@@ -30,6 +30,7 @@ Item {
     property alias rectangle: rectangle
     property color handleColor: Qt.rgba(1, 1, 1, enabled? 0.9 : 0.2)
     property int snapMargin: 10
+    property rect _boundary: Qt.rect(-10000, -10000, 20000, 20000)
 
     signal rectChanged(Rectangle rect)
 
@@ -50,6 +51,10 @@ Item {
         topRightHandle.y = topLeftHandle.y
         bottomLeftHandle.x = topLeftHandle.x
         bottomLeftHandle.y = bottomRightHandle.y
+    }
+
+    function setBoundary(boundary) {
+        _boundary = Qt.rect(boundary.x * widthScale, boundary.y * heightScale, boundary.width * widthScale, boundary.height * heightScale)
     }
 
     function snapX(x) {
@@ -116,6 +121,18 @@ Item {
         return y
     }
 
+    function boundaryX(x) {
+        x = Math.max(x, _boundary.x)
+        x = Math.min(x, _boundary.x + _boundary.width)
+        return x
+    }
+
+    function boundaryY(y) {
+        y = Math.max(y, _boundary.y)
+        y = Math.min(y, _boundary.y + _boundary.height)
+        return y
+    }
+
     Rectangle {
         id: rectangle
         color: 'transparent'
@@ -167,6 +184,10 @@ Item {
             onPositionChanged: {
                 rectangle.x = snapX(rectangle.x + rectangle.width / 2) - rectangle.width / 2
                 rectangle.y = snapY(rectangle.y + rectangle.height / 2) - rectangle.height / 2
+                rectangle.x = Math.max(rectangle.x, _boundary.x)
+                rectangle.x = Math.min(rectangle.x, _boundary.x + _boundary.width - rectangle.width)
+                rectangle.y = Math.max(rectangle.y, _boundary.y)
+                rectangle.y = Math.min(rectangle.y, _boundary.y + _boundary.height - rectangle.height)
                 rectChanged(rectangle)
             }
             onReleased: {
@@ -205,6 +226,8 @@ Item {
             onPositionChanged: {
                 topLeftHandle.x = snapX(topLeftHandle.x)
                 topLeftHandle.y = snapY(topLeftHandle.y)
+                topLeftHandle.x = boundaryX(topLeftHandle.x)
+                topLeftHandle.y = boundaryY(topLeftHandle.y)
                 if (aspectRatio !== 0.0)
                     parent.x = topRightHandle.x + handleSize - rectangle.height * aspectRatio
                 parent.x = Math.min(parent.x, bottomRightHandle.x)
@@ -240,6 +263,8 @@ Item {
             onPositionChanged: {
                 topRightHandle.x = snapX(topRightHandle.x + handleSize) - handleSize
                 topRightHandle.y = snapY(topRightHandle.y)
+                topRightHandle.x = boundaryX(topRightHandle.x + handleSize) - handleSize
+                topRightHandle.y = boundaryY(topRightHandle.y)
                 if (aspectRatio !== 0.0)
                     parent.x = topLeftHandle.x + rectangle.height * aspectRatio - handleSize
                 parent.x = Math.max(parent.x, bottomLeftHandle.x)
@@ -275,6 +300,8 @@ Item {
             onPositionChanged: {
                 bottomLeftHandle.x = snapX(bottomLeftHandle.x)
                 bottomLeftHandle.y = snapY(bottomLeftHandle.y + handleSize) - handleSize
+                bottomLeftHandle.x = boundaryX(bottomLeftHandle.x)
+                bottomLeftHandle.y = boundaryY(bottomLeftHandle.y + handleSize) - handleSize
                 if (aspectRatio !== 0.0)
                     parent.x = topRightHandle.x + handleSize - rectangle.height * aspectRatio
                 parent.x = Math.min(parent.x, topRightHandle.x)
@@ -308,6 +335,8 @@ Item {
             onPositionChanged: {
                 bottomRightHandle.x = snapX(bottomRightHandle.x + handleSize) - handleSize
                 bottomRightHandle.y = snapY(bottomRightHandle.y + handleSize) - handleSize
+                bottomRightHandle.x = boundaryX(bottomRightHandle.x + handleSize) - handleSize
+                bottomRightHandle.y = boundaryY(bottomRightHandle.y + handleSize) - handleSize
                 if (aspectRatio !== 0.0)
                     parent.x = topLeftHandle.x + rectangle.height * aspectRatio - handleSize
                 parent.x = Math.max(parent.x, topLeftHandle.x)

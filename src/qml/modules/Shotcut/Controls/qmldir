@@ -13,3 +13,4 @@ TextFilterUi 1.0 TextFilterUi.qml
 TextFilterVui 1.0 TextFilterVui.qml
 ToggleButton 1.0 ToggleButton.qml
 VuiBase 1.0 VuiBase.qml
+RectVui 1.0 RectVui.qml
