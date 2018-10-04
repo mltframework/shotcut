@@ -2521,7 +2521,7 @@ void MultitrackModel::adjustServiceFilterDurations(Mlt::Service& service, int du
     int n = service.filter_count();
     for (int i = 0; i < n; i++) {
         QScopedPointer<Mlt::Filter> filter(service.filter(i));
-        if (filter && filter->is_valid() && !filter->get_int("_loader")) {
+        if (filter && filter->is_valid() && !filter->get_int("_loader") && filter->get_in() <= 0) {
             filter->set_in_and_out(0, duration - 1);
         }
     }
