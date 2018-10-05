@@ -41,7 +41,7 @@ Item {
         filter.set(startValue, Qt.rect(0, 0, profile.width, profile.height))
         filter.set(endValue, Qt.rect(0, 0, profile.width, profile.height))
         if (filter.isNew) {
-            var presetParams = preset.parameters
+            var presetParams = preset.parameters.slice()
             var index = presetParams.indexOf('argument')
             if (index > -1)
                 presetParams.splice(index, 1)
