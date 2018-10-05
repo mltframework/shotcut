@@ -212,6 +212,7 @@ Item {
                     filter.resetProperty('transition.fix_rotate_x')
                     filter.set('transition.fix_rotate_x', value)
                 }
+                checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('transition.fix_rotate_x') > 0
             }
         }
 
@@ -233,7 +234,7 @@ Item {
         }
         KeyframesButton {
             id: scaleKeyframesButton
-            checked: filter.keyframeCount('transition.scale_x') > 0
+            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('transition.scale_x') > 0
             onToggled: {
                 var value = 100 / scaleSlider.value
                 if (checked) {
@@ -254,6 +255,7 @@ Item {
                     filter.set('transition.scale_x', value)
                     filter.set('transition.scale_y', value)
                 }
+                checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('transition.scale_x') > 0
             }
         }
 

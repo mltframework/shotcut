@@ -286,6 +286,7 @@ GridLayout {
                 filter.resetProperty(rectProperty)
                 filter.set(rectProperty, filterRect)
             }
+            checked = filter.keyframeCount(rectProperty) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
         }
     }
 
