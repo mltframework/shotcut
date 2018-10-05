@@ -52,18 +52,24 @@ Item {
         bottomLeftHandle.y = bottomRightHandle.y
     }
 
+    function snapGrid(v, gridSize) {
+        var polarity = (v < 0) ? -1 : 1
+        v = v * polarity
+        var delta = v % gridSize
+        if (delta < snapMargin) {
+            v = v - delta
+        } else if ((gridSize - delta) < snapMargin) {
+            v = v + gridSize - delta
+        }
+        return v * polarity
+    }
+
     function snapX(x) {
         if (!video.snapToGrid || video.grid === 0) {
             return x
         }
         if (video.grid < 95) {
-            var gridSize = parent.width / video.grid
-            var delta = x % gridSize
-            if (delta < snapMargin) {
-                return x - delta
-            } else if ((gridSize - delta) < snapMargin) {
-                return x + gridSize - delta
-            }
+            return snapGrid(x, parent.width / video.grid)
         } else {
             var deltas = null
             if (video.grid === 8090) {
@@ -75,7 +81,7 @@ Item {
             }
             if (deltas) {
                 for (var i = 0; i < deltas.length; i++) {
-                    delta = x - deltas[i] * parent.width
+                    var delta = x - deltas[i] * parent.width
                     if (Math.abs(delta) < snapMargin)
                         return x - delta
                 }
@@ -89,13 +95,7 @@ Item {
             return y
         }
         if (video.grid < 95) {
-            var gridSize = parent.height / video.grid
-            var delta = y % gridSize
-            if (delta < snapMargin) {
-                return y - delta
-            } else if ((gridSize - delta) < snapMargin) {
-                return y + gridSize - delta
-            }
+            return snapGrid(y, parent.height / video.grid)
         } else {
             var deltas = null
             if (video.grid === 8090) {
@@ -107,7 +107,7 @@ Item {
             }
             if (deltas) {
                 for (var i = 0; i < deltas.length; i++) {
-                    delta = y - deltas[i] * parent.height
+                    var delta = y - deltas[i] * parent.height
                     if (Math.abs(delta) < snapMargin)
                         return y - delta
                 }
