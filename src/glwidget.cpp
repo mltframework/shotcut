@@ -286,6 +286,9 @@ static void uploadTextures(QOpenGLContext* context, SharedFrame& frame, GLuint t
     const uint8_t* image = frame.get_image();
     QOpenGLFunctions* f = context->functions();
 
+    // The planes of pixel data may not be a multiple of the default 4 bytes.
+    f->glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+
     // Upload each plane of YUV to a texture.
     if (texture[0])
         f->glDeleteTextures(3, texture);
