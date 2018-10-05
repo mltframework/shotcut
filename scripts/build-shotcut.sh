@@ -1606,29 +1606,23 @@ function configure_compile_install_subproject {
         cmd cp -p "$QTDIR"/plugins/sqldrivers/libqsqlite.so "$FINAL_INSTALL_DIR"/lib/qt5/sqldrivers
         cmd cp -a "$QTDIR"/qml "$FINAL_INSTALL_DIR"/lib
 
-        log Copying some libs from system
-        SOXLIB=$(ldd "$FINAL_INSTALL_DIR"/lib/mlt/libmltsox.so | awk '/libsox/ {print $3}')
-        log SOXLIB=$SOXLIB
-        cmd install -c "$SOXLIB" "$FINAL_INSTALL_DIR"/lib
-        PNGLIB=$(ldd "$SOXLIB" | awk '/libpng/ {print $3}')
+        JSONLIB=$(ldd "$FINAL_INSTALL_DIR"/lib/mlt/libmltavformat.so | awk '/libjson-c/ {print $3}')
+        log JSONLIB=$JSONLIB
+        cmd install -c "$JSONLIB" "$FINAL_INSTALL_DIR"/lib
+        PNGLIB=$(ldd "$FINAL_INSTALL_DIR"/lib/mlt/libmltsox.so | awk '/libpng/ {print $3}')
         log PNGLIB=$PNGLIB
         cmd install -c "$PNGLIB" "$FINAL_INSTALL_DIR"/lib
-        GSMLIB=$(ldd "$SOXLIB" | awk '/libgsm/ {print $3}')
-        log GSMLIB=$GSMLIB
-        cmd install -c "$GSMLIB" "$FINAL_INSTALL_DIR"/lib
-        EXIFLIB=$(ldd "$FINAL_INSTALL_DIR"/lib/mlt/libmltqt.so | awk '/libexif/ {print $3}')
-        log EXIFLIB=$EXIFLIB
-        cmd install -c "$EXIFLIB" "$FINAL_INSTALL_DIR"/lib
-        FFTWLIB=$(ldd "$FINAL_INSTALL_DIR"/lib/mlt/libmltopengl.so | awk '/libfftw/ {print $3}')
-        log FFTWLIB=$FFTWLIB
-        cmd install -c "$FFTWLIB" "$FINAL_INSTALL_DIR"/lib
-        cmd ldd "$FINAL_INSTALL_DIR"/lib/libQt5XcbQpa.so.5
-        XKBLIB=$(ldd "$FINAL_INSTALL_DIR"/lib/libQt5XcbQpa.so.5 | awk '/libxkbcommon.so/ {print $3}')
-        log XKBLIB=$XKBLIB
-        cmd install -c "$XKBLIB" "$FINAL_INSTALL_DIR"/lib
         XKBLIB=$(ldd "$FINAL_INSTALL_DIR"/lib/libQt5XcbQpa.so.5 | awk '/libxkbcommon-x11.so/ {print $3}')
         log XKBLIB=$XKBLIB
         cmd install -c "$XKBLIB" "$FINAL_INSTALL_DIR"/lib
+
+        log Copying some libs from system
+        for lib in "$FINAL_INSTALL_DIR"/lib/qt5/{accessible,iconengines,imageformats,mediaservice,platforms,generic,platforminputcontexts,platformthemes,xcbglintegrations}/*.so; do
+          bundle_libs "$lib"
+        done
+        for lib in "$FINAL_INSTALL_DIR"/{lib,lib/mlt,lib/frei0r-1,lib/ladspa}/*.so; do
+          bundle_libs "$lib"
+        done
       fi
     elif test "webvfx" = "$1" ; then
       cmd make -C webvfx install || die "Unable to install $1/webvfx"
@@ -1726,6 +1720,34 @@ function sys_info {
       echo Found neither dpkg or rpm...
     fi
   fi
+}
+
+function bundle_libs
+{
+  target=$(dirname "$1")/$(basename "$1")
+  log bundling library dependencies of "$lib"
+  libs=$(ldd "$target" |
+    awk '($3 ~ /^\/usr/) && ($3 !~ /libstdc++/) &&
+      ($3 !~ /\/libX/) && ($3 !~ /\/libxcb/) && ($3 !~ /nvidia/) &&
+      ($3 !~ /\/libGL/) && ($3 !~ /\/libEGL/) && ($3 !~ /\/libdrm/) && ($3 !~ /\/libglapi/) &&
+      ($3 !~ /\/libgio/) && ($3 !~ /\/libasound/) && ($3 !~ /\/libgdk_pixbuf/) &&
+      ($3 !~ /\/libfontconfig/) && ($3 !~ /\/libthai/) && ($3 !~ /\/libfreetype/) &&
+      ($3 !~ /\/libharfbuzz/) && ($3 !~ /\/libselinux/) && ($3 !~ /\/libcom_err/) &&
+      ($3 !~ /\/libcrypt/) && ($3 !~ /\/libexpat/) && ($3 !~ /\/libz/) &&
+      ($3 !~ /\/libgobject/) && ($3 !~ /\/libpangoft2/) && ($3 !~ /\/libpangocairo/) &&
+      ($3 !~ /\/libpango/) && ($3 !~ /\/libjack/) && ($3 !~ /\/libuuid/) && ($3 !~ /\/libcairo/) \
+      {print $3}')
+  for lib in $libs; do
+    if [ $(basename "$lib") != $(basename "$target") ]; then
+      cmd cp -n --preserve=timestamps "$lib" "$FINAL_INSTALL_DIR/lib"
+    fi
+  done
+  for lib in $libs; do
+    if [ $(basename "$lib") != $(basename "$target") ]; then
+      newlib=$(basename "$lib")
+      bundle_libs "$FINAL_INSTALL_DIR/lib/$newlib"
+    fi
+  done
 }
 
 function fixlibs()
