@@ -20,6 +20,8 @@ DropArea {
                 var rectY = video.rect.y - video.offset.y + zoomOffsetY
                 var gridSizeX = rectW / video.grid
                 var gridSizeY = rectH / video.grid
+                var gridOffsetX = rectX % gridSizeX
+                var gridOffsetY = rectY % gridSizeY
 
                 // Black shadow grid (offset by 1)
                 ctx.lineWidth = 1
@@ -35,16 +37,16 @@ DropArea {
                     ctx.rect(0.035 * rectW + rectX + 2, 0.035 * rectH + rectY + 2, 0.93 * rectW - 1, 0.93 * rectH - 1)
                 } else {
                     // vertical grid lines
-                    for(var x = 1; x * gridSizeX < rectW; x++)
+                    for(var x = 0; x * gridSizeX < parent.width; x++)
                     {
-                        context.moveTo(rectX + x * gridSizeX + 1, rectY)
-                        context.lineTo(rectX + x * gridSizeX + 1, rectY + rectH)
+                        context.moveTo(gridOffsetX + x * gridSizeX + 1, 0)
+                        context.lineTo(gridOffsetX + x * gridSizeX + 1, parent.height)
                     }
                     // horizontal grid lines
-                    for(var y = 1; y * gridSizeY < rectH; y++)
+                    for(var y = 0; y * gridSizeY < parent.height; y++)
                     {
-                        context.moveTo(rectX, rectY + y * gridSizeY + 1)
-                        context.lineTo(rectX + rectW, rectY + y * gridSizeY + 1)
+                        context.moveTo(0, gridOffsetY + y * gridSizeY + 1)
+                        context.lineTo(parent.width, gridOffsetY + y * gridSizeY + 1)
                     }
                 }
                 // draw and close
@@ -65,16 +67,16 @@ DropArea {
                     ctx.rect(0.035 * rectW + rectX + 1, 0.035 * rectH + rectY + 1, 0.93 * rectW - 2, 0.93 * rectH - 2)
                 } else {
                     // vertical grid lines
-                    for(var x = 1; x * gridSizeX < rectW; x++)
+                    for(var x = 0; x * gridSizeX < parent.width; x++)
                     {
-                        context.moveTo(rectX + x * gridSizeX, rectY)
-                        context.lineTo(rectX + x * gridSizeX, rectY + rectH)
+                        context.moveTo(gridOffsetX + x * gridSizeX, 0)
+                        context.lineTo(gridOffsetX + x * gridSizeX, parent.height)
                     }
                     // horizontal grid lines
-                    for(var y = 1; y * gridSizeY < rectH; y++)
+                    for(var y = 0; y * gridSizeY < parent.height; y++)
                     {
-                        context.moveTo(rectX, rectY + y * gridSizeY)
-                        context.lineTo(rectX + rectW, rectY + y * gridSizeY)
+                        context.moveTo(0, gridOffsetY + y * gridSizeY)
+                        context.lineTo(parent.width, gridOffsetY + y * gridSizeY)
                     }
                 }
                 // draw and close
