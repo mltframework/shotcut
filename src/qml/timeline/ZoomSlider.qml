@@ -52,7 +52,7 @@ Rectangle {
             if (!pressed) {
                 setScaleFactor()
                 for (var i = 0; i < tracksRepeater.count; i++)
-                    tracksRepeater.itemAt(i).redrawWaveforms()
+                    tracksRepeater.itemAt(i).redrawWaveforms(false)
             }
         }
     }

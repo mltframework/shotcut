@@ -85,7 +85,7 @@ Rectangle {
         parent = track
         isAudio = track.isAudio
         height = track.height
-        generateWaveform()
+        generateWaveform(false)
     }
 
     function generateWaveform(force) {
@@ -105,7 +105,7 @@ Rectangle {
         }
     }
 
-    onAudioLevelsChanged: generateWaveform()
+    onAudioLevelsChanged: generateWaveform(false)
 
     Image {
         id: outThumbnail

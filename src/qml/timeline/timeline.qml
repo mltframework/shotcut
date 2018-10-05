@@ -33,7 +33,7 @@ Rectangle {
     function setZoom(value) {
         toolbar.scaleSlider.value = value
         for (var i = 0; i < tracksRepeater.count; i++)
-            tracksRepeater.itemAt(i).redrawWaveforms()
+            tracksRepeater.itemAt(i).redrawWaveforms(false)
     }
 
     function adjustZoom(by) {
