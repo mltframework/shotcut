@@ -168,7 +168,7 @@ void QmlProducer::remakeAudioLevels(bool isKeyframesVisible)
         AudioLevelsTask::start(m_producer, this, QModelIndex());
 }
 
-double QmlProducer::sampleAspectRatio()
+double QmlProducer::displayAspectRatio()
 {
     if (!m_producer.is_valid()) return 1.0;
     if (m_producer.get(kHeightProperty)) {

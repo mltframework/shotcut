@@ -42,7 +42,7 @@ class QmlProducer : public QObject
     Q_PROPERTY(int fadeOut READ fadeOut NOTIFY producerChanged)
     Q_PROPERTY(double speed READ speed NOTIFY producerChanged)
     Q_PROPERTY(int position READ position WRITE setPosition NOTIFY positionChanged)
-    Q_PROPERTY(double sampleAspectRatio READ sampleAspectRatio NOTIFY producerChanged)
+    Q_PROPERTY(double displayAspectRatio READ displayAspectRatio NOTIFY producerChanged)
 
 public:
     explicit QmlProducer(QObject *parent = 0);
@@ -65,7 +65,7 @@ public:
     Mlt::Producer& producer() { return m_producer; }
     Q_INVOKABLE void audioLevelsReady(const QModelIndex &index);
     Q_INVOKABLE void remakeAudioLevels();
-    double sampleAspectRatio();
+    double displayAspectRatio();
 
 signals:
     void producerChanged();

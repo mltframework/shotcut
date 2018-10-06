@@ -41,9 +41,9 @@ Item {
             bottomRightHandle.y = topLeftHandle.y + Math.round(rect.height * heightScale) - handleSize
         } else if (aspectRatio > 1.0) {
             bottomRightHandle.x = topLeftHandle.x + Math.round(rect.width * widthScale) - handleSize
-            bottomRightHandle.y = topLeftHandle.y + Math.round(rect.width * widthScale / aspectRatio) - handleSize
+            bottomRightHandle.y = topLeftHandle.y + Math.round(Math.round(rect.width / aspectRatio) * heightScale) - handleSize
         } else {
-            bottomRightHandle.x = topLeftHandle.x + Math.round(rect.height * heightScale * aspectRatio) - handleSize
+            bottomRightHandle.x = topLeftHandle.x + Math.round(Math.round(rect.height * aspectRatio) * widthScale) - handleSize
             bottomRightHandle.y = topLeftHandle.y + Math.round(rect.height * heightScale) - handleSize
         }
         topRightHandle.x = bottomRightHandle.x

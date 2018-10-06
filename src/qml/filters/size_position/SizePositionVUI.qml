@@ -32,7 +32,7 @@ VuiBase {
     property string endValue:  '_shotcut:endValue'
 
     function getAspectRatio() {
-        return (filter.get(fillProperty) === '1' && filter.get(distortProperty) === '0')? producer.sampleAspectRatio : 0.0
+        return (filter.get(fillProperty) === '1' && filter.get(distortProperty) === '0')? producer.displayAspectRatio : 0.0
     }
 
     Component.onCompleted: {
