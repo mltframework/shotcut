@@ -21,7 +21,8 @@ import QtQuick.Controls 1.0
 Rectangle {
     property int index: 0
     property real timeScale: 1.0
-    property int stepSize: Math.round(136 * Math.max(1.0, timeScale))
+    property int adjustment: 0
+    property int stepSize: Math.round(136 * Math.max(1.0, timeScale)) + adjustment
 
     SystemPalette { id: activePalette }
 
@@ -55,8 +56,8 @@ Rectangle {
         target: profile
         onProfileChanged: {
             // Force a repeater model change to update the labels.
-            ++stepSize
-            --stepSize
+            ++adjustment
+            --adjustment
         }
     }
 }
