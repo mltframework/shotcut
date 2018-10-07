@@ -394,7 +394,7 @@ function set_globals {
     if test "$FFMPEG_SUPPORT_AMF" = 1 && test "$TARGET_OS" != "Darwin" && test "$TARGET_OS" != "Linux"; then
         SUBDIRS="AMF $SUBDIRS"
     fi
-    if test "$ENABLE_SWH_PLUGINS" = "1" && test "$TARGET_OS" = "Darwin"; then
+    if test "$ENABLE_SWH_PLUGINS" = "1" && test "$TARGET_OS" = "Darwin" -o "$TARGET_OS" = "Linux"; then
         SUBDIRS="swh-plugins $SUBDIRS"
     fi
     if test "$ENABLE_WEBVFX" = "1" && test "$WEBVFX_HEAD" = 1 -o "$WEBVFX_REVISION" != ""; then
@@ -746,8 +746,11 @@ function set_globals {
 
   #####
   # swh-plugins
-  CONFIG[8]="./configure --prefix=$FINAL_INSTALL_DIR --enable-darwin --enable-sse $CONFIGURE_DEBUG_FLAG"
-  CFLAGS_[8]="-march=nocona $CFLAGS"
+  CONFIG[8]="./configure --prefix=$FINAL_INSTALL_DIR --enable-sse $CONFIGURE_DEBUG_FLAG"
+  if [ "$TARGET_OS" = "Darwin" ]; then
+    CONFIG[8]="${CONFIG[8]} --enable-darwin"
+    CFLAGS_[8]="-march=nocona $CFLAGS"
+  fi
   LDFLAGS_[8]=$LDFLAGS
 
   #####
@@ -2062,6 +2065,7 @@ export MLT_REPOSITORY="\$INSTALL_DIR/lib/mlt"
 export MLT_DATA="\$INSTALL_DIR/share/mlt"
 export MLT_PROFILES_PATH="\$INSTALL_DIR/share/mlt/profiles"
 export FREI0R_PATH="\$INSTALL_DIR/lib/frei0r-1"
+export LADSPA_PATH="\$LADSPA_PATH:/usr/local/lib/ladspa:/usr/lib/ladspa:/usr/lib64/ladspa:\$INSTALL_DIR/lib/ladspa"
 export MLT_MOVIT_PATH="\$INSTALL_DIR/share/movit"
 export MANPATH=\$MANPATH:"\$INSTALL_DIR/share/man"
 export PKG_CONFIG_PATH="\$INSTALL_DIR/lib/pkgconfig":\$PKG_CONFIG_PATH
@@ -2087,6 +2091,7 @@ export MLT_REPOSITORY="\$INSTALL_DIR/lib/mlt"
 export MLT_DATA="\$INSTALL_DIR/share/mlt"
 export MLT_PROFILES_PATH="\$INSTALL_DIR/share/mlt/profiles"
 export FREI0R_PATH="\$INSTALL_DIR/lib/frei0r-1"
+export LADSPA_PATH="\$LADSPA_PATH:/usr/local/lib/ladspa:/usr/lib/ladspa:/usr/lib64/ladspa:\$INSTALL_DIR/lib/ladspa"
 export MLT_MOVIT_PATH="\$INSTALL_DIR/share/movit"
 export QT_PLUGIN_PATH="\$INSTALL_DIR/lib/qt5"
 export QML2_IMPORT_PATH="\$INSTALL_DIR/lib/qml"
@@ -2111,6 +2116,7 @@ export MLT_REPOSITORY="\$INSTALL_DIR/lib/mlt"
 export MLT_DATA="\$INSTALL_DIR/share/mlt"
 export MLT_PROFILES_PATH="\$INSTALL_DIR/share/mlt/profiles"
 export FREI0R_PATH="\$INSTALL_DIR/lib/frei0r-1"
+export LADSPA_PATH="\$LADSPA_PATH:/usr/local/lib/ladspa:/usr/lib/ladspa:/usr/lib64/ladspa:\$INSTALL_DIR/lib/ladspa"
 export MLT_MOVIT_PATH="\$INSTALL_DIR/share/movit"
 cd "\$INSTALL_DIR"
 export QT_PLUGIN_PATH="lib/qt5"
