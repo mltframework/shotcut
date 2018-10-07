@@ -56,6 +56,7 @@ FFMPEG_SUPPORT_FAAC=0
 FFMPEG_SUPPORT_OPUS=1
 FFMPEG_SUPPORT_NVENC=1
 FFMPEG_SUPPORT_AMF=1
+FFMPEG_SUPPORT_QSV=1
 FFMPEG_ADDITIONAL_OPTIONS=
 ENABLE_VIDSTAB=1
 VIDSTAB_HEAD=1
@@ -205,6 +206,9 @@ function to_key {
     ;;
     AMF)
       echo 16
+    ;;
+    mfx_dispatch)
+      echo 17
     ;;
     *)
       echo UNKNOWN
@@ -394,6 +398,9 @@ function set_globals {
     if test "$FFMPEG_SUPPORT_AMF" = 1 && test "$TARGET_OS" != "Darwin" && test "$TARGET_OS" != "Linux"; then
         SUBDIRS="AMF $SUBDIRS"
     fi
+    if test "$FFMPEG_SUPPORT_QSV" = 1 && test "$TARGET_OS" != "Darwin" && test "$TARGET_OS" != "Linux"; then
+        SUBDIRS="mfx_dispatch $SUBDIRS"
+    fi
     if test "$ENABLE_SWH_PLUGINS" = "1" && test "$TARGET_OS" = "Darwin" -o "$TARGET_OS" = "Linux"; then
         SUBDIRS="swh-plugins $SUBDIRS"
     fi
@@ -444,6 +451,7 @@ function set_globals {
   REPOLOCS[14]="https://bitbucket.org/eigen/eigen/get/3.2.4.tar.gz"
   REPOLOCS[15]="git://github.com/FFmpeg/nv-codec-headers.git"
   REPOLOCS[16]="git://github.com/GPUOpen-LibrariesAndSDKs/AMF.git"
+  REPOLOCS[17]="git://github.com/lu-zero/mfx_dispatch.git"
 
   # REPOTYPE Array holds the repo types. (Yes, this might be redundant, but easy for me)
   REPOTYPES[0]="git"
@@ -463,6 +471,7 @@ function set_globals {
   REPOTYPES[14]="http-tgz"
   REPOTYPES[15]="git"
   REPOTYPES[16]="git"
+  REPOTYPES[17]="git"
 
   # And, set up the revisions
   REVISIONS[0]=""
@@ -519,6 +528,7 @@ function set_globals {
   REVISIONS[14]="eigen-eigen-10219c95fe65"
   REVISIONS[15]=""
   REVISIONS[16]=""
+  REVISIONS[17]=""
 
   # Figure out the number of cores in the system. Used both by make and startup script
   if test "$TARGET_OS" = "Darwin"; then
@@ -618,6 +628,9 @@ function set_globals {
   fi
   if test 1 = "$FFMPEG_SUPPORT_OPUS" ; then
     CONFIG[0]="${CONFIG[0]} --enable-libopus"
+  fi
+  if test 1 = "$FFMPEG_SUPPORT_QSV" ; then
+    CONFIG[0]="${CONFIG[0]} --enable-libmfx"
   fi
   # Add optional parameters
   CONFIG[0]="${CONFIG[0]} $FFMPEG_ADDITIONAL_OPTIONS"
@@ -830,6 +843,17 @@ function set_globals {
   #######
   # AMF - no build required
   CONFIG[16]=""
+  
+  #######
+  # QSV mfx_dispatch
+  CONFIG[17]="./configure --prefix=$FINAL_INSTALL_DIR"
+  if test "$TARGET_OS" = "Win32" ; then
+    CONFIG[17]="${CONFIG[17]} --host=x86-w64-mingw32"
+  elif test "$TARGET_OS" = "Win64" ; then
+    CONFIG[17]="${CONFIG[17]} --host=x86_64-w64-mingw32"
+  fi
+  CFLAGS_[17]="$CFLAGS"
+  LDFLAGS_[17]=$LDFLAGS
 }
 
 ######################################################################
@@ -1532,6 +1556,16 @@ function configure_compile_install_subproject {
     cmd rm -rf Thirdparty
     cmd mkdir -p "$FINAL_INSTALL_DIR/include/AMF"
     cmd cp -av "amf/public/include/." "$FINAL_INSTALL_DIR/include/AMF"
+  fi
+
+  # Special hack for mfx_dispatch
+  if test "mfx_dispatch" = "$1" -a ! -e configure ; then
+    debug "Need to create configure for $1"
+    cmd autoreconf -fiv || die "Unable to create configure file for $1"
+    cmd automake --add-missing || die "Unable to create makefile for $1"
+    if test ! -e configure ; then
+      die "Unable to confirm presence of configure file for $1"
+    fi
   fi
 
   MYCONFIG=`lookup CONFIG $1`
