@@ -66,6 +66,7 @@ MLT_REVISION=
 LOG_COLORS=0
 SHOTCUT_HEAD=1
 SHOTCUT_REVISION=
+SHOTCUT_VERSION=$(date '+%y.%m.%d')
 ENABLE_WEBVFX=1
 WEBVFX_HEAD=1
 WEBVFX_REVISION=
@@ -749,7 +750,7 @@ function set_globals {
     CONFIG[7]="$QTDIR/bin/qmake -r MLT_PREFIX=$FINAL_INSTALL_DIR $QMAKE_DEBUG_FLAG $QMAKE_ASAN_FLAGS"
   elif [ "$TARGET_OS" = "Win32" -o "$TARGET_OS" = "Win64" ]; then
     # DEFINES+=QT_STATIC is for QWebSockets
-    CONFIG[7]="$QMAKE -r -spec mkspecs/mingw CONFIG+=link_pkgconfig PKGCONFIG+=mlt++ LIBS+=-L${QTDIR}/lib SHOTCUT_VERSION=$(date '+%y.%m.%d') DEFINES+=QT_STATIC $QMAKE_DEBUG_FLAG $QMAKE_ASAN_FLAGS"
+    CONFIG[7]="$QMAKE -r -spec mkspecs/mingw CONFIG+=link_pkgconfig PKGCONFIG+=mlt++ LIBS+=-L${QTDIR}/lib SHOTCUT_VERSION=$SHOTCUT_VERSION DEFINES+=QT_STATIC $QMAKE_DEBUG_FLAG $QMAKE_ASAN_FLAGS"
   else
     CONFIG[7]="$QTDIR/bin/qmake -r PREFIX=$FINAL_INSTALL_DIR $QMAKE_DEBUG_FLAG $QMAKE_ASAN_FLAGS"
     LD_LIBRARY_PATH_[7]="/usr/local/lib"
@@ -1624,8 +1625,9 @@ function configure_compile_install_subproject {
         if [ "$TARGET_OS" = "Win32" ]; then
           cmd install -c packaging/windows/shotcut.nsi "$FINAL_INSTALL_DIR"/..
         else
-          sed 's/PROGRAMFILES/PROGRAMFILES64/' packaging/windows/shotcut.nsi >"$FINAL_INSTALL_DIR"/../shotcut.nsi
+          cmd sed 's/PROGRAMFILES/PROGRAMFILES64/' packaging/windows/shotcut.nsi >"$FINAL_INSTALL_DIR"/../shotcut.nsi
         fi
+        cmd sed -i "s/YY.MM.DD/$SHOTCUT_VERSION/" "$FINAL_INSTALL_DIR"/../shotcut.nsi
         cmd install -d "$FINAL_INSTALL_DIR"/share/translations
         cmd install -p -c translations/*.qm "$FINAL_INSTALL_DIR"/share/translations
         cmd install -d "$FINAL_INSTALL_DIR"/share/shotcut
