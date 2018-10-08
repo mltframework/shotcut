@@ -1622,12 +1622,11 @@ function configure_compile_install_subproject {
         cmd make install
         cmd install -c -m 755 src/shotcut.exe "$FINAL_INSTALL_DIR"
         cmd install -c COPYING "$FINAL_INSTALL_DIR"
-        if [ "$TARGET_OS" = "Win32" ]; then
-          cmd install -c packaging/windows/shotcut.nsi "$FINAL_INSTALL_DIR"/..
-        else
-          cmd sed 's/PROGRAMFILES/PROGRAMFILES64/' packaging/windows/shotcut.nsi >"$FINAL_INSTALL_DIR"/../shotcut.nsi
-        fi
+        cmd install -c packaging/windows/shotcut.nsi "$FINAL_INSTALL_DIR"/..
         cmd sed -i "s/YY.MM.DD/$SHOTCUT_VERSION/" "$FINAL_INSTALL_DIR"/../shotcut.nsi
+        if [ "$TARGET_OS" = "Win64" ]; then
+          cmd sed -i 's/PROGRAMFILES/PROGRAMFILES64/' "$FINAL_INSTALL_DIR"/../shotcut.nsi
+        fi
         cmd install -d "$FINAL_INSTALL_DIR"/share/translations
         cmd install -p -c translations/*.qm "$FINAL_INSTALL_DIR"/share/translations
         cmd install -d "$FINAL_INSTALL_DIR"/share/shotcut
