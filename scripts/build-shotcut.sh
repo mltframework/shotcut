@@ -630,7 +630,7 @@ function set_globals {
   if test 1 = "$FFMPEG_SUPPORT_OPUS" ; then
     CONFIG[0]="${CONFIG[0]} --enable-libopus"
   fi
-  if test 1 = "$FFMPEG_SUPPORT_QSV" ; then
+  if test 1 = "$FFMPEG_SUPPORT_QSV" && test "$TARGET_OS" != "Darwin" && test "$TARGET_OS" != "Linux" ; then
     CONFIG[0]="${CONFIG[0]} --enable-libmfx"
   fi
   # Add optional parameters
