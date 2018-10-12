@@ -1644,21 +1644,11 @@ function configure_compile_install_subproject {
         cmd cp -p "$QTDIR"/plugins/sqldrivers/libqsqlite.so "$FINAL_INSTALL_DIR"/lib/qt5/sqldrivers
         cmd cp -a "$QTDIR"/qml "$FINAL_INSTALL_DIR"/lib
 
-        JSONLIB=$(ldd "$FINAL_INSTALL_DIR"/lib/mlt/libmltavformat.so | awk '/libjson-c/ {print $3}')
-        log JSONLIB=$JSONLIB
-        cmd install -c "$JSONLIB" "$FINAL_INSTALL_DIR"/lib
-        PNGLIB=$(ldd "$FINAL_INSTALL_DIR"/lib/mlt/libmltsox.so | awk '/libpng/ {print $3}')
-        log PNGLIB=$PNGLIB
-        cmd install -c "$PNGLIB" "$FINAL_INSTALL_DIR"/lib
-        XKBLIB=$(ldd "$FINAL_INSTALL_DIR"/lib/libQt5XcbQpa.so.5 | awk '/libxkbcommon-x11.so/ {print $3}')
-        log XKBLIB=$XKBLIB
-        cmd install -c "$XKBLIB" "$FINAL_INSTALL_DIR"/lib
-
         log Copying some libs from system
-        for lib in "$FINAL_INSTALL_DIR"/lib/qt5/{accessible,iconengines,imageformats,mediaservice,platforms,generic,platforminputcontexts,platformthemes,xcbglintegrations}/*.so; do
+        for lib in "$FINAL_INSTALL_DIR"/lib/qt5/{iconengines,imageformats,mediaservice,platforms,generic,platforminputcontexts,platformthemes,xcbglintegrations}/*.so; do
           bundle_libs "$lib"
         done
-        for lib in "$FINAL_INSTALL_DIR"/{lib,lib/mlt,lib/frei0r-1,lib/ladspa}/*.so; do
+        for lib in "$FINAL_INSTALL_DIR"/{lib,lib/mlt,lib/frei0r-1,lib/ladspa}/*.so*; do
           bundle_libs "$lib"
         done
       fi
@@ -1765,16 +1755,66 @@ function bundle_libs
   target=$(dirname "$1")/$(basename "$1")
   log bundling library dependencies of "$lib"
   libs=$(ldd "$target" |
-    awk '($3 ~ /^\/usr/) && ($3 !~ /libstdc++/) &&
-      ($3 !~ /\/libX/) && ($3 !~ /\/libxcb/) && ($3 !~ /nvidia/) &&
-      ($3 !~ /\/libGL/) && ($3 !~ /\/libEGL/) && ($3 !~ /\/libdrm/) && ($3 !~ /\/libglapi/) &&
-      ($3 !~ /\/libgio/) && ($3 !~ /\/libasound/) && ($3 !~ /\/libgdk_pixbuf/) &&
-      ($3 !~ /\/libfontconfig/) && ($3 !~ /\/libthai/) && ($3 !~ /\/libfreetype/) &&
-      ($3 !~ /\/libharfbuzz/) && ($3 !~ /\/libselinux/) && ($3 !~ /\/libcom_err/) &&
-      ($3 !~ /\/libcrypt/) && ($3 !~ /\/libexpat/) && ($3 !~ /\/libz/) &&
-      ($3 !~ /\/libgobject/) && ($3 !~ /\/libpangoft2/) && ($3 !~ /\/libpangocairo/) &&
-      ($3 !~ /\/libpango/) && ($3 !~ /\/libjack/) && ($3 !~ /\/libuuid/) && ($3 !~ /\/libcairo/) \
-      {print $3}')
+    awk '($3  ~ /^\/(lib|usr)\//) &&
+         ($3 !~ /\/libld-linux\./) &&
+         ($3 !~ /\/libld-linux-x86-64\./) &&
+         ($3 !~ /\/libanl\./) &&
+         ($3 !~ /\/libBrokenLocale\./) &&
+         ($3 !~ /\/libcidn\./) &&
+         ($3 !~ /\/libcrypt\./) &&
+         ($3 !~ /\/libc\./) &&
+         ($3 !~ /\/libdl\./) &&
+         ($3 !~ /\/libm\./) &&
+         ($3 !~ /\/libmvec\./) &&
+         ($3 !~ /\/libnsl\./) &&
+         ($3 !~ /\/libnss_compat\./) &&
+         ($3 !~ /\/libnss_db\./) &&
+         ($3 !~ /\/libnss_dns\./) &&
+         ($3 !~ /\/libnss_files\./) &&
+         ($3 !~ /\/libnss_hesiod\./) &&
+         ($3 !~ /\/libnss_nisplus\./) &&
+         ($3 !~ /\/libnss_nis\./) &&
+         ($3 !~ /\/libpthread\./) &&
+         ($3 !~ /\/libresolv\./) &&
+         ($3 !~ /\/librt\./) &&
+         ($3 !~ /\/libthread_db\./) &&
+         ($3 !~ /\/libutil\./) &&
+         ($3 !~ /\/libstdc\+\+\./) &&
+         ($3 !~ /\/libGL\./) &&
+         ($3 !~ /\/libEGL\./) &&
+         ($3 !~ /\/libdrm\./) &&
+         ($3 !~ /\/libglapi\./) &&
+         ($3 !~ /\/libxcb\./) &&
+         ($3 !~ /\/libX11\./) &&
+         ($3 !~ /\/libgio\./) &&
+         ($3 !~ /\/libasound\./) &&
+         ($3 !~ /\/libgdk_pixbuf-2.0\./) &&
+         ($3 !~ /\/libfontconfig\./) &&
+         ($3 !~ /\/libthai\./) &&
+         ($3 !~ /\/libfreetype\./) &&
+         ($3 !~ /\/libharfbuzz\./) &&
+         ($3 !~ /\/libselinux\./) &&
+         ($3 !~ /\/libcom_err\./) &&
+         ($3 !~ /\/libcrypt\./) &&
+         ($3 !~ /\/libexpat\./) &&
+         ($3 !~ /\/libgcc_s\./) &&
+         ($3 !~ /\/libglib-2.0\./) &&
+         ($3 !~ /\/libgpg-error\./) &&
+         ($3 !~ /\/libICE\./) &&
+         ($3 !~ /\/libkeyutils\./) &&
+         ($3 !~ /\/libp11-kit\./) &&
+         ($3 !~ /\/libSM\./) &&
+         ($3 !~ /\/libusb-1.0\./) &&
+         ($3 !~ /\/libuuid\./) &&
+         ($3 !~ /\/libz\./) &&
+         ($3 !~ /\/libgobject-2.0\./) &&
+         ($3 !~ /\/libpangoft2-1.0\./) &&
+         ($3 !~ /\/libpangocairo-1.0\./) &&
+         ($3 !~ /\/libpango-1.0\./) &&
+         ($3 !~ /\/libjack\./) &&
+         ($3 !~ /nvidia/) &&
+         ($3 !~ /\/libcairo\./) \
+         {print $3}')
   for lib in $libs; do
     if [ $(basename "$lib") != $(basename "$target") ]; then
       cmd cp -n --preserve=timestamps "$lib" "$FINAL_INSTALL_DIR/lib"
@@ -1782,8 +1822,7 @@ function bundle_libs
   done
   for lib in $libs; do
     if [ $(basename "$lib") != $(basename "$target") ]; then
-      newlib=$(basename "$lib")
-      bundle_libs "$FINAL_INSTALL_DIR/lib/$newlib"
+      bundle_libs "$lib"
     fi
   done
 }
