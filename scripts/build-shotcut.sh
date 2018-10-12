@@ -2231,7 +2231,7 @@ End-of-shotcut-wrapper
 
   if [ "$ARCHIVE" = "1" ]; then
     log Creating archive
-    tarball="$INSTALL_DIR/shotcut.tar.bz2"
+    tarball="$INSTALL_DIR/shotcut.txz"
     cmd rm "$tarball" 2>/dev/null
 
     if [ "$SDK" = "1" ]; then
