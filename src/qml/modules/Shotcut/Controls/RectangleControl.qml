@@ -34,17 +34,17 @@ Item {
     signal rectChanged(Rectangle rect)
 
     function setHandles(rect) {
-        topLeftHandle.x = Math.round(rect.x * widthScale)
-        topLeftHandle.y = Math.round(rect.y * heightScale)
+        topLeftHandle.x = (rect.x * widthScale)
+        topLeftHandle.y = (rect.y * heightScale)
         if (aspectRatio === 0.0) {
-            bottomRightHandle.x = topLeftHandle.x + Math.round(rect.width * widthScale) - handleSize
-            bottomRightHandle.y = topLeftHandle.y + Math.round(rect.height * heightScale) - handleSize
+            bottomRightHandle.x = topLeftHandle.x + (rect.width * widthScale) - handleSize
+            bottomRightHandle.y = topLeftHandle.y + (rect.height * heightScale) - handleSize
         } else if (aspectRatio > 1.0) {
-            bottomRightHandle.x = topLeftHandle.x + Math.round(rect.width * widthScale) - handleSize
-            bottomRightHandle.y = topLeftHandle.y + Math.round(Math.round(rect.width / aspectRatio) * heightScale) - handleSize
+            bottomRightHandle.x = topLeftHandle.x + (rect.width * widthScale) - handleSize
+            bottomRightHandle.y = topLeftHandle.y + (rect.width * widthScale / aspectRatio) - handleSize
         } else {
-            bottomRightHandle.x = topLeftHandle.x + Math.round(Math.round(rect.height * aspectRatio) * widthScale) - handleSize
-            bottomRightHandle.y = topLeftHandle.y + Math.round(rect.height * heightScale) - handleSize
+            bottomRightHandle.x = topLeftHandle.x + (rect.height * heightScale * aspectRatio) - handleSize
+            bottomRightHandle.y = topLeftHandle.y + (rect.height * heightScale) - handleSize
         }
         topRightHandle.x = bottomRightHandle.x
         topRightHandle.y = topLeftHandle.y

@@ -170,8 +170,7 @@ void QmlProducer::remakeAudioLevels(bool isKeyframesVisible)
 
 double QmlProducer::displayAspectRatio()
 {
-    if (!m_producer.is_valid()) return 1.0;
-    if (m_producer.get(kHeightProperty)) {
+    if (m_producer.is_valid() && m_producer.get(kHeightProperty)) {
         double sar = 1.0;
         if (m_producer.get(kAspectDenProperty)) {
             sar = m_producer.get_double(kAspectNumProperty) /

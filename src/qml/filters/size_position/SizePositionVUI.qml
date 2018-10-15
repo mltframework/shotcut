@@ -36,8 +36,7 @@ VuiBase {
     }
 
     Component.onCompleted: {
-        filterRect = filter.getRect(rectProperty, getPosition())
-        rectangle.setHandles(filterRect)
+        rectangle.aspectRatio = getAspectRatio()
         setRectangleControl()
     }
 
@@ -115,7 +114,6 @@ VuiBase {
                 id: rectangle
                 widthScale: video.rect.width / profile.width
                 heightScale: video.rect.height / profile.height
-                aspectRatio: getAspectRatio()
                 handleSize: Math.max(Math.round(8 / zoom), 4)
                 borderSize: Math.max(Math.round(1.33 / zoom), 1)
                 onWidthScaleChanged: setHandles(filterRect)
