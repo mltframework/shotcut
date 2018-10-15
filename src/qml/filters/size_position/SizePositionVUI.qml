@@ -127,7 +127,13 @@ VuiBase {
 
     Connections {
         target: filter
-        onChanged: setRectangleControl()
+        onChanged: {
+            setRectangleControl()
+            if (rectangle.aspectRatio !== getAspectRatio()) {
+                rectangle.aspectRatio = getAspectRatio()
+                rectangle.setHandles(filterRect)
+            }
+        }
     }
 
     Connections {
