@@ -68,8 +68,9 @@ Item {
         if (!video.snapToGrid || video.grid === 0) {
             return x
         }
-        if (video.grid < 95) {
-            return snapGrid(x, parent.width / video.grid)
+        if (video.grid !== 95 && video.grid !== 8090) {
+            var n = (video.grid > 10000) ? video.grid - 10000 : parent.width / video.grid
+            return snapGrid(x, n)
         } else {
             var deltas = null
             if (video.grid === 8090) {
@@ -94,8 +95,9 @@ Item {
         if (!video.snapToGrid || video.grid === 0) {
             return y
         }
-        if (video.grid < 95) {
-            return snapGrid(y, parent.height / video.grid)
+        if (video.grid !== 95 && video.grid !== 8090) {
+            var n = (video.grid > 10000) ? video.grid - 10000 : parent.width / video.grid
+            return snapGrid(y, n)
         } else {
             var deltas = null
             if (video.grid === 8090) {

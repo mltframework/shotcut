@@ -18,40 +18,42 @@ DropArea {
                 var zoomOffsetY = ( video.rect.height - rectH ) / 2
                 var rectX = video.rect.x - video.offset.x + zoomOffsetX
                 var rectY = video.rect.y - video.offset.y + zoomOffsetY
-                var gridSizeX = rectW / video.grid
-                var gridSizeY = rectH / video.grid
+                var gridSizeX = (video.grid > 10000) ? video.grid - 10000 : rectW / video.grid
+                var gridSizeY = (video.grid > 10000) ? video.grid - 10000 : rectH / video.grid
                 var gridOffsetX = rectX % gridSizeX
                 var gridOffsetY = rectY % gridSizeY
 
-                // Black shadow grid (offset by 1)
-                ctx.lineWidth = 1
-                ctx.strokeStyle = "#000000"
-                ctx.beginPath()
-                if (video.grid === 8090) {
-                    // 80/90% Safe Areas
-                    ctx.rect( 0.1 * rectW + rectX + 2,  0.1 * rectH + rectY + 2, 0.8 * rectW - 1, 0.8 * rectH - 1)
-                    ctx.rect(0.05 * rectW + rectX + 2, 0.05 * rectH + rectY + 2, 0.9 * rectW - 1, 0.9 * rectH - 1)
-                } else if (video.grid == 95) {
-                    // EBU R95 Safe Areas
-                    ctx.rect( 0.05 * rectW + rectX + 2,  0.05 * rectH + rectY + 2,  0.9 * rectW - 1,  0.9 * rectH - 1)
-                    ctx.rect(0.035 * rectW + rectX + 2, 0.035 * rectH + rectY + 2, 0.93 * rectW - 1, 0.93 * rectH - 1)
-                } else {
-                    // vertical grid lines
-                    for(var x = 0; x * gridSizeX < parent.width; x++)
-                    {
-                        context.moveTo(gridOffsetX + x * gridSizeX + 1, 0)
-                        context.lineTo(gridOffsetX + x * gridSizeX + 1, parent.height)
+                if (video.grid <= 10000) {
+                    // Black shadow grid (offset by 1)
+                    ctx.lineWidth = 1
+                    ctx.strokeStyle = "#000000"
+                    ctx.beginPath()
+                    if (video.grid === 8090) {
+                        // 80/90% Safe Areas
+                        ctx.rect( 0.1 * rectW + rectX + 2,  0.1 * rectH + rectY + 2, 0.8 * rectW - 1, 0.8 * rectH - 1)
+                        ctx.rect(0.05 * rectW + rectX + 2, 0.05 * rectH + rectY + 2, 0.9 * rectW - 1, 0.9 * rectH - 1)
+                    } else if (video.grid == 95) {
+                        // EBU R95 Safe Areas
+                        ctx.rect( 0.05 * rectW + rectX + 2,  0.05 * rectH + rectY + 2,  0.9 * rectW - 1,  0.9 * rectH - 1)
+                        ctx.rect(0.035 * rectW + rectX + 2, 0.035 * rectH + rectY + 2, 0.93 * rectW - 1, 0.93 * rectH - 1)
+                    } else {
+                        // vertical grid lines
+                        for(var x = 0; x * gridSizeX < parent.width; x++)
+                        {
+                            context.moveTo(gridOffsetX + x * gridSizeX + 1, 0)
+                            context.lineTo(gridOffsetX + x * gridSizeX + 1, parent.height)
+                        }
+                        // horizontal grid lines
+                        for(var y = 0; y * gridSizeY < parent.height; y++)
+                        {
+                            context.moveTo(0, gridOffsetY + y * gridSizeY + 1)
+                            context.lineTo(parent.width, gridOffsetY + y * gridSizeY + 1)
+                        }
                     }
-                    // horizontal grid lines
-                    for(var y = 0; y * gridSizeY < parent.height; y++)
-                    {
-                        context.moveTo(0, gridOffsetY + y * gridSizeY + 1)
-                        context.lineTo(parent.width, gridOffsetY + y * gridSizeY + 1)
-                    }
+                    // draw and close
+                    context.stroke()
+                    context.closePath()
                 }
-                // draw and close
-                context.stroke()
-                context.closePath()
 
                 // White line grid
                 ctx.lineWidth = 1

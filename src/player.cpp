@@ -255,6 +255,14 @@ Player::Player(QWidget *parent)
     action->setCheckable(true);
     action->setData(16);
     m_gridActionGroup->addAction(action);
+    action = gridMenu->addAction(tr("10 Pixel Grid"), this, SLOT(onGridToggled()));
+    action->setCheckable(true);
+    action->setData(10010);
+    m_gridActionGroup->addAction(action);
+    action = gridMenu->addAction(tr("20 Pixel Grid"), this, SLOT(onGridToggled()));
+    action->setCheckable(true);
+    action->setData(10020);
+    m_gridActionGroup->addAction(action);
     action = gridMenu->addAction(tr("80/90% Safe Areas"), this, SLOT(onGridToggled()));
     action->setCheckable(true);
     action->setData(8090);
