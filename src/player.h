@@ -41,6 +41,7 @@ class TransportControllable;
 class QLabel;
 class QPropertyAnimation;
 class QPushButton;
+class QMenu;
 
 class Player : public QWidget
 {
@@ -147,12 +148,6 @@ private:
     QScrollBar* m_horizontalScroll;
     QScrollBar* m_verticalScroll;
     QToolButton* m_zoomButton;
-    QAction* m_zoomFitAction;
-    QAction* m_zoomOriginalAction;
-    QAction* m_zoomOutAction50;
-    QAction* m_zoomOutAction25;
-    QAction* m_zoomOutAction10;
-    QAction* m_zoomInAction;
     QToolButton* m_gridButton;
     QActionGroup* m_gridActionGroup;
     QAction* m_gridDefaultAction;
@@ -168,6 +163,7 @@ private:
     QPropertyAnimation* m_statusFadeIn;
     QPropertyAnimation* m_statusFadeOut;
     QTimer m_statusTimer;
+    QMenu* m_zoomMenu;
 
 private slots:
     void updateSelection();
@@ -178,19 +174,9 @@ private slots:
     void on_actionVolume_triggered();
     void onMuteButtonToggled(bool checked);
     void setZoom(float factor, const QIcon &icon);
-    void zoomFit();
-    void zoomOriginal();
-    void zoomOut50();
-    void zoomOut25();
-    void zoomOut10();
-    void zoomIn();
+    void onZoomTriggered();
     void toggleZoom(bool checked);
-    void grid2();
-    void grid3();
-    void grid4();
-    void grid16();
-    void gridSafeAreas8090();
-    void gridSafeAreasEbuR95();
+    void onGridToggled();
     void toggleGrid(bool checked);
     void onFadeOutFinished();
 };

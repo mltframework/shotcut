@@ -207,27 +207,27 @@ Player::Player(QWidget *parent)
 
     // Add zoom button to toolbar.
     m_zoomButton = new QToolButton;
-    QMenu* zoomMenu = new QMenu(this);
-    m_zoomFitAction = zoomMenu->addAction(
+    m_zoomMenu = new QMenu(this);
+    m_zoomMenu->addAction(
         QIcon::fromTheme("zoom-fit-best", QIcon(":/icons/oxygen/32x32/actions/zoom-fit-best")),
-        tr("Zoom Fit"), this, SLOT(zoomFit()));
-    m_zoomOutAction10 = zoomMenu->addAction(
+        tr("Zoom Fit"), this, SLOT(onZoomTriggered()))->setData(0.0f);
+    m_zoomMenu->addAction(
         QIcon::fromTheme("zoom-out", QIcon(":/icons/oxygen/32x32/actions/zoom-out")),
-        tr("Zoom 10%"), this, SLOT(zoomOut10()));
-    m_zoomOutAction25 = zoomMenu->addAction(
+        tr("Zoom 10%"), this, SLOT(onZoomTriggered()))->setData(0.1f);
+    m_zoomMenu->addAction(
         QIcon::fromTheme("zoom-out", QIcon(":/icons/oxygen/32x32/actions/zoom-out")),
-        tr("Zoom 25%"), this, SLOT(zoomOut25()));
-    m_zoomOutAction50 = zoomMenu->addAction(
+        tr("Zoom 25%"), this, SLOT(onZoomTriggered()))->setData(0.25f);
+    m_zoomMenu->addAction(
         QIcon::fromTheme("zoom-out", QIcon(":/icons/oxygen/32x32/actions/zoom-out")),
-        tr("Zoom 50%"), this, SLOT(zoomOut50()));
-    m_zoomOriginalAction = zoomMenu->addAction(
+        tr("Zoom 50%"), this, SLOT(onZoomTriggered()))->setData(0.5f);;
+    m_zoomMenu->addAction(
         QIcon::fromTheme("zoom-original", QIcon(":/icons/oxygen/32x32/actions/zoom-original")),
-        tr("Zoom 100%"), this, SLOT(zoomOriginal()));
-    m_zoomInAction = zoomMenu->addAction(
+        tr("Zoom 100%"), this, SLOT(onZoomTriggered()))->setData(1.0f);;
+    m_zoomMenu->addAction(
         QIcon::fromTheme("zoom-in", QIcon(":/icons/oxygen/32x32/actions/zoom-in")),
-        tr("Zoom 200%"), this, SLOT(zoomIn()));
+        tr("Zoom 200%"), this, SLOT(onZoomTriggered()))->setData(2.0f);
     connect(m_zoomButton, SIGNAL(toggled(bool)), SLOT(toggleZoom(bool)));
-    m_zoomButton->setMenu(zoomMenu);
+    m_zoomButton->setMenu(m_zoomMenu);
     m_zoomButton->setPopupMode(QToolButton::MenuButtonPopup);
     m_zoomButton->setCheckable(true);
     m_zoomButton->setToolTip(tr("Toggle zoom"));
@@ -238,24 +238,30 @@ Player::Player(QWidget *parent)
     m_gridButton = new QToolButton;
     QMenu* gridMenu = new QMenu(this);
     m_gridActionGroup = new QActionGroup(this);
-    QAction* action = gridMenu->addAction(tr("2x2 Grid"), this, SLOT(grid2()));
+    QAction* action = gridMenu->addAction(tr("2x2 Grid"), this, SLOT(onGridToggled()));
     action->setCheckable(true);
+    action->setData(2);
     m_gridDefaultAction = action;
     m_gridActionGroup->addAction(action);
-    action = gridMenu->addAction(tr("3x3 Grid"), this, SLOT(grid3()));
+    action = gridMenu->addAction(tr("3x3 Grid"), this, SLOT(onGridToggled()));
     action->setCheckable(true);
+    action->setData(3);
     m_gridActionGroup->addAction(action);
-    action = gridMenu->addAction(tr("4x4 Grid"), this, SLOT(grid4()));
+    action = gridMenu->addAction(tr("4x4 Grid"), this, SLOT(onGridToggled()));
     action->setCheckable(true);
+    action->setData(4);
     m_gridActionGroup->addAction(action);
-    action = gridMenu->addAction(tr("16x16 Grid"), this, SLOT(grid16()));
+    action = gridMenu->addAction(tr("16x16 Grid"), this, SLOT(onGridToggled()));
     action->setCheckable(true);
+    action->setData(16);
     m_gridActionGroup->addAction(action);
-    action = gridMenu->addAction(tr("80/90% Safe Areas"), this, SLOT(gridSafeAreas8090()));
+    action = gridMenu->addAction(tr("80/90% Safe Areas"), this, SLOT(onGridToggled()));
     action->setCheckable(true);
+    action->setData(8090);
     m_gridActionGroup->addAction(action);
-    action = gridMenu->addAction(tr("EBU R95 Safe Areas"), this, SLOT(gridSafeAreasEbuR95()));
+    action = gridMenu->addAction(tr("EBU R95 Safe Areas"), this, SLOT(onGridToggled()));
     action->setCheckable(true);
+    action->setData(95);
     m_gridActionGroup->addAction(action);
     gridMenu->addSeparator();
     action = gridMenu->addAction(tr("Snapping"));
@@ -965,92 +971,30 @@ void Player::setZoom(float factor, const QIcon& icon)
     }
 }
 
-void Player::zoomFit()
+void Player::onZoomTriggered()
 {
-    setZoom(0.0f, m_zoomFitAction->icon());
-}
-
-void Player::zoomOriginal()
-{
-    setZoom(1.0f, m_zoomOriginalAction->icon());
-}
-
-void Player::zoomOut50()
-{
-    setZoom(0.5f, m_zoomOutAction50->icon());
-}
-
-void Player::zoomOut25()
-{
-    setZoom(0.25f, m_zoomOutAction25->icon());
-}
-
-void Player::zoomOut10()
-{
-    setZoom(0.1f, m_zoomOutAction10->icon());
-}
-
-void Player::zoomIn()
-{
-    setZoom(2.0f, m_zoomInAction->icon());
+    QAction* action = qobject_cast<QAction*>(sender());
+    setZoom(action->data().toFloat(), action->icon());
 }
 
 void Player::toggleZoom(bool checked)
 {
-    if (!checked || m_zoomToggleFactor == 0.0f)
-        zoomFit();
-    else if (m_zoomToggleFactor == 1.0f)
-        zoomOriginal();
-    else if (m_zoomToggleFactor == 0.5f)
-        zoomOut50();
-    else if (m_zoomToggleFactor == 0.25f)
-        zoomOut25();
-    else if (m_zoomToggleFactor == 0.1f)
-        zoomOut10();
-    else if (m_zoomToggleFactor == 2.0f)
-        zoomIn();
+    foreach (QAction* a, m_zoomMenu->actions()) {
+        if ((!checked || m_zoomToggleFactor == 0.0f) && a->data().toFloat() == 0.0f) {
+            setZoom(0.0f, a->icon());
+            break;
+        } else if (a->data().toFloat() == m_zoomToggleFactor) {
+            setZoom(m_zoomToggleFactor, a->icon());
+            break;
+        }
+    }
 }
 
-void Player::grid2()
+void Player::onGridToggled()
 {
     m_gridButton->setChecked(true);
-    m_gridDefaultAction = m_gridActionGroup->actions()[0];
-    emit gridChanged(2);
-}
-
-void Player::grid3()
-{
-    m_gridButton->setChecked(true);
-    m_gridDefaultAction = m_gridActionGroup->actions()[1];
-    emit gridChanged(3);
-}
-
-void Player::grid4()
-{
-    m_gridButton->setChecked(true);
-    m_gridDefaultAction = m_gridActionGroup->actions()[2];
-    emit gridChanged(4);
-}
-
-void Player::grid16()
-{
-    m_gridButton->setChecked(true);
-    m_gridDefaultAction = m_gridActionGroup->actions()[3];
-    emit gridChanged(16);
-}
-
-void Player::gridSafeAreas8090()
-{
-    m_gridButton->setChecked(true);
-    m_gridDefaultAction = m_gridActionGroup->actions()[4];
-    emit gridChanged(8090);
-}
-
-void Player::gridSafeAreasEbuR95()
-{
-    m_gridButton->setChecked(true);
-    m_gridDefaultAction = m_gridActionGroup->actions()[5];
-    emit gridChanged(95);
+    m_gridDefaultAction = qobject_cast<QAction*>(sender());
+    emit gridChanged(m_gridDefaultAction->data().toInt());
 }
 
 void Player::toggleGrid(bool checked)
