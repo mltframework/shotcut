@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2013-2015 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2013-2018 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -70,10 +69,15 @@ void QmlUtilities::setCommonProperties(QQmlContext* context)
 QDir QmlUtilities::qmlDir()
 {
     QDir dir(qApp->applicationDirPath());
-#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
+#if defined(Q_OS_MAC)
     dir.cdUp();
-#endif
+    dir.cd("Resources");
+#else
+    #if defined(Q_OS_UNIX)
+    dir.cdUp();
+    #endif
     dir.cd("share");
+#endif
     dir.cd("shotcut");
     dir.cd("qml");
     return dir;

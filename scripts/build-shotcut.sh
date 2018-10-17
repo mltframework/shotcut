@@ -1835,23 +1835,27 @@ function fixlibs()
     awk '/^\t@rpath\/Qt/ || /^\t\/opt\/local/ || /^\t\/Applications\// || /^\t\/Users\// || /^\tlibwebvfx/ || /^\tlibvidstab/ {print $1}')
 
   # if the target is a lib, change its id
-  #if [ $(echo "$1" | grep '\.dylib$') ] || [ $(echo "$1" | grep '\.so$') ]; then
-  #  cmd install_name_tool -id "@executable_path/lib/$(basename "$1")" "$target"
-  #fi
+  if [ $(echo "$1" | grep '\.dylib$') ] || [ $(echo "$1" | grep '\.so$') ]; then
+    cmd install_name_tool -id "@rpath/$(basename "$1")" "$target"
+  fi
 
   for lib in $libs; do
     if [ $(basename "$lib") != $(basename "$target") ]; then
       newlib=$(basename "$lib")
       libpath=$(echo $lib | sed "s|@rpath\/Qt|${QTDIR}\/lib\/Qt|")
-      cmd cp -n "$libpath" lib/
-      cmd install_name_tool -change "$lib" "@executable_path/lib/$newlib" "$target"
+      if [ $(echo "$lib" | grep -v '\.dylib$') ] && [ $(echo "$lib" | grep -v '\.so$') ]; then
+        newlib="$newlib".dylib
+      fi
+      cmd cp -n "$libpath" "Frameworks/$newlib" 2> /dev/null
+      cmd install_name_tool -change "$lib" "@rpath/$newlib" "$target"
     fi
   done
 
+  libs=$(otool -L "$target" | awk '/^\t@rpath\// {print $1}')
   for lib in $libs; do
     if [ $(basename "$lib") != $(basename "$target") ]; then
       newlib=$(basename "$lib")
-      fixlibs "lib/$newlib"
+      fixlibs "Frameworks/$newlib"
     fi
   done
 }
@@ -1882,20 +1886,24 @@ function deploy_osx
   cmd cp translations/*.qm "$BUILD_DIR/Resources/translations/"
 
   # copy Shotcut QML
-  cmd mkdir -p "$BUILD_DIR"/MacOS/share/shotcut/ 2>/dev/null
-  cmd cp -a src/qml "$BUILD_DIR"/MacOS/share/shotcut/
+  cmd mkdir -p "$BUILD_DIR"/Resources/shotcut 2>/dev/null
+  cmd cp -a src/qml "$BUILD_DIR"/Resources/shotcut
 
   # This little guy helps Qt 5 apps find the Qt plugins!
-  printf "[Paths]\nPlugins=MacOS/lib/qt5\nQml2Imports=MacOS/lib/qml\n" > "$BUILD_DIR/Resources/qt.conf"
+  printf "[Paths]\nPlugins=PlugIns/qt\nQml2Imports=Resources/qml\n" > "$BUILD_DIR/Resources/qt.conf"
 
-  cmd cd "$BUILD_DIR/MacOS" || die "Unable to change directory to MacOS"
+  cmd cd "$BUILD_DIR" || die "Unable to change directory to $BUILD_DIR"
 
   log Copying supplementary executables
-  cmd cp -a "$FINAL_INSTALL_DIR"/bin/{melt,qmelt,ffmpeg,ffplay,ffprobe} .
-  mkdir lib 2>/dev/null
-  for exe in $(find . -type f -perm +u+x -maxdepth 1); do
+  cmd mkdir -p MacOS 2>/dev/null
+  cmd cp -a "$FINAL_INSTALL_DIR"/bin/{melt,qmelt,ffmpeg,ffplay,ffprobe} MacOS
+  cmd mkdir -p Frameworks 2>/dev/null
+  for exe in $(find MacOS -type f -perm +u+x -maxdepth 1); do
     log fixing library paths of executable "$exe"
     fixlibs "$exe"
+    cmd install_name_tool -delete_rpath "$FINAL_INSTALL_DIR/lib" "$exe" 2> /dev/null
+    cmd install_name_tool -delete_rpath "$QTDIR/lib" "$exe" 2> /dev/null
+    cmd install_name_tool -add_rpath "@executable_path/../Frameworks" "$exe"
   done
 
   # Copy webvfx here temporarily so it can be found by fixlibs.
@@ -1904,11 +1912,10 @@ function deploy_osx
 
   # MLT plugins
   log Copying MLT plugins
-  cmd mkdir -p lib/mlt 2>/dev/null
-  cmd cp "$FINAL_INSTALL_DIR"/lib/mlt/libmlt*.dylib lib/mlt
-  cmd mkdir share 2>/dev/null
-  cmd cp -a "$FINAL_INSTALL_DIR"/share/mlt share
-  for lib in lib/mlt/*; do
+  cmd mkdir -p PlugIns/mlt 2>/dev/null
+  cmd cp "$FINAL_INSTALL_DIR"/lib/mlt/libmlt*.dylib PlugIns/mlt
+  cmd cp -a "$FINAL_INSTALL_DIR"/share/mlt Resources
+  for lib in PlugIns/mlt/*; do
     log fixing library paths of "$lib"
     fixlibs "$lib"
   done
@@ -1919,16 +1926,16 @@ function deploy_osx
 
   # Qt plugins
   log Copying Qt plugins
-  cmd mkdir -p lib/qt5/sqldrivers 2>/dev/null
+  cmd mkdir -p PlugIns/qt/sqldrivers 2>/dev/null
   # try QTDIR first
   if [ -d "$QTDIR/plugins" ]; then
-    cmd cp -a "$QTDIR/plugins"/{audio,accessible,iconengines,imageformats,mediaservice,platforms} lib/qt5
-    cmd cp -p "$QTDIR/plugins/sqldrivers/libqsqlite.dylib" lib/qt5/sqldrivers
+    cmd cp -a "$QTDIR/plugins"/{audio,accessible,iconengines,imageformats,mediaservice,platforms} PlugIns/qt
+    cmd cp -p "$QTDIR/plugins/sqldrivers/libqsqlite.dylib" PlugIns/qt/sqldrivers
   # try Qt Creator next
   elif [ -d "/Applications/Qt Creator.app/Contents/PlugIns" ]; then
-    cmd cp -a "/Applications/Qt Creator.app/Contents/PlugIns"/{accessible,iconengines,imageformats,mediaservice,platforms,generic,platforminputcontexts,platformthemes} lib/qt5
+    cmd cp -a "/Applications/Qt Creator.app/Contents/PlugIns"/{accessible,iconengines,imageformats,mediaservice,platforms,generic,platforminputcontexts,platformthemes} PlugIns/qt
   fi
-  for dir in lib/qt5/*; do
+  for dir in PlugIns/qt/*; do
     for lib in $dir/*; do
       log fixing library paths of Qt plugin "$lib"
       fixlibs "$lib"
@@ -1939,54 +1946,107 @@ function deploy_osx
   log Copying Qt QML modules
   # try QTDIR first
   if [ -d "$QTDIR/qml" ]; then
-    cmd cp -a "$QTDIR/qml" lib
+    cmd cp -a "$QTDIR/qml" Resources
   # try Qt Creator next
   elif [ -d "/Applications/Qt Creator.app/Contents/Imports/qtquick2" ]; then
-    cmd cp -a "/Applications/Qt Creator.app/Contents/Imports/qtquick2" lib/qml
+    cmd cp -a "/Applications/Qt Creator.app/Contents/Imports/qtquick2" Resources/qml
   fi
-  for lib in $(find lib/qml -name '*.dylib'); do
+  for lib in $(find Resources -name '*.dylib'); do
     fixlibs "$lib"
   done
 
   # frei0r plugins
   log Copying frei0r plugins
-  cmd mkdir lib/frei0r-1 2>/dev/null
-  cmd cp -a "$FINAL_INSTALL_DIR"/lib/frei0r-1 lib
-  for lib in lib/frei0r-1/*; do
+  cmd mkdir PlugIns/frei0r-1 2>/dev/null
+  cmd cp -a "$FINAL_INSTALL_DIR"/lib/frei0r-1 PlugIns
+  for lib in PlugIns/frei0r-1/*; do
     log fixing library paths of frei0r plugin "$lib"
     fixlibs "$lib"
   done
 
   # LADSPA plugins
   log Copying LADSPA plugins
-  cmd mkdir lib/ladspa 2>/dev/null
-  cmd cp -a "$FINAL_INSTALL_DIR"/lib/ladspa/* lib/ladspa
-  for lib in lib/ladspa/*; do
+  cmd mkdir PlugIns/ladspa 2>/dev/null
+  cmd cp -a "$FINAL_INSTALL_DIR"/lib/ladspa/* PlugIns/ladspa
+  for lib in PlugIns/ladspa/*; do
     log fixing library paths of LADSPA plugin "$lib"
     fixlibs "$lib"
   done
 
   # Movit shaders
   log Copying Movit shaders
-  cmd cp -a "$FINAL_INSTALL_DIR"/share/movit share
+  cmd cp -a "$FINAL_INSTALL_DIR"/share/movit Resources
+
+  log Fixing rpath in libraries
+  cmd find . -name '*.dylib' -exec sh -c "install_name_tool -delete_rpath \"/Users/ddennedy/src/qt5.6/qt-everywhere-opensource-src-5.6.1/qtwebkit/lib\" {} 2> /dev/null" \;
+  cmd find . -name '*.dylib' -exec sh -c "install_name_tool -delete_rpath \"/opt/local/lib/libomp\" {} 2> /dev/null" \;
+  cmd find . -name '*.dylib' -exec sh -c "install_name_tool -delete_rpath \"$FINAL_INSTALL_DIR/lib\" {} 2> /dev/null" \;
+  cmd find . -name '*.dylib' -exec sh -c "install_name_tool -delete_rpath \"$FINAL_INSTALL_DIR/lib/mlt\" {} 2>/dev/null" \;
+  cmd find . -name '*.dylib' -exec sh -c "install_name_tool -delete_rpath \"$QTDIR/lib\" {} 2>/dev/null" \;
+  cmd find . -name '*.dylib' -exec sh -c "install_name_tool -delete_rpath \"@loader_path/../../../\" {} 2>/dev/null" \;
+  cmd find . -name '*.dylib' -exec sh -c "install_name_tool -delete_rpath \"@loader_path/../../lib\" {} 2>/dev/null" \;
+  cmd find . -name '*.dylib' -exec sh -c "install_name_tool -delete_rpath \"@loader_path/../../../lib\" {} 2>/dev/null" \;
+  cmd find . -name '*.dylib' -exec sh -c "install_name_tool -delete_rpath \"@loader_path/../../../../lib\" {} 2>/dev/null" \;
+  cmd find . -name '*.dylib' -exec sh -c "install_name_tool -delete_rpath \"@loader_path/../../../../../lib\" {} 2>/dev/null" \;
+  cmd find . -name '*.dylib' -exec sh -c "install_name_tool -add_rpath    \"@executable_path/../Frameworks\" {} 2>/dev/null" \;
 
   popd
 
   if [ "$ARCHIVE" = "1" ]; then
-    # build DMG
-    log Making disk image
-    dmg_name="$INSTALL_DIR/shotcut.dmg"
-    cmd rm "$dmg_name" 2>/dev/null
-    cmd rm -rf staging 2>/dev/null
-    cmd mkdir staging
-    cmd mv shotcut/src/Shotcut.app staging
-    cmd ln -s /Applications staging
-    cmd cp shotcut/COPYING staging
-    sync
-    cmd hdiutil create -fs HFS+ -srcfolder staging -volname Shotcut -format UDBZ -size 400m "$dmg_name"
-  fi
-  if [ "$CLEANUP" = "1" ]; then
-    cmd rm -rf staging
+    if [ "$SDK" = "1" ]; then
+      # Prepare src for archiving
+      cmd rm -rf "$INSTALL_DIR"/Shotcut.app
+      cmd mv shotcut/src/Shotcut.app "$INSTALL_DIR"/Shotcut
+      clean_dirs
+      pushd "$INSTALL_DIR"
+      log Copying src
+      cmd rm -rf Shotcut/src 2> /dev/null
+      cmd cp -a "$SOURCE_DIR" Shotcut
+      log Copying includes
+      cmd rm -rf Shotcut/include 2> /dev/null
+      cmd cp -a "$FINAL_INSTALL_DIR"/include Shotcut
+      log Copying pkg-config files
+      cmd rm -rf Shotcut/pkgconfig 2> /dev/null
+      cmd cp -a "$FINAL_INSTALL_DIR"/lib/pkgconfig Shotcut
+      log Symlinking libs
+      for lib in avcodec avdevice avfilter avformat avutil epoxy mlt++ mlt movit mp3lame opus postproc swresample swscale vidstab webvfx x264 x265; do
+        dylib=$(ls Shotcut/Contents/Frameworks/lib$lib.*.dylib | head -n 1)
+        cmd ln -sf $dylib Shotcut/Contents/Frameworks/lib$lib.dylib
+      done
+
+      log Making archive
+      cmd tar -cJvf shotcut.txz Shotcut
+      [ "$CLEANUP" = "1" ] && cmd rm -rf Shotcut
+      popd
+    else
+      # build DMG
+      log Staging disk image
+      dmg_name="$INSTALL_DIR/shotcut.dmg"
+      cmd rm "$dmg_name" 2>/dev/null
+      cmd rm -rf staging 2>/dev/null
+      cmd mkdir staging
+      cmd mv shotcut/src/Shotcut.app staging
+      cmd ln -s /Applications staging
+      cmd cp shotcut/COPYING staging
+      sync
+
+      log Signing code and resources
+      cmd find staging/Shotcut.app/Contents/Frameworks -type f -exec codesign -v -s Meltytech {} \;
+      cmd find staging/Shotcut.app/Contents/PlugIns -type f -exec codesign -v -s Meltytech {} \;
+      cmd find staging/Shotcut.app/Contents/Resources -type f -exec codesign -v -s Meltytech {} \;
+      cmd find staging/Shotcut.app/Contents/MacOS -type f -exec codesign -v -s Meltytech {} \;
+      cmd codesign -v -s Meltytech staging/Shotcut.app
+      cmd codesign --verify --deep --strict --verbose=2 staging/Shotcut.app
+      cmd spctl -a -t exec -vv staging/Shotcut.app
+
+      log Making disk image
+      cmd hdiutil create -fs HFS+ -srcfolder staging -volname Shotcut -format UDBZ -size 400m "$dmg_name"
+      cmd codesign -v -s Meltytech "$dmg_name"
+
+      if [ "$CLEANUP" = "1" ]; then
+        cmd rm -rf staging
+      fi
+    fi
   fi
 }
 
@@ -2249,7 +2309,7 @@ End-of-shotcut-wrapper
       cmd rm -rf Shotcut/Shotcut.app/share/doc
       cmd rm -rf Shotcut/Shotcut.app/share/man
     fi
-    cmd tar -cjvf "$tarball" Shotcut
+    cmd tar -cJvf "$tarball" Shotcut
   fi
 
   if [ "$CLEANUP" = "1" ]; then

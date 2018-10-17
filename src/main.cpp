@@ -183,7 +183,7 @@ public:
 #if defined (Q_OS_WIN)
         LOG_INFO() << "Windows version" << QSysInfo::windowsVersion();
 #elif defined(Q_OS_MAC)
-        LOG_INFO() << "OS X version" << QSysInfo::macVersion();
+        LOG_INFO() << "macOS version" << QSysInfo::macVersion();
 #else
         LOG_INFO() << "Linux version";
 #endif
