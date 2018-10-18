@@ -317,9 +317,15 @@ mac {
     isEmpty(MLT_PREFIX) {
         MLT_PREFIX = /opt/local
     }
-    INCLUDEPATH += $$MLT_PREFIX/include/mlt++
-    INCLUDEPATH += $$MLT_PREFIX/include/mlt
-    LIBS += -L$$MLT_PREFIX/lib -lmlt++ -lmlt
+    isEmpty(PREFIX) {
+        INCLUDEPATH += $$MLT_PREFIX/include/mlt++
+        INCLUDEPATH += $$MLT_PREFIX/include/mlt
+        LIBS += -L$$MLT_PREFIX/lib -lmlt++ -lmlt
+    } else {
+        INCLUDEPATH += $$PREFIX/Contents/Frameworks/include/mlt++
+        INCLUDEPATH += $$PREFIX/Contents/Frameworks/include/mlt
+        LIBS += -L$$PREFIX/Contents/Frameworks -lmlt++ -lmlt
+    }
 }
 win32 {
     CONFIG += windows rtti
@@ -350,12 +356,13 @@ win32:isEmpty(PREFIX) {
     message("Install PREFIX not set; using C:\\Projects\\Shotcut. You can change this with 'qmake PREFIX=...'")
     PREFIX = C:\\Projects\\Shotcut
 }
-unix:target.path = $$PREFIX/bin
+unix:!mac:target.path = $$PREFIX/bin
 win32:target.path = $$PREFIX
 INSTALLS += target
 
 qmlfiles.files = $$PWD/qml
-qmlfiles.path = $$PREFIX/share/shotcut
+!mac:qmlfiles.path = $$PREFIX/share/shotcut
+mac:qmlfiles.path = $$PREFIX/Contents/Resources/shotcut
 INSTALLS += qmlfiles
 
 unix:!mac {
