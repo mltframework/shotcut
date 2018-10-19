@@ -112,7 +112,7 @@ function usage {
   echo "Where:"
   echo -e "\t-c config-file\tDefaults to $CONFIGFILE"
   echo -e "\t-o target-os\tDefaults to $(uname -s); use Win32 or Win64 to cross-compile"
-  echo -e "\t-s\t\tbuild SDK (Linux and Windows only)"
+  echo -e "\t-s\t\tbuild SDK"
   echo -e "\t-t\t\tSpawn into sep. process"
 }
 
@@ -416,6 +416,7 @@ function set_globals {
   if [ "$DEBUG_BUILD" = "1" ]; then
     CONFIGURE_DEBUG_FLAG="--enable-debug"
     QMAKE_DEBUG_FLAG="CONFIG+=debug"
+    CMAKE_DEBUG_FLAG="-DCMAKE_BUILD_TYPE=Debug"
   else
     CONFIGURE_DEBUG_FLAG=
     QMAKE_DEBUG_FLAG=
@@ -680,9 +681,9 @@ function set_globals {
   ####
   # frei0r
   if test "$TARGET_OS" = "Win32" -o "$TARGET_OS" = "Win64" ; then
-    CONFIG[2]="cmake -DCMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -DCMAKE_TOOLCHAIN_FILE=my.cmake -DWITHOUT_GAVL=1 -DWITHOUT_OPENCV=1"
+    CONFIG[2]="cmake -DCMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -DCMAKE_TOOLCHAIN_FILE=my.cmake -DWITHOUT_GAVL=1 -DWITHOUT_OPENCV=1 $CMAKE_DEBUG_FLAG"
   else
-    CONFIG[2]="./configure --prefix=$FINAL_INSTALL_DIR $CONFIGURE_DEBUG_FLAG"
+    CONFIG[2]="./configure --prefix=$FINAL_INSTALL_DIR"
   fi
   CFLAGS_[2]="$CFLAGS -O2"
   LDFLAGS_[2]=$LDFLAGS
@@ -760,7 +761,7 @@ function set_globals {
 
   #####
   # swh-plugins
-  CONFIG[8]="./configure --prefix=$FINAL_INSTALL_DIR --enable-sse $CONFIGURE_DEBUG_FLAG"
+  CONFIG[8]="./configure --prefix=$FINAL_INSTALL_DIR --enable-sse"
   if [ "$TARGET_OS" = "Darwin" ]; then
     CONFIG[8]="${CONFIG[8]} --enable-darwin"
     CFLAGS_[8]="-march=nocona $CFLAGS"
@@ -782,7 +783,7 @@ function set_globals {
 
   ####
   # vid.stab
-  CONFIG[10]="cmake -DCMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -DCMAKE_INSTALL_LIBDIR=lib"
+  CONFIG[10]="cmake -DCMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -DCMAKE_INSTALL_LIBDIR=lib $CMAKE_DEBUG_FLAG"
   if test "$TARGET_OS" = "Win32" -o "$TARGET_OS" = "Win64" ; then
       CONFIG[10]="${CONFIG[10]} -DCMAKE_TOOLCHAIN_FILE=my.cmake"
   elif test "$TARGET_OS" = "Darwin" ; then
@@ -827,9 +828,9 @@ function set_globals {
   # x265
   CFLAGS_[13]=$CFLAGS
   if test "$TARGET_OS" = "Win32" -o "$TARGET_OS" = "Win64" ; then
-    CONFIG[13]="cmake -DCMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -DCMAKE_TOOLCHAIN_FILE=my.cmake -DENABLE_CLI=OFF"
+    CONFIG[13]="cmake -DCMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -DCMAKE_TOOLCHAIN_FILE=my.cmake -DENABLE_CLI=OFF $CMAKE_DEBUG_FLAG"
   else
-    CONFIG[13]="cmake -DCMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -DENABLE_CLI=OFF"
+    CONFIG[13]="cmake -DCMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -DENABLE_CLI=OFF $CMAKE_DEBUG_FLAG"
   fi
   LDFLAGS_[13]=$LDFLAGS
 
@@ -1992,28 +1993,30 @@ function deploy_osx
 
   popd
 
+  if [ "$SDK" = "1" ]; then
+    # Prepare src for archiving
+    cmd rm -rf "$INSTALL_DIR"/Shotcut
+    cmd mv shotcut/src/Shotcut.app "$INSTALL_DIR"/Shotcut
+    clean_dirs
+    pushd "$INSTALL_DIR"
+    log Copying src
+    cmd cp -a "$SOURCE_DIR" Shotcut
+    log Copying includes
+    cmd cp -a "$FINAL_INSTALL_DIR"/include Shotcut/Contents/Frameworks
+    log Copying pkg-config files
+    cmd mkdir -p Shotcut/Contents/Frameworks/lib 2> /dev/null
+    cmd cp -a "$FINAL_INSTALL_DIR"/lib/pkgconfig Shotcut/Contents/Frameworks/lib
+    log Symlinking libs
+    pushd Shotcut/Contents/Frameworks
+    for lib in avcodec avdevice avfilter avformat avutil epoxy mlt++ mlt movit mp3lame opus postproc swresample swscale vidstab webvfx x264 x265; do
+      dylib=$(ls lib$lib.*.dylib | head -n 1)
+      cmd ln -sf $dylib lib$lib.dylib
+    done
+    popd
+  fi
+  
   if [ "$ARCHIVE" = "1" ]; then
     if [ "$SDK" = "1" ]; then
-      # Prepare src for archiving
-      cmd rm -rf "$INSTALL_DIR"/Shotcut.app
-      cmd mv shotcut/src/Shotcut.app "$INSTALL_DIR"/Shotcut
-      clean_dirs
-      pushd "$INSTALL_DIR"
-      log Copying src
-      cmd rm -rf Shotcut/src 2> /dev/null
-      cmd cp -a "$SOURCE_DIR" Shotcut
-      log Copying includes
-      cmd rm -rf Shotcut/include 2> /dev/null
-      cmd cp -a "$FINAL_INSTALL_DIR"/include Shotcut
-      log Copying pkg-config files
-      cmd rm -rf Shotcut/pkgconfig 2> /dev/null
-      cmd cp -a "$FINAL_INSTALL_DIR"/lib/pkgconfig Shotcut
-      log Symlinking libs
-      for lib in avcodec avdevice avfilter avformat avutil epoxy mlt++ mlt movit mp3lame opus postproc swresample swscale vidstab webvfx x264 x265; do
-        dylib=$(ls Shotcut/Contents/Frameworks/lib$lib.*.dylib | head -n 1)
-        cmd ln -sf $dylib Shotcut/Contents/Frameworks/lib$lib.dylib
-      done
-
       log Making archive
       cmd tar -cJvf shotcut.txz Shotcut
       [ "$CLEANUP" = "1" ] && cmd rm -rf Shotcut
