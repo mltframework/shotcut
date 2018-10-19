@@ -106,6 +106,8 @@ private slots:
 
     void on_heightSpinner_editingFinished();
 
+    void on_advancedButton_clicked(bool checked);
+
 private:
     enum {
         RateControlAverage = 0,

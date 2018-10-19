@@ -55,6 +55,7 @@ EncodeDock::EncodeDock(QWidget *parent) :
     LOG_DEBUG() << "begin";
     ui->setupUi(this);
     ui->stopCaptureButton->hide();
+    on_advancedButton_clicked(ui->advancedButton->isChecked());
 #if QT_POINTER_SIZE == 4
     // On 32-bit process, limit multi-threading to mitigate running out of memory.
     ui->parallelCheckbox->setChecked(false);
@@ -424,6 +425,7 @@ void EncodeDock::loadPresets()
     grandParentItem = new QStandardItem(tr("Stock"));
     parentItem = grandParentItem;
     sourceModel->invisibleRootItem()->appendRow(parentItem);
+    parentItem->appendRow(new QStandardItem(tr("Default")));
     QString prefix("consumer/avformat/");
     if (m_presets && m_presets->is_valid()) {
         for (int j = 0; j < m_presets->count(); j++) {
@@ -1134,6 +1136,8 @@ void EncodeDock::on_presetsTree_clicked(const QModelIndex &index)
             loadPresetFromProperties(*preset);
         }
         delete preset;
+    } else {
+        on_resetButton_clicked();
     }
 }
 
@@ -1649,4 +1653,13 @@ void EncodeDock::on_widthSpinner_editingFinished()
 void EncodeDock::on_heightSpinner_editingFinished()
 {
     ui->heightSpinner->setValue(Util::coerceMultiple(ui->heightSpinner->value()));
+}
+
+void EncodeDock::on_advancedButton_clicked(bool checked)
+{
+    ui->streamButton->setVisible(checked);
+    ui->formatLabel->setVisible(checked);
+    ui->formatCombo->setVisible(checked);
+    ui->tabWidget->setVisible(checked);
+    ui->helpLabel->setVisible(!checked);
 }

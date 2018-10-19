@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>575</width>
-    <height>484</height>
+    <width>778</width>
+    <height>644</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -45,6 +45,19 @@
       <property name="spacing">
        <number>0</number>
       </property>
+      <item>
+       <widget class="QLabel" name="label_6">
+        <property name="text">
+         <string>&lt;b&gt;Presets&lt;/b&gt;</string>
+        </property>
+        <property name="textFormat">
+         <enum>Qt::RichText</enum>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
       <item>
        <widget class="LineEditClear" name="presetsSearch">
         <property name="placeholderText">
@@ -131,8 +144,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>329</width>
-         <height>456</height>
+         <width>445</width>
+         <height>658</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -152,11 +165,24 @@
          <number>0</number>
         </property>
         <item>
+         <widget class="QLabel" name="helpLabel">
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Export Help&lt;/span&gt;&lt;/p&gt;&lt;p&gt;The defaults create a H.264/AAC MP4 file, which is suitable for most users and purposes. Choose a &lt;span style=&quot; font-weight:600;&quot;&gt;Preset&lt;/span&gt; at the left before deciding to use the &lt;span style=&quot; font-weight:600;&quot;&gt;Advanced&lt;/span&gt; mode. The &lt;span style=&quot; font-weight:600;&quot;&gt;Advanced&lt;/span&gt; mode does not prevent creating an invalid combination of options!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+          <property name="textFormat">
+           <enum>Qt::RichText</enum>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
          <layout class="QGridLayout" name="gridLayout_5">
           <property name="verticalSpacing">
            <number>3</number>
           </property>
-          <item row="1" column="0">
+          <item row="2" column="0">
            <widget class="QLabel" name="label_5">
             <property name="text">
              <string>From</string>
@@ -166,8 +192,8 @@
             </property>
            </widget>
           </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="label">
+          <item row="3" column="0">
+           <widget class="QLabel" name="formatLabel">
             <property name="text">
              <string>Format</string>
             </property>
@@ -176,7 +202,7 @@
             </property>
            </widget>
           </item>
-          <item row="2" column="1">
+          <item row="3" column="1">
            <layout class="QHBoxLayout" name="horizontalLayout_14">
             <item>
              <widget class="QComboBox" name="formatCombo"/>
@@ -196,7 +222,7 @@
             </item>
            </layout>
           </item>
-          <item row="1" column="1">
+          <item row="2" column="1">
            <layout class="QHBoxLayout" name="horizontalLayout_19">
             <item>
              <widget class="QComboBox" name="fromCombo">
@@ -424,19 +450,6 @@
                   </spacer>
                  </item>
                 </layout>
-               </item>
-               <item row="9" column="0">
-                <spacer name="verticalSpacer_2">
-                 <property name="orientation">
-                  <enum>Qt::Vertical</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>20</width>
-                   <height>40</height>
-                  </size>
-                 </property>
-                </spacer>
                </item>
                <item row="0" column="0">
                 <widget class="QLabel" name="label_22">
@@ -1606,6 +1619,19 @@ in temporal compression</string>
          </widget>
         </item>
         <item>
+         <spacer name="verticalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
          <layout class="QHBoxLayout" name="horizontalLayout_2">
           <property name="spacing">
            <number>6</number>
@@ -1618,19 +1644,29 @@ in temporal compression</string>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="streamButton">
-            <property name="text">
-             <string>Stream</string>
-            </property>
-           </widget>
-          </item>
-          <item>
            <widget class="QPushButton" name="resetButton">
             <property name="toolTip">
              <string>Reset options to defaults</string>
             </property>
             <property name="text">
              <string>Reset</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="advancedButton">
+            <property name="text">
+             <string>Advanced</string>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="streamButton">
+            <property name="text">
+             <string>Stream</string>
             </property>
            </widget>
           </item>
@@ -1728,7 +1764,6 @@ in temporal compression</string>
   <tabstop>disableAudioCheckbox</tabstop>
   <tabstop>advancedTextEdit</tabstop>
   <tabstop>streamButton</tabstop>
-  <tabstop>resetButton</tabstop>
   <tabstop>scrollArea</tabstop>
   <tabstop>addPresetButton</tabstop>
   <tabstop>removePresetButton</tabstop>
