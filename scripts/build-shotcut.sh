@@ -2024,14 +2024,17 @@ function deploy_osx
     else
       # build DMG
       log Staging disk image
-      dmg_name="$INSTALL_DIR/shotcut.dmg"
-      cmd rm "$dmg_name" 2>/dev/null
       cmd rm -rf staging 2>/dev/null
       cmd mkdir staging
       cmd mv shotcut/src/Shotcut.app staging
       cmd ln -s /Applications staging
       cmd cp shotcut/COPYING staging
+
+      log Making disk image
+      dmg_name="$INSTALL_DIR/unsigned.dmg"
+      cmd rm "$dmg_name" 2>/dev/null
       sync
+      cmd hdiutil create -fs HFS+ -srcfolder staging -volname Shotcut -format UDBZ -size 400m "$dmg_name"
 
       log Signing code and resources
       cmd find staging/Shotcut.app/Contents/Frameworks -type f -exec codesign -v -s Meltytech {} \;
@@ -2043,8 +2046,10 @@ function deploy_osx
       cmd spctl -a -t exec -vv staging/Shotcut.app
 
       log Making disk image
+      dmg_name="$INSTALL_DIR/signed.dmg"
+      cmd rm "$dmg_name" 2>/dev/null
+      sync
       cmd hdiutil create -fs HFS+ -srcfolder staging -volname Shotcut -format UDBZ -size 400m "$dmg_name"
-      cmd codesign -v -s Meltytech "$dmg_name"
 
       if [ "$CLEANUP" = "1" ]; then
         cmd rm -rf staging
