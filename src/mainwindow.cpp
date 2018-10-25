@@ -1141,7 +1141,7 @@ bool MainWindow::isSourceClipMyProject(QString resource)
 {
     if (m_player->tabIndex() == Player::ProjectTabIndex && MLT.savedProducer() && MLT.savedProducer()->is_valid())
         resource = QString::fromUtf8(MLT.savedProducer()->get("resource"));
-    if (QDir::toNativeSeparators(resource) == QDir::toNativeSeparators(MAIN.fileName())) {
+    if (QDir::toNativeSeparators(resource) == QDir::toNativeSeparators(fileName())) {
         QMessageBox dialog(QMessageBox::Information,
                            qApp->applicationName(),
                            tr("You cannot add a project to itself!"),
@@ -2066,13 +2066,24 @@ void MainWindow::closeEvent(QCloseEvent* event)
         if (!m_htmlEditor || m_htmlEditor->close()) {
             LOG_DEBUG() << "begin";
             writeSettings();
-            MLT.stop();
+            if (multitrack())
+                m_timelineDock->model()->close();
+            if (playlist())
+                m_playlistDock->model()->close();
+            else
+                onMultitrackClosed();
             QThreadPool::globalInstance()->clear();
             AudioLevelsTask::closeAll();
             event->accept();
             emit aboutToShutDown();
-            QApplication::exit(m_exitCode);
-            LOG_DEBUG() << "end";
+            if (m_exitCode == EXIT_SUCCESS) {
+                QApplication::quit();
+                LOG_DEBUG() << "end";
+                ::_Exit(0);
+            } else {
+                QApplication::exit(m_exitCode);
+                LOG_DEBUG() << "end";
+            }
             return;
         }
     }
@@ -3339,7 +3350,7 @@ void MainWindow::on_actionApplicationLog_triggered()
 
 void MainWindow::on_actionClose_triggered()
 {
-    if (MAIN.continueModified()) {
+    if (continueModified()) {
         LOG_DEBUG() << "";
         if (multitrack())
             m_timelineDock->model()->close();
@@ -3727,7 +3738,7 @@ void MainWindow::on_actionLayoutRemove_triggered()
 
 void MainWindow::onAppendToPlaylist(const QString& xml)
 {
-    MAIN.undoStack()->push(new Playlist::AppendCommand(*m_playlistDock->model(), xml, false));
+    undoStack()->push(new Playlist::AppendCommand(*m_playlistDock->model(), xml, false));
 }
 
 void MainWindow::onAppendTaskDone()
