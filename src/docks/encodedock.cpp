@@ -26,6 +26,7 @@
 #include "jobs/encodejob.h"
 #include "shotcut_mlt_properties.h"
 #include "util.h"
+#include "dialogs/listselectiondialog.h"
 
 #include <Logger.h>
 #include <QtWidgets>
@@ -34,6 +35,7 @@
 #include <QTimer>
 #include <QFileInfo>
 #include <QStorageInfo>
+#include <QProcess>
 
 // formulas to map absolute value ranges to percentages as int
 #define TO_ABSOLUTE(min, max, rel) qRound(float(min) + float((max) - (min) + 1) * float(rel) / 100.0f)
@@ -111,6 +113,8 @@ EncodeDock::EncodeDock(QWidget *parent) :
     ui->videoCodecCombo->model()->sort(0);
     ui->videoCodecCombo->insertItem(0, tr("Default for format"));
 
+    ui->hwencodeCheckBox->setChecked(!Settings.encodeHardware().isEmpty());
+
     on_resetButton_clicked();
 
     LOG_DEBUG() << "end";
@@ -151,8 +155,16 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties& preset)
                     ui->audioCodecCombo->setCurrentIndex(i);
         }
         else if (name == "vcodec") {
+            QString vcodec = QString::fromLatin1(preset.get("vcodec"));
+            foreach (const QString& hw, Settings.encodeHardware()) {
+                if ((vcodec == "libx264" && hw.startsWith("h264")) ||
+                    (vcodec == "libx265" && hw.startsWith("hevc"))) {
+                    vcodec = hw;
+                    break;
+                }
+            }
             for (int i = 0; i < ui->videoCodecCombo->count(); i++)
-                if (ui->videoCodecCombo->itemText(i) == preset.get("vcodec"))
+                if (ui->videoCodecCombo->itemText(i) == vcodec)
                     ui->videoCodecCombo->setCurrentIndex(i);
         }
         else if (name == "channels")
@@ -331,6 +343,7 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties& preset)
         else // 1 (best, NOT 100%) - 31 (worst)
             ui->videoQualitySpinner->setValue(TO_RELATIVE(31, 1, videoQuality));
     }
+    on_videoCodecCombo_currentIndexChanged(ui->videoCodecCombo->currentIndex());
     on_audioRateControlCombo_activated(ui->audioRateControlCombo->currentIndex());
     on_videoRateControlCombo_activated(ui->videoRateControlCombo->currentIndex());
 }
@@ -1664,4 +1677,62 @@ void EncodeDock::on_advancedButton_clicked(bool checked)
     ui->formatCombo->setVisible(checked);
     ui->tabWidget->setVisible(checked);
     ui->helpLabel->setVisible(!checked);
+}
+
+static QStringList codecs()
+{
+    QStringList codecs;
+#if defined(Q_OS_WIN)
+    codecs << "h264_nvenc";
+    codecs << "hevc_nvenc";
+    codecs << "h264_amf";
+    codecs << "hevc_amf";
+    codecs << "h264_qsv";
+    codecs << "hevc_qsv";
+#elif defined(Q_OS_MAC)
+    codecs << "h264_videotoolbox";
+    codecs << "hevc_videotoolbox";
+#else
+    codecs << "h264_nvenc";
+    codecs << "hevc_nvenc";
+#endif
+    return codecs;
+}
+
+void EncodeDock::on_hwencodeCheckBox_clicked(bool checked)
+{
+    if (checked && Settings.encodeHardware().isEmpty()) {
+        MAIN.showStatusMessage(tr("Detecting hardware encoders..."));
+        QStringList hwlist;
+        QFileInfo ffmpegPath(qApp->applicationDirPath(), "ffmpeg");
+        foreach (const QString& codec, codecs()) {
+            LOG_DEBUG() << "checking for" << codec;
+            QCoreApplication::processEvents();
+            QProcess proc;
+            proc.setStandardOutputFile(QProcess::nullDevice());
+            proc.start(QString::fromLatin1("%1 -f lavfi -i color=s=640x360 -t 0.040 -an -c:v %2 -f rawvideo pipe:")
+                           .arg(ffmpegPath.absoluteFilePath())
+                           .arg(codec));
+            proc.waitForFinished(5000);
+            if (proc.exitStatus() == QProcess::NormalExit && !proc.exitCode())
+                hwlist << codec;
+        }
+        MAIN.showStatusMessage(tr("Found %1").arg(hwlist.join(", ")));
+        Settings.setEncodeHardware(hwlist);
+    }
+}
+
+void EncodeDock::on_hwencodeButton_clicked()
+{
+    ListSelectionDialog dialog(codecs(), this);
+    dialog.setWindowModality(QmlApplication::dialogModality());
+    dialog.setWindowTitle(tr("Configure Hardware Encoding"));
+    dialog.setSelection(Settings.encodeHardware());
+
+    // Show the dialog.
+    if (dialog.exec() == QDialog::Accepted) {
+        Settings.setEncodeHardware(dialog.selection());
+        if (dialog.selection().isEmpty())
+            ui->hwencodeCheckBox->setChecked(false);
+    }
 }

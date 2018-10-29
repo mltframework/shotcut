@@ -145,7 +145,7 @@
          <x>0</x>
          <y>0</y>
          <width>445</width>
-         <height>658</height>
+         <height>616</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -192,17 +192,7 @@
             </property>
            </widget>
           </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="formatLabel">
-            <property name="text">
-             <string>Format</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="1">
+          <item row="5" column="1">
            <layout class="QHBoxLayout" name="horizontalLayout_14">
             <item>
              <widget class="QComboBox" name="formatCombo"/>
@@ -222,6 +212,16 @@
             </item>
            </layout>
           </item>
+          <item row="5" column="0">
+           <widget class="QLabel" name="formatLabel">
+            <property name="text">
+             <string>Format</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
           <item row="2" column="1">
            <layout class="QHBoxLayout" name="horizontalLayout_19">
             <item>
@@ -233,6 +233,37 @@
             </item>
             <item>
              <spacer name="horizontalSpacer_23">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+          <item row="4" column="1">
+           <layout class="QHBoxLayout" name="horizontalLayout_20">
+            <item>
+             <widget class="QCheckBox" name="hwencodeCheckBox">
+              <property name="text">
+               <string>Use hardware encoding if available</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="hwencodeButton">
+              <property name="text">
+               <string>Configure...</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_25">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>

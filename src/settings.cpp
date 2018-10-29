@@ -219,6 +219,19 @@ void ShotcutSettings::setEncodeFreeSpaceCheck(bool b)
     settings.setValue("encode/freeSpaceCheck", b);
 }
 
+QStringList ShotcutSettings::encodeHardware() const
+{
+    return settings.value("encode/hardware").toStringList();
+}
+
+void ShotcutSettings::setEncodeHardware(const QStringList& ls)
+{
+    if (ls.isEmpty())
+        settings.remove("encode/hardware");
+    else
+        settings.setValue("encode/hardware", ls);
+}
+
 bool ShotcutSettings::showConvertClipDialog() const
 {
     return settings.value("showConvertClipDialog", true).toBool();

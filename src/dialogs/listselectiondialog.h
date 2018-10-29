@@ -32,6 +32,7 @@ class ListSelectionDialog : public QDialog
 public:
     explicit ListSelectionDialog(const QStringList& list, QWidget *parent = 0);
     ~ListSelectionDialog();
+    void setSelection(const QStringList& selection);
     QStringList selection() const;
     
 private:

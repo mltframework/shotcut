@@ -36,6 +36,17 @@ ListSelectionDialog::~ListSelectionDialog()
 {
     delete ui;
 }
+
+void ListSelectionDialog::setSelection(const QStringList& selection)
+{
+    int n = ui->listWidget->count();
+    for (int i = 0; i < n; ++i) {
+        QListWidgetItem* item = ui->listWidget->item(i);
+        if (selection.indexOf(item->text()) > -1)
+            item->setCheckState(Qt::Checked);
+    }
+}
+
 QStringList ListSelectionDialog::selection() const
 {
     QStringList result;
