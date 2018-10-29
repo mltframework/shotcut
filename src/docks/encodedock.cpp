@@ -1566,6 +1566,8 @@ void EncodeDock::on_scanModeCombo_currentIndexChanged(int index)
 void EncodeDock::on_presetsSearch_textChanged(const QString &search)
 {
     m_presetsModel.setFilterFixedString(search);
+    if (search.isEmpty())
+        ui->presetsTree->expandAll();
 }
 
 bool PresetsProxyModel::filterAcceptsRow(int source_row, const QModelIndex &source_parent) const
