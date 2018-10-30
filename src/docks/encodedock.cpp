@@ -746,8 +746,10 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
                     else
                         setIfNotSet(p, "sc_threshold", 0);
                 }
-                if (vcodec.contains("_videotoolbox")) {
+                if (vcodec.endsWith("_videotoolbox")) {
                     setIfNotSet(p, "pix_fmt", "nv12");
+                } else if (vcodec.endsWith("_vaapi")) {
+                    setIfNotSet(p, "vprofile", "main");
                 }
             }
             setIfNotSet(p, "width", ui->widthSpinner->value());
@@ -1699,6 +1701,8 @@ static QStringList codecs()
 #else
     codecs << "h264_nvenc";
     codecs << "hevc_nvenc";
+    codecs << "h264_vaapi";
+    codecs << "hevc_vaapi";
 #endif
     return codecs;
 }
@@ -1714,9 +1718,10 @@ void EncodeDock::on_hwencodeCheckBox_clicked(bool checked)
             QCoreApplication::processEvents();
             QProcess proc;
             proc.setStandardOutputFile(QProcess::nullDevice());
-            proc.start(QString::fromLatin1("%1 -f lavfi -i color=s=640x360 -t 0.040 -an -c:v %2 -f rawvideo pipe:")
-                           .arg(ffmpegPath.absoluteFilePath())
-                           .arg(codec));
+            proc.start(QString::fromLatin1("%1 -f lavfi -i color=s=640x360 -t 0.040 -an %2 -c:v %3 -f rawvideo pipe:")
+                       .arg(ffmpegPath.absoluteFilePath())
+                       .arg(codec.endsWith("_vaapi")? "-vaapi_device :0 -vf format=nv12,hwupload" : "")
+                       .arg(codec));
             proc.waitForFinished(5000);
             if (proc.exitStatus() == QProcess::NormalExit && !proc.exitCode())
                 hwlist << codec;
@@ -1730,9 +1735,11 @@ void EncodeDock::on_hwencodeCheckBox_clicked(bool checked)
             Settings.setEncodeHardware(hwlist);
             Settings.setEncodeUseHardware(true);
         }
-    } else {
+    } else if (!checked) {
         Settings.setEncodeUseHardware(false);
     }
+    if (checked)
+        resetOptions();
 }
 
 void EncodeDock::on_hwencodeButton_clicked()
