@@ -1719,8 +1719,13 @@ void EncodeDock::on_hwencodeCheckBox_clicked(bool checked)
             if (proc.exitStatus() == QProcess::NormalExit && !proc.exitCode())
                 hwlist << codec;
         }
-        MAIN.showStatusMessage(tr("Found %1").arg(hwlist.join(", ")));
-        Settings.setEncodeHardware(hwlist);
+        if (hwlist.isEmpty()) {
+            MAIN.showStatusMessage(tr("Nothing found"), 10);
+            ui->hwencodeCheckBox->setChecked(false);
+        } else {
+            MAIN.showStatusMessage(tr("Found %1").arg(hwlist.join(", ")));
+            Settings.setEncodeHardware(hwlist);
+        }
     }
 }
 
