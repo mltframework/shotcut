@@ -80,6 +80,8 @@ public:
     void setEncodePath(const QString&);
     bool encodeFreeSpaceCheck() const;
     void setEncodeFreeSpaceCheck(bool);
+    bool encodeUseHardware() const;
+    void setEncodeUseHardware(bool);
     QStringList encodeHardware() const;
     void setEncodeHardware(const QStringList&);
     bool showConvertClipDialog() const;

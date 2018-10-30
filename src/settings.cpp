@@ -219,6 +219,16 @@ void ShotcutSettings::setEncodeFreeSpaceCheck(bool b)
     settings.setValue("encode/freeSpaceCheck", b);
 }
 
+bool ShotcutSettings::encodeUseHardware() const
+{
+    return settings.value("encode/useHardware").toBool();
+}
+
+void ShotcutSettings::setEncodeUseHardware(bool b)
+{
+    settings.setValue("encode/useHardware", b);
+}
+
 QStringList ShotcutSettings::encodeHardware() const
 {
     return settings.value("encode/hardware").toStringList();

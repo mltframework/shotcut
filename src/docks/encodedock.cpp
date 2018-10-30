@@ -113,7 +113,7 @@ EncodeDock::EncodeDock(QWidget *parent) :
     ui->videoCodecCombo->model()->sort(0);
     ui->videoCodecCombo->insertItem(0, tr("Default for format"));
 
-    ui->hwencodeCheckBox->setChecked(!Settings.encodeHardware().isEmpty());
+    ui->hwencodeCheckBox->setChecked(Settings.encodeUseHardware() && !Settings.encodeHardware().isEmpty());
 
     on_resetButton_clicked();
 
@@ -156,11 +156,13 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties& preset)
         }
         else if (name == "vcodec") {
             QString vcodec = QString::fromLatin1(preset.get("vcodec"));
-            foreach (const QString& hw, Settings.encodeHardware()) {
-                if ((vcodec == "libx264" && hw.startsWith("h264")) ||
-                    (vcodec == "libx265" && hw.startsWith("hevc"))) {
-                    vcodec = hw;
-                    break;
+            if (ui->hwencodeCheckBox->isChecked()) {
+                foreach (const QString& hw, Settings.encodeHardware()) {
+                    if ((vcodec == "libx264" && hw.startsWith("h264")) ||
+                        (vcodec == "libx265" && hw.startsWith("hevc"))) {
+                        vcodec = hw;
+                        break;
+                    }
                 }
             }
             for (int i = 0; i < ui->videoCodecCombo->count(); i++)
@@ -1722,10 +1724,14 @@ void EncodeDock::on_hwencodeCheckBox_clicked(bool checked)
         if (hwlist.isEmpty()) {
             MAIN.showStatusMessage(tr("Nothing found"), 10);
             ui->hwencodeCheckBox->setChecked(false);
+            Settings.setEncodeUseHardware(false);
         } else {
             MAIN.showStatusMessage(tr("Found %1").arg(hwlist.join(", ")));
             Settings.setEncodeHardware(hwlist);
+            Settings.setEncodeUseHardware(true);
         }
+    } else {
+        Settings.setEncodeUseHardware(false);
     }
 }
 
@@ -1739,7 +1745,9 @@ void EncodeDock::on_hwencodeButton_clicked()
     // Show the dialog.
     if (dialog.exec() == QDialog::Accepted) {
         Settings.setEncodeHardware(dialog.selection());
-        if (dialog.selection().isEmpty())
+        if (dialog.selection().isEmpty()) {
             ui->hwencodeCheckBox->setChecked(false);
+            Settings.setEncodeUseHardware(false);
+        }            
     }
 }
