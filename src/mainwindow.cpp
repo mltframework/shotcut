@@ -86,6 +86,7 @@
 #include <QJsonDocument>
 #include <QJSEngine>
 #include <QDirIterator>
+#include <QQuickWindow>
 
 static bool eventDebugCallback(void **data)
 {
@@ -427,6 +428,7 @@ MainWindow::MainWindow()
     connect(videoWidget, SIGNAL(dragStarted()), m_playlistDock, SLOT(onPlayerDragStarted()));
     connect(videoWidget, SIGNAL(seekTo(int)), m_player, SLOT(seek(int)));
     connect(videoWidget, SIGNAL(gpuNotSupported()), this, SLOT(onGpuNotSupported()));
+    connect(videoWidget->quickWindow(), SIGNAL(sceneGraphInitialized()), SLOT(onSceneGraphInitialized()), Qt::QueuedConnection);
     connect(videoWidget, SIGNAL(frameDisplayed(const SharedFrame&)), m_scopeController, SIGNAL(newFrame(const SharedFrame&)));
     connect(m_filterController, SIGNAL(currentFilterChanged(QmlFilter*, QmlMetadata*, int)), videoWidget, SLOT(setCurrentFilter(QmlFilter*, QmlMetadata*)));
 
@@ -917,9 +919,10 @@ bool MainWindow::isCompatibleWithGpuMode(MltXmlChecker& checker)
 {
     if (checker.needsGPU() && !Settings.playerGPU()) {
         LOG_INFO() << "file uses GPU but GPU not enabled";
-        QMessageBox dialog(QMessageBox::Question,
+        QMessageBox dialog(QMessageBox::Warning,
            qApp->applicationName(),
-           tr("The file you opened uses GPU effects, but GPU effects are not enabled.\n"
+           tr("The file you opened uses GPU effects, but GPU effects are not enabled.\n\n"
+              "GPU effects are EXPERIMENTAL, UNSTABLE and UNSUPPORTED! Unsupported means do not report bugs about it.\n\n"
               "Do you want to enable GPU effects and restart?"),
            QMessageBox::No |
            QMessageBox::Yes,
@@ -1404,8 +1407,8 @@ void MainWindow::readPlayerSettings()
     if (ui->actionJack)
         ui->actionJack->setChecked(Settings.playerJACK());
     if (ui->actionGPU) {
-        ui->actionGPU->setChecked(Settings.playerGPU());
         MLT.videoWidget()->setProperty("gpu", ui->actionGPU->isChecked());
+        ui->actionGPU->setChecked(Settings.playerGPU());
     }
 
     setAudioChannels(Settings.playerAudioChannels());
@@ -2992,7 +2995,7 @@ void MainWindow::on_actionJack_triggered(bool checked)
 void MainWindow::on_actionGPU_triggered(bool checked)
 {
     if (checked) {
-        QMessageBox dialog(QMessageBox::Information,
+        QMessageBox dialog(QMessageBox::Warning,
                            qApp->applicationName(),
                            tr("GPU effects are experimental and may cause instability on some systems. "
                               "Some CPU effects are incompatible with GPU effects and will be disabled. "
@@ -3822,4 +3825,26 @@ void MainWindow::on_actionClearRecentOnExit_toggled(bool arg1)
     Settings.setClearRecent(arg1);
     if (arg1)
         Settings.setRecent(QStringList());
+}
+
+void MainWindow::onSceneGraphInitialized()
+{
+    if (Settings.playerGPU()) {
+        QMessageBox dialog(QMessageBox::Warning,
+                           qApp->applicationName(),
+                           tr("GPU effects are EXPERIMENTAL, UNSTABLE and UNSUPPORTED! Unsupported means do not report bugs about it.\n\n"
+                              "Do you want to disable GPU effects and restart Shotcut?"),
+                           QMessageBox::No | QMessageBox::Yes,
+                           this);
+        dialog.setDefaultButton(QMessageBox::Yes);
+        dialog.setEscapeButton(QMessageBox::No);
+        dialog.setWindowModality(QmlApplication::dialogModality());
+        if (dialog.exec() == QMessageBox::Yes) {
+            ui->actionGPU->setChecked(false);
+            m_exitCode = EXIT_RESTART;
+            QApplication::closeAllWindows();
+        } else {
+            ui->actionGPU->setVisible(true);
+        }
+    }
 }

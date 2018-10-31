@@ -314,6 +314,7 @@ private slots:
     void onOpenOtherTriggered(QWidget* widget);
     void onOpenOtherTriggered();
     void on_actionClearRecentOnExit_toggled(bool arg1);
+    void onSceneGraphInitialized();
 };
 
 #define MAIN MainWindow::singleton()

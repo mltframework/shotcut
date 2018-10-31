@@ -486,6 +486,9 @@
    <property name="toolTip">
     <string>Use GPU filters</string>
    </property>
+   <property name="visible">
+    <bool>false</bool>
+   </property>
   </action>
   <action name="actionChannels1">
    <property name="checkable">
