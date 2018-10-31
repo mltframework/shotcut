@@ -10,6 +10,7 @@ Metadata {
     qml: 'ui_movit.qml'
     vui: 'vui_movit.qml'
     allowMultiple: false
+    isFavorite: true
     keyframes {
         allowTrim: false
         allowAnimateIn: true

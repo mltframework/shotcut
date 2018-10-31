@@ -9,6 +9,7 @@ Metadata {
     qml: 'ui_affine.qml'
     vui: 'vui_affine.qml'
     gpuAlt: 'movit.rect'
+    isFavorite: true
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true
