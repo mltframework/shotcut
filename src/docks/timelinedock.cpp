@@ -73,7 +73,7 @@ TimelineDock::TimelineDock(QWidget *parent) :
     connect(this, SIGNAL(clipMoved(int,int,int,int,bool)), SLOT(onClipMoved(int,int,int,int,bool)), Qt::QueuedConnection);
     connect(this, SIGNAL(transitionAdded(int,int,int,bool)), SLOT(onTransitionAdded(int,int,int,bool)), Qt::QueuedConnection);
     connect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame&)), this, SLOT(onShowFrame(const SharedFrame&)));
-    connect(this, SIGNAL(visibilityChanged(bool)), this, SLOT(load(bool)));
+    connect(this, SIGNAL(visibilityChanged(bool)), this, SLOT(load()));
     connect(this, SIGNAL(topLevelChanged(bool)), this, SLOT(onTopLevelChanged(bool)));
     LOG_DEBUG() << "end";
 }
