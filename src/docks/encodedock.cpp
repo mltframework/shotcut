@@ -423,6 +423,7 @@ void EncodeDock::loadPresets()
                 if (row == grandParentItem->rowCount()) {
                     // There is no category node yet; create it.
                     parentItem = new QStandardItem(nameParts[0]);
+                    parentItem->setData(QString());
                     grandParentItem->appendRow(parentItem);
                 }
                 // Remove the category from the name.
@@ -1577,9 +1578,13 @@ void EncodeDock::on_presetsSearch_textChanged(const QString &search)
 bool PresetsProxyModel::filterAcceptsRow(int source_row, const QModelIndex &source_parent) const
 {
     QModelIndex index = sourceModel()->index(source_row, 0, source_parent);
-    return !source_parent.isValid() ||
-        sourceModel()->data(index).toString().contains(filterRegExp()) ||
-        sourceModel()->data(index, Qt::ToolTipRole).toString().contains(filterRegExp());
+
+    // Show categories with descendants that match.
+    for (int i = 0; i < sourceModel()->rowCount(index); i++)
+        if (filterAcceptsRow(i, index)) return true;
+
+    return sourceModel()->data(index).toString().contains(filterRegExp()) ||
+           sourceModel()->data(index, Qt::ToolTipRole).toString().contains(filterRegExp());
 }
 
 void EncodeDock::on_resetButton_clicked()
