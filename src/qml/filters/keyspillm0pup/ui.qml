@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2015 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2015-2018 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -102,6 +101,7 @@ Item {
         Preset {
             id: presetItem
             Layout.columnSpan: 2
+            parameters: defaultParameters
             onPresetSelected: setControls()
         }
 
