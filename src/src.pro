@@ -112,7 +112,8 @@ SOURCES += main.cpp\
     qmltypes/qmlproducer.cpp \
     models/keyframesmodel.cpp \
     widgets/textproducerwidget.cpp \
-    dialogs/listselectiondialog.cpp
+    dialogs/listselectiondialog.cpp \
+    widgets/newprojectfolder.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -221,7 +222,8 @@ HEADERS  += mainwindow.h \
     qmltypes/qmlproducer.h \
     models/keyframesmodel.h \
     widgets/textproducerwidget.h \
-    dialogs/listselectiondialog.h
+    dialogs/listselectiondialog.h \
+    widgets/newprojectfolder.h
 
 FORMS    += mainwindow.ui \
     openotherdialog.ui \
@@ -264,7 +266,8 @@ FORMS    += mainwindow.ui \
     dialogs/unlinkedfilesdialog.ui \
     dialogs/transcodedialog.ui \
     widgets/textproducerwidget.ui \
-    dialogs/listselectiondialog.ui
+    dialogs/listselectiondialog.ui \
+    widgets/newprojectfolder.ui
 
 RESOURCES += \
     ../icons/resources.qrc \

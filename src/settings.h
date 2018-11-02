@@ -175,6 +175,9 @@ public:
     bool clearRecent() const;
     void setClearRecent(bool);
 
+    QString projectsFolder() const;
+    void setProjectsFolder(const QString& path);
+
 signals:
     void openPathChanged();
     void savePathChanged();

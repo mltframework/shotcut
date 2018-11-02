@@ -164,6 +164,7 @@ private:
     QPropertyAnimation* m_statusFadeOut;
     QTimer m_statusTimer;
     QMenu* m_zoomMenu;
+    QWidget* m_projectWidget;
 
 private slots:
     void updateSelection();

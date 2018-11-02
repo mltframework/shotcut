@@ -672,3 +672,13 @@ void ShotcutSettings::setClearRecent(bool b)
 {
     settings.setValue("clearRecent", b);
 }
+
+QString ShotcutSettings::projectsFolder() const
+{
+    return settings.value("projectsFolder", QStandardPaths::standardLocations(QStandardPaths::MoviesLocation)).toString();
+}
+
+void ShotcutSettings::setProjectsFolder(const QString &path)
+{
+    settings.setValue("projectsFolder", path);
+}

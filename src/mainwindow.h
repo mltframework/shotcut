@@ -101,6 +101,14 @@ public:
     void keyPressEvent(QKeyEvent*);
     void keyReleaseEvent(QKeyEvent *);
     void hideSetDataDirectory();
+    QMenu* customProfileMenu() const { return m_customProfileMenu; }
+    QAction* actionAddCustomProfile() const;
+    QAction* actionProfileRemove() const;
+    QActionGroup* profileGroup() const { return m_profileGroup; }
+    void buildVideoModeMenu(QMenu *topMenu, QMenu *&customMenu, QActionGroup* group, QAction *addAction, QAction *removeAction);
+    void newProject(const QString& filename, bool isProjectFolder = false);
+    void addCustomProfile(const QString& name, QMenu* menu, QAction* action, QActionGroup* group);
+    void removeCustomProfiles(const QStringList& profiles, QDir &dir, QMenu* menu, QAction* action);
 
 signals:
     void audioChannelsChanged();
@@ -169,6 +177,7 @@ private:
     QNetworkAccessManager m_network;
     QString m_upgradeUrl;
     KeyframesDock* m_keyframesDock;
+    QString m_projectFolder;
 
 #ifdef WITH_LIBLEAP
     LeapListener m_leapListener;

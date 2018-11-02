@@ -540,58 +540,7 @@ void MainWindow::setupSettingsMenu()
     m_profileGroup = new QActionGroup(this);
     m_profileGroup->addAction(ui->actionProfileAutomatic);
     ui->actionProfileAutomatic->setData(QString());
-    ui->menuProfile->addAction(addProfile(m_profileGroup, "HD 720p 50 fps", "atsc_720p_50"));
-    ui->menuProfile->addAction(addProfile(m_profileGroup, "HD 720p 59.94 fps", "atsc_720p_5994"));
-    ui->menuProfile->addAction(addProfile(m_profileGroup, "HD 720p 60 fps", "atsc_720p_60"));
-    ui->menuProfile->addAction(addProfile(m_profileGroup, "HD 1080i 25 fps", "atsc_1080i_50"));
-    ui->menuProfile->addAction(addProfile(m_profileGroup, "HD 1080i 29.97 fps", "atsc_1080i_5994"));
-    ui->menuProfile->addAction(addProfile(m_profileGroup, "HD 1080p 23.98 fps", "atsc_1080p_2398"));
-    ui->menuProfile->addAction(addProfile(m_profileGroup, "HD 1080p 24 fps", "atsc_1080p_24"));
-    ui->menuProfile->addAction(addProfile(m_profileGroup, "HD 1080p 25 fps", "atsc_1080p_25"));
-    ui->menuProfile->addAction(addProfile(m_profileGroup, "HD 1080p 29.97 fps", "atsc_1080p_2997"));
-    ui->menuProfile->addAction(addProfile(m_profileGroup, "HD 1080p 30 fps", "atsc_1080p_30"));
-    ui->menuProfile->addAction(addProfile(m_profileGroup, "HD 1080p 59.94 fps", "atsc_1080p_5994"));
-    ui->menuProfile->addAction(addProfile(m_profileGroup, "HD 1080p 60 fps", "atsc_1080p_60"));
-    ui->menuProfile->addAction(addProfile(m_profileGroup, "SD NTSC", "dv_ntsc"));
-    ui->menuProfile->addAction(addProfile(m_profileGroup, "SD PAL", "dv_pal"));
-    ui->menuProfile->addAction(addProfile(m_profileGroup, "UHD 2160p 23.98 fps", "uhd_2160p_2398"));
-    ui->menuProfile->addAction(addProfile(m_profileGroup, "UHD 2160p 24 fps", "uhd_2160p_24"));
-    ui->menuProfile->addAction(addProfile(m_profileGroup, "UHD 2160p 25 fps", "uhd_2160p_25"));
-    ui->menuProfile->addAction(addProfile(m_profileGroup, "UHD 2160p 29.97 fps", "uhd_2160p_2997"));
-    ui->menuProfile->addAction(addProfile(m_profileGroup, "UHD 2160p 30 fps", "uhd_2160p_30"));
-    ui->menuProfile->addAction(addProfile(m_profileGroup, "UHD 2160p 50 fps", "uhd_2160p_50"));
-    ui->menuProfile->addAction(addProfile(m_profileGroup, "UHD 2160p 59.94 fps", "uhd_2160p_5994"));
-    ui->menuProfile->addAction(addProfile(m_profileGroup, "UHD 2160p 60 fps", "uhd_2160p_60"));
-    QMenu* menu = ui->menuProfile->addMenu(tr("Non-Broadcast"));
-    menu->addAction(addProfile(m_profileGroup, "HD 720p 23.98 fps", "atsc_720p_2398"));
-    menu->addAction(addProfile(m_profileGroup, "HD 720p 24 fps", "atsc_720p_24"));
-    menu->addAction(addProfile(m_profileGroup, "HD 720p 25 fps", "atsc_720p_25"));
-    menu->addAction(addProfile(m_profileGroup, "HD 720p 29.97 fps", "atsc_720p_2997"));
-    menu->addAction(addProfile(m_profileGroup, "HD 720p 30 fps", "atsc_720p_30"));
-    menu->addAction(addProfile(m_profileGroup, "HD 1080i 60 fps", "atsc_1080i_60"));
-    menu->addAction(addProfile(m_profileGroup, "HDV 1080i 25 fps", "hdv_1080_50i"));
-    menu->addAction(addProfile(m_profileGroup, "HDV 1080i 29.97 fps", "hdv_1080_60i"));
-    menu->addAction(addProfile(m_profileGroup, "HDV 1080p 25 fps", "hdv_1080_25p"));
-    menu->addAction(addProfile(m_profileGroup, "HDV 1080p 29.97 fps", "hdv_1080_30p"));
-    menu->addAction(addProfile(m_profileGroup, tr("DVD Widescreen NTSC"), "dv_ntsc_wide"));
-    menu->addAction(addProfile(m_profileGroup, tr("DVD Widescreen PAL"), "dv_pal_wide"));
-    menu->addAction(addProfile(m_profileGroup, "640x480 4:3 NTSC", "square_ntsc"));
-    menu->addAction(addProfile(m_profileGroup, "768x576 4:3 PAL", "square_pal"));
-    menu->addAction(addProfile(m_profileGroup, "854x480 16:9 NTSC", "square_ntsc_wide"));
-    menu->addAction(addProfile(m_profileGroup, "1024x576 16:9 PAL", "square_pal_wide"));
-    m_customProfileMenu = ui->menuProfile->addMenu(tr("Custom"));
-    m_customProfileMenu->addAction(ui->actionAddCustomProfile);
-    // Load custom profiles
-    QDir dir(Settings.appDataLocation());
-    if (dir.cd("profiles")) {
-        QStringList profiles = dir.entryList(QDir::Files | QDir::NoDotAndDotDot | QDir::Readable);
-        if (profiles.length() > 0) {
-            m_customProfileMenu->addAction(ui->actionProfileRemove);
-            m_customProfileMenu->addSeparator();
-        }
-        foreach (QString name, profiles)
-            m_customProfileMenu->addAction(addProfile(m_profileGroup, name, dir.filePath(name)));
-    }
+    buildVideoModeMenu(ui->menuProfile, m_customProfileMenu, m_profileGroup, ui->actionAddCustomProfile, ui->actionProfileRemove);
 
     // Add the SDI and HDMI devices to the Settings menu.
     m_externalGroup = new QActionGroup(this);
@@ -2001,6 +1950,137 @@ void MainWindow::hideSetDataDirectory()
     delete ui->actionAppDataSet;
 }
 
+QAction *MainWindow::actionAddCustomProfile() const
+{
+    return ui->actionAddCustomProfile;
+}
+
+QAction *MainWindow::actionProfileRemove() const
+{
+    return ui->actionProfileRemove;
+}
+
+void MainWindow::buildVideoModeMenu(QMenu* topMenu, QMenu*& customMenu, QActionGroup* group, QAction* addAction, QAction* removeAction)
+{
+    topMenu->addAction(addProfile(group, "HD 720p 50 fps", "atsc_720p_50"));
+    topMenu->addAction(addProfile(group, "HD 720p 59.94 fps", "atsc_720p_5994"));
+    topMenu->addAction(addProfile(group, "HD 720p 60 fps", "atsc_720p_60"));
+    topMenu->addAction(addProfile(group, "HD 1080i 25 fps", "atsc_1080i_50"));
+    topMenu->addAction(addProfile(group, "HD 1080i 29.97 fps", "atsc_1080i_5994"));
+    topMenu->addAction(addProfile(group, "HD 1080p 23.98 fps", "atsc_1080p_2398"));
+    topMenu->addAction(addProfile(group, "HD 1080p 24 fps", "atsc_1080p_24"));
+    topMenu->addAction(addProfile(group, "HD 1080p 25 fps", "atsc_1080p_25"));
+    topMenu->addAction(addProfile(group, "HD 1080p 29.97 fps", "atsc_1080p_2997"));
+    topMenu->addAction(addProfile(group, "HD 1080p 30 fps", "atsc_1080p_30"));
+    topMenu->addAction(addProfile(group, "HD 1080p 59.94 fps", "atsc_1080p_5994"));
+    topMenu->addAction(addProfile(group, "HD 1080p 60 fps", "atsc_1080p_60"));
+    topMenu->addAction(addProfile(group, "SD NTSC", "dv_ntsc"));
+    topMenu->addAction(addProfile(group, "SD PAL", "dv_pal"));
+    topMenu->addAction(addProfile(group, "UHD 2160p 23.98 fps", "uhd_2160p_2398"));
+    topMenu->addAction(addProfile(group, "UHD 2160p 24 fps", "uhd_2160p_24"));
+    topMenu->addAction(addProfile(group, "UHD 2160p 25 fps", "uhd_2160p_25"));
+    topMenu->addAction(addProfile(group, "UHD 2160p 29.97 fps", "uhd_2160p_2997"));
+    topMenu->addAction(addProfile(group, "UHD 2160p 30 fps", "uhd_2160p_30"));
+    topMenu->addAction(addProfile(group, "UHD 2160p 50 fps", "uhd_2160p_50"));
+    topMenu->addAction(addProfile(group, "UHD 2160p 59.94 fps", "uhd_2160p_5994"));
+    topMenu->addAction(addProfile(group, "UHD 2160p 60 fps", "uhd_2160p_60"));
+    QMenu* menu = topMenu->addMenu(tr("Non-Broadcast"));
+    menu->addAction(addProfile(group, "HD 720p 23.98 fps", "atsc_720p_2398"));
+    menu->addAction(addProfile(group, "HD 720p 24 fps", "atsc_720p_24"));
+    menu->addAction(addProfile(group, "HD 720p 25 fps", "atsc_720p_25"));
+    menu->addAction(addProfile(group, "HD 720p 29.97 fps", "atsc_720p_2997"));
+    menu->addAction(addProfile(group, "HD 720p 30 fps", "atsc_720p_30"));
+    menu->addAction(addProfile(group, "HD 1080i 60 fps", "atsc_1080i_60"));
+    menu->addAction(addProfile(group, "HDV 1080i 25 fps", "hdv_1080_50i"));
+    menu->addAction(addProfile(group, "HDV 1080i 29.97 fps", "hdv_1080_60i"));
+    menu->addAction(addProfile(group, "HDV 1080p 25 fps", "hdv_1080_25p"));
+    menu->addAction(addProfile(group, "HDV 1080p 29.97 fps", "hdv_1080_30p"));
+    menu->addAction(addProfile(group, tr("DVD Widescreen NTSC"), "dv_ntsc_wide"));
+    menu->addAction(addProfile(group, tr("DVD Widescreen PAL"), "dv_pal_wide"));
+    menu->addAction(addProfile(group, "640x480 4:3 NTSC", "square_ntsc"));
+    menu->addAction(addProfile(group, "768x576 4:3 PAL", "square_pal"));
+    menu->addAction(addProfile(group, "854x480 16:9 NTSC", "square_ntsc_wide"));
+    menu->addAction(addProfile(group, "1024x576 16:9 PAL", "square_pal_wide"));
+    customMenu = topMenu->addMenu(tr("Custom"));
+    customMenu->addAction(addAction);
+    // Load custom profiles
+    QDir dir(Settings.appDataLocation());
+    if (dir.cd("profiles")) {
+        QStringList profiles = dir.entryList(QDir::Files | QDir::NoDotAndDotDot | QDir::Readable);
+        if (profiles.length() > 0) {
+            customMenu->addAction(removeAction);
+            customMenu->addSeparator();
+        }
+        foreach (QString name, profiles)
+            customMenu->addAction(addProfile(group, name, dir.filePath(name)));
+    }
+}
+
+void MainWindow::newProject(const QString &filename, bool isProjectFolder)
+{
+    saveXML(filename);
+    if (m_autosaveFile)
+        m_autosaveFile->changeManagedFile(filename);
+    else
+        m_autosaveFile.reset(new AutoSaveFile(filename));
+    setCurrentFile(filename);
+    setWindowModified(false);
+    if (MLT.producer())
+        showStatusMessage(tr("Saved %1").arg(m_currentFile));
+    m_undoStack->setClean();
+    m_recentDock->add(filename);
+
+    if (isProjectFolder) {
+        QFileInfo info(filename);
+        m_projectFolder = info.absolutePath();
+    }
+}
+
+void MainWindow::addCustomProfile(const QString &name, QMenu *menu, QAction *action, QActionGroup *group)
+{
+    // Add new profile to the menu.
+    QDir dir(Settings.appDataLocation());
+    if (dir.cd("profiles")) {
+        QStringList profiles = dir.entryList(QDir::Files | QDir::NoDotAndDotDot | QDir::Readable);
+        if (profiles.length() == 1) {
+            menu->addAction(action);
+            menu->addSeparator();
+        }
+        action = addProfile(group, name, dir.filePath(name));
+        action->setChecked(true);
+        menu->addAction(action);
+        Settings.setPlayerProfile(dir.filePath(name));
+        Settings.sync();
+    }
+}
+
+void MainWindow::removeCustomProfiles(const QStringList &profiles, QDir& dir, QMenu *menu, QAction *action)
+{
+    foreach(const QString& profile, profiles) {
+        // Remove the file.
+        dir.remove(profile);
+        // Locate the menu item.
+        foreach (QAction* a, menu->actions()) {
+            if (a->text() == profile) {
+                // Remove the menu item.
+                delete a;
+                break;
+            }
+        }
+    }
+    // If no more custom video modes.
+    if (menu->actions().size() == 3) {
+        // Remove the Remove action and separator.
+        menu->removeAction(action);
+        foreach (QAction* a, menu->actions()) {
+            if (a->isSeparator()) {
+                delete a;
+                break;
+            }
+        }
+    }
+}
+
 // Drag-n-drop events
 
 bool MainWindow::eventFilter(QObject* target, QEvent* event)
@@ -2209,18 +2289,7 @@ bool MainWindow::on_actionSave_As_triggered()
 
         if (Util::warnIfNotWritable(filename, this, caption))
             return false;
-
-        saveXML(filename);
-        if (m_autosaveFile)
-            m_autosaveFile->changeManagedFile(filename);
-        else
-            m_autosaveFile.reset(new AutoSaveFile(filename));
-        setCurrentFile(filename);
-        setWindowModified(false);
-        if (MLT.producer())
-            showStatusMessage(tr("Saved %1").arg(m_currentFile));
-        m_undoStack->setClean();
-        m_recentDock->add(filename);
+        newProject(filename);
     }
     return !filename.isEmpty();
 }
@@ -3129,20 +3198,7 @@ void MainWindow::on_actionAddCustomProfile_triggered()
     if (dialog.exec() == QDialog::Accepted) {
         QString name = dialog.profileName();
         if (!name.isEmpty()) {
-            // Add new profile to the menu.
-            QDir dir(Settings.appDataLocation());
-            if (dir.cd("profiles")) {
-                QStringList profiles = dir.entryList(QDir::Files | QDir::NoDotAndDotDot | QDir::Readable);
-                if (profiles.length() == 1) {
-                    m_customProfileMenu->addAction(ui->actionProfileRemove);
-                    m_customProfileMenu->addSeparator();
-                }
-                QAction* action = addProfile(m_profileGroup, name, dir.filePath(name));
-                action->setChecked(true);
-                m_customProfileMenu->addAction(action);
-                Settings.setPlayerProfile(dir.filePath(name));
-                Settings.sync();
-            }
+            addCustomProfile(name, customProfileMenu(), actionProfileRemove(), profileGroup());
         } else if (m_profileGroup->checkedAction()) {
             m_profileGroup->checkedAction()->setChecked(false);
         }
@@ -3355,6 +3411,7 @@ void MainWindow::on_actionClose_triggered()
 {
     if (continueModified()) {
         LOG_DEBUG() << "";
+        m_projectFolder = "";
         if (multitrack())
             m_timelineDock->model()->close();
         if (playlist())
@@ -3671,29 +3728,7 @@ void MainWindow::on_actionProfileRemove_triggered()
 
         // Show the dialog.
         if (dialog.exec() == QDialog::Accepted) {
-            foreach(const QString& profile, dialog.selection()) {
-                // Remove the file.
-                dir.remove(profile);
-                // Locate the menu item.
-                foreach (QAction* a, m_customProfileMenu->actions()) {
-                    if (a->text() == profile) {
-                        // Remove the menu item.
-                        delete a;
-                        break;
-                    }
-                }
-            }
-            // If no more custom video modes.
-            if (m_customProfileMenu->actions().size() == 3) {
-                // Remove the Remove action and separator.
-                m_customProfileMenu->removeAction(ui->actionProfileRemove);
-                foreach (QAction* a, m_customProfileMenu->actions()) {
-                    if (a->isSeparator()) {
-                        delete a;
-                        break;
-                    }
-                }
-            }
+            removeCustomProfiles(dialog.selection(), dir, customProfileMenu(), actionProfileRemove());
         }
     }
 }

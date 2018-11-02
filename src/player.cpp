@@ -22,6 +22,8 @@
 #include "widgets/audioscale.h"
 #include "settings.h"
 #include "util.h"
+#include "widgets/newprojectfolder.h"
+
 #include <QtWidgets>
 #include <limits>
 
@@ -97,7 +99,6 @@ Player::Player(QWidget *parent)
     m_videoLayout->setSpacing(4);
     m_videoLayout->setContentsMargins(0, 0, 0, 0);
     vlayout->addLayout(m_videoLayout, 10);
-    vlayout->addStretch();
     m_videoScrollWidget = new QWidget;
     m_videoLayout->addWidget(m_videoScrollWidget, 10);
     m_videoLayout->addStretch();
@@ -116,6 +117,12 @@ Player::Player(QWidget *parent)
     m_horizontalScroll = new QScrollBar(Qt::Horizontal);
     glayout->addWidget(m_horizontalScroll, 1, 0);
     m_horizontalScroll->hide();
+
+    // Add the new project widget.
+    m_videoWidget->hide();
+    m_projectWidget = new NewProjectFolder(this);
+    vlayout->addWidget(m_projectWidget);
+    vlayout->addStretch();
 
     // Add the volume and signal level meter
     m_volumePopup = new QFrame(this, Qt::Popup);
@@ -506,10 +513,12 @@ void Player::reset()
     actionRewind->setDisabled(true);
     actionFastForward->setDisabled(true);
     m_videoWidget->hide();
+    m_projectWidget->show();
 }
 
 void Player::onProducerOpened(bool play)
 {
+    m_projectWidget->hide();
     m_videoWidget->show();
     m_duration = MLT.producer()->get_length();
     m_isSeekable = MLT.isSeekable();
