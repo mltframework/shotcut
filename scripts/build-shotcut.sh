@@ -1644,14 +1644,6 @@ function configure_compile_install_subproject {
         cmd cp -a "$QTDIR"/plugins/{accessible,iconengines,imageformats,mediaservice,platforms,generic,platforminputcontexts,platformthemes,xcbglintegrations} "$FINAL_INSTALL_DIR"/lib/qt5
         cmd cp -p "$QTDIR"/plugins/sqldrivers/libqsqlite.so "$FINAL_INSTALL_DIR"/lib/qt5/sqldrivers
         cmd cp -a "$QTDIR"/qml "$FINAL_INSTALL_DIR"/lib
-
-        log Copying some libs from system
-        for lib in "$FINAL_INSTALL_DIR"/lib/qt5/{iconengines,imageformats,mediaservice,platforms,generic,platforminputcontexts,platformthemes,xcbglintegrations}/*.so; do
-          bundle_libs "$lib"
-        done
-        for lib in "$FINAL_INSTALL_DIR"/{lib,lib/mlt,lib/frei0r-1,lib/ladspa}/*.so*; do
-          bundle_libs "$lib"
-        done
       fi
     elif test "webvfx" = "$1" ; then
       cmd make -C webvfx install || die "Unable to install $1/webvfx"
@@ -1699,6 +1691,17 @@ function configure_compile_install_all {
   for DIR in $SUBDIRS ; do
     configure_compile_install_subproject $DIR
   done
+
+  if [ "$ARCHIVE" = "1" ]; then
+    log Copying some libs from system
+    for lib in "$FINAL_INSTALL_DIR"/lib/qt5/{iconengines,imageformats,mediaservice,platforms,generic,platforminputcontexts,platformthemes,xcbglintegrations}/*.so; do
+      bundle_libs "$lib"
+    done
+    for lib in "$FINAL_INSTALL_DIR"/{lib,lib/mlt,lib/frei0r-1,lib/ladspa}/*.so*; do
+      bundle_libs "$lib"
+    done
+  fi
+
   feedback_status Done configuring, compiling and installing all sources
 }
 
@@ -1754,7 +1757,7 @@ function sys_info {
 function bundle_libs
 {
   target=$(dirname "$1")/$(basename "$1")
-  log bundling library dependencies of "$lib"
+  log bundling library dependencies of $(basename "$1")
   libs=$(ldd "$target" |
     awk '($3  ~ /^\/(lib|usr)\//) &&
          ($3 !~ /\/libld-linux\./) &&
