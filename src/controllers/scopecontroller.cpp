@@ -36,9 +36,9 @@ ScopeController::ScopeController(QMainWindow* mainWindow, QMenu* menu)
     createScopeDock<AudioPeakMeterScopeWidget>(mainWindow, scopeMenu);
     createScopeDock<AudioSpectrumScopeWidget>(mainWindow, scopeMenu);
     createScopeDock<AudioWaveformScopeWidget>(mainWindow, scopeMenu);
-//    if (!Settings.playerGPU()) {
-//        createScopeDock<VideoWaveformScopeWidget>(mainWindow, scopeMenu);
-//    }
+    if (!Settings.playerGPU()) {
+        createScopeDock<VideoWaveformScopeWidget>(mainWindow, scopeMenu);
+    }
     LOG_DEBUG() << "end";
 }
 
