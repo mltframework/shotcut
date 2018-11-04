@@ -223,7 +223,7 @@ Item {
         SliderSpinner {
             id: scaleSlider
             minimumValue: 0.1
-            maximumValue: 200
+            maximumValue: 500
             decimals: 1
             spinnerWidth: 110
             suffix: ' %'
