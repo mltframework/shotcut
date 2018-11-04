@@ -1985,6 +1985,12 @@ void MainWindow::buildVideoModeMenu(QMenu* topMenu, QMenu*& customMenu, QActionG
     topMenu->addAction(addProfile(group, "UHD 2160p 59.94 fps", "uhd_2160p_5994"));
     topMenu->addAction(addProfile(group, "UHD 2160p 60 fps", "uhd_2160p_60"));
     QMenu* menu = topMenu->addMenu(tr("Non-Broadcast"));
+    menu->addAction(addProfile(group, "640x480 4:3 NTSC", "square_ntsc"));
+    menu->addAction(addProfile(group, "768x576 4:3 PAL", "square_pal"));
+    menu->addAction(addProfile(group, "854x480 16:9 NTSC", "square_ntsc_wide"));
+    menu->addAction(addProfile(group, "1024x576 16:9 PAL", "square_pal_wide"));
+    menu->addAction(addProfile(group, tr("DVD Widescreen NTSC"), "dv_ntsc_wide"));
+    menu->addAction(addProfile(group, tr("DVD Widescreen PAL"), "dv_pal_wide"));
     menu->addAction(addProfile(group, "HD 720p 23.98 fps", "atsc_720p_2398"));
     menu->addAction(addProfile(group, "HD 720p 24 fps", "atsc_720p_24"));
     menu->addAction(addProfile(group, "HD 720p 25 fps", "atsc_720p_25"));
@@ -1995,12 +2001,8 @@ void MainWindow::buildVideoModeMenu(QMenu* topMenu, QMenu*& customMenu, QActionG
     menu->addAction(addProfile(group, "HDV 1080i 29.97 fps", "hdv_1080_60i"));
     menu->addAction(addProfile(group, "HDV 1080p 25 fps", "hdv_1080_25p"));
     menu->addAction(addProfile(group, "HDV 1080p 29.97 fps", "hdv_1080_30p"));
-    menu->addAction(addProfile(group, tr("DVD Widescreen NTSC"), "dv_ntsc_wide"));
-    menu->addAction(addProfile(group, tr("DVD Widescreen PAL"), "dv_pal_wide"));
-    menu->addAction(addProfile(group, "640x480 4:3 NTSC", "square_ntsc"));
-    menu->addAction(addProfile(group, "768x576 4:3 PAL", "square_pal"));
-    menu->addAction(addProfile(group, "854x480 16:9 NTSC", "square_ntsc_wide"));
-    menu->addAction(addProfile(group, "1024x576 16:9 PAL", "square_pal_wide"));
+    menu->addAction(addProfile(group, "Square 1080p 30 fps", "square_1080p_30"));
+    menu->addAction(addProfile(group, "Square 1080p 60 fps", "square_1080p_60"));
     customMenu = topMenu->addMenu(tr("Custom"));
     customMenu->addAction(addAction);
     // Load custom profiles
