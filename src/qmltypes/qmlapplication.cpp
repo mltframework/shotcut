@@ -30,6 +30,7 @@
 #else
 #include <clocale>
 #endif
+#include <limits>
 
 QmlApplication& QmlApplication::singleton()
 {
@@ -124,5 +125,18 @@ QString QmlApplication::timecode(int frames)
 int QmlApplication::audioChannels()
 {
     return MLT.audioChannels();
+}
+
+QString QmlApplication::getNextProjectFile(const QString &extension)
+{
+    QDir dir(MLT.projectFolder());
+    if (!MLT.projectFolder().isEmpty() && dir.exists()) {
+        for (unsigned i = 1; i < std::numeric_limits<unsigned>::max(); i++) {
+            QString filename = QString::fromLatin1("%1.%2").arg(i).arg(extension);
+            if (!dir.exists(filename))
+                return dir.filePath(filename);
+        }
+    }
+    return QString();
 }
 

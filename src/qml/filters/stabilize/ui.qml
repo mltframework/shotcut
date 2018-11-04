@@ -1,6 +1,5 @@
 /*
  * Copyright (c) 2013-2018 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -59,6 +58,14 @@ Item {
         status.text = _analysisRequiredMessage
     }
 
+    function startAnalyzeJob(filename) {
+        stabilizeRoot.fileSaved(filename)
+        filter.set('filename', filename)
+        filter.getHash()
+        setStatus(true)
+        filter.analyze();
+    }
+
     // This signal is used to workaround context properties not available in
     // the FileDialog onAccepted signal handler on Qt 5.5.
     signal fileSaved(string filename)
@@ -95,7 +102,6 @@ Item {
                 // In Windows, the prefix is a little different
                 filename = filename.substring(1)
             }
-            stabilizeRoot.fileSaved(filename)
 
             var extension = ".stab"
             // Force file extension to ".stab"
@@ -103,10 +109,7 @@ Item {
             if (extIndex == -1) {
                 filename += ".stab"
             }
-            filter.set('filename', filename)
-            filter.getHash()
-            setStatus(true)
-            filter.analyze();
+            startAnalyzeJob(filename)
         }
         onRejected: {
             button.enabled = true
@@ -167,7 +170,13 @@ Item {
             Layout.alignment: Qt.AlignRight
             onClicked: {
                 button.enabled = false
-                fileDialog.open()
+                var filename = application.getNextProjectFile('stab')
+                if (filename) {
+                    stabilizeRoot.fileSaved(filename)
+                    startAnalyzeJob(filename)
+                } else {
+                    fileDialog.open()
+                }
             }
         }
         Label {
