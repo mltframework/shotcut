@@ -177,7 +177,6 @@ private:
     QNetworkAccessManager m_network;
     QString m_upgradeUrl;
     KeyframesDock* m_keyframesDock;
-    QString m_projectFolder;
 
 #ifdef WITH_LIBLEAP
     LeapListener m_leapListener;

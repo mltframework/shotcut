@@ -140,6 +140,8 @@ public:
     }
     void setSavedProducer(Mlt::Producer* producer);
     static Mlt::Filter* getFilter(const QString& name, Mlt::Service* service);
+    QString projectFolder() const { return m_projectFolder; }
+    void setProjectFolder(const QString& folderName);
 
 protected:
     Mlt::Repository* m_repo;
@@ -156,6 +158,7 @@ private:
     QScopedPointer<Mlt::Producer> m_savedProducer;
     QScopedPointer<Mlt::Producer> m_filtersClipboard;
     unsigned m_skipJackEvents;
+    QString m_projectFolder;
 
     static void on_jack_started(mlt_properties owner, void* object, mlt_position *position);
     void onJackStarted(int position);

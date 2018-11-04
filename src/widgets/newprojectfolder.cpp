@@ -195,8 +195,6 @@ void NewProjectFolder::on_startButton_clicked()
         }
         dir.cd(projectName);
     }
-    Settings.setSavePath(dir.absolutePath());
-//    Settings.setEncodePath(dir.absolutePath());
 
     // Create the project file.
     QFileInfo info(dir.absolutePath(), fileName);

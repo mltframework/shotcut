@@ -2032,7 +2032,7 @@ void MainWindow::newProject(const QString &filename, bool isProjectFolder)
 
     if (isProjectFolder) {
         QFileInfo info(filename);
-        m_projectFolder = info.absolutePath();
+        MLT.setProjectFolder(info.absolutePath());
     }
 }
 
@@ -3411,7 +3411,7 @@ void MainWindow::on_actionClose_triggered()
 {
     if (continueModified()) {
         LOG_DEBUG() << "";
-        m_projectFolder = "";
+        MLT.setProjectFolder(QString());
         if (multitrack())
             m_timelineDock->model()->close();
         if (playlist())

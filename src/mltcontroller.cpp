@@ -117,6 +117,12 @@ int Controller::open(const QString &url)
             if (!channels)
                 channels = 2;
             m_audioChannels = channels;
+            if (m_producer->get_int(kShotcutProjectFolder)) {
+                QFileInfo info(url);
+                setProjectFolder(info.absolutePath());
+            } else {
+                setProjectFolder(QString());
+            }
         }
         if (profile().fps() != fps || (Settings.playerGPU() && !profile().is_explicit())) {
             // Reload with correct FPS or with Movit normalizing filters attached.
@@ -409,6 +415,7 @@ void Controller::saveXML(const QString& filename, Service* service, bool withRel
     Service s(service? service->get_service() : m_producer->get_service());
     if (s.is_valid()) {
         s.set(kShotcutProjectAudioChannels, m_audioChannels);
+        s.set(kShotcutProjectFolder, m_projectFolder.isEmpty()? 0 : 1);
         int ignore = s.get_int("ignore_points");
         if (ignore)
             s.set("ignore_points", 0);
@@ -994,6 +1001,14 @@ Filter* Controller::getFilter(const QString& name, Service* service)
         }
     }
     return 0;
+}
+
+void Controller::setProjectFolder(const QString& folderName)
+{
+    m_projectFolder = folderName;
+    if (!m_projectFolder.isEmpty())
+        Settings.setSavePath(m_projectFolder);
+    LOG_DEBUG() << "project folder" << m_projectFolder;
 }
 
 void TransportControl::play(double speed)
