@@ -1789,6 +1789,7 @@ function bundle_libs
          ($3 !~ /\/libdrm\./) &&
          ($3 !~ /\/libglapi\./) &&
          ($3 !~ /\/libxcb\./) &&
+         ($3 !~ /\/libxcb-dri3\./) &&
          ($3 !~ /\/libX11\./) &&
          ($3 !~ /\/libgio\./) &&
          ($3 !~ /\/libasound\./) &&
