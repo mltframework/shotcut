@@ -1,6 +1,5 @@
 /*
  * Copyright (c) 2012-2018 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,6 +19,8 @@
 #include "ui_servicepresetwidget.h"
 #include "qmltypes/qmlapplication.h"
 #include "settings.h"
+
+#include <Logger.h>
 
 #include <QDir>
 #include <QInputDialog>
@@ -59,6 +60,21 @@ void ServicePresetWidget::loadPresets()
     }
 }
 
+static void saveProperties(const Mlt::Properties& properties, const QString& filePath)
+{
+    // Save properties as YAML to file.
+    char* yamlStr = const_cast<Mlt::Properties&>(properties).serialise_yaml();
+    QString yaml = yamlStr;
+    free(yamlStr);
+    QFile yamlFile(filePath);
+    if (!yamlFile.open(QIODevice::WriteOnly)) {
+        LOG_ERROR() << "Failed to save preset: " << filePath;
+    } else {
+        yamlFile.write(yaml.toUtf8());
+        yamlFile.close();
+    }
+}
+
 void ServicePresetWidget::saveDefaultPreset(const Mlt::Properties& properties)
 {
     QDir dir(Settings.appDataLocation());
@@ -73,7 +89,7 @@ void ServicePresetWidget::saveDefaultPreset(const Mlt::Properties& properties)
         if (dir.mkdir(m_widgetName))
             dir.cd(m_widgetName);
     }
-    const_cast<Mlt::Properties&>(properties).save(dir.filePath(tr("(defaults)")).toUtf8().constData());
+    saveProperties(properties, dir.filePath(tr("(defaults)")));
 }
 
 void ServicePresetWidget::savePreset(const Mlt::Properties& properties)
@@ -98,7 +114,7 @@ void ServicePresetWidget::savePreset(const Mlt::Properties& properties)
             if (dir.mkdir(m_widgetName))
                 dir.cd(m_widgetName);
         }
-        const_cast<Mlt::Properties&>(properties).save(dir.filePath(preset).toUtf8().constData());
+        saveProperties(properties, dir.filePath(preset));
 
         // add the preset and select it
         loadPresets();
@@ -115,11 +131,28 @@ void ServicePresetWidget::on_presetCombo_activated(int index)
 {
     QString preset = ui->presetCombo->itemText(index);
     QDir dir(Settings.appDataLocation());
-    Mlt::Properties* properties = new Mlt::Properties;
+    Mlt::Properties* properties;
 
     if (!dir.cd("presets") || !dir.cd(m_widgetName))
         return;
-    properties->load(dir.filePath(preset).toUtf8().constData());
+
+    // Detect the preset file format
+    bool isYaml = false;
+    QFile presetFile(dir.filePath(preset));
+    if (presetFile.open(QIODevice::ReadOnly)) {
+        isYaml = (presetFile.readLine(4) == "---");
+        presetFile.close();
+    }
+
+    if (isYaml) {
+        // Load from YAML file.
+        properties = Mlt::Properties::parse_yaml(dir.filePath(preset).toUtf8().constData());
+    } else {
+        // Load from legacy preset file.
+        properties = new Mlt::Properties;
+        properties->load(dir.filePath(preset).toUtf8().constData());
+    }
+
     emit selected(properties);
 }
 
