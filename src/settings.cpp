@@ -242,6 +242,16 @@ void ShotcutSettings::setEncodeHardware(const QStringList& ls)
         settings.setValue("encode/hardware", ls);
 }
 
+bool ShotcutSettings::encodeAdvanced() const
+{
+    return settings.value("encode/advanced", false).toBool();
+}
+
+void ShotcutSettings::setEncodeAdvanced(bool b)
+{
+    settings.setValue("encode/advanced", b);
+}
+
 bool ShotcutSettings::showConvertClipDialog() const
 {
     return settings.value("showConvertClipDialog", true).toBool();

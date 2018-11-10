@@ -112,6 +112,8 @@ private slots:
 
     void on_hwencodeButton_clicked();
 
+    void on_advancedCheckBox_clicked(bool checked);
+
 private:
     enum {
         RateControlAverage = 0,

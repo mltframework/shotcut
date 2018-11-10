@@ -57,6 +57,8 @@ EncodeDock::EncodeDock(QWidget *parent) :
     LOG_DEBUG() << "begin";
     ui->setupUi(this);
     ui->stopCaptureButton->hide();
+    ui->advancedButton->setChecked(Settings.encodeAdvanced());
+    ui->advancedCheckBox->setChecked(Settings.encodeAdvanced());
     on_advancedButton_clicked(ui->advancedButton->isChecked());
 #if QT_POINTER_SIZE == 4
     // On 32-bit process, limit multi-threading to mitigate running out of memory.
@@ -1683,6 +1685,7 @@ void EncodeDock::on_heightSpinner_editingFinished()
 
 void EncodeDock::on_advancedButton_clicked(bool checked)
 {
+    ui->advancedCheckBox->setVisible(checked);
     ui->streamButton->setVisible(checked);
     ui->formatLabel->setVisible(checked);
     ui->formatCombo->setVisible(checked);
@@ -1761,4 +1764,9 @@ void EncodeDock::on_hwencodeButton_clicked()
             Settings.setEncodeUseHardware(false);
         }            
     }
+}
+
+void EncodeDock::on_advancedCheckBox_clicked(bool checked)
+{
+    Settings.setEncodeAdvanced(checked);
 }

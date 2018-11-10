@@ -84,6 +84,8 @@ public:
     void setEncodeUseHardware(bool);
     QStringList encodeHardware() const;
     void setEncodeHardware(const QStringList&);
+    bool encodeAdvanced() const;
+    void setEncodeAdvanced(bool);
     bool showConvertClipDialog() const;
     void setShowConvertClipDialog(bool);
 
