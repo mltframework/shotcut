@@ -1743,8 +1743,7 @@ void EncodeDock::on_hwencodeCheckBox_clicked(bool checked)
     } else if (!checked) {
         Settings.setEncodeUseHardware(false);
     }
-    if (checked)
-        resetOptions();
+    resetOptions();
 }
 
 void EncodeDock::on_hwencodeButton_clicked()
