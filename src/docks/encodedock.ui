@@ -1697,7 +1697,7 @@ in temporal compression</string>
           <item>
            <widget class="QCheckBox" name="advancedCheckBox">
             <property name="toolTip">
-             <string>Save Advanced mode</string>
+             <string>Always start in Advanced mode</string>
             </property>
             <property name="text">
              <string/>
