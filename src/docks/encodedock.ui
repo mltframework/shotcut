@@ -251,7 +251,7 @@
             <item>
              <widget class="QCheckBox" name="hwencodeCheckBox">
               <property name="text">
-               <string>Use hardware encoder if available</string>
+               <string>Use hardware encoder</string>
               </property>
              </widget>
             </item>
