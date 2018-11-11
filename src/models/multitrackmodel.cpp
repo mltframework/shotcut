@@ -1276,6 +1276,7 @@ void MultitrackModel::joinClips(int trackIndex, int clipIndex)
         emit dataChanged(modelIndex, modelIndex, roles);
         AudioLevelsTask::start(clip->parent(), this, modelIndex);
 
+        clearMixReferences(trackIndex, clipIndex + 1);
         beginRemoveRows(index(trackIndex), clipIndex + 1, clipIndex + 1);
         playlist.remove(clipIndex + 1);
         endRemoveRows();
