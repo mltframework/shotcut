@@ -52,6 +52,9 @@
         <property name="alignment">
          <set>Qt::AlignCenter</set>
         </property>
+        <property name="margin">
+         <number>4</number>
+        </property>
        </widget>
       </item>
       <item>
@@ -221,6 +224,9 @@ A folder will be created in this folder for each project.</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
+        </property>
+        <property name="margin">
+         <number>4</number>
         </property>
        </widget>
       </item>
