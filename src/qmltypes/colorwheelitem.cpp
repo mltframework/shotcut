@@ -219,6 +219,37 @@ void ColorWheelItem::hoverMoveEvent(QHoverEvent * event)
     updateCursor(event->pos());
 }
 
+void ColorWheelItem::wheelEvent(QWheelEvent *event)
+{
+    QPoint steps = event->angleDelta() / 8 / 15;
+    int delta = steps.y();
+    QColor currentColor = color();
+    int c;
+
+    // Increment/decrement RGB values by delta
+    c = currentColor.red();
+    c += delta;
+    if(c < 0) c = 0;
+    if(c > 255) c = 255;
+    currentColor.setRed(c);
+
+    c = currentColor.green();
+    c += delta;
+    if(c < 0) c = 0;
+    if(c > 255) c = 255;
+    currentColor.setGreen(c);
+
+    c = currentColor.blue();
+    c += delta;
+    if(c < 0) c = 0;
+    if(c > 255) c = 255;
+    currentColor.setBlue(c);
+
+    setColor(currentColor);
+
+    event->accept();
+}
+
 void ColorWheelItem::paint(QPainter *painter)
 {
     QSize size( width(), height() );
