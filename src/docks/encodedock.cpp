@@ -840,7 +840,7 @@ void EncodeDock::collectProperties(QDomElement& node, int realtime)
     delete p;
 }
 
-MeltJob* EncodeDock::createMeltJob(Mlt::Service* service, const QString& target, int realtime, int pass)
+MeltJob* EncodeDock::createMeltJob(Mlt::Producer* service, const QString& target, int realtime, int pass)
 {
     // if image sequence, change filename to include number
     QString mytarget = target;
@@ -855,6 +855,7 @@ MeltJob* EncodeDock::createMeltJob(Mlt::Service* service, const QString& target,
 
     // Fix in/out points of filters on clip-only project.
     QScopedPointer<Mlt::Producer> tempProducer;
+    if (MLT.isSeekable(service))
     if (ui->fromCombo->currentData().toString() == "clip" || ui->fromCombo->currentData().toString() == "batch") {
         QString xml = MLT.XML(service);
         tempProducer.reset(new Mlt::Producer(MLT.profile(), "xml-string", xml.toUtf8().constData()));
