@@ -36,6 +36,13 @@ NewProjectFolder::NewProjectFolder(QWidget* parent) :
     ui(new Ui::NewProjectFolder)
 {
     ui->setupUi(this);
+    QPalette originalPalette = ui->frame->palette();
+    QPalette palette = ui->frame->palette();
+    palette.setColor(QPalette::WindowText, palette.color(palette.Highlight));
+    ui->frame->setPalette(palette);
+    ui->frame_2->setPalette(palette);
+    palette.setColor(QPalette::WindowText, originalPalette.color(palette.WindowText));
+    ui->widget->setPalette(palette);
     Util::setColorsToHighlight(ui->newProjectLabel);
     Util::setColorsToHighlight(ui->newProjectLabel_2);
     ui->projectsFolderButton->setText(Settings.projectsFolder());

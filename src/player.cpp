@@ -98,7 +98,7 @@ Player::Player(QWidget *parent)
     m_videoLayout = new QHBoxLayout;
     m_videoLayout->setSpacing(4);
     m_videoLayout->setContentsMargins(0, 0, 0, 0);
-    vlayout->addLayout(m_videoLayout, 10);
+    vlayout->addLayout(m_videoLayout, 1);
     m_videoScrollWidget = new QWidget;
     m_videoLayout->addWidget(m_videoScrollWidget, 10);
     m_videoLayout->addStretch();
@@ -121,7 +121,7 @@ Player::Player(QWidget *parent)
     // Add the new project widget.
     m_videoWidget->hide();
     m_projectWidget = new NewProjectFolder(this);
-    vlayout->addWidget(m_projectWidget);
+    vlayout->addWidget(m_projectWidget, 10);
     vlayout->addStretch();
 
     // Add the volume and signal level meter
