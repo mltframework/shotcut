@@ -35,9 +35,9 @@ public:
 private:
     void refreshScope(const QSize& size, bool full) Q_DECL_OVERRIDE;
     void paintEvent(QPaintEvent*) Q_DECL_OVERRIDE;
+    void mouseMoveEvent(QMouseEvent *event);
 
     SharedFrame m_frame;
-    QSize m_prevSize;
     QImage m_renderImg;
     QTime m_refreshTime;
 
