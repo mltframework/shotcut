@@ -58,6 +58,7 @@ protected:
     void mouseMoveEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
     void hoverMoveEvent(QHoverEvent * event);
+    void wheelEvent(QWheelEvent *event);
     void paint(QPainter *painter);
 
 private:
