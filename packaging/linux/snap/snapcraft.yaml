@@ -28,6 +28,7 @@ parts:
   shotcut:
     plugin: dump
     source: 'https://github.com/mltframework/shotcut/releases/download/v18.11.13/shotcut-linux-x86_64-181113.txz'
+    source-type: tar
     organize:
       'Shotcut': './'
     build-attributes: [no-patchelf]

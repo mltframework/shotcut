@@ -12,8 +12,8 @@ ingredients:
     - echo "multiarch-support" >> excludedeblist                                                                                         
                                                                                                                                          
 script:
-  - DLD=$(wget -q "https://api.github.com/repos/mltframework/shotcut/releases/latest"  -O - | grep -E "https.*linux-x86_64.*.tar.bz2" | cut -d'"' -f4)
-  - wget -q "$DLD" -O - | tar xj -C usr/bin --strip=2
+  - DLD=$(wget -q "https://api.github.com/repos/mltframework/shotcut/releases/latest"  -O - | grep -E "https.*linux-x86_64.*.txz" | cut -d'"' -f4)
+  - wget -q "$DLD" -O - | tar xJ -C usr/bin --strip=2
   - wget "https://github.com/mltframework/shotcut/raw/master/icons/shotcut-logo-64.png" -O shotcut.png
   - wget "https://github.com/mltframework/shotcut/raw/master/packaging/linux/org.shotcut.Shotcut.desktop" -O shotcut.desktop
   - desktop-file-edit --set-key=Exec --set-value=shotcut shotcut.desktop
