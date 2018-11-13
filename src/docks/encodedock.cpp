@@ -266,7 +266,8 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties& preset)
             videoQuality = preset.get_int("qscale");
         }
         else if (name == "crf") {
-            ui->videoRateControlCombo->setCurrentIndex(preset.get("vbufsize")? RateControlConstrained : RateControlQuality);
+            ui->videoRateControlCombo->setCurrentIndex(preset.get("vbufsize")? RateControlConstrained
+              : ui->videoCodecCombo->currentText().endsWith("_ videotoolbox")? RateControlAverage : RateControlQuality);
             videoQuality = preset.get_int("crf");
         }
         else if (name == "bufsize") {
@@ -339,7 +340,8 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties& preset)
     if (ui->videoRateControlCombo->currentIndex() == RateControlQuality && videoQuality > -1) {
         const QString& vcodec = ui->videoCodecCombo->currentText();
         //val = min + (max - min) * paramval;
-        if (vcodec == "libx264" || vcodec == "libx265" || vcodec.contains("nvenc") || vcodec.endsWith("_amf") || vcodec.endsWith("_qsv"))
+        if (vcodec == "libx264" || vcodec == "libx265" || vcodec.contains("nvenc") || vcodec.endsWith("_amf")
+                || vcodec.endsWith("_qsv") || vcodec.endsWith("_videotoolbox") || vcodec.endsWith("_vaapi"))
             // 0 (best, 100%) - 51 (worst)
             ui->videoQualitySpinner->setValue(TO_RELATIVE(51, 0, videoQuality));
         else if (vcodec.startsWith("libvpx")) // 0 (best, 100%) - 63 (worst)
@@ -562,11 +564,13 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
             const QString& vcodec = ui->videoCodecCombo->currentText();
             const QString& vbitrate = ui->videoBitrateCombo->currentText();
             double cvbr = ::atof(vbitrate.toLatin1().constData());
+            int vq = ui->videoQualitySpinner->value();
+
             if (vbitrate.endsWith('M'))
                 cvbr *= 1000000.0;
             else if (vbitrate.endsWith('k'))
                 cvbr *= 1000.0;
-            cvbr *= 0.8;
+            cvbr *= double(vq) / 100.0;
 
             if (ui->videoCodecCombo->currentIndex() > 0)
                 setIfNotSet(p, "vcodec", vcodec.toLatin1().constData());
@@ -588,7 +592,6 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
                     break;
                     }
                 case RateControlQuality: {
-                    int vq = ui->videoQualitySpinner->value();
                     x265params = QString("crf=%1:%2").arg(TO_ABSOLUTE(51, 0, vq)).arg(x265params);
                     // Also set crf property so that custom presets can be interpreted properly.
                     setIfNotSet(p, "crf", TO_ABSOLUTE(51, 0, vq));
@@ -596,7 +599,6 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
                     }
                 case RateControlConstrained: {
                     QString b = ui->videoBitrateCombo->currentText();
-                    int vq = ui->videoQualitySpinner->value();
                     // x265 does not expect bitrate suffixes and requires Kb/s
                     b.replace('k', "").replace('M', "000");
                     x265params = QString("crf=%1:vbv-bufsize=%2:vbv-maxrate=%3:%4")
@@ -633,7 +635,6 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
                     break;
                     }
                 case RateControlQuality: {
-                    int vq = ui->videoQualitySpinner->value();
                     setIfNotSet(p, "rc", "constqp");
                     setIfNotSet(p, "vglobal_quality", TO_ABSOLUTE(51, 0, vq));
                     setIfNotSet(p, "vq", TO_ABSOLUTE(51, 0, vq));
@@ -641,7 +642,6 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
                     }
                 case RateControlConstrained: {
                     const QString& b = ui->videoBitrateCombo->currentText();
-                    int vq = ui->videoQualitySpinner->value();
                     setIfNotSet(p, "qmin", TO_ABSOLUTE(51, 0, vq));
                     setIfNotSet(p, "vb", qRound(cvbr));
                     setIfNotSet(p, "vmaxrate", b.toLatin1().constData());
@@ -673,7 +673,6 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
                     break;
                     }
                 case RateControlQuality: {
-                    int vq = ui->videoQualitySpinner->value();
                     setIfNotSet(p, "rc", "cqp");
                     setIfNotSet(p, "qp_i", TO_ABSOLUTE(51, 0, vq));
                     setIfNotSet(p, "qp_p", TO_ABSOLUTE(51, 0, vq));
@@ -682,7 +681,6 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
                     break;
                     }
                 case RateControlConstrained: {
-                    int vq = ui->videoQualitySpinner->value();
                     setIfNotSet(p, "rc", "vbr_peak");
                     setIfNotSet(p, "qmin", TO_ABSOLUTE(51, 0, vq));
                     setIfNotSet(p, "vb", qRound(cvbr));
@@ -714,7 +712,6 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
                     break;
                     }
                 case RateControlQuality: {
-                    int vq = ui->videoQualitySpinner->value();
                     if (vcodec == "libx264") {
                         setIfNotSet(p, "crf", TO_ABSOLUTE(51, 0, vq));
                     } else if (vcodec.startsWith("libvpx")) {
@@ -726,12 +723,11 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
                     break;
                     }
                 case RateControlConstrained: {
-                    int vq = ui->videoQualitySpinner->value();
                     if (vcodec == "libx264") {
                         setIfNotSet(p, "crf", TO_ABSOLUTE(51, 0, vq));
                     } else if (vcodec.startsWith("libvpx")) {
                         setIfNotSet(p, "crf", TO_ABSOLUTE(63, 0, vq));
-                    } else if (vcodec.endsWith("_qsv")) {
+                    } else if (vcodec.endsWith("_qsv") || vcodec.endsWith("_videotoolbox") || vcodec.endsWith("_vaapi")) {
                         setIfNotSet(p, "vb", qRound(cvbr));
                     } else {
                         setIfNotSet(p, "qscale", TO_ABSOLUTE(31, 1, vq));
@@ -820,8 +816,9 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
                 setIfNotSet(p, "threads", ui->videoCodecThreadsSpinner->maximum() - 1);
             else
                 setIfNotSet(p, "threads", ui->videoCodecThreadsSpinner->value());
-            if (ui->videoRateControlCombo->currentIndex() != RateControlQuality &&
-                !vcodec.contains("nvenc") && !vcodec.endsWith("_amf") && !vcodec.endsWith("_qsv") &&
+            if (ui->videoRateControlCombo->currentIndex() != RateControlQuality
+                    && !vcodec.contains("nvenc") && !vcodec.endsWith("_amf") && !vcodec.endsWith("_qsv")
+                    && !vcodec.endsWith("_videotoolbox") && !vcodec.endsWith("_vaapi") &&
                 ui->dualPassCheckbox->isEnabled() && ui->dualPassCheckbox->isChecked())
                 setIfNotSet(p, "pass", 1);
         }
@@ -988,6 +985,8 @@ void EncodeDock::enqueueMelt(const QString& target, int realtime)
             && !ui->videoCodecCombo->currentText().contains("nvenc")
             && !ui->videoCodecCombo->currentText().endsWith("_amf")
             && !ui->videoCodecCombo->currentText().endsWith("_qsv")
+            && !ui->videoCodecCombo->currentText().endsWith("_videotoolbox")
+            && !ui->videoCodecCombo->currentText().endsWith("_vaapi")
             &&  ui->dualPassCheckbox->isEnabled() && ui->dualPassCheckbox->isChecked())? 1 : 0;
     if (!service) {
         // For each playlist item.
@@ -1063,7 +1062,7 @@ void EncodeDock::resetOptions()
     ui->deinterlacerCombo->setCurrentIndex(3);
     ui->interpolationCombo->setCurrentIndex(1);
 
-    ui->videoRateControlCombo->setCurrentIndex(2);
+    ui->videoRateControlCombo->setCurrentIndex(RateControlQuality);
     ui->videoBitrateCombo->lineEdit()->setText("2M");
     ui->videoBufferSizeSpinner->setValue(224);
     ui->gopSpinner->blockSignals(true);
@@ -1659,6 +1658,15 @@ void EncodeDock::on_videoCodecCombo_currentIndexChanged(int index)
             ui->advancedTextEdit->appendPlainText("\nload_plugin=hevc_hw\n");
         ui->dualPassCheckbox->setChecked(false);
         ui->dualPassCheckbox->setEnabled(false);
+    } else if (vcodec.endsWith("_videotoolbox")) {
+        if (ui->videoRateControlCombo->currentIndex() == RateControlQuality) {
+            ui->videoRateControlCombo->setCurrentIndex(RateControlAverage);
+        }
+        ui->dualPassCheckbox->setChecked(false);
+        ui->dualPassCheckbox->setEnabled(false);
+    } else if (vcodec.endsWith("_vaapi")) {
+        ui->dualPassCheckbox->setChecked(false);
+        ui->dualPassCheckbox->setEnabled(false);
     } else {
         ui->dualPassCheckbox->setEnabled(true);
     }
@@ -1738,15 +1746,12 @@ void EncodeDock::on_hwencodeCheckBox_clicked(bool checked)
         if (hwlist.isEmpty()) {
             MAIN.showStatusMessage(tr("Nothing found"), 10);
             ui->hwencodeCheckBox->setChecked(false);
-            Settings.setEncodeUseHardware(false);
         } else {
             MAIN.showStatusMessage(tr("Found %1").arg(hwlist.join(", ")));
             Settings.setEncodeHardware(hwlist);
-            Settings.setEncodeUseHardware(true);
         }
-    } else if (!checked) {
-        Settings.setEncodeUseHardware(false);
     }
+    Settings.setEncodeUseHardware(ui->hwencodeCheckBox->isChecked());
     resetOptions();
 }
 
