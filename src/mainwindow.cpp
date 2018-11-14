@@ -2151,12 +2151,16 @@ void MainWindow::closeEvent(QCloseEvent* event)
         if (!m_htmlEditor || m_htmlEditor->close()) {
             LOG_DEBUG() << "begin";
             writeSettings();
-            if (multitrack())
-                m_timelineDock->model()->close();
-            if (playlist())
-                m_playlistDock->model()->close();
-            else
-                onMultitrackClosed();
+            if (m_exitCode == EXIT_SUCCESS) {
+                MLT.stop();
+            } else {
+                if (multitrack())
+                    m_timelineDock->model()->close();
+                if (playlist())
+                    m_playlistDock->model()->close();
+                else
+                    onMultitrackClosed();
+            }
             QThreadPool::globalInstance()->clear();
             AudioLevelsTask::closeAll();
             event->accept();
