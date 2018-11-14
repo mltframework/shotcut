@@ -1063,8 +1063,8 @@ void EncodeDock::resetOptions()
     ui->interpolationCombo->setCurrentIndex(1);
 
     ui->videoRateControlCombo->setCurrentIndex(RateControlQuality);
-    ui->videoBitrateCombo->lineEdit()->setText("2M");
-    ui->videoBufferSizeSpinner->setValue(224);
+    ui->videoBitrateCombo->lineEdit()->setText("12M");
+    ui->videoBufferSizeSpinner->setValue(1500);
     ui->gopSpinner->blockSignals(true);
     ui->gopSpinner->setValue(MLT.profile().fps() * 5.0);
     ui->gopSpinner->blockSignals(false);
