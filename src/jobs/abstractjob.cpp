@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2012-2017 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2012-2018 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,18 +30,20 @@ AbstractJob::AbstractJob(const QString& name)
     , m_ran(false)
     , m_killed(false)
     , m_label(name)
-    , m_postJobAction(0)
+    , m_startingPercent(0)
 {
     setObjectName(name);
     connect(this, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(onFinished(int, QProcess::ExitStatus)));
     connect(this, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
     connect(this, SIGNAL(started()), this, SLOT(onStarted()));
+    connect(this, SIGNAL(progressUpdated(QStandardItem*, int)), SLOT(onProgressUpdated(QStandardItem*, int)));
 }
 
 void AbstractJob::start()
 {
     m_ran = true;
-    m_time.start();
+    m_estimateTime.start();
+    m_totalTime.start();
     emit progressUpdated(m_item, 0);
 }
 
@@ -85,7 +86,7 @@ QTime AbstractJob::estimateRemaining(int percent)
 {
     QTime result;
     if (percent) {
-        int averageMs = m_time.elapsed() / percent;
+        int averageMs = m_estimateTime.elapsed() / (percent - m_startingPercent);
         result = QTime::fromMSecsSinceStartOfDay(averageMs * (100 - percent));
     }
     return result;
@@ -107,7 +108,7 @@ void AbstractJob::stop()
 void AbstractJob::onFinished(int exitCode, QProcess::ExitStatus exitStatus)
 {
     m_log.append(readAll());
-    const QTime& time = QTime::fromMSecsSinceStartOfDay(m_time.elapsed());
+    const QTime& time = QTime::fromMSecsSinceStartOfDay(m_totalTime.elapsed());
     if (exitStatus == QProcess::NormalExit && exitCode == 0 && !m_killed) {
         if (m_postJobAction) {
             m_postJobAction->doAction();
@@ -144,4 +145,13 @@ void AbstractJob::onStarted()
         CloseHandle(processHandle);
     }
 #endif
+}
+
+void AbstractJob::onProgressUpdated(QStandardItem*, int percent)
+{
+    // Start timer on first reported percentage > 0.
+    if (percent == 1) {
+        m_estimateTime.restart();
+        m_startingPercent = percent;
+    }
 }
