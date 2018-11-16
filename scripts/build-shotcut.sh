@@ -528,7 +528,7 @@ function set_globals {
     REVISIONS[13]="$X265_REVISION"
   fi
   REVISIONS[14]="eigen-eigen-10219c95fe65"
-  REVISIONS[15]=""
+  REVISIONS[15]="sdk/8.1"
   REVISIONS[16]=""
   REVISIONS[17]=""
 
