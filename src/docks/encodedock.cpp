@@ -1739,8 +1739,7 @@ void EncodeDock::on_hwencodeCheckBox_clicked(bool checked)
                        .arg(ffmpegPath.absoluteFilePath())
                        .arg(codec.endsWith("_vaapi")? "-vaapi_device :0 -vf format=nv12,hwupload" : "")
                        .arg(codec));
-            proc.waitForFinished(5000);
-            if (proc.exitStatus() == QProcess::NormalExit && !proc.exitCode())
+            if (proc.waitForFinished(5000) && proc.exitStatus() == QProcess::NormalExit && !proc.exitCode())
                 hwlist << codec;
         }
         if (hwlist.isEmpty()) {
