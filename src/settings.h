@@ -99,6 +99,7 @@ public:
     void setPlayerGamma(const QString&);
     bool playerGPU() const;
     void setPlayerGPU(bool);
+    bool playerWarnGPU() const;
     QString playerInterpolation() const;
     void setPlayerInterpolation(const QString&);
     bool playerJACK() const;

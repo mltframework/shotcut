@@ -866,7 +866,7 @@ void MainWindow::open(Mlt::Producer* producer)
 
 bool MainWindow::isCompatibleWithGpuMode(MltXmlChecker& checker)
 {
-    if (checker.needsGPU() && !Settings.playerGPU()) {
+    if (checker.needsGPU() && !Settings.playerGPU() && Settings.playerWarnGPU()) {
         LOG_INFO() << "file uses GPU but GPU not enabled";
         QMessageBox dialog(QMessageBox::Warning,
            qApp->applicationName(),
@@ -3870,7 +3870,7 @@ void MainWindow::on_actionClearRecentOnExit_toggled(bool arg1)
 
 void MainWindow::onSceneGraphInitialized()
 {
-    if (Settings.playerGPU()) {
+    if (Settings.playerGPU() && Settings.playerWarnGPU()) {
         QMessageBox dialog(QMessageBox::Warning,
                            qApp->applicationName(),
                            tr("GPU effects are EXPERIMENTAL, UNSTABLE and UNSUPPORTED! Unsupported means do not report bugs about it.\n\n"
@@ -3887,5 +3887,7 @@ void MainWindow::onSceneGraphInitialized()
         } else {
             ui->actionGPU->setVisible(true);
         }
+    } else if (Settings.playerGPU()) {
+        ui->actionGPU->setVisible(true);
     }
 }
