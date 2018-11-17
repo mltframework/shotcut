@@ -103,8 +103,14 @@ public:
         : QApplication(argc, argv)
     {
         QDir dir(applicationDirPath());
+#ifdef Q_OS_MAC
+        dir.cdUp();
+        dir.cd("PlugIns");
+        dir.cd("qt");
+#else
         dir.cd("lib");
         dir.cd("qt5");
+#endif
         addLibraryPath(dir.absolutePath());
         setOrganizationName("Meltytech");
         setOrganizationDomain("meltytech.com");
