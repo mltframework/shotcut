@@ -651,7 +651,7 @@ void AvformatProducerWidget::convert(TranscodeDialog& dialog)
         args << "-loglevel" << "verbose";
         args << "-i" << resource;
         // transcode all streams
-        args << "-map" << "0";
+        args << "-map" << "0" << "-map_metadata" << "0";
         // except data, subtitles, and attachments
         args << "-map" << "-0:d" << "-map" << "-0:s" << "-map" << "-0:t" << "-ignore_unknown";
 
@@ -836,15 +836,19 @@ void AvformatProducerWidget::on_actionExtractSubclip_triggered()
         ffmpegArgs << "-loglevel" << "verbose";
         ffmpegArgs << "-i" << resource;
         // set trim options
-        if (m_producer->get(kFilterInProperty))
-            ffmpegArgs << "-ss" << QString::fromLatin1(m_producer->get_time(kFilterInProperty, mlt_time_clock)).replace(',', '.');
-        else
-            ffmpegArgs << "-ss" << QString::fromLatin1(m_producer->get_time("in", mlt_time_clock)).replace(',', '.').replace(',', '.');
+        if (m_producer->get_int(kFilterInProperty) || m_producer->get_int("in")) {
+            if (m_producer->get(kFilterInProperty))
+                ffmpegArgs << "-ss" << QString::fromLatin1(m_producer->get_time(kFilterInProperty, mlt_time_clock)).replace(',', '.');
+            else
+                ffmpegArgs << "-ss" << QString::fromLatin1(m_producer->get_time("in", mlt_time_clock)).replace(',', '.').replace(',', '.');
+        }
         if (m_producer->get(kFilterOutProperty))
             ffmpegArgs << "-to" << QString::fromLatin1(m_producer->get_time(kFilterOutProperty, mlt_time_clock)).replace(',', '.');
         else
             ffmpegArgs << "-to" << QString::fromLatin1(m_producer->get_time("out", mlt_time_clock)).replace(',', '.');
-        ffmpegArgs << "-map" << "0" << "-codec" << "copy" << "-y" << filename;
+        ffmpegArgs << "-avoid_negative_ts" << "make_zero"
+                   << "-map" << "0" << "-map_metadata" << "0"
+                   << "-codec" << "copy" << "-y" << filename;
 
         // Run the ffmpeg job.
         FfmpegJob* ffmpegJob = new FfmpegJob(filename, ffmpegArgs, false);
