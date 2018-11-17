@@ -138,6 +138,7 @@ Item {
                 ListElement { text: QT_TR_NOOP('HH:MM:SS'); format: "HH:MM:SS" }
                 ListElement { text: QT_TR_NOOP('HH:MM:SS.S'); format: "HH:MM:SS.S" }
                 ListElement { text: QT_TR_NOOP('MM:SS'); format: "MM:SS" }
+                ListElement { text: QT_TR_NOOP('MM:SS.SS'); format: "MM:SS.SS" }
                 ListElement { text: QT_TR_NOOP('SS'); format: "SS" }
                 ListElement { text: QT_TR_NOOP('SS.S'); format: "SS.S" }
                 ListElement { text: QT_TR_NOOP('SS.SS'); format: "SS.SS" }
