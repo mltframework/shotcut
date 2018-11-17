@@ -1644,6 +1644,8 @@ function configure_compile_install_subproject {
         cmd cp -a "$QTDIR"/plugins/{accessible,iconengines,imageformats,mediaservice,platforms,generic,platforminputcontexts,platformthemes,xcbglintegrations} "$FINAL_INSTALL_DIR"/lib/qt5
         cmd cp -p "$QTDIR"/plugins/sqldrivers/libqsqlite.so "$FINAL_INSTALL_DIR"/lib/qt5/sqldrivers
         cmd cp -a "$QTDIR"/qml "$FINAL_INSTALL_DIR"/lib
+        cmd install -d "$FINAL_INSTALL_DIR"/lib/va
+        cmd install -p -c /usr/lib/x86_64-linux-gnu/dri/*_drv_video.so "$FINAL_INSTALL_DIR"/lib/va
       fi
     elif test "webvfx" = "$1" ; then
       cmd make -C webvfx install || die "Unable to install $1/webvfx"
@@ -1697,7 +1699,7 @@ function configure_compile_install_all {
     for lib in "$FINAL_INSTALL_DIR"/lib/qt5/{iconengines,imageformats,mediaservice,platforms,generic,platforminputcontexts,platformthemes,xcbglintegrations}/*.so; do
       bundle_libs "$lib"
     done
-    for lib in "$FINAL_INSTALL_DIR"/{lib,lib/mlt,lib/frei0r-1,lib/ladspa}/*.so*; do
+    for lib in "$FINAL_INSTALL_DIR"/{lib,lib/mlt,lib/frei0r-1,lib/ladspa,lib/va}/*.so*; do
       bundle_libs "$lib"
     done
   fi
@@ -2210,9 +2212,10 @@ export LD_LIBRARY_PATH="\$INSTALL_DIR/lib":\$LD_LIBRARY_PATH
 export MLT_REPOSITORY="\$INSTALL_DIR/lib/mlt"
 export MLT_DATA="\$INSTALL_DIR/share/mlt"
 export MLT_PROFILES_PATH="\$INSTALL_DIR/share/mlt/profiles"
+export MLT_MOVIT_PATH="\$INSTALL_DIR/share/movit"
 export FREI0R_PATH="\$INSTALL_DIR/lib/frei0r-1"
 export LADSPA_PATH="\$LADSPA_PATH:/usr/local/lib/ladspa:/usr/lib/ladspa:/usr/lib64/ladspa:\$INSTALL_DIR/lib/ladspa"
-export MLT_MOVIT_PATH="\$INSTALL_DIR/share/movit"
+export LIBVA_DRIVERS_PATH="\$INSTALL_DIR/lib/va"
 export MANPATH=\$MANPATH:"\$INSTALL_DIR/share/man"
 export PKG_CONFIG_PATH="\$INSTALL_DIR/lib/pkgconfig":\$PKG_CONFIG_PATH
 export QT_PLUGIN_PATH="\$INSTALL_DIR/lib/qt5"
@@ -2236,9 +2239,10 @@ export LD_LIBRARY_PATH="\$INSTALL_DIR/lib":\$LD_LIBRARY_PATH
 export MLT_REPOSITORY="\$INSTALL_DIR/lib/mlt"
 export MLT_DATA="\$INSTALL_DIR/share/mlt"
 export MLT_PROFILES_PATH="\$INSTALL_DIR/share/mlt/profiles"
+export MLT_MOVIT_PATH="\$INSTALL_DIR/share/movit"
 export FREI0R_PATH="\$INSTALL_DIR/lib/frei0r-1"
 export LADSPA_PATH="\$LADSPA_PATH:/usr/local/lib/ladspa:/usr/lib/ladspa:/usr/lib64/ladspa:\$INSTALL_DIR/lib/ladspa"
-export MLT_MOVIT_PATH="\$INSTALL_DIR/share/movit"
+export LIBVA_DRIVERS_PATH="\$INSTALL_DIR/lib/va"
 export QT_PLUGIN_PATH="\$INSTALL_DIR/lib/qt5"
 export QML2_IMPORT_PATH="\$INSTALL_DIR/lib/qml"
 "\$INSTALL_DIR/bin/$exe" "\$@"
@@ -2261,9 +2265,10 @@ export LD_LIBRARY_PATH="\$INSTALL_DIR/lib":\$LD_LIBRARY_PATH
 export MLT_REPOSITORY="\$INSTALL_DIR/lib/mlt"
 export MLT_DATA="\$INSTALL_DIR/share/mlt"
 export MLT_PROFILES_PATH="\$INSTALL_DIR/share/mlt/profiles"
+export MLT_MOVIT_PATH="\$INSTALL_DIR/share/movit"
 export FREI0R_PATH="\$INSTALL_DIR/lib/frei0r-1"
 export LADSPA_PATH="\$LADSPA_PATH:/usr/local/lib/ladspa:/usr/lib/ladspa:/usr/lib64/ladspa:\$INSTALL_DIR/lib/ladspa"
-export MLT_MOVIT_PATH="\$INSTALL_DIR/share/movit"
+export LIBVA_DRIVERS_PATH="\$INSTALL_DIR/lib/va"
 cd "\$INSTALL_DIR"
 export QT_PLUGIN_PATH="lib/qt5"
 export QML2_IMPORT_PATH="lib/qml"
