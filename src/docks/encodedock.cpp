@@ -1736,7 +1736,8 @@ void EncodeDock::on_hwencodeCheckBox_clicked(bool checked)
             QProcess proc;
             QString cmd = QString::fromLatin1("%1 -hide_banner -f lavfi -i color=s=640x360 -t 0.040 -an %2 -c:v %3 -f rawvideo pipe:")
                     .arg(ffmpegPath.absoluteFilePath())
-                    .arg(codec.endsWith("_vaapi")? "-vaapi_device :0 -vf format=nv12,hwupload" : "")
+                    .arg(codec.endsWith("_vaapi")? "-vaapi_device :0 -vf format=nv12,hwupload"
+                          : (codec == "hevc_qsv")? "-load_plugin hevc_hw" : "")
                     .arg(codec);
             LOG_DEBUG() << cmd;
             proc.setStandardOutputFile(QProcess::nullDevice());
