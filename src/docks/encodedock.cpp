@@ -36,6 +36,7 @@
 #include <QFileInfo>
 #include <QStorageInfo>
 #include <QProcess>
+#include <QRegularExpression>
 
 // formulas to map absolute value ranges to percentages as int
 #define TO_ABSOLUTE(min, max, rel) qRound(float(min) + float((max) - (min) + 1) * float(rel) / 100.0f)
@@ -1731,16 +1732,30 @@ void EncodeDock::on_hwencodeCheckBox_clicked(bool checked)
         QStringList hwlist;
         QFileInfo ffmpegPath(qApp->applicationDirPath(), "ffmpeg");
         foreach (const QString& codec, codecs()) {
-            LOG_DEBUG() << "checking for" << codec;
-            QCoreApplication::processEvents();
+            LOG_INFO() << "checking for" << codec;
             QProcess proc;
+            QString cmd = QString::fromLatin1("%1 -hide_banner -f lavfi -i color=s=640x360 -t 0.040 -an %2 -c:v %3 -f rawvideo pipe:")
+                    .arg(ffmpegPath.absoluteFilePath())
+                    .arg(codec.endsWith("_vaapi")? "-vaapi_device :0 -vf format=nv12,hwupload" : "")
+                    .arg(codec);
+            LOG_DEBUG() << cmd;
             proc.setStandardOutputFile(QProcess::nullDevice());
-            proc.start(QString::fromLatin1("%1 -f lavfi -i color=s=640x360 -t 0.040 -an %2 -c:v %3 -f rawvideo pipe:")
-                       .arg(ffmpegPath.absoluteFilePath())
-                       .arg(codec.endsWith("_vaapi")? "-vaapi_device :0 -vf format=nv12,hwupload" : "")
-                       .arg(codec));
-            if (proc.waitForFinished(5000) && proc.exitStatus() == QProcess::NormalExit && !proc.exitCode())
+            proc.setReadChannel(QProcess::StandardError);
+            proc.start(cmd, QIODevice::ReadOnly);
+            bool started = proc.waitForStarted(2000);
+            bool finished = false;
+            QCoreApplication::processEvents();
+            if (started) {
+                finished = proc.waitForFinished(4000);
+                QCoreApplication::processEvents();
+            }
+            if (started && finished && proc.exitStatus() == QProcess::NormalExit && !proc.exitCode()) {
                 hwlist << codec;
+            } else {
+                QString output = proc.readAll();
+                foreach (const QString& line, output.split(QRegularExpression("[\r\n]"), QString::SkipEmptyParts))
+                    LOG_DEBUG() << line;
+            }
         }
         if (hwlist.isEmpty()) {
             MAIN.showStatusMessage(tr("Nothing found"), 10);
