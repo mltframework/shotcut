@@ -101,7 +101,7 @@ void AudioPeakMeterScopeWidget::setOrientation(Qt::Orientation orientation)
 
 void AudioPeakMeterScopeWidget::reconfigureMeter()
 {
-    // Set the bar lables.
+    // Set the bar labels.
     QStringList channelLabels;
     if (m_channels == 2 )
         channelLabels << tr("L") << tr("R");

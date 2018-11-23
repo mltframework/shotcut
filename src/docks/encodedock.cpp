@@ -804,7 +804,7 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
                     p->set("frame_rate_num", 60000);
                     p->set("frame_rate_den", 1001);
                 } else {
-                    // Workaround storing QDoubleSpinBox::value() loses precison.
+                    // Workaround storing QDoubleSpinBox::value() loses precision.
                     p->set("frame_rate_num", qRound(ui->fpsSpinner->value() * 1000000.0));
                     p->set("frame_rate_den", 1000000);
                 }
