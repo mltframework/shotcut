@@ -184,8 +184,9 @@ void NewProjectFolder::on_startButton_clicked()
     else
         fileName += ".mlt";
 
-    // Check if the project exists.
-    if (dir.cd(ui->projectNameLineEdit->text())) {
+    // Check if the project folder exists.
+    if (dir.cd(projectName)) {
+        // Check if the project file exists.
         if (dir.exists(fileName)) {
             QMessageBox::warning(this, ui->newProjectLabel->text(),
                                  tr("There is already a project with that name.\n"
@@ -194,7 +195,7 @@ void NewProjectFolder::on_startButton_clicked()
         }
     } else {
         // Create the project folder if needed.
-        if (!dir.mkdir(projectName)) {
+        if (!dir.mkpath(projectName)) {
             QMessageBox::warning(this, ui->newProjectLabel->text(),
                                  tr("Unable to create folder %1\n"
                                     "Perhaps you do not have permission.\n"
