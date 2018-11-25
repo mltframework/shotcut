@@ -130,13 +130,16 @@ void ClearCommand::redo()
 void ClearCommand::undo()
 {
     LOG_DEBUG() << "";
-    m_model.close();
     Mlt::Producer* producer = new Mlt::Producer(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
     if (producer->is_valid()) {
         producer->set("resource", "<playlist>");
-        MAIN.open(producer);
-        MLT.pause();
-        MAIN.seekPlaylist(0);
+        if (!MLT.setProducer(producer)) {
+            m_model.load();
+            MLT.pause();
+            MAIN.seekPlaylist(0);
+        }
+    } else {
+        LOG_ERROR() << "failed to restore playlist from XML";
     }
 }
 
