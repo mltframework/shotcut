@@ -1800,7 +1800,6 @@ function bundle_libs
          ($3 !~ /\/libthai\./) &&
          ($3 !~ /\/libfreetype\./) &&
          ($3 !~ /\/libharfbuzz\./) &&
-         ($3 !~ /\/libselinux\./) &&
          ($3 !~ /\/libcom_err\./) &&
          ($3 !~ /\/libcrypt\./) &&
          ($3 !~ /\/libexpat\./) &&
