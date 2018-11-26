@@ -5,9 +5,9 @@ ingredients:
   packages:
     - libsdl2-2.0-0
     - libxkbcommon-x11-0
-  dist: trusty
+  dist: xenial
   sources: 
-    - deb http://us.archive.ubuntu.com/ubuntu/ trusty main universe
+    - deb http://us.archive.ubuntu.com/ubuntu/ xenial main universe
   script:
     - echo "multiarch-support" >> excludedeblist                                                                                         
                                                                                                                                          
