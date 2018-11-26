@@ -4275,7 +4275,7 @@ process.nextTick = function (fun) {
     }
 };
 
-// v8 likes predictable objects
+// v8 likes predictible objects
 function Item(fun, array) {
     this.fun = fun;
     this.array = array;
