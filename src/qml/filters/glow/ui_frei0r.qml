@@ -102,12 +102,13 @@ Item {
             parameters: defaultParameters
             onBeforePresetLoaded: filter.resetProperty(paramBlur)
             onPresetSelected: {
+                setControls()
+                blurKeyframesButton.checked = filter.keyframeCount(paramBlur) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
                 middleValue = filter.getDouble(paramBlur, filter.animateIn)
                 if (filter.animateIn > 0)
                     startValue = filter.getDouble(paramBlur, 0)
                 if (filter.animateOut > 0)
                     endValue = filter.getDouble(paramBlur, filter.duration - 1)
-                setControls()
             }
         }
 

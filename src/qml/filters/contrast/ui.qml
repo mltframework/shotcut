@@ -149,6 +149,12 @@ Item {
             parameters: defaultParameters
             onPresetSelected: {
                 setControls()
+                keyframesButton.checked = filter.keyframeCount('gain_r') > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
+                middleValue = filter.getDouble('gain_r', filter.animateIn)
+                if (filter.animateIn > 0)
+                    startValue = filter.getDouble('gain_r', 0)
+                if (filter.animateOut > 0)
+                    endValue = filter.getDouble('gain_r', filter.duration - 1)
             }
         }
 

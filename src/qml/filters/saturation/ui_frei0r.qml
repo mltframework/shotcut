@@ -74,7 +74,7 @@ Item {
 
         if (filter.animateIn > 0 || filter.animateOut > 0) {
             filter.resetProperty(saturationParameter)
-            brightnessKeyframesButton.checked = false
+            keyframesButton.checked = false
             if (filter.animateIn > 0) {
                 filter.set(saturationParameter, startValue, 0)
                 filter.set(saturationParameter, middleValue, filter.animateIn - 1)
@@ -83,7 +83,7 @@ Item {
                 filter.set(saturationParameter, middleValue, filter.duration - filter.animateOut)
                 filter.set(saturationParameter, endValue, filter.duration - 1)
             }
-        } else if (!brightnessKeyframesButton.checked) {
+        } else if (!keyframesButton.checked) {
             filter.resetProperty(saturationParameter)
             filter.set(saturationParameter, middleValue)
         } else if (position !== null) {
@@ -109,6 +109,7 @@ Item {
             }
             onPresetSelected: {
                 setControls()
+                keyframesButton.checked = filter.keyframeCount(parameters[0]) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
                 middleValue = filter.getDouble(saturationParameter, filter.animateIn)
                 if (filter.animateIn > 0)
                     startValue = filter.getDouble(saturationParameter, 0)
@@ -132,7 +133,7 @@ Item {
             onClicked: slider.value = 100
         }
         KeyframesButton {
-            id: brightnessKeyframesButton
+            id: keyframesButton
             checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(saturationParameter) > 0
             onToggled: {
                 var value = slider.value / frei0rMaximum
