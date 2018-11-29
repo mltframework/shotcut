@@ -1,6 +1,5 @@
 /*
  * Copyright (c) 2014-2018 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,6 +35,7 @@ Item {
             filter.set('level', 1)
             filter.set('alpha', 1.0)
             filter.set('opacity', filter.getDouble('alpha'))
+            filter.savePreset(preset.parameters)
         } else {
             middleValue = filter.getDouble('opacity', filter.animateIn)
             if (filter.animateIn > 0)
@@ -102,6 +102,29 @@ Item {
         columns: 4
         anchors.fill: parent
         anchors.margins: 8
+
+        Label {
+            text: qsTr('Preset')
+            Layout.alignment: Qt.AlignRight
+        }
+        Preset {
+            id: preset
+            Layout.columnSpan: parent.columns
+            parameters: ['opacity', 'alpha']
+            onBeforePresetLoaded: {
+                filter.resetProperty(parameters[0])
+                filter.resetProperty(parameters[1])
+            }
+            onPresetSelected: {
+                setControls()
+                keyframesButton.checked = filter.keyframeCount(parameters[0]) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
+                middleValue = filter.getDouble(parameters[0], filter.animateIn)
+                if (filter.animateIn > 0)
+                    startValue = filter.getDouble(parameters[0], 0)
+                if (filter.animateOut > 0)
+                    endValue = filter.getDouble(parameters[0], filter.duration - 1)
+            }
+        }
 
         Label {
             text: qsTr('Level')

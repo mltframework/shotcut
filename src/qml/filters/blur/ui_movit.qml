@@ -33,6 +33,7 @@ Item {
         if (filter.isNew) {
             // Set default parameter values
             filter.set('radius', 3.0)
+            filter.savePreset(preset.parameters)
         } else {
             middleValue = filter.getDouble('radius', filter.animateIn)
             if (filter.animateIn > 0)
@@ -87,35 +88,56 @@ Item {
         }
     }
 
-    ColumnLayout {
+    GridLayout {
+        columns: 4
         anchors.fill: parent
         anchors.margins: 8
 
-        RowLayout {
-            Label { text: qsTr('Radius') }
-            SliderSpinner {
-                id: slider
-                minimumValue: 0
-                maximumValue: 99.99
-                decimals: 2
-                onValueChanged: updateFilter(getPosition())
+        Label {
+            text: qsTr('Preset')
+            Layout.alignment: Qt.AlignRight
+        }
+        Preset {
+            id: preset
+            Layout.columnSpan: parent.columns - 1
+            parameters: ['radius']
+            onBeforePresetLoaded: {
+                filter.resetProperty(parameters[0])
             }
-            UndoButton {
-                onClicked: slider.value = 3.0
+            onPresetSelected: {
+                setControls()
+                keyframesButton.checked = filter.keyframeCount(parameters[0]) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
+                middleValue = filter.getDouble(parameters[0], filter.animateIn)
+                if (filter.animateIn > 0)
+                    startValue = filter.getDouble(parameters[0], 0)
+                if (filter.animateOut > 0)
+                    endValue = filter.getDouble(parameters[0], filter.duration - 1)
             }
-            KeyframesButton {
-                id: keyframesButton
-                checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('radius') > 0
-                onToggled: {
-                    if (checked) {
-                        blockUpdate = true
-                        filter.clearSimpleAnimation('radius')
-                        blockUpdate = false
-                        filter.set('radius', slider.value, getPosition())
-                    } else {
-                        filter.resetProperty('radius')
-                        filter.set('radius', slider.value)
-                    }
+        }
+
+        Label { text: qsTr('Radius') }
+        SliderSpinner {
+            id: slider
+            minimumValue: 0
+            maximumValue: 99.99
+            decimals: 2
+            onValueChanged: updateFilter(getPosition())
+        }
+        UndoButton {
+            onClicked: slider.value = 3.0
+        }
+        KeyframesButton {
+            id: keyframesButton
+            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('radius') > 0
+            onToggled: {
+                if (checked) {
+                    blockUpdate = true
+                    filter.clearSimpleAnimation('radius')
+                    blockUpdate = false
+                    filter.set('radius', slider.value, getPosition())
+                } else {
+                    filter.resetProperty('radius')
+                    filter.set('radius', slider.value)
                 }
             }
         }

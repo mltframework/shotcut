@@ -17,9 +17,6 @@ Metadata {
                 name: qsTr('Level')
                 property: 'alpha'
                 isSimple: true
-                isCurve: true
-                minimum: 0
-                maximum: 1
             }
         ]
     }

@@ -37,6 +37,7 @@ Item {
             // Set default parameter values
             filter.set('hori', 2)
             filter.set('vert', 2)
+            filter.savePreset(preset.parameters)
         } else {
             middleWidthValue = filter.getDouble('hori', filter.animateIn)
             middleHeightValue = filter.getDouble('vert', filter.animateIn)
@@ -134,6 +135,34 @@ Item {
         anchors.fill: parent
         anchors.margins: 8
 
+        Label {
+            text: qsTr('Preset')
+            Layout.alignment: Qt.AlignRight
+        }
+        Preset {
+            id: preset
+            Layout.columnSpan: parent.columns - 1
+            parameters: ['hori', 'vert']
+            onBeforePresetLoaded: {
+                filter.resetProperty('hori')
+                filter.resetProperty('vert')
+            }
+            onPresetSelected: {
+                setControls()
+                widthKeyframesButton.checked = filter.keyframeCount('hori') > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
+                heightKeyframesButton.checked = filter.keyframeCount('vert') > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
+                middleWidthValue = filter.getDouble('hori', filter.animateIn)
+                middleHeightValue = filter.getDouble('vert', filter.animateIn)
+                if (filter.animateIn > 0) {
+                    startWidthValue = filter.getDouble('hori', 0)
+                    startHeightValue = filter.getDouble('vert', 0)
+                }
+                if (filter.animateOut > 0) {
+                    endWidthValue = filter.getDouble('hori', filter.duration - 1)
+                    endHeightValue = filter.getDouble('vert', filter.duration - 1)
+                }
+            }
+        }
         Label {
             text: qsTr('Width')
             Layout.alignment: Qt.AlignRight

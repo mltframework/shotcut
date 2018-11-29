@@ -32,6 +32,7 @@ Item {
         if (filter.isNew) {
             // Set default parameter values
             filter.set('level', 1.0)
+            filter.savePreset(preset.parameters)
         } else {
             middleValue = filter.getDouble('level', filter.animateIn)
             if (filter.animateIn > 0)
@@ -113,6 +114,28 @@ Item {
         columns: 4
         anchors.fill: parent
         anchors.margins: 8
+
+        Label {
+            text: qsTr('Preset')
+            Layout.alignment: Qt.AlignRight
+        }
+        Preset {
+            id: preset
+            Layout.columnSpan: parent.columns - 1
+            parameters: ['level']
+            onBeforePresetLoaded: {
+                filter.resetProperty(parameters[0])
+            }
+            onPresetSelected: {
+                setControls()
+                brightnessKeyframesButton.checked = filter.keyframeCount(parameters[0]) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
+                middleValue = filter.getDouble(parameters[0], filter.animateIn)
+                if (filter.animateIn > 0)
+                    startValue = filter.getDouble(parameters[0], 0)
+                if (filter.animateOut > 0)
+                    endValue = filter.getDouble(parameters[0], filter.duration - 1)
+            }
+        }
 
         Label {
             text: qsTr('Level')
