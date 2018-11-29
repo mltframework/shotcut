@@ -1193,6 +1193,7 @@ void MainWindow::open(QString url, const Mlt::Properties* properties)
 
         open(MLT.producer());
         if (url.startsWith(AutoSaveFile::path())) {
+            QMutexLocker locker(&m_autosaveMutex);          
             if (m_autosaveFile && m_autosaveFile->managedFileName() != untitledFileName()) {
                 m_recentDock->add(m_autosaveFile->managedFileName());
                 LOG_INFO() << m_autosaveFile->managedFileName();
@@ -2021,6 +2022,7 @@ void MainWindow::buildVideoModeMenu(QMenu* topMenu, QMenu*& customMenu, QActionG
 void MainWindow::newProject(const QString &filename, bool isProjectFolder)
 {
     saveXML(filename);
+    QMutexLocker locker(&m_autosaveMutex);
     if (m_autosaveFile)
         m_autosaveFile->changeManagedFile(filename);
     else
@@ -2247,6 +2249,7 @@ void MainWindow::onProducerOpened()
         getHash(*MLT.producer());
         ui->actionPaste->setEnabled(true);
     }
+    QMutexLocker locker(&m_autosaveMutex);
     if (m_autosaveFile)
         setCurrentFile(m_autosaveFile->managedFileName());
     else if (!MLT.URL().isEmpty())
@@ -2471,6 +2474,7 @@ void MainWindow::onPlaylistClosed()
     setWindowModified(false);
     m_undoStack->clear();
     MLT.resetURL();
+    QMutexLocker locker(&m_autosaveMutex);
     m_autosaveFile.reset(new AutoSaveFile(untitledFileName()));
     if (!isMultitrackValid())
         m_player->enableTab(Player::ProjectTabIndex, false);
@@ -2499,6 +2503,7 @@ void MainWindow::onMultitrackClosed()
     setWindowModified(false);
     m_undoStack->clear();
     MLT.resetURL();
+    QMutexLocker locker(&m_autosaveMutex);
     m_autosaveFile.reset(new AutoSaveFile(untitledFileName()));
     if (!playlist() || playlist()->count() == 0)
         m_player->enableTab(Player::ProjectTabIndex, false);
