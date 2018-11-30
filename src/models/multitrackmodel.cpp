@@ -2486,6 +2486,7 @@ void MultitrackModel::addBackgroundTrack()
     Mlt::Playlist playlist(MLT.profile());
     playlist.set("id", kBackgroundTrackId);
     Mlt::Producer producer(MLT.profile(), "color:black");
+    producer.set("mlt_image_format", "rgb24");
     producer.set("length", 1);
     producer.set("id", "black");
     // Allow mixing against frames produced by this producer.
@@ -3259,6 +3260,7 @@ void MultitrackModel::addBlackTrackIfNeeded()
             delete producer;
         }
         Mlt::Producer producer(MLT.profile(), "color:black");
+        producer.set("mlt_image_format", "rgb24");
         m_tractor->set_track(producer, 0);
     }
 }

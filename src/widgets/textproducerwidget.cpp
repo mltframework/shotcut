@@ -81,6 +81,7 @@ Mlt::Producer* TextProducerWidget::newProducer(Mlt::Profile& profile)
 {
     Mlt::Producer* p = new Mlt::Producer(profile, "color:");
     p->set("resource", colorStringToResource(ui->colorLabel->text()).toLatin1().constData());
+    p->set("mlt_image_format", "rgb24a");
     p->set(kShotcutCaptionProperty, ui->colorLabel->text().toLatin1().constData());
     p->set(kShotcutDetailProperty, ui->colorLabel->text().toLatin1().constData());
     Mlt::Filter filter(profile, "dynamictext");
