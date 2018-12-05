@@ -8,4 +8,19 @@ Metadata {
     mlt_service: 'panner'
     objectName: 'audioBalance'
     qml: 'ui.qml'
+    keyframes {
+        allowAnimateIn: true
+        allowAnimateOut: true
+        simpleProperties: ['split']
+        parameters: [
+            Parameter {
+                name: qsTr('Position')
+                property: 'split'
+                isSimple: true
+                isCurve: true
+                minimum: 0
+                maximum: 1
+            }
+        ]
+    }
 }
