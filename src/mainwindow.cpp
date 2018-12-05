@@ -2021,6 +2021,10 @@ void MainWindow::buildVideoModeMenu(QMenu* topMenu, QMenu*& customMenu, QActionG
 
 void MainWindow::newProject(const QString &filename, bool isProjectFolder)
 {
+    if (isProjectFolder) {
+        QFileInfo info(filename);
+        MLT.setProjectFolder(info.absolutePath());
+    }
     saveXML(filename);
     QMutexLocker locker(&m_autosaveMutex);
     if (m_autosaveFile)
@@ -2033,11 +2037,6 @@ void MainWindow::newProject(const QString &filename, bool isProjectFolder)
         showStatusMessage(tr("Saved %1").arg(m_currentFile));
     m_undoStack->setClean();
     m_recentDock->add(filename);
-
-    if (isProjectFolder) {
-        QFileInfo info(filename);
-        MLT.setProjectFolder(info.absolutePath());
-    }
 }
 
 void MainWindow::addCustomProfile(const QString &name, QMenu *menu, QAction *action, QActionGroup *group)
@@ -2615,6 +2614,10 @@ void MainWindow::saveXML(const QString &filename, bool withRelativePaths)
         MLT.producer()->set_in_and_out(in, out);
     } else if (MLT.producer()) {
         MLT.saveXML(filename, (MLT.isMultitrack() || MLT.isPlaylist())? MLT.savedProducer() : 0, withRelativePaths);
+    } else {
+        // Save an empty playlist, which is accepted by both MLT and Shotcut.
+        Mlt::Playlist playlist(MLT.profile());
+        MLT.saveXML(filename, &playlist, withRelativePaths);
     }
 }
 
