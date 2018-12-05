@@ -35,6 +35,10 @@ Item {
             filter.set('split', 0.5)
             filter.savePreset(preset.parameters)
         } else {
+            // Convert old version of filter.
+            if (filter.getDouble('start') !== 0.5)
+                filter.set('split', filter.getDouble('start'))
+
             middleValue = filter.getDouble('split', filter.animateIn)
             if (filter.animateIn > 0)
                 startValue = filter.getDouble('split', 0)
