@@ -144,8 +144,8 @@ public:
             QCoreApplication::translate("main", "The directory for app configuration and data."),
             QCoreApplication::translate("main", "directory"));
         parser.addOption(appDataOption);
-        parser.addPositionalArgument("resource",
-            QCoreApplication::translate("main", "A file to open."));
+        parser.addPositionalArgument("[FILE]...",
+            QCoreApplication::translate("main", "Zero or more files or folders to open"));
         parser.process(arguments());
 #ifdef Q_OS_WIN
         isFullScreen = false;
