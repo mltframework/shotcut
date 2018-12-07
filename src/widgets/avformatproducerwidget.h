@@ -89,7 +89,7 @@ private slots:
 
     void on_actionFFmpegConvert_triggered();
 
-    void on_actionReverse_triggered();
+    void on_reverseButton_clicked();
     
     void on_actionExtractSubclip_triggered();
 

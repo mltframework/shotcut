@@ -586,7 +586,6 @@ void AvformatProducerWidget::on_menuButton_clicked()
     menu.addAction(ui->actionFFmpegInfo);
     menu.addAction(ui->actionFFmpegIntegrityCheck);
     menu.addAction(ui->actionFFmpegConvert);
-    menu.addAction(ui->actionReverse);
     menu.addAction(ui->actionExtractSubclip);
     menu.exec(ui->menuButton->mapToGlobal(QPoint(0, 0)));
 }
@@ -696,7 +695,7 @@ void AvformatProducerWidget::convert(TranscodeDialog& dialog)
     }
 }
 
-void AvformatProducerWidget::on_actionReverse_triggered()
+void AvformatProducerWidget::on_reverseButton_clicked()
 {
     TranscodeDialog dialog(tr("Choose an edit-friendly format below and then click OK to choose a file name. "
                               "After choosing a file name, a job is created. "

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>384</width>
-    <height>534</height>
+    <height>545</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -733,6 +733,13 @@
       </widget>
      </item>
      <item>
+      <widget class="QPushButton" name="reverseButton">
+       <property name="text">
+        <string>Reverse...</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QPushButton" name="menuButton">
        <property name="toolTip">
         <string>Display a menu of additional actions</string>
@@ -800,11 +807,6 @@
     <string>Convert to Edit-friendly...</string>
    </property>
   </action>
-  <action name="actionReverse">
-   <property name="text">
-    <string>Reverse...</string>
-   </property>
-  </action>
   <action name="actionExtractSubclip">
    <property name="text">
     <string>Extract Sub-clip...</string>
@@ -820,6 +822,7 @@
  </customwidgets>
  <tabstops>
   <tabstop>notesTextEdit</tabstop>
+  <tabstop>speedSpinBox</tabstop>
   <tabstop>durationSpinBox</tabstop>
   <tabstop>tabWidget</tabstop>
   <tabstop>videoTrackComboBox</tabstop>
@@ -827,11 +830,12 @@
   <tabstop>aspectDenSpinBox</tabstop>
   <tabstop>scanComboBox</tabstop>
   <tabstop>fieldOrderComboBox</tabstop>
+  <tabstop>resetButton</tabstop>
+  <tabstop>reverseButton</tabstop>
+  <tabstop>menuButton</tabstop>
   <tabstop>audioTrackComboBox</tabstop>
   <tabstop>syncSlider</tabstop>
   <tabstop>spinBox</tabstop>
-  <tabstop>resetButton</tabstop>
-  <tabstop>menuButton</tabstop>
   <tabstop>metadataTable</tabstop>
  </tabstops>
  <resources>
@@ -845,12 +849,12 @@
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>175</x>
-     <y>397</y>
+     <x>199</x>
+     <y>356</y>
     </hint>
     <hint type="destinationlabel">
-     <x>183</x>
-     <y>430</y>
+     <x>255</x>
+     <y>390</y>
     </hint>
    </hints>
   </connection>
@@ -861,12 +865,12 @@
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>159</x>
-     <y>424</y>
+     <x>255</x>
+     <y>390</y>
     </hint>
     <hint type="destinationlabel">
-     <x>160</x>
-     <y>396</y>
+     <x>184</x>
+     <y>356</y>
     </hint>
    </hints>
   </connection>
