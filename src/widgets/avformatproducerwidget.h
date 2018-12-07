@@ -93,6 +93,8 @@ private slots:
     
     void on_actionExtractSubclip_triggered();
 
+    void on_rangeComboBox_activated(int index);
+
 private:
     Ui::AvformatProducerWidget *ui;
     int m_defaultDuration;

@@ -212,7 +212,7 @@ void AvformatProducerWidget::recreateProducer()
 {
     Mlt::Producer* p = newProducer(MLT.profile());
     p->pass_list(*m_producer, "audio_index, video_index, force_aspect_ratio,"
-                 "video_delay, force_progressive, force_tff,"
+                 "video_delay, force_progressive, force_tff, set.force_full_luma,"
                  kAspectRatioNumerator ","
                  kAspectRatioDenominator ","
                  kShotcutHashProperty ","
@@ -259,6 +259,10 @@ void AvformatProducerWidget::onFrameDecoded()
     int totalAudioChannels = 0;
     bool populateTrackCombos = (ui->videoTrackComboBox->count() == 0 &&
                                 ui->audioTrackComboBox->count() == 0);
+    int color_range = !qstrcmp(m_producer->get("meta.media.color_range"), "full");
+    if (m_producer->get_int("set.force_full_luma"))
+        color_range = 1;
+
     for (int i = 0; i < n; i++) {
         QString key = QString("meta.media.%1.stream.type").arg(i);
         QString streamType(m_producer->get(key.toLatin1().constData()));
@@ -284,8 +288,10 @@ void AvformatProducerWidget::onFrameDecoded()
                 QString codec(m_producer->get(key.toLatin1().constData()));
                 ui->videoTableWidget->setItem(0, 1, new QTableWidgetItem(codec));
                 key = QString("meta.media.%1.codec.pix_fmt").arg(i);
-                ui->videoTableWidget->setItem(3, 1, new QTableWidgetItem(
-                    m_producer->get(key.toLatin1().constData())));
+                QString pix_fmt = QString::fromLatin1(m_producer->get(key.toLatin1().constData()));
+                if (pix_fmt.startsWith("yuvj"))
+                    color_range = 1;
+                ui->videoTableWidget->setItem(3, 1, new QTableWidgetItem(pix_fmt));
                 ui->videoTrackComboBox->setCurrentIndex(videoIndex);
             }
             ui->tabWidget->setTabEnabled(0, true);
@@ -418,6 +424,7 @@ void AvformatProducerWidget::onFrameDecoded()
         tff = m_producer->get_int("force_tff");
     ui->fieldOrderComboBox->setCurrentIndex(tff);
     ui->fieldOrderComboBox->setEnabled(!progressive);
+    ui->rangeComboBox->setCurrentIndex(color_range);
 
     if (populateTrackCombos) {
         for (int i = 0; i < m_producer->count(); i++) {
@@ -853,5 +860,13 @@ void AvformatProducerWidget::on_actionExtractSubclip_triggered()
         FfmpegJob* ffmpegJob = new FfmpegJob(filename, ffmpegArgs, false);
         ffmpegJob->setLabel(tr("Extract sub-clip %1").arg(Util::baseName(resource)));
         JOBS.add(ffmpegJob);
+    }
+}
+
+void AvformatProducerWidget::on_rangeComboBox_activated(int index)
+{
+    if (m_producer) {
+        m_producer->set("set.force_full_luma", index);
+        recreateProducer();
     }
 }
