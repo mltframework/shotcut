@@ -566,6 +566,8 @@ void AvformatProducerWidget::on_speedSpinBox_editingFinished()
 {
     if (!m_producer)
         return;
+    if (ui->speedSpinBox->value() == GetSpeedFromProducer(producer()))
+        return;
     m_recalcDuration = true;
     recreateProducer();
 }
