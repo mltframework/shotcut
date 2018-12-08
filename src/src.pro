@@ -287,7 +287,8 @@ OTHER_FILES += \
     ../packaging/linux/snap/package.mak \
     ../packaging/linux/org.shotcut.Shotcut.appdata.xml \
     ../packaging/linux/org.shotcut.Shotcut.desktop \
-    ../packaging/linux/org.shotcut.Shotcut.xml
+    ../packaging/linux/org.shotcut.Shotcut.xml \
+    ../packaging/linux/shotcut.1
 
 INCLUDEPATH = ../CuteLogger/include
 
@@ -377,5 +378,7 @@ unix:!mac {
     mime.path = $$PREFIX/share/mime/packages
     icons.files = $$PWD/../packaging/linux/org.shotcut.Shotcut.png
     icons.path = $$PREFIX/share/icons/hicolor/64x64/apps
-    INSTALLS += metainfo desktop mime icons
+    man.files = $$PWD/../packaging/linux/shotcut.1
+    man.path = $$PREFIX/share/man/man1
+    INSTALLS += metainfo desktop mime icons man
 }
