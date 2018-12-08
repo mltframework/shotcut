@@ -994,7 +994,7 @@ void EncodeDock::enqueueMelt(const QString& target, int realtime)
         if (MAIN.playlist() && MAIN.playlist()->count() > 1) {
             QFileInfo fi(target);
             int n = MAIN.playlist()->count();
-            int digits = QString::number(n + 1).size();
+            int digits = QString::number(n).size();
             for (int i = 0; i < n; i++) {
                 QScopedPointer<Mlt::ClipInfo> info(MAIN.playlist()->clip_info(i));
                 if (!info) continue;
