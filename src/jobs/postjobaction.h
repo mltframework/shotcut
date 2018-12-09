@@ -37,7 +37,7 @@ public:
     virtual ~FilePropertiesPostJobAction() {}
     virtual void doAction();
 
-private:
+protected:
     QString m_srcFile;
     QString m_dstFile;
 };

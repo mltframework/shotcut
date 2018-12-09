@@ -16,6 +16,8 @@
  */
 
 #include "postjobaction.h"
+#include "mainwindow.h"
+#include "docks/playlistdock.h"
 
 // For file time functions in FilePropertiesPostJobAction::doAction();
 #include <utime.h>
@@ -47,4 +49,6 @@ void ReverseFilePostJobAction::doAction()
 {
     FilePropertiesPostJobAction::doAction();
     QFile::remove(m_fileNameToRemove);
+    MAIN.open(m_dstFile);
+    MAIN.playlistDock()->on_actionAppendCut_triggered();
 }
