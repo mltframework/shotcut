@@ -37,6 +37,10 @@ Player::Player(QWidget *parent)
     : QWidget(parent)
     , m_position(0)
     , m_playPosition(std::numeric_limits<int>::max())
+    , m_previousIn(-1)
+    , m_previousOut(-1)
+    , m_duration(0)
+    , m_isSeekable(false)
     , m_isMeltedPlaying(-1)
     , m_zoomToggleFactor(Settings.playerZoom() == 0.0f? 1.0f : Settings.playerZoom())
     , m_pauseAfterOpen(false)
@@ -444,6 +448,11 @@ void Player::resizeEvent(QResizeEvent*)
 
 void Player::play(double speed)
 {
+    // Start from beginning if trying to start at the end.
+    if (m_position >= m_duration - 1) {
+        emit seeked(m_previousIn);
+        m_position = m_previousIn;
+    }
     emit played(speed);
     if (m_isSeekable) {
         actionPlay->setIcon(m_pauseIcon);
