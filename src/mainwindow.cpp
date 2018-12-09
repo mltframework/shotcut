@@ -2272,6 +2272,8 @@ bool MainWindow::on_actionSave_triggered()
         if (Util::warnIfNotWritable(m_currentFile, this, tr("Save XML")))
             return false;
         saveXML(m_currentFile);
+        QMutexLocker locker(&m_autosaveMutex);
+        m_autosaveFile.reset(new AutoSaveFile(m_currentFile));
         setCurrentFile(m_currentFile);
         setWindowModified(false);
         showStatusMessage(tr("Saved %1").arg(m_currentFile));
@@ -2318,10 +2320,12 @@ bool MainWindow::continueModified()
         dialog.setEscapeButton(QMessageBox::Cancel);
         int r = dialog.exec();
         if (r == QMessageBox::Yes || r == QMessageBox::No) {
-            QMutexLocker locker(&m_autosaveMutex);
-            m_autosaveFile.reset();
-            if (r == QMessageBox::Yes)
+            if (r == QMessageBox::Yes) {
                 return on_actionSave_triggered();
+            } else {
+                QMutexLocker locker(&m_autosaveMutex);
+                m_autosaveFile.reset();
+            }
         } else if (r == QMessageBox::Cancel) {
             return false;
         }
