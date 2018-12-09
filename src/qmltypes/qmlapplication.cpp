@@ -25,6 +25,7 @@
 #include <QCursor>
 #include <QPalette>
 #include <QStyle>
+#include <QFileInfo>
 #ifdef Q_OS_WIN
 #include <QLocale>
 #else
@@ -127,12 +128,19 @@ int QmlApplication::audioChannels()
     return MLT.audioChannels();
 }
 
-QString QmlApplication::getNextProjectFile(const QString &extension)
+QString QmlApplication::getNextProjectFile(const QString& filename)
 {
     QDir dir(MLT.projectFolder());
     if (!MLT.projectFolder().isEmpty() && dir.exists()) {
+        QFileInfo info(filename);
+        QString basename = info.completeBaseName();
+        QString extension = info.suffix();
+        if (extension.isEmpty()) {
+            extension = basename;
+            basename = QString();
+        }
         for (unsigned i = 1; i < std::numeric_limits<unsigned>::max(); i++) {
-            QString filename = QString::fromLatin1("%1.%2").arg(i).arg(extension);
+            QString filename = QString::fromLatin1("%1%2.%3").arg(basename).arg(i).arg(extension);
             if (!dir.exists(filename))
                 return dir.filePath(filename);
         }

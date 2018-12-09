@@ -28,6 +28,7 @@
 #include "settings.h"
 #include "mainwindow.h"
 #include "Logger.h"
+#include "qmltypes/qmlapplication.h"
 #include <QtWidgets>
 
 bool ProducerIsTimewarp( Mlt::Producer* producer )
@@ -771,7 +772,9 @@ void AvformatProducerWidget::on_reverseButton_clicked()
         }
         QFileInfo fi(resource);
         path = path.arg(fi.completeBaseName()).arg(tr("Reversed"));
-        QString filename = QFileDialog::getSaveFileName(this, dialog.windowTitle(), path);
+        QString filename = QmlApplication::getNextProjectFile(path);
+        if (filename.isEmpty())
+            filename = QFileDialog::getSaveFileName(this, dialog.windowTitle(), path);
         if (!filename.isEmpty()) {
             if (filename == QDir::toNativeSeparators(resource)) {
                 QMessageBox::warning(this, dialog.windowTitle(),

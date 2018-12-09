@@ -53,7 +53,7 @@ public:
     Q_INVOKABLE static void pasteFilters();
     Q_INVOKABLE static QString timecode(int frames);
     Q_INVOKABLE static int audioChannels();
-    Q_INVOKABLE static QString getNextProjectFile(const QString& extension);
+    Q_INVOKABLE static QString getNextProjectFile(const QString& filename);
 
 signals:
     void paletteChanged();
