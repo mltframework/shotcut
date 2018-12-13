@@ -3,18 +3,18 @@ import org.shotcut.qml 1.0
 
 Metadata {
     type: Metadata.Filter
-    name: qsTr("Mask")
-    mlt_service: "frei0r.alphaspot"
-    isHidden: true
-    qml: "ui.qml"
+    name: qsTr('Mask: Simple Shape')
+    mlt_service: 'mask_start'
+    objectName: 'maskSimpleShape'
+    qml: 'ui.qml'
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true
-        simpleProperties: ['1', '2', '3', '4']
+        simpleProperties: ['filter.1', 'filter.2', 'filter.3', 'filter.4']
         parameters: [
             Parameter {
                 name: qsTr('Horizontal')
-                property: '1'
+                property: 'filter.1'
                 isSimple: true
                 isCurve: true
                 minimum: -1
@@ -22,7 +22,7 @@ Metadata {
             },
             Parameter {
                 name: qsTr('Vertical')
-                property: '2'
+                property: 'filter.2'
                 isSimple: true
                 isCurve: true
                 minimum: -1
@@ -30,7 +30,7 @@ Metadata {
             },
             Parameter {
                 name: qsTr('Width')
-                property: '3'
+                property: 'filter.3'
                 isSimple: true
                 isCurve: true
                 minimum: 0
@@ -38,7 +38,7 @@ Metadata {
             },
             Parameter {
                 name: qsTr('Height')
-                property: '4'
+                property: 'filter.4'
                 isSimple: true
                 isCurve: true
                 minimum: 0
