@@ -2054,7 +2054,7 @@ function deploy_osx
       dmg_name="$INSTALL_DIR/signed.dmg"
       cmd rm "$dmg_name" 2>/dev/null
       sync
-      cmd hdiutil create -fs HFS+ -srcfolder staging -volname Shotcut -format UDBZ -size 400m "$dmg_name"
+      cmd hdiutil create -fs HFS+ -srcfolder staging -volname Shotcut -format UDBZ -size 800m "$dmg_name"
 
       if [ "$CLEANUP" = "1" ]; then
         cmd rm -rf staging
