@@ -23,6 +23,7 @@ import Shotcut.Controls 1.0
 import org.shotcut.qml 1.0 as Shotcut
 
 Item {
+    id: shapeRoot
     property bool blockUpdate: true
     property double startValue: 0
     property double middleValue: 50
@@ -83,11 +84,13 @@ Item {
                     break
                 }
             }
+            alphaRadioButton.enabled = false
         } else {
             resourceCombo.currentIndex = 0
             shapeFile.url = resource
             fileLabel.text = shapeFile.fileName
             fileLabelTip.text = shapeFile.url
+            alphaRadioButton.enabled = true
         }
         previousResourceComboIndex = resourceCombo.currentIndex
         invertCheckBox.checked = filter.getDouble('filter.invert') === 1
@@ -147,6 +150,14 @@ Item {
         }
     }
 
+    // This signal is used to workaround context properties not available in
+    // the FileDialog onAccepted signal handler on Qt 5.5.
+    signal fileOpened(string path)
+    onFileOpened: {
+        settings.openPath = path
+        fileDialog.folder = 'file:///' + path
+    }
+
     Shotcut.File { id: shapeFile }
     FileDialog {
         id: fileDialog
@@ -154,14 +165,14 @@ Item {
         selectMultiple: false
         selectFolder: false
         folder: settingsOpenPath
-        nameFilters: ["All Files (*)"]
-        selectedNameFilter: nameFilters[0]
         onAccepted: {
             shapeFile.url = fileDialog.fileUrl
             filter.set('filter.resource', shapeFile.url)
             fileLabel.text = shapeFile.fileName
             fileLabelTip.text = shapeFile.url
             previousResourceComboIndex = resourceCombo.currentIndex
+            alphaRadioButton.enabled = true
+            shapeRoot.fileOpened(shapeFile.path)
         }
         onRejected: resourceCombo.currentIndex = previousResourceComboIndex
     }
@@ -198,7 +209,8 @@ Item {
             model: [qsTr('Custom...'), qsTr('Bar Horizontal'), qsTr('Bar Vertical'), qsTr('Barn Door Horizontal'), qsTr('Barn Door Vertical'), qsTr('Barn Door Diagonal SW-NE'), qsTr('Barn Door Diagonal NW-SE'), qsTr('Diagonal Top Left'), qsTr('Diagonal Top Right'), qsTr('Matrix Waterfall Horizontal'), qsTr('Matrix Waterfall Vertical'), qsTr('Matrix Snake Horizontal'), qsTr('Matrix Snake Parallel Horizontal'), qsTr('Matrix Snake Vertical'), qsTr('Matrix Snake Parallel Vertical'), qsTr('Barn V Up'), qsTr('Iris Circle'), qsTr('Double Iris'), qsTr('Iris Box'), qsTr('Box Bottom Right'), qsTr('Box Bottom Left'), qsTr('Box Right Center'), qsTr('Clock Top')]
             currentIndex: 1
             ToolTip {
-                 text: qsTr('Set a mask from another file\'s brightness or alpha.')
+                text: qsTr('Set a mask from another file\'s brightness or alpha.')
+                isVisible: !resourceCombo.pressed
             }
             onActivated: updateResource(index)
             function updateResource(index) {
@@ -212,6 +224,9 @@ Item {
                     var s = (index < 10) ? '%luma0%1.pgm' : '%luma%1.pgm'
                     filter.set('filter.resource', s.arg(index))
                     previousResourceComboIndex = index
+                    brightnessRadioButton.checked = true
+                    filter.set('filter.use_luminance', 1)
+                    alphaRadioButton.enabled = false
                 }
             }
         }
