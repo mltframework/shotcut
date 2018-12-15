@@ -200,7 +200,7 @@ Item {
         }
 
         Label {
-            text: qsTr('<b>File:</b>')
+            text: qsTr('File')
             Layout.alignment: Qt.AlignRight
         }
         ComboBox {
