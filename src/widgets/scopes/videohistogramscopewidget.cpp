@@ -53,7 +53,7 @@ void VideoHistogramScopeWidget::refreshScope(const QSize& size, bool full)
     QVector<unsigned int> bBins(256, 0);
 
     if (m_frame.is_valid() && m_frame.get_image_width() && m_frame.get_image_height()) {
-        const uint8_t* p = nullptr;
+        const uint8_t* p = NULL;
         size_t count = 0;
         int width = m_frame.get_image_width();
         int height = m_frame.get_image_height();
