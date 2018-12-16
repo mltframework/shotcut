@@ -22,7 +22,6 @@
 #include "scopewidget.h"
 #include <QMutex>
 #include <QImage>
-#include <QTime>
 
 class VideoWaveformScopeWidget Q_DECL_FINAL : public ScopeWidget
 {
@@ -39,7 +38,6 @@ private:
 
     SharedFrame m_frame;
     QImage m_renderImg;
-    QTime m_refreshTime;
 
     // Variables accessed from multiple threads (mutex protected)
     QMutex m_mutex;

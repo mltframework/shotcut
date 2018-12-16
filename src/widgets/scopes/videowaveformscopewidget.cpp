@@ -29,12 +29,10 @@ VideoWaveformScopeWidget::VideoWaveformScopeWidget()
   : ScopeWidget("VideoZoom")
   , m_frame()
   , m_renderImg()
-  , m_refreshTime()
   , m_mutex(QMutex::NonRecursive)
   , m_displayImg()
 {
     LOG_DEBUG() << "begin";
-    m_refreshTime.start();
     setMouseTracking(true);
     LOG_DEBUG() << "end";
 }
@@ -43,13 +41,10 @@ VideoWaveformScopeWidget::VideoWaveformScopeWidget()
 void VideoWaveformScopeWidget::refreshScope(const QSize& size, bool full)
 {
     Q_UNUSED(size)
+    Q_UNUSED(full)
+
     while (m_queue.count() > 0) {
         m_frame = m_queue.pop();
-    }
-
-    if (!full && m_refreshTime.elapsed() < 90) {
-        // Limit refreshes to 90ms unless there is a good reason.
-        return;
     }
 
     if (m_frame.is_valid() && m_frame.get_image_width() && m_frame.get_image_height()) {
@@ -78,8 +73,6 @@ void VideoWaveformScopeWidget::refreshScope(const QSize& size, bool full)
     m_mutex.lock();
     m_displayImg.swap(m_renderImg);
     m_mutex.unlock();
-
-    m_refreshTime.restart();
 }
 
 void VideoWaveformScopeWidget::paintEvent(QPaintEvent*)
