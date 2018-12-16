@@ -92,6 +92,7 @@ SOURCES += main.cpp\
     widgets/scopes/audiopeakmeterscopewidget.cpp \
     widgets/scopes/audiospectrumscopewidget.cpp \
     widgets/scopes/audiowaveformscopewidget.cpp \
+    widgets/scopes/videohistogramscopewidget.cpp \
     widgets/scopes/videowaveformscopewidget.cpp \
     sharedframe.cpp \
     widgets/audioscale.cpp \
@@ -200,6 +201,7 @@ HEADERS  += mainwindow.h \
     widgets/scopes/audiopeakmeterscopewidget.h \
     widgets/scopes/audiospectrumscopewidget.h \
     widgets/scopes/audiowaveformscopewidget.h \
+    widgets/scopes/videohistogramscopewidget.h \
     widgets/scopes/videowaveformscopewidget.h \
     dataqueue.h \
     sharedframe.h \

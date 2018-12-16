@@ -20,6 +20,7 @@
 #include "widgets/scopes/audiopeakmeterscopewidget.h"
 #include "widgets/scopes/audiospectrumscopewidget.h"
 #include "widgets/scopes/audiowaveformscopewidget.h"
+#include "widgets/scopes/videohistogramscopewidget.h"
 #include "widgets/scopes/videowaveformscopewidget.h"
 #include "docks/scopedock.h"
 #include "settings.h"
@@ -37,6 +38,7 @@ ScopeController::ScopeController(QMainWindow* mainWindow, QMenu* menu)
     createScopeDock<AudioSpectrumScopeWidget>(mainWindow, scopeMenu);
     createScopeDock<AudioWaveformScopeWidget>(mainWindow, scopeMenu);
     if (!Settings.playerGPU()) {
+        createScopeDock<VideoHistogramScopeWidget>(mainWindow, scopeMenu);
         createScopeDock<VideoWaveformScopeWidget>(mainWindow, scopeMenu);
     }
     LOG_DEBUG() << "end";
