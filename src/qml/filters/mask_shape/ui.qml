@@ -43,8 +43,11 @@ Item {
             filter.set('filter.invert', 0)
             filter.set('filter.use_luminance', 1)
             filter.set('filter.resource', '%luma01.pgm')
+            filter.set('filter.use_mix', 1)
             filter.savePreset(preset.parameters)
         } else {
+            if (filter.get('filter.use_mix').length === 0)
+                filter.set('filter.use_mix', 1)
             initSimpleAnimation()
         }
         setControls()
@@ -93,6 +96,7 @@ Item {
             alphaRadioButton.enabled = true
         }
         previousResourceComboIndex = resourceCombo.currentIndex
+        thresholdCheckBox.checked = filter.getDouble('filter.use_mix') === 1
         invertCheckBox.checked = filter.getDouble('filter.invert') === 1
         if (filter.getDouble('filter.use_luminance') === 1)
             brightnessRadioButton.checked = true
@@ -189,7 +193,7 @@ Item {
         Preset {
             id: preset
             Layout.columnSpan: 3
-            parameters: ['filter.mix', 'filter.softness', 'filter.use_luminance', 'filter.invert', 'filter.resource']
+            parameters: ['filter.mix', 'filter.softness', 'filter.use_luminance', 'filter.invert', 'filter.resource', 'filter.use_mix']
             onBeforePresetLoaded: {
                 filter.resetProperty('filter.mix')
             }
@@ -280,9 +284,11 @@ Item {
         }
         Item { Layout.fillWidth: true }
 
-        Label {
+        CheckBox {
+            id: thresholdCheckBox
             text: qsTr('Threshold')
             Layout.alignment: Qt.AlignRight
+            onClicked: filter.set('filter.use_mix', checked)
         }
         SliderSpinner {
             id: thresholdSlider
