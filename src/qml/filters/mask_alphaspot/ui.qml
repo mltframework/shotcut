@@ -29,11 +29,11 @@ Item {
     property string paramRotation: 'filter.5'
     property string paramSoftness: 'filter.6'
     property string paramOperation: 'filter.9'
-    property var defaultParameters: [paramHorizontal, paramShape, paramWidth, paramHeight,  paramVertical, paramRotation, paramSoftness, paramOperation]
+    property var defaultParameters: [paramHorizontal, paramVertical, paramWidth, paramHeight,  paramShape, paramRotation, paramSoftness, paramOperation]
     property bool blockUpdate: true
-    property var startValues: [0.5, 0.5, 0, 0]
+    property var startValues: [0.5, 0.5, 0.1, 0.1]
     property var middleValues: [0.5, 0.5, 0.1, 0.1]
-    property var endValues: [0.5, 0.5, 0, 0]
+    property var endValues: [0.5, 0.5, 0.1, 0.1]
 
     width: 350
     height: 250
@@ -98,7 +98,7 @@ Item {
 
     function updateFilter(parameter, value, position, button) {
         if (blockUpdate) return
-        var index = parseInt(parameter - 1)
+        var index = defaultParameters.indexOf(parameter)
 
         if (position !== null) {
             if (position <= 0 && filter.animateIn > 0)

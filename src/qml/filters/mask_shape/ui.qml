@@ -25,9 +25,9 @@ import org.shotcut.qml 1.0 as Shotcut
 Item {
     id: shapeRoot
     property bool blockUpdate: true
-    property double startValue: 0
+    property double startValue: 50
     property double middleValue: 50
-    property double endValue: 100
+    property double endValue: 50
     property url settingsOpenPath: 'file:///' + settings.openPath
     property int previousResourceComboIndex
 
