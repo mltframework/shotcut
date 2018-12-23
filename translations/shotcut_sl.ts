@@ -100,7 +100,7 @@
     <message>
         <location filename="../src/widgets/scopes/audioloudnessscopewidget.cpp" line="98"/>
         <source>True Peak</source>
-        <translation>Resnični vrh</translation>
+        <translation>Pravi vrh</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/audioloudnessscopewidget.cpp" line="104"/>
@@ -222,199 +222,209 @@
         <translation>Video</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="164"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="466"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="294"/>
+        <source>Broadcast Limited (MPEG)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="299"/>
+        <source>Full (JPEG)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="334"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="480"/>
         <source>Track</source>
         <translation>Posnetek</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="196"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="322"/>
         <source>Aspect ratio</source>
         <translation>Razmerje stranic</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="227"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="387"/>
         <source>:</source>
         <translation>:</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="268"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="175"/>
         <source>Scan mode</source>
         <translation>Način branja</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="294"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="431"/>
         <source>Interlaced</source>
         <translation>Prepleteno</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="299"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="436"/>
         <source>Progressive</source>
         <translation>Progresivno</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="365"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="395"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="552"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="582"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="238"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="268"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="566"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="596"/>
         <source>Codec</source>
         <translation>Kodek</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="370"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="400"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="185"/>
+        <source>Color Range</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="243"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="273"/>
         <source>Resolution</source>
         <translation>Ločljivost</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="375"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="405"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="248"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="278"/>
         <source>Frame rate</source>
         <translation>Hitrost slik</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="380"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="253"/>
         <source>Pixel format</source>
         <translation>Format zaslonske pike</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="385"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="572"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="712"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="258"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="586"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="726"/>
         <source>Name</source>
         <translation>Ime</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="390"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="577"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="717"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="263"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="591"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="731"/>
         <source>Value</source>
         <translation>Vrednost</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="410"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="567"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="597"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="283"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="581"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="611"/>
         <source>Format</source>
         <translation>Format</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="418"/>
-        <source>Field order</source>
-        <translation>Zaporedje polj</translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="431"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="445"/>
         <source>Bottom Field First</source>
         <translation>Najprej spodnje polje</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="436"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="450"/>
         <source>Top Field First</source>
         <translation>Najprej zgornje polje</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="460"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="474"/>
         <source>Audio</source>
         <translation>Zvok</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="557"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="587"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="571"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="601"/>
         <source>Channels</source>
         <translation>Kanali</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="562"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="592"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="576"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="606"/>
         <source>Sample rate</source>
         <translation>Frekvenca vzorčenja</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="605"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="619"/>
         <source>Adjust the audio/video synchronization. The center position is equivalent to no alteration.</source>
         <translation>Prilagodite sinhronizacijo zvoka/videa. Sredinski položaj je enakovreden nobeni spremembi.</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="624"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="638"/>
         <source>Sync</source>
         <translation>Sinkronizacija</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="649"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="663"/>
         <source> ms</source>
         <translation>ms</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="678"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="692"/>
         <source>Metadata</source>
         <translation>Metapodatki</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="731"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="745"/>
         <source>Reset</source>
         <translation>Ponastavi</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="738"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="759"/>
         <source>Display a menu of additional actions</source>
         <translation>Prikaži meni z dodatnimi akcijami</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="780"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="801"/>
         <source>Show in Folder</source>
         <translation>Prikaži v mapi</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="785"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="806"/>
         <source>Copy Full File Path</source>
         <translation>Kopiraj celo pot datoteke</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="790"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="811"/>
         <source>More Information...</source>
         <translation>Več podatkov...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="795"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="816"/>
         <source>Start Integrity Check Job</source>
         <translation>Začni preverjanje integritete</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="800"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="821"/>
         <source>Convert to Edit-friendly...</source>
         <translation>Pretvori v prijazno za urejanje...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="805"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="704"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="752"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="713"/>
         <source>Reverse...</source>
         <translation>Povratno...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="810"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="817"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="826"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="828"/>
         <source>Extract Sub-clip...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="279"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="309"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="284"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="316"/>
         <source>None</source>
         <translation>Brez</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="330"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="337"/>
         <source>All</source>
         <translation>Vse</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="408"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="415"/>
         <source>(variable)</source>
         <translation>(spremenljivo)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="444"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="452"/>
         <source>This file is variable frame rate, which is not reliable for editing. Do you want to convert it to an edit-friendly format?
 
 If yes, choose a format below and then click OK to choose a file name. After choosing a file name, a job is created. When it is done, double-click the job to open it.
@@ -425,7 +435,7 @@ If yes, choose a format below and then click OK to choose a file name. After cho
 </translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="455"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="463"/>
         <source>This file does not support seeking and cannot be used for editing. Do you want to convert it to an edit-friendly format?
 
 If yes, choose a format below and then click OK to choose a file name. After choosing a file name, a job is created. When it is done, double-click the job to open it.
@@ -436,36 +446,36 @@ If yes, choose a format below and then click OK to choose a file name. After cho
 </translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="634"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="701"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="643"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="710"/>
         <source>Choose an edit-friendly format below and then click OK to choose a file name. After choosing a file name, a job is created. When it is done, double-click the job to open it.
 </source>
         <translation>Spodaj izberite prijazno obliko za urejanje in kliknite Vredu, da izberete ime datoteke. Po izboru imena datoteke, se ustvari posel. Ko bo ta končan, dvokliknite nanj, da ga odprete.
 </translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="692"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="793"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="701"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="804"/>
         <source>Convert %1</source>
         <translation>Pretvori %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="765"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="774"/>
         <source>Reversed</source>
         <translation>Obrnjeno</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="801"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="812"/>
         <source>Reverse %1</source>
         <translation>Obrni %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="816"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="827"/>
         <source>Sub-clip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="851"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="866"/>
         <source>Extract sub-clip %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -963,142 +973,142 @@ If yes, choose a format below and then click OK to choose a file name. After cho
         <translation>Izbriši trenutno izbrano prednastavitev</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="170"/>
+        <location filename="../src/docks/encodedock.ui" line="175"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Export Help&lt;/span&gt;&lt;/p&gt;&lt;p&gt;The defaults create a H.264/AAC MP4 file, which is suitable for most users and purposes. Choose a &lt;span style=&quot; font-weight:600;&quot;&gt;Preset&lt;/span&gt; at the left before deciding to use the &lt;span style=&quot; font-weight:600;&quot;&gt;Advanced&lt;/span&gt; mode. The &lt;span style=&quot; font-weight:600;&quot;&gt;Advanced&lt;/span&gt; mode does not prevent creating an invalid combination of options!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="188"/>
+        <location filename="../src/docks/encodedock.ui" line="193"/>
         <source>From</source>
         <translation>Od</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="218"/>
+        <location filename="../src/docks/encodedock.ui" line="223"/>
         <source>Format</source>
         <translation>Oblika</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="254"/>
+        <location filename="../src/docks/encodedock.ui" line="259"/>
         <source>Use hardware encoder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="261"/>
+        <location filename="../src/docks/encodedock.ui" line="266"/>
         <source>Configure...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="295"/>
+        <location filename="../src/docks/encodedock.ui" line="300"/>
         <source>Video</source>
         <translation>Video</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="319"/>
+        <location filename="../src/docks/encodedock.ui" line="324"/>
         <source>Interpolation</source>
         <translation>Interpolacija</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="329"/>
+        <location filename="../src/docks/encodedock.ui" line="334"/>
         <source>Field order</source>
         <translation>Vrstni red polj</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="339"/>
+        <location filename="../src/docks/encodedock.ui" line="344"/>
         <source>Aspect ratio</source>
         <translation>Razmerje stranic</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="370"/>
+        <location filename="../src/docks/encodedock.ui" line="375"/>
         <source>x</source>
         <translation>x</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="408"/>
+        <location filename="../src/docks/encodedock.ui" line="413"/>
         <source>Scan mode</source>
         <translation>Način branja</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="427"/>
+        <location filename="../src/docks/encodedock.ui" line="432"/>
         <source>Interlaced</source>
         <translation>Prepleteno</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="432"/>
+        <location filename="../src/docks/encodedock.ui" line="437"/>
         <source>Progressive</source>
         <translation>Progresivno</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="488"/>
+        <location filename="../src/docks/encodedock.ui" line="493"/>
         <source>Resolution</source>
         <translation>Ločljivost</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="498"/>
+        <location filename="../src/docks/encodedock.ui" line="503"/>
         <source>Frames/sec</source>
         <translation>Okvirjev/s</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="526"/>
+        <location filename="../src/docks/encodedock.ui" line="531"/>
         <source>:</source>
         <translation>:</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="567"/>
+        <location filename="../src/docks/encodedock.ui" line="572"/>
         <source>Bottom Field First</source>
         <translation>Najprej spodnje</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="572"/>
+        <location filename="../src/docks/encodedock.ui" line="577"/>
         <source>Top Field First</source>
         <translation>Najprej zgornje polje</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="601"/>
+        <location filename="../src/docks/encodedock.ui" line="606"/>
         <source>One Field (fast)</source>
         <translation>Eno polje (hitro)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="606"/>
+        <location filename="../src/docks/encodedock.ui" line="611"/>
         <source>Linear Blend (fast)</source>
         <translation>Linearno mešanje (hitro)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="611"/>
+        <location filename="../src/docks/encodedock.ui" line="616"/>
         <source>YADIF - temporal only (good)</source>
         <translation>YADIF - samo časovno (dobro)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="616"/>
+        <location filename="../src/docks/encodedock.ui" line="621"/>
         <source>YADIF - temporal + spatial (best)</source>
         <translation>YADIF - časovno in prostorsko (najboljše)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="639"/>
+        <location filename="../src/docks/encodedock.ui" line="644"/>
         <source>Deinterlacer</source>
         <translation>Odprepletalnik</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="655"/>
+        <location filename="../src/docks/encodedock.ui" line="660"/>
         <source>Nearest Neighbor (fast)</source>
         <translation>Najbližji sosed (hitro)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="660"/>
+        <location filename="../src/docks/encodedock.ui" line="665"/>
         <source>Bilinear (good)</source>
         <translation>Dvolinearno (dobro)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="665"/>
+        <location filename="../src/docks/encodedock.ui" line="670"/>
         <source>Bicubic (better)</source>
         <translation>Dvokubično (boljše)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="670"/>
+        <location filename="../src/docks/encodedock.ui" line="675"/>
         <source>Hyper/Lanczos (best)</source>
         <translation>Hyper/Lanczos (najboljše)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="693"/>
+        <location filename="../src/docks/encodedock.ui" line="698"/>
         <source>This enables multiple image processing threads.
 Sometimes, this can be a problem, and you can
 test if turning this off helps. For example, some
@@ -1109,590 +1119,590 @@ with parallel processing enabled.</source>
 Včasih to lahko povzroči težave in lahko preizkusite, če pomaga, da to izklopite. Na primer, nekateri prepleteni AVCHD v povezavi z YADIF odprepletalnikom so sporočani kot problematični z omogočeno vzporedno obdelavo.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="701"/>
+        <location filename="../src/docks/encodedock.ui" line="706"/>
         <source>Parallel processing</source>
         <translation>Vzporedna obdelava</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="715"/>
-        <location filename="../src/docks/encodedock.ui" line="724"/>
-        <location filename="../src/docks/encodedock.ui" line="1395"/>
+        <location filename="../src/docks/encodedock.ui" line="720"/>
+        <location filename="../src/docks/encodedock.ui" line="729"/>
+        <location filename="../src/docks/encodedock.ui" line="1400"/>
         <source>Codec</source>
         <translation>Kodek</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="754"/>
+        <location filename="../src/docks/encodedock.ui" line="759"/>
         <source>GOP</source>
         <translation>GOP</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="766"/>
+        <location filename="../src/docks/encodedock.ui" line="771"/>
         <source>GOP = group of pictures, which is the maximum key frame interval</source>
         <translation>GOP = Skupina slik, kar je največji interval ključnih okvirjev</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="779"/>
+        <location filename="../src/docks/encodedock.ui" line="784"/>
         <source>frames</source>
         <translation>okvirjev</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="799"/>
+        <location filename="../src/docks/encodedock.ui" line="804"/>
         <source>A fixed GOP means that keyframes will
 not be inserted at detected scene changes.</source>
         <translation>Fiksni GOP pomeni, da ključni okviri ne bodo vstavljeni pri zaznanih spremembah scene.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="803"/>
+        <location filename="../src/docks/encodedock.ui" line="808"/>
         <source>Fixed</source>
         <translation>Fiksno</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="827"/>
-        <location filename="../src/docks/encodedock.ui" line="1437"/>
+        <location filename="../src/docks/encodedock.ui" line="832"/>
+        <location filename="../src/docks/encodedock.ui" line="1442"/>
         <source>The average bit rate</source>
         <translation>Povprečna bitna hitrost</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="837"/>
-        <location filename="../src/docks/encodedock.ui" line="1462"/>
+        <location filename="../src/docks/encodedock.ui" line="842"/>
+        <location filename="../src/docks/encodedock.ui" line="1467"/>
         <source>64k</source>
         <translation>64k</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="842"/>
-        <location filename="../src/docks/encodedock.ui" line="1472"/>
+        <location filename="../src/docks/encodedock.ui" line="847"/>
+        <location filename="../src/docks/encodedock.ui" line="1477"/>
         <source>128k</source>
         <translation>128k</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="847"/>
-        <location filename="../src/docks/encodedock.ui" line="1487"/>
+        <location filename="../src/docks/encodedock.ui" line="852"/>
+        <location filename="../src/docks/encodedock.ui" line="1492"/>
         <source>256k</source>
         <translation>256k</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="852"/>
-        <location filename="../src/docks/encodedock.ui" line="1497"/>
+        <location filename="../src/docks/encodedock.ui" line="857"/>
+        <location filename="../src/docks/encodedock.ui" line="1502"/>
         <source>512k</source>
         <translation>512k</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="857"/>
+        <location filename="../src/docks/encodedock.ui" line="862"/>
         <source>768k</source>
         <translation>768k</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="862"/>
-        <location filename="../src/docks/encodedock.ui" line="1502"/>
+        <location filename="../src/docks/encodedock.ui" line="867"/>
+        <location filename="../src/docks/encodedock.ui" line="1507"/>
         <source>1M</source>
         <translation>1M</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="867"/>
+        <location filename="../src/docks/encodedock.ui" line="872"/>
         <source>1200k</source>
         <translation>1200k</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="872"/>
+        <location filename="../src/docks/encodedock.ui" line="877"/>
         <source>1500k</source>
         <translation>1500k</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="877"/>
+        <location filename="../src/docks/encodedock.ui" line="882"/>
         <source>2M</source>
         <translation>2M</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="882"/>
+        <location filename="../src/docks/encodedock.ui" line="887"/>
         <source>2500k</source>
         <translation>2500k</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="887"/>
+        <location filename="../src/docks/encodedock.ui" line="892"/>
         <source>3M</source>
         <translation>3M</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="892"/>
+        <location filename="../src/docks/encodedock.ui" line="897"/>
         <source>4M</source>
         <translation>4M</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="897"/>
+        <location filename="../src/docks/encodedock.ui" line="902"/>
         <source>5M</source>
         <translation>5M</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="902"/>
+        <location filename="../src/docks/encodedock.ui" line="907"/>
         <source>6M</source>
         <translation>6M</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="907"/>
+        <location filename="../src/docks/encodedock.ui" line="912"/>
         <source>8M</source>
         <translation>8M</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="912"/>
+        <location filename="../src/docks/encodedock.ui" line="917"/>
         <source>10M</source>
         <translation>10M</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="917"/>
+        <location filename="../src/docks/encodedock.ui" line="922"/>
         <source>12M</source>
         <translation>12M</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="922"/>
+        <location filename="../src/docks/encodedock.ui" line="927"/>
         <source>14M</source>
         <translation>14M</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="927"/>
+        <location filename="../src/docks/encodedock.ui" line="932"/>
         <source>16M</source>
         <translation>16M</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="932"/>
+        <location filename="../src/docks/encodedock.ui" line="937"/>
         <source>18M</source>
         <translation>18M</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="937"/>
+        <location filename="../src/docks/encodedock.ui" line="942"/>
         <source>20M</source>
         <translation>20M</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="942"/>
+        <location filename="../src/docks/encodedock.ui" line="947"/>
         <source>25M</source>
         <translation>25M</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="947"/>
+        <location filename="../src/docks/encodedock.ui" line="952"/>
         <source>30M</source>
         <translation>30M</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="952"/>
+        <location filename="../src/docks/encodedock.ui" line="957"/>
         <source>40M</source>
         <translation>40M</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="957"/>
+        <location filename="../src/docks/encodedock.ui" line="962"/>
         <source>50M</source>
         <translation>50M</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="962"/>
+        <location filename="../src/docks/encodedock.ui" line="967"/>
         <source>60M</source>
         <translation>60M</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="967"/>
+        <location filename="../src/docks/encodedock.ui" line="972"/>
         <source>70M</source>
         <translation>70M</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="972"/>
+        <location filename="../src/docks/encodedock.ui" line="977"/>
         <source>80M</source>
         <translation>80M</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="980"/>
-        <location filename="../src/docks/encodedock.ui" line="1510"/>
+        <location filename="../src/docks/encodedock.ui" line="985"/>
+        <location filename="../src/docks/encodedock.ui" line="1515"/>
         <source>b/s</source>
         <translation>b/s</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1002"/>
+        <location filename="../src/docks/encodedock.ui" line="1007"/>
         <source>Disable video</source>
         <translation>Onemogoči video</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1009"/>
+        <location filename="../src/docks/encodedock.ui" line="1014"/>
         <source>Dual pass</source>
         <translation>Dvojni prehod</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1016"/>
+        <location filename="../src/docks/encodedock.ui" line="1021"/>
         <source>B frames</source>
         <translation>B okvirji</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1028"/>
+        <location filename="../src/docks/encodedock.ui" line="1033"/>
         <source>B frames are the bidirectional &quot;delta&quot; pictures
 in temporal compression</source>
         <translation>B-okviri so dvosmerne &quot;delta&quot; slike v časovnem stiskanju</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1067"/>
+        <location filename="../src/docks/encodedock.ui" line="1072"/>
         <source>Codec threads</source>
         <translation>Niti kodeka</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1082"/>
+        <location filename="../src/docks/encodedock.ui" line="1087"/>
         <source>(0 = auto)</source>
         <translation>(0 = samodejno)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1104"/>
-        <location filename="../src/docks/encodedock.ui" line="1552"/>
+        <location filename="../src/docks/encodedock.ui" line="1109"/>
+        <location filename="../src/docks/encodedock.ui" line="1557"/>
         <source>Rate control</source>
         <translation>Kontrola hitrosti</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1117"/>
-        <location filename="../src/docks/encodedock.ui" line="1565"/>
+        <location filename="../src/docks/encodedock.ui" line="1122"/>
+        <location filename="../src/docks/encodedock.ui" line="1570"/>
         <source>Average Bitrate</source>
         <translation>Povprečna bitna hitrost</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1122"/>
-        <location filename="../src/docks/encodedock.ui" line="1570"/>
+        <location filename="../src/docks/encodedock.ui" line="1127"/>
+        <location filename="../src/docks/encodedock.ui" line="1575"/>
         <source>Constant Bitrate</source>
         <translation>Konstantna bitna hitrost</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1127"/>
-        <location filename="../src/docks/encodedock.ui" line="1575"/>
+        <location filename="../src/docks/encodedock.ui" line="1132"/>
+        <location filename="../src/docks/encodedock.ui" line="1580"/>
         <source>Quality-based VBR</source>
         <translation>VBR zasnovan na kakovosti</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1132"/>
+        <location filename="../src/docks/encodedock.ui" line="1137"/>
         <source>Constrained VBR</source>
         <translation>Omejen VBR</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1155"/>
+        <location filename="../src/docks/encodedock.ui" line="1160"/>
         <source>Buffer size</source>
         <translation>Velikost predpomnilnika</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1177"/>
+        <location filename="../src/docks/encodedock.ui" line="1182"/>
         <source>KiB</source>
         <translation>KiB</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1199"/>
-        <location filename="../src/docks/encodedock.ui" line="1598"/>
+        <location filename="../src/docks/encodedock.ui" line="1204"/>
+        <location filename="../src/docks/encodedock.ui" line="1603"/>
         <source>Quality</source>
         <translation>Kakovost</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1211"/>
-        <location filename="../src/docks/encodedock.ui" line="1610"/>
+        <location filename="../src/docks/encodedock.ui" line="1216"/>
+        <location filename="../src/docks/encodedock.ui" line="1615"/>
         <source> %</source>
         <translation>%</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1242"/>
-        <location filename="../src/docks/encodedock.ui" line="1425"/>
+        <location filename="../src/docks/encodedock.ui" line="1247"/>
+        <location filename="../src/docks/encodedock.ui" line="1430"/>
         <source>Bitrate</source>
         <translation>Bitna hitrost</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1253"/>
+        <location filename="../src/docks/encodedock.ui" line="1258"/>
         <source>Audio</source>
         <translation>Zvok</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1262"/>
+        <location filename="../src/docks/encodedock.ui" line="1267"/>
         <source>Channels</source>
         <translation>Kanali</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1274"/>
+        <location filename="../src/docks/encodedock.ui" line="1279"/>
         <source>The number of audio channels in the output.</source>
         <translation>Število zvočnih kanalov v izhodu.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1278"/>
+        <location filename="../src/docks/encodedock.ui" line="1283"/>
         <source>1 (mono)</source>
         <translation>1 (mono)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1283"/>
+        <location filename="../src/docks/encodedock.ui" line="1288"/>
         <source>2 (stereo)</source>
         <translation>2 (stereo)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1288"/>
+        <location filename="../src/docks/encodedock.ui" line="1293"/>
         <source>6 (5.1)</source>
         <translation>6 (5.1)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1320"/>
+        <location filename="../src/docks/encodedock.ui" line="1325"/>
         <source>8000</source>
         <translation>8000</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1325"/>
+        <location filename="../src/docks/encodedock.ui" line="1330"/>
         <source>12000</source>
         <translation>12000</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1330"/>
+        <location filename="../src/docks/encodedock.ui" line="1335"/>
         <source>16000</source>
         <translation>16000</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1335"/>
+        <location filename="../src/docks/encodedock.ui" line="1340"/>
         <source>22050</source>
         <translation>22050</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1340"/>
+        <location filename="../src/docks/encodedock.ui" line="1345"/>
         <source>32000</source>
         <translation>32000</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1345"/>
+        <location filename="../src/docks/encodedock.ui" line="1350"/>
         <source>44100</source>
         <translation>44100</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1350"/>
+        <location filename="../src/docks/encodedock.ui" line="1355"/>
         <source>48000</source>
         <translation>48000</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1355"/>
+        <location filename="../src/docks/encodedock.ui" line="1360"/>
         <source>96000</source>
         <translation>96000</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1363"/>
+        <location filename="../src/docks/encodedock.ui" line="1368"/>
         <source>Hz</source>
         <translation>Hz</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1385"/>
+        <location filename="../src/docks/encodedock.ui" line="1390"/>
         <source>Sample rate</source>
         <translation>Frekvenca vzorčenja</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1447"/>
+        <location filename="../src/docks/encodedock.ui" line="1452"/>
         <source>16k</source>
         <translation>16k</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1452"/>
+        <location filename="../src/docks/encodedock.ui" line="1457"/>
         <source>32k</source>
         <translation>32k</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1457"/>
+        <location filename="../src/docks/encodedock.ui" line="1462"/>
         <source>48k</source>
         <translation>48k</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1467"/>
+        <location filename="../src/docks/encodedock.ui" line="1472"/>
         <source>96k</source>
         <translation>96k</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1477"/>
+        <location filename="../src/docks/encodedock.ui" line="1482"/>
         <source>192k</source>
         <translation type="unfinished">192k</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1482"/>
+        <location filename="../src/docks/encodedock.ui" line="1487"/>
         <source>220k</source>
         <translation>220k</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1492"/>
+        <location filename="../src/docks/encodedock.ui" line="1497"/>
         <source>384k</source>
         <translation>384k</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1532"/>
+        <location filename="../src/docks/encodedock.ui" line="1537"/>
         <source>Disable audio</source>
         <translation>Onemogoči zvok</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1642"/>
+        <location filename="../src/docks/encodedock.ui" line="1647"/>
         <source>Other</source>
         <translation>Ostalo</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1673"/>
-        <location filename="../src/docks/encodedock.cpp" line="887"/>
-        <location filename="../src/docks/encodedock.cpp" line="1207"/>
-        <location filename="../src/docks/encodedock.cpp" line="1629"/>
+        <location filename="../src/docks/encodedock.ui" line="1682"/>
+        <location filename="../src/docks/encodedock.cpp" line="888"/>
+        <location filename="../src/docks/encodedock.cpp" line="1208"/>
+        <location filename="../src/docks/encodedock.cpp" line="1630"/>
         <source>Export File</source>
         <translation>Izvozi datoteko</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1680"/>
+        <location filename="../src/docks/encodedock.ui" line="1692"/>
         <source>Reset options to defaults</source>
         <translation>Ponastavi na privzete možnosti</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1683"/>
+        <location filename="../src/docks/encodedock.ui" line="1695"/>
         <source>Reset</source>
         <translation>Ponastavi</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1690"/>
+        <location filename="../src/docks/encodedock.ui" line="1702"/>
         <source>Advanced</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1700"/>
+        <location filename="../src/docks/encodedock.ui" line="1712"/>
         <source>Always start in Advanced mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1710"/>
-        <location filename="../src/docks/encodedock.cpp" line="1346"/>
-        <location filename="../src/docks/encodedock.cpp" line="1353"/>
-        <location filename="../src/docks/encodedock.cpp" line="1464"/>
+        <location filename="../src/docks/encodedock.ui" line="1722"/>
+        <location filename="../src/docks/encodedock.cpp" line="1347"/>
+        <location filename="../src/docks/encodedock.cpp" line="1354"/>
+        <location filename="../src/docks/encodedock.cpp" line="1465"/>
         <source>Stream</source>
         <translation>Pretok</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1737"/>
-        <location filename="../src/docks/encodedock.cpp" line="1181"/>
-        <location filename="../src/docks/encodedock.cpp" line="1269"/>
-        <location filename="../src/docks/encodedock.cpp" line="1283"/>
+        <location filename="../src/docks/encodedock.ui" line="1749"/>
+        <location filename="../src/docks/encodedock.cpp" line="1182"/>
+        <location filename="../src/docks/encodedock.cpp" line="1270"/>
+        <location filename="../src/docks/encodedock.cpp" line="1284"/>
         <source>Stop Capture</source>
         <translation>Ustavi zajem</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="98"/>
+        <location filename="../src/docks/encodedock.cpp" line="99"/>
         <source>Automatic from extension</source>
         <translation>Samodejno iz končnice</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="106"/>
-        <location filename="../src/docks/encodedock.cpp" line="116"/>
+        <location filename="../src/docks/encodedock.cpp" line="107"/>
+        <location filename="../src/docks/encodedock.cpp" line="117"/>
         <source>Default for format</source>
         <translation>Privzeto za format</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="368"/>
+        <location filename="../src/docks/encodedock.cpp" line="369"/>
         <source>Timeline</source>
-        <translation>Časovni trak</translation>
+        <translation>Časovnica</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="370"/>
+        <location filename="../src/docks/encodedock.cpp" line="371"/>
         <source>Playlist</source>
         <translation>Seznam predvajanja</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="372"/>
+        <location filename="../src/docks/encodedock.cpp" line="373"/>
         <source>Each Playlist Item</source>
         <translation>Vsak vnos predvajalnega seznama</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="381"/>
-        <location filename="../src/docks/encodedock.cpp" line="393"/>
+        <location filename="../src/docks/encodedock.cpp" line="382"/>
+        <location filename="../src/docks/encodedock.cpp" line="394"/>
         <source>Source</source>
         <translation>Vir</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="408"/>
-        <location filename="../src/docks/encodedock.cpp" line="1128"/>
+        <location filename="../src/docks/encodedock.cpp" line="409"/>
         <location filename="../src/docks/encodedock.cpp" line="1129"/>
+        <location filename="../src/docks/encodedock.cpp" line="1130"/>
         <source>Custom</source>
         <translation>Po meri</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="444"/>
+        <location filename="../src/docks/encodedock.cpp" line="445"/>
         <source>Stock</source>
         <translation>Zaloga</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="447"/>
+        <location filename="../src/docks/encodedock.cpp" line="448"/>
         <source>Default</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="891"/>
+        <location filename="../src/docks/encodedock.cpp" line="892"/>
         <source>You cannot write to a file that is in your project.
 Try again with a different folder or file name.</source>
         <translation>Ni možno pisati v datoteko, ki je v vašem projektu. Poskusite znova z drugo mapo ali imenom datoteke.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1207"/>
-        <location filename="../src/docks/encodedock.cpp" line="1631"/>
+        <location filename="../src/docks/encodedock.cpp" line="1208"/>
+        <location filename="../src/docks/encodedock.cpp" line="1632"/>
         <source>Capture File</source>
         <translation>Snemalna datoteka</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1228"/>
+        <location filename="../src/docks/encodedock.cpp" line="1229"/>
         <source>The drive you chose only has %1 MiB of free space.
 Do you still want to continue?</source>
         <translation>Izbran nosilec ima le %1MiB prostora na voljo.
 Želite vseeno nadaljevati?</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1235"/>
+        <location filename="../src/docks/encodedock.cpp" line="1236"/>
         <source>Do not show this anymore.</source>
         <comment>Export free disk space warning dialog</comment>
         <translation>Tega ne prikazuj več</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1240"/>
+        <location filename="../src/docks/encodedock.cpp" line="1241"/>
         <source>Export canceled.</source>
         <translation>Izvoz preklican.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1341"/>
-        <location filename="../src/docks/encodedock.cpp" line="1362"/>
+        <location filename="../src/docks/encodedock.cpp" line="1342"/>
+        <location filename="../src/docks/encodedock.cpp" line="1363"/>
         <source>Stop Stream</source>
         <translation>Ustavi pretok</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1354"/>
+        <location filename="../src/docks/encodedock.cpp" line="1355"/>
         <source>Enter the network protocol scheme, address, port, and parameters as an URL:</source>
         <translation>Vnesite mrežni protokol, naslov, vrata in parametre kot URL:</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1399"/>
+        <location filename="../src/docks/encodedock.cpp" line="1400"/>
         <source>Add Export Preset</source>
         <translation>Dodaj prednastavitev za izvoz</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1441"/>
+        <location filename="../src/docks/encodedock.cpp" line="1442"/>
         <source>Delete Preset</source>
         <translation>Izbriši prednastavitve</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1442"/>
+        <location filename="../src/docks/encodedock.cpp" line="1443"/>
         <source>Are you sure you want to delete %1?</source>
         <translation>Ali res želite izbrisati %1?</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1561"/>
-        <location filename="../src/docks/encodedock.cpp" line="1566"/>
+        <location filename="../src/docks/encodedock.cpp" line="1562"/>
+        <location filename="../src/docks/encodedock.cpp" line="1567"/>
         <source>None</source>
         <translation>Brez</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1615"/>
+        <location filename="../src/docks/encodedock.cpp" line="1616"/>
         <source>KiB (%1s)</source>
         <translation>KiB (%1s)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1730"/>
+        <location filename="../src/docks/encodedock.cpp" line="1731"/>
         <source>Detecting hardware encoders...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1747"/>
+        <location filename="../src/docks/encodedock.cpp" line="1762"/>
         <source>Nothing found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1750"/>
+        <location filename="../src/docks/encodedock.cpp" line="1765"/>
         <source>Found %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1762"/>
+        <location filename="../src/docks/encodedock.cpp" line="1777"/>
         <source>Configure Hardware Encoding</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2685,12 +2695,12 @@ the list. This does not stop a currently running job. Right-
     <message>
         <location filename="../src/qml/views/keyframes/KeyframesToolbar.qml" line="67"/>
         <source>Zoom timeline out (-)</source>
-        <translation>Pomanjšaj časovni trak (-)</translation>
+        <translation>Pomanjšaj časovnico (-)</translation>
     </message>
     <message>
         <location filename="../src/qml/views/keyframes/KeyframesToolbar.qml" line="74"/>
         <source>Zoom timeline in (+)</source>
-        <translation>Povečaj časovni trak (+)</translation>
+        <translation>Povečaj časovnico (+)</translation>
     </message>
 </context>
 <context>
@@ -3167,7 +3177,7 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="394"/>
-        <location filename="../src/mainwindow.cpp" line="2770"/>
+        <location filename="../src/mainwindow.cpp" line="2786"/>
         <source>Enter Full Screen</source>
         <translation>Vnesi celoten zaslon</translation>
     </message>
@@ -3179,12 +3189,12 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     <message>
         <location filename="../src/mainwindow.ui" line="406"/>
         <source>Peak Meter</source>
-        <translation>Merilec vrha</translation>
+        <translation>Prikaz nivoja</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="409"/>
         <source>Show or hide the audio peak meter</source>
-        <translation>Prikaži ali skrij merilec vrha zvoka</translation>
+        <translation>Prikaži ali skrij prikaz zvočnih nivojev</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="418"/>
@@ -3348,7 +3358,7 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     <message>
         <location filename="../src/mainwindow.ui" line="672"/>
         <source>Timeline</source>
-        <translation>Časovni trak</translation>
+        <translation>Časovnica</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="677"/>
@@ -3522,7 +3532,7 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     <message>
         <location filename="../src/mainwindow.ui" line="928"/>
         <source>Timeline Project</source>
-        <translation>Časovni trak projekta</translation>
+        <translation>Projektna časovnica</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="933"/>
@@ -3533,7 +3543,7 @@ audio (0%) or clip B&apos;s audio (100%).</source>
         <location filename="../src/mainwindow.ui" line="943"/>
         <location filename="../src/mainwindow.ui" line="948"/>
         <source>Remove...</source>
-        <translation type="unfinished"></translation>
+        <translation>Odstrani...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="957"/>
@@ -3681,8 +3691,8 @@ Prosim namestite jo z vašim upraviteljem paketov. Lahko se imenuje libsdl2-2.0-
     <message>
         <location filename="../src/mainwindow.cpp" line="845"/>
         <location filename="../src/mainwindow.cpp" line="847"/>
-        <location filename="../src/mainwindow.cpp" line="1206"/>
-        <location filename="../src/mainwindow.cpp" line="3345"/>
+        <location filename="../src/mainwindow.cpp" line="1207"/>
+        <location filename="../src/mainwindow.cpp" line="3361"/>
         <source>Failed to open </source>
         <translation>Odpiranje ni uspelo</translation>
     </message>
@@ -3732,115 +3742,115 @@ with &quot;- Repaired&quot; in the file name and open it.</source>
         <translation>Samemu sebi ne morete dodati projekta!</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1240"/>
-        <location filename="../src/mainwindow.cpp" line="3325"/>
+        <location filename="../src/mainwindow.cpp" line="1241"/>
+        <location filename="../src/mainwindow.cpp" line="3341"/>
         <source>Open File</source>
         <translation>Odpri datoteko</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1502"/>
+        <location filename="../src/mainwindow.cpp" line="1503"/>
         <source>Untitled</source>
         <translation>Brez naslova</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1518"/>
+        <location filename="../src/mainwindow.cpp" line="1519"/>
         <source>About Shotcut</source>
         <translation>Vizitka Shotcuta</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1519"/>
+        <location filename="../src/mainwindow.cpp" line="1520"/>
         <source>&lt;h1&gt;Shotcut version %1&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;https://www.shotcut.org/&quot;&gt;Shotcut&lt;/a&gt; is a free, open source, cross platform video editor.&lt;/p&gt;&lt;small&gt;&lt;p&gt;Copyright &amp;copy; 2011-2018 &lt;a href=&quot;https://www.meltytech.com/&quot;&gt;Meltytech&lt;/a&gt;, LLC&lt;/p&gt;&lt;p&gt;Licensed under the &lt;a href=&quot;https://www.gnu.org/licenses/gpl.html&quot;&gt;GNU General Public License v3.0&lt;/a&gt;&lt;/p&gt;&lt;p&gt;This program proudly uses the following projects:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://www.qt.io/&quot;&gt;Qt&lt;/a&gt; application and UI framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; multimedia authoring framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; multimedia format and codec libraries&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; H.264 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; VP8 and VP9 encoders&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; MP3 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt; video plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; audio plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;DefaultIcon&lt;/a&gt; icon collection by &lt;a href=&quot;http://www.interactivemania.com/&quot;&gt;interactivemania&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt;Oxygen&lt;/a&gt; icon collection&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;The source code used to build this program can be downloaded from &lt;a href=&quot;https://www.shotcut.org/&quot;&gt;shotcut.org&lt;/a&gt;.&lt;/p&gt;This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.&lt;/small&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1987"/>
+        <location filename="../src/mainwindow.cpp" line="1988"/>
         <source>Non-Broadcast</source>
         <translation>Ne-oddajno</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1992"/>
+        <location filename="../src/mainwindow.cpp" line="1993"/>
         <source>DVD Widescreen NTSC</source>
         <translation>DVD Širokozaslonsko NTSC</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1993"/>
+        <location filename="../src/mainwindow.cpp" line="1994"/>
         <source>DVD Widescreen PAL</source>
         <translation>DVD Širokozaslonsko PAL</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2006"/>
+        <location filename="../src/mainwindow.cpp" line="2007"/>
         <source>Custom</source>
         <translation>Po meri</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2031"/>
-        <location filename="../src/mainwindow.cpp" line="2271"/>
+        <location filename="../src/mainwindow.cpp" line="2037"/>
+        <location filename="../src/mainwindow.cpp" line="2279"/>
         <source>Saved %1</source>
         <translation>%1 shranjeno</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2266"/>
-        <location filename="../src/mainwindow.cpp" line="2284"/>
+        <location filename="../src/mainwindow.cpp" line="2272"/>
+        <location filename="../src/mainwindow.cpp" line="2292"/>
         <source>Save XML</source>
         <translation>Shrani XML</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2285"/>
+        <location filename="../src/mainwindow.cpp" line="2293"/>
         <source>MLT XML (*.mlt)</source>
         <translation>MLT XML (*.mlt)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2304"/>
+        <location filename="../src/mainwindow.cpp" line="2312"/>
         <source>The project has been modified.
 Do you want to save your changes?</source>
         <translation>Ta projekt je bil spremenjen.
 Ali želite shraniti svoje spremembe?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2331"/>
+        <location filename="../src/mainwindow.cpp" line="2341"/>
         <source>There are incomplete jobs.
 Do you want to still want to exit?</source>
         <translation>Obstajajo nepopoln posli.
 Ali še vedno žlite zapreti  program?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2344"/>
+        <location filename="../src/mainwindow.cpp" line="2354"/>
         <source>An export is in progress.
 Do you want to still want to exit?</source>
         <translation>Poteka izvoz. 
 Ali še vedno žlite zapreti program?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2773"/>
+        <location filename="../src/mainwindow.cpp" line="2789"/>
         <source>Exit Full Screen</source>
         <translation>Zapri celozaslonski prikaz</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2786"/>
+        <location filename="../src/mainwindow.cpp" line="2802"/>
         <source>GPU effects are not supported</source>
         <translation>Učinki GPU niso podprti</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2878"/>
+        <location filename="../src/mainwindow.cpp" line="2894"/>
         <source>Click here to check for a new version of Shotcut.</source>
         <translation>Kliknite tukaj, če želite preveriti obstoj nove različice Shotcuta.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3021"/>
+        <location filename="../src/mainwindow.cpp" line="3037"/>
         <source>You must restart Shotcut to switch to the new language.
 Do you want to restart now?</source>
         <translation>Shotcut morate znova zagnati, če želite preklopiti na nov jezik.
 Ali ga želite ponovno zagnati zdaj?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3062"/>
+        <location filename="../src/mainwindow.cpp" line="3078"/>
         <source>Failed to connect to JACK.
 Please verify that JACK is installed and running.</source>
         <translation>Povezovanje z JACK ni uspelo.
 Preverite, da je JACK nameščen in zagnan.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3071"/>
+        <location filename="../src/mainwindow.cpp" line="3087"/>
         <source>GPU effects are experimental and may cause instability on some systems. Some CPU effects are incompatible with GPU effects and will be disabled. A project created with GPU effects can not be converted to a CPU only project later.
 
 Do you want to enable GPU effects and restart Shotcut?</source>
@@ -3849,7 +3859,7 @@ Do you want to enable GPU effects and restart Shotcut?</source>
 Ali želite omogočiti učinke GPU in znova zagnati Shotcut?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3093"/>
+        <location filename="../src/mainwindow.cpp" line="3109"/>
         <source>Shotcut must restart to disable GPU effects.
 
 Disable GPU effects and restart?</source>
@@ -3858,112 +3868,112 @@ Disable GPU effects and restart?</source>
 Onemogočim učinke GPU in ga znova zaženem?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3303"/>
+        <location filename="../src/mainwindow.cpp" line="3319"/>
         <source>Do you want to automatically check for updates in the future?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3310"/>
+        <location filename="../src/mainwindow.cpp" line="3326"/>
         <source>Do not show this anymore.</source>
         <comment>Automatic upgrade check dialog</comment>
         <translation>Tega ne prikazuj več.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3326"/>
+        <location filename="../src/mainwindow.cpp" line="3342"/>
         <source>MLT XML (*.mlt);;All Files (*)</source>
         <translation>MLT XML (*.mlt);;Vse datoteke (*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3386"/>
+        <location filename="../src/mainwindow.cpp" line="3402"/>
         <source>You must restart Shotcut to change the display method.
 Do you want to restart now?</source>
         <translation>Za spremembo načina prikaza je Shotcut potrebno ponovno zagnati.
 Želite to storiti sedaj?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3408"/>
+        <location filename="../src/mainwindow.cpp" line="3424"/>
         <source>Application Log</source>
         <translation>Dnevnik aplikacije</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3445"/>
+        <location filename="../src/mainwindow.cpp" line="3461"/>
         <source>Shotcut version %1 is available! Click here to get it.</source>
         <translation>Na voljo je Shotcut različica %1! Kliknite tukaj, da jo dobite.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3451"/>
+        <location filename="../src/mainwindow.cpp" line="3467"/>
         <source>You are running the latest version of Shotcut.</source>
         <translation>Uporabljate najnovejšo različico  Shotcuta.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3461"/>
+        <location filename="../src/mainwindow.cpp" line="3477"/>
         <source>Failed to read version.json when checking. Click here to go to the Web site.</source>
         <translation>Med pregledom ni bilo mogoče prebrati version.json. Kliknite tu, da odprete spletno stran.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3511"/>
+        <location filename="../src/mainwindow.cpp" line="3527"/>
         <source>Export EDL</source>
         <translation>Izvozi EDL</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3512"/>
+        <location filename="../src/mainwindow.cpp" line="3528"/>
         <source>EDL (*.edl)</source>
         <translation>EDL (*.edit)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3558"/>
+        <location filename="../src/mainwindow.cpp" line="3574"/>
         <source>A JavaScript error occurred during export.</source>
         <translation>Med izvozom je prišlo do napake Javascript.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3561"/>
+        <location filename="../src/mainwindow.cpp" line="3577"/>
         <source>Failed to open export-edl.js</source>
         <translation>Export-edl.js ni bilo mogoče odpreti.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3587"/>
+        <location filename="../src/mainwindow.cpp" line="3603"/>
         <source>Export Frame</source>
         <translation>Izvozi okvir</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3600"/>
+        <location filename="../src/mainwindow.cpp" line="3616"/>
         <source>Unable to export frame.</source>
         <translation>Okvirja ni bilo mogoče izvoziti.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3608"/>
+        <location filename="../src/mainwindow.cpp" line="3624"/>
         <source>You must restart Shotcut to change the data directory.
 Do you want to continue?</source>
         <translation>Če želite spremeniti mapo podatkov, morate znova zagnati Shotcut.
 Ali želite nadaljevati?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3617"/>
+        <location filename="../src/mainwindow.cpp" line="3633"/>
         <source>Data Directory</source>
         <translation>Mapa s podatki</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3700"/>
+        <location filename="../src/mainwindow.cpp" line="3716"/>
         <source>Add Custom Layout</source>
         <translation>Dodaj postavitev po meri</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3701"/>
+        <location filename="../src/mainwindow.cpp" line="3717"/>
         <source>Name</source>
         <translation>Ime</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3729"/>
+        <location filename="../src/mainwindow.cpp" line="3745"/>
         <source>Remove Video Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3743"/>
+        <location filename="../src/mainwindow.cpp" line="3759"/>
         <source>Remove Layout</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3872"/>
+        <location filename="../src/mainwindow.cpp" line="3888"/>
         <source>GPU effects are EXPERIMENTAL, UNSTABLE and UNSUPPORTED! Unsupported means do not report bugs about it.
 
 Do you want to disable GPU effects and restart Shotcut?</source>
@@ -4035,96 +4045,96 @@ Do you want to disable GPU effects and restart Shotcut?</source>
         <translation>Oblika</translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.ui" line="72"/>
-        <location filename="../src/widgets/newprojectfolder.ui" line="173"/>
+        <location filename="../src/widgets/newprojectfolder.ui" line="152"/>
+        <location filename="../src/widgets/newprojectfolder.ui" line="253"/>
         <source>PushButton</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.ui" line="84"/>
+        <location filename="../src/widgets/newprojectfolder.ui" line="164"/>
         <source>Start</source>
         <translation>Začetek</translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.ui" line="145"/>
+        <location filename="../src/widgets/newprojectfolder.ui" line="225"/>
         <source>A folder with this name will be created containing
 a project file with the same name.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.ui" line="119"/>
+        <location filename="../src/widgets/newprojectfolder.ui" line="199"/>
         <source>Projects folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.ui" line="153"/>
+        <location filename="../src/widgets/newprojectfolder.ui" line="233"/>
         <source>Project name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.ui" line="129"/>
+        <location filename="../src/widgets/newprojectfolder.ui" line="209"/>
         <source>Video mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.ui" line="169"/>
+        <location filename="../src/widgets/newprojectfolder.ui" line="249"/>
         <source>This is the folder to contain Shotcut project folders.
 A folder will be created in this folder for each project.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.ui" line="106"/>
+        <location filename="../src/widgets/newprojectfolder.ui" line="186"/>
         <source>Automatic means the resolution and frame rate are based on the &lt;b&gt;first&lt;/b&gt; file you &lt;b&gt;add&lt;/b&gt; to your project. If the first file is not a video clip (for example, image or audio), then it will be 1920x1080p 25 fps.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.ui" line="223"/>
+        <location filename="../src/widgets/newprojectfolder.ui" line="53"/>
         <source>Recent Projects</source>
-        <translation type="unfinished"></translation>
+        <translation>Nedavni projekti</translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.ui" line="50"/>
+        <location filename="../src/widgets/newprojectfolder.ui" line="130"/>
         <source>New Project</source>
-        <translation type="unfinished"></translation>
+        <translation>Nov projekt</translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.ui" line="271"/>
+        <location filename="../src/widgets/newprojectfolder.ui" line="298"/>
         <source>Automatic</source>
         <translation>Samodejno</translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.ui" line="276"/>
+        <location filename="../src/widgets/newprojectfolder.ui" line="303"/>
         <source>Add...</source>
         <translation>Dodaj...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.ui" line="281"/>
+        <location filename="../src/widgets/newprojectfolder.ui" line="308"/>
         <source>Remove...</source>
-        <translation type="unfinished"></translation>
+        <translation>Odstrani...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.cpp" line="116"/>
+        <location filename="../src/widgets/newprojectfolder.cpp" line="117"/>
         <source>Projects Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Mapa s projekti</translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.cpp" line="145"/>
+        <location filename="../src/widgets/newprojectfolder.cpp" line="146"/>
         <source>Custom</source>
         <translation>Po meri</translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.cpp" line="162"/>
+        <location filename="../src/widgets/newprojectfolder.cpp" line="163"/>
         <source>Remove Video Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.cpp" line="190"/>
+        <location filename="../src/widgets/newprojectfolder.cpp" line="192"/>
         <source>There is already a project with that name.
 Try again with a different name.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.cpp" line="198"/>
+        <location filename="../src/widgets/newprojectfolder.cpp" line="200"/>
         <source>Unable to create folder %1
 Perhaps you do not have permission.
 Try again with a different folder.</source>
@@ -4354,237 +4364,237 @@ Try again with a different folder.</source>
 <context>
     <name>Player</name>
     <message>
-        <location filename="../src/player.cpp" line="62"/>
+        <location filename="../src/player.cpp" line="66"/>
         <source>Source</source>
         <translation>Vir</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="63"/>
+        <location filename="../src/player.cpp" line="67"/>
         <source>Project</source>
         <translation>Projekt</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="146"/>
+        <location filename="../src/player.cpp" line="148"/>
         <source>Adjust the audio volume</source>
         <translation>Prilagodi glasnost zvoka</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="165"/>
+        <location filename="../src/player.cpp" line="167"/>
         <source>Silence the audio</source>
         <translation>Utišaj zvok</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="184"/>
+        <location filename="../src/player.cpp" line="186"/>
         <source>Transport Controls</source>
         <translation>Kontrole prevoza</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="191"/>
+        <location filename="../src/player.cpp" line="193"/>
         <source>Current position</source>
         <translation>Trenutni položaj</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="195"/>
+        <location filename="../src/player.cpp" line="197"/>
         <source>Total Duration</source>
         <translation>Skupno trajanje</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="200"/>
+        <location filename="../src/player.cpp" line="202"/>
         <source>In Point</source>
         <translation>V točki</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="204"/>
+        <location filename="../src/player.cpp" line="206"/>
         <source>Selected Duration</source>
         <translation>Izbrano trajanje</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="220"/>
+        <location filename="../src/player.cpp" line="222"/>
         <source>Zoom Fit</source>
         <translation>Zapolni</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="223"/>
+        <location filename="../src/player.cpp" line="225"/>
         <source>Zoom 10%</source>
         <translation>Povečava 10%</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="226"/>
+        <location filename="../src/player.cpp" line="228"/>
         <source>Zoom 25%</source>
         <translation>Povečava 25%</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="229"/>
+        <location filename="../src/player.cpp" line="231"/>
         <source>Zoom 50%</source>
         <translation>Povečava 50%</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="232"/>
+        <location filename="../src/player.cpp" line="234"/>
         <source>Zoom 100%</source>
         <translation>Povečava 100%</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="235"/>
+        <location filename="../src/player.cpp" line="237"/>
         <source>Zoom 200%</source>
         <translation>Povečava 200%</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="240"/>
+        <location filename="../src/player.cpp" line="242"/>
         <source>Toggle zoom</source>
         <translation>Preklopi povečavo</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="248"/>
+        <location filename="../src/player.cpp" line="250"/>
         <source>2x2 Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Mreža 2x2</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="253"/>
+        <location filename="../src/player.cpp" line="255"/>
         <source>3x3 Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Mreža 3x3</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="257"/>
+        <location filename="../src/player.cpp" line="259"/>
         <source>4x4 Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Mreža 4x4</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="261"/>
+        <location filename="../src/player.cpp" line="263"/>
         <source>16x16 Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Mreža 16x16</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="269"/>
+        <location filename="../src/player.cpp" line="271"/>
         <source>10 Pixel Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Mreža 10 px</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="265"/>
+        <location filename="../src/player.cpp" line="267"/>
         <source>20 Pixel Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Mreža 20px</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="273"/>
+        <location filename="../src/player.cpp" line="275"/>
         <source>80/90% Safe Areas</source>
-        <translation type="unfinished"></translation>
+        <translation>80%/90% varnostni izrez</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="277"/>
+        <location filename="../src/player.cpp" line="279"/>
         <source>EBU R95 Safe Areas</source>
-        <translation type="unfinished"></translation>
+        <translation>EBU R95 varnostni izrez</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="282"/>
+        <location filename="../src/player.cpp" line="284"/>
         <source>Snapping</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="291"/>
+        <location filename="../src/player.cpp" line="293"/>
         <source>Toggle grid display on the player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="377"/>
-        <location filename="../src/player.cpp" line="473"/>
-        <location filename="../src/player.cpp" line="496"/>
-        <location filename="../src/player.cpp" line="746"/>
+        <location filename="../src/player.cpp" line="379"/>
+        <location filename="../src/player.cpp" line="480"/>
+        <location filename="../src/player.cpp" line="503"/>
+        <location filename="../src/player.cpp" line="753"/>
         <source>Play</source>
         <translation>Predvajaj</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="379"/>
-        <location filename="../src/player.cpp" line="474"/>
-        <location filename="../src/player.cpp" line="497"/>
-        <location filename="../src/player.cpp" line="747"/>
+        <location filename="../src/player.cpp" line="381"/>
+        <location filename="../src/player.cpp" line="481"/>
+        <location filename="../src/player.cpp" line="504"/>
+        <location filename="../src/player.cpp" line="754"/>
         <source>Start playback (L)</source>
         <translation>Zaženi predvajanje (L)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="382"/>
-        <location filename="../src/player.cpp" line="452"/>
-        <location filename="../src/player.cpp" line="753"/>
+        <location filename="../src/player.cpp" line="384"/>
+        <location filename="../src/player.cpp" line="459"/>
+        <location filename="../src/player.cpp" line="760"/>
         <source>Pause</source>
         <translation>Pavza</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="384"/>
-        <location filename="../src/player.cpp" line="453"/>
-        <location filename="../src/player.cpp" line="754"/>
+        <location filename="../src/player.cpp" line="386"/>
+        <location filename="../src/player.cpp" line="460"/>
+        <location filename="../src/player.cpp" line="761"/>
         <source>Pause playback (K)</source>
         <translation>Pavza predvajanja (K)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="386"/>
+        <location filename="../src/player.cpp" line="388"/>
         <source>Skip Next</source>
         <translation>Skoči naprej</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="388"/>
+        <location filename="../src/player.cpp" line="390"/>
         <source>Skip to the next point (Alt+Right)</source>
         <translation>Skoči na naslednjo točko (Alt+desno)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="391"/>
+        <location filename="../src/player.cpp" line="393"/>
         <source>Skip Previous</source>
         <translation>Skoči nazaj</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="393"/>
+        <location filename="../src/player.cpp" line="395"/>
         <source>Skip to the previous point (Alt+Left)</source>
         <translation>Skoči na prejšnjo točko (Alt+levo)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="396"/>
+        <location filename="../src/player.cpp" line="398"/>
         <source>Rewind</source>
         <translation>Previj</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="398"/>
+        <location filename="../src/player.cpp" line="400"/>
         <source>Play quickly backwards (J)</source>
         <translation>Hitro predvajaj nazaj (J)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="400"/>
+        <location filename="../src/player.cpp" line="402"/>
         <source>Fast Forward</source>
         <translation>Previj naprej</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="402"/>
+        <location filename="../src/player.cpp" line="404"/>
         <source>Play quickly forwards (L)</source>
         <translation>Hitro prevajaj naprej (L)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="404"/>
+        <location filename="../src/player.cpp" line="406"/>
         <source>Volume</source>
         <translation>Glasnost</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="406"/>
+        <location filename="../src/player.cpp" line="408"/>
         <source>Show the volume control</source>
         <translation>Prikaži nadzor glasnosti</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="457"/>
+        <location filename="../src/player.cpp" line="464"/>
         <source>Stop</source>
         <translation>Ustavi</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="458"/>
+        <location filename="../src/player.cpp" line="465"/>
         <source>Stop playback (K)</source>
         <translation>Ustavi predvajanje (K)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="541"/>
+        <location filename="../src/player.cpp" line="548"/>
         <source>Live</source>
         <translation>V živo</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="963"/>
+        <location filename="../src/player.cpp" line="970"/>
         <source>Unmute</source>
         <translation>Vklopi zvok</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="968"/>
+        <location filename="../src/player.cpp" line="975"/>
         <source>Mute</source>
         <translation>Izklopi zvok</translation>
     </message>
@@ -4748,7 +4758,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/docks/playlistdock.ui" line="369"/>
         <source>Add All to Timeline</source>
-        <translation>Dodaj vse na časovni trak</translation>
+        <translation>Dodaj vse na časovnico</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="377"/>
@@ -4901,7 +4911,7 @@ p, li { white-space: pre-wrap; }
         <translation>Počisti seznam predvajanja</translation>
     </message>
     <message>
-        <location filename="../src/commands/playlistcommands.cpp" line="149"/>
+        <location filename="../src/commands/playlistcommands.cpp" line="152"/>
         <source>Move item from %1 to %2</source>
         <translation>Premakni vnos iz %1 v %2</translation>
     </message>
@@ -5059,7 +5069,7 @@ p, li { white-space: pre-wrap; }
         <translation>Odklopi zvok</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2986"/>
+        <location filename="../src/mainwindow.cpp" line="3002"/>
         <source>You cannot add a project to itself!</source>
         <translation>Samemu sebi ne morete dodati projekta!</translation>
     </message>
@@ -5070,9 +5080,9 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/util.cpp" line="91"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="680"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="770"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="823"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="689"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="781"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="834"/>
         <source>Unable to write file %1
 Perhaps you do not have permission.
 Try again with a different folder.</source>
@@ -5143,7 +5153,7 @@ Try again with a different folder.</source>
 <context>
     <name>ScopeController</name>
     <message>
-        <location filename="../src/controllers/scopecontroller.cpp" line="34"/>
+        <location filename="../src/controllers/scopecontroller.cpp" line="35"/>
         <source>Scopes</source>
         <translation>Obsegi</translation>
     </message>
@@ -5530,7 +5540,7 @@ Try again with a different folder.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/textproducerwidget.cpp" line="91"/>
+        <location filename="../src/widgets/textproducerwidget.cpp" line="92"/>
         <source>Edit your text using the Filters panel.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5599,7 +5609,7 @@ Try again with a different folder.</source>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="370"/>
         <source>You must save to Copy Timeline to Source.</source>
-        <translation type="unfinished"></translation>
+        <translation>Za kopiranje časovnice morate projekt shraniti.</translation>
     </message>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="934"/>
@@ -5617,7 +5627,7 @@ Try again with a different folder.</source>
     <message>
         <location filename="../src/widgets/timelinepropertieswidget.ui" line="26"/>
         <source>Timeline</source>
-        <translation>Časovni trak</translation>
+        <translation>Časovnica</translation>
     </message>
     <message>
         <location filename="../src/widgets/timelinepropertieswidget.ui" line="39"/>
@@ -5747,12 +5757,12 @@ vpliva na položaj drugih izrezkov (Z)</translation>
     <message>
         <location filename="../src/qml/timeline/TimelineToolbar.qml" line="248"/>
         <source>Zoom timeline out (-)</source>
-        <translation>Pomanjšaj časovni trak (-)</translation>
+        <translation>Pomanjšaj časovnico (-)</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/TimelineToolbar.qml" line="256"/>
         <source>Zoom timeline in (+)</source>
-        <translation>Povečaj časovni trak (+)</translation>
+        <translation>Povečaj časovnico (+)</translation>
     </message>
 </context>
 <context>
@@ -6175,6 +6185,45 @@ vpliva na položaj drugih izrezkov (Z)</translation>
     </message>
 </context>
 <context>
+    <name>VideoHistogramScopeWidget</name>
+    <message>
+        <location filename="../src/widgets/scopes/videohistogramscopewidget.cpp" line="115"/>
+        <source>Luma</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/scopes/videohistogramscopewidget.cpp" line="120"/>
+        <source>Red</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/scopes/videohistogramscopewidget.cpp" line="125"/>
+        <source>Green</source>
+        <translation>Zeleno</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/scopes/videohistogramscopewidget.cpp" line="130"/>
+        <source>Blue</source>
+        <translation>Modro</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/scopes/videohistogramscopewidget.cpp" line="214"/>
+        <source>Value: %1
+IRE: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/scopes/videohistogramscopewidget.cpp" line="218"/>
+        <source>Value: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/scopes/videohistogramscopewidget.cpp" line="226"/>
+        <source>Video Histogram</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>VideoQualityJob</name>
     <message>
         <location filename="../src/jobs/videoqualityjob.cpp" line="36"/>
@@ -6210,7 +6259,29 @@ vpliva na položaj drugih izrezkov (Z)</translation>
 <context>
     <name>VideoWaveformScopeWidget</name>
     <message>
-        <location filename="../src/widgets/scopes/videowaveformscopewidget.cpp" line="98"/>
+        <location filename="../src/widgets/scopes/videowaveformscopewidget.cpp" line="108"/>
+        <source>100</source>
+        <translation type="unfinished">100</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/scopes/videowaveformscopewidget.cpp" line="112"/>
+        <location filename="../src/widgets/scopes/videowaveformscopewidget.cpp" line="113"/>
+        <source>0</source>
+        <translation>0</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/scopes/videowaveformscopewidget.cpp" line="133"/>
+        <source>Pixel: %1
+IRE: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/scopes/videowaveformscopewidget.cpp" line="137"/>
+        <source>IRE: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/scopes/videowaveformscopewidget.cpp" line="144"/>
         <source>Video Waveform</source>
         <translation>Valovna oblika videa</translation>
     </message>
@@ -6466,42 +6537,42 @@ Večini uporabnikov tega ni treba spreminjati.</translation>
 <context>
     <name>main</name>
     <message>
-        <location filename="../src/main.cpp" line="125"/>
+        <location filename="../src/main.cpp" line="131"/>
         <source>Fill the screen with the Shotcut window.</source>
         <translation>Zapolni celotni zaslon z  oknom programa</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="129"/>
+        <location filename="../src/main.cpp" line="135"/>
         <source>Hide upgrade prompt and menu item.</source>
         <translation>Skrij poziv za nadgradnjo in vnos menija.</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="132"/>
+        <location filename="../src/main.cpp" line="138"/>
         <source>Use GPU processing.</source>
         <translation>Uporabi obdelavo grafične kartice.</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="135"/>
+        <location filename="../src/main.cpp" line="141"/>
         <source>Clear Recent on Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="138"/>
+        <location filename="../src/main.cpp" line="144"/>
         <source>The directory for app configuration and data.</source>
         <translation>Mapa za nastavitve in podatke programa</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="139"/>
+        <location filename="../src/main.cpp" line="145"/>
         <source>directory</source>
         <translation>mapa</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="142"/>
-        <source>A file to open.</source>
-        <translation>Datoteka za odpiranje.</translation>
+        <location filename="../src/main.cpp" line="148"/>
+        <source>Zero or more files or folders to open</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="279"/>
+        <location filename="../src/main.cpp" line="285"/>
         <source>Loading plugins...</source>
         <translation>Nalaganje vtičnikov...</translation>
     </message>
@@ -6522,6 +6593,12 @@ Večini uporabnikov tega ni treba spreminjati.</translation>
         <location filename="../src/qml/filters/audio_balance/meta.qml" line="7"/>
         <source>Balance</source>
         <translation>Ravnovesje</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/audio_balance/meta.qml" line="17"/>
+        <location filename="../src/qml/filters/audio_pan/meta.qml" line="17"/>
+        <source>Position</source>
+        <translation>Položaj</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_bandpass/meta.qml" line="7"/>
@@ -6741,22 +6818,26 @@ Večini uporabnikov tega ni treba spreminjati.</translation>
         <translation>Maska</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask/meta.qml" line="15"/>
+        <location filename="../src/qml/filters/mask/meta.qml" line="16"/>
+        <location filename="../src/qml/filters/mask_alphaspot/meta.qml" line="16"/>
         <source>Horizontal</source>
         <translation>Vodoravno</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask/meta.qml" line="23"/>
+        <location filename="../src/qml/filters/mask/meta.qml" line="24"/>
+        <location filename="../src/qml/filters/mask_alphaspot/meta.qml" line="24"/>
         <source>Vertical</source>
         <translation>Navpično</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask/meta.qml" line="31"/>
+        <location filename="../src/qml/filters/mask/meta.qml" line="32"/>
+        <location filename="../src/qml/filters/mask_alphaspot/meta.qml" line="32"/>
         <source>Width</source>
         <translation>Širina</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask/meta.qml" line="39"/>
+        <location filename="../src/qml/filters/mask/meta.qml" line="40"/>
+        <location filename="../src/qml/filters/mask_alphaspot/meta.qml" line="40"/>
         <source>Height</source>
         <translation>Višina</translation>
     </message>
@@ -6883,6 +6964,51 @@ Večini uporabnikov tega ni treba spreminjati.</translation>
     <message>
         <location filename="../src/qml/filters/timer/meta.qml" line="7"/>
         <source>Timer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/levels/meta.qml" line="6"/>
+        <source>Levels</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/levels/meta.qml" line="15"/>
+        <source>Input Black</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/levels/meta.qml" line="23"/>
+        <source>Input White</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/levels/meta.qml" line="31"/>
+        <source>Gamma</source>
+        <translation>Gamma</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/mask_alphaspot/meta.qml" line="6"/>
+        <source>Mask: Simple Shape</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/mask_apply/meta.qml" line="6"/>
+        <source>Mask: Apply</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/mask_shape/meta.qml" line="6"/>
+        <source>Mask: From File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/mask_shape/meta.qml" line="16"/>
+        <source>Threshold</source>
+        <translation>Prag</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/waveform/meta.qml" line="7"/>
+        <source>Audio Waveform Visualization</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7269,7 +7395,7 @@ Večini uporabnikov tega ni treba spreminjati.</translation>
     <message>
         <location filename="../src/qml/timeline/timeline.qml" line="427"/>
         <source>Copy Timeline to Source</source>
-        <translation>Kopiraj časovni trak v vir</translation>
+        <translation>Kopiraj časovnico v izvor</translation>
     </message>
     <message>
         <location filename="../src/qml/timeline/timeline.qml" line="433"/>
@@ -7348,6 +7474,7 @@ Večini uporabnikov tega ni treba spreminjati.</translation>
         <location filename="../src/qml/filters/alpha_adjust/ui.qml" line="69"/>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="139"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="126"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="289"/>
         <location filename="../src/qml/filters/smartblur/ui.qml" line="106"/>
         <source>Threshold</source>
         <translation>Prag</translation>
@@ -7366,6 +7493,7 @@ Večini uporabnikov tega ni treba spreminjati.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/alpha_adjust/ui.qml" line="103"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="255"/>
         <location filename="../src/qml/filters/select0r/ui.qml" line="300"/>
         <source>Invert</source>
         <translation>Obrni</translation>
@@ -7406,10 +7534,10 @@ Večini uporabnikov tega ni treba spreminjati.</translation>
         <translation>Belo ozadje</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_balance/ui.qml" line="40"/>
+        <location filename="../src/qml/filters/audio_balance/ui.qml" line="122"/>
         <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="58"/>
-        <location filename="../src/qml/filters/audio_pan/ui.qml" line="48"/>
-        <location filename="../src/qml/filters/audio_pan/ui.qml" line="53"/>
+        <location filename="../src/qml/filters/audio_pan/ui.qml" line="130"/>
+        <location filename="../src/qml/filters/audio_pan/ui.qml" line="135"/>
         <location filename="../src/qml/filters/audio_swapchannels/ui.qml" line="59"/>
         <location filename="../src/qml/filters/crop/ui.qml" line="176"/>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="527"/>
@@ -7417,10 +7545,10 @@ Večini uporabnikov tega ni treba spreminjati.</translation>
         <translation>Levo</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_balance/ui.qml" line="47"/>
+        <location filename="../src/qml/filters/audio_balance/ui.qml" line="129"/>
         <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="58"/>
-        <location filename="../src/qml/filters/audio_pan/ui.qml" line="48"/>
-        <location filename="../src/qml/filters/audio_pan/ui.qml" line="60"/>
+        <location filename="../src/qml/filters/audio_pan/ui.qml" line="130"/>
+        <location filename="../src/qml/filters/audio_pan/ui.qml" line="142"/>
         <location filename="../src/qml/filters/audio_swapchannels/ui.qml" line="59"/>
         <location filename="../src/qml/filters/crop/ui.qml" line="193"/>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="539"/>
@@ -7428,18 +7556,22 @@ Večini uporabnikov tega ni treba spreminjati.</translation>
         <translation>Desno</translation>
     </message>
     <message>
+        <location filename="../src/qml/filters/audio_balance/ui.qml" line="101"/>
         <location filename="../src/qml/filters/audio_bandpass/ui.qml" line="52"/>
         <location filename="../src/qml/filters/audio_basstreble/ui.qml" line="169"/>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="71"/>
         <location filename="../src/qml/filters/audio_delay/ui.qml" line="50"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="58"/>
+        <location filename="../src/qml/filters/audio_gain/ui.qml" line="127"/>
         <location filename="../src/qml/filters/audio_highpass/ui.qml" line="50"/>
         <location filename="../src/qml/filters/audio_limiter/ui.qml" line="63"/>
         <location filename="../src/qml/filters/audio_lowpass/ui.qml" line="52"/>
         <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="86"/>
         <location filename="../src/qml/filters/audio_notch/ui.qml" line="52"/>
+        <location filename="../src/qml/filters/audio_pan/ui.qml" line="102"/>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="106"/>
         <location filename="../src/qml/filters/bluescreen0r/ui.qml" line="51"/>
+        <location filename="../src/qml/filters/brightness/ui.qml" line="119"/>
         <location filename="../src/qml/filters/color/ui.qml" line="75"/>
         <location filename="../src/qml/filters/contrast/ui.qml" line="144"/>
         <location filename="../src/qml/filters/crop/ui.qml" line="83"/>
@@ -7449,10 +7581,14 @@ Večini uporabnikov tega ni treba spreminjati.</translation>
         <location filename="../src/qml/filters/hue_lightness_saturation/ui.qml" line="54"/>
         <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="98"/>
         <location filename="../src/qml/filters/lenscorrection/ui.qml" line="61"/>
+        <location filename="../src/qml/filters/levels/ui.qml" line="154"/>
         <location filename="../src/qml/filters/lines/ui.qml" line="52"/>
         <location filename="../src/qml/filters/mask/ui.qml" line="157"/>
+        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="158"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="190"/>
         <location filename="../src/qml/filters/mosaic/ui.qml" line="56"/>
         <location filename="../src/qml/filters/oldfilm/ui.qml" line="60"/>
+        <location filename="../src/qml/filters/opacity/ui.qml" line="107"/>
         <location filename="../src/qml/filters/rotate/ui.qml" line="151"/>
         <location filename="../src/qml/filters/select0r/ui.qml" line="109"/>
         <location filename="../src/qml/filters/sepia/ui.qml" line="38"/>
@@ -7462,6 +7598,7 @@ Večini uporabnikov tega ni treba spreminjati.</translation>
         <location filename="../src/qml/filters/tcolor/ui.qml" line="48"/>
         <location filename="../src/qml/filters/timer/ui.qml" line="110"/>
         <location filename="../src/qml/filters/wave/ui.qml" line="44"/>
+        <location filename="../src/qml/filters/waveform/ui.qml" line="81"/>
         <location filename="../src/qml/filters/webvfx_ruttetraizer/ui.qml" line="62"/>
         <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="69"/>
         <location filename="../src/qml/filters/white/ui.qml" line="66"/>
@@ -7580,7 +7717,7 @@ Večini uporabnikov tega ni treba spreminjati.</translation>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="84"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="71"/>
         <source>The balance between the RMS and peak envelope followers. RMS is generally better for subtle, musical compression and peak is better for heavier, fast compression and percussion.</source>
-        <translation>Ravnovesje med RMS in spremljevalnimi vrhunci ovojnice. RMS je na splošno boljši za subtilno, glasbeno stiskanje in vrhunec je boljši za težje, hitro stiskanje in tolkala.</translation>
+        <translation>Ravnovesje med RMS in spremljevalnimi vrhovi. RMS je na splošno boljši za subtilno, glasbeno stiskanje in vrhunec je boljši za težje, hitro stiskanje in tolkala.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="91"/>
@@ -7691,15 +7828,15 @@ Večini uporabnikov tega ni treba spreminjati.</translation>
         <location filename="../src/qml/filters/fadein_movit/ui.qml" line="55"/>
         <location filename="../src/qml/filters/fadeout_brightness/ui.qml" line="61"/>
         <location filename="../src/qml/filters/fadeout_movit/ui.qml" line="60"/>
-        <location filename="../src/qml/filters/timer/ui.qml" line="192"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="193"/>
         <source>Duration</source>
         <translation>Trajanje</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_gain/ui.qml" line="126"/>
-        <location filename="../src/qml/filters/brightness/ui.qml" line="118"/>
-        <location filename="../src/qml/filters/contrast/ui.qml" line="156"/>
-        <location filename="../src/qml/filters/opacity/ui.qml" line="107"/>
+        <location filename="../src/qml/filters/audio_gain/ui.qml" line="149"/>
+        <location filename="../src/qml/filters/brightness/ui.qml" line="141"/>
+        <location filename="../src/qml/filters/contrast/ui.qml" line="162"/>
+        <location filename="../src/qml/filters/opacity/ui.qml" line="130"/>
         <source>Level</source>
         <translation>Raven</translation>
     </message>
@@ -7839,7 +7976,9 @@ Večini uporabnikov tega ni treba spreminjati.</translation>
         <translation>Analiziraj</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_pan/ui.qml" line="42"/>
+        <location filename="../src/qml/filters/audio_pan/ui.qml" line="124"/>
+        <location filename="../src/qml/filters/levels/ui.qml" line="173"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="264"/>
         <source>Channel</source>
         <translation>Kanal</translation>
     </message>
@@ -7991,29 +8130,34 @@ Večini uporabnikov tega ni treba spreminjati.</translation>
         <location filename="../src/qml/filters/dust/ui.qml" line="59"/>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="487"/>
         <location filename="../src/qml/filters/spot_remover/ui.qml" line="188"/>
+        <location filename="../src/qml/filters/waveform/ui.qml" line="154"/>
         <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="152"/>
         <source>Size</source>
         <translation>Velikost</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="62"/>
+        <location filename="../src/qml/filters/levels/ui.qml" line="192"/>
         <location filename="../src/qml/filters/timer/ui.qml" line="53"/>
         <source>Bottom Left</source>
         <translation>Spodaj levo</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="67"/>
+        <location filename="../src/qml/filters/levels/ui.qml" line="192"/>
         <location filename="../src/qml/filters/timer/ui.qml" line="58"/>
         <source>Bottom Right</source>
         <translation>Spodaj desno</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="72"/>
+        <location filename="../src/qml/filters/levels/ui.qml" line="192"/>
         <source>Top Left</source>
         <translation>Zgoraj levo</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="77"/>
+        <location filename="../src/qml/filters/levels/ui.qml" line="192"/>
         <source>Top Right</source>
         <translation>Zgoraj desno</translation>
     </message>
@@ -8178,6 +8322,7 @@ Večini uporabnikov tega ni treba spreminjati.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="403"/>
+        <location filename="../src/qml/filters/waveform/ui.qml" line="116"/>
         <location filename="../src/qml/filters/webvfx_ruttetraizer/ui.qml" line="91"/>
         <source>Thickness</source>
         <translation>Debelina</translation>
@@ -8195,6 +8340,7 @@ Večini uporabnikov tega ni treba spreminjati.</translation>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="441"/>
         <location filename="../src/qml/filters/spot_remover/ui.qml" line="142"/>
+        <location filename="../src/qml/filters/waveform/ui.qml" line="133"/>
         <source>Position</source>
         <translation>Položaj</translation>
     </message>
@@ -8229,6 +8375,7 @@ Večini uporabnikov tega ni treba spreminjati.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/grain/ui.qml" line="76"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="271"/>
         <location filename="../src/qml/filters/webvfx_ruttetraizer/ui.qml" line="74"/>
         <source>Brightness</source>
         <translation>Svetlost</translation>
@@ -8309,6 +8456,7 @@ Večini uporabnikov tega ni treba spreminjati.</translation>
     <message>
         <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="241"/>
         <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="272"/>
+        <location filename="../src/qml/filters/levels/ui.qml" line="192"/>
         <source>None</source>
         <translation>Brez</translation>
     </message>
@@ -8378,6 +8526,7 @@ Večini uporabnikov tega ni treba spreminjati.</translation>
     <message>
         <location filename="../src/qml/filters/lines/ui.qml" line="63"/>
         <location filename="../src/qml/filters/mask/ui.qml" line="248"/>
+        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="249"/>
         <location filename="../src/qml/filters/mosaic/ui.qml" line="67"/>
         <source>Width</source>
         <translation>Širina</translation>
@@ -8432,93 +8581,110 @@ Click &quot;Open&quot; to load a file.</source>
     </message>
     <message>
         <location filename="../src/qml/filters/mask/ui.qml" line="176"/>
+        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="177"/>
         <location filename="../src/qml/filters/select0r/ui.qml" line="273"/>
         <source>Operation</source>
         <translation>Postopek</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask/ui.qml" line="182"/>
+        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="183"/>
         <location filename="../src/qml/filters/select0r/ui.qml" line="281"/>
         <source>Write on Clear</source>
         <translation>Belo na praznem</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask/ui.qml" line="182"/>
+        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="183"/>
         <location filename="../src/qml/filters/select0r/ui.qml" line="282"/>
         <source>Maximum</source>
         <translation>Zgornja meja</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask/ui.qml" line="182"/>
+        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="183"/>
         <location filename="../src/qml/filters/select0r/ui.qml" line="283"/>
         <source>Minimum</source>
         <translation>Spodnja meja</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask/ui.qml" line="182"/>
+        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="183"/>
         <location filename="../src/qml/filters/select0r/ui.qml" line="284"/>
         <source>Add</source>
         <translation>Dodaj</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask/ui.qml" line="182"/>
+        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="183"/>
         <location filename="../src/qml/filters/select0r/ui.qml" line="285"/>
         <source>Subtract</source>
         <translation>Odstrani</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask/ui.qml" line="191"/>
+        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="192"/>
         <location filename="../src/qml/filters/select0r/ui.qml" line="216"/>
         <source>Shape</source>
         <translation>Oblika</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask/ui.qml" line="197"/>
+        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="198"/>
         <source>Rectangle</source>
         <translation>Pravokotnik</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask/ui.qml" line="197"/>
+        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="198"/>
         <source>Ellipse</source>
         <translation>Elipsa</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask/ui.qml" line="197"/>
+        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="198"/>
         <source>Triangle</source>
         <translation>Trikotnik</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask/ui.qml" line="197"/>
+        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="198"/>
         <location filename="../src/qml/filters/select0r/ui.qml" line="226"/>
         <source>Diamond</source>
         <translation>Romb</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask/ui.qml" line="206"/>
+        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="207"/>
         <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="202"/>
         <source>Horizontal</source>
         <translation>Vodoravno</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask/ui.qml" line="227"/>
+        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="228"/>
         <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="219"/>
         <source>Vertical</source>
         <translation>Navpično</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask/ui.qml" line="269"/>
+        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="270"/>
         <location filename="../src/qml/filters/mosaic/ui.qml" line="84"/>
         <source>Height</source>
         <translation>Višina</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask/ui.qml" line="290"/>
+        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="291"/>
         <location filename="../src/qml/filters/rotate/ui.qml" line="181"/>
         <source>Rotation</source>
         <translation>Vrtenje</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask/ui.qml" line="308"/>
+        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="309"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="311"/>
         <source>Softness</source>
         <translation>Mehkoba</translation>
     </message>
@@ -8575,6 +8741,7 @@ Click &quot;Open&quot; to load a file.</source>
     </message>
     <message>
         <location filename="../src/qml/filters/mask/ui.qml" line="299"/>
+        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="300"/>
         <location filename="../src/qml/filters/rotate/ui.qml" line="188"/>
         <location filename="../src/qml/filters/webvfx_ruttetraizer/ui.qml" line="162"/>
         <location filename="../src/qml/filters/webvfx_ruttetraizer/ui.qml" line="178"/>
@@ -8737,16 +8904,58 @@ Click &quot;Open&quot; to load a file.</source>
         <translation>Če je razlika med prvotno in zamegljeno zaslonsko piko od praga, bo zaslonska pika zamenjana z zamegljeno.</translation>
     </message>
     <message>
+        <location filename="../src/qml/filters/levels/ui.qml" line="178"/>
         <location filename="../src/qml/filters/spillsuppress/ui.qml" line="46"/>
         <location filename="../src/qml/filters/tcolor/ui.qml" line="59"/>
         <source>Green</source>
         <translation>Zeleno</translation>
     </message>
     <message>
+        <location filename="../src/qml/filters/levels/ui.qml" line="178"/>
         <location filename="../src/qml/filters/spillsuppress/ui.qml" line="52"/>
         <location filename="../src/qml/filters/tcolor/ui.qml" line="83"/>
         <source>Blue</source>
         <translation>Modro</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/levels/ui.qml" line="178"/>
+        <source>Red</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/levels/ui.qml" line="178"/>
+        <source>Value</source>
+        <translation>Vrednost</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/levels/ui.qml" line="187"/>
+        <source>Histogram</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/levels/ui.qml" line="205"/>
+        <source>Input Black</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/levels/ui.qml" line="225"/>
+        <source>Input White</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/levels/ui.qml" line="245"/>
+        <source>Gamma</source>
+        <translation>Gamma</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/levels/ui.qml" line="265"/>
+        <source>Output Black</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/levels/ui.qml" line="280"/>
+        <source>Output White</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/stabilize/ui.qml" line="29"/>
@@ -8942,73 +9151,253 @@ Click &quot;Open&quot; to load a file.</source>
     <message>
         <location filename="../src/qml/filters/timer/ui.qml" line="138"/>
         <source>HH:MM:SS</source>
-        <translation type="unfinished"></translation>
+        <translation>uu:mm:ss</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/timer/ui.qml" line="139"/>
         <source>HH:MM:SS.S</source>
-        <translation type="unfinished"></translation>
+        <translation>uu:mm:ss.s</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/timer/ui.qml" line="140"/>
         <source>MM:SS</source>
-        <translation type="unfinished"></translation>
+        <translation>mm:ss</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/timer/ui.qml" line="141"/>
-        <source>SS</source>
+        <source>MM:SS.SS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/timer/ui.qml" line="142"/>
-        <source>SS.S</source>
-        <translation type="unfinished"></translation>
+        <source>SS</source>
+        <translation>ss</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/timer/ui.qml" line="143"/>
-        <source>SS.SS</source>
-        <translation type="unfinished"></translation>
+        <source>SS.S</source>
+        <translation>ss.s</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/timer/ui.qml" line="151"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="144"/>
+        <source>SS.SS</source>
+        <translation>ss.ss</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/timer/ui.qml" line="152"/>
         <source>Direction</source>
         <translation>Smer</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/timer/ui.qml" line="157"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="158"/>
         <source>Up</source>
         <translation>Gor</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/timer/ui.qml" line="158"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="159"/>
         <source>Down</source>
         <translation>Dol</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/timer/ui.qml" line="166"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="167"/>
         <source>Start</source>
         <translation>Začetek</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/timer/ui.qml" line="184"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="185"/>
         <source>Set start to current position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/timer/ui.qml" line="210"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="211"/>
         <source>Set end to current position</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="207"/>
+        <source>File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="213"/>
+        <source>Custom...</source>
+        <translation>Po meri...</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="213"/>
+        <source>Bar Horizontal</source>
+        <translation>Vodoravni trak</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="213"/>
+        <source>Bar Vertical</source>
+        <translation>Navpični trak</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="213"/>
+        <source>Barn Door Horizontal</source>
+        <translation>Dvokrilno vodoravno</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="213"/>
+        <source>Barn Door Vertical</source>
+        <translation>Dvokrilno navpično</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="213"/>
+        <source>Barn Door Diagonal SW-NE</source>
+        <translation>Dvokrilno diagonalno JZ-SV</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="213"/>
+        <source>Barn Door Diagonal NW-SE</source>
+        <translation>Dvokrilno poševno SZ-JV</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="213"/>
+        <source>Diagonal Top Left</source>
+        <translation>Diagonalno zgoraj levo</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="213"/>
+        <source>Diagonal Top Right</source>
+        <translation>Diagonalno zgoraj desno</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="213"/>
+        <source>Matrix Waterfall Horizontal</source>
+        <translation>Vodoraven matrix slap</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="213"/>
+        <source>Matrix Waterfall Vertical</source>
+        <translation>Navpičen matrix slap</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="213"/>
+        <source>Matrix Snake Horizontal</source>
+        <translation>Vodoravna matrix kača</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="213"/>
+        <source>Matrix Snake Parallel Horizontal</source>
+        <translation>Vzporedna vodoravna matrix kača</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="213"/>
+        <source>Matrix Snake Vertical</source>
+        <translation>Navpična matrix kača</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="213"/>
+        <source>Matrix Snake Parallel Vertical</source>
+        <translation>Vzporedna navpična matrix kača</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="213"/>
+        <source>Barn V Up</source>
+        <translation>Dvokrilen V navzgor</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="213"/>
+        <source>Iris Circle</source>
+        <translation>Okrogla zaslonka</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="213"/>
+        <source>Double Iris</source>
+        <translation>Dvojna zaslonka</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="213"/>
+        <source>Iris Box</source>
+        <translation>Škatlasta zaslonka</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="213"/>
+        <source>Box Bottom Right</source>
+        <translation>Škatla desno spodaj</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="213"/>
+        <source>Box Bottom Left</source>
+        <translation>Škatla levo spodaj</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="213"/>
+        <source>Box Right Center</source>
+        <translation>Škatla center desno</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="213"/>
+        <source>Clock Top</source>
+        <translation>Ura zgoraj</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="216"/>
+        <source>Set a mask from another file&apos;s brightness or alpha.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="225"/>
+        <source>Open Mask File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="277"/>
+        <source>Alpha</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/waveform/ui.qml" line="92"/>
+        <source>Waveform Color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/waveform/ui.qml" line="104"/>
+        <source>Background Color</source>
+        <translation>Barva ozadja</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/waveform/ui.qml" line="175"/>
+        <source>Fill</source>
+        <translation>Zapolni</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/waveform/ui.qml" line="181"/>
+        <source>Fill the area under the spectrum.</source>
+        <translation>Zapolni območje pod spektrom.</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/waveform/ui.qml" line="186"/>
+        <source>Combine</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/waveform/ui.qml" line="192"/>
+        <source>Combine all channels into one waveform.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/waveform/ui.qml" line="197"/>
+        <source>Window</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ui_boxblur</name>
     <message>
-        <location filename="../src/qml/filters/blur/ui_boxblur.qml" line="138"/>
+        <location filename="../src/qml/filters/blur/ui_boxblur.qml" line="139"/>
+        <source>Preset</source>
+        <translation>Prednastavitev</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blur/ui_boxblur.qml" line="167"/>
         <source>Width</source>
         <translation>Širina</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/blur/ui_boxblur.qml" line="173"/>
+        <location filename="../src/qml/filters/blur/ui_boxblur.qml" line="202"/>
         <source>Height</source>
         <translation>Višina</translation>
     </message>
@@ -9023,7 +9412,7 @@ Click &quot;Open&quot; to load a file.</source>
         <translation>Prednastavitev</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/glow/ui_frei0r.qml" line="115"/>
+        <location filename="../src/qml/filters/glow/ui_frei0r.qml" line="116"/>
         <source>Blur</source>
         <translation>Zameglitev</translation>
     </message>
@@ -9033,7 +9422,7 @@ Click &quot;Open&quot; to load a file.</source>
         <translation>Sivinska lestvica</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/saturation/ui_frei0r.qml" line="121"/>
+        <location filename="../src/qml/filters/saturation/ui_frei0r.qml" line="122"/>
         <source>Level</source>
         <translation>Raven</translation>
     </message>
@@ -9074,20 +9463,22 @@ Click &quot;Open&quot; to load a file.</source>
 <context>
     <name>ui_movit</name>
     <message>
-        <location filename="../src/qml/filters/blur/ui_movit.qml" line="95"/>
+        <location filename="../src/qml/filters/blur/ui_movit.qml" line="118"/>
         <location filename="../src/qml/filters/glow/ui_movit.qml" line="152"/>
         <source>Radius</source>
         <translation>Polmer</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/brightness/ui_movit.qml" line="119"/>
-        <location filename="../src/qml/filters/saturation/ui_movit.qml" line="118"/>
+        <location filename="../src/qml/filters/brightness/ui_movit.qml" line="141"/>
+        <location filename="../src/qml/filters/saturation/ui_movit.qml" line="120"/>
         <source>Level</source>
         <translation>Raven</translation>
     </message>
     <message>
+        <location filename="../src/qml/filters/blur/ui_movit.qml" line="97"/>
+        <location filename="../src/qml/filters/brightness/ui_movit.qml" line="119"/>
         <location filename="../src/qml/filters/glow/ui_movit.qml" line="133"/>
-        <location filename="../src/qml/filters/saturation/ui_movit.qml" line="98"/>
+        <location filename="../src/qml/filters/saturation/ui_movit.qml" line="99"/>
         <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="137"/>
         <location filename="../src/qml/filters/vignette/ui_movit.qml" line="128"/>
         <source>Preset</source>
