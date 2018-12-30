@@ -277,9 +277,9 @@ RESOURCES += \
 
 OTHER_FILES += \
     ../COPYING \
-    shotcut.rc \
+    ../packaging/windows/shotcut.rc \
     ../scripts/build-shotcut.sh \
-    ../icons/shotcut.icns \
+    ../packaging/macos/shotcut.icns \
     ../packaging/windows/shotcut.nsi \
     ../packaging/macos/Info.plist \
     ../icons/dark/index.theme \
@@ -314,7 +314,7 @@ VERSION = $$SHOTCUT_VERSION
 
 mac {
     TARGET = Shotcut
-    ICON = ../icons/shotcut.icns
+    ICON = ../packaging/macos/shotcut.icns
     QMAKE_INFO_PLIST = ../packaging/macos/Info.plist
     INCLUDEPATH += $$[QT_INSTALL_HEADERS]
 
@@ -345,7 +345,7 @@ win32 {
         INCLUDEPATH += $$PWD/../drmingw/include
         LIBS += -L$$PWD/../drmingw/x64/lib -lexchndl
     }
-    RC_FILE = shotcut.rc
+    RC_FILE = ../packaging/windows/shotcut.rc
 }
 unix:!mac {
     QT += x11extras
