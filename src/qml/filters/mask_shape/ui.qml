@@ -44,10 +44,13 @@ Item {
             filter.set('filter.use_luminance', 1)
             filter.set('filter.resource', '%luma01.pgm')
             filter.set('filter.use_mix', 1)
+            filter.set('filter.audio_match', 0)
             filter.savePreset(preset.parameters)
         } else {
             if (filter.get('filter.use_mix').length === 0)
                 filter.set('filter.use_mix', 1)
+            if (filter.get('filter.audio_match').length === 0)
+                filter.set('filter.audio_match', 1)
             initSimpleAnimation()
         }
         setControls()
