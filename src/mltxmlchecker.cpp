@@ -1,6 +1,5 @@
 /*
  * Copyright (c) 2014-2018 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -369,6 +368,8 @@ void MltXmlChecker::checkUnlinkedFile(const QString& mlt_service)
     if (!mlt_service.isEmpty() && mlt_service != "color" && mlt_service != "colour")
     // not a builtin luma wipe file
     if ((mlt_service != "luma" && mlt_service != "movit.luma_mix") || !baseName.startsWith('%'))
+    // not a Stabilize filter without Analyze results
+    if (baseName != "vidstab.trf")
     // not the generic <producer> resource
     if (baseName != "<producer>")
     // not a URL
