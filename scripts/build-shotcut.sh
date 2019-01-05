@@ -1788,7 +1788,7 @@ function bundle_libs
          ($3 !~ /\/libstdc\+\+\./) &&
          ($3 !~ /\/libGL\./) &&
          ($3 !~ /\/libEGL\./) &&
-         ($3 !~ /\/libdrm\./) &&
+		 ($3 !~ /\/libdrm/) &&
          ($3 !~ /\/libglapi\./) &&
          ($3 !~ /\/libxcb\./) &&
          ($3 !~ /\/libxcb-dri3\./) &&
