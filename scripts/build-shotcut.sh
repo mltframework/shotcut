@@ -530,7 +530,7 @@ function set_globals {
   REVISIONS[14]="eigen-eigen-10219c95fe65"
   REVISIONS[15]="sdk/8.1"
   REVISIONS[16]=""
-  REVISIONS[17]=""
+  REVISIONS[17]="1.25"
 
   # Figure out the number of cores in the system. Used both by make and startup script
   if test "$TARGET_OS" = "Darwin"; then
