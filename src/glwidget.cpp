@@ -169,9 +169,9 @@ void GLWidget::initializeGL()
     m_frameRenderer = new FrameRenderer(quickWindow()->openglContext(), &m_offscreenSurface);
     quickWindow()->openglContext()->makeCurrent(quickWindow());
 
-    connect(m_frameRenderer, SIGNAL(frameDisplayed(const SharedFrame&)), this, SIGNAL(frameDisplayed(const SharedFrame&)), Qt::QueuedConnection);
-    connect(m_frameRenderer, SIGNAL(textureReady(GLuint,GLuint,GLuint)), SLOT(updateTexture(GLuint,GLuint,GLuint)), Qt::DirectConnection);
     connect(m_frameRenderer, SIGNAL(frameDisplayed(const SharedFrame&)), SLOT(onFrameDisplayed(const SharedFrame&)), Qt::QueuedConnection);
+    connect(m_frameRenderer, SIGNAL(frameDisplayed(const SharedFrame&)), SIGNAL(frameDisplayed(const SharedFrame&)), Qt::QueuedConnection);
+    connect(m_frameRenderer, SIGNAL(textureReady(GLuint,GLuint,GLuint)), SLOT(updateTexture(GLuint,GLuint,GLuint)), Qt::DirectConnection);
     connect(m_frameRenderer, SIGNAL(imageReady()), SIGNAL(imageReady()));
 
     m_initSem.release();
