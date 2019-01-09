@@ -60,10 +60,13 @@ NewProjectFolder::~NewProjectFolder()
 
 void NewProjectFolder::showEvent(QShowEvent*)
 {
+    QString external = Settings.playerExternal();
+    bool ok = false;
+    external.toInt(&ok);
     m_profile = Settings.playerProfile();
 
     // Automatic not permitted for SDI/HDMI
-    if (!Settings.playerExternal().isEmpty() && m_profile.isEmpty())
+    if (!external.isEmpty() && !ok && m_profile.isEmpty())
         m_profile = "atsc_720p_50";
     bool found = false;
     foreach (QAction* a, MAIN.profileGroup()->actions()) {
@@ -78,9 +81,6 @@ void NewProjectFolder::showEvent(QShowEvent*)
 
     // Update Video Mode menu.
     m_videoModeMenu.clear();
-    QString external = Settings.playerExternal();
-    bool ok = false;
-    external.toInt(&ok);
     if (external.isEmpty() || ok) {
         m_profileGroup->addAction(ui->actionProfileAutomatic);
         m_videoModeMenu.addAction(ui->actionProfileAutomatic);
@@ -90,6 +90,7 @@ void NewProjectFolder::showEvent(QShowEvent*)
     // Check the current menu item.
     foreach (QAction* a, m_profileGroup->actions()) {
         if (a->data().toString() == m_profile) {
+            LOG_DEBUG() << "m_profile" << m_profile << "action.data" << a->data().toString();
             a->setChecked(true);
             break;
         }
