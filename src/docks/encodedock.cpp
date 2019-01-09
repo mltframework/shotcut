@@ -1734,15 +1734,17 @@ void EncodeDock::on_hwencodeCheckBox_clicked(bool checked)
         foreach (const QString& codec, codecs()) {
             LOG_INFO() << "checking for" << codec;
             QProcess proc;
-            QString cmd = QString::fromLatin1("%1 -hide_banner -f lavfi -i color=s=640x360 -t 0.040 -an %2 -c:v %3 -f rawvideo pipe:")
-                    .arg(ffmpegPath.absoluteFilePath())
-                    .arg(codec.endsWith("_vaapi")? "-vaapi_device :0 -vf format=nv12,hwupload"
-                          : (codec == "hevc_qsv")? "-load_plugin hevc_hw" : "")
-                    .arg(codec);
-            LOG_DEBUG() << cmd;
+            QStringList args;
+            args << "-hide_banner" << "-f" << "lavfi" << "-i" << "color=s=640x360" << "-t" << "0.040" << "-an";
+            if (codec.endsWith("_vaapi"))
+                args << "-vaapi_device" << ":0" << "-vf" << "format=nv12,hwupload";
+            else if (codec == "hevc_qsv")
+                args << "-load_plugin" << "hevc_hw";
+            args << "-c:v" << codec << "-f" << "rawvideo" << "pipe:";
+            LOG_DEBUG() << ffmpegPath.absoluteFilePath() << args;
             proc.setStandardOutputFile(QProcess::nullDevice());
             proc.setReadChannel(QProcess::StandardError);
-            proc.start(cmd, QIODevice::ReadOnly);
+            proc.start(ffmpegPath.absoluteFilePath(), args, QIODevice::ReadOnly);
             bool started = proc.waitForStarted(2000);
             bool finished = false;
             QCoreApplication::processEvents();
