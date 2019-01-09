@@ -39,7 +39,6 @@ TimelineDock::TimelineDock(QWidget *parent) :
     ui(new Ui::TimelineDock),
     m_quickView(QmlUtilities::sharedEngine(), this),
     m_position(-1),
-    m_updateCommand(0),
     m_ignoreNextPositionChange(false),
     m_trimDelta(0),
     m_transitionDelta(0)
@@ -80,7 +79,6 @@ TimelineDock::TimelineDock(QWidget *parent) :
 
 TimelineDock::~TimelineDock()
 {
-    delete m_updateCommand;
     delete ui;
 }
 
@@ -464,9 +462,7 @@ void TimelineDock::onProducerChanged(Mlt::Producer* after)
     QString xmlAfter = MLT.XML(after);
     m_updateCommand->setXmlAfter(xmlAfter);
     setSelection(); // clearing selection prevents a crash
-    Timeline::UpdateCommand* command = m_updateCommand;
-    m_updateCommand = 0;
-    MAIN.undoStack()->push(command);
+    MAIN.undoStack()->push(m_updateCommand.take());
 }
 
 void TimelineDock::addAudioTrack()
@@ -643,8 +639,7 @@ void TimelineDock::emitSelectedFromSelection()
     int clipIndex = selection().isEmpty()? 0 : selection().first();
     QScopedPointer<Mlt::ClipInfo> info(getClipInfo(trackIndex, clipIndex));
     if (info && info->producer && info->producer->is_valid()) {
-        delete m_updateCommand;
-        m_updateCommand = new Timeline::UpdateCommand(*this, trackIndex, clipIndex, info->start);
+        m_updateCommand.reset(new Timeline::UpdateCommand(*this, trackIndex, clipIndex, info->start));
         // We need to set these special properties so time-based filters
         // can get information about the cut while still applying filters
         // to the cut parent.
