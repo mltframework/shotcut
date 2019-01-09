@@ -444,7 +444,7 @@ function set_globals {
   REPOLOCS[5]="git://github.com/ddennedy/movit.git"
   REPOLOCS[6]="https://ftp.osuosl.org/pub/blfs/conglomeration/lame/lame-3.99.5.tar.gz"
   REPOLOCS[7]="git://github.com/mltframework/shotcut.git"
-  REPOLOCS[8]="http://ftp.us.debian.org/debian/pool/main/s/swh-plugins/swh-plugins_0.4.17.orig.tar.gz"
+  REPOLOCS[8]="http://ftp.us.debian.org/debian/pool/main/s/swh-plugins/swh-plugins_0.4.15+1.orig.tar.gz"
   REPOLOCS[9]="git://github.com/mltframework/webvfx.git"
   REPOLOCS[10]="git://github.com/georgmartius/vid.stab.git"
   REPOLOCS[11]="git://github.com/anholt/libepoxy.git"
