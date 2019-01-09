@@ -931,6 +931,17 @@ UpdateCommand::UpdateCommand(TimelineDock& timeline, int trackIndex, int clipInd
     m_undoHelper.recordBeforeState();
 }
 
+void UpdateCommand::setPosition(int trackIndex, int clipIndex, int position)
+{
+    if (trackIndex >= 0)
+        m_trackIndex = trackIndex;
+    if (clipIndex >= 0)
+        m_clipIndex = clipIndex;
+    if (position >= 0)
+        m_position = position;
+    m_undoHelper.recordBeforeState();
+}
+
 void UpdateCommand::redo()
 {
     LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "position" << m_position;

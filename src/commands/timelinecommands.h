@@ -476,6 +476,10 @@ public:
     UpdateCommand(TimelineDock& timeline, int trackIndex, int clipIndex, int position,
         QUndoCommand * parent = 0);
     void setXmlAfter(const QString& xml) { m_xmlAfter = xml; }
+    void setPosition(int trackIndex, int clipIndex, int position);
+    int trackIndex() const {return m_trackIndex;}
+    int clipIndex() const {return m_clipIndex;}
+    int position() const {return m_position;}
     void redo();
     void undo();
 private:
