@@ -107,9 +107,16 @@ Mlt::Producer* AvformatProducerWidget::newProducer(Mlt::Profile& profile)
     }
     else
     {
-        double warpspeed = ui->speedSpinBox->value();
+        // If the system language's numeric format and region's numeric format differ, then MLT
+        // uses the language's numeric format while Qt is using the region's. Thus, to
+        // supply a proper numeric format in string form to MLT, we must use MLT instead of
+        // letting Qt convert it.
+        Mlt::Properties tempProps;
+        tempProps.set("speed", ui->speedSpinBox->value());
+        QString warpspeed = QString::fromLatin1(tempProps.get("speed"));
+
         QString filename = GetFilenameFromProducer(producer());
-        QString s = QString("%1:%L2:%3").arg("timewarp").arg(warpspeed).arg(filename);
+        QString s = QString("%1:%2:%3").arg("timewarp").arg(warpspeed).arg(filename);
         p = new Mlt::Producer(profile, s.toUtf8().constData());
         p->set(kShotcutProducerProperty, "avformat");
     }
