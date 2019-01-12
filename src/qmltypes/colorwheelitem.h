@@ -33,6 +33,7 @@ class ColorWheelItem : public QQuickPaintedItem
     Q_PROPERTY(qreal redF READ redF WRITE setRedF)
     Q_PROPERTY(qreal greenF READ greenF WRITE setGreenF)
     Q_PROPERTY(qreal blueF READ blueF WRITE setBlueF)
+    Q_PROPERTY(qreal step READ step WRITE setStep)
 public:
     explicit ColorWheelItem(QQuickItem *parent = 0);
     QColor color();
@@ -49,6 +50,9 @@ public:
     void setGreenF(qreal green);
     qreal blueF();
     void setBlueF(qreal blue);
+    qreal step();
+    void setStep(qreal blue);
+
 
 signals:
     void colorChanged(const QColor &color);
@@ -72,6 +76,7 @@ private:
     QColor m_color;
     bool m_isInWheel;
     bool m_isInSquare;
+    qreal m_step;
 
     int wheelSize() const;
     QColor colorForPoint(const QPoint &point);

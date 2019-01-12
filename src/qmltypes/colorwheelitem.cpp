@@ -38,6 +38,7 @@ ColorWheelItem::ColorWheelItem(QQuickItem *parent)
     , m_color(0, 0, 0, 0)
     , m_isInWheel(false)
     , m_isInSquare(false)
+    , m_step(1/256)
 {
     setAcceptedMouseButtons(Qt::LeftButton);
     setAcceptHoverEvents(true);
@@ -141,6 +142,16 @@ void ColorWheelItem::setBlueF(qreal blue)
     }
 }
 
+qreal ColorWheelItem::step()
+{
+    return m_step;
+}
+
+void ColorWheelItem::setStep(qreal step)
+{
+    m_step = step;
+}
+
 int ColorWheelItem::wheelSize() const
 {
     qreal ws = (qreal)width() / (1.0 + 1.0 / WHEEL_SLIDER_RATIO);
@@ -222,28 +233,28 @@ void ColorWheelItem::hoverMoveEvent(QHoverEvent * event)
 void ColorWheelItem::wheelEvent(QWheelEvent *event)
 {
     QPoint steps = event->angleDelta() / 8 / 15;
-    int delta = steps.y();
+    qreal delta = (qreal)steps.y() * m_step;
     QColor currentColor = color();
-    int c;
+    qreal c;
 
     // Increment/decrement RGB values by delta
-    c = currentColor.red();
+    c = currentColor.redF();
     c += delta;
     if(c < 0) c = 0;
-    if(c > 255) c = 255;
-    currentColor.setRed(c);
+    if(c > 1) c = 1;
+    currentColor.setRedF(c);
 
-    c = currentColor.green();
+    c = currentColor.greenF();
     c += delta;
     if(c < 0) c = 0;
-    if(c > 255) c = 255;
-    currentColor.setGreen(c);
+    if(c > 1) c = 1;
+    currentColor.setGreenF(c);
 
-    c = currentColor.blue();
+    c = currentColor.blueF();
     c += delta;
     if(c < 0) c = 0;
-    if(c > 255) c = 255;
-    currentColor.setBlue(c);
+    if(c > 1) c = 1;
+    currentColor.setBlueF(c);
 
     setColor(currentColor);
 
