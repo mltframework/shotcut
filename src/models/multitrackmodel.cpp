@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2018 Meltytech, LLC
+ * Copyright (c) 2013-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -396,7 +396,7 @@ bool MultitrackModel::trimClipInValid(int trackIndex, int clipIndex, int delta, 
             result = false;
         else if (!ripple && delta < 0 && clipIndex > 0 && !playlist.is_blank(clipIndex - 1))
             result = false;
-        else if (delta > 0 && clipIndex > 0 && isTransition(playlist, clipIndex - 1))
+        else if (!ripple && delta > 0 && clipIndex > 0 && isTransition(playlist, clipIndex - 1))
             result = false;
     }
     return result;
@@ -517,7 +517,7 @@ bool MultitrackModel::trimClipOutValid(int trackIndex, int clipIndex, int delta,
             result = false;
         else if (!ripple && delta < 0 && (clipIndex + 1) < playlist.count() && !playlist.is_blank(clipIndex + 1))
             result = false;
-        else if (delta > 0 && (clipIndex + 1) < playlist.count() && isTransition(playlist, clipIndex + 1))
+        else if (!ripple && delta > 0 && (clipIndex + 1) < playlist.count() && isTransition(playlist, clipIndex + 1))
             return false;
     }
     return result;
