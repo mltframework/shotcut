@@ -1800,6 +1800,9 @@ void MultitrackModel::trimTransitionIn(int trackIndex, int clipIndex, int delta)
         playlist.clip_info(clipIndex, &info);
         playlist.resize_clip(clipIndex, info.frame_in, info.frame_out - delta);
 
+        // Adjust filters.
+        adjustClipFilters(*info.producer, info.frame_in, info.frame_out, 0, delta);
+
         QVector<int> roles;
         roles << OutPointRole;
         roles << DurationRole;
@@ -1875,6 +1878,9 @@ void MultitrackModel::trimTransitionOut(int trackIndex, int clipIndex, int delta
         Mlt::ClipInfo info;
         playlist.clip_info(clipIndex, &info);
         playlist.resize_clip(clipIndex, info.frame_in + delta, info.frame_out);
+
+        // Adjust filters.
+        adjustClipFilters(*info.producer, info.frame_in, info.frame_out, delta, 0);
 
         QVector<int> roles;
         roles << OutPointRole;
