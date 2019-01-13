@@ -1,6 +1,5 @@
 /*
  * Copyright (c) 2014-2018 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,6 +35,10 @@ DirectShowVideoWidget::DirectShowVideoWidget(QWidget *parent) :
         ui->videoCombo->addItem(QCamera::deviceDescription(deviceName));
     foreach (const QAudioDeviceInfo &deviceInfo, QAudioDeviceInfo::availableDevices(QAudio::AudioInput))
         ui->audioCombo->addItem(deviceInfo.deviceName());
+    if (ui->videoCombo->count() > 1)
+        ui->videoCombo->setCurrentIndex(1);
+    if (ui->audioCombo->count() > 1)
+        ui->audioCombo->setCurrentIndex(1);
 #endif
 }
 
