@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2017-2018 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2017-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -448,6 +447,13 @@ Rectangle {
             onTriggered: settings.timelineShowThumbnails = checked
         }
         MenuItem {
+            text: qsTr('Center the Playhead')
+            checkable: true
+            checked: settings.timelineCenterPlayhead
+            onTriggered: settings.timelineCenterPlayhead = checked
+        }
+        MenuSeparator {}
+        MenuItem {
             text: qsTr('Reload')
             onTriggered: parameters.reload()
         }
@@ -480,16 +486,7 @@ Rectangle {
 
     Connections {
         target: producer
-        onPositionChanged: if (!stopScrolling) {
-           var x = position * timeScale;
-           if (!scrollView) return;
-           if (x > scrollView.flickableItem.contentX + scrollView.width - 50)
-               scrollView.flickableItem.contentX = x - scrollView.width + 50;
-           else if (x < 50)
-               scrollView.flickableItem.contentX = 0;
-           else if (x < scrollView.flickableItem.contentX + 50)
-               scrollView.flickableItem.contentX = x - 50;
-        }
+        onPositionChanged: if (!stopScrolling) Logic.scrollIfNeeded()
     }
 
     Connections {
