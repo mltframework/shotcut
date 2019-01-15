@@ -3608,6 +3608,12 @@ void MainWindow::onGLWidgetImageReady()
                 saveFileName += ".png";
             if (Util::warnIfNotWritable(saveFileName, this, caption))
                 return;
+            // Convert to square pixels if needed.
+            qreal aspectRatio = (qreal) image.width() / image.height();
+            if (qFloor(aspectRatio * 1000) != qFloor(MLT.profile().dar() * 1000)) {
+                image = image.scaled(qRound(image.height() * MLT.profile().dar()), image.height(),
+                                     Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+            }
             image.save(saveFileName);
             Settings.setSavePath(fi.path());
             m_recentDock->add(saveFileName);
