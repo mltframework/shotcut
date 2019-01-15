@@ -140,5 +140,5 @@ void EncodeJob::onFinished(int exitCode, QProcess::ExitStatus exitStatus)
             return;
         }
     }
-    AbstractJob::onFinished(exitCode, exitStatus);
+    MeltJob::onFinished(exitCode, exitStatus);
 }
