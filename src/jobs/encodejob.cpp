@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2018 Meltytech, LLC
+ * Copyright (c) 2012-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,6 +30,7 @@
 #include "jobqueue.h"
 #include "jobs/videoqualityjob.h"
 #include "util.h"
+#include <Logger.h>
 
 EncodeJob::EncodeJob(const QString &name, const QString &xml, int frameRateNum, int frameRateDen)
     : MeltJob(name, xml, frameRateNum, frameRateDen)
@@ -103,4 +104,41 @@ void EncodeJob::onVideoQualityTriggered()
                      MLT.profile().frame_rate_num(), MLT.profile().frame_rate_den()));
         }
     }
+}
+
+void EncodeJob::onFinished(int exitCode, QProcess::ExitStatus exitStatus)
+{
+    if (exitStatus != QProcess::NormalExit && exitCode != 0 && !stopped()) {
+        LOG_INFO() << "job failed with" << exitCode;
+        appendToLog(QString("Failed with exit code %1\n").arg(exitCode));
+        bool isParallel = false;
+        // Parse the XML.
+        m_xml.open();
+        QDomDocument dom(xmlPath());
+        dom.setContent(&m_xml);
+        m_xml.close();
+
+        // Locate the consumer element.
+        QDomNodeList consumers = dom.elementsByTagName("consumer");
+        for (int i = 0; i < consumers.length(); i++ ) {
+            QDomElement consumer = consumers.at(i).toElement();
+            // If real_time is set for parallel.
+            if (consumer.attribute("real_time").toInt() < -1) {
+                isParallel = true;
+                consumer.setAttribute("real_time", "-1");
+            }
+        }
+        if (isParallel) {
+            QString message(tr("Export job failed; trying again without Parallel processing."));
+            MAIN.showStatusMessage(message);
+            appendToLog(message.append("\n"));
+            m_xml.open();
+            QTextStream textStream(&m_xml);
+            dom.save(textStream, 2);
+            m_xml.close();
+            MeltJob::start();
+            return;
+        }
+    }
+    AbstractJob::onFinished(exitCode, exitStatus);
 }

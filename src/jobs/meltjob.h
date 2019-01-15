@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2018 Meltytech, LLC
+ * Copyright (c) 2012-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,13 +40,15 @@ public slots:
 
 protected slots:
     virtual void onOpenTiggered();
+    virtual void onFinished(int exitCode, QProcess::ExitStatus exitStatus);
     void onShowFolderTriggered();
-    
+
+protected:
+    QTemporaryFile m_xml;
+
 private:
     void onReadyRead();
-    void onFinished(int exitCode, QProcess::ExitStatus exitStatus);
 
-    QTemporaryFile m_xml;
     bool m_isStreaming;
     int m_previousPercent;
     QStringList m_args;
