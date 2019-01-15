@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2018 Meltytech, LLC
+ * Copyright (c) 2013-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,6 +31,7 @@ class ShotcutSettings : public QObject
     Q_PROPERTY(bool timelineRipple READ timelineRipple WRITE setTimelineRipple NOTIFY timelineRippleChanged)
     Q_PROPERTY(bool timelineRippleAllTracks READ timelineRippleAllTracks WRITE setTimelineRippleAllTracks NOTIFY timelineRippleAllTracksChanged)
     Q_PROPERTY(bool timelineSnap READ timelineSnap WRITE setTimelineSnap NOTIFY timelineSnapChanged)
+    Q_PROPERTY(bool timelineCenterPlayhead READ timelineCenterPlayhead WRITE setTimelineCenterPlayhead NOTIFY timelineCenterPlayheadChanged)
     Q_PROPERTY(QString openPath READ openPath WRITE setOpenPath NOTIFY openPathChanged)
     Q_PROPERTY(QString savePath READ savePath WRITE setSavePath NOTIFY savePathChanged)
     Q_PROPERTY(QString playlistThumbnails READ playlistThumbnails WRITE setPlaylistThumbnails NOTIFY playlistThumbnailsChanged)
@@ -135,6 +136,8 @@ public:
     void setTimelineRippleAllTracks(bool);
     bool timelineSnap() const;
     void setTimelineSnap(bool);
+    bool timelineCenterPlayhead() const;
+    void setTimelineCenterPlayhead(bool);
 
     QString filterFavorite(const QString& filterName);
     void setFilterFavorite(const QString& filterName, const QString& value);
@@ -189,6 +192,7 @@ signals:
     void timelineRippleChanged();
     void timelineRippleAllTracksChanged();
     void timelineSnapChanged();
+    void timelineCenterPlayheadChanged();
     void playerAudioChannelsChanged(int);
     void playerGpuChanged();
     void audioInDurationChanged();

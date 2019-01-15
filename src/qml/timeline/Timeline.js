@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2018 Meltytech, LLC
+ * Copyright (c) 2013-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,12 +18,21 @@
 function scrollIfNeeded() {
     var x = timeline.position * multitrack.scaleFactor;
     if (!scrollView) return;
-    if (x > scrollView.flickableItem.contentX + scrollView.width - 50)
-        scrollView.flickableItem.contentX = x - scrollView.width + 50;
-    else if (x < 50)
-        scrollView.flickableItem.contentX = 0;
-    else if (x < scrollView.flickableItem.contentX + 50)
-        scrollView.flickableItem.contentX = x - 50;
+    if (settings.timelineCenterPlayhead) {
+        if (x > scrollView.flickableItem.contentX + scrollView.width * 0.5)
+            scrollView.flickableItem.contentX = x - scrollView.width * 0.5;
+        else if (x < scrollView.width * 0.5)
+            scrollView.flickableItem.contentX = 0;
+        else if (x < scrollView.flickableItem.contentX + scrollView.width * 0.5)
+            scrollView.flickableItem.contentX = x - scrollView.width * 0.5;
+    } else {
+        if (x > scrollView.flickableItem.contentX + scrollView.width - 50)
+            scrollView.flickableItem.contentX = x - scrollView.width + 50;
+        else if (x < 50)
+            scrollView.flickableItem.contentX = 0;
+        else if (x < scrollView.flickableItem.contentX + 50)
+            scrollView.flickableItem.contentX = x - 50;
+    }
 }
 
 function dragging(pos, duration) {

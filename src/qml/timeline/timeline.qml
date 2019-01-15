@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2018 Meltytech, LLC
+ * Copyright (c) 2013-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -470,6 +470,13 @@ Rectangle {
             checked: settings.timelineShowThumbnails
             onTriggered: settings.timelineShowThumbnails = checked
         }
+        MenuItem {
+            text: qsTr('Center the Playhead')
+            checkable: true
+            checked: settings.timelineCenterPlayhead
+            onTriggered: settings.timelineCenterPlayhead = checked
+        }
+        MenuSeparator {}
         MenuItem {
             id: propertiesMenuItem
             visible: false

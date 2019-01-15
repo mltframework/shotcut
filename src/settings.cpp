@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2018 Meltytech, LLC
+ * Copyright (c) 2013-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -483,6 +483,17 @@ void ShotcutSettings::setTimelineSnap(bool b)
 {
     settings.setValue("timeline/snap", b);
     emit timelineSnapChanged();
+}
+
+bool ShotcutSettings::timelineCenterPlayhead() const
+{
+    return settings.value("timeline/centerPlayhead", false).toBool();
+}
+
+void ShotcutSettings::setTimelineCenterPlayhead(bool b)
+{
+    settings.setValue("timeline/centerPlayhead", b);
+    emit timelineCenterPlayheadChanged();
 }
 
 QString ShotcutSettings::filterFavorite(const QString& filterName)
