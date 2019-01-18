@@ -121,6 +121,7 @@ private:
     Highlighter *highlighter;
     Ui_Dialog *ui_dialog;
     QDialog *insertHtmlDialog;
+    QUrl baseUrl;
 };
 
 #endif // HTML_EDITOR_H
