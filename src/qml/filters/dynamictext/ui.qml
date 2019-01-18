@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2018 Meltytech, LLC
+ * Copyright (c) 2014-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -108,20 +108,28 @@ Item {
             filter.set(rectProperty,   '0=-5%/-5%:110%x110%; -1=0%/0%:100%x100%')
             filter.savePreset(presetParams.concat('shotcut:animIn'), qsTr('Slow Zoom Out'))
             filter.set(rectProperty,   '0=-5%/-5%:110%x110%; -1=-10%/-5%:110%x110%')
+            filter.deletePreset(qsTr('Slow Pan Left'))
             filter.savePreset(presetParams.concat('shotcut:animIn'), qsTr('Slow Move Left'))
             filter.set(rectProperty,   '0=-5%/-5%:110%x110%; -1=0%/-5%:110%x110%')
+            filter.deletePreset(qsTr('Slow Pan Right'))
             filter.savePreset(presetParams.concat('shotcut:animIn'), qsTr('Slow Move Right'))
             filter.set(rectProperty,   '0=-5%/-5%:110%x110%; -1=-5%/-10%:110%x110%')
+            filter.deletePreset(qsTr('Slow Pan Up'))
             filter.savePreset(presetParams.concat('shotcut:animIn'), qsTr('Slow Move Up'))
             filter.set(rectProperty,   '0=-5%/-5%:110%x110%; -1=-5%/0%:110%x110%')
+            filter.deletePreset(qsTr('Slow Pan Down'))
             filter.savePreset(presetParams.concat('shotcut:animIn'), qsTr('Slow Move Down'))
             filter.set(rectProperty,   '0=0%/0%:100%x100%; -1=-10%/-10%:110%x110%')
+            filter.deletePreset(qsTr('Slow Zoom In, Pan Up Left'))
             filter.savePreset(presetParams.concat('shotcut:animIn'), qsTr('Slow Zoom In, Move Up Left'))
             filter.set(rectProperty,   '0=0%/0%:100%x100%; -1=0%/0%:110%x110%')
+            filter.deletePreset(qsTr('Slow Zoom In, Pan Down Right'))
             filter.savePreset(presetParams.concat('shotcut:animIn'), qsTr('Slow Zoom In, Move Down Right'))
             filter.set(rectProperty,   '0=-10%/0%:110%x110%; -1=0%/0%:100%x100%')
+            filter.deletePreset(qsTr('Slow Zoom Out, Pan Up Right'))
             filter.savePreset(presetParams.concat('shotcut:animIn'), qsTr('Slow Zoom Out, Move Up Right'))
             filter.set(rectProperty,   '0=0%/-10%:110%x110%; -1=0%/0%:100%x100%')
+            filter.deletePreset(qsTr('Slow Zoom Out, Pan Down Left'))
             filter.savePreset(presetParams.concat('shotcut:animIn'), qsTr('Slow Zoom Out, Move Down Left'))
             filter.animateIn = 0
             filter.resetProperty(rectProperty)
