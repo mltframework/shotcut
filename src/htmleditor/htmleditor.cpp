@@ -247,10 +247,11 @@ bool HtmlEditor::fileSaveAs()
 void HtmlEditor::insertImage()
 {
     QString filters;
-    filters += tr("Common Graphics (*.png *.jpg *.jpeg *.gif);;");
+    filters += tr("Common Graphics (*.png *.jpg *.jpeg *.gif *.svg);;");
     filters += tr("Portable Network Graphics (PNG) (*.png);;");
     filters += tr("JPEG (*.jpg *.jpeg);;");
     filters += tr("Graphics Interchange Format (*.gif);;");
+    filters += tr("Scalable Vector Graphics (*.svg);;");
     filters += tr("All Files (*)");
 
     QString fn = QFileDialog::getOpenFileName(this, tr("Open image..."),
