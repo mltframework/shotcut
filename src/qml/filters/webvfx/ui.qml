@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2018 Meltytech, LLC
+ * Copyright (c) 2014-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,11 +17,12 @@
 
 import QtQuick 2.1
 import QtQuick.Dialogs 1.1
-import QtQuick.Controls 1.1
+import QtQuick.Controls 1.5
 import QtQuick.Layouts 1.0
 import QtQuick.Window 2.1
 import Shotcut.Controls 1.0 as Shotcut
 import org.shotcut.qml 1.0 as Shotcut
+import QtQml.Models 2.2
 
 Item {
     id: webvfxRoot
@@ -41,7 +42,7 @@ Item {
         }
         onUrlChanged: {
             if (exists())
-                customUILoader.source = url;
+                customUILoader.source = 'file:///' + url;
             else
                 customUILoader.source = "";
         }
@@ -69,38 +70,43 @@ Item {
         if (htmlFile.exists()) {
             fileLabel.text = htmlFile.fileName
             fileLabelTip.text = htmlFile.url
+            fileLabel.visible = true
             openButton.visible = false
-            newButton.visible = false
+            templatesView.visible = false
             editButton.visible = true
             reloadButton.visible = true
             webvfxCheckBox.enabled = false
         } else {
-            console.log('htmlFile.url = ' + htmlFile.url)
-            fileLabel.text = qsTr("No File Loaded")
-            fileLabel.color = 'red'
-            fileLabelTip.text = qsTr('No HTML file loaded. Click "Open" or "New" to load a file.')
+            fileLabel.visible = false
             filter.set("disable", 1)
         }
         filter.set('in', producer.in)
         filter.set('out', producer.out)
     }
 
-    function handleHtmlFile(selectExisting) {
-        webvfxRoot.fileSaved(htmlFile.path)
-        if (!selectExisting)
-            htmlFile.copyFromFile(webvfxCheckBox.checked? ":/scripts/web-animations.html" : ":/scripts/new.html")
+    function handleHtmlFile(selectExisting, selectFolder) {
+        var protocol = webvfxCheckBox.checked? 'webvfx' : 'plain'
+        if (!selectExisting || selectFolder) {
+            templatesView.selection.forEach( function(row) {
+                protocol = templatesModel.data(row, Shotcut.WebvfxTemplatesModel.ProtocolRole)
+                htmlFile.url = templatesModel.copyTemplate(row, htmlFile.url)
+                if (!htmlFile.url.length)
+                    return
+            })
+        }
 
+        webvfxRoot.fileSaved(htmlFile.path)
         fileLabel.text = htmlFile.fileName
-        fileLabel.color = activePalette.text
         fileLabelTip.text = htmlFile.url
+        fileLabel.visible = true
         openButton.visible = false
-        newButton.visible = false
+        templatesView.visible = false
         webvfxCheckBox.enabled = false
         editButton.visible = true
         reloadButton.visible = true
 
         var resource = htmlFile.url
-        if (webvfxCheckBox.checked) {
+        if (protocol === 'webvfx') {
             filter.set('duration', filter.duration / profile.fps)
         } else {
             resource = "plain:" + resource
@@ -108,9 +114,8 @@ Item {
         filter.set('resource', resource)
         filter.set("disable", 0)
 
-        if (!selectExisting) {
+        if (!selectExisting || selectFolder) {
             editor.edit(htmlFile.url)
-            editButton.enabled = false
             reloadButton.enabled = false
         }
     }
@@ -125,13 +130,13 @@ Item {
         selectedNameFilter: "HTML-Files (*.htm *.html)"
         onAccepted: {
             htmlFile.url = fileDialog.fileUrl
-            if (!selectExisting && !htmlFile.suffix())
+            if (!selectExisting && !selectFolder && !htmlFile.suffix())
                 htmlFile.url = htmlFile.url + ".html"
-            handleHtmlFile(selectExisting)
+            handleHtmlFile(selectExisting, selectFolder)
         }
         onRejected: {
             openButton.visible = true
-            newButton.visible = true
+            templatesView.visible = true
         }
     }
 
@@ -140,9 +145,45 @@ Item {
         anchors.fill: parent
         anchors.margins: 8
 
-        // Row 1
+        TableView {
+            id: templatesView
+            Layout.columnSpan: 4
+            Layout.fillWidth: true
+            Shotcut.WebvfxTemplatesModel {
+                id: templatesModel
+            }
+            model: templatesModel
+            TableViewColumn {
+                title: qsTr('Template')
+                role: 'name'
+                resizable: false
+            }
+            property int selectedRow: -1
+            onClicked : {
+                selectedRow = row
+                if (application.isProjectFolder()) {
+                    htmlFile.url = templatesModel.copyTemplate(row)
+                    handleHtmlFile(true, false)
+                    editor.edit(htmlFile.url)
+                    reloadButton.enabled = false
+                } else if (templatesModel.needsFolder(row)) {
+                    fileDialog.selectExisting = true
+                    fileDialog.selectFolder = true
+                    fileDialog.title = qsTr("Choose a Folder for HTML")
+                    fileDialog.open()
+                } else {
+                    fileDialog.selectExisting = false
+                    fileDialog.selectFolder = false
+                    fileDialog.title = qsTr("Save HTML File")
+                    fileDialog.open()
+                }
+            }
+        }
+
         Label {
+            id: fileRowLabel
             text: qsTr('<b>File:</b>')
+            visible: fileLabel.visible
         }
         Label {
             id: fileLabel
@@ -150,11 +191,25 @@ Item {
             Shotcut.ToolTip { id: fileLabelTip }
         }
 
-        // Row 2
+        Button {
+            id: openButton
+            text: qsTr('Open...')
+            onClicked: {
+                fileDialog.selectExisting = true
+                fileDialog.selectFolder = false
+                fileDialog.title = qsTr( "Open HTML File" )
+                fileDialog.open()
+            }
+            Shotcut.ToolTip {
+                 text: qsTr("Load an existing HTML file.")
+            }
+        }
         CheckBox {
             id: webvfxCheckBox
-            Layout.columnSpan: 4
+            Layout.columnSpan: 3
+            Layout.fillWidth: true
             text: qsTr('Use WebVfx JavaScript extension')
+            visible: openButton.visible
             Shotcut.ToolTip {
                 id: webvfxCheckTip
                 text: '<b>' + qsTr('For Advanced Users: ') + '</b>' + '<p>' +
@@ -179,51 +234,12 @@ Item {
             }
         }
 
-        // Row 3
-        Button {
-            id: openButton
-            text: qsTr('Open...')
-            onClicked: {
-                fileDialog.selectExisting = true
-                fileDialog.title = qsTr( "Open HTML File" )
-                fileDialog.open()
-            }
-            Shotcut.ToolTip {
-                 text: qsTr("Load an existing HTML file.")
-            }
-        }
-        Button {
-            id: newButton
-            text: qsTr('New...')
-            onClicked: {
-                var filename = application.getNextProjectFile('html')
-                if (filename) {
-                    htmlFile.url = filename
-                    handleHtmlFile(false)
-                } else {
-                    fileDialog.selectExisting = false
-                    fileDialog.title = qsTr( "Save HTML File" )
-                    fileDialog.open()
-                }
-            }
-            Shotcut.ToolTip {
-                 text: qsTr("Load new HTML file.")
-            }
-        }
-        Item {
-            Layout.columnSpan: 2
-            Layout.fillWidth: true
-            visible: openButton.visible
-        }
-
-        // Row 4
         Button {
             id: editButton
             text: qsTr('Edit...')
             visible: false
             onClicked: {
                 editor.edit(htmlFile.url)
-                editButton.enabled = false
                 reloadButton.enabled = false
             }
             Shotcut.HtmlEditor {
@@ -232,7 +248,6 @@ Item {
                     filter.set("_reload", 1);
                 }
                 onClosed: {
-                    editButton.enabled = true
                     reloadButton.enabled = true
                 }
             }
@@ -262,6 +277,7 @@ Item {
             Layout.columnSpan: 4
         }
     }
+
     Connections {
         target: filter
         onInChanged: filter.set('duration', filter.duration / profile.fps)

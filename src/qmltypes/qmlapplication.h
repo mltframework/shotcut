@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2018 Meltytech, LLC
+ * Copyright (c) 2014-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -39,7 +39,6 @@ class QmlApplication : public QObject
     Q_PROPERTY(QRect mainWinRect READ mainWinRect);
     Q_PROPERTY(bool hasFiltersOnClipboard READ hasFiltersOnClipboard NOTIFY filtersCopied)
 
-
 public:
     static QmlApplication& singleton();
     static Qt::WindowModality dialogModality();
@@ -54,6 +53,7 @@ public:
     Q_INVOKABLE static QString timecode(int frames);
     Q_INVOKABLE static int audioChannels();
     Q_INVOKABLE static QString getNextProjectFile(const QString& filename);
+    Q_INVOKABLE static bool isProjectFolder();
 
 signals:
     void paletteChanged();

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2018 Meltytech, LLC
+ * Copyright (c) 2013-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,6 +26,7 @@
 #include "qmltypes/qmlhtmleditor.h"
 #include "qmltypes/qmlmetadata.h"
 #include "qmltypes/timelineitems.h"
+#include "qmltypes/webvfxtemplatesmodel.h"
 #include "settings.h"
 #include "models/metadatamodel.h"
 #include "models/keyframesmodel.h"
@@ -56,6 +57,7 @@ void QmlUtilities::registerCommonTypes()
                                               "You cannot create a MetadataModel from QML.");
     qmlRegisterType<ColorPickerItem>("Shotcut.Controls", 1, 0, "ColorPickerItem");
     qmlRegisterType<ColorWheelItem>("Shotcut.Controls", 1, 0, "ColorWheelItem");
+    qmlRegisterType<WebvfxTemplatesModel>("org.shotcut.qml", 1, 0, "WebvfxTemplatesModel");
     registerTimelineItems();
 }
 

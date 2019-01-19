@@ -114,7 +114,8 @@ SOURCES += main.cpp\
     models/keyframesmodel.cpp \
     widgets/textproducerwidget.cpp \
     dialogs/listselectiondialog.cpp \
-    widgets/newprojectfolder.cpp
+    widgets/newprojectfolder.cpp \
+    qmltypes/webvfxtemplatesmodel.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -225,7 +226,8 @@ HEADERS  += mainwindow.h \
     models/keyframesmodel.h \
     widgets/textproducerwidget.h \
     dialogs/listselectiondialog.h \
-    widgets/newprojectfolder.h
+    widgets/newprojectfolder.h \
+    qmltypes/webvfxtemplatesmodel.h
 
 FORMS    += mainwindow.ui \
     openotherdialog.ui \
