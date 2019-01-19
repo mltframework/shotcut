@@ -27,7 +27,7 @@ import QtQml.Models 2.2
 Item {
     id: webvfxRoot
     width: 350
-    height: 100
+    height: 200 + customUILoader.height
     property url settingsSavePath: 'file:///' + settings.savePath
 
     SystemPalette { id: activePalette; colorGroup: SystemPalette.Active }
@@ -154,7 +154,7 @@ Item {
             }
             model: templatesModel
             TableViewColumn {
-                title: qsTr('Template')
+                title: qsTr('Templates')
                 role: 'name'
                 resizable: false
             }
