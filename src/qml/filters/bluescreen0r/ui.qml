@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2015 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2015-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -67,7 +66,11 @@ Item {
         }
         ColorPicker {
             id: colorPicker
-            onValueChanged: filter.set(colorParam, value)
+            onValueChanged: {
+                filter.set(colorParam, value)
+                filter.set('disable', 0)
+            }
+            onPickStarted: filter.set('disable', 1)
         }
         UndoButton {
             onClicked: colorPicker.value = colorDefault
