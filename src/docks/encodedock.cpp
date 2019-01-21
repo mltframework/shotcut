@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2018 Meltytech, LLC
+ * Copyright (c) 2012-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1205,10 +1205,16 @@ void EncodeDock::on_encodeButton_clicked()
         }
 #endif
     }
+
     QString caption = seekable? tr("Export File") : tr("Capture File");
+    QString nameFilter;
+    if (!m_extension.isEmpty())
+        nameFilter = tr("%1 (*.%2);;All Files (*)").arg(ui->formatCombo->currentText()).arg(m_extension);
+    else
+        tr("Determined by Export (*)");
     m_outputFilename = QFileDialog::getSaveFileName(this,
         caption, directory,
-        QString(), 0, QFileDialog::HideNameFilterDetails);
+        nameFilter, 0, QFileDialog::HideNameFilterDetails);
     if (!m_outputFilename.isEmpty()) {
         QFileInfo fi(m_outputFilename);
         MLT.pause();
