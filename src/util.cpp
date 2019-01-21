@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2018 Meltytech, LLC
+ * Copyright (c) 2014-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -122,8 +122,8 @@ QString Util::removeFileScheme(QUrl& url)
 {
     QString path = url.url();
     if (url.scheme() == "file")
-        path = url.url(QUrl::PreferLocalFile);
-    return path;
+        path = url.toString(QUrl::PreferLocalFile);
+    return QUrl::fromPercentEncoding(path.toUtf8());
 }
 
 QStringList Util::sortedFileList(const QList<QUrl>& urls)
