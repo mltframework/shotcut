@@ -1,7 +1,5 @@
 /*
- * Copyright (c) 2014 Meltytech, LLC
- * Author: Brian Matherly <pez4brian@yahoo.com>
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2014-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,6 +36,7 @@ public slots:
 signals:
     void screenSelected(QRect);
     void colorPicked(const QColor &color);
+    void cancelled();
 
 public:
     bool onMousePressEvent(QMouseEvent *event);
@@ -65,6 +64,7 @@ public:
 signals:
     void pickColor();
     void colorPicked(const QColor &color);
+    void cancelled();
 
 private:
     ScreenSelector m_selector;

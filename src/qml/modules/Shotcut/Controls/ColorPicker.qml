@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2014-2016 Meltytech, LLC
- * Author: Brian Matherly <pez4brian@yahoo.com>
+ * Copyright (c) 2014-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,6 +28,7 @@ RowLayout {
     property alias eyedropper: pickerButton.visible
     
     signal pickStarted
+    signal pickCancelled
     
     SystemPalette { id: activePalette; colorGroup: SystemPalette.Active }
     
@@ -38,6 +38,7 @@ RowLayout {
             value = color
             pickerButton.checked = false
         }
+        onCancelled: pickCancelled()
     }
     
     Button {

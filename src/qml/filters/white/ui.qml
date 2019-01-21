@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2014-2015 Meltytech, LLC
- * Author: Brian Matherly <pez4brian@yahoo.com>
+ * Copyright (c) 2014-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -93,6 +92,7 @@ Item {
             onPickStarted: {
                 filter.set("disable", 1);
             }
+            onPickCancelled: filter.set('disable', 0)
         }
         UndoButton {
             onClicked: colorPicker.value = defaultNeutral

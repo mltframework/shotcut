@@ -1,7 +1,5 @@
 /*
- * Copyright (c) 2014 Meltytech, LLC
- * Author: Brian Matherly <pez4brian@yahoo.com>
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2014-2019 Meltytech, LLC
  * Inspiration: KDENLIVE colorpickerwidget.cpp by Till Theato (root@ttill.de)
  * Inspiration: QColorDialog.cpp
  *
@@ -123,8 +121,10 @@ bool ScreenSelector::onMouseReleaseEvent(QMouseEvent *event)
 
 bool ScreenSelector::onKeyPressEvent(QKeyEvent* event)
 {
-    if (event->key() == Qt::Key_Escape)
+    if (event->key() == Qt::Key_Escape) {
         release();
+        emit cancelled();
+    }
     event->accept();
     return true;
 }
@@ -171,4 +171,5 @@ ColorPickerItem::ColorPickerItem(QObject* parent)
 {
     connect(this, SIGNAL(pickColor()), &m_selector, SLOT(startSelection()));
     connect(&m_selector, SIGNAL(colorPicked(QColor)), SIGNAL(colorPicked(QColor)));
+    connect(&m_selector, SIGNAL(cancelled()), SIGNAL(cancelled()));
 }

@@ -71,6 +71,7 @@ Item {
                 filter.set('disable', 0)
             }
             onPickStarted: filter.set('disable', 1)
+            onPickCancelled: filter.set('disable', 0)
         }
         UndoButton {
             onClicked: colorPicker.value = colorDefault

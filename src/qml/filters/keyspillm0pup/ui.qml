@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2018 Meltytech, LLC
+ * Copyright (c) 2015-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -122,6 +122,7 @@ Item {
             onPickStarted: {
                 filter.set("disable", 1);
             }
+            onPickCancelled: filter.set('disable', 0)
         }
         UndoButton {
             onClicked: keyColorPicker.value = keyColorDefault
@@ -144,6 +145,7 @@ Item {
             onPickStarted: {
                 filter.set("disable", 1);
             }
+            onPickCancelled: filter.set('disable', 0)
         }
         UndoButton {
             onClicked: targetColorPicker.value = targetColorDefault
