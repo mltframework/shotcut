@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Meltytech, LLC
+ * Copyright (c) 2018-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -59,6 +59,8 @@ private slots:
 
     void on_recentListView_clicked(const QModelIndex& index);
 
+    void on_projectNameLineEdit_textEdited(const QString& text);
+    
 private:
     Ui::NewProjectFolder *ui;
     QActionGroup* m_profileGroup;
@@ -66,6 +68,7 @@ private:
     QMenu* m_customProfileMenu;
     QString m_profile;
     QStandardItemModel m_model;
+    QString m_projectName;
 };
 
 #endif // NEWPROJECTFOLDER_H
