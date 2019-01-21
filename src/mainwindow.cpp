@@ -1837,20 +1837,22 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
     case Qt::Key_7:
     case Qt::Key_8:
     case Qt::Key_9:
-        if (m_playlistDock->isVisible() && m_playlistDock->model()->rowCount() > 0) {
+        if (m_playlistDock->isVisible() && m_playlistDock->model()->rowCount() > 0 && !(event->modifiers() & Qt::AltModifier)) {
             m_playlistDock->raise();
             m_playlistDock->setIndex(event->key() - Qt::Key_1);
         }
         break;
     case Qt::Key_0:
-        if (m_timelineDock->isVisible()) {
-            if (event->modifiers() & Qt::ControlModifier)
-                m_timelineDock->model()->setTrackHeight(50);
-            else
-                m_timelineDock->resetZoom();
-        } else if (m_playlistDock->isVisible() && m_playlistDock->model()->rowCount() > 0) {
-            m_playlistDock->raise();
-            m_playlistDock->setIndex(9);
+        if (!(event->modifiers() & Qt::AltModifier)) {
+            if (m_timelineDock->isVisible()) {
+                if (event->modifiers() & Qt::ControlModifier)
+                    m_timelineDock->model()->setTrackHeight(50);
+                else
+                    m_timelineDock->resetZoom();
+            } else if (m_playlistDock->isVisible() && m_playlistDock->model()->rowCount() > 0) {
+                m_playlistDock->raise();
+                m_playlistDock->setIndex(9);
+            }
         }
         break;
     case Qt::Key_X: // Avid Extract
