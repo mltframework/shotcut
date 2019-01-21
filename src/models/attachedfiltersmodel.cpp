@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2018 Meltytech, LLC
+ * Copyright (c) 2013-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -161,7 +161,8 @@ bool AttachedFiltersModel::setData(const QModelIndex& index, const QVariant& , i
         if (filter && filter->is_valid()) {
             filter->set("disable", !filter->get_int("disable"));
             emit changed();
-            emit dataChanged(createIndex(index.row(), 0), createIndex(index.row(), 0));
+            QModelIndex modelIndex = createIndex(index.row(), 0);
+            emit dataChanged(modelIndex, modelIndex, QVector<int>() << Qt::CheckStateRole);
         }
         delete filter;
         return true;

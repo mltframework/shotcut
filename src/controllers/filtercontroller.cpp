@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2018 Meltytech, LLC
+ * Copyright (c) 2014-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -147,6 +147,7 @@ void FilterController::setCurrentFilter(int attachedIndex, bool isNew)
         filter = new QmlFilter(*m_mltFilter, meta);
         filter->setIsNew(isNew);
         connect(filter, SIGNAL(changed()), SLOT(onQmlFilterChanged()));
+        connect(filter, SIGNAL(changed(QString)), SLOT(onQmlFilterChanged(const QString&)));
     }
 
     emit currentFilterChanged(filter, meta, m_currentFilterIndex);
@@ -215,6 +216,14 @@ void FilterController::handleAttachDuplicateFailed(int index)
 void FilterController::onQmlFilterChanged()
 {
     emit filterChanged(m_mltFilter);
+}
+
+void FilterController::onQmlFilterChanged(const QString &name)
+{
+    if (name == "disable") {
+        QModelIndex index = m_attachedModel.index(m_currentFilterIndex);
+        emit m_attachedModel.dataChanged(index, index, QVector<int>() << Qt::CheckStateRole);
+    }
 }
 
 void FilterController::addMetadata(QmlMetadata* meta)
