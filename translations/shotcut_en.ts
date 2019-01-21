@@ -1521,8 +1521,8 @@ in temporal compression</source>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1682"/>
         <location filename="../src/docks/encodedock.cpp" line="888"/>
-        <location filename="../src/docks/encodedock.cpp" line="1208"/>
-        <location filename="../src/docks/encodedock.cpp" line="1630"/>
+        <location filename="../src/docks/encodedock.cpp" line="1209"/>
+        <location filename="../src/docks/encodedock.cpp" line="1636"/>
         <source>Export File</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1548,17 +1548,17 @@ in temporal compression</source>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1722"/>
-        <location filename="../src/docks/encodedock.cpp" line="1347"/>
-        <location filename="../src/docks/encodedock.cpp" line="1354"/>
-        <location filename="../src/docks/encodedock.cpp" line="1465"/>
+        <location filename="../src/docks/encodedock.cpp" line="1353"/>
+        <location filename="../src/docks/encodedock.cpp" line="1360"/>
+        <location filename="../src/docks/encodedock.cpp" line="1471"/>
         <source>Stream</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1749"/>
         <location filename="../src/docks/encodedock.cpp" line="1182"/>
-        <location filename="../src/docks/encodedock.cpp" line="1270"/>
-        <location filename="../src/docks/encodedock.cpp" line="1284"/>
+        <location filename="../src/docks/encodedock.cpp" line="1276"/>
+        <location filename="../src/docks/encodedock.cpp" line="1290"/>
         <source>Stop Capture</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1618,82 +1618,92 @@ Try again with a different folder or file name.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1208"/>
-        <location filename="../src/docks/encodedock.cpp" line="1632"/>
+        <location filename="../src/docks/encodedock.cpp" line="1209"/>
+        <location filename="../src/docks/encodedock.cpp" line="1638"/>
         <source>Capture File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1229"/>
+        <location filename="../src/docks/encodedock.cpp" line="1212"/>
+        <source>%1 (*.%2);;All Files (*)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/encodedock.cpp" line="1214"/>
+        <source>Determined by Export (*)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/encodedock.cpp" line="1235"/>
         <source>The drive you chose only has %1 MiB of free space.
 Do you still want to continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1236"/>
+        <location filename="../src/docks/encodedock.cpp" line="1242"/>
         <source>Do not show this anymore.</source>
         <comment>Export free disk space warning dialog</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1241"/>
+        <location filename="../src/docks/encodedock.cpp" line="1247"/>
         <source>Export canceled.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1342"/>
-        <location filename="../src/docks/encodedock.cpp" line="1363"/>
+        <location filename="../src/docks/encodedock.cpp" line="1348"/>
+        <location filename="../src/docks/encodedock.cpp" line="1369"/>
         <source>Stop Stream</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1355"/>
+        <location filename="../src/docks/encodedock.cpp" line="1361"/>
         <source>Enter the network protocol scheme, address, port, and parameters as an URL:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1400"/>
+        <location filename="../src/docks/encodedock.cpp" line="1406"/>
         <source>Add Export Preset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1442"/>
+        <location filename="../src/docks/encodedock.cpp" line="1448"/>
         <source>Delete Preset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1443"/>
+        <location filename="../src/docks/encodedock.cpp" line="1449"/>
         <source>Are you sure you want to delete %1?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1562"/>
-        <location filename="../src/docks/encodedock.cpp" line="1567"/>
+        <location filename="../src/docks/encodedock.cpp" line="1568"/>
+        <location filename="../src/docks/encodedock.cpp" line="1573"/>
         <source>None</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1616"/>
+        <location filename="../src/docks/encodedock.cpp" line="1622"/>
         <source>KiB (%1s)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1731"/>
+        <location filename="../src/docks/encodedock.cpp" line="1737"/>
         <source>Detecting hardware encoders...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1764"/>
+        <location filename="../src/docks/encodedock.cpp" line="1770"/>
         <source>Nothing found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1767"/>
+        <location filename="../src/docks/encodedock.cpp" line="1773"/>
         <source>Found %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1779"/>
+        <location filename="../src/docks/encodedock.cpp" line="1785"/>
         <source>Configure Hardware Encoding</source>
         <translation type="unfinished"></translation>
     </message>
