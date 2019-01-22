@@ -228,15 +228,11 @@ void NewProjectFolder::on_startButton_clicked()
 
 void NewProjectFolder::on_projectNameLineEdit_textChanged(const QString& arg1)
 {
+    m_projectName = arg1;
     ui->startButton->setDisabled(arg1.isEmpty());
 }
 
 void NewProjectFolder::on_recentListView_clicked(const QModelIndex& index)
 {
     MAIN.open(m_model.itemData(index)[Qt::ToolTipRole].toString());
-}
-
-void NewProjectFolder::on_projectNameLineEdit_textEdited(const QString& text)
-{
-    m_projectName = text;
 }

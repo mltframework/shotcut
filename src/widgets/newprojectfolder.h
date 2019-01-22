@@ -59,8 +59,6 @@ private slots:
 
     void on_recentListView_clicked(const QModelIndex& index);
 
-    void on_projectNameLineEdit_textEdited(const QString& text);
-    
 private:
     Ui::NewProjectFolder *ui;
     QActionGroup* m_profileGroup;
