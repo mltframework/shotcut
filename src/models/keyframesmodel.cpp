@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Meltytech, LLC
+ * Copyright (c) 2018-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -290,8 +290,7 @@ bool KeyframesModel::setInterpolation(int parameterIndex, int keyframeIndex, Int
 //                LOG_DEBUG() << "keyframe index" << keyframeIndex << "keyframe type" << type;
                 foreach (name, m_metadata->keyframes()->parameter(m_metadataIndex[parameterIndex])->gangedProperties()) {
                     Mlt::Animation animation = m_filter->getAnimation(name);
-                    if (animation.is_valid())
-                        animation.key_set_frame(keyframeIndex, mlt_keyframe_type(type));
+                    animation.key_set_type(keyframeIndex, mlt_keyframe_type(type));
                 }
                 QModelIndex modelIndex = index(keyframeIndex, 0, index(parameterIndex));
                 emit dataChanged(modelIndex, modelIndex, QVector<int>() << KeyframeTypeRole << NameRole);
