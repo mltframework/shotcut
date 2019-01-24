@@ -397,34 +397,34 @@
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="752"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="713"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="720"/>
         <source>Reverse...</source>
         <translation>Käännä takaperin...</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="826"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="828"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="835"/>
         <source>Extract Sub-clip...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="284"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="316"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="291"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="323"/>
         <source>None</source>
         <translation>Ei mitään</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="337"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="344"/>
         <source>All</source>
         <translation>Kaikki</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="415"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="422"/>
         <source>(variable)</source>
         <translation>(muuttuva)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="452"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="459"/>
         <source>This file is variable frame rate, which is not reliable for editing. Do you want to convert it to an edit-friendly format?
 
 If yes, choose a format below and then click OK to choose a file name. After choosing a file name, a job is created. When it is done, double-click the job to open it.
@@ -435,7 +435,7 @@ Jos kyllä, valitse muoto alapuolelta, klikkaa OK ja valitse tiedostonimi. Sen j
 </translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="463"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="470"/>
         <source>This file does not support seeking and cannot be used for editing. Do you want to convert it to an edit-friendly format?
 
 If yes, choose a format below and then click OK to choose a file name. After choosing a file name, a job is created. When it is done, double-click the job to open it.
@@ -446,36 +446,36 @@ Jos kyllä, valitse muoto alapuolelta, klikkaa OK ja valitse tiedostonimi. Sen j
 </translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="643"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="710"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="650"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="717"/>
         <source>Choose an edit-friendly format below and then click OK to choose a file name. After choosing a file name, a job is created. When it is done, double-click the job to open it.
 </source>
         <translation>Valitse editointiystävällinen muoto alta ja paina OK, jotta voit valita tiedostonimen. Sen jälkeen työ aloitetaan. Kun se on valmis, avaa se kaksoisklikkaamalla.
 </translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="701"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="804"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="708"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="811"/>
         <source>Convert %1</source>
         <translation>Muunna %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="774"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="781"/>
         <source>Reversed</source>
         <translation>Käännetty</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="812"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="819"/>
         <source>Reverse %1</source>
         <translation>Takaperin %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="827"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="834"/>
         <source>Sub-clip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="866"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="873"/>
         <source>Extract sub-clip %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -635,17 +635,17 @@ Jos kyllä, valitse muoto alapuolelta, klikkaa OK ja valitse tiedostonimi. Sen j
 <context>
     <name>ColorPicker</name>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/ColorPicker.qml" line="56"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/ColorPicker.qml" line="57"/>
         <source>Click to open color dialog</source>
         <translation>Avaa värivalitsin</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/ColorPicker.qml" line="61"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/ColorPicker.qml" line="62"/>
         <source>Please choose a color</source>
         <translation>Valitse väri</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/ColorPicker.qml" line="84"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/ColorPicker.qml" line="85"/>
         <source>Pick a color on the screen. By pressing the mouse button and then moving your mouse you can select a section of the screen from which to get an average color.</source>
         <translation>Valitse väri näytöltä. Pitämällä hiiren painikkeen alhaalla ja liikuttamalla hiirtä voit valita osan ruudusta, josta saat keskimääräisen värin.</translation>
     </message>
@@ -911,7 +911,7 @@ Jos kyllä, valitse muoto alapuolelta, klikkaa OK ja valitse tiedostonimi. Sen j
     </message>
     <message>
         <location filename="../src/widgets/directshowvideowidget.ui" line="26"/>
-        <location filename="../src/widgets/directshowvideowidget.cpp" line="93"/>
+        <location filename="../src/widgets/directshowvideowidget.cpp" line="96"/>
         <source>Audio/Video Device</source>
         <translation>Ääni-/videolaite</translation>
     </message>
@@ -1534,8 +1534,8 @@ in temporal compression</source>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1682"/>
         <location filename="../src/docks/encodedock.cpp" line="888"/>
-        <location filename="../src/docks/encodedock.cpp" line="1208"/>
-        <location filename="../src/docks/encodedock.cpp" line="1630"/>
+        <location filename="../src/docks/encodedock.cpp" line="1209"/>
+        <location filename="../src/docks/encodedock.cpp" line="1636"/>
         <source>Export File</source>
         <translation>Vie tiedosto</translation>
     </message>
@@ -1561,17 +1561,17 @@ in temporal compression</source>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1722"/>
-        <location filename="../src/docks/encodedock.cpp" line="1347"/>
-        <location filename="../src/docks/encodedock.cpp" line="1354"/>
-        <location filename="../src/docks/encodedock.cpp" line="1465"/>
+        <location filename="../src/docks/encodedock.cpp" line="1353"/>
+        <location filename="../src/docks/encodedock.cpp" line="1360"/>
+        <location filename="../src/docks/encodedock.cpp" line="1471"/>
         <source>Stream</source>
         <translation>Virta</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1749"/>
         <location filename="../src/docks/encodedock.cpp" line="1182"/>
-        <location filename="../src/docks/encodedock.cpp" line="1270"/>
-        <location filename="../src/docks/encodedock.cpp" line="1284"/>
+        <location filename="../src/docks/encodedock.cpp" line="1276"/>
+        <location filename="../src/docks/encodedock.cpp" line="1290"/>
         <source>Stop Capture</source>
         <translation>Pysäytä kaappaus</translation>
     </message>
@@ -1632,83 +1632,93 @@ Try again with a different folder or file name.</source>
 Yritä uudelleen toiseen kansioon tai eri tiedostonimellä.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1208"/>
-        <location filename="../src/docks/encodedock.cpp" line="1632"/>
+        <location filename="../src/docks/encodedock.cpp" line="1209"/>
+        <location filename="../src/docks/encodedock.cpp" line="1638"/>
         <source>Capture File</source>
         <translation>Kaappaa tiedosto</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1229"/>
+        <location filename="../src/docks/encodedock.cpp" line="1212"/>
+        <source>%1 (*.%2);;All Files (*)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/encodedock.cpp" line="1214"/>
+        <source>Determined by Export (*)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/encodedock.cpp" line="1235"/>
         <source>The drive you chose only has %1 MiB of free space.
 Do you still want to continue?</source>
         <translation>Levyasemassa, jonka valitsit, on vain %1 MiB tilaa.
 Haluatko silti jatkaa?</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1236"/>
+        <location filename="../src/docks/encodedock.cpp" line="1242"/>
         <source>Do not show this anymore.</source>
         <comment>Export free disk space warning dialog</comment>
         <translation>Älä näytä tätä enää.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1241"/>
+        <location filename="../src/docks/encodedock.cpp" line="1247"/>
         <source>Export canceled.</source>
         <translation>Vienti keskeytettiin.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1342"/>
-        <location filename="../src/docks/encodedock.cpp" line="1363"/>
+        <location filename="../src/docks/encodedock.cpp" line="1348"/>
+        <location filename="../src/docks/encodedock.cpp" line="1369"/>
         <source>Stop Stream</source>
         <translation>Pysäytä kuvavirta</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1355"/>
+        <location filename="../src/docks/encodedock.cpp" line="1361"/>
         <source>Enter the network protocol scheme, address, port, and parameters as an URL:</source>
         <translation>Kirjoita verkkoprotokolla, osoite, portti ja parametrit URL:nä:</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1400"/>
+        <location filename="../src/docks/encodedock.cpp" line="1406"/>
         <source>Add Export Preset</source>
         <translation>Lisää vientiasetus</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1442"/>
+        <location filename="../src/docks/encodedock.cpp" line="1448"/>
         <source>Delete Preset</source>
         <translation>Poista esiasetus</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1443"/>
+        <location filename="../src/docks/encodedock.cpp" line="1449"/>
         <source>Are you sure you want to delete %1?</source>
         <translation>Haluatko varmasti poistaa %1?</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1562"/>
-        <location filename="../src/docks/encodedock.cpp" line="1567"/>
+        <location filename="../src/docks/encodedock.cpp" line="1568"/>
+        <location filename="../src/docks/encodedock.cpp" line="1573"/>
         <source>None</source>
         <translation>Ei mitään</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1616"/>
+        <location filename="../src/docks/encodedock.cpp" line="1622"/>
         <source>KiB (%1s)</source>
         <translation>KiB (%1s)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1731"/>
+        <location filename="../src/docks/encodedock.cpp" line="1737"/>
         <source>Detecting hardware encoders...</source>
         <translation>Havaitaan laitteistoenkoodereita...</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1762"/>
+        <location filename="../src/docks/encodedock.cpp" line="1770"/>
         <source>Nothing found</source>
         <translation>Mitään ei löytynyt</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1765"/>
+        <location filename="../src/docks/encodedock.cpp" line="1773"/>
         <source>Found %1</source>
         <translation>Löytyi %1</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1777"/>
+        <location filename="../src/docks/encodedock.cpp" line="1785"/>
         <source>Configure Hardware Encoding</source>
         <translation>Konfiguroi laitteistoenkoodaus</translation>
     </message>
@@ -1716,30 +1726,35 @@ Haluatko silti jatkaa?</translation>
 <context>
     <name>EncodeJob</name>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="37"/>
+        <location filename="../src/jobs/encodejob.cpp" line="38"/>
         <source>Open</source>
         <translation>Avaa</translation>
     </message>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="38"/>
+        <location filename="../src/jobs/encodejob.cpp" line="39"/>
         <source>Open the output file in the Shotcut player</source>
         <translation>Avaa valmis tiedosto Shotcutin soittimessa</translation>
     </message>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="42"/>
         <location filename="../src/jobs/encodejob.cpp" line="43"/>
+        <location filename="../src/jobs/encodejob.cpp" line="44"/>
         <source>Show In Folder</source>
         <translation>Näytä kansiossa</translation>
     </message>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="47"/>
+        <location filename="../src/jobs/encodejob.cpp" line="48"/>
         <source>Measure Video Quality...</source>
         <translation>Mittaa videon laatu</translation>
     </message>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="57"/>
+        <location filename="../src/jobs/encodejob.cpp" line="58"/>
         <source>Video Quality Report</source>
         <translation>Videon laaturaportti</translation>
+    </message>
+    <message>
+        <location filename="../src/jobs/encodejob.cpp" line="132"/>
+        <source>Export job failed; trying again without Parallel processing.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1771,7 +1786,7 @@ Haluatko silti jatkaa?</translation>
 <context>
     <name>FilterController</name>
     <message>
-        <location filename="../src/controllers/filtercontroller.cpp" line="211"/>
+        <location filename="../src/controllers/filtercontroller.cpp" line="212"/>
         <source>Only one %1 filter is allowed.</source>
         <translation>Vain yksi %1 suodatin on sallittu.</translation>
     </message>
@@ -1938,7 +1953,7 @@ ruudunpuskuroinnin laajennoksella</translation>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="14"/>
         <location filename="../src/htmleditor/htmleditor.cpp" line="162"/>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="746"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="749"/>
         <source>HTML Editor</source>
         <translation>HTML muokkaus</translation>
     </message>
@@ -2302,87 +2317,92 @@ Haluatko tallentaa muutokset?</translation>
         <translation>Tallenna nimellä...</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="250"/>
-        <source>Common Graphics (*.png *.jpg *.jpeg *.gif);;</source>
-        <translation>Yleiset kuvatiedostot (*.png *.jpg *.jpeg *.gif);;</translation>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="251"/>
+        <source>Common Graphics (*.png *.jpg *.jpeg *.gif *.svg);;</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="251"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="252"/>
         <source>Portable Network Graphics (PNG) (*.png);;</source>
         <translation>Portable Network Graphics (PNG) (*.png);;</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="252"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="253"/>
         <source>JPEG (*.jpg *.jpeg);;</source>
         <translation>JPEG (*.jpg *.jpeg);;</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="253"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="254"/>
         <source>Graphics Interchange Format (*.gif);;</source>
         <translation>Graphics Interchange Format (*.gif);;</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="254"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="255"/>
+        <source>Scalable Vector Graphics (*.svg);;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="256"/>
         <source>All Files (*)</source>
         <translation>Kaikki tiedostot (*)</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="256"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="258"/>
         <source>Open image...</source>
         <translation>Avaa kuva...</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="303"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="305"/>
         <source>Create link</source>
         <translation>Luo linkki</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="304"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="306"/>
         <source>Enter URL</source>
         <translation>Kirjoita URL</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="494"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="496"/>
         <source>Font</source>
         <translation>Fontti</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="494"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="496"/>
         <source>Select font:</source>
         <translation>Valitse fontti:</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="504"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="506"/>
         <source>Font Size</source>
         <translation>Fontin koko</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="504"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="506"/>
         <source>Size in points:</source>
         <translation>Koko pisteinä:</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="640"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="642"/>
         <source>Open %1 ?</source>
         <translation>Avaa %1 ?</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="641"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="643"/>
         <source>Open link</source>
         <translation>Avaa linkki</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="650"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="652"/>
         <source>Text Outline</source>
         <translation>Tekstin reunus</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="667"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="669"/>
         <source>Text Shadow</source>
         <translation>Tekstin varjostus</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="746"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="749"/>
         <source>%1[*] - %2</source>
         <translation>%1[*] - %2</translation>
     </message>
@@ -2625,27 +2645,27 @@ työtä, jotta saat pysäytettyä nykyisen työn.</translation>
 <context>
     <name>Keyframe</name>
     <message>
-        <location filename="../src/qml/views/keyframes/Keyframe.qml" line="112"/>
+        <location filename="../src/qml/views/keyframes/Keyframe.qml" line="115"/>
         <source>Keyframe Type</source>
         <translation>Avainruudun tyyppi</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/keyframes/Keyframe.qml" line="115"/>
+        <location filename="../src/qml/views/keyframes/Keyframe.qml" line="118"/>
         <source>Discrete</source>
         <translation>Diskreetti</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/keyframes/Keyframe.qml" line="122"/>
+        <location filename="../src/qml/views/keyframes/Keyframe.qml" line="125"/>
         <source>Linear</source>
         <translation>Lineaarinen</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/keyframes/Keyframe.qml" line="129"/>
+        <location filename="../src/qml/views/keyframes/Keyframe.qml" line="132"/>
         <source>Smooth</source>
         <translation>Pehmeä</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/keyframes/Keyframe.qml" line="138"/>
+        <location filename="../src/qml/views/keyframes/Keyframe.qml" line="141"/>
         <source>Remove</source>
         <translation>Poista</translation>
     </message>
@@ -3189,7 +3209,7 @@ vain klippi A:n ääni (0%) tai klippi B:n ääni (100%).</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="394"/>
-        <location filename="../src/mainwindow.cpp" line="2786"/>
+        <location filename="../src/mainwindow.cpp" line="2788"/>
         <source>Enter Full Screen</source>
         <translation>Koko näytön tilaan</translation>
     </message>
@@ -3704,7 +3724,7 @@ Asenna se käyttämällä paketinhallintaa. Sen nimi on todennäköisesti libsdl
         <location filename="../src/mainwindow.cpp" line="845"/>
         <location filename="../src/mainwindow.cpp" line="847"/>
         <location filename="../src/mainwindow.cpp" line="1207"/>
-        <location filename="../src/mainwindow.cpp" line="3361"/>
+        <location filename="../src/mainwindow.cpp" line="3363"/>
         <source>Failed to open </source>
         <translation>Avaaminen epäonnistui</translation>
     </message>
@@ -3759,7 +3779,7 @@ ja lisää tiedostonimeen &quot;- Korjattu&quot;.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1241"/>
-        <location filename="../src/mainwindow.cpp" line="3341"/>
+        <location filename="../src/mainwindow.cpp" line="3343"/>
         <source>Open File</source>
         <translation>Avaa tiedosto</translation>
     </message>
@@ -3775,98 +3795,98 @@ ja lisää tiedostonimeen &quot;- Korjattu&quot;.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1520"/>
-        <source>&lt;h1&gt;Shotcut version %1&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;https://www.shotcut.org/&quot;&gt;Shotcut&lt;/a&gt; is a free, open source, cross platform video editor.&lt;/p&gt;&lt;small&gt;&lt;p&gt;Copyright &amp;copy; 2011-2018 &lt;a href=&quot;https://www.meltytech.com/&quot;&gt;Meltytech&lt;/a&gt;, LLC&lt;/p&gt;&lt;p&gt;Licensed under the &lt;a href=&quot;https://www.gnu.org/licenses/gpl.html&quot;&gt;GNU General Public License v3.0&lt;/a&gt;&lt;/p&gt;&lt;p&gt;This program proudly uses the following projects:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://www.qt.io/&quot;&gt;Qt&lt;/a&gt; application and UI framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; multimedia authoring framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; multimedia format and codec libraries&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; H.264 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; VP8 and VP9 encoders&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; MP3 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt; video plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; audio plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;DefaultIcon&lt;/a&gt; icon collection by &lt;a href=&quot;http://www.interactivemania.com/&quot;&gt;interactivemania&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt;Oxygen&lt;/a&gt; icon collection&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;The source code used to build this program can be downloaded from &lt;a href=&quot;https://www.shotcut.org/&quot;&gt;shotcut.org&lt;/a&gt;.&lt;/p&gt;This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.&lt;/small&gt;</source>
-        <translation>&lt;h1&gt;Shotcut versio %1&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;https://www.shotcut.org/&quot;&gt;Shotcut&lt;/a&gt; on ilmainen, vapaan lähdekoodin usean alustan videoeditori.&lt;/p&gt;&lt;small&gt;&lt;p&gt;Copyright &amp;copy; 2011-2018 &lt;a href=&quot;https://www.meltytech.com/&quot;&gt;Meltytech&lt;/a&gt;, LLC&lt;/p&gt;&lt;p&gt;Lisensoitu &lt;a href=&quot;https://www.gnu.org/licenses/gpl.html&quot;&gt;GNU General Public License v3.0 mukaan&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Tämä ohjelma käyttää seuraavia projekteja:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://www.qt.io/&quot;&gt;Qt&lt;/a&gt; application and UI framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; multimedia authoring framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; multimedia format and codec libraries&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; H.264 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; VP8 and VP9 encoders&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; MP3 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt; video plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; audio plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;DefaultIcon&lt;/a&gt; icon collection by &lt;a href=&quot;http://www.interactivemania.com/&quot;&gt;interactivemania&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt;Oxygen&lt;/a&gt; icon collection&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;Ohjelman lähdekoodi on ladattavissa sivulta &lt;a href=&quot;https://www.shotcut.org/&quot;&gt;shotcut.org&lt;/a&gt;.&lt;/p&gt;Ohjelmaa jaetaan siinä toivossa, että se olisi hyödyllinen, mutta ILMAN MITÄÄN TAKUUTA ; myös ilman takuuta KAUPALLISTAMISESTA tai SOPIVUUDESTA JOHONKIN TIETTYYN TARKOITUKSEEN.&lt;/small&gt;</translation>
+        <source>&lt;h1&gt;Shotcut version %1&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;https://www.shotcut.org/&quot;&gt;Shotcut&lt;/a&gt; is a free, open source, cross platform video editor.&lt;/p&gt;&lt;small&gt;&lt;p&gt;Copyright &amp;copy; 2011-2019 &lt;a href=&quot;https://www.meltytech.com/&quot;&gt;Meltytech&lt;/a&gt;, LLC&lt;/p&gt;&lt;p&gt;Licensed under the &lt;a href=&quot;https://www.gnu.org/licenses/gpl.html&quot;&gt;GNU General Public License v3.0&lt;/a&gt;&lt;/p&gt;&lt;p&gt;This program proudly uses the following projects:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://www.qt.io/&quot;&gt;Qt&lt;/a&gt; application and UI framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; multimedia authoring framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; multimedia format and codec libraries&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; H.264 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; VP8 and VP9 encoders&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; MP3 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt; video plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; audio plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;DefaultIcon&lt;/a&gt; icon collection by &lt;a href=&quot;http://www.interactivemania.com/&quot;&gt;interactivemania&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt;Oxygen&lt;/a&gt; icon collection&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;The source code used to build this program can be downloaded from &lt;a href=&quot;https://www.shotcut.org/&quot;&gt;shotcut.org&lt;/a&gt;.&lt;/p&gt;This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.&lt;/small&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1988"/>
+        <location filename="../src/mainwindow.cpp" line="1990"/>
         <source>Non-Broadcast</source>
         <translation>Ei-lähetysmuotoinen</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1993"/>
+        <location filename="../src/mainwindow.cpp" line="1995"/>
         <source>DVD Widescreen NTSC</source>
         <translation>DVD laajakuja  NTSC</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1994"/>
+        <location filename="../src/mainwindow.cpp" line="1996"/>
         <source>DVD Widescreen PAL</source>
         <translation>DVD laajakuva PAL</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2007"/>
+        <location filename="../src/mainwindow.cpp" line="2009"/>
         <source>Custom</source>
         <translation>Oma asetus</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2037"/>
-        <location filename="../src/mainwindow.cpp" line="2279"/>
+        <location filename="../src/mainwindow.cpp" line="2039"/>
+        <location filename="../src/mainwindow.cpp" line="2281"/>
         <source>Saved %1</source>
         <translation>Tallennettu %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2272"/>
-        <location filename="../src/mainwindow.cpp" line="2292"/>
+        <location filename="../src/mainwindow.cpp" line="2274"/>
+        <location filename="../src/mainwindow.cpp" line="2294"/>
         <source>Save XML</source>
         <translation>Tallenna XML</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2293"/>
+        <location filename="../src/mainwindow.cpp" line="2295"/>
         <source>MLT XML (*.mlt)</source>
         <translation>MLT XML (*.mlt)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2312"/>
+        <location filename="../src/mainwindow.cpp" line="2314"/>
         <source>The project has been modified.
 Do you want to save your changes?</source>
         <translation>Projektia on muokattu.
 Haluatko tallentaa muutokset?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2341"/>
+        <location filename="../src/mainwindow.cpp" line="2343"/>
         <source>There are incomplete jobs.
 Do you want to still want to exit?</source>
         <translation>Töitä on vielä kesken.
 Haluatko silti poistua?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2354"/>
+        <location filename="../src/mainwindow.cpp" line="2356"/>
         <source>An export is in progress.
 Do you want to still want to exit?</source>
         <translation>Vienti on vielä kesken.
 Haluatko silti poistua?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2789"/>
+        <location filename="../src/mainwindow.cpp" line="2791"/>
         <source>Exit Full Screen</source>
         <translation>Poistu koko näytön tilasta</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2802"/>
+        <location filename="../src/mainwindow.cpp" line="2804"/>
         <source>GPU effects are not supported</source>
         <translation>GPU efektit eivät ole tuettu</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2894"/>
+        <location filename="../src/mainwindow.cpp" line="2896"/>
         <source>Click here to check for a new version of Shotcut.</source>
         <translation>Tarkista tästä uusin Shotcutin versio.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3037"/>
+        <location filename="../src/mainwindow.cpp" line="3039"/>
         <source>You must restart Shotcut to switch to the new language.
 Do you want to restart now?</source>
         <translation>Shotcut täytyy käynnistää uudelleen, jotta kieli voidaan vaihtaa.
 Haluatko käynnistää uudelleen nyt?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3078"/>
+        <location filename="../src/mainwindow.cpp" line="3080"/>
         <source>Failed to connect to JACK.
 Please verify that JACK is installed and running.</source>
         <translation>Yhteys JACKiin epäonnistui.
 Tarkista, että JACK on asennettu ja toiminnassa.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3087"/>
+        <location filename="../src/mainwindow.cpp" line="3089"/>
         <source>GPU effects are experimental and may cause instability on some systems. Some CPU effects are incompatible with GPU effects and will be disabled. A project created with GPU effects can not be converted to a CPU only project later.
 
 Do you want to enable GPU effects and restart Shotcut?</source>
@@ -3875,7 +3895,7 @@ Do you want to enable GPU effects and restart Shotcut?</source>
 Haluatko ottaa GPU efektit käyttöön ja käynnistää Shotcutin uudelleen?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3109"/>
+        <location filename="../src/mainwindow.cpp" line="3111"/>
         <source>Shotcut must restart to disable GPU effects.
 
 Disable GPU effects and restart?</source>
@@ -3884,112 +3904,112 @@ Disable GPU effects and restart?</source>
 Poista GPU efektit käytöstä ja käynnistä uudelleen?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3319"/>
+        <location filename="../src/mainwindow.cpp" line="3321"/>
         <source>Do you want to automatically check for updates in the future?</source>
         <translation>Haluatko tarkistaa päivitykset automaattisesti tulevaisuudessa?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3326"/>
+        <location filename="../src/mainwindow.cpp" line="3328"/>
         <source>Do not show this anymore.</source>
         <comment>Automatic upgrade check dialog</comment>
         <translation>Älä näytä tätä enää.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3342"/>
+        <location filename="../src/mainwindow.cpp" line="3344"/>
         <source>MLT XML (*.mlt);;All Files (*)</source>
         <translation>MLT XML (*.mlt);;Kaikki tiedostot (*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3402"/>
+        <location filename="../src/mainwindow.cpp" line="3404"/>
         <source>You must restart Shotcut to change the display method.
 Do you want to restart now?</source>
         <translation>Shotcut täytyy käynnistää uudelleen, jotta näyttömetodia voi vaihtaa.
 Haluatko käynnistää uudelleen nyt?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3424"/>
+        <location filename="../src/mainwindow.cpp" line="3426"/>
         <source>Application Log</source>
         <translation>Ohjelman loki</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3461"/>
+        <location filename="../src/mainwindow.cpp" line="3463"/>
         <source>Shotcut version %1 is available! Click here to get it.</source>
         <translation>Shotcut versio %1 on saatavilla! Lataa se tästä.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3467"/>
+        <location filename="../src/mainwindow.cpp" line="3469"/>
         <source>You are running the latest version of Shotcut.</source>
         <translation>Sinulla on uusin versio Shotcutista.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3477"/>
+        <location filename="../src/mainwindow.cpp" line="3479"/>
         <source>Failed to read version.json when checking. Click here to go to the Web site.</source>
         <translation>Version tarkistus epäonnistui, koska version.json ei ole luettavissa. Klikkaa tästä nettisivuillemme.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3527"/>
+        <location filename="../src/mainwindow.cpp" line="3529"/>
         <source>Export EDL</source>
         <translation>Vie EDL</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3528"/>
+        <location filename="../src/mainwindow.cpp" line="3530"/>
         <source>EDL (*.edl)</source>
         <translation>EDL (*.edl)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3574"/>
+        <location filename="../src/mainwindow.cpp" line="3576"/>
         <source>A JavaScript error occurred during export.</source>
         <translation>Viennin aikana tapahtui JavaScript-virhe.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3577"/>
+        <location filename="../src/mainwindow.cpp" line="3579"/>
         <source>Failed to open export-edl.js</source>
         <translation>Avaaminen epäonnistui: export-edl.js</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3603"/>
+        <location filename="../src/mainwindow.cpp" line="3605"/>
         <source>Export Frame</source>
         <translation>Vie ruutu</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3616"/>
+        <location filename="../src/mainwindow.cpp" line="3624"/>
         <source>Unable to export frame.</source>
         <translation>Ruudun vienti epäonnistui.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3624"/>
+        <location filename="../src/mainwindow.cpp" line="3632"/>
         <source>You must restart Shotcut to change the data directory.
 Do you want to continue?</source>
         <translation>Shotcut täytyy käynnistää uudelleen, jotta datakansiota voi vaihtaa.
 Haluatko jatkaa?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3633"/>
+        <location filename="../src/mainwindow.cpp" line="3641"/>
         <source>Data Directory</source>
         <translation>Hakemisto</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3716"/>
+        <location filename="../src/mainwindow.cpp" line="3724"/>
         <source>Add Custom Layout</source>
         <translation>Aseta mukautettu ulkoasu</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3717"/>
+        <location filename="../src/mainwindow.cpp" line="3725"/>
         <source>Name</source>
         <translation>Nimi</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3745"/>
+        <location filename="../src/mainwindow.cpp" line="3753"/>
         <source>Remove Video Mode</source>
         <translation>Poista videotila</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3759"/>
+        <location filename="../src/mainwindow.cpp" line="3767"/>
         <source>Remove Layout</source>
         <translation>Poista ulkoasu</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3888"/>
+        <location filename="../src/mainwindow.cpp" line="3896"/>
         <source>GPU effects are EXPERIMENTAL, UNSTABLE and UNSUPPORTED! Unsupported means do not report bugs about it.
 
 Do you want to disable GPU effects and restart Shotcut?</source>
@@ -4129,29 +4149,29 @@ A folder will be created in this folder for each project.</source>
         <translation>Poista...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.cpp" line="117"/>
+        <location filename="../src/widgets/newprojectfolder.cpp" line="118"/>
         <source>Projects Folder</source>
         <translation>Projektikansio</translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.cpp" line="146"/>
+        <location filename="../src/widgets/newprojectfolder.cpp" line="147"/>
         <source>Custom</source>
         <translation>Oma asetus</translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.cpp" line="163"/>
+        <location filename="../src/widgets/newprojectfolder.cpp" line="164"/>
         <source>Remove Video Mode</source>
         <translation>Poista videotila</translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.cpp" line="192"/>
+        <location filename="../src/widgets/newprojectfolder.cpp" line="193"/>
         <source>There is already a project with that name.
 Try again with a different name.</source>
         <translation>Tällä nimellä on jo projekti.
 Yritä uudelleen eri nimellä.</translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.cpp" line="200"/>
+        <location filename="../src/widgets/newprojectfolder.cpp" line="201"/>
         <source>Unable to create folder %1
 Perhaps you do not have permission.
 Try again with a different folder.</source>
@@ -4392,227 +4412,227 @@ Yritä uudelleen eri nimellä.</translation>
         <translation>Projekti</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="148"/>
+        <location filename="../src/player.cpp" line="149"/>
         <source>Adjust the audio volume</source>
         <translation>Säädä äänenvoimakkuutta</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="167"/>
+        <location filename="../src/player.cpp" line="168"/>
         <source>Silence the audio</source>
         <translation>Vaimenna ääni</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="186"/>
+        <location filename="../src/player.cpp" line="187"/>
         <source>Transport Controls</source>
         <translation>Kelaustoiminnot</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="193"/>
+        <location filename="../src/player.cpp" line="194"/>
         <source>Current position</source>
         <translation>Nykyinen kohta</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="197"/>
+        <location filename="../src/player.cpp" line="198"/>
         <source>Total Duration</source>
         <translation>Kokonaiskesto</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="202"/>
+        <location filename="../src/player.cpp" line="203"/>
         <source>In Point</source>
         <translation>In-kohta</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="206"/>
+        <location filename="../src/player.cpp" line="207"/>
         <source>Selected Duration</source>
         <translation>Valittu kesto</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="222"/>
+        <location filename="../src/player.cpp" line="223"/>
         <source>Zoom Fit</source>
         <translation>Zoom sovita</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="225"/>
+        <location filename="../src/player.cpp" line="226"/>
         <source>Zoom 10%</source>
         <translation>Zoomaa 10%</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="228"/>
+        <location filename="../src/player.cpp" line="229"/>
         <source>Zoom 25%</source>
         <translation>Zoom 25%</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="231"/>
+        <location filename="../src/player.cpp" line="232"/>
         <source>Zoom 50%</source>
         <translation>Zoom 50%</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="234"/>
+        <location filename="../src/player.cpp" line="235"/>
         <source>Zoom 100%</source>
         <translation>Zoom 100%</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="237"/>
+        <location filename="../src/player.cpp" line="238"/>
         <source>Zoom 200%</source>
         <translation>Zoom 200%</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="242"/>
+        <location filename="../src/player.cpp" line="243"/>
         <source>Toggle zoom</source>
         <translation>Vaihda zoom</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="250"/>
+        <location filename="../src/player.cpp" line="251"/>
         <source>2x2 Grid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="255"/>
+        <location filename="../src/player.cpp" line="256"/>
         <source>3x3 Grid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="259"/>
+        <location filename="../src/player.cpp" line="260"/>
         <source>4x4 Grid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="263"/>
+        <location filename="../src/player.cpp" line="264"/>
         <source>16x16 Grid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="271"/>
+        <location filename="../src/player.cpp" line="272"/>
         <source>10 Pixel Grid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="267"/>
+        <location filename="../src/player.cpp" line="268"/>
         <source>20 Pixel Grid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="275"/>
+        <location filename="../src/player.cpp" line="276"/>
         <source>80/90% Safe Areas</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="279"/>
+        <location filename="../src/player.cpp" line="280"/>
         <source>EBU R95 Safe Areas</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="284"/>
+        <location filename="../src/player.cpp" line="285"/>
         <source>Snapping</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="293"/>
+        <location filename="../src/player.cpp" line="294"/>
         <source>Toggle grid display on the player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="379"/>
-        <location filename="../src/player.cpp" line="480"/>
-        <location filename="../src/player.cpp" line="503"/>
-        <location filename="../src/player.cpp" line="753"/>
+        <location filename="../src/player.cpp" line="380"/>
+        <location filename="../src/player.cpp" line="481"/>
+        <location filename="../src/player.cpp" line="504"/>
+        <location filename="../src/player.cpp" line="754"/>
         <source>Play</source>
         <translation>Soita</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="381"/>
-        <location filename="../src/player.cpp" line="481"/>
-        <location filename="../src/player.cpp" line="504"/>
-        <location filename="../src/player.cpp" line="754"/>
+        <location filename="../src/player.cpp" line="382"/>
+        <location filename="../src/player.cpp" line="482"/>
+        <location filename="../src/player.cpp" line="505"/>
+        <location filename="../src/player.cpp" line="755"/>
         <source>Start playback (L)</source>
         <translation>Aloita toisto (L)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="384"/>
-        <location filename="../src/player.cpp" line="459"/>
-        <location filename="../src/player.cpp" line="760"/>
+        <location filename="../src/player.cpp" line="385"/>
+        <location filename="../src/player.cpp" line="460"/>
+        <location filename="../src/player.cpp" line="761"/>
         <source>Pause</source>
         <translation>Tauko</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="386"/>
-        <location filename="../src/player.cpp" line="460"/>
-        <location filename="../src/player.cpp" line="761"/>
+        <location filename="../src/player.cpp" line="387"/>
+        <location filename="../src/player.cpp" line="461"/>
+        <location filename="../src/player.cpp" line="762"/>
         <source>Pause playback (K)</source>
         <translation>Keskeytä toisto (K)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="388"/>
+        <location filename="../src/player.cpp" line="389"/>
         <source>Skip Next</source>
         <translation>Siirry seuraavaan</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="390"/>
+        <location filename="../src/player.cpp" line="391"/>
         <source>Skip to the next point (Alt+Right)</source>
         <translation>Siirry seuraavaan merkkiin (Alt+Oikea)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="393"/>
+        <location filename="../src/player.cpp" line="394"/>
         <source>Skip Previous</source>
         <translation>Siirry edelliseen</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="395"/>
+        <location filename="../src/player.cpp" line="396"/>
         <source>Skip to the previous point (Alt+Left)</source>
         <translation>Siirry edelliseen merkkiin (Alt+Vasen)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="398"/>
+        <location filename="../src/player.cpp" line="399"/>
         <source>Rewind</source>
         <translation>Taaksepäin</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="400"/>
+        <location filename="../src/player.cpp" line="401"/>
         <source>Play quickly backwards (J)</source>
         <translation>Toista nopeasti takaisinpäin (J)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="402"/>
+        <location filename="../src/player.cpp" line="403"/>
         <source>Fast Forward</source>
         <translation>Eteenpäin</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="404"/>
+        <location filename="../src/player.cpp" line="405"/>
         <source>Play quickly forwards (L)</source>
         <translation>Toista nopeasti eteenpäin (L)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="406"/>
+        <location filename="../src/player.cpp" line="407"/>
         <source>Volume</source>
         <translation>Äänenvoimakkuus</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="408"/>
+        <location filename="../src/player.cpp" line="409"/>
         <source>Show the volume control</source>
         <translation>Näytä äänenvoimakkuussäädin</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="464"/>
+        <location filename="../src/player.cpp" line="465"/>
         <source>Stop</source>
         <translation>Pysäytä</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="465"/>
+        <location filename="../src/player.cpp" line="466"/>
         <source>Stop playback (K)</source>
         <translation>Pysäytä toisto (K)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="548"/>
+        <location filename="../src/player.cpp" line="549"/>
         <source>Live</source>
         <translation>Live</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="970"/>
+        <location filename="../src/player.cpp" line="971"/>
         <source>Unmute</source>
         <translation>Poista mykistys</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="975"/>
+        <location filename="../src/player.cpp" line="976"/>
         <source>Mute</source>
         <translation>Mykistä</translation>
     </message>
@@ -5082,25 +5102,25 @@ p, li { white-space: pre-wrap; }
         <translation>Muuta klipin ominaisuuksia</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="963"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="974"/>
         <source>Detach Audio</source>
         <translation>Irrota ääni</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3002"/>
+        <location filename="../src/mainwindow.cpp" line="3004"/>
         <source>You cannot add a project to itself!</source>
         <translation>Et voi lisätä projektia itseensä.</translation>
     </message>
     <message>
-        <location filename="../src/mltxmlchecker.cpp" line="105"/>
+        <location filename="../src/mltxmlchecker.cpp" line="104"/>
         <source>The file is not a MLT XML file.</source>
         <translation>Tämä ei ole MTL XML tiedosto.</translation>
     </message>
     <message>
         <location filename="../src/util.cpp" line="91"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="689"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="781"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="834"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="696"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="788"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="841"/>
         <source>Unable to write file %1
 Perhaps you do not have permission.
 Try again with a different folder.</source>
@@ -5312,123 +5332,203 @@ Kokeile uudelleen jotain toista kansiota.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="99"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="98"/>
+        <source>Slow Move Left</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="100"/>
         <source>Slow Pan Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="101"/>
-        <source>Slow Pan Up</source>
+        <source>Slow Move Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="103"/>
+        <source>Slow Pan Up</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="104"/>
+        <source>Slow Move Up</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="106"/>
         <source>Slow Pan Down</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="105"/>
-        <source>Slow Zoom In, Pan Up Left</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="107"/>
-        <source>Slow Zoom In, Pan Down Right</source>
+        <source>Slow Move Down</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="109"/>
+        <source>Slow Zoom In, Pan Up Left</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="110"/>
+        <source>Slow Zoom In, Move Up Left</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="112"/>
+        <source>Slow Zoom In, Pan Down Right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="113"/>
+        <source>Slow Zoom In, Move Down Right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="115"/>
         <source>Slow Zoom Out, Pan Up Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="111"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="116"/>
+        <source>Slow Zoom Out, Move Up Right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="118"/>
         <source>Slow Zoom Out, Pan Down Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="246"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="119"/>
+        <source>Slow Zoom Out, Move Down Left</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="121"/>
+        <source>Slow Zoom In, Hold Bottom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="123"/>
+        <source>Slow Zoom In, Hold Top</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="125"/>
+        <source>Slow Zoom In, Hold Left</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="127"/>
+        <source>Slow Zoom In, Hold Right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="129"/>
+        <source>Slow Zoom Out, Hold Bottom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="131"/>
+        <source>Slow Zoom Out, Hold Top</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="133"/>
+        <source>Slow Zoom Out, Hold Left</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="135"/>
+        <source>Slow Zoom Out, Hold Right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="270"/>
         <source>Preset</source>
         <translation>Esiasetus</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="271"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="295"/>
         <source>Position</source>
         <translation>Kohta</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="317"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="341"/>
         <source>Size</source>
         <translation>Koko</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="352"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="376"/>
         <source>Size mode</source>
         <translation>Kokomoodi</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="357"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="381"/>
         <source>Fit</source>
         <translation>Sovita</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="366"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="390"/>
         <source>Fill</source>
         <translation>Täytä</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="375"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="399"/>
         <source>Distort</source>
         <translation>Vääristä</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="392"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="416"/>
         <source>Horizontal fit</source>
         <translation>Sovita vaakasuunnassa</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="397"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="421"/>
         <source>Left</source>
         <translation>Vasen</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="404"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="428"/>
         <source>Center</source>
         <translation>Keskellä</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="411"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="435"/>
         <source>Right</source>
         <translation>Oikea</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="425"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="449"/>
         <source>Vertical fit</source>
         <translation>Sovita pystysuunnassa</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="430"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="454"/>
         <source>Top</source>
         <translation>Ylhäällä</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="437"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="461"/>
         <source>Middle</source>
         <comment>Size and Position video filter</comment>
         <translation>Keskellä</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="444"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="468"/>
         <source>Bottom</source>
         <translation>Alhaalla</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="123"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="147"/>
         <source>Shake 1 Second - Scaled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="132"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="156"/>
         <source>Shake 1 Second - Unscaled</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5617,22 +5717,22 @@ Kokeile uudelleen jotain toista kansiota.</translation>
         <translation>Aikajana</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="155"/>
+        <location filename="../src/docks/timelinedock.cpp" line="153"/>
         <source>This track is locked</source>
         <translation>Tämä raita on lukittu</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="367"/>
+        <location filename="../src/docks/timelinedock.cpp" line="369"/>
         <source>Failed to open </source>
         <translation>Avaaminen epäonnistui</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="370"/>
+        <location filename="../src/docks/timelinedock.cpp" line="372"/>
         <source>You must save to Copy Timeline to Source.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="934"/>
+        <location filename="../src/docks/timelinedock.cpp" line="948"/>
         <source>You cannot split a transition.</source>
         <translation>Et voi jakaa siirtymää kahtia.</translation>
     </message>
@@ -6534,17 +6634,22 @@ Most users do not need to change this.</source>
 <context>
     <name>keyframes</name>
     <message>
-        <location filename="../src/qml/views/keyframes/keyframes.qml" line="427"/>
+        <location filename="../src/qml/views/keyframes/keyframes.qml" line="426"/>
         <source>Show Audio Waveforms</source>
         <translation>Näytä ääniaaltomuodot</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/keyframes/keyframes.qml" line="445"/>
+        <location filename="../src/qml/views/keyframes/keyframes.qml" line="444"/>
         <source>Show Video Thumbnails</source>
         <translation>Näytä videon esikatselukuvat</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/keyframes/keyframes.qml" line="451"/>
+        <location filename="../src/qml/views/keyframes/keyframes.qml" line="450"/>
+        <source>Center the Playhead</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/views/keyframes/keyframes.qml" line="457"/>
         <source>Reload</source>
         <translation>Lataa uudelleen</translation>
     </message>
@@ -7026,6 +7131,16 @@ Most users do not need to change this.</source>
         <source>Audio Waveform Visualization</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../src/qml/filters/chromahold/meta.qml" line="23"/>
+        <source>Chroma Hold</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/webvfx_swirl/meta.qml" line="7"/>
+        <source>Swirl (HTML)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>meta_affine</name>
@@ -7283,6 +7398,34 @@ Most users do not need to change this.</source>
     </message>
 </context>
 <context>
+    <name>simple_scroll_ui</name>
+    <message>
+        <location filename="../src/qml/filters/webvfx/templates/webvfx/Basic/Simple Scroll/simple_scroll_ui.qml" line="40"/>
+        <source>Direction</source>
+        <translation>Suunta</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/webvfx/templates/webvfx/Basic/Simple Scroll/simple_scroll_ui.qml" line="43"/>
+        <source>Up</source>
+        <translation>Ylös</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/webvfx/templates/webvfx/Basic/Simple Scroll/simple_scroll_ui.qml" line="43"/>
+        <source>Down</source>
+        <translation>Alas</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/webvfx/templates/webvfx/Basic/Simple Scroll/simple_scroll_ui.qml" line="43"/>
+        <source>Right</source>
+        <translation>Oikea</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/webvfx/templates/webvfx/Basic/Simple Scroll/simple_scroll_ui.qml" line="43"/>
+        <source>Left</source>
+        <translation>Vasen</translation>
+    </message>
+</context>
+<context>
     <name>text_outline</name>
     <message>
         <location filename="../src/qml/htmleditor/text_outline.qml" line="22"/>
@@ -7433,12 +7576,17 @@ Most users do not need to change this.</source>
         <translation>Näytä videon esikatselukuvat</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="476"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="474"/>
+        <source>Center the Playhead</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/timeline/timeline.qml" line="483"/>
         <source>Properties</source>
         <translation>Ominaisuudet</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="480"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="487"/>
         <source>Reload</source>
         <translation>Lataa uudelleen</translation>
     </message>
@@ -7489,7 +7637,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/alpha_adjust/ui.qml" line="69"/>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="139"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="126"/>
-        <location filename="../src/qml/filters/mask_shape/ui.qml" line="289"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="292"/>
         <location filename="../src/qml/filters/smartblur/ui.qml" line="106"/>
         <source>Threshold</source>
         <translation type="unfinished"></translation>
@@ -7508,8 +7656,8 @@ Most users do not need to change this.</source>
     </message>
     <message>
         <location filename="../src/qml/filters/alpha_adjust/ui.qml" line="103"/>
-        <location filename="../src/qml/filters/mask_shape/ui.qml" line="255"/>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="300"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="258"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="301"/>
         <source>Invert</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7555,7 +7703,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/audio_pan/ui.qml" line="135"/>
         <location filename="../src/qml/filters/audio_swapchannels/ui.qml" line="59"/>
         <location filename="../src/qml/filters/crop/ui.qml" line="176"/>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="527"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="535"/>
         <source>Left</source>
         <translation>Vasen</translation>
     </message>
@@ -7566,7 +7714,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/audio_pan/ui.qml" line="142"/>
         <location filename="../src/qml/filters/audio_swapchannels/ui.qml" line="59"/>
         <location filename="../src/qml/filters/crop/ui.qml" line="193"/>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="539"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="547"/>
         <source>Right</source>
         <translation>Oikea</translation>
     </message>
@@ -7585,13 +7733,14 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/audio_notch/ui.qml" line="52"/>
         <location filename="../src/qml/filters/audio_pan/ui.qml" line="102"/>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="106"/>
-        <location filename="../src/qml/filters/bluescreen0r/ui.qml" line="51"/>
+        <location filename="../src/qml/filters/bluescreen0r/ui.qml" line="50"/>
         <location filename="../src/qml/filters/brightness/ui.qml" line="119"/>
-        <location filename="../src/qml/filters/color/ui.qml" line="75"/>
+        <location filename="../src/qml/filters/chromahold/ui.qml" line="50"/>
+        <location filename="../src/qml/filters/color/ui.qml" line="122"/>
         <location filename="../src/qml/filters/contrast/ui.qml" line="144"/>
         <location filename="../src/qml/filters/crop/ui.qml" line="83"/>
         <location filename="../src/qml/filters/dust/ui.qml" line="48"/>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="260"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="268"/>
         <location filename="../src/qml/filters/grain/ui.qml" line="49"/>
         <location filename="../src/qml/filters/hue_lightness_saturation/ui.qml" line="54"/>
         <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="98"/>
@@ -7600,7 +7749,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/lines/ui.qml" line="52"/>
         <location filename="../src/qml/filters/mask/ui.qml" line="157"/>
         <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="158"/>
-        <location filename="../src/qml/filters/mask_shape/ui.qml" line="190"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="193"/>
         <location filename="../src/qml/filters/mosaic/ui.qml" line="56"/>
         <location filename="../src/qml/filters/oldfilm/ui.qml" line="60"/>
         <location filename="../src/qml/filters/opacity/ui.qml" line="107"/>
@@ -7616,7 +7765,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/waveform/ui.qml" line="81"/>
         <location filename="../src/qml/filters/webvfx_ruttetraizer/ui.qml" line="62"/>
         <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="69"/>
-        <location filename="../src/qml/filters/white/ui.qml" line="66"/>
+        <location filename="../src/qml/filters/white/ui.qml" line="65"/>
         <source>Preset</source>
         <translation>Esiasetus</translation>
     </message>
@@ -7690,7 +7839,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="34"/>
         <location filename="../src/qml/filters/audio_swapchannels/ui.qml" line="34"/>
         <location filename="../src/qml/filters/crop/ui.qml" line="102"/>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="533"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="541"/>
         <source>Center</source>
         <translation>Keskellä</translation>
     </message>
@@ -7993,7 +8142,7 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/audio_pan/ui.qml" line="124"/>
         <location filename="../src/qml/filters/levels/ui.qml" line="173"/>
-        <location filename="../src/qml/filters/mask_shape/ui.qml" line="264"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="267"/>
         <source>Channel</source>
         <translation>Kanava</translation>
     </message>
@@ -8098,29 +8247,30 @@ Most users do not need to change this.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bluescreen0r/ui.qml" line="65"/>
+        <location filename="../src/qml/filters/bluescreen0r/ui.qml" line="64"/>
         <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="109"/>
         <location filename="../src/qml/filters/select0r/ui.qml" line="120"/>
         <source>Key color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bluescreen0r/ui.qml" line="78"/>
+        <location filename="../src/qml/filters/bluescreen0r/ui.qml" line="82"/>
+        <location filename="../src/qml/filters/chromahold/ui.qml" line="82"/>
         <source>Distance</source>
         <translation>Etäisyys</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/color/ui.qml" line="98"/>
+        <location filename="../src/qml/filters/color/ui.qml" line="145"/>
         <source>Shadows (Lift)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/color/ui.qml" line="128"/>
+        <location filename="../src/qml/filters/color/ui.qml" line="175"/>
         <source>Midtones (Gamma)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/color/ui.qml" line="158"/>
+        <location filename="../src/qml/filters/color/ui.qml" line="205"/>
         <source>Highlights (Gain)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8131,22 +8281,22 @@ Most users do not need to change this.</source>
     </message>
     <message>
         <location filename="../src/qml/filters/crop/ui.qml" line="142"/>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="557"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="565"/>
         <source>Top</source>
         <translation>Ylhäällä</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/crop/ui.qml" line="159"/>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="569"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="577"/>
         <source>Bottom</source>
         <translation>Alhaalla</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dust/ui.qml" line="59"/>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="487"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="495"/>
         <location filename="../src/qml/filters/spot_remover/ui.qml" line="188"/>
         <location filename="../src/qml/filters/waveform/ui.qml" line="154"/>
-        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="152"/>
+        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="153"/>
         <source>Size</source>
         <translation>Koko</translation>
     </message>
@@ -8237,140 +8387,180 @@ Most users do not need to change this.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="113"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="112"/>
+        <source>Slow Move Left</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="114"/>
         <source>Slow Pan Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="115"/>
-        <source>Slow Pan Up</source>
+        <source>Slow Move Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="117"/>
+        <source>Slow Pan Up</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="118"/>
+        <source>Slow Move Up</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="120"/>
         <source>Slow Pan Down</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="119"/>
-        <source>Slow Zoom In, Pan Up Left</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="121"/>
-        <source>Slow Zoom In, Pan Down Right</source>
+        <source>Slow Move Down</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="123"/>
+        <source>Slow Zoom In, Pan Up Left</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="124"/>
+        <source>Slow Zoom In, Move Up Left</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="126"/>
+        <source>Slow Zoom In, Pan Down Right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="127"/>
+        <source>Slow Zoom In, Move Down Right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="129"/>
         <source>Slow Zoom Out, Pan Up Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="125"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="130"/>
+        <source>Slow Zoom Out, Move Up Right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="132"/>
         <source>Slow Zoom Out, Pan Down Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="193"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="133"/>
+        <source>Slow Zoom Out, Move Down Left</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="201"/>
         <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="119"/>
         <source>Bold</source>
         <translation>Lihavoitu</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="195"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="203"/>
         <source>Italic</source>
         <translation>Kursiivi</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="286"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="294"/>
         <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="81"/>
         <source>Text</source>
         <translation>Teksti</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="313"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="321"/>
         <source>Insert field</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="319"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="327"/>
         <source># (Hash sign)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="323"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="331"/>
         <source>Timecode</source>
         <translation>Aikakoodi</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="327"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="335"/>
         <source>Frame #</source>
         <comment>Frame number</comment>
         <translation>Ruutu #</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="331"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="339"/>
         <source>File date</source>
         <translation>Tiedoston päivämäärä</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="335"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="343"/>
         <source>File name</source>
         <translation>Tiedoston nimi</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="341"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="349"/>
         <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="94"/>
         <source>Font</source>
         <translation>Fontti</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="378"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="386"/>
         <source>Use font size</source>
         <translation>Käytä fonttikokoa</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="393"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="401"/>
         <source>Outline</source>
         <translation>Reunus</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="403"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="411"/>
         <location filename="../src/qml/filters/waveform/ui.qml" line="116"/>
         <location filename="../src/qml/filters/webvfx_ruttetraizer/ui.qml" line="91"/>
         <source>Thickness</source>
         <translation>Paksuus</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="417"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="425"/>
         <source>Background</source>
         <translation>Tausta</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="427"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="435"/>
         <source>Padding</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="441"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="449"/>
         <location filename="../src/qml/filters/spot_remover/ui.qml" line="142"/>
         <location filename="../src/qml/filters/waveform/ui.qml" line="133"/>
         <source>Position</source>
         <translation>Kohta</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="522"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="530"/>
         <source>Horizontal fit</source>
         <translation>Sovita vaakasuunnassa</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="552"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="560"/>
         <source>Vertical fit</source>
         <translation>Sovita pystysuunnassa</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="563"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="571"/>
         <source>Middle</source>
         <comment>Text video filter</comment>
         <translation>Keskellä</translation>
@@ -8390,7 +8580,7 @@ Most users do not need to change this.</source>
     </message>
     <message>
         <location filename="../src/qml/filters/grain/ui.qml" line="76"/>
-        <location filename="../src/qml/filters/mask_shape/ui.qml" line="271"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="274"/>
         <location filename="../src/qml/filters/webvfx_ruttetraizer/ui.qml" line="74"/>
         <source>Brightness</source>
         <translation>Kirkkaus</translation>
@@ -8412,109 +8602,109 @@ Most users do not need to change this.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="131"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="132"/>
         <source>Target color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="153"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="155"/>
         <source>Mask type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="159"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="161"/>
         <source>Color Distance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="159"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="161"/>
         <source>Transparency</source>
         <translation>Läpinäkyvyys</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="159"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="161"/>
         <source>Edge Inwards</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="159"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="161"/>
         <source>Edge Outwards</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="167"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="169"/>
         <source>Tolerance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="184"/>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="247"/>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="256"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="186"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="248"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="257"/>
         <source>Slope</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="201"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="203"/>
         <source>Hue gate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="218"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="220"/>
         <source>Saturation threshold</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="235"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="237"/>
         <source>Operation 1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="241"/>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="272"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="243"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="274"/>
         <location filename="../src/qml/filters/levels/ui.qml" line="192"/>
         <source>None</source>
         <translation>Ei mitään</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="241"/>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="272"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="243"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="274"/>
         <source>De-Key</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="241"/>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="272"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="243"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="274"/>
         <source>Desaturate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="241"/>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="272"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="243"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="274"/>
         <source>Adjust Luma</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="249"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="251"/>
         <source>Amount 1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="266"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="268"/>
         <source>Operation 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="280"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="282"/>
         <source>Amount 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="299"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="301"/>
         <source>Show mask</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="309"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="311"/>
         <source>Send mask to alpha channel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8553,7 +8743,6 @@ Most users do not need to change this.</source>
     </message>
     <message>
         <location filename="../src/qml/filters/lut3d/ui.qml" line="56"/>
-        <location filename="../src/qml/filters/webvfx/ui.qml" line="79"/>
         <source>No File Loaded</source>
         <translation>Ei yhtään tiedostoa ladattu</translation>
     </message>
@@ -8566,7 +8755,7 @@ Klikkaa &quot;Avaa&quot; ladataksesi tiedoston.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/lut3d/ui.qml" line="87"/>
-        <location filename="../src/qml/filters/webvfx/ui.qml" line="185"/>
+        <location filename="../src/qml/filters/webvfx/ui.qml" line="196"/>
         <source>Open...</source>
         <translation>Avaa...</translation>
     </message>
@@ -8598,49 +8787,49 @@ Klikkaa &quot;Avaa&quot; ladataksesi tiedoston.</translation>
     <message>
         <location filename="../src/qml/filters/mask/ui.qml" line="176"/>
         <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="177"/>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="273"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="274"/>
         <source>Operation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask/ui.qml" line="182"/>
         <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="183"/>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="281"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="282"/>
         <source>Write on Clear</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask/ui.qml" line="182"/>
         <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="183"/>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="282"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="283"/>
         <source>Maximum</source>
         <translation>Maksimi</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask/ui.qml" line="182"/>
         <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="183"/>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="283"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="284"/>
         <source>Minimum</source>
         <translation>Minimi</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask/ui.qml" line="182"/>
         <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="183"/>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="284"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="285"/>
         <source>Add</source>
         <translation>Lisää</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask/ui.qml" line="182"/>
         <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="183"/>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="285"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="286"/>
         <source>Subtract</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask/ui.qml" line="191"/>
         <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="192"/>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="216"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="217"/>
         <source>Shape</source>
         <translation>Muoto</translation>
     </message>
@@ -8665,21 +8854,21 @@ Klikkaa &quot;Avaa&quot; ladataksesi tiedoston.</translation>
     <message>
         <location filename="../src/qml/filters/mask/ui.qml" line="197"/>
         <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="198"/>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="226"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="227"/>
         <source>Diamond</source>
         <translation>Timantti</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask/ui.qml" line="206"/>
         <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="207"/>
-        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="202"/>
+        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="203"/>
         <source>Horizontal</source>
         <translation>Vaakasuuntainen</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask/ui.qml" line="227"/>
         <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="228"/>
-        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="219"/>
+        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="220"/>
         <source>Vertical</source>
         <translation>Pystysuuntainen</translation>
     </message>
@@ -8700,13 +8889,13 @@ Klikkaa &quot;Avaa&quot; ladataksesi tiedoston.</translation>
     <message>
         <location filename="../src/qml/filters/mask/ui.qml" line="308"/>
         <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="309"/>
-        <location filename="../src/qml/filters/mask_shape/ui.qml" line="311"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="314"/>
         <source>Softness</source>
         <translation>Pehmennys</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/movit_diffusion/ui.qml" line="34"/>
-        <location filename="../src/qml/filters/webvfx_circular_frame/ui.qml" line="101"/>
+        <location filename="../src/qml/filters/webvfx_circular_frame/ui.qml" line="100"/>
         <source>Radius</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8783,82 +8972,82 @@ Klikkaa &quot;Avaa&quot; ladataksesi tiedoston.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="142"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="143"/>
         <source>Color space</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="149"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="150"/>
         <source>Red-Green-Blue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="155"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="156"/>
         <source>Hue-Chroma-Intensity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="165"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="166"/>
         <source>Red delta</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="165"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="166"/>
         <source>Hue delta</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="182"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="183"/>
         <source>Green delta</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="182"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="183"/>
         <source>Chroma delta</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="199"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="200"/>
         <source>Blue delta</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="199"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="200"/>
         <source>Intensity delta</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="224"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="225"/>
         <source>Box</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="225"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="226"/>
         <source>Ellipsoid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="235"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="236"/>
         <source>Edge</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="243"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="244"/>
         <source>Hard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="244"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="245"/>
         <source>Fat</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="245"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="246"/>
         <source>Normal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="246"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="247"/>
         <source>Thin</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8888,8 +9077,9 @@ Klikkaa &quot;Avaa&quot; ladataksesi tiedoston.</translation>
         <translation>Kontrasti</translation>
     </message>
     <message>
+        <location filename="../src/qml/filters/chromahold/ui.qml" line="64"/>
         <location filename="../src/qml/filters/sketch/ui.qml" line="116"/>
-        <location filename="../src/qml/filters/webvfx_circular_frame/ui.qml" line="133"/>
+        <location filename="../src/qml/filters/webvfx_circular_frame/ui.qml" line="132"/>
         <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="131"/>
         <source>Color</source>
         <translation>Väri</translation>
@@ -9044,72 +9234,67 @@ Klikkaa &quot;Avaa&quot; ladataksesi tiedoston.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/webvfx/ui.qml" line="81"/>
-        <source>No HTML file loaded. Click &quot;Open&quot; or &quot;New&quot; to load a file.</source>
-        <translation>Ei HTML-tiedostoa ladattu. Klikkaa &quot;Avaa&quot; tai &quot;Uusi&quot; ladataksesi tiedoston.</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/webvfx/ui.qml" line="145"/>
+        <location filename="../src/qml/filters/webvfx/ui.qml" line="185"/>
         <source>&lt;b&gt;File:&lt;/b&gt;</source>
         <translation>&lt;b&gt;Tiedosto:&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/webvfx/ui.qml" line="157"/>
+        <location filename="../src/qml/filters/webvfx/ui.qml" line="211"/>
         <source>Use WebVfx JavaScript extension</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/webvfx/ui.qml" line="160"/>
+        <location filename="../src/qml/filters/webvfx/ui.qml" line="215"/>
         <source>For Advanced Users: </source>
         <translation>Edistyneille käyttäjille:</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/webvfx/ui.qml" line="161"/>
+        <location filename="../src/qml/filters/webvfx/ui.qml" line="216"/>
         <source>If you enable this, and you do not use the WebVfx JavaScript extension, your content will not render!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/webvfx/ui.qml" line="173"/>
+        <location filename="../src/qml/filters/webvfx/ui.qml" line="228"/>
         <source>Confirm Selection</source>
         <translation>Vahvista valinta</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/webvfx/ui.qml" line="174"/>
+        <location filename="../src/qml/filters/webvfx/ui.qml" line="229"/>
         <source>Do you still want to use this?</source>
         <translation>Haluatko yhä käyttää tätä?</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/webvfx/ui.qml" line="188"/>
+        <location filename="../src/qml/filters/webvfx/ui.qml" line="200"/>
         <source>Open HTML File</source>
         <translation>Avaa HTML-tiedosto</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/webvfx/ui.qml" line="192"/>
+        <location filename="../src/qml/filters/webvfx/ui.qml" line="157"/>
+        <source>Templates</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/webvfx/ui.qml" line="172"/>
+        <source>Choose a Folder for HTML</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/webvfx/ui.qml" line="204"/>
         <source>Load an existing HTML file.</source>
         <translation>Lataa olemassa oleva HTML-tiedosto.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/webvfx/ui.qml" line="197"/>
-        <source>New...</source>
-        <translation>Uusi...</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/webvfx/ui.qml" line="205"/>
+        <location filename="../src/qml/filters/webvfx/ui.qml" line="177"/>
         <source>Save HTML File</source>
         <translation>Tallenna HTML-tiedosto</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/webvfx/ui.qml" line="210"/>
-        <source>Load new HTML file.</source>
-        <translation>Lataa uusi HTML-tiedosto.</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/webvfx/ui.qml" line="222"/>
+        <location filename="../src/qml/filters/webvfx/ui.qml" line="239"/>
         <source>Edit...</source>
         <translation>Muokkaa...</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/webvfx/ui.qml" line="242"/>
+        <location filename="../src/qml/filters/webvfx/ui.qml" line="257"/>
         <source>Reload</source>
         <translation>Lataa uudelleen</translation>
     </message>
@@ -9120,7 +9305,7 @@ Klikkaa &quot;Avaa&quot; ladataksesi tiedoston.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx_ruttetraizer/ui.qml" line="123"/>
-        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="168"/>
+        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="169"/>
         <source>Depth</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9145,12 +9330,12 @@ Klikkaa &quot;Avaa&quot; ladataksesi tiedoston.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="185"/>
+        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="186"/>
         <source>Tilt</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/white/ui.qml" line="80"/>
+        <location filename="../src/qml/filters/white/ui.qml" line="79"/>
         <source>Neutral color</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9230,137 +9415,137 @@ Klikkaa &quot;Avaa&quot; ladataksesi tiedoston.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask_shape/ui.qml" line="207"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="210"/>
         <source>File</source>
         <translation>Tiedosto</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask_shape/ui.qml" line="213"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="216"/>
         <source>Custom...</source>
         <translation>Kustomoitu...</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask_shape/ui.qml" line="213"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="216"/>
         <source>Bar Horizontal</source>
         <translation>Vaakasuuntainen palkki</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask_shape/ui.qml" line="213"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="216"/>
         <source>Bar Vertical</source>
         <translation>Pystysuuntainen palkki</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask_shape/ui.qml" line="213"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="216"/>
         <source>Barn Door Horizontal</source>
         <translation>Ladon ovet vaakasuunnassa</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask_shape/ui.qml" line="213"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="216"/>
         <source>Barn Door Vertical</source>
         <translation>Ladon ovet pystysuunnassa</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask_shape/ui.qml" line="213"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="216"/>
         <source>Barn Door Diagonal SW-NE</source>
         <translation>Ladon ovet vinottain oikea-ala, vasen-ylä</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask_shape/ui.qml" line="213"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="216"/>
         <source>Barn Door Diagonal NW-SE</source>
         <translation>Ladon ovet vinottain vasen-ala, oikea ylä</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask_shape/ui.qml" line="213"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="216"/>
         <source>Diagonal Top Left</source>
         <translation>Viisto ylävasen</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask_shape/ui.qml" line="213"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="216"/>
         <source>Diagonal Top Right</source>
         <translation>Viisto yläoikea</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask_shape/ui.qml" line="213"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="216"/>
         <source>Matrix Waterfall Horizontal</source>
         <translation>Matrix vesiputous vaakasuunnassa</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask_shape/ui.qml" line="213"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="216"/>
         <source>Matrix Waterfall Vertical</source>
         <translation>Matrix vesiputous pystysuunnassa</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask_shape/ui.qml" line="213"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="216"/>
         <source>Matrix Snake Horizontal</source>
         <translation>Matrix käärme vaakasuunnassa</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask_shape/ui.qml" line="213"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="216"/>
         <source>Matrix Snake Parallel Horizontal</source>
         <translation>Matrix käärme rinnakkain vaakasuunnassa</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask_shape/ui.qml" line="213"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="216"/>
         <source>Matrix Snake Vertical</source>
         <translation>Matrix käärme pystysuunnassa</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask_shape/ui.qml" line="213"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="216"/>
         <source>Matrix Snake Parallel Vertical</source>
         <translation>Matrix käärme rinnakkain pystysuunnassa</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask_shape/ui.qml" line="213"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="216"/>
         <source>Barn V Up</source>
         <translation>Lato V ylös</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask_shape/ui.qml" line="213"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="216"/>
         <source>Iris Circle</source>
         <translation>Iiris ympyrä</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask_shape/ui.qml" line="213"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="216"/>
         <source>Double Iris</source>
         <translation>Kaksois-iiris</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask_shape/ui.qml" line="213"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="216"/>
         <source>Iris Box</source>
         <translation>Iiris laatikko</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask_shape/ui.qml" line="213"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="216"/>
         <source>Box Bottom Right</source>
         <translation>Laatikko alhaalla oikealta</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask_shape/ui.qml" line="213"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="216"/>
         <source>Box Bottom Left</source>
         <translation>Laatikko alhaalta vasemmalta</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask_shape/ui.qml" line="213"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="216"/>
         <source>Box Right Center</source>
         <translation>Laatikko oikealta keskeltä</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask_shape/ui.qml" line="213"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="216"/>
         <source>Clock Top</source>
         <translation>Kello ylhäältä</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask_shape/ui.qml" line="216"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="219"/>
         <source>Set a mask from another file&apos;s brightness or alpha.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask_shape/ui.qml" line="225"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="228"/>
         <source>Open Mask File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask_shape/ui.qml" line="277"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="280"/>
         <source>Alpha</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9398,6 +9583,11 @@ Klikkaa &quot;Avaa&quot; ladataksesi tiedoston.</translation>
         <location filename="../src/qml/filters/waveform/ui.qml" line="197"/>
         <source>Window</source>
         <translation>Ikkuna</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/webvfx_swirl/ui.qml" line="41"/>
+        <source>Swirl amount</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
