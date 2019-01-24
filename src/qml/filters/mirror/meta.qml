@@ -4,7 +4,7 @@ import org.shotcut.qml 1.0
 Metadata {
     type: Metadata.Filter
     name: qsTr("Mirror")
-    mlt_service: "mirror"
+    mlt_service: "avfilter.hflip"
     gpuAlt: "movit.mirror"
     qml: "ui.qml"
 }
