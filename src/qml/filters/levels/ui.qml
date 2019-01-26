@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Meltytech, LLC
+ * Copyright (c) 2018-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -87,8 +87,8 @@ Item {
 
     function setControls() {
         setKeyframedControls()
-        channelCombo.currentIndex = filter.get(channelParam) * 10
-        histogramCombo.currentIndex = (filter.getDouble(showHistogramParam) === 1) ? (filter.get(histogramPositionParam) * 10) : 4
+        channelCombo.currentIndex = filter.getDouble(channelParam) * 10
+        histogramCombo.currentIndex = (filter.getDouble(showHistogramParam) === 1) ? (filter.getDouble(histogramPositionParam) * 10) : 4
         outputBlackSlider.value = filter.getDouble(outputBlackParam) * outputBlackSlider.maximumValue
         outputWhiteSlider.value = filter.getDouble(outputWhiteParam) * outputWhiteSlider.maximumValue
     }
