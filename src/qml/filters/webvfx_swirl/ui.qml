@@ -44,7 +44,6 @@ Item {
                 minimumValue: 0
                 maximumValue: 100
                 suffix: ' %'
-                value: filter.getDouble('maximum')
                 onValueChanged: {
                     filter.set('maximum', value / 100)
                     filter.set('_refresh', 1)
