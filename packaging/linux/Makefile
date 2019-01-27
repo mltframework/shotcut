@@ -1,3 +1,6 @@
+all: snap appimage
+.PHONY: all snap appimage
+
 snap:
 	mkdir -p snap/gui
 	cp ../../icons/shotcut-logo-64.png snap/gui
@@ -12,3 +15,4 @@ appimage: appimage/appimage.yml
 
 clean:
 	rm -rf out pkg2appimage Shotcut
+
