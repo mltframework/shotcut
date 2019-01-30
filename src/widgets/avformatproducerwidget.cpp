@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2018 Meltytech, LLC
+ * Copyright (c) 2012-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -268,8 +268,6 @@ void AvformatProducerWidget::onFrameDecoded()
     bool populateTrackCombos = (ui->videoTrackComboBox->count() == 0 &&
                                 ui->audioTrackComboBox->count() == 0);
     int color_range = !qstrcmp(m_producer->get("meta.media.color_range"), "full");
-    if (m_producer->get_int("set.force_full_luma"))
-        color_range = 1;
 
     for (int i = 0; i < n; i++) {
         QString key = QString("meta.media.%1.stream.type").arg(i);
@@ -432,6 +430,8 @@ void AvformatProducerWidget::onFrameDecoded()
         tff = m_producer->get_int("force_tff");
     ui->fieldOrderComboBox->setCurrentIndex(tff);
     ui->fieldOrderComboBox->setEnabled(!progressive);
+    if (m_producer->get("set.force_full_luma"))
+        color_range = m_producer->get_int("set.force_full_luma");
     ui->rangeComboBox->setCurrentIndex(color_range);
 
     if (populateTrackCombos) {
