@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2015 Meltytech, LLC
- * Author: Harald Hvaal <harald.hvaal@gmail.com>
+ * Copyright (c) 2015-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,7 +16,7 @@
  */
 
 #include "playlisttable.h"
-
+#include <Logger.h>
 #include <QKeyEvent>
 
 PlaylistTable::PlaylistTable(QWidget *parent)
@@ -38,4 +37,15 @@ void PlaylistTable::keyPressEvent(QKeyEvent* event)
         return;
     }
     QTableView::keyPressEvent(event);
+}
+
+void PlaylistTable::dropEvent(QDropEvent* event)
+{
+    QModelIndex index = indexAt(event->pos());
+    if (event->dropAction() == Qt::MoveAction && index.row() == -1) {
+        event->acceptProposedAction();
+        emit movedToEnd();
+    } else {
+        QTableView::dropEvent(event);
+    }
 }

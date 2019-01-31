@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2018 Meltytech, LLC
+ * Copyright (c) 2012-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@
 #include "settings.h"
 #include "shotcut_mlt_properties.h"
 #include "widgets/playlisticonview.h"
+#include "widgets/playlisttable.h"
 #include "util.h"
 #include "commands/playlistcommands.h"
 #include <Logger.h>
@@ -155,7 +156,7 @@ PlaylistDock::PlaylistDock(QWidget *parent) :
     connect(ui->actionDetailed, SIGNAL(triggered(bool)), SLOT(updateViewModeFromActions()));
     connect(ui->actionIcons, SIGNAL(triggered(bool)), SLOT(updateViewModeFromActions()));
     connect(ui->actionTiled, SIGNAL(triggered(bool)), SLOT(updateViewModeFromActions()));
-
+    connect(ui->tableView, SIGNAL(movedToEnd()), SLOT(onMovedToEnd()));
     connect(ui->actionRemove, SIGNAL(triggered()), this, SLOT(on_removeButton_clicked()));
     connect(&m_model, SIGNAL(cleared()), this, SLOT(onPlaylistCleared()));
     connect(&m_model, SIGNAL(created()), this, SLOT(onPlaylistCreated()));
@@ -760,6 +761,11 @@ void PlaylistDock::on_detailsButton_clicked()
     ui->actionTiled->setChecked(false);
     ui->actionIcons->setChecked(false);
     updateViewModeFromActions();
+}
+
+void PlaylistDock::onMovedToEnd()
+{
+    onMoveClip(m_view->currentIndex().row(), model()->rowCount());
 }
 
 void PlaylistDock::keyPressEvent(QKeyEvent* event)

@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2015 Meltytech, LLC
- * Author: Harald Hvaal <harald.hvaal@gmail.com>
+ * Copyright (c) 2015-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,9 +22,14 @@
 
 class PlaylistTable : public QTableView
 {
+    Q_OBJECT
 public:
     PlaylistTable(QWidget *parent = 0);
     void keyPressEvent(QKeyEvent*);
+    void dropEvent(QDropEvent* event) Q_DECL_OVERRIDE;
+
+signals:
+    void movedToEnd();
 };
 
 #endif
