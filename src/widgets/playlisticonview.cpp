@@ -1,7 +1,25 @@
+/*
+ * Copyright (c) 2016-2019 Meltytech, LLC
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 #include "playlisticonview.h"
 
 #include "models/playlistmodel.h"
 #include "settings.h"
+#include <Logger.h>
 
 #include <QDebug>
 #include <QPainter>
@@ -217,13 +235,11 @@ void PlaylistIconView::dropEvent(QDropEvent *event)
     if (dropPos == QAbstractItemView::BelowItem)
         index = index.sibling(index.row() + 1, index.column());
 
-    if (true) {
-    //if (d->dropOn(event, &row, &col, &index)) {
-        const Qt::DropAction action = event->dropAction();
-        if (model()->dropMimeData(event->mimeData(), action, index.row(), index.column(), index)) {
-            event->acceptProposedAction();
-        }
-    }
+    const Qt::DropAction action = event->dropAction();
+    int row = (index.row() != -1) ? index.row() : model()->rowCount();
+    if (model()->dropMimeData(event->mimeData(), action, row, index.column(), index))
+        event->acceptProposedAction();
+
     stopAutoScroll();
     setState(NoState);
     viewport()->update();
