@@ -115,7 +115,7 @@ p, li { white-space: pre-wrap; }
          </widget>
         </item>
         <item>
-         <widget class="QListView" name="listView">
+         <widget class="PlaylistListView" name="listView">
           <property name="contextMenuPolicy">
            <enum>Qt::CustomContextMenu</enum>
           </property>
@@ -408,6 +408,11 @@ p, li { white-space: pre-wrap; }
    <class>PlaylistTable</class>
    <extends>QTableView</extends>
    <header>widgets/playlisttable.h</header>
+  </customwidget>
+  <customwidget>
+   <class>PlaylistListView</class>
+   <extends>QListView</extends>
+   <header>widgets/playlistlistview.h</header>
   </customwidget>
  </customwidgets>
  <resources>
