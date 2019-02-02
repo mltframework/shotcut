@@ -167,7 +167,7 @@ Item {
         }
 
         Label {
-            text: qsTr('Start')
+            text: qsTr('Start Delay')
             Layout.alignment: Qt.AlignRight
         }
         RowLayout {
@@ -181,11 +181,12 @@ Item {
                 onSetDefaultClicked: {
                     startSpinner.timeStr = _defaultStart
                 }
+                ToolTip { text: "The timer will be frozen from the beginning of the filter until the Start Delay time has elapsed." }
             }
             Button {
                 iconName: 'insert'
                 iconSource: 'qrc:///icons/oxygen/32x32/actions/insert.png'
-                tooltip: qsTr('Set start to current position')
+                tooltip: qsTr('Set start to begin at the current position')
                 implicitWidth: 20
                 implicitHeight: 20
                 onClicked: startSpinner.setValueSeconds(producer.position / profile.fps)
@@ -207,11 +208,12 @@ Item {
                 onSetDefaultClicked: {
                     durationSpinner.timeStr = _defaultDuration
                 }
+                ToolTip { text: "The timer will be frozen after the Duration has elapsed." }
             }
             Button {
                 iconName: 'insert'
                 iconSource: 'qrc:///icons/oxygen/32x32/actions/insert.png'
-                tooltip: qsTr('Set end to current position')
+                tooltip: qsTr('Set duration to end at the current position')
                 implicitWidth: 20
                 implicitHeight: 20
                 onClicked: {
@@ -240,6 +242,7 @@ Item {
                 onSetDefaultClicked: {
                     offsetSpinner.timeStr = _defaultOffset
                 }
+                ToolTip { text: "When the direction is Down, the timer will count down to Offset. When the Direction is up, the timer will count up starting from Offset." }
             }
         }
 
