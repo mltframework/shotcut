@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2018 Meltytech, LLC
+ * Copyright (c) 2013-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -284,7 +284,7 @@ Rectangle {
         }
         onReleased: {
             if (!doubleClickTimer.isFirstRelease && doubleClickTimer.running) {
-                timeline.position = clipRoot.x / multitrack.scaleFactor
+                timeline.position = Math.round(clipRoot.x / multitrack.scaleFactor)
                 doubleClickTimer.stop()
             } else {
                 doubleClickTimer.isFirstRelease = false
