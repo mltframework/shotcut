@@ -27,6 +27,7 @@ Item {
 
     property string _defaultStart: '00:00:00.000'
     property string _defaultDuration: '00:00:10.000'
+    property string _defaultOffset: '00:00:00.000'
 
     Component.onCompleted: {
         filter.blockSignals = true
@@ -36,6 +37,7 @@ Item {
         if (filter.isNew) {
             filter.set("start", _defaultStart)
             filter.set("duration", _defaultDuration)
+            filter.set("offset", _defaultOffset)
 
             if (application.OS === 'Windows')
                 filter.set('family', 'Verdana')
@@ -96,6 +98,7 @@ Item {
 
         startSpinner.timeStr = filter.get("start")
         durationSpinner.timeStr = filter.get("duration")
+        offsetSpinner.timeStr = filter.get("offset")
 
         textFilterUi.setControls()
     }
@@ -217,6 +220,25 @@ Item {
                     if (endTime > startTime) {
                         durationSpinner.setValueSeconds(endTime - startTime)
                     }
+                }
+            }
+        }
+
+
+        Label {
+            text: qsTr('Offset')
+            Layout.alignment: Qt.AlignRight
+        }
+        RowLayout {
+            spacing: 0
+            ClockSpinner {
+                id: offsetSpinner
+                maximumValue: 10 * 60 * 60 // 10 hours
+                onTimeStrChanged: {
+                    filter.set('offset', offsetSpinner.timeStr)
+                }
+                onSetDefaultClicked: {
+                    offsetSpinner.timeStr = _defaultOffset
                 }
             }
         }
