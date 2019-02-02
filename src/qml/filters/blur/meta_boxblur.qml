@@ -18,7 +18,7 @@ Metadata {
                 property: 'hori'
                 isSimple: true
                 isCurve: true
-                minimum: 1
+                minimum: 0
                 maximum: 99
             },
             Parameter {
@@ -26,7 +26,7 @@ Metadata {
                 property: 'vert'
                 isSimple: true
                 isCurve: true
-                minimum: 1
+                minimum: 0
                 maximum: 99
             }
         ]
