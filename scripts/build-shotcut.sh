@@ -39,8 +39,8 @@ X264_HEAD=0
 X264_REVISION="origin/stable"
 X265_HEAD=0
 X265_REVISION="origin/stable"
-LIBVPX_HEAD=0
-LIBVPX_REVISION="e3210930f54693fe60227784f6394f9b31c5947b"
+LIBVPX_HEAD=1
+LIBVPX_REVISION=0
 ENABLE_LAME=1
 LIBOPUS_HEAD=0
 LIBOPUS_REVISION="v1.3"
@@ -701,7 +701,7 @@ function set_globals {
 
   ####
   # libvpx
-  CONFIG[4]="./configure --prefix=$FINAL_INSTALL_DIR --enable-vp8 --enable-postproc --enable-multithread --enable-runtime-cpu-detect --disable-install-docs --disable-debug-libs --disable-examples --disable-unit-tests $CONFIGURE_DEBUG_FLAG"
+  CONFIG[4]="./configure --prefix=$FINAL_INSTALL_DIR --enable-vp8 --enable-postproc --enable-multithread --enable-runtime-cpu-detect --disable-install-docs --disable-debug-libs --disable-examples --disable-unit-tests --extra-cflags=-std=c99 $CONFIGURE_DEBUG_FLAG"
   if test "$TARGET_OS" = "Linux" ; then
     CONFIG[4]="${CONFIG[4]} --enable-shared"
   elif test "$TARGET_OS" = "Darwin" ; then
