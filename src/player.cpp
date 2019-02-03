@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2018 Meltytech, LLC
+ * Copyright (c) 2012-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -546,7 +546,7 @@ void Player::onProducerOpened(bool play)
         m_scrubber->setOutPoint(m_previousOut);
     }
     else {
-        m_durationLabel->setText(tr("Live").prepend(" / "));
+        m_durationLabel->setText(tr("Not Seekable").prepend(" / "));
         m_scrubber->setDisabled(true);
         // cause scrubber redraw
         m_scrubber->setScale(m_duration);
