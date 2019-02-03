@@ -513,6 +513,8 @@ void TimelineDock::append(int trackIndex)
             new Timeline::AppendCommand(m_model, trackIndex,
                 MLT.XML(MLT.isClip()? 0 : MLT.savedProducer())));
         selectClipUnderPlayhead();
+    } else if (!MLT.savedProducer()) {
+        emit showStatusMessage(tr("You cannot add a non-seekable source."));
     }
 }
 
@@ -892,6 +894,8 @@ void TimelineDock::insert(int trackIndex, int position, const QString &xml)
         MAIN.undoStack()->push(
             new Timeline::InsertCommand(m_model, trackIndex, position, xmlToUse));
         selectClipUnderPlayhead();
+    } else if (!MLT.savedProducer() && !xml.isEmpty()) {
+        emit showStatusMessage(tr("You cannot add a non-seekable source."));
     }
 }
 
@@ -912,6 +916,8 @@ void TimelineDock::overwrite(int trackIndex, int position, const QString &xml)
         MAIN.undoStack()->push(
             new Timeline::OverwriteCommand(m_model, trackIndex, position, xmlToUse));
         selectClipUnderPlayhead();
+    } else if (!MLT.savedProducer() && !xml.isEmpty()) {
+        emit showStatusMessage(tr("You cannot add a non-seekable source."));
     }
 }
 
