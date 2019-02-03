@@ -3617,7 +3617,8 @@ void MainWindow::onGLWidgetImageReady()
                 image = image.scaled(qRound(image.height() * MLT.profile().dar()), image.height(),
                                      Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
             }
-            image.save(saveFileName);
+            image.save(saveFileName, Q_NULLPTR,
+                (QFileInfo(saveFileName).suffix() == "webp")? 80 : -1);
             Settings.setSavePath(fi.path());
             m_recentDock->add(saveFileName);
         }
