@@ -3527,7 +3527,7 @@ void MainWindow::on_actionExportEDL_triggered()
     QString path = Settings.savePath();
     path.append("/.edl");
     QString caption = tr("Export EDL");
-    QString saveFileName = QFileDialog::getSaveFileName(this, caption, path, tr("EDL (*.edl)"));
+    QString saveFileName = QFileDialog::getSaveFileName(this, caption, path, tr("EDL (*.edl);;All Files (*)"));
     if (!saveFileName.isEmpty()) {
         QFileInfo fi(saveFileName);
         if (fi.suffix() != "edl")
@@ -3603,7 +3603,8 @@ void MainWindow::onGLWidgetImageReady()
         QString path = Settings.savePath();
         path.append("/.png");
         QString caption = tr("Export Frame");
-        QString saveFileName = QFileDialog::getSaveFileName(this, caption, path);
+        QString nameFilter = tr("PNG (*.png);;BMP (*.bmp);;JPEG (*.jpg *.jpeg);;PPM (*.ppm);;TIFF (*.tif *.tiff);;WebP (*.webp);;All Files (*)");
+        QString saveFileName = QFileDialog::getSaveFileName(this, caption, path, nameFilter);
         if (!saveFileName.isEmpty()) {
             QFileInfo fi(saveFileName);
             if (fi.suffix().isEmpty())

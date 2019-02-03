@@ -663,6 +663,7 @@ void AvformatProducerWidget::convert(TranscodeDialog& dialog)
         QString resource = GetFilenameFromProducer(producer());
         QString path = Settings.savePath();
         QStringList args;
+        QString nameFilter;
 
         args << "-loglevel" << "verbose";
         args << "-i" << resource;
@@ -674,22 +675,25 @@ void AvformatProducerWidget::convert(TranscodeDialog& dialog)
         switch (dialog.format()) {
         case 0:
             path.append("/%1.mp4");
+            nameFilter = tr("MP4 (*.mp4);;All Files (*)");
             args << "-f" << "mp4" << "-codec:a" << "ac3" << "-b:a" << "512k" << "-codec:v" << "libx264";
             args << "-preset" << "medium" << "-g" << "1" << "-crf" << "11";
             break;
         case 1:
             args << "-f" << "mov" << "-codec:a" << "alac" << "-codec:v" << "prores_ks" << "-profile:v" << "standard";
             path.append("/%1.mov");
+            nameFilter = tr("MOV (*.mov);;All Files (*)");
             break;
         case 2:
             args << "-f" << "matroska" << "-codec:a" << "flac" << "-codec:v" << "ffv1" << "-coder" << "1";
             args << "-context" << "1" << "-g" << "1" << "-threads" << QString::number(QThread::idealThreadCount());
             path.append("/%1.mkv");
+            nameFilter = tr("MKV (*.mkv);;All Files (*)");
             break;
         }
         QFileInfo fi(resource);
         path = path.arg(fi.baseName());
-        QString filename = QFileDialog::getSaveFileName(this, dialog.windowTitle(), path);
+        QString filename = QFileDialog::getSaveFileName(this, dialog.windowTitle(), path, nameFilter);
         if (!filename.isEmpty()) {
             if (filename == QDir::toNativeSeparators(resource)) {
                 QMessageBox::warning(this, dialog.windowTitle(),
@@ -727,6 +731,7 @@ void AvformatProducerWidget::on_reverseButton_clicked()
         QString path = Settings.savePath();
         QStringList meltArgs;
         QStringList ffmpegArgs;
+        QString nameFilter;
 
         ffmpegArgs << "-loglevel" << "verbose";
         ffmpegArgs << "-i" << resource;
@@ -759,6 +764,7 @@ void AvformatProducerWidget::on_reverseButton_clicked()
         switch (dialog.format()) {
         case 0:
             path.append("/%1 - %2.mp4");
+            nameFilter = tr("MP4 (*.mp4);;All Files (*)");
             ffmpegArgs << "-f" << "mp4" << "-codec:a" << "ac3" << "-b:a" << "512k" << "-codec:v" << "libx264";
             ffmpegArgs << "-preset" << "medium" << "-g" << "1" << "-crf" << "11";
             meltArgs << "acodec=ac3" << "ab=512k" << "vcodec=libx264";
@@ -768,6 +774,7 @@ void AvformatProducerWidget::on_reverseButton_clicked()
             ffmpegArgs << "-f" << "mov" << "-codec:a" << "alac" << "-codec:v" << "prores_ks" << "-profile:v" << "standard";
             meltArgs << "acodec=alac" << "vcodec=prores_ks" << "vprofile=standard";
             path.append("/%1 - %2.mov");
+            nameFilter = tr("MOV (*.mov);;All Files (*)");
             break;
         case 2:
             ffmpegArgs << "-f" << "matroska" << "-codec:a" << "flac" << "-codec:v" << "ffv1" << "-coder" << "1";
@@ -775,13 +782,14 @@ void AvformatProducerWidget::on_reverseButton_clicked()
             meltArgs << "acodec=flac" << "vcodec=ffv1" << "coder=1";
             meltArgs << "context=1" << "g=1" << QString::number(QThread::idealThreadCount()).prepend("threads=");
             path.append("/%1 - %2.mkv");
+            nameFilter = tr("MKV (*.mkv);;All Files (*)");
             break;
         }
         QFileInfo fi(resource);
         path = path.arg(fi.completeBaseName()).arg(tr("Reversed"));
         QString filename = QmlApplication::getNextProjectFile(path);
         if (filename.isEmpty())
-            filename = QFileDialog::getSaveFileName(this, dialog.windowTitle(), path);
+            filename = QFileDialog::getSaveFileName(this, dialog.windowTitle(), path, nameFilter);
         if (!filename.isEmpty()) {
             if (filename == QDir::toNativeSeparators(resource)) {
                 QMessageBox::warning(this, dialog.windowTitle(),
@@ -833,7 +841,8 @@ void AvformatProducerWidget::on_actionExtractSubclip_triggered()
     path.append("/%1 - %2.%3");
     path = path.arg(fi.completeBaseName()).arg(tr("Sub-clip")).arg(fi.suffix());
     QString caption = tr("Extract Sub-clip...");
-    QString filename = QFileDialog::getSaveFileName(this, caption, path);
+    QString nameFilter = tr("%1 (*.%2);;All Files (*)").arg(fi.suffix()).arg(fi.suffix());
+    QString filename = QFileDialog::getSaveFileName(this, caption, path, nameFilter);
 
     if (!filename.isEmpty()) {
         if (filename == QDir::toNativeSeparators(resource)) {

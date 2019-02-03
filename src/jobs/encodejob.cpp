@@ -56,7 +56,8 @@ void EncodeJob::onVideoQualityTriggered()
     QString directory = Settings.encodePath();
     directory += "/.txt";
     QString caption = tr("Video Quality Report");
-    QString reportPath= QFileDialog::getSaveFileName(&MAIN, caption, directory);
+    QString nameFilter = tr("Text Documents (*.txt);;All Files (*)");
+    QString reportPath= QFileDialog::getSaveFileName(&MAIN, caption, directory, nameFilter);
     if (!reportPath.isEmpty()) {
         QFileInfo fi(reportPath);
         if (fi.suffix().isEmpty())
