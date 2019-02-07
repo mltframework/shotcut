@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2018 Meltytech, LLC
+ * Copyright (c) 2011-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -144,6 +144,14 @@ public:
             QCoreApplication::translate("main", "The directory for app configuration and data."),
             QCoreApplication::translate("main", "directory"));
         parser.addOption(appDataOption);
+        QCommandLineOption scaleOption("QT_SCALE_FACTOR",
+            QCoreApplication::translate("main", "The scale factor for a high-DPI screen"),
+            QCoreApplication::translate("main", "number"));
+        parser.addOption(scaleOption);
+        scaleOption = QCommandLineOption("QT_SCREEN_SCALE_FACTORS",
+            QCoreApplication::translate("main", "A semicolon-separated list of scale factors for each screen"),
+            QCoreApplication::translate("main", "list"));
+        parser.addOption(scaleOption);
         parser.addPositionalArgument("[FILE]...",
             QCoreApplication::translate("main", "Zero or more files or folders to open"));
         parser.process(arguments());
@@ -261,6 +269,14 @@ int main(int argc, char **argv)
 #endif
 #if QT_VERSION >= 0x050600
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    for (int i = 1; i + 1 < argc; i++) {
+        ::qputenv("QT_AUTO_SCREEN_SCALE_FACTOR", "0");
+        if (!::qstrcmp("--QT_SCALE_FACTOR", argv[i]) || !::qstrcmp("--QT_SCREEN_SCALE_FACTORS", argv[i])) {
+            QByteArray value(argv[i + 1]);
+            ::qputenv(value.contains(';')? "QT_SCREEN_SCALE_FACTORS" : "QT_SCALE_FACTOR", value);
+            break;
+        }
+    }
 #endif
 #ifdef Q_OS_MAC
     // Launcher and Spotlight on macOS are not setting this environment
