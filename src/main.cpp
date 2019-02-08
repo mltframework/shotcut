@@ -270,9 +270,9 @@ int main(int argc, char **argv)
 #if QT_VERSION >= 0x050600
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     for (int i = 1; i + 1 < argc; i++) {
-        ::qputenv("QT_AUTO_SCREEN_SCALE_FACTOR", "0");
         if (!::qstrcmp("--QT_SCALE_FACTOR", argv[i]) || !::qstrcmp("--QT_SCREEN_SCALE_FACTORS", argv[i])) {
             QByteArray value(argv[i + 1]);
+            ::qputenv("QT_AUTO_SCREEN_SCALE_FACTOR", "0");
             ::qputenv(value.contains(';')? "QT_SCREEN_SCALE_FACTORS" : "QT_SCALE_FACTOR", value);
             break;
         }
