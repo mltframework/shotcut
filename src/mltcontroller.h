@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2018 Meltytech, LLC
+ * Copyright (c) 2011-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@
 #include <QString>
 #include <QUuid>
 #include <QScopedPointer>
+#include <QMutex>
 #include <Mlt.h>
 #include "transportcontrol.h"
 
@@ -159,6 +160,7 @@ private:
     QScopedPointer<Mlt::Producer> m_filtersClipboard;
     unsigned m_skipJackEvents;
     QString m_projectFolder;
+    QMutex m_saveXmlMutex;
 
     static void on_jack_started(mlt_properties owner, void* object, mlt_position *position);
     void onJackStarted(int position);

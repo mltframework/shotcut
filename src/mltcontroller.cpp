@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2018 Meltytech, LLC
+ * Copyright (c) 2011-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@
 #include <QMetaType>
 #include <QFileInfo>
 #include <QUuid>
+#include <QTemporaryFile>
 #include <Logger.h>
 #include <Mlt.h>
 #include <math.h>
@@ -411,6 +412,7 @@ void Controller::refreshConsumer(bool scrubAudio)
 
 void Controller::saveXML(const QString& filename, Service* service, bool withRelativePaths)
 {
+    QMutexLocker locker(&m_saveXmlMutex);
     Consumer c(profile(), "xml", filename.toUtf8().constData());
     Service s(service? service->get_service() : m_producer->get_service());
     if (s.is_valid()) {
