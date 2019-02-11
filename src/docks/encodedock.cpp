@@ -617,6 +617,10 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
                     x265params = QString("scenecut=0:%1").arg(x265params);
                     setIfNotSet(p, "sc_threshold", 0);
                 }
+                if (ui->scanModeCombo->currentIndex() == 0 && !x265params.contains("interlace=")) {
+                    x265params = QString("interlace=%1:%2").arg(
+                        ui->fieldOrderCombo->currentIndex()? "tff" : "bff").arg(x265params);
+                }
                 // Also set some properties so that custom presets can be interpreted properly.
                 setIfNotSet(p, "g", ui->gopSpinner->value());
                 setIfNotSet(p, "bf", ui->bFramesSpinner->value());
