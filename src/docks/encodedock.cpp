@@ -822,6 +822,13 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
                     && !vcodec.endsWith("_videotoolbox") && !vcodec.endsWith("_vaapi") &&
                 ui->dualPassCheckbox->isEnabled() && ui->dualPassCheckbox->isChecked())
                 setIfNotSet(p, "pass", 1);
+            if (ui->scanModeCombo->currentIndex() == 0 && ui->fieldOrderCombo->currentIndex() == 0 && vcodec == "libx264") {
+                QString x264params = QString::fromUtf8(p->get("x264-params"));
+                if (!x264params.contains("bff=") && !x264params.contains("tff=")) {
+                    x264params.prepend("bff=1:");
+                    p->set("x264-params", x264params.toUtf8().constData());
+                }
+            }
         }
     }
     return p;
