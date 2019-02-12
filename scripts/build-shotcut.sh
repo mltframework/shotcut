@@ -2086,6 +2086,7 @@ function deploy_win32
     cmd rm -rf lib/cmake lib/pkgconfig lib/gdk-pixbuf-2.0 lib/glib-2.0 lib/gtk-2.0
     cmd rm -rf share/doc share/man share/ffmpeg/examples share/aclocal share/glib-2.0 share/gtk-2.0 share/gtk-doc share/themes share/locale
   fi
+  cmd touch shotcut.exe.local
   cmd mv COPYING COPYING.txt
   if [ "$DEBUG_BUILD" != "1" -o "$SDK" = "1" ]; then
     cmd cp -p "$QTDIR"/bin/Qt5{Concurrent,Core,Declarative,Gui,Multimedia,MultimediaQuick_p,MultimediaWidgets,Network,OpenGL,Positioning,PrintSupport,Qml,QuickParticles,Quick,QuickWidgets,Script,Sensors,Sql,Svg,WebChannel,WebKit,WebKitWidgets,WebSockets,Widgets,Xml,XmlPatterns}.dll .
