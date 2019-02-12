@@ -2004,8 +2004,10 @@ void MainWindow::buildVideoModeMenu(QMenu* topMenu, QMenu*& customMenu, QActionG
     menu->addAction(addProfile(group, "HDV 1080i 29.97 fps", "hdv_1080_60i"));
     menu->addAction(addProfile(group, "HDV 1080p 25 fps", "hdv_1080_25p"));
     menu->addAction(addProfile(group, "HDV 1080p 29.97 fps", "hdv_1080_30p"));
-    menu->addAction(addProfile(group, "Square 1080p 30 fps", "square_1080p_30"));
-    menu->addAction(addProfile(group, "Square 1080p 60 fps", "square_1080p_60"));
+    menu->addAction(addProfile(group, tr("Square 1080p 30 fps"), "square_1080p_30"));
+    menu->addAction(addProfile(group, tr("Square 1080p 60 fps"), "square_1080p_60"));
+    menu->addAction(addProfile(group, tr("Vertical HD 30 fps"), "vertical_hd_30"));
+    menu->addAction(addProfile(group, tr("Vertical HD 60 fps"), "vertical_hd_60"));
     customMenu = topMenu->addMenu(tr("Custom"));
     customMenu->addAction(addAction);
     // Load custom profiles
