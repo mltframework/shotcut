@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2018 Meltytech, LLC
+ * Copyright (c) 2014-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -166,6 +166,7 @@ GridLayout {
                 id: fontDialog
                 title: "Please choose a font"
                 property string fontFamily: ''
+                modality: Qt.ApplicationModal
                 onFontChanged: {
                     filter.set('family', font.family)
                     filter.set('weight', 10 * font.weight )
