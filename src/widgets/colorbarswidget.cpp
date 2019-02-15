@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2018 Meltytech, LLC
+ * Copyright (c) 2012-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@
 #include "colorbarswidget.h"
 #include "ui_colorbarswidget.h"
 #include "util.h"
+#include "mltcontroller.h"
 #include <MltProfile.h>
 
 static const char* kParamType = "0";
@@ -66,6 +67,7 @@ Mlt::Producer* ColorBarsWidget::newProducer(Mlt::Profile& profile)
         p->set(kParamAspect, map_value_backward(ASPECT_NTSC_WIDE, 0, 6.9999));
     else if (profile.sample_aspect_num() == 4 && profile.sample_aspect_den() == 3)
         p->set(kParamAspect, map_value_backward(ASPECT_HDV, 0, 6.9999));
+    MLT.setDurationFromDefault(p);
     p->set(kShotcutCaptionProperty, ui->comboBox->currentText().toUtf8().constData());
     p->set(kShotcutDetailProperty, ui->comboBox->currentText().toUtf8().constData());
     return p;

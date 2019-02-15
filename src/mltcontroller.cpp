@@ -867,6 +867,16 @@ void Controller::setImageDurationFromDefault(Service* service) const
     }
 }
 
+void Controller::setDurationFromDefault(Producer* producer) const
+{
+    if (producer && producer->is_valid()) {
+        int out = qRound(m_profile->fps() * Settings.imageDuration()) - 1;
+        if (out >= producer->get_length())
+            producer->set("length", out + 1);
+        producer->set("out", out);
+    }
+}
+
 QUuid Controller::uuid(Mlt::Properties &properties) const
 {
     return QUuid(properties.get(kUuidProperty));

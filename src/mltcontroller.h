@@ -105,6 +105,7 @@ public:
     bool isAudioFilter(const QString& name);
     int realTime() const;
     void setImageDurationFromDefault(Service* service) const;
+    void setDurationFromDefault(Producer* service) const;
     QUuid uuid(Mlt::Properties &properties) const;
     void setUuid(Mlt::Properties &properties, QUuid uid) const;
     QUuid ensureHasUuid(Mlt::Properties& properties) const;
