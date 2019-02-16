@@ -826,6 +826,11 @@
     <string>Extract Sub-clip...</string>
    </property>
   </action>
+  <action name="actionSetFileDate">
+   <property name="text">
+    <string>Set File Date...</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>
