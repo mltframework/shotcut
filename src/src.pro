@@ -41,6 +41,7 @@ SOURCES += main.cpp\
     docks/recentdock.cpp \
     docks/encodedock.cpp \
     dialogs/addencodepresetdialog.cpp \
+    dialogs/filedatedialog.cpp \
     jobqueue.cpp \
     docks/jobsdock.cpp \
     dialogs/textviewerdialog.cpp \
@@ -151,6 +152,7 @@ HEADERS  += mainwindow.h \
     docks/recentdock.h \
     docks/encodedock.h \
     dialogs/addencodepresetdialog.h \
+    dialogs/filedatedialog.h \
     jobqueue.h \
     docks/jobsdock.h \
     dialogs/textviewerdialog.h \

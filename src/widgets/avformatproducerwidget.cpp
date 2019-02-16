@@ -20,6 +20,7 @@
 #include "util.h"
 #include "mltcontroller.h"
 #include "shotcut_mlt_properties.h"
+#include "dialogs/filedatedialog.h"
 #include "jobqueue.h"
 #include "jobs/ffprobejob.h"
 #include "jobs/ffmpegjob.h"
@@ -606,6 +607,7 @@ void AvformatProducerWidget::on_menuButton_clicked()
     menu.addAction(ui->actionFFmpegIntegrityCheck);
     menu.addAction(ui->actionFFmpegConvert);
     menu.addAction(ui->actionExtractSubclip);
+    menu.addAction(ui->actionSetFileDate);
     menu.exec(ui->menuButton->mapToGlobal(QPoint(0, 0)));
 }
 
@@ -886,6 +888,14 @@ void AvformatProducerWidget::on_actionExtractSubclip_triggered()
         ffmpegJob->setLabel(tr("Extract sub-clip %1").arg(Util::baseName(resource)));
         JOBS.add(ffmpegJob);
     }
+}
+
+
+void AvformatProducerWidget::on_actionSetFileDate_triggered()
+{
+    QString resource = GetFilenameFromProducer(producer());
+    FileDateDialog dialog(resource, this);
+    dialog.exec();
 }
 
 void AvformatProducerWidget::on_rangeComboBox_activated(int index)

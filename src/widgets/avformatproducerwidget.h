@@ -90,8 +90,10 @@ private slots:
     void on_actionFFmpegConvert_triggered();
 
     void on_reverseButton_clicked();
-    
+
     void on_actionExtractSubclip_triggered();
+
+    void on_actionSetFileDate_triggered();
 
     void on_rangeComboBox_activated(int index);
 
