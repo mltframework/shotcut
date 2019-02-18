@@ -47,6 +47,7 @@ public:
         COLUMN_IN,
         COLUMN_DURATION,
         COLUMN_START,
+        COLUMN_DATE,
         COLUMN_COUNT
     };
 
@@ -56,7 +57,8 @@ public:
         FIELD_RESOURCE,
         FIELD_IN,
         FIELD_DURATION,
-        FIELD_START
+        FIELD_START,
+        FIELD_DATE,
     };
 
     static const int THUMBNAIL_WIDTH = 80;
