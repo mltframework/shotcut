@@ -257,6 +257,21 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
         }
         else
             return "";
+    case FIELD_DATE:
+        if (info->producer && info->producer->is_valid()) {
+            QString resource = QString::fromUtf8(info->producer->get("resource"));
+            QFileInfo fileInfo(resource);
+            if (!fileInfo.exists()) {
+                resource = QString::fromUtf8(info->producer->get("warp_resource"));
+                fileInfo = QFileInfo(resource);
+                if (!fileInfo.exists()) {
+                    return "";
+                }
+            }
+            return fileInfo.lastModified().toString("yyyy-MM-dd HH:mm:ss");
+        }
+        else
+            return "";
     case FIELD_THUMBNAIL:
         {
             QString setting = Settings.playlistThumbnails();
@@ -347,6 +362,8 @@ QVariant PlaylistModel::headerData(int section, Qt::Orientation orientation, int
             return tr("Duration");
         case COLUMN_START:
             return tr("Start");
+        case COLUMN_DATE:
+            return tr("Date");
         default:
             break;
         }
