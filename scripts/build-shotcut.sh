@@ -563,20 +563,21 @@ function set_globals {
     FFMPEG_SUPPORT_THEORA=0
     if test "$TARGET_OS" = "Win32" ; then
       export HOST=i686-w64-mingw32
-      export QTDIR="$HOME/qt-5.6.1-x86-mingw482-posix-sjlj"
-      export QMAKE="$HOME/Qt/5.6.1/gcc_64/bin/qmake"
-      export LRELEASE="$HOME/Qt/5.6.1/gcc_64/bin/lrelease"
-      export CFLAGS="-I/usr/$HOST/include $CFLAGS"
-      export CXXFLAGS="-I/usr/$HOST/include $CXXFLAGS"
-      export LDFLAGS="-L/usr/$HOST/lib -Wl,--large-address-aware $LDFLAGS"
-      export CROSS=${HOST}-
+      export CROSS=${HOST}.static-
+      export QTDIR="$HOME/qt-5.9.7-x86-mingw540-sjlj"
+      export QMAKE="$HOME/Qt/5.9.7/gcc_64/bin/qmake"
+      export LRELEASE="$HOME/Qt/5.9.7/gcc_64/bin/lrelease"
+      export LDFLAGS="-L/opt/mxe/gcc-5.4.0/usr/${HOST}.static/lib -Wl,--large-address-aware $LDFLAGS"
     else
       export HOST=x86_64-w64-mingw32
-      export QTDIR="$HOME/qt-5.6.1-x64-mingw510r0-seh"
-      export QMAKE="$HOME/Qt/5.6.1/gcc_64/bin/qmake"
-      export LRELEASE="$HOME/Qt/5.6.1/gcc_64/bin/lrelease"
       export CROSS=${HOST}.static-
+      export QTDIR="$HOME/qt-5.9.7-x64-mingw540-seh"
+      export QMAKE="$HOME/Qt/5.9.7/gcc_64/bin/qmake"
+      export LRELEASE="$HOME/Qt/5.9.7/gcc_64/bin/lrelease"
+      export LDFLAGS="-L/opt/mxe/gcc-5.4.0/usr/${HOST}.static/lib $LDFLAGS"
     fi
+    export CFLAGS="-I/opt/mxe/gcc-5.4.0/usr/${HOST}.static/include $CFLAGS"
+    export CXXFLAGS="-I/opt/mxe/gcc-5.4.0/usr/${HOST}.static/include $CXXFLAGS"
     export CC=${CROSS}gcc
     export CXX=${CROSS}g++
     export AR=${CROSS}ar
@@ -587,14 +588,14 @@ function set_globals {
     export CMAKE_ROOT="${SOURCE_DIR}/vid.stab/cmake"
     export PKG_CONFIG=pkg-config
   elif test "$TARGET_OS" = "Darwin"; then
-    export QTDIR="$HOME/Qt/5.6.1/clang_64"
+    export QTDIR="$HOME/Qt/5.9.7/clang_64"
     export RANLIB=ranlib
   else
     if test -z "$QTDIR" ; then
       if [ "$(uname -m)" = "x86_64" ]; then
-        export QTDIR="$HOME/Qt/5.6.1/gcc_64"
+        export QTDIR="$HOME/Qt/5.9.7/gcc_64"
       else
-        export QTDIR="$HOME/Qt/5.6.1/gcc"
+        export QTDIR="$HOME/Qt/5.9.71/gcc"
       fi
     fi
     export RANLIB=ranlib
@@ -751,7 +752,7 @@ function set_globals {
     CONFIG[7]="$QTDIR/bin/qmake -r MLT_PREFIX=$FINAL_INSTALL_DIR $QMAKE_DEBUG_FLAG $QMAKE_ASAN_FLAGS"
   elif [ "$TARGET_OS" = "Win32" -o "$TARGET_OS" = "Win64" ]; then
     # DEFINES+=QT_STATIC is for QWebSockets
-    CONFIG[7]="$QMAKE -r -spec mkspecs/mingw CONFIG+=link_pkgconfig PKGCONFIG+=mlt++ LIBS+=-L${QTDIR}/lib SHOTCUT_VERSION=$SHOTCUT_VERSION DEFINES+=QT_STATIC $QMAKE_DEBUG_FLAG $QMAKE_ASAN_FLAGS"
+    CONFIG[7]="$QMAKE -r -spec mkspecs/mingw CONFIG+=link_pkgconfig PKGCONFIG+=mlt++ LIBS+=-L${QTDIR}/lib SHOTCUT_VERSION=$SHOTCUT_VERSION DEFINES+=QT_STATIC QMAKE_CXXFLAGS+=-std=c++11 $QMAKE_DEBUG_FLAG $QMAKE_ASAN_FLAGS"
   else
     CONFIG[7]="$QTDIR/bin/qmake -r PREFIX=$FINAL_INSTALL_DIR $QMAKE_DEBUG_FLAG $QMAKE_ASAN_FLAGS"
     LD_LIBRARY_PATH_[7]="/usr/local/lib"
@@ -773,7 +774,7 @@ function set_globals {
   if [ "$TARGET_OS" = "Darwin" ]; then
     CONFIG[9]="$QTDIR/bin/qmake -r MLT_PREFIX=$FINAL_INSTALL_DIR"
   elif [ "$TARGET_OS" = "Win32" -o "$TARGET_OS" = "Win64" ]; then
-    CONFIG[9]="$QMAKE -r -spec mkspecs/mingw LIBS+=-L${QTDIR}/lib INCLUDEPATH+=$FINAL_INSTALL_DIR/include"
+    CONFIG[9]="$QMAKE -r -spec mkspecs/mingw LIBS+=-L${QTDIR}/lib INCLUDEPATH+=$FINAL_INSTALL_DIR/include QMAKE_CXXFLAGS+=-std=c++11 "
   else
     CONFIG[9]="$QTDIR/bin/qmake -r"
   fi
@@ -850,9 +851,9 @@ function set_globals {
   # QSV mfx_dispatch
   CONFIG[17]="./configure --prefix=$FINAL_INSTALL_DIR"
   if test "$TARGET_OS" = "Win32" ; then
-    CONFIG[17]="${CONFIG[17]} --host=x86-w64-mingw32"
+    CONFIG[17]="${CONFIG[17]} --host=x86-w64-mingw32 --without-libva_drm --without-libva_x11"
   elif test "$TARGET_OS" = "Win64" ; then
-    CONFIG[17]="${CONFIG[17]} --host=x86_64-w64-mingw32"
+    CONFIG[17]="${CONFIG[17]} --host=x86_64-w64-mingw32 --without-libva_drm --without-libva_x11"
   fi
   CFLAGS_[17]="$CFLAGS"
   LDFLAGS_[17]=$LDFLAGS
@@ -1066,8 +1067,7 @@ function get_win32_build {
       elif [ -d "/usr/share/cmake-2.8" ] ; then
         cmd cp -r /usr/share/cmake-2.8/Modules cmake
       fi
-      sed 's/-rdynamic//' cmake/Modules/Platform/Linux-GNU.cmake >/tmp/Linux-GNU.cmake
-      cmd mv /tmp/Linux-GNU.cmake cmake/Modules/Platform
+      sed 's/-rdynamic//' -i cmake/Modules/Platform/Linux-GNU.cmake
 
       debug "Create cmake rules for $1"
       cat >my.cmake <<END_OF_CMAKE_RULES
@@ -1083,7 +1083,7 @@ SET(CMAKE_STRIP ${CROSS}strip)
 SET(CMAKE_RC_COMPILER /usr/bin/${HOST}-windres)
 
 # here is the target environment located
-SET(CMAKE_FIND_ROOT_PATH $(dirname $(dirname $(which ${CROSS}gcc)))/$HOST.static $FINAL_INSTALL_DIR)
+SET(CMAKE_FIND_ROOT_PATH $(dirname $(dirname $(which ${CROSS}gcc)))/${HOST}.static $FINAL_INSTALL_DIR)
 
 # adjust the default behaviour of the FIND_XXX() commands:
 # search headers and libraries in the target environment, search
@@ -1143,7 +1143,7 @@ QMAKE_CXXFLAGS_RTTI_OFF	= -fno-rtti
 QMAKE_CXXFLAGS_EXCEPTIONS_ON = -fexceptions -mthreads
 QMAKE_CXXFLAGS_EXCEPTIONS_OFF = -fno-exceptions
 
-QMAKE_INCDIR		= /usr/$HOST/include
+QMAKE_INCDIR		= /opt/mxe/gcc-5.4.0/usr/${HOST}.static/include
 QMAKE_INCDIR_QT		= \$(QTDIR)/include
 QMAKE_LIBDIR_QT		= \$(QTDIR)/lib
 
@@ -1528,15 +1528,24 @@ function configure_compile_install_subproject {
     fi
   fi
 
+  # Special hack for mlt
+  if test "mlt" = "$1"; then
+    export CXXFLAGS="$CFLAGS -std=c++11"
+  fi
+
+  # Special hack for shotcut
+  if test "shotcut" = "$1" -a \( "$TARGET_OS" = "Win32" -o "$TARGET_OS" = "Win64" \) ; then
+    sed 's/QMAKE_LIBS_OPENGL = -lGL//' -i /root/Qt/5.9.7/gcc_64/mkspecs/modules/qt_lib_gui_private.pri
+  fi
+
   # Special hack for movit
-  if test "movit" = "$1" -o "mlt" = "$1"; then
+  if test "movit" = "$1"; then
     export CXXFLAGS="$CFLAGS"
   fi
 
   # Special hack for vid.stab
   if test "vid.stab" = "$1" -a "$TARGET_OS" = "Win32"; then
-    sed 's/-O3/-O2/' <CMakeLists.txt >CMakeLists.new
-    mv CMakeLists.new CMakeLists.txt
+    sed 's/-O3/-O2/' -i CMakeLists.txt
   fi
 
   # Special hack for libopus
@@ -2094,24 +2103,24 @@ function deploy_win32
   if [ "$DEBUG_BUILD" = "1" -o "$SDK" = "1" ]; then
     cmd cp -p "$QTDIR"/bin/Qt5{Concurrent,Core,Declarative,Gui,Multimedia,MultimediaQuick_p,MultimediaWidgets,Network,OpenGL,Positioning,PrintSupport,Qml,QuickParticles,Quick,QuickWidgets,Script,Sensors,Sql,Svg,WebChannel,WebKit,WebKitWidgets,WebSockets,Widgets,Xml,XmlPatterns}d.dll .
   fi
-  if [ "$TARGET_OS" = "Win32" ]; then
-    cmd cp -p "$QTDIR"/bin/{icudt57,icuin57,icuuc57,libgcc_s_sjlj-1,libstdc++-6,libwinpthread-1,libEGL,libGLESv2,opengl32sw,d3dcompiler_47,libgomp-1}.dll .
-  else
-    cmd cp -p "$QTDIR"/bin/{icudt57,icuin57,icuuc57,libgcc_s_seh-1,libstdc++-6,libwinpthread-1,libEGL,libGLESv2,opengl32sw,d3dcompiler_47}.dll .
-    if [ "$DEBUG_BUILD" = "1" -o "$SDK" = "1" ]; then
-        cmd cp -p "$SOURCE_DIR"/shotcut/drmingw/x64/bin/*.{dll,yes} .
-    fi
+  cmd cp -p "$QTDIR"/bin/{icudt57,icuin57,icuuc57,libgcc_s_sjlj-1,libgcc_s_seh-1,libstdc++-6,libwinpthread-1,libEGL,libGLESv2,opengl32sw,d3dcompiler_47,libgomp-1,libeay32,ssleay32}.dll .
+  if [ "$TARGET_OS" = "Win64" ] && [ "$DEBUG_BUILD" = "1" -o "$SDK" = "1" ]; then
+    cmd cp -p "$SOURCE_DIR"/shotcut/drmingw/x64/bin/*.{dll,yes} .
   fi
   cmd mkdir -p lib/qt5/sqldrivers
   cmd cp -pr "$QTDIR"/plugins/{audio,iconengines,imageformats,mediaservice,platforms,generic,sqldrivers} lib/qt5
   cmd cp -pr "$QTDIR"/qml lib
   cmd cp -pr "$QTDIR"/translations/qt_*.qm share/translations
   cmd cp -pr "$QTDIR"/translations/qtbase_*.qm share/translations
+  cmd rm lib/qt5/sqldrivers/qsqlodbc*.dll
   if [ "$DEBUG_BUILD" != "1" -a "$SDK" != "1" ]; then
+    cmd rm lib/qt5/audio/qtaudio_windowsd.dll
+    cmd rm lib/qt5/generic/qtuiotouchplugind.dll
     cmd rm lib/qt5/iconengines/qsvgicond.dll
     cmd rm lib/qt5/imageformats/qddsd.dll
     cmd rm lib/qt5/imageformats/qgifd.dll
     cmd rm lib/qt5/imageformats/qicod.dll
+    cmd rm lib/qt5/imageformats/qicnsd.dll
     cmd rm lib/qt5/imageformats/qjpegd.dll
     cmd rm lib/qt5/imageformats/qsvgd.dll
     cmd rm lib/qt5/imageformats/qtgad.dll
