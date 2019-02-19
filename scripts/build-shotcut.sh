@@ -2163,6 +2163,30 @@ function deploy_win32
     cmd rm lib/qml/QtMultimedia/declarative_multimediad.dll
     cmd rm lib/qml/QtNfc/declarative_nfcd.dll
     cmd rm lib/qml/QtWebChannel/declarative_webchanneld.dll
+    cmd rm lib/qml/Qt/labs/calendar/qtlabscalendarplugind.dll
+    cmd rm lib/qml/Qt/labs/platform/qtlabsplatformplugind.dll
+    cmd rm lib/qml/Qt/labs/sharedimage/sharedimageplugind.dll
+    cmd rm lib/qml/Qt3D/Animation/quick3danimationplugind.dll
+    cmd rm lib/qml/Qt3D/Core/quick3dcoreplugind.dll
+    cmd rm lib/qml/Qt3D/Extras/quick3dextrasplugind.dll
+    cmd rm lib/qml/Qt3D/Input/quick3dinputplugind.dll
+    cmd rm lib/qml/Qt3D/Logic/quick3dlogicplugind.dll
+    cmd rm lib/qml/Qt3D/Render/quick3drenderplugind.dll
+    cmd rm lib/qml/QtCharts/qtchartsqml2d.dll
+    cmd rm lib/qml/QtDataVisualization/datavisualizationqml2d.dll
+    cmd rm lib/qml/QtGamepad/declarative_gamepadd.dll
+    cmd rm lib/qml/QtGraphicalEffects/private/qtgraphicaleffectsprivated.dll
+    cmd rm lib/qml/QtGraphicalEffects/qtgraphicaleffectsplugind.dll
+    cmd rm lib/qml/QtPurchasing/declarative_purchasingd.dll
+    cmd rm lib/qml/QtQml/RemoteObjects/qtqmlremoteobjectsd.dll
+    cmd rm lib/qml/QtQuick/Controls.2/Material/qtquickcontrols2materialstyleplugind.dll
+    cmd rm lib/qml/QtQuick/Controls.2/qtquickcontrols2plugind.dll
+    cmd rm lib/qml/QtQuick/Controls.2/Universal/qtquickcontrols2universalstyleplugind.dll
+    cmd rm lib/qml/QtQuick/Scene2D/qtquickscene2dplugind.dll
+    cmd rm lib/qml/QtQuick/Scene3D/qtquickscene3dplugind.dll
+    cmd rm lib/qml/QtQuick/Templates.2/qtquicktemplates2plugind.dll
+    cmd rm lib/qml/QtQuick/VirtualKeyboard/Styles/qtvirtualkeyboardstylesplugind.dll
+    cmd rm lib/qml/QtScxml/declarative_scxmld.dll
   fi
   if [ "$TARGET_OS" = "Win32" ]; then
     cmd tar -xJf "$HOME/swh-plugins-win32-0.4.15.tar.xz"
