@@ -1703,7 +1703,7 @@ function configure_compile_install_all {
     configure_compile_install_subproject $DIR
   done
 
-  if [ "$ARCHIVE" = "1" ]; then
+  if [ "$ARCHIVE" = "1" ] && [ "$TARGET_OS" = "Linux" ]; then
     log Copying some libs from system
     for lib in "$FINAL_INSTALL_DIR"/lib/qt5/{iconengines,imageformats,mediaservice,platforms,generic,platforminputcontexts,platformthemes,xcbglintegrations}/*.so; do
       bundle_libs "$lib"
@@ -1993,7 +1993,7 @@ function deploy_osx
   cmd cp -a "$FINAL_INSTALL_DIR"/share/movit Resources
 
   log Fixing rpath in libraries
-  cmd find . -name '*.dylib' -exec sh -c "install_name_tool -delete_rpath \"/Users/ddennedy/src/qt5.6/qt-everywhere-opensource-src-5.6.1/qtwebkit/lib\" {} 2> /dev/null" \;
+  cmd find . -name '*.dylib' -exec sh -c "install_name_tool -delete_rpath \"/Users/ddennedy/src/qt-everywhere-opensource-src-5.9.7/qtwebkit-opensource-src-5.9.1/lib\" {} 2> /dev/null" \;
   cmd find . -name '*.dylib' -exec sh -c "install_name_tool -delete_rpath \"/opt/local/lib/libomp\" {} 2> /dev/null" \;
   cmd find . -name '*.dylib' -exec sh -c "install_name_tool -delete_rpath \"$FINAL_INSTALL_DIR/lib\" {} 2> /dev/null" \;
   cmd find . -name '*.dylib' -exec sh -c "install_name_tool -delete_rpath \"$FINAL_INSTALL_DIR/lib/mlt\" {} 2>/dev/null" \;
