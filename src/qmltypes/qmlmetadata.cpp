@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2018 Meltytech, LLC
+ * Copyright (c) 2013-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@
 #include "settings.h"
 #include "util.h"
 #include <Logger.h>
+#include <QVersionNumber>
 
 QmlMetadata::QmlMetadata(QObject *parent)
     : QObject(parent)
@@ -165,9 +166,8 @@ QmlKeyframesMetadata::QmlKeyframesMetadata(QObject* parent)
 void QmlKeyframesMetadata::checkVersion(const QString& version)
 {
     if (!m_minimumVersion.isEmpty()) {
-        // m_enabled = version >= m_minimumVersion, but we need to compare each field of the version separately.
         LOG_DEBUG() << "MLT version:" << version << "Shotcut minimumVersion:" << m_minimumVersion;
-        if (Util::versionStringToUInt(version) < Util::versionStringToUInt(m_minimumVersion))
+        if (QVersionNumber::fromString(version) < QVersionNumber::fromString(m_minimumVersion))
             setDisabled();
     }
 }

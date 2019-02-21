@@ -87,6 +87,7 @@
 #include <QJSEngine>
 #include <QDirIterator>
 #include <QQuickWindow>
+#include <QVersionNumber>
 
 static bool eventDebugCallback(void **data)
 {
@@ -3461,7 +3462,7 @@ void MainWindow::onUpgradeCheckFinished(QNetworkReply* reply)
 
         if (!json.isNull() && json.object().value("version_string").type() == QJsonValue::String && current != "adhoc") {
             QString latest = json.object().value("version_string").toString();
-            if (Util::versionStringToUInt(current) < Util::versionStringToUInt(latest)) {
+            if (QVersionNumber::fromString(current) < QVersionNumber::fromString(latest)) {
                 QAction* action = new QAction(tr("Shotcut version %1 is available! Click here to get it.").arg(latest), 0);
                 connect(action, SIGNAL(triggered(bool)), SLOT(onUpgradeTriggered()));
                 if (!json.object().value("url").isUndefined())

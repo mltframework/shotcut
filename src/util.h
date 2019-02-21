@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2018 Meltytech, LLC
+ * Copyright (c) 2014-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -41,7 +41,6 @@ public:
     static QStringList sortedFileList(const QList<QUrl>& urls);
     static int coerceMultiple(int value, int multiple = 2);
     static QList<QUrl> expandDirectories(const QList<QUrl>& urls);
-    static uint versionStringToUInt(const QString& s);
 };
 
 #endif // UTIL_H
