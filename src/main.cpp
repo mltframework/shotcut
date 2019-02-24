@@ -113,7 +113,7 @@ public:
 #endif
         addLibraryPath(dir.absolutePath());
         setOrganizationName("Meltytech");
-        setOrganizationDomain("meltytech.com");
+        setOrganizationDomain("shotcut.org");
         setApplicationName("Shotcut");
         setApplicationVersion(SHOTCUT_VERSION);
         setAttribute(Qt::AA_UseHighDpiPixmaps);
