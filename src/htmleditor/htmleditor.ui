@@ -630,7 +630,7 @@
   <customwidget>
    <class>QWebView</class>
    <extends>QWidget</extends>
-   <header>QtWebKitWidgets/QWebView</header>
+   <header>QWebView</header>
   </customwidget>
  </customwidgets>
  <resources>
