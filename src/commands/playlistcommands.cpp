@@ -164,4 +164,37 @@ void MoveCommand::undo()
     m_model.move(m_to, m_from);
 }
 
+SortCommand::SortCommand(PlaylistModel& model, int column, Qt::SortOrder order, QUndoCommand *parent)
+    : QUndoCommand(parent)
+    , m_model(model)
+    , m_column(column)
+    , m_order(order)
+{
+    m_xml = MLT.XML(m_model.playlist());
+    QString columnName = m_model.headerData(m_column, Qt::Horizontal, Qt::DisplayRole).toString();
+    setText(QObject::tr("Sort playlist by %1").arg(columnName));
+}
+
+void SortCommand::redo()
+{
+    LOG_DEBUG() << m_column;
+    m_model.sort(m_column, m_order);
+}
+
+void SortCommand::undo()
+{
+    LOG_DEBUG() << "";
+    Mlt::Producer* producer = new Mlt::Producer(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
+    if (producer->is_valid()) {
+        producer->set("resource", "<playlist>");
+        if (!MLT.setProducer(producer)) {
+            m_model.load();
+            MLT.pause();
+            MAIN.seekPlaylist(0);
+        }
+    } else {
+        LOG_ERROR() << "failed to restore playlist from XML";
+    }
+}
+
 } // namespace Playlist

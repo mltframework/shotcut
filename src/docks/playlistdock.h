@@ -75,6 +75,10 @@ private slots:
 
     void on_actionRemoveAll_triggered();
 
+    void on_actionSortByName_triggered();
+
+    void on_actionSortByDate_triggered();
+
     void onPlaylistCreated();
 
     void onPlaylistLoaded();
