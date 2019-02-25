@@ -406,6 +406,43 @@ bool PlaylistModel::moveRows(const QModelIndex &, int sourceRow, int count, cons
     return true;
 }
 
+void PlaylistModel::sort(int column, Qt::SortOrder order)
+{
+    if (!m_playlist) return;
+
+    int index = 0;
+    int count = rowCount();
+    if (count < 2) return;
+
+    // Create a map of values mapped to their original index.
+    // The values will be naturally sorted in the map.
+    QMap<QString, int> indexMap;
+    for (index = 0; index < count; index++) {
+        QModelIndex modelIndex = createIndex(index, column);
+        QString key = data(modelIndex, Qt::DisplayRole).toString();
+        indexMap[key] = index;
+    }
+
+    // Move the sorted indexes into a list to be used to reorder the playlist.
+    QVector<int> indexList(count);
+    QMap<QString, int>::iterator itr = indexMap.begin();
+    index = 0;
+    while (itr != indexMap.end()) {
+        if (order == Qt::AscendingOrder) {
+            indexList[index] = itr.value();
+        } else {
+            indexList[count - index - 1] = itr.value();
+        }
+        index++;
+        itr++;
+    }
+
+    m_playlist->reorder(indexList.data());
+
+    emit dataChanged(createIndex(0, 0), createIndex(rowCount(), columnCount()));
+    emit modified();
+}
+
 QStringList PlaylistModel::mimeTypes() const
 {
     QStringList ls = QAbstractTableModel::mimeTypes();

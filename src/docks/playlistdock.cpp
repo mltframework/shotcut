@@ -279,6 +279,11 @@ void PlaylistDock::on_menuButton_clicked()
         menu.addSeparator();
     }
     menu.addAction(ui->actionRemoveAll);
+    QMenu* sortByMenu = menu.addMenu(tr("Sort"));
+    QActionGroup sortGroup(this);
+    sortGroup.addAction(ui->actionSortByName);
+    sortGroup.addAction(ui->actionSortByDate);
+    sortByMenu->addActions(sortGroup.actions());
     menu.addAction(ui->actionAddToTimeline);
     menu.addSeparator();
 
@@ -490,6 +495,16 @@ void PlaylistDock::on_actionGoto_triggered()
 void PlaylistDock::on_actionRemoveAll_triggered()
 {
     MAIN.undoStack()->push(new Playlist::ClearCommand(m_model));
+}
+
+void PlaylistDock::on_actionSortByName_triggered()
+{
+    MAIN.undoStack()->push(new Playlist::SortCommand(m_model, PlaylistModel::COLUMN_RESOURCE, Qt::AscendingOrder));
+}
+
+void PlaylistDock::on_actionSortByDate_triggered()
+{
+    MAIN.undoStack()->push(new Playlist::SortCommand(m_model, PlaylistModel::COLUMN_DATE, Qt::AscendingOrder));
 }
 
 void PlaylistDock::onPlaylistCreated()

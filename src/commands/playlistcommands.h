@@ -97,6 +97,19 @@ private:
     QString m_xml;
 };
 
+class SortCommand : public QUndoCommand
+{
+public:
+	SortCommand(PlaylistModel& model, int column, Qt::SortOrder order, QUndoCommand * parent = 0);
+    void redo();
+    void undo();
+private:
+    PlaylistModel& m_model;
+    int m_column;
+    Qt::SortOrder m_order;
+    QString m_xml;
+};
+
 }
 
 #endif // PLAYLISTCOMMANDS_H

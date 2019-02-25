@@ -369,6 +369,16 @@ p, li { white-space: pre-wrap; }
     <string>Add All to Timeline</string>
    </property>
   </action>
+  <action name="actionSortByName">
+   <property name="text">
+    <string>Sort By Name</string>
+   </property>
+  </action>
+  <action name="actionSortByDate">
+   <property name="text">
+    <string>Sort By Date</string>
+   </property>
+  </action>
   <action name="actionDetailed">
    <property name="checkable">
     <bool>true</bool>
