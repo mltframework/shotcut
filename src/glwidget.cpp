@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2018 Meltytech, LLC
+ * Copyright (c) 2011-2019 Meltytech, LLC
  *
  * GL shader based on BSD licensed code from Peter Bengtsson:
  * http://www.fourcc.org/source/YUV420P-OpenGL-GLSLang.c
@@ -488,7 +488,10 @@ void GLWidget::mouseMoveEvent(QMouseEvent* event)
         return;
     if (!MLT.producer())
         return;
-    if (!MLT.isSeekableClip()) {
+    if (MLT.isMultitrack() || MLT.isPlaylist()) {
+        MAIN.showStatusMessage(tr("You cannot drag from Project."));
+        return;
+    } else if (!MLT.isSeekableClip()) {
         MAIN.showStatusMessage(tr("You cannot drag a non-seekable source"));
         return;
     }
