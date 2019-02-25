@@ -163,7 +163,7 @@ Item {
                 selectedRow = row
                 if (application.isProjectFolder()) {
                     htmlFile.url = templatesModel.copyTemplate(row)
-                    handleHtmlFile(true, false)
+                    handleHtmlFile(false, true)
                     editor.edit(htmlFile.url)
                     reloadButton.enabled = false
                 } else if (templatesModel.needsFolder(row)) {
