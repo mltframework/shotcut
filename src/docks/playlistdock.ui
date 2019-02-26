@@ -302,6 +302,11 @@ p, li { white-space: pre-wrap; }
     <string>Remove</string>
    </property>
   </action>
+  <action name="actionSetFileDate">
+   <property name="text">
+    <string>Set File Date...</string>
+   </property>
+  </action>
   <action name="actionGoto">
    <property name="text">
     <string>Goto</string>

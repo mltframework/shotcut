@@ -79,6 +79,8 @@ private slots:
 
     void on_actionSortByDate_triggered();
 
+    void on_actionSetFileDate_triggered();
+
     void onPlaylistCreated();
 
     void onPlaylistLoaded();
