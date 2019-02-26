@@ -18,6 +18,7 @@
 #include "playlistdock.h"
 #include "ui_playlistdock.h"
 #include "dialogs/durationdialog.h"
+#include "dialogs/filedatedialog.h"
 #include "mainwindow.h"
 #include "settings.h"
 #include "shotcut_mlt_properties.h"
@@ -413,6 +414,28 @@ void PlaylistDock::on_removeButton_clicked()
     }
 }
 
+void PlaylistDock::on_actionSetFileDate_triggered()
+{
+    QModelIndex index = m_view->currentIndex();
+    if (!index.isValid() || !m_model.playlist()) return;
+    int count = m_model.playlist()->count();
+    if (count == 0) return;
+    int i = index.row() >= count? count-1 : index.row();
+    QScopedPointer<Mlt::ClipInfo> info(m_model.playlist()->clip_info(i));
+    if (info && info->producer && info->producer->is_valid()) {
+        QString resource = QString::fromUtf8(info->producer->get("resource"));
+        QFileInfo fileInfo(resource);
+        if (!fileInfo.exists()) {
+            resource = QString::fromUtf8(info->producer->get("warp_resource"));
+            fileInfo = QFileInfo(resource);
+        }
+        if (fileInfo.exists()) {
+            FileDateDialog dialog(resource, this);
+            dialog.exec();
+        }
+    }
+}
+
 void PlaylistDock::setUpdateButtonEnabled(bool modified)
 {
     ui->updateButton->setEnabled(modified);
@@ -457,6 +480,19 @@ void PlaylistDock::viewCustomContextMenuRequested(const QPoint &pos)
         }
 
         menu.addAction(ui->actionRemove);
+
+        if (info && info->producer && info->producer->is_valid()) {
+            QString resource = QString::fromUtf8(info->producer->get("resource"));
+            QFileInfo fileInfo(resource);
+            if (!fileInfo.exists()) {
+                resource = QString::fromUtf8(info->producer->get("warp_resource"));
+                fileInfo = QFileInfo(resource);
+            }
+            if (fileInfo.exists()) {
+                menu.addAction(ui->actionSetFileDate);
+            }
+        }
+
         menu.exec(mapToGlobal(pos));
     }
 }
