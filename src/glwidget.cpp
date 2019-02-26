@@ -484,8 +484,13 @@ void GLWidget::mouseMoveEvent(QMouseEvent* event)
     }
     if (!(event->buttons() & Qt::LeftButton))
         return;
+    if (m_dragStart.isNull())
+        return;
     if ((event->pos() - m_dragStart).manhattanLength() < QApplication::startDragDistance())
         return;
+    // Reset the drag point to prevent repeating drag actions.
+    m_dragStart.setX(0);
+    m_dragStart.setY(0);
     if (!MLT.producer())
         return;
     if (MLT.isMultitrack() || MLT.isPlaylist()) {
@@ -495,6 +500,7 @@ void GLWidget::mouseMoveEvent(QMouseEvent* event)
         MAIN.showStatusMessage(tr("You cannot drag a non-seekable source"));
         return;
     }
+
     QDrag *drag = new QDrag(this);
     QMimeData *mimeData = new QMimeData;
     mimeData->setData(Mlt::XmlMimeType, MLT.XML().toUtf8());
