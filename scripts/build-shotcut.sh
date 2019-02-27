@@ -563,21 +563,21 @@ function set_globals {
     FFMPEG_SUPPORT_THEORA=0
     if test "$TARGET_OS" = "Win32" ; then
       export HOST=i686-w64-mingw32
-      export CROSS=${HOST}.static-
+      export CROSS=${HOST}.shared-
       export QTDIR="$HOME/qt-5.9.7-x86-mingw540-sjlj"
       export QMAKE="$HOME/Qt/5.9.7/gcc_64/bin/qmake"
       export LRELEASE="$HOME/Qt/5.9.7/gcc_64/bin/lrelease"
-      export LDFLAGS="-L/opt/mxe/gcc-5.4.0/usr/${HOST}.static/lib -Wl,--large-address-aware $LDFLAGS"
+      export LDFLAGS="-L/opt/mxe/usr/${HOST}.shared/lib -Wl,--large-address-aware $LDFLAGS"
     else
       export HOST=x86_64-w64-mingw32
-      export CROSS=${HOST}.static-
+      export CROSS=${HOST}.shared-
       export QTDIR="$HOME/qt-5.9.7-x64-mingw540-seh"
       export QMAKE="$HOME/Qt/5.9.7/gcc_64/bin/qmake"
       export LRELEASE="$HOME/Qt/5.9.7/gcc_64/bin/lrelease"
-      export LDFLAGS="-L/opt/mxe/gcc-5.4.0/usr/${HOST}.static/lib $LDFLAGS"
+      export LDFLAGS="-L/opt/mxe/usr/${HOST}.shared/lib $LDFLAGS"
     fi
-    export CFLAGS="-I/opt/mxe/gcc-5.4.0/usr/${HOST}.static/include $CFLAGS"
-    export CXXFLAGS="-I/opt/mxe/gcc-5.4.0/usr/${HOST}.static/include $CXXFLAGS"
+    export CFLAGS="-I/opt/mxe/usr/${HOST}.shared/include $CFLAGS"
+    export CXXFLAGS="-I/opt/mxe/usr/${HOST}.shared/include $CXXFLAGS"
     export CC=${CROSS}gcc
     export CXX=${CROSS}g++
     export AR=${CROSS}ar
@@ -1083,7 +1083,7 @@ SET(CMAKE_STRIP ${CROSS}strip)
 SET(CMAKE_RC_COMPILER /usr/bin/${HOST}-windres)
 
 # here is the target environment located
-SET(CMAKE_FIND_ROOT_PATH $(dirname $(dirname $(which ${CROSS}gcc)))/${HOST}.static $FINAL_INSTALL_DIR)
+SET(CMAKE_FIND_ROOT_PATH $(dirname $(dirname $(which ${CROSS}gcc)))/${HOST}.shared $FINAL_INSTALL_DIR)
 
 # adjust the default behaviour of the FIND_XXX() commands:
 # search headers and libraries in the target environment, search
@@ -1143,7 +1143,7 @@ QMAKE_CXXFLAGS_RTTI_OFF	= -fno-rtti
 QMAKE_CXXFLAGS_EXCEPTIONS_ON = -fexceptions -mthreads
 QMAKE_CXXFLAGS_EXCEPTIONS_OFF = -fno-exceptions
 
-QMAKE_INCDIR		= /opt/mxe/gcc-5.4.0/usr/${HOST}.static/include
+QMAKE_INCDIR		= /opt/mxe/usr/${HOST}.shared/include
 QMAKE_INCDIR_QT		= \$(QTDIR)/include
 QMAKE_LIBDIR_QT		= \$(QTDIR)/lib
 
@@ -2103,7 +2103,12 @@ function deploy_win32
   if [ "$DEBUG_BUILD" = "1" -o "$SDK" = "1" ]; then
     cmd cp -p "$QTDIR"/bin/Qt5{Concurrent,Core,Declarative,Gui,Multimedia,MultimediaQuick_p,MultimediaWidgets,Network,OpenGL,Positioning,PrintSupport,Qml,QuickParticles,Quick,QuickWidgets,Script,Sensors,Sql,Svg,WebChannel,WebKit,WebKitWidgets,WebSockets,Widgets,Xml,XmlPatterns}d.dll .
   fi
-  cmd cp -p "$QTDIR"/bin/{icudt57,icuin57,icuuc57,libgcc_s_sjlj-1,libgcc_s_seh-1,libstdc++-6,libwinpthread-1,libEGL,libGLESv2,opengl32sw,d3dcompiler_47,libgomp-1,libeay32,ssleay32}.dll .
+  cmd cp -p "$QTDIR"/bin/{icudt57,icuin57,icuuc57,libEGL,libGLESv2,opengl32sw,d3dcompiler_47,libeay32,ssleay32}.dll .
+  if [ "$TARGET_OS" = "Win64" ]; then
+    cmd cp -p /opt/mxe/usr/x86_64-w64-mingw32.shared/bin/{libgcc_s_seh-1,libgomp-1,libstdc++-6,libwinpthread-1}.dll .
+  else
+    cmd cp -p /opt/mxe/usr/i686-w64-mingw32.shared/bin/{libgcc_s_sjlj-1,libgomp-1,libstdc++-6,libwinpthread-1}.dll .
+  fi
   if [ "$TARGET_OS" = "Win64" ] && [ "$DEBUG_BUILD" = "1" -o "$SDK" = "1" ]; then
     cmd cp -p "$SOURCE_DIR"/shotcut/drmingw/x64/bin/*.{dll,yes} .
   fi
