@@ -113,8 +113,9 @@ public:
 #endif
         addLibraryPath(dir.absolutePath());
         setOrganizationName("Meltytech");
-#ifdef Q_OS_LINUX
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
         setOrganizationDomain("shotcut.org");
+        setDesktopFileName("org.shotcut.Shotcut");
 #else
         setOrganizationDomain("meltytech.com");
 #endif
