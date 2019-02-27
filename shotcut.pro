@@ -1,3 +1,10 @@
+include(shotcut.pri)
+
+!minQtVersion(5, 9, 0) {
+    message("Cannot build Shotcut with Qt version $${QT_VERSION}.")
+    error("Use at least Qt 5.9.0.")
+}
+
 TEMPLATE = subdirs
 SUBDIRS = CuteLogger src translations
 cache()
