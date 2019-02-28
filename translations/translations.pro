@@ -17,6 +17,7 @@ LANGUAGES = \
     de \
     el \
     en \
+    en_GB \
     es \
     et \
     fi \

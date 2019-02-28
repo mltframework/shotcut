@@ -238,6 +238,8 @@ public:
     #endif
         if (locale.startsWith("pt_"))
             locale = "pt";
+        else if (locale.startsWith("en_"))
+            locale = "en";
         if (qtTranslator.load("qt_" + locale, QLibraryInfo::location(QLibraryInfo::TranslationsPath)))
             installTranslator(&qtTranslator);
         else if (qtTranslator.load("qt_" + locale, dir.absolutePath()))
