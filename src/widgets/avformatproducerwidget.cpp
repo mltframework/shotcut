@@ -461,6 +461,7 @@ void AvformatProducerWidget::onFrameDecoded()
                                       "If yes, choose a format below and then click OK to choose a file name. "
                                       "After choosing a file name, a job is created. "
                                       "When it is done, double-click the job to open it.\n"), this);
+            dialog.setWindowModality(QmlApplication::dialogModality());
             dialog.showCheckBox();
             convert(dialog);
         }
@@ -472,6 +473,7 @@ void AvformatProducerWidget::onFrameDecoded()
                                       "If yes, choose a format below and then click OK to choose a file name. "
                                       "After choosing a file name, a job is created. "
                                       "When it is done, double-click the job to open it.\n"), this);
+            dialog.setWindowModality(QmlApplication::dialogModality());
             dialog.showCheckBox();
             convert(dialog);
         }
@@ -650,6 +652,7 @@ void AvformatProducerWidget::on_actionFFmpegConvert_triggered()
     TranscodeDialog dialog(tr("Choose an edit-friendly format below and then click OK to choose a file name. "
                               "After choosing a file name, a job is created. "
                               "When it is done, double-click the job to open it.\n"), this);
+    dialog.setWindowModality(QmlApplication::dialogModality());
     convert(dialog);
 }
 
@@ -722,6 +725,7 @@ void AvformatProducerWidget::on_reverseButton_clicked()
                               "After choosing a file name, a job is created. "
                               "When it is done, double-click the job to open it.\n"), this);
     dialog.setWindowTitle(tr("Reverse..."));
+    dialog.setWindowModality(QmlApplication::dialogModality());
     int result = dialog.exec();
     if (dialog.isCheckBoxChecked()) {
         Settings.setShowConvertClipDialog(false);
