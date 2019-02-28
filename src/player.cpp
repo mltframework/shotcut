@@ -172,10 +172,6 @@ Player::Player(QWidget *parent)
     volumeLayoutH->addWidget(m_muteButton);
     connect(m_muteButton, SIGNAL(toggled(bool)), this, SLOT(onMuteButtonToggled(bool)));
 
-    // This hack realizes the volume popup geometry for on_actionVolume_triggered().
-    m_volumePopup->show();
-    m_volumePopup->hide();
-
     // Add the scrub bar.
     m_scrubber = new ScrubBar(this);
     m_scrubber->setFocusPolicy(Qt::NoFocus);
@@ -952,11 +948,12 @@ void Player::onCaptureStateChanged(bool active)
 
 void Player::on_actionVolume_triggered()
 {
+    // We must show first to realizes the volume popup geometry.
+    m_volumePopup->show();
     int x = (m_volumePopup->width() - m_volumeWidget->width()) / 2;
     x = mapToParent(m_volumeWidget->geometry().bottomLeft()).x() - x;
     int y = m_scrubber->geometry().height() - m_volumePopup->height();
     m_volumePopup->move(mapToGlobal(m_scrubber->geometry().bottomLeft()) + QPoint(x, y));
-    m_volumePopup->show();
     m_volumeWidget->hide();
     m_volumeWidget->show();
 }
