@@ -278,6 +278,7 @@ GridLayout {
     }
     KeyframesButton {
         id: positionKeyframesButton
+        Layout.rowSpan: 2
         checked: filter.keyframeCount(rectProperty) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
         onToggled: {
             if (checked) {
@@ -324,7 +325,6 @@ GridLayout {
             updateFilter(getPosition())
         }
     }
-    Item { Layout.fillWidth: true }
 
     Label {
         text: qsTr('Horizontal fit')

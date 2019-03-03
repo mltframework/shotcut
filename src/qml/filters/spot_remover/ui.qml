@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Meltytech, LLC
+ * Copyright (c) 2018-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -171,6 +171,7 @@ Item {
         }
         KeyframesButton {
             id: positionKeyframesButton
+            Layout.rowSpan: 2
             checked: filter.keyframeCount(rectProperty) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
             onToggled: {
                 if (checked) {
@@ -217,7 +218,6 @@ Item {
                 setFilter(getPosition())
             }
         }
-        Item { Layout.fillWidth: true }
 
         Item { Layout.fillHeight: true }
     }
