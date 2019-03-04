@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2017 Meltytech, LLC
+ * Copyright (c) 2012-2019 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -28,7 +28,7 @@ TimeSpinBox::TimeSpinBox(QWidget *parent)
 {
     setLineEdit(new TimeSpinBoxLineEdit);
     setRange(0, INT_MAX);
-    setFixedWidth(this->fontMetrics().width("HHH:MM:SS.MMM"));
+    setFixedWidth(this->fontMetrics().boundingRect("_HHH:MM:SS;MMM_").width());
     setAlignment(Qt::AlignRight);
     m_validator = new QRegExpValidator(QRegExp("^\\s*(\\d*:){0,2}(\\d*[.;:])?\\d*\\s*$"), this);
     setValue(0);
