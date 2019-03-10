@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2018 Meltytech, LLC
+ * Copyright (c) 2013-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -262,8 +262,8 @@ Item {
         Label { text: qsTr('X offset') }
         SliderSpinner {
             id: xOffsetSlider
-            minimumValue: -2000
-            maximumValue: 2000
+            minimumValue: -5000
+            maximumValue: 5000
             spinnerWidth: 110
             onValueChanged: if (!blockUpdate) {
                 if (xOffsetKeyframesButton.checked)
@@ -291,8 +291,8 @@ Item {
         Label { text: qsTr('Y offset') }
         SliderSpinner {
             id: yOffsetSlider
-            minimumValue: -2000
-            maximumValue: 2000
+            minimumValue: -5000
+            maximumValue: 5000
             spinnerWidth: 110
             onValueChanged: if (!blockUpdate) {
                 if (yOffsetKeyframesButton.checked)
