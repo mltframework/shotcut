@@ -79,7 +79,7 @@ public:
     void onWindowResize();
     virtual void seek(int position);
     void refreshConsumer(bool scrubAudio = false);
-    void saveXML(const QString& filename, Service* service = 0, bool withRelativePaths = true);
+    bool saveXML(const QString& filename, Service* service = 0, bool withRelativePaths = true);
     QString XML(Service* service = 0, bool withProfile = false, bool withMetadata = false);
     int consumerChanged();
     void setProfile(const QString& profile_name);

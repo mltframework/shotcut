@@ -22,6 +22,7 @@
 #include <QFileInfo>
 #include <QUuid>
 #include <QTemporaryFile>
+#include <QXmlStreamReader>
 #include <Logger.h>
 #include <Mlt.h>
 #include <math.h>
@@ -410,10 +411,17 @@ void Controller::refreshConsumer(bool scrubAudio)
     }
 }
 
-void Controller::saveXML(const QString& filename, Service* service, bool withRelativePaths)
+bool Controller::saveXML(const QString& filename, Service* service, bool withRelativePaths)
 {
     QMutexLocker locker(&m_saveXmlMutex);
-    Consumer c(profile(), "xml", filename.toUtf8().constData());
+    // First, write to a temp file.
+    QFileInfo fi(filename);
+    QTemporaryFile tmp(fi.absolutePath().append("/shotcut-XXXXXX.mlt"));
+    tmp.open();
+    tmp.close();
+    QString tmpFileName = tmp.fileName();
+    LOG_DEBUG() << "writing temporary XML file" << tmpFileName;
+    Consumer c(profile(), "xml", tmpFileName.toUtf8().constData());
     Service s(service? service->get_service() : m_producer->get_service());
     if (s.is_valid()) {
         s.set(kShotcutProjectAudioChannels, m_audioChannels);
@@ -425,7 +433,7 @@ void Controller::saveXML(const QString& filename, Service* service, bool withRel
         c.set("no_meta", 1);
         c.set("store", "shotcut");
         if (withRelativePaths) {
-            c.set("root", QFileInfo(filename).absolutePath().toUtf8().constData());
+            c.set("root", fi.absolutePath().toUtf8().constData());
             c.set("no_root", 1);
         }
         c.set("title", QString("Shotcut version ").append(SHOTCUT_VERSION).toUtf8().constData());
@@ -433,7 +441,22 @@ void Controller::saveXML(const QString& filename, Service* service, bool withRel
         c.start();
         if (ignore)
             s.set("ignore_points", ignore);
+
+        // Next, check if the temp file is well-formed XML.
+        tmp.open();
+        QXmlStreamReader xml(&tmp);
+        while (!xml.atEnd())
+            xml.readNext();
+        tmp.close();
+        if (!xml.hasError()) {
+            // If the file is good, then move it into place.
+            LOG_DEBUG() << "rename" << tmpFileName << filename;
+            tmp.setAutoRemove(false);
+            tmp.rename(filename);
+            return true;
+        }
     }
+    return false;
 }
 
 QString Controller::XML(Service* service, bool withProfile, bool withMetadata)

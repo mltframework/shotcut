@@ -1022,9 +1022,11 @@ void MainWindow::doAutosave()
 {
     QMutexLocker locker(&m_autosaveMutex);
     if (m_autosaveFile) {
+        bool success = false;
         if (m_autosaveFile->isOpen() || m_autosaveFile->open(QIODevice::ReadWrite)) {
-            saveXML(m_autosaveFile->fileName(), false /* without relative paths */);
-        } else {
+            success = saveXML(m_autosaveFile->fileName(), false /* without relative paths */);
+        }
+        if (!success) {
             LOG_ERROR() << "failed to open autosave file for writing" << m_autosaveFile->fileName();
         }
     }
@@ -1130,6 +1132,19 @@ void MainWindow::setAudioChannels(int channels)
     else if (channels == 6)
         ui->actionChannels6->setChecked(true);
     emit audioChannelsChanged();
+}
+
+void MainWindow::showSaveError()
+{
+    QMessageBox dialog(QMessageBox::Critical,
+                       qApp->applicationName(),
+                       tr("There was an error saving. Please try again."),
+                       QMessageBox::Ok,
+                       this);
+    dialog.setDefaultButton(QMessageBox::Ok);
+    dialog.setEscapeButton(QMessageBox::Ok);
+    dialog.setWindowModality(QmlApplication::dialogModality());
+    dialog.exec();
 }
 
 static void autosaveTask(MainWindow* p)
@@ -2034,18 +2049,21 @@ void MainWindow::newProject(const QString &filename, bool isProjectFolder)
         QFileInfo info(filename);
         MLT.setProjectFolder(info.absolutePath());
     }
-    saveXML(filename);
-    QMutexLocker locker(&m_autosaveMutex);
-    if (m_autosaveFile)
-        m_autosaveFile->changeManagedFile(filename);
-    else
-        m_autosaveFile.reset(new AutoSaveFile(filename));
-    setCurrentFile(filename);
-    setWindowModified(false);
-    if (MLT.producer())
-        showStatusMessage(tr("Saved %1").arg(m_currentFile));
-    m_undoStack->setClean();
-    m_recentDock->add(filename);
+    if (saveXML(filename)) {
+        QMutexLocker locker(&m_autosaveMutex);
+        if (m_autosaveFile)
+            m_autosaveFile->changeManagedFile(filename);
+        else
+            m_autosaveFile.reset(new AutoSaveFile(filename));
+        setCurrentFile(filename);
+        setWindowModified(false);
+        if (MLT.producer())
+            showStatusMessage(tr("Saved %1").arg(m_currentFile));
+        m_undoStack->setClean();
+        m_recentDock->add(filename);
+    } else {
+        showSaveError();
+    }
 }
 
 void MainWindow::addCustomProfile(const QString &name, QMenu *menu, QAction *action, QActionGroup *group)
@@ -2280,12 +2298,16 @@ bool MainWindow::on_actionSave_triggered()
     } else {
         if (Util::warnIfNotWritable(m_currentFile, this, tr("Save XML")))
             return false;
-        saveXML(m_currentFile);
+        bool success = saveXML(m_currentFile);
         QMutexLocker locker(&m_autosaveMutex);
         m_autosaveFile.reset(new AutoSaveFile(m_currentFile));
         setCurrentFile(m_currentFile);
         setWindowModified(false);
-        showStatusMessage(tr("Saved %1").arg(m_currentFile));
+        if (success) {
+            showStatusMessage(tr("Saved %1").arg(m_currentFile));
+        } else {
+            showSaveError();
+        }
         m_undoStack->setClean();
         return true;
     }
@@ -2615,23 +2637,25 @@ void MainWindow::on_actionForum_triggered()
     QDesktopServices::openUrl(QUrl("https://forum.shotcut.org/"));
 }
 
-void MainWindow::saveXML(const QString &filename, bool withRelativePaths)
+bool MainWindow::saveXML(const QString &filename, bool withRelativePaths)
 {
+    bool result;
     if (m_timelineDock->model()->rowCount() > 0) {
-        MLT.saveXML(filename, multitrack(), withRelativePaths);
+        result = MLT.saveXML(filename, multitrack(), withRelativePaths);
     } else if (m_playlistDock->model()->rowCount() > 0) {
         int in = MLT.producer()->get_in();
         int out = MLT.producer()->get_out();
         MLT.producer()->set_in_and_out(0, MLT.producer()->get_length() - 1);
-        MLT.saveXML(filename, playlist(), withRelativePaths);
+        result = MLT.saveXML(filename, playlist(), withRelativePaths);
         MLT.producer()->set_in_and_out(in, out);
     } else if (MLT.producer()) {
-        MLT.saveXML(filename, (MLT.isMultitrack() || MLT.isPlaylist())? MLT.savedProducer() : 0, withRelativePaths);
+        result = MLT.saveXML(filename, (MLT.isMultitrack() || MLT.isPlaylist())? MLT.savedProducer() : 0, withRelativePaths);
     } else {
         // Save an empty playlist, which is accepted by both MLT and Shotcut.
         Mlt::Playlist playlist(MLT.profile());
-        MLT.saveXML(filename, &playlist, withRelativePaths);
+        result = MLT.saveXML(filename, &playlist, withRelativePaths);
     }
+    return result;
 }
 
 void MainWindow::changeTheme(const QString &theme)

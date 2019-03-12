@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2018 Meltytech, LLC
+ * Copyright (c) 2011-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -79,7 +79,7 @@ public:
     bool continueModified();
     bool continueJobsRunning();
     QUndoStack* undoStack() const;
-    void saveXML(const QString& filename, bool withRelativePaths = true);
+    bool saveXML(const QString& filename, bool withRelativePaths = true);
     static void changeTheme(const QString& theme);
     PlaylistDock* playlistDock() const { return m_playlistDock; }
     FilterController* filterController() const { return m_filterController; }
@@ -142,6 +142,7 @@ private:
     void stepLeftBySeconds(int sec);
     bool saveRepairedXmlFile(MltXmlChecker& checker, QString& fileName);
     void setAudioChannels(int channels);
+    void showSaveError();
 
     Ui::MainWindow* ui;
     Player* m_player;
