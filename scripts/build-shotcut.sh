@@ -1781,7 +1781,6 @@ function bundle_libs
          ($3 !~ /\/libdl\./) &&
          ($3 !~ /\/libm\./) &&
          ($3 !~ /\/libmvec\./) &&
-         ($3 !~ /\/libnsl\./) &&
          ($3 !~ /\/libnss_compat\./) &&
          ($3 !~ /\/libnss_db\./) &&
          ($3 !~ /\/libnss_dns\./) &&
@@ -1797,9 +1796,10 @@ function bundle_libs
          ($3 !~ /\/libstdc\+\+\./) &&
          ($3 !~ /\/libGL\./) &&
          ($3 !~ /\/libEGL\./) &&
-		 ($3 !~ /\/libdrm/) &&
+         ($3 !~ /\/libdrm/) &&
          ($3 !~ /\/libglapi\./) &&
          ($3 !~ /\/libxcb\./) &&
+         ($3 !~ /\/libxcb-dri2\./) &&
          ($3 !~ /\/libxcb-dri3\./) &&
          ($3 !~ /\/libX11\./) &&
          ($3 !~ /\/libgio\./) &&
