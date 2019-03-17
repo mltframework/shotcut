@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2018 Meltytech, LLC
+ * Copyright (c) 2013-2019 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -298,7 +298,7 @@ void QmlFilter::analyze(bool isAudio)
     m_filter.set("results", NULL, 0);
     int disable = m_filter.get_int("disable");
     m_filter.set("disable", 0);
-    MLT.saveXML(tmp.fileName(), &service);
+    MLT.saveXML(tmp.fileName(), &service, false, false);
     m_filter.set("disable", disable);
 
     // get temp filename for output xml

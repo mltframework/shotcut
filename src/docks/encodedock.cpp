@@ -884,7 +884,7 @@ MeltJob* EncodeDock::createMeltJob(Mlt::Producer* service, const QString& target
     QTemporaryFile tmp;
     tmp.open();
     tmp.close();
-    MLT.saveXML(tmp.fileName(), service, false /* without relative paths */);
+    MLT.saveXML(tmp.fileName(), service, false /* without relative paths */, false /* without verify */);
 
     // parse xml
     QFile f1(tmp.fileName());
