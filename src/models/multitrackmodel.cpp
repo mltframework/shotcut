@@ -2883,8 +2883,12 @@ void MultitrackModel::insertTrack(int trackIndex, TrackType type)
     // Get the new track index.
     Track& track = m_trackList[qBound(0, trackIndex, m_trackList.count() - 1)];
     int i = track.mlt_index;
-    if (type == VideoTrackType)
+    QScopedPointer<Mlt::Transition> lower;
+    const char* videoTransitionName = Settings.playerGPU()? "movit.overlay" : "frei0r.cairoblend";
+    if (type == VideoTrackType) {
         ++i;
+        lower.reset(getTransition(videoTransitionName, track.mlt_index));
+    }
 
     if (trackIndex >= m_trackList.count()) {
         if (type == AudioTrackType) {
@@ -2952,8 +2956,25 @@ void MultitrackModel::insertTrack(int trackIndex, TrackType type)
 
     if (type == VideoTrackType) {
         // Add the composite transition.
-        Mlt::Transition composite(MLT.profile(), Settings.playerGPU()? "movit.overlay" : "frei0r.cairoblend");
-        m_tractor->plant_transition(composite, last_mlt_index, i);
+        Mlt::Transition composite(MLT.profile(), videoTransitionName);
+        if (lower) {
+            QScopedPointer<Mlt::Service> consumer(lower->consumer());
+            if (consumer->is_valid()) {
+                // Insert the new transition.
+                LOG_DEBUG() << "inserting transition" << last_mlt_index << i;
+                composite.connect(*lower, last_mlt_index, i);
+                Mlt::Transition t((mlt_transition) consumer->get_service());
+                t.connect(composite, consumer->get_int("a_track"), consumer->get_int("b_track"));
+            } else {
+                // Append the new transition.
+                LOG_DEBUG() << "appending transition";
+                m_tractor->plant_transition(composite, last_mlt_index, i);
+            }
+        } else {
+            // Append the new transition.
+            LOG_DEBUG() << "appending transition";
+            m_tractor->plant_transition(composite, last_mlt_index, i);
+        }
     }
 
     // Add the shotcut logical video track.
