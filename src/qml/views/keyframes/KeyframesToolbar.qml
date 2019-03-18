@@ -25,10 +25,12 @@ ToolBar {
     SystemPalette { id: activePalette }
 
     width: 200
+    height: menuButton.height + 4
     anchors.margins: 0
 
     RowLayout {
         ToolButton {
+            id: menuButton
             action: menuAction
         }
         Button { // separator

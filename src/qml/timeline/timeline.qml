@@ -140,7 +140,7 @@ Rectangle {
                     color: activePalette.windowText
                     elide: Qt.ElideRight
                     x: 8
-                    y: 2
+                    anchors.verticalCenter: parent.verticalCenter
                     width: parent.width - 8
                 }
                 ToolButton {

@@ -28,6 +28,7 @@ ToolBar {
     SystemPalette { id: activePalette }
 
     width: 200
+    height: snapButton.height + 4
     anchors.margins: 0
 
     RowLayout {
