@@ -162,9 +162,6 @@ MainWindow::MainWindow()
 
     // Create the UI.
     ui->setupUi(this);
-#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
-    if (Settings.theme() == "light" || Settings.theme() == "dark" )
-#endif
     ui->mainToolBar->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
 #ifdef Q_OS_MAC
     // Qt 5 on OS X supports the standard Full Screen window widget.
@@ -2689,11 +2686,7 @@ void MainWindow::changeTheme(const QString &theme)
         QIcon::setThemeName("light");
     } else {
         QApplication::setStyle(qApp->property("system-style").toString());
-#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
-        QIcon::setThemeName("");
-#else
         QIcon::setThemeName("oxygen");
-#endif
     }
     emit QmlApplication::singleton().paletteChanged();
     LOG_DEBUG() << "end";
@@ -3265,9 +3258,6 @@ void MainWindow::on_actionSystemTheme_triggered()
     changeTheme("system");
     QApplication::setPalette(QApplication::style()->standardPalette());
     Settings.setTheme("system");
-#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
-    ui->mainToolBar->setToolButtonStyle(Qt::ToolButtonFollowStyle);
-#endif
 }
 
 void MainWindow::on_actionFusionDark_triggered()
