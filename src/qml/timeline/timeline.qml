@@ -115,7 +115,6 @@ Rectangle {
     TimelineToolbar {
         id: toolbar
         width: parent.width
-        height: ruler.height + 6
         anchors.top: parent.top
         z: 1
     }

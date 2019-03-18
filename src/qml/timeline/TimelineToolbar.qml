@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2018 Meltytech, LLC
+ * Copyright (c) 2013-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,74 +28,50 @@ ToolBar {
     SystemPalette { id: activePalette }
 
     width: 200
-    height: 24
     anchors.margins: 0
 
     RowLayout {
         ToolButton {
             action: menuAction
-            implicitWidth: 28
-            implicitHeight: 24
         }
         Button { // separator
             enabled: false
             implicitWidth: 1
-            implicitHeight: 20
         }
         ToolButton {
             action: cutAction
-            implicitWidth: 28
-            implicitHeight: 24
         }
         ToolButton {
             action: copyAction
-            implicitWidth: 28
-            implicitHeight: 24
         }
         ToolButton {
             action: insertAction
-            implicitWidth: 28
-            implicitHeight: 24
         }
         Button { // separator
             enabled: false
             implicitWidth: 1
-            implicitHeight: 20
         }
         ToolButton {
             action: appendAction
-            implicitWidth: 28
-            implicitHeight: 24
         }
         ToolButton {
             action: deleteAction
-            implicitWidth: 28
-            implicitHeight: 24
         }
         ToolButton {
             action: liftAction
-            implicitWidth: 28
-            implicitHeight: 24
         }
         ToolButton {
             action: overwriteAction
-            implicitWidth: 28
-            implicitHeight: 24
         }
         ToolButton {
             action: splitAction
-            implicitWidth: 28
-            implicitHeight: 24
         }
         Button { // separator
             enabled: false
             implicitWidth: 1
-            implicitHeight: 20
         }
         ToolButton {
             id: snapButton
-            implicitWidth: 28
-            implicitHeight: 24
             checkable: true
             checked: settings.timelineSnap
             iconName: 'snap'
@@ -105,8 +81,6 @@ ToolBar {
         }
         ToolButton {
             id: scrubButton
-            implicitWidth: 28
-            implicitHeight: 24
             checkable: true
             iconName: 'scrub_drag'
             iconSource: 'qrc:///icons/oxygen/32x32/actions/scrub_drag.png'
@@ -114,8 +88,6 @@ ToolBar {
         }
         ToolButton {
             id: rippleButton
-            implicitWidth: 28
-            implicitHeight: 24
             checkable: true
             checked: settings.timelineRipple
             iconName: 'target'
@@ -127,20 +99,15 @@ ToolBar {
         Button { // separator
             enabled: false
             implicitWidth: 1
-            implicitHeight: 20
         }
         ToolButton {
             action: zoomOutAction
-            implicitWidth: 28
-            implicitHeight: 24
         }
         ZoomSlider {
             id: scaleSlider
         }
         ToolButton {
             action: zoomInAction
-            implicitWidth: 28
-            implicitHeight: 24
         }
 
         ColorOverlay {

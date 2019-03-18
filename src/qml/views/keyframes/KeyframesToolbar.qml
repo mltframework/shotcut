@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2016-2018 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2016-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,32 +25,24 @@ ToolBar {
     SystemPalette { id: activePalette }
 
     width: 200
-    height: 24
     anchors.margins: 0
 
     RowLayout {
         ToolButton {
             action: menuAction
-            implicitWidth: 28
-            implicitHeight: 24
         }
         Button { // separator
             enabled: false
             implicitWidth: 1
-            implicitHeight: 20
         }
         ToolButton {
             action: zoomOutAction
-            implicitWidth: 28
-            implicitHeight: 24
         }
         ZoomSlider {
             id: scaleSlider
         }
         ToolButton {
             action: zoomInAction
-            implicitWidth: 28
-            implicitHeight: 24
         }
     }
 

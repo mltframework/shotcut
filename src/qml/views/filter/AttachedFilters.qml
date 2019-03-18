@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2014-2018 Meltytech, LLC
- * Author: Brian Matherly <code@brianmatherly.com>
+ * Copyright (c) 2014-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -72,7 +71,6 @@ Rectangle {
                 
                 CheckBox {
                     id: filterDelegateCheck
-                    width: 15
                     anchors.verticalCenter: parent.verticalCenter
                     checkedState: model.checkState
                     onClicked: {
