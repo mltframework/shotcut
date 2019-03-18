@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2016 Meltytech, LLC
+ * Copyright (c) 2015-2019 Meltytech, LLC
  * Author: Brian Matherly <code@brianmatherly.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,8 +22,10 @@
 #include <QPainter>
 #include <QToolTip>
 
-const qreal IRE0 = 16;
-const qreal IRE100 = 235;
+static const qreal IRE0 = 16;
+static const qreal IRE100 = 235;
+static const QColor TEXT_COLOR = {220, 220, 220};
+
 
 VideoWaveformScopeWidget::VideoWaveformScopeWidget()
   : ScopeWidget("VideoZoom")
@@ -87,7 +89,10 @@ void VideoWaveformScopeWidget::paintEvent(QPaintEvent*)
     int fontSize = font.pointSize() - (font.pointSize() > 10? 2 : (font.pointSize() > 8? 1 : 0));
     font.setPointSize(fontSize);
     QFontMetrics fm(font);
-    p.setPen(palette().text().color().rgb());
+    QPen pen;
+    pen.setColor(TEXT_COLOR);
+    pen.setWidth(devicePixelRatio());
+    p.setPen(pen);
     p.setFont(font);
 
     // Fill the background
