@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2012-2016 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2012-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,6 +28,7 @@
 #include <QPalette>
 #include <QCryptographicHash>
 #include <QScopedPointer>
+#include <QDir>
 
 #include "settings.h"
 #include "database.h"
@@ -229,9 +229,18 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
         } else {
             // Prefer detail or full path for tooltip
             if (info->producer && info->producer->is_valid())
-                result = info->producer->get("shotcut:detail");
-            if (result.isNull())
-                result = QString::fromUtf8(info->resource);
+                result = info->producer->get(kShotcutDetailProperty);
+            if (result.isNull()) {
+                if (!::qstrcmp(info->producer->get("mlt_service"), "timewarp"))
+                    result = QString::fromUtf8(info->producer->get("warp_resource"));
+                else
+                    result = QString::fromUtf8(info->resource);
+                if (!result.isEmpty() && QFileInfo(result).isRelative()) {
+                    QString basePath = QFileInfo(MAIN.fileName()).canonicalPath();
+                    result = QFileInfo(basePath, result).filePath();
+                }
+                result = QDir::toNativeSeparators(result);
+            }
             if ((result.isNull() || Util::baseName(result) == "<producer>") && info->producer && info->producer->is_valid())
                 result = info->producer->get(kShotcutCaptionProperty);
             if (result.isNull() && info->producer && info->producer->is_valid())

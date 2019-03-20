@@ -253,7 +253,6 @@ void AvformatProducerWidget::onFrameDecoded()
     if(warpSpeed != 1.0)
         caption = QString("%1 (%2x)").arg(name).arg(warpSpeed);
     m_producer->set(kShotcutCaptionProperty, caption.toUtf8().constData());
-    m_producer->set(kShotcutDetailProperty, resource.toUtf8().constData());
     ui->filenameLabel->setText(ui->filenameLabel->fontMetrics().elidedText(caption, Qt::ElideLeft, width() - 30));
     ui->filenameLabel->setToolTip(resource);
     ui->notesTextEdit->setPlainText(QString::fromUtf8(m_producer->get(kCommentProperty)));
