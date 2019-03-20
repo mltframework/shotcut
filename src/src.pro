@@ -119,6 +119,7 @@ SOURCES += main.cpp\
     qmltypes/webvfxtemplatesmodel.cpp \
     widgets/playlistlistview.cpp
 
+mac: OBJECTIVE_SOURCES = macos.mm
 
 HEADERS  += mainwindow.h \
     mltcontroller.h \
@@ -323,6 +324,7 @@ mac {
     ICON = ../packaging/macos/shotcut.icns
     QMAKE_INFO_PLIST = ../packaging/macos/Info.plist
     INCLUDEPATH += $$[QT_INSTALL_HEADERS]
+    LIBS += -framework Foundation -framework Cocoa
 
     # QMake from Qt 5.1.0 on OSX is messing with the environment in which it runs
     # pkg-config such that the PKG_CONFIG_PATH env var is not set.

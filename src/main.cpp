@@ -27,6 +27,10 @@
 #include <QCommandLineParser>
 #include <framework/mlt_log.h>
 
+#ifdef Q_OS_MAC
+    #include "macos.h"
+#endif
+
 #ifdef Q_OS_WIN
 #ifdef QT_DEBUG
 #   include <exchndl.h>
@@ -301,6 +305,7 @@ int main(int argc, char **argv)
             qputenv("LANG", QLocale().name().toUtf8());
         }
     }
+    removeMacosTabBar();
 #endif
 
     Application a(argc, argv);

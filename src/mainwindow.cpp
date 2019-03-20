@@ -168,7 +168,6 @@ MainWindow::MainWindow()
     ui->mainToolBar->removeAction(ui->actionFullscreen);
     // OS X has a standard Full Screen shortcut we should use.
     ui->actionEnter_Full_Screen->setShortcut(QKeySequence((Qt::CTRL + Qt::META + Qt::Key_F)));
-    setUnifiedTitleAndToolBarOnMac(true);
 #endif
 #ifdef Q_OS_WIN
     // Fullscreen on Windows is not allowing popups and other app windows to appear.
