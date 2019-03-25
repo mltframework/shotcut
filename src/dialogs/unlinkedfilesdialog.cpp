@@ -71,8 +71,9 @@ void UnlinkedFilesDialog::on_tableView_doubleClicked(const QModelIndex& index)
         }
 
         // Add chosen filename to the model.
-        model->setData(secondColIndex, filenames[0]);
-        model->setData(secondColIndex, filenames[0], Qt::ToolTipRole);
+        QString filePath = QDir::toNativeSeparators(filenames[0]);
+        model->setData(secondColIndex, filePath);
+        model->setData(secondColIndex, filePath, Qt::ToolTipRole);
         model->setData(secondColIndex, hash, MltXmlChecker::ShotcutHashRole);
 
         Settings.setOpenPath(QFileInfo(filenames.first()).path());

@@ -1198,7 +1198,7 @@ void MainWindow::open(QString url, const Mlt::Properties* properties)
         if (m_profileGroup->checkedAction() && m_profileGroup->checkedAction()->data().toString().isEmpty())
             MLT.profile().set_explicit(false);
     }
-    if (!MLT.open(url)) {
+    if (!MLT.open(QDir::fromNativeSeparators(url))) {
         Mlt::Properties* props = const_cast<Mlt::Properties*>(properties);
         if (props && props->is_valid())
             mlt_properties_inherit(MLT.producer()->get_properties(), props->get_properties());

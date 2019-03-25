@@ -230,8 +230,8 @@ void MltXmlChecker::processProperties()
                 if (!m_resource.newDetail.isEmpty())
                     p.second = Util::baseName(m_resource.newDetail);
             } else if (p.first == kShotcutDetailProperty) {
-                if (!m_resource.newDetail.isEmpty())
-                    p.second = m_resource.newDetail;
+                // We no longer save this (leaks absolute paths).
+                p.second.clear();
             } else if (p.first == "audio_index" || p.first == "video_index") {
                 fixStreamIndex(p.second);
             }
@@ -364,6 +364,7 @@ void MltXmlChecker::checkUnlinkedFile(const QString& mlt_service)
 {
     // Check for an unlinked file.
     const QString baseName = m_resource.info.baseName();
+    const QString filePath = QDir::toNativeSeparators(m_resource.info.filePath());
     // not the color producer
     if (!mlt_service.isEmpty() && mlt_service != "color" && mlt_service != "colour")
     // not a builtin luma wipe file
@@ -379,11 +380,11 @@ void MltXmlChecker::checkUnlinkedFile(const QString& mlt_service)
     // file does not exist
     if (!m_resource.info.exists())
     // not already in the model
-    if (m_unlinkedFilesModel.findItems(m_resource.info.filePath(),
+    if (m_unlinkedFilesModel.findItems(filePath,
             Qt::MatchFixedString | Qt::MatchCaseSensitive).isEmpty()) {
         LOG_ERROR() << "file not found: " << m_resource.info.filePath();
         QIcon icon(":/icons/oxygen/32x32/status/task-reject.png");
-        QStandardItem* item = new QStandardItem(icon, m_resource.info.filePath());
+        QStandardItem* item = new QStandardItem(icon, filePath);
         item->setToolTip(item->text());
         item->setData(m_resource.hash, ShotcutHashRole);
         m_unlinkedFilesModel.appendRow(item);
@@ -396,12 +397,16 @@ bool MltXmlChecker::fixUnlinkedFile(QString& value)
     for (int row = 0; row < m_unlinkedFilesModel.rowCount(); ++row) {
         const QStandardItem* replacement = m_unlinkedFilesModel.item(row, ReplacementColumn);
         if (replacement && !replacement->text().isEmpty() &&
-                m_unlinkedFilesModel.item(row, MissingColumn)->text() == m_resource.info.filePath()) {
+                m_unlinkedFilesModel.item(row, MissingColumn)->text() == QDir::toNativeSeparators(m_resource.info.filePath())) {
             m_resource.info.setFile(replacement->text());
             m_resource.newDetail = replacement->text();
             m_resource.newHash = replacement->data(ShotcutHashRole).toString();
+            value = QDir::fromNativeSeparators(replacement->text());
+            // Convert to relative path if possible.
+            if (value.startsWith(m_basePath + "/"))
+                value = value.mid(m_basePath.size() + 1);
             // Restore special prefix such as "plain:" or speed value.
-            value = replacement->text().prepend(m_resource.prefix);
+            value.prepend(m_resource.prefix);
             m_isCorrected = true;
             return true;
         }

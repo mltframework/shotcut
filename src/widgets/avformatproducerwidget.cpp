@@ -50,7 +50,7 @@ QString GetFilenameFromProducer( Mlt::Producer* producer )
         QFileInfo fi(basePath, resource);
         resource = fi.filePath();
     }
-    return QDir::toNativeSeparators(resource);
+    return resource;
 }
 
 double GetSpeedFromProducer( Mlt::Producer* producer )
@@ -247,7 +247,7 @@ void AvformatProducerWidget::onFrameDecoded()
         m_defaultDuration = m_producer->get_length();
 
     double warpSpeed = GetSpeedFromProducer(producer());
-    QString resource = GetFilenameFromProducer(producer());
+    QString resource = QDir::toNativeSeparators(GetFilenameFromProducer(producer()));
     QString name = Util::baseName(resource);
     QString caption = name;
     if(warpSpeed != 1.0)
