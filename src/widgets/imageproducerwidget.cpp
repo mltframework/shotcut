@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2018 Meltytech, LLC
+ * Copyright (c) 2012-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@
 #include "shotcut_mlt_properties.h"
 #include "util.h"
 #include <QFileInfo>
+#include <QDir>
 
 ImageProducerWidget::ImageProducerWidget(QWidget *parent) :
     QWidget(parent),
@@ -60,7 +61,7 @@ void ImageProducerWidget::setProducer(Mlt::Producer* p)
         s = QString::fromUtf8(m_producer->get("resource"));
         p->set("ttl", 1);
     }
-    ui->filenameLabel->setText(ui->filenameLabel->fontMetrics().elidedText(s, Qt::ElideLeft, width() - 40));
+    ui->filenameLabel->setText(ui->filenameLabel->fontMetrics().elidedText(QDir::toNativeSeparators(s), Qt::ElideLeft, width() - 40));
     updateDuration();
     ui->resolutionLabel->setText(QString("%1x%2").arg(p->get("meta.media.width")).arg(p->get("meta.media.height")));
     ui->aspectNumSpinBox->blockSignals(true);

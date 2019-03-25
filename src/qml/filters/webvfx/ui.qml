@@ -69,7 +69,7 @@ Item {
 
         if (htmlFile.exists()) {
             fileLabel.text = htmlFile.fileName
-            fileLabelTip.text = htmlFile.url
+            fileLabelTip.text = htmlFile.filePath
             fileLabel.visible = true
             openButton.visible = false
             templatesView.visible = false
@@ -97,7 +97,7 @@ Item {
 
         webvfxRoot.fileSaved(htmlFile.path)
         fileLabel.text = htmlFile.fileName
-        fileLabelTip.text = htmlFile.url
+        fileLabelTip.text = htmlFile.filePath
         fileLabel.visible = true
         openButton.visible = false
         templatesView.visible = false

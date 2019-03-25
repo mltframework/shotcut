@@ -59,7 +59,7 @@ RecentDock::RecentDock(QWidget *parent) :
     ui->listWidget->setDragDropMode(QAbstractItemView::DragOnly);
     foreach (QString s, m_recent) {
         QStandardItem* item = new QStandardItem(Util::baseName(s));
-        item->setToolTip(s);
+        item->setToolTip(QDir::toNativeSeparators(s));
         m_model.appendRow(item);
     }
     m_proxyModel.setSourceModel(&m_model);
@@ -78,7 +78,7 @@ void RecentDock::add(const QString &s)
     if (s.startsWith(QDir::tempPath())) return;
     QString name = remove(s);
     QStandardItem* item = new QStandardItem(name);
-    item->setToolTip(s);
+    item->setToolTip(QDir::toNativeSeparators(s));
     m_model.insertRow(0, item);
     m_recent.prepend(s);
     while (m_recent.count() > MaxItems)

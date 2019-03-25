@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2014-2016 Meltytech, LLC
- * Author: Brian Matherly <pez4brian@yahoo.com>
+ * Copyright (c) 2014-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,6 +18,7 @@
 #include "qmlfile.h"
 #include <QFileInfo>
 #include <QFile>
+#include <QDir>
 #include <Logger.h>
 
 QmlFile::QmlFile(QObject* parent)
@@ -76,7 +76,12 @@ QString QmlFile::getFileName()
 
 QString QmlFile::getPath()
 {
-    return QFileInfo(m_url.toString()).path();
+    return QDir::toNativeSeparators(QFileInfo(m_url.toString()).path());
+}
+
+QString QmlFile::getFilePath()
+{
+    return QDir::toNativeSeparators(m_url.toString());
 }
 
 void QmlFile::copyFromFile(QString source)

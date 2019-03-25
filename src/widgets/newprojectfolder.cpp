@@ -101,7 +101,7 @@ void NewProjectFolder::showEvent(QShowEvent*)
     foreach (QString s, Settings.recent()) {
         if (s.endsWith(".mlt")) {
             QStandardItem* item = new QStandardItem(Util::baseName(s));
-            item->setToolTip(s);
+            item->setToolTip(QDir::toNativeSeparators(s));
             m_model.appendRow(item);
         }
     }

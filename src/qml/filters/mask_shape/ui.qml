@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Meltytech, LLC
+ * Copyright (c) 2018-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -95,7 +95,7 @@ Item {
             resourceCombo.currentIndex = 0
             shapeFile.url = resource
             fileLabel.text = shapeFile.fileName
-            fileLabelTip.text = shapeFile.url
+            fileLabelTip.text = shapeFile.filePath
             alphaRadioButton.enabled = true
         }
         previousResourceComboIndex = resourceCombo.currentIndex
@@ -176,7 +176,7 @@ Item {
             shapeFile.url = fileDialog.fileUrl
             filter.set('filter.resource', shapeFile.url)
             fileLabel.text = shapeFile.fileName
-            fileLabelTip.text = shapeFile.url
+            fileLabelTip.text = shapeFile.filePath
             previousResourceComboIndex = resourceCombo.currentIndex
             alphaRadioButton.enabled = true
             shapeRoot.fileOpened(shapeFile.path)

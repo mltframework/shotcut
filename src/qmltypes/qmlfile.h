@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2014-2016 Meltytech, LLC
- * Author: Brian Matherly <pez4brian@yahoo.com>
+ * Copyright (c) 2014-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,6 +27,7 @@ class QmlFile : public QObject
     Q_PROPERTY(QString url READ getUrl WRITE setUrl NOTIFY urlChanged)
     Q_PROPERTY(QString fileName READ getFileName)
     Q_PROPERTY(QString path READ getPath)
+    Q_PROPERTY(QString filePath READ getFilePath)
 
 public:
     explicit QmlFile(QObject *parent = 0);
@@ -35,6 +35,7 @@ public:
     void setUrl(const QString& text);
     QString getFileName();
     QString getPath();
+    QString getFilePath();
     Q_INVOKABLE void copyFromFile(QString source);
     Q_INVOKABLE bool exists();
     Q_INVOKABLE QString suffix();
