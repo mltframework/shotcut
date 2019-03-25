@@ -124,6 +124,7 @@ signals:
     void filterOutChanged(int delta, Mlt::Filter*);
     void reloadRequested();
     void inserted(int trackIndex, int clipIndex);
+    void overWritten(int trackIndex, int clipIndex);
 
 public slots:
     void refreshTrackList();

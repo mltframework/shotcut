@@ -180,6 +180,7 @@ private slots:
     void onTopLevelChanged(bool floating);
     void onTransitionAdded(int trackIndex, int clipIndex, int position, bool ripple);
     void onInserted(int trackIndex, int clipIndex);
+    void onOverWritten(int trackIndex, int clipIndex);
 };
 
 #endif // TIMELINEDOCK_H

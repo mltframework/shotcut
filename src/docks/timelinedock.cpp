@@ -66,6 +66,7 @@ TimelineDock::TimelineDock(QWidget *parent) :
 
     connect(&m_model, SIGNAL(modified()), this, SLOT(clearSelectionIfInvalid()));
     connect(&m_model, &MultitrackModel::inserted, this, &TimelineDock::onInserted);
+    connect(&m_model, &MultitrackModel::overWritten, this, &TimelineDock::onOverWritten);
     connect(&m_model, SIGNAL(rowsInserted(QModelIndex,int,int)), SLOT(onRowsInserted(QModelIndex,int,int)));
     connect(&m_model, SIGNAL(rowsRemoved(QModelIndex,int,int)), SLOT(onRowsRemoved(QModelIndex,int,int)));
 
@@ -922,10 +923,15 @@ void TimelineDock::overwrite(int trackIndex, int position, const QString &xml)
             position = m_position;
         MAIN.undoStack()->push(
             new Timeline::OverwriteCommand(m_model, trackIndex, position, xmlToUse));
-        selectClipUnderPlayhead();
     } else if (!MLT.isSeekableClip()) {
         emit showStatusMessage(kNonSeekableWarning);
     }
+}
+
+void TimelineDock::onOverWritten(int trackIndex, int clipIndex)
+{
+    Q_UNUSED(trackIndex)
+    setSelection(QList<int>() << clipIndex);
 }
 
 void TimelineDock::appendFromPlaylist(Mlt::Playlist *playlist)
