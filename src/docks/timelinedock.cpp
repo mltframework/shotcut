@@ -65,6 +65,7 @@ TimelineDock::TimelineDock(QWidget *parent) :
     m_quickView.setClearColor(palette().window().color());
 
     connect(&m_model, SIGNAL(modified()), this, SLOT(clearSelectionIfInvalid()));
+    connect(&m_model, &MultitrackModel::inserted, this, &TimelineDock::onInserted);
     connect(&m_model, SIGNAL(rowsInserted(QModelIndex,int,int)), SLOT(onRowsInserted(QModelIndex,int,int)));
     connect(&m_model, SIGNAL(rowsRemoved(QModelIndex,int,int)), SLOT(onRowsRemoved(QModelIndex,int,int)));
 
@@ -894,10 +895,15 @@ void TimelineDock::insert(int trackIndex, int position, const QString &xml)
             position = m_position;
         MAIN.undoStack()->push(
             new Timeline::InsertCommand(m_model, trackIndex, position, xmlToUse));
-        selectClipUnderPlayhead();
     } else if (!MLT.isSeekableClip()) {
         emit showStatusMessage(kNonSeekableWarning);
     }
+}
+
+void TimelineDock::onInserted(int trackIndex, int clipIndex)
+{
+    Q_UNUSED(trackIndex)
+    setSelection(QList<int>() << clipIndex);
 }
 
 void TimelineDock::overwrite(int trackIndex, int position, const QString &xml)

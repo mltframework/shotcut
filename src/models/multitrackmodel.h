@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2018 Meltytech, LLC
+ * Copyright (c) 2013-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -123,6 +123,7 @@ signals:
     void filterInChanged(int delta, Mlt::Filter*);
     void filterOutChanged(int delta, Mlt::Filter*);
     void reloadRequested();
+    void inserted(int trackIndex, int clipIndex);
 
 public slots:
     void refreshTrackList();

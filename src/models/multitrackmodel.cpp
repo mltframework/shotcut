@@ -1073,6 +1073,7 @@ int MultitrackModel::insertClip(int trackIndex, Mlt::Producer &clip, int positio
 
             QModelIndex index = createIndex(result, 0, trackIndex);
             AudioLevelsTask::start(clip.parent(), this, index);
+            emit inserted(trackIndex, result);
             emit modified();
             emit seeked(playlist.clip_start(result) + playlist.clip_length(result));
         }
