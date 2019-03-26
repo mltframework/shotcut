@@ -141,6 +141,7 @@ int Controller::open(const QString &url)
                 m_url = url;
         }
         setImageDurationFromDefault(m_producer.data());
+        lockCreationTime(m_producer.data());
     }
     else {
         m_producer.reset();
@@ -616,6 +617,18 @@ bool Controller::isImageProducer(Service* service) const
     return false;
 }
 
+bool Controller::isFileProducer(Service* service) const
+{
+    if (service && service->is_valid()) {
+        QString serviceName = service->get("mlt_service");
+        return (serviceName == "pixbuf" ||
+                serviceName == "qimage" ||
+                serviceName.startsWith("avformat") ||
+                serviceName.startsWith("timewarp"));
+    }
+    return false;
+}
+
 void Controller::rewind(bool forceChangeDirection)
 {
     if (!m_producer || !m_producer->is_valid())
@@ -905,6 +918,18 @@ void Controller::setDurationFromDefault(Producer* producer) const
         if (out >= producer->get_length())
             producer->set("length", out + 1);
         producer->set("out", out);
+    }
+}
+
+void Controller::lockCreationTime(Producer* producer) const
+{
+    // Apply the creation_time property on the producer so that it will persist
+    // through XML serialization/deserialization.
+    if (producer && producer->is_valid() && isFileProducer(producer)) {
+        int64_t creation_time = producer->get_creation_time();
+        if (creation_time != 0) {
+            producer->set_creation_time(creation_time);
+        }
     }
 }
 

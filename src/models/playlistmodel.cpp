@@ -18,6 +18,7 @@
 #include "playlistmodel.h"
 #include "util.h"
 #include "shotcut_mlt_properties.h"
+#include <QDateTime>
 #include <QUrl>
 #include <QImage>
 #include <QColor>
@@ -268,16 +269,13 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
             return "";
     case FIELD_DATE:
         if (info->producer && info->producer->is_valid()) {
-            QString resource = QString::fromUtf8(info->producer->get("resource"));
-            QFileInfo fileInfo(resource);
-            if (!fileInfo.exists()) {
-                resource = QString::fromUtf8(info->producer->get("warp_resource"));
-                fileInfo = QFileInfo(resource);
-                if (!fileInfo.exists()) {
-                    return "";
-                }
+            int64_t ms = info->producer->get_creation_time();
+            if (!ms) {
+                return "";
             }
-            return fileInfo.lastModified().toString("yyyy-MM-dd HH:mm:ss");
+            else {
+               return QDateTime::fromMSecsSinceEpoch(ms).toString("yyyy-MM-dd HH:mm:ss");
+            }
         }
         else
             return "";

@@ -423,6 +423,7 @@ void PlaylistDock::on_actionSetFileDate_triggered()
     int i = index.row() >= count? count-1 : index.row();
     QScopedPointer<Mlt::ClipInfo> info(m_model.playlist()->clip_info(i));
     if (info && info->producer && info->producer->is_valid()) {
+        QString title = info->producer->get("mlt_service");
         QString resource = QString::fromUtf8(info->producer->get("resource"));
         QFileInfo fileInfo(resource);
         if (!fileInfo.exists()) {
@@ -430,9 +431,10 @@ void PlaylistDock::on_actionSetFileDate_triggered()
             fileInfo = QFileInfo(resource);
         }
         if (fileInfo.exists()) {
-            FileDateDialog dialog(resource, this);
-            dialog.exec();
+           title = fileInfo.baseName();
         }
+        FileDateDialog dialog(resource, info->producer, this);
+        dialog.exec();
     }
 }
 
@@ -480,18 +482,7 @@ void PlaylistDock::viewCustomContextMenuRequested(const QPoint &pos)
         }
 
         menu.addAction(ui->actionRemove);
-
-        if (info && info->producer && info->producer->is_valid()) {
-            QString resource = QString::fromUtf8(info->producer->get("resource"));
-            QFileInfo fileInfo(resource);
-            if (!fileInfo.exists()) {
-                resource = QString::fromUtf8(info->producer->get("warp_resource"));
-                fileInfo = QFileInfo(resource);
-            }
-            if (fileInfo.exists()) {
-                menu.addAction(ui->actionSetFileDate);
-            }
-        }
+        menu.addAction(ui->actionSetFileDate);
 
         menu.exec(mapToGlobal(pos));
     }
@@ -601,6 +592,7 @@ void PlaylistDock::onDropped(const QMimeData *data, int row)
                     producer->set("mute_on_pause", 0);
                 }
                 MLT.setImageDurationFromDefault(producer);
+                MLT.lockCreationTime(producer);
                 if (row == -1)
                     MAIN.undoStack()->push(new Playlist::AppendCommand(m_model, MLT.XML(producer)));
                 else

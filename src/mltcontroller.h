@@ -91,6 +91,7 @@ public:
     bool isPlaylist() const;
     bool isMultitrack() const;
     bool isImageProducer(Service* service) const;
+    bool isFileProducer(Service* service) const;
     void rewind(bool forceChangeDirection);
     void fastForward(bool forceChangeDirection);
     void previous(int currentPosition);
@@ -106,6 +107,7 @@ public:
     int realTime() const;
     void setImageDurationFromDefault(Service* service) const;
     void setDurationFromDefault(Producer* service) const;
+    void lockCreationTime(Producer* producer) const;
     QUuid uuid(Mlt::Properties &properties) const;
     void setUuid(Mlt::Properties &properties, QUuid uid) const;
     QUuid ensureHasUuid(Mlt::Properties& properties) const;

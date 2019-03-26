@@ -889,7 +889,7 @@ void AvformatProducerWidget::on_actionExtractSubclip_triggered()
 void AvformatProducerWidget::on_actionSetFileDate_triggered()
 {
     QString resource = GetFilenameFromProducer(producer());
-    FileDateDialog dialog(resource, this);
+    FileDateDialog dialog(resource, producer(), this);
     dialog.exec();
 }
 

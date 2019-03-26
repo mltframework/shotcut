@@ -17,25 +17,30 @@
 
 #include "filedatedialog.h"
 
-#include <QDebug>
+#include "MltProducer.h"
+
 #include <QDateTimeEdit>
+#include <QDebug>
 #include <QDialogButtonBox>
-#include <QFileInfo>
 #include <QVBoxLayout>
 
-#include <utime.h>
-
-FileDateDialog::FileDateDialog(QString filename, QWidget* parent)
+FileDateDialog::FileDateDialog(QString title, Mlt::Producer* producer, QWidget* parent)
     : QDialog(parent)
-    , m_filename(filename)
+    , m_producer(producer)
     , m_dtEdit(new QDateTimeEdit())
 {
-    QFileInfo fileInfo(m_filename);
-    setWindowTitle(tr("%1 File Date").arg(fileInfo.fileName()));
+    setWindowTitle(tr("%1 File Date").arg(title));
+    int64_t milliseconds = producer->get_creation_time();
+    QDateTime creation_time;
+    if ( !milliseconds ) {
+        creation_time = QDateTime::currentDateTime();
+    } else {
+        // Set the date to the current producer date.
+        creation_time = QDateTime::fromMSecsSinceEpoch(milliseconds);
+    }
 
     m_dtEdit->setCalendarPopup(true);
-    // Set the date to the current file date.
-    m_dtEdit->setDateTime(fileInfo.lastModified());
+    m_dtEdit->setDateTime(creation_time);
 
     QVBoxLayout *VLayout = new QVBoxLayout(this);
     VLayout->addWidget(m_dtEdit);
@@ -52,19 +57,6 @@ FileDateDialog::FileDateDialog(QString filename, QWidget* parent)
 
 void FileDateDialog::accept()
 {
-    // Apply the new file date to the file.
-    // TODO: When QT 5.10 is available, use QFileDevice functions
-#ifdef Q_OS_WIN
-    struct _utimbuf dstTime;
-    dstTime.actime = m_dtEdit->dateTime().toMSecsSinceEpoch() / 1000;
-    dstTime.modtime = dstTime.actime;
-    _utime(m_filename.toUtf8().constData(), &dstTime);
-#else
-    struct utimbuf dstTime;
-    dstTime.actime = m_dtEdit->dateTime().toMSecsSinceEpoch() / 1000;
-    dstTime.modtime = dstTime.actime;
-    utime(m_filename.toUtf8().constData(), &dstTime);
-#endif
-
+    m_producer->set_creation_time((int64_t)m_dtEdit->dateTime().toTimeSpec(Qt::LocalTime).toMSecsSinceEpoch());
     QDialog::accept();
 }

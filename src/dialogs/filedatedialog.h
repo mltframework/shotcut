@@ -21,18 +21,21 @@
 #include <QDialog>
 
 class QDateTimeEdit;
+namespace Mlt {
+class Producer;
+}
 
 class FileDateDialog : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit FileDateDialog(QString filename, QWidget *parent = 0);
+    explicit FileDateDialog(QString title, Mlt::Producer* producer, QWidget *parent = 0);
 
 private:
     void accept();
 
-    QString m_filename;
+    Mlt::Producer* m_producer;
     QDateTimeEdit* m_dtEdit;
 };
 
