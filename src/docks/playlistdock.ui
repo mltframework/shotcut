@@ -304,7 +304,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionSetFileDate">
    <property name="text">
-    <string>Set File Date...</string>
+    <string>Set Creation Time...</string>
    </property>
   </action>
   <action name="actionGoto">
