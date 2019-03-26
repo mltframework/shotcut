@@ -894,6 +894,8 @@ void TimelineDock::insert(int trackIndex, int position, const QString &xml)
             : MLT.XML(MLT.isClip()? 0 : MLT.savedProducer());
         if (position < 0)
             position = m_position;
+        if (m_model.trackList().size() == 0)
+            position = 0;
         MAIN.undoStack()->push(
             new Timeline::InsertCommand(m_model, trackIndex, position, xmlToUse));
     } else if (!MLT.isSeekableClip()) {
@@ -921,6 +923,8 @@ void TimelineDock::overwrite(int trackIndex, int position, const QString &xml)
             : MLT.XML(MLT.isClip()? 0 : MLT.savedProducer());
         if (position < 0)
             position = m_position;
+        if (m_model.trackList().size() == 0)
+            position = 0;
         MAIN.undoStack()->push(
             new Timeline::OverwriteCommand(m_model, trackIndex, position, xmlToUse));
     } else if (!MLT.isSeekableClip()) {
