@@ -5,6 +5,13 @@ include(shotcut.pri)
     error("Use at least Qt 5.9.0.")
 }
 
+QMELT_OUTPUT = $$system(qmelt -version, blob)
+QMELT_STRING = $$find(QMELT_OUTPUT, "qmelt qmelt")
+isEmpty(QMELT_STRING) {
+    message("You need qmelt [https://github.com/mltframework/webvfx] for a fully functional Shotcut.")
+    error("Cannot find qmelt binary.")
+}
+
 TEMPLATE = subdirs
 SUBDIRS = CuteLogger src translations
 cache()
