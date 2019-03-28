@@ -380,7 +380,15 @@ mac:qmlfiles.path = $$PREFIX/Contents/Resources/shotcut
 INSTALLS += qmlfiles
 
 unix:!mac {
-    metainfo.files = $$PWD/../packaging/linux/org.shotcut.Shotcut.appdata.xml
+    isEmpty(SHOTCUT_DATE) {
+        SHOTCUT_DATE = 20$$replace(SHOTCUT_VERSION, \., -)
+    }
+    appdata = $$cat($$PWD/../packaging/linux/org.shotcut.Shotcut.appdata.xml.in, blob)
+    appdata = $$replace(appdata, @SHOTCUT_VERSION@, $$SHOTCUT_VERSION)
+    appdata = $$replace(appdata, @SHOTCUT_DATE@, $$SHOTCUT_DATE)
+    write_file($$OUT_PWD/../packaging/linux/org.shotcut.Shotcut.appdata.xml, appdata)
+
+    metainfo.files = $$OUT_PWD/../packaging/linux/org.shotcut.Shotcut.appdata.xml
     metainfo.path = $$PREFIX/share/metainfo
     desktop.files = $$PWD/../packaging/linux/org.shotcut.Shotcut.desktop
     desktop.path = $$PREFIX/share/applications
