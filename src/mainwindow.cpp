@@ -2914,8 +2914,13 @@ void MainWindow::showUpgradePrompt()
 {
     if (Settings.checkUpgradeAutomatic()) {
         showStatusMessage("Checking for upgrade...");
-        m_network.get(QNetworkRequest(QUrl("http://check.shotcut.org/version.json")));
+        QNetworkRequest request(QUrl("https://check.shotcut.org/version.json"));
+        QSslConfiguration sslConfig = request.sslConfiguration();
+        sslConfig.setPeerVerifyMode(QSslSocket::VerifyNone);
+        request.setSslConfiguration(sslConfig);
+        m_network.get(request);
     } else {
+        m_network.setStrictTransportSecurityEnabled(false);
         QAction* action = new QAction(tr("Click here to check for a new version of Shotcut."), 0);
         connect(action, SIGNAL(triggered(bool)), SLOT(on_actionUpgrade_triggered()));
         showStatusMessage(action, 15 /* seconds */);
@@ -3477,9 +3482,9 @@ void MainWindow::onUpgradeCheckFinished(QNetworkReply* reply)
         QJsonDocument json = QJsonDocument::fromJson(response);
         QString current = qApp->applicationVersion();
 
-        if (!json.isNull() && json.object().value("version_string").type() == QJsonValue::String && current != "adhoc") {
+        if (!json.isNull() && json.object().value("version_string").type() == QJsonValue::String) {
             QString latest = json.object().value("version_string").toString();
-            if (QVersionNumber::fromString(current) < QVersionNumber::fromString(latest)) {
+            if (current != "adhoc" && QVersionNumber::fromString(current) < QVersionNumber::fromString(latest)) {
                 QAction* action = new QAction(tr("Shotcut version %1 is available! Click here to get it.").arg(latest), 0);
                 connect(action, SIGNAL(triggered(bool)), SLOT(onUpgradeTriggered()));
                 if (!json.object().value("url").isUndefined())
