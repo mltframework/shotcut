@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2017 Meltytech, LLC
+ * Copyright (c) 2012-2019 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -75,12 +75,13 @@ RecentDock::~RecentDock()
 
 void RecentDock::add(const QString &s)
 {
-    if (s.startsWith(QDir::tempPath())) return;
+    QString filePath = QDir::fromNativeSeparators(s);
+    if (filePath.startsWith(QDir::tempPath())) return;
     QString name = remove(s);
     QStandardItem* item = new QStandardItem(name);
     item->setToolTip(QDir::toNativeSeparators(s));
     m_model.insertRow(0, item);
-    m_recent.prepend(s);
+    m_recent.prepend(filePath);
     while (m_recent.count() > MaxItems)
         m_recent.removeLast();
     Settings.setRecent(m_recent);
@@ -94,10 +95,11 @@ void RecentDock::on_listWidget_activated(const QModelIndex& i)
 
 QString RecentDock::remove(const QString &s)
 {
-    m_recent.removeOne(s);
+    QString filePath = QDir::fromNativeSeparators(s);
+    m_recent.removeOne(filePath);
     Settings.setRecent(m_recent);
 
-    QString name = Util::baseName(s);
+    QString name = Util::baseName(filePath);
     QList<QStandardItem*> items = m_model.findItems(name);
     if (items.count() > 0)
         m_model.removeRow(items.first()->row());
