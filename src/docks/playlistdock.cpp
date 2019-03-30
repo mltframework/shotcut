@@ -488,9 +488,9 @@ void PlaylistDock::viewCustomContextMenuRequested(const QPoint &pos)
                 resource = QString::fromUtf8(info->producer->get("warp_resource"));
                 fileInfo = QFileInfo(resource);
             }
-            if (fileInfo.exists()) {
-                menu.addAction(ui->actionSetFileDate);
-            }
+//            if (fileInfo.exists()) {
+//                menu.addAction(ui->actionSetFileDate);
+//            }
         }
 
         menu.exec(mapToGlobal(pos));

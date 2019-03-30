@@ -606,7 +606,7 @@ void AvformatProducerWidget::on_menuButton_clicked()
     menu.addAction(ui->actionFFmpegIntegrityCheck);
     menu.addAction(ui->actionFFmpegConvert);
     menu.addAction(ui->actionExtractSubclip);
-    menu.addAction(ui->actionSetFileDate);
+//    menu.addAction(ui->actionSetFileDate);
     menu.exec(ui->menuButton->mapToGlobal(QPoint(0, 0)));
 }
 
