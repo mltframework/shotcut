@@ -232,6 +232,21 @@ Player::Player(QWidget *parent)
     m_zoomMenu->addAction(
         QIcon::fromTheme("zoom-in", QIcon(":/icons/oxygen/32x32/actions/zoom-in")),
         tr("Zoom 200%"), this, SLOT(onZoomTriggered()))->setData(2.0f);
+    m_zoomMenu->addAction(
+        QIcon::fromTheme("zoom-in", QIcon(":/icons/oxygen/32x32/actions/zoom-in")),
+        tr("Zoom 300%"), this, SLOT(onZoomTriggered()))->setData(3.0f);
+    m_zoomMenu->addAction(
+        QIcon::fromTheme("zoom-in", QIcon(":/icons/oxygen/32x32/actions/zoom-in")),
+        tr("Zoom 400%"), this, SLOT(onZoomTriggered()))->setData(4.0f);
+    m_zoomMenu->addAction(
+        QIcon::fromTheme("zoom-in", QIcon(":/icons/oxygen/32x32/actions/zoom-in")),
+        tr("Zoom 500%"), this, SLOT(onZoomTriggered()))->setData(5.0f);
+    m_zoomMenu->addAction(
+        QIcon::fromTheme("zoom-in", QIcon(":/icons/oxygen/32x32/actions/zoom-in")),
+        tr("Zoom 750%"), this, SLOT(onZoomTriggered()))->setData(7.5f);
+    m_zoomMenu->addAction(
+        QIcon::fromTheme("zoom-in", QIcon(":/icons/oxygen/32x32/actions/zoom-in")),
+        tr("Zoom 1000%"), this, SLOT(onZoomTriggered()))->setData(10.0f);
     connect(m_zoomButton, SIGNAL(toggled(bool)), SLOT(toggleZoom(bool)));
     m_zoomButton->setMenu(m_zoomMenu);
     m_zoomButton->setPopupMode(QToolButton::MenuButtonPopup);
