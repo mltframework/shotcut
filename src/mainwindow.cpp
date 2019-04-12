@@ -3456,6 +3456,7 @@ void MainWindow::on_actionClose_triggered()
     if (continueModified()) {
         LOG_DEBUG() << "";
         MLT.setProjectFolder(QString());
+        MLT.stop();
         if (multitrack())
             m_timelineDock->model()->close();
         if (playlist())
