@@ -24,6 +24,8 @@ Item {
     property string rectProperty: "rect"
     property rect filterRect: filter.getRect(rectProperty)
     property var defaultParameters: [rectProperty, 'color.1', 'color.2' ,'osc', 'frequency_low', 'frequency_high', 'threshold']
+    property int _minFreqDelta: 100
+    property bool _disableUpdate: false
 
     width: 350
     height: 425
@@ -64,12 +66,14 @@ Item {
     }
 
     function setControls() {
+        _disableUpdate = true
         fgColor.value = filter.get('color.1')
         bgColor.value = filter.get('color.2')
         oscSlider.value = filter.getDouble('osc')
         freqLowSlider.value = filter.getDouble('frequency_low')
         freqHighSlider.value = filter.getDouble('frequency_high')
         thresholdSlider.value = filter.getDouble('threshold')
+        _disableUpdate = false
     }
 
     GridLayout {
@@ -181,10 +185,15 @@ Item {
             Layout.columnSpan: 3
             id: freqLowSlider
             minimumValue: 20
-            maximumValue: 1000
+            maximumValue: 20000 - _minFreqDelta
             decimals: 0
             suffix: ' Hz'
-            onValueChanged: filter.set("frequency_low", value)
+            onValueChanged: {
+                filter.set("frequency_low", value)
+                if (!_disableUpdate && (value + _minFreqDelta) > freqHighSlider.value) {
+                    freqHighSlider.value = value + _minFreqDelta
+                }
+            }
         }
         UndoButton {
             onClicked: freqLowSlider.value = 20
@@ -198,11 +207,16 @@ Item {
         SliderSpinner {
             Layout.columnSpan: 3
             id: freqHighSlider
-            minimumValue: 1000
+            minimumValue: 20 + _minFreqDelta
             maximumValue: 20000
             decimals: 0
             suffix: ' Hz'
-            onValueChanged: filter.set("frequency_high", value)
+            onValueChanged: {
+                filter.set("frequency_high", value)
+                if (!_disableUpdate && (value - _minFreqDelta) < freqLowSlider.value) {
+                    freqLowSlider.value = value - _minFreqDelta
+                }
+            }
         }
         UndoButton {
             onClicked: freqHighSlider.value = 20000
