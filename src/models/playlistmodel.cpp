@@ -421,24 +421,25 @@ void PlaylistModel::sort(int column, Qt::SortOrder order)
     int count = rowCount();
     if (count < 2) return;
 
-    // Create a map of values mapped to their original index.
-    // The values will be naturally sorted in the map.
-    QMap<QString, int> indexMap;
+    // Create a list mapping values to their original index.
+    QVector<QPair<QString, int>> indexMap(count);
     for (index = 0; index < count; index++) {
         QModelIndex modelIndex = createIndex(index, column);
         QString key = data(modelIndex, Qt::DisplayRole).toString();
-        indexMap[key] = index;
+        indexMap[index] = qMakePair(key, index);
     }
+    // Sort the list.
+    std::sort(indexMap.begin(), indexMap.end());
 
     // Move the sorted indexes into a list to be used to reorder the playlist.
     QVector<int> indexList(count);
-    QMap<QString, int>::iterator itr = indexMap.begin();
+    QVector<QPair<QString, int>>::iterator itr = indexMap.begin();
     index = 0;
     while (itr != indexMap.end()) {
         if (order == Qt::AscendingOrder) {
-            indexList[index] = itr.value();
+            indexList[index] = itr->second;
         } else {
-            indexList[count - index - 1] = itr.value();
+            indexList[count - index - 1] = itr->second;
         }
         index++;
         itr++;
