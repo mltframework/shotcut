@@ -25,6 +25,8 @@ Item {
     property string rectProperty: "rect"
     property rect filterRect: filter.getRect(rectProperty)
     property var defaultParameters: [rectProperty, 'type', 'color.1', 'bgcolor', 'thickness', 'fill', 'mirror', 'reverse', 'tension', 'bands', 'frequency_low', 'frequency_high', 'threshold']
+    property int _minFreqDelta: 1000
+    property bool _disableUpdate: false
 
     width: 350
     height: 425
@@ -71,6 +73,7 @@ Item {
     }
 
     function setControls() {
+        _disableUpdate = true
         typeCombo.currentIndex = typeCombo.valueToIndex()
         fgColor.value = filter.get('color.1')
         bgColor.value = filter.get('bgcolor')
@@ -83,6 +86,7 @@ Item {
         freqLowSlider.value = filter.getDouble('frequency_low')
         freqHighSlider.value = filter.getDouble('frequency_high')
         thresholdSlider.value = filter.getDouble('threshold')
+        _disableUpdate = false
     }
 
     GridLayout {
@@ -267,19 +271,25 @@ Item {
         UndoButton {
             onClicked: bandsSlider.value = 31
         }
-        
+
         Label {
             text: qsTr('Low Frequency')
             Layout.alignment: Qt.AlignRight
+            ToolTip { text: qsTr('The low end of the frequency range of the spectrum.') }
         }
         SliderSpinner {
             Layout.columnSpan: 3
             id: freqLowSlider
             minimumValue: 20
-            maximumValue: 1000
+            maximumValue: 20000 - _minFreqDelta
             decimals: 0
             suffix: ' Hz'
-            onValueChanged: filter.set("frequency_low", value)
+            onValueChanged: {
+                filter.set("frequency_low", value)
+                if (!_disableUpdate && (value + _minFreqDelta) > freqHighSlider.value) {
+                    freqHighSlider.value = value + _minFreqDelta
+                }
+            }
         }
         UndoButton {
             onClicked: freqLowSlider.value = 20
@@ -288,20 +298,26 @@ Item {
         Label {
             text: qsTr('High Frequency')
             Layout.alignment: Qt.AlignRight
+            ToolTip { text: qsTr('The high end of the frequency range of the spectrum.') }
         }
         SliderSpinner {
             Layout.columnSpan: 3
             id: freqHighSlider
-            minimumValue: 1000
+            minimumValue: 20 + _minFreqDelta
             maximumValue: 20000
             decimals: 0
             suffix: ' Hz'
-            onValueChanged: filter.set("frequency_high", value)
+            onValueChanged: {
+                filter.set("frequency_high", value)
+                if (!_disableUpdate && (value - _minFreqDelta) < freqLowSlider.value) {
+                    freqLowSlider.value = value - _minFreqDelta
+                }
+            }
         }
         UndoButton {
             onClicked: freqHighSlider.value = 20000
         }
-        
+
         Label {
             text: qsTr('Threshold')
             Layout.alignment: Qt.AlignRight
@@ -318,7 +334,7 @@ Item {
         UndoButton {
             onClicked: thresholdSlider.value = -60
         }
-        
+
         Item { Layout.fillHeight: true }
     }
 
