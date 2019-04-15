@@ -20,6 +20,7 @@
 
 #include <QDialog>
 
+class QComboBox;
 class QDateTimeEdit;
 namespace Mlt {
 class Producer;
@@ -32,10 +33,15 @@ class FileDateDialog : public QDialog
 public:
     explicit FileDateDialog(QString title, Mlt::Producer* producer, QWidget *parent = 0);
 
-private:
+private slots:
     void accept();
+    void dateSelected(int index);
+
+private:
+    void populateDateOptions(Mlt::Producer* producer);
 
     Mlt::Producer* m_producer;
+    QComboBox* m_dtCombo;
     QDateTimeEdit* m_dtEdit;
 };
 
