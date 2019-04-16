@@ -27,6 +27,7 @@ LANGUAGES = \
     it \
     ja \
     nb \
+    nn \
     ne \
     nl \
     oc \
