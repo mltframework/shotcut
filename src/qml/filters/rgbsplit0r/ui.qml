@@ -20,14 +20,16 @@ import QtQuick.Controls 1.1
 import QtQuick.Layouts 1.1
 import Shotcut.Controls 1.0
 
-Item {
+KeyframableFilter {
     property string verSplit: '0'
     property string horSplit: '1'
-    property double verSplitDefault: 0.5
+    property double  verSplitDefault: 0.5
     property double horSplitDefault: 0.5
-    property real maxFilterPercent: 100.0
-    property real maxUserPercent: 100.0
-    property real defaultValue: 2.5 / maxFilterPercent
+
+    keyframableParameters: [verSplit, horSplit]
+    startValues: [0.5, 0.5]
+    middleValues: [verSplitDefault, horSplitDefault]
+    endValues: [0.5, 0.5]
 
     width: 350
     height: 100
@@ -37,19 +39,34 @@ Item {
             filter.set(verSplit, verSplitDefault)
             filter.set(horSplit, horSplitDefault)
             filter.savePreset(preset.parameters)
+        } else {
+            initializeSimpleKeyframes()
         }
         setControls()
     }
 
     function setControls() {
-        verSplitSlider.value = filter.getDouble(verSplit) * maxFilterPercent
-        horSplitSlider.value = filter.getDouble(horSplit) * maxFilterPercent
+        var position = getPosition()
+        blockUpdate = true
+        verSplitSlider.value = filter.getDouble(verSplit, position) * verSplitSlider.maximumValue
+        horSplitSlider.value = filter.getDouble(horSplit, position) * horSplitSlider.maximumValue
+        blockUpdate = false
+        enableControls(isSimpleKeyframesActive())
+    }
+
+    function enableControls(enabled) {
+        verSplitSlider.enabled = horSplitSlider.enabled = enabled
+    }
+
+    function updateSimpleKeyframes() {
+        updateFilter(verSplit, verSplitSlider.value / verSplitSlider.maximumValue, verKeyframesButton)
+        updateFilter(horSplit, horSplitSlider.value / horSplitSlider.maximumValue, horKeyframesButton)
     }
 
     GridLayout {
         anchors.fill: parent
         anchors.margins: 8
-        columns: 3
+        columns: 4
 
         Label {
             text: qsTr('Preset')
@@ -58,8 +75,15 @@ Item {
         Preset {
             id: preset
             parameters: [verSplit, horSplit]
-            Layout.columnSpan: 2
-            onPresetSelected: setControls()
+            Layout.columnSpan: 3
+            onBeforePresetLoaded: {
+                filter.resetProperty(verSplit)
+                filter.resetProperty(horSplit)
+            }
+            onPresetSelected: {
+                setControls()
+                initializeSimpleKeyframes()
+            }
         }
 
         Label {
@@ -69,14 +93,22 @@ Item {
         SliderSpinner {
             id: verSplitSlider
             minimumValue: 0
-            maximumValue: maxUserPercent
+            maximumValue: 100
             stepSize: 0.1
             decimals: 1
             suffix: ' %'
-            onValueChanged: filter.set(verSplit, value / maxFilterPercent)
+            onValueChanged: updateFilter(verSplit, verSplitSlider.value / verSplitSlider.maximumValue, verKeyframesButton, getPosition())
         }
         UndoButton {
-            onClicked: verSplitSlider.value = verSplitDefault * maxFilterPercent
+            onClicked: verSplitSlider.value = verSplitDefault * verSplitSlider.maximumValue
+        }
+        KeyframesButton {
+            id: verKeyframesButton
+            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(verSplit) > 0
+            onToggled: {
+                enableControls(true)
+                toggleKeyframes(checked, verSplit, verSplitSlider.value / verSplitSlider.maximumValue)
+            }
         }
 
         Label {
@@ -86,18 +118,39 @@ Item {
         SliderSpinner {
             id: horSplitSlider
             minimumValue: 0
-            maximumValue: maxUserPercent
+            maximumValue: 100
             stepSize: 0.1
             decimals: 1
             suffix: ' %'
-            onValueChanged: filter.set(horSplit, value / maxFilterPercent)
+            onValueChanged: updateFilter(horSplit, horSplitSlider.value / horSplitSlider.maximumValue, horKeyframesButton, getPosition())
             }
         UndoButton {
-            onClicked: horSplitSlider.value = horSplitDefault * maxFilterPercent
+            onClicked: horSplitSlider.value = horSplitDefault * horSplitSlider.maximumValue
+        }
+        KeyframesButton {
+            id: horKeyframesButton
+            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(horSplit) > 0
+            onToggled: {
+                enableControls(true)
+                toggleKeyframes(checked, horSplit, horSplitSlider.value / horSplitSlider.maximumValue)
+            }
         }
 
         Item {
             Layout.fillHeight: true;
         }
     }
-  }
+
+    Connections {
+        target: filter
+        onInChanged: updateSimpleKeyframes()
+        onOutChanged: updateSimpleKeyframes()
+        onAnimateInChanged: updateSimpleKeyframes()
+        onAnimateOutChanged: updateSimpleKeyframes()
+    }
+
+    Connections {
+        target: producer
+        onPositionChanged: setControls()
+    }
+}

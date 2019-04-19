@@ -23,4 +23,27 @@ Metadata {
     name: qsTr("RGB Shift")
     mlt_service: "frei0r.rgbsplit0r"
     qml: "ui.qml"
+    keyframes {
+        allowAnimateIn: true
+        allowAnimateOut: true
+        simpleProperties: ['0', '1']
+        parameters: [
+            Parameter {
+                name: qsTr('Vertical')
+                property: '0'
+                isSimple: true
+                isCurve: true
+                minimum: 0
+                maximum: 1
+            },
+            Parameter {
+                name: qsTr('Horizontal')
+                property: '1'
+                isSimple: true
+                isCurve: true
+                minimum: 0
+                maximum: 1
+            }
+        ]
+    }
 }
