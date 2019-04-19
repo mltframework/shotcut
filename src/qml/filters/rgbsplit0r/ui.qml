@@ -39,8 +39,6 @@ KeyframableFilter {
             filter.set(verSplit, verSplitDefault)
             filter.set(horSplit, horSplitDefault)
             filter.savePreset(preset.parameters)
-        } else {
-            initializeSimpleKeyframes()
         }
         setControls()
     }
@@ -123,7 +121,7 @@ KeyframableFilter {
             decimals: 1
             suffix: ' %'
             onValueChanged: updateFilter(horSplit, horSplitSlider.value / horSplitSlider.maximumValue, horKeyframesButton, getPosition())
-            }
+        }
         UndoButton {
             onClicked: horSplitSlider.value = horSplitDefault * horSplitSlider.maximumValue
         }
@@ -137,7 +135,7 @@ KeyframableFilter {
         }
 
         Item {
-            Layout.fillHeight: true;
+            Layout.fillHeight: true
         }
     }
 
