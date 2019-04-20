@@ -590,7 +590,7 @@ Rectangle {
     Menu {
         id: menu
         function show() {
-            mergeItem.visible = timeline.mergeClipWithNext(trackIndex, index, true)
+//            mergeItem.visible = timeline.mergeClipWithNext(trackIndex, index, true)
             popup()
         }
         MenuItem {
