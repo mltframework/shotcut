@@ -1765,6 +1765,7 @@ bool MultitrackModel::trimTransitionInValid(int trackIndex, int clipIndex, int d
 
 void MultitrackModel::trimTransitionIn(int trackIndex, int clipIndex, int delta)
 {
+//    LOG_DEBUG() << "clipIndex" << clipIndex << "delta" << delta;
     int i = m_trackList.at(trackIndex).mlt_index;
     QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
     if (track) {
@@ -1803,7 +1804,8 @@ void MultitrackModel::trimTransitionIn(int trackIndex, int clipIndex, int delta)
         playlist.resize_clip(clipIndex, info.frame_in, info.frame_out - delta);
 
         // Adjust filters.
-        adjustClipFilters(*info.producer, info.frame_in, info.frame_out, 0, delta);
+        playlist.clip_info(clipIndex + 2, &info);
+        adjustClipFilters(*info.producer, info.frame_in, info.frame_out, -(out + 1), 0);
 
         QVector<int> roles;
         roles << OutPointRole;
@@ -1844,6 +1846,7 @@ bool MultitrackModel::trimTransitionOutValid(int trackIndex, int clipIndex, int 
 
 void MultitrackModel::trimTransitionOut(int trackIndex, int clipIndex, int delta)
 {
+//    LOG_DEBUG() << "clipIndex" << clipIndex << "delta" << delta;
     int i = m_trackList.at(trackIndex).mlt_index;
     QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
     if (track) {
@@ -1882,7 +1885,8 @@ void MultitrackModel::trimTransitionOut(int trackIndex, int clipIndex, int delta
         playlist.resize_clip(clipIndex, info.frame_in + delta, info.frame_out);
 
         // Adjust filters.
-        adjustClipFilters(*info.producer, info.frame_in, info.frame_out, delta, 0);
+        playlist.clip_info(clipIndex - 2, &info);
+        adjustClipFilters(*info.producer, info.frame_in, info.frame_out, 0, -(out + 1));
 
         QVector<int> roles;
         roles << OutPointRole;
@@ -1937,6 +1941,12 @@ void MultitrackModel::addTransitionByTrimIn(int trackIndex, int clipIndex, int d
 
         // Create transition if it does not yet exist.
         if (!isTransition(playlist, clipIndex - 1)) {
+            // Adjust filters.
+            Mlt::ClipInfo info;
+            playlist.clip_info(clipIndex, &info);
+            adjustClipFilters(*info.producer, info.frame_in, info.frame_out, delta, 0);
+
+            // Insert the mix clip.
             beginInsertRows(index(trackIndex), clipIndex, clipIndex);
             playlist.mix_out(clipIndex - 1, -delta);
             QScopedPointer<Mlt::Producer> producer(playlist.get_clip(clipIndex));
@@ -2006,6 +2016,12 @@ void MultitrackModel::addTransitionByTrimOut(int trackIndex, int clipIndex, int 
 
         // Create transition if it does not yet exist.
         if (!isTransition(playlist, clipIndex + 1)) {
+            // Adjust filters.
+            Mlt::ClipInfo info;
+            playlist.clip_info(clipIndex, &info);
+            adjustClipFilters(*info.producer, info.frame_in, info.frame_out, 0, delta);
+
+            // Insert the mix clip.
             beginInsertRows(index(trackIndex), clipIndex + 1, clipIndex + 1);
             playlist.mix_in(clipIndex, -delta);
             QScopedPointer<Mlt::Producer> producer(playlist.get_clip(clipIndex + 1));
@@ -2568,7 +2584,7 @@ void MultitrackModel::adjustClipFilters(Mlt::Producer& producer, int in, int out
                     }
                     filter->set_in_and_out(in + inDelta, filter->get_out());
                     emit filterInChanged(inDelta, filter.data());
-                } else if (!filter->get_int("_loader") && filter->get_in() == in) {
+                } else if (!filter->get_int("_loader") && filter->get_in() <= in) {
                     filter->set_in_and_out(in + inDelta, filter->get_out());
                     emit filterInChanged(inDelta, filter.data());
                 }
@@ -2595,7 +2611,7 @@ void MultitrackModel::adjustClipFilters(Mlt::Producer& producer, int in, int out
                     filter->anim_set("level", -60, filter->get_length() - 1);
                 }
                 emit filterOutChanged(outDelta, filter.data());
-            } else if (!filter->get_int("_loader") && filter->get_out() == out) {
+            } else if (!filter->get_int("_loader") && filter->get_out() >= out) {
                 filter->set_in_and_out(filter->get_in(), out - outDelta);
                 emit filterOutChanged(outDelta, filter.data());
 
