@@ -39,6 +39,12 @@ Item {
             initializeSimpleKeyframes()
     }
 
+    // This function should be called in your Preset.beforePresetSelected handler.
+    function resetSimpleKeyframes() {
+        for (var i in keyframableParameters)
+            filter.resetProperty(keyframableParameters[i])
+    }
+
     // This function should be called in your Preset.presetSelected handler.
     function initializeSimpleKeyframes() {
         for (var i in keyframableParameters) {

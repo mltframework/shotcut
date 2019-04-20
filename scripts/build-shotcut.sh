@@ -1769,6 +1769,7 @@ function bundle_libs
 {
   target=$(dirname "$1")/$(basename "$1")
   log bundling library dependencies of $(basename "$1")
+  # See https://github.com/AppImage/pkg2appimage/blob/master/excludelist
   libs=$(ldd "$target" |
     awk '($3  ~ /^\/(lib|usr)\//) &&
          ($3 !~ /\/libld-linux\./) &&

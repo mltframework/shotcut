@@ -74,10 +74,7 @@ KeyframableFilter {
             id: preset
             parameters: [verSplit, horSplit]
             Layout.columnSpan: 3
-            onBeforePresetLoaded: {
-                filter.resetProperty(verSplit)
-                filter.resetProperty(horSplit)
-            }
+            onBeforePresetLoaded: resetSimpleKeyframes()
             onPresetSelected: {
                 setControls()
                 initializeSimpleKeyframes()
@@ -95,7 +92,7 @@ KeyframableFilter {
             stepSize: 0.1
             decimals: 1
             suffix: ' %'
-            onValueChanged: updateFilter(verSplit, verSplitSlider.value / verSplitSlider.maximumValue, verKeyframesButton, getPosition())
+            onValueChanged: updateFilter(verSplit, value / maximumValue, verKeyframesButton, getPosition())
         }
         UndoButton {
             onClicked: verSplitSlider.value = verSplitDefault * verSplitSlider.maximumValue
@@ -120,7 +117,7 @@ KeyframableFilter {
             stepSize: 0.1
             decimals: 1
             suffix: ' %'
-            onValueChanged: updateFilter(horSplit, horSplitSlider.value / horSplitSlider.maximumValue, horKeyframesButton, getPosition())
+            onValueChanged: updateFilter(horSplit, value / maximumValue, horKeyframesButton, getPosition())
         }
         UndoButton {
             onClicked: horSplitSlider.value = horSplitDefault * horSplitSlider.maximumValue
