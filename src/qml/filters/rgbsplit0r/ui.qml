@@ -23,8 +23,8 @@ import Shotcut.Controls 1.0
 KeyframableFilter {
     property string verSplit: '0'
     property string horSplit: '1'
-    property double  verSplitDefault: 0.5
-    property double horSplitDefault: 0.5
+    property double  verSplitDefault: 0.4
+    property double horSplitDefault: 0.4
 
     keyframableParameters: [verSplit, horSplit]
     startValues: [0.5, 0.5]
