@@ -95,7 +95,7 @@ Item {
             onValueChanged: filter.set("initial_zoom", value)
         }
         UndoButton {
-            onClicked: initialZoomSlider.value = 10
+            onClicked: initialZoomSlider.value = 100
         }
 
         Label {
@@ -131,7 +131,7 @@ Item {
             onValueChanged: filter.set("zoom", value)
         }
         UndoButton {
-            onClicked: zoomSlider.value = 50
+            onClicked: zoomSlider.value = 10
         }
 
         Label {
