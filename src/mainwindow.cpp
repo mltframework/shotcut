@@ -3899,7 +3899,7 @@ void MainWindow::onOpenOtherTriggered()
     else if (sender()->objectName() == "jack")
         onOpenOtherTriggered(new JackProducerWidget(this));
     else if (sender()->objectName() == "alsa")
-        onOpenOtherTriggered(new TextProducerWidget(this));
+        onOpenOtherTriggered(new AlsaWidget(this));
 #if defined(Q_OS_MAC)
     else if (sender()->objectName() == "device")
         onOpenOtherTriggered(new AvfoundationProducerWidget(this));
