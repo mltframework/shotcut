@@ -95,12 +95,20 @@ QVariant MultitrackModel::data(const QModelIndex &index, int role) const
             switch (role) {
             case NameRole: {
                 QString result;
-                if (info->producer && info->producer->is_valid())
+                if (info->producer && info->producer->is_valid()) {
                     result = info->producer->get(kShotcutCaptionProperty);
-                if (result.isNull())
-                    result = Util::baseName(QString::fromUtf8(info->resource));
-                if (result == "<producer>" && info->producer && info->producer->is_valid())
-                    result = QString::fromUtf8(info->producer->get("mlt_service"));
+                    if (result.isNull()) {
+                        if (!::qstrcmp(info->producer->get("mlt_service"), "timewarp")) {
+                            result = Util::baseName(QString::fromUtf8(info->producer->get("warp_resource")));
+                            double speed = ::fabs(info->producer->get_double("warp_speed"));
+                            result = QString("%1 (%2x)").arg(result).arg(speed);
+                        } else {
+                            result = Util::baseName(QString::fromUtf8(info->resource));
+                        }
+                    }
+                    if (result == "<producer>")
+                        result = QString::fromUtf8(info->producer->get("mlt_service"));
+                }
                 return result;
             }
             case ResourceRole:
