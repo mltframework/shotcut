@@ -65,8 +65,8 @@ TimelineDock::TimelineDock(QWidget *parent) :
     m_quickView.setClearColor(palette().window().color());
 
     connect(&m_model, SIGNAL(modified()), this, SLOT(clearSelectionIfInvalid()));
-    connect(&m_model, &MultitrackModel::inserted, this, &TimelineDock::onInserted);
-    connect(&m_model, &MultitrackModel::overWritten, this, &TimelineDock::onOverWritten);
+    connect(&m_model, &MultitrackModel::inserted, this, &TimelineDock::onInserted, Qt::QueuedConnection);
+    connect(&m_model, &MultitrackModel::overWritten, this, &TimelineDock::onOverWritten, Qt::QueuedConnection);
     connect(&m_model, SIGNAL(rowsInserted(QModelIndex,int,int)), SLOT(onRowsInserted(QModelIndex,int,int)));
     connect(&m_model, SIGNAL(rowsRemoved(QModelIndex,int,int)), SLOT(onRowsRemoved(QModelIndex,int,int)));
 
