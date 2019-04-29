@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2018 Meltytech, LLC
+ * Copyright (c) 2013-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -114,6 +114,16 @@ Rectangle {
                 // Snap if Alt key is not down.
                 if (!(mouse.modifiers & Qt.AltModifier) && settings.timelineSnap)
                     trackRoot.checkSnap(clip)
+
+                // Show distance moved as time in a "bubble" help.
+                var delta = Math.round(clip.x / timeScale) - model.start
+                var s = application.timecode(Math.abs(delta))
+                // remove leading zeroes
+                if (s.substring(0, 3) === '00:')
+                    s = s.substring(3)
+                s = ((delta < 0)? '-' : (delta > 0)? '+' : '') + s
+                bubbleHelp.show(x, trackRoot.y + trackRoot.height, s)
+
                 // Prevent dragging left of multitracks origin.
                 clip.x = Math.max(0, clip.x)
                 var mapped = trackRoot.mapFromItem(clip, mouse.x, mouse.y)

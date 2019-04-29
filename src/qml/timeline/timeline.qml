@@ -530,15 +530,6 @@ Rectangle {
                 } else {
                     scrollTimer.stop()
                 }
-                // Show distance moved as time in a "bubble" help.
-                var track = tracksRepeater.itemAt(clip.trackIndex)
-                var delta = Math.round((clip.x - clip.originalX) / multitrack.scaleFactor)
-                var s = application.timecode(Math.abs(delta))
-                // remove leading zeroes
-                if (s.substring(0, 3) === '00:')
-                    s = s.substring(3)
-                s = ((delta < 0)? '-' : (delta > 0)? '+' : '') + s
-                bubbleHelp.show(x, track.y + height, s)
             }
             onClipDropped: {
                 scrollTimer.running = false
