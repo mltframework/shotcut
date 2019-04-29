@@ -307,12 +307,8 @@ void TimelineDock::selectClipUnderPlayhead()
 
 int TimelineDock::centerOfClip(int trackIndex, int clipIndex)
 {
-    Mlt::ClipInfo * clip = getClipInfo(trackIndex, clipIndex);
-    Q_ASSERT(clip);
-    int centerOfClip = clip->start + clip->frame_count / 2;
-    delete clip;
-    clip = 0;
-    return centerOfClip;
+    QScopedPointer<Mlt::ClipInfo> clip(getClipInfo(trackIndex, clipIndex));
+    return clip? clip->start + clip->frame_count / 2 : -1;
 }
 
 bool TimelineDock::isTrackLocked(int trackIndex) const
