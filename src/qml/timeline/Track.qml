@@ -201,7 +201,12 @@ Rectangle {
                     })
                 }
             }
-            onDropped: placeHolderAdded = false
+            onDropped: {
+                if (placeHolderAdded) {
+                    multitrack.reload(true)
+                    placeHolderAdded = false
+                }
+            }
 
             Component.onCompleted: {
                 moved.connect(trackRoot.clipDropped)
