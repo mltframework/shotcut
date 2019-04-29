@@ -306,7 +306,7 @@ Item {
         }
         KeyframesButton {
             id: thresholdKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('mix') > 0
+            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('filter.mix') > 0
             onToggled: onKeyframesButtonClicked(checked, 'filter.mix', thresholdSlider.value)
         }
 
