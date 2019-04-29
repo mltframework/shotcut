@@ -223,6 +223,10 @@ public:
                    Settings.drawMethod() <= Qt::AA_UseSoftwareOpenGL) {
             QCoreApplication::setAttribute(Qt::ApplicationAttribute(Settings.drawMethod()));
         }
+#elif !defined(Q_OS_MAC)
+        if (Settings.drawMethod() == Qt::AA_UseSoftwareOpenGL && !Settings.playerGPU()) {
+            ::qputenv("LIBGL_ALWAYS_SOFTWARE", "1");
+        }
 #endif
         // Load translations
         QString locale = Settings.language();
@@ -332,6 +336,11 @@ int main(int argc, char **argv)
 
     if (EXIT_RESTART == result) {
         LOG_DEBUG() << "restarting app";
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
+        ::qputenv("LIBGL_ALWAYS_SOFTWARE", 
+            Settings.drawMethod() == Qt::AA_UseSoftwareOpenGL && !Settings.playerGPU()
+            ? "1" : "0");
+#endif
         QProcess* restart = new QProcess;
         QStringList args = a.arguments();
         if (!args.isEmpty())

@@ -289,7 +289,7 @@ private slots:
     void onTimelineClipSelected();
     void onAddAllToTimeline(Mlt::Playlist* playlist);
     void on_actionScrubAudio_triggered(bool checked);
-#ifdef Q_OS_WIN
+#if !defined(Q_OS_MAC)
     void onDrawingMethodTriggered(QAction*);
 #endif
     void on_actionApplicationLog_triggered();

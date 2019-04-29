@@ -726,14 +726,20 @@ void MainWindow::setupSettingsMenu()
     // Therefore, the JACK option for Shotcut is banned on Windows.
     delete ui->actionJack;
     ui->actionJack = 0;
-
+#endif
+#if !defined(Q_OS_MAC)
     // Setup the display method actions.
     if (!Settings.playerGPU()) {
         group = new QActionGroup(this);
+#if defined(Q_OS_WIN)
         ui->actionDrawingAutomatic->setData(0);
         group->addAction(ui->actionDrawingAutomatic);
         ui->actionDrawingDirectX->setData(Qt::AA_UseOpenGLES);
         group->addAction(ui->actionDrawingDirectX);
+#else
+        delete ui->actionDrawingAutomatic;
+        delete ui->actionDrawingDirectX;
+#endif
         ui->actionDrawingOpenGL->setData(Qt::AA_UseDesktopOpenGL);
         group->addAction(ui->actionDrawingOpenGL);
         ui->actionDrawingSoftware->setData(Qt::AA_UseSoftwareOpenGL);
@@ -743,22 +749,30 @@ void MainWindow::setupSettingsMenu()
         case Qt::AA_UseDesktopOpenGL:
             ui->actionDrawingOpenGL->setChecked(true);
             break;
+#if defined(Q_OS_WIN)
         case Qt::AA_UseOpenGLES:
             ui->actionDrawingDirectX->setChecked(true);
             break;
+#endif
         case Qt::AA_UseSoftwareOpenGL:
             ui->actionDrawingSoftware->setChecked(true);
             break;
+#if defined(Q_OS_WIN)
         default:
             ui->actionDrawingAutomatic->setChecked(true);
             break;
+#else
+        default:
+            ui->actionDrawingOpenGL->setChecked(true);
+            break;
+#endif
         }
     } else {
         // GPU mode only works with OpenGL.
         delete ui->menuDrawingMethod;
         ui->menuDrawingMethod = 0;
     }
-#else
+#else  // Q_OS_MAC
     delete ui->menuDrawingMethod;
     ui->menuDrawingMethod = 0;
 #endif
@@ -3422,7 +3436,7 @@ void MainWindow::on_actionScrubAudio_triggered(bool checked)
     Settings.setPlayerScrubAudio(checked);
 }
 
-#ifdef Q_OS_WIN
+#if !defined(Q_OS_MAC)
 void MainWindow::onDrawingMethodTriggered(QAction *action)
 {
     Settings.setDrawMethod(action->data().toInt());

@@ -562,7 +562,11 @@ void ShotcutSettings::setLoudnessScopeShowMeter(const QString& meter, bool b)
 
 int ShotcutSettings::drawMethod() const
 {
+#ifdef Q_OS_WIN
     return settings.value("opengl", 0).toInt();
+#else
+    return settings.value("opengl", Qt::AA_UseDesktopOpenGL).toInt();
+#endif
 }
 
 void ShotcutSettings::setDrawMethod(int i)
