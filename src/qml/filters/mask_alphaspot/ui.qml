@@ -251,7 +251,7 @@ Item {
         }
         SliderSpinner {
             id: widthSlider
-            minimumValue: 0
+            minimumValue: 0.0001
             maximumValue: 100
             decimals: 2
             suffix: ' %'
@@ -272,7 +272,7 @@ Item {
         }
         SliderSpinner {
             id: heightSlider
-            minimumValue: 0
+            minimumValue: 0.0001
             maximumValue: 100
             decimals: 2
             suffix: ' %'
