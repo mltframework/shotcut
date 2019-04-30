@@ -396,14 +396,19 @@
         <translation>編集向けの形式に変換...</translation>
     </message>
     <message>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="831"/>
+        <source>Set Creation Time...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="752"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="724"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="726"/>
         <source>Reverse...</source>
         <translation>逆転...</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="826"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="843"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="844"/>
         <source>Extract Sub-clip...</source>
         <translation>サブクリップを抽出...</translation>
     </message>
@@ -435,7 +440,7 @@ If yes, choose a format below and then click OK to choose a file name. After cho
 </translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="470"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="471"/>
         <source>This file does not support seeking and cannot be used for editing. Do you want to convert it to an edit-friendly format?
 
 If yes, choose a format below and then click OK to choose a file name. After choosing a file name, a job is created. When it is done, double-click the job to open it.
@@ -446,59 +451,59 @@ If yes, choose a format below and then click OK to choose a file name. After cho
 </translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="650"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="721"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="653"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="723"/>
         <source>Choose an edit-friendly format below and then click OK to choose a file name. After choosing a file name, a job is created. When it is done, double-click the job to open it.
 </source>
         <translation>編集向けの形式を下記から選択し、OK をクリックしてファイル名を指定してください。 ファイル名を指定後、ジョブが作成されます。完了後、ジョブをダブルクリックして開きます。
 </translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="678"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="767"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="680"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="768"/>
         <source>MP4 (*.mp4);;All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>MP4 (*.mp4);;全てのファイル (*)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="685"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="777"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="687"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="778"/>
         <source>MOV (*.mov);;All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>MOV (*.mov);;全てのファイル (*)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="691"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="785"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="693"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="786"/>
         <source>MKV (*.mkv);;All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>MKV (*.mkv);;全てのファイル (*)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="712"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="819"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="714"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="820"/>
         <source>Convert %1</source>
         <translation>%1 を変換</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="789"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="790"/>
         <source>Reversed</source>
         <translation>逆転済み</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="827"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="828"/>
         <source>Reverse %1</source>
         <translation>%1 を逆転</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="842"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="843"/>
         <source>Sub-clip</source>
         <translation>サブクリップ</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="844"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="845"/>
         <source>%1 (*.%2);;All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 (*.%2);;全てのファイル (*)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="882"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="883"/>
         <source>Extract sub-clip %1</source>
         <translation>サブクリップ %1 を抽出</translation>
     </message>
@@ -1664,7 +1669,7 @@ Try again with a different folder or file name.</source>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="1223"/>
         <source>%1 (*.%2);;All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 (*.%2);;全てのファイル (*)</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="1225"/>
@@ -1778,7 +1783,7 @@ Do you still want to continue?</source>
     <message>
         <location filename="../src/jobs/encodejob.cpp" line="59"/>
         <source>Text Documents (*.txt);;All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>テキストドキュメント (*.txt);;全てのファイル (*)</translation>
     </message>
     <message>
         <location filename="../src/jobs/encodejob.cpp" line="133"/>
@@ -1810,6 +1815,44 @@ Do you still want to continue?</source>
         <location filename="../src/jobs/ffprobejob.cpp" line="56"/>
         <source>More Information</source>
         <translation>追加情報</translation>
+    </message>
+</context>
+<context>
+    <name>FileDateDialog</name>
+    <message>
+        <location filename="../src/dialogs/filedatedialog.cpp" line="42"/>
+        <source>%1 File Date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/filedatedialog.cpp" line="98"/>
+        <source>Current Value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/filedatedialog.cpp" line="102"/>
+        <source>Now</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/filedatedialog.cpp" line="112"/>
+        <source>System - Modified</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/filedatedialog.cpp" line="113"/>
+        <source>System - Created</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/filedatedialog.cpp" line="122"/>
+        <source>Metadata - Creation Time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/filedatedialog.cpp" line="127"/>
+        <source>Metadata - QuickTime date</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2509,13 +2552,13 @@ Do you want to save your changes?</source>
         <translation>リセット</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.cpp" line="205"/>
+        <location filename="../src/widgets/imageproducerwidget.cpp" line="206"/>
         <source>Getting length of image sequence...</source>
         <translation>画像シーケンスの長さを取得しています...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.cpp" line="217"/>
-        <location filename="../src/widgets/imageproducerwidget.cpp" line="233"/>
+        <location filename="../src/widgets/imageproducerwidget.cpp" line="218"/>
+        <location filename="../src/widgets/imageproducerwidget.cpp" line="234"/>
         <source>Reloading image sequence...</source>
         <translation>画像シーケンスを再読み込みしています...</translation>
     </message>
@@ -2746,17 +2789,17 @@ the list. This does not stop a currently running job. Right-
 <context>
     <name>KeyframesToolbar</name>
     <message>
-        <location filename="../src/qml/views/keyframes/KeyframesToolbar.qml" line="60"/>
+        <location filename="../src/qml/views/keyframes/KeyframesToolbar.qml" line="53"/>
         <source>Display a menu of additional actions</source>
         <translation>追加の操作メニューを表示</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/keyframes/KeyframesToolbar.qml" line="67"/>
+        <location filename="../src/qml/views/keyframes/KeyframesToolbar.qml" line="60"/>
         <source>Zoom timeline out (-)</source>
         <translation>タイムラインの縮小 (-)</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/keyframes/KeyframesToolbar.qml" line="74"/>
+        <location filename="../src/qml/views/keyframes/KeyframesToolbar.qml" line="67"/>
         <source>Zoom timeline in (+)</source>
         <translation>タイムラインの拡大 (+)</translation>
     </message>
@@ -3123,498 +3166,498 @@ audio (0%) or clip B&apos;s audio (100%).</source>
         <translation>ツールバー</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="266"/>
+        <location filename="../src/mainwindow.ui" line="260"/>
         <source>&amp;Open File...</source>
         <translation>ファイルを開く(&amp;O)...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="269"/>
+        <location filename="../src/mainwindow.ui" line="263"/>
         <source>Open a video, audio or image file</source>
         <translation>映像・音声・画像ファイルを開く</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="272"/>
+        <location filename="../src/mainwindow.ui" line="266"/>
         <source>Ctrl+O</source>
         <translation>Ctrl+O</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="280"/>
+        <location filename="../src/mainwindow.ui" line="274"/>
         <source>E&amp;xit</source>
         <translation>終了(&amp;X)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="283"/>
+        <location filename="../src/mainwindow.ui" line="277"/>
         <source>Quit the application</source>
         <translation>アプリケーションを終了</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="286"/>
+        <location filename="../src/mainwindow.ui" line="280"/>
         <source>Ctrl+Q</source>
         <translation>Ctrl+Q</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="291"/>
+        <location filename="../src/mainwindow.ui" line="285"/>
         <source>&amp;About Shotcut</source>
         <translation>Shotcut について(&amp;A)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="299"/>
+        <location filename="../src/mainwindow.ui" line="293"/>
         <source>About Qt</source>
         <translation>Qt について</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="307"/>
+        <location filename="../src/mainwindow.ui" line="301"/>
         <source>Open Other...</source>
         <translation>その他を開く...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="310"/>
-        <location filename="../src/mainwindow.ui" line="960"/>
+        <location filename="../src/mainwindow.ui" line="304"/>
+        <location filename="../src/mainwindow.ui" line="954"/>
         <source>Open a device, stream or generator</source>
         <translation>デバイス・ストリーム・ジェネレーターを開く</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="313"/>
+        <location filename="../src/mainwindow.ui" line="307"/>
         <source>Ctrl+Shift+O</source>
         <translation>Ctrl+Shift+O</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="325"/>
+        <location filename="../src/mainwindow.ui" line="319"/>
         <source>&amp;Save</source>
         <translation>保存(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="328"/>
+        <location filename="../src/mainwindow.ui" line="322"/>
         <source>Save project as a MLT XML file</source>
         <translation>プロジェクトを MLT XML ファイルとして保存</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="331"/>
+        <location filename="../src/mainwindow.ui" line="325"/>
         <source>Ctrl+S</source>
         <translation>Ctrl+S</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="339"/>
+        <location filename="../src/mainwindow.ui" line="333"/>
         <source>Save &amp;As...</source>
         <translation>名前を付けて保存(&amp;A)...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="342"/>
+        <location filename="../src/mainwindow.ui" line="336"/>
         <source>Save project to a different MLT XML file</source>
         <translation>プロジェクトを別の MLT XML ファイルとして保存</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="345"/>
+        <location filename="../src/mainwindow.ui" line="339"/>
         <source>Ctrl+Shift+S</source>
         <translation>Ctrl+Shift+S</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="354"/>
+        <location filename="../src/mainwindow.ui" line="348"/>
         <source>Export</source>
         <translation>書き出し</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="357"/>
+        <location filename="../src/mainwindow.ui" line="351"/>
         <source>Show the Export panel</source>
         <translation>書き出しパネルを表示する</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="366"/>
+        <location filename="../src/mainwindow.ui" line="360"/>
         <source>&amp;Undo</source>
         <translation>元に戻す(&amp;U)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="375"/>
+        <location filename="../src/mainwindow.ui" line="369"/>
         <source>&amp;Redo</source>
         <translation>やり直す(&amp;R)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="380"/>
+        <location filename="../src/mainwindow.ui" line="374"/>
         <source>Forum...</source>
         <translation>掲示板...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="385"/>
+        <location filename="../src/mainwindow.ui" line="379"/>
         <source>FAQ...</source>
         <translation>FAQ...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="394"/>
-        <location filename="../src/mainwindow.cpp" line="2791"/>
+        <location filename="../src/mainwindow.ui" line="388"/>
+        <location filename="../src/mainwindow.cpp" line="2826"/>
         <source>Enter Full Screen</source>
         <translation>全画面表示にする</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="397"/>
+        <location filename="../src/mainwindow.ui" line="391"/>
         <source>Ctrl+Shift+F</source>
         <translation>Ctrl+Shift+F</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="406"/>
+        <location filename="../src/mainwindow.ui" line="400"/>
         <source>Peak Meter</source>
         <translation>ピークメーター</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="409"/>
+        <location filename="../src/mainwindow.ui" line="403"/>
         <source>Show or hide the audio peak meter</source>
         <translation>音声ピークメーターを表示または非表示</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="418"/>
-        <location filename="../src/mainwindow.cpp" line="248"/>
+        <location filename="../src/mainwindow.ui" line="412"/>
+        <location filename="../src/mainwindow.cpp" line="245"/>
         <source>Properties</source>
         <translation>プロパティ</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="427"/>
+        <location filename="../src/mainwindow.ui" line="421"/>
         <source>Recent</source>
         <translation>使用履歴</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="436"/>
+        <location filename="../src/mainwindow.ui" line="430"/>
         <source>Playlist</source>
         <translation>プレイリスト</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="445"/>
-        <location filename="../src/mainwindow.cpp" line="361"/>
+        <location filename="../src/mainwindow.ui" line="439"/>
+        <location filename="../src/mainwindow.cpp" line="358"/>
         <source>History</source>
         <translation>操作履歴</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="454"/>
+        <location filename="../src/mainwindow.ui" line="448"/>
         <source>Full Screen</source>
         <translation>全画面</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="465"/>
+        <location filename="../src/mainwindow.ui" line="459"/>
         <source>Realtime (frame dropping)</source>
         <translation>実時間 (ドロップフレーム)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="476"/>
+        <location filename="../src/mainwindow.ui" line="470"/>
         <source>Progressive</source>
         <translation>プログレッシブ</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="484"/>
+        <location filename="../src/mainwindow.ui" line="478"/>
         <source>GPU Effects (experimental)</source>
         <translation>GPU エフェクト (実験的)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="487"/>
+        <location filename="../src/mainwindow.ui" line="481"/>
         <source>Use GPU filters</source>
         <translation>GPU フィルタを使用</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="498"/>
+        <location filename="../src/mainwindow.ui" line="492"/>
         <source>1 (mono)</source>
         <translation>1 (モノラル)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="506"/>
+        <location filename="../src/mainwindow.ui" line="500"/>
         <source>2 (stereo)</source>
         <translation>2 (ステレオ)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="514"/>
+        <location filename="../src/mainwindow.ui" line="508"/>
         <source>6 (5.1)</source>
         <translation>6 (5.1)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="525"/>
+        <location filename="../src/mainwindow.ui" line="519"/>
         <source>One Field (fast)</source>
         <translation>ワンフィールド (高速)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="533"/>
+        <location filename="../src/mainwindow.ui" line="527"/>
         <source>Linear Blend (fast)</source>
         <translation>リニアブレンド (高速)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="541"/>
+        <location filename="../src/mainwindow.ui" line="535"/>
         <source>YADIF - temporal only (good)</source>
         <translation>YADIF - 時間軸のみ (良い)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="549"/>
+        <location filename="../src/mainwindow.ui" line="543"/>
         <source>YADIF - temporal + spatial (best)</source>
         <translation>YADIF - 時間軸 + 空間軸 (最高)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="560"/>
+        <location filename="../src/mainwindow.ui" line="554"/>
         <source>Nearest Neighbor (fast)</source>
         <translation>ニアレストネイバー (高速)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="568"/>
+        <location filename="../src/mainwindow.ui" line="562"/>
         <source>Bilinear (good)</source>
         <translation>バイリニア (良い)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="576"/>
+        <location filename="../src/mainwindow.ui" line="570"/>
         <source>Bicubic (better)</source>
         <translation>バイキュービック (非常に良い)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="584"/>
+        <location filename="../src/mainwindow.ui" line="578"/>
         <source>Hyper/Lanczos (best)</source>
         <translation>ハイパー・ランチョス (最高)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="595"/>
-        <location filename="../src/mainwindow.ui" line="747"/>
+        <location filename="../src/mainwindow.ui" line="589"/>
+        <location filename="../src/mainwindow.ui" line="741"/>
         <source>Automatic</source>
         <translation>自動</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="606"/>
+        <location filename="../src/mainwindow.ui" line="600"/>
         <source>None</source>
         <translation>なし</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="614"/>
+        <location filename="../src/mainwindow.ui" line="608"/>
         <source>Use JACK Audio</source>
         <translation>JACK Audio を使用</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="623"/>
+        <location filename="../src/mainwindow.ui" line="617"/>
         <source>Filters</source>
         <translation>フィルタ</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="626"/>
+        <location filename="../src/mainwindow.ui" line="620"/>
         <source>Modify the video image or audio</source>
         <translation>映像イメージや音声を変更</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="631"/>
-        <location filename="../src/mainwindow.ui" line="938"/>
+        <location filename="../src/mainwindow.ui" line="625"/>
+        <location filename="../src/mainwindow.ui" line="932"/>
         <source>Add...</source>
         <translation>追加...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="639"/>
+        <location filename="../src/mainwindow.ui" line="633"/>
         <source>System</source>
         <translation>システム</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="642"/>
+        <location filename="../src/mainwindow.ui" line="636"/>
         <source>Use the user or platform style, colors, and icons.</source>
         <translation>ユーザー環境のスタイルや色、アイコンを使用します。</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="650"/>
+        <location filename="../src/mainwindow.ui" line="644"/>
         <source>Fusion Dark</source>
         <translation>フュージョン・ダーク</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="658"/>
+        <location filename="../src/mainwindow.ui" line="652"/>
         <source>Fusion Light</source>
         <translation>フュージョン・ライト</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="663"/>
+        <location filename="../src/mainwindow.ui" line="657"/>
         <source>Tutorials...</source>
         <translation>チュートリアル...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="672"/>
+        <location filename="../src/mainwindow.ui" line="666"/>
         <source>Timeline</source>
         <translation>タイムライン</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="677"/>
-        <location filename="../src/mainwindow.ui" line="680"/>
+        <location filename="../src/mainwindow.ui" line="671"/>
+        <location filename="../src/mainwindow.ui" line="674"/>
         <source>Restore Default Layout</source>
         <translation>デフォルトレイアウトに戻す</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="688"/>
+        <location filename="../src/mainwindow.ui" line="682"/>
         <source>Show Title Bars</source>
         <translation>タイトルバーを表示</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="696"/>
+        <location filename="../src/mainwindow.ui" line="690"/>
         <source>Show Toolbar</source>
         <translation>ツールバーを表示</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="701"/>
+        <location filename="../src/mainwindow.ui" line="695"/>
         <source>Upgrade...</source>
         <translation>アップグレード...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="706"/>
+        <location filename="../src/mainwindow.ui" line="700"/>
         <source>Open MLT XML As Clip...</source>
         <translation>MLT XML をクリップとして開く...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="709"/>
+        <location filename="../src/mainwindow.ui" line="703"/>
         <source>Open a MLT XML project file as a virtual clip</source>
         <translation>MLT XML プロジェクトを仮想クリップとして開く</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="720"/>
+        <location filename="../src/mainwindow.ui" line="714"/>
         <source>sRGB (computer)</source>
         <translation>sRGB (computer)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="728"/>
+        <location filename="../src/mainwindow.ui" line="722"/>
         <source>Rec. 709 (TV)</source>
         <translation>Rec. 709 (TV)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="736"/>
+        <location filename="../src/mainwindow.ui" line="730"/>
         <source>Scrub Audio</source>
         <translation>音声をスクラブ再生</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="771"/>
+        <location filename="../src/mainwindow.ui" line="765"/>
         <source>Software (Mesa)</source>
         <extracomment>Do not translate &quot;Mesa&quot;</extracomment>
         <translation>ソフトウェア (Mesa)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="776"/>
+        <location filename="../src/mainwindow.ui" line="770"/>
         <source>Application Log...</source>
         <translation>アプリケーションログ...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="784"/>
+        <location filename="../src/mainwindow.ui" line="778"/>
         <source>Project</source>
         <translation>プロジェクト</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="792"/>
-        <location filename="../src/mainwindow.ui" line="918"/>
+        <location filename="../src/mainwindow.ui" line="786"/>
+        <location filename="../src/mainwindow.ui" line="912"/>
         <source>Player</source>
         <translation>プレイヤー</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="800"/>
+        <location filename="../src/mainwindow.ui" line="794"/>
         <source>User Interface</source>
         <translation>ユーザーインターフェイス</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="809"/>
+        <location filename="../src/mainwindow.ui" line="803"/>
         <source>Close</source>
         <translation>閉じる</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="812"/>
+        <location filename="../src/mainwindow.ui" line="806"/>
         <source>Ctrl+W</source>
         <translation>Ctrl+W</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="827"/>
+        <location filename="../src/mainwindow.ui" line="821"/>
         <source>Cu&amp;t</source>
         <translation>切り取り(&amp;T)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="830"/>
+        <location filename="../src/mainwindow.ui" line="824"/>
         <source>Ctrl+X</source>
         <translation>Ctrl+X</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="842"/>
+        <location filename="../src/mainwindow.ui" line="836"/>
         <source>&amp;Copy</source>
         <translation>コピー(&amp;C)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="845"/>
+        <location filename="../src/mainwindow.ui" line="839"/>
         <source>Ctrl+C</source>
         <translation>Ctrl+C</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="857"/>
+        <location filename="../src/mainwindow.ui" line="851"/>
         <source>&amp;Paste</source>
         <translation>貼り付け(&amp;P)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="860"/>
+        <location filename="../src/mainwindow.ui" line="854"/>
         <source>Ctrl+V</source>
         <translation>Ctrl+V</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="865"/>
+        <location filename="../src/mainwindow.ui" line="859"/>
         <source>Export EDL...</source>
         <translation>EDL を書き出す...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="870"/>
+        <location filename="../src/mainwindow.ui" line="864"/>
         <source>Export Frame...</source>
         <translation>フレームを書き出す...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="875"/>
+        <location filename="../src/mainwindow.ui" line="869"/>
         <source>Export Video...</source>
         <translation>映像を書き出す...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="880"/>
+        <location filename="../src/mainwindow.ui" line="874"/>
         <source>Set...</source>
         <translation>変更...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="885"/>
+        <location filename="../src/mainwindow.ui" line="879"/>
         <source>Show...</source>
         <translation>表示...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="888"/>
+        <location filename="../src/mainwindow.ui" line="882"/>
         <source>Show</source>
         <translation>表示</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="897"/>
-        <location filename="../src/mainwindow.ui" line="900"/>
+        <location filename="../src/mainwindow.ui" line="891"/>
+        <location filename="../src/mainwindow.ui" line="894"/>
         <source>Keyframes</source>
         <translation>キーフレーム</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="905"/>
+        <location filename="../src/mainwindow.ui" line="899"/>
         <source>New</source>
         <translation>新規</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="908"/>
+        <location filename="../src/mainwindow.ui" line="902"/>
         <source>Ctrl+N</source>
         <translation>Ctrl+N</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="913"/>
+        <location filename="../src/mainwindow.ui" line="907"/>
         <source>Keyboard Shortcuts...</source>
         <translation>キーボードショートカット...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="923"/>
+        <location filename="../src/mainwindow.ui" line="917"/>
         <source>Playlist Project</source>
         <translation>プレイリストプロジェクト</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="928"/>
+        <location filename="../src/mainwindow.ui" line="922"/>
         <source>Timeline Project</source>
         <translation>タイムラインプロジェクト</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="933"/>
+        <location filename="../src/mainwindow.ui" line="927"/>
         <source>Clip-only Project</source>
         <translation>クリップ専用プロジェクト</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="943"/>
-        <location filename="../src/mainwindow.ui" line="948"/>
+        <location filename="../src/mainwindow.ui" line="937"/>
+        <location filename="../src/mainwindow.ui" line="942"/>
         <source>Remove...</source>
         <translation>削除...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="957"/>
+        <location filename="../src/mainwindow.ui" line="951"/>
         <source>Open Other</source>
         <translation>その他を開く</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="971"/>
+        <location filename="../src/mainwindow.ui" line="965"/>
         <source>Clear Recent on Exit</source>
         <translation>終了時に使用履歴を消去</translation>
     </message>
@@ -3637,130 +3680,130 @@ Please install it using your package manager. It may be named libsdl2-2.0-0, SDL
 パッケージマネージャからインストールして下さい。パッケージ名は libsdl2-2.0-0, SDL2 などです。</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="202"/>
+        <location filename="../src/mainwindow.cpp" line="199"/>
         <source>Ctrl+Z</source>
         <translation>Ctrl+Z</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="204"/>
+        <location filename="../src/mainwindow.cpp" line="201"/>
         <source>Ctrl+Y</source>
         <translation>Ctrl+Y</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="206"/>
+        <location filename="../src/mainwindow.cpp" line="203"/>
         <source>Ctrl+Shift+Z</source>
         <translation>Ctrl+Shift+Z</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="553"/>
+        <location filename="../src/mainwindow.cpp" line="550"/>
         <source>Screen %1</source>
         <translation>スクリーン %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="584"/>
+        <location filename="../src/mainwindow.cpp" line="581"/>
         <source>Off</source>
         <translation>オフ</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="587"/>
+        <location filename="../src/mainwindow.cpp" line="584"/>
         <source>Internal</source>
         <translation>内部</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="590"/>
+        <location filename="../src/mainwindow.cpp" line="587"/>
         <source>External</source>
         <translation>外部</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="604"/>
+        <location filename="../src/mainwindow.cpp" line="601"/>
         <source>DeckLink Keyer</source>
         <translation>DeckLink Keyer</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="796"/>
+        <location filename="../src/mainwindow.cpp" line="811"/>
         <source>Color</source>
         <translation>色</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="798"/>
+        <location filename="../src/mainwindow.cpp" line="813"/>
         <source>Text</source>
         <translation>テキスト</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="801"/>
+        <location filename="../src/mainwindow.cpp" line="816"/>
         <source>Noise</source>
         <translation>ノイズ</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="803"/>
+        <location filename="../src/mainwindow.cpp" line="818"/>
         <source>Ising</source>
         <translation>イジング</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="805"/>
+        <location filename="../src/mainwindow.cpp" line="820"/>
         <source>Lissajous</source>
         <translation>リサージュ</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="807"/>
+        <location filename="../src/mainwindow.cpp" line="822"/>
         <source>Plasma</source>
         <translation>プラズマ</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="809"/>
+        <location filename="../src/mainwindow.cpp" line="824"/>
         <source>Color Bars</source>
         <translation>カラーバー</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="811"/>
+        <location filename="../src/mainwindow.cpp" line="826"/>
         <source>Audio Tone</source>
         <translation>発信音</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="813"/>
+        <location filename="../src/mainwindow.cpp" line="828"/>
         <source>Count</source>
         <translation>カウント</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="816"/>
+        <location filename="../src/mainwindow.cpp" line="831"/>
         <source>Video4Linux</source>
         <translation>Video4Linux</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="817"/>
+        <location filename="../src/mainwindow.cpp" line="832"/>
         <source>PulseAudio</source>
         <translation>PulseAudio</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="818"/>
+        <location filename="../src/mainwindow.cpp" line="833"/>
         <source>JACK Audio</source>
         <translation>JACK オーディオ</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="819"/>
+        <location filename="../src/mainwindow.cpp" line="834"/>
         <source>ALSA Audio</source>
         <translation>ALSA オーディオ</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="821"/>
+        <location filename="../src/mainwindow.cpp" line="836"/>
         <source>Audio/Video Device</source>
         <translation>音声・映像デバイス</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="824"/>
+        <location filename="../src/mainwindow.cpp" line="839"/>
         <source>SDI/HDMI</source>
         <translation>SDI/HDMI</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="846"/>
-        <location filename="../src/mainwindow.cpp" line="848"/>
-        <location filename="../src/mainwindow.cpp" line="1208"/>
-        <location filename="../src/mainwindow.cpp" line="3366"/>
+        <location filename="../src/mainwindow.cpp" line="861"/>
+        <location filename="../src/mainwindow.cpp" line="863"/>
+        <location filename="../src/mainwindow.cpp" line="1238"/>
+        <location filename="../src/mainwindow.cpp" line="3404"/>
         <source>Failed to open </source>
         <translation>開けませんでした</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="874"/>
+        <location filename="../src/mainwindow.cpp" line="889"/>
         <source>The file you opened uses GPU effects, but GPU effects are not enabled.
 
 GPU effects are EXPERIMENTAL, UNSTABLE and UNSUPPORTED! Unsupported means do not report bugs about it.
@@ -3773,24 +3816,24 @@ GPU エフェクトは実験的かつ不安定なためサポートしておら�
 GPU エフェクトを有効にして再起動しますか?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="895"/>
+        <location filename="../src/mainwindow.cpp" line="910"/>
         <source>The file you opened uses CPU effects that are incompatible with GPU effects, but GPU effects are enabled.
 Do you want to disable GPU effects and restart?</source>
         <translation>このファイルは GPU エフェクトと互換性のない CPU エフェクトを使用していますが、GPU エフェクトが有効になっています。
 GPU エフェクトを無効にして再起動しますか?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="918"/>
+        <location filename="../src/mainwindow.cpp" line="933"/>
         <source>Repaired</source>
         <translation>修復済み</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="941"/>
+        <location filename="../src/mainwindow.cpp" line="956"/>
         <source>Repairing the project failed.</source>
         <translation>プロジェクトの修復に失敗しました。</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="953"/>
+        <location filename="../src/mainwindow.cpp" line="968"/>
         <source>Shotcut noticed some problems in your project.
 Do you want Shotcut to try to repair it?
 
@@ -3803,145 +3846,150 @@ Shotcut で問題の修復を試みますか?
 というファイル名のコピーを生成し、開きます。</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="989"/>
+        <location filename="../src/mainwindow.cpp" line="1004"/>
         <source>Auto-saved files exist. Do you want to recover them now?</source>
         <translation>自動保存されたファイルがあります。このファイルを回復しますか?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1100"/>
+        <location filename="../src/mainwindow.cpp" line="1117"/>
         <source>You cannot add a project to itself!</source>
         <translation>プロジェクト自体を追加することはできません。</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1242"/>
-        <location filename="../src/mainwindow.cpp" line="3346"/>
+        <location filename="../src/mainwindow.cpp" line="1152"/>
+        <source>There was an error saving. Please try again.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="1272"/>
+        <location filename="../src/mainwindow.cpp" line="3384"/>
         <source>Open File</source>
         <translation>ファイルを開く</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1504"/>
+        <location filename="../src/mainwindow.cpp" line="1534"/>
         <source>Untitled</source>
         <translation>名称未設定</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1520"/>
+        <location filename="../src/mainwindow.cpp" line="1550"/>
         <source>About Shotcut</source>
         <translation>Shotcut について</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1521"/>
+        <location filename="../src/mainwindow.cpp" line="1551"/>
         <source>&lt;h1&gt;Shotcut version %1&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;https://www.shotcut.org/&quot;&gt;Shotcut&lt;/a&gt; is a free, open source, cross platform video editor.&lt;/p&gt;&lt;small&gt;&lt;p&gt;Copyright &amp;copy; 2011-2019 &lt;a href=&quot;https://www.meltytech.com/&quot;&gt;Meltytech&lt;/a&gt;, LLC&lt;/p&gt;&lt;p&gt;Licensed under the &lt;a href=&quot;https://www.gnu.org/licenses/gpl.html&quot;&gt;GNU General Public License v3.0&lt;/a&gt;&lt;/p&gt;&lt;p&gt;This program proudly uses the following projects:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://www.qt.io/&quot;&gt;Qt&lt;/a&gt; application and UI framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; multimedia authoring framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; multimedia format and codec libraries&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; H.264 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; VP8 and VP9 encoders&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; MP3 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt; video plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; audio plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;DefaultIcon&lt;/a&gt; icon collection by &lt;a href=&quot;http://www.interactivemania.com/&quot;&gt;interactivemania&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt;Oxygen&lt;/a&gt; icon collection&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;The source code used to build this program can be downloaded from &lt;a href=&quot;https://www.shotcut.org/&quot;&gt;shotcut.org&lt;/a&gt;.&lt;/p&gt;This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.&lt;/small&gt;</source>
         <translation>&lt;h1&gt;Shotcut バージョン %1&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;https://www.shotcut.org/&quot;&gt;Shotcut&lt;/a&gt; はフリーでオープンソースの、クロスプラットフォームな動画エディターです。&lt;/p&gt;&lt;small&gt;&lt;p&gt;Copyright &amp;copy; 2011-2019 &lt;a href=&quot;https://www.meltytech.com/&quot;&gt;Meltytech&lt;/a&gt;, LLC&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;https://www.gnu.org/licenses/gpl.html&quot;&gt;GNU General Public License v3.0&lt;/a&gt; のもとに配布されています。&lt;/p&gt;&lt;p&gt;このプログラムは次のプロジェクトを利用していることを公言します:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://www.qt.io/&quot;&gt;Qt&lt;/a&gt; アプリケーション/UI フレームワーク&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; マルチメディアオーサリングフレームワーク&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; マルチメディアフォーマット＆コーデックライブラリ&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; H.264 エンコーダ&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; VP8/VP9 エンコーダ&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; MP3 エンコーダ&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt; 映像プラグイン&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; 音声プラグイン&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;DefaultIcon&lt;/a&gt; アイコンコレクション (&lt;a href=&quot;http://www.interactivemania.com/&quot;&gt;interactivemania&lt;/a&gt; より)&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt;Oxygen&lt;/a&gt; アイコンコレクション&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;このプログラムのソースコードは &lt;a href=&quot;https://www.shotcut.org/&quot;&gt;shotcut.org&lt;/a&gt; からダウンロードできます。&lt;/p&gt;このプログラムは多くの人々の役に立つことを願って配布されていますが、いかなる保証もありません。商品性や特定目的への適合性といった黙示的な保証は一切ありません。&lt;/small&gt;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1991"/>
+        <location filename="../src/mainwindow.cpp" line="2021"/>
         <source>Non-Broadcast</source>
         <translation>標準放送以外</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1996"/>
+        <location filename="../src/mainwindow.cpp" line="2026"/>
         <source>DVD Widescreen NTSC</source>
         <translation>DVD ワイドスクリーン NTSC</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1997"/>
+        <location filename="../src/mainwindow.cpp" line="2027"/>
         <source>DVD Widescreen PAL</source>
         <translation>DVD ワイドスクリーン PAL</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2008"/>
+        <location filename="../src/mainwindow.cpp" line="2038"/>
         <source>Square 1080p 30 fps</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2009"/>
+        <location filename="../src/mainwindow.cpp" line="2039"/>
         <source>Square 1080p 60 fps</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2010"/>
+        <location filename="../src/mainwindow.cpp" line="2040"/>
         <source>Vertical HD 30 fps</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2011"/>
+        <location filename="../src/mainwindow.cpp" line="2041"/>
         <source>Vertical HD 60 fps</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2012"/>
+        <location filename="../src/mainwindow.cpp" line="2042"/>
         <source>Custom</source>
         <translation>カスタム</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2042"/>
-        <location filename="../src/mainwindow.cpp" line="2284"/>
+        <location filename="../src/mainwindow.cpp" line="2072"/>
+        <location filename="../src/mainwindow.cpp" line="2318"/>
         <source>Saved %1</source>
         <translation>%1 を保存しました</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2277"/>
-        <location filename="../src/mainwindow.cpp" line="2297"/>
+        <location filename="../src/mainwindow.cpp" line="2310"/>
+        <location filename="../src/mainwindow.cpp" line="2334"/>
         <source>Save XML</source>
         <translation>XML を保存</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2298"/>
+        <location filename="../src/mainwindow.cpp" line="2335"/>
         <source>MLT XML (*.mlt)</source>
         <translation>MLT XML (*.mlt)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2317"/>
+        <location filename="../src/mainwindow.cpp" line="2354"/>
         <source>The project has been modified.
 Do you want to save your changes?</source>
         <translation>このプロジェクトは変更されています。
 変更を保存しますか?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2346"/>
+        <location filename="../src/mainwindow.cpp" line="2383"/>
         <source>There are incomplete jobs.
 Do you want to still want to exit?</source>
         <translation>完了していないジョブがあります。
 本当に終了しますか?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2359"/>
+        <location filename="../src/mainwindow.cpp" line="2396"/>
         <source>An export is in progress.
 Do you want to still want to exit?</source>
         <translation>書き出しが実行中です。
 本当に終了しますか?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2794"/>
+        <location filename="../src/mainwindow.cpp" line="2829"/>
         <source>Exit Full Screen</source>
         <translation>全画面表示を終了</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2807"/>
+        <location filename="../src/mainwindow.cpp" line="2842"/>
         <source>GPU effects are not supported</source>
         <translation>GPU エフェクトはサポートされていません</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2899"/>
+        <location filename="../src/mainwindow.cpp" line="2939"/>
         <source>Click here to check for a new version of Shotcut.</source>
         <translation>ここをクリックすると Shotcut の最新版を確認します。</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3042"/>
+        <location filename="../src/mainwindow.cpp" line="3083"/>
         <source>You must restart Shotcut to switch to the new language.
 Do you want to restart now?</source>
         <translation>言語を変更するには Shotcut の再起動が必要です。
 今すぐ再起動しますか?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3083"/>
+        <location filename="../src/mainwindow.cpp" line="3124"/>
         <source>Failed to connect to JACK.
 Please verify that JACK is installed and running.</source>
         <translation>JACK への接続に失敗しました。
 JACK がインストールされ、実行中であることを確認してください。</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3092"/>
+        <location filename="../src/mainwindow.cpp" line="3133"/>
         <source>GPU effects are experimental and may cause instability on some systems. Some CPU effects are incompatible with GPU effects and will be disabled. A project created with GPU effects can not be converted to a CPU only project later.
 
 Do you want to enable GPU effects and restart Shotcut?</source>
@@ -3950,7 +3998,7 @@ Do you want to enable GPU effects and restart Shotcut?</source>
 GPU エフェクトを有効にして Shotcut を再起動しますか?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3114"/>
+        <location filename="../src/mainwindow.cpp" line="3155"/>
         <source>Shotcut must restart to disable GPU effects.
 
 Disable GPU effects and restart?</source>
@@ -3959,117 +4007,117 @@ Disable GPU effects and restart?</source>
 GPU エフェクトを無効化して再起動しますか?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3324"/>
+        <location filename="../src/mainwindow.cpp" line="3362"/>
         <source>Do you want to automatically check for updates in the future?</source>
         <translation>更新の確認を自動的に行いますか?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3331"/>
+        <location filename="../src/mainwindow.cpp" line="3369"/>
         <source>Do not show this anymore.</source>
         <comment>Automatic upgrade check dialog</comment>
         <translation>今後、表示しない。</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3347"/>
+        <location filename="../src/mainwindow.cpp" line="3385"/>
         <source>MLT XML (*.mlt);;All Files (*)</source>
         <translation>MLT XML (*.mlt);;全てのファイル (*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3407"/>
+        <location filename="../src/mainwindow.cpp" line="3445"/>
         <source>You must restart Shotcut to change the display method.
 Do you want to restart now?</source>
         <translation>描画方法を変更するには Shotcut の再起動が必要です。
 今すぐ再起動しますか?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3429"/>
+        <location filename="../src/mainwindow.cpp" line="3467"/>
         <source>Application Log</source>
         <translation>アプリケーションログ</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3466"/>
+        <location filename="../src/mainwindow.cpp" line="3505"/>
         <source>Shotcut version %1 is available! Click here to get it.</source>
         <translation>Shotcut バージョン %1 が利用可能です。ここをクリックしてください。</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3472"/>
+        <location filename="../src/mainwindow.cpp" line="3511"/>
         <source>You are running the latest version of Shotcut.</source>
         <translation>最新版の Shotcut を使用中です。</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3482"/>
+        <location filename="../src/mainwindow.cpp" line="3521"/>
         <source>Failed to read version.json when checking. Click here to go to the Web site.</source>
         <translation>確認中に version.json の読み込みに失敗しました。ここをクリックするとウェブサイトを表示します。</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3532"/>
+        <location filename="../src/mainwindow.cpp" line="3571"/>
         <source>Export EDL</source>
         <translation>EDL の書き出し</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3533"/>
+        <location filename="../src/mainwindow.cpp" line="3572"/>
         <source>EDL (*.edl);;All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>EDL (*.edl);;全てのファイル (*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3579"/>
+        <location filename="../src/mainwindow.cpp" line="3618"/>
         <source>A JavaScript error occurred during export.</source>
         <translation>書き出し中に JavaScript エラーが発生しました。</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3582"/>
+        <location filename="../src/mainwindow.cpp" line="3621"/>
         <source>Failed to open export-edl.js</source>
         <translation>export-edl.js を開けませんでした</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3608"/>
+        <location filename="../src/mainwindow.cpp" line="3647"/>
         <source>Export Frame</source>
         <translation>フレームの書き出し</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3609"/>
+        <location filename="../src/mainwindow.cpp" line="3648"/>
         <source>PNG (*.png);;BMP (*.bmp);;JPEG (*.jpg *.jpeg);;PPM (*.ppm);;TIFF (*.tif *.tiff);;WebP (*.webp);;All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>PNG (*.png);;BMP (*.bmp);;JPEG (*.jpg *.jpeg);;PPM (*.ppm);;TIFF (*.tif *.tiff);;WebP (*.webp);;全てのファイル (*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3629"/>
+        <location filename="../src/mainwindow.cpp" line="3668"/>
         <source>Unable to export frame.</source>
         <translation>フレームを書き出せませんでした。</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3637"/>
+        <location filename="../src/mainwindow.cpp" line="3676"/>
         <source>You must restart Shotcut to change the data directory.
 Do you want to continue?</source>
         <translation>データフォルダの変更には Shotcut の再起動が必要です。
 続行しますか?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3646"/>
+        <location filename="../src/mainwindow.cpp" line="3685"/>
         <source>Data Directory</source>
         <translation>データフォルダ</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3729"/>
+        <location filename="../src/mainwindow.cpp" line="3768"/>
         <source>Add Custom Layout</source>
         <translation>カスタムレイアウトを追加</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3730"/>
+        <location filename="../src/mainwindow.cpp" line="3769"/>
         <source>Name</source>
         <translation>名前</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3758"/>
+        <location filename="../src/mainwindow.cpp" line="3797"/>
         <source>Remove Video Mode</source>
         <translation>映像モードを削除</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3772"/>
+        <location filename="../src/mainwindow.cpp" line="3811"/>
         <source>Remove Layout</source>
         <translation>レイアウトを削除</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3901"/>
+        <location filename="../src/mainwindow.cpp" line="3940"/>
         <source>GPU effects are EXPERIMENTAL, UNSTABLE and UNSUPPORTED! Unsupported means do not report bugs about it.
 
 Do you want to disable GPU effects and restart Shotcut?</source>
@@ -4500,217 +4548,242 @@ Try again with a different folder.</source>
         <translation>音声を静音化</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="187"/>
+        <location filename="../src/player.cpp" line="183"/>
         <source>Transport Controls</source>
         <translation>トランスポートコントロール</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="194"/>
+        <location filename="../src/player.cpp" line="190"/>
         <source>Current position</source>
         <translation>現在の再生位置</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="198"/>
+        <location filename="../src/player.cpp" line="194"/>
         <source>Total Duration</source>
         <translation>合計の長さ</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="203"/>
+        <location filename="../src/player.cpp" line="199"/>
         <source>In Point</source>
         <translation>編集開始点</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="207"/>
+        <location filename="../src/player.cpp" line="203"/>
         <source>Selected Duration</source>
         <translation>選択された長さ</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="223"/>
+        <location filename="../src/player.cpp" line="219"/>
         <source>Zoom Fit</source>
         <translation>画面に合わせる</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="226"/>
+        <location filename="../src/player.cpp" line="222"/>
         <source>Zoom 10%</source>
         <translation>10% 表示</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="229"/>
+        <location filename="../src/player.cpp" line="225"/>
         <source>Zoom 25%</source>
         <translation>25% 表示</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="232"/>
+        <location filename="../src/player.cpp" line="228"/>
         <source>Zoom 50%</source>
         <translation>50% 表示</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="235"/>
+        <location filename="../src/player.cpp" line="231"/>
         <source>Zoom 100%</source>
         <translation>100% 表示</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="238"/>
+        <location filename="../src/player.cpp" line="234"/>
         <source>Zoom 200%</source>
         <translation>200% 表示</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="243"/>
+        <location filename="../src/player.cpp" line="254"/>
         <source>Toggle zoom</source>
         <translation>拡大率の切り替え</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="251"/>
+        <location filename="../src/player.cpp" line="262"/>
         <source>2x2 Grid</source>
         <translation>2x2 グリッド</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="256"/>
+        <location filename="../src/player.cpp" line="267"/>
         <source>3x3 Grid</source>
         <translation>3x3 グリッド</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="260"/>
+        <location filename="../src/player.cpp" line="271"/>
         <source>4x4 Grid</source>
         <translation>4x4 グリッド</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="264"/>
+        <location filename="../src/player.cpp" line="275"/>
         <source>16x16 Grid</source>
         <translation>16x16 グリッド</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="272"/>
+        <location filename="../src/player.cpp" line="283"/>
         <source>10 Pixel Grid</source>
         <translation>10 ピクセルグリッド</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="549"/>
+        <location filename="../src/player.cpp" line="560"/>
         <source>Not Seekable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="268"/>
+        <location filename="../src/player.cpp" line="279"/>
         <source>20 Pixel Grid</source>
         <translation>20 ピクセルグリッド</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="276"/>
+        <location filename="../src/player.cpp" line="237"/>
+        <source>Zoom 300%</source>
+        <translation type="unfinished">200% 表示 {300%?}</translation>
+    </message>
+    <message>
+        <location filename="../src/player.cpp" line="240"/>
+        <source>Zoom 400%</source>
+        <translation type="unfinished">200% 表示 {400%?}</translation>
+    </message>
+    <message>
+        <location filename="../src/player.cpp" line="243"/>
+        <source>Zoom 500%</source>
+        <translation type="unfinished">200% 表示 {500%?}</translation>
+    </message>
+    <message>
+        <location filename="../src/player.cpp" line="246"/>
+        <source>Zoom 750%</source>
+        <translation type="unfinished">200% 表示 {750%?}</translation>
+    </message>
+    <message>
+        <location filename="../src/player.cpp" line="249"/>
+        <source>Zoom 1000%</source>
+        <translation type="unfinished">200% 表示 {1000%?}</translation>
+    </message>
+    <message>
+        <location filename="../src/player.cpp" line="287"/>
         <source>80/90% Safe Areas</source>
         <translation>80/90% セーフエリア</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="280"/>
+        <location filename="../src/player.cpp" line="291"/>
         <source>EBU R95 Safe Areas</source>
         <translation>EBU R95 セーフエリア</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="285"/>
+        <location filename="../src/player.cpp" line="296"/>
         <source>Snapping</source>
         <translation>スナップ</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="294"/>
+        <location filename="../src/player.cpp" line="305"/>
         <source>Toggle grid display on the player</source>
         <translation>プレイヤーのグリッド表示の切り替え</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="380"/>
-        <location filename="../src/player.cpp" line="481"/>
-        <location filename="../src/player.cpp" line="504"/>
-        <location filename="../src/player.cpp" line="754"/>
+        <location filename="../src/player.cpp" line="391"/>
+        <location filename="../src/player.cpp" line="492"/>
+        <location filename="../src/player.cpp" line="515"/>
+        <location filename="../src/player.cpp" line="765"/>
         <source>Play</source>
         <translation>再生</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="382"/>
-        <location filename="../src/player.cpp" line="482"/>
-        <location filename="../src/player.cpp" line="505"/>
-        <location filename="../src/player.cpp" line="755"/>
+        <location filename="../src/player.cpp" line="393"/>
+        <location filename="../src/player.cpp" line="493"/>
+        <location filename="../src/player.cpp" line="516"/>
+        <location filename="../src/player.cpp" line="766"/>
         <source>Start playback (L)</source>
         <translation>再生を開始 (L)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="385"/>
-        <location filename="../src/player.cpp" line="460"/>
-        <location filename="../src/player.cpp" line="761"/>
+        <location filename="../src/player.cpp" line="396"/>
+        <location filename="../src/player.cpp" line="471"/>
+        <location filename="../src/player.cpp" line="772"/>
         <source>Pause</source>
         <translation>一時停止</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="387"/>
-        <location filename="../src/player.cpp" line="461"/>
-        <location filename="../src/player.cpp" line="762"/>
+        <location filename="../src/player.cpp" line="398"/>
+        <location filename="../src/player.cpp" line="472"/>
+        <location filename="../src/player.cpp" line="773"/>
         <source>Pause playback (K)</source>
         <translation>再生を一時停止 (K)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="389"/>
+        <location filename="../src/player.cpp" line="400"/>
         <source>Skip Next</source>
         <translation>次にスキップ</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="391"/>
+        <location filename="../src/player.cpp" line="402"/>
         <source>Skip to the next point (Alt+Right)</source>
         <translation>次のポイントにスキップ (Alt+Right)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="394"/>
+        <location filename="../src/player.cpp" line="405"/>
         <source>Skip Previous</source>
         <translation>前にスキップ</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="396"/>
+        <location filename="../src/player.cpp" line="407"/>
         <source>Skip to the previous point (Alt+Left)</source>
         <translation>前のポイントにスキップ (Alt+Left)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="399"/>
+        <location filename="../src/player.cpp" line="410"/>
         <source>Rewind</source>
         <translation>早戻し</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="401"/>
+        <location filename="../src/player.cpp" line="412"/>
         <source>Play quickly backwards (J)</source>
         <translation>クイック逆再生 (J)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="403"/>
+        <location filename="../src/player.cpp" line="414"/>
         <source>Fast Forward</source>
         <translation>早送り</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="405"/>
+        <location filename="../src/player.cpp" line="416"/>
         <source>Play quickly forwards (L)</source>
         <translation>クイック再生 (L)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="407"/>
+        <location filename="../src/player.cpp" line="418"/>
         <source>Volume</source>
         <translation>音量</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="409"/>
+        <location filename="../src/player.cpp" line="420"/>
         <source>Show the volume control</source>
         <translation>音量コントロールを表示</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="465"/>
+        <location filename="../src/player.cpp" line="476"/>
         <source>Stop</source>
         <translation>停止</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="466"/>
+        <location filename="../src/player.cpp" line="477"/>
         <source>Stop playback (K)</source>
         <translation>再生を停止 (K)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="971"/>
+        <location filename="../src/player.cpp" line="983"/>
         <source>Unmute</source>
         <translation>ミュート解除</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="976"/>
+        <location filename="../src/player.cpp" line="988"/>
         <source>Mute</source>
         <translation>ミュート</translation>
     </message>
@@ -4763,19 +4836,19 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="190"/>
-        <location filename="../src/docks/playlistdock.ui" line="391"/>
+        <location filename="../src/docks/playlistdock.ui" line="406"/>
         <source>View as tiles</source>
         <translation>タイル表示</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="204"/>
-        <location filename="../src/docks/playlistdock.ui" line="402"/>
+        <location filename="../src/docks/playlistdock.ui" line="417"/>
         <source>View as icons</source>
         <translation>アイコン表示</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="218"/>
-        <location filename="../src/docks/playlistdock.ui" line="380"/>
+        <location filename="../src/docks/playlistdock.ui" line="395"/>
         <source>View as details</source>
         <translation>詳細表示</translation>
     </message>
@@ -4826,84 +4899,104 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="307"/>
+        <source>Set Creation Time...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/playlistdock.ui" line="312"/>
         <source>Goto</source>
         <translation>ジャンプ</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="310"/>
+        <location filename="../src/docks/playlistdock.ui" line="315"/>
         <source>Go to the start of this cut in the playlist</source>
         <translation>プレイリストでこのカットの開始位置に行く</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="315"/>
+        <location filename="../src/docks/playlistdock.ui" line="320"/>
         <source>Remove All</source>
         <translation>全て削除</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="318"/>
+        <location filename="../src/docks/playlistdock.ui" line="323"/>
         <source>Remove all items from the playlist</source>
         <translation>プレイリストから全ての項目を削除</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="326"/>
+        <location filename="../src/docks/playlistdock.ui" line="331"/>
         <source>Hidden</source>
         <translation>非表示</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="334"/>
-        <location filename="../src/docks/playlistdock.ui" line="337"/>
+        <location filename="../src/docks/playlistdock.ui" line="339"/>
+        <location filename="../src/docks/playlistdock.ui" line="342"/>
         <source>In and Out - Left/Right</source>
         <translation>開始点と終了点 - 左右</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="345"/>
-        <location filename="../src/docks/playlistdock.ui" line="348"/>
+        <location filename="../src/docks/playlistdock.ui" line="350"/>
+        <location filename="../src/docks/playlistdock.ui" line="353"/>
         <source>In and Out - Top/Bottom</source>
         <translation>開始点と終了点 - 上下</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="356"/>
+        <location filename="../src/docks/playlistdock.ui" line="361"/>
         <source>In Only - Small</source>
         <translation>開始点のみ - 小</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="364"/>
+        <location filename="../src/docks/playlistdock.ui" line="369"/>
         <source>In Only - Large</source>
         <translation>開始点のみ - 大</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="369"/>
+        <location filename="../src/docks/playlistdock.ui" line="374"/>
         <source>Add All to Timeline</source>
         <translation>タイムラインに全て追加する</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="377"/>
+        <location filename="../src/docks/playlistdock.ui" line="379"/>
+        <source>Sort By Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/playlistdock.ui" line="384"/>
+        <source>Sort By Date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/playlistdock.ui" line="392"/>
         <source>Details</source>
         <translation>詳細</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="388"/>
+        <location filename="../src/docks/playlistdock.ui" line="403"/>
         <source>Tiles</source>
         <translation>タイル</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="399"/>
+        <location filename="../src/docks/playlistdock.ui" line="414"/>
         <source>Icons</source>
         <translation>アイコン</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="285"/>
+        <location filename="../src/docks/playlistdock.cpp" line="283"/>
+        <source>Sort</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/playlistdock.cpp" line="291"/>
         <source>View mode</source>
         <translation>表示方法</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="293"/>
+        <location filename="../src/docks/playlistdock.cpp" line="299"/>
         <source>Thumbnails</source>
         <translation>サムネイル</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="383"/>
-        <location filename="../src/docks/playlistdock.cpp" line="563"/>
+        <location filename="../src/docks/playlistdock.cpp" line="389"/>
+        <location filename="../src/docks/playlistdock.cpp" line="606"/>
         <source>You cannot insert a playlist into a playlist!</source>
         <translation>プレイリストをプレイリストに挿入する事はできません。</translation>
     </message>
@@ -4911,34 +5004,39 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>PlaylistModel</name>
     <message>
-        <location filename="../src/models/playlistmodel.cpp" line="339"/>
+        <location filename="../src/models/playlistmodel.cpp" line="361"/>
         <source>#</source>
         <translation>#</translation>
     </message>
     <message>
-        <location filename="../src/models/playlistmodel.cpp" line="341"/>
+        <location filename="../src/models/playlistmodel.cpp" line="363"/>
         <source>Thumbnails</source>
         <translation>サムネイル</translation>
     </message>
     <message>
-        <location filename="../src/models/playlistmodel.cpp" line="343"/>
+        <location filename="../src/models/playlistmodel.cpp" line="365"/>
         <source>Clip</source>
         <translation>クリップ</translation>
     </message>
     <message>
-        <location filename="../src/models/playlistmodel.cpp" line="345"/>
+        <location filename="../src/models/playlistmodel.cpp" line="367"/>
         <source>In</source>
         <translation>イン点</translation>
     </message>
     <message>
-        <location filename="../src/models/playlistmodel.cpp" line="347"/>
+        <location filename="../src/models/playlistmodel.cpp" line="369"/>
         <source>Duration</source>
         <translation>長さ</translation>
     </message>
     <message>
-        <location filename="../src/models/playlistmodel.cpp" line="349"/>
+        <location filename="../src/models/playlistmodel.cpp" line="371"/>
         <source>Start</source>
         <translation>開始</translation>
+    </message>
+    <message>
+        <location filename="../src/models/playlistmodel.cpp" line="373"/>
+        <source>Date</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5030,6 +5128,11 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/commands/playlistcommands.cpp" line="152"/>
         <source>Move item from %1 to %2</source>
         <translation>項目を %1 から %2 へ移動</translation>
+    </message>
+    <message>
+        <location filename="../src/commands/playlistcommands.cpp" line="175"/>
+        <source>Sort playlist by %1</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="33"/>
@@ -5185,7 +5288,7 @@ p, li { white-space: pre-wrap; }
         <translation>音声を分離</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3007"/>
+        <location filename="../src/mainwindow.cpp" line="3047"/>
         <source>You cannot add a project to itself!</source>
         <translation>プロジェクト自体を追加することはできません。</translation>
     </message>
@@ -5196,9 +5299,9 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/util.cpp" line="91"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="700"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="796"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="850"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="702"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="797"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="851"/>
         <source>Unable to write file %1
 Perhaps you do not have permission.
 Try again with a different folder.</source>
@@ -5540,7 +5643,7 @@ Try again with a different folder.</source>
         <translation>位置</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="364"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="365"/>
         <source>Size</source>
         <translation>サイズ</translation>
     </message>
@@ -5666,7 +5769,7 @@ Try again with a different folder.</source>
         <translation>位置</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="295"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="296"/>
         <source>Size</source>
         <translation>サイズ</translation>
     </message>
@@ -5765,23 +5868,23 @@ Try again with a different folder.</source>
     <message>
         <location filename="../src/dialogs/textviewerdialog.cpp" line="47"/>
         <source>Text Documents (*.txt);;All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>テキストドキュメント (*.txt);;全てのファイル (*)</translation>
     </message>
 </context>
 <context>
     <name>TiledItemDelegate</name>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="98"/>
+        <location filename="../src/docks/playlistdock.cpp" line="99"/>
         <source>Duration: %1</source>
         <translation>長さ: %1</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="101"/>
+        <location filename="../src/docks/playlistdock.cpp" line="102"/>
         <source>In: %1</source>
         <translation>イン点: %1</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="103"/>
+        <location filename="../src/docks/playlistdock.cpp" line="104"/>
         <source>Start: %1</source>
         <translation>開始点: %1</translation>
     </message>
@@ -5807,22 +5910,22 @@ Try again with a different folder.</source>
         <translation>タイムライン</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="154"/>
+        <location filename="../src/docks/timelinedock.cpp" line="156"/>
         <source>This track is locked</source>
         <translation>このトラックはロックされています</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="370"/>
+        <location filename="../src/docks/timelinedock.cpp" line="368"/>
         <source>Failed to open </source>
         <translation>開けませんでした</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="373"/>
+        <location filename="../src/docks/timelinedock.cpp" line="371"/>
         <source>You must save to Copy Timeline to Source.</source>
         <translation>タイムラインをソースにコピーするために保存する必要があります。</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="955"/>
+        <location filename="../src/docks/timelinedock.cpp" line="967"/>
         <source>You cannot split a transition.</source>
         <translation>トランジションを分割することはできません。</translation>
     </message>
@@ -5892,85 +5995,85 @@ Try again with a different folder.</source>
 <context>
     <name>TimelineToolbar</name>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="103"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="80"/>
         <source>Toggle snapping</source>
         <translation>スナップの切り替え</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="113"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="88"/>
         <source>Scrub while dragging</source>
         <translation>ドラッグ時にスクラブ再生</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="123"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="96"/>
         <source>Ripple trim and drop</source>
         <translation>ファイルドロップ時にリップルトリム</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="124"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="97"/>
         <source>Ripple</source>
         <translation>リップル</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="174"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="142"/>
         <source>Display a menu of additional actions</source>
         <translation>追加の操作メニューを表示</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="182"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="150"/>
         <source>Cut - Copy the current clip to the Source
 player and ripple delete it</source>
         <translation>切り取り - ソースプレイヤーに現在の
 クリップをコピーし、リップル削除します</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="191"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="159"/>
         <source>Copy - Copy the current clip to the Source player (C)</source>
         <translation>コピー - 現在のクリップをソースプレイヤーにコピーする (C)</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="200"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="168"/>
         <source>Paste - Insert clip into the current track
 shifting following clips to the right (V)</source>
         <translation>貼り付け -  現在のトラックにクリップを挿入し
 そこに続くクリップの右にトラックを移動する (V)</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="208"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="176"/>
         <source>Append to the current track (A)</source>
         <translation>現在のトラックに付加する (A)</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="216"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="184"/>
         <source>Ripple Delete - Remove current clip
 shifting following clips to the left (X)</source>
         <translation>リップル削除 - 現在のクリップを削除して
 後続のクリップを左に詰めます (X)</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="224"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="192"/>
         <source>Lift - Remove current clip without
 affecting position of other clips (Z)</source>
         <translation>抜き取り - 他のクリップの位置を変更せずに
 現在のクリップを削除します (Z)</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="232"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="200"/>
         <source>Overwrite clip onto the current track (B)</source>
         <translation>現在のトラックにクリップを上書きする (B)</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="240"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="208"/>
         <source>Split At Playhead (S)</source>
         <translation>再生ヘッドで分割する (S)</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="248"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="216"/>
         <source>Zoom timeline out (-)</source>
         <translation>タイムラインの縮小 (-)</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="256"/>
+        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="224"/>
         <source>Zoom timeline in (+)</source>
         <translation>タイムラインの拡大 (+)</translation>
     </message>
@@ -6164,42 +6267,42 @@ affecting position of other clips (Z)</source>
 <context>
     <name>TranscodeDialog</name>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="14"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="17"/>
         <source>Dialog</source>
         <translation>ダイアログ</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="41"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="44"/>
         <source>good</source>
         <translation>良い</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="51"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="54"/>
         <source>better</source>
         <translation>非常に良い</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="61"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="64"/>
         <source>best</source>
         <translation>最高</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="94"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="97"/>
         <source>medium</source>
         <translation>軽い</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="104"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="107"/>
         <source>large</source>
         <translation>重い</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="114"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="117"/>
         <source>biggest</source>
         <translation>非常に重い</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="136"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="139"/>
         <source>Do not show this anymore.</source>
         <comment>Convert to edit-friendly format dialog</comment>
         <translation>今後、表示しない。</translation>
@@ -6470,30 +6573,30 @@ IRE: %2</translation>
 <context>
     <name>VideoWaveformScopeWidget</name>
     <message>
-        <location filename="../src/widgets/scopes/videowaveformscopewidget.cpp" line="108"/>
+        <location filename="../src/widgets/scopes/videowaveformscopewidget.cpp" line="113"/>
         <source>100</source>
         <translation>100</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videowaveformscopewidget.cpp" line="112"/>
-        <location filename="../src/widgets/scopes/videowaveformscopewidget.cpp" line="113"/>
+        <location filename="../src/widgets/scopes/videowaveformscopewidget.cpp" line="117"/>
+        <location filename="../src/widgets/scopes/videowaveformscopewidget.cpp" line="118"/>
         <source>0</source>
         <translation>0</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videowaveformscopewidget.cpp" line="133"/>
+        <location filename="../src/widgets/scopes/videowaveformscopewidget.cpp" line="138"/>
         <source>Pixel: %1
 IRE: %2</source>
         <translation>ピクセル: %1
 IRE: %2</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videowaveformscopewidget.cpp" line="137"/>
+        <location filename="../src/widgets/scopes/videowaveformscopewidget.cpp" line="142"/>
         <source>IRE: %1</source>
         <translation>IRE: %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videowaveformscopewidget.cpp" line="144"/>
+        <location filename="../src/widgets/scopes/videowaveformscopewidget.cpp" line="149"/>
         <source>Video Waveform</source>
         <translation>映像波形</translation>
     </message>
@@ -6731,22 +6834,22 @@ Most users do not need to change this.</source>
 <context>
     <name>keyframes</name>
     <message>
-        <location filename="../src/qml/views/keyframes/keyframes.qml" line="426"/>
+        <location filename="../src/qml/views/keyframes/keyframes.qml" line="425"/>
         <source>Show Audio Waveforms</source>
         <translation>音声波形を表示</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/keyframes/keyframes.qml" line="444"/>
+        <location filename="../src/qml/views/keyframes/keyframes.qml" line="443"/>
         <source>Show Video Thumbnails</source>
         <translation>映像サムネイルを表示</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/keyframes/keyframes.qml" line="450"/>
+        <location filename="../src/qml/views/keyframes/keyframes.qml" line="449"/>
         <source>Center the Playhead</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/views/keyframes/keyframes.qml" line="457"/>
+        <location filename="../src/qml/views/keyframes/keyframes.qml" line="456"/>
         <source>Reload</source>
         <translation>再読み込み</translation>
     </message>
@@ -6754,62 +6857,62 @@ Most users do not need to change this.</source>
 <context>
     <name>main</name>
     <message>
-        <location filename="../src/main.cpp" line="136"/>
+        <location filename="../src/main.cpp" line="140"/>
         <source>Fill the screen with the Shotcut window.</source>
         <translation>Shotcut のウィンドウを画面一杯に広げます。</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="140"/>
+        <location filename="../src/main.cpp" line="144"/>
         <source>Hide upgrade prompt and menu item.</source>
         <translation>アップグレードの通知とメニュー項目を非表示にします。</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="143"/>
+        <location filename="../src/main.cpp" line="147"/>
         <source>Use GPU processing.</source>
         <translation>GPU 処理を使用します。</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="146"/>
+        <location filename="../src/main.cpp" line="150"/>
         <source>Clear Recent on Exit</source>
         <translation>終了時に使用履歴を消去します。</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="149"/>
+        <location filename="../src/main.cpp" line="153"/>
         <source>The directory for app configuration and data.</source>
         <translation>アプリの設定とデータのフォルダです。</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="150"/>
+        <location filename="../src/main.cpp" line="154"/>
         <source>directory</source>
         <translation>フォルダ</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="153"/>
+        <location filename="../src/main.cpp" line="157"/>
         <source>The scale factor for a high-DPI screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="154"/>
+        <location filename="../src/main.cpp" line="158"/>
         <source>number</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="157"/>
+        <location filename="../src/main.cpp" line="161"/>
         <source>A semicolon-separated list of scale factors for each screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="158"/>
+        <location filename="../src/main.cpp" line="162"/>
         <source>list</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="161"/>
+        <location filename="../src/main.cpp" line="165"/>
         <source>Zero or more files or folders to open</source>
         <translation>0個以上のファイルまたはフォルダを開きます</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="306"/>
+        <location filename="../src/main.cpp" line="317"/>
         <source>Loading plugins...</source>
         <translation>プラグインを読み込み中...</translation>
     </message>
@@ -7057,12 +7160,14 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/mask/meta.qml" line="16"/>
         <location filename="../src/qml/filters/mask_alphaspot/meta.qml" line="16"/>
+        <location filename="../src/qml/filters/rgbsplit0r/meta.qml" line="40"/>
         <source>Horizontal</source>
         <translation>水平</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask/meta.qml" line="24"/>
         <location filename="../src/qml/filters/mask_alphaspot/meta.qml" line="24"/>
+        <location filename="../src/qml/filters/rgbsplit0r/meta.qml" line="32"/>
         <source>Vertical</source>
         <translation>垂直</translation>
     </message>
@@ -7254,23 +7359,74 @@ Most users do not need to change this.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/imagegrid/meta.qml" line="6"/>
+        <location filename="../src/qml/filters/grid/meta.qml" line="6"/>
         <source>Grid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/imagegrid/meta.qml" line="15"/>
+        <location filename="../src/qml/filters/grid/meta.qml" line="15"/>
         <source>Rows</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/imagegrid/meta.qml" line="23"/>
+        <location filename="../src/qml/filters/grid/meta.qml" line="23"/>
         <source>Columns</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx_swirl/meta.qml" line="7"/>
         <source>Swirl (HTML)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/aech0r/meta.qml" line="6"/>
+        <source>Analog Echo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/distort/meta.qml" line="23"/>
+        <source>Distort</source>
+        <translation>歪曲する</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/distort/meta.qml" line="32"/>
+        <source>Amplitude</source>
+        <translation>振幅</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/distort/meta.qml" line="40"/>
+        <location filename="../src/qml/filters/glitch/meta.qml" line="32"/>
+        <source>Frequency</source>
+        <translation>周波数</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/distort/meta.qml" line="48"/>
+        <source>Velocity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/glitch/meta.qml" line="23"/>
+        <source>Glitch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/glitch/meta.qml" line="40"/>
+        <source>Block height</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/glitch/meta.qml" line="48"/>
+        <source>Shift intensity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/glitch/meta.qml" line="56"/>
+        <source>Color intensity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/rgbsplit0r/meta.qml" line="23"/>
+        <source>RGB Shift</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7303,6 +7459,14 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/blur/meta_boxblur.qml" line="25"/>
         <source>Height</source>
         <translation>高さ</translation>
+    </message>
+</context>
+<context>
+    <name>meta_dance</name>
+    <message>
+        <location filename="../src/qml/filters/dance/meta_dance.qml" line="7"/>
+        <source>Audio Dance Visualization</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7354,6 +7518,14 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/color/meta_frei0r_coloradj.qml" line="7"/>
         <source>Color Grading</source>
         <translation>カラーコレクション</translation>
+    </message>
+</context>
+<context>
+    <name>meta_lightshow</name>
+    <message>
+        <location filename="../src/qml/filters/lightshow/meta_lightshow.qml" line="7"/>
+        <source>Audio Light Visualization</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7638,92 +7810,92 @@ Most users do not need to change this.</source>
 <context>
     <name>timeline</name>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="139"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="138"/>
         <source>Master</source>
         <translation>マスター</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="156"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="155"/>
         <source>Filters</source>
         <translation>フィルタ</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="337"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="336"/>
         <source>Insert</source>
         <translation>挿入</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="337"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="336"/>
         <source>Overwrite</source>
         <translation>上書き</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="401"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="400"/>
         <source>Add Audio Track</source>
         <translation>音声トラックを追加</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="406"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="405"/>
         <source>Add Video Track</source>
         <translation>映像トラックを追加</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="411"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="410"/>
         <source>Insert Track</source>
         <translation>トラックを挿入</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="415"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="414"/>
         <source>Remove Track</source>
         <translation>トラックを削除</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="420"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="419"/>
         <source>Ripple All Tracks</source>
         <translation>全てのトラックをリップル</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="427"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="426"/>
         <source>Copy Timeline to Source</source>
         <translation>タイムラインをソースにコピー</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="433"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="432"/>
         <source>Make Tracks Shorter</source>
         <translation>トラックを狭くする</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="438"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="437"/>
         <source>Make Tracks Taller</source>
         <translation>トラックを広げる</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="448"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="447"/>
         <source>Show Audio Waveforms</source>
         <translation>音声波形を表示</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="468"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="467"/>
         <source>Show Video Thumbnails</source>
         <translation>映像サムネイルを表示</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="474"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="473"/>
         <source>Center the Playhead</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="483"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="482"/>
         <source>Properties</source>
         <translation>プロパティ</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="487"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="486"/>
         <source>Reload</source>
         <translation>再読み込み</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="443"/>
+        <location filename="../src/qml/timeline/timeline.qml" line="442"/>
         <source>Reset Track Height</source>
         <translation>トラックの縦幅をリセット</translation>
     </message>
@@ -7835,7 +8007,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/audio_pan/ui.qml" line="135"/>
         <location filename="../src/qml/filters/audio_swapchannels/ui.qml" line="59"/>
         <location filename="../src/qml/filters/crop/ui.qml" line="176"/>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="536"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="537"/>
         <source>Left</source>
         <translation>左</translation>
     </message>
@@ -7846,11 +8018,12 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/audio_pan/ui.qml" line="142"/>
         <location filename="../src/qml/filters/audio_swapchannels/ui.qml" line="59"/>
         <location filename="../src/qml/filters/crop/ui.qml" line="193"/>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="548"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="549"/>
         <source>Right</source>
         <translation>右</translation>
     </message>
     <message>
+        <location filename="../src/qml/filters/aech0r/ui.qml" line="73"/>
         <location filename="../src/qml/filters/audio_balance/ui.qml" line="101"/>
         <location filename="../src/qml/filters/audio_bandpass/ui.qml" line="52"/>
         <location filename="../src/qml/filters/audio_basstreble/ui.qml" line="169"/>
@@ -7871,11 +8044,13 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/color/ui.qml" line="122"/>
         <location filename="../src/qml/filters/contrast/ui.qml" line="144"/>
         <location filename="../src/qml/filters/crop/ui.qml" line="83"/>
+        <location filename="../src/qml/filters/distort/ui.qml" line="78"/>
         <location filename="../src/qml/filters/dust/ui.qml" line="48"/>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="268"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="269"/>
+        <location filename="../src/qml/filters/glitch/ui.qml" line="81"/>
         <location filename="../src/qml/filters/grain/ui.qml" line="49"/>
+        <location filename="../src/qml/filters/grid/ui.qml" line="138"/>
         <location filename="../src/qml/filters/hue_lightness_saturation/ui.qml" line="54"/>
-        <location filename="../src/qml/filters/imagegrid/ui.qml" line="138"/>
         <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="98"/>
         <location filename="../src/qml/filters/lenscorrection/ui.qml" line="61"/>
         <location filename="../src/qml/filters/levels/ui.qml" line="154"/>
@@ -7886,6 +8061,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/mosaic/ui.qml" line="56"/>
         <location filename="../src/qml/filters/oldfilm/ui.qml" line="60"/>
         <location filename="../src/qml/filters/opacity/ui.qml" line="107"/>
+        <location filename="../src/qml/filters/rgbsplit0r/ui.qml" line="70"/>
         <location filename="../src/qml/filters/rotate/ui.qml" line="151"/>
         <location filename="../src/qml/filters/select0r/ui.qml" line="109"/>
         <location filename="../src/qml/filters/sepia/ui.qml" line="38"/>
@@ -7972,7 +8148,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="34"/>
         <location filename="../src/qml/filters/audio_swapchannels/ui.qml" line="34"/>
         <location filename="../src/qml/filters/crop/ui.qml" line="102"/>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="542"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="543"/>
         <source>Center</source>
         <translation>センター</translation>
     </message>
@@ -8414,286 +8590,286 @@ Most users do not need to change this.</source>
     </message>
     <message>
         <location filename="../src/qml/filters/crop/ui.qml" line="142"/>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="566"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="567"/>
         <source>Top</source>
         <translation>上</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/crop/ui.qml" line="159"/>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="578"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="579"/>
         <source>Bottom</source>
         <translation>下</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dust/ui.qml" line="59"/>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="496"/>
-        <location filename="../src/qml/filters/spot_remover/ui.qml" line="188"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="498"/>
+        <location filename="../src/qml/filters/spot_remover/ui.qml" line="189"/>
         <location filename="../src/qml/filters/waveform/ui.qml" line="154"/>
         <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="153"/>
         <source>Size</source>
         <translation>サイズ</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="62"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="63"/>
         <location filename="../src/qml/filters/levels/ui.qml" line="192"/>
         <location filename="../src/qml/filters/timer/ui.qml" line="55"/>
         <source>Bottom Left</source>
         <translation>左下</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="67"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="68"/>
         <location filename="../src/qml/filters/levels/ui.qml" line="192"/>
         <location filename="../src/qml/filters/timer/ui.qml" line="60"/>
         <source>Bottom Right</source>
         <translation>右下</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="72"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="73"/>
         <location filename="../src/qml/filters/levels/ui.qml" line="192"/>
         <source>Top Left</source>
         <translation>左上</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="77"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="78"/>
         <location filename="../src/qml/filters/levels/ui.qml" line="192"/>
         <source>Top Right</source>
         <translation>右上</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="82"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="83"/>
         <source>Lower Third</source>
         <translation>下部3分の1</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="87"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="88"/>
         <source>Slide In From Left</source>
         <translation>左からスライドイン</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="89"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="90"/>
         <source>Slide In From Right</source>
         <translation>右からスライドイン</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="91"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="92"/>
         <source>Slide In From Top</source>
         <translation>上からスライドイン</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="93"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="94"/>
         <source>Slide In From Bottom</source>
         <translation>下からスライドイン</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="97"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="98"/>
         <source>Slide Out Left</source>
         <translation>左にスライドアウト</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="99"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="100"/>
         <source>Slide Out Right</source>
         <translation>右にスライドアウト</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="101"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="102"/>
         <source>Slide Out Top</source>
         <translation>上にスライドアウト</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="103"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="104"/>
         <source>Slide Out Bottom</source>
         <translation>下にスライドアウト</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="107"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="108"/>
         <source>Slow Zoom In</source>
         <translation>ゆっくりと拡大</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="109"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="110"/>
         <source>Slow Zoom Out</source>
         <translation>ゆっくりと縮小</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="111"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="112"/>
         <source>Slow Pan Left</source>
         <translation>ゆっくりと左にパン</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="112"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="113"/>
         <source>Slow Move Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="114"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="115"/>
         <source>Slow Pan Right</source>
         <translation>ゆっくりと右にパン</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="115"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="116"/>
         <source>Slow Move Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="117"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="118"/>
         <source>Slow Pan Up</source>
         <translation>ゆっくりと上にパン</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="118"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="119"/>
         <source>Slow Move Up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="120"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="121"/>
         <source>Slow Pan Down</source>
         <translation>ゆっくりと下にパン</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="121"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="122"/>
         <source>Slow Move Down</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="123"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="124"/>
         <source>Slow Zoom In, Pan Up Left</source>
         <translation>ゆっくり拡大、左上にパン</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="124"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="125"/>
         <source>Slow Zoom In, Move Up Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="126"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="127"/>
         <source>Slow Zoom In, Pan Down Right</source>
         <translation>ゆっくり拡大、右下にパン</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="127"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="128"/>
         <source>Slow Zoom In, Move Down Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="129"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="130"/>
         <source>Slow Zoom Out, Pan Up Right</source>
         <translation>ゆっくり縮小、右上にパン</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="130"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="131"/>
         <source>Slow Zoom Out, Move Up Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="132"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="133"/>
         <source>Slow Zoom Out, Pan Down Left</source>
         <translation>ゆっくり縮小、左下にパン</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="133"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="134"/>
         <source>Slow Zoom Out, Move Down Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="201"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="202"/>
         <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="119"/>
         <source>Bold</source>
         <translation>太字</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="203"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="204"/>
         <source>Italic</source>
         <translation>斜体</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="294"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="295"/>
         <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="81"/>
         <source>Text</source>
         <translation>テキスト</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="321"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="322"/>
         <source>Insert field</source>
         <translation>フィールドを挿入</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="327"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="328"/>
         <source># (Hash sign)</source>
         <translation># (シャープ)</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="331"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="332"/>
         <source>Timecode</source>
         <translation>タイムコード</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="335"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="336"/>
         <source>Frame #</source>
         <comment>Frame number</comment>
         <translation>フレーム No.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="339"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="340"/>
         <source>File date</source>
         <translation>ファイルの日付</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="343"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="344"/>
         <source>File name</source>
         <translation>ファイル名</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="349"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="350"/>
         <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="94"/>
         <source>Font</source>
         <translation>フォント</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="387"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="388"/>
         <source>Use font size</source>
         <translation>フォントサイズを使用</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="402"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="403"/>
         <source>Outline</source>
         <translation>輪郭</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="412"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="413"/>
         <location filename="../src/qml/filters/waveform/ui.qml" line="116"/>
         <location filename="../src/qml/filters/webvfx_ruttetraizer/ui.qml" line="91"/>
         <source>Thickness</source>
         <translation>太さ</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="426"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="427"/>
         <source>Background</source>
         <translation>背景</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="436"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="437"/>
         <source>Padding</source>
         <translation>パディング</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="450"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="451"/>
         <location filename="../src/qml/filters/spot_remover/ui.qml" line="142"/>
         <location filename="../src/qml/filters/waveform/ui.qml" line="133"/>
         <source>Position</source>
         <translation>位置</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="531"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="532"/>
         <source>Horizontal fit</source>
         <translation>水平に合わせる</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="561"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="562"/>
         <source>Vertical fit</source>
         <translation>垂直に合わせる</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="572"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="573"/>
         <source>Middle</source>
         <comment>Text video filter</comment>
         <translation>中央</translation>
@@ -8875,45 +9051,45 @@ Most users do not need to change this.</source>
         <translation>暗さ</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lut3d/ui.qml" line="56"/>
+        <location filename="../src/qml/filters/lut3d/ui.qml" line="55"/>
         <source>No File Loaded</source>
         <translation>ファイルが読み込まれていません</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lut3d/ui.qml" line="58"/>
+        <location filename="../src/qml/filters/lut3d/ui.qml" line="57"/>
         <source>No 3D LUT file loaded.
 Click &quot;Open&quot; to load a file.</source>
         <translation>3D LUT ファイルが読み込まれていません。
 &quot;開く&quot; をクリックしてファイルを読み込んでください。</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lut3d/ui.qml" line="87"/>
+        <location filename="../src/qml/filters/lut3d/ui.qml" line="86"/>
         <location filename="../src/qml/filters/webvfx/ui.qml" line="196"/>
         <source>Open...</source>
         <translation>開く...</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lut3d/ui.qml" line="91"/>
+        <location filename="../src/qml/filters/lut3d/ui.qml" line="90"/>
         <source>Open 3D LUT File</source>
         <translation>3D LUT ファイルを開く</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lut3d/ui.qml" line="103"/>
+        <location filename="../src/qml/filters/lut3d/ui.qml" line="102"/>
         <source>Interpolation</source>
         <translation>補間</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lut3d/ui.qml" line="109"/>
+        <location filename="../src/qml/filters/lut3d/ui.qml" line="108"/>
         <source>Nearest</source>
         <translation>ニアレスト</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lut3d/ui.qml" line="109"/>
+        <location filename="../src/qml/filters/lut3d/ui.qml" line="108"/>
         <source>Trilinear</source>
         <translation>トライリニア</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lut3d/ui.qml" line="109"/>
+        <location filename="../src/qml/filters/lut3d/ui.qml" line="108"/>
         <source>Tetrahedral</source>
         <translation>4面体</translation>
     </message>
@@ -8994,6 +9170,7 @@ Click &quot;Open&quot; to load a file.</source>
     <message>
         <location filename="../src/qml/filters/mask/ui.qml" line="206"/>
         <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="207"/>
+        <location filename="../src/qml/filters/rgbsplit0r/ui.qml" line="110"/>
         <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="203"/>
         <source>Horizontal</source>
         <translation>水平</translation>
@@ -9001,6 +9178,7 @@ Click &quot;Open&quot; to load a file.</source>
     <message>
         <location filename="../src/qml/filters/mask/ui.qml" line="227"/>
         <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="228"/>
+        <location filename="../src/qml/filters/rgbsplit0r/ui.qml" line="85"/>
         <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="220"/>
         <source>Vertical</source>
         <translation>垂直</translation>
@@ -9243,6 +9421,27 @@ Click &quot;Open&quot; to load a file.</source>
         <translation>元のピクセルとぼかされたピクセルの差分がしきい値以下の場合、ぼかされたピクセルに置き換えられます。</translation>
     </message>
     <message>
+        <location filename="../src/qml/filters/aech0r/ui.qml" line="86"/>
+        <source>Fade</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/aech0r/ui.qml" line="103"/>
+        <source>Fade period</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/aech0r/ui.qml" line="125"/>
+        <source>Lighter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/aech0r/ui.qml" line="133"/>
+        <source>Plans fade</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/aech0r/ui.qml" line="167"/>
         <location filename="../src/qml/filters/levels/ui.qml" line="178"/>
         <location filename="../src/qml/filters/spillsuppress/ui.qml" line="46"/>
         <location filename="../src/qml/filters/tcolor/ui.qml" line="59"/>
@@ -9250,6 +9449,7 @@ Click &quot;Open&quot; to load a file.</source>
         <translation>緑</translation>
     </message>
     <message>
+        <location filename="../src/qml/filters/aech0r/ui.qml" line="183"/>
         <location filename="../src/qml/filters/levels/ui.qml" line="178"/>
         <location filename="../src/qml/filters/spillsuppress/ui.qml" line="52"/>
         <location filename="../src/qml/filters/tcolor/ui.qml" line="83"/>
@@ -9257,6 +9457,12 @@ Click &quot;Open&quot; to load a file.</source>
         <translation>青</translation>
     </message>
     <message>
+        <location filename="../src/qml/filters/aech0r/ui.qml" line="199"/>
+        <source>Comparison</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/aech0r/ui.qml" line="150"/>
         <location filename="../src/qml/filters/levels/ui.qml" line="178"/>
         <source>Red</source>
         <translation>赤</translation>
@@ -9347,9 +9553,21 @@ Click &quot;Open&quot; to load a file.</source>
         <translation>黄</translation>
     </message>
     <message>
+        <location filename="../src/qml/filters/distort/ui.qml" line="95"/>
         <location filename="../src/qml/filters/wave/ui.qml" line="60"/>
         <source>Amplitude</source>
         <translation>振幅</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/distort/ui.qml" line="120"/>
+        <location filename="../src/qml/filters/glitch/ui.qml" line="98"/>
+        <source>Frequency</source>
+        <translation>周波数</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/distort/ui.qml" line="145"/>
+        <source>Velocity</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/wave/ui.qml" line="75"/>
@@ -9550,7 +9768,7 @@ Click &quot;Open&quot; to load a file.</source>
     <message>
         <location filename="../src/qml/filters/timer/ui.qml" line="231"/>
         <source>Offset</source>
-        <translation type="unfinished"></translation>
+        <translation>オフセット</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask_shape/ui.qml" line="210"/>
@@ -9723,14 +9941,29 @@ Click &quot;Open&quot; to load a file.</source>
         <translation>ウィンドウ</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/imagegrid/ui.qml" line="166"/>
-        <location filename="../src/qml/filters/imagegrid/ui.qml" line="202"/>
+        <location filename="../src/qml/filters/grid/ui.qml" line="166"/>
+        <location filename="../src/qml/filters/grid/ui.qml" line="202"/>
         <source>Columns</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx_swirl/ui.qml" line="41"/>
         <source>Swirl amount</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/glitch/ui.qml" line="123"/>
+        <source>Block height</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/glitch/ui.qml" line="148"/>
+        <source>Shift intensity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/glitch/ui.qml" line="173"/>
+        <source>Color intensity</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -9750,6 +9983,140 @@ Click &quot;Open&quot; to load a file.</source>
         <location filename="../src/qml/filters/blur/ui_boxblur.qml" line="202"/>
         <source>Height</source>
         <translation>高さ</translation>
+    </message>
+</context>
+<context>
+    <name>ui_dance</name>
+    <message>
+        <location filename="../src/qml/filters/dance/ui_dance.qml" line="73"/>
+        <source>Preset</source>
+        <translation>プリセット</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/dance/ui_dance.qml" line="84"/>
+        <source>Initial Zoom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/dance/ui_dance.qml" line="86"/>
+        <source>The amount to zoom the image before any motion occurs.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/dance/ui_dance.qml" line="102"/>
+        <source>Oscillation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/dance/ui_dance.qml" line="104"/>
+        <source>Oscillation can be useful to make the image move back and forth during long periods of sound.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/dance/ui_dance.qml" line="120"/>
+        <source>Zoom</source>
+        <translation>縮小拡大</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/dance/ui_dance.qml" line="122"/>
+        <source>The amount that the audio affects the zoom of the image.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/dance/ui_dance.qml" line="138"/>
+        <source>Up</source>
+        <translation>アップ</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/dance/ui_dance.qml" line="140"/>
+        <source>The amount that the audio affects the upward offset of the image.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/dance/ui_dance.qml" line="156"/>
+        <source>Down</source>
+        <translation>ダウン</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/dance/ui_dance.qml" line="158"/>
+        <source>The amount that the audio affects the downward offset of the image.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/dance/ui_dance.qml" line="174"/>
+        <source>Left</source>
+        <translation>左</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/dance/ui_dance.qml" line="176"/>
+        <source>The amount that the audio affects the left offset of the image.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/dance/ui_dance.qml" line="192"/>
+        <source>Right</source>
+        <translation>右</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/dance/ui_dance.qml" line="194"/>
+        <source>The amount that the audio affects the right offset of the image.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/dance/ui_dance.qml" line="210"/>
+        <source>Clockwise</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/dance/ui_dance.qml" line="212"/>
+        <source>The amount that the audio affects the clockwise rotation of the image.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/dance/ui_dance.qml" line="220"/>
+        <location filename="../src/qml/filters/dance/ui_dance.qml" line="238"/>
+        <source> deg</source>
+        <translation>度</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/dance/ui_dance.qml" line="228"/>
+        <source>Counterclockwise</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/dance/ui_dance.qml" line="230"/>
+        <source>The amount that the audio affects the counterclockwise rotation of the image.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/dance/ui_dance.qml" line="246"/>
+        <source>Low Frequency</source>
+        <translation>低周波</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/dance/ui_dance.qml" line="248"/>
+        <source>The low end of the frequency range to be used to influence the image motion.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/dance/ui_dance.qml" line="269"/>
+        <source>High Frequency</source>
+        <translation>高周波</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/dance/ui_dance.qml" line="271"/>
+        <source>The high end of the frequency range to be used to influence the image motion.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/dance/ui_dance.qml" line="292"/>
+        <source>Threshold</source>
+        <translation>しきい値</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/dance/ui_dance.qml" line="294"/>
+        <source>The minimum amplitude of sound that must occur within the frequency range to cause the image to move.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9808,6 +10175,74 @@ Click &quot;Open&quot; to load a file.</source>
         <location filename="../src/qml/filters/color/ui_frei0r_coloradj.qml" line="64"/>
         <source>Highlights (Gain)</source>
         <translation>ハイライト (ゲイン)</translation>
+    </message>
+</context>
+<context>
+    <name>ui_lightshow</name>
+    <message>
+        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="85"/>
+        <source>Preset</source>
+        <translation>プリセット</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="96"/>
+        <source>Foreground</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="108"/>
+        <source>Background</source>
+        <translation>背景</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="120"/>
+        <source>Position</source>
+        <translation>位置</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="141"/>
+        <source>Size</source>
+        <translation>サイズ</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="162"/>
+        <source>Oscillation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="164"/>
+        <source>Oscillation can be useful to make the light blink during long periods of sound.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="180"/>
+        <source>Low Frequency</source>
+        <translation>低周波</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="182"/>
+        <source>The low end of the frequency range to be used to influence the light.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="203"/>
+        <source>High Frequency</source>
+        <translation>高周波</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="205"/>
+        <source>The high end of the frequency range to be used to influence the light.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="226"/>
+        <source>Threshold</source>
+        <translation>しきい値</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="228"/>
+        <source>The minimum amplitude of sound that must occur within the frequency range to cause the light to change.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9911,102 +10346,112 @@ Click &quot;Open&quot; to load a file.</source>
 <context>
     <name>ui_spectrum</name>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="94"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="98"/>
         <source>Preset</source>
         <translation>プリセット</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="105"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="109"/>
         <source>Type</source>
         <translation>種類</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="111"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="115"/>
         <source>Line</source>
         <translation>曲線</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="111"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="115"/>
         <source>Bar</source>
         <translation>棒線</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="124"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="128"/>
         <source>Spectrum Color</source>
         <translation>スペクトルの色</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="136"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="140"/>
         <source>Background Color</source>
         <translation>背景色</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="148"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="152"/>
         <source>Thickness</source>
         <translation>太さ</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="165"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="169"/>
         <source>Position</source>
         <translation>位置</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="186"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="190"/>
         <source>Size</source>
         <translation>サイズ</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="207"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="211"/>
         <source>Fill</source>
         <translation>塗りつぶし</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="213"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="217"/>
         <source>Fill the area under the spectrum.</source>
         <translation>スペクトルの下を塗りつぶします。</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="218"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="222"/>
         <source>Mirror</source>
         <translation>ミラー</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="224"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="228"/>
         <source>Mirror the spectrum.</source>
         <translation>スペクトルをミラーします。</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="229"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="233"/>
         <source>Reverse</source>
         <translation>反転</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="235"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="239"/>
         <source>Reverse the spectrum.</source>
         <translation>スペクトルを反転させます。</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="240"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="244"/>
         <source>Tension</source>
         <translation>テンション</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="256"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="260"/>
         <source>Bands</source>
         <translation>バンド</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="272"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="276"/>
         <source>Low Frequency</source>
         <translation>低周波</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="289"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="278"/>
+        <source>The low end of the frequency range of the spectrum.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="299"/>
         <source>High Frequency</source>
         <translation>高周波</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="306"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="301"/>
+        <source>The high end of the frequency range of the spectrum.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="322"/>
         <source>Threshold</source>
         <translation>しきい値</translation>
     </message>
