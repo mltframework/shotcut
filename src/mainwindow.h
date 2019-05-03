@@ -324,6 +324,8 @@ private slots:
     void onOpenOtherTriggered();
     void on_actionClearRecentOnExit_toggled(bool arg1);
     void onSceneGraphInitialized();
+    void on_actionShowTextUnderIcons_toggled(bool b);
+    void on_actionShowSmallIcons_toggled(bool b);
 };
 
 #define MAIN MainWindow::singleton()

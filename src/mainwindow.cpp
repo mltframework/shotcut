@@ -162,7 +162,6 @@ MainWindow::MainWindow()
 
     // Create the UI.
     ui->setupUi(this);
-    ui->mainToolBar->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
 #ifdef Q_OS_MAC
     // Qt 5 on OS X supports the standard Full Screen window widget.
     ui->mainToolBar->removeAction(ui->actionFullscreen);
@@ -2227,6 +2226,10 @@ void MainWindow::showEvent(QShowEvent* event)
     on_actionShowTitleBars_triggered(Settings.showTitleBars());
     ui->actionShowToolbar->setChecked(Settings.showToolBar());
     on_actionShowToolbar_triggered(Settings.showToolBar());
+    ui->actionShowTextUnderIcons->setChecked(Settings.textUnderIcons());
+    on_actionShowTextUnderIcons_toggled(Settings.textUnderIcons());
+    ui->actionShowSmallIcons->setChecked(Settings.smallIcons());
+    on_actionShowSmallIcons_toggled(Settings.smallIcons());
 
     windowHandle()->installEventFilter(this);
 
@@ -3306,6 +3309,10 @@ void MainWindow::on_actionRestoreLayout_triggered()
     on_actionLayoutTimeline_triggered();
     ui->actionShowTitleBars->setChecked(true);
     on_actionShowTitleBars_triggered(true);
+    ui->actionShowTextUnderIcons->setChecked(true);
+    on_actionShowTextUnderIcons_toggled(true);
+    ui->actionShowSmallIcons->setChecked(false);
+    on_actionShowSmallIcons_toggled(false);
 }
 
 void MainWindow::on_actionShowTitleBars_triggered(bool checked)
@@ -3954,4 +3961,16 @@ void MainWindow::onSceneGraphInitialized()
     } else if (Settings.playerGPU()) {
         ui->actionGPU->setVisible(true);
     }
+}
+
+void MainWindow::on_actionShowTextUnderIcons_toggled(bool b)
+{
+    ui->mainToolBar->setToolButtonStyle(b? Qt::ToolButtonTextUnderIcon : Qt::ToolButtonIconOnly);
+    Settings.setTextUnderIcons(b);
+}
+
+void MainWindow::on_actionShowSmallIcons_toggled(bool b)
+{
+    ui->mainToolBar->setIconSize(b? QSize(16, 16) : QSize());
+    Settings.setSmallIcons(b);
 }

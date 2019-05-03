@@ -81,6 +81,8 @@
     <addaction name="menuLayout"/>
     <addaction name="actionShowTitleBars"/>
     <addaction name="actionShowToolbar"/>
+    <addaction name="actionShowSmallIcons"/>
+    <addaction name="actionShowTextUnderIcons"/>
     <addaction name="separator"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
@@ -963,6 +965,22 @@
    </property>
    <property name="text">
     <string>Clear Recent on Exit</string>
+   </property>
+  </action>
+  <action name="actionShowTextUnderIcons">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Show Text Under Icons</string>
+   </property>
+  </action>
+  <action name="actionShowSmallIcons">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Show Small Icons</string>
    </property>
   </action>
  </widget>

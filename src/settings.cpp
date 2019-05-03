@@ -148,6 +148,26 @@ void ShotcutSettings::setShowToolBar(bool b)
     settings.setValue("toolBar", b);
 }
 
+bool ShotcutSettings::textUnderIcons() const
+{
+    return settings.value("textUnderIcons", true).toBool();
+}
+
+void ShotcutSettings::setTextUnderIcons(bool b)
+{
+    settings.setValue("textUnderIcons", b);
+}
+
+bool ShotcutSettings::smallIcons() const
+{
+    return settings.value("smallIcons", false).toBool();
+}
+
+void ShotcutSettings::setSmallIcons(bool b)
+{
+    settings.setValue("smallIcons", b);
+}
+
 QByteArray ShotcutSettings::windowGeometry() const
 {
     return settings.value("geometry").toByteArray();

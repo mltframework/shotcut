@@ -43,7 +43,6 @@ class ShotcutSettings : public QObject
     Q_PROPERTY(double videoInDuration READ videoInDuration WRITE setVideoInDuration NOTIFY videoInDurationChanged)
     Q_PROPERTY(double videoOutDuration READ videoOutDuration WRITE setVideoOutDuration NOTIFY videoOutDurationChanged)
 
-
 public:
     static ShotcutSettings& singleton();
     explicit ShotcutSettings() : QObject() {}
@@ -66,6 +65,10 @@ public:
     void setShowTitleBars(bool);
     bool showToolBar() const;
     void setShowToolBar(bool);
+    bool textUnderIcons() const;
+    void setTextUnderIcons(bool);
+    bool smallIcons() const;
+    void setSmallIcons(bool);
     QByteArray windowGeometry() const;
     void setWindowGeometry(const QByteArray&);
     QByteArray windowGeometryDefault() const;
