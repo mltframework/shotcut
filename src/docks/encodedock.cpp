@@ -1201,14 +1201,14 @@ void EncodeDock::on_encodeButton_clicked()
     QString directory = Settings.encodePath();
     if (!m_extension.isEmpty()) {
         if (!MAIN.fileName().isEmpty()) {
-            directory += QString("/%1.%2").arg(QFileInfo(MAIN.fileName()).baseName())
+            directory += QString("/%1.%2").arg(QFileInfo(MAIN.fileName()).completeBaseName())
                                           .arg(m_extension);
         } else {
             directory += "/." + m_extension;
         }
     } else {
         if (!MAIN.fileName().isEmpty()) {
-            directory += "/" + QFileInfo(MAIN.fileName()).baseName();
+            directory += "/" + QFileInfo(MAIN.fileName()).completeBaseName();
         }
 #ifdef Q_OS_MAC
         else {
