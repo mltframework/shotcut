@@ -949,7 +949,7 @@ MeltJob* EncodeDock::createMeltJob(Mlt::Producer* service, const QString& target
 
     int frameRateNum = consumerNode.attribute("frame_rate_num").toInt();
     int frameRateDen = consumerNode.attribute("frame_rate_den").toInt();
-    MeltJob* job = new EncodeJob(target, dom.toString(2), frameRateNum, frameRateDen);
+    MeltJob* job = new EncodeJob(QDir::toNativeSeparators(target), dom.toString(2), frameRateNum, frameRateDen);
     job->setUseMultiConsumer(
             ui->widthSpinner->value() != MLT.profile().width() ||
             ui->heightSpinner->value() != MLT.profile().height() ||
