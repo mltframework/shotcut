@@ -2517,8 +2517,8 @@ void MultitrackModel::addBackgroundTrack()
 {
     Mlt::Playlist playlist(MLT.profile());
     playlist.set("id", kBackgroundTrackId);
-    Mlt::Producer producer(MLT.profile(), "color:black");
-    producer.set("mlt_image_format", "rgb24");
+    Mlt::Producer producer(MLT.profile(), "color:0");
+    producer.set("mlt_image_format", "rgb24a");
     producer.set("length", 1);
     producer.set("id", "black");
     // Allow mixing against frames produced by this producer.
@@ -3301,7 +3301,7 @@ void MultitrackModel::addBlackTrackIfNeeded()
     if (track) {
         Mlt::Playlist playlist(*track);
         QScopedPointer<Mlt::Producer> clip(playlist.get_clip(0));
-        if (clip && QString(clip->get("resource")) == "black")
+        if (clip && QString(clip->get("id")) == "black")
             found = true;
     }
     if (!found) {
@@ -3312,8 +3312,8 @@ void MultitrackModel::addBlackTrackIfNeeded()
                 m_tractor->set_track(*producer, n);
             delete producer;
         }
-        Mlt::Producer producer(MLT.profile(), "color:black");
-        producer.set("mlt_image_format", "rgb24");
+        Mlt::Producer producer(MLT.profile(), "color:0");
+        producer.set("mlt_image_format", "rgb24a");
         m_tractor->set_track(producer, 0);
     }
 }
