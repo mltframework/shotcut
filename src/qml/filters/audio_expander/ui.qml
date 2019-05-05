@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2015 Meltytech, LLC
- * Author: Lauren Dennedy
+ * Copyright (c) 2015-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -42,7 +41,7 @@ Item {
     function setControls() {
         sliderPeak.value = filter.getDouble('0') * sliderPeak.maximumValue
         sliderAttack.value = filter.getDouble('1')
-        sliderRelease.value = filter.get('2')
+        sliderRelease.value = filter.getDouble('2')
         sliderThreshold.value = filter.getDouble('3')
         sliderRatio.value = filter.getDouble('4')
         sliderRadius.value = filter.getDouble('5')

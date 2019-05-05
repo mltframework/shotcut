@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2015 Meltytech, LLC
- * Author: Lauren Dennedy
+ * Copyright (c) 2015-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -39,7 +38,7 @@ Item {
     function setControls() {
         sliderCenter.value = filter.getDouble('0')
         sliderBandwidth.value = filter.getDouble('1')
-        sliderStages.value = filter.get('2')
+        sliderStages.value = filter.getDouble('2')
         sliderWetness.value = filter.getDouble('wetness') * sliderWetness.maximumValue
     }
 

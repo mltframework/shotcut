@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2018 Meltytech, LLC
+ * Copyright (c) 2015-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -90,7 +90,7 @@ Item {
     function setControls() {
         sliderRoom.value = filter.getDouble('0')
         sliderTime.value = filter.getDouble('1')
-        sliderDamp.value = filter.get('2') * sliderDamp.maximumValue
+        sliderDamp.value = filter.getDouble('2') * sliderDamp.maximumValue
         sliderInput.value = filter.getDouble('3') * sliderInput.maximumValue
         sliderDry.value = filter.getDouble('4')
         sliderReflection.value = filter.getDouble('5')

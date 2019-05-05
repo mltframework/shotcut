@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2015-2016 Meltytech, LLC
- * Author: Lauren Dennedy
+ * Copyright (c) 2015-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -50,7 +49,7 @@ Item {
         running: false
         repeat: true
         onTriggered: {
-            grGauge.value = filter.get('3[0]') * -1.0
+            grGauge.value = filter.getDouble('3[0]') * -1.0
         }
     }
 
