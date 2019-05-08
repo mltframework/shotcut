@@ -672,7 +672,7 @@ void AvformatProducerWidget::convert(TranscodeDialog& dialog)
         args << "-loglevel" << "verbose";
         args << "-i" << resource;
         // transcode all streams except data, subtitles, and attachments
-        args << "-map" << "0:V?" << "-map" << "0:a" << "-map_metadata" << "0" << "-ignore_unknown";
+        args << "-map" << "0:V?" << "-map" << "0:a?" << "-map_metadata" << "0" << "-ignore_unknown";
 
         switch (dialog.format()) {
         case 0:
@@ -748,7 +748,7 @@ void AvformatProducerWidget::on_reverseButton_clicked()
         else
             ffmpegArgs << "-to" << QString::fromLatin1(m_producer->get_time("out", mlt_time_clock)).replace(',', '.');
         // transcode all streams except data, subtitles, and attachments
-        ffmpegArgs << "-map" << "0:V?" << "-map" << "0:a" << "-map_metadata" << "0" << "-ignore_unknown";
+        ffmpegArgs << "-map" << "0:V?" << "-map" << "0:a?" << "-map_metadata" << "0" << "-ignore_unknown";
 
         meltArgs << "-consumer" << "avformat";
         if (m_producer->get_int("audio_index") == -1) {
