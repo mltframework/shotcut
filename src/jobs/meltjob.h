@@ -42,12 +42,12 @@ protected slots:
     virtual void onOpenTiggered();
     virtual void onFinished(int exitCode, QProcess::ExitStatus exitStatus);
     void onShowFolderTriggered();
+    void onReadyRead();
 
 protected:
     QTemporaryFile m_xml;
 
 private:
-    void onReadyRead();
 
     bool m_isStreaming;
     int m_previousPercent;

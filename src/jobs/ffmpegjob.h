@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2016-2017 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2016-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,9 +31,9 @@ public:
 
 private slots:
     void onOpenTriggered();
+    void onReadyRead();
 
 private:
-    void onReadyRead();
     QStringList m_args;
     QString m_duration;
     int m_totalFrames;

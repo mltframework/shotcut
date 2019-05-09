@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2018 Meltytech, LLC
+ * Copyright (c) 2012-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -141,24 +141,28 @@ void MeltJob::onViewXmlTriggered()
 
 void MeltJob::onReadyRead()
 {
-    QString msg = readLine();
-    int index = msg.indexOf("Frame:");
-    if (index > -1) {
-        index += 6;
-        int comma = msg.indexOf(',', index);
-        m_currentFrame = msg.mid(index, comma - index).toInt();
-    }
-    index = msg.indexOf("percentage:");
-    if (index > -1) {
-        int percent = msg.mid(index + 11).toInt();
-        if (percent != m_previousPercent) {
-            emit progressUpdated(m_item, percent);
-            m_previousPercent = percent;
+    QString msg;
+    do {
+        msg = readLine();
+        int index = msg.indexOf("Frame:");
+        if (index > -1) {
+            index += 6;
+            int comma = msg.indexOf(',', index);
+            m_currentFrame = msg.mid(index, comma - index).toInt();
         }
-    }
-    else {
-        appendToLog(msg);
-    }
+        index = msg.indexOf("percentage:");
+        if (index > -1) {
+            int percent = msg.mid(index + 11).toInt();
+            if (percent != m_previousPercent) {
+                emit progressUpdated(m_item, percent);
+                QCoreApplication::processEvents();
+                m_previousPercent = percent;
+            }
+        }
+        else {
+            appendToLog(msg);
+        }
+    } while (!msg.isEmpty());
 }
 
 void MeltJob::onFinished(int exitCode, QProcess::ExitStatus exitStatus)

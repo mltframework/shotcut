@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2016-2017 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2016-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -76,40 +75,43 @@ void FfmpegJob::onOpenTriggered()
 
 void FfmpegJob::onReadyRead()
 {
-    QString msg = readLine();
-    if (msg.contains("Duration:")) {
-        m_duration = msg.mid(msg.indexOf("Duration:") + 9);
-        m_duration = m_duration.left(m_duration.indexOf(','));
-        emit progressUpdated(m_item, 0);
-        appendToLog(msg);
-    }
-    else if (!m_totalFrames && msg.contains(" fps")) {
-        Mlt::Profile profile;
-        QRegularExpression re("(\\d+|\\d+.\\d+) fps");
-        QRegularExpressionMatch match = re.match(msg);
-        if (match.hasMatch()) {
-            QString fps = match.captured(1);
-            profile.set_frame_rate(qRound(fps.toFloat() * 1000), 1000);
-        } else {
-            profile.set_frame_rate(25, 1);
-        }
-        Mlt::Properties props;
-        props.set("_profile", profile.get_profile(), 0);
-        m_totalFrames = props.time_to_frames(m_duration.toLatin1().constData());
-        appendToLog(msg);
-    }
-    else if (msg.startsWith("frame=") && m_totalFrames > 0) {
-        msg = msg.mid(msg.indexOf("frame=") + 6);
-        msg = msg.left(msg.indexOf(" fps"));
-        int frame = msg.toInt();
-        int percent = qRound(frame * 100.0 / m_totalFrames);
-        if (percent != m_previousPercent) {
-            emit progressUpdated(m_item, percent);
-            m_previousPercent = percent;
-        }
-    }
-    else {
-        if (!msg.trimmed().isEmpty())
+    QString msg;
+    do {
+        msg = readLine();
+        if (msg.contains("Duration:")) {
+            m_duration = msg.mid(msg.indexOf("Duration:") + 9);
+            m_duration = m_duration.left(m_duration.indexOf(','));
+            emit progressUpdated(m_item, 0);
             appendToLog(msg);
-    }
+        }
+        else if (!m_totalFrames && msg.contains(" fps")) {
+            Mlt::Profile profile;
+            QRegularExpression re("(\\d+|\\d+.\\d+) fps");
+            QRegularExpressionMatch match = re.match(msg);
+            if (match.hasMatch()) {
+                QString fps = match.captured(1);
+                profile.set_frame_rate(qRound(fps.toFloat() * 1000), 1000);
+            } else {
+                profile.set_frame_rate(25, 1);
+            }
+            Mlt::Properties props;
+            props.set("_profile", profile.get_profile(), 0);
+            m_totalFrames = props.time_to_frames(m_duration.toLatin1().constData());
+            appendToLog(msg);
+        }
+        else if (msg.startsWith("frame=") && m_totalFrames > 0) {
+            msg = msg.mid(msg.indexOf("frame=") + 6);
+            msg = msg.left(msg.indexOf(" fps"));
+            int frame = msg.toInt();
+            int percent = qRound(frame * 100.0 / m_totalFrames);
+            if (percent != m_previousPercent) {
+                emit progressUpdated(m_item, percent);
+                m_previousPercent = percent;
+            }
+        }
+        else {
+            if (!msg.trimmed().isEmpty())
+                appendToLog(msg);
+        }
+    } while (!msg.isEmpty());
 }
