@@ -671,6 +671,7 @@ void AvformatProducerWidget::convert(TranscodeDialog& dialog)
 
         args << "-loglevel" << "verbose";
         args << "-i" << resource;
+        args << "-max_muxing_queue_size" << "9999";
         // transcode all streams except data, subtitles, and attachments
         args << "-map" << "0:V?" << "-map" << "0:a?" << "-map_metadata" << "0" << "-ignore_unknown";
 
@@ -738,6 +739,7 @@ void AvformatProducerWidget::on_reverseButton_clicked()
 
         ffmpegArgs << "-loglevel" << "verbose";
         ffmpegArgs << "-i" << resource;
+        ffmpegArgs << "-max_muxing_queue_size" << "9999";
         // set trim options
         if (m_producer->get(kFilterInProperty))
             ffmpegArgs << "-ss" << QString::fromLatin1(m_producer->get_time(kFilterInProperty, mlt_time_clock)).replace(',', '.');
