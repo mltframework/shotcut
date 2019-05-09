@@ -1203,18 +1203,11 @@ void EncodeDock::on_encodeButton_clicked()
         if (!MAIN.fileName().isEmpty()) {
             directory += QString("/%1.%2").arg(QFileInfo(MAIN.fileName()).completeBaseName())
                                           .arg(m_extension);
-        } else {
-            directory += "/." + m_extension;
         }
     } else {
         if (!MAIN.fileName().isEmpty()) {
             directory += "/" + QFileInfo(MAIN.fileName()).completeBaseName();
         }
-#ifdef Q_OS_MAC
-        else {
-            directory += "/.mp4";
-        }
-#endif
     }
 
     QString caption = seekable? tr("Export File") : tr("Capture File");
@@ -1223,9 +1216,7 @@ void EncodeDock::on_encodeButton_clicked()
         nameFilter = tr("%1 (*.%2);;All Files (*)").arg(ui->formatCombo->currentText()).arg(m_extension);
     else
         tr("Determined by Export (*)");
-    m_outputFilename = QFileDialog::getSaveFileName(this,
-        caption, directory,
-        nameFilter, 0, QFileDialog::HideNameFilterDetails);
+    m_outputFilename = QFileDialog::getSaveFileName(this, caption, directory, nameFilter);
     if (!m_outputFilename.isEmpty()) {
         QFileInfo fi(m_outputFilename);
         MLT.pause();

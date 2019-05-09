@@ -54,7 +54,6 @@ void EncodeJob::onVideoQualityTriggered()
 {
     // Get the location and file name for the report.
     QString directory = Settings.encodePath();
-    directory += "/.txt";
     QString caption = tr("Video Quality Report");
     QString nameFilter = tr("Text Documents (*.txt);;All Files (*)");
     QString reportPath= QFileDialog::getSaveFileName(&MAIN, caption, directory, nameFilter);

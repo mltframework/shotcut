@@ -2330,9 +2330,7 @@ bool MainWindow::on_actionSave_triggered()
 bool MainWindow::on_actionSave_As_triggered()
 {
     QString path = Settings.savePath();
-    if (m_currentFile.isEmpty())
-        path.append("/.mlt");
-    else
+    if (!m_currentFile.isEmpty())
         path = m_currentFile;
     QString caption = tr("Save XML");
     QString filename = QFileDialog::getSaveFileName(this, caption, path, tr("MLT XML (*.mlt)"));
@@ -3574,7 +3572,6 @@ void MainWindow::on_actionExportEDL_triggered()
 {
     // Dialog to get export file name.
     QString path = Settings.savePath();
-    path.append("/.edl");
     QString caption = tr("Export EDL");
     QString saveFileName = QFileDialog::getSaveFileName(this, caption, path, tr("EDL (*.edl);;All Files (*)"));
     if (!saveFileName.isEmpty()) {
@@ -3650,7 +3647,6 @@ void MainWindow::onGLWidgetImageReady()
         disconnect(glw, SIGNAL(imageReady()), this, 0);
     if (!image.isNull()) {
         QString path = Settings.savePath();
-        path.append("/.png");
         QString caption = tr("Export Frame");
         QString nameFilter = tr("PNG (*.png);;BMP (*.bmp);;JPEG (*.jpg *.jpeg);;PPM (*.ppm);;TIFF (*.tif *.tiff);;WebP (*.webp);;All Files (*)");
         QString saveFileName = QFileDialog::getSaveFileName(this, caption, path, nameFilter);

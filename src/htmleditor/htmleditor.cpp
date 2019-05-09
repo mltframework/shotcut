@@ -232,7 +232,6 @@ bool HtmlEditor::fileSave()
 bool HtmlEditor::fileSaveAs()
 {
     QString path = Settings.savePath();
-    path.append("/.html");
     QString fn = QFileDialog::getSaveFileName(this, tr("Save as..."),
                  path, tr("HTML-Files (*.htm *.html);;All Files (*)"));
     if (fn.isEmpty())
