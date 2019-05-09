@@ -373,26 +373,12 @@ void EncodeDock::onProducerOpened()
         ui->fromCombo->addItem(tr("Each Playlist Item"), "batch");
     if (MLT.isClip() && MLT.producer() && MLT.producer()->is_valid()
             && qstrcmp("_hide", MLT.producer()->get("resource"))) {
-        if (MLT.producer()->get(kShotcutCaptionProperty)) {
-            ui->fromCombo->addItem(MLT.producer()->get(kShotcutCaptionProperty), "clip");
-        } else if (MLT.producer()->get("resource")) {
-            QFileInfo resource(MLT.producer()->get("resource"));
-            ui->fromCombo->addItem(resource.completeBaseName(), "clip");
-        } else {
-            ui->fromCombo->addItem(tr("Source"), "clip");
-        }
+        ui->fromCombo->addItem(tr("Source"), "clip");
         if (MLT.producer()->get_int(kBackgroundCaptureProperty) || MLT.producer()->get_int(kExportFromProperty))
             index = ui->fromCombo->count() - 1;
     } else if (MLT.savedProducer() && MLT.savedProducer()->is_valid()
                && qstrcmp("_hide", MLT.savedProducer()->get("resource"))) {
-        if (MLT.savedProducer()->get(kShotcutCaptionProperty)) {
-            ui->fromCombo->addItem(MLT.savedProducer()->get(kShotcutCaptionProperty), "clip");
-        } else if (MLT.savedProducer()->get("resource")) {
-            QFileInfo resource(MLT.savedProducer()->get("resource"));
-            ui->fromCombo->addItem(resource.completeBaseName(), "clip");
-        } else {
-            ui->fromCombo->addItem(tr("Source"), "clip");
-        }
+        ui->fromCombo->addItem(tr("Source"), "clip");
     }
     ui->fromCombo->blockSignals(false);
     if (!m_immediateJob) {
