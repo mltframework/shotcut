@@ -483,6 +483,7 @@ QString Controller::XML(Service* service, bool withProfile, bool withMetadata)
         c.set("no_meta", 1);
     c.set("no_profile", !withProfile);
     c.set("store", "shotcut");
+    c.set("root", "");
     c.connect(s);
     c.start();
     if (ignore)
