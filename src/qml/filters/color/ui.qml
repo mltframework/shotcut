@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2014-2018 Meltytech, LLC
- * Author: Brian Matherly <code@brianmatherly.com>
+ * Copyright (c) 2014-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,8 +25,8 @@ Item {
     property double gammaFactor: 2.0
     property double gainFactor: 4.0
     property bool blockUpdate: true
-    width: 455
-    height: 280
+    width: 520
+    height: 300
 
     Component.onCompleted: {
         if (filter.isNew) {

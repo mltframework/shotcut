@@ -24,7 +24,7 @@ import Shotcut.Controls 1.0
 
 Item {
     width: 350
-    height: 250
+    height: 300
     Component.onCompleted: {
         if (filter.isNew) {
             // Set default parameter values
