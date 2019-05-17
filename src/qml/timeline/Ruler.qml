@@ -19,10 +19,9 @@ import QtQuick 2.0
 import QtQuick.Controls 1.0
 
 Rectangle {
-    property int index: 0
     property real timeScale: 1.0
     property int adjustment: 0
-    property int stepSize: Math.round(136 * Math.max(1.0, timeScale)) + adjustment
+    property real intervalSeconds: 5 * Math.max(1, Math.floor(1.5 / timeScale)) + adjustment
 
     SystemPalette { id: activePalette }
 
@@ -32,22 +31,20 @@ Rectangle {
     color: activePalette.base
 
     Repeater {
-        model: parent.width / stepSize
+        model: parent.width / (intervalSeconds * profile.fps * timeScale)
         Rectangle {
             anchors.bottom: rulerTop.bottom
             height: 18
             width: 1
             color: activePalette.windowText
-            x: index * stepSize
+            x: index * intervalSeconds * profile.fps * timeScale
             Label {
                 anchors.left: parent.right
                 anchors.leftMargin: 2
                 anchors.bottom: parent.bottom
                 anchors.bottomMargin: 2
                 color: activePalette.windowText
-                x: index * stepSize + 2
-                text: application.timecode(index * stepSize / timeScale)
-                font.pointSize: 7.5
+                text: application.timecode(index * intervalSeconds * profile.fps + 2).substr(0, 8)
             }
         }
     }

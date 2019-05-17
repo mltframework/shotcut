@@ -230,7 +230,6 @@ Rectangle {
                     Ruler {
                         id: ruler
                         width: producer.duration * timeScale
-                        index: index
                     }
                 }
                 ScrollView {

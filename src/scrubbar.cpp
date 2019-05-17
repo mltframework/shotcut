@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2011-2016 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2011-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -295,7 +294,7 @@ void ScrubBar::updatePixmap()
         for (int i = 0; x < l_width - l_margin - l_timecodeWidth; i++, x += l_interval) {
             int y = l_selectionSize + fontMetrics().ascent() - 2 * ratio;
             int frames = qRound(i * m_fps * m_secondsPerTick);
-            p.drawText(x + 2 * ratio, y, MLT.producer()->frames_to_time(frames));
+            p.drawText(x + 2 * ratio, y, QString(MLT.producer()->frames_to_time(frames)).left(8));
         }
     }
 

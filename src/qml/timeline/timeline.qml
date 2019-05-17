@@ -253,7 +253,6 @@ Rectangle {
                     Ruler {
                         id: ruler
                         width: tracksContainer.width
-                        index: index
                         timeScale: multitrack.scaleFactor
                     }
                 }
