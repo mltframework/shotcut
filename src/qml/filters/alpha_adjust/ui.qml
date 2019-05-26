@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2015 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2015-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -44,7 +43,7 @@ Item {
             }
         }
         sliderAmount.value = filter.getDouble(paramAmount) * 100
-        invertCheckbox.checked = filter.get(paramInvert)
+        invertCheckbox.checked = filter.get(paramInvert) === '1'
     }
     GridLayout {
         anchors.fill: parent
@@ -101,7 +100,6 @@ Item {
         CheckBox {
             id: invertCheckbox
             text: qsTr('Invert')
-            checked: filter.get(paramInvert)
             onCheckedChanged: filter.set(paramInvert, checked)
         }
         UndoButton {
