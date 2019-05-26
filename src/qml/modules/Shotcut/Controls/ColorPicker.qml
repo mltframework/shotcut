@@ -64,7 +64,7 @@ RowLayout {
         color: value
         onAccepted: {
             // Make a copy of the current value.
-            var myColor = Qt.darker(value, 1.0)
+            var myColor = Qt.darker(color, 1.0)
             // Ignore alpha when comparing.
             myColor.a = currentColor.a
             // If the user changed color but left alpha at 0,
