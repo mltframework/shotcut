@@ -31,6 +31,7 @@ Item {
     property double endValue: 0.5
 
     Component.onCompleted: {
+        filter.set('transparent', 1)
         if (filter.isNew) {
             filter.set('resource', filter.path + 'filter-demo.html')
             // Set default parameter values
@@ -44,7 +45,7 @@ Item {
                 endValue = filter.getDouble('radius', filter.duration - 1)
         }
         setControls()
-        slider.value = filter.getDouble('radius') * slider.maximumValue
+        colorSwatch.value = filter.get('color')
     }
 
     function getPosition() {
@@ -134,8 +135,8 @@ Item {
         }
         ColorPicker {
             id: colorSwatch
+            alpha: true
             Layout.columnSpan: 2
-            value: filter.get('color')
             property bool isReady: false
             Component.onCompleted: isReady = true
             onValueChanged: {
