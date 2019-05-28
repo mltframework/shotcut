@@ -35,7 +35,7 @@ Item {
         if (filter.isNew) {
             filter.set('resource', filter.path + 'filter-demo.html')
             // Set default parameter values
-            colorSwatch.value = 'black'
+            filter.set('color', '#ff000000')
             filter.set('radius', 0.5)
         } else {
             middleValue = filter.getDouble('radius', filter.animateIn)
