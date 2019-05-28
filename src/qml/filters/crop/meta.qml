@@ -3,7 +3,7 @@ import org.shotcut.qml 1.0
 
 Metadata {
     type: Metadata.Filter
-    name: qsTr("Crop")
+    name: qsTr("Crop: Source")
     mlt_service: "crop"
     qml: "ui.qml"
     gpuAlt: "crop"
