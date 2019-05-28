@@ -4,7 +4,7 @@ import org.shotcut.qml 1.0
 Metadata {
     type: Metadata.Filter
     objectName: 'dynamicText'
-    name: qsTr('Text')
+    name: qsTr('Text: Simple')
     mlt_service: 'dynamictext'
     qml: "ui.qml"
     vui: 'vui.qml'

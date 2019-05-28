@@ -3,7 +3,7 @@ import org.shotcut.qml 1.0
 
 Metadata {
     type: Metadata.Filter
-    name: qsTr("Overlay HTML")
+    name: qsTr("Text: HTML")
     mlt_service: "webvfx"
     qml: "ui.qml"
     isFavorite: true
