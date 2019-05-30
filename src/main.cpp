@@ -26,6 +26,7 @@
 #include <QProcess>
 #include <QCommandLineParser>
 #include <framework/mlt_log.h>
+#include <QFile>
 
 #ifdef Q_OS_MAC
     #include "macos.h"
@@ -217,6 +218,21 @@ public:
         Settings.log();
 
 #if defined(Q_OS_WIN)
+        dir = applicationDirPath();
+        if (!Settings.playerGPU() && Settings.drawMethod() == Qt::AA_UseSoftwareOpenGL) {
+            if (QFile::exists(dir.filePath("opengl32sw.dll"))) {
+                if (!QFile::rename(dir.filePath("opengl32sw.dll"), dir.filePath("opengl32.dll"))) {
+                    LOG_ERROR() << "Failed to rename opengl32sw.dll";
+                }
+            }
+        } else if (QFile::exists(dir.filePath("opengl32.dll"))) {
+            // If the user installed their own opengl32.dll they might still have opengl32sw.dll,
+            // which must be removed.
+            QFile::remove(dir.filePath("opengl32sw.dll"));
+            if (!QFile::rename(dir.filePath("opengl32.dll"), dir.filePath("opengl32sw.dll"))) {
+                LOG_ERROR() << "Failed to rename opengl32.dll";
+            }
+        }
         if (Settings.playerGPU()) {
             QCoreApplication::setAttribute(Qt::AA_UseDesktopOpenGL);
         } else if (Settings.drawMethod() >= Qt::AA_UseDesktopOpenGL &&
