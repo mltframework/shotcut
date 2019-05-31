@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2018 Meltytech, LLC
+ * Copyright (c) 2013-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -47,6 +47,7 @@ Item {
                 endValue = filter.getDouble('split', filter.duration - 1)
         }
         setControls()
+        combo.currentIndex = filter.get("channel")
     }
 
     function getPosition() {
@@ -111,6 +112,7 @@ Item {
             }
             onPresetSelected: {
                 setControls()
+                combo.currentIndex = filter.get("channel")
                 keyframesButton.checked = filter.keyframeCount(parameters[0]) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
                 middleValue = filter.getDouble(parameters[0], filter.animateIn)
                 if (filter.animateIn > 0)
