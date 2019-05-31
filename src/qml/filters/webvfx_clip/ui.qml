@@ -44,7 +44,7 @@ Item {
         if (filter.isNew) {
             filter.set('resource', filter.path + 'filter-clip.html')
             // Set default parameter values
-            filter.set('color', '#00000000')
+            filter.set('color', '#ff000000')
             filter.set('radius', 0)
             filter.set(rectProperty, '0%/0%:100%x100%')
             filter.set('x', 0)
