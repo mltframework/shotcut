@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2013-2018 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2013-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -101,6 +100,7 @@ public:
     Q_INVOKABLE void clearSimpleAnimation(const QString& name);
     Mlt::Animation getAnimation(const QString& name);
     Q_INVOKABLE int keyframeCount(const QString& name);
+    mlt_keyframe_type getKeyframeType(Mlt::Animation& animation, int position, mlt_keyframe_type defaultType);
 
 public slots:
     void preset(const QString& name);
@@ -126,7 +126,6 @@ private:
     
     QString objectNameOrService();
     int keyframeIndex(Mlt::Animation& animation, int position);
-    mlt_keyframe_type getKeyframeType(Mlt::Animation& animation, int position, mlt_keyframe_type defaultType = mlt_keyframe_linear);
 };
 
 class AnalyzeDelegate : public QObject

@@ -128,9 +128,10 @@ Rectangle {
                         ParameterHead {
                             trackName: model.name
                             delegateIndex: index
+                            isCurve: model.isCurve
 //                            isLocked: model.locked
                             width: headerWidth
-                            height: Logic.trackHeight(model.isCurve)
+                            height: Logic.trackHeight(isCurve)
                             current: false // index === currentTrack
 //                            onIsLockedChanged: parametersRepeater.itemAt(index).isLocked = isLocked
                             onClicked: {

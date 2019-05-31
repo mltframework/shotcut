@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Meltytech, LLC
+ * Copyright (c) 2018-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -71,7 +71,9 @@ public:
     Q_INVOKABLE bool setInterpolation(int parameterIndex, int keyframeIndex, InterpolationType type);
     Q_INVOKABLE bool setPosition(int parameterIndex, int keyframeIndex, int position);
     Q_INVOKABLE void addKeyframe(int parameterIndex, double value, int position, InterpolationType type);
+    Q_INVOKABLE void addKeyframe(int parameterIndex, int position);
     Q_INVOKABLE void setKeyframe(int parameterIndex, double value, int position, InterpolationType type);
+    Q_INVOKABLE bool isKeyframe(int parameterIndex, int position);
 
 signals:
     void loaded();

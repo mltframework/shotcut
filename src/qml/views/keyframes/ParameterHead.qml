@@ -28,6 +28,7 @@ Rectangle {
     property bool isLocked: false
     property bool selected: false
     property bool current: false
+    property bool isCurve: false
     property int delegateIndex: -1
     signal clicked()
 
@@ -124,6 +125,25 @@ Rectangle {
                     }
                 }
                 tooltip: (delegateIndex >= 0) ? qsTr('Seek to previous keyframe') : qsTr('Seek backwards')
+            }
+
+            ToolButton {
+                id: addButton
+                visible: delegateIndex >= 0 && isCurve
+                implicitWidth: 20
+                implicitHeight: 20
+                iconName: 'chronometer';
+                iconSource: 'qrc:///icons/oxygen/32x32/actions/chronometer.png'
+                onClicked: {
+                    parameters.addKeyframe(delegateIndex, producer.position)
+                    root.selection = [parameters.keyframeIndex(delegateIndex, producer.position)]
+                }
+                tooltip: qsTr('Add a keyframe at play head')
+            }
+            Item {
+                visible: delegateIndex < 0
+                width: 20
+                height: 20
             }
 
             ToolButton {

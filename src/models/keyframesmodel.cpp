@@ -341,6 +341,20 @@ void KeyframesModel::addKeyframe(int parameterIndex, double value, int position,
     }
 }
 
+void KeyframesModel::addKeyframe(int parameterIndex, int position)
+{
+    if (m_filter && parameterIndex < m_propertyNames.count()) {
+        QString name = m_propertyNames[parameterIndex];
+        // Get the value from the existing position.
+        double value = m_filter->getDouble(name, position);
+        Mlt::Animation anim = m_filter->getAnimation(name);
+        if (anim.is_valid() && !anim.is_key(position)) {
+            mlt_keyframe_type keyframeType = m_filter->getKeyframeType(anim, position, mlt_keyframe_type(-1));
+            m_filter->set(name, value, position, keyframeType);
+        }
+    }
+}
+
 void KeyframesModel::setKeyframe(int parameterIndex, double value, int position, KeyframesModel::InterpolationType type)
 {
     if (m_filter && parameterIndex < m_propertyNames.count()) {
@@ -353,6 +367,16 @@ void KeyframesModel::setKeyframe(int parameterIndex, double value, int position,
         emit dataChanged(modelIndex, modelIndex, QVector<int>() << NumericValueRole << NameRole);
         updateNeighborsMinMax(parameterIndex, modelIndex.row());
     }
+}
+
+bool KeyframesModel::isKeyframe(int parameterIndex, int position)
+{
+    if (m_filter && parameterIndex < m_propertyNames.count()) {
+        QString name = m_propertyNames[parameterIndex];
+        Mlt::Animation anim = m_filter->getAnimation(name);
+        return anim.is_valid() && anim.is_key(position);
+    }
+    return false;
 }
 
 void KeyframesModel::reload()
