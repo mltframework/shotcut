@@ -351,7 +351,7 @@ bool ShotcutSettings::playerGPU() const
 
 bool ShotcutSettings::playerWarnGPU() const
 {
-    return settings.value("player/warnGPU", true).toBool();
+    return settings.value("player/warnGPU", false).toBool();
 }
 
 void ShotcutSettings::setPlayerJACK(bool b)

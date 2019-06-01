@@ -477,7 +477,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>GPU Effects (experimental)</string>
+    <string>GPU Effects (unstable)</string>
    </property>
    <property name="toolTip">
     <string>Use GPU filters</string>
