@@ -97,6 +97,16 @@ ToolBar {
             text: qsTr('Ripple')
             onClicked: settings.timelineRipple = checked
         }
+        ToolButton {
+            id: rippleAllButton
+            checkable: true
+            checked: settings.timelineRippleAllTracks
+            iconName: 'ripple-all'
+            iconSource: 'qrc:///icons/oxygen/32x32/actions/ripple-all.png'
+            tooltip: qsTr('Ripple edits across all tracks')
+            text: qsTr('Ripple All')
+            onClicked: settings.timelineRippleAllTracks = checked
+        }
         Button { // separator
             enabled: false
             implicitWidth: 1
@@ -132,6 +142,14 @@ ToolBar {
             visible: settings.timelineRipple
             anchors.fill: rippleButton
             source: rippleButton
+            color: checkedColor
+            cached: true
+        }
+        ColorOverlay {
+            id: rippleAllColorEffect
+            visible: settings.timelineRippleAllTracks
+            anchors.fill: rippleAllButton
+            source: rippleAllButton
             color: checkedColor
             cached: true
         }
