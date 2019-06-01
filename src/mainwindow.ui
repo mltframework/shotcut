@@ -245,10 +245,10 @@
    <addaction name="actionProperties"/>
    <addaction name="actionRecent"/>
    <addaction name="actionPlaylist"/>
-   <addaction name="actionHistory"/>
+   <addaction name="actionTimeline"/>
    <addaction name="actionFilters"/>
    <addaction name="actionKeyframes"/>
-   <addaction name="actionTimeline"/>
+   <addaction name="actionHistory"/>
    <addaction name="actionEncode"/>
    <addaction name="actionFullscreen"/>
   </widget>
@@ -865,10 +865,16 @@
    <property name="text">
     <string>Export Frame...</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+E</string>
+   </property>
   </action>
   <action name="actionExportVideo">
    <property name="text">
     <string>Export Video...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+E</string>
    </property>
   </action>
   <action name="actionAppDataSet">
@@ -907,6 +913,9 @@
   <action name="actionKeyboardShortcuts">
    <property name="text">
     <string>Keyboard Shortcuts...</string>
+   </property>
+   <property name="shortcut">
+    <string>F1</string>
    </property>
   </action>
   <action name="actionLayoutPlayer">

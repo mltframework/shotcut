@@ -238,6 +238,7 @@ MainWindow::MainWindow()
     m_scopeController = new ScopeController(this, ui->menuView);
     QDockWidget* audioMeterDock = findChild<QDockWidget*>("AudioPeakMeterDock");
     if (audioMeterDock) {
+        audioMeterDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_1));
         connect(ui->actionAudioMeter, SIGNAL(triggered()), audioMeterDock->toggleViewAction(), SLOT(trigger()));
     }
 
@@ -245,6 +246,7 @@ MainWindow::MainWindow()
     m_propertiesDock->hide();
     m_propertiesDock->setObjectName("propertiesDock");
     m_propertiesDock->setWindowIcon(ui->actionProperties->icon());
+    m_propertiesDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_2));
     m_propertiesDock->toggleViewAction()->setIcon(ui->actionProperties->icon());
     m_propertiesDock->setMinimumWidth(300);
     QScrollArea* scroll = new QScrollArea;
@@ -258,6 +260,7 @@ MainWindow::MainWindow()
     m_recentDock = new RecentDock(this);
     m_recentDock->hide();
     addDockWidget(Qt::RightDockWidgetArea, m_recentDock);
+    m_recentDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_3));
     ui->menuView->addAction(m_recentDock->toggleViewAction());
     connect(m_recentDock, SIGNAL(itemActivated(QString)), this, SLOT(open(QString)));
     connect(m_recentDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onRecentDockTriggered(bool)));
@@ -267,6 +270,7 @@ MainWindow::MainWindow()
     m_playlistDock = new PlaylistDock(this);
     m_playlistDock->hide();
     addDockWidget(Qt::LeftDockWidgetArea, m_playlistDock);
+    m_playlistDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_4));
     ui->menuView->addAction(m_playlistDock->toggleViewAction());
     connect(m_playlistDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onPlaylistDockTriggered(bool)));
     connect(ui->actionPlaylist, SIGNAL(triggered()), this, SLOT(onPlaylistDockTriggered()));
@@ -287,6 +291,7 @@ MainWindow::MainWindow()
     m_timelineDock = new TimelineDock(this);
     m_timelineDock->hide();
     addDockWidget(Qt::BottomDockWidgetArea, m_timelineDock);
+    m_timelineDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_5));
     ui->menuView->addAction(m_timelineDock->toggleViewAction());
     connect(m_timelineDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onTimelineDockTriggered(bool)));
     connect(ui->actionTimeline, SIGNAL(triggered()), SLOT(onTimelineDockTriggered()));
@@ -317,6 +322,7 @@ MainWindow::MainWindow()
     m_filtersDock->setMinimumSize(400, 300);
     m_filtersDock->hide();
     addDockWidget(Qt::LeftDockWidgetArea, m_filtersDock);
+    m_filtersDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_6));
     ui->menuView->addAction(m_filtersDock->toggleViewAction());
     connect(m_filtersDock, SIGNAL(currentFilterRequested(int)), m_filterController, SLOT(setCurrentFilter(int)), Qt::QueuedConnection);
     connect(m_filtersDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onFiltersDockTriggered(bool)));
@@ -348,6 +354,7 @@ MainWindow::MainWindow()
     m_keyframesDock = new KeyframesDock(m_filtersDock->qmlProducer(), this);
     m_keyframesDock->hide();
     addDockWidget(Qt::BottomDockWidgetArea, m_keyframesDock);
+    m_keyframesDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_7));
     ui->menuView->addAction(m_keyframesDock->toggleViewAction());
     connect(m_keyframesDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onKeyframesDockTriggered(bool)));
     connect(ui->actionKeyframes, SIGNAL(triggered()), this, SLOT(onKeyframesDockTriggered()));
@@ -359,6 +366,7 @@ MainWindow::MainWindow()
     m_historyDock->setObjectName("historyDock");
     m_historyDock->setWindowIcon(ui->actionHistory->icon());
     m_historyDock->toggleViewAction()->setIcon(ui->actionHistory->icon());
+    m_historyDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_8));
     m_historyDock->setMinimumWidth(150);
     addDockWidget(Qt::RightDockWidgetArea, m_historyDock);
     ui->menuView->addAction(m_historyDock->toggleViewAction());
@@ -375,6 +383,7 @@ MainWindow::MainWindow()
     m_encodeDock = new EncodeDock(this);
     m_encodeDock->hide();
     addDockWidget(Qt::LeftDockWidgetArea, m_encodeDock);
+    m_encodeDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_9));
     ui->menuView->addAction(m_encodeDock->toggleViewAction());
     connect(this, SIGNAL(producerOpened()), m_encodeDock, SLOT(onProducerOpened()));
     connect(ui->actionEncode, SIGNAL(triggered()), this, SLOT(onEncodeTriggered()));
@@ -1867,7 +1876,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
     case Qt::Key_7:
     case Qt::Key_8:
     case Qt::Key_9:
-        if (m_playlistDock->isVisible() && m_playlistDock->model()->rowCount() > 0 && !(event->modifiers() & Qt::AltModifier)) {
+        if (!event->modifiers() && m_playlistDock->isVisible() && m_playlistDock->model()->rowCount() > 0) {
             m_playlistDock->raise();
             m_playlistDock->setIndex(event->key() - Qt::Key_1);
         }
