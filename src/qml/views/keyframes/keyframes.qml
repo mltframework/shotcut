@@ -501,6 +501,13 @@ Rectangle {
         }
     }
 
+    Connections {
+        target: keyframes
+        onZoomIn: zoomIn()
+        onZoomOut: zoomOut()
+        onResetZoom: resetZoom()
+    }
+
     // This provides continuous scrolling at the left/right edges.
     Timer {
         id: scrollTimer

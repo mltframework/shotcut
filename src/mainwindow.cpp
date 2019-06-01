@@ -1893,6 +1893,9 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
                 m_playlistDock->setIndex(9);
             }
         }
+        if (m_keyframesDock->isVisible() && (event->modifiers() & Qt::AltModifier)) {
+            emit m_keyframesDock->resetZoom();
+        }
         break;
     case Qt::Key_X: // Avid Extract
         if (event->modifiers() == Qt::ShiftModifier && m_playlistDock->model()->rowCount() > 0) {
@@ -1932,20 +1935,26 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         }
         break;
     case Qt::Key_Minus:
-        if (m_timelineDock->isVisible()) {
+        if (m_timelineDock->isVisible() && !(event->modifiers() & Qt::AltModifier)) {
             if (event->modifiers() & Qt::ControlModifier)
                 m_timelineDock->makeTracksShorter();
             else
                 m_timelineDock->zoomOut();
         }
+        if (m_keyframesDock->isVisible() && (event->modifiers() & Qt::AltModifier)) {
+            emit m_keyframesDock->zoomOut();
+        }
         break;
     case Qt::Key_Equal:
     case Qt::Key_Plus:
-        if (m_timelineDock->isVisible()) {
+        if (m_timelineDock->isVisible() && !(event->modifiers() & Qt::AltModifier)) {
             if (event->modifiers() & Qt::ControlModifier)
                 m_timelineDock->makeTracksTaller();
             else
                 m_timelineDock->zoomIn();
+        }
+        if (m_keyframesDock->isVisible() && (event->modifiers() & Qt::AltModifier)) {
+            emit m_keyframesDock->zoomIn();
         }
         break;
     case Qt::Key_Enter: // Seek to current playlist item

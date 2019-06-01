@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2016-2018 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2016-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -47,6 +46,9 @@ public:
 
 signals:
     void changed(); /// Notifies when a filter parameter changes.
+    void zoomIn();
+    void zoomOut();
+    void resetZoom();
 
 public slots:
     void setCurrentFilter(QmlFilter* filter, QmlMetadata* meta);
