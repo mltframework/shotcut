@@ -26,6 +26,7 @@
 #include <Logger.h>
 #include <Mlt.h>
 #include <math.h>
+#include <clocale>
 
 #include "glwidget.h"
 #include "settings.h"
@@ -48,6 +49,7 @@ Controller::Controller()
 {
     LOG_DEBUG() << "begin";
     m_repo = Mlt::Factory::init();
+    ::setlocale( LC_ALL, "C" );
     m_profile.reset(new Mlt::Profile(kDefaultMltProfile));
     m_filtersClipboard.reset(new Mlt::Producer(profile(), "color", "black"));
     updateAvformatCaching(0);

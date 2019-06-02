@@ -53,6 +53,8 @@ public:
     bool isCorrected() const { return m_isCorrected; }
     QString tempFileName() const { return m_tempFile.fileName(); }
     QStandardItemModel& unlinkedFilesModel() { return m_unlinkedFilesModel; }
+    void setLocale();
+    bool usesLocale() const { return m_usesLocale; }
 
 private:
     void readMlt();
@@ -74,6 +76,7 @@ private:
     bool m_needsCPU;
     bool m_hasEffects;
     bool m_isCorrected;
+    bool m_usesLocale;
     QChar m_decimalPoint;
     QTemporaryFile m_tempFile;
     bool m_numericValueChanged;

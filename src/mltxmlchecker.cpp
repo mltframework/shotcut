@@ -25,6 +25,7 @@
 #include <QUrl>
 #include <QRegExp>
 #include <Logger.h>
+#include <clocale>
 
 static QString getPrefix(const QString& name, const QString& value);
 
@@ -50,22 +51,28 @@ static bool isNumericProperty(const QString& name)
             name == "rect" || name == "warp_speed";
 }
 
+static QChar getMltDecimalPoint()
+{
+    QChar result('.');
+    Mlt::Producer producer(MLT.profile(), "color", "black");
+    if (producer.is_valid()) {
+        const char* timeString = producer.get_length_time(mlt_time_clock);
+        if (qstrlen(timeString) >= 8) // HH:MM:SS.ms
+            result = timeString[8];
+    }
+    return result;
+}
+
 MltXmlChecker::MltXmlChecker()
     : m_needsGPU(false)
     , m_needsCPU(false)
     , m_hasEffects(false)
     , m_isCorrected(false)
-    , m_decimalPoint(QLocale().decimalPoint())
+    , m_usesLocale(false)
+    , m_decimalPoint('.')
     , m_tempFile(QDir::tempPath().append("/shotcut-XXXXXX.mlt"))
     , m_numericValueChanged(false)
 {
-    Mlt::Producer producer(MLT.profile(), "color", "black");
-    if (producer.is_valid()) {
-        const char* timeString = producer.get_length_time(mlt_time_clock);
-        if (qstrlen(timeString) >= 8) // HH:MM:SS.ms
-            m_decimalPoint = timeString[8];
-    }
-    LOG_DEBUG() << "decimal point" << m_decimalPoint;
     m_unlinkedFilesModel.setColumnCount(ColumnCount);
 }
 
@@ -91,11 +98,20 @@ bool MltXmlChecker::check(const QString& fileName)
                     if (a.name().toString().toUpper() != "LC_NUMERIC") {
                         m_newXml.writeAttribute(a);
                     } else {
-                        // Upon correcting the document to conform to current system,
-                        // update the declared LC_NUMERIC.
-                        m_newXml.writeAttribute("LC_NUMERIC", QLocale().name());
+                        QString value = a.value().toString().toUpper();
+                        m_usesLocale = (value != "" && value != "C" && value != "POSIX");
+                        if (m_usesLocale) {
+                            // Upon correcting the document to conform to current system,
+                            // update the declared LC_NUMERIC.
+                            m_newXml.writeAttribute("LC_NUMERIC", QLocale().name());
+                        }
                     }
                 }
+                QString savedLocaleName = ::setlocale(LC_ALL, NULL);
+                ::setlocale(LC_ALL, m_usesLocale? "" : "C");
+                m_decimalPoint = getMltDecimalPoint();
+                ::setlocale(LC_ALL, savedLocaleName.toUtf8().constData());
+                LOG_DEBUG() << "decimal point" << m_decimalPoint;
                 readMlt();
                 m_newXml.writeEndElement();
                 m_newXml.writeEndDocument();
@@ -118,6 +134,11 @@ bool MltXmlChecker::check(const QString& fileName)
 QString MltXmlChecker::errorString() const
 {
     return m_xml.errorString();
+}
+
+void MltXmlChecker::setLocale()
+{
+    ::setlocale(LC_ALL, m_usesLocale? "" : "C");
 }
 
 void MltXmlChecker::readMlt()
