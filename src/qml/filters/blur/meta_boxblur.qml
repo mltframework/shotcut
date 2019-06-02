@@ -3,7 +3,7 @@ import org.shotcut.qml 1.0
 
 Metadata {
     type: Metadata.Filter
-    name: qsTr("Blur")
+    name: qsTr("Blur: Box")
     mlt_service: "boxblur"
     qml: "ui_boxblur.qml"
     gpuAlt: "movit.blur"
