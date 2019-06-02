@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2015 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +20,30 @@ import org.shotcut.qml 1.0
 
 Metadata {
     type: Metadata.Filter
-    name: qsTr("Reduce Noise: Smart Blur")
-    mlt_service: 'avfilter.smartblur'
-    qml: 'ui.qml'
+    name: qsTr("Reduce Noise: HQDN3D")
+    mlt_service: "frei0r.hqdn3d"
+    qml: "ui.qml"
+    keyframes {
+        allowAnimateIn: true
+        allowAnimateOut: true
+        simpleProperties: ['0', '1']
+        parameters: [
+            Parameter {
+                name: qsTr('Spatial')
+                property: '0'
+                isSimple: true
+                isCurve: true
+                minimum: 0
+                maximum: 1
+            },
+            Parameter {
+                name: qsTr('Temporal')
+                property: '1'
+                isSimple: true
+                isCurve: true
+                minimum: 0
+                maximum: 1
+            }
+        ]
+    }
 }
