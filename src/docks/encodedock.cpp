@@ -891,7 +891,7 @@ MeltJob* EncodeDock::createMeltJob(Mlt::Producer* service, const QString& target
         return 0;
     }
 
-    if (Util::warnIfNotWritable(target, this, caption))
+    if (Util::warnIfNotWritable(target, this, caption, true /* remove */))
         return 0;
 
     // add consumer element

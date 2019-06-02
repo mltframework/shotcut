@@ -62,7 +62,7 @@ void EncodeJob::onVideoQualityTriggered()
         if (fi.suffix().isEmpty())
             reportPath += ".txt";
 
-        if (Util::warnIfNotWritable(reportPath, &MAIN, caption))
+        if (Util::warnIfNotWritable(reportPath, &MAIN, caption, true /* remove */))
             return;
 
         // Get temp filename for the new XML.

@@ -455,11 +455,41 @@ bool Controller::saveXML(const QString& filename, Service* service, bool withRel
                 xml.readNext();
             tmp.close();
             if (!xml.hasError()) {
+                // QFile::rename() can fail and remove the destination file. See its docs.
+                // So, save an existing target file as a backup.
+                QString backupName;
+                if (QFile::exists(filename)) {
+                    QTemporaryFile backupTmp;
+                    backupTmp.setFileTemplate(
+                        QString("%1/%2 - backup - XXXXXX.mlt").arg(fi.absolutePath()).arg(fi.completeBaseName()));
+                    backupTmp.open();
+                    backupTmp.close();
+                    backupName = backupTmp.fileName();
+                    backupTmp.remove();
+                    if (!QFile::exists(backupName)) {
+                        LOG_DEBUG() << "rename to backup" << filename << backupName;
+                        if (!QFile::rename(filename, backupName)) {
+                            LOG_ERROR() << "rename to backup failed" << filename << backupName;
+                            return false;
+                        }
+                    } else {
+                        // Do not overwrite the backup file.
+                        LOG_ERROR() << "backup file already exists" << backupName;
+                        return false;
+                    }
+                }
                 // If the file is good, then move it into place.
                 LOG_DEBUG() << "rename" << mltFileName << filename;
                 tmp.setAutoRemove(false);
-                tmp.rename(filename);
-                return true;
+                if (tmp.rename(filename)) {
+                    // Double-check the rename operation.
+                    if (QFile::exists(filename) && QFile::exists(backupName))
+                        QFile::remove(backupName);
+                    return true;
+                } else {
+                    LOG_ERROR() << "rename failed" << mltFileName << filename;
+                    return false;
+                }
             }
         } else {
             return true;

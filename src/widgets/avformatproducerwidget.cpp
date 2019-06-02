@@ -706,7 +706,7 @@ void AvformatProducerWidget::convert(TranscodeDialog& dialog)
                                      .arg(fi.fileName()));
                 return;
             }
-            if (Util::warnIfNotWritable(filename, this, dialog.windowTitle()))
+            if (Util::warnIfNotWritable(filename, this, dialog.windowTitle(), true /* remove */))
                 return;
 
             Settings.setSavePath(QFileInfo(filename).path());
@@ -802,7 +802,7 @@ void AvformatProducerWidget::on_reverseButton_clicked()
                                      .arg(fi.fileName()));
                 return;
             }
-            if (Util::warnIfNotWritable(filename, this, dialog.windowTitle()))
+            if (Util::warnIfNotWritable(filename, this, dialog.windowTitle(), true /* remove */))
                 return;
 
             Settings.setSavePath(QFileInfo(filename).path());
@@ -856,7 +856,7 @@ void AvformatProducerWidget::on_actionExtractSubclip_triggered()
                                  .arg(fi.fileName()));
             return;
         }
-        if (Util::warnIfNotWritable(filename, this, caption))
+        if (Util::warnIfNotWritable(filename, this, caption, true /* remove */))
             return;
         Settings.setSavePath(QFileInfo(filename).path());
 

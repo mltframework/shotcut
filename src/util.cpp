@@ -78,7 +78,7 @@ void Util::showInFolder(const QString& path)
     QDesktopServices::openUrl(QUrl::fromLocalFile(info.isDir()? path : info.path()));
 }
 
-bool Util::warnIfNotWritable(const QString& filePath, QWidget* parent, const QString& caption)
+bool Util::warnIfNotWritable(const QString& filePath, QWidget* parent, const QString& caption, bool remove)
 {
     // Returns true if not writable.
     if (!filePath.isEmpty()) {
@@ -93,7 +93,7 @@ bool Util::warnIfNotWritable(const QString& filePath, QWidget* parent, const QSt
                                     "Try again with a different folder.")
                                  .arg(fi.fileName()));
             return true;
-        } else {
+        } else if (remove) {
             file.remove();
         }
     }
