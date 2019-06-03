@@ -100,12 +100,10 @@ bool MltXmlChecker::check(const QString& fileName)
                     } else {
                         QString value = a.value().toString().toUpper();
                         // Determine whether this document uses a non-POSIX/-generic numeric locale.
-                        m_usesLocale = (value != "" && value != "C" && value != "POSIX");
-                        if (m_usesLocale) {
-                            // Upon correcting the document to conform to current system,
-                            // update the declared LC_NUMERIC.
-                            m_newXml.writeAttribute("LC_NUMERIC", QLocale().name());
-                        }
+                        m_usesLocale = (value != "" && value != "C" && value != "POSIX" && QLocale().decimalPoint() != '.');
+                        // Upon correcting the document to conform to current system,
+                        // update the declared LC_NUMERIC.
+                        m_newXml.writeAttribute("LC_NUMERIC", m_usesLocale? QLocale().name() : "C");
                     }
                 }
                 // Get the current locale by name.
