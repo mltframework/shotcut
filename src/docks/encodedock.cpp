@@ -146,7 +146,7 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties& preset)
         QString name(preset.get_name(i));
 
         // Convert numeric strings to the current MLT numeric locale.
-        QString value(preset.get(i));
+        QString value = QString::fromUtf8(preset.get(i)).trimmed();
         if (Util::convertNumericString(value, decimalPoint))
             preset.set(name.toUtf8().constData(), value.toUtf8().constData());
 
