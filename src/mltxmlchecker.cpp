@@ -99,6 +99,7 @@ bool MltXmlChecker::check(const QString& fileName)
                         m_newXml.writeAttribute(a);
                     } else {
                         QString value = a.value().toString().toUpper();
+                        // Determine whether this document uses a non-POSIX/-generic numeric locale.
                         m_usesLocale = (value != "" && value != "C" && value != "POSIX");
                         if (m_usesLocale) {
                             // Upon correcting the document to conform to current system,
@@ -107,11 +108,17 @@ bool MltXmlChecker::check(const QString& fileName)
                         }
                     }
                 }
+                // Get the current locale by name.
                 QString savedLocaleName = ::setlocale(LC_ALL, NULL);
+                // Apply the chosen locale.
                 ::setlocale(LC_ALL, m_usesLocale? "" : "C");
+                // Get the decimal point expected based on the current system
+                // locale or POSIX/C if the document is using POSIX.
                 m_decimalPoint = getMltDecimalPoint();
+                // Restore the saved locale.
                 ::setlocale(LC_ALL, savedLocaleName.toUtf8().constData());
                 LOG_DEBUG() << "decimal point" << m_decimalPoint;
+
                 readMlt();
                 m_newXml.writeEndElement();
                 m_newXml.writeEndDocument();
@@ -138,6 +145,7 @@ QString MltXmlChecker::errorString() const
 
 void MltXmlChecker::setLocale()
 {
+    // Returns whether this document uses a non-POSIX/-generic numeric locale.
     ::setlocale(LC_ALL, m_usesLocale? "" : "C");
 }
 

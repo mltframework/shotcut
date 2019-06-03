@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2017-2018 Meltytech, LLC
- * Author: Brian Matherly <code@brianmatherly.org>
+ * Copyright (c) 2017-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -64,11 +63,7 @@ Item {
             filterRect.y = y
             filterRect.width = w
             filterRect.height = h
-            filter.set(rectProperty, '%L1%/%L2%:%L3%x%L4%'
-                       .arg(x / profile.width * 100)
-                       .arg(y / profile.height * 100)
-                       .arg(w / profile.width * 100)
-                       .arg(h / profile.height * 100))
+            filter.set(rectProperty, filterRect)
         }
     }
 

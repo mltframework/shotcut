@@ -57,11 +57,7 @@ Item {
             filterRect.y = y
             filterRect.width = w
             filterRect.height = h
-            filter.set(rectProperty, '%L1%/%L2%:%L3%x%L4%'
-                       .arg(x / profile.width * 100)
-                       .arg(y / profile.height * 100)
-                       .arg(w / profile.width * 100)
-                       .arg(h / profile.height * 100))
+            filter.set(rectProperty, filterRect)
         }
     }
 
