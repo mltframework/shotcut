@@ -1,6 +1,5 @@
 /*
  * Copyright (c) 2013-2019 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,6 +23,7 @@
 #include "jobs/meltjob.h"
 #include "shotcut_mlt_properties.h"
 #include "settings.h"
+#include "util.h"
 #include <Logger.h>
 
 #include <QDir>
@@ -514,7 +514,18 @@ void QmlFilter::preset(const QString &name)
     if(isYaml) {
         // Load from YAML file.
         QScopedPointer<Mlt::Properties> properties(Mlt::Properties::parse_yaml(dir.filePath(name).toUtf8().constData()));
-        m_filter.inherit(*properties);
+        if (properties && properties->is_valid()) {
+            QChar decimalPoint = MLT.decimalPoint();
+            for (int i = 0; i < properties->count(); i++) {
+                QString name(properties->get_name(i));
+        
+                // Convert numeric strings to the current MLT numeric locale.
+                QString value = QString::fromUtf8(properties->get(i));
+                if (Util::convertDecimalPoints(value, decimalPoint))
+                    properties->set(name.toUtf8().constData(), value.toUtf8().constData());
+            }
+            m_filter.inherit(*properties);
+        }
     } else {
         // Load from legacy preset file
         m_filter.load(dir.filePath(name).toUtf8().constData());

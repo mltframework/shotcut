@@ -225,3 +225,20 @@ bool Util::convertNumericString(QString& str, QChar decimalPoint)
     }
     return result;
 }
+
+bool Util::convertDecimalPoints(QString& str, QChar decimalPoint)
+{
+    // Returns true if the string was changed.
+    bool result = false;
+    if (!str.contains(decimalPoint)) {
+        for (int i = 0; i < str.size(); ++i) {
+            QCharRef ch = str[i];
+            // Space is used as a delimiter for rect fields and possibly elsewhere.
+            if (ch != decimalPoint && ch != ' ' && isDecimalPoint(ch)) {
+                ch = decimalPoint;
+                result = true;
+            }
+        }
+    }
+    return result;
+}

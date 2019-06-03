@@ -44,6 +44,7 @@ public:
     static bool isDecimalPoint(QChar ch);
     static bool isNumeric(QString& str);
     static bool convertNumericString(QString& str, QChar decimalPoint);
+    static bool convertDecimalPoints(QString& str, QChar decimalPoint);
 };
 
 #endif // UTIL_H
