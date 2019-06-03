@@ -954,6 +954,7 @@ void Controller::setDurationFromDefault(Producer* producer) const
         int out = qRound(m_profile->fps() * Settings.imageDuration()) - 1;
         if (out >= producer->get_length())
             producer->set("length", out + 1);
+        producer->set("length", qRound(m_profile->fps() * kMaxImageDurationSecs));
         producer->set("out", out);
     }
 }
