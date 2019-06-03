@@ -147,6 +147,13 @@ void MltXmlChecker::setLocale()
 {
     // Returns whether this document uses a non-POSIX/-generic numeric locale.
     ::setlocale(LC_ALL, m_usesLocale? "" : "C");
+#ifdef Q_OS_WIN
+    // MLT on Windows needs this for the getlocale() call made by consumer_xml.c
+    if (m_usesLocale)
+        ::qunsetenv("LC_ALL");
+    else
+        ::qputenv("LC_ALL", "C");
+#endif
 }
 
 void MltXmlChecker::readMlt()

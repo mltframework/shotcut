@@ -49,7 +49,11 @@ Controller::Controller()
 {
     LOG_DEBUG() << "begin";
     m_repo = Mlt::Factory::init();
-    ::setlocale( LC_ALL, "C" );
+    ::setlocale(LC_ALL, "C");
+#ifdef Q_OS_WIN
+    // MLT on Windows needs this for the getlocale() call made by consumer_xml.c
+    ::qputenv("LC_ALL", "C");
+#endif
     m_profile.reset(new Mlt::Profile(kDefaultMltProfile));
     m_filtersClipboard.reset(new Mlt::Producer(profile(), "color", "black"));
     updateAvformatCaching(0);
