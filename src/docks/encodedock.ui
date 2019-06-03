@@ -1647,8 +1647,15 @@ in temporal compression</string>
               <string>Other</string>
              </attribute>
              <layout class="QGridLayout" name="gridLayout_4">
-              <item row="0" column="0">
+              <item row="1" column="0">
                <widget class="QPlainTextEdit" name="advancedTextEdit"/>
+              </item>
+              <item row="0" column="0">
+               <widget class="QLabel" name="otherTipLabel">
+                <property name="wordWrap">
+                 <bool>true</bool>
+                </property>
+               </widget>
               </item>
              </layout>
             </widget>

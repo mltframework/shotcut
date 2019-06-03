@@ -49,11 +49,8 @@ Controller::Controller()
 {
     LOG_DEBUG() << "begin";
     m_repo = Mlt::Factory::init();
-    ::setlocale(LC_ALL, "C");
-#ifdef Q_OS_WIN
-    // MLT on Windows needs this for the getlocale() call made by consumer_xml.c
     ::qputenv("LC_ALL", "C");
-#endif
+    ::setlocale(LC_ALL, "C");
     m_profile.reset(new Mlt::Profile(kDefaultMltProfile));
     m_filtersClipboard.reset(new Mlt::Producer(profile(), "color", "black"));
     updateAvformatCaching(0);
@@ -1115,6 +1112,18 @@ void Controller::setProjectFolder(const QString& folderName)
     if (!m_projectFolder.isEmpty())
         Settings.setSavePath(m_projectFolder);
     LOG_DEBUG() << "project folder" << m_projectFolder;
+}
+
+QChar Controller::decimalPoint() const
+{
+    QChar result('.');
+    Mlt::Producer producer(profile(), "color", "black");
+    if (producer.is_valid()) {
+        const char* timeString = producer.get_length_time(mlt_time_clock);
+        if (qstrlen(timeString) >= 8) // HH:MM:SS.ms
+            result = timeString[8];
+    }
+    return result;
 }
 
 void TransportControl::play(double speed)

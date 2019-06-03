@@ -137,12 +137,19 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties& preset)
     int audioQuality = -1;
     int videoQuality = -1;
     QStringList other;
+    QChar decimalPoint = MLT.decimalPoint();
 
     ui->disableAudioCheckbox->setChecked(preset.get_int("an"));
     ui->disableVideoCheckbox->setChecked(preset.get_int("vn"));
     m_extension.clear();
     for (int i = 0; i < preset.count(); i++) {
         QString name(preset.get_name(i));
+
+        // Convert numeric strings to the current MLT numeric locale.
+        QString value(preset.get(i));
+        if (Util::convertNumericString(value, decimalPoint))
+            preset.set(name.toUtf8().constData(), value.toUtf8().constData());
+
         if (name == "f") {
             for (int i = 0; i < ui->formatCombo->count(); i++)
                 if (ui->formatCombo->itemText(i) == preset.get("f")) {
@@ -385,6 +392,7 @@ void EncodeDock::onProducerOpened()
         ui->fromCombo->setCurrentIndex(index);
         on_fromCombo_currentIndexChanged(index);
     }
+    ui->otherTipLabel->setText(tr("You must enter numeric values using '%1' as the decimal point.").arg(MLT.decimalPoint()));
 }
 
 void EncodeDock::loadPresets()

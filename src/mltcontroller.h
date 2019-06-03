@@ -146,6 +146,7 @@ public:
     static Mlt::Filter* getFilter(const QString& name, Mlt::Service* service);
     QString projectFolder() const { return m_projectFolder; }
     void setProjectFolder(const QString& folderName);
+    QChar decimalPoint() const;
 
 protected:
     Mlt::Repository* m_repo;

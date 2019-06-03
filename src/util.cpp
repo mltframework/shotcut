@@ -189,3 +189,39 @@ QList<QUrl> Util::expandDirectories(const QList<QUrl>& urls)
     }
     return result;
 }
+
+bool Util::isDecimalPoint(QChar ch)
+{
+    // See https://en.wikipedia.org/wiki/Decimal_separator#Unicode_characters
+    return ch == '.' || ch == ',' || ch == '\'' || ch == ' '
+        || ch == QChar(0x00B7) || ch == QChar(0x2009) || ch == QChar(0x202F)
+        || ch == QChar(0x02D9) || ch == QChar(0x066B) || ch == QChar(0x066C)
+        || ch == QChar(0x2396);
+}
+
+bool Util::isNumeric(QString& str)
+{
+    for (int i = 0; i < str.size(); ++i) {
+        QCharRef ch = str[i];
+        if (ch != '+' && ch != '-' && ch.toLower() != 'e'
+            && !isDecimalPoint(ch) && !ch.isDigit())
+            return false;
+    }
+    return true;
+}
+
+bool Util::convertNumericString(QString& str, QChar decimalPoint)
+{
+    // Returns true if the string was changed.
+    bool result = false;
+    if (isNumeric(str)) {
+        for (int i = 0; i < str.size(); ++i) {
+            QCharRef ch = str[i];
+            if (ch != decimalPoint && isDecimalPoint(ch)) {
+                ch = decimalPoint;
+                result = true;
+            }
+        }
+    }
+    return result;
+}

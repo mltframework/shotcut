@@ -41,6 +41,9 @@ public:
     static QStringList sortedFileList(const QList<QUrl>& urls);
     static int coerceMultiple(int value, int multiple = 2);
     static QList<QUrl> expandDirectories(const QList<QUrl>& urls);
+    static bool isDecimalPoint(QChar ch);
+    static bool isNumeric(QString& str);
+    static bool convertNumericString(QString& str, QChar decimalPoint);
 };
 
 #endif // UTIL_H

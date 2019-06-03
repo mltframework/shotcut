@@ -51,18 +51,6 @@ static bool isNumericProperty(const QString& name)
             name == "rect" || name == "warp_speed";
 }
 
-static QChar getMltDecimalPoint()
-{
-    QChar result('.');
-    Mlt::Producer producer(MLT.profile(), "color", "black");
-    if (producer.is_valid()) {
-        const char* timeString = producer.get_length_time(mlt_time_clock);
-        if (qstrlen(timeString) >= 8) // HH:MM:SS.ms
-            result = timeString[8];
-    }
-    return result;
-}
-
 MltXmlChecker::MltXmlChecker()
     : m_needsGPU(false)
     , m_needsCPU(false)
@@ -106,15 +94,24 @@ bool MltXmlChecker::check(const QString& fileName)
                         m_newXml.writeAttribute("LC_NUMERIC", m_usesLocale? QLocale().name() : "C");
                     }
                 }
-                // Get the current locale by name.
-                QString savedLocaleName = ::setlocale(LC_ALL, NULL);
-                // Apply the chosen locale.
-                ::setlocale(LC_ALL, m_usesLocale? "" : "C");
+                // We cannot apply the locale change to the session at this point
+                // because we are merely checking at this point and not loading.
+                // Save the current locale state.
+                bool isCLocale = (::qgetenv("LC_ALL").toUpper() == "C");
+                // Apply the chosen locale temporarily.
+                setLocale();
                 // Get the decimal point expected based on the current system
                 // locale or POSIX/C if the document is using POSIX.
-                m_decimalPoint = getMltDecimalPoint();
-                // Restore the saved locale.
-                ::setlocale(LC_ALL, savedLocaleName.toUtf8().constData());
+                m_decimalPoint = MLT.decimalPoint();
+                // Restore the current locale state.
+                if (isCLocale) {
+                    ::qputenv("LC_ALL", "C");
+                    ::setlocale(LC_ALL, "C");
+                } else {
+                    ::qunsetenv("LC_ALL");
+                    ::setlocale(LC_ALL, "");
+                }
+                
                 LOG_DEBUG() << "decimal point" << m_decimalPoint;
 
                 readMlt();
@@ -144,14 +141,13 @@ QString MltXmlChecker::errorString() const
 void MltXmlChecker::setLocale()
 {
     // Returns whether this document uses a non-POSIX/-generic numeric locale.
-    ::setlocale(LC_ALL, m_usesLocale? "" : "C");
-#ifdef Q_OS_WIN
-    // MLT on Windows needs this for the getlocale() call made by consumer_xml.c
-    if (m_usesLocale)
+    if (m_usesLocale) {
         ::qunsetenv("LC_ALL");
-    else
+        ::setlocale(LC_ALL, "");
+    } else {
         ::qputenv("LC_ALL", "C");
-#endif
+        ::setlocale(LC_ALL, "C");
+    }
 }
 
 void MltXmlChecker::readMlt()
