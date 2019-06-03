@@ -147,6 +147,7 @@ public:
     QString projectFolder() const { return m_projectFolder; }
     void setProjectFolder(const QString& folderName);
     QChar decimalPoint() const;
+    static void resetLocale();
 
 protected:
     Mlt::Repository* m_repo;

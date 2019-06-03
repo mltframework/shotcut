@@ -3526,6 +3526,7 @@ void MainWindow::on_actionClose_triggered()
             m_playlistDock->model()->close();
         else
             onMultitrackClosed();
+        MLT.resetLocale();
     }
 }
 

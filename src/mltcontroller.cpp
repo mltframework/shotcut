@@ -49,8 +49,7 @@ Controller::Controller()
 {
     LOG_DEBUG() << "begin";
     m_repo = Mlt::Factory::init();
-    ::qputenv("LC_ALL", "C");
-    ::setlocale(LC_ALL, "C");
+    resetLocale();
     m_profile.reset(new Mlt::Profile(kDefaultMltProfile));
     m_filtersClipboard.reset(new Mlt::Producer(profile(), "color", "black"));
     updateAvformatCaching(0);
@@ -1124,6 +1123,12 @@ QChar Controller::decimalPoint() const
             result = timeString[8];
     }
     return result;
+}
+
+void Controller::resetLocale()
+{
+    ::qputenv("LC_ALL", "C");
+    ::setlocale(LC_ALL, "C");
 }
 
 void TransportControl::play(double speed)
