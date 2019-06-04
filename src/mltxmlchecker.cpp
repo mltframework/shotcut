@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2018 Meltytech, LLC
+ * Copyright (c) 2014-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -103,6 +103,7 @@ bool MltXmlChecker::check(const QString& fileName)
                 // Get the decimal point expected based on the current system
                 // locale or POSIX/C if the document is using POSIX.
                 m_decimalPoint = MLT.decimalPoint();
+                LOG_INFO() << "decimal point" << m_decimalPoint;
                 // Restore the current locale state.
                 if (isCLocale) {
                     ::qputenv("LC_ALL", "C");
@@ -111,8 +112,6 @@ bool MltXmlChecker::check(const QString& fileName)
                     ::qunsetenv("LC_ALL");
                     ::setlocale(LC_ALL, "");
                 }
-                
-                LOG_DEBUG() << "decimal point" << m_decimalPoint;
 
                 readMlt();
                 m_newXml.writeEndElement();

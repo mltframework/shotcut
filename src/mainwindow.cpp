@@ -1222,8 +1222,10 @@ void MainWindow::open(QString url, const Mlt::Properties* properties)
         if (m_profileGroup->checkedAction() && m_profileGroup->checkedAction()->data().toString().isEmpty())
             MLT.profile().set_explicit(false);
     }
-    if (url.endsWith(".mlt") || url.endsWith(".xml"))
+    if (url.endsWith(".mlt") || url.endsWith(".xml")) {
         checker.setLocale();
+        LOG_INFO() << "decimal point" << MLT.decimalPoint();
+    }
     if (!MLT.open(QDir::fromNativeSeparators(url))) {
         Mlt::Properties* props = const_cast<Mlt::Properties*>(properties);
         if (props && props->is_valid())

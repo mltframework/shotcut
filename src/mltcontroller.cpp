@@ -1129,6 +1129,7 @@ void Controller::resetLocale()
 {
     ::qputenv("LC_ALL", "C");
     ::setlocale(LC_ALL, "C");
+    LOG_INFO() << "decimal point .";
 }
 
 void TransportControl::play(double speed)
