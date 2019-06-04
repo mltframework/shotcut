@@ -736,6 +736,7 @@ void AvformatProducerWidget::on_reverseButton_clicked()
         QStringList meltArgs;
         QStringList ffmpegArgs;
         QString nameFilter;
+        QString ffmpegSuffix = "mov";;
 
         ffmpegArgs << "-loglevel" << "verbose";
         ffmpegArgs << "-i" << resource;
@@ -768,8 +769,7 @@ void AvformatProducerWidget::on_reverseButton_clicked()
         case 0:
             path.append("/%1 - %2.mp4");
             nameFilter = tr("MP4 (*.mp4);;All Files (*)");
-            ffmpegArgs << "-f" << "mp4" << "-codec:a" << "ac3" << "-b:a" << "512k" << "-codec:v" << "libx264";
-            ffmpegArgs << "-preset" << "medium" << "-g" << "1" << "-crf" << "11";
+            ffmpegArgs << "-f" << "mov" << "-codec:a" << "alac" << "-codec:v" << "prores_ks" << "-profile:v" << "standard";
             meltArgs << "acodec=ac3" << "ab=512k" << "vcodec=libx264";
             meltArgs << "vpreset=medium" << "g=1" << "crf=11";
             break;
@@ -780,7 +780,7 @@ void AvformatProducerWidget::on_reverseButton_clicked()
             nameFilter = tr("MOV (*.mov);;All Files (*)");
             break;
         case 2:
-            ffmpegArgs << "-f" << "matroska" << "-codec:a" << "flac" << "-codec:v" << "ffv1" << "-coder" << "1";
+            ffmpegArgs << "-f" << "mov" << "-codec:a" << "alac" << "-codec:v" << "ffv1" << "-coder" << "1";
             ffmpegArgs << "-context" << "1" << "-g" << "1" << "-threads" << QString::number(QThread::idealThreadCount());
             meltArgs << "acodec=flac" << "vcodec=ffv1" << "coder=1";
             meltArgs << "context=1" << "g=1" << QString::number(QThread::idealThreadCount()).prepend("threads=");
@@ -809,7 +809,7 @@ void AvformatProducerWidget::on_reverseButton_clicked()
 
             // Make a temporary file name for the ffmpeg job.
             QFileInfo fi(filename);
-            QString tmpFileName = QString("%1/%2 - XXXXXX.%3").arg(fi.path()).arg(fi.completeBaseName()).arg(fi.suffix());
+            QString tmpFileName = QString("%1/%2 - XXXXXX.%3").arg(fi.path()).arg(fi.completeBaseName()).arg(ffmpegSuffix);
             QTemporaryFile tmp(tmpFileName);
             tmp.setAutoRemove(false);
             tmp.open();
