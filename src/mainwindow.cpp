@@ -1046,7 +1046,9 @@ void MainWindow::doAutosave()
     if (m_autosaveFile) {
         bool success = false;
         if (m_autosaveFile->isOpen() || m_autosaveFile->open(QIODevice::ReadWrite)) {
+            m_autosaveFile->close();
             success = saveXML(m_autosaveFile->fileName(), false /* without relative paths */);
+            m_autosaveFile->open(QIODevice::ReadWrite);
         }
         if (!success) {
             LOG_ERROR() << "failed to open autosave file for writing" << m_autosaveFile->fileName();
