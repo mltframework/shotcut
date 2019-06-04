@@ -250,6 +250,7 @@
    <addaction name="actionKeyframes"/>
    <addaction name="actionHistory"/>
    <addaction name="actionEncode"/>
+   <addaction name="actionJobs"/>
    <addaction name="actionFullscreen"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
@@ -990,6 +991,15 @@
    </property>
    <property name="text">
     <string>Show Small Icons</string>
+   </property>
+  </action>
+  <action name="actionJobs">
+   <property name="icon">
+    <iconset theme="run-build" resource="../icons/resources.qrc">
+     <normaloff>:/icons/oxygen/32x32/actions/run-build.png</normaloff>:/icons/oxygen/32x32/actions/run-build.png</iconset>
+   </property>
+   <property name="text">
+    <string>Jobs</string>
    </property>
   </action>
  </widget>

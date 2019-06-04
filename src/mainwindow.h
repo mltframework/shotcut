@@ -221,7 +221,7 @@ private slots:
     bool on_actionSave_As_triggered();
     void onEncodeTriggered(bool checked = true);
     void onCaptureStateChanged(bool started);
-    void onJobsDockTriggered(bool);
+    void onJobsDockTriggered(bool = true);
     void onRecentDockTriggered(bool checked = true);
     void onPlaylistDockTriggered(bool checked = true);
     void onTimelineDockTriggered(bool checked = true);

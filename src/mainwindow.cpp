@@ -411,9 +411,11 @@ MainWindow::MainWindow()
     m_jobsDock = new JobsDock(this);
     m_jobsDock->hide();
     addDockWidget(Qt::RightDockWidgetArea, m_jobsDock);
+    m_jobsDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_0));
     ui->menuView->addAction(m_jobsDock->toggleViewAction());
     connect(&JOBS, SIGNAL(jobAdded()), m_jobsDock, SLOT(onJobAdded()));
     connect(m_jobsDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onJobsDockTriggered(bool)));
+    connect(ui->actionJobs, SIGNAL(triggered()), this, SLOT(onJobsDockTriggered()));
 
     tabifyDockWidget(m_propertiesDock, m_playlistDock);
     tabifyDockWidget(m_playlistDock, m_filtersDock);
@@ -1887,12 +1889,9 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         }
         break;
     case Qt::Key_0:
-        if (!(event->modifiers() & Qt::AltModifier)) {
+        if (!event->modifiers() ) {
             if (m_timelineDock->isVisible()) {
-                if (event->modifiers() & Qt::ControlModifier)
-                    m_timelineDock->model()->setTrackHeight(50);
-                else
-                    m_timelineDock->resetZoom();
+                m_timelineDock->resetZoom();
             } else if (m_playlistDock->isVisible() && m_playlistDock->model()->rowCount() > 0) {
                 m_playlistDock->raise();
                 m_playlistDock->setIndex(9);
