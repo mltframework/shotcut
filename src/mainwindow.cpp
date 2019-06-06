@@ -3428,7 +3428,7 @@ void MainWindow::on_actionOpenXML_triggered()
                 // Show a warning dialog and cancel if requested.
                 QMessageBox dialog(QMessageBox::Question,
                    qApp->applicationName(),
-                   tr("The decimal point of the MLT XML file\nyou nwant to open is incompatible.\n\n"
+                   tr("The decimal point of the MLT XML file\nyou want to open is incompatible.\n\n"
                       "Do you want to continue to open this MLT XML file?"),
                    QMessageBox::No |
                    QMessageBox::Yes,

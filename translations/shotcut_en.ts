@@ -4012,7 +4012,7 @@ Disable GPU effects and restart?</source>
     <message>
         <location filename="../src/mainwindow.cpp" line="3431"/>
         <source>The decimal point of the MLT XML file
-you nwant to open is incompatible.
+you want to open is incompatible.
 
 Do you want to continue to open this MLT XML file?</source>
         <translation type="unfinished"></translation>
