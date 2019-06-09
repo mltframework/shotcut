@@ -25,8 +25,8 @@ Item {
     property double gammaFactor: 2.0
     property double gainFactor: 4.0
     property bool blockUpdate: true
-    width: 520
-    height: 300
+    width: 620
+    height: 350
 
     Component.onCompleted: {
         if (filter.isNew) {
