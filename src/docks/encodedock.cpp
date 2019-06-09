@@ -240,8 +240,7 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties& preset)
         }
         else if (name == "pix_fmt") {
             QString pix_fmt(preset.get("pix_fmt"));
-            if (pix_fmt != "yuv420p")
-                other.append(QString("%1=%2").arg(name).arg(pix_fmt));
+            other.append(QString("%1=%2").arg(name).arg(pix_fmt));
         }
         else if (name == "pass")
             ui->dualPassCheckbox->setChecked(true);
