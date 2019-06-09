@@ -84,7 +84,7 @@ KeyframableFilter {
         Preset {
             id: preset
             parameters: [glitchFreq, blockH, shiftInt, colorInt]
-            Layout.columnSpan: 4
+            Layout.columnSpan: 3
             onBeforePresetLoaded: {
                 resetSimpleKeyframes
             }
