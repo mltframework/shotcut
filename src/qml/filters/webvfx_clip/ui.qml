@@ -36,7 +36,7 @@ Item {
     property rect filterRect
 
     Component.onCompleted: {
-        blockUpdate = true
+        filter.blockSignals = true
         filter.set('transparent', 1)
         filter.set(startValueRect, Qt.rect(0, 0, profile.width, profile.height))
         filter.set(middleValueRect, Qt.rect(0, 0, profile.width, profile.height))
@@ -47,10 +47,6 @@ Item {
             filter.set('color', '#ff000000')
             filter.set('radius', 0)
             filter.set(rectProperty, '0%/0%:100%x100%')
-            filter.set('x', 0)
-            filter.set('y', 0)
-            filter.set('w', profile.width)
-            filter.set('h', profile.height)
             filter.savePreset(preset.parameters)
         } else {
             middleValueRadius = filter.getDouble('radius', filter.animateIn)
@@ -64,9 +60,9 @@ Item {
                 filter.set(endValueRect, filter.getRect(rectProperty, filter.duration - 1))
             }
         }
-        blockUpdate = false
+        filter.blockSignals = false
         setRatioControls()
-        setRectControls(false)
+        setRectControls()
         colorSwatch.value = filter.get('color')
         if (filter.isNew)
             filter.set(rectProperty, filter.getRect(rectProperty))
@@ -85,28 +81,21 @@ Item {
         radiusKeyframesButton.checked = filter.keyframeCount('radius') > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
     }
 
-    function setRectControls(isUpdateFilter) {
-        if (blockUpdate) return
+    function setRectControls() {
         var position = getPosition()
+        var newValue = filter.getRect(rectProperty, position)
+        if (filterRect !== newValue) {
+            filterRect = newValue
+            rectX.text = filterRect.x.toFixed()
+            rectY.text = filterRect.y.toFixed()
+            rectW.text = filterRect.width.toFixed()
+            rectH.text = filterRect.height.toFixed()
+        }
         var enabled = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1)
         rectX.enabled = enabled
         rectY.enabled = enabled
         rectW.enabled = enabled
         rectH.enabled = enabled
-        positionKeyframesButton.checked = filter.keyframeCount(rectProperty) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
-
-        var newValue = filter.getRect(rectProperty, position)
-        if (filterRect !== newValue) {
-            filterRect = newValue
-            blockUpdate = true
-            rectX.text = filterRect.x.toFixed()
-            rectY.text = filterRect.y.toFixed()
-            rectW.text = filterRect.width.toFixed()
-            rectH.text = filterRect.height.toFixed()
-            blockUpdate = false
-            if (isUpdateFilter)
-                updateFilterRect(position, false)
-        }
     }
     
     function updateFilterRatio(position) {
@@ -142,12 +131,11 @@ Item {
         }
     }
 
-    function updateFilterRect(position, setRectProperty) {
-        if (blockUpdate) return
-        blockUpdate = true
+    function updateFilterRect(position) {
         var rect
 
         if (position !== null) {
+            filter.blockSignals = true
             if (position <= 0 && filter.animateIn > 0) {
                 filter.set(startValueRect, filterRect)
             } else if (position >= filter.duration - 1 && filter.animateOut > 0) {
@@ -155,63 +143,31 @@ Item {
             } else {
                 filter.set(middleValueRect, filterRect)
             }
+            filter.blockSignals = false
         }
 
         if (filter.animateIn > 0 || filter.animateOut > 0) {
-            if (setRectProperty) filter.resetProperty(rectProperty)
-            filter.resetProperty('x')
-            filter.resetProperty('y')
-            filter.resetProperty('w')
-            filter.resetProperty('h')
+            filter.resetProperty(rectProperty)
             positionKeyframesButton.checked = false
             if (filter.animateIn > 0) {
                 rect = filter.getRect(startValueRect)
-                if (setRectProperty) filter.set(rectProperty, rect, 1.0, 0)
-                filter.set('x', rect.x, 0)
-                filter.set('y', rect.y, 0)
-                filter.set('w', rect.width, 0)
-                filter.set('h', rect.height, 0)
+                filter.set(rectProperty, rect, 1.0, 0)
                 rect = filter.getRect(middleValueRect)
-                if (setRectProperty) filter.set(rectProperty, rect, 1.0, filter.animateIn - 1)
-                filter.set('x', rect.x, filter.animateIn - 1)
-                filter.set('y', rect.y, filter.animateIn - 1)
-                filter.set('w', rect.width, filter.animateIn - 1)
-                filter.set('h', rect.height, filter.animateIn - 1)
+                filter.set(rectProperty, rect, 1.0, filter.animateIn - 1)
             }
             if (filter.animateOut > 0) {
                 rect = filter.getRect(middleValueRect)
-                if (setRectProperty) filter.set(rectProperty, rect, 1.0, filter.duration - filter.animateOut)
-                filter.set('x', rect.x, filter.duration - filter.animateOut)
-                filter.set('y', rect.y, filter.duration - filter.animateOut)
-                filter.set('w', rect.width, filter.duration - filter.animateOut)
-                filter.set('h', rect.height, filter.duration - filter.animateOut)
+                filter.set(rectProperty, rect, 1.0, filter.duration - filter.animateOut)
                 rect = filter.getRect(endValueRect)
-                if (setRectProperty) filter.set(rectProperty, rect, 1.0, filter.duration - 1)
-                filter.set('x', rect.x, filter.duration - 1)
-                filter.set('y', rect.y, filter.duration - 1)
-                filter.set('w', rect.width, filter.duration - 1)
-                filter.set('h', rect.height, filter.duration - 1)
+                filter.set(rectProperty, rect, 1.0, filter.duration - 1)
             }
         } else if (!positionKeyframesButton.checked) {
-            if (setRectProperty) filter.resetProperty(rectProperty)
-            filter.resetProperty('x')
-            filter.resetProperty('y')
-            filter.resetProperty('w')
-            filter.resetProperty('h')
+            filter.resetProperty(rectProperty)
             rect = filter.getRect(middleValueRect)
-            if (setRectProperty) filter.set(rectProperty, rect)
-            filter.set('x', rect.x)
-            filter.set('y', rect.y)
-            filter.set('w', rect.width)
-            filter.set('h', rect.height)
+            filter.set(rectProperty, rect)
         } else if (position !== null) {
-            if (setRectProperty) filter.set(rectProperty, filterRect, 1.0, position)
-            filter.set('x', filterRect.x, position)
-            filter.set('y', filterRect.y, position)
-            filter.set('w', filterRect.width, position)
-            filter.set('h', filterRect.height, position)
+            filter.set(rectProperty, filterRect, 1.0, position)
         }
-        blockUpdate = false
     }
 
     GridLayout {
@@ -225,15 +181,19 @@ Item {
         }
         Preset {
             id: preset
-            parameters: [rectProperty, 'x', 'y', 'w', 'h', 'radius', 'color']
+            parameters: [rectProperty, 'radius', 'color']
             Layout.columnSpan: 3
             onBeforePresetLoaded: {
-                filterRect = null
+                filterRect = Qt.rect(0, 0, 0, 0)
                 filter.resetProperty(rectProperty)
                 filter.resetProperty('radius')
             }
             onPresetSelected: {
-                blockUpdate = true
+                setRatioControls()
+                setRectControls()
+                colorSwatch.value = filter.get('color')
+                positionKeyframesButton.checked = filter.keyframeCount(rectProperty) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
+                filter.blockSignals = true
                 middleValueRadius = filter.getDouble('radius', filter.animateIn)
                 filter.set(middleValueRect, filter.getRect(rectProperty, filter.animateIn + 1))
                 if (filter.animateIn > 0) {
@@ -244,10 +204,7 @@ Item {
                     endValueRadius = filter.getDouble('radius', filter.duration - 1)
                     filter.set(endValueRect, filter.getRect(rectProperty, filter.duration - 1))
                 }
-                blockUpdate = false
-                setRatioControls()
-                setRectControls(false)
-                colorSwatch.value = filter.get('color')
+                filter.blockSignals = false
             }
         }
 
@@ -287,7 +244,9 @@ Item {
             checked: filter.keyframeCount(rectProperty) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
             onToggled: {
                 if (checked) {
+                    filter.blockSignals = true
                     filter.clearSimpleAnimation(rectProperty)
+                    filter.blockSignals = false
                     filter.set(rectProperty, filterRect, 1.0, getPosition())
                 } else {
                     filter.resetProperty(rectProperty)
@@ -350,14 +309,13 @@ Item {
             onToggled: {
                 var value = slider.value / 100.0
                 if (checked) {
-                    blockUpdate = true
                     filter.clearSimpleAnimation('radius')
-                    blockUpdate = false
                     filter.set('radius', value, getPosition())
                 } else {
                     filter.resetProperty('radius')
                     filter.set('radius', value)
                 }
+                checked = filter.keyframeCount('radius') > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
             }
         }
 
@@ -392,12 +350,12 @@ Item {
 
     function updateFilter() {
         updateFilterRatio(null)
-        updateFilterRect(null, true)
+        updateFilterRect(null)
     }
     
     Connections {
         target: filter
-        onChanged: setRectControls(true)
+        onChanged: setRectControls()
         onInChanged: updateFilter()
         onOutChanged: updateFilter()
         onAnimateInChanged: updateFilter()
@@ -408,7 +366,7 @@ Item {
         target: producer
         onPositionChanged: {
             setRatioControls()
-            setRectControls(false)
+            setRectControls()
         }
     }
 }

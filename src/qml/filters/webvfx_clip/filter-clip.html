@@ -33,10 +33,11 @@ function Filter() {
     this.context = this.canvas.getContext('2d');
 
     this.clipRoundedRect = function() {
-        var x = webvfx.getNumberParameter('x');
-        var y = webvfx.getNumberParameter('y');
-        var width = webvfx.getNumberParameter('w');
-        var height = webvfx.getNumberParameter('h');
+        var rect = webvfx.getRectParameter('rect');
+        var x = rect.x;
+        var y = rect.y;
+        var width = rect.width;
+        var height = rect.height;
         var radius = webvfx.getNumberParameter('radius');
         if (x != this.x || y != this.y || width != this.width
             || height != this.height || this.radius != radius) {
