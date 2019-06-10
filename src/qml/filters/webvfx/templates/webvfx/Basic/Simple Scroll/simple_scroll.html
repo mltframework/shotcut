@@ -30,28 +30,28 @@
         function Filter() {
             this.duration = window.webvfx? webvfx.getNumberParameter('duration') : 0;
             this.duration *= 1000;
-			switch (window.webvfx? webvfx.getNumberParameter('direction') : 0) {
-			case 1: // down
-				this.animation = document.body.animate({
-					top: [-document.body.clientHeight + 'px', '100%']
-				}, this.duration);
-				break;
-			case 2: // right
-				this.animation = document.body.animate({
-					left: [-document.body.clientWidth + 'px', '100%']
-				}, this.duration);
-				break;
-			case 3: // left
-				this.animation = document.body.animate({
-					left: ['100%', -document.body.clientWidth + 'px']
-				}, this.duration);
-				break;
-			default: // up
-				this.animation = document.body.animate({
-					top: ['100%', -document.body.clientHeight + 'px']
-				}, this.duration);
-				break;
-			}
+            switch (window.webvfx? webvfx.getNumberParameter('direction') : 0) {
+            case 1: // down
+                this.animation = document.body.animate({
+                    top: [-document.body.clientHeight + 'px', '100%']
+                }, this.duration);
+                break;
+            case 2: // right
+                this.animation = document.body.animate({
+                    left: [-document.body.clientWidth + 'px', '100%']
+                }, this.duration);
+                break;
+            case 3: // left
+                this.animation = document.body.animate({
+                    left: ['100%', -document.body.clientWidth + 'px']
+                }, this.duration);
+                break;
+            default: // up
+                this.animation = document.body.animate({
+                    top: ['100%', -document.body.clientHeight - 15 + 'px']
+                }, this.duration);
+                break;
+            }
             this.animation.pause();
         }
 
