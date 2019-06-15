@@ -593,10 +593,22 @@ void PlaylistDock::onDropped(const QMimeData *data, int row)
                 }
                 MLT.setImageDurationFromDefault(producer);
                 MLT.lockCreationTime(producer);
-                if (row == -1)
-                    MAIN.undoStack()->push(new Playlist::AppendCommand(m_model, MLT.XML(producer)));
-                else
-                    MAIN.undoStack()->push(new Playlist::InsertCommand(m_model, MLT.XML(producer), insertNextAt++));
+                if (MLT.isSeekable(producer)) {
+                    if (row == -1)
+                        MAIN.undoStack()->push(new Playlist::AppendCommand(m_model, MLT.XML(producer)));
+                    else
+                        MAIN.undoStack()->push(new Playlist::InsertCommand(m_model, MLT.XML(producer), insertNextAt++));
+                } else {
+                    DurationDialog dialog(this);
+                    dialog.setDuration(MLT.profile().fps() * 5);
+                    if (dialog.exec() == QDialog::Accepted) {
+                        producer->set_in_and_out(0, dialog.duration() - 1);
+                        if (row == -1)
+                            MAIN.undoStack()->push(new Playlist::AppendCommand(m_model, MLT.XML(producer)));
+                        else
+                            MAIN.undoStack()->push(new Playlist::InsertCommand(m_model, MLT.XML(producer), insertNextAt++));
+                    }
+                }
             }
         }
     }
