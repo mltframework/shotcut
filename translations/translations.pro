@@ -37,6 +37,7 @@ LANGUAGES = \
     ru \
     sk \
     sl \
+    sv \
     tr \
     uk \
     zh_CN \
