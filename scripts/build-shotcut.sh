@@ -114,6 +114,7 @@ function usage {
   echo -e "\t-o target-os\tDefaults to $(uname -s); use Win32 or Win64 to cross-compile"
   echo -e "\t-s\t\tbuild SDK"
   echo -e "\t-t\t\tSpawn into sep. process"
+  echo -e "\t-v shotcut-version\t\tSet the Shotcut version; defaults to $SHOTCUT_VERSION"
 }
 
 #################################################################
@@ -122,7 +123,7 @@ function usage {
 function parse_args {
   CONFIGFILEOPT=""
   DETACH=0
-  while getopts ":tsc:o:" OPT; do
+  while getopts ":tsc:o:v:" OPT; do
     case $OPT in
       c ) CONFIGFILEOPT=$OPTARG
           echo Setting configfile to $CONFIGFILEOPT
@@ -132,6 +133,7 @@ function parse_args {
       h ) usage
           exit 0;;
       o ) TARGET_OS=$OPTARG;;
+      v ) SHOTCUT_VERSION=$OPTARG;;
       * ) echo "Unknown option $OPT"
           usage
           exit 1;;
