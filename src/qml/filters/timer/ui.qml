@@ -23,7 +23,7 @@ import QtQml.Models 2.2
 
 Item {
     width: 500
-    height: 350
+    height: 400
 
     property string _defaultStart: '00:00:00.000'
     property string _defaultDuration: '00:00:10.000'
