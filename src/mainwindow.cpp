@@ -1197,6 +1197,12 @@ void MainWindow::open(QString url, const Mlt::Properties* properties)
     LOG_DEBUG() << url;
     bool modified = false;
     MltXmlChecker checker;
+    if (url.endsWith(".mlt") || url.endsWith(".xml")) {
+        if (url != untitledFileName()) {
+            showStatusMessage(tr("Opening %1").arg(url));
+            QCoreApplication::processEvents();
+        }
+    }
     if (checker.check(url)) {
         if (!isCompatibleWithGpuMode(checker))
             return;
@@ -1205,6 +1211,7 @@ void MainWindow::open(QString url, const Mlt::Properties* properties)
         // only check for a modified project when loading a project, not a simple producer
         if (!continueModified())
             return;
+        QCoreApplication::processEvents();
         // close existing project
         if (playlist())
             m_playlistDock->model()->close();
