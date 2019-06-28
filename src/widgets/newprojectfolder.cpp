@@ -46,7 +46,6 @@ NewProjectFolder::NewProjectFolder(QWidget* parent) :
     ui->widget_2->setPalette(palette);
     Util::setColorsToHighlight(ui->newProjectLabel);
     Util::setColorsToHighlight(ui->newProjectLabel_2);
-    ui->projectsFolderButton->setText(Settings.projectsFolder());
     ui->actionProfileAutomatic->setData(QString());
     ui->recentListView->setModel(&m_model);
     m_profileGroup = new QActionGroup(this);
@@ -106,6 +105,7 @@ void NewProjectFolder::showEvent(QShowEvent*)
         }
     }
 
+    setProjectFolderButtonText(Settings.projectsFolder());
 }
 
 void NewProjectFolder::hideEvent(QHideEvent*)
@@ -117,7 +117,7 @@ void NewProjectFolder::on_projectsFolderButton_clicked()
 {
     QString dirName = QFileDialog::getExistingDirectory(this, tr("Projects Folder"), Settings.projectsFolder());
     if (!dirName.isEmpty()) {
-        ui->projectsFolderButton->setText(dirName);
+        setProjectFolderButtonText(dirName);
         Settings.setProjectsFolder(dirName);
     }
 }
@@ -236,3 +236,10 @@ void NewProjectFolder::on_recentListView_clicked(const QModelIndex& index)
 {
     MAIN.open(m_model.itemData(index)[Qt::ToolTipRole].toString());
 }
+
+void NewProjectFolder::setProjectFolderButtonText(const QString& text)
+{
+    ui->projectsFolderButton->setText(
+        ui->projectsFolderButton->fontMetrics().elidedText(text, Qt::ElideLeft, ui->recentListView->width() / 1.5));
+}
+

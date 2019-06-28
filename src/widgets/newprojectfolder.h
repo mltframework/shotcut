@@ -22,6 +22,7 @@
 #include <QModelIndex>
 #include <QStandardItemModel>
 #include <QMenu>
+#include <QString>
 
 namespace Ui {
 class NewProjectFolder;
@@ -60,6 +61,8 @@ private slots:
     void on_recentListView_clicked(const QModelIndex& index);
 
 private:
+    void setProjectFolderButtonText(const QString& text);
+
     Ui::NewProjectFolder *ui;
     QActionGroup* m_profileGroup;
     QMenu m_videoModeMenu;
