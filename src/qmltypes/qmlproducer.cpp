@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2018 Meltytech, LLC
+ * Copyright (c) 2016-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -179,6 +179,57 @@ double QmlProducer::displayAspectRatio()
         return sar * m_producer.get_double(kWidthProperty) / m_producer.get_double(kHeightProperty);
     }
     return MLT.profile().dar();
+}
+
+QString QmlProducer::get(QString name, int position)
+{
+    if (m_producer.is_valid()) {
+        const char* propertyName = name.toUtf8().constData();
+        if (position < 0)
+            return QString::fromUtf8(m_producer.get(propertyName));
+        else
+            return QString::fromUtf8(m_producer.anim_get(propertyName, position, duration()));
+    } else {
+        return QString();
+    }
+}
+
+double QmlProducer::getDouble(QString name, int position)
+{
+    if (m_producer.is_valid()) {
+        const char* propertyName = name.toUtf8().constData();
+        if (position < 0)
+            return m_producer.get_double(propertyName);
+        else
+            return m_producer.anim_get_double(propertyName, position, duration());
+    } else {
+        return 0.0;
+    }
+}
+
+QRectF QmlProducer::getRect(QString name, int position)
+{
+    if (!m_producer.is_valid()) return QRectF();
+    const char* s = m_producer.get(name.toUtf8().constData());
+    if (s) {
+        const char* propertyName = name.toUtf8().constData();
+        mlt_rect rect;
+        if (position < 0) {
+            rect = m_producer.get_rect(propertyName);
+        } else {
+            rect = m_producer.anim_get_rect(propertyName, position, duration());
+        }
+        if (::strchr(s, '%')) {
+            return QRectF(qRound(rect.x * MLT.profile().width()),
+                          qRound(rect.y * MLT.profile().height()),
+                          qRound(rect.w * MLT.profile().width()),
+                          qRound(rect.h * MLT.profile().height()));
+        } else {
+            return QRectF(rect.x, rect.y, rect.w, rect.h);
+        }
+    } else {
+        return QRectF(0.0, 0.0, 0.0, 0.0);
+    }
 }
 
 void QmlProducer::setProducer(Mlt::Producer& producer)

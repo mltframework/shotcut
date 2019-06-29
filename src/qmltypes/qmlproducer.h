@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2016-2018 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2016-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +21,7 @@
 #include <QObject>
 #include <QString>
 #include <QVariant>
+#include <QRectF>
 
 #include <MltProducer.h>
 #include "shotcut_mlt_properties.h"
@@ -66,6 +66,9 @@ public:
     Q_INVOKABLE void audioLevelsReady(const QModelIndex &index);
     Q_INVOKABLE void remakeAudioLevels();
     double displayAspectRatio();
+    Q_INVOKABLE QString get(QString name, int position = -1);
+    Q_INVOKABLE double getDouble(QString name, int position = -1);
+    Q_INVOKABLE QRectF getRect(QString name, int position = -1);
 
 signals:
     void producerChanged();
