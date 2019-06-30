@@ -84,7 +84,7 @@ bool Util::warnIfNotWritable(const QString& filePath, QWidget* parent, const QSt
     if (!filePath.isEmpty()) {
         // Do a hard check by writing to the file.
         QFile file(filePath);
-        file.open(QIODevice::WriteOnly);
+        file.open(QIODevice::WriteOnly | QIODevice::Append);
         if (file.write("") < 0) {
             QFileInfo fi(filePath);
             QMessageBox::warning(parent, caption,
