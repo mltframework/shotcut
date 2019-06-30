@@ -27,6 +27,7 @@
 #include <Mlt.h>
 #include <math.h>
 #include <clocale>
+#include <unistd.h>
 
 #include "glwidget.h"
 #include "settings.h"
@@ -518,6 +519,11 @@ bool Controller::saveXML(const QString& filename, Service* service, bool withRel
                     } else {
                         LOG_WARNING() << "rename failed, trying again";
                     }
+#ifdef Q_OS_WIN
+                    ::Sleep(200);
+#else
+                    ::usleep(200000);
+#endif
                 }
                 LOG_ERROR() << "rename failed" << mltFileName << filename;
                 return false;
