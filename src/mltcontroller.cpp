@@ -472,34 +472,55 @@ bool Controller::saveXML(const QString& filename, Service* service, bool withRel
                     QTemporaryFile backupTmp;
                     backupTmp.setFileTemplate(
                         QString("%1/%2 - backup - XXXXXX.mlt").arg(fi.absolutePath()).arg(fi.completeBaseName()));
-                    backupTmp.open();
-                    backupTmp.close();
-                    backupName = backupTmp.fileName();
-                    backupTmp.remove();
-                    if (!QFile::exists(backupName)) {
-                        LOG_DEBUG() << "rename to backup" << filename << backupName;
-                        if (!QFile::rename(filename, backupName)) {
-                            LOG_ERROR() << "rename to backup failed" << filename << backupName;
+                    // Only remove the backup file if we successfully move the temp file to target.
+                    backupTmp.setAutoRemove(false);
+                    QFile existingFile(filename);
+                    if (existingFile.open(QIODevice::ReadOnly)) {
+                        // Copy contents of existing file to temporary backup file.
+                        backupTmp.open();
+                        backupName = backupTmp.fileName();
+                        LOG_DEBUG() << "copy to backup" << filename << backupName;
+                        QByteArray buffer;
+                        while (!(buffer = existingFile.read(1048576LL /*1MiB*/)).isEmpty()) {
+                            backupTmp.write(buffer);
+                        }
+                        if (existingFile.error() != QFileDevice::NoError) {
+                            LOG_ERROR() << "backup error" << existingFile.errorString();
+                            return false;
+                        }
+                        if (backupTmp.size() != existingFile.size()) {
+                            LOG_ERROR() << "backup file size problem: existing file size" << existingFile.size() << ", backup file size" << backupTmp.size();
+                            return false;
+                        }
+                        backupTmp.close();
+                        existingFile.close();
+                        // Remove the existing file as its name becomes the target for rename.
+                        if (!existingFile.remove()) {
+                            LOG_ERROR() << "failed to remove existing file" << filename;
                             return false;
                         }
                     } else {
                         // Do not overwrite the backup file.
-                        LOG_ERROR() << "backup file already exists" << backupName;
+                        LOG_ERROR() << "failed to open existing file" << filename << "for backup:" << existingFile.errorString();
                         return false;
                     }
                 }
                 // If the file is good, then move it into place.
                 LOG_DEBUG() << "rename" << mltFileName << filename;
                 tmp.setAutoRemove(false);
-                if (tmp.rename(filename)) {
-                    // Double-check the rename operation.
-                    if (QFile::exists(filename) && QFile::exists(backupName))
-                        QFile::remove(backupName);
-                    return true;
-                } else {
-                    LOG_ERROR() << "rename failed" << mltFileName << filename;
-                    return false;
+                int attempts = 5;
+                for (int i = 0; i < attempts; i++) {
+                    if (tmp.rename(filename)) {
+                        // Double-check the rename operation.
+                        if (QFile::exists(filename) && QFile::exists(backupName))
+                            QFile::remove(backupName);
+                        return true;
+                    } else {
+                        LOG_WARNING() << "rename failed, trying again";
+                    }
                 }
+                LOG_ERROR() << "rename failed" << mltFileName << filename;
+                return false;
             }
         } else {
             return true;
