@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2016-2017 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2016-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,6 +20,7 @@
 #include "settings.h"
 #include "mainwindow.h"
 #include "mltxmlchecker.h"
+#include <Logger.h>
 #include <QFileDialog>
 #include <QStringList>
 
@@ -76,6 +76,66 @@ void UnlinkedFilesDialog::on_tableView_doubleClicked(const QModelIndex& index)
         model->setData(secondColIndex, filePath, Qt::ToolTipRole);
         model->setData(secondColIndex, hash, MltXmlChecker::ShotcutHashRole);
 
-        Settings.setOpenPath(QFileInfo(filenames.first()).path());
+        QFileInfo fi(QFileInfo(filenames.first()));
+        Settings.setOpenPath(fi.path());
+        lookInDir(fi.dir());
+    }
+}
+
+bool UnlinkedFilesDialog::lookInDir(const QDir& dir, bool recurse)
+{
+    LOG_DEBUG() << dir.canonicalPath();
+    // returns true if outstanding is > 0
+    unsigned outstanding = 0;
+    QAbstractItemModel* model = ui->tableView->model();
+    for (int row = 0; row < model->rowCount(); row++) {
+        QModelIndex replacementIndex = model->index(row, MltXmlChecker::ReplacementColumn);
+        if (model->data(replacementIndex, MltXmlChecker::ShotcutHashRole).isNull())
+            ++outstanding;
+    }
+    if (outstanding)
+    foreach (const QString& fileName, dir.entryList(QDir::Files | QDir::Readable | QDir::NoDotAndDotDot)) {
+        QString hash = MAIN.getFileHash(dir.absoluteFilePath(fileName));
+        for (int row = 0; row < model->rowCount(); row++) {
+            QModelIndex replacementIndex = model->index(row, MltXmlChecker::ReplacementColumn);
+            if (model->data(replacementIndex, MltXmlChecker::ShotcutHashRole).isNull()) {
+                QModelIndex missingIndex = model->index(row, MltXmlChecker::MissingColumn);
+                QFileInfo missingInfo(model->data(missingIndex).toString());
+                QString missingHash = model->data(missingIndex, MltXmlChecker::ShotcutHashRole).toString();
+                if (hash == missingHash || fileName == missingInfo.fileName()) {
+                    if (hash == missingHash) {
+                        QIcon icon(":/icons/oxygen/32x32/status/task-complete.png");
+                        model->setData(missingIndex, icon, Qt::DecorationRole);
+                    } else {
+                        QIcon icon(":/icons/oxygen/32x32/status/task-attempt.png");
+                        model->setData(missingIndex, icon, Qt::DecorationRole);
+                    }
+                    QString filePath = QDir::toNativeSeparators(dir.absoluteFilePath(fileName));
+                    model->setData(replacementIndex, filePath);
+                    model->setData(replacementIndex, filePath, Qt::ToolTipRole);
+                    model->setData(replacementIndex, hash, MltXmlChecker::ShotcutHashRole);
+                    QCoreApplication::processEvents();
+                    if (--outstanding)
+                        break;
+                    else
+                        return false;
+                }
+            }
+        }
+    }
+    if (outstanding && recurse) {
+        foreach (const QString& dirName, dir.entryList(QDir::Dirs | QDir::Executable | QDir::NoDotAndDotDot)) {
+            if (!lookInDir(dir.absoluteFilePath(dirName), true))
+                break;
+        }
+    }
+    return outstanding;
+}
+
+void UnlinkedFilesDialog::on_searchFolderButton_clicked()
+{
+    QString dirName = QFileDialog::getExistingDirectory(this, windowTitle(), Settings.openPath());
+    if (!dirName.isEmpty()) {
+        lookInDir(dirName);
     }
 }

@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2016 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2016-1029 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,6 +20,7 @@
 
 #include <QDialog>
 #include <QStandardItemModel>
+#include <QDir>
 
 namespace Ui {
 class UnlinkedFilesDialog;
@@ -39,7 +39,11 @@ public:
 private slots:
     void on_tableView_doubleClicked(const QModelIndex& index);
 
+    void on_searchFolderButton_clicked();
+
 private:
+    bool lookInDir(const QDir& dir, bool recurse = false);
+
     Ui::UnlinkedFilesDialog *ui;
 };
 
