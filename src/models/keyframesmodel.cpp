@@ -440,10 +440,9 @@ void KeyframesModel::onFilterInChanged(int delta)
         if (count > 0) {
             Mlt::Animation animation = m_filter->getAnimation(m_propertyNames[parameterIndex]);
             if (animation.is_valid()) {
-                int filterDuration = m_filter->duration();
                 for (int keyframeIndex = 0; keyframeIndex < count;) {
                     int newFrame = animation.key_get_frame(keyframeIndex) - delta;
-                    if (newFrame < 0 || newFrame >= filterDuration || animation.is_key(newFrame)) {
+                    if (animation.is_key(newFrame)) {
                         beginRemoveRows(index(parameterIndex), keyframeIndex, keyframeIndex);
                         animation.remove(animation.key_get_frame(keyframeIndex));
                         animation.interpolate();
@@ -470,10 +469,9 @@ void KeyframesModel::onFilterOutChanged(int delta)
         if (count > 0) {
             Mlt::Animation animation = m_filter->getAnimation(m_propertyNames[parameterIndex]);
             if (animation.is_valid()) {
-                int filterDuration = m_filter->duration();
                 for (int keyframeIndex = 0; keyframeIndex < count;) {
                     int frame = animation.key_get_frame(keyframeIndex);
-                    if (frame < 0 || frame >= filterDuration) {
+                    if (frame < 0) {
                         beginRemoveRows(index(parameterIndex), keyframeIndex, keyframeIndex);
                         animation.remove(animation.key_get_frame(keyframeIndex));
                         animation.interpolate();

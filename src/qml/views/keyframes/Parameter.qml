@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Meltytech, LLC
+ * Copyright (c) 2018-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@ import org.shotcut.qml 1.0
 
 Item {
     id: parameterRoot
+    clip: true
     property alias rootIndex: keyframeDelegateModel.rootIndex
     property bool isCurve: false
     property double minimum: 0.0
@@ -97,7 +98,9 @@ Item {
                     }
                 }
                 // Draw extent after last keyframe.
-                ctx.lineTo((filter.out - producer.in + 1) * timeScale, keyframesRepeater.itemAt(i - 1).y + heightOffset)
+                var x = (filter.out - producer.in + 1) * timeScale
+                if (x > keyframesRepeater.itemAt(i - 1).x)
+                    ctx.lineTo(x, keyframesRepeater.itemAt(i - 1).y + heightOffset)
             }
             ctx.stroke()
         }
