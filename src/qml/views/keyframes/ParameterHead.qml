@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2017-2018 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2017-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -189,7 +188,7 @@ Rectangle {
                             position = filter.out
                         else
                             position = producer.out
-                        producer.position = position - producer.in
+                        producer.position = Math.min(position - producer.in, producer.duration - 1)
                     }
                 }
                 tooltip: (delegateIndex >= 0) ? qsTr('Seek to next keyframe') : qsTr('Seek forwards')
