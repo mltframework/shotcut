@@ -238,6 +238,10 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties& preset)
         else if (name == "r") {
             ui->fpsSpinner->setValue(preset.get_double("r"));
         }
+        else if (name == "frame_rate_num") {
+            if (preset.get_int("frame_rate_den"))
+                ui->fpsSpinner->setValue(preset.get_double("frame_rate_num") / preset.get_double("frame_rate_den"));
+        }
         else if (name == "pix_fmt") {
             QString pix_fmt(preset.get("pix_fmt"));
             other.append(QString("%1=%2").arg(name).arg(pix_fmt));
