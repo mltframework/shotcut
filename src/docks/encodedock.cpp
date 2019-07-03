@@ -1798,3 +1798,42 @@ void EncodeDock::on_advancedCheckBox_clicked(bool checked)
 {
     Settings.setEncodeAdvanced(checked);
 }
+
+void EncodeDock::showFrameRateDialog(int numerator)
+{
+    double fps = numerator / 1001.0;
+    QMessageBox dialog(QMessageBox::Question,
+                       tr("Export Frames/sec"),
+                       tr("The value you entered is very similar to the common,\n"
+                          "more standard %1 = %2/1001.\n\n"
+                          "Do you want to use %1 = %2/1001 instead?")
+                          .arg(fps, 0, 'f', 6).arg(numerator),
+                       QMessageBox::No | QMessageBox::Yes,
+                       this);
+    dialog.setDefaultButton(QMessageBox::Yes);
+    dialog.setEscapeButton(QMessageBox::No);
+    dialog.setWindowModality(QmlApplication::dialogModality());
+    int result = dialog.exec();
+    if (result == QMessageBox::Yes) {
+        ui->fpsSpinner->setValue(fps);
+    }
+}
+
+void EncodeDock::on_fpsSpinner_editingFinished()
+{
+    if (ui->fpsSpinner->value() == 23.98 || ui->fpsSpinner->value() == 23.976) {
+        showFrameRateDialog(24000);
+    } else if (ui->fpsSpinner->value() == 29.97) {
+        showFrameRateDialog(30000);
+    } else if (ui->fpsSpinner->value() == 47.95) {
+        showFrameRateDialog(48000);
+    } else if (ui->fpsSpinner->value() == 59.94) {
+        showFrameRateDialog(60000);
+    }
+}
+
+void EncodeDock::on_fpsComboBox_activated(const QString &arg1)
+{
+    if (!arg1.isEmpty())
+        ui->fpsSpinner->setValue(arg1.toDouble());
+}

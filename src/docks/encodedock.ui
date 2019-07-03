@@ -473,6 +473,66 @@
                     </widget>
                    </item>
                    <item>
+                    <widget class="QComboBox" name="fpsComboBox">
+                     <property name="maximumSize">
+                      <size>
+                       <width>24</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <item>
+                      <property name="text">
+                       <string notr="true"/>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string notr="true">23.976024</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string notr="true">24</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string notr="true">25</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string notr="true">29.970030</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string notr="true">30</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string notr="true">48</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string notr="true">50</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string notr="true">59.940060</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string notr="true">60</string>
+                      </property>
+                     </item>
+                    </widget>
+                   </item>
+                   <item>
                     <spacer name="horizontalSpacer_16">
                      <property name="orientation">
                       <enum>Qt::Horizontal</enum>
@@ -1785,11 +1845,6 @@ in temporal compression</string>
   </customwidget>
  </customwidgets>
  <tabstops>
-  <tabstop>presetsSearch</tabstop>
-  <tabstop>presetsTree</tabstop>
-  <tabstop>addPresetButton</tabstop>
-  <tabstop>removePresetButton</tabstop>
-  <tabstop>scrollArea</tabstop>
   <tabstop>fromCombo</tabstop>
   <tabstop>hwencodeCheckBox</tabstop>
   <tabstop>hwencodeButton</tabstop>
@@ -1797,39 +1852,45 @@ in temporal compression</string>
   <tabstop>tabWidget</tabstop>
   <tabstop>widthSpinner</tabstop>
   <tabstop>heightSpinner</tabstop>
-  <tabstop>scanModeCombo</tabstop>
-  <tabstop>fpsSpinner</tabstop>
   <tabstop>aspectNumSpinner</tabstop>
   <tabstop>aspectDenSpinner</tabstop>
+  <tabstop>fpsSpinner</tabstop>
+  <tabstop>fpsComboBox</tabstop>
+  <tabstop>scanModeCombo</tabstop>
   <tabstop>fieldOrderCombo</tabstop>
   <tabstop>deinterlacerCombo</tabstop>
   <tabstop>interpolationCombo</tabstop>
   <tabstop>parallelCheckbox</tabstop>
-  <tabstop>videoCodecCombo</tabstop>
-  <tabstop>gopSpinner</tabstop>
-  <tabstop>strictGopCheckBox</tabstop>
-  <tabstop>videoBitrateCombo</tabstop>
-  <tabstop>disableVideoCheckbox</tabstop>
-  <tabstop>dualPassCheckbox</tabstop>
-  <tabstop>bFramesSpinner</tabstop>
-  <tabstop>videoCodecThreadsSpinner</tabstop>
-  <tabstop>videoRateControlCombo</tabstop>
-  <tabstop>videoBufferSizeSpinner</tabstop>
-  <tabstop>videoQualitySpinner</tabstop>
-  <tabstop>audioChannelsCombo</tabstop>
-  <tabstop>sampleRateCombo</tabstop>
-  <tabstop>audioCodecCombo</tabstop>
-  <tabstop>audioBitrateCombo</tabstop>
-  <tabstop>disableAudioCheckbox</tabstop>
-  <tabstop>audioRateControlCombo</tabstop>
-  <tabstop>audioQualitySpinner</tabstop>
-  <tabstop>advancedTextEdit</tabstop>
   <tabstop>encodeButton</tabstop>
   <tabstop>resetButton</tabstop>
   <tabstop>advancedButton</tabstop>
   <tabstop>advancedCheckBox</tabstop>
   <tabstop>streamButton</tabstop>
   <tabstop>stopCaptureButton</tabstop>
+  <tabstop>presetsSearch</tabstop>
+  <tabstop>presetsTree</tabstop>
+  <tabstop>addPresetButton</tabstop>
+  <tabstop>removePresetButton</tabstop>
+  <tabstop>scrollArea</tabstop>
+  <tabstop>videoCodecCombo</tabstop>
+  <tabstop>videoRateControlCombo</tabstop>
+  <tabstop>videoBitrateCombo</tabstop>
+  <tabstop>videoBufferSizeSpinner</tabstop>
+  <tabstop>videoQualitySpinner</tabstop>
+  <tabstop>gopSpinner</tabstop>
+  <tabstop>strictGopCheckBox</tabstop>
+  <tabstop>bFramesSpinner</tabstop>
+  <tabstop>videoCodecThreadsSpinner</tabstop>
+  <tabstop>dualPassCheckbox</tabstop>
+  <tabstop>disableVideoCheckbox</tabstop>
+  <tabstop>audioChannelsCombo</tabstop>
+  <tabstop>sampleRateCombo</tabstop>
+  <tabstop>audioCodecCombo</tabstop>
+  <tabstop>audioRateControlCombo</tabstop>
+  <tabstop>audioBitrateCombo</tabstop>
+  <tabstop>audioQualitySpinner</tabstop>
+  <tabstop>disableAudioCheckbox</tabstop>
+  <tabstop>advancedTextEdit</tabstop>
  </tabstops>
  <resources>
   <include location="../../icons/resources.qrc"/>

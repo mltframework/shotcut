@@ -114,6 +114,10 @@ private slots:
 
     void on_advancedCheckBox_clicked(bool checked);
 
+    void on_fpsSpinner_editingFinished();
+
+    void on_fpsComboBox_activated(const QString &arg1);
+
 private:
     enum {
         RateControlAverage = 0,
@@ -144,6 +148,7 @@ private:
     void encode(const QString& target);
     void resetOptions();
     Mlt::Producer* fromProducer() const;
+    void showFrameRateDialog(int numerator);
 };
 
 #endif // ENCODEDOCK_H
