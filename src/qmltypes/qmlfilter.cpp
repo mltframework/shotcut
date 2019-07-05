@@ -337,6 +337,17 @@ void QmlFilter::analyze(bool isAudio)
         connect(job, &AbstractJob::finished, this, &QmlFilter::analyzeFinished);
         QFileInfo info(QString::fromUtf8(service.get("resource")));
         job->setLabel(tr("Analyze %1").arg(info.fileName()));
+
+        // Touch the target .stab file. This prevents multiple jobs from trying
+        // to write the same file.
+        QString filename(m_filter.get("filename"));
+        if (!filename.isEmpty() && !QFile::exists(filename)) {
+            job->setProperty("filename", filename);
+            QFile file(filename);
+            file.open(QFile::WriteOnly);
+            file.write("");
+        }
+
         JOBS.add(job);
     }
 }
@@ -618,6 +629,10 @@ void AnalyzeDelegate::onAnalyzeFinished(AbstractJob *job, bool isSuccess)
                 break;
             }
         }
+    } else if (!job->property("filename").isNull()) {
+        QFile file(job->property("filename").toString());
+        if (file.exists() && file.size() == 0)
+            file.remove();
     }
     QFile::remove(fileName);
     deleteLater();
