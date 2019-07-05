@@ -539,7 +539,7 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
                     if (RateControlConstant == ui->audioRateControlCombo->currentIndex())
                         setIfNotSet(p, "vbr", "off");
                     else
-                        setIfNotSet(p, "vbr", "on");
+                        setIfNotSet(p, "vbr", "constrained");
                 }
             } else if (acodec == "libopus") {
                 setIfNotSet(p, "vbr", "on");
