@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2018 Meltytech, LLC
+ * Copyright (c) 2013-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,7 +25,8 @@
 
 CustomProfileDialog::CustomProfileDialog(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::CustomProfileDialog)
+    ui(new Ui::CustomProfileDialog),
+    m_fps(0.0)
 {
     ui->setupUi(this);
     ui->widthSpinner->setValue(MLT.profile().width());
@@ -111,4 +112,27 @@ void CustomProfileDialog::on_widthSpinner_editingFinished()
 void CustomProfileDialog::on_heightSpinner_editingFinished()
 {
     ui->heightSpinner->setValue(Util::coerceMultiple(ui->heightSpinner->value()));
+}
+
+void CustomProfileDialog::on_fpsSpinner_editingFinished()
+{
+    if (ui->fpsSpinner->value() != m_fps) {
+        const QString caption(tr("Video Mode Frames/sec"));
+        if (ui->fpsSpinner->value() == 23.98 || ui->fpsSpinner->value() == 23.976) {
+            Util::showFrameRateDialog(caption, 24000, ui->fpsSpinner, this);
+        } else if (ui->fpsSpinner->value() == 29.97) {
+            Util::showFrameRateDialog(caption, 30000, ui->fpsSpinner, this);
+        } else if (ui->fpsSpinner->value() == 47.95) {
+            Util::showFrameRateDialog(caption, 48000, ui->fpsSpinner, this);
+        } else if (ui->fpsSpinner->value() == 59.94) {
+            Util::showFrameRateDialog(caption, 60000, ui->fpsSpinner, this);
+        }
+        m_fps = ui->fpsSpinner->value();
+    }
+}
+
+void CustomProfileDialog::on_fpsComboBox_activated(const QString &arg1)
+{
+    if (!arg1.isEmpty())
+        ui->fpsSpinner->setValue(arg1.toDouble());
 }

@@ -279,7 +279,7 @@
         <item>
          <widget class="QDoubleSpinBox" name="fpsSpinner">
           <property name="decimals">
-           <number>3</number>
+           <number>6</number>
           </property>
           <property name="minimum">
            <double>1.000000000000000</double>
@@ -290,6 +290,66 @@
           <property name="value">
            <double>25.000000000000000</double>
           </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="fpsComboBox">
+          <property name="maximumSize">
+           <size>
+            <width>20</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <item>
+           <property name="text">
+            <string notr="true"/>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string notr="true">23.976024</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string notr="true">24</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string notr="true">25</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string notr="true">29.970030</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string notr="true">30</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string notr="true">48</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string notr="true">50</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string notr="true">59.940060</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string notr="true">60</string>
+           </property>
+          </item>
          </widget>
         </item>
         <item>

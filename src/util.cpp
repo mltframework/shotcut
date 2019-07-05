@@ -26,8 +26,10 @@
 #include <QDesktopServices>
 #include <QMessageBox>
 #include <QMap>
+#include <QDoubleSpinBox>
 #include <MltProducer.h>
 #include "shotcut_mlt_properties.h"
+#include "qmltypes/qmlapplication.h"
 
 QString Util::baseName(const QString &filePath)
 {
@@ -241,4 +243,22 @@ bool Util::convertDecimalPoints(QString& str, QChar decimalPoint)
         }
     }
     return result;
+}
+
+void Util::showFrameRateDialog(const QString& caption, int numerator, QDoubleSpinBox* spinner, QWidget *parent)
+{
+    double fps = numerator / 1001.0;
+    QMessageBox dialog(QMessageBox::Question, caption,
+                       QObject::tr("The value you entered is very similar to the common,\n"
+                          "more standard %1 = %2/1001.\n\n"
+                          "Do you want to use %1 = %2/1001 instead?")
+                          .arg(fps, 0, 'f', 6).arg(numerator),
+                       QMessageBox::No | QMessageBox::Yes,
+                       parent);
+    dialog.setDefaultButton(QMessageBox::Yes);
+    dialog.setEscapeButton(QMessageBox::No);
+    dialog.setWindowModality(QmlApplication::dialogModality());
+    if (dialog.exec() == QMessageBox::Yes) {
+        spinner->setValue(fps);
+    }
 }

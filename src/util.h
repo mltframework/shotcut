@@ -23,6 +23,8 @@
 #include <QUrl>
 
 class QWidget;
+class QDoubleSpinBox;
+
 namespace Mlt {
     class Producer;
 }
@@ -45,6 +47,7 @@ public:
     static bool isNumeric(QString& str);
     static bool convertNumericString(QString& str, QChar decimalPoint);
     static bool convertDecimalPoints(QString& str, QChar decimalPoint);
+    static void showFrameRateDialog(const QString& caption, int numerator, QDoubleSpinBox* spinner, QWidget* parent = Q_NULLPTR);
 };
 
 #endif // UTIL_H

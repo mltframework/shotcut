@@ -476,7 +476,7 @@
                     <widget class="QComboBox" name="fpsComboBox">
                      <property name="maximumSize">
                       <size>
-                       <width>24</width>
+                       <width>20</width>
                        <height>16777215</height>
                       </size>
                      </property>

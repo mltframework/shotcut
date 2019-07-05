@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2018 Meltytech, LLC
+ * Copyright (c) 2013-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,8 +40,13 @@ private slots:
 
     void on_heightSpinner_editingFinished();
 
+    void on_fpsSpinner_editingFinished();
+
+    void on_fpsComboBox_activated(const QString &arg1);
+
 private:
     Ui::CustomProfileDialog *ui;
+    double m_fps;
 };
 
 #endif // CUSTOMPROFILEDIALOG_H

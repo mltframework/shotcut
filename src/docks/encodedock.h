@@ -138,6 +138,7 @@ private:
     PresetsProxyModel m_presetsModel;
     QString m_outputFilename;
     bool m_isDefaultSettings;
+    double m_fps;
 
     void loadPresets();
     Mlt::Properties* collectProperties(int realtime);
@@ -148,7 +149,6 @@ private:
     void encode(const QString& target);
     void resetOptions();
     Mlt::Producer* fromProducer() const;
-    void showFrameRateDialog(int numerator);
 };
 
 #endif // ENCODEDOCK_H
