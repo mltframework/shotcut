@@ -518,7 +518,8 @@ void QmlFilter::preset(const QString &name)
             QChar decimalPoint = MLT.decimalPoint();
             for (int i = 0; i < properties->count(); i++) {
                 QString name(properties->get_name(i));
-        
+                if (m_metadata->mlt_service() == "dynamictext" && name == "argument")
+                    continue;
                 // Convert numeric strings to the current MLT numeric locale.
                 QString value = QString::fromUtf8(properties->get(i));
                 if (Util::convertDecimalPoints(value, decimalPoint))
