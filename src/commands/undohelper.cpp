@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2015-2016 Meltytech, LLC
- * Author: Harald Hvaal <harald.hvaal@gmail.com>
+ * Copyright (c) 2015-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -208,6 +207,8 @@ void UndoHelper::undoChanges()
 
             QModelIndex modelIndex = m_model.createIndex(currentIndex, 0, info.oldTrackIndex);
             QVector<int> roles;
+            roles << MultitrackModel::InPointRole;
+            roles << MultitrackModel::OutPointRole;
             roles << MultitrackModel::DurationRole;
             emit m_model.dataChanged(modelIndex, modelIndex, roles);
             QScopedPointer<Mlt::Producer> clip(playlist.get_clip(currentIndex));
