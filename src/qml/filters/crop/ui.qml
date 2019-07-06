@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2014-2015 Meltytech, LLC
- * Author: Brian Matherly <pez4brian@yahoo.com>
+ * Copyright (c) 2014-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +21,8 @@ import QtQuick.Layouts 1.0
 import Shotcut.Controls 1.0
 
 Item {
+    property int producerWidth: (producer.get('meta.media.width') === null)? profile.width :producer.get('meta.media.width')
+    property int producerHeight: (producer.get('meta.media.height') === null)? profile.height : producer.get('meta.media.height')
     property var defaultParameters: ['left', 'right', 'top', 'bottom', 'center', 'center_bias']
     width: 350
     height: 200
@@ -127,8 +128,8 @@ Item {
         }
         SliderSpinner {
             id: biasslider
-            minimumValue: -Math.max(profile.width, profile.height) / 2
-            maximumValue: Math.max(profile.width, profile.height) / 2
+            minimumValue: -Math.max(producerWidth, producerHeight) / 2
+            maximumValue: Math.max(producerWidth, producerHeight) / 2
             suffix: ' px'
             value: +filter.get('center_bias')
             onValueChanged: filter.set('center_bias', value)
@@ -145,7 +146,7 @@ Item {
         SliderSpinner {
             id: topslider
             minimumValue: 0
-            maximumValue: profile.height
+            maximumValue: producerHeight
             suffix: ' px'
             value: +filter.get('top')
             onValueChanged: filter.set('top', value)
@@ -162,7 +163,7 @@ Item {
         SliderSpinner {
             id: bottomslider
             minimumValue: 0
-            maximumValue: profile.height
+            maximumValue: producerHeight
             suffix: ' px'
             value: +filter.get('bottom')
             onValueChanged: filter.set('bottom', value)
@@ -179,7 +180,7 @@ Item {
         SliderSpinner {
             id: leftslider
             minimumValue: 0
-            maximumValue: profile.width
+            maximumValue: producerWidth
             suffix: ' px'
             value: +filter.get('left')
             onValueChanged: filter.set('left', value)
@@ -196,7 +197,7 @@ Item {
         SliderSpinner {
             id: rightslider
             minimumValue: 0
-            maximumValue: profile.width
+            maximumValue: producerWidth
             suffix: ' px'
             value: +filter.get('right')
             onValueChanged: filter.set('right', value)
