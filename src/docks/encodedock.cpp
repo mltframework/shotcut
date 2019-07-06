@@ -945,8 +945,8 @@ MeltJob* EncodeDock::createMeltJob(Mlt::Producer* service, const QString& target
     for (int i = 0; i < playlists.length();++i)
         playlists.item(i).toElement().setAttribute("autoclose", 1);
 
-    int frameRateNum = consumerNode.attribute("frame_rate_num").toInt();
-    int frameRateDen = consumerNode.attribute("frame_rate_den").toInt();
+    int frameRateNum = consumerNode.hasAttribute("frame_rate_num")? consumerNode.attribute("frame_rate_num").toInt() : MLT.profile().frame_rate_num();
+    int frameRateDen = consumerNode.hasAttribute("frame_rate_den")? consumerNode.attribute("frame_rate_den").toInt() : MLT.profile().frame_rate_den();
     MeltJob* job = new EncodeJob(QDir::toNativeSeparators(target), dom.toString(2), frameRateNum, frameRateDen);
     job->setUseMultiConsumer(
             ui->widthSpinner->value() != MLT.profile().width() ||
