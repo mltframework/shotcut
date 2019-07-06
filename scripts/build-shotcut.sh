@@ -1780,7 +1780,6 @@ function bundle_libs
          ($3 !~ /\/libanl\./) &&
          ($3 !~ /\/libBrokenLocale\./) &&
          ($3 !~ /\/libcidn\./) &&
-         ($3 !~ /\/libcrypt\./) &&
          ($3 !~ /\/libc\./) &&
          ($3 !~ /\/libdl\./) &&
          ($3 !~ /\/libm\./) &&
@@ -1805,6 +1804,7 @@ function bundle_libs
          ($3 !~ /\/libxcb\./) &&
          ($3 !~ /\/libxcb-dri2\./) &&
          ($3 !~ /\/libxcb-dri3\./) &&
+         ($3 !~ /\/libfribidi\./) &&
          ($3 !~ /\/libX11\./) &&
          ($3 !~ /\/libgio\./) &&
          ($3 !~ /\/libasound\./) &&
