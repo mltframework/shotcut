@@ -108,6 +108,7 @@ public:
     void insertTrack(int trackIndex, TrackType type = VideoTrackType);
     void insertOrAdjustBlankAt(QList<int> tracks, int position, int length);
     bool mergeClipWithNext(int trackIndex, int clipIndex, bool dryrun);
+    void adjustClipFilters(Mlt::Producer& producer, int in, int out, int inDelta, int outDelta);
 
 signals:
     void created();
@@ -201,7 +202,6 @@ private:
 private slots:
     void adjustBackgroundDuration();
     void adjustTrackFilters();
-    void adjustClipFilters(Mlt::Producer& producer, int in, int out, int inDelta, int outDelta);
 };
 
 #endif // MULTITRACKMODEL_H

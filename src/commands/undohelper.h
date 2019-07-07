@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2015 Meltytech, LLC
- * Author: Harald Hvaal <harald.hvaal@gmail.com>
+ * Copyright (c) 2015-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -60,6 +59,8 @@ private:
         QString xml;
         int frame_in;
         int frame_out;
+        int in_delta;
+        int out_delta;
 
         int changes;
         Info()
@@ -70,6 +71,8 @@ private:
             , isBlank(false)
             , frame_in(-1)
             , frame_out(-1)
+            , in_delta(0)
+            , out_delta(0)
             , changes(NoChange)
         {}
     };

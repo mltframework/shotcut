@@ -2596,18 +2596,35 @@ void MainWindow::onMultitrackModified()
 
     // Reflect this playlist info onto the producer for keyframes dock.
     if (!m_timelineDock->selection().isEmpty()) {
+        int trackIndex = m_timelineDock->currentTrack();
         int clipIndex = m_timelineDock->selection().first();
-        QScopedPointer<Mlt::ClipInfo> info(m_timelineDock->getClipInfo(m_timelineDock->currentTrack(), clipIndex));
+        QScopedPointer<Mlt::ClipInfo> info(m_timelineDock->getClipInfo(trackIndex, clipIndex));
         if (info && info->producer && info->producer->is_valid()) {
-            info->producer->set(kPlaylistStartProperty, info->start);
-            if (info->frame_in != info->producer->get_int(kFilterInProperty)) {
-                info->producer->set(kFilterInProperty, info->frame_in);
-                int delta = info->frame_in - info->producer->get_int(kFilterInProperty);
+            int expected = info->frame_in;
+            QScopedPointer<Mlt::ClipInfo> info2(m_timelineDock->getClipInfo(trackIndex, clipIndex - 1));
+            if (info2 && info2->producer && info2->producer->is_valid()
+                      && info2->producer->get(kShotcutTransitionProperty)) {
+                // Factor in a transition left of the clip.
+                expected -= info2->frame_count;
+                info->producer->set(kPlaylistStartProperty, info2->start);
+            } else {
+                info->producer->set(kPlaylistStartProperty, info->start);
+            }
+            if (expected != info->producer->get_int(kFilterInProperty)) {
+                int delta = expected - info->producer->get_int(kFilterInProperty);
+                info->producer->set(kFilterInProperty, expected);
                 emit m_filtersDock->producerInChanged(delta);
             }
-            if (info->frame_out != info->producer->get_int(kFilterOutProperty)) {
-                info->producer->set(kFilterOutProperty, info->frame_out);
-                int delta = info->frame_out - info->producer->get_int(kFilterOutProperty);
+            expected = info->frame_out;
+            info2.reset(m_timelineDock->getClipInfo(trackIndex, clipIndex + 1));
+            if (info2 && info2->producer && info2->producer->is_valid()
+                      && info2->producer->get(kShotcutTransitionProperty)) {
+                // Factor in a transition right of the clip.
+                expected += info2->frame_count;
+            }
+            if (expected != info->producer->get_int(kFilterOutProperty)) {
+                int delta = expected - info->producer->get_int(kFilterOutProperty);
+                info->producer->set(kFilterOutProperty, expected);
                 emit m_filtersDock->producerOutChanged(delta);
             }
         }

@@ -118,6 +118,8 @@ void UndoHelper::recordAfterState()
                 if (info.frame_in != newInfo.frame_in || info.frame_out != newInfo.frame_out) {
                     UNDOLOG << "In/out changed:" << uid;
                     info.changes |= ClipInfoModified;
+                    info.in_delta = info.frame_in - newInfo.frame_in;
+                    info.out_delta = newInfo.frame_out - info.frame_out;
                 }
             }
             clipsRemoved.removeOne(uid);
@@ -205,14 +207,25 @@ void UndoHelper::undoChanges()
             UNDOLOG << "resizing clip at" << currentIndex;
             playlist.resize_clip(currentIndex, info.frame_in, info.frame_out);
 
+            QScopedPointer<Mlt::Producer> clip(playlist.get_clip(currentIndex));
+            int in = info.frame_in;
+            int out = info.frame_out;
+            if (clip && clip->is_valid()) {
+                if (clip->parent().get(kFilterInProperty))
+                    in = clip->parent().get_int(kFilterInProperty);
+                if (clip->parent().get(kFilterOutProperty))
+                    out = clip->parent().get_int(kFilterOutProperty);
+                m_model.adjustClipFilters(clip->parent(), in, out, info.in_delta, info.out_delta);
+            }
+
             QModelIndex modelIndex = m_model.createIndex(currentIndex, 0, info.oldTrackIndex);
             QVector<int> roles;
             roles << MultitrackModel::InPointRole;
             roles << MultitrackModel::OutPointRole;
             roles << MultitrackModel::DurationRole;
             emit m_model.dataChanged(modelIndex, modelIndex, roles);
-            QScopedPointer<Mlt::Producer> clip(playlist.get_clip(currentIndex));
-            AudioLevelsTask::start(clip->parent(), &m_model, modelIndex);
+            if (clip && clip->is_valid())
+                AudioLevelsTask::start(clip->parent(), &m_model, modelIndex);
         }
     }
 
