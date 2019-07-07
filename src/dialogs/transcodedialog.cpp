@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2017 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2017-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -49,7 +48,7 @@ void TranscodeDialog::on_horizontalSlider_valueChanged(int position)
         ui->formatLabel->setText(tr("Lossy: I-frame–only H.264/AC-3 MP4"));
         break;
     case 1:
-        ui->formatLabel->setText(tr("Intermediate: ProRes/ALAC MOV"));
+        ui->formatLabel->setText(tr("Intermediate: DNxHR/ALAC MOV"));
         break;
     case 2:
         ui->formatLabel->setText(tr("Lossless: FFV1/FLAC MKV"));
