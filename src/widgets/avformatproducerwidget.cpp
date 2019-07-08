@@ -221,7 +221,7 @@ void AvformatProducerWidget::recreateProducer()
 {
     Mlt::Producer* p = newProducer(MLT.profile());
     p->pass_list(*m_producer, "audio_index, video_index, force_aspect_ratio,"
-                 "video_delay, force_progressive, force_tff, set.force_full_luma,"
+                 "video_delay, force_progressive, force_tff, set.force_full_luma, color_range,"
                  kAspectRatioNumerator ","
                  kAspectRatioDenominator ","
                  kShotcutHashProperty ","
@@ -430,7 +430,9 @@ void AvformatProducerWidget::onFrameDecoded()
         tff = m_producer->get_int("force_tff");
     ui->fieldOrderComboBox->setCurrentIndex(tff);
     ui->fieldOrderComboBox->setEnabled(!progressive);
-    if (m_producer->get("set.force_full_luma"))
+    if (m_producer->get("color_range"))
+        color_range = m_producer->get_int("color_range") == 2;
+    else if (m_producer->get("set.force_full_luma"))
         color_range = m_producer->get_int("set.force_full_luma");
     ui->rangeComboBox->setCurrentIndex(color_range);
 
@@ -917,7 +919,7 @@ void AvformatProducerWidget::on_actionSetFileDate_triggered()
 void AvformatProducerWidget::on_rangeComboBox_activated(int index)
 {
     if (m_producer) {
-        m_producer->set("set.force_full_luma", index);
+        m_producer->set("color_range", index? 2 : 1);
         recreateProducer();
     }
 }
