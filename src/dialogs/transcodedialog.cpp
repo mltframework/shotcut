@@ -51,7 +51,7 @@ void TranscodeDialog::on_horizontalSlider_valueChanged(int position)
         ui->formatLabel->setText(tr("Intermediate: DNxHR/ALAC MOV"));
         break;
     case 2:
-        ui->formatLabel->setText(tr("Lossless: FFV1/FLAC MKV"));
+        ui->formatLabel->setText(tr("Lossless: Ut Video/FLAC MKV"));
         break;
     }
     m_format = position;

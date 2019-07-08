@@ -676,30 +676,27 @@ void AvformatProducerWidget::convert(TranscodeDialog& dialog)
         args << "-max_muxing_queue_size" << "9999";
         // transcode all streams except data, subtitles, and attachments
         args << "-map" << "0:V?" << "-map" << "0:a?" << "-map_metadata" << "0" << "-ignore_unknown";
+        if (ui->rangeComboBox->currentIndex())
+            args << "-vf" << "scale=in_range=full:out_range=full" << "-color_range" << "jpeg";
+        else
+            args << "-vf" << "scale=in_range=mpeg:out_range=mpeg" << "-color_range" << "mpeg";
 
         switch (dialog.format()) {
         case 0:
             path.append("/%1.mp4");
             nameFilter = tr("MP4 (*.mp4);;All Files (*)");
-            args << "-color_range" << (ui->rangeComboBox->currentIndex()? "jpeg" : "mpeg");
-            args << "-f" << "mp4" << "-codec:a?" << "ac3" << "-b:a?" << "512k" << "-codec:v?" << "libx264";
+            args << "-f" << "mp4" << "-codec:a" << "ac3" << "-b:a" << "512k" << "-codec:v?" << "libx264";
             args << "-preset" << "medium" << "-g" << "1" << "-crf" << "11";
             break;
         case 1:
-            if (ui->rangeComboBox->currentIndex())
-                args << "-vf" << "scale=in_range=full:out_range=limited";
-            args << "-f" << "mov" << "-codec:a?" << "alac" << "-codec:v?" << "dnxhd";
-            args << "-profile:v?" << (ui->rangeComboBox->currentIndex()? "dnxhr_hqx" : "dnxhr_hq");
-            args << "-pix_fmt" << (ui->rangeComboBox->currentIndex()? "yuv422p10le" : "yuv422p");
+            args << "-f" << "mov" << "-codec:a" << "alac" << "-codec:v" << "dnxhd";
+            args << "-profile:v?" << "dnxhr_hq" << "-pix_fmt" << "yuv422p";
             path.append("/%1.mov");
             nameFilter = tr("MOV (*.mov);;All Files (*)");
             break;
         case 2:
-            if (ui->rangeComboBox->currentIndex())
-                args << "-vf" << "scale=in_range=full:out_range=limited";
-            args << "-f" << "matroska" << "-codec:a" << "flac" << "-codec:v" << "ffv1" << "-coder" << "1";
-            args << "-pix_fmt" << (ui->rangeComboBox->currentIndex()? "yuv422p10le" : "yuv422p");
-            args << "-context" << "1" << "-g" << "1" << "-threads" << QString::number(QThread::idealThreadCount());
+            args << "-f" << "matroska" << "-codec:a" << "flac" << "-codec:v" << "utvideo";
+            args << "-pix_fmt" << "yuv422p";
             path.append("/%1.mkv");
             nameFilter = tr("MKV (*.mkv);;All Files (*)");
             break;
@@ -762,6 +759,10 @@ void AvformatProducerWidget::on_reverseButton_clicked()
             ffmpegArgs << "-to" << QString::fromLatin1(m_producer->get_time("out", mlt_time_clock)).replace(',', '.');
         // transcode all streams except data, subtitles, and attachments
         ffmpegArgs << "-map" << "0:V?" << "-map" << "0:a?" << "-map_metadata" << "0" << "-ignore_unknown";
+        if (ui->rangeComboBox->currentIndex())
+            ffmpegArgs << "-vf" << "scale=in_range=full:out_range=full" << "-color_range" << "jpeg";
+        else
+            ffmpegArgs << "-vf" << "scale=in_range=mpeg:out_range=mpeg" << "-color_range" << "mpeg";
 
         meltArgs << "-consumer" << "avformat";
         if (m_producer->get_int("audio_index") == -1) {
@@ -779,32 +780,23 @@ void AvformatProducerWidget::on_reverseButton_clicked()
         case 0:
             path.append("/%1 - %2.mp4");
             nameFilter = tr("MP4 (*.mp4);;All Files (*)");
-            if (ui->rangeComboBox->currentIndex())
-                ffmpegArgs << "-vf" << "scale=in_range=full:out_range=limited";
-            ffmpegArgs << "-f" << "mov" << "-codec:a?" << "alac" << "-codec:v?" << "dnxhd";
-            ffmpegArgs << "-profile:v?" << (ui->rangeComboBox->currentIndex()? "dnxhr_hqx" : "dnxhr_hq");
-            ffmpegArgs << "-pix_fmt" << (ui->rangeComboBox->currentIndex()? "yuv422p10le" : "yuv422p");
+            ffmpegArgs << "-f" << "mov" << "-codec:a" << "alac" << "-codec:v" << "dnxhd";
+            ffmpegArgs << "-profile:v" << "dnxhr_hq" << "-pix_fmt" << "yuv422p";
             meltArgs << "acodec=ac3" << "ab=512k" << "vcodec=libx264";
             meltArgs << "vpreset=medium" << "g=1" << "crf=11";
             break;
         case 1:
-            if (ui->rangeComboBox->currentIndex())
-                ffmpegArgs << "-vf" << "scale=in_range=full:out_range=limited";
-            ffmpegArgs << "-f" << "mov" << "-codec:a?" << "alac" << "-codec:v?" << "dnxhd";
-            ffmpegArgs << "-profile:v?" << (ui->rangeComboBox->currentIndex()? "dnxhr_hqx" : "dnxhr_hq");
-            ffmpegArgs << "-pix_fmt" << (ui->rangeComboBox->currentIndex()? "yuv422p10le" : "yuv422p");
+            ffmpegArgs << "-f" << "mov" << "-codec:a" << "alac" << "-codec:v" << "dnxhd";
+            ffmpegArgs << "-profile:v" << "dnxhr_hq" << "-pix_fmt" << "yuv422p";
             meltArgs << "acodec=alac" << "vcodec=dnxhd" << "vprofile=dnxhr_hq";
             path.append("/%1 - %2.mov");
             nameFilter = tr("MOV (*.mov);;All Files (*)");
             break;
         case 2:
-            if (ui->rangeComboBox->currentIndex())
-                ffmpegArgs << "-vf" << "scale=in_range=full:out_range=limited";
-            ffmpegArgs << "-f" << "mov" << "-codec:a?" << "alac" << "-codec:v?" << "ffv1" << "-coder" << "1";
+            ffmpegArgs << "-f" << "mov" << "-codec:a?" << "alac" << "-codec:v" << "ffv1" << "-coder" << "1";
             ffmpegArgs << "-pix_fmt" << (ui->rangeComboBox->currentIndex()? "yuv422p10le" : "yuv422p");
-            ffmpegArgs << "-context" << "1" << "-g" << "1" << "-threads" << QString::number(QThread::idealThreadCount());
-            meltArgs << "acodec=flac" << "vcodec=ffv1" << "coder=1";
-            meltArgs << "context=1" << "g=1" << QString::number(QThread::idealThreadCount()).prepend("threads=");
+            ffmpegArgs << "-context" << "1" << "-g" << "1";
+            meltArgs << "acodec=flac" << "vcodec=utvideo";
             path.append("/%1 - %2.mkv");
             nameFilter = tr("MKV (*.mkv);;All Files (*)");
             break;
