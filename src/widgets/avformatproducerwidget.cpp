@@ -677,9 +677,9 @@ void AvformatProducerWidget::convert(TranscodeDialog& dialog)
         // transcode all streams except data, subtitles, and attachments
         args << "-map" << "0:V?" << "-map" << "0:a?" << "-map_metadata" << "0" << "-ignore_unknown";
         if (ui->rangeComboBox->currentIndex())
-            args << "-vf" << "scale=in_range=full:out_range=full" << "-color_range" << "jpeg";
+            args << "-vf" << "scale=flags=accurate_rnd+full_chroma_inp+full_chroma_int:in_range=full:out_range=full" << "-color_range" << "jpeg";
         else
-            args << "-vf" << "scale=in_range=mpeg:out_range=mpeg" << "-color_range" << "mpeg";
+            args << "-vf" << "scale=flags=accurate_rnd+full_chroma_inp+full_chroma_int:in_range=mpeg:out_range=mpeg" << "-color_range" << "mpeg";
 
         switch (dialog.format()) {
         case 0:
@@ -760,9 +760,9 @@ void AvformatProducerWidget::on_reverseButton_clicked()
         // transcode all streams except data, subtitles, and attachments
         ffmpegArgs << "-map" << "0:V?" << "-map" << "0:a?" << "-map_metadata" << "0" << "-ignore_unknown";
         if (ui->rangeComboBox->currentIndex())
-            ffmpegArgs << "-vf" << "scale=in_range=full:out_range=full" << "-color_range" << "jpeg";
+            ffmpegArgs << "-vf" << "scale=flags=accurate_rnd+full_chroma_inp+full_chroma_int:in_range=full:out_range=full" << "-color_range" << "jpeg";
         else
-            ffmpegArgs << "-vf" << "scale=in_range=mpeg:out_range=mpeg" << "-color_range" << "mpeg";
+            ffmpegArgs << "-vf" << "scale=flags=accurate_rnd+full_chroma_inp+full_chroma_int:in_range=mpeg:out_range=mpeg" << "-color_range" << "mpeg";
 
         meltArgs << "-consumer" << "avformat";
         if (m_producer->get_int("audio_index") == -1) {
