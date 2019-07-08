@@ -743,7 +743,7 @@ void AvformatProducerWidget::on_reverseButton_clicked()
         QStringList meltArgs;
         QStringList ffmpegArgs;
         QString nameFilter;
-        QString ffmpegSuffix = "mov";;
+        QString ffmpegSuffix = "mov";
 
         ffmpegArgs << "-loglevel" << "verbose";
         ffmpegArgs << "-i" << resource;
@@ -793,10 +793,10 @@ void AvformatProducerWidget::on_reverseButton_clicked()
             nameFilter = tr("MOV (*.mov);;All Files (*)");
             break;
         case 2:
-            ffmpegArgs << "-f" << "mov" << "-codec:a?" << "alac" << "-codec:v" << "ffv1" << "-coder" << "1";
-            ffmpegArgs << "-pix_fmt" << (ui->rangeComboBox->currentIndex()? "yuv422p10le" : "yuv422p");
-            ffmpegArgs << "-context" << "1" << "-g" << "1";
-            meltArgs << "acodec=flac" << "vcodec=utvideo";
+            ffmpegSuffix = "mkv";
+            ffmpegArgs << "-f" << "matroska" << "-codec:a" << "pcm_s32le" << "-codec:v" << "utvideo";
+            ffmpegArgs << "-pix_fmt" << "yuv422p";
+            meltArgs << "acodec=flac" << "vcodec=utvideo" << "mlt_audio_format=s32le" << "pix_fmt=yuv422p";
             path.append("/%1 - %2.mkv");
             nameFilter = tr("MKV (*.mkv);;All Files (*)");
             break;
