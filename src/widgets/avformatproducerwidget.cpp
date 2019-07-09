@@ -416,7 +416,7 @@ void AvformatProducerWidget::onFrameDecoded()
         fps = m_producer->get_double("fps");
     bool isVariableFrameRate = m_producer->get_int("meta.media.variable_frame_rate");
     if (fps != 0.0 ) {
-        ui->videoTableWidget->setItem(2, 1, new QTableWidgetItem(QString("%L1 %2").arg(fps)
+        ui->videoTableWidget->setItem(2, 1, new QTableWidgetItem(QString("%L1 %2").arg(fps, 0, 'f', 6)
                                       .arg(isVariableFrameRate? tr("(variable)") : "")));
     }
 
