@@ -683,7 +683,7 @@ void AvformatProducerWidget::convert(TranscodeDialog& dialog)
 
         switch (dialog.format()) {
         case 0:
-            path.append("/%1.mp4");
+            path.append("/%1 - %2.mp4");
             nameFilter = tr("MP4 (*.mp4);;All Files (*)");
             args << "-f" << "mp4" << "-codec:a" << "ac3" << "-b:a" << "512k" << "-codec:v?" << "libx264";
             args << "-preset" << "medium" << "-g" << "1" << "-crf" << "11";
@@ -691,18 +691,18 @@ void AvformatProducerWidget::convert(TranscodeDialog& dialog)
         case 1:
             args << "-f" << "mov" << "-codec:a" << "alac" << "-codec:v" << "dnxhd";
             args << "-profile:v?" << "dnxhr_hq" << "-pix_fmt" << "yuv422p";
-            path.append("/%1.mov");
+            path.append("/%1 - %2.mov");
             nameFilter = tr("MOV (*.mov);;All Files (*)");
             break;
         case 2:
             args << "-f" << "matroska" << "-codec:a" << "flac" << "-codec:v" << "utvideo";
             args << "-pix_fmt" << "yuv422p";
-            path.append("/%1.mkv");
+            path.append("/%1 - %2.mkv");
             nameFilter = tr("MKV (*.mkv);;All Files (*)");
             break;
         }
         QFileInfo fi(resource);
-        path = path.arg(fi.baseName());
+        path = path.arg(fi.completeBaseName()).arg(tr("Converted"));
         QString filename = QFileDialog::getSaveFileName(this, dialog.windowTitle(), path, nameFilter);
         if (!filename.isEmpty()) {
             if (filename == QDir::toNativeSeparators(resource)) {
