@@ -50,6 +50,8 @@ NewProjectFolder::NewProjectFolder(QWidget* parent) :
     ui->recentListView->setModel(&m_model);
     m_profileGroup = new QActionGroup(this);
     connect(m_profileGroup, SIGNAL(triggered(QAction*)), SLOT(onProfileTriggered(QAction*)));
+    ui->label->setToolTip(ui->projectsFolderButton->toolTip());
+    ui->label_2->setToolTip(ui->projectNameLineEdit->toolTip());
 }
 
 NewProjectFolder::~NewProjectFolder()
@@ -177,7 +179,7 @@ void NewProjectFolder::on_actionProfileRemove_triggered()
 
 void NewProjectFolder::on_startButton_clicked()
 {
-    QDir dir(ui->projectsFolderButton->text());
+    QDir dir(Settings.projectsFolder());
     QString projectName = m_projectName;
     QString fileName = projectName;
     if (projectName.endsWith(".mlt"))
@@ -239,7 +241,9 @@ void NewProjectFolder::on_recentListView_clicked(const QModelIndex& index)
 
 void NewProjectFolder::setProjectFolderButtonText(const QString& text)
 {
-    ui->projectsFolderButton->setText(
-        ui->projectsFolderButton->fontMetrics().elidedText(text, Qt::ElideLeft, ui->recentListView->width() / 1.5));
+    QString elidedText = ui->projectsFolderButton->fontMetrics().elidedText(text, Qt::ElideLeft, ui->recentListView->width() / 1.5);
+    ui->projectsFolderButton->setText(elidedText);
+    if (text != elidedText)
+        ui->projectsFolderButton->setToolTip(text);
 }
 
