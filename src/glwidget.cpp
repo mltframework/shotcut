@@ -522,6 +522,14 @@ void GLWidget::keyPressEvent(QKeyEvent* event)
     MAIN.keyPressEvent(event);
 }
 
+bool GLWidget::event(QEvent* event)
+{
+    bool result = QQuickWidget::event(event);
+    if (event->type() == QEvent::PaletteChange && m_sharedFrame.is_valid())
+        onFrameDisplayed(m_sharedFrame);
+    return result;
+}
+
 void GLWidget::createThread(RenderThread **thread, thread_function_t function, void *data)
 {
 #ifdef Q_OS_WIN

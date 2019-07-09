@@ -36,16 +36,7 @@ NewProjectFolder::NewProjectFolder(QWidget* parent) :
     ui(new Ui::NewProjectFolder)
 {
     ui->setupUi(this);
-    QPalette originalPalette = ui->frame->palette();
-    QPalette palette = ui->frame->palette();
-    palette.setColor(QPalette::WindowText, palette.color(palette.Highlight));
-    ui->frame->setPalette(palette);
-    ui->frame_2->setPalette(palette);
-    palette.setColor(QPalette::WindowText, originalPalette.color(palette.WindowText));
-    ui->widget->setPalette(palette);
-    ui->widget_2->setPalette(palette);
-    Util::setColorsToHighlight(ui->newProjectLabel);
-    Util::setColorsToHighlight(ui->newProjectLabel_2);
+    setColors();
     ui->actionProfileAutomatic->setData(QString());
     ui->recentListView->setModel(&m_model);
     m_profileGroup = new QActionGroup(this);
@@ -113,6 +104,14 @@ void NewProjectFolder::showEvent(QShowEvent*)
 void NewProjectFolder::hideEvent(QHideEvent*)
 {
     ui->projectNameLineEdit->setText(QString());
+}
+
+bool NewProjectFolder::event(QEvent* event)
+{
+    bool result = QWidget::event(event);
+    if (event->type() == QEvent::PaletteChange)
+        setColors();
+    return result;
 }
 
 void NewProjectFolder::on_projectsFolderButton_clicked()
@@ -237,6 +236,22 @@ void NewProjectFolder::on_projectNameLineEdit_textChanged(const QString& arg1)
 void NewProjectFolder::on_recentListView_clicked(const QModelIndex& index)
 {
     MAIN.open(m_model.itemData(index)[Qt::ToolTipRole].toString());
+}
+
+void NewProjectFolder::setColors()
+{
+    QPalette palette = ui->frame->palette();
+
+    palette.setColor(QPalette::WindowText, QPalette().color(QPalette::Highlight));
+    ui->frame->setPalette(palette);
+    ui->frame_2->setPalette(palette);
+
+    palette.setColor(QPalette::WindowText, QPalette().color(QPalette::WindowText));
+    ui->widget->setPalette(palette);
+    ui->widget_2->setPalette(palette);
+
+    Util::setColorsToHighlight(ui->newProjectLabel);
+    Util::setColorsToHighlight(ui->newProjectLabel_2);
 }
 
 void NewProjectFolder::setProjectFolderButtonText(const QString& text)

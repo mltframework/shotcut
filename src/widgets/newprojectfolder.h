@@ -42,6 +42,7 @@ public:
 protected:
     void showEvent(QShowEvent*);
     void hideEvent(QHideEvent*);
+    bool event(QEvent* event);
 
 private slots:
     void on_projectsFolderButton_clicked();
@@ -61,6 +62,7 @@ private slots:
     void on_recentListView_clicked(const QModelIndex& index);
 
 private:
+    void setColors();
     void setProjectFolderButtonText(const QString& text);
 
     Ui::NewProjectFolder *ui;

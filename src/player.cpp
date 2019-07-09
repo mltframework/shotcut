@@ -458,6 +458,16 @@ void Player::resizeEvent(QResizeEvent*)
     }
 }
 
+bool Player::event(QEvent* event)
+{
+    bool result = QWidget::event(event);
+    if (event->type() == QEvent::PaletteChange) {
+        m_videoScrollWidget->hide();
+        m_videoScrollWidget->show();
+    }
+    return result;
+}
+
 void Player::play(double speed)
 {
     // Start from beginning if trying to start at the end.
