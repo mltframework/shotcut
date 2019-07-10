@@ -44,10 +44,14 @@ function Filter() {
     this.radius = webvfx.getNumberParameter('radius');
     this.context.beginPath();
     this.context.arc(this.canvas.width/2, this.canvas.height/2,
-                     this.canvas.height * this.radius, 0, Math.PI*2, true)
+                     this.hypotenuse() / 2 * this.radius, 0, Math.PI*2, true)
     this.context.clip();
 
     this.image = new Image();
+}
+
+Filter.prototype.hypotenuse = function() {
+    return Math.sqrt(Math.pow(this.canvas.width, 2) + Math.pow(this.canvas.height, 2));
 }
 
 Filter.prototype.render = function(time) {
@@ -64,7 +68,7 @@ Filter.prototype.render = function(time) {
 
         this.context.beginPath();
         this.context.arc(this.canvas.width/2, this.canvas.height/2,
-                         this.canvas.height * this.radius, 0, Math.PI*2, true)
+                         this.hypotenuse() / 2 * this.radius, 0, Math.PI*2, true)
         this.context.clip();
     }
     webvfx.getImage("video").assignToHTMLImageElement(this.image);
