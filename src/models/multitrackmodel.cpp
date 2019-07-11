@@ -749,13 +749,8 @@ bool MultitrackModel::moveClip(int fromTrack, int toTrack, int clipIndex, int po
             moveClipToEnd(playlist, toTrack, clipIndex, position, ripple);
             result = true;
         }
-        else if ((targetIndex < (clipIndex - 1) || targetIndex > (clipIndex + 1))
-            && playlist.is_blank_at(position) && playlist.clip_length(clipIndex) <= playlist.clip_length(targetIndex)) {
-            // Relocate clip.
-            relocateClip(playlist, toTrack, clipIndex, position, ripple);
-            result = true;
-        }
         else if (ripple && targetIndex >= clipIndex) {
+            // Push the clips.
             int clipStart = playlist.clip_start(clipIndex);
             int duration = position - clipStart;
             QList<int> trackList;
@@ -773,6 +768,12 @@ bool MultitrackModel::moveClip(int fromTrack, int toTrack, int clipIndex, int po
             }
             insertOrAdjustBlankAt(trackList, clipStart, duration);
             consolidateBlanks(playlist, fromTrack);
+            result = true;
+        }
+        else if ((targetIndex < (clipIndex - 1) || targetIndex > (clipIndex + 1))
+            && playlist.is_blank_at(position) && playlist.clip_length(clipIndex) <= playlist.clip_length(targetIndex)) {
+            // Relocate clip.
+            relocateClip(playlist, toTrack, clipIndex, position, ripple);
             result = true;
         }
         else if (targetIndex >= (clipIndex - 1) && targetIndex <= (clipIndex + 1)) {
