@@ -297,6 +297,7 @@ Item {
             id: slider
             minimumValue: 0
             maximumValue: 100
+            decimals: 1
             suffix: ' %'
             onValueChanged: updateFilterRatio(getPosition())
         }
