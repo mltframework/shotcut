@@ -402,13 +402,13 @@
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="752"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="735"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="734"/>
         <source>Reverse...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="826"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="865"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="859"/>
         <source>Extract Sub-clip...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -429,7 +429,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="459"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="461"/>
         <source>This file is variable frame rate, which is not reliable for editing. Do you want to convert it to an edit-friendly format?
 
 If yes, choose a format below and then click OK to choose a file name. After choosing a file name, a job is created. When it is done, double-click the job to open it.
@@ -437,7 +437,7 @@ If yes, choose a format below and then click OK to choose a file name. After cho
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="471"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="473"/>
         <source>This file does not support seeking and cannot be used for editing. Do you want to convert it to an edit-friendly format?
 
 If yes, choose a format below and then click OK to choose a file name. After choosing a file name, a job is created. When it is done, double-click the job to open it.
@@ -445,58 +445,63 @@ If yes, choose a format below and then click OK to choose a file name. After cho
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="653"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="732"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="655"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="731"/>
         <source>Choose an edit-friendly format below and then click OK to choose a file name. After choosing a file name, a job is created. When it is done, double-click the job to open it.
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="681"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="779"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="687"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="782"/>
         <source>MP4 (*.mp4);;All Files (*)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="693"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="796"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="695"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="793"/>
         <source>MOV (*.mov);;All Files (*)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="702"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="807"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="701"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="801"/>
         <source>MKV (*.mkv);;All Files (*)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="723"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="841"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="705"/>
+        <source>Converted</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="722"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="835"/>
         <source>Convert %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="811"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="805"/>
         <source>Reversed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="849"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="843"/>
         <source>Reverse %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="864"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="858"/>
         <source>Sub-clip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="866"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="860"/>
         <source>%1 (*.%2);;All Files (*)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="904"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="898"/>
         <source>Extract sub-clip %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2548,13 +2553,13 @@ Do you want to save your changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.cpp" line="206"/>
+        <location filename="../src/widgets/imageproducerwidget.cpp" line="213"/>
         <source>Getting length of image sequence...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.cpp" line="218"/>
-        <location filename="../src/widgets/imageproducerwidget.cpp" line="234"/>
+        <location filename="../src/widgets/imageproducerwidget.cpp" line="225"/>
+        <location filename="../src/widgets/imageproducerwidget.cpp" line="241"/>
         <source>Reloading image sequence...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4210,96 +4215,96 @@ Do you want to disable GPU effects and restart Shotcut?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.ui" line="152"/>
-        <location filename="../src/widgets/newprojectfolder.ui" line="253"/>
+        <location filename="../src/widgets/newprojectfolder.ui" line="181"/>
+        <location filename="../src/widgets/newprojectfolder.ui" line="198"/>
         <source>PushButton</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.ui" line="164"/>
+        <location filename="../src/widgets/newprojectfolder.ui" line="224"/>
         <source>Start</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.ui" line="225"/>
+        <location filename="../src/widgets/newprojectfolder.ui" line="211"/>
         <source>A folder with this name will be created containing
 a project file with the same name.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.ui" line="199"/>
+        <location filename="../src/widgets/newprojectfolder.ui" line="152"/>
         <source>Projects folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.ui" line="233"/>
+        <location filename="../src/widgets/newprojectfolder.ui" line="256"/>
         <source>Project name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.ui" line="209"/>
+        <location filename="../src/widgets/newprojectfolder.ui" line="246"/>
         <source>Video mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.ui" line="249"/>
+        <location filename="../src/widgets/newprojectfolder.ui" line="194"/>
         <source>This is the folder to contain Shotcut project folders.
 A folder will be created in this folder for each project.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.ui" line="186"/>
+        <location filename="../src/widgets/newprojectfolder.ui" line="308"/>
         <source>Automatic means the resolution and frame rate are based on the &lt;b&gt;first&lt;/b&gt; file you &lt;b&gt;add&lt;/b&gt; to your project. If the first file is not a video clip (for example, image or audio), then it will be 1920x1080p 25 fps.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.ui" line="53"/>
+        <location filename="../src/widgets/newprojectfolder.ui" line="59"/>
         <source>Recent Projects</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.ui" line="130"/>
+        <location filename="../src/widgets/newprojectfolder.ui" line="136"/>
         <source>New Project</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.ui" line="298"/>
+        <location filename="../src/widgets/newprojectfolder.ui" line="350"/>
         <source>Automatic</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.ui" line="303"/>
+        <location filename="../src/widgets/newprojectfolder.ui" line="355"/>
         <source>Add...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.ui" line="308"/>
+        <location filename="../src/widgets/newprojectfolder.ui" line="360"/>
         <source>Remove...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.cpp" line="118"/>
+        <location filename="../src/widgets/newprojectfolder.cpp" line="119"/>
         <source>Projects Folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.cpp" line="147"/>
+        <location filename="../src/widgets/newprojectfolder.cpp" line="148"/>
         <source>Custom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.cpp" line="164"/>
+        <location filename="../src/widgets/newprojectfolder.cpp" line="165"/>
         <source>Remove Video Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.cpp" line="193"/>
+        <location filename="../src/widgets/newprojectfolder.cpp" line="194"/>
         <source>There is already a project with that name.
 Try again with a different name.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.cpp" line="201"/>
+        <location filename="../src/widgets/newprojectfolder.cpp" line="202"/>
         <source>Unable to create folder %1
 Perhaps you do not have permission.
 Try again with a different folder.</source>
@@ -4639,7 +4644,7 @@ Try again with a different folder.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="560"/>
+        <location filename="../src/player.cpp" line="570"/>
         <source>Not Seekable</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4695,31 +4700,31 @@ Try again with a different folder.</source>
     </message>
     <message>
         <location filename="../src/player.cpp" line="391"/>
-        <location filename="../src/player.cpp" line="492"/>
-        <location filename="../src/player.cpp" line="515"/>
-        <location filename="../src/player.cpp" line="765"/>
+        <location filename="../src/player.cpp" line="502"/>
+        <location filename="../src/player.cpp" line="525"/>
+        <location filename="../src/player.cpp" line="775"/>
         <source>Play</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="393"/>
-        <location filename="../src/player.cpp" line="493"/>
-        <location filename="../src/player.cpp" line="516"/>
-        <location filename="../src/player.cpp" line="766"/>
+        <location filename="../src/player.cpp" line="503"/>
+        <location filename="../src/player.cpp" line="526"/>
+        <location filename="../src/player.cpp" line="776"/>
         <source>Start playback (L)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="396"/>
-        <location filename="../src/player.cpp" line="471"/>
-        <location filename="../src/player.cpp" line="772"/>
+        <location filename="../src/player.cpp" line="481"/>
+        <location filename="../src/player.cpp" line="782"/>
         <source>Pause</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="398"/>
-        <location filename="../src/player.cpp" line="472"/>
-        <location filename="../src/player.cpp" line="773"/>
+        <location filename="../src/player.cpp" line="482"/>
+        <location filename="../src/player.cpp" line="783"/>
         <source>Pause playback (K)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4774,22 +4779,22 @@ Try again with a different folder.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="476"/>
+        <location filename="../src/player.cpp" line="486"/>
         <source>Stop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="477"/>
+        <location filename="../src/player.cpp" line="487"/>
         <source>Stop playback (K)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="983"/>
+        <location filename="../src/player.cpp" line="993"/>
         <source>Unmute</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="988"/>
+        <location filename="../src/player.cpp" line="998"/>
         <source>Mute</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5298,9 +5303,9 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/util.cpp" line="93"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="711"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="818"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="872"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="710"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="812"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="866"/>
         <source>Unable to write file %1
 Perhaps you do not have permission.
 Try again with a different folder.</source>
@@ -6335,7 +6340,7 @@ affecting position of other clips (Z)</source>
     </message>
     <message>
         <location filename="../src/dialogs/transcodedialog.cpp" line="54"/>
-        <source>Lossless: FFV1/FLAC MKV</source>
+        <source>Lossless: Ut Video/FLAC MKV</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -9490,7 +9495,7 @@ Click &quot;Open&quot; to load a file.</source>
     <message>
         <location filename="../src/qml/filters/chromahold/ui.qml" line="64"/>
         <location filename="../src/qml/filters/sketch/ui.qml" line="116"/>
-        <location filename="../src/qml/filters/webvfx_circular_frame/ui.qml" line="133"/>
+        <location filename="../src/qml/filters/webvfx_circular_frame/ui.qml" line="134"/>
         <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="131"/>
         <source>Color</source>
         <translation type="unfinished"></translation>
@@ -10082,7 +10087,7 @@ Click &quot;Open&quot; to load a file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/webvfx_clip/ui.qml" line="324"/>
+        <location filename="../src/qml/filters/webvfx_clip/ui.qml" line="325"/>
         <source>Padding color</source>
         <translation type="unfinished"></translation>
     </message>
