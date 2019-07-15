@@ -121,6 +121,9 @@ void ImageProducerWidget::recreateProducer()
     Mlt::Producer* p = newProducer(MLT.profile());
     p->pass_list(*m_producer, "force_aspect_ratio," kAspectRatioNumerator ", resource, " kAspectRatioDenominator
         ", ttl," kShotcutResourceProperty ", autolength, length," kShotcutSequenceProperty ", " kPlaylistIndexProperty);
+    QString resource = p->get("resource");
+    if (resource.startsWith("qimage:") || resource.startsWith("pixbuf:"))
+        p->set("resource", resource.mid(resource.indexOf(':') + 1).toUtf8().constData());
     Mlt::Controller::copyFilters(*m_producer, *p);
     if (m_producer->get(kMultitrackItemProperty)) {
         emit producerChanged(p);
@@ -199,7 +202,11 @@ void ImageProducerWidget::on_sequenceCheckBox_clicked(bool checked)
             m_producer->set("begin", begin.toLatin1().constData());
             int j = begin.toInt();
             name.replace(i, count, begin.prepend('%').append('d'));
-            resource = info.path() + "/" + name;
+            QString serviceName = m_producer->get("mlt_service");
+            if (!serviceName.isEmpty())
+                resource = serviceName + ":" + info.path() + "/" + name;
+            else
+                resource = info.path() + "/" + name;
             m_producer->set("resource", resource.toUtf8().constData());
 
             // Count the number of consecutive files.
