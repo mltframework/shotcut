@@ -10,6 +10,8 @@ snap:
 	snapcraft cleanbuild
 
 appimage: appimage/appimage.yml
+	mkdir -p Shotcut
+	echo $(shell wget -q "https://api.github.com/repos/mltframework/shotcut/releases/latest"  -O - | grep tag_name | cut -d'"' -f4 | sed 's|^v||') > Shotcut/VERSION
 	wget -N https://raw.githubusercontent.com/probonopd/AppImages/master/pkg2appimage
 	bash -ex pkg2appimage appimage/appimage.yml
 
