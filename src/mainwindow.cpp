@@ -3232,7 +3232,7 @@ void MainWindow::onExternalTriggered(QAction *action)
     LOG_DEBUG() << action->data().toString();
     bool isExternal = !action->data().toString().isEmpty();
     Settings.setPlayerExternal(action->data().toString());
-
+    MLT.stop();
     bool ok = false;
     int screen = action->data().toInt(&ok);
     if (ok || action->data().toString().isEmpty()) {
