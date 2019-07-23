@@ -556,9 +556,13 @@ void MainWindow::setupSettingsMenu()
     ui->actionExternalNone->setData(QString());
     m_externalGroup->addAction(ui->actionExternalNone);
 
-    int n = QApplication::desktop()->screenCount();
+    QList<QScreen*> screens = QGuiApplication::screens();
+    int n = screens.size();
     for (int i = 0; n > 1 && i < n; i++) {
-        QAction* action = new QAction(tr("Screen %1").arg(i), this);
+        QAction* action = new QAction(tr("Screen %1 (%2 x %3 @ %4 Hz)").arg(i)
+            .arg(screens[i]->size().width() * screens[i]->devicePixelRatio())
+            .arg(screens[i]->size().height() * screens[i]->devicePixelRatio())
+            .arg(screens[i]->refreshRate()), this);
         action->setCheckable(true);
         action->setData(i);
         m_externalGroup->addAction(action);
