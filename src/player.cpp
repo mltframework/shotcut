@@ -923,6 +923,7 @@ void Player::moveVideoToScreen(int screen)
         m_videoScrollWidget->showFullScreen();
     }
     m_monitorScreen = screen;
+    QCoreApplication::processEvents();
 }
 
 void Player::setPauseAfterOpen(bool pause)
