@@ -919,7 +919,7 @@ void Player::moveVideoToScreen(int screen)
         }
         m_videoScrollWidget->showNormal();
         m_videoScrollWidget->setParent(QApplication::desktop()->screen(screen));
-        m_videoScrollWidget->move(QApplication::desktop()->screenGeometry(screen).bottomLeft());
+        m_videoScrollWidget->move(QApplication::desktop()->screenGeometry(screen).topLeft());
         m_videoScrollWidget->showFullScreen();
     }
     m_monitorScreen = screen;
