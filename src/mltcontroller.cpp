@@ -221,8 +221,8 @@ void Controller::pause()
 {
     if (m_producer && m_producer->get_speed() != 0) {
         m_producer->set_speed(0);
-        m_producer->seek(m_consumer->position() + 1);
         if (m_consumer && m_consumer->is_valid()) {
+            m_producer->seek(m_consumer->position() + 1);
             m_consumer->purge();
             m_consumer->start();
             // The following fixes a bug with frame-dropping. It is possible a video frame rendering
