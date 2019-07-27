@@ -262,7 +262,10 @@ p, li { white-space: pre-wrap; }
   </widget>
   <action name="actionInsertCut">
    <property name="text">
-    <string>Insert Cut</string>
+    <string>Insert</string>
+   </property>
+   <property name="toolTip">
+    <string>Insert</string>
    </property>
   </action>
   <action name="actionAppendCut">
@@ -271,7 +274,10 @@ p, li { white-space: pre-wrap; }
      <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
-    <string>Append Cut</string>
+    <string>Append</string>
+   </property>
+   <property name="toolTip">
+    <string>Append</string>
    </property>
   </action>
   <action name="actionInsertBlank">
@@ -291,10 +297,10 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionOpen">
    <property name="text">
-    <string>Open As Clip</string>
+    <string>Open </string>
    </property>
    <property name="toolTip">
-    <string>Open the cut in the player</string>
+    <string>Open the clip in the Source player</string>
    </property>
   </action>
   <action name="actionRemove">
@@ -312,7 +318,7 @@ p, li { white-space: pre-wrap; }
     <string>Goto</string>
    </property>
    <property name="toolTip">
-    <string>Go to the start of this cut in the playlist</string>
+    <string>Go to the start of this clip in the Project player</string>
    </property>
   </action>
   <action name="actionRemoveAll">
@@ -415,6 +421,14 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="toolTip">
     <string>View as icons</string>
+   </property>
+  </action>
+  <action name="actionCopy">
+   <property name="text">
+    <string>Copy</string>
+   </property>
+   <property name="toolTip">
+    <string>Open a copy of the clip in the Source player</string>
    </property>
   </action>
  </widget>

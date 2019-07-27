@@ -275,6 +275,7 @@ void PlaylistDock::on_menuButton_clicked()
         if (MLT.isClip())
             menu.addAction(ui->actionInsertCut);
         menu.addAction(ui->actionOpen);
+        menu.addAction(ui->actionCopy);
         menu.addAction(ui->actionUpdate);
         menu.addAction(ui->actionRemove);
         menu.addSeparator();
@@ -326,7 +327,7 @@ void PlaylistDock::on_actionAppendCut_triggered()
                 new Playlist::AppendCommand(m_model,
                     MLT.XML(MLT.isClip()? 0 : MLT.savedProducer())));
             MLT.producer()->set(kPlaylistIndexProperty, m_model.playlist()->count());
-            setUpdateButtonEnabled(true);
+            setUpdateButtonEnabled(false);
         } else {
             DurationDialog dialog(this);
             dialog.setDuration(MLT.profile().fps() * 5);
@@ -455,8 +456,7 @@ void PlaylistDock::on_actionOpen_triggered()
     if (!index.isValid() || !m_model.playlist()) return;
     Mlt::ClipInfo* i = m_model.playlist()->clip_info(index.row());
     if (i) {
-        QString xml = MLT.XML(i->producer);
-        Mlt::Producer* p = new Mlt::Producer(MLT.profile(), "xml-string", xml.toUtf8().constData());
+        Mlt::Producer* p = new Mlt::Producer(i->producer);
         p->set_in_and_out(i->frame_in, i->frame_out);
         p->set(kPlaylistIndexProperty, index.row() + 1);
         emit clipOpened(p);
@@ -474,6 +474,7 @@ void PlaylistDock::viewCustomContextMenuRequested(const QPoint &pos)
         if (MLT.isClip())
             menu.addAction(ui->actionInsertCut);
         menu.addAction(ui->actionOpen);
+        menu.addAction(ui->actionCopy);
 
         QScopedPointer<Mlt::ClipInfo> info(m_model.playlist()->clip_info(index.row()));
         if (info && MLT.producer()->get_int(kPlaylistIndexProperty) == index.row() + 1) {
@@ -497,8 +498,7 @@ void PlaylistDock::viewDoubleClicked(const QModelIndex &index)
         if (qApp->keyboardModifiers() == Qt::ShiftModifier) {
             emit itemActivated(i->start);
         } else {
-            QString xml = MLT.XML(i->producer);
-            Mlt::Producer* p = new Mlt::Producer(MLT.profile(), "xml-string", xml.toUtf8().constData());
+            Mlt::Producer* p = new Mlt::Producer(i->producer);
             p->set_in_and_out(i->frame_in, i->frame_out);
             p->set(kPlaylistIndexProperty, index.row() + 1);
             emit clipOpened(p);
@@ -837,4 +837,19 @@ void PlaylistDock::keyReleaseEvent(QKeyEvent* event)
     QDockWidget::keyReleaseEvent(event);
     if (!event->isAccepted())
         MAIN.keyReleaseEvent(event);
+}
+
+void PlaylistDock::on_actionCopy_triggered()
+{
+    QModelIndex index = m_view->currentIndex();
+    if (!index.isValid() || !m_model.playlist()) return;
+    Mlt::ClipInfo* i = m_model.playlist()->clip_info(index.row());
+    if (i) {
+        QString xml = MLT.XML(i->producer);
+        Mlt::Producer* p = new Mlt::Producer(MLT.profile(), "xml-string", xml.toUtf8().constData());
+        p->set_in_and_out(i->frame_in, i->frame_out);
+        p->set(kPlaylistIndexProperty, index.row() + 1);
+        emit clipOpened(p);
+        delete i;
+    }
 }

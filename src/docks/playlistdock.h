@@ -121,6 +121,8 @@ private slots:
 
     void onMovedToEnd();
 
+    void on_actionCopy_triggered();
+
 protected:
     void keyPressEvent(QKeyEvent* event);
     void keyReleaseEvent(QKeyEvent* event);
