@@ -288,6 +288,10 @@ MainWindow::MainWindow()
     connect(this, SIGNAL(producerOpened()), m_playlistDock, SLOT(onProducerOpened()));
     if (!Settings.playerGPU())
         connect(m_playlistDock->model(), SIGNAL(loaded()), this, SLOT(updateThumbnails()));
+    connect(m_player, &Player::inChanged, m_playlistDock, &PlaylistDock::onInChanged);
+    connect(m_player, &Player::outChanged, m_playlistDock, &PlaylistDock::onOutChanged);
+    connect(m_playlistDock->model(), &PlaylistModel::inChanged, m_player, &Player::setIn);
+    connect(m_playlistDock->model(), &PlaylistModel::outChanged, m_player, &Player::setOut);
 
     m_timelineDock = new TimelineDock(this);
     m_timelineDock->hide();

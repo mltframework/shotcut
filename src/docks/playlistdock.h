@@ -59,6 +59,8 @@ public slots:
     void on_removeButton_clicked();
     void setUpdateButtonEnabled(bool modified);
     void onProducerOpened();
+    void onInChanged();
+    void onOutChanged();
 
 private slots:
     void on_menuButton_clicked();

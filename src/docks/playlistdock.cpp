@@ -450,6 +450,30 @@ void PlaylistDock::onProducerOpened()
         ui->addButton->setEnabled(true);
 }
 
+void PlaylistDock::onInChanged()
+{
+    int index = MLT.producer()->get_int(kPlaylistIndexProperty) - 1;
+    QScopedPointer<Mlt::ClipInfo> info(m_model.playlist()->clip_info(index));
+    if (info && info->producer
+             && info->producer->get_producer() == MLT.producer()->get_producer()
+             && info->frame_in != MLT.producer()->get_in()) {
+        MAIN.undoStack()->push(new Playlist::TrimClipInCommand(m_model, index, MLT.producer()->get_in()));
+        setUpdateButtonEnabled(false);
+    }
+}
+
+void PlaylistDock::onOutChanged()
+{
+    int index = MLT.producer()->get_int(kPlaylistIndexProperty) - 1;
+    QScopedPointer<Mlt::ClipInfo> info(m_model.playlist()->clip_info(index));
+    if (info && info->producer
+             && info->producer->get_producer() == MLT.producer()->get_producer()
+             && info->frame_out != MLT.producer()->get_out()) {
+        MAIN.undoStack()->push(new Playlist::TrimClipOutCommand(m_model, index, MLT.producer()->get_out()));
+        setUpdateButtonEnabled(false);
+    }
+}
+
 void PlaylistDock::on_actionOpen_triggered()
 {
     QModelIndex index = m_view->currentIndex();

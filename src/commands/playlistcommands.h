@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2018 Meltytech, LLC
+ * Copyright (c) 2013-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,6 +24,12 @@
 
 namespace Playlist
 {
+
+enum {
+    UndoIdTrimClipIn,
+    UndoIdTrimClipOut,
+    UndoIdUpdate
+};
 
 class AppendCommand : public QUndoCommand
 {
@@ -55,6 +61,9 @@ public:
     UpdateCommand(PlaylistModel& model, const QString& xml, int row, QUndoCommand * parent = 0);
     void redo();
     void undo();
+protected:
+    int id() const { return UndoIdUpdate; }
+    bool mergeWith(const QUndoCommand *other);
 private:
     PlaylistModel& m_model;
     QString m_newXml;
@@ -108,6 +117,40 @@ private:
     int m_column;
     Qt::SortOrder m_order;
     QString m_xml;
+};
+
+class TrimClipInCommand : public QUndoCommand
+{
+public:
+    TrimClipInCommand(PlaylistModel& model, int row, int in, QUndoCommand * parent = nullptr);
+    void redo();
+    void undo();
+protected:
+    int id() const { return UndoIdTrimClipIn; }
+    bool mergeWith(const QUndoCommand *other);
+private:
+    PlaylistModel& m_model;
+    int m_row;
+    int m_oldIn;
+    int m_newIn;
+    int m_out;
+};
+
+class TrimClipOutCommand : public QUndoCommand
+{
+public:
+    TrimClipOutCommand(PlaylistModel& model, int row, int out, QUndoCommand * parent = nullptr);
+    void redo();
+    void undo();
+protected:
+    int id() const { return UndoIdTrimClipOut; }
+    bool mergeWith(const QUndoCommand *other);
+private:
+    PlaylistModel& m_model;
+    int m_row;
+    int m_in;
+    int m_oldOut;
+    int m_newOut;
 };
 
 }

@@ -731,3 +731,23 @@ void PlaylistModel::setPlaylist(Mlt::Playlist& playlist)
         emit loaded();
     }
 }
+
+void PlaylistModel::setInOut(int row, int in, int out)
+{
+    if (!m_playlist || row < 0 || row >= m_playlist->count()) return;
+    bool inChanged = false, outChanged = false;
+    QScopedPointer<Mlt::ClipInfo> info(m_playlist->clip_info(row));
+    if (info && info->producer && info->producer->is_valid()) {
+        if (MLT.producer()->get_producer() == info->producer->get_producer()) {
+            inChanged = info->frame_in != in;
+            outChanged = info->frame_out != out;
+        }
+        m_playlist->resize_clip(row, in, out);
+        QThreadPool::globalInstance()->start(
+            new UpdateThumbnailTask(this, *info->producer, in, out, row), 1);
+        emit dataChanged(createIndex(row, COLUMN_IN), createIndex(row, COLUMN_START));
+        emit modified();
+        if (inChanged) emit this->inChanged(in);
+        if (outChanged) emit this->outChanged(out);
+    }
+}

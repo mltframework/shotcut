@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2018 Meltytech, LLC
+ * Copyright (c) 2013-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -89,6 +89,16 @@ void UpdateCommand::undo()
     LOG_DEBUG() << "row" << m_row;
     Mlt::Producer producer(MLT.profile(), "xml-string", m_oldXml.toUtf8().constData());
     m_model.update(m_row, producer);
+}
+
+bool UpdateCommand::mergeWith(const QUndoCommand *other)
+{
+    const UpdateCommand* that = static_cast<const UpdateCommand*>(other);
+    LOG_DEBUG() << "this row" << m_row << "that row" << that->m_row;
+    if (that->id() != id() || that->m_row != m_row)
+        return false;
+    m_newXml = that->m_newXml;
+    return true;
 }
 
 RemoveCommand::RemoveCommand(PlaylistModel& model, int row, QUndoCommand *parent)
@@ -195,6 +205,82 @@ void SortCommand::undo()
     } else {
         LOG_ERROR() << "failed to restore playlist from XML";
     }
+}
+
+TrimClipInCommand::TrimClipInCommand(PlaylistModel& model, int row, int in, QUndoCommand *parent)
+    : QUndoCommand(parent)
+    , m_model(model)
+    , m_row(row)
+    , m_oldIn(in)
+    , m_newIn(in)
+    , m_out(-1)
+{
+    setText(QObject::tr("Trim playlist item %1 in").arg(row + 1));
+    QScopedPointer<Mlt::ClipInfo> info(m_model.playlist()->clip_info(row));
+    if (info) {
+        m_oldIn = info->frame_in;
+        m_out = info->frame_out;
+    }
+}
+
+void TrimClipInCommand::redo()
+{
+    LOG_DEBUG() << "row" << m_row << "in" << m_newIn;
+    m_model.setInOut(m_row, m_newIn, m_out);
+}
+
+void TrimClipInCommand::undo()
+{
+    LOG_DEBUG() << "row" << m_row << "in" << m_oldIn;
+    m_model.setInOut(m_row, m_oldIn, m_out);
+}
+
+bool TrimClipInCommand::mergeWith(const QUndoCommand *other)
+{
+    const TrimClipInCommand* that = static_cast<const TrimClipInCommand*>(other);
+    LOG_DEBUG() << "this row" << m_row << "that row" << that->m_row;
+    if (that->id() != id() || that->m_row != m_row)
+        return false;
+    m_newIn = that->m_newIn;
+    return true;
+}
+
+TrimClipOutCommand::TrimClipOutCommand(PlaylistModel& model, int row, int out, QUndoCommand *parent)
+    : QUndoCommand(parent)
+    , m_model(model)
+    , m_row(row)
+    , m_in(-1)
+    , m_oldOut(out)
+    , m_newOut(out)
+{
+    setText(QObject::tr("Trim playlist item %1 out").arg(row + 1));
+    QScopedPointer<Mlt::ClipInfo> info(m_model.playlist()->clip_info(row));
+    if (info) {
+        m_in = info->frame_in;
+        m_oldOut = info->frame_out;
+    }
+}
+
+void TrimClipOutCommand::redo()
+{
+    LOG_DEBUG() << "row" << m_row << "out" << m_newOut;
+    m_model.setInOut(m_row, m_in, m_newOut);
+}
+
+void TrimClipOutCommand::undo()
+{
+    LOG_DEBUG() << "row" << m_row << "out" << m_oldOut;
+    m_model.setInOut(m_row, m_in, m_oldOut);
+}
+
+bool TrimClipOutCommand::mergeWith(const QUndoCommand *other)
+{
+    const TrimClipOutCommand* that = static_cast<const TrimClipOutCommand*>(other);
+    LOG_DEBUG() << "this row" << m_row << "that row" << that->m_row;
+    if (that->id() != id() || that->m_row != m_row)
+        return false;
+    m_newOut = that->m_newOut;
+    return true;
 }
 
 } // namespace Playlist

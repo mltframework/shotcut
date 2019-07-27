@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2012 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2012-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -87,6 +86,7 @@ public:
     void refreshThumbnails();
     Mlt::Playlist* playlist() { return m_playlist; }
     void setPlaylist(Mlt::Playlist& playlist);
+    void setInOut(int row, int in, int out);
 
     ViewMode viewMode() const;
     void setViewMode(ViewMode mode);
@@ -99,6 +99,8 @@ signals:
     void loaded();
     void dropped(const QMimeData *data, int row);
     void moveClip(int from, int to);
+    void inChanged(int in);
+    void outChanged(int out);
 
 public slots:
     void clear();
