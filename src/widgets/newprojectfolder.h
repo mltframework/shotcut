@@ -61,6 +61,8 @@ private slots:
 
     void on_recentListView_clicked(const QModelIndex& index);
 
+    void on_recentListView_doubleClicked(const QModelIndex& index);
+    
 private:
     void setColors();
     void setProjectFolderButtonText(const QString& text);

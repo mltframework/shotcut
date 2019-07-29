@@ -262,3 +262,7 @@ void NewProjectFolder::setProjectFolderButtonText(const QString& text)
         ui->projectsFolderButton->setToolTip(text);
 }
 
+void NewProjectFolder::on_recentListView_doubleClicked(const QModelIndex& index)
+{
+    on_recentListView_clicked(index);
+}
