@@ -20,7 +20,7 @@
 #include "mainwindow.h"
 #include "controllers/filtercontroller.h"
 #include "jobqueue.h"
-#include "jobs/meltjob.h"
+#include "jobs/encodejob.h"
 #include "shotcut_mlt_properties.h"
 #include "settings.h"
 #include "util.h"
@@ -591,8 +591,9 @@ mlt_keyframe_type QmlFilter::getKeyframeType(Mlt::Animation& animation, int posi
 
 AnalyzeDelegate::AnalyzeDelegate(Mlt::Filter& filter)
     : QObject(0)
-#if LIBMLT_VERSION_INT >= MLT_VERSION_PARSER_FIXED
+#if LIBMLT_VERSION_INT >= MLT_VERSION_CPP_UPDATED
     , m_uuid(QUuid::createUuid())
+    , m_serviceName(filter.get("mlt_service"))
 {
     filter.set(kShotcutHashProperty, m_uuid.toByteArray().data());
     QByteArray uuid = filter.get(kShotcutHashProperty);
@@ -602,7 +603,7 @@ AnalyzeDelegate::AnalyzeDelegate(Mlt::Filter& filter)
 {}
 #endif
 
-#if LIBMLT_VERSION_INT >= MLT_VERSION_PARSER_FIXED
+#if LIBMLT_VERSION_INT >= MLT_VERSION_CPP_UPDATED
 
 class FindFilterParser : public Mlt::Parser
 {
@@ -639,6 +640,62 @@ public:
     int on_end_transition(Mlt::Transition*) { return 0; }
 };
 
+void AnalyzeDelegate::updateJob(EncodeJob* job, const QString& results)
+{
+    bool isUpdated = false;
+
+    // parse the xml
+    QFile file(job->xmlPath());
+    file.open(QIODevice::ReadOnly);
+    QDomDocument dom(job->xmlPath());
+    dom.setContent(&file);
+    file.close();
+
+    // look for the matching filter elements
+    QDomNodeList filters = dom.elementsByTagName("filter");
+    for (int i = 0; i < filters.size(); i++) {
+        QDomNode filterNode = filters.at(i);
+        bool found = false;
+
+        QDomNodeList properties = filterNode.toElement().elementsByTagName("property");
+        for (int j = 0; j < properties.size(); j++) {
+            QDomNode propertyNode = properties.at(j);
+            if (propertyNode.attributes().namedItem("name").toAttr().value() == kShotcutHashProperty
+                    && propertyNode.toElement().text() == m_uuid.toString()) {
+                // found a matching filter
+                found = true;
+                break;
+            }
+        }
+        if (found) {
+            // remove existing results if any
+            for (int j = 0; j < properties.size(); j++) {
+                QDomNode propertyNode = properties.at(j);
+                if (propertyNode.attributes().namedItem("name").toAttr().value() == "results") {
+                    filterNode.removeChild(propertyNode);
+                    break;
+                }
+            }
+            // add the results
+            QDomText textNode = dom.createTextNode(results);
+            QDomElement propertyNode = dom.createElement("property");
+            propertyNode.setAttribute("name", "results");
+            propertyNode.appendChild(textNode);
+            filterNode.appendChild(propertyNode);
+            isUpdated = true;
+            LOG_INFO() << "updated pending job" << job->label() << "with results:" << results;
+        }
+    }
+    
+    if (isUpdated) {
+        // Save the new XML.
+        file.open(QIODevice::WriteOnly);
+        QTextStream textStream(&file);
+        dom.save(textStream, 2);
+        file.close();
+    }
+}
+
 #endif
 
 void AnalyzeDelegate::onAnalyzeFinished(AbstractJob *job, bool isSuccess)
@@ -646,33 +703,46 @@ void AnalyzeDelegate::onAnalyzeFinished(AbstractJob *job, bool isSuccess)
     QString fileName = job->objectName();
 
     if (isSuccess) {
-#if LIBMLT_VERSION_INT >= MLT_VERSION_PARSER_FIXED
-        // locate the filter by UUID
-        FindFilterParser graphParser(m_uuid);
-        if (MAIN.isMultitrackValid()) {
-            graphParser.start(*MAIN.multitrack());
-            foreach (Mlt::Filter filter, graphParser.filters())
-                updateFilter(filter, fileName);
+#if LIBMLT_VERSION_INT >= MLT_VERSION_CPP_UPDATED
+        QString results = resultsFromXml(fileName, m_serviceName);
+        if (!results.isEmpty()) {
+            // look for filters by UUID in each pending export job.
+            foreach (AbstractJob* job, JOBS.jobs()) {
+                if (!job->ran() && typeid(*job) == typeid(EncodeJob)) {
+                    updateJob(dynamic_cast<EncodeJob*>(job), results);
+                }
+            }
+    
+            // Locate filters in memory by UUID.
+            FindFilterParser graphParser(m_uuid);
+            if (MAIN.isMultitrackValid()) {
+                graphParser.start(*MAIN.multitrack());
+                foreach (Mlt::Filter filter, graphParser.filters())
+                    updateFilter(filter, results);
+            }
+            if (MAIN.playlist() && MAIN.playlist()->count() > 0) {
+                graphParser.start(*MAIN.playlist());
+                foreach (Mlt::Filter filter, graphParser.filters())
+                    updateFilter(filter, results);
+            }
+            if (MLT.producer() && MLT.producer()->is_valid()) {
+                graphParser.start(*MLT.producer());
+                foreach (Mlt::Filter filter, graphParser.filters())
+                    updateFilter(filter, results);
+            }
+            if (MLT.savedProducer() && MLT.savedProducer()->is_valid()) {
+                graphParser.start(*MLT.savedProducer());
+                foreach (Mlt::Filter filter, graphParser.filters())
+                    updateFilter(filter, results);
+            }
+            emit MAIN.filterController()->attachedModel()->changed();
         }
-        if (MAIN.playlist() && MAIN.playlist()->count() > 0) {
-            graphParser.start(*MAIN.playlist());
-            foreach (Mlt::Filter filter, graphParser.filters())
-                updateFilter(filter, fileName);
-        }
-        if (MLT.producer() && MLT.producer()->is_valid()) {
-            graphParser.start(*MLT.producer());
-            foreach (Mlt::Filter filter, graphParser.filters())
-                updateFilter(filter, fileName);
-        }
-        if (MLT.savedProducer() && MLT.savedProducer()->is_valid()) {
-            graphParser.start(*MLT.savedProducer());
-            foreach (Mlt::Filter filter, graphParser.filters())
-                updateFilter(filter, fileName);
-        }
-        
-        // look for the filter by its UUID in each pending export job
 #else
-        updateFilter(m_filter, fileName);
+        QString results = resultsFromXml(fileName, m_filter.get("mlt_service"));
+        if (!results.isEmpty()) {
+            updateFilter(m_filter, results);
+            emit MAIN.filterController()->attachedModel()->changed();
+        }
 #endif
     } else if (!job->property("filename").isNull()) {
         QFile file(job->property("filename").toString());
@@ -683,7 +753,7 @@ void AnalyzeDelegate::onAnalyzeFinished(AbstractJob *job, bool isSuccess)
     deleteLater();
 }
 
-void AnalyzeDelegate::updateFilter(Mlt::Filter& filter, const QString& fileName)
+QString AnalyzeDelegate::resultsFromXml(const QString& fileName, const QString& serviceName)
 {
     // parse the xml
     QFile file(fileName);
@@ -701,7 +771,7 @@ void AnalyzeDelegate::updateFilter(Mlt::Filter& filter, const QString& fileName)
         for (int j = 0; j < properties.size(); j++) {
             QDomNode propertyNode = properties.at(j);
             if (propertyNode.attributes().namedItem("name").toAttr().value() == "mlt_service"
-                    && propertyNode.toElement().text() == filter.get("mlt_service")) {
+                    && propertyNode.toElement().text() == serviceName) {
                 found = true;
                 break;
             }
@@ -710,12 +780,18 @@ void AnalyzeDelegate::updateFilter(Mlt::Filter& filter, const QString& fileName)
             for (int j = 0; j < properties.size(); j++) {
                 QDomNode propertyNode = properties.at(j);
                 if (propertyNode.attributes().namedItem("name").toAttr().value() == "results") {
-                    filter.set("results", propertyNode.toElement().text().toUtf8().constData());
-                    filter.set("reload", 1);
-                    emit MAIN.filterController()->attachedModel()->changed();
+                    return propertyNode.toElement().text();
                 }
             }
             break;
         }
     }
+    return QString();
+}
+
+void AnalyzeDelegate::updateFilter(Mlt::Filter& filter, const QString& results)
+{
+    filter.set("results", results.toUtf8().constData());
+    filter.set("reload", 1);
+    LOG_INFO() << "updated filter" << filter.get("mlt_service") << "with results:" << results;
 }

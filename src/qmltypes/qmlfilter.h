@@ -30,9 +30,10 @@
 #include "qmlmetadata.h"
 #include "shotcut_mlt_properties.h"
 
-#define MLT_VERSION_PARSER_FIXED ((6<<16)+(17<<8))
+#define MLT_VERSION_CPP_UPDATED ((6<<16)+(17<<8))
 
 class AbstractJob;
+class EncodeJob;
 
 class QmlFilter : public QObject
 {
@@ -141,9 +142,13 @@ public slots:
     void onAnalyzeFinished(AbstractJob *job, bool isSuccess);
 
 private:
-    void updateFilter(Mlt::Filter& filter, const QString& fileName);
-#if LIBMLT_VERSION_INT >= MLT_VERSION_PARSER_FIXED
+    QString resultsFromXml(const QString& fileName, const QString& serviceName);
+    void updateFilter(Mlt::Filter& filter, const QString& results);
+#if LIBMLT_VERSION_INT >= MLT_VERSION_CPP_UPDATED
+    void updateJob(EncodeJob* job, const QString& results);
+
     QUuid m_uuid;
+    QString m_serviceName;
 #else
     Mlt::Filter m_filter;
 #endif
