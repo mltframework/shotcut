@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2018 Meltytech, LLC
+ * Copyright (c) 2013-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,6 +29,7 @@ Item {
     property string _analysisRequiredMessage: qsTr('Click Analyze to use this filter.')
 
     Component.onCompleted: {
+        filter.set('analyze', 0)
         shakinessSlider.value = filter.getDouble('shakiness')
         accuracySlider.value = filter.getDouble('accuracy')
         button.enabled = !hasAnalysisCompleted()

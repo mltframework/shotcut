@@ -298,7 +298,9 @@ void QmlFilter::analyze(bool isAudio)
     m_filter.set("results", NULL, 0);
     int disable = m_filter.get_int("disable");
     m_filter.set("disable", 0);
+    if (!isAudio) m_filter.set("analyze", 1);
     MLT.saveXML(tmp.fileName(), &service, false, false);
+    if (!isAudio) m_filter.set("analyze", 0);
     m_filter.set("disable", disable);
 
     // get temp filename for output xml
@@ -667,6 +669,8 @@ void AnalyzeDelegate::onAnalyzeFinished(AbstractJob *job, bool isSuccess)
             foreach (Mlt::Filter filter, graphParser.filters())
                 updateFilter(filter, fileName);
         }
+        
+        // look for the filter by its UUID in each pending export job
 #else
         updateFilter(m_filter, fileName);
 #endif
@@ -707,6 +711,7 @@ void AnalyzeDelegate::updateFilter(Mlt::Filter& filter, const QString& fileName)
                 QDomNode propertyNode = properties.at(j);
                 if (propertyNode.attributes().namedItem("name").toAttr().value() == "results") {
                     filter.set("results", propertyNode.toElement().text().toUtf8().constData());
+                    filter.set("reload", 1);
                     emit MAIN.filterController()->attachedModel()->changed();
                 }
             }
