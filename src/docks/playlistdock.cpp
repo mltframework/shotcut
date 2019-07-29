@@ -453,6 +453,8 @@ void PlaylistDock::onProducerOpened()
 void PlaylistDock::onInChanged()
 {
     int index = MLT.producer()->get_int(kPlaylistIndexProperty) - 1;
+    if (index < 0 || !m_model.playlist() || !m_model.playlist()->is_valid())
+        return;
     QScopedPointer<Mlt::ClipInfo> info(m_model.playlist()->clip_info(index));
     if (info && info->producer
              && info->producer->get_producer() == MLT.producer()->get_producer()
@@ -465,6 +467,8 @@ void PlaylistDock::onInChanged()
 void PlaylistDock::onOutChanged()
 {
     int index = MLT.producer()->get_int(kPlaylistIndexProperty) - 1;
+    if (index < 0 || !m_model.playlist() || !m_model.playlist()->is_valid())
+        return;
     QScopedPointer<Mlt::ClipInfo> info(m_model.playlist()->clip_info(index));
     if (info && info->producer
              && info->producer->get_producer() == MLT.producer()->get_producer()
