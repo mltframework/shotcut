@@ -61,6 +61,7 @@ public slots:
     void onProducerOpened();
     void onInChanged();
     void onOutChanged();
+    void on_actionCopy_triggered();
 
 private slots:
     void on_menuButton_clicked();
@@ -122,8 +123,6 @@ private slots:
     void on_detailsButton_clicked();
 
     void onMovedToEnd();
-
-    void on_actionCopy_triggered();
 
 protected:
     void keyPressEvent(QKeyEvent* event);

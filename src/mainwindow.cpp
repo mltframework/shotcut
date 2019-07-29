@@ -1689,7 +1689,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
             m_playlistDock->show();
             m_playlistDock->raise();
             if (m_playlistDock->position() >= 0)
-                m_playlistDock->on_actionOpen_triggered();
+                m_playlistDock->on_actionCopy_triggered();
         } else {
             m_timelineDock->show();
             m_timelineDock->raise();
