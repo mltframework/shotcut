@@ -589,46 +589,87 @@ mlt_keyframe_type QmlFilter::getKeyframeType(Mlt::Animation& animation, int posi
 
 AnalyzeDelegate::AnalyzeDelegate(Mlt::Filter& filter)
     : QObject(0)
+#if LIBMLT_VERSION_INT >= MLT_VERSION_PARSER_FIXED
+    , m_uuid(QUuid::createUuid())
+{
+    filter.set(kShotcutHashProperty, m_uuid.toByteArray().data());
+    QByteArray uuid = filter.get(kShotcutHashProperty);
+}
+#else
     , m_filter(filter)
 {}
+#endif
+
+#if LIBMLT_VERSION_INT >= MLT_VERSION_PARSER_FIXED
+
+class FindFilterParser : public Mlt::Parser
+{
+private:
+    QUuid m_uuid;
+    QList<Mlt::Filter> m_filters;
+
+public:
+    FindFilterParser(QUuid uuid)
+        : Mlt::Parser()
+        , m_uuid(uuid)
+    {}
+    
+    QList<Mlt::Filter>& filters() { return m_filters; }
+    
+    int on_start_filter(Mlt::Filter *filter) {
+        QByteArray uuid = filter->get(kShotcutHashProperty);
+        if (uuid == m_uuid.toByteArray())
+            m_filters << Mlt::Filter(*filter);
+        return 0;
+    }
+    int on_start_producer(Mlt::Producer*) { return 0; }
+    int on_end_producer(Mlt::Producer*) { return 0; }
+    int on_start_playlist(Mlt::Playlist*) { return 0; }
+    int on_end_playlist(Mlt::Playlist*) { return 0; }
+    int on_start_tractor(Mlt::Tractor*) { return 0; }
+    int on_end_tractor(Mlt::Tractor*) { return 0; }
+    int on_start_multitrack(Mlt::Multitrack*) { return 0; }
+    int on_end_multitrack(Mlt::Multitrack*) { return 0; }
+    int on_start_track() { return 0; }
+    int on_end_track() { return 0; }
+    int on_end_filter(Mlt::Filter*) { return 0; }
+    int on_start_transition(Mlt::Transition*) { return 0; }
+    int on_end_transition(Mlt::Transition*) { return 0; }
+};
+
+#endif
 
 void AnalyzeDelegate::onAnalyzeFinished(AbstractJob *job, bool isSuccess)
 {
     QString fileName = job->objectName();
 
     if (isSuccess) {
-        // parse the xml
-        QFile file(fileName);
-        file.open(QIODevice::ReadOnly);
-        QDomDocument dom(fileName);
-        dom.setContent(&file);
-        file.close();
-
-        QDomNodeList filters = dom.elementsByTagName("filter");
-        for (int i = 0; i < filters.size(); i++) {
-            QDomNode filterNode = filters.at(i);
-            bool found = false;
-
-            QDomNodeList properties = filterNode.toElement().elementsByTagName("property");
-            for (int j = 0; j < properties.size(); j++) {
-                QDomNode propertyNode = properties.at(j);
-                if (propertyNode.attributes().namedItem("name").toAttr().value() == "mlt_service"
-                        && propertyNode.toElement().text() == m_filter.get("mlt_service")) {
-                    found = true;
-                    break;
-                }
-            }
-            if (found) {
-                for (int j = 0; j < properties.size(); j++) {
-                    QDomNode propertyNode = properties.at(j);
-                    if (propertyNode.attributes().namedItem("name").toAttr().value() == "results") {
-                        m_filter.set("results", propertyNode.toElement().text().toUtf8().constData());
-                        emit MAIN.filterController()->attachedModel()->changed();
-                    }
-                }
-                break;
-            }
+#if LIBMLT_VERSION_INT >= MLT_VERSION_PARSER_FIXED
+        // locate the filter by UUID
+        FindFilterParser graphParser(m_uuid);
+        if (MAIN.isMultitrackValid()) {
+            graphParser.start(*MAIN.multitrack());
+            foreach (Mlt::Filter filter, graphParser.filters())
+                updateFilter(filter, fileName);
         }
+        if (MAIN.playlist() && MAIN.playlist()->count() > 0) {
+            graphParser.start(*MAIN.playlist());
+            foreach (Mlt::Filter filter, graphParser.filters())
+                updateFilter(filter, fileName);
+        }
+        if (MLT.producer() && MLT.producer()->is_valid()) {
+            graphParser.start(*MLT.producer());
+            foreach (Mlt::Filter filter, graphParser.filters())
+                updateFilter(filter, fileName);
+        }
+        if (MLT.savedProducer() && MLT.savedProducer()->is_valid()) {
+            graphParser.start(*MLT.savedProducer());
+            foreach (Mlt::Filter filter, graphParser.filters())
+                updateFilter(filter, fileName);
+        }
+#else
+        updateFilter(m_filter, fileName);
+#endif
     } else if (!job->property("filename").isNull()) {
         QFile file(job->property("filename").toString());
         if (file.exists() && file.size() == 0)
@@ -636,4 +677,40 @@ void AnalyzeDelegate::onAnalyzeFinished(AbstractJob *job, bool isSuccess)
     }
     QFile::remove(fileName);
     deleteLater();
+}
+
+void AnalyzeDelegate::updateFilter(Mlt::Filter& filter, const QString& fileName)
+{
+    // parse the xml
+    QFile file(fileName);
+    file.open(QIODevice::ReadOnly);
+    QDomDocument dom(fileName);
+    dom.setContent(&file);
+    file.close();
+
+    QDomNodeList filters = dom.elementsByTagName("filter");
+    for (int i = 0; i < filters.size(); i++) {
+        QDomNode filterNode = filters.at(i);
+        bool found = false;
+
+        QDomNodeList properties = filterNode.toElement().elementsByTagName("property");
+        for (int j = 0; j < properties.size(); j++) {
+            QDomNode propertyNode = properties.at(j);
+            if (propertyNode.attributes().namedItem("name").toAttr().value() == "mlt_service"
+                    && propertyNode.toElement().text() == filter.get("mlt_service")) {
+                found = true;
+                break;
+            }
+        }
+        if (found) {
+            for (int j = 0; j < properties.size(); j++) {
+                QDomNode propertyNode = properties.at(j);
+                if (propertyNode.attributes().namedItem("name").toAttr().value() == "results") {
+                    filter.set("results", propertyNode.toElement().text().toUtf8().constData());
+                    emit MAIN.filterController()->attachedModel()->changed();
+                }
+            }
+            break;
+        }
+    }
 }

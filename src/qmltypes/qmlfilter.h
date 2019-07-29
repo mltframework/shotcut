@@ -22,12 +22,15 @@
 #include <QString>
 #include <QVariant>
 #include <QRectF>
+#include <QUuid>
 #include <MltFilter.h>
 #include <MltProducer.h>
 #include <MltAnimation.h>
 
 #include "qmlmetadata.h"
 #include "shotcut_mlt_properties.h"
+
+#define MLT_VERSION_PARSER_FIXED ((6<<16)+(17<<8))
 
 class AbstractJob;
 
@@ -138,7 +141,12 @@ public slots:
     void onAnalyzeFinished(AbstractJob *job, bool isSuccess);
 
 private:
+    void updateFilter(Mlt::Filter& filter, const QString& fileName);
+#if LIBMLT_VERSION_INT >= MLT_VERSION_PARSER_FIXED
+    QUuid m_uuid;
+#else
     Mlt::Filter m_filter;
+#endif
 };
 
 #endif // FILTER_H
