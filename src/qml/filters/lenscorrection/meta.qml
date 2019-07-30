@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Meltytech, LLC
+ * Copyright (c) 2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,5 +22,44 @@ Metadata {
     type: Metadata.Filter
     name: qsTr("Lens Correction")
     mlt_service: 'frei0r.lenscorrection'
-    qml: 'ui.qml'
+    qml: "ui.qml"
+    keyframes {
+        allowAnimateIn: true
+        allowAnimateOut: true
+        simpleProperties: ['0', '1', '2', '3']
+        parameters: [
+            Parameter {
+                name: qsTr('X Center')
+                property: '0'
+                isSimple: true
+                isCurve: true
+                minimum: 0
+                maximum: 1
+            },
+            Parameter {
+                name: qsTr('Y Center')
+                property: '1'
+                isSimple: true
+                isCurve: true
+                minimum: 0
+                maximum: 1
+             },
+            Parameter {
+                name: qsTr('Correction at Center')
+                property: '2'
+                isSimple: true
+                isCurve: true
+                minimum: 0
+                maximum: 1
+             },
+            Parameter {
+                name: qsTr('Correction at Edges')
+                property: '3'
+                isSimple: true
+                isCurve: true
+                minimum: 0
+                maximum: 1
+            }
+        ]
+    }
 }
