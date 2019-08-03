@@ -38,6 +38,7 @@ public:
     ~AudioLoudnessScopeWidget();
     QString getTitle() Q_DECL_OVERRIDE;
     void setOrientation(Qt::Orientation orientation) Q_DECL_OVERRIDE;
+    void setOrientation(Qt::Orientation orientation, bool force);
 
 protected:
     bool event(QEvent *event) Q_DECL_OVERRIDE;
