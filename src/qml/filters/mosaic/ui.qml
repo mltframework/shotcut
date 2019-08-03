@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2018 Meltytech, LLC
- * Author: Brian Matherly <code@brianmatherly.com>
+ * Copyright (c) 2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,36 +20,52 @@ import QtQuick.Controls 1.1
 import QtQuick.Layouts 1.0
 import Shotcut.Controls 1.0
 
-Item {
-    property string xSize: '0'
-    property string ySize: '1'
+KeyframableFilter {
+    property string xsize: '0'
+    property string ysize: '1'
     property real maxFilterPercent: 50.0
     property real maxUserPercent: 20.0
     property real defaultValue: 2.5 / maxFilterPercent
-    property var defaultParameters: [xSize, ySize]
+
+    keyframableParameters: [xsize, ysize]
+    startValues: [0, 0]
+    middleValues: [defaultValue, defaultValue]
+    endValues: [0, 0]
 
     width: 200
     height: 50
+
     Component.onCompleted: {
         if (filter.isNew) {
-            // Set default parameter values
-            filter.set(xSize, defaultValue)
-            filter.set(ySize, defaultValue)
-            filter.savePreset(defaultParameters)
+            filter.set(xsize, defaultValue)
+            filter.set(ysize, defaultValue)
+            filter.savePreset(preset.parameters)
         }
-        wslider.value = filter.getDouble(xSize) * maxFilterPercent
-        hslider.value = filter.getDouble(ySize) * maxFilterPercent
+        setControls()
     }
 
     function setControls() {
-        wslider.value = filter.getDouble(xSize) * maxFilterPercent
-        hslider.value = filter.getDouble(ySize) * maxFilterPercent
+        var position = getPosition()
+        blockUpdate = true
+        xsizeSlider.value = filter.getDouble(xsize, position) * maxFilterPercent
+        ysizeSlider.value = filter.getDouble(ysize, position) * maxFilterPercent
+        blockUpdate = false
+        enableControls(isSimpleKeyframesActive())
+    }
+
+    function enableControls(enabled) {
+        xsizeSlider.enabled = ysizeSlider.enabled = enabled
+    }
+
+    function updateSimpleKeyframes() {
+        updateFilter(xsize, xsizeSlider.value / maxFilterPercent, xsizeKeyframesButton)
+        updateFilter(ysize, ysizeSlider.value / maxFilterPercent, ysizeKeyframesButton)
     }
 
     GridLayout {
-        columns: 3
         anchors.fill: parent
         anchors.margins: 8
+        columns: 4
 
         Label {
             text: qsTr('Preset')
@@ -58,9 +73,16 @@ Item {
         }
         Preset {
             id: preset
-            parameters: defaultParameters
-            Layout.columnSpan: 2
-            onPresetSelected: setControls()
+            parameters: [xsize, ysize]
+            Layout.columnSpan: 3
+            onBeforePresetLoaded: {
+                filter.resetProperty(xsize)
+                filter.resetProperty(ysize)
+            }
+            onPresetSelected: {
+                setControls()
+                initializeSimpleKeyframes()
+            }
         }
 
         Label {
@@ -68,16 +90,24 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
         SliderSpinner {
-            id: wslider
+            id: xsizeSlider
             minimumValue: 0.1
-            maximumValue: maxUserPercent
+            maximumValue: 20
             stepSize: 0.1
             decimals: 1
             suffix: ' %'
-            onValueChanged: filter.set(xSize, value / maxFilterPercent)
+            onValueChanged: updateFilter(xsize, xsizeSlider.value / maxFilterPercent, xsizeKeyframesButton, getPosition())
         }
         UndoButton {
-            onClicked: wslider.value = defaultValue * maxFilterPercent
+            onClicked: xsizeSlider.value = defaultValue * maxFilterPercent
+        }
+        KeyframesButton {
+            id: xsizeKeyframesButton
+            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(xsize) > 0
+            onToggled: {
+                enableControls(true)
+                toggleKeyframes(checked, xsize, xsizeSlider.value / maxFilterPercent)
+            }
         }
 
         Label {
@@ -85,20 +115,41 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
         SliderSpinner {
-            id: hslider
+            id: ysizeSlider
             minimumValue: 0.1
-            maximumValue: maxUserPercent
+            maximumValue: 20
             stepSize: 0.1
             decimals: 1
             suffix: ' %'
-            onValueChanged: filter.set(ySize, value / maxFilterPercent)
+            onValueChanged: updateFilter(ysize, ysizeSlider.value / maxFilterPercent, ysizeKeyframesButton, getPosition())
         }
         UndoButton {
-            onClicked: hslider.value = defaultValue * maxFilterPercent
+            onClicked: ysizeSlider.value = defaultValue * maxFilterPercent
         }
-        
+        KeyframesButton {
+            id: ysizeKeyframesButton
+            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(ysize) > 0
+            onToggled: {
+                enableControls(true)
+                toggleKeyframes(checked, ysize, ysizeSlider.value / maxFilterPercent)
+            }
+        }
+
         Item {
             Layout.fillHeight: true
         }
+    }
+
+    Connections {
+        target: filter
+        onInChanged: updateSimpleKeyframes()
+        onOutChanged: updateSimpleKeyframes()
+        onAnimateInChanged: updateSimpleKeyframes()
+        onAnimateOutChanged: updateSimpleKeyframes()
+    }
+
+    Connections {
+        target: producer
+        onPositionChanged: setControls()
     }
 }
