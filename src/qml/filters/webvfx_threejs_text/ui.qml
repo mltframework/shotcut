@@ -44,8 +44,6 @@ Item {
 
             setControls();
         }
-        filter.set('in', producer.in)
-        filter.set('out', producer.out)
     }
 
     function setControls() {

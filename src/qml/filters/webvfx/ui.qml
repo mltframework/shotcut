@@ -80,8 +80,6 @@ Item {
             fileLabel.visible = false
             filter.set("disable", 1)
         }
-        filter.set('in', producer.in)
-        filter.set('out', producer.out)
     }
 
     function handleHtmlFile(selectExisting, selectFolder) {
