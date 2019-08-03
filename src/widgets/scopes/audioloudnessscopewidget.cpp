@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2016 Meltytech, LLC
- * Author: Brian Matherly <code@brianmatherly.com>
+ * Copyright (c) 2016-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -72,7 +71,6 @@ AudioLoudnessScopeWidget::AudioLoudnessScopeWidget()
 
     QVBoxLayout* vlayout = new QVBoxLayout(this);
     vlayout->setContentsMargins(4, 4, 4, 4);
-    vlayout->addWidget(m_qview);
 
     QHBoxLayout* hlayout = new QHBoxLayout();
     vlayout->addLayout(hlayout);
@@ -122,6 +120,7 @@ AudioLoudnessScopeWidget::AudioLoudnessScopeWidget()
     hlayout->addWidget(m_timeLabel);
 
     hlayout->addStretch();
+    vlayout->addWidget(m_qview);
 
     connect(m_qview->quickWindow(), SIGNAL(sceneGraphInitialized()), SLOT(resetQview()));
 
