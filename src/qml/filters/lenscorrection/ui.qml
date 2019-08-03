@@ -104,10 +104,10 @@ KeyframableFilter {
         SliderSpinner {
             id: xcenterSlider
             minimumValue: 0
-            maximumValue: 1.0
-            stepSize: 0.001
-            decimals: 3
-            suffix: ' '
+            maximumValue: 100
+            stepSize: 0.1
+            decimals: 1
+            suffix: ' %'
             onValueChanged: updateFilter(xcenter, xcenterSlider.value / xcenterSlider.maximumValue, xcenterKeyframesButton, getPosition())
         }
         UndoButton {
@@ -129,10 +129,10 @@ KeyframableFilter {
         SliderSpinner {
             id: ycenterSlider
             minimumValue: 0
-            maximumValue: 1.0
-            stepSize: 0.001
-            decimals: 3
-            suffix: ' '
+            maximumValue: 100
+            stepSize: 0.1
+            decimals: 1
+            suffix: ' %'
             onValueChanged: updateFilter(ycenter, ycenterSlider.value / ycenterSlider.maximumValue, ycenterKeyframesButton, getPosition())
         }
         UndoButton {
@@ -154,10 +154,10 @@ Label {
         SliderSpinner {
             id: correctionnearcenterSlider
             minimumValue: 0
-            maximumValue: 1.0
-            stepSize: 0.001
-            decimals: 3
-            suffix: ' '
+            maximumValue: 100
+            stepSize: 0.1
+            decimals: 1
+            suffix: ' %'
             onValueChanged: updateFilter(correctionnearcenter, correctionnearcenterSlider.value / correctionnearcenterSlider.maximumValue, cncenKeyframesButton, getPosition())
         }
         UndoButton {
@@ -179,10 +179,10 @@ Label {
         SliderSpinner {
             id: correctionnearedgesSlider
             minimumValue: 0
-            maximumValue: 1.0
-            stepSize: 0.001
-            decimals: 3
-            suffix: ' '
+            maximumValue: 100
+            stepSize: 0.1
+            decimals: 1
+            suffix: ' %'
             onValueChanged: updateFilter(correctionnearedges, correctionnearedgesSlider.value / correctionnearedgesSlider.maximumValue, cnedgeKeyframesButton, getPosition())
         }
         UndoButton {
