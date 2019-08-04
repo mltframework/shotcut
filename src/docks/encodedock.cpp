@@ -991,14 +991,14 @@ void EncodeDock::runMelt(const QString& target, int realtime)
 
 #if LIBMLT_VERSION_INT >= MLT_VERSION_CPP_UPDATED
 
-class FindFilterParser : public Mlt::Parser
+class FindAnalysisFilterParser : public Mlt::Parser
 {
 private:
     QUuid m_uuid;
     QList<Mlt::Filter> m_filters;
 
 public:
-    FindFilterParser() : Mlt::Parser()
+    FindAnalysisFilterParser() : Mlt::Parser()
     {}
 
     QList<Mlt::Filter>& filters() { return m_filters; }
@@ -1046,7 +1046,7 @@ void EncodeDock::enqueueAnalysis()
     Mlt::Producer* producer = fromProducer();
     if (producer && producer->is_valid()) {
         // Look in the producer for all filters requiring analysis.
-        FindFilterParser parser;
+        FindAnalysisFilterParser parser;
         parser.start(*producer);
         // If there are Filters show a dialog.
         if (parser.filters().size() > 0) {
