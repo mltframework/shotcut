@@ -1496,6 +1496,7 @@ void EncodeDock::on_videoRateControlCombo_activated(int index)
         ui->videoBufferSizeLabel->hide();
         ui->videoBufferSizeSuffixLabel->hide();
         ui->videoQualityLabel->hide();
+        ui->videoQualitySuffixLabel->hide();
         break;
     case RateControlConstant:
         ui->videoBitrateCombo->show();
@@ -1507,6 +1508,7 @@ void EncodeDock::on_videoRateControlCombo_activated(int index)
         ui->videoBufferSizeLabel->show();
         ui->videoBufferSizeSuffixLabel->show();
         ui->videoQualityLabel->hide();
+        ui->videoQualitySuffixLabel->hide();
         break;
     case RateControlQuality:
         ui->videoBitrateCombo->hide();
@@ -1518,6 +1520,7 @@ void EncodeDock::on_videoRateControlCombo_activated(int index)
         ui->videoBufferSizeLabel->hide();
         ui->videoBufferSizeSuffixLabel->hide();
         ui->videoQualityLabel->show();
+        ui->videoQualitySuffixLabel->show();
         break;
     case RateControlConstrained:
         ui->videoBitrateCombo->show();
@@ -1529,6 +1532,7 @@ void EncodeDock::on_videoRateControlCombo_activated(int index)
         ui->videoBufferSizeLabel->show();
         ui->videoBufferSizeSuffixLabel->show();
         ui->videoQualityLabel->show();
+        ui->videoQualitySuffixLabel->show();
         break;
     }
 }
@@ -1542,6 +1546,7 @@ void EncodeDock::on_audioRateControlCombo_activated(int index)
         ui->audioBitrateLabel->show();
         ui->audioBitrateSuffixLabel->show();
         ui->audioQualityLabel->hide();
+        ui->audioQualitySuffixLabel->hide();
         break;
     case RateControlConstant:
         ui->audioBitrateCombo->show();
@@ -1549,6 +1554,7 @@ void EncodeDock::on_audioRateControlCombo_activated(int index)
         ui->audioBitrateLabel->show();
         ui->audioBitrateSuffixLabel->show();
         ui->audioQualityLabel->hide();
+        ui->audioQualitySuffixLabel->hide();
         break;
     case RateControlQuality:
         ui->audioBitrateCombo->hide();
@@ -1556,6 +1562,7 @@ void EncodeDock::on_audioRateControlCombo_activated(int index)
         ui->audioBitrateLabel->hide();
         ui->audioBitrateSuffixLabel->hide();
         ui->audioQualityLabel->show();
+        ui->audioQualitySuffixLabel->show();
         break;
     }
 }
@@ -1677,6 +1684,13 @@ void EncodeDock::on_videoCodecCombo_currentIndexChanged(int index)
     } else {
         ui->dualPassCheckbox->setEnabled(true);
     }
+    on_videoQualitySpinner_valueChanged(ui->videoQualitySpinner->value());
+}
+
+void EncodeDock::on_audioCodecCombo_currentIndexChanged(int index)
+{
+    Q_UNUSED(index)
+    on_audioQualitySpinner_valueChanged(ui->audioQualitySpinner->value());
 }
 
 void EncodeDock::setAudioChannels( int channels )
@@ -1821,4 +1835,38 @@ void EncodeDock::on_fpsComboBox_activated(const QString &arg1)
 {
     if (!arg1.isEmpty())
         ui->fpsSpinner->setValue(arg1.toDouble());
+}
+
+void EncodeDock::on_videoQualitySpinner_valueChanged(int vq)
+{
+    const QString& vcodec = ui->videoCodecCombo->currentText();
+    QString s;
+    if (vcodec == "libx264" || vcodec == "libx265") {
+        s = QString("crf=%1").arg(TO_ABSOLUTE(51, 0, vq));
+    } else if (vcodec.startsWith("libvpx")) {
+        s = QString("crf=%1").arg(TO_ABSOLUTE(63, 0, vq));
+    } else if (vcodec.contains("nvenc")) {
+        if (ui->videoRateControlCombo->currentIndex() == RateControlQuality)
+            s = QString("vglobal_quality=%1").arg(TO_ABSOLUTE(51, 0, vq));
+        else
+            s = QString("qmin=%1").arg(TO_ABSOLUTE(51, 0, vq));
+    } else if (vcodec.endsWith("_amf")) {
+        s = QString("qp_i=qp_p=qp_b=%1").arg(TO_ABSOLUTE(51, 0, vq));
+    } else {
+        s = QString("qscale=%1").arg(TO_ABSOLUTE(31, 0, vq));
+    }
+    ui->videoQualitySuffixLabel->setText(s);
+}
+
+void EncodeDock::on_audioQualitySpinner_valueChanged(int aq)
+{
+    const QString& acodec = ui->audioCodecCombo->currentText();
+    if (acodec == "libmp3lame")
+        aq = TO_ABSOLUTE(9, 0, aq);
+    else if (acodec == "libvorbis" || acodec == "vorbis")
+        aq = TO_ABSOLUTE(0, 10, aq);
+    else
+        aq = TO_ABSOLUTE(0, 500, aq);
+    QString s("aq=%1");
+    ui->audioQualitySuffixLabel->setText(s.arg(aq));
 }

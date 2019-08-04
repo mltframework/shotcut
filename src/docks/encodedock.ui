@@ -1287,6 +1287,13 @@ in temporal compression</string>
                  </widget>
                 </item>
                 <item>
+                 <widget class="QLabel" name="videoQualitySuffixLabel">
+                  <property name="text">
+                   <string>TextLabel</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
                  <spacer name="horizontalSpacer_19">
                   <property name="orientation">
                    <enum>Qt::Horizontal</enum>
@@ -1682,6 +1689,13 @@ in temporal compression</string>
                   </property>
                   <property name="value">
                    <number>50</number>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="audioQualitySuffixLabel">
+                  <property name="text">
+                   <string>TextLabel</string>
                   </property>
                  </widget>
                 </item>
