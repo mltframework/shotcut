@@ -27,6 +27,7 @@
 #include "shotcut_mlt_properties.h"
 #include "util.h"
 #include "dialogs/listselectiondialog.h"
+#include "qmltypes/qmlfilter.h"
 
 #include <Logger.h>
 #include <QtWidgets>
@@ -988,6 +989,91 @@ void EncodeDock::runMelt(const QString& target, int realtime)
     }
 }
 
+#if LIBMLT_VERSION_INT >= MLT_VERSION_CPP_UPDATED
+
+class FindFilterParser : public Mlt::Parser
+{
+private:
+    QUuid m_uuid;
+    QList<Mlt::Filter> m_filters;
+
+public:
+    FindFilterParser() : Mlt::Parser()
+    {}
+
+    QList<Mlt::Filter>& filters() { return m_filters; }
+
+    int on_start_filter(Mlt::Filter *filter) {
+        QString serviceName = filter->get("mlt_service");
+        if (serviceName == "loudness" || serviceName == "vidstab") {
+            // If the results property does not exist, empty, or file does not exist.
+            QString results = filter->get("results");
+            if (results.isEmpty()) {
+                if (serviceName == "vidstab") {
+                    // vidstab requires a filename, which is only available when using a project folder.
+                    QString filename = filter->get("filename");
+                    if (filename.isEmpty() || filename.endsWith("vidstab.trf")) {
+                        filename = QmlApplication::getNextProjectFile("stab");
+                        if (!filename.isEmpty()) {
+                            filter->set("filename", filename.toUtf8().constData());
+                            m_filters << Mlt::Filter(*filter);
+                        }
+                    }
+                } else {
+                    m_filters << Mlt::Filter(*filter);
+                }
+            }
+        }
+        return 0;
+    }
+    int on_start_producer(Mlt::Producer*) { return 0; }
+    int on_end_producer(Mlt::Producer*) { return 0; }
+    int on_start_playlist(Mlt::Playlist*) { return 0; }
+    int on_end_playlist(Mlt::Playlist*) { return 0; }
+    int on_start_tractor(Mlt::Tractor*) { return 0; }
+    int on_end_tractor(Mlt::Tractor*) { return 0; }
+    int on_start_multitrack(Mlt::Multitrack*) { return 0; }
+    int on_end_multitrack(Mlt::Multitrack*) { return 0; }
+    int on_start_track() { return 0; }
+    int on_end_track() { return 0; }
+    int on_end_filter(Mlt::Filter*) { return 0; }
+    int on_start_transition(Mlt::Transition*) { return 0; }
+    int on_end_transition(Mlt::Transition*) { return 0; }
+};
+
+void EncodeDock::enqueueAnalysis()
+{
+    Mlt::Producer* producer = fromProducer();
+    if (producer && producer->is_valid()) {
+        // Look in the producer for all filters requiring analysis.
+        FindFilterParser parser;
+        parser.start(*producer);
+        // If there are Filters show a dialog.
+        if (parser.filters().size() > 0) {
+            QMessageBox dialog(QMessageBox::Question,
+                               windowTitle(),
+                               tr("Shotcut found filters that require analysis jobs that have not run.\n"
+                                  "Do you want to run the analysis jobs now?"),
+                               QMessageBox::No | QMessageBox::Yes,
+                               this);
+            dialog.setDefaultButton(QMessageBox::Yes);
+            dialog.setEscapeButton(QMessageBox::No);
+            dialog.setWindowModality(QmlApplication::dialogModality());
+            if (QMessageBox::Yes == dialog.exec()) {
+                // If dialog accepted enqueue jobs.
+                foreach (Mlt::Filter filter, parser.filters()) {
+                    QScopedPointer<QmlMetadata> meta(new QmlMetadata);
+                    QmlFilter qmlFilter(filter, meta.data());
+                    bool isAudio = !::qstrcmp("loudness", filter.get("mlt_service"));
+                    qmlFilter.analyze(isAudio);
+                }
+            }
+        }
+    }
+}
+
+#endif
+
 void EncodeDock::enqueueMelt(const QString& target, int realtime)
 {
     Mlt::Producer* service = fromProducer();
@@ -1257,6 +1343,9 @@ void EncodeDock::on_encodeButton_clicked()
                 threadCount = qMin(threadCount - 1, 4);
             else
                 threadCount = 1;
+#if LIBMLT_VERSION_INT >= MLT_VERSION_CPP_UPDATED
+            enqueueAnalysis();
+#endif
             enqueueMelt(m_outputFilename, Settings.playerGPU()? -1 : -threadCount);
         }
         else if (MLT.producer()->get_int(kBackgroundCaptureProperty)) {

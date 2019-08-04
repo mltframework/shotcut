@@ -151,6 +151,9 @@ private:
     void collectProperties(QDomElement& node, int realtime);
     MeltJob* createMeltJob(Mlt::Producer* service, const QString& target, int realtime, int pass = 0);
     void runMelt(const QString& target, int realtime = -1);
+#if LIBMLT_VERSION_INT >= MLT_VERSION_CPP_UPDATED
+    void enqueueAnalysis();
+#endif
     void enqueueMelt(const QString& target, int realtime);
     void encode(const QString& target);
     void resetOptions();
