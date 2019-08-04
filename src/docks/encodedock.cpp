@@ -1014,10 +1014,10 @@ public:
                     QString filename = filter->get("filename");
                     if (filename.isEmpty() || filename.endsWith("vidstab.trf")) {
                         filename = QmlApplication::getNextProjectFile("stab");
-                        if (!filename.isEmpty()) {
-                            filter->set("filename", filename.toUtf8().constData());
-                            m_filters << Mlt::Filter(*filter);
-                        }
+                    }
+                    if (!filename.isEmpty()) {
+                        filter->set("filename", filename.toUtf8().constData());
+                        m_filters << Mlt::Filter(*filter);
                     }
                 } else {
                     m_filters << Mlt::Filter(*filter);
@@ -1183,7 +1183,7 @@ void EncodeDock::resetOptions()
     preset.set("f", "mp4");
     preset.set("movflags", "+faststart");
     preset.set("vcodec", "libx264");
-    preset.set("crf", "21");
+    preset.set("crf", "23");
     preset.set("preset", "fast");
     preset.set("acodec", "aac");
     preset.set("meta.preset.extension", "mp4");
