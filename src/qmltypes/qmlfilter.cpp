@@ -596,7 +596,6 @@ AnalyzeDelegate::AnalyzeDelegate(Mlt::Filter& filter)
     , m_serviceName(filter.get("mlt_service"))
 {
     filter.set(kShotcutHashProperty, m_uuid.toByteArray().data());
-    QByteArray uuid = filter.get(kShotcutHashProperty);
 }
 #else
     , m_filter(filter)
@@ -738,7 +737,7 @@ void AnalyzeDelegate::onAnalyzeFinished(AbstractJob *job, bool isSuccess)
             emit MAIN.filterController()->attachedModel()->changed();
         }
 #else
-        QString results = resultsFromXml(fileName, m_filter.get("mlt_service"));
+        QString results = resultsFromXml(fileName, m_serviceName);
         if (!results.isEmpty()) {
             updateFilter(m_filter, results);
             emit MAIN.filterController()->attachedModel()->changed();
@@ -793,5 +792,6 @@ void AnalyzeDelegate::updateFilter(Mlt::Filter& filter, const QString& results)
 {
     filter.set("results", results.toUtf8().constData());
     filter.set("reload", 1);
+    filter.clear(kShotcutHashProperty);
     LOG_INFO() << "updated filter" << filter.get("mlt_service") << "with results:" << results;
 }
