@@ -462,7 +462,8 @@ void AvformatProducerWidget::onFrameDecoded()
                                       "Do you want to convert it to an edit-friendly format?\n\n"
                                       "If yes, choose a format below and then click OK to choose a file name. "
                                       "After choosing a file name, a job is created. "
-                                      "When it is done, double-click the job to open it.\n"), this);
+                                      "When it is done, double-click the job to open it.\n"),
+                                   ui->scanComboBox->currentIndex(), this);
             dialog.setWindowModality(QmlApplication::dialogModality());
             dialog.showCheckBox();
             convert(dialog);
@@ -474,7 +475,8 @@ void AvformatProducerWidget::onFrameDecoded()
                                       "Do you want to convert it to an edit-friendly format?\n\n"
                                       "If yes, choose a format below and then click OK to choose a file name. "
                                       "After choosing a file name, a job is created. "
-                                      "When it is done, double-click the job to open it.\n"), this);
+                                      "When it is done, double-click the job to open it.\n"),
+                                   ui->scanComboBox->currentIndex(), this);
             dialog.setWindowModality(QmlApplication::dialogModality());
             dialog.showCheckBox();
             convert(dialog);
@@ -654,7 +656,8 @@ void AvformatProducerWidget::on_actionFFmpegConvert_triggered()
 {
     TranscodeDialog dialog(tr("Choose an edit-friendly format below and then click OK to choose a file name. "
                               "After choosing a file name, a job is created. "
-                              "When it is done, double-click the job to open it.\n"), this);
+                              "When it is done, double-click the job to open it.\n"),
+                           ui->scanComboBox->currentIndex(), this);
     dialog.setWindowModality(QmlApplication::dialogModality());
     convert(dialog);
 }
@@ -680,6 +683,8 @@ void AvformatProducerWidget::convert(TranscodeDialog& dialog)
             args << "-vf" << "scale=flags=accurate_rnd+full_chroma_inp+full_chroma_int:in_range=full:out_range=full" << "-color_range" << "jpeg";
         else
             args << "-vf" << "scale=flags=accurate_rnd+full_chroma_inp+full_chroma_int:in_range=mpeg:out_range=mpeg" << "-color_range" << "mpeg";
+        if (!ui->scanComboBox->currentIndex())
+            args << "-flags" << "+ildct+ilme" << "-top" << QString::number(ui->fieldOrderComboBox->currentIndex());
 
         switch (dialog.format()) {
         case 0:
@@ -689,8 +694,12 @@ void AvformatProducerWidget::convert(TranscodeDialog& dialog)
             args << "-preset" << "medium" << "-g" << "1" << "-crf" << "11";
             break;
         case 1:
-            args << "-f" << "mov" << "-codec:a" << "alac" << "-codec:v" << "dnxhd";
-            args << "-profile:v?" << "dnxhr_hq" << "-pix_fmt" << "yuv422p";
+            args << "-f" << "mov" << "-codec:a" << "alac";
+            if (ui->scanComboBox->currentIndex()) { // progressive
+                args << "-codec:v" << "dnxhd" << "-profile:v" << "dnxhr_hq" << "-pix_fmt" << "yuv422p";
+            } else { // interlaced
+                args << "-codec:v" << "prores_ks" << "-profile:v" << "standard";
+            }
             path.append("/%1 - %2.mov");
             nameFilter = tr("MOV (*.mov);;All Files (*)");
             break;
@@ -730,7 +739,8 @@ void AvformatProducerWidget::on_reverseButton_clicked()
 {
     TranscodeDialog dialog(tr("Choose an edit-friendly format below and then click OK to choose a file name. "
                               "After choosing a file name, a job is created. "
-                              "When it is done, double-click the job to open it.\n"), this);
+                              "When it is done, double-click the job to open it.\n"),
+                           ui->scanComboBox->currentIndex(), this);
     dialog.setWindowTitle(tr("Reverse..."));
     dialog.setWindowModality(QmlApplication::dialogModality());
     int result = dialog.exec();
@@ -763,6 +773,8 @@ void AvformatProducerWidget::on_reverseButton_clicked()
             ffmpegArgs << "-vf" << "scale=flags=accurate_rnd+full_chroma_inp+full_chroma_int:in_range=full:out_range=full" << "-color_range" << "jpeg";
         else
             ffmpegArgs << "-vf" << "scale=flags=accurate_rnd+full_chroma_inp+full_chroma_int:in_range=mpeg:out_range=mpeg" << "-color_range" << "mpeg";
+        if (!ui->scanComboBox->currentIndex())
+            ffmpegArgs << "-flags" << "+ildct+ilme" << "-top" << QString::number(ui->fieldOrderComboBox->currentIndex());
 
         meltArgs << "-consumer" << "avformat";
         if (m_producer->get_int("audio_index") == -1) {
@@ -780,15 +792,27 @@ void AvformatProducerWidget::on_reverseButton_clicked()
         case 0:
             path.append("/%1 - %2.mp4");
             nameFilter = tr("MP4 (*.mp4);;All Files (*)");
-            ffmpegArgs << "-f" << "mov" << "-codec:a" << "alac" << "-codec:v" << "dnxhd";
-            ffmpegArgs << "-profile:v" << "dnxhr_hq" << "-pix_fmt" << "yuv422p";
+            ffmpegArgs << "-f" << "mov" << "-codec:a" << "alac";
+            if (ui->scanComboBox->currentIndex()) { // progressive
+                ffmpegArgs << "-codec:v" << "dnxhd" << "-profile:v" << "dnxhr_hq" << "-pix_fmt" << "yuv422p";
+            } else { // interlaced
+                ffmpegArgs << "-codec:v" << "prores_ks" << "-profile:v" << "standard";
+                meltArgs << "top_field_first=" + QString::number(ui->fieldOrderComboBox->currentIndex());
+            }
             meltArgs << "acodec=ac3" << "ab=512k" << "vcodec=libx264";
             meltArgs << "vpreset=medium" << "g=1" << "crf=11";
             break;
         case 1:
-            ffmpegArgs << "-f" << "mov" << "-codec:a" << "alac" << "-codec:v" << "dnxhd";
-            ffmpegArgs << "-profile:v" << "dnxhr_hq" << "-pix_fmt" << "yuv422p";
-            meltArgs << "acodec=alac" << "vcodec=dnxhd" << "vprofile=dnxhr_hq";
+            ffmpegArgs << "-f" << "mov" << "-codec:a" << "alac";
+            meltArgs << "acodec=alac";
+            if (ui->scanComboBox->currentIndex()) { // progressive
+                ffmpegArgs << "-codec:v" << "dnxhd" << "-profile:v" << "dnxhr_hq" << "-pix_fmt" << "yuv422p";
+                meltArgs << "vcodec=dnxhd" << "vprofile=dnxhr_hq";
+            } else { // interlaced
+                ffmpegArgs << "-codec:v" << "prores_ks" << "-profile:v" << "standard";
+                meltArgs << "top_field_first=" + QString::number(ui->fieldOrderComboBox->currentIndex());
+                meltArgs << "vcodec=prores_ks" << "vprofile=standard";
+            }
             path.append("/%1 - %2.mov");
             nameFilter = tr("MOV (*.mov);;All Files (*)");
             break;
@@ -796,6 +820,9 @@ void AvformatProducerWidget::on_reverseButton_clicked()
             ffmpegSuffix = "mkv";
             ffmpegArgs << "-f" << "matroska" << "-codec:a" << "pcm_s32le" << "-codec:v" << "utvideo";
             ffmpegArgs << "-pix_fmt" << "yuv422p";
+            if (!ui->scanComboBox->currentIndex()) { // interlaced
+                meltArgs << "field_order=" + QString::fromLatin1(ui->fieldOrderComboBox->currentIndex()? "tt" : "bb");
+            }
             meltArgs << "acodec=flac" << "vcodec=utvideo" << "mlt_audio_format=s32le" << "pix_fmt=yuv422p";
             path.append("/%1 - %2.mkv");
             nameFilter = tr("MKV (*.mkv);;All Files (*)");

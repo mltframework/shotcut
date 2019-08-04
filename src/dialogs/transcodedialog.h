@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2017 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2017-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,7 +30,7 @@ class TranscodeDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit TranscodeDialog(const QString& message, QWidget *parent = 0);
+    explicit TranscodeDialog(const QString& message, bool isProgressive, QWidget *parent = nullptr);
     ~TranscodeDialog();
     int format() const { return m_format; }
     void showCheckBox();
@@ -46,6 +45,7 @@ private:
     Ui::TranscodeDialog *ui;
     int m_format;
     bool m_isChecked;
+    bool m_isProgressive;
 };
 
 #endif // TRANSCODEDIALOG_H

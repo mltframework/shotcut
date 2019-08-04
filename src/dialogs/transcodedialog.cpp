@@ -18,17 +18,18 @@
 #include "transcodedialog.h"
 #include "ui_transcodedialog.h"
 
-TranscodeDialog::TranscodeDialog(const QString& message, QWidget *parent) :
+TranscodeDialog::TranscodeDialog(const QString& message, bool isProgressive, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::TranscodeDialog),
     m_format(1),
-    m_isChecked(false)
+    m_isChecked(false),
+    m_isProgressive(isProgressive)
 {
     ui->setupUi(this);
     setWindowTitle(tr("Convert to Edit-friendly..."));
     ui->messageLabel->setText(message);
     ui->checkBox->hide();
-    on_horizontalSlider_valueChanged(1);
+    on_horizontalSlider_valueChanged(m_format);
 }
 
 TranscodeDialog::~TranscodeDialog()
@@ -48,7 +49,7 @@ void TranscodeDialog::on_horizontalSlider_valueChanged(int position)
         ui->formatLabel->setText(tr("Lossy: I-frame–only H.264/AC-3 MP4"));
         break;
     case 1:
-        ui->formatLabel->setText(tr("Intermediate: DNxHR/ALAC MOV"));
+        ui->formatLabel->setText(tr("Intermediate: %1/ALAC MOV").arg(m_isProgressive? "DNxHR" : "ProRes"));
         break;
     case 2:
         ui->formatLabel->setText(tr("Lossless: Ut Video/FLAC MKV"));
