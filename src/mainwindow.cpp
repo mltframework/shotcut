@@ -1688,8 +1688,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         if (event->modifiers() == Qt::ShiftModifier && m_playlistDock->model()->rowCount() > 0) {
             m_playlistDock->show();
             m_playlistDock->raise();
-            if (m_playlistDock->position() >= 0)
-                m_playlistDock->on_actionCopy_triggered();
+            m_playlistDock->on_actionCopy_triggered();
         } else {
             m_timelineDock->show();
             m_timelineDock->raise();
