@@ -33,7 +33,7 @@ Metadata {
                 property: '0'
                 isSimple: true
                 isCurve: true
-                minimum: 0.002
+                minimum: 0
                 maximum: 0.4
             },
             Parameter {
@@ -41,7 +41,7 @@ Metadata {
                 property: '1'
                 isSimple: true
                 isCurve: true
-                minimum: 0.002
+                minimum: 0
                 maximum: 0.4
             }
         ]

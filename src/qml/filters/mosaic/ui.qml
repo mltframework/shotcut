@@ -91,7 +91,7 @@ KeyframableFilter {
         }
         SliderSpinner {
             id: xsizeSlider
-            minimumValue: 0.1
+            minimumValue: 0
             maximumValue: 20
             stepSize: 0.1
             decimals: 1
@@ -116,7 +116,7 @@ KeyframableFilter {
         }
         SliderSpinner {
             id: ysizeSlider
-            minimumValue: 0.1
+            minimumValue: 0
             maximumValue: 20
             stepSize: 0.1
             decimals: 1
