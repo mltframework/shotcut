@@ -20,7 +20,7 @@ GlslTransition.prototype.render = function (time) {
     shader.updateUniform("progress", time);
     shader.updateUniform("from", video.toImageData());
     shader.updateUniform("resolution", [video.width, video.height]);
-    shader.updateUniform("maximum", webvfx.getNumberParameter("maximum") || 0.5);
+    shader.updateUniform("maximum", webvfx.getNumberParameter("maximum"));
     this.renderer.render(shader);
 }
 function init() {
