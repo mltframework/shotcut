@@ -267,6 +267,9 @@ p, li { white-space: pre-wrap; }
    <property name="toolTip">
     <string>Insert</string>
    </property>
+   <property name="shortcut">
+    <string>Shift+V</string>
+   </property>
   </action>
   <action name="actionAppendCut">
    <property name="icon">
@@ -278,6 +281,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="toolTip">
     <string>Append</string>
+   </property>
+   <property name="shortcut">
+    <string>Shift+A</string>
    </property>
   </action>
   <action name="actionInsertBlank">
@@ -294,6 +300,9 @@ p, li { white-space: pre-wrap; }
    <property name="text">
     <string>Replace</string>
    </property>
+   <property name="shortcut">
+    <string>Shift+B</string>
+   </property>
   </action>
   <action name="actionOpen">
    <property name="text">
@@ -302,10 +311,16 @@ p, li { white-space: pre-wrap; }
    <property name="toolTip">
     <string>Open the clip in the Source player</string>
    </property>
+   <property name="shortcut">
+    <string>Return</string>
+   </property>
   </action>
   <action name="actionRemove">
    <property name="text">
     <string>Remove</string>
+   </property>
+   <property name="shortcut">
+    <string>Shift+X</string>
    </property>
   </action>
   <action name="actionSetFileDate">
@@ -319,6 +334,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="toolTip">
     <string>Go to the start of this clip in the Project player</string>
+   </property>
+   <property name="shortcut">
+    <string>Shift+Return</string>
    </property>
   </action>
   <action name="actionRemoveAll">
@@ -429,6 +447,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="toolTip">
     <string>Open a copy of the clip in the Source player</string>
+   </property>
+   <property name="shortcut">
+    <string>Shift+C</string>
    </property>
   </action>
  </widget>
