@@ -28,6 +28,7 @@ Q_OBJECT
 public:
     PlaylistListView(QWidget *parent = 0);
     void dropEvent(QDropEvent* event) Q_DECL_OVERRIDE;
+    void keyPressEvent(QKeyEvent* event) Q_DECL_OVERRIDE;
 
 signals:
     void movedToEnd();

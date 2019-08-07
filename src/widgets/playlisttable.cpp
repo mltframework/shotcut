@@ -37,6 +37,7 @@ void PlaylistTable::keyPressEvent(QKeyEvent* event)
         return;
     }
     QTableView::keyPressEvent(event);
+    event->ignore();
 }
 
 void PlaylistTable::dropEvent(QDropEvent* event)

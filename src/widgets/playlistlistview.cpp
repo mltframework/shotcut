@@ -33,3 +33,9 @@ void PlaylistListView::dropEvent(QDropEvent* event)
         QListView::dropEvent(event);
     }
 }
+
+void PlaylistListView::keyPressEvent(QKeyEvent* event)
+{
+    QListView::keyPressEvent(event);
+    event->ignore();
+}

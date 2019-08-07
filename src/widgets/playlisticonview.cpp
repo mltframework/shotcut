@@ -258,6 +258,12 @@ void PlaylistIconView::setModel(QAbstractItemModel* model)
     viewport()->update();
 }
 
+void PlaylistIconView::keyPressEvent(QKeyEvent* event)
+{
+    QAbstractItemView::keyPressEvent(event);
+    event->ignore();
+}
+
 QAbstractItemView::DropIndicatorPosition PlaylistIconView::position(const QPoint &pos, const QRect &rect, const QModelIndex &index) const
 {
     Q_UNUSED(index);
