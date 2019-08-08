@@ -737,7 +737,7 @@ void AnalyzeDelegate::onAnalyzeFinished(AbstractJob *job, bool isSuccess)
             emit MAIN.filterController()->attachedModel()->changed();
         }
 #else
-        QString results = resultsFromXml(fileName, m_serviceName);
+        QString results = resultsFromXml(fileName, m_filter.get("mlt_service"));
         if (!results.isEmpty()) {
             updateFilter(m_filter, results);
             emit MAIN.filterController()->attachedModel()->changed();
