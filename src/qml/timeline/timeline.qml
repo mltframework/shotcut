@@ -133,10 +133,10 @@ Rectangle {
                 color: selected? shotcutBlue : activePalette.window
                 border.color: selected? 'red' : 'transparent'
                 border.width: selected? 1 : 0
+                visible: trackHeaderRepeater.count
                 z: 1
                 Label {
                     text: qsTr('Master')
-                    visible: tracksRepeater.count
                     color: activePalette.windowText
                     elide: Qt.ElideRight
                     x: 8
