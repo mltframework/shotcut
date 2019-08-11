@@ -30,14 +30,14 @@
         function Filter() {
             this.duration = window.webvfx? webvfx.getNumberParameter('duration') : 0;
             this.duration *= 1000;
-            this.animation = document.body.animate({
-                top: ['100%', -document.body.clientHeight + 'px']
-            }, this.duration);
-            this.animation.pause();
+            // TODO add your animation here and assign it to this.animation
+            if (this.animation)
+                this.animation.pause();
         }
 
         Filter.prototype.render = function(progress) {
-            this.animation.currentTime = progress * this.duration;
+            if (this.animation)
+                this.animation.currentTime = progress * this.duration;
         }
 
         window.addEventListener("load", function() {
