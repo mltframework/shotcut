@@ -612,14 +612,6 @@ void PlaylistDock::onDropped(const QMimeData *data, int row)
                     first = false;
                 }
                 Mlt::Producer* producer = &p;
-                if (first) {
-                    first = false;
-                    if (!MLT.producer() || !MLT.producer()->is_valid()) {
-                        MAIN.open(path);
-                        if (MLT.producer() && MLT.producer()->is_valid())
-                            producer = MLT.producer();
-                    }
-                }
                 // Convert avformat to avformat-novalidate so that XML loads faster.
                 if (!qstrcmp(producer->get("mlt_service"), "avformat")) {
                     producer->set("mlt_service", "avformat-novalidate");
@@ -642,6 +634,11 @@ void PlaylistDock::onDropped(const QMimeData *data, int row)
                         else
                             MAIN.undoStack()->push(new Playlist::InsertCommand(m_model, MLT.XML(producer), insertNextAt++));
                     }
+                }
+                if (first) {
+                    first = false;
+                    setIndex(0);
+                    on_actionOpen_triggered();
                 }
             }
         }
