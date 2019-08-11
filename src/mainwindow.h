@@ -326,6 +326,8 @@ private slots:
     void onSceneGraphInitialized();
     void on_actionShowTextUnderIcons_toggled(bool b);
     void on_actionShowSmallIcons_toggled(bool b);
+    void onPlaylistInChanged(int in);
+    void onPlaylistOutChanged(int out);
 };
 
 #define MAIN MainWindow::singleton()

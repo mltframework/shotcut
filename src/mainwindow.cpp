@@ -290,8 +290,8 @@ MainWindow::MainWindow()
         connect(m_playlistDock->model(), SIGNAL(loaded()), this, SLOT(updateThumbnails()));
     connect(m_player, &Player::inChanged, m_playlistDock, &PlaylistDock::onInChanged);
     connect(m_player, &Player::outChanged, m_playlistDock, &PlaylistDock::onOutChanged);
-    connect(m_playlistDock->model(), &PlaylistModel::inChanged, m_player, &Player::setIn);
-    connect(m_playlistDock->model(), &PlaylistModel::outChanged, m_player, &Player::setOut);
+    connect(m_playlistDock->model(), &PlaylistModel::inChanged, this, &MainWindow::onPlaylistInChanged);
+    connect(m_playlistDock->model(), &PlaylistModel::outChanged, this, &MainWindow::onPlaylistOutChanged);
 
     m_timelineDock = new TimelineDock(this);
     m_timelineDock->hide();
@@ -4049,4 +4049,18 @@ void MainWindow::on_actionShowSmallIcons_toggled(bool b)
 {
     ui->mainToolBar->setIconSize(b? QSize(16, 16) : QSize());
     Settings.setSmallIcons(b);
+}
+
+void MainWindow::onPlaylistInChanged(int in)
+{
+    m_player->blockSignals(true);
+    m_player->setIn(in);
+    m_player->blockSignals(false);
+}
+
+void MainWindow::onPlaylistOutChanged(int out)
+{
+    m_player->blockSignals(true);
+    m_player->setOut(out);
+    m_player->blockSignals(false);
 }

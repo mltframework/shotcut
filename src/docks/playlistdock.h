@@ -88,6 +88,8 @@ private slots:
 
     void onPlaylistLoaded();
 
+    void onPlaylistModified();
+
     void onPlaylistCleared();
 
     void onPlaylistClosed();
