@@ -1056,12 +1056,13 @@ void Controller::pasteFilters(Mlt::Producer* producer)
                       :(m_producer && m_producer->is_valid())? m_producer.data()
                       : 0;
     if (targetProducer) {
+        int j = targetProducer->filter_count();
         copyFilters(*m_filtersClipboard, *targetProducer);
 
         // Adjust filters.
         bool changed = false;
         int n = targetProducer->filter_count();
-        for (int j = 0; j < n; j++) {
+        for (; j < n; j++) {
             QScopedPointer<Mlt::Filter> filter(targetProducer->filter(j));
 
             if (filter && filter->is_valid()) {
