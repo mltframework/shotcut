@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2014-2018 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2014-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,6 +33,8 @@ Item {
     signal rectChanged(Rectangle rect)
 
     function setHandles(rect) {
+        if (rect.x < 0 || rect.y < 0 || rect.width < 0 || rect.height < 0)
+            return
         topLeftHandle.x = (rect.x * widthScale)
         topLeftHandle.y = (rect.y * heightScale)
         if (aspectRatio === 0.0) {

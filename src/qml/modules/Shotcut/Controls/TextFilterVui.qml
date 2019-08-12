@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2018 Meltytech, LLC
+ * Copyright (c) 2014-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,15 +24,13 @@ VuiBase {
     property string valignProperty: 'halign'
     property string useFontSizeProperty: 'shotcut:usePointSize'
     property real zoom: (video.zoom > 0)? video.zoom : 1.0
-    property rect filterRect
+    property rect filterRect: Qt.rect(-1, -1, -1, -1)
     property bool blockUpdate: false
     property string startValue: '_shotcut:startValue'
     property string middleValue: '_shotcut:middleValue'
     property string endValue:  '_shotcut:endValue'
 
     Component.onCompleted: {
-        filterRect = filter.getRect(rectProperty, getPosition())
-        rectangle.setHandles(filterRect)
         setRectangleControl()
     }
 
@@ -43,11 +41,11 @@ VuiBase {
     function setRectangleControl() {
         if (blockUpdate) return
         var position = getPosition()
-        var newValue = filter.getRect(rectProperty, position)
-        if (filterRect !== newValue) {
-            filterRect = newValue
-            rectangle.setHandles(filterRect)
-        }
+            var newValue = filter.getRect(rectProperty, position)
+            if (filterRect !== newValue) {
+                filterRect = newValue
+                rectangle.setHandles(filterRect)
+            }
         rectangle.enabled = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1)
     }
 
