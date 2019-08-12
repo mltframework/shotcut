@@ -535,14 +535,15 @@ bool MultitrackModel::trimClipOutValid(int trackIndex, int clipIndex, int delta,
 
 int MultitrackModel::trackHeight() const
 {
-    int result = m_tractor? m_tractor->get_int(kTrackHeightProperty) : 50;
-    return result? result : 50;
+    int result = m_tractor? m_tractor->get_int(kTrackHeightProperty) : Settings.timelineTrackHeight();
+    return result? result : qMax(10, Settings.timelineTrackHeight());
 }
 
 void MultitrackModel::setTrackHeight(int height)
 {
     if (m_tractor) {
         m_tractor->set(kTrackHeightProperty, height);
+        Settings.setTimelineTrackHeight(height);
         emit trackHeightChanged();
     }
 }

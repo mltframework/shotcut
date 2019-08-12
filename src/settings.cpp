@@ -516,6 +516,16 @@ void ShotcutSettings::setTimelineCenterPlayhead(bool b)
     emit timelineCenterPlayheadChanged();
 }
 
+int ShotcutSettings::timelineTrackHeight() const
+{
+    return settings.value("timeline/trackHeight", 50).toInt();
+}
+
+void ShotcutSettings::setTimelineTrackHeight(int n)
+{
+    settings.setValue("timeline/trackHeight", n);
+}
+
 QString ShotcutSettings::filterFavorite(const QString& filterName)
 {
     return settings.value("filter/favorite/" + filterName, "").toString();

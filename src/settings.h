@@ -141,6 +141,8 @@ public:
     void setTimelineSnap(bool);
     bool timelineCenterPlayhead() const;
     void setTimelineCenterPlayhead(bool);
+    int timelineTrackHeight() const;
+    void setTimelineTrackHeight(int);
 
     QString filterFavorite(const QString& filterName);
     void setFilterFavorite(const QString& filterName, const QString& value);
