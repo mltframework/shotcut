@@ -63,6 +63,14 @@ private slots:
 
     void on_notesTextEdit_textChanged();
 
+    void on_menuButton_clicked();
+
+    void on_actionCopyFullFilePath_triggered();
+
+    void on_actionOpenFolder_triggered();
+
+    void on_actionSetFileDate_triggered();
+
 private:
     Ui::ImageProducerWidget *ui;
     int m_defaultDuration;

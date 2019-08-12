@@ -21,8 +21,11 @@
 #include "mainwindow.h"
 #include "shotcut_mlt_properties.h"
 #include "util.h"
+#include "dialogs/filedatedialog.h"
 #include <QFileInfo>
 #include <QDir>
+#include <QMenu>
+#include <QClipboard>
 
 ImageProducerWidget::ImageProducerWidget(QWidget *parent) :
     QWidget(parent),
@@ -257,4 +260,42 @@ void ImageProducerWidget::on_notesTextEdit_textChanged()
         m_producer->set(kCommentProperty, ui->notesTextEdit->toPlainText().toUtf8().constData());
         emit modified();
     }
+}
+
+void ImageProducerWidget::on_menuButton_clicked()
+{
+    QMenu menu;
+    if (!MLT.resource().contains("://")) // not a network stream
+        menu.addAction(ui->actionOpenFolder);
+    menu.addAction(ui->actionCopyFullFilePath);
+    menu.addAction(ui->actionSetFileDate);
+    menu.exec(ui->menuButton->mapToGlobal(QPoint(0, 0)));
+}
+
+static QString GetFilenameFromProducer( Mlt::Producer* producer )
+{
+    QString resource = QString::fromUtf8(producer->get("resource"));;
+    if (QFileInfo(resource).isRelative()) {
+        QString basePath = QFileInfo(MAIN.fileName()).canonicalPath();
+        QFileInfo fi(basePath, resource);
+        resource = fi.filePath();
+    }
+    return resource;
+}
+
+void ImageProducerWidget::on_actionCopyFullFilePath_triggered()
+{
+    qApp->clipboard()->setText(GetFilenameFromProducer(producer()));
+}
+
+void ImageProducerWidget::on_actionOpenFolder_triggered()
+{
+    Util::showInFolder(GetFilenameFromProducer(producer()));
+}
+
+void ImageProducerWidget::on_actionSetFileDate_triggered()
+{
+    QString resource = GetFilenameFromProducer(producer());
+    FileDateDialog dialog(resource, producer(), this);
+    dialog.exec();
 }

@@ -32,12 +32,12 @@
 #include "qmltypes/qmlapplication.h"
 #include <QtWidgets>
 
-bool ProducerIsTimewarp( Mlt::Producer* producer )
+static bool ProducerIsTimewarp( Mlt::Producer* producer )
 {
     return QString::fromUtf8(producer->get("mlt_service")) == "timewarp";
 }
 
-QString GetFilenameFromProducer( Mlt::Producer* producer )
+static QString GetFilenameFromProducer( Mlt::Producer* producer )
 {
     QString resource;
     if (ProducerIsTimewarp(producer)) {
@@ -53,7 +53,7 @@ QString GetFilenameFromProducer( Mlt::Producer* producer )
     return resource;
 }
 
-double GetSpeedFromProducer( Mlt::Producer* producer )
+static double GetSpeedFromProducer( Mlt::Producer* producer )
 {
     double speed = 1.0;
     if (ProducerIsTimewarp(producer) )
