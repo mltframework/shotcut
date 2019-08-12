@@ -87,6 +87,7 @@ void ImageProducerWidget::setProducer(Mlt::Producer* p)
     ui->sequenceCheckBox->setChecked(m_producer->get_int(kShotcutSequenceProperty));
     ui->repeatSpinBox->setEnabled(m_producer->get_int(kShotcutSequenceProperty));
     ui->durationSpinBox->setEnabled(!p->get(kMultitrackItemProperty));
+    ui->notesTextEdit->setPlainText(QString::fromUtf8(m_producer->get(kCommentProperty)));
 }
 
 void ImageProducerWidget::updateDuration()
@@ -120,7 +121,8 @@ void ImageProducerWidget::recreateProducer()
 {
     Mlt::Producer* p = newProducer(MLT.profile());
     p->pass_list(*m_producer, "force_aspect_ratio," kAspectRatioNumerator ", resource, " kAspectRatioDenominator
-        ", ttl," kShotcutResourceProperty ", autolength, length," kShotcutSequenceProperty ", " kPlaylistIndexProperty);
+        ", ttl," kShotcutResourceProperty ", autolength, length," kShotcutSequenceProperty ", " kPlaylistIndexProperty
+        ", " kCommentProperty);
     QString resource = p->get("resource");
     if (resource.startsWith("qimage:") || resource.startsWith("pixbuf:"))
         p->set("resource", resource.mid(resource.indexOf(':') + 1).toUtf8().constData());
@@ -246,4 +248,13 @@ void ImageProducerWidget::on_repeatSpinBox_editingFinished()
 void ImageProducerWidget::on_defaultDurationButton_clicked()
 {
     Settings.setImageDuration(ui->durationSpinBox->value() / MLT.profile().fps());
+}
+
+void ImageProducerWidget::on_notesTextEdit_textChanged()
+{
+    QString existing = QString::fromUtf8(m_producer->get(kCommentProperty));
+    if (ui->notesTextEdit->toPlainText() != existing) {
+        m_producer->set(kCommentProperty, ui->notesTextEdit->toPlainText().toUtf8().constData());
+        emit modified();
+    }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2018 Meltytech, LLC
+ * Copyright (c) 2012-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -41,6 +41,7 @@ public:
 signals:
     void producerChanged(Mlt::Producer*);
     void producerReopened();
+    void modified();
 
 public slots:
     void updateDuration();
@@ -59,7 +60,9 @@ private slots:
     void on_repeatSpinBox_editingFinished();
 
     void on_defaultDurationButton_clicked();
-    
+
+    void on_notesTextEdit_textChanged();
+
 private:
     Ui::ImageProducerWidget *ui;
     int m_defaultDuration;
