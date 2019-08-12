@@ -39,30 +39,22 @@ function Filter() {
         var width = rect.width;
         var height = rect.height;
         var radius = webvfx.getNumberParameter('radius');
-        if (x != this.x || y != this.y || width != this.width
-            || height != this.height || this.radius != radius) {
-            this.x = x;
-            this.y = y;
-            this.width = width;
-            this.height = height;
-            this.radius = radius;
-            radius *= 0.5 * Math.min(width, height);
+        radius *= 0.5 * Math.min(width, height);
 
-            // Clear/reset the canvas
-            this.canvas.width = this.canvas.width;
-            
-            this.context.beginPath();
-            this.context.moveTo(x, y + radius);
-            this.context.lineTo(x, y + height - radius);
-            this.context.arcTo(x, y + height, x + radius, y + height, radius);
-            this.context.lineTo(x + width - radius, y + height);
-            this.context.arcTo(x + width, y + height, x + width, y + height-radius, radius);
-            this.context.lineTo(x + width, y + radius);
-            this.context.arcTo(x + width, y, x + width - radius, y, radius);
-            this.context.lineTo(x + radius, y);
-            this.context.arcTo(x, y, x, y + radius, radius);
-            this.context.clip();
-        }
+        // Clear/reset the canvas
+        this.canvas.width = this.canvas.width;
+
+        this.context.beginPath();
+        this.context.moveTo(x, y + radius);
+        this.context.lineTo(x, y + height - radius);
+        this.context.arcTo(x, y + height, x + radius, y + height, radius);
+        this.context.lineTo(x + width - radius, y + height);
+        this.context.arcTo(x + width, y + height, x + width, y + height-radius, radius);
+        this.context.lineTo(x + width, y + radius);
+        this.context.arcTo(x + width, y, x + width - radius, y, radius);
+        this.context.lineTo(x + radius, y);
+        this.context.arcTo(x, y, x, y + radius, radius);
+        this.context.clip();
     }
 
     // Set the document background color.

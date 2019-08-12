@@ -41,10 +41,10 @@ function Filter() {
     document.body.style.backgroundColor = color;
 
     // Clip video to a circle in the middle of the canvas
-    this.radius = webvfx.getNumberParameter('radius');
+    var radius = webvfx.getNumberParameter('radius');
     this.context.beginPath();
     this.context.arc(this.canvas.width/2, this.canvas.height/2,
-                     this.hypotenuse() / 2 * this.radius, 0, Math.PI*2, true)
+                     this.hypotenuse() / 2 * radius, 0, Math.PI*2, true)
     this.context.clip();
 
     this.image = new Image();
@@ -58,19 +58,16 @@ Filter.prototype.render = function(time) {
     var color = webvfx.getStringParameter('color')
     if (color && color != document.body.style.backgroundColor)
         document.body.style.backgroundColor = toHtmlColor(color);
-
     var radius = webvfx.getNumberParameter('radius')
-    if (radius != this.radius) {
-        this.radius = radius;
 
-        // Clear/reset the canvas
-        this.canvas.width = this.canvas.width;
+    // Clear/reset the canvas
+    this.canvas.width = this.canvas.width;
 
-        this.context.beginPath();
-        this.context.arc(this.canvas.width/2, this.canvas.height/2,
-                         this.hypotenuse() / 2 * this.radius, 0, Math.PI*2, true)
-        this.context.clip();
-    }
+    this.context.beginPath();
+    this.context.arc(this.canvas.width/2, this.canvas.height/2,
+                     this.hypotenuse() / 2 * radius, 0, Math.PI*2, true)
+    this.context.clip();
+
     webvfx.getImage("video").assignToHTMLImageElement(this.image);
     this.context.drawImage(this.image, 0, 0);
 }
