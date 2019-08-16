@@ -678,6 +678,9 @@ void MainWindow::setupSettingsMenu()
     a = new QAction(QLocale::languageToString(QLocale::Japanese), m_languagesGroup);
     a->setCheckable(true);
     a->setData("ja");
+    a = new QAction(QLocale::languageToString(QLocale::Korean), m_languagesGroup);
+    a->setCheckable(true);
+    a->setData("ko");
     a = new QAction(QLocale::languageToString(QLocale::Nepali), m_languagesGroup);
     a->setCheckable(true);
     a->setData("ne");

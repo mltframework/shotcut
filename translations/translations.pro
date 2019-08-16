@@ -25,6 +25,7 @@ LANGUAGES = \
     gd \
     hu \
     it \
+    ko \
     ja \
     nb \
     nn \
