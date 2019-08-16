@@ -37,6 +37,8 @@
 #include <QKeyEvent>
 #include <QDir>
 
+static const int kInOutChangedTimeoutMs = 100;
+
 class TiledItemDelegate : public QStyledItemDelegate
 {
     Q_OBJECT
@@ -200,6 +202,11 @@ PlaylistDock::PlaylistDock(QWidget *parent) :
         ui->actionDetailed->setChecked(true);
 
     updateViewModeFromActions();
+
+    m_inChangedTimer.setSingleShot(true);
+    m_outChangedTimer.setSingleShot(true);
+    connect(&m_inChangedTimer, SIGNAL(timeout()), this, SLOT(onInTimerFired()));
+    connect(&m_outChangedTimer, SIGNAL(timeout()), this, SLOT(onOutTimerFired()));
 
     LOG_DEBUG() << "end";
 }
@@ -452,30 +459,12 @@ void PlaylistDock::onProducerOpened()
 
 void PlaylistDock::onInChanged()
 {
-    int index = MLT.producer()->get_int(kPlaylistIndexProperty) - 1;
-    if (index < 0 || !m_model.playlist() || !m_model.playlist()->is_valid())
-        return;
-    QScopedPointer<Mlt::ClipInfo> info(m_model.playlist()->clip_info(index));
-    if (info && info->producer
-             && info->producer->get_producer() == MLT.producer()->get_producer()
-             && info->frame_in != MLT.producer()->get_in()) {
-        MAIN.undoStack()->push(new Playlist::TrimClipInCommand(m_model, index, MLT.producer()->get_in()));
-        setUpdateButtonEnabled(false);
-    }
+    m_inChangedTimer.start(kInOutChangedTimeoutMs);
 }
 
 void PlaylistDock::onOutChanged()
 {
-    int index = MLT.producer()->get_int(kPlaylistIndexProperty) - 1;
-    if (index < 0 || !m_model.playlist() || !m_model.playlist()->is_valid())
-        return;
-    QScopedPointer<Mlt::ClipInfo> info(m_model.playlist()->clip_info(index));
-    if (info && info->producer
-             && info->producer->get_producer() == MLT.producer()->get_producer()
-             && info->frame_out != MLT.producer()->get_out()) {
-        MAIN.undoStack()->push(new Playlist::TrimClipOutCommand(m_model, index, MLT.producer()->get_out()));
-        setUpdateButtonEnabled(false);
-    }
+    m_outChangedTimer.start(kInOutChangedTimeoutMs);
 }
 
 void PlaylistDock::on_actionOpen_triggered()
@@ -854,6 +843,34 @@ void PlaylistDock::on_detailsButton_clicked()
 void PlaylistDock::onMovedToEnd()
 {
     onMoveClip(m_view->currentIndex().row(), model()->rowCount());
+}
+
+void PlaylistDock::onInTimerFired()
+{
+    int index = MLT.producer()->get_int(kPlaylistIndexProperty) - 1;
+    if (index < 0 || !m_model.playlist() || !m_model.playlist()->is_valid())
+        return;
+    QScopedPointer<Mlt::ClipInfo> info(m_model.playlist()->clip_info(index));
+    if (info && info->producer
+             && info->producer->get_producer() == MLT.producer()->get_producer()
+             && info->frame_in != MLT.producer()->get_in()) {
+        MAIN.undoStack()->push(new Playlist::TrimClipInCommand(m_model, index, MLT.producer()->get_in()));
+        setUpdateButtonEnabled(false);
+    }
+}
+
+void PlaylistDock::onOutTimerFired()
+{
+    int index = MLT.producer()->get_int(kPlaylistIndexProperty) - 1;
+    if (index < 0 || !m_model.playlist() || !m_model.playlist()->is_valid())
+        return;
+    QScopedPointer<Mlt::ClipInfo> info(m_model.playlist()->clip_info(index));
+    if (info && info->producer
+             && info->producer->get_producer() == MLT.producer()->get_producer()
+             && info->frame_out != MLT.producer()->get_out()) {
+        MAIN.undoStack()->push(new Playlist::TrimClipOutCommand(m_model, index, MLT.producer()->get_out()));
+        setUpdateButtonEnabled(false);
+    }
 }
 
 void PlaylistDock::keyPressEvent(QKeyEvent* event)

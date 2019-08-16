@@ -20,6 +20,7 @@
 
 #include <QDockWidget>
 #include <QUndoCommand>
+#include <QTimer>
 #include "models/playlistmodel.h"
 
 namespace Ui {
@@ -126,6 +127,10 @@ private slots:
 
     void onMovedToEnd();
 
+    void onInTimerFired();
+
+    void onOutTimerFired();
+
 protected:
     void keyPressEvent(QKeyEvent* event);
     void keyReleaseEvent(QKeyEvent* event);
@@ -138,6 +143,8 @@ private:
     QAbstractItemView *m_iconsView;
     PlaylistModel m_model;
     int m_defaultRowHeight;
+    QTimer m_inChangedTimer;
+    QTimer m_outChangedTimer;
 };
 
 #endif // PLAYLISTDOCK_H
