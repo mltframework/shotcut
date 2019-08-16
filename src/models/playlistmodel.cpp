@@ -465,10 +465,12 @@ QMimeData *PlaylistModel::mimeData(const QModelIndexList &indexes) const
     Mlt::ClipInfo* info = m_playlist->clip_info(indexes.first().row());
     if (info) {
         Mlt::Producer* producer = info->producer;
+        int in = producer->get_in();
+        int out = producer->get_out();
         producer->set_in_and_out(info->frame_in, info->frame_out);
         mimeData->setData(Mlt::XmlMimeType, MLT.XML(producer).toUtf8());
         mimeData->setText(QString::number(info->frame_count));
-        producer->set_in_and_out(0, -1);
+        producer->set_in_and_out(in, out);
         delete info;
     }
     return mimeData;
