@@ -71,6 +71,7 @@ public:
 
     void closeConsumer();
     virtual void play(double speed = 1.0);
+    bool isPaused() const;
     virtual void pause();
     void stop();
     bool enableJack(bool enable = true);

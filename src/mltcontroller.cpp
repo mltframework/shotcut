@@ -222,9 +222,14 @@ void Controller::play(double speed)
     setVolume(m_volume);
 }
 
+bool Controller::isPaused() const
+{
+    return m_producer && qAbs(m_producer->get_speed()) < 0.1;
+}
+
 void Controller::pause()
 {
-    if (m_producer && m_producer->get_speed() != 0) {
+    if (m_producer && !isPaused()) {
         m_producer->set_speed(0);
         if (m_consumer && m_consumer->is_valid()) {
             m_producer->seek(m_consumer->position() + 1);
@@ -285,7 +290,7 @@ void Controller::onJackStopped(int position)
         --m_skipJackEvents;
     } else {
         if (m_producer) {
-            if (m_producer->get_speed() != 0) {
+            if (!isPaused()) {
                 Event *event = m_consumer->setup_wait_for("consumer-sdl-paused");
                 int result = m_producer->set_speed(0);
                 if (result == 0 && m_consumer->is_valid() && !m_consumer->is_stopped())
@@ -380,7 +385,7 @@ void Controller::setVolume(double volume, bool muteOnPause)
     m_volume = volume;
 
     // Keep the consumer muted when paused
-    if (muteOnPause && m_producer && m_producer->get_speed() == 0) {
+    if (muteOnPause && !isPaused()) {
         volume = 0.0;
     }
 
