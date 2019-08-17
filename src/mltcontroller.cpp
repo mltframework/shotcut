@@ -97,6 +97,11 @@ int Controller::setProducer(Mlt::Producer* producer, bool)
     return error;
 }
 
+static bool isFpsDifferent(double a, double b)
+{
+    return qAbs(a - b) > 0.001;
+}
+
 int Controller::open(const QString &url)
 {
     int error = 0;
@@ -129,7 +134,7 @@ int Controller::open(const QString &url)
                 setProjectFolder(QString());
             }
         }
-        if (profile().fps() != fps || (Settings.playerGPU() && !profile().is_explicit())) {
+        if (isFpsDifferent(profile().fps(), fps) || (Settings.playerGPU() && !profile().is_explicit())) {
             // Reload with correct FPS or with Movit normalizing filters attached.
             m_producer.reset(new Mlt::Producer(profile(), url.toUtf8().constData()));
         }
@@ -165,7 +170,7 @@ bool Controller::openXML(const QString &filename)
             profile().set_width(Util::coerceMultiple(profile().width()));
             profile().set_height(Util::coerceMultiple(profile().height()));
         }
-        if (profile().fps() != fps) {
+        if (isFpsDifferent(profile().fps(), fps)) {
             // reopen with the correct fps
             delete producer;
             producer = new Mlt::Producer(profile(), "xml", filename.toUtf8().constData());
