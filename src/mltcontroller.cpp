@@ -315,27 +315,35 @@ bool Controller::enableJack(bool enable)
             case 8:
                 m_jackFilter->set("in_8", "-");
                 m_jackFilter->set("out_8", "system:playback_8");
+                Q_FALLTHROUGH();
             case 7:
                 m_jackFilter->set("in_7", "-");
                 m_jackFilter->set("out_7", "system:playback_7");
+                Q_FALLTHROUGH();
             case 6:
                 m_jackFilter->set("in_6", "-");
                 m_jackFilter->set("out_6", "system:playback_6");
+                Q_FALLTHROUGH();
             case 5:
                 m_jackFilter->set("in_5", "-");
                 m_jackFilter->set("out_5", "system:playback_5");
+                Q_FALLTHROUGH();
             case 4:
                 m_jackFilter->set("in_4", "-");
                 m_jackFilter->set("out_4", "system:playback_4");
+                Q_FALLTHROUGH();
             case 3:
                 m_jackFilter->set("in_3", "-");
                 m_jackFilter->set("out_3", "system:playback_3");
+                Q_FALLTHROUGH();
             case 2:
                 m_jackFilter->set("in_2", "-");
                 m_jackFilter->set("out_2", "system:playback_2");
+                Q_FALLTHROUGH();
             case 1:
                 m_jackFilter->set("in_1", "-");
                 m_jackFilter->set("out_1", "system:playback_1");
+                Q_FALLTHROUGH();
             default:
                 break;
             }
