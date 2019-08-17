@@ -38,16 +38,16 @@ class TransportControl : public TransportControllable
 {
     Q_OBJECT
 public slots:
-    void play(double speed = 1.0);
-    void pause();
-    void stop();
-    void seek(int position);
-    void rewind(bool forceChangeDirection);
-    void fastForward(bool forceChangeDirection);
-    void previous(int currentPosition);
-    void next(int currentPosition);
-    void setIn(int);
-    void setOut(int);
+    void play(double speed = 1.0) override;
+    void pause() override;
+    void stop() override;
+    void seek(int position) override;
+    void rewind(bool forceChangeDirection) override;
+    void fastForward(bool forceChangeDirection) override;
+    void previous(int currentPosition) override;
+    void next(int currentPosition) override;
+    void setIn(int) override;
+    void setOut(int) override;
 };
 
 class Controller
@@ -57,7 +57,7 @@ protected:
     virtual int reconfigure(bool isMulti) = 0;
 
 public:
-    static Controller& singleton(QObject *parent = 0);
+    static Controller& singleton(QObject *parent = nullptr);
     virtual ~Controller();
     static void destroy();
 
@@ -80,13 +80,13 @@ public:
     void onWindowResize();
     virtual void seek(int position);
     void refreshConsumer(bool scrubAudio = false);
-    bool saveXML(const QString& filename, Service* service = 0, bool withRelativePaths = true, bool verify = true);
-    QString XML(Service* service = 0, bool withProfile = false, bool withMetadata = false);
+    bool saveXML(const QString& filename, Service* service = nullptr, bool withRelativePaths = true, bool verify = true);
+    QString XML(Service* service = nullptr, bool withProfile = false, bool withMetadata = false);
     int consumerChanged();
     void setProfile(const QString& profile_name);
     void setAudioChannels(int audioChannels);
     QString resource() const;
-    bool isSeekable(Mlt::Producer* p = 0) const;
+    bool isSeekable(Mlt::Producer* p = nullptr) const;
     bool isClip() const;
     bool isSeekableClip();
     bool isPlaylist() const;
@@ -113,7 +113,7 @@ public:
     void setUuid(Mlt::Properties &properties, QUuid uid) const;
     QUuid ensureHasUuid(Mlt::Properties& properties) const;
     static void copyFilters(Mlt::Producer& fromProducer, Mlt::Producer& toProducer);
-    void copyFilters(Mlt::Producer* producer = 0);
+    void copyFilters(Mlt::Producer* producer = nullptr);
     void pasteFilters(Mlt::Producer* producer = 0);
     bool hasFiltersOnClipboard() const {
         return m_filtersClipboard->is_valid() && m_filtersClipboard->filter_count() > 0;
@@ -157,20 +157,20 @@ protected:
 
 private:
     QScopedPointer<Mlt::Profile> m_profile;
-    int m_audioChannels;
+    int m_audioChannels{2};
     QScopedPointer<Mlt::Filter> m_jackFilter;
     QString m_url;
-    double m_volume;
+    double m_volume{1.0};
     TransportControl m_transportControl;
     QScopedPointer<Mlt::Producer> m_savedProducer;
     QScopedPointer<Mlt::Producer> m_filtersClipboard;
-    unsigned m_skipJackEvents;
+    unsigned m_skipJackEvents{0};
     QString m_projectFolder;
     QMutex m_saveXmlMutex;
 
-    static void on_jack_started(mlt_properties owner, void* object, mlt_position *position);
+    static void on_jack_started(mlt_properties owner, void* object, const mlt_position *position);
     void onJackStarted(int position);
-    static void on_jack_stopped(mlt_properties owner, void* object, mlt_position *position);
+    static void on_jack_stopped(mlt_properties owner, void* object, const mlt_position *position);
     void onJackStopped(int position);
     void stopJack();
 };

@@ -25,7 +25,7 @@
 #include <QXmlStreamReader>
 #include <Logger.h>
 #include <Mlt.h>
-#include <math.h>
+#include <cmath>
 #include <clocale>
 #include <unistd.h>
 
@@ -40,13 +40,10 @@
 namespace Mlt {
 
 static const int kThumbnailOutSeekFactor = 5;
-static Controller* instance = 0;
+static Controller* instance = nullptr;
 const QString XmlMimeType("application/vnd.mlt+xml");
 
 Controller::Controller()
-    : m_audioChannels(2)
-    , m_volume(1.0)
-    , m_skipJackEvents(0)
 {
     LOG_DEBUG() << "begin";
     m_repo = Mlt::Factory::init();
@@ -263,10 +260,10 @@ void Controller::stop()
     stopJack();
 }
 
-void Controller::on_jack_started(mlt_properties, void* object, mlt_position *position)
+void Controller::on_jack_started(mlt_properties, void* object, const mlt_position *position)
 {
     if (object && position)
-        ((Controller*) object)->onJackStarted(*position);
+        (static_cast<Controller*>(object))->onJackStarted(*position);
 }
 
 void Controller::onJackStarted(int position)
@@ -278,10 +275,10 @@ void Controller::onJackStarted(int position)
     }
 }
 
-void Controller::on_jack_stopped(mlt_properties, void* object, mlt_position *position)
+void Controller::on_jack_stopped(mlt_properties, void* object, const mlt_position *position)
 {
     if (object && position)
-        ((Controller*) object)->onJackStopped(*position);
+        (static_cast<Controller*>(object))->onJackStopped(*position);
 }
 
 void Controller::onJackStopped(int position)
@@ -360,8 +357,8 @@ bool Controller::enableJack(bool enable)
 			m_consumer->attach(*m_jackFilter);
 			m_consumer->set("audio_off", 1);
 			if (isSeekable()) {
-				m_jackFilter->listen("jack-started", this, (mlt_listener) on_jack_started);
-				m_jackFilter->listen("jack-stopped", this, (mlt_listener) on_jack_stopped);
+				m_jackFilter->listen("jack-started", this, reinterpret_cast<mlt_listener>(on_jack_started));
+				m_jackFilter->listen("jack-stopped", this, reinterpret_cast<mlt_listener>(on_jack_stopped));
 			}
 		}
 		else {
@@ -534,9 +531,9 @@ bool Controller::saveXML(const QString& filename, Service* service, bool withRel
                         if (QFile::exists(filename) && QFile::exists(backupName))
                             QFile::remove(backupName);
                         return true;
-                    } else {
-                        LOG_WARNING() << "rename failed, trying again";
-                    }
+                    } 
+                    LOG_WARNING() << "rename failed, trying again";
+                    
 #ifdef Q_OS_WIN
                     ::Sleep(200);
 #else
@@ -916,7 +913,7 @@ QImage Controller::image(Mlt::Frame* frame, int width, int height)
         const uchar *image = frame->get_image(format, width, height);
         if (image) {
             QImage temp(width, height, QImage::Format_ARGB32);
-            memcpy(temp.scanLine(0), image, width * height * 4);
+            memcpy(temp.scanLine(0), image, size_t(width * height * 4));
             result = temp.rgbSwapped();
         }
     } else {
@@ -948,7 +945,7 @@ QImage Controller::image(Producer& producer, int frameNumber, int width, int hei
 void Controller::updateAvformatCaching(int trackCount)
 {
     int i = QThread::idealThreadCount() + trackCount * 2;
-    mlt_service_cache_set_size(NULL, "producer_avformat", qMax(4, i));
+    mlt_service_cache_set_size(nullptr, "producer_avformat", qMax(4, i));
 }
 
 bool Controller::isAudioFilter(const QString &name)
@@ -972,16 +969,15 @@ int Controller::realTime() const
     if (!Settings.playerRealtime()) {
         if (Settings.playerGPU()) {
             return -1;
-        } else {
+        } 
 #if QT_POINTER_SIZE == 4
-            // Limit to 1 rendering thread on 32-bit process to reduce memory usage.
-            int threadCount = 1;
+        // Limit to 1 rendering thread on 32-bit process to reduce memory usage.
+        int threadCount = 1;
 #else
-            int threadCount = QThread::idealThreadCount();
+        int threadCount = QThread::idealThreadCount();
 #endif
-            threadCount = threadCount > 2? qMin(threadCount - 1, 4) : 1;
-            realtime = -threadCount;
-        }
+        threadCount = threadCount > 2? qMin(threadCount - 1, 4) : 1;
+        realtime = -threadCount;
     }
     return realtime;
 }
@@ -1022,7 +1018,7 @@ void Controller::lockCreationTime(Producer* producer) const
 
 QUuid Controller::uuid(Mlt::Properties &properties) const
 {
-    return QUuid(properties.get(kUuidProperty));
+    return {properties.get(kUuidProperty)};
 }
 
 void Controller::setUuid(Mlt::Properties &properties, QUuid uid) const
@@ -1035,11 +1031,10 @@ QUuid Controller::ensureHasUuid(Mlt::Properties& properties) const
 {
     if (properties.get(kUuidProperty)) {
         return uuid(properties);
-    } else {
-        QUuid newUid = QUuid::createUuid();
-        setUuid(properties, newUid);
-        return newUid;
-    }
+    } 
+    QUuid newUid = QUuid::createUuid();
+    setUuid(properties, newUid);
+    return newUid;
 }
 
 void Controller::copyFilters(Producer& fromProducer, Producer& toProducer)
@@ -1072,7 +1067,7 @@ void Controller::pasteFilters(Mlt::Producer* producer)
 {
     Mlt::Producer* targetProducer = (producer && producer->is_valid())? producer
                       :(m_producer && m_producer->is_valid())? m_producer.data()
-                      : 0;
+                      : nullptr;
     if (targetProducer) {
         int j = targetProducer->filter_count();
         copyFilters(*m_filtersClipboard, *targetProducer);
@@ -1156,7 +1151,7 @@ Filter* Controller::getFilter(const QString& name, Service* service)
             delete filter;
         }
     }
-    return 0;
+    return nullptr;
 }
 
 void Controller::setProjectFolder(const QString& folderName)
