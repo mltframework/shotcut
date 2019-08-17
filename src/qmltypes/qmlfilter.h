@@ -46,7 +46,7 @@ class QmlFilter : public QObject
     Q_PROPERTY(int animateIn READ animateIn WRITE setAnimateIn NOTIFY animateInChanged)
     Q_PROPERTY(int animateOut READ animateOut WRITE setAnimateOut NOTIFY animateOutChanged)
     Q_PROPERTY(int duration READ duration NOTIFY durationChanged)
-    Q_PROPERTY(bool blockSignals WRITE blockSignals)
+    Q_PROPERTY(bool blockSignals READ signalsBlocked WRITE blockSignals)
 
 public:
     enum TimeFormat
@@ -59,7 +59,7 @@ public:
     Q_ENUMS(TimeFormat)
 
     explicit QmlFilter();
-    explicit QmlFilter(Mlt::Filter& mltFilter, const QmlMetadata* metadata, QObject *parent = 0);
+    explicit QmlFilter(Mlt::Filter& mltFilter, const QmlMetadata* metadata, QObject *parent = nullptr);
     ~QmlFilter();
 
     bool isNew() const { return m_isNew; }

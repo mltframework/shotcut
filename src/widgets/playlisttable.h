@@ -24,8 +24,8 @@ class PlaylistTable : public QTableView
 {
     Q_OBJECT
 public:
-    PlaylistTable(QWidget *parent = 0);
-    void keyPressEvent(QKeyEvent*);
+    PlaylistTable(QWidget *parent = nullptr);
+    void keyPressEvent(QKeyEvent*) Q_DECL_OVERRIDE;
     void dropEvent(QDropEvent* event) Q_DECL_OVERRIDE;
 
 signals:

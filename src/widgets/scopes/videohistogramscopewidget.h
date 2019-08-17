@@ -34,7 +34,7 @@ private:
     void refreshScope(const QSize& size, bool full) Q_DECL_OVERRIDE;
     void paintEvent(QPaintEvent*) Q_DECL_OVERRIDE;
     void drawHistogram(QPainter& p, QString title, QColor color, QColor outline, QVector<unsigned int>& bins, QRect rect);
-    void mouseMoveEvent(QMouseEvent *event);
+    void mouseMoveEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
 
     SharedFrame m_frame;
 
