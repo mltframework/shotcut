@@ -382,7 +382,7 @@ void Controller::setVolume(double volume, bool muteOnPause)
     m_volume = volume;
 
     // Keep the consumer muted when paused
-    if (muteOnPause && !isPaused()) {
+    if (muteOnPause && isPaused()) {
         volume = 0.0;
     }
 
