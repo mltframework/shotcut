@@ -634,7 +634,7 @@ void AvformatProducerWidget::on_actionFFmpegInfo_triggered()
     args << "-v" << "quiet";
     args << "-print_format" << "ini";
     args << "-pretty";
-    args << "-show_format" << "-show_programs" << "-show_streams";
+    args << "-show_format" << "-show_programs" << "-show_streams" << "-find_stream_info";
     args << GetFilenameFromProducer(producer());
     AbstractJob* job = new FfprobeJob(args.last(), args);
     job->start();
