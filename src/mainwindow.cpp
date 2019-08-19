@@ -650,7 +650,7 @@ void MainWindow::setupSettingsMenu()
     a->setData("en_GB");
     a = new QAction(QLocale::languageToString(QLocale::English).append(" (United States)"), m_languagesGroup);
     a->setCheckable(true);
-    a->setData("en");
+    a->setData("en_US");
     a = new QAction(QLocale::languageToString(QLocale::Estonian), m_languagesGroup);
     a->setCheckable(true);
     a->setData("et");

@@ -65,7 +65,10 @@ void ShotcutSettings::log()
 
 QString ShotcutSettings::language() const
 {
-    return settings.value("language", QLocale().name()).toString();
+    QString language = settings.value("language", QLocale().name()).toString();
+    if (language == "en")
+        language = "en_US";
+    return language;
 }
 
 void ShotcutSettings::setLanguage(const QString& s)
