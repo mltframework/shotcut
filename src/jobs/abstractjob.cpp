@@ -144,7 +144,7 @@ void AbstractJob::onStarted()
     HANDLE processHandle = OpenProcess(PROCESS_SET_INFORMATION, FALSE, processId);
     if(processHandle)
     {
-        SetPriorityClass(processHandle, IDLE_PRIORITY_CLASS);
+        SetPriorityClass(processHandle, BELOW_NORMAL_PRIORITY_CLASS);
         CloseHandle(processHandle);
     }
 #endif
