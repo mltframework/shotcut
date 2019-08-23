@@ -74,7 +74,9 @@ UpdateCommand::UpdateCommand(PlaylistModel& model, const QString& xml, int row, 
     , m_row(row)
 {
     setText(QObject::tr("Update playlist item %1").arg(row + 1));
-    m_oldXml = MLT.XML(m_model.playlist()->get_clip(m_row));
+    QScopedPointer<Mlt::ClipInfo> info(m_model.playlist()->clip_info(row));
+    info->producer->set_in_and_out(info->frame_in, info->frame_out);
+    m_oldXml = MLT.XML(info->producer);
 }
 
 void UpdateCommand::redo()
@@ -106,7 +108,9 @@ RemoveCommand::RemoveCommand(PlaylistModel& model, int row, QUndoCommand *parent
     , m_model(model)
     , m_row(row)
 {
-    m_xml = MLT.XML(m_model.playlist()->get_clip(m_row));
+    QScopedPointer<Mlt::ClipInfo> info(m_model.playlist()->clip_info(row));
+    info->producer->set_in_and_out(info->frame_in, info->frame_out);
+    m_xml = MLT.XML(info->producer);
     setText(QObject::tr("Remove playlist item %1").arg(row + 1));
 }
 
