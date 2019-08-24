@@ -1773,6 +1773,8 @@ void EncodeDock::on_videoCodecCombo_currentIndexChanged(int index)
     } else {
         ui->dualPassCheckbox->setEnabled(true);
     }
+    if (vcodec == "libx265" || vcodec.contains("hevc"))
+        ui->videoQualitySpinner->setValue(50);
     on_videoQualitySpinner_valueChanged(ui->videoQualitySpinner->value());
 }
 
