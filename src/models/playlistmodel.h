@@ -118,6 +118,7 @@ private:
     Mlt::Playlist* m_playlist;
     int m_dropRow;
     ViewMode m_mode;
+    QList<int> m_rowsRemoved;
 };
 
 #endif // PLAYLISTMODEL_H

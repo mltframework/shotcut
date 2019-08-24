@@ -35,7 +35,6 @@ PlaylistIconView::PlaylistIconView(QWidget *parent)
 {
     verticalScrollBar()->setSingleStep(100);
     verticalScrollBar()->setPageStep(400);
-    setContextMenuPolicy(Qt::CustomContextMenu);
     connect(&Settings, SIGNAL(playlistThumbnailsChanged()), SLOT(updateSizes()));
 }
 
@@ -112,9 +111,21 @@ bool PlaylistIconView::isIndexHidden(const QModelIndex &index) const
 
 void PlaylistIconView::setSelection(const QRect &rect, QItemSelectionModel::SelectionFlags command)
 {
-    QModelIndex i = indexAt(rect.bottomRight());
-    selectionModel()->select(i, command);
-    viewport()->update();
+    QModelIndex topLeft;
+    if (!selectionModel()->selectedIndexes().isEmpty())
+        topLeft = selectionModel()->selectedIndexes().first();
+    if (m_isToggleSelect) {
+        command = QItemSelectionModel::Toggle;
+        selectionModel()->select(indexAt(rect.bottomRight()), command);
+        viewport()->update();
+        return;
+    } else if (m_isRangeSelect && topLeft.isValid()) {
+        QModelIndex bottomRight = indexAt(rect.bottomRight());
+        selectionModel()->select(QItemSelection(topLeft, bottomRight), command);
+        viewport()->update();
+        return;
+    }
+    m_pendingSelect = indexAt(rect.topLeft());
 }
 
 QRegion PlaylistIconView::visualRegionForSelection(const QItemSelection &selection) const
@@ -208,6 +219,11 @@ void PlaylistIconView::paintEvent(QPaintEvent*)
 
 void PlaylistIconView::mouseReleaseEvent(QMouseEvent *event)
 {
+    if (m_draggingOverPos.isNull() && m_pendingSelect.isValid()) {
+        selectionModel()->select(m_pendingSelect, QItemSelectionModel::ClearAndSelect);
+        viewport()->update();
+    }
+    m_pendingSelect = QModelIndex();
     QAbstractItemView::mouseReleaseEvent(event);
 }
 
@@ -262,6 +278,16 @@ void PlaylistIconView::keyPressEvent(QKeyEvent* event)
 {
     QAbstractItemView::keyPressEvent(event);
     event->ignore();
+    m_isToggleSelect = (event->modifiers() & Qt::ControlModifier);
+    m_isRangeSelect = (event->modifiers() & Qt::ShiftModifier);
+}
+
+void PlaylistIconView::keyReleaseEvent(QKeyEvent *event)
+{
+    QAbstractItemView::keyPressEvent(event);
+    event->ignore();
+    m_isToggleSelect = false;
+    m_isRangeSelect = false;
 }
 
 QAbstractItemView::DropIndicatorPosition PlaylistIconView::position(const QPoint &pos, const QRect &rect, const QModelIndex &index) const

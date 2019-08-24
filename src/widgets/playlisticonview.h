@@ -45,6 +45,7 @@ public:
     void resizeEvent(QResizeEvent *event) Q_DECL_OVERRIDE;
     void setModel(QAbstractItemModel* model) Q_DECL_OVERRIDE;
     void keyPressEvent(QKeyEvent* event) Q_DECL_OVERRIDE;
+    void keyReleaseEvent(QKeyEvent* event) Q_DECL_OVERRIDE;
 
     void rowsInserted(const QModelIndex &parent, int start, int end) Q_DECL_OVERRIDE;
     void rowsAboutToBeRemoved(const QModelIndex &parent, int start, int end) Q_DECL_OVERRIDE;
@@ -60,6 +61,9 @@ private:
     QSize m_gridSize;
     QPoint m_draggingOverPos;
     int m_itemsPerRow;
+    bool m_isToggleSelect {false};
+    bool m_isRangeSelect {false};
+    QModelIndex m_pendingSelect;
 };
 
 #endif

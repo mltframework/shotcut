@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2018 Meltytech, LLC
+ * Copyright (c) 2013-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -66,7 +66,18 @@ void InsertCommand::redo()
     LOG_DEBUG() << "trackIndex" << m_trackIndex << "position" << m_position;
     m_undoHelper.recordBeforeState();
     Mlt::Producer clip(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
-    m_model.insertClip(m_trackIndex, clip, m_position);
+    if (clip.type() == playlist_type) {
+        Mlt::Playlist playlist(clip);
+        int i = playlist.count();
+        while (i--) {
+            QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(i));
+            clip = Mlt::Producer(info->producer);
+            clip.set_in_and_out(info->frame_in, info->frame_out);
+            m_model.insertClip(m_trackIndex, clip, m_position, false);
+        }
+    } else {
+        m_model.insertClip(m_trackIndex, clip, m_position);
+    }
     m_undoHelper.recordAfterState();
 }
 
@@ -93,7 +104,19 @@ void OverwriteCommand::redo()
     LOG_DEBUG() << "trackIndex" << m_trackIndex << "position" << m_position;
     m_undoHelper.recordBeforeState();
     Mlt::Producer clip(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
-    m_model.overwrite(m_trackIndex, clip, m_position);
+    if (clip.type() == playlist_type) {
+        Mlt::Playlist playlist(clip);
+        int position = m_position;
+        for (int i = 0; i < playlist.count(); i++) {
+            QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(i));
+            clip = Mlt::Producer(info->producer);
+            clip.set_in_and_out(info->frame_in, info->frame_out);
+            m_model.overwrite(m_trackIndex, clip, position, false);
+            position += info->frame_count;
+        }
+    } else {
+        m_model.overwrite(m_trackIndex, clip, m_position);
+    }
     m_undoHelper.recordAfterState();
 }
 

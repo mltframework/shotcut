@@ -98,7 +98,7 @@ p, li { white-space: pre-wrap; }
            <bool>true</bool>
           </property>
           <property name="selectionMode">
-           <enum>QAbstractItemView::SingleSelection</enum>
+           <enum>QAbstractItemView::ExtendedSelection</enum>
           </property>
           <property name="selectionBehavior">
            <enum>QAbstractItemView::SelectRows</enum>
@@ -118,6 +118,9 @@ p, li { white-space: pre-wrap; }
          <widget class="PlaylistListView" name="listView">
           <property name="contextMenuPolicy">
            <enum>Qt::CustomContextMenu</enum>
+          </property>
+          <property name="selectionMode">
+           <enum>QAbstractItemView::ExtendedSelection</enum>
           </property>
           <property name="movement">
            <enum>QListView::Static</enum>

@@ -43,7 +43,7 @@ class TiledItemDelegate : public QStyledItemDelegate
 {
     Q_OBJECT
 public:
-    TiledItemDelegate(QAbstractItemView * view, QWidget *parent = 0)
+    TiledItemDelegate(QAbstractItemView * view, QWidget *parent = nullptr)
          : QStyledItemDelegate(parent),
          m_view(view)
     {
@@ -320,7 +320,7 @@ void PlaylistDock::on_actionInsertCut_triggered()
     if (MLT.isClip() || MLT.savedProducer()) {
         QMimeData mimeData;
         mimeData.setData(Mlt::XmlMimeType, MLT.XML(
-            MLT.isClip()? 0 : MLT.savedProducer()).toUtf8());
+            MLT.isClip()? nullptr : MLT.savedProducer()).toUtf8());
         onDropped(&mimeData, m_view->currentIndex().row());
     }
 }
@@ -332,7 +332,7 @@ void PlaylistDock::on_actionAppendCut_triggered()
             || (MLT.savedProducer() && MLT.isSeekable(MLT.savedProducer()))) {
             MAIN.undoStack()->push(
                 new Playlist::AppendCommand(m_model,
-                    MLT.XML(MLT.isClip()? 0 : MLT.savedProducer())));
+                    MLT.XML(MLT.isClip()? nullptr : MLT.savedProducer())));
             MLT.producer()->set(kPlaylistIndexProperty, m_model.playlist()->count());
             setUpdateButtonEnabled(false);
         } else {
@@ -402,23 +402,31 @@ void PlaylistDock::on_actionUpdate_triggered()
 
 void PlaylistDock::on_removeButton_clicked()
 {
-    QModelIndex index = m_view->currentIndex();
-    if (!index.isValid() || !m_model.playlist()) return;
-    MAIN.undoStack()->push(new Playlist::RemoveCommand(m_model, index.row()));
-    int count = m_model.playlist()->count();
-    if (count == 0) return;
-    int i = index.row() >= count? count-1 : index.row();
-    QScopedPointer<Mlt::ClipInfo> info(m_model.playlist()->clip_info(i));
-    if (info) {
-        emit itemActivated(info->start);
-        int j = MLT.producer()->get_int(kPlaylistIndexProperty);
-        if (j > i + 1) {
-            MLT.producer()->set(kPlaylistIndexProperty, j - 1);
-        } else if (j == i + 1) {
-            // Remove the playlist index property on the producer.
-            MLT.producer()->set(kPlaylistIndexProperty, 0, 0);
-            setUpdateButtonEnabled(false);
+    if (!m_model.playlist() || !m_view->selectionModel()) return;
+    QList<int> rowsRemoved;
+    int n = m_view->selectionModel()->selectedIndexes().size();
+    if (n > 0)
+        MAIN.undoStack()->beginMacro(tr("Remove %1 playlist items").arg(n));
+    foreach (auto index, m_view->selectionModel()->selectedIndexes()) {
+        int row = index.row();
+        if (!rowsRemoved.contains(row)) {
+            int adjustment = 0;
+            foreach (int i, rowsRemoved) {
+                if (row > i)
+                    --adjustment;
+            }
+            row += adjustment;
+            rowsRemoved << index.row();
+            if (m_model.playlist()->clip_length(row) > 0)
+                MAIN.undoStack()->push(new Playlist::RemoveCommand(m_model, row));
         }
+    }
+    if (n > 0)
+        MAIN.undoStack()->endMacro();
+    if (rowsRemoved.contains(MLT.producer()->get_int(kPlaylistIndexProperty))) {
+        // Remove the playlist index property on the producer.
+        MLT.producer()->set(kPlaylistIndexProperty, nullptr, 0);
+        setUpdateButtonEnabled(false);
     }
 }
 
@@ -576,7 +584,6 @@ void PlaylistDock::onPlaylistCleared()
     ui->removeButton->setEnabled(false);
     ui->updateButton->setEnabled(false);
     ui->menuButton->setEnabled(false);
-    ui->stackedWidget->setCurrentIndex(0);
 }
 
 void PlaylistDock::onPlaylistClosed()
@@ -675,6 +682,7 @@ void PlaylistDock::onDropped(const QMimeData *data, int row)
 void PlaylistDock::onMoveClip(int from, int to)
 {
     MAIN.undoStack()->push(new Playlist::MoveCommand(m_model, from, to));
+    m_view->selectionModel()->clear();
 }
 
 void PlaylistDock::onPlayerDragStarted()
@@ -787,16 +795,16 @@ void PlaylistDock::setViewMode(PlaylistModel::ViewMode mode)
     if (m_model.viewMode() == mode)
         return;
 
-    ui->listView->setModel(0);
-    ui->tableView->setModel(0);
-    m_iconsView->setModel(0);
+    ui->listView->setModel(nullptr);
+    ui->tableView->setModel(nullptr);
+    m_iconsView->setModel(nullptr);
     ui->listView->hide();
     ui->tableView->hide();
     m_iconsView->hide();
 
     if (ui->listView->itemDelegate()) {
         QAbstractItemDelegate * delegate = ui->listView->itemDelegate();
-        ui->listView->setItemDelegate(0);
+        ui->listView->setItemDelegate(nullptr);
         delete delegate;
     }
 

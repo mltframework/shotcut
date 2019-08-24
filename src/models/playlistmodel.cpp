@@ -332,7 +332,6 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
             }
             return image;
         }
-        break;
     }
     return QVariant();
 }
@@ -397,12 +396,28 @@ bool PlaylistModel::removeRows(int row, int count, const QModelIndex& parent)
 {
     Q_UNUSED(count)
     Q_UNUSED(parent)
-    if (!m_playlist || row == m_dropRow || m_dropRow == -1 ) return false;
-    if (row < m_dropRow)
-        emit moveClip(row, m_dropRow - 1);
-    else
-        emit moveClip(row, m_dropRow);
-    m_dropRow = -1;
+    if (!m_playlist || m_dropRow == -1 ) return false;
+    if (row < m_dropRow) {
+        if (!m_rowsRemoved.contains(row)) {
+            int adjustment = 0;
+            foreach (int i, m_rowsRemoved) {
+                if (row > i)
+                    --adjustment;
+            }
+            m_rowsRemoved << row;
+            emit moveClip(row + adjustment, m_dropRow - 1);
+        }
+    } else {
+        if (!m_rowsRemoved.contains(row)) {
+            foreach (int i, m_rowsRemoved) {
+                if (row >= i)
+                    ++row;
+            }
+        }
+        m_rowsRemoved << m_dropRow;
+        if (row != m_dropRow)
+            emit moveClip(row, m_dropRow++);
+    }
     return true;
 }
 
@@ -462,17 +477,21 @@ QStringList PlaylistModel::mimeTypes() const
 QMimeData *PlaylistModel::mimeData(const QModelIndexList &indexes) const
 {
     QMimeData *mimeData = new QMimeData;
-    Mlt::ClipInfo* info = m_playlist->clip_info(indexes.first().row());
-    if (info) {
-        Mlt::Producer* producer = info->producer;
-        int in = producer->get_in();
-        int out = producer->get_out();
-        producer->set_in_and_out(info->frame_in, info->frame_out);
-        mimeData->setData(Mlt::XmlMimeType, MLT.XML(producer).toUtf8());
-        mimeData->setText(QString::number(info->frame_count));
-        producer->set_in_and_out(in, out);
-        delete info;
+    int count = 0;
+    foreach (auto index, indexes) {
+        if (index.column()) continue;
+        count += m_playlist->clip_length(index.row());
     }
+    Mlt::Playlist playlist(MLT.profile());
+    foreach (auto index, indexes) {
+        if (index.column()) continue;
+        QScopedPointer<Mlt::ClipInfo> info(m_playlist->clip_info(index.row()));
+        if (info && info->producer) {
+            playlist.append(*info->producer, info->frame_in, info->frame_out);
+        }
+    }
+    mimeData->setData(Mlt::XmlMimeType, MLT.XML(&playlist).toUtf8());
+    mimeData->setText(QString::number(count));
     return mimeData;
 }
 
@@ -483,6 +502,7 @@ bool PlaylistModel::dropMimeData(const QMimeData *data, Qt::DropAction action, i
     // Internal reorder
     if (action == Qt::MoveAction) {
         m_dropRow = row;
+        m_rowsRemoved.clear();
         return true;
     }
     // Dragged from player or file manager
