@@ -209,6 +209,35 @@ Rectangle {
         color: 'black'
     }
 
+    Rectangle {
+        // text background
+        color: 'lightgray'
+        visible: labelRight.visible
+        opacity: 0.7
+        anchors.top: parent.top
+        anchors.right: parent.right
+        anchors.topMargin: parent.border.width
+        anchors.rightMargin: parent.border.width +
+            ((isAudio || !settings.timelineShowThumbnails) ? 0 : outThumbnail.width) + 2
+        width: labelRight.width + 2
+        height: labelRight.height
+    }
+
+    Text {
+        id: labelRight
+        text: clipName
+        visible: !isBlank && !isTransition && parent.width > ((settings.timelineShowThumbnails? 2 * outThumbnail.width : 0) + 3 * label.width)
+        font.pointSize: 8
+        anchors {
+            top: parent.top
+            right: parent.right
+            topMargin: parent.border.width + 1
+            rightMargin: parent.border.width +
+                ((isAudio || !settings.timelineShowThumbnails) ? 0 : outThumbnail.width) + 3
+        }
+        color: 'black'
+    }
+
     states: [
         State {
             name: 'normal'
