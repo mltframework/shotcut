@@ -22,6 +22,7 @@
 #include "shotcut_mlt_properties.h"
 #include "util.h"
 #include "dialogs/filedatedialog.h"
+#include <Logger.h>
 #include <QFileInfo>
 #include <QDir>
 #include <QMenu>
@@ -109,7 +110,7 @@ void ImageProducerWidget::reopen(Mlt::Producer* p)
         position = p->get_out();
     p->set("in", m_producer->get_in());
     if (MLT.setProducer(p)) {
-        AbstractProducerWidget::setProducer(0);
+        AbstractProducerWidget::setProducer(nullptr);
         return;
     }
     MLT.stop();
@@ -122,11 +123,19 @@ void ImageProducerWidget::reopen(Mlt::Producer* p)
 
 void ImageProducerWidget::recreateProducer()
 {
+    QString resource = m_producer->get("resource");
+    if (!resource.startsWith("qimage:") && !resource.startsWith("pixbuf:")) {
+        QString serviceName = m_producer->get("mlt_service");
+        if (!serviceName.isEmpty()) {
+            resource.prepend(':').prepend(serviceName);
+            m_producer->set("resource", resource.toUtf8().constData());
+        }
+    }
     Mlt::Producer* p = newProducer(MLT.profile());
     p->pass_list(*m_producer, "force_aspect_ratio," kAspectRatioNumerator ", resource, " kAspectRatioDenominator
-        ", ttl," kShotcutResourceProperty ", autolength, length," kShotcutSequenceProperty ", " kPlaylistIndexProperty
+        ", begin, ttl," kShotcutResourceProperty ", autolength, length," kShotcutSequenceProperty ", " kPlaylistIndexProperty
         ", " kCommentProperty);
-    QString resource = p->get("resource");
+    resource = p->get("resource");
     if (resource.startsWith("qimage:") || resource.startsWith("pixbuf:"))
         p->set("resource", resource.mid(resource.indexOf(':') + 1).toUtf8().constData());
     Mlt::Controller::copyFilters(*m_producer, *p);
