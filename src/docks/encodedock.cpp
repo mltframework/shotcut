@@ -144,6 +144,12 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties& preset)
     ui->disableAudioCheckbox->setChecked(preset.get_int("an"));
     ui->disableVideoCheckbox->setChecked(preset.get_int("vn"));
     m_extension.clear();
+
+    // Default the HEVC crf to 28 per libx265 default.
+    QString vcodec = QString::fromLatin1(preset.get("vcodec"));
+    if (vcodec == "libx265" || vcodec.contains("hevc"))
+        ui->videoQualitySpinner->setValue(45);
+
     for (int i = 0; i < preset.count(); i++) {
         QString name(preset.get_name(i));
 
@@ -167,7 +173,6 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties& preset)
                     ui->audioCodecCombo->setCurrentIndex(i);
         }
         else if (name == "vcodec") {
-            QString vcodec = QString::fromLatin1(preset.get("vcodec"));
             if (ui->hwencodeCheckBox->isChecked()) {
                 foreach (const QString& hw, Settings.encodeHardware()) {
                     if ((vcodec == "libx264" && hw.startsWith("h264")) ||
@@ -1773,8 +1778,6 @@ void EncodeDock::on_videoCodecCombo_currentIndexChanged(int index)
     } else {
         ui->dualPassCheckbox->setEnabled(true);
     }
-    if (vcodec == "libx265" || vcodec.contains("hevc"))
-        ui->videoQualitySpinner->setValue(50);
     on_videoQualitySpinner_valueChanged(ui->videoQualitySpinner->value());
 }
 
