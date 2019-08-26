@@ -191,7 +191,7 @@ public slots:
     void openMultiple(const QStringList& paths);
     void openMultiple(const QList<QUrl>& urls);
     void openVideo();
-    void openCut(Mlt::Producer* producer);
+    void openCut(Mlt::Producer* producer, bool play = false);
     void hideProducer();
     void closeProducer();
     void showStatusMessage(QAction* action, int timeoutSeconds = 5);

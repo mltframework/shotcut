@@ -275,7 +275,7 @@ MainWindow::MainWindow()
     ui->menuView->addAction(m_playlistDock->toggleViewAction());
     connect(m_playlistDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onPlaylistDockTriggered(bool)));
     connect(ui->actionPlaylist, SIGNAL(triggered()), this, SLOT(onPlaylistDockTriggered()));
-    connect(m_playlistDock, SIGNAL(clipOpened(Mlt::Producer*)), this, SLOT(openCut(Mlt::Producer*)));
+    connect(m_playlistDock, SIGNAL(clipOpened(Mlt::Producer*, bool)), this, SLOT(openCut(Mlt::Producer*, bool)));
     connect(m_playlistDock, SIGNAL(itemActivated(int)), this, SLOT(seekPlaylist(int)));
     connect(m_playlistDock, SIGNAL(showStatusMessage(QString)), this, SLOT(showStatusMessage(QString)));
     connect(m_playlistDock->model(), SIGNAL(created()), this, SLOT(onPlaylistCreated()));
@@ -1323,9 +1323,9 @@ void MainWindow::openVideo()
     }
 }
 
-void MainWindow::openCut(Mlt::Producer* producer)
+void MainWindow::openCut(Mlt::Producer* producer, bool play)
 {
-    m_player->setPauseAfterOpen(true);
+    m_player->setPauseAfterOpen(!play);
     open(producer);
     MLT.seek(producer->get_in());
 }

@@ -484,7 +484,7 @@ void PlaylistDock::on_actionOpen_triggered()
         Mlt::Producer* p = new Mlt::Producer(i->producer);
         p->set_in_and_out(i->frame_in, i->frame_out);
         p->set(kPlaylistIndexProperty, index.row() + 1);
-        emit clipOpened(p);
+        emit clipOpened(p, true);
         delete i;
     }
 }
@@ -526,11 +526,9 @@ void PlaylistDock::viewDoubleClicked(const QModelIndex &index)
             Mlt::Producer* p = new Mlt::Producer(i->producer);
             p->set_in_and_out(i->frame_in, i->frame_out);
             p->set(kPlaylistIndexProperty, index.row() + 1);
-            emit clipOpened(p);
+            emit clipOpened(p, true);
         }
         delete i;
-    } else {
-        MAIN.openVideo();
     }
 }
 
