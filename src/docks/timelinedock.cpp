@@ -1127,6 +1127,7 @@ void TimelineDock::load(bool force)
 {
     if (m_quickView.source().isEmpty() || force) {
         QDir sourcePath = QmlUtilities::qmlDir();
+        sourcePath.cd("views");
         sourcePath.cd("timeline");
         m_quickView.setFocusPolicy(isFloating()? Qt::NoFocus : Qt::StrongFocus);
         m_quickView.setSource(QUrl::fromLocalFile(sourcePath.filePath("timeline.qml")));
