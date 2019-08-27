@@ -493,7 +493,7 @@ void MainWindow::onTimelineClipSelected()
     if (t->selection().isEmpty())
         return;
 
-    m_navigationPosition = t->centerOfClip(t->currentTrack(), t->selection().first());
+    m_navigationPosition = t->centerOfClip(t->selection().first().y(), t->selection().first().x());
 
     // Switch to Project player.
     if (m_player->tabIndex() != Player::ProjectTabIndex) {
@@ -1628,10 +1628,10 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
             if (m_timelineDock->selection().isEmpty()) {
                 m_timelineDock->selectClipUnderPlayhead();
             } else if (m_timelineDock->selection().size() == 1) {
-                int newIndex = m_timelineDock->selection().first() - 1;
+                int newIndex = m_timelineDock->selection().first().x() - 1;
                 if (newIndex < 0)
                     break;
-                m_timelineDock->setSelection(QList<int>() << newIndex);
+                m_timelineDock->setSelection(QList<QPoint>() << QPoint(newIndex, m_timelineDock->selection().first().y()));
                 m_navigationPosition = m_timelineDock->centerOfClip(m_timelineDock->currentTrack(), newIndex);
             }
         } else {
@@ -1643,10 +1643,10 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
             if (m_timelineDock->selection().isEmpty()) {
                 m_timelineDock->selectClipUnderPlayhead();
             } else if (m_timelineDock->selection().size() == 1) {
-                int newIndex = m_timelineDock->selection().first() + 1;
+                int newIndex = m_timelineDock->selection().first().x() + 1;
                 if (newIndex >= m_timelineDock->clipCount(-1))
                     break;
-                m_timelineDock->setSelection(QList<int>() << newIndex);
+                m_timelineDock->setSelection(QList<QPoint>() << QPoint(newIndex, m_timelineDock->selection().first().y()));
                 m_navigationPosition = m_timelineDock->centerOfClip(m_timelineDock->currentTrack(), newIndex);
             }
         } else {
@@ -1696,7 +1696,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
             m_timelineDock->show();
             m_timelineDock->raise();
             if (!m_timelineDock->selection().isEmpty())
-                m_timelineDock->copyClip(m_timelineDock->currentTrack(), m_timelineDock->selection().first());
+                m_timelineDock->copyClip(m_timelineDock->selection().first().y(), m_timelineDock->selection().first().x());
         }
         break;
     case Qt::Key_D:
@@ -1847,18 +1847,19 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
             m_playlistDock->on_actionOpen_triggered();
         } else if (isMultitrackValid()) {
             int newClipIndex = -1;
+            int trackIndex = m_timelineDock->currentTrack() - 1;
             if ((event->modifiers() & Qt::ControlModifier) &&
                     !m_timelineDock->selection().isEmpty() &&
-                    m_timelineDock->currentTrack() > 0) {
+                    trackIndex > -1) {
 
-                newClipIndex = m_timelineDock->clipIndexAtPosition(m_timelineDock->currentTrack() - 1, m_navigationPosition);
+                newClipIndex = m_timelineDock->clipIndexAtPosition(trackIndex, m_navigationPosition);
             }
 
             m_timelineDock->selectTrack(-1);
 
             if (newClipIndex >= 0) {
-                newClipIndex = qMin(newClipIndex, m_timelineDock->clipCount(m_timelineDock->currentTrack()) - 1);
-                m_timelineDock->setSelection(QList<int>() << newClipIndex);
+                newClipIndex = qMin(newClipIndex, m_timelineDock->clipCount(trackIndex) - 1);
+                m_timelineDock->setSelection(QList<QPoint>() << QPoint(newClipIndex, trackIndex));
             }
 
         } else if (m_playlistDock->isVisible() && m_playlistDock->model()->rowCount() > 0) {
@@ -1875,18 +1876,19 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
             m_playlistDock->on_actionOpen_triggered();
         } else if (isMultitrackValid()) {
             int newClipIndex = -1;
+            int trackIndex = m_timelineDock->currentTrack() + 1;
             if ((event->modifiers() & Qt::ControlModifier) &&
                     !m_timelineDock->selection().isEmpty() &&
-                    m_timelineDock->currentTrack() < m_timelineDock->model()->trackList().count() - 1) {
+                    trackIndex < m_timelineDock->model()->trackList().count()) {
 
-                newClipIndex = m_timelineDock->clipIndexAtPosition(m_timelineDock->currentTrack() + 1, m_navigationPosition);
+                newClipIndex = m_timelineDock->clipIndexAtPosition(trackIndex, m_navigationPosition);
             }
 
             m_timelineDock->selectTrack(1);
 
             if (newClipIndex >= 0) {
-                newClipIndex = qMin(newClipIndex, m_timelineDock->clipCount(m_timelineDock->currentTrack()) - 1);
-                m_timelineDock->setSelection(QList<int>() << newClipIndex);
+                newClipIndex = qMin(newClipIndex, m_timelineDock->clipCount(trackIndex) - 1);
+                m_timelineDock->setSelection(QList<QPoint>() << QPoint(newClipIndex, trackIndex));
             }
 
         } else if (m_playlistDock->isVisible() && m_playlistDock->model()->rowCount() > 0) {
@@ -2606,8 +2608,8 @@ void MainWindow::onMultitrackModified()
 
     // Reflect this playlist info onto the producer for keyframes dock.
     if (!m_timelineDock->selection().isEmpty()) {
-        int trackIndex = m_timelineDock->currentTrack();
-        int clipIndex = m_timelineDock->selection().first();
+        int trackIndex = m_timelineDock->selection().first().y();
+        int clipIndex = m_timelineDock->selection().first().x();
         QScopedPointer<Mlt::ClipInfo> info(m_timelineDock->getClipInfo(trackIndex, clipIndex));
         if (info && info->producer && info->producer->is_valid()) {
             int expected = info->frame_in;
@@ -3636,7 +3638,7 @@ void MainWindow::on_actionCopy_triggered()
     m_timelineDock->show();
     m_timelineDock->raise();
     if (!m_timelineDock->selection().isEmpty())
-        m_timelineDock->copyClip(m_timelineDock->currentTrack(), m_timelineDock->selection().first());
+        m_timelineDock->copyClip(m_timelineDock->selection().first().y(), m_timelineDock->selection().first().x());
 }
 
 void MainWindow::on_actionPaste_triggered()

@@ -405,7 +405,7 @@ void PlaylistDock::on_removeButton_clicked()
     if (!m_model.playlist() || !m_view->selectionModel()) return;
     QList<int> rowsRemoved;
     int n = m_view->selectionModel()->selectedIndexes().size();
-    if (n > 0)
+    if (n > 1)
         MAIN.undoStack()->beginMacro(tr("Remove %1 playlist items").arg(n));
     foreach (auto index, m_view->selectionModel()->selectedIndexes()) {
         int row = index.row();
@@ -421,7 +421,7 @@ void PlaylistDock::on_removeButton_clicked()
                 MAIN.undoStack()->push(new Playlist::RemoveCommand(m_model, row));
         }
     }
-    if (n > 0)
+    if (n > 1)
         MAIN.undoStack()->endMacro();
     if (rowsRemoved.contains(MLT.producer()->get_int(kPlaylistIndexProperty))) {
         // Remove the playlist index property on the producer.

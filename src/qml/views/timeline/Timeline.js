@@ -141,3 +141,33 @@ function onMouseWheel(wheel) {
         }
     }
 }
+
+function toggleSelection(trackIndex, clipIndex) {
+    var result = []
+    var skip = false
+    timeline.selection.forEach(function(el) {
+        if (el.x !== clipIndex || el.y !== trackIndex)
+            result.push(el)
+        else
+            skip = true
+    })
+    if (!skip)
+        result.push(Qt.point(clipIndex, trackIndex))
+    return result
+}
+
+function selectRange(trackIndex, clipIndex) {
+    var result = [timeline.selection.length? timeline.selection[0] : Qt.point(clipIndex, trackIndex)]
+    // this only works on a single track for now
+    if (timeline.selection.length && trackIndex === result[0].y) {
+        var x
+        if (clipIndex > result[0].x) {
+            for (x = result[0].x + 1; x <= clipIndex; x++)
+                result.push(Qt.point(x, trackIndex))
+        } else {
+            for (x = clipIndex; x < result[0].x; x++)
+                result.push(Qt.point(x, trackIndex))
+        }
+    }
+    return result
+}

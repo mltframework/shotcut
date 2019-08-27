@@ -38,7 +38,7 @@ class TimelineDock : public QDockWidget
     Q_OBJECT
     Q_PROPERTY(int position READ position WRITE setPosition NOTIFY positionChanged)
     Q_PROPERTY(int currentTrack READ currentTrack WRITE setCurrentTrack NOTIFY currentTrackChanged)
-    Q_PROPERTY(QList<int> selection READ selection WRITE setSelection NOTIFY selectionChanged)
+    Q_PROPERTY(QVariantList selection READ selectionForJS WRITE setSelectionFromJS NOTIFY selectionChanged)
 
 public:
     explicit TimelineDock(QWidget *parent = 0);
@@ -65,8 +65,10 @@ public:
     void resetZoom();
     void makeTracksShorter();
     void makeTracksTaller();
-    void setSelection(QList<int> selection = QList<int>(), int trackIndex = -1, bool isMultitrack = false);
-    QList<int> selection() const;
+    void setSelectionFromJS(const QVariantList& list);
+    void setSelection(QList<QPoint> selection = QList<QPoint>(), int trackIndex = -1, bool isMultitrack = false);
+    QVariantList selectionForJS() const;
+    QList<QPoint> selection() const;
     void saveAndClearSelection();
     void restoreSelection();
     void selectClipUnderPlayhead();
@@ -164,7 +166,7 @@ private:
     QScopedPointer<Timeline::UpdateCommand> m_updateCommand;
     bool m_ignoreNextPositionChange;
     struct Selection {
-        QList<int> selectedClips;
+        QList<QPoint> selectedClips; // x is the clip index, y is the track index
         int selectedTrack;
         bool isMultitrackSelected;
     };

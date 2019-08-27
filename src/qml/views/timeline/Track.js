@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2018 Meltytech, LLC
+ * Copyright (c) 2013-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -176,4 +176,12 @@ function snapDrop(pos, repeater) {
         if (right > cursorX - SNAP && right < cursorX + SNAP)
             dropTarget.x = cursorX - dropTarget.width + headerWidth - scrollView.flickableItem.contentX
     }
+}
+
+function selectionContains(selection, trackIndex, clipIndex) {
+    for (var i = 0; i < selection.length; i++) {
+        if (selection[i].x === clipIndex && selection[i].y === trackIndex)
+            return true
+    }
+    return false
 }

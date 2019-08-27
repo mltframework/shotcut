@@ -81,8 +81,6 @@ Rectangle {
     property bool stopScrolling: false
     property color shotcutBlue: Qt.rgba(23/255, 92/255, 118/255, 1.0)
 
-    onCurrentTrackChanged: timeline.selection = []
-
     MouseArea {
         anchors.fill: parent
         acceptedButtons: Qt.RightButton
@@ -291,14 +289,14 @@ Rectangle {
             CornerSelectionShadow {
                 y: tracksRepeater.count ? tracksRepeater.itemAt(currentTrack).y + ruler.height - scrollView.flickableItem.contentY : 0
                 clip: timeline.selection.length ?
-                        tracksRepeater.itemAt(currentTrack).clipAt(timeline.selection[0]) : null
+                        tracksRepeater.itemAt(timeline.selection[0].y).clipAt(timeline.selection[0].x) : null
                 opacity: clip && clip.x + clip.width < scrollView.flickableItem.contentX ? 1 : 0
             }
 
             CornerSelectionShadow {
                 y: tracksRepeater.count ? tracksRepeater.itemAt(currentTrack).y + ruler.height - scrollView.flickableItem.contentY : 0
                 clip: timeline.selection.length ?
-                        tracksRepeater.itemAt(currentTrack).clipAt(timeline.selection[timeline.selection.length - 1]) : null
+                        tracksRepeater.itemAt(timeline.selection[timeline.selection.length - 1].y).clipAt(timeline.selection[timeline.selection.length - 1].x) : null
                 opacity: clip && clip.x > scrollView.flickableItem.contentX + scrollView.width ? 1 : 0
                 anchors.right: parent.right
                 mirrorGradient: true
@@ -507,10 +505,16 @@ Rectangle {
             isMute: mute
             isCurrentTrack: currentTrack === index
             timeScale: multitrack.scaleFactor
-            selection: timeline.selection
             onClipClicked: {
-                currentTrack = track.DelegateModel.itemsIndex
-                timeline.selection = [ clip.DelegateModel.itemsIndex ];
+                var trackIndex = track.DelegateModel.itemsIndex
+                var clipIndex = clip.DelegateModel.itemsIndex
+                currentTrack = trackIndex
+                if (mouse.modifiers & Qt.ControlModifier)
+                    timeline.selection = Logic.toggleSelection(trackIndex, clipIndex)
+                else if (mouse.modifiers & Qt.ShiftModifier)
+                    timeline.selection = Logic.selectRange(trackIndex, clipIndex)
+                else // select one
+                    timeline.selection = [Qt.point(clipIndex, trackIndex)]
                 root.clipClicked()
             }
             onClipDragged: {

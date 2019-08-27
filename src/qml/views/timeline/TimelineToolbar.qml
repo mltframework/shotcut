@@ -178,7 +178,7 @@ ToolBar {
         iconName: 'edit-copy'
         iconSource: 'qrc:///icons/oxygen/32x32/actions/edit-copy.png'
         enabled: timeline.selection.length
-        onTriggered: timeline.copyClip(currentTrack, timeline.selection[0])
+        onTriggered: timeline.copyClip(timeline.selection[0].y, timeline.selection[0].x)
     }
 
     Action {
@@ -202,7 +202,7 @@ ToolBar {
         tooltip: qsTr('Ripple Delete - Remove current clip\nshifting following clips to the left (X)')
         iconName: 'list-remove'
         iconSource: 'qrc:///icons/oxygen/32x32/actions/list-remove.png'
-        onTriggered: timeline.remove(currentTrack, timeline.selection[0])
+        onTriggered: timeline.removeSelection()
    }
 
     Action {
@@ -210,7 +210,7 @@ ToolBar {
         tooltip: qsTr('Lift - Remove current clip without\naffecting position of other clips (Z)')
         iconName: 'lift'
         iconSource: 'qrc:///icons/oxygen/32x32/actions/lift.png'
-        onTriggered: timeline.lift(currentTrack, timeline.selection[0])
+        onTriggered: timeline.liftSelection()
     }
 
     Action {

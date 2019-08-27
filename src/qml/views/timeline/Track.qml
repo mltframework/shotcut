@@ -28,11 +28,10 @@ Rectangle {
     property bool placeHolderAdded: false
     property bool isCurrentTrack: false
     property bool isLocked: false
-    property var selection
     property alias clipCount: repeater.count
     property bool isMute: false
 
-    signal clipClicked(var clip, var track)
+    signal clipClicked(var clip, var track, var mouse)
     signal clipDragged(var clip, int x, int y)
     signal clipDropped(var clip)
     signal clipDraggedToTrack(var clip, int direction)
@@ -85,10 +84,10 @@ Rectangle {
             hash: model.hash
             speed: model.speed
             audioIndex: model.audioIndex
-            selected: trackRoot.isCurrentTrack && trackRoot.selection.indexOf(index) !== -1
+            selected: Logic.selectionContains(timeline.selection, trackIndex, index)
             isTrackMute: trackRoot.isMute
 
-            onClicked: trackRoot.clipClicked(clip, trackRoot);
+            onClicked: trackRoot.clipClicked(clip, trackRoot, mouse);
             onMoved: {
                 var fromTrack = clip.originalTrackIndex
                 var toTrack = clip.trackIndex

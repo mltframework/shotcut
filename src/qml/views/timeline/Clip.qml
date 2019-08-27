@@ -46,7 +46,7 @@ Rectangle {
     property string audioIndex: ''
     property bool isTrackMute: false
 
-    signal clicked(var clip)
+    signal clicked(var clip, var mouse)
     signal moved(var clip)
     signal dragged(var clip, var mouse)
     signal dropped(var clip)
@@ -302,7 +302,7 @@ Rectangle {
             originalClipIndex = index
             startX = parent.x
             clipRoot.forceActiveFocus();
-            clipRoot.clicked(clipRoot)
+            clipRoot.clicked(clipRoot, mouse)
         }
         onPositionChanged: {
             if (mouse.y < 0 && trackIndex > 0)
@@ -347,7 +347,7 @@ Rectangle {
             onClicked: {
                 timeline.position = timeline.position // pause
                 clipRoot.forceActiveFocus();
-                clipRoot.clicked(clipRoot)
+                clipRoot.clicked(clipRoot, mouse)
                 menu.show()
             }
         }
@@ -680,7 +680,7 @@ Rectangle {
             text: qsTr('Properties')
             onTriggered: {
                 clipRoot.forceActiveFocus()
-                clipRoot.clicked(clipRoot)
+                clipRoot.clicked(clipRoot, mouse)
                 timeline.openProperties()
             }
         }
