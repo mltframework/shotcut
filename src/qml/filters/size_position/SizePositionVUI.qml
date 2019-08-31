@@ -47,11 +47,11 @@ VuiBase {
     function setRectangleControl() {
         if (blockUpdate) return
         var position = getPosition()
-            var newValue = filter.getRect(rectProperty, position)
-            if (filterRect !== newValue) {
-                filterRect = newValue
-                rectangle.setHandles(filterRect)
-            }
+        var newValue = filter.getRect(rectProperty, position)
+        if (filterRect !== newValue) {
+            filterRect = newValue
+            rectangle.setHandles(filterRect)
+        }
         rectangle.enabled = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1)
     }
 

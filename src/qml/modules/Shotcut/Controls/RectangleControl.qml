@@ -33,7 +33,7 @@ Item {
     signal rectChanged(Rectangle rect)
 
     function setHandles(rect) {
-        if (rect.x < 0 || rect.y < 0 || rect.width < 0 || rect.height < 0)
+        if ( rect.width < 0 || rect.height < 0)
             return
         topLeftHandle.x = (rect.x * widthScale)
         topLeftHandle.y = (rect.y * heightScale)
