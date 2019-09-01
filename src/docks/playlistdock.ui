@@ -455,6 +455,14 @@ p, li { white-space: pre-wrap; }
     <string>Shift+C</string>
    </property>
   </action>
+  <action name="actionPlayAfterOpen">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Play After Open</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>

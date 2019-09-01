@@ -131,6 +131,8 @@ private slots:
 
     void onOutTimerFired();
 
+    void on_actionPlayAfterOpen_triggered(bool checked);
+
 protected:
     void keyPressEvent(QKeyEvent* event);
     void keyReleaseEvent(QKeyEvent* event);

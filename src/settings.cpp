@@ -453,6 +453,16 @@ void ShotcutSettings::setPlaylistThumbnails(const QString& s)
     emit playlistThumbnailsChanged();
 }
 
+bool ShotcutSettings::playlistAutoplay() const
+{
+    return settings.value("playlist/autoplay", true).toBool();
+}
+
+void ShotcutSettings::setPlaylistAutoplay(bool b)
+{
+    settings.setValue("playlist/autoplay", b);
+}
+
 bool ShotcutSettings::timelineShowWaveforms() const
 {
     return settings.value("timeline/waveforms", true).toBool();

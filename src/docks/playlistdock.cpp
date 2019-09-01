@@ -137,6 +137,7 @@ PlaylistDock::PlaylistDock(QWidget *parent) :
     LOG_DEBUG() << "begin";
     ui->setupUi(this);
     toggleViewAction()->setIcon(windowIcon());
+    ui->actionPlayAfterOpen->setChecked(Settings.playlistAutoplay());
 
     m_iconsView = new PlaylistIconView(this);
     ui->listView->parentWidget()->layout()->addWidget(m_iconsView);
@@ -312,6 +313,9 @@ void PlaylistDock::on_menuButton_clicked()
     group.addAction(ui->actionLeftAndRight);
     group.addAction(ui->actionTopAndBottom);
     subMenu->addActions(group.actions());
+
+    menu.addAction(ui->actionPlayAfterOpen);
+
     menu.exec(mapToGlobal(pos));
 }
 
@@ -484,7 +488,7 @@ void PlaylistDock::on_actionOpen_triggered()
         Mlt::Producer* p = new Mlt::Producer(i->producer);
         p->set_in_and_out(i->frame_in, i->frame_out);
         p->set(kPlaylistIndexProperty, index.row() + 1);
-        emit clipOpened(p, true);
+        emit clipOpened(p, Settings.playlistAutoplay());
         delete i;
     }
 }
@@ -526,7 +530,7 @@ void PlaylistDock::viewDoubleClicked(const QModelIndex &index)
             Mlt::Producer* p = new Mlt::Producer(i->producer);
             p->set_in_and_out(i->frame_in, i->frame_out);
             p->set(kPlaylistIndexProperty, index.row() + 1);
-            emit clipOpened(p, true);
+            emit clipOpened(p, Settings.playlistAutoplay());
         }
         delete i;
     }
@@ -916,4 +920,9 @@ void PlaylistDock::on_actionCopy_triggered()
         emit clipOpened(p);
         delete i;
     }
+}
+
+void PlaylistDock::on_actionPlayAfterOpen_triggered(bool checked)
+{
+    Settings.setPlaylistAutoplay(checked);
 }

@@ -127,6 +127,8 @@ public:
 
     QString playlistThumbnails() const;
     void setPlaylistThumbnails(const QString&);
+    bool playlistAutoplay() const;
+    void setPlaylistAutoplay(bool);
 
     bool timelineShowWaveforms() const;
     void setTimelineShowWaveforms(bool);
