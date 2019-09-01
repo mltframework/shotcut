@@ -786,6 +786,18 @@ void TimelineDock::detachAudio(int trackIndex, int clipIndex)
     }
 }
 
+void TimelineDock::selectAll()
+{
+    QList<QPoint> selection;
+    for (int y = 0; y < m_model.rowCount(); y++) {
+        for (int x = 0; x < m_model.rowCount(m_model.index(y)); x++) {
+            if (!isBlank(y, x))
+                selection << QPoint(x, y);
+        }
+    }
+    setSelection(selection);
+}
+
 void TimelineDock::setTrackName(int trackIndex, const QString &value)
 {
     MAIN.undoStack()->push(

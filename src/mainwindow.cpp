@@ -1685,6 +1685,10 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
             m_playlistDock->show();
             m_playlistDock->raise();
             m_playlistDock->on_actionSelectAll_triggered();
+        } else if (event->modifiers() == Qt::ControlModifier) {
+            m_timelineDock->show();
+            m_timelineDock->raise();
+            m_timelineDock->selectAll();
         } else if (event->modifiers() == Qt::NoModifier) {
             m_timelineDock->show();
             m_timelineDock->raise();

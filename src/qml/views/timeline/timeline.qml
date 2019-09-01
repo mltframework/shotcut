@@ -415,6 +415,17 @@ Rectangle {
         }
         MenuSeparator {}
         MenuItem {
+            text: qsTr('Select All')
+            shortcut: 'Ctrl+A'
+            onTriggered: timeline.selectAll()
+        }
+        MenuItem {
+            text: qsTr('Select None')
+            shortcut: 'Ctrl+D'
+            onTriggered: timeline.selection = null
+        }
+        MenuSeparator {}
+        MenuItem {
             text: qsTr("Ripple All Tracks")
             shortcut: 'Ctrl+Alt+R'
             checkable: true
