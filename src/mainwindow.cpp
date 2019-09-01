@@ -1681,7 +1681,11 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
             m_playlistDock->show();
             m_playlistDock->raise();
             m_playlistDock->on_actionAppendCut_triggered();
-        } else {
+        } else if ((event->modifiers() & Qt::ControlModifier) && (event->modifiers() & Qt::ShiftModifier)) {
+            m_playlistDock->show();
+            m_playlistDock->raise();
+            m_playlistDock->on_actionSelectAll_triggered();
+        } else if (event->modifiers() == Qt::NoModifier) {
             m_timelineDock->show();
             m_timelineDock->raise();
             m_timelineDock->append(-1);
@@ -1700,10 +1704,15 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         }
         break;
     case Qt::Key_D:
-        if (event->modifiers() & Qt::ControlModifier)
+        if (event->modifiers() == Qt::ControlModifier) {
             m_timelineDock->setSelection();
-        else
+        } else if ((event->modifiers() & Qt::ControlModifier) && (event->modifiers() & Qt::ShiftModifier)) {
+            m_playlistDock->show();
+            m_playlistDock->raise();
+            m_playlistDock->on_actionSelectNone_triggered();
+        } else {
             handled = false;
+        }
         break;
     case Qt::Key_H:
 #ifdef Q_OS_MAC
@@ -1845,6 +1854,12 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
             m_playlistDock->raise();
             m_playlistDock->decrementIndex();
             m_playlistDock->on_actionOpen_triggered();
+        } else if ((event->modifiers() & Qt::ControlModifier) && (event->modifiers() & Qt::ShiftModifier)) {
+            if (m_playlistDock->model()->rowCount() > 0) {
+                m_playlistDock->raise();
+                m_playlistDock->moveClipUp();
+                m_playlistDock->decrementIndex();
+            }
         } else if (isMultitrackValid()) {
             int newClipIndex = -1;
             int trackIndex = m_timelineDock->currentTrack() - 1;
@@ -1862,11 +1877,6 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
                 m_timelineDock->setSelection(QList<QPoint>() << QPoint(newClipIndex, trackIndex));
             }
 
-        } else if (m_playlistDock->isVisible() && m_playlistDock->model()->rowCount() > 0) {
-            m_playlistDock->raise();
-            if (event->modifiers() & Qt::ControlModifier)
-                m_playlistDock->moveClipUp();
-            m_playlistDock->decrementIndex();
         }
         break;
     case Qt::Key_Down:
@@ -1874,6 +1884,12 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
             m_playlistDock->raise();
             m_playlistDock->incrementIndex();
             m_playlistDock->on_actionOpen_triggered();
+        } else if ((event->modifiers() & Qt::ControlModifier) && (event->modifiers() & Qt::ShiftModifier)) {
+            if (m_playlistDock->model()->rowCount() > 0) {
+                m_playlistDock->raise();
+                m_playlistDock->moveClipDown();
+                m_playlistDock->incrementIndex();
+            }
         } else if (isMultitrackValid()) {
             int newClipIndex = -1;
             int trackIndex = m_timelineDock->currentTrack() + 1;
@@ -1891,11 +1907,6 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
                 m_timelineDock->setSelection(QList<QPoint>() << QPoint(newClipIndex, trackIndex));
             }
 
-        } else if (m_playlistDock->isVisible() && m_playlistDock->model()->rowCount() > 0) {
-            m_playlistDock->raise();
-            if (event->modifiers() & Qt::ControlModifier)
-                m_playlistDock->moveClipDown();
-            m_playlistDock->incrementIndex();
         }
         break;
     case Qt::Key_1:

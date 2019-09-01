@@ -398,7 +398,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionAddToTimeline">
    <property name="text">
-    <string>Add All to Timeline</string>
+    <string>Add Selected to Timeline</string>
    </property>
   </action>
   <action name="actionSortByName">
@@ -461,6 +461,22 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>Play After Open</string>
+   </property>
+  </action>
+  <action name="actionSelectAll">
+   <property name="text">
+    <string>Select All</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+A</string>
+   </property>
+  </action>
+  <action name="actionSelectNone">
+   <property name="text">
+    <string>Select None</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+D</string>
    </property>
   </action>
  </widget>

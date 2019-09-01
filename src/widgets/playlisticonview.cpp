@@ -67,6 +67,12 @@ void PlaylistIconView::dataChanged(const QModelIndex &topLeft, const QModelIndex
     viewport()->update();
 }
 
+void PlaylistIconView::selectionChanged(const QItemSelection& selected, const QItemSelection& deselected)
+{
+    QAbstractItemView::selectionChanged(selected, deselected);
+    viewport()->update();
+}
+
 void PlaylistIconView::scrollTo(const QModelIndex &index, ScrollHint hint)
 {
     Q_UNUSED(index);
@@ -117,12 +123,10 @@ void PlaylistIconView::setSelection(const QRect &rect, QItemSelectionModel::Sele
     if (m_isToggleSelect) {
         command = QItemSelectionModel::Toggle;
         selectionModel()->select(indexAt(rect.bottomRight()), command);
-        viewport()->update();
         return;
     } else if (m_isRangeSelect && topLeft.isValid()) {
         QModelIndex bottomRight = indexAt(rect.bottomRight());
         selectionModel()->select(QItemSelection(topLeft, bottomRight), command);
-        viewport()->update();
         return;
     }
     m_pendingSelect = indexAt(rect.topLeft());

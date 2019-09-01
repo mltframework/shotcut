@@ -63,6 +63,8 @@ public slots:
     void onInChanged();
     void onOutChanged();
     void on_actionCopy_triggered();
+    void on_actionSelectAll_triggered();
+    void on_actionSelectNone_triggered();
 
 private slots:
     void on_menuButton_clicked();
