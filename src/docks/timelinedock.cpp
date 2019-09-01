@@ -246,8 +246,11 @@ void TimelineDock::makeTracksTaller()
 void TimelineDock::setSelectionFromJS(const QVariantList& list)
 {
     QList<QPoint> points;
-    foreach (auto v, list)
-        points << v.toPoint();
+    for (const auto& v : list) {
+        auto p = v.toPoint();
+        if (!isBlank(p.y(), p.x()))
+            points << p;
+    }
     setSelection(points);
 }
 
@@ -595,16 +598,15 @@ void TimelineDock::removeSelection(bool withCopy)
     if (n > 1)
         MAIN.undoStack()->beginMacro(tr("Remove %1 from timeline").arg(n));
     QList<QPoint> clipsRemoved;
-    foreach (auto clip, selection()) {
+    for (const auto& clip : selection()) {
         if (!clipsRemoved.contains(clip)) {
             int adjustment = 0;
-            foreach (auto i, clipsRemoved) {
+            for (auto& i : clipsRemoved) {
                 if (clip.y() == i.y() && clip.x() > i.x())
                     --adjustment;
             }
             clipsRemoved << clip;
-            clip.setX(clip.x() + adjustment);
-            remove(clip.y(), clip.x());
+            remove(clip.y(), clip.x() + adjustment);
         }
     }
     if (n > 1)
@@ -624,8 +626,21 @@ void TimelineDock::liftSelection()
     int n = selection().size();
     if (n > 1)
         MAIN.undoStack()->beginMacro(tr("Lift %1 from timeline").arg(n));
-    foreach (auto clip, selection())
+    QList<QPoint> clipsRemoved;
+    for (auto clip : selection()) {
+        int adjustment = 0;
+        for (const auto& i : clipsRemoved) {
+            if (clip.y() == i.y() && clip.x() > i.x())
+                --adjustment;
+        }
+        clip.setX(clip.x() + adjustment);
+        // Blanks will be consolidated by the model.
+        if (isBlank(clip.y(), clip.x() - 1))
+            clipsRemoved << clip;
+        if (isBlank(clip.y(), clip.x() + 1))
+            clipsRemoved << clip;
         lift(clip.y(), clip.x());
+    }
     if (n > 1)
         MAIN.undoStack()->endMacro();
 }
