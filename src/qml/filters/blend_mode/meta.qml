@@ -8,7 +8,4 @@ Metadata {
     objectName: 'blendMode'
     qml: "ui.qml"
     isClipOnly: true
-    keyframes {
-        allowTrim: false
-    }
 }

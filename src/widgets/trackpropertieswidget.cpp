@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2015-2018 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2015-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,6 +25,7 @@
 #include <QScopedPointer>
 
 static const char* BLEND_PROPERTY_CAIROBLEND = "1";
+static const char* BLEND_PROPERTY_CAIROBLEND_SAVED = "_1";
 
 TrackPropertiesWidget::TrackPropertiesWidget(Mlt::Producer& track, QWidget *parent) :
     QWidget(parent),
@@ -63,7 +63,9 @@ TrackPropertiesWidget::TrackPropertiesWidget(Mlt::Producer& track, QWidget *pare
         ui->blendModeLabel->show();
         ui->blendModeCombo->show();
 
-        QString blendMode = transition->get(BLEND_PROPERTY_CAIROBLEND);
+        QString blendMode = transition->get(BLEND_PROPERTY_CAIROBLEND_SAVED);
+        if (blendMode.isEmpty())
+            blendMode = transition->get(BLEND_PROPERTY_CAIROBLEND);
         if (transition->get_int("disable"))
             blendMode = QString();
         else if (blendMode.isEmpty()) // A newly added track does not set its mode property.
