@@ -1696,6 +1696,10 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
             m_playlistDock->show();
             m_playlistDock->raise();
             m_playlistDock->on_actionCopy_triggered();
+        } else if ((event->modifiers() & Qt::ControlModifier) && (event->modifiers() & Qt::AltModifier)) {
+            m_timelineDock->show();
+            m_timelineDock->raise();
+            m_timelineDock->copyToSource();
         } else {
             m_timelineDock->show();
             m_timelineDock->raise();
@@ -1763,6 +1767,10 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
             m_timelineDock->show();
             m_timelineDock->raise();
             m_timelineDock->addVideoTrack();
+        } else if ((event->modifiers() & Qt::ControlModifier) && (event->modifiers() & Qt::AltModifier)) {
+            m_timelineDock->show();
+            m_timelineDock->raise();
+            m_timelineDock->insertTrack();
         } else {
             setInToCurrent(event->modifiers() & Qt::ShiftModifier);
         }
@@ -1796,6 +1804,10 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
             m_timelineDock->show();
             m_timelineDock->raise();
             m_timelineDock->addAudioTrack();
+        } else if ((event->modifiers() & Qt::ControlModifier) && (event->modifiers() & Qt::AltModifier)) {
+            m_timelineDock->show();
+            m_timelineDock->raise();
+            m_timelineDock->removeTrack();
         }
         break;
     case Qt::Key_V: // Avid Splice In

@@ -405,10 +405,12 @@ Rectangle {
         }
         MenuItem {
             text: qsTr('Insert Track')
+            shortcut: 'Ctrl+Alt+I'
             onTriggered: timeline.insertTrack()
         }
         MenuItem {
             text: qsTr('Remove Track')
+            shortcut: 'Ctrl+Alt+U'
             onTriggered: timeline.removeTrack()
         }
         MenuSeparator {}
@@ -421,6 +423,7 @@ Rectangle {
         }
         MenuItem {
             text: qsTr('Copy Timeline to Source')
+            shortcut: 'Ctrl+Alt+C'
             onTriggered: timeline.copyToSource()
         }
         MenuSeparator {}
@@ -481,9 +484,7 @@ Rectangle {
         }
         MenuItem {
             text: qsTr('Reload')
-            onTriggered: {
-                multitrack.reload()
-            }
+            onTriggered: multitrack.reload()
         }
         onPopupVisibleChanged: {
             if (visible && application.OS === 'Windows' && __popupGeometry.height > 0) {
