@@ -548,48 +548,48 @@ Si oui, choisissez un format ci-dessous et cliquez sur OK pour choisir un nom de
 <context>
     <name>Clip</name>
     <message>
-        <location filename="../src/qml/timeline/Clip.qml" line="598"/>
+        <location filename="../src/qml/views/timeline/Clip.qml" line="627"/>
         <source>Cut</source>
         <translation>Couper</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/Clip.qml" line="610"/>
+        <location filename="../src/qml/views/timeline/Clip.qml" line="639"/>
         <source>Copy</source>
         <translation>Copier</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/Clip.qml" line="617"/>
+        <location filename="../src/qml/views/timeline/Clip.qml" line="646"/>
         <source>Remove</source>
         <translation>Supprimer</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/Clip.qml" line="622"/>
+        <location filename="../src/qml/views/timeline/Clip.qml" line="651"/>
         <source>Lift</source>
         <translation>Enlever</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/Clip.qml" line="630"/>
+        <location filename="../src/qml/views/timeline/Clip.qml" line="659"/>
         <source>Split At Playhead (S)</source>
         <translation>Découper au curseur de lecture (S)</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/Clip.qml" line="636"/>
+        <location filename="../src/qml/views/timeline/Clip.qml" line="665"/>
         <source>Merge with next clip</source>
         <translation>Fusionner avec le clip suivant</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/Clip.qml" line="641"/>
+        <location filename="../src/qml/views/timeline/Clip.qml" line="670"/>
         <source>Detach Audio</source>
         <translation>Détacher l&apos;audio</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/Clip.qml" line="646"/>
         <location filename="../src/qml/views/keyframes/Clip.qml" line="490"/>
+        <location filename="../src/qml/views/timeline/Clip.qml" line="675"/>
         <source>Rebuild Audio Waveform</source>
         <translation>Reconstruire la forme d’onde</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/Clip.qml" line="651"/>
+        <location filename="../src/qml/views/timeline/Clip.qml" line="680"/>
         <source>Properties</source>
         <translation>Propriétés</translation>
     </message>
@@ -1579,9 +1579,9 @@ in temporal compression</source>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1763"/>
-        <location filename="../src/docks/encodedock.cpp" line="898"/>
-        <location filename="../src/docks/encodedock.cpp" line="1297"/>
-        <location filename="../src/docks/encodedock.cpp" line="1732"/>
+        <location filename="../src/docks/encodedock.cpp" line="903"/>
+        <location filename="../src/docks/encodedock.cpp" line="1302"/>
+        <location filename="../src/docks/encodedock.cpp" line="1737"/>
         <source>Export File</source>
         <translation>Exporter le fichier</translation>
     </message>
@@ -1607,17 +1607,17 @@ in temporal compression</source>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1803"/>
-        <location filename="../src/docks/encodedock.cpp" line="1442"/>
-        <location filename="../src/docks/encodedock.cpp" line="1449"/>
-        <location filename="../src/docks/encodedock.cpp" line="1560"/>
+        <location filename="../src/docks/encodedock.cpp" line="1447"/>
+        <location filename="../src/docks/encodedock.cpp" line="1454"/>
+        <location filename="../src/docks/encodedock.cpp" line="1565"/>
         <source>Stream</source>
         <translation>Flux</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1830"/>
-        <location filename="../src/docks/encodedock.cpp" line="1277"/>
-        <location filename="../src/docks/encodedock.cpp" line="1365"/>
-        <location filename="../src/docks/encodedock.cpp" line="1379"/>
+        <location filename="../src/docks/encodedock.cpp" line="1282"/>
+        <location filename="../src/docks/encodedock.cpp" line="1370"/>
+        <location filename="../src/docks/encodedock.cpp" line="1384"/>
         <source>Stop Capture</source>
         <translation>Arrêter la capture</translation>
     </message>
@@ -1633,153 +1633,153 @@ in temporal compression</source>
         <translation>Format par défaut</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="381"/>
+        <location filename="../src/docks/encodedock.cpp" line="386"/>
         <source>Timeline</source>
         <translation>Timeline</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="383"/>
+        <location filename="../src/docks/encodedock.cpp" line="388"/>
         <source>Playlist</source>
         <translation>Liste de lecture</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="385"/>
+        <location filename="../src/docks/encodedock.cpp" line="390"/>
         <source>Each Playlist Item</source>
         <translation>Chaque élément de la liste de lecture</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="388"/>
         <location filename="../src/docks/encodedock.cpp" line="393"/>
+        <location filename="../src/docks/encodedock.cpp" line="398"/>
         <source>Source</source>
         <translation>Source</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="400"/>
+        <location filename="../src/docks/encodedock.cpp" line="405"/>
         <source>You must enter numeric values using &apos;%1&apos; as the decimal point.</source>
         <translation>Vous devez saisir des valeurs numériques avec &quot;%1&quot; comme séparateur décimal.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="408"/>
-        <location filename="../src/docks/encodedock.cpp" line="1224"/>
-        <location filename="../src/docks/encodedock.cpp" line="1225"/>
+        <location filename="../src/docks/encodedock.cpp" line="413"/>
+        <location filename="../src/docks/encodedock.cpp" line="1229"/>
+        <location filename="../src/docks/encodedock.cpp" line="1230"/>
         <source>Custom</source>
         <translation>Personnalisé</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="444"/>
+        <location filename="../src/docks/encodedock.cpp" line="449"/>
         <source>Stock</source>
         <translation>Stock</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="447"/>
+        <location filename="../src/docks/encodedock.cpp" line="452"/>
         <source>Default</source>
         <translation>Par défaut</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="902"/>
+        <location filename="../src/docks/encodedock.cpp" line="907"/>
         <source>You cannot write to a file that is in your project.
 Try again with a different folder or file name.</source>
         <translation>Vous ne pouvez pas écrire un fichier qui appartient à votre projet. Réessayez avec un dossier ou un nom de fichier différent.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1055"/>
+        <location filename="../src/docks/encodedock.cpp" line="1060"/>
         <source>Shotcut found filters that require analysis jobs that have not run.
 Do you want to run the analysis jobs now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1297"/>
-        <location filename="../src/docks/encodedock.cpp" line="1734"/>
+        <location filename="../src/docks/encodedock.cpp" line="1302"/>
+        <location filename="../src/docks/encodedock.cpp" line="1739"/>
         <source>Capture File</source>
         <translation>Fichier de capture</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1300"/>
+        <location filename="../src/docks/encodedock.cpp" line="1305"/>
         <source>%1 (*.%2);;All Files (*)</source>
         <translation>%1 (*.%2);;Tous les fichiers (*)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1302"/>
+        <location filename="../src/docks/encodedock.cpp" line="1307"/>
         <source>Determined by Export (*)</source>
         <translation>Défini par l&apos;export (*)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1321"/>
+        <location filename="../src/docks/encodedock.cpp" line="1326"/>
         <source>The drive you chose only has %1 MiB of free space.
 Do you still want to continue?</source>
         <translation>Le disque que vous avez choisi n’a plus que %1 Mio d’espace disponible.
 Voulez-vous continuer ?</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1328"/>
+        <location filename="../src/docks/encodedock.cpp" line="1333"/>
         <source>Do not show this anymore.</source>
         <comment>Export free disk space warning dialog</comment>
         <translation>Ne plus afficher.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1333"/>
+        <location filename="../src/docks/encodedock.cpp" line="1338"/>
         <source>Export canceled.</source>
         <translation>Export annulé.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1437"/>
-        <location filename="../src/docks/encodedock.cpp" line="1458"/>
+        <location filename="../src/docks/encodedock.cpp" line="1442"/>
+        <location filename="../src/docks/encodedock.cpp" line="1463"/>
         <source>Stop Stream</source>
         <translation>Arrêter le Flux</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1450"/>
+        <location filename="../src/docks/encodedock.cpp" line="1455"/>
         <source>Enter the network protocol scheme, address, port, and parameters as an URL:</source>
         <translation>Entrer le type de protocole réseau, l’adresse, le port et les paramètres comme un URL :</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1495"/>
+        <location filename="../src/docks/encodedock.cpp" line="1500"/>
         <source>Add Export Preset</source>
         <translation>Ajouter un préréglage d’export</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1537"/>
+        <location filename="../src/docks/encodedock.cpp" line="1542"/>
         <source>Delete Preset</source>
         <translation>Supprimer une Préselection</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1538"/>
+        <location filename="../src/docks/encodedock.cpp" line="1543"/>
         <source>Are you sure you want to delete %1?</source>
         <translation>Voulez-vous vraiment supprimer %1 ?</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1664"/>
         <location filename="../src/docks/encodedock.cpp" line="1669"/>
+        <location filename="../src/docks/encodedock.cpp" line="1674"/>
         <source>None</source>
         <translation>Aucun</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1718"/>
+        <location filename="../src/docks/encodedock.cpp" line="1723"/>
         <source>KiB (%1s)</source>
         <translation> Kio (%1s)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1840"/>
+        <location filename="../src/docks/encodedock.cpp" line="1845"/>
         <source>Detecting hardware encoders...</source>
         <translation>Détection d’encodeurs matériels…</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1873"/>
+        <location filename="../src/docks/encodedock.cpp" line="1878"/>
         <source>Nothing found</source>
         <translation>Aucun résultat</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1876"/>
+        <location filename="../src/docks/encodedock.cpp" line="1881"/>
         <source>Found %1</source>
         <translation>Trouvé %1</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1888"/>
+        <location filename="../src/docks/encodedock.cpp" line="1893"/>
         <source>Configure Hardware Encoding</source>
         <translation>Configurer l&apos;encodage matériel</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1909"/>
+        <location filename="../src/docks/encodedock.cpp" line="1914"/>
         <source>Export Frames/sec</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2609,13 +2609,13 @@ Voulez-vous enregistrer ces modifications ?</translation>
         <translation>Réinitialiser</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.cpp" line="218"/>
+        <location filename="../src/widgets/imageproducerwidget.cpp" line="227"/>
         <source>Getting length of image sequence...</source>
         <translation>Récupération de la longueur de la séquence d’images…</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.cpp" line="230"/>
-        <location filename="../src/widgets/imageproducerwidget.cpp" line="246"/>
+        <location filename="../src/widgets/imageproducerwidget.cpp" line="239"/>
+        <location filename="../src/widgets/imageproducerwidget.cpp" line="255"/>
         <source>Reloading image sequence...</source>
         <translation>Rechargement de la séquence d’images…</translation>
     </message>
@@ -3336,7 +3336,7 @@ audio du clip A (0 %) ou du clip B (100 %).</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="391"/>
-        <location filename="../src/mainwindow.cpp" line="2889"/>
+        <location filename="../src/mainwindow.cpp" line="2918"/>
         <source>Enter Full Screen</source>
         <translation>Passer en plein écran</translation>
     </message>
@@ -3881,7 +3881,7 @@ Veuillez l’installer avec votre gestionnaire de paquets. Elle peut se nommer l
         <location filename="../src/mainwindow.cpp" line="886"/>
         <location filename="../src/mainwindow.cpp" line="888"/>
         <location filename="../src/mainwindow.cpp" line="1276"/>
-        <location filename="../src/mainwindow.cpp" line="3491"/>
+        <location filename="../src/mainwindow.cpp" line="3520"/>
         <source>Failed to open </source>
         <translation>Échec à l’ouverture </translation>
     </message>
@@ -3950,7 +3950,7 @@ avec « -réparé » dans le nom de fichier, et l’ouvrira.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1310"/>
-        <location filename="../src/mainwindow.cpp" line="3451"/>
+        <location filename="../src/mainwindow.cpp" line="3480"/>
         <source>Open File</source>
         <translation>Ouvrir un fichier</translation>
     </message>
@@ -3970,113 +3970,113 @@ avec « -réparé » dans le nom de fichier, et l’ouvrira.</translation>
         <translation>&lt;h1&gt;Shotcut version %1&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;https://www.shotcut.org/&quot;&gt;Shotcut&lt;/a&gt; est un éditeur vidéo gratuit, open source pour toutes les plateformes.&lt;/p&gt;&lt;small&gt;&lt;p&gt; Copyright &amp;copy; 2011-2019 &lt;a href=&quot;https://www.meltytech.com/&quot;&gt;Meltytech&lt;/a&gt;, LLC&lt;/p&gt;&lt;p&gt; Sous licence &lt;a href=&quot;https://www.gnu.org/licenses/gpl.html&quot;&gt;GNU General Public License v3.0&lt;/a&gt;&lt;/p&gt;&lt;p&gt; Ce programme utilise les composants suivants : &lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://www.qt.io/&quot;&gt;Qt&lt;/a&gt; structure d’application et d’interface utilisateur&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; structure de création multimédia&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; bibliothèques de codecs et formats multimédia&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; encodeur H.264&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; encodeurs VP8 et VP9&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; encodeur MP3&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.dyne.org/software/frei0r/&quot;&gt; Frei0r&lt;/a&gt; greffons vidéo&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; greffons audio&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;DefaultIcon&lt;/a&gt; collection d’icônes par &lt;a href=&quot;http://www.interactivemania.com/&quot;&gt;interactivemania&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt; Oxygen&lt;/a&gt; collection d’icônes&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt; Le code source de ce programme peut être téléchargé depuis&lt;a href=&quot;https://www.shotcut.org/&quot;&gt; shotcut.org&lt;/a&gt;.&lt;/p&gt;Ce programme est distribué dans l’espoir qu’il sera utile, mais SANS AUCUNE GARANTIE ; notamment, sans garantie implicite de VALEUR COMMERCIALE ou d’ADÉQUATION À UN BUT PARTICULIER.&lt;/small&gt; </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2065"/>
+        <location filename="../src/mainwindow.cpp" line="2094"/>
         <source>Non-Broadcast</source>
         <translation>Non Broadcast</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2070"/>
+        <location filename="../src/mainwindow.cpp" line="2099"/>
         <source>DVD Widescreen NTSC</source>
         <translation>DVD écran large NTSC</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2071"/>
+        <location filename="../src/mainwindow.cpp" line="2100"/>
         <source>DVD Widescreen PAL</source>
         <translation>DVD écran large PAL</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2082"/>
+        <location filename="../src/mainwindow.cpp" line="2111"/>
         <source>Square 1080p 30 fps</source>
         <translation>Carré 1080p 30 ips</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2083"/>
+        <location filename="../src/mainwindow.cpp" line="2112"/>
         <source>Square 1080p 60 fps</source>
         <translation>Carré 1080p 60 ips</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2084"/>
+        <location filename="../src/mainwindow.cpp" line="2113"/>
         <source>Vertical HD 30 fps</source>
         <translation>HD Vertical 30 ips</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2085"/>
+        <location filename="../src/mainwindow.cpp" line="2114"/>
         <source>Vertical HD 60 fps</source>
         <translation>HD Vertical 60 ips</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2086"/>
+        <location filename="../src/mainwindow.cpp" line="2115"/>
         <source>Custom</source>
         <translation>Personnalisé</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2116"/>
-        <location filename="../src/mainwindow.cpp" line="2366"/>
+        <location filename="../src/mainwindow.cpp" line="2145"/>
+        <location filename="../src/mainwindow.cpp" line="2395"/>
         <source>Saved %1</source>
         <translation>%1 enregistré</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2358"/>
-        <location filename="../src/mainwindow.cpp" line="2380"/>
+        <location filename="../src/mainwindow.cpp" line="2387"/>
+        <location filename="../src/mainwindow.cpp" line="2409"/>
         <source>Save XML</source>
         <translation>Enregistrer en XML</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2381"/>
+        <location filename="../src/mainwindow.cpp" line="2410"/>
         <source>MLT XML (*.mlt)</source>
         <translation>XML MLT (*.mlt)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2400"/>
+        <location filename="../src/mainwindow.cpp" line="2429"/>
         <source>The project has been modified.
 Do you want to save your changes?</source>
         <translation>Ce projet a été modifié.
 Voulez-vous enregistrer vos modifications ?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2429"/>
+        <location filename="../src/mainwindow.cpp" line="2458"/>
         <source>There are incomplete jobs.
 Do you want to still want to exit?</source>
         <translation>Il y a des tâches non terminées.
 Voulez-vous vraiment quitter ?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2442"/>
+        <location filename="../src/mainwindow.cpp" line="2471"/>
         <source>An export is in progress.
 Do you want to still want to exit?</source>
         <translation>Un export est en cours.
 Voulez-vous vraiment quitter ?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2892"/>
+        <location filename="../src/mainwindow.cpp" line="2921"/>
         <source>Exit Full Screen</source>
         <translation>Quitter le plein écran</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2905"/>
+        <location filename="../src/mainwindow.cpp" line="2934"/>
         <source>GPU effects are not supported</source>
         <translation>Les effets GPU ne sont pas pris en charge</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3002"/>
+        <location filename="../src/mainwindow.cpp" line="3031"/>
         <source>Click here to check for a new version of Shotcut.</source>
         <translation>Cliquez ici pour vérifier s’il existe une nouvelle version de Shotcut.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3146"/>
+        <location filename="../src/mainwindow.cpp" line="3175"/>
         <source>You must restart Shotcut to switch to the new language.
 Do you want to restart now?</source>
         <translation>Vous devez redémarrer Shotcut pour modifier la langue. Voulez-vous redémarrer maintenant ?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3187"/>
+        <location filename="../src/mainwindow.cpp" line="3216"/>
         <source>Failed to connect to JACK.
 Please verify that JACK is installed and running.</source>
         <translation>Échec de connexion à JACK.
 Veuillez vérifier que JACK est installé et fonctionne.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3196"/>
+        <location filename="../src/mainwindow.cpp" line="3225"/>
         <source>GPU effects are experimental and may cause instability on some systems. Some CPU effects are incompatible with GPU effects and will be disabled. A project created with GPU effects can not be converted to a CPU only project later.
 
 Do you want to enable GPU effects and restart Shotcut?</source>
@@ -4085,7 +4085,7 @@ Do you want to enable GPU effects and restart Shotcut?</source>
 Voulez-vous activer les effets GPU et redémarrer Shotcut ?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3218"/>
+        <location filename="../src/mainwindow.cpp" line="3247"/>
         <source>Shotcut must restart to disable GPU effects.
 
 Disable GPU effects and restart?</source>
@@ -4094,23 +4094,23 @@ Disable GPU effects and restart?</source>
 Désactiver les effets GPU et redémarrer ?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3429"/>
+        <location filename="../src/mainwindow.cpp" line="3458"/>
         <source>Do you want to automatically check for updates in the future?</source>
         <translation>Voulez vous vérifier automatiquement les futures mises à jour ?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3436"/>
+        <location filename="../src/mainwindow.cpp" line="3465"/>
         <source>Do not show this anymore.</source>
         <comment>Automatic upgrade check dialog</comment>
         <translation>Ne plus afficher.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3452"/>
+        <location filename="../src/mainwindow.cpp" line="3481"/>
         <source>MLT XML (*.mlt);;All Files (*)</source>
         <translation>MLT XML (*.mlt);;Tous les fichiers (*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3469"/>
+        <location filename="../src/mainwindow.cpp" line="3498"/>
         <source>The decimal point of the MLT XML file
 you want to open is incompatible.
 
@@ -4121,101 +4121,101 @@ que vous souhaitez ouvrir est incompatible.
 Voulez-vous continuer à ouvrir ce fichier MLT XML ?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3532"/>
+        <location filename="../src/mainwindow.cpp" line="3561"/>
         <source>You must restart Shotcut to change the display method.
 Do you want to restart now?</source>
         <translation>Vous devez redémarrer Shotcut pour modifier le mode d’affichage.
 Voulez-vous redémarrer maintenant ?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3554"/>
+        <location filename="../src/mainwindow.cpp" line="3583"/>
         <source>Application Log</source>
         <translation>Journal de l’application</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3593"/>
+        <location filename="../src/mainwindow.cpp" line="3622"/>
         <source>Shotcut version %1 is available! Click here to get it.</source>
         <translation>Shotcut version %1 est disponible ! Cliquez ici pour le télécharger.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3599"/>
+        <location filename="../src/mainwindow.cpp" line="3628"/>
         <source>You are running the latest version of Shotcut.</source>
         <translation>Vous utilisez la dernière version de Shotcut.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3609"/>
+        <location filename="../src/mainwindow.cpp" line="3638"/>
         <source>Failed to read version.json when checking. Click here to go to the Web site.</source>
         <translation>Impossible de lire la version.json lors de la vérification. Cliquez ici pour vous rendre sur le site Web.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3658"/>
+        <location filename="../src/mainwindow.cpp" line="3687"/>
         <source>Export EDL</source>
         <translation>Exporter EDL</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3659"/>
+        <location filename="../src/mainwindow.cpp" line="3688"/>
         <source>EDL (*.edl);;All Files (*)</source>
         <translation>EDL (*.edl);;Tous les fichiers (*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3705"/>
+        <location filename="../src/mainwindow.cpp" line="3734"/>
         <source>A JavaScript error occurred during export.</source>
         <translation>Une erreur JavaScript est survenue pendant l’export.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3708"/>
+        <location filename="../src/mainwindow.cpp" line="3737"/>
         <source>Failed to open export-edl.js</source>
         <translation>Impossible d’ouvrir export-edl.js</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3733"/>
+        <location filename="../src/mainwindow.cpp" line="3762"/>
         <source>Export Frame</source>
         <translation>Exporter l’image</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3734"/>
+        <location filename="../src/mainwindow.cpp" line="3763"/>
         <source>PNG (*.png);;BMP (*.bmp);;JPEG (*.jpg *.jpeg);;PPM (*.ppm);;TIFF (*.tif *.tiff);;WebP (*.webp);;All Files (*)</source>
         <translation>PNG (*.png);;BMP (*.bmp);;JPEG (*.jpg *.jpeg);;PPM (*.ppm);;TIFF (*.tif *.tiff);;WebP (*.webp);;Tous les fichiers (*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3754"/>
+        <location filename="../src/mainwindow.cpp" line="3783"/>
         <source>Unable to export frame.</source>
         <translation>Impossible d’exporter l’image.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3762"/>
+        <location filename="../src/mainwindow.cpp" line="3791"/>
         <source>You must restart Shotcut to change the data directory.
 Do you want to continue?</source>
         <translation>Vous devez redémarrer Shotcut pour modifier le répertoire des données.
 Voulez-vous continuer ?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3771"/>
+        <location filename="../src/mainwindow.cpp" line="3800"/>
         <source>Data Directory</source>
         <translation>Répertoire des données</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3854"/>
+        <location filename="../src/mainwindow.cpp" line="3883"/>
         <source>Add Custom Layout</source>
         <translation>Ajouter une disposition personnalisée</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3855"/>
+        <location filename="../src/mainwindow.cpp" line="3884"/>
         <source>Name</source>
         <translation>Nom</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3883"/>
+        <location filename="../src/mainwindow.cpp" line="3912"/>
         <source>Remove Video Mode</source>
         <translation>Supprimer le mode vidéo</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3897"/>
+        <location filename="../src/mainwindow.cpp" line="3926"/>
         <source>Remove Layout</source>
         <translation>Supprimer l&apos;arrangement</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4026"/>
+        <location filename="../src/mainwindow.cpp" line="4055"/>
         <source>GPU effects are EXPERIMENTAL, UNSTABLE and UNSUPPORTED! Unsupported means do not report bugs about it.
 
 Do you want to disable GPU effects and restart Shotcut?</source>
@@ -4922,268 +4922,298 @@ p, li { white-space: pre-wrap; }
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Double-cliquez sur un &amp;eacute;l&amp;eacute;ment de la liste de lecture pour l’ouvrir dans le lecteur.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="142"/>
+        <location filename="../src/docks/playlistdock.ui" line="145"/>
         <source>Add the Source to the playlist</source>
         <translation>Ajouter la source à la liste de lecture</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="159"/>
+        <location filename="../src/docks/playlistdock.ui" line="162"/>
         <source>Remove cut</source>
         <translation>Supprimer la séquence</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="176"/>
+        <location filename="../src/docks/playlistdock.ui" line="179"/>
         <source>Update</source>
         <translation>Mettre à jour</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="190"/>
-        <location filename="../src/docks/playlistdock.ui" line="430"/>
+        <location filename="../src/docks/playlistdock.ui" line="193"/>
+        <location filename="../src/docks/playlistdock.ui" line="433"/>
         <source>View as tiles</source>
         <translation>Voir en mosaïque</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="204"/>
-        <location filename="../src/docks/playlistdock.ui" line="441"/>
+        <location filename="../src/docks/playlistdock.ui" line="207"/>
+        <location filename="../src/docks/playlistdock.ui" line="444"/>
         <source>View as icons</source>
         <translation>Voir en icônes</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="218"/>
-        <location filename="../src/docks/playlistdock.ui" line="419"/>
+        <location filename="../src/docks/playlistdock.ui" line="221"/>
+        <location filename="../src/docks/playlistdock.ui" line="422"/>
         <source>View as details</source>
         <translation>Voir les détails</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="235"/>
+        <location filename="../src/docks/playlistdock.ui" line="238"/>
         <source>Display a menu of additional actions</source>
         <translation>Afficher un menu d’actions supplémentaires</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="291"/>
+        <location filename="../src/docks/playlistdock.ui" line="294"/>
         <source>Insert Blank</source>
         <translation>Insérer un blanc</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="296"/>
+        <location filename="../src/docks/playlistdock.ui" line="299"/>
         <source>Append Blank</source>
         <translation>Joindre un blanc</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="301"/>
+        <location filename="../src/docks/playlistdock.ui" line="304"/>
         <source>Replace</source>
         <translation>Remplacer</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="320"/>
+        <location filename="../src/docks/playlistdock.ui" line="323"/>
         <source>Remove</source>
         <translation>Enlever</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="328"/>
+        <location filename="../src/docks/playlistdock.ui" line="331"/>
         <source>Set Creation Time...</source>
         <translation>Régler date de création…</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="333"/>
+        <location filename="../src/docks/playlistdock.ui" line="336"/>
         <source>Goto</source>
         <translation>Aller à</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="265"/>
         <location filename="../src/docks/playlistdock.ui" line="268"/>
+        <location filename="../src/docks/playlistdock.ui" line="271"/>
         <source>Insert</source>
         <translation>Insérer</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="271"/>
+        <location filename="../src/docks/playlistdock.ui" line="274"/>
         <source>Shift+V</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="280"/>
         <location filename="../src/docks/playlistdock.ui" line="283"/>
+        <location filename="../src/docks/playlistdock.ui" line="286"/>
         <source>Append</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="286"/>
+        <location filename="../src/docks/playlistdock.ui" line="289"/>
         <source>Shift+A</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="304"/>
+        <location filename="../src/docks/playlistdock.ui" line="307"/>
         <source>Shift+B</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="309"/>
+        <location filename="../src/docks/playlistdock.ui" line="312"/>
         <source>Open </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="312"/>
+        <location filename="../src/docks/playlistdock.ui" line="315"/>
         <source>Open the clip in the Source player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="315"/>
+        <location filename="../src/docks/playlistdock.ui" line="318"/>
         <source>Return</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="323"/>
+        <location filename="../src/docks/playlistdock.ui" line="326"/>
         <source>Shift+X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="336"/>
+        <location filename="../src/docks/playlistdock.ui" line="339"/>
         <source>Go to the start of this clip in the Project player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="339"/>
+        <location filename="../src/docks/playlistdock.ui" line="342"/>
         <source>Shift+Return</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="344"/>
+        <location filename="../src/docks/playlistdock.ui" line="347"/>
         <source>Remove All</source>
         <translation>Enlever Tout</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="347"/>
+        <location filename="../src/docks/playlistdock.ui" line="350"/>
         <source>Remove all items from the playlist</source>
         <translation>Enlever tous les éléments de la liste de lecture</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="355"/>
+        <location filename="../src/docks/playlistdock.ui" line="358"/>
         <source>Hidden</source>
         <translation>Caché</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="363"/>
         <location filename="../src/docks/playlistdock.ui" line="366"/>
+        <location filename="../src/docks/playlistdock.ui" line="369"/>
         <source>In and Out - Left/Right</source>
         <translation>Entrée et Sortie - Gauche/Droite</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="374"/>
         <location filename="../src/docks/playlistdock.ui" line="377"/>
+        <location filename="../src/docks/playlistdock.ui" line="380"/>
         <source>In and Out - Top/Bottom</source>
         <translation>Entrée et Sortie - Haut/Bas</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="385"/>
+        <location filename="../src/docks/playlistdock.ui" line="388"/>
         <source>In Only - Small</source>
         <translation>Entrée seulement - Petit</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="393"/>
+        <location filename="../src/docks/playlistdock.ui" line="396"/>
         <source>In Only - Large</source>
         <translation>Entrée seulement - Grand</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="398"/>
-        <source>Add All to Timeline</source>
-        <translation>Tout ajouter à la timeline</translation>
+        <location filename="../src/docks/playlistdock.ui" line="401"/>
+        <source>Add Selected to Timeline</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="403"/>
+        <location filename="../src/docks/playlistdock.ui" line="463"/>
+        <source>Play After Open</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/playlistdock.ui" line="468"/>
+        <source>Select All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/playlistdock.ui" line="471"/>
+        <source>Ctrl+Shift+A</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/playlistdock.ui" line="476"/>
+        <source>Select None</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/playlistdock.ui" line="479"/>
+        <source>Ctrl+Shift+D</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/playlistdock.ui" line="406"/>
         <source>Sort By Name</source>
         <translation>Trier par nom</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="408"/>
+        <location filename="../src/docks/playlistdock.ui" line="411"/>
         <source>Sort By Date</source>
         <translation>Trier par date</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="416"/>
+        <location filename="../src/docks/playlistdock.ui" line="419"/>
         <source>Details</source>
         <translation>Détails</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="427"/>
+        <location filename="../src/docks/playlistdock.ui" line="430"/>
         <source>Tiles</source>
         <translation>Mosaïque</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="438"/>
+        <location filename="../src/docks/playlistdock.ui" line="441"/>
         <source>Icons</source>
         <translation>Icônes</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="446"/>
+        <location filename="../src/docks/playlistdock.ui" line="449"/>
         <source>Copy</source>
         <translation>Copier</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="449"/>
+        <location filename="../src/docks/playlistdock.ui" line="452"/>
         <source>Open a copy of the clip in the Source player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="452"/>
+        <location filename="../src/docks/playlistdock.ui" line="455"/>
         <source>Shift+C</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="291"/>
+        <location filename="../src/docks/playlistdock.cpp" line="297"/>
         <source>Sort</source>
         <translation>Trier</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="299"/>
+        <location filename="../src/docks/playlistdock.cpp" line="304"/>
         <source>View mode</source>
         <translation>Mode de visualisation</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="307"/>
+        <location filename="../src/docks/playlistdock.cpp" line="311"/>
         <source>Thumbnails</source>
         <translation>Miniatures</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="397"/>
-        <location filename="../src/docks/playlistdock.cpp" line="638"/>
+        <location filename="../src/docks/playlistdock.cpp" line="404"/>
+        <location filename="../src/docks/playlistdock.cpp" line="660"/>
         <source>You cannot insert a playlist into a playlist!</source>
         <translation>Vous ne pouvez pas insérer une liste de lecture dans une liste de lecture !</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/playlistdock.cpp" line="416"/>
+        <source>Remove %1 playlist items</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>PlaylistModel</name>
     <message>
-        <location filename="../src/models/playlistmodel.cpp" line="361"/>
+        <location filename="../src/models/playlistmodel.cpp" line="360"/>
         <source>#</source>
         <translation>n°</translation>
     </message>
     <message>
-        <location filename="../src/models/playlistmodel.cpp" line="363"/>
+        <location filename="../src/models/playlistmodel.cpp" line="362"/>
         <source>Thumbnails</source>
         <translation>Miniatures</translation>
     </message>
     <message>
-        <location filename="../src/models/playlistmodel.cpp" line="365"/>
+        <location filename="../src/models/playlistmodel.cpp" line="364"/>
         <source>Clip</source>
         <translation>Clip</translation>
     </message>
     <message>
-        <location filename="../src/models/playlistmodel.cpp" line="367"/>
+        <location filename="../src/models/playlistmodel.cpp" line="366"/>
         <source>In</source>
         <translation>Entrée</translation>
     </message>
     <message>
-        <location filename="../src/models/playlistmodel.cpp" line="369"/>
+        <location filename="../src/models/playlistmodel.cpp" line="368"/>
         <source>Duration</source>
         <translation>Durée</translation>
     </message>
     <message>
-        <location filename="../src/models/playlistmodel.cpp" line="371"/>
+        <location filename="../src/models/playlistmodel.cpp" line="370"/>
         <source>Start</source>
         <translation>Début</translation>
     </message>
     <message>
-        <location filename="../src/models/playlistmodel.cpp" line="373"/>
+        <location filename="../src/models/playlistmodel.cpp" line="372"/>
         <source>Date</source>
         <translation>Date</translation>
     </message>
@@ -5264,32 +5294,32 @@ p, li { white-space: pre-wrap; }
         <translation>Mettre à jour l’élément %1 de la liste de lecture</translation>
     </message>
     <message>
-        <location filename="../src/commands/playlistcommands.cpp" line="110"/>
+        <location filename="../src/commands/playlistcommands.cpp" line="114"/>
         <source>Remove playlist item %1</source>
         <translation>Supprimer l’élément %1 de la liste de la lecture</translation>
     </message>
     <message>
-        <location filename="../src/commands/playlistcommands.cpp" line="131"/>
+        <location filename="../src/commands/playlistcommands.cpp" line="135"/>
         <source>Clear playlist</source>
         <translation>Effacer la liste de lecture</translation>
     </message>
     <message>
-        <location filename="../src/commands/playlistcommands.cpp" line="162"/>
+        <location filename="../src/commands/playlistcommands.cpp" line="166"/>
         <source>Move item from %1 to %2</source>
         <translation>Déplacer l’élément de %1 à %2</translation>
     </message>
     <message>
-        <location filename="../src/commands/playlistcommands.cpp" line="185"/>
+        <location filename="../src/commands/playlistcommands.cpp" line="189"/>
         <source>Sort playlist by %1</source>
         <translation>Trier la liste par %1</translation>
     </message>
     <message>
-        <location filename="../src/commands/playlistcommands.cpp" line="218"/>
+        <location filename="../src/commands/playlistcommands.cpp" line="222"/>
         <source>Trim playlist item %1 in</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/playlistcommands.cpp" line="256"/>
+        <location filename="../src/commands/playlistcommands.cpp" line="260"/>
         <source>Trim playlist item %1 out</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5304,150 +5334,150 @@ p, li { white-space: pre-wrap; }
         <translation>Insérer dans la piste</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="88"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="99"/>
         <source>Overwrite onto track</source>
         <translation>Ecrire par dessus la piste</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="115"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="138"/>
         <source>Lift from track</source>
         <translation>Enlever de la piste</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="141"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="164"/>
         <source>Remove from track</source>
         <translation>Retirer de la piste</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="167"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="190"/>
         <source>Change track name</source>
         <translation>Changer le nom de la piste</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="189"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="212"/>
         <source>Merge adjacent clips</source>
         <translation>Fusionner les clips adjacents</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="213"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="236"/>
         <source>Toggle track mute</source>
         <translation>Activer / désactiver l’audio de la piste</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="234"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="257"/>
         <source>Toggle track hidden</source>
         <translation>Activer/désactiver la visibilité de la piste</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="256"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="279"/>
         <source>Change track compositing</source>
         <translation>Changer la composition de la piste</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="278"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="301"/>
         <source>Lock track</source>
         <translation>Vérouiller la piste</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="306"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="329"/>
         <source>Move clip</source>
         <translation>Déplacer le clip</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="332"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="355"/>
         <source>Trim clip in point</source>
         <translation>Retirer le point d’entrée du clip</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="379"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="402"/>
         <source>Trim clip out point</source>
         <translation>Retirer le point de sortie du clip</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="424"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="447"/>
         <source>Split clip</source>
         <translation>Découper le clip</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="448"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="471"/>
         <source>Adjust fade in</source>
         <translation>Ajuster le fondu entrant</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="481"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="504"/>
         <source>Adjust fade out</source>
         <translation>Ajuster le fondu sortant</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="515"/>
-        <location filename="../src/commands/timelinecommands.cpp" line="631"/>
-        <location filename="../src/commands/timelinecommands.cpp" line="747"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="538"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="654"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="770"/>
         <source>Add transition</source>
         <translation>Ajouter une transition</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="543"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="566"/>
         <source>Trim transition in point</source>
         <translation>Retirer le point d’entrée de la transition</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="586"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="609"/>
         <source>Trim transition out point</source>
         <translation>Retirer le point de sortie de la transition</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="675"/>
-        <location filename="../src/commands/timelinecommands.cpp" line="710"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="698"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="733"/>
         <source>Remove transition</source>
         <translation>Enlever la transition</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="788"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="811"/>
         <source>Add video track</source>
         <translation>Ajouter une piste vidéo</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="790"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="813"/>
         <source>Add audio track</source>
         <translation>Ajouter une piste audio</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="815"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="838"/>
         <source>Insert audio track</source>
         <translation>Insérer une piste audio</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="817"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="840"/>
         <source>Insert video track</source>
         <translation>Insérer une piste vidéo</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="840"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="863"/>
         <source>Remove audio track</source>
         <translation>Retirer une piste audio</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="842"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="865"/>
         <source>Remove video track</source>
         <translation>Retirer une piste vidéo</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="890"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="913"/>
         <source>Change track blend mode</source>
         <translation>Changer le mode de fusion de la piste</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="930"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="953"/>
         <source>Change clip properties</source>
         <translation>modifier les propriétés de la séquence</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="974"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="997"/>
         <source>Detach Audio</source>
         <translation>Détacher l&apos;audio</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3110"/>
+        <location filename="../src/mainwindow.cpp" line="3139"/>
         <source>You cannot add a project to itself!</source>
         <translation>Vous ne pouvez pas ajouter un projet à lui-même !</translation>
     </message>
@@ -6082,17 +6112,27 @@ Do you want to use %1 = %2/1001 instead?</source>
         <translation>Cette piste est vérouillée</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="368"/>
+        <location filename="../src/docks/timelinedock.cpp" line="387"/>
         <source>Failed to open </source>
         <translation>Échec à l’ouverture </translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="371"/>
+        <location filename="../src/docks/timelinedock.cpp" line="390"/>
         <source>You must save to Copy Timeline to Source.</source>
         <translation>Vous devez enregistrer pou copier la timeline vers la source.</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="982"/>
+        <location filename="../src/docks/timelinedock.cpp" line="599"/>
+        <source>Remove %1 from timeline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/timelinedock.cpp" line="628"/>
+        <source>Lift %1 from timeline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/timelinedock.cpp" line="1053"/>
         <source>You cannot split a transition.</source>
         <translation>Vous ne pouvez pas découper une transition.</translation>
     </message>
@@ -6162,93 +6202,93 @@ Do you want to use %1 = %2/1001 instead?</source>
 <context>
     <name>TimelineToolbar</name>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="80"/>
+        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="80"/>
         <source>Toggle snapping</source>
         <translation>Activer / désactiver l’aimantation</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="88"/>
+        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="88"/>
         <source>Scrub while dragging</source>
         <translation>Balayer pendant le déplacement</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="96"/>
+        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="96"/>
         <source>Ripple trim and drop</source>
         <translation>Rogner et déposer propagé</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="97"/>
+        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="97"/>
         <source>Ripple</source>
         <translation>Propagation</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="106"/>
+        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="106"/>
         <source>Ripple edits across all tracks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="107"/>
+        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="107"/>
         <source>Ripple All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="160"/>
+        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="160"/>
         <source>Display a menu of additional actions</source>
         <translation>Afficher un menu d’actions supplémentaires</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="168"/>
+        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="168"/>
         <source>Cut - Copy the current clip to the Source
 player and ripple delete it</source>
         <translation>Couper - Copie le clip sélectionné vers le lecteur
 source et le supprime.</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="177"/>
+        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="177"/>
         <source>Copy - Copy the current clip to the Source player (C)</source>
         <translation>Copier - Copie le clip sélectionné vers le lecteur source (C)</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="186"/>
+        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="186"/>
         <source>Paste - Insert clip into the current track
 shifting following clips to the right (V)</source>
         <translation>Coller - Insère le clip dans la piste sélectionnée
 en décalant les clips suivants vers la droite (V)</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="194"/>
+        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="194"/>
         <source>Append to the current track (A)</source>
         <translation>Ajouter à la piste en cours (A)</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="202"/>
+        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="202"/>
         <source>Ripple Delete - Remove current clip
 shifting following clips to the left (X)</source>
         <translation>Suppression propagée - Retire le clip sélectionné en décalant les clips suivants vers la gauche (X)</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="210"/>
+        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="210"/>
         <source>Lift - Remove current clip without
 affecting position of other clips (Z)</source>
         <translation>Enlever - Enlève le clip en cours sans affecter la position des autres clips (Z)</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="218"/>
+        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="218"/>
         <source>Overwrite clip onto the current track (B)</source>
         <translation>Placer le clip en écrasant la piste courante (B)</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="226"/>
+        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="226"/>
         <source>Split At Playhead (S)</source>
         <translation>Découper au curseur de lecture (S)</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="234"/>
+        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="234"/>
         <source>Zoom timeline out (-)</source>
         <translation>Dézoomer sur la timeline (-)</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TimelineToolbar.qml" line="242"/>
+        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="242"/>
         <source>Zoom timeline in (+)</source>
         <translation>Zoomer sur la timeline (+)</translation>
     </message>
@@ -6294,37 +6334,37 @@ affecting position of other clips (Z)</source>
 <context>
     <name>TrackHead</name>
     <message>
-        <location filename="../src/qml/timeline/TrackHead.qml" line="143"/>
+        <location filename="../src/qml/views/timeline/TrackHead.qml" line="143"/>
         <source>Unmute</source>
         <translation>Rétablir le son</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TrackHead.qml" line="143"/>
+        <location filename="../src/qml/views/timeline/TrackHead.qml" line="143"/>
         <source>Mute</source>
         <translation>Couper le son</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TrackHead.qml" line="154"/>
+        <location filename="../src/qml/views/timeline/TrackHead.qml" line="154"/>
         <source>Show</source>
         <translation>Afficher</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TrackHead.qml" line="154"/>
+        <location filename="../src/qml/views/timeline/TrackHead.qml" line="154"/>
         <source>Hide</source>
         <translation>Cacher</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TrackHead.qml" line="164"/>
+        <location filename="../src/qml/views/timeline/TrackHead.qml" line="164"/>
         <source>Unlock track</source>
         <translation>Dévérouiller la piste</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TrackHead.qml" line="164"/>
+        <location filename="../src/qml/views/timeline/TrackHead.qml" line="164"/>
         <source>Lock track</source>
         <translation>Vérouiller la piste</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/TrackHead.qml" line="174"/>
+        <location filename="../src/qml/views/timeline/TrackHead.qml" line="174"/>
         <source>Filters</source>
         <translation>Filtres</translation>
     </message>
@@ -6348,13 +6388,13 @@ affecting position of other clips (Z)</source>
     </message>
     <message>
         <location filename="../src/widgets/trackpropertieswidget.cpp" line="44"/>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="76"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="78"/>
         <source>None</source>
         <translation>Aucun</translation>
     </message>
     <message>
         <location filename="../src/widgets/trackpropertieswidget.cpp" line="45"/>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="77"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="79"/>
         <source>Over</source>
         <translation>Superposition</translation>
     </message>
@@ -7173,7 +7213,9 @@ La plupart des utilisateurs n’ont pas besoin de changer cela.</translation>
         <location filename="../src/qml/filters/audio_gain/meta.qml" line="17"/>
         <location filename="../src/qml/filters/brightness/meta.qml" line="17"/>
         <location filename="../src/qml/filters/contrast/meta.qml" line="18"/>
+        <location filename="../src/qml/filters/dither/meta.qml" line="16"/>
         <location filename="../src/qml/filters/opacity/meta.qml" line="17"/>
+        <location filename="../src/qml/filters/threshold/meta.qml" line="15"/>
         <source>Level</source>
         <translation>Niveau</translation>
     </message>
@@ -7481,9 +7523,30 @@ La plupart des utilisateurs n’ont pas besoin de changer cela.</translation>
         <translation>Tailler: Cercle</translation>
     </message>
     <message>
+        <location filename="../src/qml/filters/halftone/meta.qml" line="6"/>
+        <source>Halftone</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/halftone/meta.qml" line="16"/>
         <location filename="../src/qml/filters/webvfx_circular_frame/meta.qml" line="16"/>
         <source>Radius</source>
         <translation>Rayon</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/halftone/meta.qml" line="24"/>
+        <source>Cyan</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/halftone/meta.qml" line="32"/>
+        <source>Magenta</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/halftone/meta.qml" line="40"/>
+        <source>Yellow</source>
+        <translation type="unfinished">Jaune</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/spot_remover/meta.qml" line="7"/>
@@ -7497,6 +7560,7 @@ La plupart des utilisateurs n’ont pas besoin de changer cela.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/levels/meta.qml" line="6"/>
+        <location filename="../src/qml/filters/posterize/meta.qml" line="16"/>
         <source>Levels</source>
         <translation>Niveaux</translation>
     </message>
@@ -7532,6 +7596,7 @@ La plupart des utilisateurs n’ont pas besoin de changer cela.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask_shape/meta.qml" line="16"/>
+        <location filename="../src/qml/filters/threshold/meta.qml" line="6"/>
         <source>Threshold</source>
         <translation>Seuil</translation>
     </message>
@@ -7697,6 +7762,51 @@ La plupart des utilisateurs n’ont pas besoin de changer cela.</translation>
     <message>
         <location filename="../src/qml/filters/webvfx_threejs_text/meta.qml" line="7"/>
         <source>Text: 3D</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/meta.qml" line="6"/>
+        <source>Blend Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/dither/meta.qml" line="6"/>
+        <source>Dither</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/dither/meta.qml" line="24"/>
+        <source>Matrix</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/elastic_scale/meta.qml" line="23"/>
+        <source>Elastic Scale</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/elastic_scale/meta.qml" line="33"/>
+        <source>Center</source>
+        <translation type="unfinished">Centre</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/elastic_scale/meta.qml" line="41"/>
+        <source>Linear width</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/elastic_scale/meta.qml" line="49"/>
+        <source>Linear scale factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/elastic_scale/meta.qml" line="57"/>
+        <source>Non-Linear scale factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/posterize/meta.qml" line="6"/>
+        <source>Posterize</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -8085,92 +8195,102 @@ La plupart des utilisateurs n’ont pas besoin de changer cela.</translation>
 <context>
     <name>timeline</name>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="139"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="137"/>
         <source>Master</source>
         <translation>Maître</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="155"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="153"/>
         <source>Filters</source>
         <translation>Filtres</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="335"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="333"/>
         <source>Insert</source>
         <translation>Insérer</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="335"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="333"/>
         <source>Overwrite</source>
         <translation>Écraser</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="399"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="397"/>
         <source>Add Audio Track</source>
         <translation>Ajouter une piste audio</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="404"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="402"/>
         <source>Add Video Track</source>
         <translation>Ajouter une piste vidéo</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="409"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="407"/>
         <source>Insert Track</source>
         <translation>Insérer une piste</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="413"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="412"/>
         <source>Remove Track</source>
         <translation>Supprimer une piste</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="418"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="418"/>
+        <source>Select All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="423"/>
+        <source>Select None</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="429"/>
         <source>Ripple All Tracks</source>
         <translation>Propager toutes les pistes</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="425"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="436"/>
         <source>Copy Timeline to Source</source>
         <translation>Copier la timeline vers la source</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="431"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="443"/>
         <source>Make Tracks Shorter</source>
         <translation>Raccourcir les pistes</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="436"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="448"/>
         <source>Make Tracks Taller</source>
         <translation>Agrandir les pistes</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="446"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="458"/>
         <source>Show Audio Waveforms</source>
         <translation>Afficher les formes d’ondes audio</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="466"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="478"/>
         <source>Show Video Thumbnails</source>
         <translation>Afficher les miniatures vidéo</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="472"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="484"/>
         <source>Center the Playhead</source>
         <translation>Centrer la tête de lecture</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="481"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="493"/>
         <source>Properties</source>
         <translation>Propriétés</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="485"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="497"/>
         <source>Reload</source>
         <translation>Recharger</translation>
     </message>
     <message>
-        <location filename="../src/qml/timeline/timeline.qml" line="441"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="453"/>
         <source>Reset Track Height</source>
         <translation>Réinitialiser la hauteur de piste</translation>
     </message>
@@ -8242,6 +8362,7 @@ La plupart des utilisateurs n’ont pas besoin de changer cela.</translation>
         <location filename="../src/qml/filters/alpha_adjust/ui.qml" line="102"/>
         <location filename="../src/qml/filters/mask_shape/ui.qml" line="258"/>
         <location filename="../src/qml/filters/select0r/ui.qml" line="301"/>
+        <location filename="../src/qml/filters/threshold/ui.qml" line="115"/>
         <source>Invert</source>
         <translation>Inverser</translation>
     </message>
@@ -8328,11 +8449,14 @@ La plupart des utilisateurs n’ont pas besoin de changer cela.</translation>
         <location filename="../src/qml/filters/contrast/ui.qml" line="144"/>
         <location filename="../src/qml/filters/crop/ui.qml" line="84"/>
         <location filename="../src/qml/filters/distort/ui.qml" line="78"/>
+        <location filename="../src/qml/filters/dither/ui.qml" line="70"/>
         <location filename="../src/qml/filters/dust/ui.qml" line="48"/>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="269"/>
+        <location filename="../src/qml/filters/elastic_scale/ui.qml" line="81"/>
         <location filename="../src/qml/filters/glitch/ui.qml" line="81"/>
         <location filename="../src/qml/filters/grain/ui.qml" line="49"/>
         <location filename="../src/qml/filters/grid/ui.qml" line="138"/>
+        <location filename="../src/qml/filters/halftone/ui.qml" line="81"/>
         <location filename="../src/qml/filters/hqdn3d/ui.qml" line="70"/>
         <location filename="../src/qml/filters/hue_lightness_saturation/ui.qml" line="54"/>
         <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="98"/>
@@ -8347,6 +8471,7 @@ La plupart des utilisateurs n’ont pas besoin de changer cela.</translation>
         <location filename="../src/qml/filters/noise_keyframes/ui.qml" line="66"/>
         <location filename="../src/qml/filters/oldfilm/ui.qml" line="60"/>
         <location filename="../src/qml/filters/opacity/ui.qml" line="107"/>
+        <location filename="../src/qml/filters/posterize/ui.qml" line="65"/>
         <location filename="../src/qml/filters/rgbsplit0r/ui.qml" line="70"/>
         <location filename="../src/qml/filters/rotate/ui.qml" line="151"/>
         <location filename="../src/qml/filters/select0r/ui.qml" line="109"/>
@@ -8355,6 +8480,7 @@ La plupart des utilisateurs n’ont pas besoin de changer cela.</translation>
         <location filename="../src/qml/filters/smartblur/ui.qml" line="57"/>
         <location filename="../src/qml/filters/spot_remover/ui.qml" line="117"/>
         <location filename="../src/qml/filters/tcolor/ui.qml" line="48"/>
+        <location filename="../src/qml/filters/threshold/ui.qml" line="71"/>
         <location filename="../src/qml/filters/timer/ui.qml" line="113"/>
         <location filename="../src/qml/filters/wave/ui.qml" line="44"/>
         <location filename="../src/qml/filters/waveform/ui.qml" line="77"/>
@@ -8436,6 +8562,7 @@ La plupart des utilisateurs n’ont pas besoin de changer cela.</translation>
         <location filename="../src/qml/filters/audio_swapchannels/ui.qml" line="34"/>
         <location filename="../src/qml/filters/crop/ui.qml" line="103"/>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="543"/>
+        <location filename="../src/qml/filters/elastic_scale/ui.qml" line="101"/>
         <source>Center</source>
         <translation>Centre</translation>
     </message>
@@ -8597,6 +8724,7 @@ La plupart des utilisateurs n’ont pas besoin de changer cela.</translation>
         <location filename="../src/qml/filters/brightness/ui.qml" line="141"/>
         <location filename="../src/qml/filters/contrast/ui.qml" line="162"/>
         <location filename="../src/qml/filters/opacity/ui.qml" line="130"/>
+        <location filename="../src/qml/filters/threshold/ui.qml" line="88"/>
         <source>Level</source>
         <translation>Niveau</translation>
     </message>
@@ -9257,11 +9385,97 @@ La plupart des utilisateurs n’ont pas besoin de changer cela.</translation>
         <translation>Opération 1</translation>
     </message>
     <message>
+        <location filename="../src/qml/filters/blend_mode/ui.qml" line="48"/>
+        <source>Blend mode</source>
+        <translation type="unfinished">Mode de fusion</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui.qml" line="53"/>
+        <source>Over</source>
+        <translation type="unfinished">Superposition</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui.qml" line="54"/>
         <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="243"/>
         <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="274"/>
         <location filename="../src/qml/filters/levels/ui.qml" line="192"/>
         <source>None</source>
         <translation>Aucune</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui.qml" line="56"/>
+        <source>Saturate</source>
+        <translation type="unfinished">Saturation</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui.qml" line="57"/>
+        <source>Multiply</source>
+        <translation type="unfinished">Produit</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui.qml" line="58"/>
+        <source>Screen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui.qml" line="59"/>
+        <source>Overlay</source>
+        <translation type="unfinished">Incrustation</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui.qml" line="60"/>
+        <source>Darken</source>
+        <translation type="unfinished">Obscurcir</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui.qml" line="61"/>
+        <source>Dodge</source>
+        <translation type="unfinished">Densité couleur -</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui.qml" line="62"/>
+        <source>Burn</source>
+        <translation type="unfinished">Densité couleur +</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui.qml" line="63"/>
+        <source>Hard Light</source>
+        <translation type="unfinished">Lumière crue</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui.qml" line="64"/>
+        <source>Soft Light</source>
+        <translation type="unfinished">Lumière tamisée</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui.qml" line="65"/>
+        <source>Difference</source>
+        <translation type="unfinished">Différence</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui.qml" line="66"/>
+        <source>Exclusion</source>
+        <translation type="unfinished">Exclusion</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui.qml" line="67"/>
+        <source>HSL Hue</source>
+        <translation type="unfinished">Teinte HSL</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui.qml" line="68"/>
+        <source>HSL Saturation</source>
+        <translation type="unfinished">Saturation HSL</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui.qml" line="69"/>
+        <source>HSL Color</source>
+        <translation type="unfinished">Couleur HSL</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/blend_mode/ui.qml" line="70"/>
+        <source>HSL Luminosity</source>
+        <translation type="unfinished">Luminosité HSL</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="243"/>
@@ -9411,6 +9625,7 @@ Cliquez sur « Ouvrir » pour charger un fichier.</translation>
         <translation>Minimum</translation>
     </message>
     <message>
+        <location filename="../src/qml/filters/blend_mode/ui.qml" line="55"/>
         <location filename="../src/qml/filters/mask/ui.qml" line="182"/>
         <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="183"/>
         <location filename="../src/qml/filters/select0r/ui.qml" line="285"/>
@@ -9494,10 +9709,21 @@ Cliquez sur « Ouvrir » pour charger un fichier.</translation>
         <translation>Progressivité</translation>
     </message>
     <message>
+        <location filename="../src/qml/filters/halftone/ui.qml" line="101"/>
         <location filename="../src/qml/filters/movit_diffusion/ui.qml" line="34"/>
         <location filename="../src/qml/filters/webvfx_circular_frame/ui.qml" line="101"/>
         <source>Radius</source>
         <translation>Rayon</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/halftone/ui.qml" line="126"/>
+        <source>Cyan</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/halftone/ui.qml" line="151"/>
+        <source>Magenta</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/movit_diffusion/ui.qml" line="52"/>
@@ -9837,6 +10063,7 @@ Cliquez sur « Ouvrir » pour charger un fichier.</translation>
         <translation> Rouge</translation>
     </message>
     <message>
+        <location filename="../src/qml/filters/halftone/ui.qml" line="176"/>
         <location filename="../src/qml/filters/tcolor/ui.qml" line="75"/>
         <source>Yellow</source>
         <translation>Jaune</translation>
@@ -10273,6 +10500,57 @@ Cliquez sur « Ouvrir » pour charger un fichier.</translation>
     <message>
         <location filename="../src/qml/filters/webvfx_clip/ui.qml" line="325"/>
         <source>Padding color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/dither/ui.qml" line="88"/>
+        <location filename="../src/qml/filters/posterize/ui.qml" line="82"/>
+        <source>Levels</source>
+        <translation type="unfinished">Niveaux</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/dither/ui.qml" line="113"/>
+        <source>Matrix</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/elastic_scale/ui.qml" line="103"/>
+        <source>Horizontal center position of the linear area.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/elastic_scale/ui.qml" line="127"/>
+        <source>Linear width</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/elastic_scale/ui.qml" line="129"/>
+        <source>Width of the linear area.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/elastic_scale/ui.qml" line="153"/>
+        <source>Linear scale factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/elastic_scale/ui.qml" line="155"/>
+        <source>Amount the linear area is scaled.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/elastic_scale/ui.qml" line="179"/>
+        <source>Non-Linear scale factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/elastic_scale/ui.qml" line="181"/>
+        <source>Amount the outer left and outer right areas are scaled non linearly.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/threshold/ui.qml" line="126"/>
+        <source>Compare with alpha channel</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
