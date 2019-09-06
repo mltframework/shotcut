@@ -35,6 +35,7 @@ PlaylistIconView::PlaylistIconView(QWidget *parent)
 {
     verticalScrollBar()->setSingleStep(100);
     verticalScrollBar()->setPageStep(400);
+    setContextMenuPolicy(Qt::CustomContextMenu);
     connect(&Settings, SIGNAL(playlistThumbnailsChanged()), SLOT(updateSizes()));
 }
 
@@ -118,8 +119,12 @@ bool PlaylistIconView::isIndexHidden(const QModelIndex &index) const
 void PlaylistIconView::setSelection(const QRect &rect, QItemSelectionModel::SelectionFlags command)
 {
     QModelIndex topLeft;
-    if (!selectionModel()->selectedIndexes().isEmpty())
+    if (!selectionModel()->selectedIndexes().isEmpty()) {
         topLeft = selectionModel()->selectedIndexes().first();
+    } else if (!m_isRangeSelect) {
+        selectionModel()->select(indexAt(rect.topLeft()), command);
+        return;
+    }
     if (m_isToggleSelect) {
         command = QItemSelectionModel::Toggle;
         selectionModel()->select(indexAt(rect.bottomRight()), command);
