@@ -568,7 +568,6 @@ void PlaylistDock::onPlaylistCreated()
 {
     ui->removeButton->setEnabled(true);
     ui->updateButton->setEnabled(false);
-    ui->menuButton->setEnabled(true);
     ui->stackedWidget->setCurrentIndex(1);
 }
 
@@ -582,13 +581,15 @@ void PlaylistDock::onPlaylistModified()
 {
     if (m_model.rowCount() == 1)
         ui->tableView->resizeColumnsToContents();
+    if (m_model.rowCount() > 0) {
+        ui->removeButton->setEnabled(true);
+    }
 }
 
 void PlaylistDock::onPlaylistCleared()
 {
     ui->removeButton->setEnabled(false);
     ui->updateButton->setEnabled(false);
-    ui->menuButton->setEnabled(false);
 }
 
 void PlaylistDock::onPlaylistClosed()

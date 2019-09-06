@@ -231,9 +231,6 @@ p, li { white-space: pre-wrap; }
       </item>
       <item>
        <widget class="QPushButton" name="menuButton">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
         <property name="toolTip">
          <string>Display a menu of additional actions</string>
         </property>
