@@ -126,8 +126,8 @@ public slots:
     void onClipMoved(int fromTrack, int toTrack, int clipIndex, int position, bool ripple);
     bool trimClipIn(int trackIndex, int clipIndex, int oldClipIndex, int delta, bool ripple);
     bool trimClipOut(int trackIndex, int clipIndex, int delta, bool ripple);
-    void insert(int trackIndex, int position = -1, const QString &xml = QString());
-    void overwrite(int trackIndex, int position = -1, const QString &xml = QString());
+    void insert(int trackIndex, int position = -1, const QString &xml = QString(), bool seek = true);
+    void overwrite(int trackIndex, int position = -1, const QString &xml = QString(), bool seek = true);
     void appendFromPlaylist(Mlt::Playlist* playlist);
     void splitClip(int trackIndex = -1, int clipIndex = -1);
     void fadeIn(int trackIndex, int clipIndex = -1, int duration = -1);

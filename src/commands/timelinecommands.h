@@ -57,7 +57,7 @@ private:
 class InsertCommand : public QUndoCommand
 {
 public:
-    InsertCommand(MultitrackModel& model, int trackIndex, int position, const QString &xml, QUndoCommand * parent = 0);
+    InsertCommand(MultitrackModel& model, int trackIndex, int position, const QString &xml, bool seek = true, QUndoCommand * parent = 0);
     void redo();
     void undo();
 private:
@@ -67,12 +67,13 @@ private:
     QString m_xml;
     QStringList m_oldTracks;
     UndoHelper m_undoHelper;
+    bool m_seek;
 };
 
 class OverwriteCommand : public QUndoCommand
 {
 public:
-    OverwriteCommand(MultitrackModel& model, int trackIndex, int position, const QString &xml, QUndoCommand * parent = 0);
+    OverwriteCommand(MultitrackModel& model, int trackIndex, int position, const QString &xml, bool seek = true, QUndoCommand * parent = 0);
     void redo();
     void undo();
 private:
@@ -81,6 +82,7 @@ private:
     int m_position;
     QString m_xml;
     UndoHelper m_undoHelper;
+    bool m_seek;
 };
 
 class LiftCommand : public QUndoCommand

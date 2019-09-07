@@ -50,13 +50,14 @@ void AppendCommand::undo()
 }
 
 InsertCommand::InsertCommand(MultitrackModel &model, int trackIndex,
-    int position, const QString &xml, QUndoCommand *parent)
+    int position, const QString &xml, bool seek, QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_model(model)
     , m_trackIndex(trackIndex)
     , m_position(position)
     , m_xml(xml)
     , m_undoHelper(m_model)
+    , m_seek(seek)
 {
     setText(QObject::tr("Insert into track"));
 }
@@ -76,7 +77,7 @@ void InsertCommand::redo()
             m_model.insertClip(m_trackIndex, clip, m_position, false);
         }
     } else {
-        m_model.insertClip(m_trackIndex, clip, m_position);
+        m_model.insertClip(m_trackIndex, clip, m_position, m_seek);
     }
     m_undoHelper.recordAfterState();
 }
@@ -88,13 +89,14 @@ void InsertCommand::undo()
 }
 
 OverwriteCommand::OverwriteCommand(MultitrackModel &model, int trackIndex,
-    int position, const QString &xml, QUndoCommand *parent)
+    int position, const QString &xml, bool seek, QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_model(model)
     , m_trackIndex(trackIndex)
     , m_position(position)
     , m_xml(xml)
     , m_undoHelper(m_model)
+    , m_seek(seek)
 {
     setText(QObject::tr("Overwrite onto track"));
 }
@@ -115,7 +117,7 @@ void OverwriteCommand::redo()
             position += info->frame_count;
         }
     } else {
-        m_model.overwrite(m_trackIndex, clip, m_position);
+        m_model.overwrite(m_trackIndex, clip, m_position, m_seek);
     }
     m_undoHelper.recordAfterState();
 }

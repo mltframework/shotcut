@@ -962,7 +962,7 @@ bool TimelineDock::trimClipOut(int trackIndex, int clipIndex, int delta, bool ri
     return true;
 }
 
-void TimelineDock::insert(int trackIndex, int position, const QString &xml)
+void TimelineDock::insert(int trackIndex, int position, const QString &xml, bool seek)
 {
     if (trackIndex < 0)
         trackIndex = currentTrack();
@@ -979,7 +979,7 @@ void TimelineDock::insert(int trackIndex, int position, const QString &xml)
         if (m_model.trackList().size() == 0)
             position = 0;
         MAIN.undoStack()->push(
-            new Timeline::InsertCommand(m_model, trackIndex, position, xmlToUse));
+            new Timeline::InsertCommand(m_model, trackIndex, position, xmlToUse, seek));
     } else if (!MLT.isSeekableClip()) {
         emit showStatusMessage(kNonSeekableWarning);
     }
@@ -991,7 +991,7 @@ void TimelineDock::onInserted(int trackIndex, int clipIndex)
     setSelection(QList<QPoint>() << QPoint(clipIndex, trackIndex));
 }
 
-void TimelineDock::overwrite(int trackIndex, int position, const QString &xml)
+void TimelineDock::overwrite(int trackIndex, int position, const QString &xml, bool seek)
 {
     if (trackIndex < 0)
         trackIndex = currentTrack();
@@ -1008,7 +1008,7 @@ void TimelineDock::overwrite(int trackIndex, int position, const QString &xml)
         if (m_model.trackList().size() == 0)
             position = 0;
         MAIN.undoStack()->push(
-            new Timeline::OverwriteCommand(m_model, trackIndex, position, xmlToUse));
+            new Timeline::OverwriteCommand(m_model, trackIndex, position, xmlToUse, seek));
     } else if (!MLT.isSeekableClip()) {
         emit showStatusMessage(kNonSeekableWarning);
     }

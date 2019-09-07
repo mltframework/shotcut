@@ -98,9 +98,9 @@ function dropped() {
 function acceptDrop(xml) {
     var position = Math.round((dropTarget.x + scrollView.flickableItem.contentX - headerWidth) / multitrack.scaleFactor)
     if (settings.timelineRipple)
-        timeline.insert(currentTrack, position, xml)
+        timeline.insert(currentTrack, position, xml, false)
     else
-        timeline.overwrite(currentTrack, position, xml)
+        timeline.overwrite(currentTrack, position, xml, false)
 }
 
 function trackHeight(isAudio) {
