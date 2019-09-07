@@ -914,6 +914,8 @@ void PlaylistDock::onOutTimerFired()
 void PlaylistDock::keyPressEvent(QKeyEvent* event)
 {
     QDockWidget::keyPressEvent(event);
+    if (event->key() == Qt::Key_Up || event->key() == Qt::Key_Down)
+        event->accept();
     if (!event->isAccepted())
         MAIN.keyPressEvent(event);
 }
