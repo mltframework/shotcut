@@ -726,6 +726,9 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
                     } else if (vcodec.startsWith("libvpx")) {
                         setIfNotSet(p, "crf", TO_ABSOLUTE(63, 0, vq));
                         setIfNotSet(p, "vb", 0); // VP9 needs this to prevent constrained quality mode.
+                    } else if (vcodec.endsWith("_vaapi")) {
+                        setIfNotSet(p, "vglobal_quality", TO_ABSOLUTE(51, 0, vq));
+                        setIfNotSet(p, "vq", TO_ABSOLUTE(51, 0, vq));
                     } else {
                         setIfNotSet(p, "qscale", TO_ABSOLUTE(31, 1, vq));
                     }
@@ -736,8 +739,12 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
                         setIfNotSet(p, "crf", TO_ABSOLUTE(51, 0, vq));
                     } else if (vcodec.startsWith("libvpx")) {
                         setIfNotSet(p, "crf", TO_ABSOLUTE(63, 0, vq));
-                    } else if (vcodec.endsWith("_qsv") || vcodec.endsWith("_videotoolbox") || vcodec.endsWith("_vaapi")) {
+                    } else if (vcodec.endsWith("_qsv") || vcodec.endsWith("_videotoolbox")) {
                         setIfNotSet(p, "vb", qRound(cvbr));
+                    } else if (vcodec.endsWith("_vaapi")) {
+                        setIfNotSet(p, "vb", vbitrate.toLatin1().constData());
+                        setIfNotSet(p, "vglobal_quality", TO_ABSOLUTE(51, 0, vq));
+                        setIfNotSet(p, "vq", TO_ABSOLUTE(51, 0, vq));
                     } else {
                         setIfNotSet(p, "qscale", TO_ABSOLUTE(31, 1, vq));
                     }
@@ -1946,6 +1953,8 @@ void EncodeDock::on_videoQualitySpinner_valueChanged(int vq)
             s = QString("qmin=%1").arg(TO_ABSOLUTE(51, 0, vq));
     } else if (vcodec.endsWith("_amf")) {
         s = QString("qp_i=qp_p=qp_b=%1").arg(TO_ABSOLUTE(51, 0, vq));
+    } else if (vcodec.endsWith("_vaapi")) {
+        s = QString("vglobal_quality=%1").arg(TO_ABSOLUTE(51, 0, vq));
     } else {
         s = QString("qscale=%1").arg(TO_ABSOLUTE(31, 0, vq));
     }
