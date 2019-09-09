@@ -690,7 +690,7 @@ void AvformatProducerWidget::convert(TranscodeDialog& dialog)
         case 0:
             path.append("/%1 - %2.mp4");
             nameFilter = tr("MP4 (*.mp4);;All Files (*)");
-            args << "-f" << "mp4" << "-codec:a" << "ac3" << "-b:a" << "512k" << "-codec:v?" << "libx264";
+            args << "-f" << "mp4" << "-codec:a" << "ac3" << "-b:a" << "512k" << "-codec:v" << "libx264";
             args << "-preset" << "medium" << "-g" << "1" << "-crf" << "11";
             break;
         case 1:
