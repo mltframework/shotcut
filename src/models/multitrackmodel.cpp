@@ -2513,7 +2513,7 @@ bool MultitrackModel::createIfNeeded()
     if (!m_tractor) {
         m_tractor = new Mlt::Tractor(MLT.profile());
         MLT.profile().set_explicit(true);
-        m_tractor->set("shotcut", 1);
+        m_tractor->set(kShotcutXmlProperty, 1);
         retainPlaylist();
         addBackgroundTrack();
         addVideoTrack();
@@ -2667,7 +2667,7 @@ int MultitrackModel::addAudioTrack()
     if (!m_tractor) {
         m_tractor = new Mlt::Tractor(MLT.profile());
         MLT.profile().set_explicit(true);
-        m_tractor->set("shotcut", 1);
+        m_tractor->set(kShotcutXmlProperty, 1);
         retainPlaylist();
         addBackgroundTrack();
         addAudioTrack();

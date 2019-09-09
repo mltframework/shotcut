@@ -142,7 +142,7 @@ int Controller::open(const QString &url)
         }
         if (m_url.isEmpty() && QString(m_producer->get("xml")) == "was here") {
             if (m_producer->get_int("_original_type") != tractor_type ||
-               (m_producer->get_int("_original_type") == tractor_type && m_producer->get("shotcut")))
+               (m_producer->get_int("_original_type") == tractor_type && m_producer->get(kShotcutXmlProperty)))
                 m_url = url;
         }
         setImageDurationFromDefault(m_producer.data());
@@ -688,7 +688,7 @@ bool Controller::isMultitrack() const
     return m_producer && m_producer->is_valid()
         && !m_producer->get_int(kShotcutVirtualClip)
         && (m_producer->get_int("_original_type") == tractor_type || resource() == "<tractor>")
-            && (m_producer->get("shotcut"));
+            && (m_producer->get(kShotcutXmlProperty));
 }
 
 bool Controller::isImageProducer(Service* service) const

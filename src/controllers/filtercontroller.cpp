@@ -128,8 +128,8 @@ void FilterController::setProducer(Mlt::Producer *producer)
     m_attachedModel.setProducer(producer);
     if (producer && producer->is_valid()) {
         mlt_service_type service_type = producer->type();
-        m_metadataModel.setIsClipProducer(service_type != tractor_type
-            && service_type != playlist_type);
+        m_metadataModel.setIsClipProducer(service_type != playlist_type &&
+            (service_type != tractor_type || !producer->get_int(kShotcutXmlProperty)));
     }
 }
 
