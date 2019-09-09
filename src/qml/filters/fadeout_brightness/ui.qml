@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2018 Meltytech, LLC
+ * Copyright (c) 2014-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,6 +27,7 @@ Item {
     property alias duration: timeSpinner.value
 
     Component.onCompleted: {
+        filter.blockSignals = true
         if (filter.isNew) {
             filter.set('alpha', 1)
             duration = Math.ceil(settings.videoOutDuration * profile.fps)
@@ -39,6 +40,7 @@ Item {
             duration = filter.animateOut
         }
         alphaCheckbox.checked = filter.get('alpha') != 1
+        filter.blockSignals = false
     }
 
     Connections {
