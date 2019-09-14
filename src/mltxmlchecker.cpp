@@ -347,10 +347,15 @@ static QString getPrefix(const QString& name, const QString& value)
         } else {
             // timewarp speed parameter
             length = value.indexOf(':');
-            if (length > 0 && (value[length - 1].isDigit() ||
-                               value[length - 1] == '.' ||
-                               value[length - 1] == ','))
-                return value.left(length + 1); // include the colon
+            if (length > 0) {
+                bool isNumeric = true;
+                for (int i = 0; i < length && isNumeric; i++) {
+                    if (!value[i].isDigit() && value[i] != '.' && value[i] != ',')
+                        isNumeric = false;
+                }
+                if (isNumeric)
+                    return value.left(length + 1); // include the colon
+            }
         }
     }
     return QString();
