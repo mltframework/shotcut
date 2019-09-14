@@ -1578,9 +1578,9 @@ in temporal compression</source>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1763"/>
-        <location filename="../src/docks/encodedock.cpp" line="903"/>
-        <location filename="../src/docks/encodedock.cpp" line="1302"/>
-        <location filename="../src/docks/encodedock.cpp" line="1737"/>
+        <location filename="../src/docks/encodedock.cpp" line="911"/>
+        <location filename="../src/docks/encodedock.cpp" line="1310"/>
+        <location filename="../src/docks/encodedock.cpp" line="1745"/>
         <source>Export File</source>
         <translation>Dosyayı Dışa Aktar</translation>
     </message>
@@ -1606,17 +1606,17 @@ in temporal compression</source>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1803"/>
-        <location filename="../src/docks/encodedock.cpp" line="1447"/>
-        <location filename="../src/docks/encodedock.cpp" line="1454"/>
-        <location filename="../src/docks/encodedock.cpp" line="1565"/>
+        <location filename="../src/docks/encodedock.cpp" line="1455"/>
+        <location filename="../src/docks/encodedock.cpp" line="1462"/>
+        <location filename="../src/docks/encodedock.cpp" line="1573"/>
         <source>Stream</source>
         <translation>Akış</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1830"/>
-        <location filename="../src/docks/encodedock.cpp" line="1282"/>
-        <location filename="../src/docks/encodedock.cpp" line="1370"/>
-        <location filename="../src/docks/encodedock.cpp" line="1384"/>
+        <location filename="../src/docks/encodedock.cpp" line="1290"/>
+        <location filename="../src/docks/encodedock.cpp" line="1378"/>
+        <location filename="../src/docks/encodedock.cpp" line="1392"/>
         <source>Stop Capture</source>
         <translation>Yakalamayı Durdur</translation>
     </message>
@@ -1659,8 +1659,8 @@ in temporal compression</source>
     </message>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="413"/>
-        <location filename="../src/docks/encodedock.cpp" line="1229"/>
-        <location filename="../src/docks/encodedock.cpp" line="1230"/>
+        <location filename="../src/docks/encodedock.cpp" line="1237"/>
+        <location filename="../src/docks/encodedock.cpp" line="1238"/>
         <source>Custom</source>
         <translation>Özel</translation>
     </message>
@@ -1675,111 +1675,111 @@ in temporal compression</source>
         <translation>Öntanımlı</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="907"/>
+        <location filename="../src/docks/encodedock.cpp" line="915"/>
         <source>You cannot write to a file that is in your project.
 Try again with a different folder or file name.</source>
         <translation>Projenizde bulunan bir dosyaya yazamazsınız.
 Farklı bir klasör ya da dosya adı ile yeniden deneyin.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1060"/>
+        <location filename="../src/docks/encodedock.cpp" line="1068"/>
         <source>Shotcut found filters that require analysis jobs that have not run.
 Do you want to run the analysis jobs now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1302"/>
-        <location filename="../src/docks/encodedock.cpp" line="1739"/>
+        <location filename="../src/docks/encodedock.cpp" line="1310"/>
+        <location filename="../src/docks/encodedock.cpp" line="1747"/>
         <source>Capture File</source>
         <translation>Yakalama Dosyası</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1305"/>
+        <location filename="../src/docks/encodedock.cpp" line="1313"/>
         <source>%1 (*.%2);;All Files (*)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1307"/>
+        <location filename="../src/docks/encodedock.cpp" line="1315"/>
         <source>Determined by Export (*)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1326"/>
+        <location filename="../src/docks/encodedock.cpp" line="1334"/>
         <source>The drive you chose only has %1 MiB of free space.
 Do you still want to continue?</source>
         <translation>Seçtiğiniz sürücüde yalnız %1 MB boş alan var.
 Yine de devam etmek ister misiniz?</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1333"/>
+        <location filename="../src/docks/encodedock.cpp" line="1341"/>
         <source>Do not show this anymore.</source>
         <comment>Export free disk space warning dialog</comment>
         <translation>Artık bunu gösterme.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1338"/>
+        <location filename="../src/docks/encodedock.cpp" line="1346"/>
         <source>Export canceled.</source>
         <translation>Dışa aktarma iptal edildi.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1442"/>
-        <location filename="../src/docks/encodedock.cpp" line="1463"/>
+        <location filename="../src/docks/encodedock.cpp" line="1450"/>
+        <location filename="../src/docks/encodedock.cpp" line="1471"/>
         <source>Stop Stream</source>
         <translation>Akışı Durdur</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1455"/>
+        <location filename="../src/docks/encodedock.cpp" line="1463"/>
         <source>Enter the network protocol scheme, address, port, and parameters as an URL:</source>
         <translation>Ağ iletişim kuralı şemasını, adresi, kapı numarasını ve parametreleri adres biçiminde yazın: </translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1500"/>
+        <location filename="../src/docks/encodedock.cpp" line="1508"/>
         <source>Add Export Preset</source>
         <translation>Hazır Dışa Aktarma Ayarı Ekle</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1542"/>
+        <location filename="../src/docks/encodedock.cpp" line="1550"/>
         <source>Delete Preset</source>
         <translation>Hazır Ayarı Sil</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1543"/>
+        <location filename="../src/docks/encodedock.cpp" line="1551"/>
         <source>Are you sure you want to delete %1?</source>
         <translation>%1 ögesini silmek istediğinize emin misiniz?</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1669"/>
-        <location filename="../src/docks/encodedock.cpp" line="1674"/>
+        <location filename="../src/docks/encodedock.cpp" line="1677"/>
+        <location filename="../src/docks/encodedock.cpp" line="1682"/>
         <source>None</source>
         <translation>Yok</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1723"/>
+        <location filename="../src/docks/encodedock.cpp" line="1731"/>
         <source>KiB (%1s)</source>
         <translation>KiB (%1s)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1845"/>
+        <location filename="../src/docks/encodedock.cpp" line="1853"/>
         <source>Detecting hardware encoders...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1878"/>
+        <location filename="../src/docks/encodedock.cpp" line="1886"/>
         <source>Nothing found</source>
         <translation>Hiçbir şey bulunamadı</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1881"/>
+        <location filename="../src/docks/encodedock.cpp" line="1889"/>
         <source>Found %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1893"/>
+        <location filename="../src/docks/encodedock.cpp" line="1901"/>
         <source>Configure Hardware Encoding</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1914"/>
+        <location filename="../src/docks/encodedock.cpp" line="1922"/>
         <source>Export Frames/sec</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3340,7 +3340,7 @@ belirleyin ya da yalnızca A parçasının sesini
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="391"/>
-        <location filename="../src/mainwindow.cpp" line="2918"/>
+        <location filename="../src/mainwindow.cpp" line="2921"/>
         <source>Enter Full Screen</source>
         <translation>Tam Ekran Yap </translation>
     </message>
@@ -3807,90 +3807,90 @@ Lütfen paket yöneticinizi kullanarak yükleyin. Libsdl2-2.0-0, SDL2, veya benz
         <translation>DeckLink Anahtarlayıcı </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="836"/>
+        <location filename="../src/mainwindow.cpp" line="839"/>
         <source>Color</source>
         <translation>Renk </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="838"/>
+        <location filename="../src/mainwindow.cpp" line="841"/>
         <source>Text</source>
         <translation>Metin</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="841"/>
+        <location filename="../src/mainwindow.cpp" line="844"/>
         <source>Noise</source>
         <translation>Gürültü</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="843"/>
+        <location filename="../src/mainwindow.cpp" line="846"/>
         <source>Ising</source>
         <translation>Ising</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="845"/>
+        <location filename="../src/mainwindow.cpp" line="848"/>
         <source>Lissajous</source>
         <translation>Lissajous Eğrileri</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="847"/>
+        <location filename="../src/mainwindow.cpp" line="850"/>
         <source>Plasma</source>
         <translation>Plazma </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="849"/>
+        <location filename="../src/mainwindow.cpp" line="852"/>
         <source>Color Bars</source>
         <translation>Renk Çubukları</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="851"/>
+        <location filename="../src/mainwindow.cpp" line="854"/>
         <source>Audio Tone</source>
         <translation>Ses Tonu</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="853"/>
+        <location filename="../src/mainwindow.cpp" line="856"/>
         <source>Count</source>
         <translation>Sayı</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="856"/>
+        <location filename="../src/mainwindow.cpp" line="859"/>
         <source>Video4Linux</source>
         <translation>Video4Linux </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="857"/>
+        <location filename="../src/mainwindow.cpp" line="860"/>
         <source>PulseAudio</source>
         <translation>PulseAudio </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="858"/>
+        <location filename="../src/mainwindow.cpp" line="861"/>
         <source>JACK Audio</source>
         <translation>JACK Sesi</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="859"/>
+        <location filename="../src/mainwindow.cpp" line="862"/>
         <source>ALSA Audio</source>
         <translation>ALSA Ses </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="861"/>
+        <location filename="../src/mainwindow.cpp" line="864"/>
         <source>Audio/Video Device</source>
         <translation>Ses/Görüntü Aygıtı </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="864"/>
+        <location filename="../src/mainwindow.cpp" line="867"/>
         <source>SDI/HDMI</source>
         <translation>SDI/HDMI</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="886"/>
-        <location filename="../src/mainwindow.cpp" line="888"/>
-        <location filename="../src/mainwindow.cpp" line="1276"/>
-        <location filename="../src/mainwindow.cpp" line="3520"/>
+        <location filename="../src/mainwindow.cpp" line="889"/>
+        <location filename="../src/mainwindow.cpp" line="891"/>
+        <location filename="../src/mainwindow.cpp" line="1279"/>
+        <location filename="../src/mainwindow.cpp" line="3523"/>
         <source>Failed to open </source>
         <translation>Açılamadı </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="914"/>
+        <location filename="../src/mainwindow.cpp" line="917"/>
         <source>The file you opened uses GPU effects, but GPU effects are not enabled.
 
 GPU effects are EXPERIMENTAL, UNSTABLE and UNSUPPORTED! Unsupported means do not report bugs about it.
@@ -3899,23 +3899,23 @@ Do you want to enable GPU effects and restart?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="935"/>
+        <location filename="../src/mainwindow.cpp" line="938"/>
         <source>The file you opened uses CPU effects that are incompatible with GPU effects, but GPU effects are enabled.
 Do you want to disable GPU effects and restart?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="958"/>
+        <location filename="../src/mainwindow.cpp" line="961"/>
         <source>Repaired</source>
         <translation>Onarılmış</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="981"/>
+        <location filename="../src/mainwindow.cpp" line="984"/>
         <source>Repairing the project failed.</source>
         <translation>Proje onarılamadı.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="993"/>
+        <location filename="../src/mainwindow.cpp" line="996"/>
         <source>Shotcut noticed some problems in your project.
 Do you want Shotcut to try to repair it?
 
@@ -3929,185 +3929,185 @@ Evet seçerseniz Shotcut projenizin bir kopyasını oluşturarak
 adına &quot;- Onarılmış&quot; ekleyecek ve açacak.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1029"/>
+        <location filename="../src/mainwindow.cpp" line="1032"/>
         <source>Auto-saved files exist. Do you want to recover them now?</source>
         <translation>Otomatik olarak kaydedilen dosyalar var. Onları şimdi kurtarmak ister misiniz?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1144"/>
+        <location filename="../src/mainwindow.cpp" line="1147"/>
         <source>You cannot add a project to itself!</source>
         <translation>Kendisine bir proje ekleyemezsin!</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1179"/>
+        <location filename="../src/mainwindow.cpp" line="1182"/>
         <source>There was an error saving. Please try again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1213"/>
+        <location filename="../src/mainwindow.cpp" line="1216"/>
         <source>Opening %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1310"/>
-        <location filename="../src/mainwindow.cpp" line="3480"/>
+        <location filename="../src/mainwindow.cpp" line="1313"/>
+        <location filename="../src/mainwindow.cpp" line="3483"/>
         <source>Open File</source>
         <translation>Dosya Aç</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1572"/>
+        <location filename="../src/mainwindow.cpp" line="1575"/>
         <source>Untitled</source>
         <translation>Başlıksız</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1588"/>
+        <location filename="../src/mainwindow.cpp" line="1591"/>
         <source>About Shotcut</source>
         <translation>Shotcut Hakkında</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1589"/>
+        <location filename="../src/mainwindow.cpp" line="1592"/>
         <source>&lt;h1&gt;Shotcut version %1&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;https://www.shotcut.org/&quot;&gt;Shotcut&lt;/a&gt; is a free, open source, cross platform video editor.&lt;/p&gt;&lt;small&gt;&lt;p&gt;Copyright &amp;copy; 2011-2019 &lt;a href=&quot;https://www.meltytech.com/&quot;&gt;Meltytech&lt;/a&gt;, LLC&lt;/p&gt;&lt;p&gt;Licensed under the &lt;a href=&quot;https://www.gnu.org/licenses/gpl.html&quot;&gt;GNU General Public License v3.0&lt;/a&gt;&lt;/p&gt;&lt;p&gt;This program proudly uses the following projects:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://www.qt.io/&quot;&gt;Qt&lt;/a&gt; application and UI framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; multimedia authoring framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; multimedia format and codec libraries&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; H.264 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; VP8 and VP9 encoders&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; MP3 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt; video plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; audio plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;DefaultIcon&lt;/a&gt; icon collection by &lt;a href=&quot;http://www.interactivemania.com/&quot;&gt;interactivemania&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt;Oxygen&lt;/a&gt; icon collection&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;The source code used to build this program can be downloaded from &lt;a href=&quot;https://www.shotcut.org/&quot;&gt;shotcut.org&lt;/a&gt;.&lt;/p&gt;This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.&lt;/small&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2094"/>
+        <location filename="../src/mainwindow.cpp" line="2097"/>
         <source>Non-Broadcast</source>
         <translation>Yayınlanmayacak</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2099"/>
+        <location filename="../src/mainwindow.cpp" line="2102"/>
         <source>DVD Widescreen NTSC</source>
         <translation>DVD Geniş Ekran NTSC </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2100"/>
+        <location filename="../src/mainwindow.cpp" line="2103"/>
         <source>DVD Widescreen PAL</source>
         <translation>DVD Geniş Ekran PAL</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2111"/>
+        <location filename="../src/mainwindow.cpp" line="2114"/>
         <source>Square 1080p 30 fps</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2112"/>
+        <location filename="../src/mainwindow.cpp" line="2115"/>
         <source>Square 1080p 60 fps</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2113"/>
+        <location filename="../src/mainwindow.cpp" line="2116"/>
         <source>Vertical HD 30 fps</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2114"/>
+        <location filename="../src/mainwindow.cpp" line="2117"/>
         <source>Vertical HD 60 fps</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2115"/>
+        <location filename="../src/mainwindow.cpp" line="2118"/>
         <source>Custom</source>
         <translation>Özel </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2145"/>
-        <location filename="../src/mainwindow.cpp" line="2395"/>
+        <location filename="../src/mainwindow.cpp" line="2148"/>
+        <location filename="../src/mainwindow.cpp" line="2398"/>
         <source>Saved %1</source>
         <translation>%1 Kaydedildi</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2387"/>
-        <location filename="../src/mainwindow.cpp" line="2409"/>
+        <location filename="../src/mainwindow.cpp" line="2390"/>
+        <location filename="../src/mainwindow.cpp" line="2412"/>
         <source>Save XML</source>
         <translation>XML Kaydet</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2410"/>
+        <location filename="../src/mainwindow.cpp" line="2413"/>
         <source>MLT XML (*.mlt)</source>
         <translation>MLT XML (*.mlt) </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2429"/>
+        <location filename="../src/mainwindow.cpp" line="2432"/>
         <source>The project has been modified.
 Do you want to save your changes?</source>
         <translation>Projede değişiklikler yapılmış.
 Değişiklikleri kaydetmek ister misiniz?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2458"/>
+        <location filename="../src/mainwindow.cpp" line="2461"/>
         <source>There are incomplete jobs.
 Do you want to still want to exit?</source>
         <translation>Tamamlanmamış görevler var.
 Gene de çıkmak istiyor musunuz? </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2471"/>
+        <location filename="../src/mainwindow.cpp" line="2474"/>
         <source>An export is in progress.
 Do you want to still want to exit?</source>
         <translation>Devam eden bir dışa aktarma işlemi var.
 Yine de çıkmak ister misiniz?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2921"/>
+        <location filename="../src/mainwindow.cpp" line="2924"/>
         <source>Exit Full Screen</source>
         <translation>Tam Ekrandan Çık</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2934"/>
+        <location filename="../src/mainwindow.cpp" line="2937"/>
         <source>GPU effects are not supported</source>
         <translation>Grafik İşlemci efektleri desteklenmiyor </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3031"/>
+        <location filename="../src/mainwindow.cpp" line="3034"/>
         <source>Click here to check for a new version of Shotcut.</source>
         <translation>Shotcut güncelleme denetimi için buraya tıklayın. </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3175"/>
+        <location filename="../src/mainwindow.cpp" line="3178"/>
         <source>You must restart Shotcut to switch to the new language.
 Do you want to restart now?</source>
         <translation>Dil değişikliklerinin etkilili olması için Shotcut uygulamasını
 yeniden başlatmalısınız. Şimdi yeniden başlatmak ister misiniz?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3216"/>
+        <location filename="../src/mainwindow.cpp" line="3219"/>
         <source>Failed to connect to JACK.
 Please verify that JACK is installed and running.</source>
         <translation>JACK bağlantısı kurulamadı. 
 Lütfen JACK uygulamasının kurulu ve çalışır durumda olduğunu doğrulayın.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3225"/>
+        <location filename="../src/mainwindow.cpp" line="3228"/>
         <source>GPU effects are experimental and may cause instability on some systems. Some CPU effects are incompatible with GPU effects and will be disabled. A project created with GPU effects can not be converted to a CPU only project later.
 
 Do you want to enable GPU effects and restart Shotcut?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3247"/>
+        <location filename="../src/mainwindow.cpp" line="3250"/>
         <source>Shotcut must restart to disable GPU effects.
 
 Disable GPU effects and restart?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3458"/>
+        <location filename="../src/mainwindow.cpp" line="3461"/>
         <source>Do you want to automatically check for updates in the future?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3465"/>
+        <location filename="../src/mainwindow.cpp" line="3468"/>
         <source>Do not show this anymore.</source>
         <comment>Automatic upgrade check dialog</comment>
         <translation>Artık bunu gösterme.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3481"/>
+        <location filename="../src/mainwindow.cpp" line="3484"/>
         <source>MLT XML (*.mlt);;All Files (*)</source>
         <translation>MLT XML (*.mlt);;Tüm Dosyalar (*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3498"/>
+        <location filename="../src/mainwindow.cpp" line="3501"/>
         <source>The decimal point of the MLT XML file
 you want to open is incompatible.
 
@@ -4115,7 +4115,7 @@ Do you want to continue to open this MLT XML file?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3561"/>
+        <location filename="../src/mainwindow.cpp" line="3564"/>
         <source>You must restart Shotcut to change the display method.
 Do you want to restart now?</source>
         <translation>Görüntüleme yöntemini değiştirmek için Shotcut
@@ -4123,94 +4123,94 @@ uygulamasını yeniden başlatmanız gerekir.
 Şimdi yeniden başlatmak ister misiniz?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3583"/>
+        <location filename="../src/mainwindow.cpp" line="3586"/>
         <source>Application Log</source>
         <translation>Uygulama Günlüğü </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3622"/>
+        <location filename="../src/mainwindow.cpp" line="3625"/>
         <source>Shotcut version %1 is available! Click here to get it.</source>
         <translation>Shotcut %1 sürümü yayınlanmış! Almak için buraya tıklayın.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3628"/>
+        <location filename="../src/mainwindow.cpp" line="3631"/>
         <source>You are running the latest version of Shotcut.</source>
         <translation>Shotcut sürümünüz güncel.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3638"/>
+        <location filename="../src/mainwindow.cpp" line="3641"/>
         <source>Failed to read version.json when checking. Click here to go to the Web site.</source>
         <translation>Güncelleme denetimi sırasında version.json dosyası okunamadı. Web sitesine gitmek için buraya tıklayın.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3687"/>
+        <location filename="../src/mainwindow.cpp" line="3690"/>
         <source>Export EDL</source>
         <translation>EDL Olarak Dışa Aktar</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3688"/>
+        <location filename="../src/mainwindow.cpp" line="3691"/>
         <source>EDL (*.edl);;All Files (*)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3734"/>
+        <location filename="../src/mainwindow.cpp" line="3737"/>
         <source>A JavaScript error occurred during export.</source>
         <translation>Dışa aktarma sırasında bir JavaScript sorunu çıktı. </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3737"/>
+        <location filename="../src/mainwindow.cpp" line="3740"/>
         <source>Failed to open export-edl.js</source>
         <translation>Dışa aktarılan edl.js dosyası açılamadı</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3762"/>
+        <location filename="../src/mainwindow.cpp" line="3765"/>
         <source>Export Frame</source>
         <translation>Kare Olarak Dışa Aktar</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3763"/>
+        <location filename="../src/mainwindow.cpp" line="3766"/>
         <source>PNG (*.png);;BMP (*.bmp);;JPEG (*.jpg *.jpeg);;PPM (*.ppm);;TIFF (*.tif *.tiff);;WebP (*.webp);;All Files (*)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3783"/>
+        <location filename="../src/mainwindow.cpp" line="3786"/>
         <source>Unable to export frame.</source>
         <translation>Kare dışa aktarılamadı. </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3791"/>
+        <location filename="../src/mainwindow.cpp" line="3794"/>
         <source>You must restart Shotcut to change the data directory.
 Do you want to continue?</source>
         <translation>Veri klasörünü değiştirmek için  Shotcut uygulamasını yeniden başlatmalısınız. 
 Devam etmek istiyor musunuz?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3800"/>
+        <location filename="../src/mainwindow.cpp" line="3803"/>
         <source>Data Directory</source>
         <translation>Veri Klasörü</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3883"/>
+        <location filename="../src/mainwindow.cpp" line="3886"/>
         <source>Add Custom Layout</source>
         <translation>Özel Düzen Ekle</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3884"/>
+        <location filename="../src/mainwindow.cpp" line="3887"/>
         <source>Name</source>
         <translation>Ad </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3912"/>
+        <location filename="../src/mainwindow.cpp" line="3915"/>
         <source>Remove Video Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3926"/>
+        <location filename="../src/mainwindow.cpp" line="3929"/>
         <source>Remove Layout</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4055"/>
+        <location filename="../src/mainwindow.cpp" line="4058"/>
         <source>GPU effects are EXPERIMENTAL, UNSTABLE and UNSUPPORTED! Unsupported means do not report bugs about it.
 
 Do you want to disable GPU effects and restart Shotcut?</source>
@@ -4927,218 +4927,218 @@ p, li { beyaz-alan: ön sarma; }
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="193"/>
-        <location filename="../src/docks/playlistdock.ui" line="433"/>
+        <location filename="../src/docks/playlistdock.ui" line="430"/>
         <source>View as tiles</source>
         <translation>Görselli liste görünümü</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="207"/>
-        <location filename="../src/docks/playlistdock.ui" line="444"/>
+        <location filename="../src/docks/playlistdock.ui" line="441"/>
         <source>View as icons</source>
         <translation>Simge görünümü</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="221"/>
-        <location filename="../src/docks/playlistdock.ui" line="422"/>
+        <location filename="../src/docks/playlistdock.ui" line="419"/>
         <source>View as details</source>
         <translation>Ayrıntılı görünüm</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="238"/>
+        <location filename="../src/docks/playlistdock.ui" line="235"/>
         <source>Display a menu of additional actions</source>
         <translation>Ek işlemler menüsünü görüntüle</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="294"/>
+        <location filename="../src/docks/playlistdock.ui" line="291"/>
         <source>Insert Blank</source>
         <translation>Boşluk Ekle </translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="299"/>
+        <location filename="../src/docks/playlistdock.ui" line="296"/>
         <source>Append Blank</source>
         <translation>Boş Ekle </translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="304"/>
+        <location filename="../src/docks/playlistdock.ui" line="301"/>
         <source>Replace</source>
         <translation>Değiştir </translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="323"/>
+        <location filename="../src/docks/playlistdock.ui" line="320"/>
         <source>Remove</source>
         <translation>Kaldır</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="331"/>
+        <location filename="../src/docks/playlistdock.ui" line="328"/>
         <source>Set Creation Time...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="336"/>
+        <location filename="../src/docks/playlistdock.ui" line="333"/>
         <source>Goto</source>
         <translation>Git</translation>
     </message>
     <message>
+        <location filename="../src/docks/playlistdock.ui" line="265"/>
         <location filename="../src/docks/playlistdock.ui" line="268"/>
-        <location filename="../src/docks/playlistdock.ui" line="271"/>
         <source>Insert</source>
         <translation>Ek </translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="274"/>
+        <location filename="../src/docks/playlistdock.ui" line="271"/>
         <source>Shift+V</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../src/docks/playlistdock.ui" line="280"/>
         <location filename="../src/docks/playlistdock.ui" line="283"/>
-        <location filename="../src/docks/playlistdock.ui" line="286"/>
         <source>Append</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="289"/>
+        <location filename="../src/docks/playlistdock.ui" line="286"/>
         <source>Shift+A</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="307"/>
+        <location filename="../src/docks/playlistdock.ui" line="304"/>
         <source>Shift+B</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="312"/>
+        <location filename="../src/docks/playlistdock.ui" line="309"/>
         <source>Open </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="315"/>
+        <location filename="../src/docks/playlistdock.ui" line="312"/>
         <source>Open the clip in the Source player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="318"/>
+        <location filename="../src/docks/playlistdock.ui" line="315"/>
         <source>Return</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="326"/>
+        <location filename="../src/docks/playlistdock.ui" line="323"/>
         <source>Shift+X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="339"/>
+        <location filename="../src/docks/playlistdock.ui" line="336"/>
         <source>Go to the start of this clip in the Project player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="342"/>
+        <location filename="../src/docks/playlistdock.ui" line="339"/>
         <source>Shift+Return</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="347"/>
+        <location filename="../src/docks/playlistdock.ui" line="344"/>
         <source>Remove All</source>
         <translation>Tümünü Kaldır</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="350"/>
+        <location filename="../src/docks/playlistdock.ui" line="347"/>
         <source>Remove all items from the playlist</source>
         <translation>Oynatma listesindeki tüm ögeleri kaldır </translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="358"/>
+        <location filename="../src/docks/playlistdock.ui" line="355"/>
         <source>Hidden</source>
         <translation>Görüntülenmesin</translation>
     </message>
     <message>
+        <location filename="../src/docks/playlistdock.ui" line="363"/>
         <location filename="../src/docks/playlistdock.ui" line="366"/>
-        <location filename="../src/docks/playlistdock.ui" line="369"/>
         <source>In and Out - Left/Right</source>
         <translation>Giriş ve Çıkış - Sol/Sağ</translation>
     </message>
     <message>
+        <location filename="../src/docks/playlistdock.ui" line="374"/>
         <location filename="../src/docks/playlistdock.ui" line="377"/>
-        <location filename="../src/docks/playlistdock.ui" line="380"/>
         <source>In and Out - Top/Bottom</source>
         <translation>Giriş ve Çıkış - Üst/Alt</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="388"/>
+        <location filename="../src/docks/playlistdock.ui" line="385"/>
         <source>In Only - Small</source>
         <translation>Yalnız Giriş - Küçük </translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="396"/>
+        <location filename="../src/docks/playlistdock.ui" line="393"/>
         <source>In Only - Large</source>
         <translation>Yalnız Giriş - Büyük </translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="401"/>
+        <location filename="../src/docks/playlistdock.ui" line="398"/>
         <source>Add Selected to Timeline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="463"/>
+        <location filename="../src/docks/playlistdock.ui" line="460"/>
         <source>Play After Open</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="468"/>
+        <location filename="../src/docks/playlistdock.ui" line="465"/>
         <source>Select All</source>
-        <translation type="unfinished"></translation>
+        <translation>Tümünü Seç</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="471"/>
+        <location filename="../src/docks/playlistdock.ui" line="468"/>
         <source>Ctrl+Shift+A</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="476"/>
+        <location filename="../src/docks/playlistdock.ui" line="473"/>
         <source>Select None</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="479"/>
+        <location filename="../src/docks/playlistdock.ui" line="476"/>
         <source>Ctrl+Shift+D</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="406"/>
+        <location filename="../src/docks/playlistdock.ui" line="403"/>
         <source>Sort By Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="411"/>
+        <location filename="../src/docks/playlistdock.ui" line="408"/>
         <source>Sort By Date</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="419"/>
+        <location filename="../src/docks/playlistdock.ui" line="416"/>
         <source>Details</source>
         <translation>Ayrıntılar</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="430"/>
+        <location filename="../src/docks/playlistdock.ui" line="427"/>
         <source>Tiles</source>
         <translation>Görselli Liste</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="441"/>
+        <location filename="../src/docks/playlistdock.ui" line="438"/>
         <source>Icons</source>
         <translation>Simge</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="449"/>
+        <location filename="../src/docks/playlistdock.ui" line="446"/>
         <source>Copy</source>
         <translation>Kopyala </translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="452"/>
+        <location filename="../src/docks/playlistdock.ui" line="449"/>
         <source>Open a copy of the clip in the Source player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="455"/>
+        <location filename="../src/docks/playlistdock.ui" line="452"/>
         <source>Shift+C</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5159,7 +5159,7 @@ p, li { beyaz-alan: ön sarma; }
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="404"/>
-        <location filename="../src/docks/playlistdock.cpp" line="660"/>
+        <location filename="../src/docks/playlistdock.cpp" line="661"/>
         <source>You cannot insert a playlist into a playlist!</source>
         <translation>Bir oynatma listesine başka bir oynatma listesi eklenemez!</translation>
     </message>
@@ -5318,155 +5318,155 @@ p, li { beyaz-alan: ön sarma; }
         <translation>İze ekle </translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="61"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="62"/>
         <source>Insert into track</source>
         <translation>İz içine ekle </translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="99"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="101"/>
         <source>Overwrite onto track</source>
         <translation>İz üzerine ekle</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="138"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="140"/>
         <source>Lift from track</source>
         <translation>İz üzerinden kaldır</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="164"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="166"/>
         <source>Remove from track</source>
         <translation>İzden kaldır</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="190"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="192"/>
         <source>Change track name</source>
         <translation>İz adını değiştir </translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="212"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="214"/>
         <source>Merge adjacent clips</source>
         <translation>Bitişik parçaları birleştir </translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="236"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="238"/>
         <source>Toggle track mute</source>
         <translation>İz sesini aç/kapat</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="257"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="259"/>
         <source>Toggle track hidden</source>
         <translation>İzi görüntüle/gizle</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="279"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="281"/>
         <source>Change track compositing</source>
         <translation>İz birleştirmesini değiştir</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="301"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="303"/>
         <source>Lock track</source>
         <translation>İzi Kilitle</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="329"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="331"/>
         <source>Move clip</source>
         <translation>Parçayı taşı</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="355"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="357"/>
         <source>Trim clip in point</source>
         <translation>Parçayı giriş noktasından kırp </translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="402"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="404"/>
         <source>Trim clip out point</source>
         <translation>Parçayı çıkış noktasından kırp </translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="447"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="449"/>
         <source>Split clip</source>
         <translation>Parçayı böl</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="471"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="473"/>
         <source>Adjust fade in</source>
         <translation>Başlarken aydınlat</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="504"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="506"/>
         <source>Adjust fade out</source>
         <translation>Biterken karart</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="538"/>
-        <location filename="../src/commands/timelinecommands.cpp" line="654"/>
-        <location filename="../src/commands/timelinecommands.cpp" line="770"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="540"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="656"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="772"/>
         <source>Add transition</source>
         <translation>Geçiş ekle </translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="566"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="568"/>
         <source>Trim transition in point</source>
         <translation>Geçiş noktasının başından kırp </translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="609"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="611"/>
         <source>Trim transition out point</source>
         <translation>Geçiş noktasının sonudan kırp </translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="698"/>
-        <location filename="../src/commands/timelinecommands.cpp" line="733"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="700"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="735"/>
         <source>Remove transition</source>
         <translation>Geçişi kaldır </translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="811"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="813"/>
         <source>Add video track</source>
         <translation>Görüntü İzi Ekle</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="813"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="815"/>
         <source>Add audio track</source>
         <translation>Ses izi ekle</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="838"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="840"/>
         <source>Insert audio track</source>
         <translation>Ses İzi Ekle</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="840"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="842"/>
         <source>Insert video track</source>
         <translation>Araya Görüntü İzi Ekle</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="863"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="865"/>
         <source>Remove audio track</source>
         <translation>Ses İzini Kaldır</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="865"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="867"/>
         <source>Remove video track</source>
         <translation>Görüntü İzini Kaldır</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="913"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="915"/>
         <source>Change track blend mode</source>
         <translation>İz karıştırma kipini değiştir</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="953"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="955"/>
         <source>Change clip properties</source>
         <translation>Parça özelliklerini değiştir</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="997"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="999"/>
         <source>Detach Audio</source>
         <translation>Sesi Ayır</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3139"/>
+        <location filename="../src/mainwindow.cpp" line="3142"/>
         <source>You cannot add a project to itself!</source>
         <translation>Kendisine bir proje ekleyemezsin!</translation>
     </message>
@@ -6373,99 +6373,99 @@ konumunu etkilemeden siler (Z)</translation>
         <translation>Karıştırma Kipi</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="37"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="36"/>
         <source>Track: %1</source>
         <translation>İz: %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="44"/>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="78"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="43"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="75"/>
         <source>None</source>
         <translation>Yok</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="45"/>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="79"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="44"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="76"/>
         <source>Over</source>
         <translation>Yansıma</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="46"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="45"/>
         <source>Add</source>
         <translation>Ekle</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="47"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="46"/>
         <source>Saturate</source>
         <translation>Doygunluk</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="48"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="47"/>
         <source>Multiply</source>
         <translation>Çoklama</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="49"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="48"/>
         <source>Screen</source>
         <translation>Ekran</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="50"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="49"/>
         <source>Overlay</source>
         <translation>Kaplama </translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="51"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="50"/>
         <source>Darken</source>
         <translation>Karartma </translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="52"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="51"/>
         <source>Dodge</source>
         <translation>Atlatma </translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="53"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="52"/>
         <source>Burn</source>
         <translation>Yakma</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="54"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="53"/>
         <source>Hard Light</source>
         <translation>Parlak Işık</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="55"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="54"/>
         <source>Soft Light</source>
         <translation>Sönük Işık</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="56"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="55"/>
         <source>Difference</source>
         <translation>Benzeri</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="57"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="56"/>
         <source>Exclusion</source>
         <translation>Hariç tutulanlar</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="58"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="57"/>
         <source>HSL Hue</source>
         <translation>HSL Hue </translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="59"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="58"/>
         <source>HSL Saturation</source>
         <translation>HSL Doygunluğu </translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="60"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="59"/>
         <source>HSL Color</source>
         <translation>HSL Rengi</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="61"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="60"/>
         <source>HSL Luminosity</source>
         <translation>HSL Parlaklığı </translation>
     </message>
@@ -7536,7 +7536,7 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/halftone/meta.qml" line="40"/>
         <source>Yellow</source>
-        <translation type="unfinished">Sarı</translation>
+        <translation>Sarı</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/spot_remover/meta.qml" line="7"/>
@@ -7777,7 +7777,7 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/elastic_scale/meta.qml" line="33"/>
         <source>Center</source>
-        <translation type="unfinished">Orta</translation>
+        <translation>Orta</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/elastic_scale/meta.qml" line="41"/>
@@ -8227,7 +8227,7 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/views/timeline/timeline.qml" line="418"/>
         <source>Select All</source>
-        <translation type="unfinished"></translation>
+        <translation>Tümünü Seç</translation>
     </message>
     <message>
         <location filename="../src/qml/views/timeline/timeline.qml" line="423"/>
@@ -8701,9 +8701,9 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/audio_fadein/ui.qml" line="52"/>
         <location filename="../src/qml/filters/audio_fadeout/ui.qml" line="58"/>
-        <location filename="../src/qml/filters/fadein_brightness/ui.qml" line="61"/>
+        <location filename="../src/qml/filters/fadein_brightness/ui.qml" line="63"/>
         <location filename="../src/qml/filters/fadein_movit/ui.qml" line="55"/>
-        <location filename="../src/qml/filters/fadeout_brightness/ui.qml" line="61"/>
+        <location filename="../src/qml/filters/fadeout_brightness/ui.qml" line="63"/>
         <location filename="../src/qml/filters/fadeout_movit/ui.qml" line="60"/>
         <location filename="../src/qml/filters/timer/ui.qml" line="197"/>
         <source>Duration</source>
@@ -9282,9 +9282,9 @@ Most users do not need to change this.</source>
         <translation>Orta</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/fadein_brightness/ui.qml" line="80"/>
+        <location filename="../src/qml/filters/fadein_brightness/ui.qml" line="82"/>
         <location filename="../src/qml/filters/fadein_movit/ui.qml" line="76"/>
-        <location filename="../src/qml/filters/fadeout_brightness/ui.qml" line="80"/>
+        <location filename="../src/qml/filters/fadeout_brightness/ui.qml" line="82"/>
         <location filename="../src/qml/filters/fadeout_movit/ui.qml" line="79"/>
         <source>Adjust opacity instead of fade with black</source>
         <translation>Siyah kısma yerine matlık ayarlansın</translation>
@@ -9377,12 +9377,12 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="48"/>
         <source>Blend mode</source>
-        <translation type="unfinished">Karıştırma Kipi</translation>
+        <translation>Karıştırma Kipi</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="53"/>
         <source>Over</source>
-        <translation type="unfinished">Yansıma</translation>
+        <translation>Yansıma</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="54"/>
@@ -9395,77 +9395,77 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="56"/>
         <source>Saturate</source>
-        <translation type="unfinished">Doygunluk</translation>
+        <translation>Doygunluk</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="57"/>
         <source>Multiply</source>
-        <translation type="unfinished">Çoklama</translation>
+        <translation>Çoklama</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="58"/>
         <source>Screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Ekran </translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="59"/>
         <source>Overlay</source>
-        <translation type="unfinished">Kaplama </translation>
+        <translation>Kaplama </translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="60"/>
         <source>Darken</source>
-        <translation type="unfinished">Karartma </translation>
+        <translation>Karartma </translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="61"/>
         <source>Dodge</source>
-        <translation type="unfinished">Atlatma </translation>
+        <translation>Atlatma </translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="62"/>
         <source>Burn</source>
-        <translation type="unfinished">Yakma</translation>
+        <translation>Yakma</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="63"/>
         <source>Hard Light</source>
-        <translation type="unfinished">Parlak Işık</translation>
+        <translation>Parlak Işık</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="64"/>
         <source>Soft Light</source>
-        <translation type="unfinished">Sönük Işık</translation>
+        <translation>Sönük Işık</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="65"/>
         <source>Difference</source>
-        <translation type="unfinished">Benzeri</translation>
+        <translation>Benzeri</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="66"/>
         <source>Exclusion</source>
-        <translation type="unfinished">Hariç tutulanlar</translation>
+        <translation>Hariç tutulanlar</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="67"/>
         <source>HSL Hue</source>
-        <translation type="unfinished">HSL Hue </translation>
+        <translation>HSL Hue </translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="68"/>
         <source>HSL Saturation</source>
-        <translation type="unfinished">HSL Doygunluğu </translation>
+        <translation>HSL Doygunluğu </translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="69"/>
         <source>HSL Color</source>
-        <translation type="unfinished">HSL Rengi</translation>
+        <translation>HSL Rengi</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="70"/>
         <source>HSL Luminosity</source>
-        <translation type="unfinished">HSL Parlaklığı </translation>
+        <translation>HSL Parlaklığı </translation>
     </message>
     <message>
         <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="243"/>

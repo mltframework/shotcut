@@ -23,6 +23,7 @@ LANGUAGES = \
     fi \
     fr \
     gd \
+    gl \
     hu \
     it \
     ko \

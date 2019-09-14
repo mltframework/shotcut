@@ -1572,9 +1572,9 @@ in temporal compression</source>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1763"/>
-        <location filename="../src/docks/encodedock.cpp" line="903"/>
-        <location filename="../src/docks/encodedock.cpp" line="1302"/>
-        <location filename="../src/docks/encodedock.cpp" line="1737"/>
+        <location filename="../src/docks/encodedock.cpp" line="911"/>
+        <location filename="../src/docks/encodedock.cpp" line="1310"/>
+        <location filename="../src/docks/encodedock.cpp" line="1745"/>
         <source>Export File</source>
         <translation>Izvozi datoteko</translation>
     </message>
@@ -1600,17 +1600,17 @@ in temporal compression</source>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1803"/>
-        <location filename="../src/docks/encodedock.cpp" line="1447"/>
-        <location filename="../src/docks/encodedock.cpp" line="1454"/>
-        <location filename="../src/docks/encodedock.cpp" line="1565"/>
+        <location filename="../src/docks/encodedock.cpp" line="1455"/>
+        <location filename="../src/docks/encodedock.cpp" line="1462"/>
+        <location filename="../src/docks/encodedock.cpp" line="1573"/>
         <source>Stream</source>
         <translation>Pretok</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1830"/>
-        <location filename="../src/docks/encodedock.cpp" line="1282"/>
-        <location filename="../src/docks/encodedock.cpp" line="1370"/>
-        <location filename="../src/docks/encodedock.cpp" line="1384"/>
+        <location filename="../src/docks/encodedock.cpp" line="1290"/>
+        <location filename="../src/docks/encodedock.cpp" line="1378"/>
+        <location filename="../src/docks/encodedock.cpp" line="1392"/>
         <source>Stop Capture</source>
         <translation>Ustavi zajem</translation>
     </message>
@@ -1653,8 +1653,8 @@ in temporal compression</source>
     </message>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="413"/>
-        <location filename="../src/docks/encodedock.cpp" line="1229"/>
-        <location filename="../src/docks/encodedock.cpp" line="1230"/>
+        <location filename="../src/docks/encodedock.cpp" line="1237"/>
+        <location filename="../src/docks/encodedock.cpp" line="1238"/>
         <source>Custom</source>
         <translation>Po meri</translation>
     </message>
@@ -1669,110 +1669,110 @@ in temporal compression</source>
         <translation>Privzeto</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="907"/>
+        <location filename="../src/docks/encodedock.cpp" line="915"/>
         <source>You cannot write to a file that is in your project.
 Try again with a different folder or file name.</source>
         <translation>Ni možno pisati v datoteko, ki je v vašem projektu. Poskusite znova z drugo mapo ali imenom datoteke.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1060"/>
+        <location filename="../src/docks/encodedock.cpp" line="1068"/>
         <source>Shotcut found filters that require analysis jobs that have not run.
 Do you want to run the analysis jobs now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1302"/>
-        <location filename="../src/docks/encodedock.cpp" line="1739"/>
+        <location filename="../src/docks/encodedock.cpp" line="1310"/>
+        <location filename="../src/docks/encodedock.cpp" line="1747"/>
         <source>Capture File</source>
         <translation>Snemalna datoteka</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1305"/>
+        <location filename="../src/docks/encodedock.cpp" line="1313"/>
         <source>%1 (*.%2);;All Files (*)</source>
         <translation>%1 (*.%2);;Vse datoteke (*)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1307"/>
+        <location filename="../src/docks/encodedock.cpp" line="1315"/>
         <source>Determined by Export (*)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1326"/>
+        <location filename="../src/docks/encodedock.cpp" line="1334"/>
         <source>The drive you chose only has %1 MiB of free space.
 Do you still want to continue?</source>
         <translation>Izbran nosilec ima le %1MiB prostora na voljo.
 Želite vseeno nadaljevati?</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1333"/>
+        <location filename="../src/docks/encodedock.cpp" line="1341"/>
         <source>Do not show this anymore.</source>
         <comment>Export free disk space warning dialog</comment>
         <translation>Tega ne prikazuj več</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1338"/>
+        <location filename="../src/docks/encodedock.cpp" line="1346"/>
         <source>Export canceled.</source>
         <translation>Izvoz preklican.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1442"/>
-        <location filename="../src/docks/encodedock.cpp" line="1463"/>
+        <location filename="../src/docks/encodedock.cpp" line="1450"/>
+        <location filename="../src/docks/encodedock.cpp" line="1471"/>
         <source>Stop Stream</source>
         <translation>Ustavi pretok</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1455"/>
+        <location filename="../src/docks/encodedock.cpp" line="1463"/>
         <source>Enter the network protocol scheme, address, port, and parameters as an URL:</source>
         <translation>Vnesite mrežni protokol, naslov, vrata in parametre kot URL:</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1500"/>
+        <location filename="../src/docks/encodedock.cpp" line="1508"/>
         <source>Add Export Preset</source>
         <translation>Dodaj prednastavitev za izvoz</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1542"/>
+        <location filename="../src/docks/encodedock.cpp" line="1550"/>
         <source>Delete Preset</source>
         <translation>Izbriši prednastavitve</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1543"/>
+        <location filename="../src/docks/encodedock.cpp" line="1551"/>
         <source>Are you sure you want to delete %1?</source>
         <translation>Ali res želite izbrisati %1?</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1669"/>
-        <location filename="../src/docks/encodedock.cpp" line="1674"/>
+        <location filename="../src/docks/encodedock.cpp" line="1677"/>
+        <location filename="../src/docks/encodedock.cpp" line="1682"/>
         <source>None</source>
         <translation>Brez</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1723"/>
+        <location filename="../src/docks/encodedock.cpp" line="1731"/>
         <source>KiB (%1s)</source>
         <translation>KiB (%1s)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1845"/>
+        <location filename="../src/docks/encodedock.cpp" line="1853"/>
         <source>Detecting hardware encoders...</source>
         <translation>Odkrivam strojne kodirnike...</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1878"/>
+        <location filename="../src/docks/encodedock.cpp" line="1886"/>
         <source>Nothing found</source>
         <translation>Nič ni najdeno</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1881"/>
+        <location filename="../src/docks/encodedock.cpp" line="1889"/>
         <source>Found %1</source>
         <translation>Našel %1</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1893"/>
+        <location filename="../src/docks/encodedock.cpp" line="1901"/>
         <source>Configure Hardware Encoding</source>
         <translation>Konfiguriraj strojno kodiranje</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1914"/>
+        <location filename="../src/docks/encodedock.cpp" line="1922"/>
         <source>Export Frames/sec</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3325,7 +3325,7 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="391"/>
-        <location filename="../src/mainwindow.cpp" line="2918"/>
+        <location filename="../src/mainwindow.cpp" line="2921"/>
         <source>Enter Full Screen</source>
         <translation>Vnesi celoten zaslon</translation>
     </message>
@@ -3792,90 +3792,90 @@ Prosim namestite jo z vašim upraviteljem paketov. Lahko se imenuje libsdl2-2.0-
         <translation>DeckLink Keyer</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="836"/>
+        <location filename="../src/mainwindow.cpp" line="839"/>
         <source>Color</source>
         <translation>Barva</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="838"/>
+        <location filename="../src/mainwindow.cpp" line="841"/>
         <source>Text</source>
         <translation>Besedilo</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="841"/>
+        <location filename="../src/mainwindow.cpp" line="844"/>
         <source>Noise</source>
         <translation>Šum</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="843"/>
+        <location filename="../src/mainwindow.cpp" line="846"/>
         <source>Ising</source>
         <translation>Ising</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="845"/>
+        <location filename="../src/mainwindow.cpp" line="848"/>
         <source>Lissajous</source>
         <translation>Lissajous</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="847"/>
+        <location filename="../src/mainwindow.cpp" line="850"/>
         <source>Plasma</source>
         <translation>Plazma</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="849"/>
+        <location filename="../src/mainwindow.cpp" line="852"/>
         <source>Color Bars</source>
         <translation>Barvni trakovi</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="851"/>
+        <location filename="../src/mainwindow.cpp" line="854"/>
         <source>Audio Tone</source>
         <translation>Zvočni ton</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="853"/>
+        <location filename="../src/mainwindow.cpp" line="856"/>
         <source>Count</source>
         <translation>Število</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="856"/>
+        <location filename="../src/mainwindow.cpp" line="859"/>
         <source>Video4Linux</source>
         <translation>Video4Linux</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="857"/>
+        <location filename="../src/mainwindow.cpp" line="860"/>
         <source>PulseAudio</source>
         <translation>PulseAudio</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="858"/>
+        <location filename="../src/mainwindow.cpp" line="861"/>
         <source>JACK Audio</source>
         <translation>Zvok JACK</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="859"/>
+        <location filename="../src/mainwindow.cpp" line="862"/>
         <source>ALSA Audio</source>
         <translation>Zvok ALSA</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="861"/>
+        <location filename="../src/mainwindow.cpp" line="864"/>
         <source>Audio/Video Device</source>
         <translation>Zvočna/Video naprava</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="864"/>
+        <location filename="../src/mainwindow.cpp" line="867"/>
         <source>SDI/HDMI</source>
         <translation>SDI/HDMI</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="886"/>
-        <location filename="../src/mainwindow.cpp" line="888"/>
-        <location filename="../src/mainwindow.cpp" line="1276"/>
-        <location filename="../src/mainwindow.cpp" line="3520"/>
+        <location filename="../src/mainwindow.cpp" line="889"/>
+        <location filename="../src/mainwindow.cpp" line="891"/>
+        <location filename="../src/mainwindow.cpp" line="1279"/>
+        <location filename="../src/mainwindow.cpp" line="3523"/>
         <source>Failed to open </source>
         <translation>Odpiranje ni uspelo</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="914"/>
+        <location filename="../src/mainwindow.cpp" line="917"/>
         <source>The file you opened uses GPU effects, but GPU effects are not enabled.
 
 GPU effects are EXPERIMENTAL, UNSTABLE and UNSUPPORTED! Unsupported means do not report bugs about it.
@@ -3884,24 +3884,24 @@ Do you want to enable GPU effects and restart?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="935"/>
+        <location filename="../src/mainwindow.cpp" line="938"/>
         <source>The file you opened uses CPU effects that are incompatible with GPU effects, but GPU effects are enabled.
 Do you want to disable GPU effects and restart?</source>
         <translation>Datoteka, ki ste jo odprli uporablja učinke CPU, ki niso združljivi z učinki GPU, vendar so omogočeni učinki GPU.
 Ali želite onemogočiti učinke GPU in jo znova zagnati??</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="958"/>
+        <location filename="../src/mainwindow.cpp" line="961"/>
         <source>Repaired</source>
         <translation>Popravljeno</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="981"/>
+        <location filename="../src/mainwindow.cpp" line="984"/>
         <source>Repairing the project failed.</source>
         <translation>Popravilo projekta ni uspelo.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="993"/>
+        <location filename="../src/mainwindow.cpp" line="996"/>
         <source>Shotcut noticed some problems in your project.
 Do you want Shotcut to try to repair it?
 
@@ -3910,155 +3910,155 @@ with &quot;- Repaired&quot; in the file name and open it.</source>
         <translation>Shotcut je opazil nekaj težav v vašem projektu. Ali želite, da jih Shotcut poskusi popraviti? Če izberete Da, bo Shotcut ustvaril kopijo vašega projekta z &quot;- popravljeno&quot; v imenu datoteke in ga bo odprl.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1029"/>
+        <location filename="../src/mainwindow.cpp" line="1032"/>
         <source>Auto-saved files exist. Do you want to recover them now?</source>
         <translation>Obstajajo samodejno shranjene datoteke. Ali jih zdaj želite povrniti?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1144"/>
+        <location filename="../src/mainwindow.cpp" line="1147"/>
         <source>You cannot add a project to itself!</source>
         <translation>Samemu sebi ne morete dodati projekta!</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1179"/>
+        <location filename="../src/mainwindow.cpp" line="1182"/>
         <source>There was an error saving. Please try again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1213"/>
+        <location filename="../src/mainwindow.cpp" line="1216"/>
         <source>Opening %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1310"/>
-        <location filename="../src/mainwindow.cpp" line="3480"/>
+        <location filename="../src/mainwindow.cpp" line="1313"/>
+        <location filename="../src/mainwindow.cpp" line="3483"/>
         <source>Open File</source>
         <translation>Odpri datoteko</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1572"/>
+        <location filename="../src/mainwindow.cpp" line="1575"/>
         <source>Untitled</source>
         <translation>Brez naslova</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1588"/>
+        <location filename="../src/mainwindow.cpp" line="1591"/>
         <source>About Shotcut</source>
         <translation>Vizitka Shotcuta</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1589"/>
+        <location filename="../src/mainwindow.cpp" line="1592"/>
         <source>&lt;h1&gt;Shotcut version %1&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;https://www.shotcut.org/&quot;&gt;Shotcut&lt;/a&gt; is a free, open source, cross platform video editor.&lt;/p&gt;&lt;small&gt;&lt;p&gt;Copyright &amp;copy; 2011-2019 &lt;a href=&quot;https://www.meltytech.com/&quot;&gt;Meltytech&lt;/a&gt;, LLC&lt;/p&gt;&lt;p&gt;Licensed under the &lt;a href=&quot;https://www.gnu.org/licenses/gpl.html&quot;&gt;GNU General Public License v3.0&lt;/a&gt;&lt;/p&gt;&lt;p&gt;This program proudly uses the following projects:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://www.qt.io/&quot;&gt;Qt&lt;/a&gt; application and UI framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; multimedia authoring framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; multimedia format and codec libraries&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; H.264 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; VP8 and VP9 encoders&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; MP3 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt; video plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; audio plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;DefaultIcon&lt;/a&gt; icon collection by &lt;a href=&quot;http://www.interactivemania.com/&quot;&gt;interactivemania&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt;Oxygen&lt;/a&gt; icon collection&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;The source code used to build this program can be downloaded from &lt;a href=&quot;https://www.shotcut.org/&quot;&gt;shotcut.org&lt;/a&gt;.&lt;/p&gt;This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.&lt;/small&gt;</source>
         <translation>&lt;h1&gt;Različica Shotcuta %1&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;https://www.shotcut.org/&quot;&gt;Shotcut&lt;/a&gt; je brezplačen, odprtokoden in prenosen urejevalnik videa.&lt;/p&gt;&lt;small&gt;&lt;p&gt;Copyright &amp;copy; 2011-2019 &lt;a href=&quot;https://www.meltytech.com/&quot;&gt;Meltytech&lt;/a&gt;, LLC&lt;/p&gt;&lt;p&gt;Licencirano z &lt;a href=&quot;https://www.gnu.org/licenses/gpl.html&quot;&gt;GNU General Public License v3.0&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Ta program ponosno uporablja naslednje projekte:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://www.qt.io/&quot;&gt;Qt&lt;/a&gt; ogrodje za aplikacije in UI&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; ogrodje za ustvarjanje medijev&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; knjižnice formatov in multimedijskih kodekov&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; H.264 kodirnik&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; kodirniki VP8 in VP9&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; kodirnik MP3&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt; video vtičnike&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; audio vtičnike&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;DefaultIcon&lt;/a&gt; zbirko ikon od &lt;a href=&quot;http://www.interactivemania.com/&quot;&gt;interactivemania&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt;Oxygen&lt;/a&gt; icon collection&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;Izvorno kodo programa lahko prenesete s &lt;a href=&quot;https://www.shotcut.org/&quot;&gt;shotcut.org&lt;/a&gt;.&lt;/p&gt;Ta program se deli v upanju, da bo uporaben, a BREZ GARANCIJE in brez zagotovila o primernosti za prodajo ali določen namen.&lt;/small&gt;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2094"/>
+        <location filename="../src/mainwindow.cpp" line="2097"/>
         <source>Non-Broadcast</source>
         <translation>Ne-oddajno</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2099"/>
+        <location filename="../src/mainwindow.cpp" line="2102"/>
         <source>DVD Widescreen NTSC</source>
         <translation>DVD Širokozaslonsko NTSC</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2100"/>
+        <location filename="../src/mainwindow.cpp" line="2103"/>
         <source>DVD Widescreen PAL</source>
         <translation>DVD Širokozaslonsko PAL</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2111"/>
+        <location filename="../src/mainwindow.cpp" line="2114"/>
         <source>Square 1080p 30 fps</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2112"/>
+        <location filename="../src/mainwindow.cpp" line="2115"/>
         <source>Square 1080p 60 fps</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2113"/>
+        <location filename="../src/mainwindow.cpp" line="2116"/>
         <source>Vertical HD 30 fps</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2114"/>
+        <location filename="../src/mainwindow.cpp" line="2117"/>
         <source>Vertical HD 60 fps</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2115"/>
+        <location filename="../src/mainwindow.cpp" line="2118"/>
         <source>Custom</source>
         <translation>Po meri</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2145"/>
-        <location filename="../src/mainwindow.cpp" line="2395"/>
+        <location filename="../src/mainwindow.cpp" line="2148"/>
+        <location filename="../src/mainwindow.cpp" line="2398"/>
         <source>Saved %1</source>
         <translation>%1 shranjeno</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2387"/>
-        <location filename="../src/mainwindow.cpp" line="2409"/>
+        <location filename="../src/mainwindow.cpp" line="2390"/>
+        <location filename="../src/mainwindow.cpp" line="2412"/>
         <source>Save XML</source>
         <translation>Shrani XML</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2410"/>
+        <location filename="../src/mainwindow.cpp" line="2413"/>
         <source>MLT XML (*.mlt)</source>
         <translation>MLT XML (*.mlt)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2429"/>
+        <location filename="../src/mainwindow.cpp" line="2432"/>
         <source>The project has been modified.
 Do you want to save your changes?</source>
         <translation>Ta projekt je bil spremenjen.
 Ali želite shraniti svoje spremembe?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2458"/>
+        <location filename="../src/mainwindow.cpp" line="2461"/>
         <source>There are incomplete jobs.
 Do you want to still want to exit?</source>
         <translation>Obstajajo nepopoln posli.
 Ali še vedno žlite zapreti  program?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2471"/>
+        <location filename="../src/mainwindow.cpp" line="2474"/>
         <source>An export is in progress.
 Do you want to still want to exit?</source>
         <translation>Poteka izvoz. 
 Ali še vedno žlite zapreti program?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2921"/>
+        <location filename="../src/mainwindow.cpp" line="2924"/>
         <source>Exit Full Screen</source>
         <translation>Zapri celozaslonski prikaz</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2934"/>
+        <location filename="../src/mainwindow.cpp" line="2937"/>
         <source>GPU effects are not supported</source>
         <translation>Učinki GPU niso podprti</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3031"/>
+        <location filename="../src/mainwindow.cpp" line="3034"/>
         <source>Click here to check for a new version of Shotcut.</source>
         <translation>Kliknite tukaj, če želite preveriti obstoj nove različice Shotcuta.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3175"/>
+        <location filename="../src/mainwindow.cpp" line="3178"/>
         <source>You must restart Shotcut to switch to the new language.
 Do you want to restart now?</source>
         <translation>Shotcut morate znova zagnati, če želite preklopiti na nov jezik.
 Ali ga želite ponovno zagnati zdaj?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3216"/>
+        <location filename="../src/mainwindow.cpp" line="3219"/>
         <source>Failed to connect to JACK.
 Please verify that JACK is installed and running.</source>
         <translation>Povezovanje z JACK ni uspelo.
 Preverite, da je JACK nameščen in zagnan.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3225"/>
+        <location filename="../src/mainwindow.cpp" line="3228"/>
         <source>GPU effects are experimental and may cause instability on some systems. Some CPU effects are incompatible with GPU effects and will be disabled. A project created with GPU effects can not be converted to a CPU only project later.
 
 Do you want to enable GPU effects and restart Shotcut?</source>
@@ -4067,7 +4067,7 @@ Do you want to enable GPU effects and restart Shotcut?</source>
 Ali želite omogočiti učinke GPU in znova zagnati Shotcut?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3247"/>
+        <location filename="../src/mainwindow.cpp" line="3250"/>
         <source>Shotcut must restart to disable GPU effects.
 
 Disable GPU effects and restart?</source>
@@ -4076,23 +4076,23 @@ Disable GPU effects and restart?</source>
 Onemogočim učinke GPU in ga znova zaženem?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3458"/>
+        <location filename="../src/mainwindow.cpp" line="3461"/>
         <source>Do you want to automatically check for updates in the future?</source>
         <translation>Ali želite v prihodnje samodejno preverjati, če so na voljo posodobitve?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3465"/>
+        <location filename="../src/mainwindow.cpp" line="3468"/>
         <source>Do not show this anymore.</source>
         <comment>Automatic upgrade check dialog</comment>
         <translation>Tega ne prikazuj več.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3481"/>
+        <location filename="../src/mainwindow.cpp" line="3484"/>
         <source>MLT XML (*.mlt);;All Files (*)</source>
         <translation>MLT XML (*.mlt);;Vse datoteke (*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3498"/>
+        <location filename="../src/mainwindow.cpp" line="3501"/>
         <source>The decimal point of the MLT XML file
 you want to open is incompatible.
 
@@ -4100,101 +4100,101 @@ Do you want to continue to open this MLT XML file?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3561"/>
+        <location filename="../src/mainwindow.cpp" line="3564"/>
         <source>You must restart Shotcut to change the display method.
 Do you want to restart now?</source>
         <translation>Za spremembo načina prikaza je Shotcut potrebno ponovno zagnati.
 Želite to storiti sedaj?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3583"/>
+        <location filename="../src/mainwindow.cpp" line="3586"/>
         <source>Application Log</source>
         <translation>Dnevnik aplikacije</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3622"/>
+        <location filename="../src/mainwindow.cpp" line="3625"/>
         <source>Shotcut version %1 is available! Click here to get it.</source>
         <translation>Na voljo je Shotcut različica %1! Kliknite tukaj, da jo prenesete.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3628"/>
+        <location filename="../src/mainwindow.cpp" line="3631"/>
         <source>You are running the latest version of Shotcut.</source>
         <translation>Uporabljate najnovejšo različico  Shotcuta.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3638"/>
+        <location filename="../src/mainwindow.cpp" line="3641"/>
         <source>Failed to read version.json when checking. Click here to go to the Web site.</source>
         <translation>Med pregledom ni bilo mogoče prebrati version.json. Kliknite tu, da odprete spletno stran.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3687"/>
+        <location filename="../src/mainwindow.cpp" line="3690"/>
         <source>Export EDL</source>
         <translation>Izvozi EDL</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3688"/>
+        <location filename="../src/mainwindow.cpp" line="3691"/>
         <source>EDL (*.edl);;All Files (*)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3734"/>
+        <location filename="../src/mainwindow.cpp" line="3737"/>
         <source>A JavaScript error occurred during export.</source>
         <translation>Med izvozom je prišlo do napake Javascript.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3737"/>
+        <location filename="../src/mainwindow.cpp" line="3740"/>
         <source>Failed to open export-edl.js</source>
         <translation>Export-edl.js ni bilo mogoče odpreti.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3762"/>
+        <location filename="../src/mainwindow.cpp" line="3765"/>
         <source>Export Frame</source>
         <translation>Izvozi sličico</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3763"/>
+        <location filename="../src/mainwindow.cpp" line="3766"/>
         <source>PNG (*.png);;BMP (*.bmp);;JPEG (*.jpg *.jpeg);;PPM (*.ppm);;TIFF (*.tif *.tiff);;WebP (*.webp);;All Files (*)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3783"/>
+        <location filename="../src/mainwindow.cpp" line="3786"/>
         <source>Unable to export frame.</source>
         <translation>Sličice ni bilo mogoče izvoziti.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3791"/>
+        <location filename="../src/mainwindow.cpp" line="3794"/>
         <source>You must restart Shotcut to change the data directory.
 Do you want to continue?</source>
         <translation>Če želite spremeniti mapo podatkov, morate znova zagnati Shotcut.
 Ali želite nadaljevati?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3800"/>
+        <location filename="../src/mainwindow.cpp" line="3803"/>
         <source>Data Directory</source>
         <translation>Mapa s podatki</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3883"/>
+        <location filename="../src/mainwindow.cpp" line="3886"/>
         <source>Add Custom Layout</source>
         <translation>Dodaj postavitev po meri</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3884"/>
+        <location filename="../src/mainwindow.cpp" line="3887"/>
         <source>Name</source>
         <translation>Ime</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3912"/>
+        <location filename="../src/mainwindow.cpp" line="3915"/>
         <source>Remove Video Mode</source>
         <translation>Odstrani video način</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3926"/>
+        <location filename="../src/mainwindow.cpp" line="3929"/>
         <source>Remove Layout</source>
         <translation>Odstrani postavitev</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4055"/>
+        <location filename="../src/mainwindow.cpp" line="4058"/>
         <source>GPU effects are EXPERIMENTAL, UNSTABLE and UNSUPPORTED! Unsupported means do not report bugs about it.
 
 Do you want to disable GPU effects and restart Shotcut?</source>
@@ -4912,218 +4912,218 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="193"/>
-        <location filename="../src/docks/playlistdock.ui" line="433"/>
+        <location filename="../src/docks/playlistdock.ui" line="430"/>
         <source>View as tiles</source>
         <translation>Ploščice</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="207"/>
-        <location filename="../src/docks/playlistdock.ui" line="444"/>
+        <location filename="../src/docks/playlistdock.ui" line="441"/>
         <source>View as icons</source>
         <translation>Ikone</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="221"/>
-        <location filename="../src/docks/playlistdock.ui" line="422"/>
+        <location filename="../src/docks/playlistdock.ui" line="419"/>
         <source>View as details</source>
         <translation>Podrobno</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="238"/>
+        <location filename="../src/docks/playlistdock.ui" line="235"/>
         <source>Display a menu of additional actions</source>
         <translation>Prikaži meni dodatnih akcij</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="294"/>
+        <location filename="../src/docks/playlistdock.ui" line="291"/>
         <source>Insert Blank</source>
         <translation>Vstavi prazno</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="299"/>
+        <location filename="../src/docks/playlistdock.ui" line="296"/>
         <source>Append Blank</source>
         <translation>Dodaj prazno</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="304"/>
+        <location filename="../src/docks/playlistdock.ui" line="301"/>
         <source>Replace</source>
         <translation>Zamenjaj</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="323"/>
+        <location filename="../src/docks/playlistdock.ui" line="320"/>
         <source>Remove</source>
         <translation>Odstrani</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="331"/>
+        <location filename="../src/docks/playlistdock.ui" line="328"/>
         <source>Set Creation Time...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="336"/>
+        <location filename="../src/docks/playlistdock.ui" line="333"/>
         <source>Goto</source>
         <translation>Pojdi na</translation>
     </message>
     <message>
+        <location filename="../src/docks/playlistdock.ui" line="265"/>
         <location filename="../src/docks/playlistdock.ui" line="268"/>
-        <location filename="../src/docks/playlistdock.ui" line="271"/>
         <source>Insert</source>
         <translation>Vstavi</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="274"/>
+        <location filename="../src/docks/playlistdock.ui" line="271"/>
         <source>Shift+V</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../src/docks/playlistdock.ui" line="280"/>
         <location filename="../src/docks/playlistdock.ui" line="283"/>
-        <location filename="../src/docks/playlistdock.ui" line="286"/>
         <source>Append</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="289"/>
+        <location filename="../src/docks/playlistdock.ui" line="286"/>
         <source>Shift+A</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="307"/>
+        <location filename="../src/docks/playlistdock.ui" line="304"/>
         <source>Shift+B</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="312"/>
+        <location filename="../src/docks/playlistdock.ui" line="309"/>
         <source>Open </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="315"/>
+        <location filename="../src/docks/playlistdock.ui" line="312"/>
         <source>Open the clip in the Source player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="318"/>
+        <location filename="../src/docks/playlistdock.ui" line="315"/>
         <source>Return</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="326"/>
+        <location filename="../src/docks/playlistdock.ui" line="323"/>
         <source>Shift+X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="339"/>
+        <location filename="../src/docks/playlistdock.ui" line="336"/>
         <source>Go to the start of this clip in the Project player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="342"/>
+        <location filename="../src/docks/playlistdock.ui" line="339"/>
         <source>Shift+Return</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="347"/>
+        <location filename="../src/docks/playlistdock.ui" line="344"/>
         <source>Remove All</source>
         <translation>Odstrani vse</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="350"/>
+        <location filename="../src/docks/playlistdock.ui" line="347"/>
         <source>Remove all items from the playlist</source>
         <translation>dstrani vse vnose s seznama</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="358"/>
+        <location filename="../src/docks/playlistdock.ui" line="355"/>
         <source>Hidden</source>
         <translation>Skriti</translation>
     </message>
     <message>
+        <location filename="../src/docks/playlistdock.ui" line="363"/>
         <location filename="../src/docks/playlistdock.ui" line="366"/>
-        <location filename="../src/docks/playlistdock.ui" line="369"/>
         <source>In and Out - Left/Right</source>
         <translation>Noter in ven -  Levo/Desno</translation>
     </message>
     <message>
+        <location filename="../src/docks/playlistdock.ui" line="374"/>
         <location filename="../src/docks/playlistdock.ui" line="377"/>
-        <location filename="../src/docks/playlistdock.ui" line="380"/>
         <source>In and Out - Top/Bottom</source>
         <translation>Noter in ven - Zgoraj/Na dno</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="388"/>
+        <location filename="../src/docks/playlistdock.ui" line="385"/>
         <source>In Only - Small</source>
         <translation>Samo noter - majhno</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="396"/>
+        <location filename="../src/docks/playlistdock.ui" line="393"/>
         <source>In Only - Large</source>
         <translation>Samo noter - veliko</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="401"/>
+        <location filename="../src/docks/playlistdock.ui" line="398"/>
         <source>Add Selected to Timeline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="463"/>
+        <location filename="../src/docks/playlistdock.ui" line="460"/>
         <source>Play After Open</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="468"/>
+        <location filename="../src/docks/playlistdock.ui" line="465"/>
         <source>Select All</source>
-        <translation type="unfinished"></translation>
+        <translation>Izberi vse</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="471"/>
+        <location filename="../src/docks/playlistdock.ui" line="468"/>
         <source>Ctrl+Shift+A</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="476"/>
+        <location filename="../src/docks/playlistdock.ui" line="473"/>
         <source>Select None</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="479"/>
+        <location filename="../src/docks/playlistdock.ui" line="476"/>
         <source>Ctrl+Shift+D</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="406"/>
+        <location filename="../src/docks/playlistdock.ui" line="403"/>
         <source>Sort By Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="411"/>
+        <location filename="../src/docks/playlistdock.ui" line="408"/>
         <source>Sort By Date</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="419"/>
+        <location filename="../src/docks/playlistdock.ui" line="416"/>
         <source>Details</source>
         <translation>Podrobnosti</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="430"/>
+        <location filename="../src/docks/playlistdock.ui" line="427"/>
         <source>Tiles</source>
         <translation>Ploščice</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="441"/>
+        <location filename="../src/docks/playlistdock.ui" line="438"/>
         <source>Icons</source>
         <translation>Ikone</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="449"/>
+        <location filename="../src/docks/playlistdock.ui" line="446"/>
         <source>Copy</source>
         <translation>Kopiraj</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="452"/>
+        <location filename="../src/docks/playlistdock.ui" line="449"/>
         <source>Open a copy of the clip in the Source player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="455"/>
+        <location filename="../src/docks/playlistdock.ui" line="452"/>
         <source>Shift+C</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5144,7 +5144,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="404"/>
-        <location filename="../src/docks/playlistdock.cpp" line="660"/>
+        <location filename="../src/docks/playlistdock.cpp" line="661"/>
         <source>You cannot insert a playlist into a playlist!</source>
         <translation>Seznam predvajanja ne morete vstaviti na seznam predvajanja!</translation>
     </message>
@@ -5303,155 +5303,155 @@ p, li { white-space: pre-wrap; }
         <translation>Pripni v posnetek</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="61"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="62"/>
         <source>Insert into track</source>
         <translation>Vstavi v posnetek</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="99"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="101"/>
         <source>Overwrite onto track</source>
         <translation>Prepiši posnetek</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="138"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="140"/>
         <source>Lift from track</source>
         <translation>Dvigni iz posnetka</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="164"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="166"/>
         <source>Remove from track</source>
         <translation>Odstrani iz posnetka</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="190"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="192"/>
         <source>Change track name</source>
         <translation>Spremeni posnetka</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="212"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="214"/>
         <source>Merge adjacent clips</source>
         <translation>Združi sosednja izrezka</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="236"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="238"/>
         <source>Toggle track mute</source>
         <translation>Preklopi zvok posnetka</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="257"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="259"/>
         <source>Toggle track hidden</source>
         <translation>Preklopi skriti posnetek</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="279"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="281"/>
         <source>Change track compositing</source>
         <translation>Spremeni sestavljanje posnetka</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="301"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="303"/>
         <source>Lock track</source>
         <translation>Zakleni posnetek</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="329"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="331"/>
         <source>Move clip</source>
         <translation>Premakni izrezek</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="355"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="357"/>
         <source>Trim clip in point</source>
         <translation>Odreži izrezek v točki</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="402"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="404"/>
         <source>Trim clip out point</source>
         <translation>Odreži izrezek izven točke</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="447"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="449"/>
         <source>Split clip</source>
         <translation>Razdeli izrezek</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="471"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="473"/>
         <source>Adjust fade in</source>
         <translation>Prilagodi pojemanje v</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="504"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="506"/>
         <source>Adjust fade out</source>
         <translation>Prilagodi pojemanje ven</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="538"/>
-        <location filename="../src/commands/timelinecommands.cpp" line="654"/>
-        <location filename="../src/commands/timelinecommands.cpp" line="770"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="540"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="656"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="772"/>
         <source>Add transition</source>
         <translation>Dodaj prehod</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="566"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="568"/>
         <source>Trim transition in point</source>
         <translation>Odreži prehod v točki</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="609"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="611"/>
         <source>Trim transition out point</source>
         <translation>Odreži prehod izven točke</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="698"/>
-        <location filename="../src/commands/timelinecommands.cpp" line="733"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="700"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="735"/>
         <source>Remove transition</source>
         <translation>Odstrani prehod</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="811"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="813"/>
         <source>Add video track</source>
         <translation>Dodaj video posnetek</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="813"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="815"/>
         <source>Add audio track</source>
         <translation>Dodaj zvočni posnetek</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="838"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="840"/>
         <source>Insert audio track</source>
         <translation>Vstavi zvočni posnetek</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="840"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="842"/>
         <source>Insert video track</source>
         <translation>Vstavi video posnetek</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="863"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="865"/>
         <source>Remove audio track</source>
         <translation>Odstrani zvočni posnetek</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="865"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="867"/>
         <source>Remove video track</source>
         <translation>Odstrani video posnetek</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="913"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="915"/>
         <source>Change track blend mode</source>
         <translation>Spremeni način mešanja posnetka</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="953"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="955"/>
         <source>Change clip properties</source>
         <translation>premeni lastnosti odseka</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="997"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="999"/>
         <source>Detach Audio</source>
         <translation>Odklopi zvok</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3139"/>
+        <location filename="../src/mainwindow.cpp" line="3142"/>
         <source>You cannot add a project to itself!</source>
         <translation>Samemu sebi ne morete dodati projekta!</translation>
     </message>
@@ -6356,99 +6356,99 @@ vpliva na položaj drugih izrezkov (Z)</translation>
         <translation>Način mešanja</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="37"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="36"/>
         <source>Track: %1</source>
         <translation>Posnetek: %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="44"/>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="78"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="43"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="75"/>
         <source>None</source>
         <translation>Brez</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="45"/>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="79"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="44"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="76"/>
         <source>Over</source>
         <translation>Čez</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="46"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="45"/>
         <source>Add</source>
         <translation>Dodaj</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="47"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="46"/>
         <source>Saturate</source>
         <translation>Nasičenost</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="48"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="47"/>
         <source>Multiply</source>
         <translation>Pomnoži</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="49"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="48"/>
         <source>Screen</source>
         <translation>Zaslon</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="50"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="49"/>
         <source>Overlay</source>
         <translation>Prekrij</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="51"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="50"/>
         <source>Darken</source>
         <translation>Potemni</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="52"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="51"/>
         <source>Dodge</source>
         <translation>Svetlenje</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="53"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="52"/>
         <source>Burn</source>
         <translation>Temnenje</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="54"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="53"/>
         <source>Hard Light</source>
         <translation>Trda svetloba</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="55"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="54"/>
         <source>Soft Light</source>
         <translation>Mehka svetloba</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="56"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="55"/>
         <source>Difference</source>
         <translation>Razlika</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="57"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="56"/>
         <source>Exclusion</source>
         <translation>Izjema</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="58"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="57"/>
         <source>HSL Hue</source>
         <translation>HSL ton</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="59"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="58"/>
         <source>HSL Saturation</source>
         <translation>HSL nasičenost</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="60"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="59"/>
         <source>HSL Color</source>
         <translation>HSL barva</translation>
     </message>
     <message>
-        <location filename="../src/widgets/trackpropertieswidget.cpp" line="61"/>
+        <location filename="../src/widgets/trackpropertieswidget.cpp" line="60"/>
         <source>HSL Luminosity</source>
         <translation>HSL svetlost</translation>
     </message>
@@ -7521,7 +7521,7 @@ Večini uporabnikov tega ni treba spreminjati.</translation>
     <message>
         <location filename="../src/qml/filters/halftone/meta.qml" line="40"/>
         <source>Yellow</source>
-        <translation type="unfinished">Rumeno</translation>
+        <translation>Rumeno</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/spot_remover/meta.qml" line="7"/>
@@ -7762,7 +7762,7 @@ Večini uporabnikov tega ni treba spreminjati.</translation>
     <message>
         <location filename="../src/qml/filters/elastic_scale/meta.qml" line="33"/>
         <source>Center</source>
-        <translation type="unfinished">Sredina</translation>
+        <translation>Sredina</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/elastic_scale/meta.qml" line="41"/>
@@ -8212,7 +8212,7 @@ Večini uporabnikov tega ni treba spreminjati.</translation>
     <message>
         <location filename="../src/qml/views/timeline/timeline.qml" line="418"/>
         <source>Select All</source>
-        <translation type="unfinished"></translation>
+        <translation>Izberi vse</translation>
     </message>
     <message>
         <location filename="../src/qml/views/timeline/timeline.qml" line="423"/>
@@ -8686,9 +8686,9 @@ Večini uporabnikov tega ni treba spreminjati.</translation>
     <message>
         <location filename="../src/qml/filters/audio_fadein/ui.qml" line="52"/>
         <location filename="../src/qml/filters/audio_fadeout/ui.qml" line="58"/>
-        <location filename="../src/qml/filters/fadein_brightness/ui.qml" line="61"/>
+        <location filename="../src/qml/filters/fadein_brightness/ui.qml" line="63"/>
         <location filename="../src/qml/filters/fadein_movit/ui.qml" line="55"/>
-        <location filename="../src/qml/filters/fadeout_brightness/ui.qml" line="61"/>
+        <location filename="../src/qml/filters/fadeout_brightness/ui.qml" line="63"/>
         <location filename="../src/qml/filters/fadeout_movit/ui.qml" line="60"/>
         <location filename="../src/qml/filters/timer/ui.qml" line="197"/>
         <source>Duration</source>
@@ -9267,9 +9267,9 @@ Večini uporabnikov tega ni treba spreminjati.</translation>
         <translation>Sredina</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/fadein_brightness/ui.qml" line="80"/>
+        <location filename="../src/qml/filters/fadein_brightness/ui.qml" line="82"/>
         <location filename="../src/qml/filters/fadein_movit/ui.qml" line="76"/>
-        <location filename="../src/qml/filters/fadeout_brightness/ui.qml" line="80"/>
+        <location filename="../src/qml/filters/fadeout_brightness/ui.qml" line="82"/>
         <location filename="../src/qml/filters/fadeout_movit/ui.qml" line="79"/>
         <source>Adjust opacity instead of fade with black</source>
         <translation>Prilagodi prosojnost, namesto da zbledi s črno</translation>
@@ -9362,12 +9362,12 @@ Večini uporabnikov tega ni treba spreminjati.</translation>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="48"/>
         <source>Blend mode</source>
-        <translation type="unfinished">Način mešanja</translation>
+        <translation>Način mešanja</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="53"/>
         <source>Over</source>
-        <translation type="unfinished">Čez</translation>
+        <translation>Čez</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="54"/>
@@ -9380,77 +9380,77 @@ Večini uporabnikov tega ni treba spreminjati.</translation>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="56"/>
         <source>Saturate</source>
-        <translation type="unfinished">Nasičenost</translation>
+        <translation>Nasičenost</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="57"/>
         <source>Multiply</source>
-        <translation type="unfinished">Pomnoži</translation>
+        <translation>Pomnoži</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="58"/>
         <source>Screen</source>
-        <translation type="unfinished">Zaslon</translation>
+        <translation>Zaslon</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="59"/>
         <source>Overlay</source>
-        <translation type="unfinished">Prekrij</translation>
+        <translation>Prekrij</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="60"/>
         <source>Darken</source>
-        <translation type="unfinished">Potemni</translation>
+        <translation>Potemni</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="61"/>
         <source>Dodge</source>
-        <translation type="unfinished">Svetlenje</translation>
+        <translation>Svetlenje</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="62"/>
         <source>Burn</source>
-        <translation type="unfinished">Temnenje</translation>
+        <translation>Temnenje</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="63"/>
         <source>Hard Light</source>
-        <translation type="unfinished">Trda svetloba</translation>
+        <translation>Trda svetloba</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="64"/>
         <source>Soft Light</source>
-        <translation type="unfinished">Mehka svetloba</translation>
+        <translation>Mehka svetloba</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="65"/>
         <source>Difference</source>
-        <translation type="unfinished">Razlika</translation>
+        <translation>Razlika</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="66"/>
         <source>Exclusion</source>
-        <translation type="unfinished">Izjema</translation>
+        <translation>Izjema</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="67"/>
         <source>HSL Hue</source>
-        <translation type="unfinished">HSL ton</translation>
+        <translation>HSL ton</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="68"/>
         <source>HSL Saturation</source>
-        <translation type="unfinished">HSL nasičenost</translation>
+        <translation>HSL nasičenost</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="69"/>
         <source>HSL Color</source>
-        <translation type="unfinished">HSL barva</translation>
+        <translation>HSL barva</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="70"/>
         <source>HSL Luminosity</source>
-        <translation type="unfinished">HSL svetlost</translation>
+        <translation>HSL svetlost</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="243"/>
@@ -10480,7 +10480,7 @@ Click &quot;Open&quot; to load a file.</source>
         <location filename="../src/qml/filters/dither/ui.qml" line="88"/>
         <location filename="../src/qml/filters/posterize/ui.qml" line="82"/>
         <source>Levels</source>
-        <translation type="unfinished">Nivoji</translation>
+        <translation>Nivoji</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dither/ui.qml" line="113"/>
