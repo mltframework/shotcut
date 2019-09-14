@@ -438,6 +438,8 @@ int MultitrackModel::trimClipIn(int trackIndex, int clipIndex, int delta, bool r
 
         Mlt::Playlist playlist(*track);
         QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(clipIndex));
+        int filterIn = MLT.filterIn(playlist, clipIndex);
+        int filterOut = MLT.filterOut(playlist, clipIndex);
 
         Q_ASSERT(otherTracksPosition == -1);
         otherTracksPosition = info->start;
@@ -453,9 +455,7 @@ int MultitrackModel::trimClipIn(int trackIndex, int clipIndex, int delta, bool r
         playlist.resize_clip(clipIndex, info->frame_in + delta, info->frame_out);
 
         // Adjust filters.
-        int in = info->producer->get(kFilterInProperty)? info->producer->get_int(kFilterInProperty) : info->frame_in;
-        int out = info->producer->get(kFilterOutProperty)? info->producer->get_int(kFilterOutProperty) : info->frame_out;
-        adjustClipFilters(*info->producer, in, out, delta, 0);
+        adjustClipFilters(*info->producer, filterIn, filterOut, delta, 0);
 
         QModelIndex modelIndex = createIndex(clipIndex, 0, i);
         QVector<int> roles;
@@ -576,6 +576,8 @@ int MultitrackModel::trimClipOut(int trackIndex, int clipIndex, int delta, bool 
 
         Mlt::Playlist playlist(*track);
         QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(clipIndex));
+        int filterIn = MLT.filterIn(playlist, clipIndex);
+        int filterOut = MLT.filterOut(playlist, clipIndex);
 
         //when not rippling, never touch the other tracks
         if (trackIndex != i && (!ripple || !Settings.timelineRippleAllTracks()))
@@ -631,9 +633,7 @@ int MultitrackModel::trimClipOut(int trackIndex, int clipIndex, int delta, bool 
         playlist.resize_clip(clipIndex, info->frame_in, info->frame_out - delta);
 
         // Adjust filters.
-        int in = info->producer->get(kFilterInProperty)? info->producer->get_int(kFilterInProperty) : info->frame_in;
-        int out = info->producer->get(kFilterOutProperty)? info->producer->get_int(kFilterOutProperty) : info->frame_out;
-        adjustClipFilters(*info->producer, in, out, 0, delta);
+        adjustClipFilters(*info->producer, filterIn, filterOut, 0, delta);
 
         QModelIndex index = createIndex(clipIndex, 0, i);
         QVector<int> roles;
@@ -1210,8 +1210,8 @@ void MultitrackModel::splitClip(int trackIndex, int clipIndex, int position)
             MLT.XML(info->producer).toUtf8().constData());
         int in = info->frame_in;
         int out = info->frame_out;
-        int filter_in = info->producer->get(kFilterInProperty)? info->producer->get_int(kFilterInProperty) : info->frame_in;
-        int filter_out = info->producer->get(kFilterOutProperty)? info->producer->get_int(kFilterOutProperty) : info->frame_out;
+        int filterIn = MLT.filterIn(playlist, clipIndex);
+        int filterOut = MLT.filterOut(playlist, clipIndex);
         int duration = position - playlist.clip_start(clipIndex);
         int delta = info->frame_count - duration;
 
@@ -1256,9 +1256,7 @@ void MultitrackModel::splitClip(int trackIndex, int clipIndex, int position)
         }
         endInsertRows();
 
-        adjustClipFilters(producer, filter_in, out, 0, delta);
-        if (producer.get(kFilterOutProperty))
-            producer.set(kFilterOutProperty, out - delta);
+        adjustClipFilters(producer, filterIn, out, 0, delta);
 
         playlist.resize_clip(clipIndex + 1, in + duration, out);
         QModelIndex modelIndex = createIndex(clipIndex + 1, 0, trackIndex);
@@ -1270,9 +1268,7 @@ void MultitrackModel::splitClip(int trackIndex, int clipIndex, int position)
         AudioLevelsTask::start(*info->producer, this, modelIndex);
 
         delta = duration;
-        adjustClipFilters(*info->producer, in, filter_out, delta, 0);
-        if (info->producer->get(kFilterInProperty))
-            info->producer->set(kFilterInProperty, in + delta);
+        adjustClipFilters(*info->producer, in, filterOut, delta, 0);
 
         emit modified();
     }

@@ -149,6 +149,8 @@ public:
     void setProjectFolder(const QString& folderName);
     QChar decimalPoint() const;
     static void resetLocale();
+    static int filterIn(Mlt::Playlist&playlist, int clipIndex);
+    static int filterOut(Mlt::Playlist&playlist, int clipIndex);
 
 protected:
     Mlt::Repository* m_repo;

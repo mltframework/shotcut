@@ -1181,6 +1181,40 @@ void Controller::resetLocale()
     LOG_INFO() << "decimal point .";
 }
 
+int Controller::filterIn(Playlist& playlist, int clipIndex)
+{
+    int result = -1;
+    QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(clipIndex));
+    if (info) {
+        QScopedPointer<Mlt::ClipInfo> info2(playlist.clip_info(clipIndex - 1));
+        if (info2 && info2->producer && info2->producer->is_valid()
+                  && info2->producer->get(kShotcutTransitionProperty)) {
+            // Factor in a transition left of the clip.
+            result = info->frame_in - info2->frame_count;
+        } else {
+            result = info->frame_in;
+        }
+    }
+    return result;
+}
+
+int Controller::filterOut(Playlist& playlist, int clipIndex)
+{
+    int result = -1;
+    QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(clipIndex));
+    if (info) {
+        QScopedPointer<Mlt::ClipInfo> info2(playlist.clip_info(clipIndex + 1));
+        if (info2 && info2->producer && info2->producer->is_valid()
+                  && info2->producer->get(kShotcutTransitionProperty)) {
+            // Factor in a transition right of the clip.
+            result = info->frame_out + info2->frame_count;
+        } else {
+            result = info->frame_out;
+        }
+    }
+    return result;
+}
+
 void TransportControl::play(double speed)
 {
     MLT.play(speed);

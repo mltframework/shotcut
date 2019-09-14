@@ -204,18 +204,15 @@ void UndoHelper::undoChanges()
 
         /* Only in/out points handled so far */
         if (info.changes & ClipInfoModified) {
+            int filterIn = MLT.filterIn(playlist, currentIndex);
+            int filterOut = MLT.filterOut(playlist, currentIndex);
+
             UNDOLOG << "resizing clip at" << currentIndex;
             playlist.resize_clip(currentIndex, info.frame_in, info.frame_out);
 
             QScopedPointer<Mlt::Producer> clip(playlist.get_clip(currentIndex));
-            int in = info.frame_in;
-            int out = info.frame_out;
             if (clip && clip->is_valid()) {
-                if (clip->parent().get(kFilterInProperty))
-                    in = clip->parent().get_int(kFilterInProperty);
-                if (clip->parent().get(kFilterOutProperty))
-                    out = clip->parent().get_int(kFilterOutProperty);
-                m_model.adjustClipFilters(clip->parent(), in, out, info.in_delta, info.out_delta);
+                m_model.adjustClipFilters(clip->parent(), filterIn, filterOut, info.in_delta, info.out_delta);
             }
 
             QModelIndex modelIndex = m_model.createIndex(currentIndex, 0, info.oldTrackIndex);
