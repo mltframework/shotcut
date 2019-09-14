@@ -456,8 +456,6 @@ int MultitrackModel::trimClipIn(int trackIndex, int clipIndex, int delta, bool r
         int in = info->producer->get(kFilterInProperty)? info->producer->get_int(kFilterInProperty) : info->frame_in;
         int out = info->producer->get(kFilterOutProperty)? info->producer->get_int(kFilterOutProperty) : info->frame_out;
         adjustClipFilters(*info->producer, in, out, delta, 0);
-        if (info->producer->get(kFilterInProperty))
-            info->producer->set(kFilterInProperty, in + delta);
 
         QModelIndex modelIndex = createIndex(clipIndex, 0, i);
         QVector<int> roles;
@@ -636,8 +634,6 @@ int MultitrackModel::trimClipOut(int trackIndex, int clipIndex, int delta, bool 
         int in = info->producer->get(kFilterInProperty)? info->producer->get_int(kFilterInProperty) : info->frame_in;
         int out = info->producer->get(kFilterOutProperty)? info->producer->get_int(kFilterOutProperty) : info->frame_out;
         adjustClipFilters(*info->producer, in, out, 0, delta);
-        if (info->producer->get(kFilterOutProperty))
-            info->producer->set(kFilterOutProperty, out - delta);
 
         QModelIndex index = createIndex(clipIndex, 0, i);
         QVector<int> roles;
