@@ -1207,15 +1207,28 @@ void MultitrackModel::splitClip(int trackIndex, int clipIndex, int position)
     QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
     if (track) {
         Mlt::Playlist playlist(*track);
-        QScopedPointer<Mlt::Producer> clip(playlist.get_clip(clipIndex));
-        int originalDuration = playlist.clip_length(clipIndex);
+        QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(clipIndex));
 
         // Make copy of clip.
         Mlt::Producer producer(MLT.profile(), "xml-string",
-            MLT.XML(&clip->parent()).toUtf8().constData());
-        int in = clip->get_in();
-        int out = clip->get_out();
+            MLT.XML(info->producer).toUtf8().constData());
+        int in = info->frame_in;
+        int out = info->frame_out;
+        int filter_in = info->producer->get(kFilterInProperty)? info->producer->get_int(kFilterInProperty) : info->frame_in;
+        int filter_out = info->producer->get(kFilterOutProperty)? info->producer->get_int(kFilterOutProperty) : info->frame_out;
         int duration = position - playlist.clip_start(clipIndex);
+        int delta = info->frame_count - duration;
+
+        // Connect a transition on the left to the new producer.
+        if (isTransition(playlist, clipIndex - 1)) {
+            QScopedPointer<Mlt::Producer> p(playlist.get_clip(clipIndex - 1));
+            Mlt::Tractor tractor(p->parent());
+            if (tractor.is_valid()) {
+                QScopedPointer<Mlt::Producer> track_b(tractor.track(1));
+                track_b.reset(producer.cut(track_b->get_in(), track_b->get_out()));
+                tractor.set_track(*track_b, 1);
+            }
+        }
 
         // Remove fades that are usually not desired after split.
         QScopedPointer<Mlt::Filter> filter(getFilter("fadeOutVolume", &producer));
@@ -1227,18 +1240,18 @@ void MultitrackModel::splitClip(int trackIndex, int clipIndex, int position)
         filter.reset(getFilter("fadeOutMovit", &producer));
         if (filter && filter->is_valid())
             producer.detach(*filter);
-        filter.reset(getFilter("fadeInVolume", &clip->parent()));
+        filter.reset(getFilter("fadeInVolume", info->producer));
         if (filter && filter->is_valid())
-            clip->parent().detach(*filter);
-        filter.reset(getFilter("fadeInBrightness", &clip->parent()));
+            info->producer->detach(*filter);
+        filter.reset(getFilter("fadeInBrightness", info->producer));
         if (filter && filter->is_valid())
-            clip->parent().detach(*filter);
-        filter.reset(getFilter("fadeInMovit", &clip->parent()));
+            info->producer->detach(*filter);
+        filter.reset(getFilter("fadeInMovit", info->producer));
         if (filter && filter->is_valid())
-            clip->parent().detach(*filter);
+            info->producer->detach(*filter);
 
         beginInsertRows(index(trackIndex), clipIndex, clipIndex);
-        if (clip->is_blank()) {
+        if (playlist.is_blank(clipIndex)) {
             playlist.insert_blank(clipIndex, duration - 1);
         } else {
             playlist.insert(producer, clipIndex, in, in + duration - 1);
@@ -1246,7 +1259,10 @@ void MultitrackModel::splitClip(int trackIndex, int clipIndex, int position)
             AudioLevelsTask::start(producer.parent(), this, modelIndex);
         }
         endInsertRows();
-        adjustClipFilters(producer, in, out, 0, originalDuration - duration);
+
+        adjustClipFilters(producer, filter_in, out, 0, delta);
+        if (producer.get(kFilterOutProperty))
+            producer.set(kFilterOutProperty, out - delta);
 
         playlist.resize_clip(clipIndex + 1, in + duration, out);
         QModelIndex modelIndex = createIndex(clipIndex + 1, 0, trackIndex);
@@ -1255,8 +1271,12 @@ void MultitrackModel::splitClip(int trackIndex, int clipIndex, int position)
         roles << InPointRole;
         roles << FadeInRole;
         emit dataChanged(modelIndex, modelIndex, roles);
-        AudioLevelsTask::start(clip->parent(), this, modelIndex);
-        adjustClipFilters(clip->parent(), in, out, duration, 0);
+        AudioLevelsTask::start(*info->producer, this, modelIndex);
+
+        delta = duration;
+        adjustClipFilters(*info->producer, in, filter_out, delta, 0);
+        if (info->producer->get(kFilterInProperty))
+            info->producer->set(kFilterInProperty, in + delta);
 
         emit modified();
     }
