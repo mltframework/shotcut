@@ -64,11 +64,12 @@ RowLayout {
         color: value
         onAccepted: {
             // Make a copy of the current value.
-            var myColor = Qt.darker(color, 1.0)
+            var myColor = Qt.darker(value, 1.0)
             // Ignore alpha when comparing.
             myColor.a = currentColor.a
             // If the user changed color but left alpha at 0,
             // they probably want to reset alpha to opaque.
+            console.log('currentColor.a=' + currentColor.a + ' currentColor=' + currentColor + ' myColor=' + myColor)
             if (currentColor.a === 0 && !Qt.colorEqual(currentColor, myColor))
                 currentColor.a = 255
             // Assign the new color value. Unlike docs say, using currentColor
