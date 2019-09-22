@@ -1859,7 +1859,7 @@ void EncodeDock::on_hwencodeCheckBox_clicked(bool checked)
             QStringList args;
             args << "-hide_banner" << "-f" << "lavfi" << "-i" << "color=s=640x360" << "-frames" << "1" << "-an";
             if (codec.endsWith("_vaapi"))
-                args << "-init_hw_device" << "vaapi=vaapi0" << "-filter_hw_device" << "vaapi0" << "-vf" << "format=nv12,hwupload";
+                args << "-init_hw_device" << "vaapi=vaapi0:,connection_type=x11" << "-filter_hw_device" << "vaapi0" << "-vf" << "format=nv12,hwupload";
             else if (codec == "hevc_qsv")
                 args << "-load_plugin" << "hevc_hw";
             args << "-c:v" << codec << "-f" << "rawvideo" << "pipe:";
