@@ -509,6 +509,7 @@ private:
     QString m_audioIndex;
     QString m_xml;
     UndoHelper m_undoHelper;
+    bool m_trackAdded;
 };
 
 } // namespace Timeline

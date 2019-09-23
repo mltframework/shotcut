@@ -995,6 +995,7 @@ DetachAudioCommand::DetachAudioCommand(MultitrackModel& model, int trackIndex, i
     , m_targetTrackIndex(-1)
     , m_xml(xml)
     , m_undoHelper(m_model)
+    , m_trackAdded(false)
 {
     setText(QObject::tr("Detach Audio"));
 }
@@ -1040,26 +1041,32 @@ void DetachAudioCommand::redo()
                 }
             }
         }
-        if (m_targetTrackIndex == -1)
+        if (m_targetTrackIndex == -1) {
             // No target audio track
             m_targetTrackIndex = m_model.addAudioTrack();
+            m_trackAdded = m_targetTrackIndex > -1;
+        }
 
-        // Add the clip to the new audio track.
-        m_undoHelper.recordBeforeState();
-        m_model.overwrite(m_targetTrackIndex, clip, m_position);
-        m_undoHelper.recordAfterState();
+        if (m_targetTrackIndex > -1) {
+            // Add the clip to the new audio track.
+            m_undoHelper.recordBeforeState();
+            m_model.overwrite(m_targetTrackIndex, clip, m_position);
+            m_undoHelper.recordAfterState();
+        }
     }
 }
 
 void DetachAudioCommand::undo()
 {
     LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "position" << m_position;
-    if (m_targetTrackIndex > -1)
+    if (m_trackAdded) {
         // Remove the new audio track.
         m_model.removeTrack(m_targetTrackIndex);
-    else
+        m_targetTrackIndex = -1;
+    } else {
         // Remove the clip from the audio track.
         m_undoHelper.undoChanges();
+    }
 
     // Restore the audio stream index on the original clip.
     int i = m_model.trackList().at(m_trackIndex).mlt_index;
