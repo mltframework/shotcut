@@ -41,6 +41,7 @@ AbstractJob::AbstractJob(const QString& name)
 
 void AbstractJob::start()
 {
+    m_killed = false;
     m_ran = true;
     m_estimateTime.start();
     m_totalTime.start();
