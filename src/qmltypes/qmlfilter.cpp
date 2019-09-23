@@ -494,6 +494,7 @@ int QmlFilter::keyframeCount(const QString& name)
 void QmlFilter::resetProperty(const QString& name)
 {
     m_filter.clear(name.toUtf8().constData());
+    emit changed();
 }
 
 void QmlFilter::clearSimpleAnimation(const QString& name)
