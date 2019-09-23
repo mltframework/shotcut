@@ -1176,8 +1176,8 @@ QChar Controller::decimalPoint() const
 
 void Controller::resetLocale()
 {
-    ::qputenv("LC_ALL", "C");
-    ::setlocale(LC_ALL, "C");
+    ::qputenv(MLT_LC_NAME, "C");
+    ::setlocale(MLT_LC_CATEGORY, "C");
     LOG_INFO() << "decimal point .";
 }
 

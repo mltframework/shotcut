@@ -312,8 +312,8 @@ int main(int argc, char **argv)
 #ifdef Q_OS_MAC
     // Launcher and Spotlight on macOS are not setting this environment
     // variable needed by setlocale() as used by MLT.
-    if (QProcessEnvironment::systemEnvironment().value("LC_NUMERIC").isEmpty()) {
-        qputenv("LC_NUMERIC", QLocale().name().toUtf8());
+    if (QProcessEnvironment::systemEnvironment().value(MLT_LC_NAME).isEmpty()) {
+        qputenv(MLT_LC_NAME, QLocale().name().toUtf8());
 
         QLocale localeByName(QLocale(QLocale().language(), QLocale().script(), QLocale().country()));
         if (QLocale().decimalPoint() != localeByName.decimalPoint()) {

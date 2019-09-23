@@ -83,7 +83,7 @@ bool MltXmlChecker::check(const QString& fileName)
                 m_newXml.writeCharacters("\n");
                 m_newXml.writeStartElement("mlt");
                 foreach (QXmlStreamAttribute a, m_xml.attributes()) {
-                    if (a.name().toString().toUpper() != "LC_NUMERIC") {
+                    if (a.name().toString().toUpper() != MLT_LC_NAME) {
                         m_newXml.writeAttribute(a);
                     } else {
                         QString value = a.value().toString().toUpper();
@@ -91,13 +91,13 @@ bool MltXmlChecker::check(const QString& fileName)
                         m_usesLocale = (value != "" && value != "C" && value != "POSIX" && QLocale().decimalPoint() != '.');
                         // Upon correcting the document to conform to current system,
                         // update the declared LC_NUMERIC.
-                        m_newXml.writeAttribute("LC_NUMERIC", m_usesLocale? QLocale().name() : "C");
+                        m_newXml.writeAttribute(MLT_LC_NAME, m_usesLocale? QLocale().name() : "C");
                     }
                 }
                 // We cannot apply the locale change to the session at this point
                 // because we are merely checking at this point and not loading.
                 // Save the current locale state.
-                bool isCLocale = (::qgetenv("LC_ALL").toUpper() == "C");
+                bool isCLocale = (::qgetenv(MLT_LC_NAME).toUpper() == "C");
                 // Apply the chosen locale temporarily.
                 setLocale();
                 // Get the decimal point expected based on the current system
@@ -106,11 +106,11 @@ bool MltXmlChecker::check(const QString& fileName)
                 LOG_INFO() << "decimal point" << m_decimalPoint;
                 // Restore the current locale state.
                 if (isCLocale) {
-                    ::qputenv("LC_ALL", "C");
-                    ::setlocale(LC_ALL, "C");
+                    ::qputenv(MLT_LC_NAME, "C");
+                    ::setlocale(MLT_LC_CATEGORY, "C");
                 } else {
-                    ::qunsetenv("LC_ALL");
-                    ::setlocale(LC_ALL, "");
+                    ::qunsetenv(MLT_LC_NAME);
+                    ::setlocale(MLT_LC_CATEGORY, "");
                 }
 
                 readMlt();
@@ -141,11 +141,11 @@ void MltXmlChecker::setLocale()
 {
     // Returns whether this document uses a non-POSIX/-generic numeric locale.
     if (m_usesLocale) {
-        ::qunsetenv("LC_ALL");
-        ::setlocale(LC_ALL, "");
+        ::qunsetenv(MLT_LC_NAME);
+        ::setlocale(MLT_LC_CATEGORY, "");
     } else {
-        ::qputenv("LC_ALL", "C");
-        ::setlocale(LC_ALL, "C");
+        ::qputenv(MLT_LC_NAME, "C");
+        ::setlocale(MLT_LC_CATEGORY, "C");
     }
 }
 

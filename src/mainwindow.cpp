@@ -3491,7 +3491,7 @@ void MainWindow::on_actionOpenXML_triggered()
             isXmlRepaired(checker, url);
             // Check if the locale usage differs.
             // Get current locale.
-            QString localeName = QString(::setlocale(LC_ALL, nullptr)).toUpper();
+            QString localeName = QString(::setlocale(MLT_LC_CATEGORY, nullptr)).toUpper();
             // Test if it is C or POSIX.
             bool currentlyUsingLocale = (localeName != "" && localeName != "C" && localeName != "POSIX");
             if (currentlyUsingLocale != checker.usesLocale()) {
