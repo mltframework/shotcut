@@ -227,7 +227,8 @@ void AvformatProducerWidget::recreateProducer()
                  kShotcutHashProperty ","
                  kPlaylistIndexProperty ","
                  kShotcutSkipConvertProperty ","
-                 kCommentProperty);
+                 kCommentProperty ","
+                 kDefaultAudioIndexProperty);
     Mlt::Controller::copyFilters(*m_producer, *p);
     if (m_producer->get(kMultitrackItemProperty)) {
         emit producerChanged(p);
@@ -510,6 +511,10 @@ void AvformatProducerWidget::on_videoTrackComboBox_activated(int index)
 void AvformatProducerWidget::on_audioTrackComboBox_activated(int index)
 {
     if (m_producer) {
+        // Save the default audio index for AudioLevelsTask.
+        if (!m_producer->get(kDefaultAudioIndexProperty)) {
+            m_producer->set(kDefaultAudioIndexProperty, m_producer->get_int("audio_index"));
+        }
         m_producer->set("audio_index", ui->audioTrackComboBox->itemData(index).toString().toUtf8().constData());
         recreateProducer();
     }

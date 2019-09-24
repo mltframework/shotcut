@@ -111,13 +111,14 @@ bool AudioLevelsTask::operator==(AudioLevelsTask &b)
 Mlt::Producer* AudioLevelsTask::tempProducer()
 {
     if (!m_tempProducer) {
-        QString service = m_producers.first().first->get("mlt_service");
+        Mlt::Producer* producer = m_producers.first().first;
+        QString service = producer->get("mlt_service");
         if (service == "avformat-novalidate")
             service = "avformat";
         else if (service.startsWith("xml"))
             service = "xml-nogl";
         m_tempProducer.reset(new Mlt::Producer(m_profile, service.toUtf8().constData(),
-            m_producers.first().first->get("resource")));
+            producer->get("resource")));
         if (m_tempProducer->is_valid()) {
             Mlt::Filter channels(m_profile, "audiochannels");
             Mlt::Filter converter(m_profile, "audioconvert");
@@ -125,7 +126,9 @@ Mlt::Producer* AudioLevelsTask::tempProducer()
             m_tempProducer->attach(channels);
             m_tempProducer->attach(converter);
             m_tempProducer->attach(levels);
-            LOG_DEBUG() << "generating audio levels for" << m_tempProducer->get("resource");
+            if (producer->get("audio_index")) {
+                m_tempProducer->pass_property(*producer, "audio_index");
+            }
         }
     }
     return m_tempProducer.data();
@@ -134,13 +137,24 @@ Mlt::Producer* AudioLevelsTask::tempProducer()
 QString AudioLevelsTask::cacheKey()
 {
     QString key = QString("%1 audiolevels");
-    if (m_producers.first().first->get(kShotcutHashProperty)) {
-        key = key.arg(m_producers.first().first->get(kShotcutHashProperty));
+    Mlt::Producer* producer = m_producers.first().first;
+    if (producer->get(kShotcutHashProperty)) {
+        key = key.arg(producer->get(kShotcutHashProperty));
     } else {
-        key = key.arg(m_producers.first().first->get("resource"));
+        key = key.arg(producer->get("resource"));
         QCryptographicHash hash(QCryptographicHash::Sha1);
         hash.addData(key.toUtf8());
         key = hash.result().toHex();
+    }
+    if (producer->get("audio_index")) {
+        if (m_isForce) {
+            producer->set(kDefaultAudioIndexProperty, -1);
+        }
+        // Add the audio index only if different than default to avoid cache miss.
+        if (producer->get(kDefaultAudioIndexProperty) && 
+                producer->get_int("audio_index") != producer->get_int(kDefaultAudioIndexProperty)) {
+            key += QString(" %1").arg(producer->get("audio_index"));
+        }
     }
     return key;
 }
@@ -155,6 +169,13 @@ void AudioLevelsTask::run()
         QTime updateTime; updateTime.start();
         // TODO: use project channel count
         int channels = 2;
+
+        if (tempProducer()->get("audio_index")) {
+            LOG_DEBUG() << "generating audio levels for" << tempProducer()->get("resource")
+                        << "audio track =" << tempProducer()->get("audio_index");
+        } else {
+            LOG_DEBUG() << "generating audio levels for" << tempProducer()->get("resource");
+        }
 
         // for each frame
         int n = tempProducer()->get_playtime();
