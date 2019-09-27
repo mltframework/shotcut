@@ -144,8 +144,8 @@ int TimelineDock::clipIndexAtPosition(int trackIndex, int position)
 
 bool TimelineDock::isBlank(int trackIndex, int clipIndex)
 {
-    Q_ASSERT(trackIndex >= 0 && clipIndex >= 0);
-    return m_model.index(clipIndex, 0, m_model.index(trackIndex))
+    return trackIndex >= 0 && clipIndex >= 0 &&
+        m_model.index(clipIndex, 0, m_model.index(trackIndex))
         .data(MultitrackModel::IsBlankRole).toBool();
 }
 
