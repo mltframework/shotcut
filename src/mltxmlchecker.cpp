@@ -72,7 +72,7 @@ bool MltXmlChecker::check(const QString& fileName)
     if (file.open(QIODevice::ReadOnly | QIODevice::Text) &&
             m_tempFile.open()) {
         m_tempFile.resize(0);
-        m_basePath = QFileInfo(fileName).canonicalPath();
+        m_fileInfo = QFileInfo(fileName);
         m_xml.setDevice(&file);
         m_newXml.setDevice(&m_tempFile);
         m_newXml.setAutoFormatting(true);
@@ -243,6 +243,7 @@ void MltXmlChecker::processProperties()
         checkGpuEffects(mlt_service);
         checkCpuEffects(mlt_service);
         checkUnlinkedFile(mlt_service);
+        checkIncludesSelf(newProperties);
 
         // Second pass: amend property values.
         m_properties = newProperties;
@@ -373,7 +374,7 @@ bool MltXmlChecker::readResourceProperty(const QString& name, QString& value)
         // Save the resource name (minus prefix) for later check for unlinked files.
         m_resource.info.setFile(value.mid(m_resource.prefix.size()));
         if (!isNetworkResource(value) && m_resource.info.isRelative())
-            m_resource.info.setFile(m_basePath, m_resource.info.filePath());
+            m_resource.info.setFile(m_fileInfo.canonicalPath(), m_resource.info.filePath());
         return true;
     }
     return false;
@@ -437,8 +438,8 @@ bool MltXmlChecker::fixUnlinkedFile(QString& value)
             m_resource.newHash = replacement->data(ShotcutHashRole).toString();
             value = QDir::fromNativeSeparators(replacement->text());
             // Convert to relative path if possible.
-            if (value.startsWith(m_basePath + "/"))
-                value = value.mid(m_basePath.size() + 1);
+            if (value.startsWith(m_fileInfo.canonicalPath() + "/"))
+                value = value.mid(m_fileInfo.canonicalPath().size() + 1);
             // Restore special prefix such as "plain:" or speed value.
             value.prepend(m_resource.prefix);
             m_isCorrected = true;
@@ -465,4 +466,19 @@ bool MltXmlChecker::fixVersion1701WindowsPathBug(QString& value)
         return true;
     }
     return false;
+}
+
+void MltXmlChecker::checkIncludesSelf(QVector<MltProperty>& properties)
+{
+    if (m_resource.info.canonicalFilePath() == m_fileInfo.canonicalFilePath()) {
+        LOG_WARNING() << "This project tries to include itself; breaking that!";
+        for (auto& p : properties) {
+            if (p.first == "mlt_service")
+                p.second.clear();
+            else if (p.first == "resource")
+                p.second = "+INVALID.txt";
+        }
+        properties << MltProperty(kShotcutCaptionProperty, "INVALID");
+        m_isCorrected = true;
+    }
 }

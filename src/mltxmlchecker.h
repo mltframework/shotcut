@@ -57,6 +57,8 @@ public:
     bool usesLocale() const { return m_usesLocale; }
 
 private:
+    typedef QPair<QString, QString> MltProperty;
+
     void readMlt();
     void processProperties();
     void checkInAndOutPoints();
@@ -69,6 +71,7 @@ private:
     bool fixUnlinkedFile(QString& value);
     void fixStreamIndex(QString& value);
     bool fixVersion1701WindowsPathBug(QString& value);
+    void checkIncludesSelf(QVector<MltProperty>& properties);
 
     QXmlStreamReader m_xml;
     QXmlStreamWriter m_newXml;
@@ -80,9 +83,8 @@ private:
     QChar m_decimalPoint;
     QTemporaryFile m_tempFile;
     bool m_numericValueChanged;
-    QString m_basePath;
+    QFileInfo m_fileInfo;
     QStandardItemModel m_unlinkedFilesModel;
-    typedef QPair<QString, QString> MltProperty;
     QString mlt_class;
     QVector<MltProperty> m_properties;
     struct MltXmlResource {
