@@ -12,7 +12,7 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>400</width>
+    <width>420</width>
     <height>202</height>
    </size>
   </property>
@@ -80,7 +80,7 @@
          <bool>false</bool>
         </attribute>
         <attribute name="headerDefaultSectionSize">
-         <number>0</number>
+         <number>35</number>
         </attribute>
        </widget>
       </item>
@@ -150,7 +150,7 @@
            <x>0</x>
            <y>0</y>
            <width>443</width>
-           <height>623</height>
+           <height>570</height>
           </rect>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -318,16 +318,6 @@
                  <property name="verticalSpacing">
                   <number>3</number>
                  </property>
-                 <item row="7" column="0">
-                  <widget class="QLabel" name="label_4">
-                   <property name="text">
-                    <string>Interpolation</string>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                   </property>
-                  </widget>
-                 </item>
                  <item row="5" column="0">
                   <widget class="QLabel" name="label_15">
                    <property name="text">
@@ -347,6 +337,140 @@
                     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                    </property>
                   </widget>
+                 </item>
+                 <item row="4" column="1" colspan="2">
+                  <layout class="QHBoxLayout" name="horizontalLayout_9">
+                   <property name="spacing">
+                    <number>2</number>
+                   </property>
+                   <item>
+                    <widget class="QComboBox" name="scanModeCombo">
+                     <property name="currentIndex">
+                      <number>1</number>
+                     </property>
+                     <item>
+                      <property name="text">
+                       <string>Interlaced</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Progressive</string>
+                      </property>
+                     </item>
+                    </widget>
+                   </item>
+                   <item>
+                    <spacer name="horizontalSpacer_9">
+                     <property name="orientation">
+                      <enum>Qt::Horizontal</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>40</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="1" column="1" colspan="2">
+                  <layout class="QHBoxLayout" name="horizontalLayout_8">
+                   <property name="spacing">
+                    <number>2</number>
+                   </property>
+                   <item>
+                    <widget class="QSpinBox" name="aspectNumSpinner">
+                     <property name="minimum">
+                      <number>1</number>
+                     </property>
+                     <property name="maximum">
+                      <number>8192</number>
+                     </property>
+                     <property name="value">
+                      <number>16</number>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_16">
+                     <property name="text">
+                      <string>:</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QSpinBox" name="aspectDenSpinner">
+                     <property name="minimum">
+                      <number>1</number>
+                     </property>
+                     <property name="maximum">
+                      <number>8192</number>
+                     </property>
+                     <property name="value">
+                      <number>9</number>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <spacer name="horizontalSpacer_8">
+                     <property name="orientation">
+                      <enum>Qt::Horizontal</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>40</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="6" column="1" colspan="2">
+                  <layout class="QHBoxLayout" name="horizontalLayout_3">
+                   <item>
+                    <widget class="QComboBox" name="deinterlacerCombo">
+                     <property name="currentIndex">
+                      <number>3</number>
+                     </property>
+                     <item>
+                      <property name="text">
+                       <string>One Field (fast)</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Linear Blend (fast)</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>YADIF - temporal only (good)</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>YADIF - temporal + spatial (best)</string>
+                      </property>
+                     </item>
+                    </widget>
+                   </item>
+                   <item>
+                    <spacer name="horizontalSpacer_21">
+                     <property name="orientation">
+                      <enum>Qt::Horizontal</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>40</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                  </layout>
                  </item>
                  <item row="0" column="1" colspan="2">
                   <layout class="QHBoxLayout" name="horizontalLayout_7">
@@ -417,30 +541,91 @@
                    </property>
                   </widget>
                  </item>
-                 <item row="4" column="1" colspan="2">
-                  <layout class="QHBoxLayout" name="horizontalLayout_9">
-                   <property name="spacing">
-                    <number>2</number>
+                 <item row="0" column="0">
+                  <widget class="QLabel" name="label_22">
+                   <property name="text">
+                    <string>Resolution</string>
                    </property>
+                   <property name="alignment">
+                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="7" column="1" colspan="2">
+                  <layout class="QHBoxLayout" name="horizontalLayout_18">
                    <item>
-                    <widget class="QComboBox" name="scanModeCombo">
+                    <widget class="QComboBox" name="interpolationCombo">
                      <property name="currentIndex">
                       <number>1</number>
                      </property>
                      <item>
                       <property name="text">
-                       <string>Interlaced</string>
+                       <string>Nearest Neighbor (fast)</string>
                       </property>
                      </item>
                      <item>
                       <property name="text">
-                       <string>Progressive</string>
+                       <string>Bilinear (good)</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Bicubic (better)</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Hyper/Lanczos (best)</string>
                       </property>
                      </item>
                     </widget>
                    </item>
                    <item>
-                    <spacer name="horizontalSpacer_9">
+                    <spacer name="horizontalSpacer_22">
+                     <property name="orientation">
+                      <enum>Qt::Horizontal</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>40</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="7" column="0">
+                  <widget class="QLabel" name="label_4">
+                   <property name="text">
+                    <string>Interpolation</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="5" column="1" colspan="2">
+                  <layout class="QHBoxLayout" name="horizontalLayout_10">
+                   <item>
+                    <widget class="QComboBox" name="fieldOrderCombo">
+                     <property name="enabled">
+                      <bool>false</bool>
+                     </property>
+                     <item>
+                      <property name="text">
+                       <string>Bottom Field First</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Top Field First</string>
+                      </property>
+                     </item>
+                    </widget>
+                   </item>
+                   <item>
+                    <spacer name="horizontalSpacer_10">
                      <property name="orientation">
                       <enum>Qt::Horizontal</enum>
                      </property>
@@ -547,16 +732,6 @@
                    </item>
                   </layout>
                  </item>
-                 <item row="0" column="0">
-                  <widget class="QLabel" name="label_22">
-                   <property name="text">
-                    <string>Resolution</string>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                   </property>
-                  </widget>
-                 </item>
                  <item row="3" column="0">
                   <widget class="QLabel" name="label_10">
                    <property name="text">
@@ -567,137 +742,6 @@
                    </property>
                   </widget>
                  </item>
-                 <item row="1" column="1" colspan="2">
-                  <layout class="QHBoxLayout" name="horizontalLayout_8">
-                   <property name="spacing">
-                    <number>2</number>
-                   </property>
-                   <item>
-                    <widget class="QSpinBox" name="aspectNumSpinner">
-                     <property name="minimum">
-                      <number>1</number>
-                     </property>
-                     <property name="maximum">
-                      <number>8192</number>
-                     </property>
-                     <property name="value">
-                      <number>16</number>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <widget class="QLabel" name="label_16">
-                     <property name="text">
-                      <string>:</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <widget class="QSpinBox" name="aspectDenSpinner">
-                     <property name="minimum">
-                      <number>1</number>
-                     </property>
-                     <property name="maximum">
-                      <number>8192</number>
-                     </property>
-                     <property name="value">
-                      <number>9</number>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <spacer name="horizontalSpacer_8">
-                     <property name="orientation">
-                      <enum>Qt::Horizontal</enum>
-                     </property>
-                     <property name="sizeHint" stdset="0">
-                      <size>
-                       <width>40</width>
-                       <height>20</height>
-                      </size>
-                     </property>
-                    </spacer>
-                   </item>
-                  </layout>
-                 </item>
-                 <item row="5" column="1" colspan="2">
-                  <layout class="QHBoxLayout" name="horizontalLayout_10">
-                   <item>
-                    <widget class="QComboBox" name="fieldOrderCombo">
-                     <property name="enabled">
-                      <bool>false</bool>
-                     </property>
-                     <item>
-                      <property name="text">
-                       <string>Bottom Field First</string>
-                      </property>
-                     </item>
-                     <item>
-                      <property name="text">
-                       <string>Top Field First</string>
-                      </property>
-                     </item>
-                    </widget>
-                   </item>
-                   <item>
-                    <spacer name="horizontalSpacer_10">
-                     <property name="orientation">
-                      <enum>Qt::Horizontal</enum>
-                     </property>
-                     <property name="sizeHint" stdset="0">
-                      <size>
-                       <width>40</width>
-                       <height>20</height>
-                      </size>
-                     </property>
-                    </spacer>
-                   </item>
-                  </layout>
-                 </item>
-                 <item row="6" column="1" colspan="2">
-                  <layout class="QHBoxLayout" name="horizontalLayout_3">
-                   <item>
-                    <widget class="QComboBox" name="deinterlacerCombo">
-                     <property name="currentIndex">
-                      <number>3</number>
-                     </property>
-                     <item>
-                      <property name="text">
-                       <string>One Field (fast)</string>
-                      </property>
-                     </item>
-                     <item>
-                      <property name="text">
-                       <string>Linear Blend (fast)</string>
-                      </property>
-                     </item>
-                     <item>
-                      <property name="text">
-                       <string>YADIF - temporal only (good)</string>
-                      </property>
-                     </item>
-                     <item>
-                      <property name="text">
-                       <string>YADIF - temporal + spatial (best)</string>
-                      </property>
-                     </item>
-                    </widget>
-                   </item>
-                   <item>
-                    <spacer name="horizontalSpacer_21">
-                     <property name="orientation">
-                      <enum>Qt::Horizontal</enum>
-                     </property>
-                     <property name="sizeHint" stdset="0">
-                      <size>
-                       <width>40</width>
-                       <height>20</height>
-                      </size>
-                     </property>
-                    </spacer>
-                   </item>
-                  </layout>
-                 </item>
                  <item row="6" column="0">
                   <widget class="QLabel" name="label_2">
                    <property name="text">
@@ -707,50 +751,6 @@
                     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                    </property>
                   </widget>
-                 </item>
-                 <item row="7" column="1" colspan="2">
-                  <layout class="QHBoxLayout" name="horizontalLayout_18">
-                   <item>
-                    <widget class="QComboBox" name="interpolationCombo">
-                     <property name="currentIndex">
-                      <number>1</number>
-                     </property>
-                     <item>
-                      <property name="text">
-                       <string>Nearest Neighbor (fast)</string>
-                      </property>
-                     </item>
-                     <item>
-                      <property name="text">
-                       <string>Bilinear (good)</string>
-                      </property>
-                     </item>
-                     <item>
-                      <property name="text">
-                       <string>Bicubic (better)</string>
-                      </property>
-                     </item>
-                     <item>
-                      <property name="text">
-                       <string>Hyper/Lanczos (best)</string>
-                      </property>
-                     </item>
-                    </widget>
-                   </item>
-                   <item>
-                    <spacer name="horizontalSpacer_22">
-                     <property name="orientation">
-                      <enum>Qt::Horizontal</enum>
-                     </property>
-                     <property name="sizeHint" stdset="0">
-                      <size>
-                       <width>40</width>
-                       <height>20</height>
-                      </size>
-                     </property>
-                    </spacer>
-                   </item>
-                  </layout>
                  </item>
                  <item row="8" column="1" colspan="2">
                   <widget class="QCheckBox" name="parallelCheckbox">
@@ -769,6 +769,19 @@ with parallel processing enabled.</string>
                     <bool>true</bool>
                    </property>
                   </widget>
+                 </item>
+                 <item row="9" column="1">
+                  <spacer name="verticalSpacer_4">
+                   <property name="orientation">
+                    <enum>Qt::Vertical</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>20</width>
+                     <height>40</height>
+                    </size>
+                   </property>
+                  </spacer>
                  </item>
                 </layout>
                </widget>
