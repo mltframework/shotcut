@@ -128,6 +128,24 @@ QString Util::removeFileScheme(QUrl& url)
     return QUrl::fromPercentEncoding(path.toUtf8());
 }
 
+static inline bool isValidGoProFirstFilePrefix(const QFileInfo& info)
+{
+    QStringList list {"GOPR", "GH01", "GS01"};
+    return list.contains(info.baseName().toUpper());
+}
+
+static inline bool isValidGoProPrefix(const QFileInfo& info)
+{
+    QStringList list {"GP", "GH", "GS"};
+    return list.contains(info.baseName().toUpper());
+}
+
+static inline bool isValidGoProSuffix(const QFileInfo& info)
+{
+    QStringList list {"MP4", "LRV", "360"};
+    return list.contains(info.suffix().toUpper());
+}
+
 QStringList Util::sortedFileList(const QList<QUrl>& urls)
 {
     QStringList result;
@@ -136,13 +154,13 @@ QStringList Util::sortedFileList(const QList<QUrl>& urls)
     // First look for GoPro main files.
     foreach (QUrl url, urls) {
         QFileInfo fi(removeFileScheme(url));
-        if (fi.baseName().size() == 8 && fi.suffix() == "MP4" && fi.baseName().startsWith("GOPR"))
+        if (fi.baseName().size() == 8 && isValidGoProSuffix(fi) && isValidGoProFirstFilePrefix(fi))
             goproFiles[fi.baseName().mid(4)] << fi.filePath();
     }
     // Then, look for GoPro split files.
     foreach (QUrl url, urls) {
         QFileInfo fi(removeFileScheme(url));
-        if (fi.baseName().size() == 8 && fi.suffix() == "MP4" && fi.baseName().startsWith("GP")) {
+        if (fi.baseName().size() == 8 && isValidGoProSuffix(fi) && isValidGoProPrefix(fi)) {
             QString goproNumber = fi.baseName().mid(4);
             // Only if there is a matching main GoPro file.
             if (goproFiles.contains(goproNumber) && goproFiles[goproNumber].size())
@@ -159,8 +177,8 @@ QStringList Util::sortedFileList(const QList<QUrl>& urls)
     // Add all the non-GoPro files.
     foreach (QUrl url, urls) {
         QFileInfo fi(removeFileScheme(url));
-        if (fi.baseName().size() == 8 && fi.suffix() == "MP4" &&
-                (fi.baseName().startsWith("GOPR") || fi.baseName().startsWith("GP"))) {
+        if (fi.baseName().size() == 8 && isValidGoProSuffix(fi) &&
+                (isValidGoProFirstFilePrefix(fi) || isValidGoProPrefix(fi))) {
             QString goproNumber = fi.baseName().mid(4);
             if (goproFiles.contains(goproNumber) && goproFiles[goproNumber].contains(fi.filePath()))
                 continue;
