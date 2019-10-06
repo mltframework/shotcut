@@ -28,18 +28,10 @@ Item {
 
     Component.onCompleted: {
         if (filter.isNew) {
-            updateFilter(amountDefault)
+            filter.set(amount, amountDefault)
             filter.savePreset(preset.parameters)
         }
         amountSlider.value = filter.get(amount)
-    }
-
-    function updateFilter(value) {
-        filter.set(amount, value)
-        var weights = []
-        for (var i = 1; i <= value; i++)
-            weights.push(i)
-        filter.set('av.weights', weights.join(' '))
     }
 
     GridLayout {
@@ -68,7 +60,7 @@ Item {
             maximumValue: Math.round(profile.fps)
             stepSize: 1
             suffix: qsTr(' frames')
-            onValueChanged: updateFilter(value)
+            onValueChanged: filter.set(amount, value)
         }
         UndoButton {
             onClicked: amountSlider.value = amountDefault
