@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2014-2016 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2014-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,6 +24,9 @@ RowLayout {
     property int minimumValue: 0
     property int maximumValue: 99
     property int value: 0
+    property alias undoButtonVisible: undoButton.visible
+    property alias saveButtonVisible: saveButton.visible
+
     signal setDefaultClicked()
     signal saveDefaultClicked()
 
@@ -83,9 +85,11 @@ RowLayout {
         }
     }
     UndoButton {
+        id: undoButton
         onClicked: root.setDefaultClicked()
     }
     SaveDefaultButton {
+        id: saveButton
         onClicked: root.saveDefaultClicked()
     }
     Action {
