@@ -1816,7 +1816,7 @@ void MultitrackModel::trimTransitionIn(int trackIndex, int clipIndex, int delta)
         playlist.unblock();
         tractor.multitrack()->set_in_and_out(0, out);
         tractor.set_in_and_out(0, out);
-        producer->set("length", out + 1);
+        producer->set("length", producer->frames_to_time(out + 1, mlt_time_clock));
         producer->set_in_and_out(0, out);
 
         // Adjust the transitions.
@@ -1897,7 +1897,7 @@ void MultitrackModel::trimTransitionOut(int trackIndex, int clipIndex, int delta
         playlist.unblock();
         tractor.multitrack()->set_in_and_out(0, out);
         tractor.set_in_and_out(0, out);
-        producer->set("length", out + 1);
+        producer->set("length", producer->frames_to_time(out + 1, mlt_time_clock));
         producer->set_in_and_out(0, out);
 
         // Adjust the transitions.
@@ -2560,9 +2560,9 @@ void MultitrackModel::adjustBackgroundDuration()
         Mlt::Producer* clip = playlist.get_clip(0);
         if (clip) {
             if (duration != clip->parent().get_length()) {
-                clip->parent().set("length", duration);
+                clip->parent().set("length", clip->parent().frames_to_time(duration, mlt_time_clock));
                 clip->parent().set_in_and_out(0, duration - 1);
-                clip->set("length", duration);
+                clip->set("length", clip->parent().frames_to_time(duration, mlt_time_clock));
                 clip->set_in_and_out(0, duration - 1);
                 playlist.resize_clip(0, 0, duration - 1);
                 emit durationChanged();

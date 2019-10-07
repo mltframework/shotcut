@@ -47,7 +47,7 @@ Mlt::Producer* ImageProducerWidget::newProducer(Mlt::Profile& profile)
     Mlt::Producer* p = new Mlt::Producer(profile, m_producer->get("resource"));
     if (p->is_valid()) {
         if (ui->durationSpinBox->value() > p->get_length())
-            p->set("length", ui->durationSpinBox->value());
+            p->set("length", p->frames_to_time(ui->durationSpinBox->value(), mlt_time_clock));
         p->set_in_and_out(0, ui->durationSpinBox->value() - 1);
     }
     return p;
@@ -234,7 +234,7 @@ void ImageProducerWidget::on_sequenceCheckBox_clicked(bool checked)
                     QCoreApplication::processEvents();
             }
             i -= j;
-            m_producer->set("length", i * m_producer->get_int("ttl"));
+            m_producer->set("length", m_producer->frames_to_time(i * m_producer->get_int("ttl"), mlt_time_clock));
             ui->durationSpinBox->setValue(i);
             MAIN.showStatusMessage(tr("Reloading image sequence..."));
             QCoreApplication::processEvents();
@@ -242,7 +242,7 @@ void ImageProducerWidget::on_sequenceCheckBox_clicked(bool checked)
     }
     else {
         m_producer->set("resource", m_producer->get(kShotcutResourceProperty));
-        m_producer->set("length", qRound(MLT.profile().fps() * Mlt::kMaxImageDurationSecs));
+        m_producer->set("length", m_producer->frames_to_time(qRound(MLT.profile().fps() * Mlt::kMaxImageDurationSecs), mlt_time_clock));
         ui->durationSpinBox->setValue(qRound(MLT.profile().fps() * Settings.imageDuration()));
     }
     recreateProducer();

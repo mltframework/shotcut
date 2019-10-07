@@ -176,7 +176,7 @@ void AvformatProducerWidget::reopen(Mlt::Producer* p)
         length = qRound(length * speedRatio);
         in = qMin(qRound(in * speedRatio), length - 1);
         out = qMin(qRound(out * speedRatio), length - 1);
-        p->set("length", length);
+        p->set("length", p->frames_to_time(length, mlt_time_clock));
         p->set_in_and_out(in, out);
         position = qRound(position * speedRatio);
 
@@ -194,7 +194,7 @@ void AvformatProducerWidget::reopen(Mlt::Producer* p)
     }
     else
     {
-        p->set("length", length);
+        p->set("length", p->frames_to_time(length, mlt_time_clock));
         if (out + 1 >= m_producer->get_length())
             p->set("out", length - 1);
         else if (out >= length)

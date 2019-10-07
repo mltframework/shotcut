@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2018 Meltytech, LLC
+ * Copyright (c) 2016-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@
 
 void setLength(Mlt::Properties* p, int length)
 {
-    p->set("length", length);
+    p->set("length", p->frames_to_time(length, mlt_time_clock));
     p->set("out", length - 1);
     p->set("in", 0);
 }

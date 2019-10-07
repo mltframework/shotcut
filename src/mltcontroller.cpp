@@ -987,7 +987,7 @@ void Controller::setImageDurationFromDefault(Service* service) const
     if (service && service->is_valid()) {
         if (isImageProducer(service)) {
             service->set("ttl", 1);
-            service->set("length", qRound(m_profile->fps() * kMaxImageDurationSecs));
+            service->set("length", service->frames_to_time(qRound(m_profile->fps() * kMaxImageDurationSecs), mlt_time_clock));
             service->set("out", qRound(m_profile->fps() * Settings.imageDuration()) - 1);
         }
     }
@@ -998,8 +998,8 @@ void Controller::setDurationFromDefault(Producer* producer) const
     if (producer && producer->is_valid()) {
         int out = qRound(m_profile->fps() * Settings.imageDuration()) - 1;
         if (out >= producer->get_length())
-            producer->set("length", out + 1);
-        producer->set("length", qRound(m_profile->fps() * kMaxImageDurationSecs));
+            producer->set("length", producer->frames_to_time(out + 1, mlt_time_clock));
+        producer->set("length", producer->frames_to_time(qRound(m_profile->fps() * kMaxImageDurationSecs), mlt_time_clock));
         producer->set("out", out);
     }
 }

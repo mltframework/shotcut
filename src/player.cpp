@@ -560,6 +560,7 @@ void Player::onProducerOpened(bool play)
     m_selectedLabel->setText("--:--:--:--");
     if (m_isSeekable) {
         m_durationLabel->setText(QString(MLT.producer()->get_length_time()).prepend(" / "));
+        MLT.producer()->get_length_time(mlt_time_clock);
         m_previousIn = MLT.isClip()? MLT.producer()->get_in() : -1;
         m_scrubber->setEnabled(true);
         m_scrubber->setInPoint(m_previousIn);
@@ -624,6 +625,7 @@ void Player::onMeltedUnitOpened()
     m_inPointLabel->setText("--:--:--:-- / ");
     m_selectedLabel->setText("--:--:--:--");
     m_durationLabel->setText(QString(MLT.producer()->get_length_time()).prepend(" / "));
+    MLT.producer()->get_length_time(mlt_time_clock);
     m_previousIn = MLT.producer()->get_in();
     m_scrubber->setEnabled(true);
     m_scrubber->setInPoint(m_previousIn);
@@ -650,6 +652,7 @@ void Player::onDurationChanged()
     m_scrubber->setScale(m_duration);
     m_scrubber->setMarkers(QList<int>());
     m_durationLabel->setText(QString(MLT.producer()->get_length_time()).prepend(" / "));
+    MLT.producer()->get_length_time(mlt_time_clock);
     if (MLT.producer()->get_speed() == 0)
         seek(m_position);
     else if (m_position >= m_duration)
