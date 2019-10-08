@@ -2034,20 +2034,28 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         LOG_DEBUG() << "Current focusWindow:" << QApplication::focusWindow();
         break;
     case Qt::Key_BracketLeft:
-        filterController()->currentFilter()->setIn(
-            m_filtersDock->qmlProducer()->position() + m_filtersDock->qmlProducer()->in());
+        if (filterController()->currentFilter() && m_filtersDock->qmlProducer()) {
+            int i = m_filtersDock->qmlProducer()->position() + m_filtersDock->qmlProducer()->in();
+            filterController()->currentFilter()->setIn(i);
+        }
         break;
     case Qt::Key_BracketRight:
-        filterController()->currentFilter()->setOut(
-            m_filtersDock->qmlProducer()->position() + m_filtersDock->qmlProducer()->in());
+        if (filterController()->currentFilter() && m_filtersDock->qmlProducer()) {
+            int i = m_filtersDock->qmlProducer()->position() + m_filtersDock->qmlProducer()->in();
+            filterController()->currentFilter()->setOut(i);
+        }
         break;
     case Qt::Key_BraceLeft:
-        filterController()->currentFilter()->setAnimateIn(
-            m_filtersDock->qmlProducer()->position() + m_filtersDock->qmlProducer()->in() - filterController()->currentFilter()->in());
+        if (filterController()->currentFilter() && m_filtersDock->qmlProducer()) {
+            int i = m_filtersDock->qmlProducer()->position() + m_filtersDock->qmlProducer()->in() - filterController()->currentFilter()->in();
+            filterController()->currentFilter()->setAnimateIn(i);
+        }
         break;
     case Qt::Key_BraceRight:
-        filterController()->currentFilter()->setAnimateOut(
-            filterController()->currentFilter()->out() - (m_filtersDock->qmlProducer()->position() + m_filtersDock->qmlProducer()->in()));
+        if (filterController()->currentFilter() && m_filtersDock->qmlProducer()) {
+            int i = filterController()->currentFilter()->out() - (m_filtersDock->qmlProducer()->position() + m_filtersDock->qmlProducer()->in());
+            filterController()->currentFilter()->setAnimateOut(i);
+        }
         break;
     default:
         handled = false;
