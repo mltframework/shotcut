@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2014-2017 Meltytech, LLC
- * Author: Brian Matherly <code@brianmatherly.com>
+ * Copyright (c) 2014-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -53,7 +52,7 @@ Rectangle {
 
         Rectangle {
             id: itemBackground
-            color: activePalette.base
+            color: wrapper.ListView.isCurrentItem ? activePalette.highlight : activePalette.base
             width: wrapper.ListView.view.width - favButton.width
             anchors.top: parent.top
             anchors.bottom: parent.bottom
@@ -76,7 +75,7 @@ Rectangle {
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom
                 text: name
-                color: activePalette.text
+                color: wrapper.ListView.isCurrentItem ? activePalette.highlightedText : activePalette.text
                 verticalAlignment: Text.AlignVCenter
             }
             
@@ -88,12 +87,7 @@ Rectangle {
                     wrapper.ListView.view.itemSelected(index)
                 }
                 onEntered: {
-                    itemBackground.color = activePalette.highlight
-                    itemText.color = activePalette.highlightedText
-                }
-                onExited: {
-                    itemBackground.color = activePalette.base
-                    itemText.color = activePalette.text
+                    wrapper.ListView.view.currentIndex = index
                 }
             }
         }

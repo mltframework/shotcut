@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2018 Meltytech, LLC
+ * Copyright (c) 2013-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -86,6 +86,13 @@ bool FiltersDock::event(QEvent *event)
     return result;
 }
 
+void FiltersDock::keyPressEvent(QKeyEvent *event)
+{
+    QDockWidget::keyPressEvent(event);
+    if (event->key() == Qt::Key_F)
+        event->ignore();
+}
+
 void FiltersDock::onSeeked(int position)
 {
     if (m_producer.producer().is_valid()) {
@@ -114,6 +121,11 @@ void FiltersDock::onShowFrame(const SharedFrame& frame)
         if (position >= 0 && position <= m_producer.duration())
             m_producer.seek(position);
     }
+}
+
+void FiltersDock::openFilterMenu() const
+{
+    QMetaObject::invokeMethod(m_qview.rootObject(), "openFilterMenu");
 }
 
 void FiltersDock::resetQview()

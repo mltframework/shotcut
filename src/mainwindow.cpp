@@ -1725,6 +1725,18 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
             handled = false;
         }
         break;
+    case Qt::Key_F:
+        if (event->modifiers() == Qt::NoModifier || event->modifiers() == Qt::ControlModifier) {
+            m_filtersDock->show();
+            m_filtersDock->raise();
+            m_filtersDock->widget()->setFocus();
+            m_filtersDock->openFilterMenu();
+        } else if (event->modifiers() == Qt::ShiftModifier) {
+            filterController()->removeCurrent();
+        } else {
+            handled = false;
+        }
+        break;
     case Qt::Key_H:
 #ifdef Q_OS_MAC
         // OS X uses Cmd+H to hide an app.

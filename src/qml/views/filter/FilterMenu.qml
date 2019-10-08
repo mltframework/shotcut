@@ -76,6 +76,9 @@ Rectangle {
                     else
                         filterWindow.close()
                 }
+                Keys.onUpPressed: menuListView.selectPrevious()
+                Keys.onDownPressed: menuListView.selectNext()
+                onAccepted: menuListView.itemSelected(menuListView.currentIndex)
             }
             ToolButton {
                 id: clearButton
@@ -149,8 +152,22 @@ Rectangle {
                 id: menuListView
 
                 function itemSelected(index) {
-                    filterWindow.close()
-                    filterSelected(index)
+                    if (index > -1) {
+                        filterWindow.close()
+                        filterSelected(index)
+                    }
+                }
+
+                function selectNext() {
+                    do {
+                        currentIndex = Math.min(currentIndex + 1, count - 1)
+                    } while (!currentItem.visible && currentIndex < count - 1)
+                }
+
+                function selectPrevious() {
+                    do {
+                        menuListView.currentIndex = Math.max(menuListView.currentIndex - 1, 0)
+                    } while (!menuListView.currentItem.visible && menuListView.currentIndex > 0)
                 }
 
                 anchors.fill: parent
@@ -159,6 +176,11 @@ Rectangle {
                 boundsBehavior: Flickable.StopAtBounds
                 currentIndex: -1
                 focus: true
+
+                onCountChanged: {
+                    currentIndex = -1
+                    selectNext()
+                }
             }
         }
     }

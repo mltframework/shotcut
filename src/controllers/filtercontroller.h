@@ -56,6 +56,7 @@ public slots:
     void onFadeOutChanged();
     void onFilterInChanged(int delta, Mlt::Filter* filter = 0);
     void onFilterOutChanged(int delta, Mlt::Filter* filter = 0);
+    void removeCurrent();
 
 private slots:
     void handleAttachedModelChange();

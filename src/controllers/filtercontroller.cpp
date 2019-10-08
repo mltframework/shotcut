@@ -227,6 +227,12 @@ void FilterController::onQmlFilterChanged(const QString &name)
     }
 }
 
+void FilterController::removeCurrent()
+{
+    if (m_currentFilterIndex > -1)
+        m_attachedModel.remove(m_currentFilterIndex);
+}
+
 void FilterController::addMetadata(QmlMetadata* meta)
 {
     m_metadataModel.add(meta);
