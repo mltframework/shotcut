@@ -31,42 +31,78 @@ ToolBar {
     RowLayout {
         ToolButton {
             id: menuButton
-            action: menuAction
+            action: Action {
+                id: menuAction
+                tooltip: qsTr('Display a menu of additional actions')
+                iconName: 'format-justify-fill'
+                iconSource: 'qrc:///icons/oxygen/32x32/actions/format-justify-fill.png'
+                onTriggered: menu.popup()
+            }
         }
         Button { // separator
             enabled: false
             implicitWidth: 1
         }
         ToolButton {
-            action: zoomOutAction
+            implicitWidth: 31
+            implicitHeight: 31
+            action: Action {
+                tooltip: qsTr('Set the filter start')
+                text: '['
+                onTriggered: filter.in = producer.position + producer.in
+            }
+        }
+        ToolButton {
+            implicitWidth: 31
+            implicitHeight: 31
+            action: Action {
+                tooltip: qsTr('Set the filter end')
+                text: ']'
+                onTriggered: filter.out = producer.position + producer.in
+            }
+        }
+        ToolButton {
+            implicitWidth: 31
+            implicitHeight: 31
+            action: Action {
+                tooltip: qsTr('Set the first simple keyframe')
+                text: '{'
+                onTriggered: filter.animateIn = producer.position + producer.in - filter.in
+            }
+        }
+        ToolButton {
+            implicitWidth: 31
+            implicitHeight: 31
+            action: Action {
+                tooltip: qsTr('Set the second simple keyframe')
+                text: '}'
+                onTriggered: filter.animateOut = filter.out - (producer.position + producer.in)
+            }
+        }
+        Button { // separator
+            enabled: false
+            implicitWidth: 1
+        }
+        ToolButton {
+            action: Action {
+                id: zoomOutAction
+                tooltip: qsTr("Zoom timeline out (-)")
+                iconName: 'zoom-out'
+                iconSource: 'qrc:///icons/oxygen/32x32/actions/zoom-out.png'
+                onTriggered: root.zoomOut()
+            }
         }
         ZoomSlider {
             id: scaleSlider
         }
         ToolButton {
-            action: zoomInAction
+            action: Action {
+                id: zoomInAction
+                tooltip: qsTr("Zoom timeline in (+)")
+                iconName: 'zoom-in'
+                iconSource: 'qrc:///icons/oxygen/32x32/actions/zoom-in.png'
+                onTriggered: root.zoomIn()
+            }
         }
-    }
-
-    Action {
-        id: menuAction
-        tooltip: qsTr('Display a menu of additional actions')
-        iconName: 'format-justify-fill'
-        iconSource: 'qrc:///icons/oxygen/32x32/actions/format-justify-fill.png'
-        onTriggered: menu.popup()
-    }
-    Action {
-        id: zoomOutAction
-        tooltip: qsTr("Zoom timeline out (-)")
-        iconName: 'zoom-out'
-        iconSource: 'qrc:///icons/oxygen/32x32/actions/zoom-out.png'
-        onTriggered: root.zoomOut()
-    }
-    Action {
-        id: zoomInAction
-        tooltip: qsTr("Zoom timeline in (+)")
-        iconName: 'zoom-in'
-        iconSource: 'qrc:///icons/oxygen/32x32/actions/zoom-in.png'
-        onTriggered: root.zoomIn()
     }
 }

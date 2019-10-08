@@ -2033,6 +2033,22 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         LOG_DEBUG() << "Current focusObject:" << QApplication::focusObject();
         LOG_DEBUG() << "Current focusWindow:" << QApplication::focusWindow();
         break;
+    case Qt::Key_BracketLeft:
+        filterController()->currentFilter()->setIn(
+            m_filtersDock->qmlProducer()->position() + m_filtersDock->qmlProducer()->in());
+        break;
+    case Qt::Key_BracketRight:
+        filterController()->currentFilter()->setOut(
+            m_filtersDock->qmlProducer()->position() + m_filtersDock->qmlProducer()->in());
+        break;
+    case Qt::Key_BraceLeft:
+        filterController()->currentFilter()->setAnimateIn(
+            m_filtersDock->qmlProducer()->position() + m_filtersDock->qmlProducer()->in() - filterController()->currentFilter()->in());
+        break;
+    case Qt::Key_BraceRight:
+        filterController()->currentFilter()->setAnimateOut(
+            filterController()->currentFilter()->out() - (m_filtersDock->qmlProducer()->position() + m_filtersDock->qmlProducer()->in()));
+        break;
     default:
         handled = false;
         break;
