@@ -144,12 +144,12 @@ Rectangle {
 
     Row {
         id: waveform
-        visible: !isBlank && settings.timelineShowWaveforms && !isTrackMute && (parseInt(audioIndex) > -1 || audioIndex === 'all')
+        visible: !isBlank && settings.timelineShowWaveforms && (parseInt(audioIndex) > -1 || audioIndex === 'all')
         height: isAudio? parent.height : parent.height / 2
         anchors.left: parent.left
         anchors.bottom: parent.bottom
         anchors.margins: parent.border.width
-        opacity: 0.7
+        opacity: isTrackMute ? 0.2 : 0.7
         property int maxWidth: 10000
         property int innerWidth: clipRoot.width - clipRoot.border.width * 2
 
