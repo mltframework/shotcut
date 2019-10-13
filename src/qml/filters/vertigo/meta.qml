@@ -42,7 +42,7 @@ Metadata {
                 property: '1'
                 isSimple: true
                 isCurve: true
-                minimum: 0.2
+                minimum: 0
                 maximum: 1
             }
         ]
