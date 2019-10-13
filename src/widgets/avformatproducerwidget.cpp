@@ -260,6 +260,7 @@ void AvformatProducerWidget::onFrameDecoded()
     ui->durationSpinBox->setValue(m_producer->get_length());
     m_recalcDuration = false;
     ui->speedSpinBox->setValue(warpSpeed);
+    ui->rangeComboBox->setEnabled(true);
 
     // populate the track combos
     int n = m_producer->get_int("meta.media.nb_streams");
@@ -296,8 +297,12 @@ void AvformatProducerWidget::onFrameDecoded()
                 ui->videoTableWidget->setItem(0, 1, new QTableWidgetItem(codec));
                 key = QString("meta.media.%1.codec.pix_fmt").arg(i);
                 QString pix_fmt = QString::fromLatin1(m_producer->get(key.toLatin1().constData()));
-                if (pix_fmt.startsWith("yuvj"))
+                if (pix_fmt.startsWith("yuvj")) {
                     color_range = 1;
+                } else if (pix_fmt.contains("gbr") || pix_fmt.contains("rgb")) {
+                    color_range = 1;
+                    ui->rangeComboBox->setEnabled(false);
+                }
                 ui->videoTableWidget->setItem(3, 1, new QTableWidgetItem(pix_fmt));
                 ui->videoTrackComboBox->setCurrentIndex(videoIndex);
             }
