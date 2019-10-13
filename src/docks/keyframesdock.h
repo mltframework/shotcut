@@ -49,6 +49,8 @@ signals:
     void zoomIn();
     void zoomOut();
     void resetZoom();
+    void seekPreviousSimple();
+    void seekNextSimple();
 
 public slots:
     void setCurrentFilter(QmlFilter* filter, QmlMetadata* meta);

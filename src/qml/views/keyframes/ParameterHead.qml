@@ -20,6 +20,7 @@ import QtQuick.Controls 1.0
 import QtQuick.Controls.Styles 1.0
 import QtQuick.Layouts 1.0
 import Shotcut.Controls 1.0 as Shotcut
+import 'Keyframes.js' as Logic
 
 Rectangle {
     id: paramHeadRoot
@@ -109,18 +110,7 @@ Rectangle {
                         root.selection = [keyframes.seekPrevious()]
                         root.currentTrack = delegateIndex
                     } else {
-                        var position = producer.position + producer.in
-                        if (position > filter.out)
-                            position = filter.out
-                        else if (position > filter.out - filter.animateOut + 1)
-                            position = filter.out - filter.animateOut + 1
-                        else if (position > filter.in + filter.animateIn - 1)
-                            position = filter.in + filter.animateIn - 1
-                        else if (position > filter.in)
-                            position = filter.in
-                        else
-                            position = 0
-                        producer.position = position - producer.in
+                        Logic.seekPreviousSimple()
                     }
                 }
                 tooltip: (delegateIndex >= 0) ? qsTr('Seek to previous keyframe') : qsTr('Seek backwards')
@@ -177,18 +167,7 @@ Rectangle {
                         root.selection = [keyframes.seekNext()]
                         root.currentTrack = delegateIndex
                     } else {
-                        var position = producer.position + producer.in
-                        if (position < filter.in)
-                            position = filter.in
-                        else if (position < filter.in + filter.animateIn - 1)
-                            position = filter.in + filter.animateIn - 1
-                        else if (position < filter.out - filter.animateOut + 1)
-                            position = filter.out - filter.animateOut + 1
-                        else if (position < filter.out)
-                            position = filter.out
-                        else
-                            position = producer.out
-                        producer.position = Math.min(position - producer.in, producer.duration - 1)
+                        Logic.seekNextSimple()
                     }
                 }
                 tooltip: (delegateIndex >= 0) ? qsTr('Seek to next keyframe') : qsTr('Seek forwards')

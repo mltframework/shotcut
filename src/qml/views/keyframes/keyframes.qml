@@ -506,6 +506,8 @@ Rectangle {
         onZoomIn: zoomIn()
         onZoomOut: zoomOut()
         onResetZoom: resetZoom()
+        onSeekPreviousSimple: Logic.seekPreviousSimple()
+        onSeekNextSimple: Logic.seekNextSimple()
     }
 
     // This provides continuous scrolling at the left/right edges.

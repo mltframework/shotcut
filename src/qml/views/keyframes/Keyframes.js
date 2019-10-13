@@ -38,3 +38,33 @@ function scrollIfNeeded() {
             scrollView.flickableItem.contentX = x - 50;
     }
 }
+
+function seekPreviousSimple() {
+    var position = producer.position + producer.in
+    if (position > filter.out)
+        position = filter.out
+    else if (position > filter.out - filter.animateOut + 1)
+        position = filter.out - filter.animateOut + 1
+    else if (position > filter.in + filter.animateIn - 1)
+        position = filter.in + filter.animateIn - 1
+    else if (position > filter.in)
+        position = filter.in
+    else
+        position = 0
+    producer.position = position - producer.in
+}
+
+function seekNextSimple() {
+    var position = producer.position + producer.in
+    if (position < filter.in)
+        position = filter.in
+    else if (position < filter.in + filter.animateIn - 1)
+        position = filter.in + filter.animateIn - 1
+    else if (position < filter.out - filter.animateOut + 1)
+        position = filter.out - filter.animateOut + 1
+    else if (position < filter.out)
+        position = filter.out
+    else
+        position = producer.out
+    producer.position = Math.min(position - producer.in, producer.duration - 1)
+}

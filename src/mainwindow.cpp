@@ -2047,14 +2047,22 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         break;
     case Qt::Key_BracketLeft:
         if (filterController()->currentFilter() && m_filtersDock->qmlProducer()) {
-            int i = m_filtersDock->qmlProducer()->position() + m_filtersDock->qmlProducer()->in();
-            filterController()->currentFilter()->setIn(i);
+            if (event->modifiers() == Qt::AltModifier) {
+                emit m_keyframesDock->seekPreviousSimple();
+            } else {
+                int i = m_filtersDock->qmlProducer()->position() + m_filtersDock->qmlProducer()->in();
+                filterController()->currentFilter()->setIn(i);
+            }
         }
         break;
     case Qt::Key_BracketRight:
         if (filterController()->currentFilter() && m_filtersDock->qmlProducer()) {
-            int i = m_filtersDock->qmlProducer()->position() + m_filtersDock->qmlProducer()->in();
-            filterController()->currentFilter()->setOut(i);
+            if (event->modifiers() == Qt::AltModifier) {
+                emit m_keyframesDock->seekNextSimple();
+            } else {
+                int i = m_filtersDock->qmlProducer()->position() + m_filtersDock->qmlProducer()->in();
+                filterController()->currentFilter()->setOut(i);
+            }
         }
         break;
     case Qt::Key_BraceLeft:
