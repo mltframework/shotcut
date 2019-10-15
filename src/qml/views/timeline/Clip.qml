@@ -170,14 +170,14 @@ Rectangle {
     Rectangle {
         // audio peak line
         width: parent.width - parent.border.width * 2
-        visible: !isBlank && !isTransition
+        visible: waveform.visible && !isTransition
         height: 1
         anchors.left: parent.left
         anchors.bottom: parent.bottom
         anchors.leftMargin: parent.border.width
         anchors.bottomMargin: waveform.height * 0.9
         color: Qt.darker(parent.color)
-        opacity: 0.7
+        opacity: waveform.opacity
     }
 
     Rectangle {

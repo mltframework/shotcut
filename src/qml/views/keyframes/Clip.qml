@@ -145,6 +145,7 @@ Rectangle {
     Rectangle {
         // audio peak line
         width: parent.width - parent.border.width * 2
+        visible: waveform.visible
         height: 1
         anchors.left: parent.left
         anchors.bottom: parent.bottom
