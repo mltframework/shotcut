@@ -223,10 +223,13 @@ Rectangle {
             Column {
                 Flickable {
                     // Non-slider scroll area for the Ruler.
+                    id: rulerFlickable
                     contentX: scrollView.flickableItem.contentX
                     width: root.width - headerWidth
                     height: ruler.height
                     interactive: false
+                    // workaround to fix https://github.com/mltframework/shotcut/issues/777
+                    onContentXChanged: if (contentX === 0) contentX = scrollView.flickableItem.contentX
 
                     Ruler {
                         id: ruler
@@ -237,6 +240,8 @@ Rectangle {
                     id: scrollView
                     width: root.width - headerWidth
                     height: root.height - ruler.height - keyframesToolbar.height
+                    // workaround to fix https://github.com/mltframework/shotcut/issues/777
+                    flickableItem.onContentXChanged: rulerFlickable.contentX = flickableItem.contentX
 
                     Item {
                         width: tracksContainer.width + headerWidth
