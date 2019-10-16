@@ -46,13 +46,13 @@ void TranscodeDialog::on_horizontalSlider_valueChanged(int position)
 {
     switch (position) {
     case 0:
-        ui->formatLabel->setText(tr("Lossy: I-frame–only H.264/AC-3 MP4"));
+        ui->formatLabel->setText(tr("Lossy: I-frame–only %1").arg("H.264/AC-3 MP4"));
         break;
     case 1:
-        ui->formatLabel->setText(tr("Intermediate: %1/ALAC MOV").arg(m_isProgressive? "DNxHR" : "ProRes"));
+        ui->formatLabel->setText(tr("Intermediate: %1").arg(m_isProgressive? "DNxHR/ALAC MOV" : "ProRes/ALAC MOV"));
         break;
     case 2:
-        ui->formatLabel->setText(tr("Lossless: Ut Video/FLAC MKV"));
+        ui->formatLabel->setText(tr("Lossless: %1").arg("Ut Video/PCM MKV"));
         break;
     }
     m_format = position;

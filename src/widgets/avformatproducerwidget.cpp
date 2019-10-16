@@ -714,7 +714,7 @@ void AvformatProducerWidget::convert(TranscodeDialog& dialog)
             nameFilter = tr("MOV (*.mov);;All Files (*)");
             break;
         case 2:
-            args << "-f" << "matroska" << "-codec:a" << "flac" << "-codec:v" << "utvideo";
+            args << "-f" << "matroska" << "-codec:a" << "pcm_f32le" << "-codec:v" << "utvideo";
             args << "-pix_fmt" << "yuv422p";
             path.append("/%1 - %2.mkv");
             nameFilter = tr("MKV (*.mkv);;All Files (*)");
@@ -833,7 +833,7 @@ void AvformatProducerWidget::on_reverseButton_clicked()
             if (!ui->scanComboBox->currentIndex()) { // interlaced
                 meltArgs << "field_order=" + QString::fromLatin1(ui->fieldOrderComboBox->currentIndex()? "tt" : "bb");
             }
-            meltArgs << "acodec=flac" << "vcodec=utvideo" << "mlt_audio_format=s32le" << "pix_fmt=yuv422p";
+            meltArgs << "acodec=pcm_f32le" << "vcodec=utvideo" << "mlt_audio_format=f32le" << "pix_fmt=yuv422p";
             path.append("/%1 - %2.mkv");
             nameFilter = tr("MKV (*.mkv);;All Files (*)");
             break;
