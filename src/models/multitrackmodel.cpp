@@ -462,6 +462,7 @@ int MultitrackModel::trimClipIn(int trackIndex, int clipIndex, int delta, bool r
         roles << DurationRole;
         roles << InPointRole;
         emit dataChanged(modelIndex, modelIndex, roles);
+        AudioLevelsTask::start(*info->producer, this, modelIndex);
 
         if (!ripple) {
             // Adjust left of the clip.
@@ -640,6 +641,7 @@ int MultitrackModel::trimClipOut(int trackIndex, int clipIndex, int delta, bool 
         roles << DurationRole;
         roles << OutPointRole;
         emit dataChanged(index, index, roles);
+        AudioLevelsTask::start(*info->producer, this, index);
         emit modified();
     }
     if (delta > 0) {
