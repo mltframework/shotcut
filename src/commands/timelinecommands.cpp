@@ -445,6 +445,7 @@ SplitCommand::SplitCommand(MultitrackModel &model, int trackIndex,
     , m_trackIndex(trackIndex)
     , m_clipIndex(clipIndex)
     , m_position(position)
+    , m_undoHelper(m_model)
 {
     setText(QObject::tr("Split clip"));
 }
@@ -452,13 +453,15 @@ SplitCommand::SplitCommand(MultitrackModel &model, int trackIndex,
 void SplitCommand::redo()
 {
     LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "position" << m_position;
+    m_undoHelper.recordBeforeState();
     m_model.splitClip(m_trackIndex, m_clipIndex, m_position);
+    m_undoHelper.recordAfterState();
 }
 
 void SplitCommand::undo()
 {
     LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "position" << m_position;
-    m_model.joinClips(m_trackIndex, m_clipIndex);
+    m_undoHelper.undoChanges();
 }
 
 FadeInCommand::FadeInCommand(MultitrackModel &model, int trackIndex, int clipIndex, int duration, QUndoCommand *parent)
@@ -545,6 +548,7 @@ void AddTransitionCommand::redo()
     LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "position" << m_position;
     m_undoHelper.recordBeforeState();
     m_transitionIndex = m_model.addTransition(m_trackIndex, m_clipIndex, m_position, m_ripple);
+    LOG_DEBUG() << "m_transitionIndex" << m_transitionIndex;
     m_undoHelper.recordAfterState();
 }
 

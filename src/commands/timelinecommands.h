@@ -263,6 +263,7 @@ private:
     int m_trackIndex;
     int m_clipIndex;
     int m_position;
+    UndoHelper m_undoHelper;
 };
 
 class FadeInCommand : public QUndoCommand
