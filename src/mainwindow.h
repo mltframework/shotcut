@@ -200,7 +200,7 @@ public slots:
     void seekTimeline(int position);
     void seekKeyframes(int position);
     QWidget* loadProducerWidget(Mlt::Producer* producer);
-    void onProducerOpened();
+    void onProducerOpened(bool withReopen = true);
     void onGpuNotSupported();
     void editHTML(const QString& fileName);
     void stepLeftOneFrame();

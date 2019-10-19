@@ -2373,10 +2373,10 @@ void MainWindow::on_actionOpenOther_triggered()
     }
 }
 
-void MainWindow::onProducerOpened()
+void MainWindow::onProducerOpened(bool withReopen)
 {
     QWidget* w = loadProducerWidget(MLT.producer());
-    if (w && !MLT.producer()->get(kMultitrackItemProperty)) {
+    if (withReopen && w && !MLT.producer()->get(kMultitrackItemProperty)) {
         if (-1 != w->metaObject()->indexOfSignal("producerReopened()"))
             connect(w, SIGNAL(producerReopened()), m_player, SLOT(onProducerOpened()));
     }
@@ -3376,6 +3376,7 @@ void MainWindow::onProfileTriggered(QAction *action)
         QString xml = MLT.XML();
         setProfile(action->data().toString());
         MLT.restart(xml);
+        onProducerOpened(false);
     } else {
         setProfile(action->data().toString());
     }
@@ -3407,8 +3408,10 @@ void MainWindow::on_actionAddCustomProfile_triggered()
         }
         // Use the new profile.
         emit profileChanged();
-        if (!xml.isEmpty())
+        if (!xml.isEmpty()) {
             MLT.restart(xml);
+            onProducerOpened(false);
+        }
     }
 }
 
