@@ -68,6 +68,7 @@ public:
     Q_INVOKABLE QString get(QString name, int position = -1);
     Q_INVOKABLE double getDouble(QString name, int position = -1);
     Q_INVOKABLE QRectF getRect(QString name, int position = -1);
+    Q_INVOKABLE QStringList getGradient(QString name);
     Q_INVOKABLE void set(QString name, QString value, int position = -1);
     Q_INVOKABLE void set(QString name, double value,
                          int position = -1, mlt_keyframe_type keyframeType = mlt_keyframe_type(-1));
@@ -79,6 +80,7 @@ public:
                          int position = -1, mlt_keyframe_type keyframeType = mlt_keyframe_type(-1));
     Q_INVOKABLE void set(QString name, const QRectF& rect, double opacity = 1.0,
                          int position = -1, mlt_keyframe_type keyframeType = mlt_keyframe_type(-1));
+    Q_INVOKABLE void setGradient(QString name, const QStringList& gradient);
     QString path() const { return m_path; }
     Q_INVOKABLE void loadPresets();
     QStringList presets() const { return m_presets; }

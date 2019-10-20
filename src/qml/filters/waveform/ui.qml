@@ -24,6 +24,7 @@ Item {
     property string rectProperty: "rect"
     property rect filterRect: filter.getRect(rectProperty)
     property var defaultParameters: [rectProperty, 'color.1', 'color.2', 'color.3', 'color.4', 'color.5', 'color.6', 'color.7', 'color.8', 'color.9', 'color.10', 'bgcolor', 'thickness', 'fill', 'show_channel', 'window']
+    property bool _disableUpdate: true
 
     width: 350
     height: 425
@@ -32,8 +33,6 @@ Item {
         if (filter.isNew) {
             filter.set(rectProperty, '0/50%:50%x50%')
             filter.set('color.1', '#ffffffff')
-            filter.set('color.2', '#ff000000')
-            filter.set('color.3', '#ffffffff')
             filter.set('bgcolor', '#00ffffff')
             filter.set('thickness', '1')
             filter.set('fill', '0')
@@ -62,22 +61,14 @@ Item {
     }
 
     function setControls() {
-        var fgColors = []
-        while (true) {
-            var colorName = 'color.' + (fgColors.length + 1).toString()
-            var color = filter.get(colorName)
-            if (color) {
-                fgColors.push(color)
-            } else {
-                break
-            }
-        }
-        fgGradient.colors = fgColors
+        _disableUpdate = true
+        fgGradient.colors = filter.getGradient('color')
         bgColor.value = filter.get('bgcolor')
         thicknessSlider.value = filter.getDouble('thickness')
         fillCheckbox.checked = filter.get('fill') == 1
         combineCheckbox.checked = filter.get('show_channel') == -1
         windowSlider.value = filter.getDouble('window')
+        _disableUpdate = false
     }
 
     GridLayout {
@@ -96,10 +87,7 @@ Item {
             onPresetSelected: setControls()
             onBeforePresetLoaded: {
                 // Clear all gradient colors before loading the new values
-                for (var i = 0; i < 10; i++) {
-                    var colorName = 'color.' + (i+1).toString()
-                    filter.resetProperty(colorName)
-                }
+                filter.setGradient('color', [])
             }
         }
 
@@ -111,14 +99,8 @@ Item {
             Layout.columnSpan: 4
             id: fgGradient
             onGradientChanged: {
-                for (var i = 0; i < 10; i++) {
-                    var colorName = 'color.' + (i+1).toString()
-                    if (i < colors.length) {
-                        filter.set(colorName, colors[i])
-                    } else {
-                        filter.resetProperty(colorName)
-                    }
-                }
+                if (_disableUpdate) return
+                filter.setGradient('color', colors)
             }
         }
 

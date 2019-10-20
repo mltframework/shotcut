@@ -25,7 +25,7 @@ Item {
     property rect filterRect: filter.getRect(rectProperty)
     property var defaultParameters: [rectProperty, 'color.1', 'color.2', 'color.3', 'color.4', 'color.5', 'color.6', 'color.7', 'color.8', 'color.9', 'color.10', 'osc', 'frequency_low', 'frequency_high', 'threshold']
     property int _minFreqDelta: 100
-    property bool _disableUpdate: false
+    property bool _disableUpdate: true
 
     width: 350
     height: 425
@@ -63,17 +63,7 @@ Item {
 
     function setControls() {
         _disableUpdate = true
-        var fgColors = []
-        while (true) {
-            var colorName = 'color.' + (fgColors.length + 1).toString()
-            var color = filter.get(colorName)
-            if (color) {
-                fgColors.push(color)
-            } else {
-                break
-            }
-        }
-        fgGradient.colors = fgColors
+        fgGradient.colors = filter.getGradient('color')
         oscSlider.value = filter.getDouble('osc')
         freqLowSlider.value = filter.getDouble('frequency_low')
         freqHighSlider.value = filter.getDouble('frequency_high')
@@ -97,10 +87,7 @@ Item {
             onPresetSelected: setControls()
             onBeforePresetLoaded: {
                 // Clear all gradient colors before loading the new values
-                for (var i = 0; i < 10; i++) {
-                    var colorName = 'color.' + (i+1).toString()
-                    filter.resetProperty(colorName)
-                }
+                filter.setGradient('color', [])
             }
         }
 
@@ -112,14 +99,8 @@ Item {
             Layout.columnSpan: 4
             id: fgGradient
             onGradientChanged: {
-                for (var i = 0; i < 10; i++) {
-                    var colorName = 'color.' + (i+1).toString()
-                    if (i < colors.length) {
-                        filter.set(colorName, colors[i])
-                    } else {
-                        filter.resetProperty(colorName)
-                    }
-                }
+                 if (_disableUpdate) return
+                 filter.setGradient('color', colors)
             }
         }
 

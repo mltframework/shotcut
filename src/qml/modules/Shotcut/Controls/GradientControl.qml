@@ -49,18 +49,18 @@ RowLayout {
             color: colorList[stopIndex]
             border.color: "gray"
             border.width: 1
-            width: 8
+            width: 6
             height: parent.height
             radius: 2
+            visible: colorList.length > 1
 
-            MouseArea {
-                anchors.fill: parent
-                onClicked: colorDialog.visible = true
+            function chooseColor() {
+                colorDialog.visible = true
             }
 
             ColorDialog {
                 id: colorDialog
-                title: qsTr("Please choose a color")
+                title: qsTr("Color #%1").arg(stopIndex + 1)
                 showAlphaChannel: true
                 color: handelRect.color
                 onAccepted: {
@@ -153,6 +153,18 @@ RowLayout {
             end: Qt.point(width, 0)
             gradient: Gradient {
                 id: gradientView
+            }
+        }
+
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                if (_stopHandles.length == 0) return
+                var nearestStop = Math.floor(mouseX / (parent.width / _stopHandles.length))
+                if (nearestStop >= _stopHandles.length) {
+                   nearestStop = _stopHandles.length - 1
+                }
+                _stopHandles[nearestStop].chooseColor()
             }
         }
     }
