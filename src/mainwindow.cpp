@@ -720,6 +720,9 @@ void MainWindow::setupSettingsMenu()
     a = new QAction(QLocale::languageToString(QLocale::Swedish), m_languagesGroup);
     a->setCheckable(true);
     a->setData("sv");
+    a = new QAction(QLocale::languageToString(QLocale::Thai), m_languagesGroup);
+    a->setCheckable(true);
+    a->setData("th");
     a = new QAction(QLocale::languageToString(QLocale::Turkish), m_languagesGroup);
     a->setCheckable(true);
     a->setData("tr");

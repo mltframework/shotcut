@@ -40,6 +40,7 @@ LANGUAGES = \
     sk \
     sl \
     sv \
+    th \
     tr \
     uk \
     zh_CN \
