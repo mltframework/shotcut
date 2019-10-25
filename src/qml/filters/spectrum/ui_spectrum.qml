@@ -23,9 +23,10 @@ import Shotcut.Controls 1.0
 Item {
     property string rectProperty: "rect"
     property rect filterRect: filter.getRect(rectProperty)
-    property var defaultParameters: [rectProperty, 'type', 'color.1', 'bgcolor', 'thickness', 'fill', 'mirror', 'reverse', 'tension', 'bands', 'frequency_low', 'frequency_high', 'threshold']
+    property var defaultParameters: [rectProperty, 'type', 'color.1', 'color.2', 'color.3', 'color.4', 'color.5', 'color.6', 'color.7', 'color.8', 'color.9', 'color.10', 'bgcolor', 'thickness', 'fill', 'mirror', 'reverse', 'tension', 'bands', 'frequency_low', 'frequency_high', 'threshold']
+
     property int _minFreqDelta: 1000
-    property bool _disableUpdate: false
+    property bool _disableUpdate: true
 
     width: 350
     height: 425
@@ -69,8 +70,7 @@ Item {
 
     function setControls() {
         _disableUpdate = true
-        typeCombo.currentIndex = typeCombo.valueToIndex()
-        fgColor.value = filter.get('color.1')
+        fgGradient.colors = filter.getGradient('color')
         bgColor.value = filter.get('bgcolor')
         thicknessSlider.value = filter.getDouble('thickness')
         fillCheckbox.checked = filter.get('fill') == 1
@@ -95,9 +95,13 @@ Item {
         }
         Preset {
             id: preset
-            parameters: [rectProperty]
+            parameters: defaultParameters
             Layout.columnSpan: 4
             onPresetSelected: setControls()
+            onBeforePresetLoaded: {
+                // Clear all gradient colors before loading the new values
+                filter.setGradient('color', [])
+            }
         }
 
         Label {
@@ -123,12 +127,13 @@ Item {
             text: qsTr('Spectrum Color')
             Layout.alignment: Qt.AlignRight
         }
-        ColorPicker {
+        GradientControl {
             Layout.columnSpan: 4
-            id: fgColor
-            eyedropper: true
-            alpha: true
-            onValueChanged: filter.set('color.1', value)
+            id: fgGradient
+            onGradientChanged: {
+                 if (_disableUpdate) return
+                 filter.setGradient('color', colors)
+            }
         }
 
         Label {
@@ -142,7 +147,7 @@ Item {
             alpha: true
             onValueChanged: filter.set('bgcolor', value)
         }
-        
+
         Label {
             text: qsTr('Thickness')
             Layout.alignment: Qt.AlignRight
@@ -159,7 +164,7 @@ Item {
         UndoButton {
             onClicked: thicknessSlider.value = 1
         }
-        
+
         Label {
             text: qsTr('Position')
             Layout.alignment: Qt.AlignRight
@@ -201,7 +206,7 @@ Item {
                 onEditingFinished: if (filterRect.height !== parseFloat(text)) setFilter()
             }
         }
-        
+
         Label {
             text: qsTr('Fill')
             Layout.alignment: Qt.AlignRight
@@ -250,7 +255,7 @@ Item {
         UndoButton {
             onClicked: tensionSlider.value = 0.4
         }
-        
+
         Label {
             text: qsTr('Bands')
             Layout.alignment: Qt.AlignRight

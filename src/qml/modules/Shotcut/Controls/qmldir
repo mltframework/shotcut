@@ -1,5 +1,6 @@
 module Shotcut.Controls
 ColorPicker 1.0 ColorPicker.qml
+GradientControl 1.0 GradientControl.qml
 Preset 1.0 Preset.qml
 ToolTip 1.0 ToolTip.qml
 UndoButton 1.0 UndoButton.qml

@@ -112,6 +112,21 @@ QRectF QmlFilter::getRect(QString name, int position)
     }
 }
 
+QStringList QmlFilter::getGradient(QString name)
+{
+    QStringList list;
+    for (int i = 1; i <= 10; i++) {
+        QString colorName = name + "." + QString::number(i);
+        const char* value = m_filter.get(colorName.toUtf8().constData());
+        if (value) {
+            list.append(QString::fromUtf8(value));
+        } else {
+            break;
+        }
+    }
+    return list;
+}
+
 void QmlFilter::set(QString name, QString value, int position)
 {
     if (!m_filter.is_valid()) return;
@@ -217,6 +232,19 @@ void QmlFilter::set(QString name, double x, double y, double width, double heigh
             emit changed(name);
         }
     }
+}
+
+void QmlFilter::setGradient(QString name, const QStringList& gradient)
+{
+    for (int i = 1; i <= 10;  i++) {
+        QString colorName = name + "." + QString::number(i);
+        if (i <= gradient.length()) {
+            m_filter.set(colorName.toUtf8().constData(), gradient[i-1].toUtf8().constData());
+        } else {
+            m_filter.clear(colorName.toUtf8().constData());
+        }
+    }
+    emit changed();
 }
 
 void QmlFilter::set(QString name, const QRectF& rect, double opacity, int position, mlt_keyframe_type keyframeType)
@@ -494,6 +522,7 @@ int QmlFilter::keyframeCount(const QString& name)
 void QmlFilter::resetProperty(const QString& name)
 {
     m_filter.clear(name.toUtf8().constData());
+    emit changed();
 }
 
 void QmlFilter::clearSimpleAnimation(const QString& name)

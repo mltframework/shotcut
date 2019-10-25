@@ -23,9 +23,9 @@ import Shotcut.Controls 1.0
 Item {
     property string rectProperty: "rect"
     property rect filterRect: filter.getRect(rectProperty)
-    property var defaultParameters: [rectProperty, 'color.1', 'color.2' ,'osc', 'frequency_low', 'frequency_high', 'threshold']
+    property var defaultParameters: [rectProperty, 'color.1', 'color.2', 'color.3', 'color.4', 'color.5', 'color.6', 'color.7', 'color.8', 'color.9', 'color.10', 'osc', 'frequency_low', 'frequency_high', 'threshold']
     property int _minFreqDelta: 100
-    property bool _disableUpdate: false
+    property bool _disableUpdate: true
 
     width: 350
     height: 425
@@ -63,8 +63,7 @@ Item {
 
     function setControls() {
         _disableUpdate = true
-        fgColor.value = filter.get('color.1')
-        bgColor.value = filter.get('color.2')
+        fgGradient.colors = filter.getGradient('color')
         oscSlider.value = filter.getDouble('osc')
         freqLowSlider.value = filter.getDouble('frequency_low')
         freqHighSlider.value = filter.getDouble('frequency_high')
@@ -86,30 +85,23 @@ Item {
             parameters: defaultParameters
             Layout.columnSpan: 4
             onPresetSelected: setControls()
+            onBeforePresetLoaded: {
+                // Clear all gradient colors before loading the new values
+                filter.setGradient('color', [])
+            }
         }
 
         Label {
-            text: qsTr('Foreground')
+            text: qsTr('Waveform Color')
             Layout.alignment: Qt.AlignRight
         }
-        ColorPicker {
+        GradientControl {
             Layout.columnSpan: 4
-            id: fgColor
-            eyedropper: true
-            alpha: true
-            onValueChanged: filter.set('color.1', value)
-        }
-
-        Label {
-            text: qsTr('Background')
-            Layout.alignment: Qt.AlignRight
-        }
-        ColorPicker {
-            Layout.columnSpan: 4
-            id: bgColor
-            eyedropper: true
-            alpha: true
-            onValueChanged: filter.set('color.2', value)
+            id: fgGradient
+            onGradientChanged: {
+                 if (_disableUpdate) return
+                 filter.setGradient('color', colors)
+            }
         }
 
         Label {
