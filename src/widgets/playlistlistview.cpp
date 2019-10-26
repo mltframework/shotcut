@@ -36,6 +36,11 @@ void PlaylistListView::dropEvent(QDropEvent* event)
 
 void PlaylistListView::keyPressEvent(QKeyEvent* event)
 {
+    // Ignore select all
+    if (event->key() == Qt::Key_A && event->modifiers() == Qt::ControlModifier) {
+        event->ignore();
+        return;
+    }
     QListView::keyPressEvent(event);
     event->ignore();
 }

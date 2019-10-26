@@ -27,12 +27,16 @@ PlaylistTable::PlaylistTable(QWidget *parent)
 
 void PlaylistTable::keyPressEvent(QKeyEvent* event)
 {
-    if (event->key() == Qt::Key_Left || event->key() == Qt::Key_Right)
-    {
+    if (event->key() == Qt::Key_Left || event->key() == Qt::Key_Right) {
         /* make sure we ignore left/right keypresses here so it can bubble its way up to the top
          * level where it's handled as a global keyboard shortcut. There's seemingly no way to keep
          * QTableView from using left/right for moving between cells, so this is a slight hack to
          * prevent that behavior. */
+        event->ignore();
+        return;
+    }
+    // Ignore select all
+    if (event->key() == Qt::Key_A && event->modifiers() == Qt::ControlModifier) {
         event->ignore();
         return;
     }
