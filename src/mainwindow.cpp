@@ -2994,12 +2994,21 @@ void MainWindow::editHTML(const QString &fileName)
     m_htmlEditor->load(fileName);
     m_htmlEditor->show();
     m_htmlEditor->raise();
-    if (Settings.playerZoom() >= 1.0f) {
-        m_htmlEditor->changeZoom(100 * m_player->videoSize().width() / MLT.profile().width());
-        m_htmlEditor->resizeWebView(m_player->videoSize().width(), m_player->videoSize().height());
+
+    bool isExternal = false;
+    int screen = Settings.playerExternal().toInt(&isExternal);
+    isExternal = isExternal && (screen != QApplication::desktop()->screenNumber(this));
+
+    if (!isExternal) {
+        if (Settings.playerZoom() >= 1.0f) {
+            m_htmlEditor->changeZoom(100 * m_player->videoSize().width() / MLT.profile().width());
+            m_htmlEditor->resizeWebView(m_player->videoSize().width(), m_player->videoSize().height());
+        } else {
+            m_htmlEditor->changeZoom(100 * MLT.displayWidth() / MLT.profile().width());
+            m_htmlEditor->resizeWebView(MLT.displayWidth(), MLT.displayHeight());
+        }
     } else {
-        m_htmlEditor->changeZoom(100 * MLT.displayWidth() / MLT.profile().width());
-        m_htmlEditor->resizeWebView(MLT.displayWidth(), MLT.displayHeight());
+        m_htmlEditor->changeZoom(100);
     }
     if (isNew) {
         // Center the new window over the main window.
