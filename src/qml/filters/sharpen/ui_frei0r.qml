@@ -25,9 +25,9 @@ Item {
     property string paramSize: '1'
     property var defaultParameters: [paramAmount, paramSize]
     property bool blockUpdate: true
-    property var startValues:  [0.0, 0.0]
+    property var startValues:  [0.3, 0.5]
     property var middleValues: [0.5, 0.5]
-    property var endValues:    [0.0, 0.0]
+    property var endValues:    [0.3, 0.5]
     width: 350
     height: 100
     Component.onCompleted: {
