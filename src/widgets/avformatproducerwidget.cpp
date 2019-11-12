@@ -658,6 +658,7 @@ void AvformatProducerWidget::on_actionFFmpegIntegrityCheck_triggered()
     args << "-err_detect" << "+explode";
     args << "-v" << "info";
     args << "-i" << resource;
+    args << "-map" << "0";
     args << "-f" << "null" << "pipe:";
     JOBS.add(new FfmpegJob(resource, args));
 }
