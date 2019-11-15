@@ -56,7 +56,7 @@ void FfmpegJob::start()
     QProcess::start(ffmpegPath.absoluteFilePath(), m_args);
 #else
     m_args.prepend(ffmpegPath.absoluteFilePath());
-    QProcess::start("/usr/bin/nice", m_args);
+    QProcess::start("nice", m_args);
 #endif
     AbstractJob::start();
 }

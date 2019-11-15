@@ -108,7 +108,7 @@ void MeltJob::start()
     QProcess::start(meltPath.absoluteFilePath(), args);
 #else
     args.prepend(meltPath.absoluteFilePath());
-    QProcess::start("/usr/bin/nice", args);
+    QProcess::start("nice", args);
 #endif
     AbstractJob::start();
 }
