@@ -13,14 +13,17 @@ Metadata {
             Parameter {
                 name: qsTr('Shadows (Lift)')
                 property: 'lift_r'
+                gangedProperties: ['lift_g', 'lift_b']
             },
             Parameter {
                 name: qsTr('Midtones (Gamma)')
                 property: 'gamma_r'
+                gangedProperties: ['gamma_g', 'gamma_b']
             },
             Parameter {
                 name: qsTr('Highlights (Gain)')
                 property: 'gain_r'
+                gangedProperties: ['gain_g', 'gain_b']
             }
         ]
     }

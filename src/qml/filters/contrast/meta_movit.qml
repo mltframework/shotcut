@@ -17,6 +17,7 @@ Metadata {
             Parameter {
                 name: qsTr('Level')
                 property: 'gain_r'
+                gangedProperties: ['gain_g', 'gain_b']
                 isSimple: true
             }
         ]
