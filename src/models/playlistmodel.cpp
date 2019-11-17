@@ -418,6 +418,7 @@ bool PlaylistModel::removeRows(int row, int count, const QModelIndex& parent)
         if (row != m_dropRow)
             emit moveClip(row, m_dropRow++);
     }
+    m_dropRow = -1;
     return true;
 }
 
