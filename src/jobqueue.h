@@ -46,6 +46,7 @@ public:
     bool isPaused() const;
     bool hasIncomplete() const;
     void remove(const QModelIndex& index);
+    void removeAll();
     QList<AbstractJob*> jobs() const { return m_jobs; }
 
 signals:

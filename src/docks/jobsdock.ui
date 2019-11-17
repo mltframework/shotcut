@@ -180,6 +180,11 @@ the list. This does not stop a currently running job. Right-
     <string>Remove</string>
    </property>
   </action>
+  <action name="actionRemoveAll">
+   <property name="text">
+    <string>Remove All</string>
+   </property>
+  </action>
  </widget>
  <resources>
   <include location="../../icons/resources.qrc"/>

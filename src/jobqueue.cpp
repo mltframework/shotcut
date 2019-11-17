@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2018 Meltytech, LLC
+ * Copyright (c) 2012-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -166,4 +166,19 @@ void JobQueue::remove(const QModelIndex& index)
     delete job;
 
     m_mutex.unlock();
+}
+
+void JobQueue::removeAll()
+{
+    QMutexLocker locker(&m_mutex);
+    auto row = 0;
+    foreach (AbstractJob* job, m_jobs) {
+        if (job->state() != QProcess::Running) {
+            removeRow(row);
+            m_jobs.removeOne(job);
+            delete job;
+        } else {
+            ++row;
+        }
+    }
 }

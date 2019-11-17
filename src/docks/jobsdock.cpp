@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2012-2017 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2012-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -116,6 +115,8 @@ void JobsDock::on_treeView_customContextMenuRequested(const QPoint &pos)
             menu.addAction(ui->actionViewLog);
         menu.addActions(job->standardActions());
     }
+    if (JOBS.rowCount() > 0)
+        menu.addAction(ui->actionRemoveAll);
     menu.exec(mapToGlobal(pos));
 }
 
@@ -179,4 +180,9 @@ void JobsDock::on_actionRemove_triggered()
     QModelIndex index = ui->treeView->currentIndex();
     if (!index.isValid()) return;
     JOBS.remove(index);
+}
+
+void JobsDock::on_actionRemoveAll_triggered()
+{
+    JOBS.removeAll();
 }
