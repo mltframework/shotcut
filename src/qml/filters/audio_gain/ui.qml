@@ -151,7 +151,7 @@ Item {
         }
         SliderSpinner {
             id: gainSlider
-            minimumValue: -50
+            minimumValue: -70
             maximumValue: 24
             suffix: ' dB'
             decimals: 1

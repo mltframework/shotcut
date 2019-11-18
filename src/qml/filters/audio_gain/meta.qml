@@ -18,7 +18,7 @@ Metadata {
                 property: 'level'
                 isSimple: true
                 isCurve: true
-                minimum: -50
+                minimum: -70
                 maximum: 24
             }
         ]
