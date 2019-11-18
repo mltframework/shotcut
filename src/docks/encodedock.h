@@ -158,6 +158,7 @@ private:
     void encode(const QString& target);
     void resetOptions();
     Mlt::Producer* fromProducer() const;
+    static void filterX265Params(QStringList& other);
 };
 
 #endif // ENCODEDOCK_H

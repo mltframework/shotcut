@@ -341,6 +341,7 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties& preset)
             other.append(QString("%1=%2").arg(name).arg(preset.get(i)));
         }
     }
+    filterX265Params(other);
     ui->advancedTextEdit->setPlainText(other.join("\n"));
 
     // normalize the quality settings
@@ -1214,6 +1215,36 @@ Mlt::Producer *EncodeDock::fromProducer() const
         return MAIN.multitrack();
     else
         return 0;
+}
+
+void EncodeDock::filterX265Params(QStringList& other)
+{
+    auto i = 0;
+    auto x265ParamsKey = "x265-params=";
+    for (const auto& s : other) {
+        if (s.startsWith(x265ParamsKey))
+            break;
+        ++i;
+    }
+    if (i < other.size()) {
+        auto x265params = other[i].mid(::strlen(x265ParamsKey));
+        QStringList params;
+        for (const auto& s : x265params.split(':')) {
+            if (!s.isEmpty()
+                    && !s.startsWith("crf=")
+                    && !s.startsWith("bitrate=")
+                    && !s.startsWith("vbv-bufsize=")
+                    && !s.startsWith("vbv-maxrate=")
+                    && !s.startsWith("keyint=")
+                    && !s.startsWith("bframes=")
+                    && !s.startsWith("scenecut=")
+                    && !s.startsWith("interlace="))
+                params << s;
+        }
+        other.removeAt(i);
+        if (params.size() > 0)
+            other.insert(i, x265ParamsKey + params.join(':'));
+    }
 }
 
 static double getBufferSize(Mlt::Properties& preset, const char* property)
