@@ -618,6 +618,13 @@ mlt_keyframe_type QmlFilter::getKeyframeType(Mlt::Animation& animation, int posi
     return result;
 }
 
+bool QmlFilter::isAtLeastVersion(const QString& version)
+{
+    QVersionNumber v1 = QVersionNumber::fromString(version);
+    QVersionNumber v2 = QVersionNumber::fromString(m_metadata->property("version").toString());
+    return v2 >= v1;
+}
+
 AnalyzeDelegate::AnalyzeDelegate(Mlt::Filter& filter)
     : QObject(0)
 #if LIBMLT_VERSION_INT >= MLT_VERSION_CPP_UPDATED

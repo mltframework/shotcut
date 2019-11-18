@@ -30,8 +30,11 @@ Item {
     property double startScaleValue: 1.0
     property double middleScaleValue: 1.0
     property double endScaleValue: 1.0
+    property bool isAtLeastVersion4: filter.isAtLeastVersion('4')
 
     Component.onCompleted: {
+        if (isAtLeastVersion4)
+            filter.set('transition.invert_scale', 1)
         if (filter.isNew) {
             // Set default parameter values
             filter.set('transition.fix_rotate_x', 0)
@@ -64,7 +67,8 @@ Item {
         blockUpdate = true
         rotationSlider.value = filter.getDouble('transition.fix_rotate_x', position)
         scaleSlider.enabled = rotationSlider.enabled = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1)
-        scaleSlider.value = 100 / filter.getDouble('transition.scale_x', position)
+        var scale = filter.getDouble('transition.scale_x', position)
+        scaleSlider.value = isAtLeastVersion4? scale * 100 : 100 / scale
         xOffsetSlider.value = filter.getDouble('transition.ox', position) * -1
         yOffsetSlider.value = filter.getDouble('transition.oy', position) * -1
         blockUpdate = false
@@ -102,9 +106,17 @@ Item {
         }
     }
 
+    function getScaleValue() {
+        if (isAtLeastVersion4) {
+            return scaleSlider.value / 100
+        } else {
+            return 100 / scaleSlider.value
+        }
+    }
+
     function updateFilterScale(position) {
         if (blockUpdate) return
-        var value = 100 / scaleSlider.value
+        var value = getScaleValue()
 
         if (position !== null) {
             if (position <= 0 && filter.animateIn > 0)
@@ -236,7 +248,7 @@ Item {
             id: scaleKeyframesButton
             checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('transition.scale_x') > 0
             onToggled: {
-                var value = 100 / scaleSlider.value
+                var value = getScaleValue()
                 if (checked) {
                     blockUpdate = true
                     if (filter.animateIn > 0 || filter.animateOut > 0) {

@@ -27,6 +27,9 @@ Metadata {
                 property: 'transition.scale_x'
                 gangedProperties: ['transition.scale_y']
                 isSimple: true
+                isCurve: true
+                minimum: 0.001
+                maximum: 10
             },
             Parameter {
                 name: qsTr('X offset')

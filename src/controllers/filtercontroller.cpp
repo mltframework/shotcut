@@ -70,6 +70,7 @@ void FilterController::loadFilterMetadata() {
                         QString version = QString::fromLatin1(mltMetadata->get("version"));
                         if (version.startsWith("lavfi"))
                             version.remove(0, 5);
+                        meta->setProperty("version", version);
                         meta->keyframes()->checkVersion(version);
                         // MLT frei0r module did get mlt_animation support until v6.10 (6.9 while in development).
                         if (meta->mlt_service().startsWith("frei0r.")) {
