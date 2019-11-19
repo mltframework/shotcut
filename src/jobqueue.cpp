@@ -168,12 +168,12 @@ void JobQueue::remove(const QModelIndex& index)
     m_mutex.unlock();
 }
 
-void JobQueue::removeAll()
+void JobQueue::removeFinished()
 {
     QMutexLocker locker(&m_mutex);
     auto row = 0;
     foreach (AbstractJob* job, m_jobs) {
-        if (job->state() != QProcess::Running) {
+        if (job->ran() && job->state() != QProcess::Running) {
             removeRow(row);
             m_jobs.removeOne(job);
             delete job;

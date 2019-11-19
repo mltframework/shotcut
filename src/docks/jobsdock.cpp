@@ -98,9 +98,8 @@ void JobsDock::resizeEvent(QResizeEvent *event)
 void JobsDock::on_treeView_customContextMenuRequested(const QPoint &pos)
 {
     QModelIndex index = ui->treeView->currentIndex();
-    if (!index.isValid()) return;
     QMenu menu(this);
-    AbstractJob* job = JOBS.jobFromIndex(index);
+    AbstractJob* job = index.isValid()? JOBS.jobFromIndex(index) : nullptr;
     if (job) {
         if (job->ran() && job->state() == QProcess::NotRunning && job->exitStatus() == QProcess::NormalExit) {
             menu.addActions(job->successActions());
@@ -115,8 +114,12 @@ void JobsDock::on_treeView_customContextMenuRequested(const QPoint &pos)
             menu.addAction(ui->actionViewLog);
         menu.addActions(job->standardActions());
     }
-    if (JOBS.rowCount() > 0)
-        menu.addAction(ui->actionRemoveAll);
+    for (auto job : JOBS.jobs()) {
+        if (job->ran() && job->state() != QProcess::Running) {
+            menu.addAction(ui->actionRemoveFinished);
+            break;
+        }
+    }
     menu.exec(mapToGlobal(pos));
 }
 
@@ -182,7 +185,7 @@ void JobsDock::on_actionRemove_triggered()
     JOBS.remove(index);
 }
 
-void JobsDock::on_actionRemoveAll_triggered()
+void JobsDock::on_actionRemoveFinished_triggered()
 {
-    JOBS.removeAll();
+    JOBS.removeFinished();
 }

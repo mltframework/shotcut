@@ -55,7 +55,7 @@ private slots:
     void on_menuButton_clicked();
     void on_treeView_doubleClicked(const QModelIndex &index);
     void on_actionRemove_triggered();
-    void on_actionRemoveAll_triggered();
+    void on_actionRemoveFinished_triggered();
 };
 
 #endif // JOBSDOCK_H

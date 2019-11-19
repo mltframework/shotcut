@@ -180,9 +180,12 @@ the list. This does not stop a currently running job. Right-
     <string>Remove</string>
    </property>
   </action>
-  <action name="actionRemoveAll">
+  <action name="actionRemoveFinished">
    <property name="text">
-    <string>Remove All</string>
+    <string>Remove Finished</string>
+   </property>
+   <property name="toolTip">
+    <string>Remove Finished</string>
    </property>
   </action>
  </widget>
