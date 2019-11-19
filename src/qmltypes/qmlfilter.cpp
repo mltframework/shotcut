@@ -261,7 +261,9 @@ void QmlFilter::loadPresets()
         foreach (QString s, entries) {
             if (s == objectNameOrService() && dir.cd(s)) {
                 m_presets.append("");
-                m_presets.append(dir.entryList(QDir::Files | QDir::Readable));
+                for (auto& s : dir.entryList(QDir::Files | QDir::Readable)) {
+                    m_presets << QUrl::fromPercentEncoding(s.toUtf8());
+                }
                 break;
             }
         }
@@ -286,7 +288,7 @@ int QmlFilter::savePreset(const QStringList &propertyNames, const QString &name)
         if (dir.mkdir(objectNameOrService()))
             dir.cd(objectNameOrService());
     }
-    const QString preset = name.isEmpty()? tr("(defaults)") : name;
+    QString preset = name.isEmpty()? tr("(defaults)") : QString::fromUtf8(QUrl::toPercentEncoding(name));
 #if LIBMLT_VERSION_INT >= ((6<<16)+(9<<8))
     // Convert properties to YAML string.
     char* yamlStr = properties.serialise_yaml();
@@ -309,8 +311,10 @@ int QmlFilter::savePreset(const QStringList &propertyNames, const QString &name)
 void QmlFilter::deletePreset(const QString &name)
 {
     QDir dir(Settings.appDataLocation());
-    if (dir.cd("presets") && dir.cd(objectNameOrService()))
-        QFile(dir.filePath(name)).remove();
+    if (dir.cd("presets") && dir.cd(objectNameOrService())) {
+        if (!QFile(dir.filePath(QUrl::toPercentEncoding(name))).remove())
+            QFile(dir.filePath(name)).remove();
+    }
     m_presets.removeOne(name);
     emit presetsChanged();
 }
@@ -542,20 +546,31 @@ void QmlFilter::preset(const QString &name)
     if (!dir.cd("presets") || !dir.cd(objectNameOrService()))
         return;
 
+    auto fileName = dir.filePath(QUrl::toPercentEncoding(name));
+
 #if LIBMLT_VERSION_INT >= ((6<<16)+(9<<8))
     // Detect the preset file format
     bool isYaml = false;
-    QFile presetFile(dir.filePath(name));
-    if(presetFile.open(QIODevice::ReadOnly)) {
+    QFile presetFile(fileName);
+    if (presetFile.open(QIODevice::ReadOnly)) {
         if(presetFile.readLine(4) == "---") {
             isYaml = true;
         }
         presetFile.close();
+    } else {
+        presetFile.setFileName(dir.filePath(name));
+        if (presetFile.open(QIODevice::ReadOnly)) {
+            fileName = dir.filePath(name);
+            if(presetFile.readLine(4) == "---") {
+                isYaml = true;
+            }
+            presetFile.close();
+        }
     }
 
     if(isYaml) {
         // Load from YAML file.
-        QScopedPointer<Mlt::Properties> properties(Mlt::Properties::parse_yaml(dir.filePath(name).toUtf8().constData()));
+        QScopedPointer<Mlt::Properties> properties(Mlt::Properties::parse_yaml(fileName.toUtf8().constData()));
         if (properties && properties->is_valid()) {
             QChar decimalPoint = MLT.decimalPoint();
             for (int i = 0; i < properties->count(); i++) {
@@ -571,10 +586,10 @@ void QmlFilter::preset(const QString &name)
         }
     } else {
         // Load from legacy preset file
-        m_filter.load(dir.filePath(name).toUtf8().constData());
+        m_filter.load(fileName.toUtf8().constData());
     }
 #else
-    m_filter.load(dir.filePath(name).toUtf8().constData());
+    m_filter.load(fileName.toUtf8().constData());
 #endif
 
     emit changed();
