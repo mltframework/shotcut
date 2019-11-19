@@ -101,6 +101,7 @@ Item {
         previousResourceComboIndex = resourceCombo.currentIndex
         thresholdCheckBox.checked = filter.getDouble('filter.use_mix') === 1
         invertCheckBox.checked = filter.getDouble('filter.invert') === 1
+        reverseCheckBox.checked = filter.getDouble('filter.reverse') === 1
         if (filter.getDouble('filter.use_luminance') === 1)
             brightnessRadioButton.checked = true
         else
@@ -253,15 +254,29 @@ Item {
         }
 
         Item { Layout.fillWidth: true }
-        CheckBox {
-            id: invertCheckBox
-            text: qsTr('Invert')
-            onClicked: filter.set('filter.invert', checked)
+        RowLayout {
+            Layout.columnSpan: 3
+            CheckBox {
+                id: invertCheckBox
+                text: qsTr('Invert')
+                onClicked: filter.set('filter.invert', checked)
+            }
+            UndoButton {
+                onClicked: invertCheckBox.checked = false
+            }
+            Item { Layout.fillWidth: true }
+            CheckBox {
+                id: reverseCheckBox
+                text: qsTr('Reverse')
+                visible: filter.isAtLeastVersion('2')
+                onClicked: filter.set('filter.reverse', checked)
+            }
+            UndoButton {
+                visible: reverseCheckBox.visible
+                onClicked: reverseCheckBox.checked = false
+            }
+            Item { Layout.fillWidth: true }
         }
-        UndoButton {
-            onClicked: invertCheckBox.checked = false
-        }
-        Item { Layout.fillWidth: true }
 
         Label {
             text: qsTr('Channel')
