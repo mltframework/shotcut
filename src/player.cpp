@@ -543,6 +543,7 @@ void Player::reset()
     actionFastForward->setDisabled(true);
     m_videoWidget->hide();
     m_projectWidget->show();
+    m_previousIn = m_previousOut = -1;
 }
 
 void Player::onProducerOpened(bool play)
