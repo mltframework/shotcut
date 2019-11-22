@@ -39,6 +39,7 @@ Item {
             // Set default parameter values
             filter.set('transition.fix_rotate_x', 0)
             filter.set('transition.scale_x', 1)
+            filter.set('transition.scale_y', 1)
             filter.set('transition.ox', 0)
             filter.set('transition.oy', 0)
             filter.set('transition.threads', 0)
