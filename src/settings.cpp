@@ -298,7 +298,11 @@ void ShotcutSettings::setPlayerAudioChannels(int i)
 
 QString ShotcutSettings::playerDeinterlacer() const
 {
-    return settings.value("player/deinterlacer", "onefield").toString();
+    QString result = settings.value("player/deinterlacer", "onefield").toString();
+    //XXX workaround yadif crashing with mlt_transition
+    if (result == "yadif" || result == "yadif-nospatial")
+        result = "onefield";
+    return result;
 }
 
 void ShotcutSettings::setPlayerDeinterlacer(const QString& s)

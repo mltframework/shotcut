@@ -536,8 +536,13 @@ void MainWindow::setupSettingsMenu()
     group = new QActionGroup(this);
     group->addAction(ui->actionOneField);
     group->addAction(ui->actionLinearBlend);
-    group->addAction(ui->actionYadifTemporal);
-    group->addAction(ui->actionYadifSpatial);
+
+    //XXX workaround yadif crashing with mlt_transition
+//    group->addAction(ui->actionYadifTemporal);
+//    group->addAction(ui->actionYadifSpatial);
+    ui->actionYadifTemporal->setVisible(false);
+    ui->actionYadifSpatial->setVisible(false);
+
     group = new QActionGroup(this);
     group->addAction(ui->actionNearest);
     group->addAction(ui->actionBilinear);
