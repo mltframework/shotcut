@@ -68,6 +68,7 @@ Item {
             maximumValue: Math.round(profile.fps)
             stepSize: 1
             suffix: qsTr(' frames')
+            spinnerWidth: 110
             onValueChanged: updateFilter(value)
         }
         UndoButton {
