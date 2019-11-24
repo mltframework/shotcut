@@ -41,10 +41,10 @@ MeltJob::MeltJob(const QString& name, const QString& xml, int frameRateNum, int 
         action->setToolTip(tr("View the MLT XML for this job"));
         connect(action, SIGNAL(triggered()), this, SLOT(onViewXmlTriggered()));
         m_standardActions << action;
-        m_xml.setFileTemplate(QDir::tempPath().append("/shotcut-XXXXXX.mlt"));
-        m_xml.open();
-        m_xml.write(xml.toUtf8());
-        m_xml.close();
+        m_xml.reset(Util::writableTemporaryFile(name, "shotcut-XXXXXX.mlt"));
+        m_xml->open();
+        m_xml->write(xml.toUtf8());
+        m_xml->close();
     } else {
         // Not an EncodeJob
         QAction* action = new QAction(tr("Open"), this);
@@ -115,9 +115,9 @@ void MeltJob::start()
 
 QString MeltJob::xml()
 {
-    m_xml.open();
-    QString s(m_xml.readAll());
-    m_xml.close();
+    m_xml->open();
+    QString s(m_xml->readAll());
+    m_xml->close();
     return s;
 }
 

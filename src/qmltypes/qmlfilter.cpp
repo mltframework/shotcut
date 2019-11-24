@@ -324,26 +324,27 @@ void QmlFilter::analyze(bool isAudio)
     Mlt::Service service(mlt_service(m_filter.get_data("service")));
 
     // get temp filename for input xml
-    QTemporaryFile tmp;
-    tmp.open();
-    tmp.close();
-    m_filter.set("results", NULL, 0);
+    QString filename(m_filter.get("filename"));
+    QScopedPointer<QTemporaryFile> tmp(Util::writableTemporaryFile(filename));
+    tmp->open();
+    tmp->close();
+    m_filter.set("results", nullptr, 0);
     int disable = m_filter.get_int("disable");
     m_filter.set("disable", 0);
     if (!isAudio) m_filter.set("analyze", 1);
-    MLT.saveXML(tmp.fileName(), &service, false, false);
+    MLT.saveXML(tmp->fileName(), &service, false, false);
     if (!isAudio) m_filter.set("analyze", 0);
     m_filter.set("disable", disable);
 
     // get temp filename for output xml
-    QTemporaryFile tmpTarget;
-    tmpTarget.open();
-    tmpTarget.close();
+    QScopedPointer<QTemporaryFile> tmpTarget(Util::writableTemporaryFile(filename));
+    tmpTarget->open();
+    tmpTarget->close();
 
     // parse xml
-    QFile f1(tmp.fileName());
+    QFile f1(tmp->fileName());
     f1.open(QIODevice::ReadOnly);
-    QDomDocument dom(tmp.fileName());
+    QDomDocument dom(tmp->fileName());
     dom.setContent(&f1);
     f1.close();
 
@@ -361,9 +362,9 @@ void QmlFilter::analyze(bool isAudio)
     else
         consumerNode.setAttribute("audio_off", 1);
     consumerNode.setAttribute("no_meta", 1);
-    consumerNode.setAttribute("resource", tmpTarget.fileName());
+    consumerNode.setAttribute("resource", tmpTarget->fileName());
 
-    AbstractJob* job = new MeltJob(tmpTarget.fileName(), dom.toString(2),
+    AbstractJob* job = new MeltJob(tmpTarget->fileName(), dom.toString(2),
         MLT.profile().frame_rate_num(), MLT.profile().frame_rate_den());
     if (job) {
         AnalyzeDelegate* delegate = new AnalyzeDelegate(m_filter);
@@ -374,7 +375,6 @@ void QmlFilter::analyze(bool isAudio)
 
         // Touch the target .stab file. This prevents multiple jobs from trying
         // to write the same file.
-        QString filename(m_filter.get("filename"));
         if (!filename.isEmpty() && !QFile::exists(filename)) {
             job->setProperty("filename", filename);
             QFile file(filename);

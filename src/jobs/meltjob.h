@@ -30,7 +30,7 @@ public:
     MeltJob(const QString& name, const QStringList& args, int frameRateNum, int frameRateDen);
     virtual ~MeltJob();
     QString xml();
-    QString xmlPath() const { return m_xml.fileName(); }
+    QString xmlPath() const { return m_xml->fileName(); }
     void setIsStreaming(bool streaming);
     void setUseMultiConsumer(bool multi = true);
 
@@ -45,7 +45,7 @@ protected slots:
     void onReadyRead();
 
 protected:
-    QTemporaryFile m_xml;
+    QScopedPointer<QTemporaryFile> m_xml;
 
 private:
 

@@ -24,6 +24,7 @@
 
 class QWidget;
 class QDoubleSpinBox;
+class QTemporaryFile;
 
 namespace Mlt {
     class Producer;
@@ -48,6 +49,7 @@ public:
     static bool convertNumericString(QString& str, QChar decimalPoint);
     static bool convertDecimalPoints(QString& str, QChar decimalPoint);
     static void showFrameRateDialog(const QString& caption, int numerator, QDoubleSpinBox* spinner, QWidget* parent = Q_NULLPTR);
+    static QTemporaryFile* writableTemporaryFile(const QString& filePath = QString(), const QString& templateName = QString());
 };
 
 #endif // UTIL_H

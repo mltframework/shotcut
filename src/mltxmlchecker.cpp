@@ -58,7 +58,6 @@ MltXmlChecker::MltXmlChecker()
     , m_isCorrected(false)
     , m_usesLocale(false)
     , m_decimalPoint('.')
-    , m_tempFile(QDir::tempPath().append("/shotcut-XXXXXX.mlt"))
     , m_numericValueChanged(false)
 {
     m_unlinkedFilesModel.setColumnCount(ColumnCount);
@@ -69,12 +68,12 @@ bool MltXmlChecker::check(const QString& fileName)
     LOG_DEBUG() << "begin";
 
     QFile file(fileName);
-    if (file.open(QIODevice::ReadOnly | QIODevice::Text) &&
-            m_tempFile.open()) {
-        m_tempFile.resize(0);
+    m_tempFile.reset(Util::writableTemporaryFile("", "shotcut-XXXXXX.mlt"));
+    if (file.open(QIODevice::ReadOnly | QIODevice::Text) && m_tempFile->open()) {
+        m_tempFile->resize(0);
         m_fileInfo = QFileInfo(fileName);
         m_xml.setDevice(&file);
-        m_newXml.setDevice(&m_tempFile);
+        m_newXml.setDevice(m_tempFile.data());
         m_newXml.setAutoFormatting(true);
         m_newXml.setAutoFormattingIndent(2);
         if (m_xml.readNextStartElement()) {
@@ -122,11 +121,13 @@ bool MltXmlChecker::check(const QString& fileName)
             }
         }
     }
-    if (m_tempFile.isOpen()) {
-        m_tempFile.close();
-//        m_tempFile.open();
-//        LOG_DEBUG() << m_tempFile.readAll().constData();
-//        m_tempFile.close();
+    if (m_tempFile->isOpen()) {
+        m_tempFile->close();
+
+        // Useful for debugging
+//        m_tempFile->open();
+//        LOG_DEBUG() << m_tempFile->readAll().constData();
+//        m_tempFile->close();
     }
     LOG_DEBUG() << "end";
     return m_xml.error() == QXmlStreamReader::NoError;

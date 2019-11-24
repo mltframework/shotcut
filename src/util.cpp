@@ -16,6 +16,7 @@
  */
 
 #include "util.h"
+
 #include <QFileInfo>
 #include <QWidget>
 #include <QStringList>
@@ -27,7 +28,11 @@
 #include <QMessageBox>
 #include <QMap>
 #include <QDoubleSpinBox>
+#include <QTemporaryFile>
+#include <QCoreApplication>
+
 #include <MltProducer.h>
+#include <Logger.h>
 #include "shotcut_mlt_properties.h"
 #include "qmltypes/qmlapplication.h"
 
@@ -278,5 +283,24 @@ void Util::showFrameRateDialog(const QString& caption, int numerator, QDoubleSpi
     dialog.setWindowModality(QmlApplication::dialogModality());
     if (dialog.exec() == QMessageBox::Yes) {
         spinner->setValue(fps);
+    }
+}
+
+QTemporaryFile* Util::writableTemporaryFile(const QString& filePath, const QString& templateName)
+{
+    // filePath should already be checked writable.
+    QFileInfo info(filePath);
+    QString templateFileName = templateName.isEmpty()?
+        QString("%1.XXXXXX").arg(QCoreApplication::applicationName()) : templateName;
+
+    // First, try the system temp dir.
+    QString templateFilePath = QDir(QDir::tempPath()).filePath(templateFileName);
+    QScopedPointer<QTemporaryFile> tmp(new QTemporaryFile(templateFilePath));
+
+    if (!tmp->open() || tmp->write("") < 0) {
+        // Otherwise, use the directory provided.
+        return new QTemporaryFile(info.dir().filePath(templateFileName));
+    } else {
+        return tmp.take();
     }
 }

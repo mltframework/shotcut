@@ -51,7 +51,7 @@ public:
     bool needsCPU() const { return m_needsCPU; }
     bool hasEffects() const { return m_hasEffects; }
     bool isCorrected() const { return m_isCorrected; }
-    QString tempFileName() const { return m_tempFile.fileName(); }
+    QString tempFileName() const { return m_tempFile->fileName(); }
     QStandardItemModel& unlinkedFilesModel() { return m_unlinkedFilesModel; }
     void setLocale();
     bool usesLocale() const { return m_usesLocale; }
@@ -81,7 +81,7 @@ private:
     bool m_isCorrected;
     bool m_usesLocale;
     QChar m_decimalPoint;
-    QTemporaryFile m_tempFile;
+    QScopedPointer<QTemporaryFile> m_tempFile;
     bool m_numericValueChanged;
     QFileInfo m_fileInfo;
     QStandardItemModel m_unlinkedFilesModel;

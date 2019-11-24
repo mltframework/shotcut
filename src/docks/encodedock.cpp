@@ -864,6 +864,10 @@ void EncodeDock::collectProperties(QDomElement& node, int realtime)
 
 MeltJob* EncodeDock::createMeltJob(Mlt::Producer* service, const QString& target, int realtime, int pass)
 {
+    QString caption = tr("Export File");
+    if (Util::warnIfNotWritable(target, this, caption, true /* remove */))
+        return nullptr;
+
     // if image sequence, change filename to include number
     QString mytarget = target;
     if (!ui->disableVideoCheckbox->isChecked()) {
@@ -894,32 +898,28 @@ MeltJob* EncodeDock::createMeltJob(Mlt::Producer* service, const QString& target
     }
 
     // get temp filename
-    QTemporaryFile tmp;
-    tmp.open();
-    tmp.close();
-    MLT.saveXML(tmp.fileName(), service, false /* without relative paths */, false /* without verify */);
+    QScopedPointer<QTemporaryFile> tmp{Util::writableTemporaryFile(target)};
+    tmp->open();
+    tmp->close();
+    MLT.saveXML(tmp->fileName(), service, false /* without relative paths */, false /* without verify */);
 
     // parse xml
-    QFile f1(tmp.fileName());
+    QFile f1(tmp->fileName());
     f1.open(QIODevice::ReadOnly);
     QXmlSimpleReader xmlReader;
     QXmlInputSource xmlSource(&f1);
-    QDomDocument dom(tmp.fileName());
+    QDomDocument dom(tmp->fileName());
     dom.setContent(&xmlSource, &xmlReader);
     f1.close();
 
     // Check if the target file is a member of the project.
-    QString caption = tr("Export File");
     QString xml = dom.toString(0);
     if (xml.contains(QDir::fromNativeSeparators(target))) {
         QMessageBox::warning(this, caption,
                              tr("You cannot write to a file that is in your project.\n"
                                 "Try again with a different folder or file name."));
-        return 0;
+        return nullptr;
     }
-
-    if (Util::warnIfNotWritable(target, this, caption, true /* remove */))
-        return 0;
 
     // add consumer element
     QDomElement consumerNode = dom.createElement("consumer");
