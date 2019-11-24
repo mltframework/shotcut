@@ -65,6 +65,7 @@ public slots:
     void on_actionCopy_triggered();
     void on_actionSelectAll_triggered();
     void on_actionSelectNone_triggered();
+    void onProducerChanged(Mlt::Producer* producer);
 
 private slots:
     void on_menuButton_clicked();
