@@ -18,6 +18,7 @@
 #include "timelinecommands.h"
 #include "mltcontroller.h"
 #include "shotcut_mlt_properties.h"
+#include "settings.h"
 #include <Logger.h>
 #include <QMetaObject>
 
@@ -58,6 +59,7 @@ InsertCommand::InsertCommand(MultitrackModel &model, int trackIndex,
     , m_xml(xml)
     , m_undoHelper(m_model)
     , m_seek(seek)
+    , m_rippleAllTracks(Settings.timelineRippleAllTracks())
 {
     setText(QObject::tr("Insert into track"));
 }
@@ -74,10 +76,10 @@ void InsertCommand::redo()
             QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(i));
             clip = Mlt::Producer(info->producer);
             clip.set_in_and_out(info->frame_in, info->frame_out);
-            m_model.insertClip(m_trackIndex, clip, m_position, false);
+            m_model.insertClip(m_trackIndex, clip, m_position, m_rippleAllTracks, false);
         }
     } else {
-        m_model.insertClip(m_trackIndex, clip, m_position, m_seek);
+        m_model.insertClip(m_trackIndex, clip, m_position, m_rippleAllTracks, m_seek);
     }
     m_undoHelper.recordAfterState();
 }
@@ -162,6 +164,7 @@ RemoveCommand::RemoveCommand(MultitrackModel &model, int trackIndex,
     , m_clipIndex(clipIndex)
     , m_xml(xml)
     , m_undoHelper(m_model)
+    , m_rippleAllTracks(Settings.timelineRippleAllTracks())
 {
     setText(QObject::tr("Remove from track"));
 }
@@ -170,7 +173,7 @@ void RemoveCommand::redo()
 {
     LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex;
     m_undoHelper.recordBeforeState();
-    m_model.removeClip(m_trackIndex, m_clipIndex);
+    m_model.removeClip(m_trackIndex, m_clipIndex, m_rippleAllTracks);
     m_undoHelper.recordAfterState();
 }
 
@@ -326,6 +329,7 @@ MoveClipCommand::MoveClipCommand(MultitrackModel &model, int fromTrackIndex, int
             MultitrackModel::StartRole).toInt())
     , m_toStart(position)
     , m_ripple(ripple)
+    , m_rippleAllTracks(Settings.timelineRippleAllTracks())
     , m_undoHelper(m_model)
 {
     setText(QObject::tr("Move clip"));
@@ -335,7 +339,7 @@ void MoveClipCommand::redo()
 {
     LOG_DEBUG() << "fromTrack" << m_fromTrackIndex << "toTrack" << m_toTrackIndex;
     m_undoHelper.recordBeforeState();
-    m_model.moveClip(m_fromTrackIndex, m_toTrackIndex, m_fromClipIndex, m_toStart, m_ripple);
+    m_model.moveClip(m_fromTrackIndex, m_toTrackIndex, m_fromClipIndex, m_toStart, m_ripple, m_rippleAllTracks);
     m_undoHelper.recordAfterState();
 }
 
@@ -352,6 +356,7 @@ TrimClipInCommand::TrimClipInCommand(MultitrackModel &model, int trackIndex, int
     , m_clipIndex(clipIndex)
     , m_delta(delta)
     , m_ripple(ripple)
+    , m_rippleAllTracks(Settings.timelineRippleAllTracks())
     , m_redo(redo)
 {
     setText(QObject::tr("Trim clip in point"));
@@ -364,7 +369,7 @@ void TrimClipInCommand::redo()
         m_undoHelper.reset(new UndoHelper(m_model));
         if (!m_ripple) m_undoHelper->setHints(UndoHelper::SkipXML);
         m_undoHelper->recordBeforeState();
-        m_model.trimClipIn(m_trackIndex, m_clipIndex, m_delta, m_ripple);
+        m_model.trimClipIn(m_trackIndex, m_clipIndex, m_delta, m_ripple, m_rippleAllTracks);
         m_undoHelper->recordAfterState();
     } else {
         Q_ASSERT(m_undoHelper);
@@ -399,6 +404,7 @@ TrimClipOutCommand::TrimClipOutCommand(MultitrackModel &model, int trackIndex, i
     , m_clipIndex(clipIndex)
     , m_delta(delta)
     , m_ripple(ripple)
+    , m_rippleAllTracks(Settings.timelineRippleAllTracks())
     , m_redo(redo)
 {
     setText(QObject::tr("Trim clip out point"));
@@ -411,7 +417,7 @@ void TrimClipOutCommand::redo()
         if (!m_ripple)
             m_undoHelper->setHints(UndoHelper::SkipXML);
         m_undoHelper->recordBeforeState();
-        m_clipIndex = m_model.trimClipOut(m_trackIndex, m_clipIndex, m_delta, m_ripple);
+        m_clipIndex = m_model.trimClipOut(m_trackIndex, m_clipIndex, m_delta, m_ripple, m_rippleAllTracks);
         m_undoHelper->recordAfterState();
     } else {
         Q_ASSERT(m_undoHelper);
@@ -665,7 +671,7 @@ void AddTransitionByTrimInCommand::redo()
     if (m_redo) {
         LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "delta" << m_trimDelta << "duration" << m_duration;
         if (m_trimDelta)
-            m_model.trimClipIn(m_trackIndex, m_clipIndex + 1, m_trimDelta, false);
+            m_model.trimClipIn(m_trackIndex, m_clipIndex + 1, m_trimDelta, false, false);
         m_model.addTransitionByTrimIn(m_trackIndex, m_clipIndex, m_duration);
         if (m_notify && m_clipIndex > 0)
             m_model.notifyClipOut(m_trackIndex, m_clipIndex - 1);
@@ -711,7 +717,7 @@ void RemoveTransitionByTrimInCommand::redo()
         QModelIndex modelIndex = m_model.makeIndex(m_trackIndex, m_clipIndex);
         int n = m_model.data(modelIndex, MultitrackModel::DurationRole).toInt();
         m_model.liftClip(m_trackIndex, m_clipIndex);
-        m_model.trimClipIn(m_trackIndex, m_clipIndex + 1, -n, false);
+        m_model.trimClipIn(m_trackIndex, m_clipIndex + 1, -n, false, false);
         m_model.notifyClipIn(m_trackIndex, m_clipIndex + 1);
     } else {
         m_redo = true;
@@ -746,7 +752,7 @@ void RemoveTransitionByTrimOutCommand::redo()
         QModelIndex modelIndex = m_model.makeIndex(m_trackIndex, m_clipIndex);
         int n = m_model.data(modelIndex, MultitrackModel::DurationRole).toInt();
         m_model.liftClip(m_trackIndex, m_clipIndex);
-        m_model.trimClipOut(m_trackIndex, m_clipIndex - 1, -n, false);
+        m_model.trimClipOut(m_trackIndex, m_clipIndex - 1, -n, false, false);
         m_model.notifyClipOut(m_trackIndex, m_clipIndex - 1);
     } else {
         m_redo = true;
@@ -781,7 +787,7 @@ void AddTransitionByTrimOutCommand::redo()
     if (m_redo) {
         LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "delta" << m_trimDelta << "duration" << m_duration;
         if (m_trimDelta)
-            m_model.trimClipOut(m_trackIndex, m_clipIndex, m_trimDelta, false);
+            m_model.trimClipOut(m_trackIndex, m_clipIndex, m_trimDelta, false, false);
         m_model.addTransitionByTrimOut(m_trackIndex, m_clipIndex, m_duration);
         if (m_notify)
             m_model.notifyClipIn(m_trackIndex, m_clipIndex + 2);

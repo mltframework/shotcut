@@ -882,7 +882,7 @@ bool TimelineDock::trimClipIn(int trackIndex, int clipIndex, int oldClipIndex, i
         QModelIndex modelIndex = m_model.makeIndex(trackIndex, clipIndex - 1);
         int n = m_model.data(modelIndex, MultitrackModel::DurationRole).toInt();
         m_model.liftClip(trackIndex, clipIndex - 1);
-        m_model.trimClipIn(trackIndex, clipIndex, -n, false);
+        m_model.trimClipIn(trackIndex, clipIndex, -n, false, false);
         m_trimDelta += delta;
         m_trimCommand.reset(new Timeline::RemoveTransitionByTrimInCommand(m_model, trackIndex, clipIndex - 1, m_trimDelta, false));
         if (m_updateCommand && m_updateCommand->trackIndex() == trackIndex && m_updateCommand->clipIndex() == clipIndex)
@@ -899,7 +899,7 @@ bool TimelineDock::trimClipIn(int trackIndex, int clipIndex, int oldClipIndex, i
             if (ripple) m_undoHelper->setHints(UndoHelper::SkipXML);
             m_undoHelper->recordBeforeState();
         }
-        clipIndex = m_model.trimClipIn(trackIndex, clipIndex, delta, ripple);
+        clipIndex = m_model.trimClipIn(trackIndex, clipIndex, delta, ripple, Settings.timelineRippleAllTracks());
 
         // Update duration in properties for image clip.
         QScopedPointer<Mlt::ClipInfo> info(getClipInfo(trackIndex, clipIndex));
@@ -929,7 +929,7 @@ bool TimelineDock::trimClipOut(int trackIndex, int clipIndex, int delta, bool ri
         QModelIndex modelIndex = m_model.makeIndex(trackIndex, clipIndex + 1);
         int n = m_model.data(modelIndex, MultitrackModel::DurationRole).toInt();
         m_model.liftClip(trackIndex, clipIndex + 1);
-        m_model.trimClipOut(trackIndex, clipIndex, -n, false);
+        m_model.trimClipOut(trackIndex, clipIndex, -n, false, false);
         m_trimDelta += delta;
         m_trimCommand.reset(new Timeline::RemoveTransitionByTrimOutCommand(m_model, trackIndex, clipIndex + 1, m_trimDelta, false));
         if (m_updateCommand && m_updateCommand->trackIndex() == trackIndex && m_updateCommand->clipIndex() == clipIndex)
@@ -946,7 +946,7 @@ bool TimelineDock::trimClipOut(int trackIndex, int clipIndex, int delta, bool ri
             if (ripple) m_undoHelper->setHints(UndoHelper::SkipXML);
             m_undoHelper->recordBeforeState();
         }
-        m_model.trimClipOut(trackIndex, clipIndex, delta, ripple);
+        m_model.trimClipOut(trackIndex, clipIndex, delta, ripple, Settings.timelineRippleAllTracks());
 
         // Update duration in properties for image clip.
         QScopedPointer<Mlt::ClipInfo> info(getClipInfo(trackIndex, clipIndex));

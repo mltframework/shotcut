@@ -134,17 +134,17 @@ public slots:
     void setTrackHidden(int row, bool hidden);
     void setTrackComposite(int row, bool composite);
     void setTrackLock(int row, bool lock);
-    int trimClipIn(int trackIndex, int clipIndex, int delta, bool ripple);
+    int trimClipIn(int trackIndex, int clipIndex, int delta, bool ripple, bool rippleAllTracks);
     void notifyClipIn(int trackIndex, int clipIndex);
-    int trimClipOut(int trackIndex, int clipIndex, int delta, bool ripple);
+    int trimClipOut(int trackIndex, int clipIndex, int delta, bool ripple, bool rippleAllTracks);
     void notifyClipOut(int trackIndex, int clipIndex);
     bool moveClipValid(int fromTrack, int toTrack, int clipIndex, int position, bool ripple);
-    bool moveClip(int fromTrack, int toTrack, int clipIndex, int position, bool ripple);
+    bool moveClip(int fromTrack, int toTrack, int clipIndex, int position, bool ripple, bool rippleAllTracks);
     int overwriteClip(int trackIndex, Mlt::Producer& clip, int position, bool seek = true);
     QString overwrite(int trackIndex, Mlt::Producer& clip, int position, bool seek = true);
-    int insertClip(int trackIndex, Mlt::Producer& clip, int position, bool seek = true);
+    int insertClip(int trackIndex, Mlt::Producer& clip, int position, bool rippleAllTracks, bool seek = true);
     int appendClip(int trackIndex, Mlt::Producer &clip);
-    void removeClip(int trackIndex, int clipIndex);
+    void removeClip(int trackIndex, int clipIndex, bool rippleAllTracks);
     void liftClip(int trackIndex, int clipIndex);
     void splitClip(int trackIndex, int clipIndex, int position);
     void joinClips(int trackIndex, int clipIndex);
@@ -176,10 +176,10 @@ private:
     TrackList m_trackList;
     bool m_isMakingTransition;
 
-    bool moveClipToTrack(int fromTrack, int toTrack, int clipIndex, int position, bool ripple);
-    void moveClipToEnd(Mlt::Playlist& playlist, int trackIndex, int clipIndex, int position, bool ripple);
-    void relocateClip(Mlt::Playlist& playlist, int trackIndex, int clipIndex, int position, bool ripple);
-    void moveClipInBlank(Mlt::Playlist& playlist, int trackIndex, int clipIndex, int position, bool ripple, int duration = 0);
+    bool moveClipToTrack(int fromTrack, int toTrack, int clipIndex, int position, bool ripple, bool rippleAllTracks);
+    void moveClipToEnd(Mlt::Playlist& playlist, int trackIndex, int clipIndex, int position, bool ripple, bool rippleAllTracks);
+    void relocateClip(Mlt::Playlist& playlist, int trackIndex, int clipIndex, int position, bool ripple, bool rippleAllTracks);
+    void moveClipInBlank(Mlt::Playlist& playlist, int trackIndex, int clipIndex, int position, bool ripple, bool rippleAllTracks, int duration = 0);
     void consolidateBlanks(Mlt::Playlist& playlist, int trackIndex);
     void consolidateBlanksAllTracks();
     void getAudioLevels();

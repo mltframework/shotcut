@@ -68,6 +68,7 @@ private:
     QStringList m_oldTracks;
     UndoHelper m_undoHelper;
     bool m_seek;
+    bool m_rippleAllTracks;
 };
 
 class OverwriteCommand : public QUndoCommand
@@ -111,6 +112,7 @@ private:
     int m_clipIndex;
     QString m_xml;
     UndoHelper m_undoHelper;
+    bool m_rippleAllTracks;
 };
 
 class NameTrackCommand : public QUndoCommand
@@ -203,6 +205,7 @@ private:
     int m_fromStart;
     int m_toStart;
     bool m_ripple;
+    bool m_rippleAllTracks;
     UndoHelper m_undoHelper;
 };
 
@@ -231,6 +234,7 @@ private:
     int m_clipIndex;
     int m_delta;
     bool m_ripple;
+    bool m_rippleAllTracks;
     bool m_redo;
 };
 
@@ -249,6 +253,7 @@ private:
     int m_clipIndex;
     int m_delta;
     bool m_ripple;
+    bool m_rippleAllTracks;
     bool m_redo;
 };
 
