@@ -142,6 +142,7 @@ protected:
 
 private:
     void setViewMode(PlaylistModel::ViewMode mode);
+    void resetPlaylistIndex();
 
     Ui::PlaylistDock *ui;
     QAbstractItemView *m_view;

@@ -263,7 +263,7 @@ void PlaylistDock::moveClipUp()
     int row = m_view->currentIndex().row();
     if (row > 0) {
         MAIN.undoStack()->push(new Playlist::MoveCommand(m_model, row, row - 1));
-        static_cast<Mlt::Properties>(MLT.producer()).clear(kPlaylistIndexProperty);
+        resetPlaylistIndex();
     }
 }
 
@@ -272,7 +272,7 @@ void PlaylistDock::moveClipDown()
     int row = m_view->currentIndex().row();
     if (row + 1 < m_model.rowCount()) {
         MAIN.undoStack()->push(new Playlist::MoveCommand(m_model, row, row + 1));
-        static_cast<Mlt::Properties>(MLT.producer()).clear(kPlaylistIndexProperty);
+        resetPlaylistIndex();
     }
 }
 
@@ -440,7 +440,7 @@ void PlaylistDock::on_removeButton_clicked()
         MAIN.undoStack()->endMacro();
     if (rowsRemoved.contains(MLT.producer()->get_int(kPlaylistIndexProperty))) {
         // Remove the playlist index property on the producer.
-        static_cast<Mlt::Properties>(MLT.producer()).clear(kPlaylistIndexProperty);
+
         setUpdateButtonEnabled(false);
     }
 }
@@ -552,19 +552,19 @@ void PlaylistDock::on_actionGoto_triggered()
 
 void PlaylistDock::on_actionRemoveAll_triggered()
 {
-    static_cast<Mlt::Properties>(MLT.producer()).clear(kPlaylistIndexProperty);
+    resetPlaylistIndex();
     MAIN.undoStack()->push(new Playlist::ClearCommand(m_model));
 }
 
 void PlaylistDock::on_actionSortByName_triggered()
 {
-    static_cast<Mlt::Properties>(MLT.producer()).clear(kPlaylistIndexProperty);
+    resetPlaylistIndex();
     MAIN.undoStack()->push(new Playlist::SortCommand(m_model, PlaylistModel::COLUMN_RESOURCE, Qt::AscendingOrder));
 }
 
 void PlaylistDock::on_actionSortByDate_triggered()
 {
-    static_cast<Mlt::Properties>(MLT.producer()).clear(kPlaylistIndexProperty);
+    resetPlaylistIndex();
     MAIN.undoStack()->push(new Playlist::SortCommand(m_model, PlaylistModel::COLUMN_DATE, Qt::AscendingOrder));
 }
 
@@ -689,14 +689,14 @@ void PlaylistDock::onDropped(const QMimeData *data, int row)
             }
         }
     }
-    static_cast<Mlt::Properties>(MLT.producer()).clear(kPlaylistIndexProperty);
+    resetPlaylistIndex();
 }
 
 void PlaylistDock::onMoveClip(int from, int to)
 {
     MAIN.undoStack()->push(new Playlist::MoveCommand(m_model, from, to));
     m_view->clearSelection();
-    static_cast<Mlt::Properties>(MLT.producer()).clear(kPlaylistIndexProperty);
+    resetPlaylistIndex();
 }
 
 void PlaylistDock::onPlayerDragStarted()
@@ -866,6 +866,12 @@ void PlaylistDock::setViewMode(PlaylistModel::ViewMode mode)
         m_iconsView->show();
     }
     m_model.refreshThumbnails();
+}
+
+void PlaylistDock::resetPlaylistIndex()
+{
+    if (MLT.producer())
+        static_cast<Mlt::Properties>(MLT.producer()).clear(kPlaylistIndexProperty);
 }
 
 #include "playlistdock.moc"
