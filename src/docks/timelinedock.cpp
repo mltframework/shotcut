@@ -578,7 +578,7 @@ void TimelineDock::lift(int trackIndex, int clipIndex)
         pulseLockButtonOnTrack(trackIndex);
         return;
     }
-    Q_ASSERT(trackIndex >= 0 && clipIndex >= 0);
+    if (trackIndex < 0 || clipIndex < 0) return;
     QScopedPointer<Mlt::Producer> clip(producerForClip(trackIndex, clipIndex));
     if (clip) {
         if (clip->is_blank())
