@@ -132,12 +132,11 @@ void ImageProducerWidget::recreateProducer()
         }
     }
     Mlt::Producer* p = newProducer(MLT.profile());
+    if (resource.startsWith("qimage:") || resource.startsWith("pixbuf:"))
+        m_producer->set("resource", resource.mid(resource.indexOf(':') + 1).toUtf8().constData());
     p->pass_list(*m_producer, "force_aspect_ratio," kAspectRatioNumerator ", resource, " kAspectRatioDenominator
         ", begin, ttl," kShotcutResourceProperty ", autolength, length," kShotcutSequenceProperty ", " kPlaylistIndexProperty
         ", " kCommentProperty);
-    resource = p->get("resource");
-    if (resource.startsWith("qimage:") || resource.startsWith("pixbuf:"))
-        p->set("resource", resource.mid(resource.indexOf(':') + 1).toUtf8().constData());
     Mlt::Controller::copyFilters(*m_producer, *p);
     if (m_producer->get(kMultitrackItemProperty)) {
         emit producerChanged(p);
