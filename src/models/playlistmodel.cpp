@@ -49,9 +49,10 @@ class UpdateThumbnailTask : public QRunnable
     int m_in;
     int m_out;
     int m_row;
+    bool m_force;
 
 public:
-    UpdateThumbnailTask(PlaylistModel* model, Mlt::Producer& producer, int in, int out, int row)
+    UpdateThumbnailTask(PlaylistModel* model, Mlt::Producer& producer, int in, int out, int row, bool force = false)
         : QRunnable()
         , m_model(model)
         , m_producer(producer)
@@ -60,6 +61,7 @@ public:
         , m_in(in)
         , m_out(out)
         , m_row(row)
+        , m_force(force)
     {}
 
     ~UpdateThumbnailTask()
@@ -121,7 +123,7 @@ public:
         int outPoint = qRound(m_out / MLT.profile().fps() * m_profile.fps());
 
         QImage image = DB.getThumbnail(cacheKey(inPoint));
-        if (image.isNull()) {
+        if (m_force || image.isNull()) {
             image = makeThumbnail(inPoint);
             m_producer.set(kThumbnailInProperty, new QImage(image), 0, (mlt_destructor) deleteQImage, NULL);
             DB.putThumbnail(cacheKey(inPoint), image);
@@ -132,7 +134,7 @@ public:
 
         if (setting == "tall" || setting == "wide") {
             image = DB.getThumbnail(cacheKey(outPoint));
-            if (image.isNull()) {
+            if (m_force || image.isNull()) {
                 image = makeThumbnail(outPoint);
                 m_producer.set(kThumbnailOutProperty, new QImage(image), 0, (mlt_destructor) deleteQImage, NULL);
                 DB.putThumbnail(cacheKey(outPoint), image);
@@ -659,6 +661,15 @@ void PlaylistModel::update(int row, Mlt::Producer& producer)
     m_playlist->insert(producer, row, in, out);
     emit dataChanged(createIndex(row, 0), createIndex(row, columnCount()));
     emit modified();
+}
+
+void PlaylistModel::updateThumbnails(int row)
+{
+    if (!m_playlist) return;
+    QScopedPointer<Mlt::ClipInfo> info(m_playlist->clip_info(row));
+    if (!info || !info->producer->is_valid()) return;
+    QThreadPool::globalInstance()->start(
+        new UpdateThumbnailTask(this, *info->producer, info->frame_in, info->frame_out, row, true /* force */), 1);
 }
 
 void PlaylistModel::appendBlank(int frames)

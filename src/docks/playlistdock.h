@@ -136,6 +136,8 @@ private slots:
 
     void on_actionPlayAfterOpen_triggered(bool checked);
 
+    void on_actionUpdateThumbnails_triggered();
+
 protected:
     void keyPressEvent(QKeyEvent* event);
     void keyReleaseEvent(QKeyEvent* event);

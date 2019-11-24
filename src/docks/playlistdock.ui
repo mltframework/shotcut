@@ -476,6 +476,11 @@ p, li { white-space: pre-wrap; }
     <string>Ctrl+Shift+D</string>
    </property>
   </action>
+  <action name="actionUpdateThumbnails">
+   <property name="text">
+    <string>Update Thumbnails</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>

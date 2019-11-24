@@ -109,6 +109,7 @@ public slots:
     void insert(Mlt::Producer&, int row);
     void remove(int row);
     void update(int row, Mlt::Producer& producer);
+    void updateThumbnails(int row);
     void appendBlank(int frames);
     void insertBlank(int frames, int row);
     void close();

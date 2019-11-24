@@ -290,6 +290,8 @@ void PlaylistDock::on_menuButton_clicked()
         if (MLT.isClip())
             menu.addAction(ui->actionInsertCut);
         menu.addAction(ui->actionUpdate);
+        menu.addAction(ui->actionUpdateThumbnails);
+        menu.addAction(ui->actionSetFileDate);
         menu.addSeparator();
     }
     menu.addAction(ui->actionRemoveAll);
@@ -517,6 +519,7 @@ void PlaylistDock::viewCustomContextMenuRequested(const QPoint &pos)
         if (MLT.isClip())
             menu.addAction(ui->actionInsertCut);
         menu.addAction(ui->actionUpdate);
+        menu.addAction(ui->actionUpdateThumbnails);
         menu.addAction(ui->actionSetFileDate);
         menu.exec(mapToGlobal(pos));
     }
@@ -980,4 +983,11 @@ void PlaylistDock::on_actionSelectAll_triggered()
 void PlaylistDock::on_actionSelectNone_triggered()
 {
     m_view->selectionModel()->clearSelection();
+}
+
+void PlaylistDock::on_actionUpdateThumbnails_triggered()
+{
+    QModelIndex index = m_view->currentIndex();
+    if (!index.isValid() || !m_model.playlist()) return;
+    m_model.updateThumbnails(index.row());
 }
