@@ -38,6 +38,12 @@ JobQueue& JobQueue::singleton(QObject* parent)
 void JobQueue::cleanup()
 {
     QMutexLocker locker(&m_mutex);
+    foreach (AbstractJob* job, m_jobs) {
+        if (job->state() == QProcess::Running) {
+            job->stop();
+            break;
+        }
+    }
     qDeleteAll(m_jobs);
 }
 

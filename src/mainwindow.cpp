@@ -2317,6 +2317,7 @@ void MainWindow::closeEvent(QCloseEvent* event)
     if (continueJobsRunning() && continueModified()) {
         if (!m_htmlEditor || m_htmlEditor->close()) {
             LOG_DEBUG() << "begin";
+            JOBS.cleanup();
             writeSettings();
             if (m_exitCode == EXIT_SUCCESS) {
                 MLT.stop();
