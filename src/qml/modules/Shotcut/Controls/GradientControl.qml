@@ -23,6 +23,7 @@ import Shotcut.Controls 1.0
 
 RowLayout {
     property var colors: []
+    property alias spinnerVisible: gradientSpinner.visible
     property var _stopHandles: []
     signal gradientChanged()
 
@@ -49,7 +50,7 @@ RowLayout {
             color: colorList[stopIndex]
             border.color: "gray"
             border.width: 1
-            width: 6
+            width: 10
             height: parent.height
             radius: 2
             visible: colorList.length > 1
@@ -69,7 +70,7 @@ RowLayout {
                 modality: Qt.ApplicationModal
             }
 
-            ToolTip { text: 'Color: %1\nClick to change'.arg(color) }
+            ToolTip { text: qsTr('Color: %1\nClick to change').arg(color) }
         }
     }
 
@@ -88,7 +89,7 @@ RowLayout {
         }
 
         var newStops = [];
-        var stepSize = 1.0 / (colors.length - 1)
+        var stepSize = colors.length? 1.0 / (colors.length - 1) : 0
         for (var idx = 0; idx < colors.length; idx++) {
             newStops.push(stopComponent.createObject(gradientView, {"position":stepSize * idx,"color":colors[idx]}));
         }
@@ -177,7 +178,7 @@ RowLayout {
         maximumValue: 10
         decimals: 0
         stepSize: 1
-        suffix: ' colors'
+        suffix: qsTr(' colors')
         onValueChanged: {
             _setStopCount(value)
         }
