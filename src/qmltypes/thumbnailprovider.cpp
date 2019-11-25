@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2013-2018 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2013-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,14 +34,19 @@ QImage ThumbnailProvider::requestImage(const QString &id, QSize *size, const QSi
 {
     QImage result;
 
-    // id is [hash]/mlt_service/resource#frameNumber
+    // id is [hash]/mlt_service/resource#frameNumber[!]
+    // optional trailing '!' means to force update
     int index = id.lastIndexOf('#');
 
     if (index != -1) {
-        QString hash = id.section('/', 0, 0);
-        QString service = id.section('/', 1, 1);
-        QString resource = id.section('/', 2);
-        int frameNumber = id.mid(index + 1).toInt();
+        QString myId = id;
+        bool force = id.endsWith('!');
+        if (force)
+            myId = id.left(id.size() - 1);
+        QString hash = myId.section('/', 0, 0);
+        QString service = myId.section('/', 1, 1);
+        QString resource = myId.section('/', 2);
+        int frameNumber = myId.mid(index + 1).toInt();
         Mlt::Properties properties;
 
         // Scale the frameNumber to ThumbnailProvider profile's fps.
@@ -53,7 +57,7 @@ QImage ThumbnailProvider::requestImage(const QString &id, QSize *size, const QSi
 
         QString key = cacheKey(properties, service, resource, hash, frameNumber);
         result = DB.getThumbnail(key);
-        if (result.isNull()) {
+        if (force || result.isNull()) {
             if (service == "avformat-novalidate")
                 service = "avformat";
             else if (service.startsWith("xml"))

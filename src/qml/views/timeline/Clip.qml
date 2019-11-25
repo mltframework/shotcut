@@ -671,6 +671,22 @@ Rectangle {
             onTriggered: timeline.detachAudio(trackIndex, index)
         }
         MenuItem {
+            visible: !isBlank && !isTransition && settings.timelineShowThumbnails && !isAudio
+            text: qsTr('Update Thumbnails')
+            onTriggered: {
+                var s = inThumbnail.source.toString()
+                if (s.substring(s.length - 1) !== '!') {
+                    inThumbnail.source = s + '!'
+                    resetThumbnailsSourceTimer.restart()
+                }
+                s = outThumbnail.source.toString()
+                if (s.substring(s.length - 1) !== '!') {
+                    outThumbnail.source = s + '!'
+                    resetThumbnailsSourceTimer.restart()
+                }
+            }
+        }
+        MenuItem {
             visible: !isBlank && !isTransition && settings.timelineShowWaveforms
             text: qsTr('Rebuild Audio Waveform')
             onTriggered: timeline.remakeAudioLevels(trackIndex, index)
@@ -689,6 +705,21 @@ Rectangle {
                 // Try to fix menu running off screen. This only works intermittently.
                 menu.__yOffset = Math.min(0, Screen.height - (__popupGeometry.y + __popupGeometry.height + 40))
                 menu.__xOffset = Math.min(0, Screen.width - (__popupGeometry.x + __popupGeometry.width))
+            }
+        }
+    }
+
+    Timer {
+        id: resetThumbnailsSourceTimer
+        interval: 5000
+        onTriggered: {
+            var s = inThumbnail.source.toString()
+            if (s.substring(s.length - 1) === '!') {
+                inThumbnail.source = s.substring(0, s.length - 1)
+            }
+            s = inThumbnail.source.toString()
+            if (s.substring(s.length - 1) === '!') {
+                inThumbnail.source = s.substring(0, s.length - 1)
             }
         }
     }
