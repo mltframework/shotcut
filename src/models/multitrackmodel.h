@@ -138,7 +138,6 @@ public slots:
     void notifyClipIn(int trackIndex, int clipIndex);
     int trimClipOut(int trackIndex, int clipIndex, int delta, bool ripple, bool rippleAllTracks);
     void notifyClipOut(int trackIndex, int clipIndex);
-    bool moveClipValid(int fromTrack, int toTrack, int clipIndex, int position, bool ripple);
     bool moveClip(int fromTrack, int toTrack, int clipIndex, int position, bool ripple, bool rippleAllTracks);
     int overwriteClip(int trackIndex, Mlt::Producer& clip, int position, bool seek = true);
     QString overwrite(int trackIndex, Mlt::Producer& clip, int position, bool seek = true);
@@ -152,7 +151,7 @@ public slots:
     void overwriteFromPlaylist(Mlt::Playlist& playlist, int trackIndex, int position);
     void fadeIn(int trackIndex, int clipIndex, int duration);
     void fadeOut(int trackIndex, int clipIndex, int duration);
-    bool addTransitionValid(int fromTrack, int toTrack, int clipIndex, int position);
+    bool addTransitionValid(int fromTrack, int toTrack, int clipIndex, int position, bool ripple);
     int addTransition(int trackIndex, int clipIndex, int position, bool ripple);
     void removeTransition(int trackIndex, int clipIndex);
     void removeTransitionByTrimIn(int trackIndex, int clipIndex, int delta);
@@ -176,9 +175,7 @@ private:
     TrackList m_trackList;
     bool m_isMakingTransition;
 
-    bool moveClipToTrack(int fromTrack, int toTrack, int clipIndex, int position, bool ripple, bool rippleAllTracks);
     void moveClipToEnd(Mlt::Playlist& playlist, int trackIndex, int clipIndex, int position, bool ripple, bool rippleAllTracks);
-    void relocateClip(Mlt::Playlist& playlist, int trackIndex, int clipIndex, int position, bool ripple, bool rippleAllTracks);
     void moveClipInBlank(Mlt::Playlist& playlist, int trackIndex, int clipIndex, int position, bool ripple, bool rippleAllTracks, int duration = 0);
     void consolidateBlanks(Mlt::Playlist& playlist, int trackIndex);
     void consolidateBlanksAllTracks();

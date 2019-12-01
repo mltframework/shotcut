@@ -97,10 +97,7 @@ Rectangle {
                 // Remove the placeholder inserted in onDraggedToTrack
                 if (placeHolderAdded) {
                     placeHolderAdded = false
-                    if (fromTrack === toTrack)
-                        multitrack.reload(true)
-                    else
-                        trackModel.items.remove(clipIndex, 1)
+                    multitrack.reload(true)
                 }
                 if (!timeline.moveClip(fromTrack, toTrack, clipIndex, frame, settings.timelineRipple))
                     clip.x = clip.originalX

@@ -147,12 +147,12 @@ void UndoHelper::undoChanges()
         const Info& info = m_state[uid];
         UNDOLOG << "Handling uid" << uid << "on track" << info.oldTrackIndex << "index" << info.oldClipIndex;
 
-        /* This is the index in the track we're currently restoring */
-        int currentIndex = info.oldClipIndex + indexAdjustment;
-
         int mltIndex = m_model.trackList()[info.oldTrackIndex].mlt_index;
         QScopedPointer<Mlt::Producer> trackProducer(m_model.tractor()->track(mltIndex));
         Mlt::Playlist playlist(*trackProducer);
+
+        /* This is the index in the track we're currently restoring */
+        int currentIndex = qMin(info.oldClipIndex + indexAdjustment, playlist.count() - 1);
 
         /* Clips that were moved are simply searched for using the uid, and moved in place. We
          * do not use the indices directly because they become invalid once the playlist is
@@ -188,7 +188,6 @@ void UndoHelper::undoChanges()
                 UNDOLOG << "inserting isBlank at " << currentIndex;
             } else {
                 UNDOLOG << "inserting clip at " << currentIndex;
-                LOG_DEBUG() << m_hints;
                 Q_ASSERT(!(m_hints & SkipXML) && "Cannot restore clip without stored XML");
                 Q_ASSERT(!info.xml.isEmpty());
                 Mlt::Producer restoredClip(MLT.profile(), "xml-string", info.xml.toUtf8().constData());
