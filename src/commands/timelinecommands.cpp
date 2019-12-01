@@ -131,12 +131,11 @@ void OverwriteCommand::undo()
 }
 
 LiftCommand::LiftCommand(MultitrackModel &model, int trackIndex,
-    int clipIndex, const QString &xml, QUndoCommand *parent)
+    int clipIndex, QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_model(model)
     , m_trackIndex(trackIndex)
     , m_clipIndex(clipIndex)
-    , m_xml(xml)
     , m_undoHelper(m_model)
 {
     setText(QObject::tr("Lift from track"));
@@ -157,12 +156,11 @@ void LiftCommand::undo()
 }
 
 RemoveCommand::RemoveCommand(MultitrackModel &model, int trackIndex,
-    int clipIndex, const QString &xml, QUndoCommand *parent)
+    int clipIndex, QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_model(model)
     , m_trackIndex(trackIndex)
     , m_clipIndex(clipIndex)
-    , m_xml(xml)
     , m_undoHelper(m_model)
     , m_rippleAllTracks(Settings.timelineRippleAllTracks())
 {

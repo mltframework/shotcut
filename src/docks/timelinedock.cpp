@@ -563,10 +563,9 @@ void TimelineDock::remove(int trackIndex, int clipIndex)
     Q_ASSERT(trackIndex >= 0 && clipIndex >= 0);
     Mlt::Producer* clip = producerForClip(trackIndex, clipIndex);
     if (clip) {
-        QString xml = MLT.XML(clip);
         delete clip;
         MAIN.undoStack()->push(
-            new Timeline::RemoveCommand(m_model, trackIndex, clipIndex, xml));
+            new Timeline::RemoveCommand(m_model, trackIndex, clipIndex));
     }
 }
 
@@ -583,9 +582,8 @@ void TimelineDock::lift(int trackIndex, int clipIndex)
     if (clip) {
         if (clip->is_blank())
             return;
-        QString xml = MLT.XML(clip.data());
         MAIN.undoStack()->push(
-            new Timeline::LiftCommand(m_model, trackIndex, clipIndex, xml));
+            new Timeline::LiftCommand(m_model, trackIndex, clipIndex));
         setSelection();
     }
 }
