@@ -1621,15 +1621,16 @@ bool MultitrackModel::addTransitionValid(int fromTrack, int toTrack, int clipInd
     if (track) {
         Mlt::Playlist playlist(*track);
         int targetIndex = playlist.get_clip_index_at(position);
-        int endOfPreviousClip = playlist.clip_start(clipIndex - 1) + playlist.clip_length(clipIndex - 1);
+        int previousIndex = clipIndex - 1 - (playlist.is_blank(clipIndex - 1)? 1 : 0);
+        int nextIndex = clipIndex + 1 + (playlist.is_blank(clipIndex + 1)? 1 : 0);
+        int endOfPreviousClip = playlist.clip_start(previousIndex) + playlist.clip_length(previousIndex);
         int endOfCurrentClip = position + playlist.clip_length(clipIndex);
-        int startOfNextClip = playlist.clip_start(clipIndex + 1);
+        int startOfNextClip = playlist.clip_start(nextIndex);
 
         if (fromTrack == toTrack)
-        if (!playlist.is_blank_at(position))
-        if (!playlist.is_blank(clipIndex + 1) || targetIndex < clipIndex)
-        if ((targetIndex == (clipIndex - 1) && (endOfCurrentClip > endOfPreviousClip + 1) && (position > playlist.clip_start(clipIndex - 1)) && !isTransition(playlist, clipIndex - 1)) ||
-            ((targetIndex == clipIndex) && (position < startOfNextClip) && !isTransition(playlist, clipIndex + 1))) {
+        if ((targetIndex < clipIndex && (endOfCurrentClip > endOfPreviousClip + 1) && (position > playlist.clip_start(previousIndex)) && !isTransition(playlist, previousIndex))
+                ||
+            ((targetIndex >= clipIndex) && (position < startOfNextClip) && !isTransition(playlist, nextIndex))) {
             result = true;
         }
     }
@@ -1642,15 +1643,22 @@ int MultitrackModel::addTransition(int trackIndex, int clipIndex, int position, 
     QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
     if (track) {
         Mlt::Playlist playlist(*track);
-        int endOfPreviousClip = playlist.clip_start(clipIndex - 1) + playlist.clip_length(clipIndex - 1);
-        int endOfCurrentClip = position + playlist.clip_length(clipIndex);
-        int startOfNextClip = playlist.clip_start(clipIndex + 1);
         int targetIndex = playlist.get_clip_index_at(position);
+        int previousIndex = clipIndex - 1 - (playlist.is_blank(clipIndex - 1)? 1 : 0);
+        int nextIndex = clipIndex + 1 + (playlist.is_blank(clipIndex + 1)? 1 : 0);
+        int endOfPreviousClip = playlist.clip_start(previousIndex) + playlist.clip_length(previousIndex);
+        int endOfCurrentClip = position + playlist.clip_length(clipIndex);
+        int startOfNextClip = playlist.clip_start(nextIndex);
 
-        if (!playlist.is_blank_at(position))
-        if ((targetIndex == (clipIndex - 1) && endOfCurrentClip > endOfPreviousClip) || // dragged left
-            (targetIndex == clipIndex && position < startOfNextClip)) { // dragged right
+        if ((targetIndex < clipIndex && endOfCurrentClip > endOfPreviousClip) || // dragged left
+            (targetIndex >= clipIndex && position < startOfNextClip)) { // dragged right
             int duration = qAbs(position - playlist.clip_start(clipIndex));
+            
+            // Remove a blank duration from the transition duration.
+            if (playlist.is_blank(clipIndex - 1) && targetIndex < clipIndex)
+                duration -= playlist.clip_length(clipIndex - 1);
+            else if (playlist.is_blank(clipIndex + 1) && targetIndex >= clipIndex)
+                duration -= playlist.clip_length(clipIndex + 1);
 
             // Adjust/insert blanks
             moveClipInBlank(playlist, trackIndex, clipIndex, position, ripple, duration);

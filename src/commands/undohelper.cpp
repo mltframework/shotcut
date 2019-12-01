@@ -138,6 +138,7 @@ void UndoHelper::undoChanges()
 #ifdef UNDOHELPER_DEBUG
     debugPrintState();
 #endif
+    int indexAdjustment = 0;
 
     /* We're walking through the list in the order of uids, which is the order in which the
      * clips were laid out originally. As we go through the clips we make sure the clips behind
@@ -147,7 +148,7 @@ void UndoHelper::undoChanges()
         UNDOLOG << "Handling uid" << uid << "on track" << info.oldTrackIndex << "index" << info.oldClipIndex;
 
         /* This is the index in the track we're currently restoring */
-        int currentIndex = info.oldClipIndex;
+        int currentIndex = info.oldClipIndex + indexAdjustment;
 
         int mltIndex = m_model.trackList()[info.oldTrackIndex].mlt_index;
         QScopedPointer<Mlt::Producer> trackProducer(m_model.tractor()->track(mltIndex));
@@ -200,6 +201,7 @@ void UndoHelper::undoChanges()
             Q_ASSERT(!clip.isNull());
             MLT.setUuid(*clip, uid);
             AudioLevelsTask::start(clip->parent(), &m_model, modelIndex);
+            ++indexAdjustment;
         }
 
         /* Only in/out points handled so far */
@@ -207,11 +209,16 @@ void UndoHelper::undoChanges()
             int filterIn = MLT.filterIn(playlist, currentIndex);
             int filterOut = MLT.filterOut(playlist, currentIndex);
 
-            UNDOLOG << "resizing clip at" << currentIndex;
-            playlist.resize_clip(currentIndex, info.frame_in, info.frame_out);
-
             QScopedPointer<Mlt::Producer> clip(playlist.get_clip(currentIndex));
             if (clip && clip->is_valid()) {
+                UNDOLOG << "resizing clip at" << currentIndex << "in" << info.frame_in << "out" << info.frame_out;
+                if (clip->parent().get_data("mlt_mix"))
+                    clip->parent().set("mlt_mix", nullptr, 0);
+                if (clip->get_data("mix_in"))
+                    clip->set("mix_in", nullptr, 0);
+                if (clip->get_data("mix_out"))
+                    clip->set("mix_out", nullptr, 0);
+                playlist.resize_clip(currentIndex, info.frame_in, info.frame_out);
                 m_model.adjustClipFilters(clip->parent(), filterIn, filterOut, info.in_delta, info.out_delta);
             }
 
@@ -250,6 +257,7 @@ void UndoHelper::undoChanges()
         }
         trackIndex++;
     }
+
     emit m_model.modified();
 #ifdef UNDOHELPER_DEBUG
     debugPrintState();
