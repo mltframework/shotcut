@@ -56,6 +56,7 @@ MltXmlChecker::MltXmlChecker()
     , m_needsCPU(false)
     , m_hasEffects(false)
     , m_isCorrected(false)
+    , m_isUpdated(false)
     , m_usesLocale(false)
     , m_decimalPoint('.')
     , m_numericValueChanged(false)
@@ -245,6 +246,7 @@ void MltXmlChecker::processProperties()
         checkCpuEffects(mlt_service);
         checkUnlinkedFile(mlt_service);
         checkIncludesSelf(newProperties);
+        checkLumaAlphaOver(mlt_service, newProperties);
 
         // Second pass: amend property values.
         m_properties = newProperties;
@@ -481,5 +483,21 @@ void MltXmlChecker::checkIncludesSelf(QVector<MltProperty>& properties)
         }
         properties << MltProperty(kShotcutCaptionProperty, "INVALID");
         m_isCorrected = true;
+    }
+}
+
+void MltXmlChecker::checkLumaAlphaOver(const QString& mlt_service, QVector<MltXmlChecker::MltProperty>& properties)
+{
+    if (mlt_service == "luma") {
+        bool found = false;
+        for (auto& p : properties) {
+            if (p.first == "alpha_over") {
+                found = true;
+            }
+        }
+        if (!found) {
+            properties << MltProperty("alpha_over", "1");
+            m_isUpdated = true;
+        }
     }
 }

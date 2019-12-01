@@ -72,7 +72,7 @@ public:
 
     virtual QObject* videoWidget() = 0;
     virtual int setProducer(Mlt::Producer*, bool isMulti = false);
-    virtual int open(const QString& url);
+    virtual int open(const QString& url, const QString& urlToSave);
     bool openXML(const QString& filename);
     virtual void close();
     virtual int displayWidth() const = 0;

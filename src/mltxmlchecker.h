@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2014-2016 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2014-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -51,6 +50,7 @@ public:
     bool needsCPU() const { return m_needsCPU; }
     bool hasEffects() const { return m_hasEffects; }
     bool isCorrected() const { return m_isCorrected; }
+    bool isUpdated() const { return m_isUpdated; }
     QString tempFileName() const { return m_tempFile->fileName(); }
     QStandardItemModel& unlinkedFilesModel() { return m_unlinkedFilesModel; }
     void setLocale();
@@ -72,6 +72,7 @@ private:
     void fixStreamIndex(QString& value);
     bool fixVersion1701WindowsPathBug(QString& value);
     void checkIncludesSelf(QVector<MltProperty>& properties);
+    void checkLumaAlphaOver(const QString& mlt_service, QVector<MltProperty>& properties);
 
     QXmlStreamReader m_xml;
     QXmlStreamWriter m_newXml;
@@ -79,6 +80,7 @@ private:
     bool m_needsCPU;
     bool m_hasEffects;
     bool m_isCorrected;
+    bool m_isUpdated;
     bool m_usesLocale;
     QChar m_decimalPoint;
     QScopedPointer<QTemporaryFile> m_tempFile;

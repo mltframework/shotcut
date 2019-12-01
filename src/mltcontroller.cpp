@@ -99,7 +99,7 @@ static bool isFpsDifferent(double a, double b)
     return qAbs(a - b) > 0.001;
 }
 
-int Controller::open(const QString &url)
+int Controller::open(const QString &url, const QString& urlToSave)
 {
     int error = 0;
 
@@ -143,7 +143,7 @@ int Controller::open(const QString &url)
         if (m_url.isEmpty() && QString(m_producer->get("xml")) == "was here") {
             if (m_producer->get_int("_original_type") != tractor_type ||
                (m_producer->get_int("_original_type") == tractor_type && m_producer->get(kShotcutXmlProperty)))
-                m_url = url;
+                m_url = urlToSave;
         }
         setImageDurationFromDefault(m_producer.data());
         lockCreationTime(m_producer.data());

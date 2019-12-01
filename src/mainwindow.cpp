@@ -1262,7 +1262,8 @@ void MainWindow::open(QString url, const Mlt::Properties* properties)
         checker.setLocale();
         LOG_INFO() << "decimal point" << MLT.decimalPoint();
     }
-    if (!MLT.open(QDir::fromNativeSeparators(url))) {
+    QString urlToOpen = checker.isUpdated()? checker.tempFileName() : url;
+    if (!MLT.open(QDir::fromNativeSeparators(urlToOpen), QDir::fromNativeSeparators(url))) {
         Mlt::Properties* props = const_cast<Mlt::Properties*>(properties);
         if (props && props->is_valid())
             mlt_properties_inherit(MLT.producer()->get_properties(), props->get_properties());
