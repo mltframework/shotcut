@@ -42,6 +42,7 @@ private:
     void paintEvent(QPaintEvent*) Q_DECL_OVERRIDE;
 
     // Members accessed only in scope thread (no thread protection).
+    SharedFrame m_frame;
     QImage m_renderWave;
     QTime m_refreshTime;
     int m_graphTopPadding;

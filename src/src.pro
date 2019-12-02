@@ -26,6 +26,7 @@ SOURCES += main.cpp\
     widgets/countproducerwidget.cpp \
     widgets/noisewidget.cpp \
     widgets/pulseaudiowidget.cpp \
+    widgets/screenselector.cpp \
     widgets/jackproducerwidget.cpp \
     widgets/toneproducerwidget.cpp \
     widgets/alsawidget.cpp \
@@ -95,6 +96,8 @@ SOURCES += main.cpp\
     widgets/scopes/audiowaveformscopewidget.cpp \
     widgets/scopes/videohistogramscopewidget.cpp \
     widgets/scopes/videowaveformscopewidget.cpp \
+    widgets/scopes/videozoomscopewidget.cpp \
+    widgets/scopes/videozoomwidget.cpp \
     sharedframe.cpp \
     widgets/audioscale.cpp \
     widgets/playlisttable.cpp \
@@ -138,6 +141,7 @@ HEADERS  += mainwindow.h \
     widgets/countproducerwidget.h \
     widgets/noisewidget.h \
     widgets/pulseaudiowidget.h \
+    widgets/screenselector.h \
     widgets/jackproducerwidget.h \
     widgets/toneproducerwidget.h \
     widgets/alsawidget.h \
@@ -208,6 +212,8 @@ HEADERS  += mainwindow.h \
     widgets/scopes/audiowaveformscopewidget.h \
     widgets/scopes/videohistogramscopewidget.h \
     widgets/scopes/videowaveformscopewidget.h \
+    widgets/scopes/videozoomscopewidget.h \
+    widgets/scopes/videozoomwidget.h \
     dataqueue.h \
     sharedframe.h \
     widgets/audioscale.h \

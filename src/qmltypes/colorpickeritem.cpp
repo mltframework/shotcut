@@ -18,135 +18,40 @@
  */
 
 #include "colorpickeritem.h"
-#include <QTimer>
-#include <QIcon>
-#include <QMouseEvent>
-#include <QApplication>
-#include <QGuiApplication>
-#include <QDesktopWidget>
-#include <QImage>
-#include <QScreen>
+
 #include "mainwindow.h"
 
-class EventFilter : public QObject
+#include <QApplication>
+#include <QDesktopWidget>
+#include <QGuiApplication>
+#include <QImage>
+#include <QScreen>
+#include <QTimer>
+
+ColorPickerItem::ColorPickerItem(QObject* parent)
+    : QObject(parent)
 {
-public:
-    explicit EventFilter(ScreenSelector *selector, QObject *parent = 0)
-        : QObject(parent)
-        , m_selector(selector)
-    {}
-
-    bool eventFilter(QObject *, QEvent *event)
-    {
-        switch (event->type()) {
-        case QEvent::MouseButtonPress:
-            return m_selector->onMousePressEvent(static_cast<QMouseEvent *>(event));
-        case QEvent::MouseMove:
-            return m_selector->onMouseMoveEvent(static_cast<QMouseEvent *>(event));
-        case QEvent::MouseButtonRelease:
-            return m_selector->onMouseReleaseEvent(static_cast<QMouseEvent *>(event));
-        case QEvent::KeyPress:
-            return m_selector->onKeyPressEvent(static_cast<QKeyEvent *>(event));
-        default:
-            break;
-        }
-        return false;
-    }
-
-private:
-    ScreenSelector *m_selector;
-};
-
-ScreenSelector::ScreenSelector(QWidget* parent)
-    : QFrame(parent)
-    , m_selectionInProgress(false)
-    , m_selectionRect()
-    , m_eventFilter(0)
-{
-    setFrameStyle(QFrame::Box | QFrame::Plain);
-    setWindowOpacity(0.5);
-    setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint | Qt::Tool);
-    hide();
+    connect(this, SIGNAL(pickColor()), &m_selector, SLOT(startSelection()));
+    connect(&m_selector, SIGNAL(screenSelected(const QRect&)), this, SLOT(screenSelected(const QRect&)));
+    connect(&m_selector, SIGNAL(cancelled()), SIGNAL(cancelled()));
 }
 
-void ScreenSelector::startSelection()
+void ColorPickerItem::screenSelected(const QRect& rect)
 {
-    m_selectionInProgress = false;
-    if (!m_eventFilter)
-        m_eventFilter = new EventFilter(this);
-    QApplication::instance()->installEventFilter(m_eventFilter);
-    grabMouse();
-    grabKeyboard();
-    MAIN.setCursor(Qt::CrossCursor);
+    Q_UNUSED(rect);
+    // Give the frame buffer time to clear the selector window before
+    // grabbing the color.
+    QTimer::singleShot(100, this, SLOT(grabColor()));
 }
 
-bool ScreenSelector::onMousePressEvent(QMouseEvent *event)
+void ColorPickerItem::grabColor()
 {
-    if (event->button() == Qt::LeftButton && !m_selectionInProgress) {
-        m_selectionInProgress = true;
-        show();
-        m_selectionRect = QRect(event->globalPos(), QSize(1,1));
-        setGeometry(m_selectionRect);
-    }
-    return true;
-}
-
-bool ScreenSelector::onMouseMoveEvent(QMouseEvent *event)
-{
-    if (m_selectionInProgress) {
-        m_selectionRect.setWidth(event->globalX() - m_selectionRect.x());
-        m_selectionRect.setHeight(event->globalY() - m_selectionRect.y());
-
-        if (m_selectionRect.width() == 0) {
-            m_selectionRect.setWidth(1);
-        }
-        if (m_selectionRect.height() == 0) {
-            m_selectionRect.setHeight(1);
-        }
-        setGeometry(m_selectionRect.normalized());
-    }
-    return true;
-}
-
-bool ScreenSelector::onMouseReleaseEvent(QMouseEvent *event)
-{
-    if(event->button() == Qt::LeftButton && m_selectionInProgress == true ) {
-        release();
-        // Give the frame buffer time to clear the selector window before
-        // signaling the selection.
-        QTimer::singleShot(100, this, SLOT(grabColor()));
-    }
-    return true;
-}
-
-bool ScreenSelector::onKeyPressEvent(QKeyEvent* event)
-{
-    if (event->key() == Qt::Key_Escape) {
-        release();
-        emit cancelled();
-    }
-    event->accept();
-    return true;
-}
-
-void ScreenSelector::release()
-{
-    QApplication::instance()->removeEventFilter(m_eventFilter);
-    releaseMouse();
-    releaseKeyboard();
-    MAIN.setCursor(Qt::ArrowCursor);
-    m_selectionInProgress = false;
-    hide();
-}
-
-void ScreenSelector::grabColor()
-{
-    m_selectionRect = m_selectionRect.normalized();
+    QRect selectionRect = m_selector.getSelectedRect().normalized();
     QDesktopWidget* desktop = QApplication::desktop();
-    int screenNum = desktop->screenNumber(m_selectionRect.topLeft());
+    int screenNum = desktop->screenNumber(selectionRect.topLeft());
     QScreen* screen = QGuiApplication::screens()[screenNum];
     QPixmap screenGrab = screen->grabWindow(desktop->winId(),
-        m_selectionRect.x(), m_selectionRect.y(), m_selectionRect.width(), m_selectionRect.height());
+        selectionRect.x(), selectionRect.y(), selectionRect.width(), selectionRect.height());
     QImage image = screenGrab.toImage();
     int numPixel = image.width() * image.height();
     int sumR = 0;
@@ -164,12 +69,4 @@ void ScreenSelector::grabColor()
 
     QColor avgColor(sumR / numPixel, sumG / numPixel, sumB / numPixel);
     emit colorPicked(avgColor);
-}
-
-ColorPickerItem::ColorPickerItem(QObject* parent)
-    : QObject(parent)
-{
-    connect(this, SIGNAL(pickColor()), &m_selector, SLOT(startSelection()));
-    connect(&m_selector, SIGNAL(colorPicked(QColor)), SIGNAL(colorPicked(QColor)));
-    connect(&m_selector, SIGNAL(cancelled()), SIGNAL(cancelled()));
 }
