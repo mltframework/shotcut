@@ -92,8 +92,10 @@ Rectangle {
                 var fromTrack = clip.originalTrackIndex
                 var toTrack = clip.trackIndex
                 var clipIndex = clip.originalClipIndex
-                var frame = Math.round(clip.x / timeScale)
-
+                var frame = Math.round(((timeline.selection.length > 1)?
+                                            (clip.x - clip.originalX) : clip.x) 
+                                       / timeScale)
+                
                 // Remove the placeholder inserted in onDraggedToTrack
                 if (placeHolderAdded) {
                     placeHolderAdded = false

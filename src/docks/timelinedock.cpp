@@ -42,7 +42,8 @@ TimelineDock::TimelineDock(QWidget *parent) :
     m_position(-1),
     m_ignoreNextPositionChange(false),
     m_trimDelta(0),
-    m_transitionDelta(0)
+    m_transitionDelta(0),
+    m_blockSetSelection(false)
 {
     LOG_DEBUG() << "begin";
     m_selection.selectedTrack = -1;
@@ -156,6 +157,23 @@ void TimelineDock::pulseLockButtonOnTrack(int trackIndex)
     emit showStatusMessage(tr("This track is locked"));
 }
 
+bool TimelineDock::findClipByUuid(const QUuid& uuid, int& trackIndex, int& clipIndex)
+{
+    for (trackIndex = 0; trackIndex < m_model.trackList().size(); trackIndex++) {
+        int i = m_model.trackList().at(trackIndex).mlt_index;
+        QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(i));
+        if (track) {
+            Mlt::Playlist playlist(*track);
+            for (clipIndex = 0; clipIndex < playlist.count(); clipIndex++) {
+                QScopedPointer<Mlt::Producer> clip(playlist.get_clip(clipIndex));
+                if (MLT.uuid(*clip) == uuid)
+                    return true;
+            }
+        }
+    }
+    return false;
+}
+
 void TimelineDock::chooseClipAtPosition(int position, int& trackIndex, int& clipIndex)
 {
     QScopedPointer<Mlt::Producer> clip;
@@ -256,6 +274,7 @@ void TimelineDock::setSelectionFromJS(const QVariantList& list)
 
 void TimelineDock::setSelection(QList<QPoint> newSelection, int trackIndex, bool isMultitrack)
 {
+    if (!m_blockSetSelection)
     if (newSelection != selection()
             || trackIndex != m_selection.selectedTrack
             || isMultitrack != m_selection.isMultitrackSelected) {
@@ -875,9 +894,39 @@ bool TimelineDock::moveClip(int fromTrack, int toTrack, int clipIndex, int posit
 
 void TimelineDock::onClipMoved(int fromTrack, int toTrack, int clipIndex, int position, bool ripple)
 {
-    setSelection();
-    MAIN.undoStack()->push(
-        new Timeline::MoveClipCommand(m_model, fromTrack, toTrack, clipIndex, position, ripple));
+    int n = selection().size();
+    if (n > 1) {
+        // get clipIndex later (as it changed) by an ID tag
+        QVector<QUuid> selectionByUuid;
+        QHash<QUuid, int> positions;
+        auto trackDifference = toTrack - fromTrack;
+
+        for (const auto& clip : selection()) {
+            QScopedPointer<Mlt::ClipInfo> info(getClipInfo(clip.y(), clip.x()));
+            QUuid uuid = MLT.ensureHasUuid(*info->cut);
+            selectionByUuid << uuid;
+            positions[uuid] = info->start;
+        }
+
+        setSelection();
+        m_blockSetSelection = true;
+
+        MAIN.undoStack()->beginMacro(tr("Move %1 timeline clips").arg(selectionByUuid.size()));
+        for (const auto& uuid : selectionByUuid) {
+            if (findClipByUuid(uuid, fromTrack, clipIndex)) {
+                toTrack = fromTrack + trackDifference;
+                MAIN.undoStack()->push(
+                    new Timeline::MoveClipCommand(m_model, fromTrack, toTrack, clipIndex, positions[uuid] + position, ripple));
+            }
+        }
+        MAIN.undoStack()->endMacro();
+        QCoreApplication::processEvents();
+        m_blockSetSelection = false;
+    } else {
+        setSelection();
+        MAIN.undoStack()->push(
+            new Timeline::MoveClipCommand(m_model, fromTrack, toTrack, clipIndex, position, ripple));
+    }
 }
 
 bool TimelineDock::trimClipIn(int trackIndex, int clipIndex, int oldClipIndex, int delta, bool ripple)

@@ -171,3 +171,12 @@ function selectRange(trackIndex, clipIndex) {
     }
     return result
 }
+
+function selectionContains(trackIndex, clipIndex) {
+    var selection = timeline.selection
+    for (var i = 0; i < selection.length; i++) {
+        if (selection[i].x === clipIndex && selection[i].y === trackIndex)
+            return true
+    }
+    return false
+}

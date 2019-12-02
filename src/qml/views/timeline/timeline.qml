@@ -530,7 +530,8 @@ Rectangle {
                     timeline.selection = Logic.toggleSelection(trackIndex, clipIndex)
                 else if (mouse.modifiers & Qt.ShiftModifier)
                     timeline.selection = Logic.selectRange(trackIndex, clipIndex)
-                else // select one
+                else if (!Logic.selectionContains(trackIndex, clipIndex))
+                    // select one
                     timeline.selection = [Qt.point(clipIndex, trackIndex)]
                 root.clipClicked()
             }
