@@ -874,7 +874,7 @@ void PlaylistDock::setViewMode(PlaylistModel::ViewMode mode)
 void PlaylistDock::resetPlaylistIndex()
 {
     if (MLT.producer())
-        static_cast<Mlt::Properties>(MLT.producer()).clear(kPlaylistIndexProperty);
+        MLT.producer()->set(kPlaylistIndexProperty, nullptr, 0);
 }
 
 #include "playlistdock.moc"
