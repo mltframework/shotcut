@@ -2181,10 +2181,12 @@ void MultitrackModel::moveClipToEnd(Mlt::Playlist& playlist, int trackIndex, int
     }
     // Finally, move clip into place.
     QModelIndex parentIndex = index(trackIndex);
-    beginMoveRows(parentIndex, clipIndex, clipIndex, parentIndex, playlist.count());
-    playlist.move(clipIndex, playlist.count());
-    endMoveRows();
-    consolidateBlanks(playlist, trackIndex);
+    if (playlist.count() < clipIndex || playlist.count() > clipIndex + 1) {
+        beginMoveRows(parentIndex, clipIndex, clipIndex, parentIndex, playlist.count());
+        playlist.move(clipIndex, playlist.count());
+        endMoveRows();
+        consolidateBlanks(playlist, trackIndex);
+    }
 
     // Ripple all unlocked tracks.
     if (clipPlaytime > 0 && ripple && rippleAllTracks)

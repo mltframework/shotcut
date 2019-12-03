@@ -170,7 +170,8 @@ void UndoHelper::undoChanges()
             Q_ASSERT(clipCurrentlyAt != -1 && "Moved clip could not be found");
             UNDOLOG << "Found clip with uid" << uid << "at index" << clipCurrentlyAt;
 
-            if (clipCurrentlyAt != info.oldClipIndex) {
+            if (clipCurrentlyAt != info.oldClipIndex &&
+                    (currentIndex < clipCurrentlyAt || currentIndex > clipCurrentlyAt + 1)) {
                 UNDOLOG << "moving from" << clipCurrentlyAt << "to" << currentIndex;
                 QModelIndex modelIndex = m_model.createIndex(clipCurrentlyAt, 0, info.oldTrackIndex);
                 m_model.beginMoveRows(modelIndex.parent(), clipCurrentlyAt, clipCurrentlyAt, modelIndex.parent(), currentIndex);

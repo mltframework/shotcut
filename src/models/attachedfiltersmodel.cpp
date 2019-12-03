@@ -213,7 +213,8 @@ bool AttachedFiltersModel::moveRows(const QModelIndex & sourceParent, int source
     QModelIndex fromIndex = createIndex(sourceRow, 0);
     QModelIndex toIndex = createIndex(destinationRow, 0);
 
-    if (fromIndex.isValid() && toIndex.isValid()) {
+    if (fromIndex.isValid() && toIndex.isValid() &&
+            (destinationRow < sourceRow || destinationRow > sourceRow + 1)) {
         if (beginMoveRows(sourceParent, sourceRow, sourceRow, destinationParent, destinationRow)) {
             if (destinationRow > sourceRow) {
                 // Moving down: Convert to "post move" indexing
