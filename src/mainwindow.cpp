@@ -2263,6 +2263,14 @@ bool MainWindow::eventFilter(QObject* target, QEvent* event)
         dropEvent(static_cast<QDropEvent*>(event));
         return true;
     } else if (event->type() == QEvent::KeyPress || event->type() == QEvent::KeyRelease) {
+        if (QEvent::KeyPress == event->type()) {
+            // Let Shift+Escape be a global hook to defocus a widget (assign global player focus).
+            auto keyEvent = static_cast<QKeyEvent*>(event);
+            if (Qt::Key_Escape == keyEvent->key() && Qt::ShiftModifier == keyEvent->modifiers()) {
+                m_player->setFocus();
+                return true;
+            }
+        }
         QQuickWidget * focusedQuickWidget = qobject_cast<QQuickWidget*>(qApp->focusWidget());
         if (focusedQuickWidget && focusedQuickWidget->quickWindow()->activeFocusItem()) {
             event->accept();
