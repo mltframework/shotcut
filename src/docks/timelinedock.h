@@ -146,6 +146,7 @@ public slots:
     void onRowsRemoved(const QModelIndex& parent, int first, int last);
     void detachAudio(int trackIndex, int clipIndex);
     void selectAll();
+    bool blockSelection(bool block);
 
 protected:
     void dragEnterEvent(QDragEnterEvent* event);
@@ -186,6 +187,24 @@ private slots:
     void onTransitionAdded(int trackIndex, int clipIndex, int position, bool ripple);
     void onInserted(int trackIndex, int clipIndex);
     void onOverWritten(int trackIndex, int clipIndex);
+};
+
+class TimelineSelectionBlocker
+{
+public:
+    TimelineSelectionBlocker(TimelineDock& timeline)
+        : m_timelineDock(timeline)
+    {
+        m_timelineDock.blockSelection(true);
+    }
+    ~TimelineSelectionBlocker()
+    {
+        QCoreApplication::processEvents();
+        m_timelineDock.blockSelection(false);
+    }
+
+private:
+    TimelineDock& m_timelineDock;
 };
 
 #endif // TIMELINEDOCK_H

@@ -2779,11 +2779,13 @@ void MainWindow::updateThumbnails()
 
 void MainWindow::on_actionUndo_triggered()
 {
+    TimelineSelectionBlocker blocker(*m_timelineDock);
     m_undoStack->undo();
 }
 
 void MainWindow::on_actionRedo_triggered()
 {
+    TimelineSelectionBlocker blocker(*m_timelineDock);
     m_undoStack->redo();
 }
 

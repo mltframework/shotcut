@@ -846,6 +846,12 @@ void TimelineDock::selectAll()
     setSelection(selection);
 }
 
+bool TimelineDock::blockSelection(bool block)
+{
+    m_blockSetSelection = block;
+    return m_blockSetSelection;
+}
+
 void TimelineDock::setTrackName(int trackIndex, const QString &value)
 {
     MAIN.undoStack()->push(
@@ -909,7 +915,7 @@ void TimelineDock::onClipMoved(int fromTrack, int toTrack, int clipIndex, int po
         }
 
         setSelection();
-        m_blockSetSelection = true;
+        TimelineSelectionBlocker blocker(*this);
 
         MAIN.undoStack()->beginMacro(tr("Move %1 timeline clips").arg(selectionByUuid.size()));
         for (const auto& uuid : selectionByUuid) {
@@ -920,8 +926,6 @@ void TimelineDock::onClipMoved(int fromTrack, int toTrack, int clipIndex, int po
             }
         }
         MAIN.undoStack()->endMacro();
-        QCoreApplication::processEvents();
-        m_blockSetSelection = false;
     } else {
         setSelection();
         MAIN.undoStack()->push(
