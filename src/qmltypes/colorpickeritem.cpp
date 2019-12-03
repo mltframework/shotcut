@@ -38,20 +38,19 @@ ColorPickerItem::ColorPickerItem(QObject* parent)
 
 void ColorPickerItem::screenSelected(const QRect& rect)
 {
-    Q_UNUSED(rect);
+    m_selectedRect = rect;
     // Give the frame buffer time to clear the selector window before
     // grabbing the color.
-    QTimer::singleShot(100, this, SLOT(grabColor()));
+    QTimer::singleShot(200, this, SLOT(grabColor()));
 }
 
 void ColorPickerItem::grabColor()
 {
-    QRect selectionRect = m_selector.getSelectedRect().normalized();
     QDesktopWidget* desktop = QApplication::desktop();
-    int screenNum = desktop->screenNumber(selectionRect.topLeft());
+    int screenNum = desktop->screenNumber(m_selectedRect.topLeft());
     QScreen* screen = QGuiApplication::screens()[screenNum];
     QPixmap screenGrab = screen->grabWindow(desktop->winId(),
-        selectionRect.x(), selectionRect.y(), selectionRect.width(), selectionRect.height());
+        m_selectedRect.x(), m_selectedRect.y(), m_selectedRect.width(), m_selectedRect.height());
     QImage image = screenGrab.toImage();
     int numPixel = image.width() * image.height();
     int sumR = 0;

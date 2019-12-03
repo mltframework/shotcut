@@ -27,7 +27,6 @@ public:
     ScreenSelector(QWidget* parent = 0);
     void setFixedSize(const QSize& size);
     void setBoundingRect(const QRect& rect);
-    QRect getSelectedRect();
     void setSelectedRect(const QRect& rect);
 
 public slots:

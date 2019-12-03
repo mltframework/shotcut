@@ -49,11 +49,6 @@ void ScreenSelector::setBoundingRect(const QRect& rect)
     m_boundingRect = rect;
 }
 
-QRect ScreenSelector::getSelectedRect()
-{
-    return m_selectionRect;
-}
-
 void ScreenSelector::setSelectedRect(const QRect& rect)
 {
     m_selectionRect = rect;
@@ -187,9 +182,5 @@ void ScreenSelector::release()
     releaseKeyboard();
     MAIN.setCursor(Qt::ArrowCursor);
     m_selectionInProgress = false;
-    m_selectionRect = QRect(-1, -1, -1, -1);
-    m_selectionPoint = QPoint(-1, -1);
-    m_fixedSize = QSize(-1, -1);
-    m_boundingRect = QRect(-1, -1, -1, -1);
     hide();
 }

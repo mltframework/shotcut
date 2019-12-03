@@ -40,6 +40,7 @@ private slots:
 
 private:
     ScreenSelector m_selector;
+    QRect m_selectedRect;
 };
 
 #endif // COLORPICKERITEM_H
