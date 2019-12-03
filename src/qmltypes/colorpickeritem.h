@@ -18,42 +18,10 @@
 #ifndef COLORPICKERITEM_H
 #define COLORPICKERITEM_H
 
-#include <QObject>
+#include "widgets/screenselector.h"
+
 #include <QColor>
-#include <QFrame>
-
-class EventFilter;
-
-class ScreenSelector : public QFrame
-{
-    Q_OBJECT
-public:
-    ScreenSelector(QWidget* parent = 0);
-
-public slots:
-    void startSelection();
-
-signals:
-    void screenSelected(QRect);
-    void colorPicked(const QColor &color);
-    void cancelled();
-
-public:
-    bool onMousePressEvent(QMouseEvent *event);
-    bool onMouseMoveEvent(QMouseEvent *event);
-    bool onMouseReleaseEvent(QMouseEvent *event);
-    bool onKeyPressEvent(QKeyEvent *event);
-
-private:
-    bool m_selectionInProgress;
-    QRect m_selectionRect;
-    EventFilter* m_eventFilter;
-
-    void release();
-
-private slots:
-    void grabColor();
-};
+#include <QObject>
 
 class ColorPickerItem : public QObject
 {
@@ -66,8 +34,13 @@ signals:
     void colorPicked(const QColor &color);
     void cancelled();
 
+private slots:
+    void screenSelected(const QRect& rect);
+    void grabColor();
+
 private:
     ScreenSelector m_selector;
+    QRect m_selectedRect;
 };
 
 #endif // COLORPICKERITEM_H

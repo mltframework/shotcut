@@ -84,7 +84,9 @@ void ScopeWidget::resizeEvent(QResizeEvent*)
     m_mutex.lock();
     m_size = size();
     m_mutex.unlock();
-    requestRefresh();
+    if (isVisible()) {
+        requestRefresh();
+    }
 }
 
 void ScopeWidget::changeEvent(QEvent*)
@@ -92,5 +94,7 @@ void ScopeWidget::changeEvent(QEvent*)
     m_mutex.lock();
     m_forceRefresh = true;
     m_mutex.unlock();
-    requestRefresh();
+    if (isVisible()) {
+        requestRefresh();
+    }
 }

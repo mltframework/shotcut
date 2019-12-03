@@ -53,33 +53,19 @@ void VideoHistogramScopeWidget::refreshScope(const QSize& size, bool full)
     QVector<unsigned int> bBins(256, 0);
 
     if (m_frame.is_valid() && m_frame.get_image_width() && m_frame.get_image_height()) {
-        const uint8_t* p = NULL;
-        size_t count = 0;
-        int width = m_frame.get_image_width();
-        int height = m_frame.get_image_height();
-
-        // Bin Y values from YUV:
-        p = m_frame.get_image();
-        count = width * height;
+        const uint8_t* pYUV = m_frame.get_image(mlt_image_yuv420p);
+        const uint8_t* pRGB = m_frame.get_image(mlt_image_rgb24);
+        size_t count = m_frame.get_image_width() * m_frame.get_image_height();
         unsigned int* pYbin = yBins.data();
-        while (count--)
-        {
-            pYbin[*p++]++;
-        }
-
-        // Create RGB frame and bin the values.
-        Mlt::Frame rgbFrame = m_frame.clone(false, true, false);
-        mlt_image_format format = mlt_image_rgb24;
-        p = (uint8_t*)rgbFrame.get_image(format, width, height, 0);
-        count = width * height;
         unsigned int* pRbin = rBins.data();
         unsigned int* pGbin = gBins.data();
         unsigned int* pBbin = bBins.data();
         while (count--)
         {
-            pRbin[*p++]++;
-            pGbin[*p++]++;
-            pBbin[*p++]++;
+            pYbin[*pYUV++]++;
+            pRbin[*pRGB++]++;
+            pGbin[*pRGB++]++;
+            pBbin[*pRGB++]++;
         }
     }
 

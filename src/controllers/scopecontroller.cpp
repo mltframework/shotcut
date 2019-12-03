@@ -22,6 +22,7 @@
 #include "widgets/scopes/audiowaveformscopewidget.h"
 #include "widgets/scopes/videohistogramscopewidget.h"
 #include "widgets/scopes/videowaveformscopewidget.h"
+#include "widgets/scopes/videozoomscopewidget.h"
 #include "docks/scopedock.h"
 #include "settings.h"
 #include <Logger.h>
@@ -40,6 +41,7 @@ ScopeController::ScopeController(QMainWindow* mainWindow, QMenu* menu)
     if (!Settings.playerGPU()) {
         createScopeDock<VideoHistogramScopeWidget>(mainWindow, scopeMenu);
         createScopeDock<VideoWaveformScopeWidget>(mainWindow, scopeMenu);
+        createScopeDock<VideoZoomScopeWidget>(mainWindow, scopeMenu);
     }
     LOG_DEBUG() << "end";
 }

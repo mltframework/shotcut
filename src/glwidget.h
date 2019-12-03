@@ -113,6 +113,7 @@ signals:
     void offsetChanged();
     void imageReady();
     void snapToGridChanged();
+    void toggleZoom(bool);
 
 private:
     QRect m_rect;

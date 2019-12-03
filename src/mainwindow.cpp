@@ -224,6 +224,7 @@ MainWindow::MainWindow()
     connect(MLT.videoWidget(), SIGNAL(started()), SLOT(processMultipleFiles()));
     connect(MLT.videoWidget(), SIGNAL(paused()), m_player, SLOT(showPaused()));
     connect(MLT.videoWidget(), SIGNAL(playing()), m_player, SLOT(showPlaying()));
+    connect(MLT.videoWidget(), SIGNAL(toggleZoom(bool)), m_player, SLOT(toggleZoom(bool)));
 
     setupSettingsMenu();
     setupOpenOtherMenu();
