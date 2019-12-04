@@ -882,21 +882,15 @@ FrameRenderer::~FrameRenderer()
 
 void FrameRenderer::showFrame(Mlt::Frame frame)
 {
-    int width = 0;
-    int height = 0;
-
     if (!Settings.playerGPU()) {
-        // Convert the image format before creating the SharedFrame.
-//        mlt_image_format format = mlt_image_yuv420p;
-//        int width = 0;
-//        int height = 0;
-//        frame.get_image(format, width, height);
         m_displayFrame = SharedFrame(frame);
     }
 
     Q_ASSERT(m_surface->surfaceHandle());
     if (m_context && m_context->isValid()) {
         if (Settings.playerGPU()) {
+            int width = 0;
+            int height = 0;
             frame.set("movit.convert.use_texture", 1);
             mlt_image_format format = mlt_image_glsl_texture;
             const GLuint* textureId = (GLuint*) frame.get_image(format, width, height);
