@@ -57,7 +57,7 @@ void VideoWaveformScopeWidget::refreshScope(const QSize& size, bool full)
         QColor bgColor( 0, 0, 0 ,0 );
         m_renderImg.fill(bgColor);
 
-        const uint8_t* yData = m_frame.get_image();
+        const uint8_t* yData = m_frame.get_image(mlt_image_yuv420p);
 
         for (int x = 0; x < columns; x++) {
             int pixels = m_frame.get_image_height();
