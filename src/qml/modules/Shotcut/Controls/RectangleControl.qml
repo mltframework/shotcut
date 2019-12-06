@@ -97,7 +97,7 @@ Item {
             return y
         }
         if (video.grid !== 95 && video.grid !== 8090) {
-            var n = (video.grid > 10000) ? video.grid - 10000 : parent.width / video.grid
+            var n = (video.grid > 10000) ? video.grid - 10000 : parent.height / video.grid
             return snapGrid(y, n)
         } else {
             var deltas = null
