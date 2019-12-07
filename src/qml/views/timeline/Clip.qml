@@ -70,7 +70,7 @@ Rectangle {
         }
     }
 
-    border.color: selected? 'red' : 'black'
+    border.color: (selected || Drag.active || trackIndex != originalTrackIndex)? 'red' : 'black'
     border.width: isBlank? 0 : 1
     clip: true
     Drag.active: mouseArea.drag.active

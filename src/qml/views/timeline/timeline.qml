@@ -80,6 +80,7 @@ Rectangle {
     property alias trackCount: tracksRepeater.count
     property bool stopScrolling: false
     property color shotcutBlue: Qt.rgba(23/255, 92/255, 118/255, 1.0)
+    property var dragDelta
 
     MouseArea {
         anchors.fill: parent
@@ -287,6 +288,26 @@ Rectangle {
                             id: tracksContainer
                             Repeater { id: tracksRepeater; model: trackDelegateModel }
                         }
+                        Item {
+                            id: selectionContainer
+                            visible: false
+                            Repeater {
+                                id: selectionRepeater
+                                model: timeline.selection
+                                Rectangle {
+                                    property var clip: trackAt(modelData.y).clipAt(modelData.x)
+                                    property var track: trackAt(clip.trackIndex + dragDelta.y)
+                                    x: clip.x + dragDelta.x
+                                    y: track.y
+                                    width: clip.width
+                                    height: track.height
+                                    color: 'transparent'
+                                    border.color: 'red'
+                                    visible: !clip.Drag.active && clip.trackIndex === clip.originalTrackIndex
+                                }
+                            }
+                        }
+
                     }
                 }
             }
@@ -551,18 +572,19 @@ Rectangle {
                 } else {
                     scrollTimer.stop()
                 }
+                dragDelta = Qt.point(clip.x - clip.originalX, clip.trackIndex - clip.originalTrackIndex)
+                selectionContainer.visible = true
             }
             onClipDropped: {
                 scrollTimer.running = false
                 bubbleHelp.hide()
+                selectionContainer.visible = false
             }
             onClipDraggedToTrack: {
                 var i = clip.trackIndex + direction
-                if (i >= 0  && i < tracksRepeater.count) {
-                    var track = tracksRepeater.itemAt(i)
-                    clip.reparent(track)
-                    clip.trackIndex = track.DelegateModel.itemsIndex
-                }
+                var track = trackAt(i)
+                clip.reparent(track)
+                clip.trackIndex = track.DelegateModel.itemsIndex
             }
             onCheckSnap: {
                 for (var i = 0; i < tracksRepeater.count; i++)

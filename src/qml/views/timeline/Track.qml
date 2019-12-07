@@ -201,6 +201,7 @@ Rectangle {
             }
             onDropped: {
                 if (placeHolderAdded) {
+                    timeline.selection = []
                     multitrack.reload(true)
                     placeHolderAdded = false
                 }
