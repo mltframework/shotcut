@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Meltytech, LLC
+ * Copyright (c) 2015-2019 Meltytech, LLC
  * Author: Brian Matherly <code@brianmatherly.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,9 +21,7 @@
 
 void destroyFrame(void* p)
 {
-    if (p) {
-        delete static_cast<Mlt::Frame*>(p);
-    }
+    delete static_cast<Mlt::Frame*>(p);
 }
 
 class FrameData : public QSharedData
@@ -213,6 +211,8 @@ const uint8_t* SharedFrame::get_image(mlt_image_format format) const
             // Save the cache frame as a property under the name of the image
             // format for later use.
             nonConstData->f.set(formatName, static_cast<void*>(cacheFrame), 0, destroyFrame);
+            // Break a circular reference
+            cacheFrame->clear("_cloned_frame");
         }
 
         // Get the image from the cache frame.
