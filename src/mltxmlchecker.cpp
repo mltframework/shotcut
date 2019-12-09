@@ -69,7 +69,8 @@ bool MltXmlChecker::check(const QString& fileName)
     LOG_DEBUG() << "begin";
 
     QFile file(fileName);
-    m_tempFile.reset(Util::writableTemporaryFile("", "shotcut-XXXXXX.mlt"));
+    m_tempFile.reset(new QTemporaryFile(
+        QFileInfo(fileName).dir().filePath("shotcut-XXXXXX.mlt")));
     if (file.open(QIODevice::ReadOnly | QIODevice::Text) && m_tempFile->open()) {
         m_tempFile->resize(0);
         m_fileInfo = QFileInfo(fileName);
