@@ -477,7 +477,6 @@ Rectangle {
         }
         MenuItem {
             text: qsTr('Reset Track Height')
-            shortcut: 'Ctrl+0'
             onTriggered: multitrack.trackHeight = 50
         }
         MenuItem {
