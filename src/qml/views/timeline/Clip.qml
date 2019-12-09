@@ -696,7 +696,7 @@ Rectangle {
             text: qsTr('Properties')
             onTriggered: {
                 clipRoot.forceActiveFocus()
-                clipRoot.clicked(clipRoot, mouse)
+                clipRoot.clicked(clipRoot, null)
                 timeline.openProperties()
             }
         }

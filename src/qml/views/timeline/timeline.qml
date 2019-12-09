@@ -546,9 +546,9 @@ Rectangle {
                 var trackIndex = track.DelegateModel.itemsIndex
                 var clipIndex = clip.DelegateModel.itemsIndex
                 currentTrack = trackIndex
-                if (mouse.modifiers & Qt.ControlModifier)
+                if (mouse && mouse.modifiers & Qt.ControlModifier)
                     timeline.selection = Logic.toggleSelection(trackIndex, clipIndex)
-                else if (mouse.modifiers & Qt.ShiftModifier)
+                else if (mouse && mouse.modifiers & Qt.ShiftModifier)
                     timeline.selection = Logic.selectRange(trackIndex, clipIndex)
                 else if (!Logic.selectionContains(trackIndex, clipIndex))
                     // select one
