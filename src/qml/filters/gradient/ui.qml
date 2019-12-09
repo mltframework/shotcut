@@ -300,7 +300,7 @@ Item {
         }
 
         Label {
-            text: qsTr('Position')
+            text: '{ } ' + qsTr('Position')
             Layout.alignment: Qt.AlignRight
         }
         RowLayout {
@@ -331,7 +331,7 @@ Item {
         }
 
         Label {
-            text: qsTr('Size')
+            text: '{ } ' + qsTr('Size')
             Layout.alignment: Qt.AlignRight
         }
         RowLayout {
