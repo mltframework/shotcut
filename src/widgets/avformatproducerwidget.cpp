@@ -173,26 +173,9 @@ void AvformatProducerWidget::reopen(Mlt::Producer* p)
         double speedRatio = oldSpeed / newSpeed;
         int in = m_producer->get_in();
 
-        if (!p->get(kShotcutLengthProperty)) {
-            // Save this info to fully reset the producer if speed changed back to 1.
-            p->set(kShotcutLengthProperty, length);
-            p->set(kShotcutInProperty, in);
-            p->set(kShotcutOutProperty, out);
-        }
-        if (newSpeed == 1.0 && p->get(kShotcutLengthProperty) && p->get(kShotcutInProperty) && p->get(kShotcutOutProperty)) {
-            // Restore the saved length, in, and out.
-            length = p->get_int(kShotcutLengthProperty);
-            in = p->get_int(kShotcutInProperty);
-            out = p->get_int(kShotcutOutProperty);
-            static_cast<Mlt::Properties*>(p)->clear(kShotcutLengthProperty);
-            static_cast<Mlt::Properties*>(p)->clear(kShotcutInProperty);
-            static_cast<Mlt::Properties*>(p)->clear(kShotcutOutProperty);
-        } else {
-            // Adjust per speed change.
-            length = qRound(length * speedRatio);
-            in = qMin(qRound(in * speedRatio), length - 1);
-            out = qMin(qRound(out * speedRatio), length - 1);
-        }
+        length = qRound(length * speedRatio);
+        in = qMin(qRound(in * speedRatio), length - 1);
+        out = qMin(qRound(out * speedRatio), length - 1);
         p->set("length", p->frames_to_time(length, mlt_time_clock));
         p->set_in_and_out(in, out);
         position = qRound(position * speedRatio);
@@ -244,9 +227,6 @@ void AvformatProducerWidget::recreateProducer()
                  kShotcutHashProperty ","
                  kPlaylistIndexProperty ","
                  kShotcutSkipConvertProperty ","
-                 kShotcutLengthProperty ","
-                 kShotcutInProperty ","
-                 kShotcutOutProperty ","
                  kCommentProperty ","
                  kDefaultAudioIndexProperty);
     Mlt::Controller::copyFilters(*m_producer, *p);

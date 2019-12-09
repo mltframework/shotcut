@@ -484,22 +484,6 @@ void TimelineDock::onProducerChanged(Mlt::Producer* after)
             int length = qRound(info->length * speedRatio);
             int in = qMin(qRound(info->frame_in * speedRatio), length - 1);
             int out = qMin(qRound(info->frame_out * speedRatio), length - 1);
-
-            if (!after->get(kShotcutLengthProperty)) {
-                // Save this info to fully reset the producer if speed changed back to 1.
-                after->set(kShotcutLengthProperty, info->length);
-                after->set(kShotcutInProperty, info->frame_in);
-                after->set(kShotcutOutProperty, info->frame_out);
-            }
-            if (newSpeed == 1.0 && after->get(kShotcutLengthProperty) && after->get(kShotcutInProperty) && after->get(kShotcutOutProperty)) {
-                // Restore the saved length, in, and out.
-                length = after->get_int(kShotcutLengthProperty);
-                in = after->get_int(kShotcutInProperty);
-                out = after->get_int(kShotcutOutProperty);
-                static_cast<Mlt::Properties*>(after)->clear(kShotcutLengthProperty);
-                static_cast<Mlt::Properties*>(after)->clear(kShotcutInProperty);
-                static_cast<Mlt::Properties*>(after)->clear(kShotcutOutProperty);
-            }
             after->set("length", after->frames_to_time(length, mlt_time_clock));
             after->set_in_and_out(in, out);
 
