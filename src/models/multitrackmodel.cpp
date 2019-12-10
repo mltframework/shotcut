@@ -761,7 +761,8 @@ bool MultitrackModel::moveClip(int fromTrack, int toTrack, int clipIndex,
                 consolidateBlanks(playlist, fromTrack);
 
                 // Overwrite with clip
-                overwrite(toTrack, clip, position, false /* seek */);
+                if (position + clip.get_playtime() >= 0)
+                    overwrite(toTrack, clip, position, false /* seek */);
             }
         }
         result = true;
@@ -915,7 +916,7 @@ QString MultitrackModel::overwrite(int trackIndex, Mlt::Producer& clip, int posi
                 splitClip(trackIndex, targetIndex, position);
                 ++targetIndex;
             } else if (position < 0) {
-                clip.set_in_and_out(-position, clip.get_out());
+                clip.set_in_and_out(clip.get_in() - position, clip.get_out());
                 QModelIndex modelIndex = createIndex(targetIndex, 0, trackIndex);
                 // Notify clip was adjusted.
                 QVector<int> roles;
