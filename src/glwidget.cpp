@@ -283,7 +283,7 @@ static void uploadTextures(QOpenGLContext* context, SharedFrame& frame, GLuint t
 {
     int width = frame.get_image_width();
     int height = frame.get_image_height();
-    const uint8_t* image = frame.get_image(mlt_image_yuv420p);
+    const uint8_t* image = frame.get_image();
     QOpenGLFunctions* f = context->functions();
 
     // The planes of pixel data may not be a multiple of the default 4 bytes.
@@ -653,7 +653,7 @@ int GLWidget::reconfigure(bool isMulti)
         // Make an event handler for when a frame's image should be displayed
         m_consumer->listen("consumer-frame-show", this, (mlt_listener) on_frame_show);
         m_consumer->set("real_time", MLT.realTime());
-        m_consumer->set("mlt_image_format", "rgb24a");
+        m_consumer->set("mlt_image_format", "yuv422");
         m_consumer->set("color_trc", Settings.playerGamma().toLatin1().constData());
         m_consumer->set("channels", property("audio_channels").toInt());
 
@@ -721,7 +721,9 @@ QImage GLWidget::image() const
         int width = frame.get_image_width();
         int height = frame.get_image_height();
         QImage result(width, height, QImage::Format_ARGB32);
-        const uchar *image = frame.get_image(mlt_image_rgb24a);
+        Mlt::Frame displayFrame(frame.clone(false, true));
+        mlt_image_format format = mlt_image_rgb24a;
+        const uchar *image = displayFrame.get_image(format, width, height);
         if (image) {
             QImage temp(width, height, QImage::Format_ARGB32);
             memcpy(temp.scanLine(0), image, width * height * 4);
@@ -883,6 +885,11 @@ FrameRenderer::~FrameRenderer()
 void FrameRenderer::showFrame(Mlt::Frame frame)
 {
     if (!Settings.playerGPU()) {
+        // Convert the image format before creating the SharedFrame.
+        mlt_image_format format = mlt_image_yuv420p;
+        int width = 0;
+        int height = 0;
+        frame.get_image(format, width, height);
         m_displayFrame = SharedFrame(frame);
     }
 
