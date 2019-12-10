@@ -904,7 +904,7 @@ void TimelineDock::onClipMoved(int fromTrack, int toTrack, int clipIndex, int po
         MAIN.undoStack()->beginMacro(tr("Move %1 timeline clips").arg(selectionByUuid.size()));
         for (const auto& uuid : selectionByUuid) {
             if (findClipByUuid(uuid, fromTrack, clipIndex)) {
-                toTrack = qMin(fromTrack + trackDifference, m_model.trackList().size() - 1);
+                toTrack = qBound(0, fromTrack + trackDifference, m_model.trackList().size() - 1);
                 MAIN.undoStack()->push(
                     new Timeline::MoveClipCommand(m_model, fromTrack, toTrack, clipIndex, positions[uuid] + position, ripple));
             }
