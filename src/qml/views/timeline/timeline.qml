@@ -572,12 +572,12 @@ Rectangle {
                     scrollTimer.stop()
                 }
                 dragDelta = Qt.point(clip.x - clip.originalX, clip.trackIndex - clip.originalTrackIndex)
-                selectionContainer.visible = true
+                // selectionContainer.visible = true // disabled for now
             }
             onClipDropped: {
                 scrollTimer.running = false
                 bubbleHelp.hide()
-                selectionContainer.visible = false
+                // selectionContainer.visible = false // disabled for now
             }
             onClipDraggedToTrack: {
                 var i = clip.trackIndex + direction
