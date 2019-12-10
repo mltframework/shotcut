@@ -124,7 +124,7 @@ Rectangle {
                 iconName: 'chronometer';
                 iconSource: 'qrc:///icons/oxygen/32x32/actions/chronometer.png'
                 onClicked: {
-                    parameters.addKeyframe(delegateIndex, producer.position)
+                    parameters.addKeyframe(delegateIndex, producer.position - (filter.in - producer.in))
                     root.selection = [parameters.keyframeIndex(delegateIndex, producer.position)]
                 }
                 tooltip: qsTr('Add a keyframe at play head')
