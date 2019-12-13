@@ -1915,10 +1915,15 @@ bool MultitrackModel::addTransitionByTrimInValid(int trackIndex, int clipIndex, 
                     result = true;
             } else if (m_isMakingTransition && isTransition(playlist, clipIndex - 1)) {
                 // Invalid if transition length will be 0 or less.
-                result = playlist.clip_length(clipIndex - 1) - delta > 0;
-                if (result && clipIndex > 1)
+                auto newTransitionDuration = playlist.clip_length(clipIndex - 1) - delta;
+                result = newTransitionDuration > 0;
+                if (result && clipIndex > 1) {
+                    QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(clipIndex));
                     // Invalid if left clip length will be 0 or less.
-                    result = playlist.clip_length(clipIndex - 2) + delta > 0;
+                    result = playlist.clip_length(clipIndex - 2) + delta > 0 &&
+                             // Invalid if current clip in point will be less than 0.
+                             info && info->frame_in - newTransitionDuration >= 0;
+                }
             } else {
                 result = m_isMakingTransition;
             }
@@ -1990,11 +1995,16 @@ bool MultitrackModel::addTransitionByTrimOutValid(int trackIndex, int clipIndex,
                     result = true;
             } else if (m_isMakingTransition && isTransition(playlist, clipIndex + 1)) {
                 // Invalid if transition length will be 0 or less.
+                auto newTransitionDuration = playlist.clip_length(clipIndex + 1) - delta;
 //                LOG_DEBUG() << "playlist.clip_length(clipIndex + 1)" << playlist.clip_length(clipIndex + 1) << "- delta" << delta << "=" << (playlist.clip_length(clipIndex + 1) - delta);
-                result = playlist.clip_length(clipIndex + 1) - delta > 0;
-                if (result && clipIndex + 2 < playlist.count())
+                result = newTransitionDuration > 0;
+                if (result && clipIndex + 2 < playlist.count()) {
+                    QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(clipIndex));
                     // Invalid if right clip length will be 0 or less.
-                    result = playlist.clip_length(clipIndex + 2) + delta > 0;
+                    result = playlist.clip_length(clipIndex + 2) + delta > 0 &&
+                             // Invalid if current clip out point would exceed its duration.
+                             info && info->frame_out + newTransitionDuration < info->length;
+                }
             } else {
                 result = m_isMakingTransition;
             }
