@@ -302,6 +302,8 @@ Item {
         Label {
             text: qsTr('Position')
             Layout.alignment: Qt.AlignRight
+            font.bold: true
+            font.italic: true
         }
         RowLayout {
             TextField {
@@ -333,6 +335,8 @@ Item {
         Label {
             text: qsTr('Size')
             Layout.alignment: Qt.AlignRight
+            font.bold: true
+            font.italic: true
         }
         RowLayout {
             TextField {
