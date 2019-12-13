@@ -30,7 +30,13 @@ ToolBar {
 
     RowLayout {
         ToolButton {
+            id: hiddenButton
+            visible: false
+        }
+        ToolButton {
             id: menuButton
+            implicitWidth: settings.smallIcons? 24 : hiddenButton.implicitWidth
+            implicitHeight: implicitWidth
             action: Action {
                 id: menuAction
                 tooltip: qsTr('Display a menu of additional actions')
@@ -42,10 +48,11 @@ ToolBar {
         Button { // separator
             enabled: false
             implicitWidth: 1
+            implicitHeight: 20
         }
         ToolButton {
-            implicitWidth: 31
-            implicitHeight: 31
+            implicitWidth: settings.smallIcons? 24 : hiddenButton.implicitWidth
+            implicitHeight: implicitWidth
             action: Action {
                 tooltip: qsTr('Set the filter start')
                 text: '['
@@ -53,8 +60,8 @@ ToolBar {
             }
         }
         ToolButton {
-            implicitWidth: 31
-            implicitHeight: 31
+            implicitWidth: settings.smallIcons? 24 : hiddenButton.implicitWidth
+            implicitHeight: implicitWidth
             action: Action {
                 tooltip: qsTr('Set the filter end')
                 text: ']'
@@ -62,8 +69,8 @@ ToolBar {
             }
         }
         ToolButton {
-            implicitWidth: 31
-            implicitHeight: 31
+            implicitWidth: settings.smallIcons? 24 : hiddenButton.implicitWidth
+            implicitHeight: implicitWidth
             action: Action {
                 tooltip: qsTr('Set the first simple keyframe')
                 text: '{'
@@ -71,8 +78,8 @@ ToolBar {
             }
         }
         ToolButton {
-            implicitWidth: 31
-            implicitHeight: 31
+            implicitWidth: settings.smallIcons? 24 : hiddenButton.implicitWidth
+            implicitHeight: implicitWidth
             action: Action {
                 tooltip: qsTr('Set the second simple keyframe')
                 text: '}'
@@ -82,8 +89,11 @@ ToolBar {
         Button { // separator
             enabled: false
             implicitWidth: 1
+            implicitHeight: 20
         }
         ToolButton {
+            implicitWidth: settings.smallIcons? 24 : hiddenButton.implicitWidth
+            implicitHeight: implicitWidth
             action: Action {
                 id: zoomOutAction
                 tooltip: qsTr("Zoom timeline out (-)")
@@ -96,6 +106,8 @@ ToolBar {
             id: scaleSlider
         }
         ToolButton {
+            implicitWidth: settings.smallIcons? 24 : hiddenButton.implicitWidth
+            implicitHeight: implicitWidth
             action: Action {
                 id: zoomInAction
                 tooltip: qsTr("Zoom timeline in (+)")

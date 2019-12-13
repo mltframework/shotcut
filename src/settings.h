@@ -42,6 +42,7 @@ class ShotcutSettings : public QObject
     Q_PROPERTY(double audioOutDuration READ audioOutDuration WRITE setAudioOutDuration NOTIFY audioOutDurationChanged)
     Q_PROPERTY(double videoInDuration READ videoInDuration WRITE setVideoInDuration NOTIFY videoInDurationChanged)
     Q_PROPERTY(double videoOutDuration READ videoOutDuration WRITE setVideoOutDuration NOTIFY videoOutDurationChanged)
+    Q_PROPERTY(bool smallIcons READ smallIcons WRITE setSmallIcons NOTIFY smallIconsChanged)
 
 public:
     static ShotcutSettings& singleton();
@@ -208,6 +209,7 @@ signals:
     void videoOutDurationChanged();
     void playlistThumbnailsChanged();
     void viewModeChanged();
+    void smallIconsChanged();
 
 private:
     QSettings settings;

@@ -169,6 +169,7 @@ bool ShotcutSettings::smallIcons() const
 void ShotcutSettings::setSmallIcons(bool b)
 {
     settings.setValue("smallIcons", b);
+    emit smallIconsChanged();
 }
 
 QByteArray ShotcutSettings::windowGeometry() const
