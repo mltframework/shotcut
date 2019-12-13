@@ -28,7 +28,7 @@ ToolBar {
     SystemPalette { id: activePalette }
 
     width: 200
-    height: snapButton.height + 4
+    height: settings.smallIcons? 28 : snapButton.height + 4
     anchors.margins: 0
 
     RowLayout {
@@ -38,63 +38,63 @@ ToolBar {
         }
         ToolButton {
             action: menuAction
-            implicitWidth: settings.smallIcons? 24 : hiddenButton.implicitWidth
+            implicitWidth: settings.smallIcons? 18 : hiddenButton.implicitWidth
             implicitHeight: implicitWidth
         }
         Button { // separator
             enabled: false
             implicitWidth: 1
-            implicitHeight: 20
+            implicitHeight: 18
         }
         ToolButton {
             action: cutAction
-            implicitWidth: settings.smallIcons? 24 : hiddenButton.implicitWidth
+            implicitWidth: settings.smallIcons? 18 : hiddenButton.implicitWidth
             implicitHeight: implicitWidth
         }
         ToolButton {
             action: copyAction
-            implicitWidth: settings.smallIcons? 24 : hiddenButton.implicitWidth
+            implicitWidth: settings.smallIcons? 18 : hiddenButton.implicitWidth
             implicitHeight: implicitWidth
         }
         ToolButton {
             action: insertAction
-            implicitWidth: settings.smallIcons? 24 : hiddenButton.implicitWidth
+            implicitWidth: settings.smallIcons? 18 : hiddenButton.implicitWidth
             implicitHeight: implicitWidth
         }
         Button { // separator
             enabled: false
             implicitWidth: 1
-            implicitHeight: 20
+            implicitHeight: 18
         }
         ToolButton {
             action: appendAction
-            implicitWidth: settings.smallIcons? 24 : hiddenButton.implicitWidth
+            implicitWidth: settings.smallIcons? 18 : hiddenButton.implicitWidth
             implicitHeight: implicitWidth
         }
         ToolButton {
             action: deleteAction
-            implicitWidth: settings.smallIcons? 24 : hiddenButton.implicitWidth
+            implicitWidth: settings.smallIcons? 18 : hiddenButton.implicitWidth
             implicitHeight: implicitWidth
         }
         ToolButton {
             action: liftAction
-            implicitWidth: settings.smallIcons? 24 : hiddenButton.implicitWidth
+            implicitWidth: settings.smallIcons? 18 : hiddenButton.implicitWidth
             implicitHeight: implicitWidth
         }
         ToolButton {
             action: overwriteAction
-            implicitWidth: settings.smallIcons? 24 : hiddenButton.implicitWidth
+            implicitWidth: settings.smallIcons? 18 : hiddenButton.implicitWidth
             implicitHeight: implicitWidth
         }
         ToolButton {
             action: splitAction
-            implicitWidth: settings.smallIcons? 24 : hiddenButton.implicitWidth
+            implicitWidth: settings.smallIcons? 18 : hiddenButton.implicitWidth
             implicitHeight: implicitWidth
         }
         Button { // separator
             enabled: false
             implicitWidth: 1
-            implicitHeight: 20
+            implicitHeight: 18
         }
         ToolButton {
             id: snapButton
@@ -104,7 +104,7 @@ ToolBar {
             iconSource: 'qrc:///icons/oxygen/32x32/actions/snap.png'
             tooltip: qsTr('Toggle snapping')
             onClicked: settings.timelineSnap = checked
-            implicitWidth: settings.smallIcons? 24 : hiddenButton.implicitWidth
+            implicitWidth: settings.smallIcons? 18 : hiddenButton.implicitWidth
             implicitHeight: implicitWidth
         }
         ToolButton {
@@ -113,7 +113,7 @@ ToolBar {
             iconName: 'scrub_drag'
             iconSource: 'qrc:///icons/oxygen/32x32/actions/scrub_drag.png'
             tooltip: qsTr('Scrub while dragging')
-            implicitWidth: settings.smallIcons? 24 : hiddenButton.implicitWidth
+            implicitWidth: settings.smallIcons? 18 : hiddenButton.implicitWidth
             implicitHeight: implicitWidth
         }
         ToolButton {
@@ -125,7 +125,7 @@ ToolBar {
             tooltip: qsTr('Ripple trim and drop')
             text: qsTr('Ripple')
             onClicked: settings.timelineRipple = checked
-            implicitWidth: settings.smallIcons? 24 : hiddenButton.implicitWidth
+            implicitWidth: settings.smallIcons? 18 : hiddenButton.implicitWidth
             implicitHeight: implicitWidth
         }
         ToolButton {
@@ -137,17 +137,17 @@ ToolBar {
             tooltip: qsTr('Ripple edits across all tracks')
             text: qsTr('Ripple All')
             onClicked: settings.timelineRippleAllTracks = checked
-            implicitWidth: settings.smallIcons? 24 : hiddenButton.implicitWidth
+            implicitWidth: settings.smallIcons? 18 : hiddenButton.implicitWidth
             implicitHeight: implicitWidth
         }
         Button { // separator
             enabled: false
             implicitWidth: 1
-            implicitHeight: 20
+            implicitHeight: 18
         }
         ToolButton {
             action: zoomOutAction
-            implicitWidth: settings.smallIcons? 24 : hiddenButton.implicitWidth
+            implicitWidth: settings.smallIcons? 18 : hiddenButton.implicitWidth
             implicitHeight: implicitWidth
         }
         ZoomSlider {
@@ -155,7 +155,7 @@ ToolBar {
         }
         ToolButton {
             action: zoomInAction
-            implicitWidth: settings.smallIcons? 24 : hiddenButton.implicitWidth
+            implicitWidth: settings.smallIcons? 18 : hiddenButton.implicitWidth
             implicitHeight: implicitWidth
         }
 

@@ -25,7 +25,7 @@ ToolBar {
     SystemPalette { id: activePalette }
 
     width: 200
-    height: menuButton.height + 4
+    height: settings.smallIcons? 28 : menuButton.height + 4
     anchors.margins: 0
 
     RowLayout {
@@ -35,7 +35,7 @@ ToolBar {
         }
         ToolButton {
             id: menuButton
-            implicitWidth: settings.smallIcons? 24 : hiddenButton.implicitWidth
+            implicitWidth: settings.smallIcons? 18 : hiddenButton.implicitWidth
             implicitHeight: implicitWidth
             action: Action {
                 id: menuAction
@@ -48,10 +48,10 @@ ToolBar {
         Button { // separator
             enabled: false
             implicitWidth: 1
-            implicitHeight: 20
+            implicitHeight: 18
         }
         ToolButton {
-            implicitWidth: settings.smallIcons? 24 : hiddenButton.implicitWidth
+            implicitWidth: settings.smallIcons? 18 : hiddenButton.implicitWidth
             implicitHeight: implicitWidth
             action: Action {
                 tooltip: qsTr('Set the filter start')
@@ -60,7 +60,7 @@ ToolBar {
             }
         }
         ToolButton {
-            implicitWidth: settings.smallIcons? 24 : hiddenButton.implicitWidth
+            implicitWidth: settings.smallIcons? 18 : hiddenButton.implicitWidth
             implicitHeight: implicitWidth
             action: Action {
                 tooltip: qsTr('Set the filter end')
@@ -69,7 +69,7 @@ ToolBar {
             }
         }
         ToolButton {
-            implicitWidth: settings.smallIcons? 24 : hiddenButton.implicitWidth
+            implicitWidth: settings.smallIcons? 18 : hiddenButton.implicitWidth
             implicitHeight: implicitWidth
             action: Action {
                 tooltip: qsTr('Set the first simple keyframe')
@@ -78,7 +78,7 @@ ToolBar {
             }
         }
         ToolButton {
-            implicitWidth: settings.smallIcons? 24 : hiddenButton.implicitWidth
+            implicitWidth: settings.smallIcons? 18 : hiddenButton.implicitWidth
             implicitHeight: implicitWidth
             action: Action {
                 tooltip: qsTr('Set the second simple keyframe')
@@ -89,10 +89,10 @@ ToolBar {
         Button { // separator
             enabled: false
             implicitWidth: 1
-            implicitHeight: 20
+            implicitHeight: 18
         }
         ToolButton {
-            implicitWidth: settings.smallIcons? 24 : hiddenButton.implicitWidth
+            implicitWidth: settings.smallIcons? 18 : hiddenButton.implicitWidth
             implicitHeight: implicitWidth
             action: Action {
                 id: zoomOutAction
@@ -106,7 +106,7 @@ ToolBar {
             id: scaleSlider
         }
         ToolButton {
-            implicitWidth: settings.smallIcons? 24 : hiddenButton.implicitWidth
+            implicitWidth: settings.smallIcons? 18 : hiddenButton.implicitWidth
             implicitHeight: implicitWidth
             action: Action {
                 id: zoomInAction
