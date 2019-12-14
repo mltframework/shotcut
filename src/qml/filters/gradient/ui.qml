@@ -45,8 +45,8 @@ Item {
     Component.onCompleted: {
         filter.blockSignals = true
         filter.set(middleValue, Qt.rect(profile.width / 2, 0, profile.width * 0.01, profile.height))
-        filter.set(startValue, middleValue)
-        filter.set(endValue, endValue)
+        filter.set(startValue, filter.getRect(middleValue))
+        filter.set(endValue, filter.getRect(middleValue))
         if (filter.isNew) {
             filter.set(patternProperty, 'gradient_linear')
             filter.set(startColorProperty, '#000000')
