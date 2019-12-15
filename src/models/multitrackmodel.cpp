@@ -1590,7 +1590,7 @@ bool MultitrackModel::addTransitionValid(int fromTrack, int toTrack, int clipInd
     return result;
 }
 
-int MultitrackModel::addTransition(int trackIndex, int clipIndex, int position, bool ripple)
+int MultitrackModel::addTransition(int trackIndex, int clipIndex, int position, bool ripple, bool rippleAllTracks)
 {
     int i = m_trackList.at(trackIndex).mlt_index;
     QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
@@ -1614,7 +1614,7 @@ int MultitrackModel::addTransition(int trackIndex, int clipIndex, int position, 
                 duration -= playlist.clip_length(clipIndex + 1);
 
             // Adjust/insert blanks
-            moveClipInBlank(playlist, trackIndex, clipIndex, position, ripple, duration);
+            moveClipInBlank(playlist, trackIndex, clipIndex, position, ripple, rippleAllTracks, duration);
             targetIndex = playlist.get_clip_index_at(position);
 
             // Create mix

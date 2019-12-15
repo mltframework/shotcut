@@ -543,6 +543,7 @@ AddTransitionCommand::AddTransitionCommand(MultitrackModel &model, int trackInde
     , m_transitionIndex(-1)
     , m_ripple(ripple)
     , m_undoHelper(model)
+    , m_rippleAllTracks(Settings.timelineRippleAllTracks())
 {
     setText(QObject::tr("Add transition"));
 }
@@ -551,7 +552,7 @@ void AddTransitionCommand::redo()
 {
     LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "position" << m_position;
     m_undoHelper.recordBeforeState();
-    m_transitionIndex = m_model.addTransition(m_trackIndex, m_clipIndex, m_position, m_ripple);
+    m_transitionIndex = m_model.addTransition(m_trackIndex, m_clipIndex, m_position, m_ripple, m_rippleAllTracks);
     LOG_DEBUG() << "m_transitionIndex" << m_transitionIndex;
     m_undoHelper.recordAfterState();
 }

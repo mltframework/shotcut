@@ -318,6 +318,7 @@ private:
     int m_transitionIndex;
     bool m_ripple;
     UndoHelper m_undoHelper;
+    bool m_rippleAllTracks;
 };
 
 class TrimTransitionInCommand : public TrimCommand

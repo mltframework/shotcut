@@ -152,7 +152,7 @@ public slots:
     void fadeIn(int trackIndex, int clipIndex, int duration);
     void fadeOut(int trackIndex, int clipIndex, int duration);
     bool addTransitionValid(int fromTrack, int toTrack, int clipIndex, int position, bool ripple);
-    int addTransition(int trackIndex, int clipIndex, int position, bool ripple);
+    int addTransition(int trackIndex, int clipIndex, int position, bool ripple, bool rippleAllTracks);
     void removeTransition(int trackIndex, int clipIndex);
     void removeTransitionByTrimIn(int trackIndex, int clipIndex, int delta);
     void removeTransitionByTrimOut(int trackIndex, int clipIndex, int delta);
