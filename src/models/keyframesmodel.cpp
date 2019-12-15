@@ -361,6 +361,8 @@ void KeyframesModel::addKeyframe(int parameterIndex, int position)
             // because it did not receive a "consumer-frame-show" event for it.
             m_filter->blockSignals(true);
             m_filter->set(name, value, position, keyframeType);
+            for (auto& key : m_metadata->keyframes()->parameter(m_metadataIndex[parameterIndex])->gangedProperties())
+                m_filter->set(key, value, position, keyframeType);
             m_filter->blockSignals(false);
             onFilterChanged(name);
         }
