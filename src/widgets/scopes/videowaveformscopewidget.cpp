@@ -24,7 +24,7 @@
 
 static const qreal IRE0 = 16;
 static const qreal IRE100 = 235;
-static const QColor TEXT_COLOR = {220, 220, 220};
+static const QColor TEXT_COLOR = {255, 255, 255, 127};
 
 
 VideoWaveformScopeWidget::VideoWaveformScopeWidget()
