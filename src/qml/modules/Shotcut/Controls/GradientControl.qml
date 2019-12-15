@@ -65,6 +65,15 @@ RowLayout {
                 showAlphaChannel: true
                 color: handelRect.color
                 onAccepted: {
+                    // Make a copy of the current value.
+                    var myColor = Qt.darker(handelRect.color, 1.0)
+                    // Ignore alpha when comparing.
+                    myColor.a = currentColor.a
+                    // If the user changed color but left alpha at 0,
+                    // they probably want to reset alpha to opaque.
+                    console.log('currentColor.a=' + currentColor.a + ' currentColor=' + currentColor + ' myColor=' + myColor)
+                    if (currentColor.a === 0 && !Qt.colorEqual(currentColor, myColor))
+                        currentColor.a = 1.0
                     parent.parent._setStopColor(handelRect.stopIndex, String(currentColor))
                 }
                 modality: Qt.ApplicationModal
