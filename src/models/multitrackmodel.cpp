@@ -1170,7 +1170,7 @@ void MultitrackModel::splitClip(int trackIndex, int clipIndex, int position)
         int delta = info->frame_count - duration;
 
         // Connect a transition on the left to the new producer.
-        if (isTransition(playlist, clipIndex - 1)) {
+        if (isTransition(playlist, clipIndex - 1) && !playlist.is_blank(clipIndex)) {
             QScopedPointer<Mlt::Producer> p(playlist.get_clip(clipIndex - 1));
             Mlt::Tractor tractor(p->parent());
             if (tractor.is_valid()) {
