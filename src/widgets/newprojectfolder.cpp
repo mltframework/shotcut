@@ -99,11 +99,13 @@ void NewProjectFolder::showEvent(QShowEvent*)
     }
 
     setProjectFolderButtonText(Settings.projectsFolder());
+    m_isOpening = false;
 }
 
 void NewProjectFolder::hideEvent(QHideEvent*)
 {
     ui->projectNameLineEdit->setText(QString());
+    m_isOpening = false;
 }
 
 bool NewProjectFolder::event(QEvent* event)
@@ -235,7 +237,10 @@ void NewProjectFolder::on_projectNameLineEdit_textChanged(const QString& arg1)
 
 void NewProjectFolder::on_recentListView_clicked(const QModelIndex& index)
 {
-    MAIN.open(m_model.itemData(index)[Qt::ToolTipRole].toString());
+    if (!m_isOpening) {
+        m_isOpening = true;
+        MAIN.open(m_model.itemData(index)[Qt::ToolTipRole].toString());
+    }
 }
 
 void NewProjectFolder::setColors()

@@ -74,6 +74,7 @@ private:
     QString m_profile;
     QStandardItemModel m_model;
     QString m_projectName;
+    bool m_isOpening;
 };
 
 #endif // NEWPROJECTFOLDER_H
