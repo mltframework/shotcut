@@ -220,7 +220,13 @@ Item {
                 text: qsTr('Set a mask from another file\'s brightness or alpha.')
                 isVisible: !resourceCombo.pressed
             }
-            onActivated: updateResource(index)
+            onActivated: {
+                // toggling focus works around a weird bug involving sticky
+                // input event focus on the ComboBox
+                enabled = false
+                updateResource(index)
+                enabled = true
+            }
             function updateResource(index) {
                 fileLabel.text = ''
                 fileLabelTip.text = ''

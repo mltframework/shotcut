@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2013-2018 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2013-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,6 +39,9 @@ RowLayout {
         model: filter.presets
         onCurrentTextChanged: {
             if (currentText.length > 0) {
+                // toggling focus works around a weird bug involving sticky
+                // input event focus on the ComboBox
+                enabled = false
                 filter.blockSignals = true
                 filter.animateIn = 0
                 filter.animateOut = 0
@@ -50,6 +52,7 @@ RowLayout {
                 filter.changed()
                 filter.animateInChanged()
                 filter.animateOutChanged()
+                enabled = true
             }
         }
     }
