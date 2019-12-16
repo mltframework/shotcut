@@ -17,7 +17,10 @@
  */
 
 #include "scopedock.h"
+
 #include "controllers/scopecontroller.h"
+#include "mltcontroller.h"
+
 #include <Logger.h>
 #include <QtWidgets/QScrollArea>
 #include <QAction>
@@ -54,6 +57,7 @@ void ScopeDock::onActionToggled(bool checked)
 {
     if(checked) {
         connect(m_scopeController, SIGNAL(newFrame(const SharedFrame&)), m_scopeWidget, SLOT(onNewFrame(const SharedFrame&)));
+        MLT.refreshConsumer();
     } else {
         disconnect(m_scopeController, SIGNAL(newFrame(const SharedFrame&)), m_scopeWidget, SLOT(onNewFrame(const SharedFrame&)));
     }
