@@ -96,6 +96,7 @@ SOURCES += main.cpp\
     widgets/scopes/audiowaveformscopewidget.cpp \
     widgets/scopes/videohistogramscopewidget.cpp \
     widgets/scopes/videorgbparadescopewidget.cpp \
+    widgets/scopes/videorgbwaveformscopewidget.cpp \
     widgets/scopes/videowaveformscopewidget.cpp \
     widgets/scopes/videozoomscopewidget.cpp \
     widgets/scopes/videozoomwidget.cpp \
@@ -213,6 +214,7 @@ HEADERS  += mainwindow.h \
     widgets/scopes/audiowaveformscopewidget.h \
     widgets/scopes/videohistogramscopewidget.h \
     widgets/scopes/videorgbparadescopewidget.h \
+    widgets/scopes/videorgbwaveformscopewidget.h \
     widgets/scopes/videowaveformscopewidget.h \
     widgets/scopes/videozoomscopewidget.h \
     widgets/scopes/videozoomwidget.h \
