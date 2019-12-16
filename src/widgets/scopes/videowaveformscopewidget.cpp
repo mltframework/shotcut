@@ -1,6 +1,5 @@
 /*
  * Copyright (c) 2015-2019 Meltytech, LLC
- * Author: Brian Matherly <code@brianmatherly.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -49,32 +48,39 @@ void VideoWaveformScopeWidget::refreshScope(const QSize& size, bool full)
         m_frame = m_queue.pop();
     }
 
-    if (m_frame.is_valid() && m_frame.get_image_width() && m_frame.get_image_height()) {
-        int columns = m_frame.get_image_width();
-        if (m_renderImg.width() != columns) {
-            m_renderImg = QImage(columns, 256, QImage::Format_ARGB32_Premultiplied);
+    int width = m_frame.get_image_width();
+    int height = m_frame.get_image_height();
+
+    if (m_frame.is_valid() && width && height) {
+        if (m_renderImg.width() != width) {
+            m_renderImg = QImage(width, 256, QImage::Format_RGBX8888);
         }
-        QColor bgColor( 0, 0, 0 ,0 );
+
+        QColor bgColor( 0, 0, 0 ,0xff );
         m_renderImg.fill(bgColor);
 
-        const uint8_t* yData = m_frame.get_image(mlt_image_yuv420p);
+        const uint8_t* src = m_frame.get_image(mlt_image_yuv420p);
+        uint8_t* dst = m_renderImg.scanLine(0);
 
-        for (int x = 0; x < columns; x++) {
-            int pixels = m_frame.get_image_height();
-            for (int j = 0; j < pixels; j++) {
-                int y = 255 - (yData[j * columns + x]);
-                QRgb currentVal = m_renderImg.pixel(x,y);
-                if (currentVal < 0xffffffff) {
-                    currentVal += 0x0f0f0f0f;
-                    m_renderImg.setPixel(x, y, currentVal);
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                uint8_t dy = 255 - src[0];
+                size_t dIndex = (dy * width + x) * 4;
+                if (dst[dIndex] < 0xff) {
+                    dst[dIndex] += 0x0f;
+                    dst[dIndex + 1] += 0x0f;
+                    dst[dIndex + 2] += 0x0f;
                 }
+                src ++;
             }
         }
-    }
 
-    m_mutex.lock();
-    m_displayImg.swap(m_renderImg);
-    m_mutex.unlock();
+        QImage scaledImage = m_renderImg.scaled(size).convertToFormat(QImage::Format_RGB32);
+
+        m_mutex.lock();
+        m_displayImg.swap(scaledImage);
+        m_mutex.unlock();
+    }
 }
 
 void VideoWaveformScopeWidget::paintEvent(QPaintEvent*)
@@ -95,13 +101,13 @@ void VideoWaveformScopeWidget::paintEvent(QPaintEvent*)
     p.setPen(pen);
     p.setFont(font);
 
-    // Fill the background
-    p.fillRect(0, 0, width(), height(), QBrush(Qt::black, Qt::SolidPattern));
-
     // draw the waveform data
     m_mutex.lock();
     if(!m_displayImg.isNull()) {
         p.drawImage(rect(), m_displayImg, m_displayImg.rect());
+    } else
+    {
+        p.fillRect(rect(), QBrush(Qt::black, Qt::SolidPattern));
     }
     m_mutex.unlock();
 
