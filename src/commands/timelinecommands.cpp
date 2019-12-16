@@ -139,6 +139,7 @@ LiftCommand::LiftCommand(MultitrackModel &model, int trackIndex,
     , m_undoHelper(m_model)
 {
     setText(QObject::tr("Lift from track"));
+    m_undoHelper.setHints(UndoHelper::RestoreTracks);
 }
 
 void LiftCommand::redo()
@@ -165,6 +166,7 @@ RemoveCommand::RemoveCommand(MultitrackModel &model, int trackIndex,
     , m_rippleAllTracks(Settings.timelineRippleAllTracks())
 {
     setText(QObject::tr("Remove from track"));
+    m_undoHelper.setHints(UndoHelper::RestoreTracks);
 }
 
 void RemoveCommand::redo()
