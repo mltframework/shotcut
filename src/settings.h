@@ -191,6 +191,8 @@ public:
 
     QString projectsFolder() const;
     void setProjectsFolder(const QString& path);
+    
+    int undoLimit() const;
 
 signals:
     void openPathChanged();

@@ -192,6 +192,7 @@ MainWindow::MainWindow()
 
     // Setup the undo stack.
     m_undoStack = new QUndoStack(this);
+    m_undoStack->setUndoLimit(Settings.undoLimit());
     QAction *undoAction = m_undoStack->createUndoAction(this);
     QAction *redoAction = m_undoStack->createRedoAction(this);
     undoAction->setIcon(QIcon::fromTheme("edit-undo", QIcon(":/icons/oxygen/32x32/actions/edit-undo.png")));

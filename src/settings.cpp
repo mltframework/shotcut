@@ -760,3 +760,8 @@ void ShotcutSettings::setProjectsFolder(const QString &path)
 {
     settings.setValue("projectsFolder", path);
 }
+
+int ShotcutSettings::undoLimit() const
+{
+    return settings.value("undoLimit", 1000).toInt();
+}
