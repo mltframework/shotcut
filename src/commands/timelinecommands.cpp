@@ -876,11 +876,19 @@ RemoveTrackCommand::RemoveTrackCommand(MultitrackModel& model, int trackIndex, Q
     else if (m_trackType == VideoTrackType)
         setText(QObject::tr("Remove video track"));
 
-    // Save track name.
+    // Get the track as MLT playlist.
     int mlt_index = m_model.trackList().at(m_trackIndex).mlt_index;
     QScopedPointer<Mlt::Producer> producer(m_model.tractor()->multitrack()->track(mlt_index));
-    if (producer && producer->is_valid())
+    if (producer && producer->is_valid()) {
+        // Save track name.
         m_trackName = QString::fromUtf8(producer->get(kTrackNameProperty));
+        // Save the track filters.
+        if (producer->filter_count() > 0) {
+            m_filtersProducer.reset(new Mlt::Producer(MLT.profile(), "color"));
+            if (m_filtersProducer->is_valid())
+                MLT.copyFilters(*producer, *m_filtersProducer);
+        }
+    }
 }
 
 void RemoveTrackCommand::redo()
@@ -908,11 +916,10 @@ void RemoveTrackCommand::undo()
     int mlt_index = m_model.trackList().at(m_trackIndex).mlt_index;
     QScopedPointer<Mlt::Producer> producer(m_model.tractor()->multitrack()->track(mlt_index));
     Mlt::Playlist playlist(*producer);
-    int n = playlist.filter_count();
-    for (int i = 0; i < n; ++i) {
-        QScopedPointer<Mlt::Filter> filter(playlist.filter(i));
-        if (filter && filter->is_valid())
-            producer->attach(*filter);
+    if (playlist.is_valid() && m_filtersProducer &&  m_filtersProducer->is_valid()) {
+        MLT.copyFilters(*m_filtersProducer, playlist);
+        QModelIndex modelIndex = m_model.index(m_trackIndex);
+        emit m_model.dataChanged(modelIndex, modelIndex, QVector<int>() << MultitrackModel::IsFilteredRole);
     }
 }
 

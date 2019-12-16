@@ -459,6 +459,7 @@ private:
     TrackType m_trackType;
     QString m_trackName;
     UndoHelper m_undoHelper;
+    QScopedPointer<Mlt::Producer> m_filtersProducer;
 };
 
 class ChangeBlendModeCommand : public QObject, public QUndoCommand
