@@ -23,6 +23,7 @@
 #include <QString>
 #include <QMap>
 #include <QList>
+#include <QSet>
 
 class UndoHelper
 {
@@ -30,7 +31,8 @@ public:
     enum OptimizationHints
     {
         NoHints,
-        SkipXML
+        SkipXML,
+        RestoreTracks
     };
     UndoHelper(MultitrackModel & model);
 
@@ -41,6 +43,7 @@ public:
 
 private:
     void debugPrintState();
+    void restoreAffectedTracks();
 
     enum ChangeFlags {
         NoChange = 0x0,
@@ -79,6 +82,7 @@ private:
     QMap<QUuid,Info> m_state;
     QList<QUuid> m_clipsAdded;
     QList<QUuid> m_insertedOrder;
+    QSet<int> m_affectedTracks;
     MultitrackModel & m_model;
     OptimizationHints m_hints;
 };

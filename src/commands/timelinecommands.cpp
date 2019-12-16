@@ -331,6 +331,7 @@ MoveClipCommand::MoveClipCommand(MultitrackModel &model, int fromTrackIndex, int
     , m_undoHelper(m_model)
 {
     setText(QObject::tr("Move clip"));
+    m_undoHelper.setHints(UndoHelper::RestoreTracks);
 }
 
 void MoveClipCommand::redo()
