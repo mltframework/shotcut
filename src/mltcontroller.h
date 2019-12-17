@@ -88,7 +88,7 @@ public:
     double volume() const;
     void onWindowResize();
     virtual void seek(int position);
-    void refreshConsumer(bool scrubAudio = false);
+    virtual void refreshConsumer(bool scrubAudio = false);
     bool saveXML(const QString& filename, Service* service = nullptr, bool withRelativePaths = true, bool verify = true);
     QString XML(Service* service = nullptr, bool withProfile = false, bool withMetadata = false);
     int consumerChanged();

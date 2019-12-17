@@ -69,6 +69,7 @@ GLWidget::GLWidget(QObject *parent)
     , m_offset(QPoint(0, 0))
     , m_shareContext(0)
     , m_snapToGrid(true)
+    , m_scrubAudio(false)
 {
     LOG_DEBUG() << "begin";
     m_texture[0] = m_texture[1] = m_texture[2] = 0;
@@ -81,6 +82,8 @@ GLWidget::GLWidget(QObject *parent)
     engine()->addImportPath(importPath.path());
     QmlUtilities::setCommonProperties(rootContext());
     rootContext()->setContextProperty("video", this);
+    m_refreshTimer.setInterval(10);
+    m_refreshTimer.setSingleShot(true);
 
     if (Settings.playerGPU())
         m_glslManager = new Filter(profile(), "glsl.manager");
@@ -92,6 +95,7 @@ GLWidget::GLWidget(QObject *parent)
     connect(quickWindow(), SIGNAL(sceneGraphInitialized()), SLOT(initializeGL()), Qt::DirectConnection);
     connect(quickWindow(), SIGNAL(sceneGraphInitialized()), SLOT(setBlankScene()), Qt::QueuedConnection);
     connect(quickWindow(), SIGNAL(beforeRendering()), SLOT(paintGL()), Qt::DirectConnection);
+    connect(&m_refreshTimer, SIGNAL(timeout()), SLOT(onRefreshTimeout()));
     LOG_DEBUG() << "end";
 }
 
@@ -464,6 +468,11 @@ void GLWidget::paintGL()
     }
 }
 
+void GLWidget::onRefreshTimeout()
+{
+    Controller::refreshConsumer(m_scrubAudio);
+}
+
 void GLWidget::mousePressEvent(QMouseEvent* event)
 {
     QQuickWidget::mousePressEvent(event);
@@ -699,6 +708,12 @@ int GLWidget::reconfigure(bool isMulti)
         Controller::close();
     }
     return error;
+}
+
+void GLWidget::refreshConsumer(bool scrubAudio)
+{
+    m_refreshTimer.start();
+    m_scrubAudio = scrubAudio;
 }
 
 QPoint GLWidget::offset() const

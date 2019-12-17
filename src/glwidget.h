@@ -28,6 +28,7 @@
 #include <QMutex>
 #include <QThread>
 #include <QRect>
+#include <QTimer>
 #include "mltcontroller.h"
 #include "sharedframe.h"
 
@@ -72,6 +73,7 @@ public:
         Controller::seek(position);
         emit paused();
     }
+    void refreshConsumer(bool scrubAudio = false);
     void pause() {
         Controller::pause();
         emit paused();
@@ -143,6 +145,8 @@ private:
     QMutex m_mutex;
     QUrl m_savedQmlSource;
     bool m_snapToGrid;
+    QTimer m_refreshTimer;
+    bool m_scrubAudio;
 
     static void on_frame_show(mlt_consumer, void* self, mlt_frame frame);
 
@@ -151,6 +155,7 @@ private slots:
     void resizeGL(int width, int height);
     void updateTexture(GLuint yName, GLuint uName, GLuint vName);
     void paintGL();
+    void onRefreshTimeout();
 
 protected:
     void resizeEvent(QResizeEvent* event);
