@@ -678,7 +678,8 @@ bool MultitrackModel::moveClip(int fromTrack, int toTrack, int clipIndex,
     if (track) {
         Mlt::Playlist playlist(*track);
         QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(clipIndex));
-        Mlt::Producer clip(info->producer);
+        QString xml = MLT.XML(info->producer);
+        Mlt::Producer clip(MLT.profile(), "xml-string", xml.toUtf8().constData());
 
         if (clip.is_valid()) {
             clearMixReferences(fromTrack, clipIndex);
