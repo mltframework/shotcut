@@ -884,7 +884,7 @@ bool TimelineDock::moveClip(int fromTrack, int toTrack, int clipIndex, int posit
 
 void TimelineDock::onClipMoved(int fromTrack, int toTrack, int clipIndex, int position, bool ripple)
 {
-    int n = 1; // selection().size(); // disabled for now
+    int n = selection().size();
     if (n > 1 && !(ripple && fromTrack == toTrack)) {
         // get clipIndex later (as it changed) by an ID tag
         QVector<QUuid> selectionByUuid;

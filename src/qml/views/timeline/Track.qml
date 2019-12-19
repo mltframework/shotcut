@@ -92,7 +92,7 @@ Rectangle {
                 var fromTrack = clip.originalTrackIndex
                 var toTrack = clip.trackIndex
                 var clipIndex = clip.originalClipIndex
-                var selection = [Qt.point(clipIndex, fromTrack)] // timeline.selection // disabled for now
+                var selection = timeline.selection
                 var frame = Math.round(((selection.length > 1)?
                                             (clip.x - clip.originalX) : clip.x) 
                                        / timeScale)
