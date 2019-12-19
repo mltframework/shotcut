@@ -987,7 +987,9 @@ void PlaylistDock::on_actionSelectNone_triggered()
 
 void PlaylistDock::on_actionUpdateThumbnails_triggered()
 {
-    QModelIndex index = m_view->currentIndex();
-    if (!index.isValid() || !m_model.playlist()) return;
-    m_model.updateThumbnails(index.row());
+    if (!m_model.playlist()) return;
+    m_view->selectionModel()->clearSelection();
+    for (auto i = 0; i < m_model.rowCount(); i++) {
+        m_model.updateThumbnails(i);
+    }
 }
