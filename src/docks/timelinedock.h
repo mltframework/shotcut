@@ -160,7 +160,6 @@ protected:
 private:
     bool isBlank(int trackIndex, int clipIndex);
     void pulseLockButtonOnTrack(int trackIndex);
-    bool findClipByUuid(const QUuid& uuid, int& trackIndex, int& clipIndex);
 
     Ui::TimelineDock *ui;
     QQuickWidget m_quickView;

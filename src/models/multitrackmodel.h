@@ -109,6 +109,7 @@ public:
     void insertOrAdjustBlankAt(QList<int> tracks, int position, int length);
     bool mergeClipWithNext(int trackIndex, int clipIndex, bool dryrun);
     void adjustClipFilters(Mlt::Producer& producer, int in, int out, int inDelta, int outDelta);
+    Mlt::ClipInfo *findClipByUuid(const QUuid& uuid, int& trackIndex, int& clipIndex);
 
 signals:
     void created();

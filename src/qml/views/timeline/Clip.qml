@@ -313,9 +313,11 @@ Rectangle {
         }
         onReleased: {
             if (!doubleClickTimer.isFirstRelease && doubleClickTimer.running) {
+                // double click
                 timeline.position = Math.round(clipRoot.x / multitrack.scaleFactor)
                 doubleClickTimer.stop()
             } else {
+                // single click
                 doubleClickTimer.isFirstRelease = false
 
                 root.stopScrolling = false

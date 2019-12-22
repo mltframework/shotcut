@@ -2514,6 +2514,25 @@ void MultitrackModel::adjustClipFilters(Mlt::Producer& producer, int in, int out
     }
 }
 
+Mlt::ClipInfo* MultitrackModel::findClipByUuid(const QUuid &uuid, int &trackIndex, int &clipIndex)
+{
+    for (trackIndex = 0; trackIndex < trackList().size(); trackIndex++) {
+        int i = trackList().at(trackIndex).mlt_index;
+        QScopedPointer<Mlt::Producer> track(tractor()->track(i));
+        if (track) {
+            Mlt::Playlist playlist(*track);
+            for (clipIndex = 0; clipIndex < playlist.count(); clipIndex++) {
+                Mlt::ClipInfo* info;
+                if ((info = playlist.clip_info(clipIndex))) {
+                    if (MLT.uuid(*info->cut) == uuid)
+                        return info;
+                }
+            }
+        }
+    }
+    return nullptr;
+}
+
 int MultitrackModel::addAudioTrack()
 {
     if (!m_tractor) {

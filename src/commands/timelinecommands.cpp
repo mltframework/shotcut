@@ -318,35 +318,109 @@ void LockTrackCommand::undo()
     m_model.setTrackLock(m_trackIndex, m_oldValue);
 }
 
-MoveClipCommand::MoveClipCommand(MultitrackModel &model, int fromTrackIndex, int toTrackIndex, int clipIndex, int position, bool ripple, QUndoCommand *parent)
+MoveClipCommand::MoveClipCommand(MultitrackModel &model, int trackDelta, bool ripple, QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_model(model)
-    , m_fromTrackIndex(fromTrackIndex)
-    , m_toTrackIndex(toTrackIndex)
-    , m_fromClipIndex(clipIndex)
-    , m_fromStart(model.data(
-        m_model.index(clipIndex, 0, m_model.index(fromTrackIndex)),
-            MultitrackModel::StartRole).toInt())
-    , m_toStart(position)
+    , m_trackDelta(trackDelta)
     , m_ripple(ripple)
     , m_rippleAllTracks(Settings.timelineRippleAllTracks())
     , m_undoHelper(m_model)
+    , m_redo(false)
+    , m_start(-1)
 {
-    setText(QObject::tr("Move clip"));
     m_undoHelper.setHints(UndoHelper::RestoreTracks);
+    m_undoHelper.recordBeforeState();
 }
 
 void MoveClipCommand::redo()
 {
-    LOG_DEBUG() << "fromTrack" << m_fromTrackIndex << "toTrack" << m_toTrackIndex;
-    m_undoHelper.recordBeforeState();
-    m_model.moveClip(m_fromTrackIndex, m_toTrackIndex, m_fromClipIndex, m_toStart, m_ripple, m_rippleAllTracks);
-    m_undoHelper.recordAfterState();
+    LOG_DEBUG() << "track delta" << m_trackDelta;
+    int trackIndex, clipIndex;
+    QMultiMap<int, Mlt::Producer> newSelection;
+
+    if (!m_redo) {
+        if (m_selection.size() > 1)
+            setText(QObject::tr("Move %1 timelime clips").arg(m_selection.size()));
+        else
+            setText(QObject::tr("Move timelime clip"));
+    }
+    if (m_ripple && !m_trackDelta) {
+        if (m_start == -1) {
+            QScopedPointer<Mlt::ClipInfo> info(m_model.findClipByUuid(MLT.uuid(m_selection.first()), trackIndex, clipIndex));
+            auto newStart = info->cut->get_int(kPlaylistStartProperty);
+            auto mlt_index = m_model.trackList().at(trackIndex).mlt_index;
+            QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(mlt_index));
+            if (track) {
+                Mlt::Playlist playlist(*track);
+                auto targetIndex = playlist.get_clip_index_at(newStart);
+                auto length = playlist.clip_length(clipIndex);
+                auto targetIndexEnd = playlist.get_clip_index_at(newStart + length - 1);
+                if (targetIndex >= clipIndex || // pushing clips on same track
+                        // pulling clips on same track
+                        ((playlist.is_blank_at(newStart) || targetIndex == clipIndex) &&
+                         (playlist.is_blank_at(newStart + length - 1) || targetIndexEnd == clipIndex))) {
+                    m_start = newStart;
+                    m_trackIndex = trackIndex;
+                    m_clipIndex = clipIndex;
+                }
+            }
+        }
+        if (m_start >= 0) {
+            // Use old behavior to push or pull clips on the same track.
+            m_model.moveClip(m_trackIndex, m_trackIndex, m_clipIndex, m_start, m_ripple, m_rippleAllTracks);
+            m_undoHelper.recordAfterState();
+            m_redo = true;
+            return;
+        }
+    }
+    // First, remove each clip.
+    for (auto& clip : m_selection) {
+        if (!m_redo) {
+            // On the initial pass, remove clips while recording info about them.
+            QScopedPointer<Mlt::ClipInfo> info(m_model.findClipByUuid(MLT.uuid(clip), trackIndex, clipIndex));
+            if (info->producer && info->producer->is_valid()) {
+                info->producer->set(kPlaylistIndexProperty, qBound(0, trackIndex + m_trackDelta, m_model.trackList().size() - 1));
+                info->producer->pass_property(*info->cut, kPlaylistStartProperty);
+                info->producer->set("_shotcut:trackIndex", trackIndex);
+                info->producer->set("_shotcut:clipIndex", clipIndex);
+                info->producer->set("_shotcut:in", info->frame_in);
+                info->producer->set("_shotcut:out", info->frame_out);
+                newSelection.insert(info->cut->get_int(kPlaylistStartProperty), info->producer);
+            }
+        } else {
+            // On redo, use the recorded indices to remove them.
+            trackIndex = clip.get_int("_shotcut:trackIndex");
+            clipIndex = clip.get_int("_shotcut:clipIndex");
+        }
+        if (m_ripple)
+            m_model.removeClip(trackIndex, clipIndex, m_rippleAllTracks);
+        else
+            m_model.liftClip(trackIndex, clipIndex);
+    }
+    if (!m_redo) {
+        m_selection = newSelection;
+    }
+    // Next, add the save clips to their new locations.
+    for (auto& clip : m_selection) {
+        auto toTrack = clip.get_int(kPlaylistIndexProperty);
+        auto start = clip.get_int(kPlaylistStartProperty);
+        clip.set_in_and_out(clip.get_int("_shotcut:in"), clip.get_int("_shotcut:out"));
+//        LOG_DEBUG() << "adding clip" << clip.get_int("_shotcut:clipIndex") << "to track" << toTrack << "start" << start;
+        if (m_ripple)
+            m_model.insertClip(toTrack, clip, start, m_rippleAllTracks);
+        else
+            m_model.overwrite(toTrack, clip, start, false);
+    }
+
+    if (!m_redo) {
+        m_redo = true;
+        m_undoHelper.recordAfterState();
+    }
 }
 
 void MoveClipCommand::undo()
 {
-    LOG_DEBUG() << "fromTrack" << m_fromTrackIndex << "toTrack" << m_toTrackIndex;
+    LOG_DEBUG() << "track delta" << m_trackDelta;
     m_undoHelper.undoChanges();
 }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2018 Meltytech, LLC
+ * Copyright (c) 2013-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,6 +25,7 @@
 #include <QString>
 #include <QObject>
 #include <MltTransition.h>
+#include <MltProducer.h>
 
 namespace Timeline
 {
@@ -192,19 +193,22 @@ private:
 class MoveClipCommand : public QUndoCommand
 {
 public:
-    MoveClipCommand(MultitrackModel& model, int fromTrackIndex, int toTrackIndex, int clipIndex, int position, bool ripple, QUndoCommand * parent = 0);
+    MoveClipCommand(MultitrackModel& model, int trackDelta, bool ripple, QUndoCommand * parent = 0);
     void redo();
     void undo();
+    QMultiMap<int, Mlt::Producer>& selection() { return m_selection; }
+
 private:
     MultitrackModel& m_model;
-    int m_fromTrackIndex;
-    int m_toTrackIndex;
-    int m_fromClipIndex;
-    int m_fromStart;
-    int m_toStart;
+    int m_trackDelta;
     bool m_ripple;
     bool m_rippleAllTracks;
     UndoHelper m_undoHelper;
+    QMultiMap<int, Mlt::Producer> m_selection; // ordered by position
+    bool m_redo;
+    int m_start;
+    int m_trackIndex;
+    int m_clipIndex;
 };
 
 class TrimCommand : public QUndoCommand

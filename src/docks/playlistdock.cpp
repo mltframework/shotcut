@@ -773,11 +773,6 @@ void PlaylistDock::on_actionInOnlyLarge_triggered(bool checked)
 void PlaylistDock::on_actionAddToTimeline_triggered()
 {
     const QModelIndexList& indexes = m_view->selectionModel()->selectedIndexes();
-    int count = 0;
-    foreach (auto index, indexes) {
-        if (index.column()) continue;
-        count += m_model.playlist()->clip_length(index.row());
-    }
     Mlt::Playlist playlist(MLT.profile());
     foreach (auto index, indexes) {
         if (index.column()) continue;

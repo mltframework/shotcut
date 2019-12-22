@@ -93,9 +93,7 @@ Rectangle {
                 var toTrack = clip.trackIndex
                 var clipIndex = clip.originalClipIndex
                 var selection = timeline.selection
-                var frame = Math.round(((selection.length > 1)?
-                                            (clip.x - clip.originalX) : clip.x) 
-                                       / timeScale)
+                var frame = Math.round(clip.x / timeScale)
 
                 // Workaround moving multiple clips on the same track with ripple on
                 if (fromTrack === toTrack && settings.timelineRipple && selection.length > 1) {
@@ -108,9 +106,7 @@ Rectangle {
                         }
                     }
                     if (clipIndexChanged) {
-                        frame += Math.round(clipAt(clipIndex).x / timeScale)
-                    } else {
-                        frame = Math.round(clip.x / timeScale)
+                        frame = Math.round((clipAt(clipIndex).x + clip.x - clip.originalX) / timeScale)
                     }
                 }
 

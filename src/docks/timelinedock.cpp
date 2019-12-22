@@ -157,23 +157,6 @@ void TimelineDock::pulseLockButtonOnTrack(int trackIndex)
     emit showStatusMessage(tr("This track is locked"));
 }
 
-bool TimelineDock::findClipByUuid(const QUuid& uuid, int& trackIndex, int& clipIndex)
-{
-    for (trackIndex = 0; trackIndex < m_model.trackList().size(); trackIndex++) {
-        int i = m_model.trackList().at(trackIndex).mlt_index;
-        QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(i));
-        if (track) {
-            Mlt::Playlist playlist(*track);
-            for (clipIndex = 0; clipIndex < playlist.count(); clipIndex++) {
-                QScopedPointer<Mlt::Producer> clip(playlist.get_clip(clipIndex));
-                if (MLT.uuid(*clip) == uuid)
-                    return true;
-            }
-        }
-    }
-    return false;
-}
-
 void TimelineDock::chooseClipAtPosition(int position, int& trackIndex, int& clipIndex)
 {
     QScopedPointer<Mlt::Producer> clip;
@@ -885,35 +868,31 @@ bool TimelineDock::moveClip(int fromTrack, int toTrack, int clipIndex, int posit
 void TimelineDock::onClipMoved(int fromTrack, int toTrack, int clipIndex, int position, bool ripple)
 {
     int n = selection().size();
-    if (n > 1 && !(ripple && fromTrack == toTrack)) {
-        // get clipIndex later (as it changed) by an ID tag
-        QVector<QUuid> selectionByUuid;
-        QHash<QUuid, int> positions;
-        auto trackDifference = toTrack - fromTrack;
-
+    if (n > 0) {
+        // determine the position delta
         for (const auto& clip : selection()) {
-            QScopedPointer<Mlt::ClipInfo> info(getClipInfo(clip.y(), clip.x()));
-            QUuid uuid = MLT.ensureHasUuid(*info->cut);
-            selectionByUuid << uuid;
-            positions[uuid] = info->start;
-        }
-
-        setSelection();
-        TimelineSelectionBlocker blocker(*this);
-
-        MAIN.undoStack()->beginMacro(tr("Move %1 timeline clips").arg(selectionByUuid.size()));
-        for (const auto& uuid : selectionByUuid) {
-            if (findClipByUuid(uuid, fromTrack, clipIndex)) {
-                toTrack = qBound(0, fromTrack + trackDifference, m_model.trackList().size() - 1);
-                MAIN.undoStack()->push(
-                    new Timeline::MoveClipCommand(m_model, fromTrack, toTrack, clipIndex, positions[uuid] + position, ripple));
+            if (clip.y() == fromTrack && clip.x() == clipIndex) {
+                QScopedPointer<Mlt::ClipInfo> info(getClipInfo(clip.y(), clip.x()));
+                if (info) {
+                    position -= info->start;
+                    break;
+                }
             }
         }
-        MAIN.undoStack()->endMacro();
-    } else {
+        auto command = new Timeline::MoveClipCommand(m_model, toTrack - fromTrack, ripple);
+
+        // Copy selected
+        for (const auto& clip : selection()) {
+            QScopedPointer<Mlt::ClipInfo> info(getClipInfo(clip.y(), clip.x()));
+            if (info && info->cut) {
+                LOG_DEBUG() << "moving clip at" << clip << "start" << info->start << "+" << position << "=" << info->start + position;
+                info->cut->set(kPlaylistStartProperty, info->start + position);
+                command->selection().insert(info->start, *info->cut);
+            }
+        }
         setSelection();
-        MAIN.undoStack()->push(
-            new Timeline::MoveClipCommand(m_model, fromTrack, toTrack, clipIndex, position, ripple));
+        TimelineSelectionBlocker blocker(*this);
+        MAIN.undoStack()->push(command);
     }
 }
 
