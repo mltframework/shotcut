@@ -57,7 +57,7 @@ Rectangle {
     }
 
     function makeTracksShorter() {
-        multitrack.trackHeight = Math.max(30, multitrack.trackHeight - 20)
+        multitrack.trackHeight = Math.max(10, multitrack.trackHeight - 20)
     }
 
     function pulseLockButtonOnTrack(index) {
@@ -465,7 +465,7 @@ Rectangle {
         }
         MenuSeparator {}
         MenuItem {
-            enabled: multitrack.trackHeight >= 50
+            enabled: multitrack.trackHeight > 10
             text: qsTr('Make Tracks Shorter')
             shortcut: 'Ctrl+-'
             onTriggered: makeTracksShorter()

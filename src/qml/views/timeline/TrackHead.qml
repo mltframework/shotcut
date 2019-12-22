@@ -19,6 +19,7 @@ import QtQuick 2.0
 import QtQuick.Controls 1.0
 import QtQuick.Controls.Styles 1.0
 import QtQuick.Layouts 1.0
+import Shotcut.Controls 1.0
 
 Rectangle {
     id: trackHeadRoot
@@ -87,8 +88,9 @@ Rectangle {
                 menu.popup()
         }
     }
-    Column {
+    Flow {
         id: trackHeadColumn
+        flow: (trackHeadRoot.height < 30)? Flow.LeftToRight : Flow.TopToBottom
         spacing: (trackHeadRoot.height < 50)? 0 : 6
         anchors {
             top: parent.top
@@ -98,7 +100,7 @@ Rectangle {
 
         Rectangle {
             color: 'transparent'
-            width: trackHeadRoot.width - trackHeadColumn.anchors.margins * 2
+            width: trackHeadRoot.width - trackHeadColumn.anchors.margins * 2 - (trackHeadRoot.height < 30? 100 : 0)
             radius: 2
             border.color: (!timeline.isFloating() && trackNameMouseArea.containsMouse)? activePalette.shadow : 'transparent'
             height: nameEdit.height
@@ -119,11 +121,12 @@ Rectangle {
                 x: 4
                 y: 3
                 width: parent.width - 8
+                ToolTip{ text: parent.text }
             }
             TextField {
                 id: nameEdit
                 visible: focus
-                width: trackHeadRoot.width - trackHeadColumn.anchors.margins * 2
+                width: parent.width
                 text: trackName
                 onAccepted: {
                     timeline.setTrackName(index, text)
@@ -135,8 +138,8 @@ Rectangle {
             spacing: 8
             ToolButton {
                 id: muteButton
-                implicitWidth: 20
-                implicitHeight: 20
+                implicitWidth: 18
+                implicitHeight: 18
                 iconName: isMute ? 'audio-volume-muted' : 'audio-volume-high'
                 iconSource: isMute ? 'qrc:///icons/oxygen/32x32/status/audio-volume-muted.png' : 'qrc:///icons/oxygen/32x32/status/audio-volume-high.png'
                 onClicked: timeline.toggleTrackMute(index)
@@ -146,8 +149,8 @@ Rectangle {
             ToolButton {
                 id: hideButton
                 visible: isVideo
-                implicitWidth: 20
-                implicitHeight: 20
+                implicitWidth: 18
+                implicitHeight: 18
                 iconName: isHidden ? 'layer-visible-off' : 'layer-visible-on'
                 iconSource: isHidden? 'qrc:///icons/oxygen/32x32/actions/layer-visible-off.png' : 'qrc:///icons/oxygen/32x32/actions/layer-visible-on.png'
                 onClicked: timeline.toggleTrackHidden(index)
@@ -156,8 +159,8 @@ Rectangle {
 
             ToolButton {
                 id: lockButton
-                implicitWidth: 20
-                implicitHeight: 20
+                implicitWidth: 18
+                implicitHeight: 18
                 iconName: isLocked ? 'object-locked' : 'object-unlocked'
                 iconSource: isLocked ? 'qrc:///icons/oxygen/32x32/status/object-locked.png' : 'qrc:///icons/oxygen/32x32/status/object-unlocked.png'
                 onClicked: timeline.setTrackLock(index, !isLocked)
@@ -167,8 +170,8 @@ Rectangle {
             ToolButton {
                 visible: isFiltered
                 anchors.right: parent.right
-                implicitWidth: 20
-                implicitHeight: 20
+                implicitWidth: 18
+                implicitHeight: 18
                 iconName: 'view-filter'
                 iconSource: 'qrc:///icons/oxygen/32x32/status/view-filter.png'
                 tooltip: qsTr('Filters')

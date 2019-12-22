@@ -80,8 +80,9 @@ Rectangle {
                 menu.popup()
         }
     }
-    Column {
+    Flow {
         id: trackHeadColumn
+        flow: (paramHeadRoot.height < 30)? Flow.LeftToRight : Flow.TopToBottom
         spacing: (paramHeadRoot.height < 50)? 0 : 6
         anchors {
             top: parent.top
@@ -95,14 +96,15 @@ Rectangle {
             elide: Qt.ElideRight
             x: 4
             y: 3
-            width: paramHeadRoot.width - trackHeadColumn.anchors.margins * 2 - 8
+            width: paramHeadRoot.width - trackHeadColumn.anchors.margins * 2 - 8 - (paramHeadRoot.height < 30? 90 : 0)
+            Shotcut.ToolTip { text: parent.text }
         }
         RowLayout {
             spacing: 8
             ToolButton {
                 id: previousButton
-                implicitWidth: 20
-                implicitHeight: 20
+                implicitWidth: 18
+                implicitHeight: 18
                 iconName: 'media-skip-backward'
                 iconSource: 'qrc:///icons/oxygen/32x32/actions/media-skip-backward.png'
                 onClicked: {
@@ -119,8 +121,8 @@ Rectangle {
             ToolButton {
                 id: addButton
                 visible: delegateIndex >= 0 && isCurve
-                implicitWidth: 20
-                implicitHeight: 20
+                implicitWidth: 18
+                implicitHeight: 18
                 iconName: 'chronometer';
                 iconSource: 'qrc:///icons/oxygen/32x32/actions/chronometer.png'
                 onClicked: {
@@ -130,17 +132,17 @@ Rectangle {
                 tooltip: qsTr('Add a keyframe at play head')
             }
             Item {
-                visible: delegateIndex < 0
-                width: 20
-                height: 20
+                visible: delegateIndex < 0 && paramHeadRoot.height >= 30
+                width: 18
+                height: 18
             }
 
             ToolButton {
                 id: deleteButton
                 visible: delegateIndex >= 0
                 enabled: root.selection.length > 0
-                implicitWidth: 20
-                implicitHeight: 20
+                implicitWidth: 18
+                implicitHeight: 18
                 iconName: 'edit-delete'
                 iconSource: 'qrc:///icons/oxygen/32x32/actions/edit-delete.png'
                 opacity: enabled? 1.0 : 0.5
@@ -151,15 +153,15 @@ Rectangle {
                 tooltip: qsTr('Delete the selected keyframe')
             }
             Item {
-                visible: delegateIndex < 0
-                width: 20
-                height: 20
+                visible: delegateIndex < 0 && paramHeadRoot.height >= 30
+                width: 18
+                height: 18
             }
 
             ToolButton {
                 id: nextButton
-                implicitWidth: 20
-                implicitHeight: 20
+                implicitWidth: 18
+                implicitHeight: 18
                 iconName: 'media-skip-forward'
                 iconSource: 'qrc:///icons/oxygen/32x32/actions/media-skip-forward.png'
                 onClicked: {
@@ -176,8 +178,8 @@ Rectangle {
             ToolButton {
                 id: lockButton
                 visible: false && delegateIndex >= 0
-                implicitWidth: 20
-                implicitHeight: 20
+                implicitWidth: 18
+                implicitHeight: 18
                 iconName: isLocked ? 'object-locked' : 'object-unlocked'
                 iconSource: isLocked ? 'qrc:///icons/oxygen/32x32/status/object-locked.png' : 'qrc:///icons/oxygen/32x32/status/object-unlocked.png'
 //                onClicked: timeline.setTrackLock(index, !isLocked)
