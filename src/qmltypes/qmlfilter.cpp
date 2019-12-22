@@ -262,7 +262,10 @@ void QmlFilter::loadPresets()
             if (s == objectNameOrService() && dir.cd(s)) {
                 m_presets.append("");
                 for (auto& s : dir.entryList(QDir::Files | QDir::Readable)) {
-                    m_presets << QUrl::fromPercentEncoding(s.toUtf8());
+                    if (s == QUrl::toPercentEncoding(QUrl::fromPercentEncoding(s.toUtf8())))
+                        m_presets << QUrl::fromPercentEncoding(s.toUtf8());
+                    else
+                        m_presets << s;
                 }
                 break;
             }
