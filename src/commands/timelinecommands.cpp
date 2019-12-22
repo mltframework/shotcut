@@ -344,7 +344,7 @@ void MoveClipCommand::redo()
         else
             setText(QObject::tr("Move timelime clip"));
     }
-    if (m_ripple && !m_trackDelta) {
+    if (m_ripple && !m_trackDelta && m_selection.size() == 1) {
         if (m_start == -1) {
             QScopedPointer<Mlt::ClipInfo> info(m_model.findClipByUuid(MLT.uuid(m_selection.first()), trackIndex, clipIndex));
             auto newStart = info->cut->get_int(kPlaylistStartProperty);
