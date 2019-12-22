@@ -33,8 +33,15 @@ Item {
     property bool isAtLeastVersion4: filter.isAtLeastVersion('4')
 
     Component.onCompleted: {
-        if (isAtLeastVersion4)
+        if (isAtLeastVersion4 && filter.get('transition.invert_scale') != 1) {
+            var scale = filter.getDouble('transition.scale_x')
+            if (scale !== 0.0)
+                filter.set('transition.scale_x', 1.0 / scale)
+            scale = filter.getDouble('transition.scale_y')
+            if (scale !== 0.0)
+                filter.set('transition.scale_y', 1.0 / scale)
             filter.set('transition.invert_scale', 1)
+        }
         if (filter.isNew) {
             // Set default parameter values
             filter.set('transition.fix_rotate_x', 0)
