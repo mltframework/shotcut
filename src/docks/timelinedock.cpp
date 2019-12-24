@@ -851,7 +851,7 @@ void TimelineDock::setTrackLock(int trackIndex, bool lock)
 
 bool TimelineDock::moveClip(int fromTrack, int toTrack, int clipIndex, int position, bool ripple)
 {
-    if (m_model.addTransitionValid(fromTrack, toTrack, clipIndex, position, ripple)) {
+    if (selection().size() <= 1 && m_model.addTransitionValid(fromTrack, toTrack, clipIndex, position, ripple)) {
         emit transitionAdded(fromTrack, clipIndex, position, ripple);
         if (m_updateCommand)
             m_updateCommand->setPosition(toTrack, clipIndex, position);

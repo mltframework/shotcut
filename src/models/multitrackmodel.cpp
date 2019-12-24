@@ -918,6 +918,7 @@ QString MultitrackModel::overwrite(int trackIndex, Mlt::Producer& clip, int posi
                 ++targetIndex;
             } else if (position < 0) {
                 clip.set_in_and_out(clip.get_in() - position, clip.get_out());
+                position = 0;
                 QModelIndex modelIndex = createIndex(targetIndex, 0, trackIndex);
                 // Notify clip was adjusted.
                 QVector<int> roles;
@@ -967,7 +968,7 @@ int MultitrackModel::insertClip(int trackIndex, Mlt::Producer &clip, int positio
     QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
     if (track) {
         Mlt::Playlist playlist(*track);
-        if (position < 0 || position >= playlist.get_playtime() - 1) {
+        if (position >= playlist.get_playtime() - 1) {
 //            LOG_DEBUG() << __FUNCTION__ << "appending";
             removeBlankPlaceholder(playlist, trackIndex);
             int n = playlist.count();
@@ -1008,6 +1009,15 @@ int MultitrackModel::insertClip(int trackIndex, Mlt::Producer &clip, int positio
                 modelIndex = createIndex(targetIndex, 0, trackIndex);
                 emit dataChanged(modelIndex, modelIndex, roles);
                 AudioLevelsTask::start(clip.parent(), this, modelIndex);
+            } else if (position < 0) {
+                clip.set_in_and_out(clip.get_in() - position, clip.get_out());
+                position = 0;
+                QModelIndex modelIndex = createIndex(targetIndex, 0, trackIndex);
+                // Notify clip was adjusted.
+                QVector<int> roles;
+                roles << InPointRole;
+                roles << DurationRole;
+                emit dataChanged(modelIndex, modelIndex, roles);
             }
 
             // Insert clip between split blanks.

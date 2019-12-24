@@ -405,11 +405,13 @@ void MoveClipCommand::redo()
         auto toTrack = clip.get_int(kPlaylistIndexProperty);
         auto start = clip.get_int(kPlaylistStartProperty);
         clip.set_in_and_out(clip.get_int("_shotcut:in"), clip.get_int("_shotcut:out"));
-//        LOG_DEBUG() << "adding clip" << clip.get_int("_shotcut:clipIndex") << "to track" << toTrack << "start" << start;
-        if (m_ripple)
-            m_model.insertClip(toTrack, clip, start, m_rippleAllTracks);
-        else
-            m_model.overwrite(toTrack, clip, start, false);
+        if (start + clip.get_playtime() >= 0) {
+//            LOG_DEBUG() << "adding clip" << clip.get_int("_shotcut:clipIndex") << "to track" << toTrack << "start" << start;
+            if (m_ripple)
+                m_model.insertClip(toTrack, clip, start, m_rippleAllTracks);
+            else
+                m_model.overwrite(toTrack, clip, start, false);
+        }
     }
 
     if (!m_redo) {
