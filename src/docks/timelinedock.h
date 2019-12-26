@@ -69,6 +69,7 @@ public:
     void setSelection(QList<QPoint> selection = QList<QPoint>(), int trackIndex = -1, bool isMultitrack = false);
     QVariantList selectionForJS() const;
     QList<QPoint> selection() const;
+    QVector<QUuid> selectionUuids();
     void saveAndClearSelection();
     void restoreSelection();
     void selectClipUnderPlayhead();

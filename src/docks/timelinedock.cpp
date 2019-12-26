@@ -289,6 +289,17 @@ QList<QPoint> TimelineDock::selection() const
     return m_selection.selectedClips;
 }
 
+QVector<QUuid> TimelineDock::selectionUuids()
+{
+    QVector<QUuid> result;
+    for (const auto& clip : selection()) {
+        QScopedPointer<Mlt::ClipInfo> info(getClipInfo(clip.y(), clip.x()));
+        if (info && info->cut && info->cut->is_valid())
+            result << MLT.ensureHasUuid(*info->cut);
+    }
+    return result;
+}
+
 void TimelineDock::saveAndClearSelection()
 {
     m_savedSelection = m_selection;
@@ -597,17 +608,10 @@ void TimelineDock::removeSelection(bool withCopy)
     int n = selection().size();
     if (n > 1)
         MAIN.undoStack()->beginMacro(tr("Remove %1 from timeline").arg(n));
-    QList<QPoint> clipsRemoved;
-    for (const auto& clip : selection()) {
-        if (!clipsRemoved.contains(clip)) {
-            int adjustment = 0;
-            for (auto& i : clipsRemoved) {
-                if (clip.y() == i.y() && clip.x() > i.x())
-                    --adjustment;
-            }
-            clipsRemoved << clip;
-            remove(clip.y(), clip.x() + adjustment);
-        }
+    int trackIndex, clipIndex;
+    for (const auto& uuid : selectionUuids()) {
+        delete m_model.findClipByUuid(uuid, trackIndex, clipIndex);
+        remove(trackIndex, clipIndex);
     }
     if (n > 1)
         MAIN.undoStack()->endMacro();
@@ -624,22 +628,13 @@ void TimelineDock::liftSelection()
     if (selection().isEmpty())
         return;
     int n = selection().size();
+    QVector<QUuid> uuids;
     if (n > 1)
         MAIN.undoStack()->beginMacro(tr("Lift %1 from timeline").arg(n));
-    QList<QPoint> clipsRemoved;
-    for (auto clip : selection()) {
-        int adjustment = 0;
-        for (const auto& i : clipsRemoved) {
-            if (clip.y() == i.y() && clip.x() > i.x())
-                --adjustment;
-        }
-        clip.setX(clip.x() + adjustment);
-        // Blanks will be consolidated by the model.
-        if (isBlank(clip.y(), clip.x() - 1))
-            clipsRemoved << clip;
-        if (isBlank(clip.y(), clip.x() + 1))
-            clipsRemoved << clip;
-        lift(clip.y(), clip.x());
+    int trackIndex, clipIndex;
+    for (const auto& uuid : selectionUuids()) {
+        delete m_model.findClipByUuid(uuid, trackIndex, clipIndex);
+        lift(trackIndex, clipIndex);
     }
     if (n > 1)
         MAIN.undoStack()->endMacro();
