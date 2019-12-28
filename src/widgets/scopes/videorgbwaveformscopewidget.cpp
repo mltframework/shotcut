@@ -81,7 +81,7 @@ void VideoRgbWaveformScopeWidget::refreshScope(const QSize& size, bool full)
             }
         }
 
-        QImage scaledImage = m_renderImg.scaled(size).convertToFormat(QImage::Format_RGB32);
+        QImage scaledImage = m_renderImg.scaled(size, Qt::IgnoreAspectRatio, Qt::SmoothTransformation).convertToFormat(QImage::Format_RGB32);
 
         m_mutex.lock();
         m_displayImg.swap(m_renderImg);
