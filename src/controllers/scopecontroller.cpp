@@ -23,6 +23,7 @@
 #include "widgets/scopes/videohistogramscopewidget.h"
 #include "widgets/scopes/videorgbparadescopewidget.h"
 #include "widgets/scopes/videorgbwaveformscopewidget.h"
+#include "widgets/scopes/videovectorscopewidget.h"
 #include "widgets/scopes/videowaveformscopewidget.h"
 #include "widgets/scopes/videozoomscopewidget.h"
 #include "docks/scopedock.h"
@@ -44,6 +45,7 @@ ScopeController::ScopeController(QMainWindow* mainWindow, QMenu* menu)
         createScopeDock<VideoHistogramScopeWidget>(mainWindow, scopeMenu);
         createScopeDock<VideoRgbParadeScopeWidget>(mainWindow, scopeMenu);
         createScopeDock<VideoRgbWaveformScopeWidget>(mainWindow, scopeMenu);
+        createScopeDock<VideoVectorScopeWidget>(mainWindow, scopeMenu);
         createScopeDock<VideoWaveformScopeWidget>(mainWindow, scopeMenu);
         createScopeDock<VideoZoomScopeWidget>(mainWindow, scopeMenu);
     }
