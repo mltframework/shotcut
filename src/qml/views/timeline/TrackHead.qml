@@ -90,7 +90,7 @@ Rectangle {
     }
     Flow {
         id: trackHeadColumn
-        flow: (trackHeadRoot.height < 30)? Flow.LeftToRight : Flow.TopToBottom
+        flow: (trackHeadRoot.height < 50)? Flow.LeftToRight : Flow.TopToBottom
         spacing: (trackHeadRoot.height < 50)? 0 : 6
         anchors {
             top: parent.top
@@ -100,7 +100,7 @@ Rectangle {
 
         Rectangle {
             color: 'transparent'
-            width: trackHeadRoot.width - trackHeadColumn.anchors.margins * 2 - (trackHeadRoot.height < 30? 100 : 0)
+            width: trackHeadRoot.width - trackHeadColumn.anchors.margins * 2 - (trackHeadRoot.height < 50? 100 : 0)
             radius: 2
             border.color: (!timeline.isFloating() && trackNameMouseArea.containsMouse)? activePalette.shadow : 'transparent'
             height: nameEdit.height
