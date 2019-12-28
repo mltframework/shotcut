@@ -658,6 +658,7 @@ void PlaylistDock::onDropped(const QMimeData *data, int row)
                     first = false;
                     setIndex(0);
                     on_actionOpen_triggered();
+                    return; // do not resetPlaylistIndex
                 }
             }
         }
