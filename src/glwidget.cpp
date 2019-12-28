@@ -287,7 +287,7 @@ static void uploadTextures(QOpenGLContext* context, SharedFrame& frame, GLuint t
 {
     int width = frame.get_image_width();
     int height = frame.get_image_height();
-    const uint8_t* image = frame.get_image();
+    const uint8_t* image = frame.get_image(mlt_image_yuv420p);
     QOpenGLFunctions* f = context->functions();
 
     // The planes of pixel data may not be a multiple of the default 4 bytes.
@@ -372,7 +372,7 @@ void GLWidget::paintGL()
     } else if (m_glslManager) {
         m_mutex.lock();
         if (m_sharedFrame.is_valid()) {
-            m_texture[0] = *((GLuint*) m_sharedFrame.get_image());
+            m_texture[0] = *((GLuint*) m_sharedFrame.get_image(mlt_image_glsl_texture));
         }
     }
 
@@ -733,21 +733,15 @@ QImage GLWidget::image() const
     }
     SharedFrame frame = m_frameRenderer->getDisplayFrame();
     if (frame.is_valid()) {
-        int width = frame.get_image_width();
-        int height = frame.get_image_height();
-        QImage result(width, height, QImage::Format_ARGB32);
-        Mlt::Frame displayFrame(frame.clone(false, true));
-        mlt_image_format format = mlt_image_rgb24a;
-        const uchar *image = displayFrame.get_image(format, width, height);
+        const uint8_t* image = frame.get_image(mlt_image_rgb24a);
         if (image) {
-            QImage temp(width, height, QImage::Format_ARGB32);
-            memcpy(temp.scanLine(0), image, width * height * 4);
-            result = temp.rgbSwapped();
+            int width = frame.get_image_width();
+            int height = frame.get_image_height();
+            QImage temp(image, width, height, QImage::Format_RGBA8888);
+            return temp.copy();
         }
-        return result;
-    } else {
-        return QImage();
     }
+    return QImage();
 }
 
 void GLWidget::requestImage() const
@@ -900,11 +894,6 @@ FrameRenderer::~FrameRenderer()
 void FrameRenderer::showFrame(Mlt::Frame frame)
 {
     if (!Settings.playerGPU()) {
-        // Convert the image format before creating the SharedFrame.
-        mlt_image_format format = mlt_image_yuv420p;
-        int width = 0;
-        int height = 0;
-        frame.get_image(format, width, height);
         m_displayFrame = SharedFrame(frame);
     }
 
