@@ -84,7 +84,7 @@ bool MltXmlChecker::check(const QString& fileName)
                 m_newXml.writeCharacters("\n");
                 m_newXml.writeStartElement("mlt");
                 foreach (QXmlStreamAttribute a, m_xml.attributes()) {
-                    if (a.name().toString().toUpper() != MLT_LC_NAME) {
+                    if (a.name().toString().toUpper() != "LC_NUMERIC") {
                         m_newXml.writeAttribute(a);
                     } else {
                         QString value = a.value().toString().toUpper();
@@ -92,7 +92,7 @@ bool MltXmlChecker::check(const QString& fileName)
                         m_usesLocale = (value != "" && value != "C" && value != "POSIX" && QLocale().decimalPoint() != '.');
                         // Upon correcting the document to conform to current system,
                         // update the declared LC_NUMERIC.
-                        m_newXml.writeAttribute(MLT_LC_NAME, m_usesLocale? QLocale().name() : "C");
+                        m_newXml.writeAttribute("LC_NUMERIC", m_usesLocale? QLocale().name() : "C");
                     }
                 }
                 // We cannot apply the locale change to the session at this point
