@@ -1255,7 +1255,7 @@ static double getBufferSize(Mlt::Properties& preset, const char* property)
     if (s.endsWith('k')) size *= 1000;
     if (s.endsWith('M')) size *= 1000000;
     // convert to KiB
-    return double(qCeil(size / 1024 / 8 * 100)) / 100;
+    return double(qRound(size / 1024 / 8 * 100)) / 100;
 }
 
 void EncodeDock::on_presetsTree_clicked(const QModelIndex &index)
