@@ -606,6 +606,7 @@ void PlaylistDock::onPlaylistClosed()
 
 void PlaylistDock::onDropped(const QMimeData *data, int row)
 {
+    bool resetIndex = true;
     if (data && data->hasUrls()) {
         int insertNextAt = row;
         bool first = true;
@@ -658,7 +659,7 @@ void PlaylistDock::onDropped(const QMimeData *data, int row)
                     first = false;
                     setIndex(0);
                     on_actionOpen_triggered();
-                    return; // do not resetPlaylistIndex
+                    resetIndex = false;
                 }
             }
         }
@@ -693,7 +694,8 @@ void PlaylistDock::onDropped(const QMimeData *data, int row)
             }
         }
     }
-    resetPlaylistIndex();
+    if (resetIndex)
+        resetPlaylistIndex();
 }
 
 void PlaylistDock::onMoveClip(int from, int to)
