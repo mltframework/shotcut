@@ -11,6 +11,7 @@
 
 # The list of supported translations
 LANGUAGES = \
+    ar \
     ca \
     cs \
     da \

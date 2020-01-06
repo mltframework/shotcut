@@ -634,7 +634,11 @@ void MainWindow::setupSettingsMenu()
 
     // Setup the language menu actions
     m_languagesGroup = new QActionGroup(this);
-    QAction* a = new QAction(QLocale::languageToString(QLocale::Catalan), m_languagesGroup);
+    QAction* a;
+    a = new QAction(QLocale::languageToString(QLocale::Arabic), m_languagesGroup);
+    a->setCheckable(true);
+    a->setData("ar");
+    a = new QAction(QLocale::languageToString(QLocale::Catalan), m_languagesGroup);
     a->setCheckable(true);
     a->setData("ca");
     a = new QAction(QLocale::languageToString(QLocale::Chinese).append(" (China)"), m_languagesGroup);
