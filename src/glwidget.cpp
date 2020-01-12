@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2019 Meltytech, LLC
+ * Copyright (c) 2011-2020 Meltytech, LLC
  *
  * GL shader based on BSD licensed code from Peter Bengtsson:
  * http://www.fourcc.org/source/YUV420P-OpenGL-GLSLang.c
@@ -634,7 +634,7 @@ int GLWidget::reconfigure(bool isMulti)
     QString serviceName = property("mlt_service").toString();
     if (!m_consumer || !m_consumer->is_valid()) {
         if (serviceName.isEmpty()) {
-            m_consumer.reset(new Mlt::FilteredConsumer(profile(), "sdl2_audio"));
+            m_consumer.reset(new Mlt::FilteredConsumer(previewProfile(), "sdl2_audio"));
             if (m_consumer->is_valid())
                 serviceName = "sdl2_audio";
             else
@@ -642,9 +642,9 @@ int GLWidget::reconfigure(bool isMulti)
             m_consumer.reset();
         }
         if (isMulti)
-            m_consumer.reset(new Mlt::FilteredConsumer(profile(), "multi"));
+            m_consumer.reset(new Mlt::FilteredConsumer(previewProfile(), "multi"));
         else
-            m_consumer.reset(new Mlt::FilteredConsumer(profile(), serviceName.toLatin1().constData()));
+            m_consumer.reset(new Mlt::FilteredConsumer(previewProfile(), serviceName.toLatin1().constData()));
 
         delete m_threadStartEvent;
         m_threadStartEvent = 0;
@@ -665,6 +665,8 @@ int GLWidget::reconfigure(bool isMulti)
         m_consumer->set("mlt_image_format", "yuv422");
         m_consumer->set("color_trc", Settings.playerGamma().toLatin1().constData());
         m_consumer->set("channels", property("audio_channels").toInt());
+        if (Settings.playerPreviewScale() > 0)
+            m_consumer->set("scale", 1.0 / Settings.playerPreviewScale());
 
         if (isMulti) {
             m_consumer->set("terminate_on_pause", 0);

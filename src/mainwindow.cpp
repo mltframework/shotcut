@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2019 Meltytech, LLC
+ * Copyright (c) 2011-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -112,6 +112,7 @@ MainWindow::MainWindow()
     , m_isKKeyPressed(false)
     , m_keyerGroup(0)
     , m_keyerMenu(0)
+    , m_previewScaleGroup(0)
     , m_isPlaylistLoaded(false)
     , m_exitCode(EXIT_SUCCESS)
     , m_navigationPosition(0)
@@ -538,6 +539,16 @@ void MainWindow::setupSettingsMenu()
     group = new QActionGroup(this);
     group->addAction(ui->actionOneField);
     group->addAction(ui->actionLinearBlend);
+    
+#if LIBMLT_VERSION_INT >= MLT_VERSION_PREVIEW_SCALE
+    m_previewScaleGroup = new QActionGroup(this);
+    m_previewScaleGroup->addAction(ui->actionPreviewNone);
+    m_previewScaleGroup->addAction(ui->actionPreview2);
+    m_previewScaleGroup->addAction(ui->actionPreview4);
+    m_previewScaleGroup->addAction(ui->actionPreview8);
+#else
+    delete ui->menuPreviewScaling;
+#endif
 
     //XXX workaround yadif crashing with mlt_transition
 //    group->addAction(ui->actionYadifTemporal);
@@ -1202,6 +1213,26 @@ void MainWindow::showSaveError()
     dialog.exec();
 }
 
+void MainWindow::setPreviewScale(int scale)
+{
+    LOG_DEBUG() << scale;
+    switch (scale) {
+    case 2:
+        ui->actionPreview2->setChecked(true);
+        break;
+    case 4:
+        ui->actionPreview4->setChecked(true);
+        break;
+    case 8:
+        ui->actionPreview8->setChecked(true);
+        break;
+    default:
+        ui->actionPreviewNone->setChecked(true);
+        break;
+    }
+    MLT.setPreviewScale(scale);
+}
+
 static void autosaveTask(MainWindow* p)
 {
     LOG_DEBUG_TIME();
@@ -1448,7 +1479,22 @@ void MainWindow::readPlayerSettings()
         ui->actionGPU->setChecked(Settings.playerGPU());
     }
 
+    QString external = Settings.playerExternal();
+    bool ok = false;
+    external.toInt(&ok);
+    auto isExternalPeripheral = !external.isEmpty() && !ok;
+
     setAudioChannels(Settings.playerAudioChannels());
+
+#if LIBMLT_VERSION_INT >= MLT_VERSION_PREVIEW_SCALE
+    if (isExternalPeripheral) {
+        setPreviewScale(1);
+        m_previewScaleGroup->setEnabled(false);
+    } else {
+        setPreviewScale(Settings.playerPreviewScale());
+        m_previewScaleGroup->setEnabled(true);
+    }
+#endif
 
     QString deinterlacer = Settings.playerDeinterlacer();
     QString interpolation = Settings.playerInterpolation();
@@ -1471,9 +1517,6 @@ void MainWindow::readPlayerSettings()
     else
         ui->actionHyper->setChecked(true);
 
-    QString external = Settings.playerExternal();
-    bool ok = false;
-    external.toInt(&ok);
     foreach (QAction* a, m_externalGroup->actions()) {
         if (a->data() == external) {
             a->setChecked(true);
@@ -1495,7 +1538,7 @@ void MainWindow::readPlayerSettings()
 
     QString profile = Settings.playerProfile();
     // Automatic not permitted for SDI/HDMI
-    if (!external.isEmpty() && !ok && profile.isEmpty())
+    if (isExternalPeripheral && profile.isEmpty())
         profile = "atsc_720p_50";
     foreach (QAction* a, m_profileGroup->actions()) {
         // Automatic not permitted for SDI/HDMI
@@ -3394,6 +3437,17 @@ void MainWindow::onExternalTriggered(QAction *action)
     }
     if (m_keyerMenu)
         m_keyerMenu->setEnabled(action->data().toString().startsWith("decklink"));
+
+#if LIBMLT_VERSION_INT >= MLT_VERSION_PREVIEW_SCALE
+    // Preview scaling not permitted for SDI/HDMI
+    if (isExternal) {
+        setPreviewScale(1);
+        m_previewScaleGroup->setEnabled(false);
+    } else {
+        setPreviewScale(Settings.playerPreviewScale());
+        m_previewScaleGroup->setEnabled(true);       
+    }
+#endif
 }
 
 void MainWindow::onKeyerTriggered(QAction *action)
@@ -4181,4 +4235,36 @@ void MainWindow::onPlaylistOutChanged(int out)
     m_player->blockSignals(true);
     m_player->setOut(out);
     m_player->blockSignals(false);
+}
+
+void MainWindow::on_actionPreviewNone_triggered(bool checked)
+{
+    if (checked) {
+        Settings.setPlayerPreviewScale(1);
+        setPreviewScale(1);
+    }
+}
+
+void MainWindow::on_actionPreview2_triggered(bool checked)
+{
+    if (checked) {
+        Settings.setPlayerPreviewScale(2);
+        setPreviewScale(2);
+    }
+}
+
+void MainWindow::on_actionPreview4_triggered(bool checked)
+{
+    if (checked) {
+        Settings.setPlayerPreviewScale(4);
+        setPreviewScale(4);
+    }
+}
+
+void MainWindow::on_actionPreview8_triggered(bool checked)
+{
+    if (checked) {
+        Settings.setPlayerPreviewScale(8);
+        setPreviewScale(8);
+    }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2019 Meltytech, LLC
+ * Copyright (c) 2013-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -445,6 +445,16 @@ float ShotcutSettings::playerZoom() const
 void ShotcutSettings::setPlayerZoom(float f)
 {
     settings.setValue("player/zoom", f);
+}
+
+int ShotcutSettings::playerPreviewScale() const
+{
+    return settings.value("player/previewScale", 1).toInt();
+}
+
+void ShotcutSettings::setPlayerPreviewScale(int i)
+{
+    settings.setValue("player/previewScale", i);
 }
 
 QString ShotcutSettings::playlistThumbnails() const

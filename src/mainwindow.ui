@@ -39,7 +39,7 @@
      <x>0</x>
      <y>0</y>
      <width>1270</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -184,6 +184,15 @@
      <addaction name="actionAppDataSet"/>
      <addaction name="actionAppDataShow"/>
     </widget>
+    <widget class="QMenu" name="menuPreviewScaling">
+     <property name="title">
+      <string>Preview Scaling</string>
+     </property>
+     <addaction name="actionPreviewNone"/>
+     <addaction name="actionPreview2"/>
+     <addaction name="actionPreview4"/>
+     <addaction name="actionPreview8"/>
+    </widget>
     <addaction name="actionProject"/>
     <addaction name="actionGPU"/>
     <addaction name="menuProfile"/>
@@ -194,6 +203,7 @@
     <addaction name="actionJack"/>
     <addaction name="actionRealtime"/>
     <addaction name="actionProgressive"/>
+    <addaction name="menuPreviewScaling"/>
     <addaction name="menuDeinterlacer"/>
     <addaction name="menuInterpolation"/>
     <addaction name="menuExternal"/>
@@ -1000,6 +1010,44 @@
    </property>
    <property name="text">
     <string>Jobs</string>
+   </property>
+  </action>
+  <action name="actionPreview4">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>1/16</string>
+   </property>
+  </action>
+  <action name="actionPreview8">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>1/64</string>
+   </property>
+   <property name="toolTip">
+    <string>1/64</string>
+   </property>
+  </action>
+  <action name="actionPreviewNone">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>None</string>
+   </property>
+  </action>
+  <action name="actionPreview2">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>1/4</string>
+   </property>
+   <property name="toolTip">
+    <string>1/4</string>
    </property>
   </action>
  </widget>

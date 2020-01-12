@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2019 Meltytech, LLC
+ * Copyright (c) 2011-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -143,6 +143,7 @@ private:
     bool saveRepairedXmlFile(MltXmlChecker& checker, QString& fileName);
     void setAudioChannels(int channels);
     void showSaveError();
+    void setPreviewScale(int scale);
 
     Ui::MainWindow* ui;
     Player* m_player;
@@ -160,6 +161,7 @@ private:
     QActionGroup* m_externalGroup;
     QActionGroup* m_keyerGroup;
     QActionGroup* m_layoutGroup;
+    QActionGroup* m_previewScaleGroup;
     FiltersDock* m_filtersDock;
     FilterController* m_filterController;
     ScopeController* m_scopeController;
@@ -328,6 +330,10 @@ private slots:
     void on_actionShowSmallIcons_toggled(bool b);
     void onPlaylistInChanged(int in);
     void onPlaylistOutChanged(int out);
+    void on_actionPreviewNone_triggered(bool checked);
+    void on_actionPreview2_triggered(bool checked);
+    void on_actionPreview4_triggered(bool checked);
+    void on_actionPreview8_triggered(bool checked);
 };
 
 #define MAIN MainWindow::singleton()

@@ -44,11 +44,12 @@ static Controller* instance = nullptr;
 const QString XmlMimeType("application/vnd.mlt+xml");
 
 Controller::Controller()
+    : m_profile(kDefaultMltProfile)
+    , m_previewProfile(kDefaultMltProfile)
 {
     LOG_DEBUG() << "begin";
     m_repo = Mlt::Factory::init();
     resetLocale();
-    m_profile.reset(new Mlt::Profile(kDefaultMltProfile));
     m_filtersClipboard.reset(new Mlt::Producer(profile(), "color", "black"));
     updateAvformatCaching(0);
     LOG_DEBUG() << "end";
@@ -118,6 +119,7 @@ int Controller::open(const QString &url, const QString& urlToSave)
             profile().set_width(Util::coerceMultiple(profile().width()));
             profile().set_height(Util::coerceMultiple(profile().height()));
         }
+        setPreviewScale(Settings.playerPreviewScale());
         if ( url.endsWith(".mlt") ) {
             // Load the number of audio channels being used when this project was created.
             int channels = m_producer->get_int(kShotcutProjectAudioChannels);
@@ -166,6 +168,7 @@ bool Controller::openXML(const QString &filename)
             profile().from_producer(*producer);
             profile().set_width(Util::coerceMultiple(profile().width()));
             profile().set_height(Util::coerceMultiple(profile().height()));
+            setPreviewScale(Settings.playerPreviewScale());
         }
         if (isFpsDifferent(profile().fps(), fps)) {
             // reopen with the correct fps
@@ -183,7 +186,7 @@ bool Controller::openXML(const QString &filename)
 
 void Controller::close()
 {
-    if (m_profile->is_explicit()) {
+    if (m_profile.is_explicit()) {
         pause();
     } else if (m_consumer && !m_consumer->is_stopped()) {
         m_consumer->stop();
@@ -596,32 +599,40 @@ void Controller::setProfile(const QString& profile_name)
     LOG_DEBUG() << "setting to profile" << (profile_name.isEmpty()? "Automatic" : profile_name);
     if (!profile_name.isEmpty()) {
         Mlt::Profile tmp(profile_name.toLatin1().constData());
-        m_profile->set_colorspace(tmp.colorspace());
-        m_profile->set_frame_rate(tmp.frame_rate_num(), tmp.frame_rate_den());
-        m_profile->set_height(Util::coerceMultiple(tmp.height()));
-        m_profile->set_progressive(tmp.progressive());
-        m_profile->set_sample_aspect(tmp.sample_aspect_num(), tmp.sample_aspect_den());
-        m_profile->set_display_aspect(tmp.display_aspect_num(), tmp.display_aspect_den());
-        m_profile->set_width(Util::coerceMultiple(tmp.width()));
-        m_profile->set_explicit(true);
+        m_profile.set_colorspace(tmp.colorspace());
+        m_profile.set_frame_rate(tmp.frame_rate_num(), tmp.frame_rate_den());
+        m_profile.set_height(Util::coerceMultiple(tmp.height()));
+        m_profile.set_progressive(tmp.progressive());
+        m_profile.set_sample_aspect(tmp.sample_aspect_num(), tmp.sample_aspect_den());
+        m_profile.set_display_aspect(tmp.display_aspect_num(), tmp.display_aspect_den());
+        m_profile.set_width(Util::coerceMultiple(tmp.width()));
+        m_profile.set_explicit(true);
     } else {
-        m_profile->set_explicit(false);
+        m_profile.set_explicit(false);
         if (m_producer && m_producer->is_valid()
             && (qstrcmp(m_producer->get("mlt_service"), "color") || qstrcmp(m_producer->get("resource"), "_hide"))) {
-            m_profile->from_producer(*m_producer);
-            m_profile->set_width(Util::coerceMultiple(m_profile->width()));
+            m_profile.from_producer(*m_producer);
+            m_profile.set_width(Util::coerceMultiple(m_profile.width()));
         } else {
             // Use a default profile with the dummy hidden color producer.
             Mlt::Profile tmp(kDefaultMltProfile);
-            m_profile->set_colorspace(tmp.colorspace());
-            m_profile->set_frame_rate(tmp.frame_rate_num(), tmp.frame_rate_den());
-            m_profile->set_height(Util::coerceMultiple(tmp.height()));
-            m_profile->set_progressive(tmp.progressive());
-            m_profile->set_sample_aspect(tmp.sample_aspect_num(), tmp.sample_aspect_den());
-            m_profile->set_display_aspect(tmp.display_aspect_num(), tmp.display_aspect_den());
-            m_profile->set_width(Util::coerceMultiple(tmp.width()));
+            m_profile.set_colorspace(tmp.colorspace());
+            m_profile.set_frame_rate(tmp.frame_rate_num(), tmp.frame_rate_den());
+            m_profile.set_height(Util::coerceMultiple(tmp.height()));
+            m_profile.set_progressive(tmp.progressive());
+            m_profile.set_sample_aspect(tmp.sample_aspect_num(), tmp.sample_aspect_den());
+            m_profile.set_display_aspect(tmp.display_aspect_num(), tmp.display_aspect_den());
+            m_profile.set_width(Util::coerceMultiple(tmp.width()));
         }
     }
+    m_previewProfile.set_colorspace(m_profile.colorspace());
+    m_previewProfile.set_frame_rate(m_profile.frame_rate_num(), m_profile.frame_rate_den());
+    m_previewProfile.set_width(Util::coerceMultiple(m_profile.width()));
+    m_previewProfile.set_height(Util::coerceMultiple(m_profile.height()));
+    m_previewProfile.set_progressive(m_profile.progressive());
+    m_previewProfile.set_sample_aspect(m_profile.sample_aspect_num(), m_profile.sample_aspect_den());
+    m_previewProfile.set_display_aspect(m_profile.display_aspect_num(), m_profile.display_aspect_den());
+    m_previewProfile.set_explicit(true);
 }
 
 void Controller::setAudioChannels(int audioChannels)
@@ -987,8 +998,8 @@ void Controller::setImageDurationFromDefault(Service* service) const
     if (service && service->is_valid()) {
         if (isImageProducer(service)) {
             service->set("ttl", 1);
-            service->set("length", service->frames_to_time(qRound(m_profile->fps() * kMaxImageDurationSecs), mlt_time_clock));
-            service->set("out", qRound(m_profile->fps() * Settings.imageDuration()) - 1);
+            service->set("length", service->frames_to_time(qRound(m_profile.fps() * kMaxImageDurationSecs), mlt_time_clock));
+            service->set("out", qRound(m_profile.fps() * Settings.imageDuration()) - 1);
         }
     }
 }
@@ -996,10 +1007,10 @@ void Controller::setImageDurationFromDefault(Service* service) const
 void Controller::setDurationFromDefault(Producer* producer) const
 {
     if (producer && producer->is_valid()) {
-        int out = qRound(m_profile->fps() * Settings.imageDuration()) - 1;
+        int out = qRound(m_profile.fps() * Settings.imageDuration()) - 1;
         if (out >= producer->get_length())
             producer->set("length", producer->frames_to_time(out + 1, mlt_time_clock));
-        producer->set("length", producer->frames_to_time(qRound(m_profile->fps() * kMaxImageDurationSecs), mlt_time_clock));
+        producer->set("length", producer->frames_to_time(qRound(m_profile.fps() * kMaxImageDurationSecs), mlt_time_clock));
         producer->set("out", out);
     }
 }
@@ -1162,7 +1173,7 @@ void Controller::setProjectFolder(const QString& folderName)
     LOG_DEBUG() << "project folder" << m_projectFolder;
 }
 
-QChar Controller::decimalPoint() const
+QChar Controller::decimalPoint()
 {
     QChar result('.');
     Mlt::Producer producer(profile(), "color", "black");
@@ -1213,6 +1224,31 @@ int Controller::filterOut(Playlist& playlist, int clipIndex)
         }
     }
     return result;
+}
+
+void Controller::setPreviewScale(int scale)
+{
+#if LIBMLT_VERSION_INT >= MLT_VERSION_PREVIEW_SCALE
+    if (scale != 0) {
+        if (m_consumer) {
+            bool jackEnabled = !m_jackFilter.isNull();
+            m_consumer->stop();
+            m_consumer.reset();
+            m_jackFilter.reset();
+            m_previewProfile.set_width(Util::coerceMultiple(m_profile.width() / scale));
+            m_previewProfile.set_height(Util::coerceMultiple(m_profile.height() / scale));
+            reconfigure(false);
+            if (m_consumer) {
+                enableJack(jackEnabled);
+                setVolume(m_volume);
+                m_consumer->start();
+            }
+        } else {
+            m_previewProfile.set_width(Util::coerceMultiple(m_profile.width() / scale));
+            m_previewProfile.set_height(Util::coerceMultiple(m_profile.height() / scale));
+        }
+    }
+#endif
 }
 
 void TransportControl::play(double speed)

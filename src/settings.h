@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2019 Meltytech, LLC
+ * Copyright (c) 2013-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -125,6 +125,8 @@ public:
     void setPlayerVolume(int);
     float playerZoom() const;
     void setPlayerZoom(float);
+    int playerPreviewScale() const;
+    void setPlayerPreviewScale(int);
 
     QString playlistThumbnails() const;
     void setPlaylistThumbnails(const QString&);

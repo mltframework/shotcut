@@ -37,6 +37,7 @@ class QQuickView;
 #   define MLT_LC_NAME     "LC_ALL"
 #endif
 
+#define MLT_VERSION_PREVIEW_SCALE ((6<<16)+(19<<8))
 
 namespace Mlt {
 
@@ -134,8 +135,11 @@ public:
     Mlt::Repository* repository() const {
         return m_repo;
     }
-    Mlt::Profile& profile() const {
-        return *m_profile;
+    Mlt::Profile& profile() {
+        return m_profile;
+    }
+    Mlt::Profile& previewProfile() {
+        return m_previewProfile;
     }
     Mlt::Producer* producer() const {
         return m_producer.data();
@@ -156,10 +160,11 @@ public:
     static Mlt::Filter* getFilter(const QString& name, Mlt::Service* service);
     QString projectFolder() const { return m_projectFolder; }
     void setProjectFolder(const QString& folderName);
-    QChar decimalPoint() const;
+    QChar decimalPoint();
     static void resetLocale();
     static int filterIn(Mlt::Playlist&playlist, int clipIndex);
     static int filterOut(Mlt::Playlist&playlist, int clipIndex);
+    void setPreviewScale(int scale);
 
 protected:
     Mlt::Repository* m_repo;
@@ -167,7 +172,8 @@ protected:
     QScopedPointer<Mlt::FilteredConsumer> m_consumer;
 
 private:
-    QScopedPointer<Mlt::Profile> m_profile;
+    Mlt::Profile m_profile;
+    Mlt::Profile m_previewProfile;
     int m_audioChannels{2};
     QScopedPointer<Mlt::Filter> m_jackFilter;
     QString m_url;
