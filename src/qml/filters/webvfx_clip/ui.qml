@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Meltytech, LLC
+ * Copyright (c) 2019-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,6 +38,7 @@ Item {
     Component.onCompleted: {
         filter.blockSignals = true
         filter.set('transparent', 1)
+        filter.set('mlt_resolution_scale', 1)
         filter.set(startValueRect, Qt.rect(0, 0, profile.width, profile.height))
         filter.set(middleValueRect, Qt.rect(0, 0, profile.width, profile.height))
         filter.set(endValueRect, Qt.rect(0, 0, profile.width, profile.height))

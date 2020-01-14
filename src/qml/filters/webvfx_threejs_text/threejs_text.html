@@ -100,7 +100,7 @@ THE SOFTWARE.
 
 		// CAMERA
 
-		camera = new THREE.PerspectiveCamera( 30, window.innerWidth / window.innerHeight, 1, 1500 );
+        camera = new THREE.PerspectiveCamera( 30, window.innerWidth / window.innerHeight, 1, 1500 );
 		camera.position.set( 0, 400, 700 );
 
 		cameraTarget = new THREE.Vector3( 0, 150, 0 );
@@ -138,11 +138,12 @@ THE SOFTWARE.
 		// RENDERER
 
 		renderer = new THREE.WebGLRenderer( { antialias: true, alpha: true } );
-		renderer.setSize( window.innerWidth, window.innerHeight );
+		var scale = webvfx.getNumberParameter('mlt_frame_resolution_scale');
+		renderer.setSize( window.innerWidth / scale, window.innerHeight / scale );
 
 		container.appendChild( renderer.domElement );
 	}
-
+    
 	function createText() {
 
 		textGeo = new THREE.TextGeometry( text, {

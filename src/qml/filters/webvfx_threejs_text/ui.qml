@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2019 Meltytech, LLC
+ * Copyright (c) 2014-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,6 +26,7 @@ Item {
     width: 400
     height: 250
     Component.onCompleted: {
+        filter.set('mlt_resolution_scale', 1)
         if (filter.isNew) {
             filter.set('resource', filter.path + 'threejs_text.html')
             // Set default parameter values

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2019 Meltytech, LLC
+ * Copyright (c) 2013-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,6 +32,7 @@ Item {
 
     Component.onCompleted: {
         filter.set('transparent', 1)
+        filter.set('mlt_resolution_scale', 1)
         if (filter.isNew) {
             filter.set('resource', filter.path + 'filter-demo.html')
             // Set default parameter values
