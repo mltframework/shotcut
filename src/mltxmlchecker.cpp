@@ -371,7 +371,7 @@ bool MltXmlChecker::readResourceProperty(const QString& name, QString& value)
     if (mlt_class == "filter" || mlt_class == "transition" || mlt_class == "producer")
     if (name == "resource" || name == "src" || name == "filename"
             || name == "luma" || name == "luma.resource" || name == "composite.luma"
-            || name == "producer.resource" || name == "av.file") {
+            || name == "producer.resource" || name == "av.file" || name == "warp_resource") {
 
         // Handle special prefix such as "plain:" or speed.
         m_resource.prefix = getPrefix(name, value);
