@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2019 Meltytech, LLC
+ * Copyright (c) 2013-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -412,17 +412,14 @@ void TimelineDock::openProperties()
 
 void TimelineDock::clearSelectionIfInvalid()
 {
-    int count = clipCount(currentTrack());
-
     QList<QPoint> newSelection;
     foreach (auto clip, selection()) {
-        if (clip.x() >= count)
+        if (clip.x() >= clipCount(clip.y()))
             continue;
 
         newSelection << QPoint(clip.x(), clip.y());
     }
     setSelection(newSelection);
-    emit selectionChanged();
 }
 
 void TimelineDock::insertTrack()
@@ -754,13 +751,24 @@ void TimelineDock::onRowsInserted(const QModelIndex& parent, int first, int last
     if (-1 == m_selection.selectedTrack) {
         QList<QPoint> newSelection;
         int n = last - first + 1;
-        foreach (auto i, m_selection.selectedClips) {
-            if (i.x() < first)
-                newSelection << QPoint(i.x(), parent.row());
-            else
-                newSelection << QPoint(i.x() + n, parent.row());
+        if (parent.isValid()) {
+            foreach (auto i, m_selection.selectedClips) {
+                if (i.x() < first)
+                    newSelection << QPoint(i.x(), parent.row());
+                else
+                    newSelection << QPoint(i.x() + n, parent.row());
+            }
+        } else {
+            foreach (auto i, m_selection.selectedClips) {
+                if (i.y() < first)
+                    newSelection << QPoint(i.x(), i.y());
+                else
+                    newSelection << QPoint(i.x(), i.y() + n);
+            }
         }
         setSelection(newSelection);
+        if (!parent.isValid())
+            model()->reload(true);
     }
 }
 
@@ -768,16 +776,27 @@ void TimelineDock::onRowsRemoved(const QModelIndex& parent, int first, int last)
 {
     Q_UNUSED(parent)
     // Adjust selected clips for changed indices.
-    if (-1 == m_selection.selectedTrack) {
+    if (-1 == m_selection.selectedTrack && parent.isValid()) {
         QList<QPoint> newSelection;
         int n = last - first + 1;
-        foreach (auto i, m_selection.selectedClips) {
-            if (i.x() < first)
-                newSelection << QPoint(i.x(), parent.row());
-            else if (i.x() > last)
-                newSelection << QPoint(i.x() - n, parent.row());
-        }
+        if (parent.isValid()) {
+            foreach (auto i, m_selection.selectedClips) {
+                if (i.x() < first)
+                    newSelection << QPoint(i.x(), parent.row());
+                else if (i.x() > last)
+                    newSelection << QPoint(i.x() - n, parent.row());
+            }
+        } else {
+            foreach (auto i, m_selection.selectedClips) {
+                if (i.y() < first)
+                    newSelection << QPoint(i.x(), i.y());
+                else if (i.y() > last)
+                    newSelection << QPoint(i.x(), i.y() - n);
+            }
+        }            
         setSelection(newSelection);
+        if (!parent.isValid())
+            model()->reload(true);
     }
 }
 
