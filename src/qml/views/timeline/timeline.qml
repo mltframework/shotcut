@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2019 Meltytech, LLC
+ * Copyright (c) 2013-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -448,7 +448,10 @@ Rectangle {
         MenuItem {
             text: qsTr('Select None')
             shortcut: 'Ctrl+D'
-            onTriggered: timeline.selection = null
+            onTriggered: {
+                timeline.selection = []
+                multitrack.reload()
+            }
         }
         MenuSeparator {}
         MenuItem {

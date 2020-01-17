@@ -1775,6 +1775,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
     case Qt::Key_D:
         if (event->modifiers() == Qt::ControlModifier) {
             m_timelineDock->setSelection();
+            m_timelineDock->model()->reload();
         } else if ((event->modifiers() & Qt::ControlModifier) && (event->modifiers() & Qt::ShiftModifier)) {
             m_playlistDock->show();
             m_playlistDock->raise();
