@@ -138,8 +138,9 @@ THE SOFTWARE.
 		// RENDERER
 
 		renderer = new THREE.WebGLRenderer( { antialias: true, alpha: true } );
-		var scale = webvfx.getNumberParameter('mlt_frame_resolution_scale');
-		renderer.setSize( window.innerWidth / scale, window.innerHeight / scale );
+		var scaleWidth = webvfx.getNumberParameter('mlt_profile_scale_width');
+		var scaleHeight = webvfx.getNumberParameter('mlt_profile_scale_height');
+		renderer.setSize( window.innerWidth / scaleWidth, window.innerHeight / scaleHeight );
 
 		container.appendChild( renderer.domElement );
 	}

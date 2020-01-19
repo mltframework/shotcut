@@ -17,10 +17,11 @@ function GlslTransition() {
 GlslTransition.prototype.render = function (time) {
     var shader = this.shader;
     var video = webvfx.getImage('video');
-    var scale = webvfx.getNumberParameter('mlt_frame_resolution_scale')
+    var scaleWidth = webvfx.getNumberParameter('mlt_profile_scale_width');
+    var scaleHeight = webvfx.getNumberParameter('mlt_profile_scale_height');
     shader.updateUniform("progress", time);
     shader.updateUniform("from", video.toImageData());
-    shader.updateUniform("resolution", [video.width / scale, video.height / scale]);
+    shader.updateUniform("resolution", [video.width / scaleWidth, video.height / scaleHeight]);
     shader.updateUniform("maximum", webvfx.getNumberParameter("maximum"));
     resize();
     this.renderer.render(shader);

@@ -27,9 +27,8 @@ function toHtmlColor(mltColor) {
 function Filter() {
     // Create a canvas
     this.canvas = document.createElement('canvas');
-    var scale = webvfx.getNumberParameter('mlt_frame_resolution_scale')
-    this.canvas.width = window.innerWidth / scale;
-    this.canvas.height = window.innerHeight / scale;
+    this.canvas.width = window.innerWidth / webvfx.getNumberParameter('mlt_profile_scale_width');
+    this.canvas.height = window.innerHeight / webvfx.getNumberParameter('mlt_profile_scale_height');
     document.body.appendChild(this.canvas);
     this.context = this.canvas.getContext('2d');
 
