@@ -1231,6 +1231,7 @@ void MainWindow::setPreviewScale(int scale)
         break;
     }
     MLT.setPreviewScale(scale);
+    MLT.refreshConsumer();
 }
 
 static void autosaveTask(MainWindow* p)

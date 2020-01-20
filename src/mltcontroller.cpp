@@ -1230,22 +1230,11 @@ void Controller::setPreviewScale(int scale)
 {
 #if LIBMLT_VERSION_INT >= MLT_VERSION_PREVIEW_SCALE
     if (scale != 0) {
+        m_previewProfile.set_width(Util::coerceMultiple(m_profile.width() / scale));
+        m_previewProfile.set_height(Util::coerceMultiple(m_profile.height() / scale));
         if (m_consumer) {
-            bool jackEnabled = !m_jackFilter.isNull();
-            m_consumer->stop();
-            m_consumer.reset();
-            m_jackFilter.reset();
-            m_previewProfile.set_width(Util::coerceMultiple(m_profile.width() / scale));
-            m_previewProfile.set_height(Util::coerceMultiple(m_profile.height() / scale));
-            reconfigure(false);
-            if (m_consumer) {
-                enableJack(jackEnabled);
-                setVolume(m_volume);
-                m_consumer->start();
-            }
-        } else {
-            m_previewProfile.set_width(Util::coerceMultiple(m_profile.width() / scale));
-            m_previewProfile.set_height(Util::coerceMultiple(m_profile.height() / scale));
+            m_consumer->set("width", m_previewProfile.width());
+            m_consumer->set("height", m_previewProfile.height());
         }
     }
 #endif
