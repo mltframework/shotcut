@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2019 Meltytech, LLC
+ * Copyright (c) 2013-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1300,6 +1300,7 @@ void MultitrackModel::appendFromPlaylist(Mlt::Playlist *from, int trackIndex)
             if (!clip->is_blank()) {
                 QString xml = MLT.XML(&clip.data()->parent());
                 Mlt::Producer producer(MLT.profile(), "xml-string", xml.toUtf8().constData());
+                producer.set_in_and_out(0, producer.get_length() - 1);
                 playlist.append(producer.parent(), clip->get_in(), clip->get_out());
                 QModelIndex modelIndex = createIndex(j, 0, trackIndex);
                 AudioLevelsTask::start(producer.parent(), this, modelIndex);
