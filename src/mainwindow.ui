@@ -1017,7 +1017,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>1/16</string>
+    <string>540p</string>
    </property>
   </action>
   <action name="actionPreview8">
@@ -1025,10 +1025,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>1/64</string>
-   </property>
-   <property name="toolTip">
-    <string>1/64</string>
+    <string>720p</string>
    </property>
   </action>
   <action name="actionPreviewNone">
@@ -1044,10 +1041,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>1/4</string>
-   </property>
-   <property name="toolTip">
-    <string>1/4</string>
+    <string>360p</string>
    </property>
   </action>
  </widget>
