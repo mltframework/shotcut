@@ -119,6 +119,7 @@ int Controller::open(const QString &url, const QString& urlToSave)
             profile().set_width(Util::coerceMultiple(profile().width()));
             profile().set_height(Util::coerceMultiple(profile().height()));
         }
+        updatePreviewProfile();
         setPreviewScale(Settings.playerPreviewScale());
         if ( url.endsWith(".mlt") ) {
             // Load the number of audio channels being used when this project was created.
@@ -168,8 +169,9 @@ bool Controller::openXML(const QString &filename)
             profile().from_producer(*producer);
             profile().set_width(Util::coerceMultiple(profile().width()));
             profile().set_height(Util::coerceMultiple(profile().height()));
-            setPreviewScale(Settings.playerPreviewScale());
         }
+        updatePreviewProfile();
+        setPreviewScale(Settings.playerPreviewScale());
         if (isFpsDifferent(profile().fps(), fps)) {
             // reopen with the correct fps
             delete producer;
@@ -625,14 +627,7 @@ void Controller::setProfile(const QString& profile_name)
             m_profile.set_width(Util::coerceMultiple(tmp.width()));
         }
     }
-    m_previewProfile.set_colorspace(m_profile.colorspace());
-    m_previewProfile.set_frame_rate(m_profile.frame_rate_num(), m_profile.frame_rate_den());
-    m_previewProfile.set_width(Util::coerceMultiple(m_profile.width()));
-    m_previewProfile.set_height(Util::coerceMultiple(m_profile.height()));
-    m_previewProfile.set_progressive(m_profile.progressive());
-    m_previewProfile.set_sample_aspect(m_profile.sample_aspect_num(), m_profile.sample_aspect_den());
-    m_previewProfile.set_display_aspect(m_profile.display_aspect_num(), m_profile.display_aspect_den());
-    m_previewProfile.set_explicit(true);
+    updatePreviewProfile();
 }
 
 void Controller::setAudioChannels(int audioChannels)
@@ -1238,6 +1233,18 @@ void Controller::setPreviewScale(int scale)
         }
     }
 #endif
+}
+
+void Controller::updatePreviewProfile()
+{
+    m_previewProfile.set_colorspace(m_profile.colorspace());
+    m_previewProfile.set_frame_rate(m_profile.frame_rate_num(), m_profile.frame_rate_den());
+    m_previewProfile.set_width(Util::coerceMultiple(m_profile.width()));
+    m_previewProfile.set_height(Util::coerceMultiple(m_profile.height()));
+    m_previewProfile.set_progressive(m_profile.progressive());
+    m_previewProfile.set_sample_aspect(m_profile.sample_aspect_num(), m_profile.sample_aspect_den());
+    m_previewProfile.set_display_aspect(m_profile.display_aspect_num(), m_profile.display_aspect_den());
+    m_previewProfile.set_explicit(true);
 }
 
 void TransportControl::play(double speed)

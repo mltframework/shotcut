@@ -165,6 +165,7 @@ public:
     static int filterIn(Mlt::Playlist&playlist, int clipIndex);
     static int filterOut(Mlt::Playlist&playlist, int clipIndex);
     void setPreviewScale(int scale);
+    void updatePreviewProfile();
 
 protected:
     Mlt::Repository* m_repo;
