@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2018 Meltytech, LLC
+ * Copyright (c) 2015-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@
 #include "mltcontroller.h"
 #include "shotcut_mlt_properties.h"
 #include "util.h"
+#include "settings.h"
 #include <QtWidgets>
 #include <QAudioDeviceInfo>
 
@@ -59,6 +60,8 @@ QString GDIgrabWidget::URL(Mlt::Profile& profile) const
         profile.set_progressive(1);
         profile.set_colorspace(709);
         profile.set_frame_rate(25, 1);
+        MLT.updatePreviewProfile();
+        MLT.setPreviewScale(Settings.playerPreviewScale());
     }
     QString s = QString("gdigrab:desktop?offset_x=%1&offset_y=%2&video_size=%3x%4&framerate=%5&show_region=%6&draw_mouse=%7")
             .arg(ui->xSpinBox->value())

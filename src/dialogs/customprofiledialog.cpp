@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2019 Meltytech, LLC
+ * Copyright (c) 2013-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -78,6 +78,8 @@ void CustomProfileDialog::on_buttonBox_accepted()
     }
     MLT.profile().set_progressive(ui->scanModeCombo->currentIndex());
     MLT.profile().set_colorspace((ui->colorspaceCombo->currentIndex() == 1)? 709 : 601);
+    MLT.updatePreviewProfile();
+    MLT.setPreviewScale(Settings.playerPreviewScale());
 
     // Save it to a file
     if (!ui->nameEdit->text().isEmpty()) {

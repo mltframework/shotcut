@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2012-2018 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2012-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,6 +23,7 @@
 #include "mltcontroller.h"
 #include "util.h"
 #include "shotcut_mlt_properties.h"
+#include "settings.h"
 #include <QtWidgets>
 
 Video4LinuxWidget::Video4LinuxWidget(QWidget *parent) :
@@ -81,6 +81,8 @@ Mlt::Producer* Video4LinuxWidget::newProducer(Mlt::Profile& profile)
             profile.set_colorspace(601);
             profile.set_frame_rate(ui->v4lFramerateSpinBox->value() * 10000, 10000);
         }
+        MLT.updatePreviewProfile();
+        MLT.setPreviewScale(Settings.playerPreviewScale());
     }
     Mlt::Producer* p = new Mlt::Producer(profile, URL().toLatin1().constData());
     if (!p->is_valid()) {
