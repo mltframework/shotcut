@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2015-2016 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2015-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,7 +31,7 @@ TimelinePropertiesWidget::TimelinePropertiesWidget(Mlt::Service &service, QWidge
         Mlt::Profile& profile = MLT.profile();
         ui->resolutionLabel->setText(QString("%1 x %2").arg(profile.width()).arg(profile.height()));
         ui->aspectRatioLabel->setText(QString("%1 : %2").arg(profile.display_aspect_num()).arg(profile.display_aspect_den()));
-        ui->frameRateLabel->setText(tr("%L1 fps").arg(profile.fps()));
+        ui->frameRateLabel->setText(tr("%L1 fps").arg(profile.fps(), 0, 'f', 6));
         if (profile.progressive())
             ui->scanModeLabel->setText(tr("Progressive"));
         else
