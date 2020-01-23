@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2019 Meltytech, LLC
+ * Copyright (c) 2018-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -231,7 +231,7 @@ void NewProjectFolder::on_startButton_clicked()
 
 void NewProjectFolder::on_projectNameLineEdit_textChanged(const QString& arg1)
 {
-    m_projectName = arg1;
+    m_projectName = arg1.trimmed();
     ui->startButton->setDisabled(arg1.isEmpty());
 }
 
