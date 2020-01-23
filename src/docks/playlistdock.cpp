@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2019 Meltytech, LLC
+ * Copyright (c) 2012-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -639,6 +639,7 @@ void PlaylistDock::onDropped(const QMimeData *data, int row)
                 }
                 MLT.setImageDurationFromDefault(producer);
                 MLT.lockCreationTime(producer);
+                producer->get_length_time(mlt_time_clock);
                 if (MLT.isSeekable(producer)) {
                     if (row == -1)
                         MAIN.undoStack()->push(new Playlist::AppendCommand(m_model, MLT.XML(producer)));

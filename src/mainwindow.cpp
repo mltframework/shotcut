@@ -3269,6 +3269,7 @@ void AppendTask::run()
             }
             MLT.setImageDurationFromDefault(&p);
             MLT.lockCreationTime(&p);
+            p.get_length_time(mlt_time_clock);
             MAIN.getHash(p);
             emit appendToPlaylist(MLT.XML(&p));
         }
