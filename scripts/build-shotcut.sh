@@ -2109,7 +2109,7 @@ function deploy_win32
   if [ "$DEBUG_BUILD" = "1" -o "$SDK" = "1" ]; then
     cmd cp -p "$QTDIR"/bin/Qt5{Concurrent,Core,Declarative,Gui,Multimedia,MultimediaQuick_p,MultimediaWidgets,Network,OpenGL,Positioning,PrintSupport,Qml,QuickParticles,Quick,QuickWidgets,Script,Sensors,Sql,Svg,WebChannel,WebKit,WebKitWidgets,WebSockets,Widgets,Xml,XmlPatterns}d.dll .
   fi
-  cmd cp -p "$QTDIR"/bin/{icudt57,icuin57,icuuc57,libEGL,libGLESv2,d3dcompiler_47,libeay32,ssleay32}.dll .
+  cmd cp -p "$QTDIR"/bin/{icudt57,icuin57,icuuc57,libEGL,libGLESv2,opengl32sw,d3dcompiler_47,libeay32,ssleay32}.dll .
   if [ "$TARGET_OS" = "Win64" ]; then
     cmd cp -p /opt/mxe/usr/x86_64-w64-mingw32.shared/bin/{libgcc_s_seh-1,libgomp-1,libstdc++-6,libwinpthread-1}.dll .
   else
