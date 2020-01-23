@@ -423,7 +423,7 @@ void Controller::seek(int position)
                 m_consumer->start();
             } else {
                 m_consumer->purge();
-                refreshConsumer(Settings.playerScrubAudio());
+                Controller::refreshConsumer(Settings.playerScrubAudio());
             }
         }
     }
@@ -803,7 +803,7 @@ void Controller::setIn(int in)
             }
         }
         if (changed)
-            refreshConsumer();
+            Controller::refreshConsumer();
         m_producer->set("in", in);
     }
 }
@@ -869,7 +869,7 @@ void Controller::setOut(int out)
                 }
             }
             if (changed)
-                refreshConsumer();
+                Controller::refreshConsumer();
         }
         m_producer->set("out", out);
     }
