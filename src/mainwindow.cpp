@@ -543,9 +543,9 @@ void MainWindow::setupSettingsMenu()
 #if LIBMLT_VERSION_INT >= MLT_VERSION_PREVIEW_SCALE
     m_previewScaleGroup = new QActionGroup(this);
     m_previewScaleGroup->addAction(ui->actionPreviewNone);
-    m_previewScaleGroup->addAction(ui->actionPreview2);
-    m_previewScaleGroup->addAction(ui->actionPreview4);
-    m_previewScaleGroup->addAction(ui->actionPreview8);
+    m_previewScaleGroup->addAction(ui->actionPreview360);
+    m_previewScaleGroup->addAction(ui->actionPreview540);
+    m_previewScaleGroup->addAction(ui->actionPreview720);
 #else
     delete ui->menuPreviewScaling;
 #endif
@@ -1217,14 +1217,14 @@ void MainWindow::setPreviewScale(int scale)
 {
     LOG_DEBUG() << scale;
     switch (scale) {
-    case 2:
-        ui->actionPreview2->setChecked(true);
+    case 360:
+        ui->actionPreview360->setChecked(true);
         break;
-    case 4:
-        ui->actionPreview4->setChecked(true);
+    case 540:
+        ui->actionPreview540->setChecked(true);
         break;
-    case 8:
-        ui->actionPreview8->setChecked(true);
+    case 720:
+        ui->actionPreview720->setChecked(true);
         break;
     default:
         ui->actionPreviewNone->setChecked(true);
@@ -1489,7 +1489,7 @@ void MainWindow::readPlayerSettings()
 
 #if LIBMLT_VERSION_INT >= MLT_VERSION_PREVIEW_SCALE
     if (isExternalPeripheral) {
-        setPreviewScale(1);
+        setPreviewScale(0);
         m_previewScaleGroup->setEnabled(false);
     } else {
         setPreviewScale(Settings.playerPreviewScale());
@@ -3444,7 +3444,7 @@ void MainWindow::onExternalTriggered(QAction *action)
 #if LIBMLT_VERSION_INT >= MLT_VERSION_PREVIEW_SCALE
     // Preview scaling not permitted for SDI/HDMI
     if (isExternal) {
-        setPreviewScale(1);
+        setPreviewScale(0);
         m_previewScaleGroup->setEnabled(false);
     } else {
         setPreviewScale(Settings.playerPreviewScale());
@@ -4243,31 +4243,31 @@ void MainWindow::onPlaylistOutChanged(int out)
 void MainWindow::on_actionPreviewNone_triggered(bool checked)
 {
     if (checked) {
-        Settings.setPlayerPreviewScale(1);
-        setPreviewScale(1);
+        Settings.setPlayerPreviewScale(0);
+        setPreviewScale(0);
     }
 }
 
-void MainWindow::on_actionPreview2_triggered(bool checked)
+void MainWindow::on_actionPreview360_triggered(bool checked)
 {
     if (checked) {
-        Settings.setPlayerPreviewScale(2);
-        setPreviewScale(2);
+        Settings.setPlayerPreviewScale(360);
+        setPreviewScale(360);
     }
 }
 
-void MainWindow::on_actionPreview4_triggered(bool checked)
+void MainWindow::on_actionPreview540_triggered(bool checked)
 {
     if (checked) {
-        Settings.setPlayerPreviewScale(4);
-        setPreviewScale(4);
+        Settings.setPlayerPreviewScale(540);
+        setPreviewScale(540);
     }
 }
 
-void MainWindow::on_actionPreview8_triggered(bool checked)
+void MainWindow::on_actionPreview720_triggered(bool checked)
 {
     if (checked) {
-        Settings.setPlayerPreviewScale(8);
-        setPreviewScale(8);
+        Settings.setPlayerPreviewScale(720);
+        setPreviewScale(720);
     }
 }

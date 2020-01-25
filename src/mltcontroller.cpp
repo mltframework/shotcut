@@ -1224,29 +1224,20 @@ int Controller::filterOut(Playlist& playlist, int clipIndex)
 void Controller::setPreviewScale(int scale)
 {
 #if LIBMLT_VERSION_INT >= MLT_VERSION_PREVIEW_SCALE
-    if (scale != 0) {
-        auto height = m_profile.height();
-        switch (scale) {
-        case 2:
-            height = MIN(360, height);
-            break;
-        case 4:
-            height = MIN(540, height);
-            break;
-        case 8:
-            height = MIN(720, height);
-            break;
-        }
-        auto width = (height == m_profile.height())? m_profile.width() :
-            Util::coerceMultiple(height * m_profile.display_aspect_num() / m_profile.display_aspect_den()
-                                        * m_profile.sample_aspect_den()  / m_profile.sample_aspect_num());
-        LOG_DEBUG() << width << "x" << height;
-        m_previewProfile.set_width(width);
-        m_previewProfile.set_height(height);
-        if (m_consumer) {
-            m_consumer->set("width", width);
-            m_consumer->set("height", height);
-        }
+    auto width = m_profile.width();
+    auto height = m_profile.height();
+    if (scale > 0) {
+        height = MIN(scale, m_profile.height());
+        width = (height == m_profile.height())? m_profile.width() :
+        Util::coerceMultiple(height * m_profile.display_aspect_num() / m_profile.display_aspect_den()
+                                    * m_profile.sample_aspect_den()  / m_profile.sample_aspect_num());
+    }
+    LOG_DEBUG() << width << "x" << height;
+    m_previewProfile.set_width(width);
+    m_previewProfile.set_height(height);
+    if (m_consumer) {
+        m_consumer->set("width", width);
+        m_consumer->set("height", height);
     }
 #endif
 }

@@ -331,9 +331,9 @@ private slots:
     void onPlaylistInChanged(int in);
     void onPlaylistOutChanged(int out);
     void on_actionPreviewNone_triggered(bool checked);
-    void on_actionPreview2_triggered(bool checked);
-    void on_actionPreview4_triggered(bool checked);
-    void on_actionPreview8_triggered(bool checked);
+    void on_actionPreview360_triggered(bool checked);
+    void on_actionPreview540_triggered(bool checked);
+    void on_actionPreview720_triggered(bool checked);
 };
 
 #define MAIN MainWindow::singleton()

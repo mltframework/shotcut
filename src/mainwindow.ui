@@ -189,9 +189,9 @@
       <string>Preview Scaling</string>
      </property>
      <addaction name="actionPreviewNone"/>
-     <addaction name="actionPreview2"/>
-     <addaction name="actionPreview4"/>
-     <addaction name="actionPreview8"/>
+     <addaction name="actionPreview360"/>
+     <addaction name="actionPreview540"/>
+     <addaction name="actionPreview720"/>
     </widget>
     <addaction name="actionProject"/>
     <addaction name="actionGPU"/>
@@ -1012,7 +1012,7 @@
     <string>Jobs</string>
    </property>
   </action>
-  <action name="actionPreview4">
+  <action name="actionPreview540">
    <property name="checkable">
     <bool>true</bool>
    </property>
@@ -1020,7 +1020,7 @@
     <string>540p</string>
    </property>
   </action>
-  <action name="actionPreview8">
+  <action name="actionPreview720">
    <property name="checkable">
     <bool>true</bool>
    </property>
@@ -1036,7 +1036,7 @@
     <string>None</string>
    </property>
   </action>
-  <action name="actionPreview2">
+  <action name="actionPreview360">
    <property name="checkable">
     <bool>true</bool>
    </property>

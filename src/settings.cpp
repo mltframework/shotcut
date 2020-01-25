@@ -449,7 +449,7 @@ void ShotcutSettings::setPlayerZoom(float f)
 
 int ShotcutSettings::playerPreviewScale() const
 {
-    return settings.value("player/previewScale", 1).toInt();
+    return settings.value("player/previewScale", 0).toInt();
 }
 
 void ShotcutSettings::setPlayerPreviewScale(int i)
