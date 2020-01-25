@@ -775,6 +775,19 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
             if (ui->heightSpinner->value() != MLT.profile().height()) {
                 setIfNotSet(p, "height", ui->heightSpinner->value());
             }
+            if (ui->previewScaleCheckBox->isChecked() && !p->get("scale")) {
+                switch (Settings.playerPreviewScale()) {
+                case 2:
+                    p->set("scale", 360.0 / MLT.profile().height());
+                    break;
+                case 4:
+                    p->set("scale", 540.0 / MLT.profile().height());
+                    break;
+                case 8:
+                    p->set("scale", 720.0 / MLT.profile().height());
+                    break;
+                }
+            }
             if (ui->aspectNumSpinner->value() != MLT.profile().display_aspect_num() ||
                 ui->aspectDenSpinner->value() != MLT.profile().display_aspect_den()) {
                 setIfNotSet(p, "aspect", double(ui->aspectNumSpinner->value()) / double(ui->aspectDenSpinner->value()));

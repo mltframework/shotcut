@@ -123,7 +123,7 @@ private slots:
     void on_videoQualitySpinner_valueChanged(int vq);
 
     void on_audioQualitySpinner_valueChanged(int aq);
-
+    
 private:
     enum {
         RateControlAverage = 0,
