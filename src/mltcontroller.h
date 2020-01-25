@@ -38,6 +38,7 @@ class QQuickView;
 #endif
 
 #define MLT_VERSION_PREVIEW_SCALE ((6<<16)+(19<<8))
+#define MLT_VERSION_SET_STRING ((6<<16)+(19<<8))
 
 namespace Mlt {
 

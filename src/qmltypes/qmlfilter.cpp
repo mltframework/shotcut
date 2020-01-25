@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2019 Meltytech, LLC
+ * Copyright (c) 2013-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -132,7 +132,11 @@ void QmlFilter::set(QString name, QString value, int position)
     if (!m_filter.is_valid()) return;
     if (position < 0) {
         if (qstrcmp(m_filter.get(name.toUtf8().constData()), value.toUtf8().constData())) {
+#if LIBMLT_VERSION_INT >= MLT_VERSION_SET_STRING 
+            m_filter.set_string(name.toUtf8().constData(), value.toUtf8().constData());
+#else
             m_filter.set(name.toUtf8().constData(), value.toUtf8().constData());
+#endif
             emit changed(name);
         }
     } else {
