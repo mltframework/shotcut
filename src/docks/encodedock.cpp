@@ -769,10 +769,19 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
                     setIfNotSet(p, "connection_type", "x11");
                 }
             }
-            setIfNotSet(p, "width", ui->widthSpinner->value());
-            setIfNotSet(p, "height", ui->heightSpinner->value());
-            setIfNotSet(p, "aspect", double(ui->aspectNumSpinner->value()) / double(ui->aspectDenSpinner->value()));
-            setIfNotSet(p, "progressive", ui->scanModeCombo->currentIndex());
+            if (ui->widthSpinner->value() != MLT.profile().width()) {
+                setIfNotSet(p, "width", ui->widthSpinner->value());
+            }
+            if (ui->heightSpinner->value() != MLT.profile().height()) {
+                setIfNotSet(p, "height", ui->heightSpinner->value());
+            }
+            if (ui->aspectNumSpinner->value() != MLT.profile().display_aspect_num() ||
+                ui->aspectDenSpinner->value() != MLT.profile().display_aspect_den()) {
+                setIfNotSet(p, "aspect", double(ui->aspectNumSpinner->value()) / double(ui->aspectDenSpinner->value()));
+            }
+            if (ui->scanModeCombo->currentIndex() != MLT.profile().progressive()) {
+                setIfNotSet(p, "progressive", ui->scanModeCombo->currentIndex());
+            }
             setIfNotSet(p, "top_field_first", ui->fieldOrderCombo->currentIndex());
             switch (ui->deinterlacerCombo->currentIndex()) {
             case 0:
