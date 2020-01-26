@@ -1569,6 +1569,9 @@ void MainWindow::readWindowSettings()
     if (!Settings.windowGeometry().isEmpty()) {
         restoreGeometry(Settings.windowGeometry());
         restoreState(Settings.windowState());
+#ifdef Q_OS_MAC
+        m_filtersDock->setFloating(false);
+#endif
     } else {
         on_actionLayoutTimeline_triggered();
     }

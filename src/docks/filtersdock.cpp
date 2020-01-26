@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2019 Meltytech, LLC
+ * Copyright (c) 2013-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -45,6 +45,9 @@ FiltersDock::FiltersDock(MetadataModel* metadataModel, AttachedFiltersModel* att
     setMinimumWidth(300);
     m_qview.setFocusPolicy(Qt::StrongFocus);
     setWidget(&m_qview);
+#ifdef Q_OS_MAC
+    setFeatures(DockWidgetClosable | DockWidgetMovable);
+#endif
 
     QmlUtilities::setCommonProperties(m_qview.rootContext());
     m_qview.rootContext()->setContextProperty("view", new QmlView(&m_qview));
