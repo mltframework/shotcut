@@ -43,10 +43,10 @@ function seekPreviousSimple() {
     var position = producer.position + producer.in
     if (position > filter.out)
         position = filter.out
-    else if (position > filter.out - filter.animateOut + 1)
-        position = filter.out - filter.animateOut + 1
-    else if (position > filter.in + filter.animateIn - 1)
-        position = filter.in + filter.animateIn - 1
+    else if (position > filter.out - filter.animateOut)
+        position = filter.out - filter.animateOut
+    else if (position > filter.in + filter.animateIn)
+        position = filter.in + filter.animateIn
     else if (position > filter.in)
         position = filter.in
     else
@@ -58,10 +58,10 @@ function seekNextSimple() {
     var position = producer.position + producer.in
     if (position < filter.in)
         position = filter.in
-    else if (position < filter.in + filter.animateIn - 1)
-        position = filter.in + filter.animateIn - 1
-    else if (position < filter.out - filter.animateOut + 1)
-        position = filter.out - filter.animateOut + 1
+    else if (position < filter.in + filter.animateIn)
+        position = filter.in + filter.animateIn
+    else if (position < filter.out - filter.animateOut)
+        position = filter.out - filter.animateOut
     else if (position < filter.out)
         position = filter.out
     else
