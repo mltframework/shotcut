@@ -44,7 +44,7 @@ Item {
         if (filter.isNew) {
             filter.set('resource', filter.path + 'rectangle.qml')
             // Set default parameter values
-            filter.set('color', '#80ff0000')
+            filter.set('color.1', '#80ff0000')
             filter.set('radius', 0)
             filter.set('border.color', '#80ffffff')
             filter.set('border.width', 3)
@@ -65,7 +65,7 @@ Item {
         filter.blockSignals = false
         setRatioControls()
         setRectControls()
-        fillColorPicker.value = filter.get('color')
+        fillColorPicker.colors = filter.getGradient('color')
         borderColorPicker.value = filter.get('border.color');
         borderWidthSpinner.value = filter.get('border.width')
         if (filter.isNew)
@@ -185,12 +185,13 @@ Item {
         }
         Preset {
             id: preset
-            parameters: [rectProperty, 'radius', 'color', 'border.color', 'border.width']
+            parameters: [rectProperty, 'radius', 'color.1', 'color.2', 'color.3', 'color.4', 'color.5', 'color.6', 'color.7', 'color.8', 'color.9', 'color.10', 'border.color', 'border.width']
             Layout.columnSpan: 3
             onBeforePresetLoaded: {
                 filterRect = Qt.rect(0, 0, 0, 0)
                 filter.resetProperty(rectProperty)
                 filter.resetProperty('radius')
+                filter.setGradient('color', [])
             }
             onPresetSelected: {
                 setRatioControls()
@@ -331,12 +332,13 @@ Item {
             text: qsTr('Fill color')
             Layout.alignment: Qt.AlignRight
         }
-        ColorPicker {
+        GradientControl {
             id: fillColorPicker
-            alpha: true
-            eyedropper: false
             Layout.columnSpan: 2
-            onValueChanged: filter.set('color', value)
+            onGradientChanged: {
+                 if (blockUpdate) return
+                 filter.setGradient('color', colors)
+            }
         }
         Item { Layout.fillWidth: true }
         

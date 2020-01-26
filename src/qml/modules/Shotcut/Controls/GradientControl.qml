@@ -98,7 +98,7 @@ RowLayout {
         }
 
         var newStops = [];
-        var stepSize = colors.length? 1.0 / (colors.length - 1) : 0
+        var stepSize = (colors.length > 1)? 1.0 / (colors.length - 1) : 0
         for (var idx = 0; idx < colors.length; idx++) {
             newStops.push(stopComponent.createObject(gradientView, {"position":stepSize * idx,"color":colors[idx]}));
         }
