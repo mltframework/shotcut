@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2012-2019 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2012-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -65,6 +64,7 @@ RecentDock::RecentDock(QWidget *parent) :
     m_proxyModel.setSourceModel(&m_model);
     m_proxyModel.setFilterCaseSensitivity(Qt::CaseInsensitive);
     ui->listWidget->setModel(&m_proxyModel);
+    connect(this, &QDockWidget::topLevelChanged, this, &RecentDock::onTopLevelChanged);
     LOG_DEBUG() << "end";
 }
 
@@ -120,4 +120,11 @@ void RecentDock::keyPressEvent(QKeyEvent *event)
 void RecentDock::on_lineEdit_textChanged(const QString& search)
 {
     m_proxyModel.setFilterFixedString(search);
+}
+
+void RecentDock::onTopLevelChanged(bool topLevel)
+{
+    setWindowFlag(Qt::FramelessWindowHint, !topLevel);
+    show();
+    raise();
 }
