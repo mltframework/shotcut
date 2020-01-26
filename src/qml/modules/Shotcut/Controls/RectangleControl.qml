@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2019 Meltytech, LLC
+ * Copyright (c) 2014-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -128,25 +128,6 @@ Item {
         anchors.left: topLeftHandle.left
         anchors.right: bottomRightHandle.right
         anchors.bottom: bottomRightHandle.bottom
-    }
-    Rectangle {
-        // Provides contrasting thick line to above rectangle.
-        color: 'transparent'
-        border.width: handleSize - borderSize
-        border.color: Qt.rgba(0, 0, 0, item.enabled? 0.4 : 0.2)
-        anchors.fill: rectangle
-        anchors.margins: borderSize
-    }
-
-    Rectangle {
-        id: positionHandle
-        color: Qt.rgba(0, 0, 0, item.enabled? 0.5 : 0.2)
-        border.width: borderSize
-        border.color: handleColor
-        width: handleSize * 2
-        height: handleSize * 2
-        radius: width / 2
-        anchors.centerIn: rectangle
         MouseArea {
             id: positionMouseArea
             anchors.fill: parent
@@ -189,6 +170,15 @@ Item {
             }
         }
     }
+    Rectangle {
+        // Provides contrasting thick line to above rectangle.
+        color: 'transparent'
+        border.width: handleSize - borderSize
+        border.color: Qt.rgba(0, 0, 0, item.enabled? 0.4 : 0.2)
+        anchors.fill: rectangle
+        anchors.margins: borderSize
+    }
+
     Rectangle {
         id: topLeftHandle
         color: handleColor
