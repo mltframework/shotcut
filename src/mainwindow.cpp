@@ -2633,7 +2633,6 @@ void MainWindow::onJobsDockTriggered(bool checked)
 void MainWindow::onRecentDockTriggered(bool checked)
 {
     if (checked) {
-        m_recentDock->setWindowFlag(Qt::FramelessWindowHint, !m_recentDock->isFloating());
         m_recentDock->show();
         m_recentDock->raise();
     }
