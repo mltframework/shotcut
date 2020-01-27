@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2014-2016 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2014-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -185,8 +184,7 @@ void LumaMixTransition::on_lumaCombo_activated(int index)
 #ifdef Q_OS_MAC
             path.append("/*");
 #endif
-            QString filename = QFileDialog::getOpenFileName(this, tr("Open File"), path,
-                tr("Images (*.bmp *.jpeg *.jpg *.pgm *.png *.svg *.tga *.tif *.tiff);;All Files (*)"));
+            QString filename = QFileDialog::getOpenFileName(this, tr("Open File"), path);
             activateWindow();
             if (!filename.isEmpty()) {
                 transition->set("resource", filename.toUtf8().constData());
