@@ -118,7 +118,7 @@ function onMouseWheel(wheel) {
             adjustZoom(wheel.angleDelta.y / 720)
         }
         if (wheel.modifiers & Qt.ShiftModifier) {
-            multitrack.trackHeight = Math.max(30, multitrack.trackHeight + wheel.angleDelta.y / 5)
+            multitrack.trackHeight = Math.max(20, multitrack.trackHeight + wheel.angleDelta.y / 5)
         }
     } else {
         // Scroll
