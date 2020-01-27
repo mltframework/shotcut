@@ -325,7 +325,7 @@ debug_and_release {
 LIBS += -lCuteLogger
 
 isEmpty(SHOTCUT_VERSION) {
-    !win32:SHOTCUT_VERSION = $$system(date "+%y.%m.%d")
+    !win32:SHOTCUT_VERSION = $$system(date -u -d "@${SOURCE_DATE_EPOCH:-$(date +%s)}" "+%y.%m.%d" 2>/dev/null || date -u -r "${SOURCE_DATE_EPOCH:-$(date +%s)}" "+%y.%m.%d")
      win32:SHOTCUT_VERSION = adhoc
 }
 DEFINES += SHOTCUT_VERSION=\\\"$$SHOTCUT_VERSION\\\"
