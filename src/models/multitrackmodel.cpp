@@ -1588,13 +1588,17 @@ bool MultitrackModel::addTransitionValid(int fromTrack, int toTrack, int clipInd
             int targetIndex = playlist.get_clip_index_at(position);
             int previousIndex = clipIndex - 1 - (playlist.is_blank(clipIndex - 1)? 1 : 0);
             int nextIndex = clipIndex + 1 + (playlist.is_blank(clipIndex + 1)? 1 : 0);
-            int endOfPreviousClip = playlist.clip_start(previousIndex) + playlist.clip_length(previousIndex);
-            int endOfCurrentClip = position + playlist.clip_length(clipIndex);
+            int endOfPreviousClip = playlist.clip_start(previousIndex) + playlist.clip_length(previousIndex) - 1;
+            int endOfCurrentClip = position + playlist.clip_length(clipIndex) - 1;
             int startOfNextClip = playlist.clip_start(nextIndex);
+            auto isBlankAtPosition = playlist.is_blank_at(position);
+            auto isTransitionAtPreviousIndex = isTransition(playlist, previousIndex);
+            auto isBlankAtEndOfCurrentClip = playlist.is_blank_at(endOfCurrentClip);
+            auto isTransitionAtNextIndex = isTransition(playlist, nextIndex);
 
-            if ((targetIndex < clipIndex && (endOfCurrentClip > endOfPreviousClip + 1) && (position > playlist.clip_start(previousIndex)) && !playlist.is_blank_at(position) && !isTransition(playlist, previousIndex))
+            if ((targetIndex < clipIndex && (endOfCurrentClip > endOfPreviousClip) && (position > playlist.clip_start(previousIndex)) && !isBlankAtPosition && !isTransitionAtPreviousIndex)
                     ||
-                (!ripple && (targetIndex >= clipIndex) && (position < startOfNextClip) && !playlist.is_blank_at(endOfCurrentClip) && !isTransition(playlist, nextIndex))) {
+                (!ripple && (targetIndex >= clipIndex) && (position < startOfNextClip) && !isBlankAtEndOfCurrentClip && !isTransitionAtNextIndex)) {
                 result = true;
             }
         }
@@ -1611,8 +1615,8 @@ int MultitrackModel::addTransition(int trackIndex, int clipIndex, int position, 
         int targetIndex = playlist.get_clip_index_at(position);
         int previousIndex = clipIndex - 1 - (playlist.is_blank(clipIndex - 1)? 1 : 0);
         int nextIndex = clipIndex + 1 + (playlist.is_blank(clipIndex + 1)? 1 : 0);
-        int endOfPreviousClip = playlist.clip_start(previousIndex) + playlist.clip_length(previousIndex);
-        int endOfCurrentClip = position + playlist.clip_length(clipIndex);
+        int endOfPreviousClip = playlist.clip_start(previousIndex) + playlist.clip_length(previousIndex) - 1;
+        int endOfCurrentClip = position + playlist.clip_length(clipIndex) - 1;
         int startOfNextClip = playlist.clip_start(nextIndex);
 
         if ((targetIndex < clipIndex && endOfCurrentClip > endOfPreviousClip) || // dragged left
