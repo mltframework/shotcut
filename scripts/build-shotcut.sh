@@ -879,6 +879,9 @@ function set_globals {
   #####
   # rubberband
   CONFIG[18]="./configure --prefix=$FINAL_INSTALL_DIR --disable-programs --disable-vamp --disable-ladspa"
+  if test "$TARGET_OS" = "Win32" -o "$TARGET_OS" = "Win64" ; then
+    CONFIG[18]="${CONFIG[18]} --host=$HOST"
+  fi
   CFLAGS_[18]=$CFLAGS
   LDFLAGS_[18]=$LDFLAGS
 }
@@ -1612,6 +1615,16 @@ function configure_compile_install_subproject {
   # Special hack for mlt, post-configure
   if test "mlt" = "$1" ; then
     mlt_check_configure
+  fi
+
+  # Special hack for rubberband post-configure
+  if [ "rubberband" = "$1" ]; then
+    if [ "$TARGET_OS" = "Darwin" ]; then
+      cmd sed -e 's/-Wl,-Bsymbolic//' -i .bak Makefile
+      cmd sed -e 's/-Wl,-soname=$(LIBNAME)$(DYNAMIC_EXTENSION).$(DYNAMIC_ABI_VERSION)//' -i .bak Makefile
+    elif [ "$TARGET_OS" = "Win32" -o "$TARGET_OS" = "Win64" ]; then
+      cmd grep -q fftw3 rubberband.pc.in || sed 's/-lrubberband/-lrubberband -lfftw3-3 -lsamplerate/' -i rubberband.pc.in
+    fi
   fi
 
   # Compile
