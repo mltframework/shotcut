@@ -70,6 +70,9 @@ SHOTCUT_VERSION=$(date '+%y.%m.%d')
 ENABLE_WEBVFX=1
 WEBVFX_HEAD=1
 WEBVFX_REVISION=
+ENABLE_RUBBERBAND=1
+RUBBERBAND_HEAD=0
+RUBBERBAND_REVISION=mlt_patches
 # QT_INCLUDE_DIR="$(pkg-config --variable=prefix QtCore)/include"
 QT_INCLUDE_DIR=${QTDIR:+${QTDIR}/include}
 # QT_LIB_DIR="$(pkg-config --variable=prefix QtCore)/lib"
@@ -212,6 +215,9 @@ function to_key {
     ;;
     mfx_dispatch)
       echo 17
+    ;;
+    rubberband)
+      echo 18
     ;;
     *)
       echo UNKNOWN
@@ -413,6 +419,9 @@ function set_globals {
     if test "$ENABLE_VIDSTAB" = 1 ; then
         SUBDIRS="vid.stab $SUBDIRS"
     fi
+    if test "$ENABLE_RUBBERBAND" = 1 ; then
+        SUBDIRS="rubberband $SUBDIRS"
+    fi
   fi
 
   if [ "$DEBUG_BUILD" = "1" ]; then
@@ -457,6 +466,7 @@ function set_globals {
   REPOLOCS[15]="git://github.com/FFmpeg/nv-codec-headers.git"
   REPOLOCS[16]="git://github.com/GPUOpen-LibrariesAndSDKs/AMF.git"
   REPOLOCS[17]="git://github.com/lu-zero/mfx_dispatch.git"
+  REPOLOCS[18]="git://github.com/bmatherly/rubberband.git"
 
   # REPOTYPE Array holds the repo types. (Yes, this might be redundant, but easy for me)
   REPOTYPES[0]="git"
@@ -477,6 +487,7 @@ function set_globals {
   REPOTYPES[15]="git"
   REPOTYPES[16]="git"
   REPOTYPES[17]="git"
+  REPOTYPES[18]="git"
 
   # And, set up the revisions
   REVISIONS[0]=""
@@ -534,6 +545,10 @@ function set_globals {
   REVISIONS[15]="sdk/8.1"
   REVISIONS[16]=""
   REVISIONS[17]="1.25"
+  REVISIONS[13]=""
+  if test 0 = "$RUBBERBAND_HEAD" -a "$RUBBERBAND_REVISION" ; then
+    REVISIONS[18]="$RUBBERBAND_REVISION"
+  fi
 
   # Figure out the number of cores in the system. Used both by make and startup script
   if test "$TARGET_OS" = "Darwin"; then
@@ -860,6 +875,15 @@ function set_globals {
   fi
   CFLAGS_[17]="$CFLAGS"
   LDFLAGS_[17]=$LDFLAGS
+
+  #####
+  # rubberband
+  CONFIG[18]="./configure --prefix=$FINAL_INSTALL_DIR --disable-programs --disable-vamp --disable-ladspa"
+  if test "$TARGET_OS" = "Win32" -o "$TARGET_OS" = "Win64" ; then
+    CONFIG[18]="${CONFIG[18]} --host=$HOST"
+  fi
+  CFLAGS_[18]=$CFLAGS
+  LDFLAGS_[18]=$LDFLAGS
 }
 
 ######################################################################
@@ -1591,6 +1615,16 @@ function configure_compile_install_subproject {
   # Special hack for mlt, post-configure
   if test "mlt" = "$1" ; then
     mlt_check_configure
+  fi
+
+  # Special hack for rubberband post-configure
+  if [ "rubberband" = "$1" ]; then
+    if [ "$TARGET_OS" = "Darwin" ]; then
+      cmd sed -e 's/-Wl,-Bsymbolic//' -i .bak Makefile
+      cmd sed -e 's/-Wl,-soname=$(LIBNAME)$(DYNAMIC_EXTENSION).$(DYNAMIC_ABI_VERSION)//' -i .bak Makefile
+    elif [ "$TARGET_OS" = "Win32" -o "$TARGET_OS" = "Win64" ]; then
+      cmd grep -q fftw3 rubberband.pc.in || sed 's/-lrubberband/-lrubberband -lfftw3-3 -lsamplerate/' -i rubberband.pc.in
+    fi
   fi
 
   # Compile
