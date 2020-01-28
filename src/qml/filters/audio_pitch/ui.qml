@@ -183,7 +183,7 @@ Item {
             minimumValue: 0.25
             maximumValue: 4.0
             decimals: 3
-            suffix: 'x'
+            suffix: ' x'
             enabled: octaveSlider.enabled
             onValueChanged: {
                 noUpdate = true
