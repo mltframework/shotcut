@@ -178,7 +178,16 @@ Item {
         anchors.fill: rectangle
         anchors.margins: borderSize
     }
-
+    Rectangle {
+        id: positionHandle
+        color: Qt.rgba(0, 0, 0, item.enabled? 0.5 : 0.2)
+        border.width: borderSize
+        border.color: handleColor
+        width: handleSize * 2
+        height: handleSize * 2
+        radius: width / 2
+        anchors.centerIn: rectangle
+    }
     Rectangle {
         id: topLeftHandle
         color: handleColor
