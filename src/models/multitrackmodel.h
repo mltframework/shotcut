@@ -116,7 +116,7 @@ signals:
     void loaded();
     void closed();
     void modified();
-    void seeked(int position);
+    void seeked(int position, bool seekPlayer = true);
     void trackHeightChanged();
     void scaleFactorChanged();
     void showStatusMessage(QString);

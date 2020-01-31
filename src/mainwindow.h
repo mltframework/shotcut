@@ -199,7 +199,7 @@ public slots:
     void showStatusMessage(QAction* action, int timeoutSeconds = 5);
     void showStatusMessage(const QString& message, int timeoutSeconds = 5);
     void seekPlaylist(int start);
-    void seekTimeline(int position);
+    void seekTimeline(int position, bool seekPlayer = true);
     void seekKeyframes(int position);
     QWidget* loadProducerWidget(Mlt::Producer* producer);
     void onProducerOpened(bool withReopen = true);

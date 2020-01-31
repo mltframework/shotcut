@@ -314,7 +314,7 @@ MainWindow::MainWindow()
     connect(m_timelineDock->model(), SIGNAL(modified()), SLOT(updateAutoSave()));
     connect(m_timelineDock->model(), SIGNAL(durationChanged()), SLOT(onMultitrackDurationChanged()));
     connect(m_timelineDock, SIGNAL(clipOpened(Mlt::Producer*)), SLOT(openCut(Mlt::Producer*)));
-    connect(m_timelineDock->model(), SIGNAL(seeked(int)), SLOT(seekTimeline(int)));
+    connect(m_timelineDock->model(), &MultitrackModel::seeked, this, &MainWindow::seekTimeline);
     connect(m_timelineDock->model(), SIGNAL(scaleFactorChanged()), m_player, SLOT(pause()));
     connect(m_timelineDock, SIGNAL(selected(Mlt::Producer*)), SLOT(loadProducerWidget(Mlt::Producer*)));
     connect(m_timelineDock, SIGNAL(selectionChanged()), SLOT(onTimelineSelectionChanged()));
@@ -1441,7 +1441,7 @@ void MainWindow::seekPlaylist(int start)
     m_player->switchToTab(Player::ProjectTabIndex);
 }
 
-void MainWindow::seekTimeline(int position)
+void MainWindow::seekTimeline(int position, bool seekPlayer)
 {
     if (!multitrack()) return;
     // we bypass this->open() to prevent sending producerOpened signal to self, which causes to reload playlist
@@ -1459,7 +1459,10 @@ void MainWindow::seekTimeline(int position)
         m_player->switchToTab(Player::ProjectTabIndex);
         m_timelineDock->emitSelectedFromSelection();
     }
-    m_player->seek(position);
+    if (seekPlayer)
+        m_player->seek(position);
+    else
+        m_player->pause();
 }
 
 void MainWindow::seekKeyframes(int position)

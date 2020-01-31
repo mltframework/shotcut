@@ -953,8 +953,7 @@ QString MultitrackModel::overwrite(int trackIndex, Mlt::Producer& clip, int posi
         AudioLevelsTask::start(clip.parent(), this, index);
         emit overWritten(trackIndex, targetIndex);
         emit modified();
-        if (seek)
-            emit seeked(playlist.clip_start(targetIndex) + playlist.clip_length(targetIndex));
+        emit seeked(playlist.clip_start(targetIndex) + playlist.clip_length(targetIndex), seek);
     }
     return MLT.XML(&result);
 }
@@ -1055,8 +1054,7 @@ int MultitrackModel::insertClip(int trackIndex, Mlt::Producer &clip, int positio
             AudioLevelsTask::start(clip.parent(), this, index);
             emit inserted(trackIndex, result);
             emit modified();
-            if (seek)
-                emit seeked(playlist.clip_start(result) + playlist.clip_length(result));
+            emit seeked(playlist.clip_start(result) + playlist.clip_length(result), seek);
         }
     }
     return result;
