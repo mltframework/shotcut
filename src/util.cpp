@@ -49,13 +49,17 @@ void Util::setColorsToHighlight(QWidget* widget, QPalette::ColorRole role)
 {
     if (role == QPalette::Base) {
         widget->setStyleSheet(
-            "QLineEdit {"
-                "font-weight: bold;"
-                "background-color: palette(highlight);"
-                "color: palette(highlighted-text);"
-                "selection-background-color: palette(alternate-base);"
-                "selection-color: palette(text);"
-            "}");
+                    "QLineEdit {"
+                        "font-weight: bold;"
+                        "background-color: palette(highlight);"
+                        "color: palette(highlighted-text);"
+                        "selection-background-color: palette(alternate-base);"
+                        "selection-color: palette(text);"
+                    "}"
+                    "QLineEdit:hover {"
+                        "border: 2px solid palette(button-text);"
+                    "}"
+        );
     } else {
         QPalette palette = QApplication::palette();
         palette.setColor(role, palette.color(palette.Highlight));
