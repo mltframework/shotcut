@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2019 Meltytech, LLC
+ * Copyright (c) 2012-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,7 +34,7 @@ ImageProducerWidget::ImageProducerWidget(QWidget *parent) :
     m_defaultDuration(-1)
 {
     ui->setupUi(this);
-    Util::setColorsToHighlight(ui->filenameLabel);
+    Util::setColorsToHighlight(ui->filenameLabel, QPalette::Base);
 }
 
 ImageProducerWidget::~ImageProducerWidget()

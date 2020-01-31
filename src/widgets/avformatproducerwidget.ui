@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>437</width>
-    <height>545</height>
+    <height>552</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,18 +15,9 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QLabel" name="filenameLabel">
-     <property name="font">
-      <font>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
+    <widget class="QLineEdit" name="filenameLabel">
      <property name="alignment">
       <set>Qt::AlignCenter</set>
-     </property>
-     <property name="textInteractionFlags">
-      <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
      </property>
     </widget>
    </item>
@@ -231,7 +222,7 @@
           <bool>false</bool>
          </attribute>
          <attribute name="verticalHeaderDefaultSectionSize">
-          <number>20</number>
+          <number>24</number>
          </attribute>
          <row>
           <property name="text">
@@ -559,7 +550,7 @@
           <bool>false</bool>
          </attribute>
          <attribute name="verticalHeaderDefaultSectionSize">
-          <number>20</number>
+          <number>24</number>
          </attribute>
          <row>
           <property name="text">
@@ -719,7 +710,7 @@
           <bool>false</bool>
          </attribute>
          <attribute name="verticalHeaderDefaultSectionSize">
-          <number>18</number>
+          <number>24</number>
          </attribute>
          <column>
           <property name="text">
@@ -840,6 +831,7 @@
   </customwidget>
  </customwidgets>
  <tabstops>
+  <tabstop>filenameLabel</tabstop>
   <tabstop>notesTextEdit</tabstop>
   <tabstop>speedSpinBox</tabstop>
   <tabstop>durationSpinBox</tabstop>

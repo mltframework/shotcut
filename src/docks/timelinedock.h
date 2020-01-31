@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2019 Meltytech, LLC
+ * Copyright (c) 2013-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -82,6 +82,7 @@ public:
     Q_INVOKABLE bool isFloating() const { return QDockWidget::isFloating(); }
     Q_INVOKABLE void copyToSource();
     Q_INVOKABLE static void openProperties();
+    void emitSelectedChanged(const QVector<int> &roles);
 
 signals:
     void currentTrackChanged();
@@ -148,6 +149,7 @@ public slots:
     void detachAudio(int trackIndex, int clipIndex);
     void selectAll();
     bool blockSelection(bool block);
+    void onProducerModified();
 
 protected:
     void dragEnterEvent(QDragEnterEvent* event);

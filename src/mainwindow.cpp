@@ -2809,8 +2809,6 @@ void MainWindow::onProducerModified()
 {
     setWindowModified(true);
     updateAutoSave();
-    if (playlist())
-        m_playlistDock->setUpdateButtonEnabled(true);
 }
 
 void MainWindow::onFilterModelChanged()
@@ -3024,6 +3022,8 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer* producer)
         }
         if (-1 != w->metaObject()->indexOfSignal("modified()")) {
             connect(w, SIGNAL(modified()), SLOT(onProducerModified()));
+            connect(w, SIGNAL(modified()), m_playlistDock, SLOT(onProducerModified()));
+            connect(w, SIGNAL(modified()), m_timelineDock, SLOT(onProducerModified()));
         }
         scrollArea->setWidget(w);
         onProducerChanged();

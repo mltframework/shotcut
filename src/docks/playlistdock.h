@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2019 Meltytech, LLC
+ * Copyright (c) 2012-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -138,6 +138,8 @@ private slots:
 
     void on_actionUpdateThumbnails_triggered();
 
+    void onProducerModified();
+
 protected:
     void keyPressEvent(QKeyEvent* event);
     void keyReleaseEvent(QKeyEvent* event);
@@ -145,6 +147,7 @@ protected:
 private:
     void setViewMode(PlaylistModel::ViewMode mode);
     void resetPlaylistIndex();
+    void emitDataChanged(const QVector<int> &roles);
 
     Ui::PlaylistDock *ui;
     QAbstractItemView *m_view;

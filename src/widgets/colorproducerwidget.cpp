@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2019 Meltytech, LLC
+ * Copyright (c) 2012-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@
 #include "shotcut_mlt_properties.h"
 #include "util.h"
 #include "mltcontroller.h"
+#include "Logger.h"
 
 static const QString kTransparent = QObject::tr("transparent", "Open Other > Color");
 
@@ -45,8 +46,9 @@ ColorProducerWidget::ColorProducerWidget(QWidget *parent) :
     ui(new Ui::ColorProducerWidget)
 {
     ui->setupUi(this);
+    m_title = ui->lineEdit->text();
     ui->colorLabel->setText(kTransparent);
-    Util::setColorsToHighlight(ui->label_2);
+    Util::setColorsToHighlight(ui->lineEdit, QPalette::Base);
     ui->preset->saveDefaultPreset(getPreset());
     ui->preset->loadPresets();
 }
@@ -80,7 +82,11 @@ Mlt::Producer* ColorProducerWidget::newProducer(Mlt::Profile& profile)
     p->set("resource", colorStringToResource(ui->colorLabel->text()).toLatin1().constData());
     p->set("mlt_image_format", "rgb24a");
     MLT.setDurationFromDefault(p);
-    p->set(kShotcutCaptionProperty, ui->colorLabel->text().toLatin1().constData());
+    if (ui->lineEdit->text().isEmpty() || ui->lineEdit->text() == m_title) {
+        p->set(kShotcutCaptionProperty, ui->colorLabel->text().toLatin1().constData());
+    } else {
+        p->set(kShotcutCaptionProperty, ui->lineEdit->text().toUtf8().constData());
+    }
     p->set(kShotcutDetailProperty, ui->colorLabel->text().toLatin1().constData());
     return p;
 }
@@ -100,12 +106,24 @@ void ColorProducerWidget::loadPreset(Mlt::Properties& p)
     ui->colorLabel->setStyleSheet(QString("color: %1; background-color: %2")
         .arg((color.value() < 150)? "white":"black")
         .arg(color.name()));
+    QString caption, detail;
     if (m_producer) {
         m_producer->set("resource", colorStringToResource(ui->colorLabel->text()).toLatin1().constData());
-        m_producer->set(kShotcutCaptionProperty, ui->colorLabel->text().toLatin1().constData());
+        caption = m_producer->get(kShotcutCaptionProperty);
+        detail = m_producer->get(kShotcutDetailProperty);
+
+        if (caption.isEmpty() || caption == detail)
+            m_producer->set(kShotcutCaptionProperty, ui->colorLabel->text().toLatin1().constData());
         m_producer->set(kShotcutDetailProperty, ui->colorLabel->text().toLatin1().constData());
         emit producerChanged(m_producer.data());
+    } else {
+        caption = p.get(kShotcutCaptionProperty);
+        detail = p.get(kShotcutDetailProperty);
     }
+    if (caption.isEmpty() || caption == detail) {
+        caption = m_title;
+    }
+    ui->lineEdit->setText(caption);
 }
 
 void ColorProducerWidget::on_preset_selected(void* p)
@@ -118,4 +136,17 @@ void ColorProducerWidget::on_preset_selected(void* p)
 void ColorProducerWidget::on_preset_saveClicked()
 {
     ui->preset->savePreset(getPreset());
+}
+
+void ColorProducerWidget::on_lineEdit_textEdited(const QString &arg1)
+{
+    if (m_producer) {
+        if (arg1.isEmpty()) {
+            m_producer->set(kShotcutCaptionProperty, ui->colorLabel->text().toLatin1().constData());
+            ui->lineEdit->setText(m_title);
+        } else {
+            m_producer->set(kShotcutCaptionProperty, arg1.toUtf8().constData());
+        }
+        emit modified();
+    }
 }

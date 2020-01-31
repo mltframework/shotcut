@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2018 Meltytech, LLC
+ * Copyright (c) 2012-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -97,11 +97,14 @@ private slots:
 
     void on_rangeComboBox_activated(int index);
 
+    void on_filenameLabel_textEdited(const QString &arg1);
+
 private:
     Ui::AvformatProducerWidget *ui;
     int m_defaultDuration;
     bool m_recalcDuration;
     bool m_askToConvert;
+    bool m_userDefinedCaption;
 
     void reopen(Mlt::Producer* p);
     void recreateProducer();
