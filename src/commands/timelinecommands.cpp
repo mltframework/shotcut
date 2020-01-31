@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2019 Meltytech, LLC
+ * Copyright (c) 2013-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1145,7 +1145,7 @@ void DetachAudioCommand::redo()
         if (m_targetTrackIndex > -1) {
             // Add the clip to the new audio track.
             m_undoHelper.recordBeforeState();
-            m_model.overwrite(m_targetTrackIndex, clip, m_position);
+            m_model.overwrite(m_targetTrackIndex, clip, m_position, false);
             m_undoHelper.recordAfterState();
         }
     }
