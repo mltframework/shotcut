@@ -58,15 +58,24 @@ void ImageProducerWidget::setProducer(Mlt::Producer* p)
     AbstractProducerWidget::setProducer(p);
     if (m_defaultDuration == -1)
         m_defaultDuration = m_producer->get_length();
-    QString s;
-    if (m_producer->get(kShotcutResourceProperty))
-        s = QString::fromUtf8(m_producer->get(kShotcutResourceProperty));
-    else {
-        s = QString::fromUtf8(m_producer->get("resource"));
+    QString resource;
+    if (m_producer->get(kShotcutResourceProperty)) {
+        resource = QString::fromUtf8(m_producer->get(kShotcutResourceProperty));
+    } else {
+        resource = QString::fromUtf8(m_producer->get("resource"));
         p->set("ttl", 1);
     }
-    ui->filenameLabel->setText(ui->filenameLabel->fontMetrics().elidedText(QDir::toNativeSeparators(s), Qt::ElideLeft, width() - 40));
+    QString name = Util::baseName(resource);
+    QString caption = m_producer->get(kShotcutCaptionProperty);
+    if (caption.isEmpty()) {
+        caption = name;
+        m_producer->set(kShotcutCaptionProperty, caption.toUtf8().constData());
+    }
+    ui->filenameLabel->setText(ui->filenameLabel->fontMetrics().elidedText(caption, Qt::ElideLeft, width() - 30));
     updateDuration();
+    resource = QDir::toNativeSeparators(resource);
+    ui->filenameLabel->setToolTip(resource);
+    m_producer->set(kShotcutDetailProperty, resource.toUtf8().constData());
     ui->resolutionLabel->setText(QString("%1x%2").arg(p->get("meta.media.width")).arg(p->get("meta.media.height")));
     ui->aspectNumSpinBox->blockSignals(true);
     if (p->get(kAspectRatioNumerator) && p->get(kAspectRatioDenominator)) {
@@ -306,4 +315,23 @@ void ImageProducerWidget::on_actionSetFileDate_triggered()
     QString resource = GetFilenameFromProducer(producer());
     FileDateDialog dialog(resource, producer(), this);
     dialog.exec();
+}
+
+void ImageProducerWidget::on_filenameLabel_editingFinished()
+{
+    if (m_producer) {
+        auto caption = ui->filenameLabel->text();
+        if (caption.isEmpty()) {
+            if (m_producer->get(kShotcutResourceProperty))
+                caption = QString::fromUtf8(m_producer->get(kShotcutResourceProperty));
+            else
+                caption = QString::fromUtf8(m_producer->get("resource"));
+            caption = Util::baseName(caption);
+            ui->filenameLabel->setText(caption);
+            m_producer->set(kShotcutCaptionProperty, caption.toUtf8().constData());
+        } else {
+            m_producer->set(kShotcutCaptionProperty, caption.toUtf8().constData());
+        }
+        emit modified();
+    }
 }
