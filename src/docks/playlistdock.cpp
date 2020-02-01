@@ -876,6 +876,14 @@ void PlaylistDock::resetPlaylistIndex()
         MLT.producer()->set(kPlaylistIndexProperty, nullptr, 0);
 }
 
+void PlaylistDock::emitDataChanged(const QVector<int> &roles)
+{
+    auto row = MLT.producer()->get_int(kPlaylistIndexProperty) - 1;
+    if (row < 0 || row >= m_model.rowCount()) return;
+    auto index = m_model.createIndex(row, PlaylistModel::COLUMN_RESOURCE);
+    emit m_model.dataChanged(index, index, roles);
+}
+
 #include "playlistdock.moc"
 
 void PlaylistDock::on_tilesButton_clicked()
@@ -991,4 +999,13 @@ void PlaylistDock::on_actionUpdateThumbnails_triggered()
     for (auto i = 0; i < m_model.rowCount(); i++) {
         m_model.updateThumbnails(i);
     }
+}
+
+void PlaylistDock::onProducerModified()
+{
+    if (!m_model.playlist()) return;
+    setUpdateButtonEnabled(true);
+
+    // The clip name may have changed.
+    emitDataChanged(QVector<int>() << PlaylistModel::FIELD_RESOURCE);
 }

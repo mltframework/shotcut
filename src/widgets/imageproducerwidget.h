@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2019 Meltytech, LLC
+ * Copyright (c) 2012-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -71,6 +71,8 @@ private slots:
 
     void on_actionSetFileDate_triggered();
 
+    void on_filenameLabel_editingFinished();
+    
 private:
     Ui::ImageProducerWidget *ui;
     int m_defaultDuration;

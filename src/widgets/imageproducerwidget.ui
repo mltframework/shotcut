@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>366</width>
-    <height>313</height>
+    <height>356</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,16 +15,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QLabel" name="filenameLabel">
-     <property name="font">
-      <font>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="text">
-      <string>TextLabel</string>
-     </property>
+    <widget class="QLineEdit" name="filenameLabel">
      <property name="alignment">
       <set>Qt::AlignCenter</set>
      </property>
@@ -324,11 +315,15 @@
   </customwidget>
  </customwidgets>
  <tabstops>
+  <tabstop>filenameLabel</tabstop>
+  <tabstop>notesTextEdit</tabstop>
+  <tabstop>defaultDurationButton</tabstop>
   <tabstop>aspectNumSpinBox</tabstop>
   <tabstop>aspectDenSpinBox</tabstop>
   <tabstop>sequenceCheckBox</tabstop>
   <tabstop>repeatSpinBox</tabstop>
   <tabstop>resetButton</tabstop>
+  <tabstop>menuButton</tabstop>
  </tabstops>
  <resources>
   <include location="../../icons/resources.qrc"/>

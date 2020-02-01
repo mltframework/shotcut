@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2019 Meltytech, LLC
+ * Copyright (c) 2014-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@
 #include <QMap>
 #include <QDoubleSpinBox>
 #include <QTemporaryFile>
-#include <QCoreApplication>
+#include <QApplication>
 
 #include <MltProducer.h>
 #include <Logger.h>
@@ -47,12 +47,27 @@ QString Util::baseName(const QString &filePath)
 
 void Util::setColorsToHighlight(QWidget* widget, QPalette::ColorRole role)
 {
-    QPalette palette = widget->palette();
-    palette.setColor(role, palette.color(palette.Highlight));
-    palette.setColor(role == QPalette::Button ? QPalette::ButtonText : QPalette::WindowText,
-        palette.color(palette.HighlightedText));
-    widget->setPalette(palette);
-    widget->setAutoFillBackground(true);
+    if (role == QPalette::Base) {
+        widget->setStyleSheet(
+                    "QLineEdit {"
+                        "font-weight: bold;"
+                        "background-color: palette(highlight);"
+                        "color: palette(highlighted-text);"
+                        "selection-background-color: palette(alternate-base);"
+                        "selection-color: palette(text);"
+                    "}"
+                    "QLineEdit:hover {"
+                        "border: 2px solid palette(button-text);"
+                    "}"
+        );
+    } else {
+        QPalette palette = QApplication::palette();
+        palette.setColor(role, palette.color(palette.Highlight));
+        palette.setColor(role == QPalette::Button ? QPalette::ButtonText : QPalette::WindowText,
+            palette.color(palette.HighlightedText));
+        widget->setPalette(palette);
+        widget->setAutoFillBackground(true);
+    }
 }
 
 void Util::showInFolder(const QString& path)

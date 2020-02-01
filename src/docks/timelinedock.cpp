@@ -410,6 +410,15 @@ void TimelineDock::openProperties()
     MAIN.onPropertiesDockTriggered(true);
 }
 
+void TimelineDock::emitSelectedChanged(const QVector<int> &roles)
+{
+    if (selection().isEmpty())
+        return;
+    auto point = selection().first();
+    auto index = model()->makeIndex(point.y(), point.x());
+    emit model()->dataChanged(index, index, roles);
+}
+
 void TimelineDock::clearSelectionIfInvalid()
 {
     QList<QPoint> newSelection;
@@ -831,6 +840,12 @@ bool TimelineDock::blockSelection(bool block)
 {
     m_blockSetSelection = block;
     return m_blockSetSelection;
+}
+
+void TimelineDock::onProducerModified()
+{
+    // The clip name may have changed.
+    emitSelectedChanged(QVector<int>() << MultitrackModel::NameRole);
 }
 
 void TimelineDock::setTrackName(int trackIndex, const QString &value)

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2019 Meltytech, LLC
+ * Copyright (c) 2012-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -85,9 +85,11 @@ AvformatProducerWidget::AvformatProducerWidget(QWidget *parent)
     , ui(new Ui::AvformatProducerWidget)
     , m_defaultDuration(-1)
     , m_recalcDuration(true)
+    , m_userDefinedCaption(false)
 {
     ui->setupUi(this);
-    Util::setColorsToHighlight(ui->filenameLabel);
+    ui->filenameLabel->setFrame(true);
+    Util::setColorsToHighlight(ui->filenameLabel, QPalette::Base);
     if (Settings.playerGPU())
         connect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame&)), this, SLOT(onFrameDisplayed(const SharedFrame&)));
     else
@@ -228,7 +230,8 @@ void AvformatProducerWidget::recreateProducer()
                  kPlaylistIndexProperty ","
                  kShotcutSkipConvertProperty ","
                  kCommentProperty ","
-                 kDefaultAudioIndexProperty);
+                 kDefaultAudioIndexProperty ","
+                 kShotcutCaptionProperty);
     Mlt::Controller::copyFilters(*m_producer, *p);
     if (m_producer->get(kMultitrackItemProperty)) {
         emit producerChanged(p);
@@ -250,11 +253,23 @@ void AvformatProducerWidget::onFrameDecoded()
     double warpSpeed = GetSpeedFromProducer(producer());
     QString resource = QDir::toNativeSeparators(GetFilenameFromProducer(producer()));
     QString name = Util::baseName(resource);
-    QString caption = name;
-    if(warpSpeed != 1.0)
-        caption = QString("%1 (%2x)").arg(name).arg(warpSpeed);
-    m_producer->set(kShotcutCaptionProperty, caption.toUtf8().constData());
-    ui->filenameLabel->setText(ui->filenameLabel->fontMetrics().elidedText(caption, Qt::ElideLeft, width() - 30));
+    QString caption = m_producer->get(kShotcutCaptionProperty);
+    if (caption.isEmpty() || caption.startsWith(name)) {
+        // compute the caption
+        if (warpSpeed != 1.0)
+            caption = QString("%1 (%2x)").arg(name).arg(warpSpeed);
+        else
+            caption = name;
+        m_producer->set(kShotcutCaptionProperty, caption.toUtf8().constData());
+        ui->filenameLabel->setText(ui->filenameLabel->fontMetrics().elidedText(caption, Qt::ElideLeft, width() - 30));
+        m_userDefinedCaption = false;
+    } else {
+        ui->filenameLabel->setText(ui->filenameLabel->fontMetrics().elidedText(caption, Qt::ElideLeft, width() - 30));
+        auto computedCaption = name;
+        if (warpSpeed != 1.0)
+            computedCaption = QString("%1 (%2x)").arg(name).arg(warpSpeed);
+        m_userDefinedCaption = caption != computedCaption;
+    }
     ui->filenameLabel->setToolTip(resource);
     ui->notesTextEdit->setPlainText(QString::fromUtf8(m_producer->get(kCommentProperty)));
     ui->durationSpinBox->setValue(m_producer->get_length());
@@ -951,5 +966,24 @@ void AvformatProducerWidget::on_rangeComboBox_activated(int index)
     if (m_producer) {
         m_producer->set("color_range", index? 2 : 1);
         recreateProducer();
+    }
+}
+
+void AvformatProducerWidget::on_filenameLabel_editingFinished()
+{
+    if (m_producer) {
+        const auto caption = ui->filenameLabel->text();
+        if (caption.isEmpty()) {
+            double warpSpeed = GetSpeedFromProducer(producer());
+            QString resource = GetFilenameFromProducer(producer());
+            QString caption = Util::baseName(resource);
+            if(warpSpeed != 1.0)
+                caption = QString("%1 (%2x)").arg(caption).arg(warpSpeed);
+            m_producer->set(kShotcutCaptionProperty, caption.toUtf8().constData());
+            ui->filenameLabel->setText(caption);
+        } else {
+            m_producer->set(kShotcutCaptionProperty, caption.toUtf8().constData());
+        }
+        emit modified();
     }
 }
