@@ -969,18 +969,20 @@ void AvformatProducerWidget::on_rangeComboBox_activated(int index)
     }
 }
 
-void AvformatProducerWidget::on_filenameLabel_textEdited(const QString &arg1)
+void AvformatProducerWidget::on_filenameLabel_editingFinished()
 {
     if (m_producer) {
-        if (arg1.isEmpty()) {
+        const auto caption = ui->filenameLabel->text();
+        if (caption.isEmpty()) {
             double warpSpeed = GetSpeedFromProducer(producer());
             QString resource = GetFilenameFromProducer(producer());
             QString caption = Util::baseName(resource);
             if(warpSpeed != 1.0)
                 caption = QString("%1 (%2x)").arg(caption).arg(warpSpeed);
             m_producer->set(kShotcutCaptionProperty, caption.toUtf8().constData());
+            ui->filenameLabel->setText(caption);
         } else {
-            m_producer->set(kShotcutCaptionProperty, arg1.toUtf8().constData());
+            m_producer->set(kShotcutCaptionProperty, caption.toUtf8().constData());
         }
         emit modified();
     }

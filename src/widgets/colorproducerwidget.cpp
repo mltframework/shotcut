@@ -138,14 +138,15 @@ void ColorProducerWidget::on_preset_saveClicked()
     ui->preset->savePreset(getPreset());
 }
 
-void ColorProducerWidget::on_lineEdit_textEdited(const QString &arg1)
+void ColorProducerWidget::on_lineEdit_editingFinished()
 {
     if (m_producer) {
-        if (arg1.isEmpty()) {
+        const auto caption = ui->lineEdit->text();
+        if (caption.isEmpty()) {
             m_producer->set(kShotcutCaptionProperty, ui->colorLabel->text().toLatin1().constData());
             ui->lineEdit->setText(m_title);
         } else {
-            m_producer->set(kShotcutCaptionProperty, arg1.toUtf8().constData());
+            m_producer->set(kShotcutCaptionProperty, caption.toUtf8().constData());
         }
         emit modified();
     }

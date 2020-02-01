@@ -97,7 +97,7 @@ private slots:
 
     void on_rangeComboBox_activated(int index);
 
-    void on_filenameLabel_textEdited(const QString &arg1);
+    void on_filenameLabel_editingFinished();
 
 private:
     Ui::AvformatProducerWidget *ui;

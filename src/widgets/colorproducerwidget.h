@@ -47,7 +47,7 @@ private slots:
     void on_preset_selected(void* p);
     void on_preset_saveClicked();
 
-    void on_lineEdit_textEdited(const QString &arg1);
+    void on_lineEdit_editingFinished();
 
 private:
     Ui::ColorProducerWidget *ui;
