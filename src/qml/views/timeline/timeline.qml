@@ -30,14 +30,21 @@ Rectangle {
 
     signal clipClicked()
 
-    function setZoom(value) {
+    function setZoom(value, targetX) {
+        if (!targetX)
+            targetX = scrollView.flickableItem.contentX + scrollView.width / 2
+        var offset = targetX - scrollView.flickableItem.contentX
+        var before = multitrack.scaleFactor
+
         toolbar.scaleSlider.value = value
+        scrollView.flickableItem.contentX = (targetX * multitrack.scaleFactor / before) - offset
+
         for (var i = 0; i < tracksRepeater.count; i++)
             tracksRepeater.itemAt(i).redrawWaveforms(false)
     }
 
-    function adjustZoom(by) {
-        setZoom(toolbar.scaleSlider.value + by)
+    function adjustZoom(by, targetX) {
+        setZoom(toolbar.scaleSlider.value + by, targetX)
     }
 
     function zoomIn() {
@@ -628,7 +635,6 @@ Rectangle {
     Connections {
         target: multitrack
         onLoaded: toolbar.scaleSlider.value = Math.pow(multitrack.scaleFactor - 0.01, 1.0 / 3.0)
-        onScaleFactorChanged: Logic.scrollIfNeeded()
     }
 
     // This provides continuous scrolling at the left/right edges.

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2019 Meltytech, LLC
+ * Copyright (c) 2013-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -115,7 +115,7 @@ function onMouseWheel(wheel) {
     if ((wheel.modifiers & Qt.ControlModifier) || (wheel.modifiers & Qt.ShiftModifier)) {
         // Zoom
         if (wheel.modifiers & Qt.ControlModifier) {
-            adjustZoom(wheel.angleDelta.y / 720)
+            adjustZoom(wheel.angleDelta.y / 720, wheel.x)
         }
         if (wheel.modifiers & Qt.ShiftModifier) {
             multitrack.trackHeight = Math.max(10, multitrack.trackHeight + wheel.angleDelta.y / 5)
