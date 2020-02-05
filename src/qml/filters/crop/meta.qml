@@ -6,7 +6,7 @@ Metadata {
     name: qsTr("Crop: Source")
     mlt_service: "crop"
     qml: "ui.qml"
-    gpuAlt: "crop"
+    gpuAlt: "movit.crop"
     allowMultiple: false
     isClipOnly: true
 }
