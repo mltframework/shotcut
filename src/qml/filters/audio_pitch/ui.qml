@@ -145,7 +145,8 @@ Item {
             id: octaveSlider
             minimumValue: -2.0
             maximumValue: 2.0
-            decimals: 3
+            decimals: 6
+            spinnerWidth: 100
             onValueChanged: {
                 updateFilter(getPosition())
                 if (frequencySlider.noUpdate == false) {
@@ -182,7 +183,8 @@ Item {
             id: frequencySlider
             minimumValue: 0.25
             maximumValue: 4.0
-            decimals: 3
+            decimals: 6
+            spinnerWidth: 100
             suffix: ' x'
             enabled: octaveSlider.enabled
             onValueChanged: {
