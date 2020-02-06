@@ -192,7 +192,7 @@ void VideoVectorScopeWidget::drawSkinToneLine(QPainter& p, qreal lineWidth)
 
 void VideoVectorScopeWidget::drawGraticuleMark(QPainter& p, const QPoint& point, QColor color, qreal lineWidth, qreal LineLength)
 {
-    color = color.darker(300);
+    color = color.darker(100);
     p.setBrush(color);
     p.setPen(QPen(color, lineWidth, Qt::SolidLine, Qt::RoundCap));
     QLineF angleline;
