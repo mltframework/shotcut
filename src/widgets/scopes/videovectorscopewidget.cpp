@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Meltytech, LLC
+ * Copyright (c) 2019-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -211,15 +211,7 @@ void VideoVectorScopeWidget::paintEvent(QPaintEvent*)
     if (!isVisible())
         return;
 
-    // Calculate the size. Vectorscope is always a square.
-    QRect squareRect;
-    if (width() > height()) {
-        int x = (width() - height()) / 2;
-        squareRect = QRect(x, 0, height(), height());
-    } else {
-        int y = (height() - width()) / 2;
-        squareRect = QRect(0, y, width(), width());
-    }
+    QRect squareRect = getCenteredSquare();
 
     // Create the painter
     QPainter p(this);
@@ -238,10 +230,31 @@ void VideoVectorScopeWidget::paintEvent(QPaintEvent*)
 
 void VideoVectorScopeWidget::mouseMoveEvent(QMouseEvent *event)
 {
-    qreal u = (qreal)event->pos().x() * 256.0 / width();
-    qreal v = (qreal)(height() - event->pos().y()) * 256.0 / height();
+    QRectF squareRect = getCenteredSquare();
+    if (!squareRect.contains(event->pos())) {
+        QToolTip::hideText();
+        return;
+    }
+    qreal realX = (qreal)event->pos().x() - ((qreal)width() - squareRect.width()) / 2;
+    qreal realY = (qreal)event->pos().y() - ((qreal)height() - squareRect.height()) / 2;
+    qreal u = realX * 255.0 / squareRect.width();
+    qreal v = (squareRect.height() - realY) * 255.0 / squareRect.height();
     QString text =  QString(tr("U: %1\nV: %2")).arg(QString::number(qRound(u)), QString::number(qRound(v)));
     QToolTip::showText(event->globalPos(), text);
+}
+
+QRect VideoVectorScopeWidget::getCenteredSquare()
+{
+    // Calculate the size. Vectorscope is always a square.
+    QRect squareRect;
+    if (width() > height()) {
+        int x = (width() - height()) / 2;
+        squareRect = QRect(x, 0, height(), height());
+    } else {
+        int y = (height() - width()) / 2;
+        squareRect = QRect(0, y, width(), width());
+    }
+    return squareRect;
 }
 
 void VideoVectorScopeWidget::profileChanged()

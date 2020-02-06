@@ -58,6 +58,7 @@ private:
     // Called in UI thread
     void paintEvent(QPaintEvent*) Q_DECL_OVERRIDE;
     void mouseMoveEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
+    QRect getCenteredSquare();
 
     // Only accessed by the scope thread
     SharedFrame m_frame;
