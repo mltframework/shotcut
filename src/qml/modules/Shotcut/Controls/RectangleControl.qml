@@ -29,6 +29,7 @@ Item {
     property alias rectangle: rectangle
     property color handleColor: Qt.rgba(1, 1, 1, enabled? 0.9 : 0.2)
     property int snapMargin: 10
+    property bool _positionDragLocked: false
 
     signal rectChanged(Rectangle rect)
 
@@ -129,46 +130,10 @@ Item {
         anchors.right: bottomRightHandle.right
         anchors.bottom: bottomRightHandle.bottom
         MouseArea {
-            id: positionMouseArea
             anchors.fill: parent
             acceptedButtons: Qt.LeftButton
-            cursorShape: Qt.SizeAllCursor
-            drag.target: rectangle
-            onEntered: {
-                rectangle.anchors.top = undefined
-                rectangle.anchors.left = undefined
-                rectangle.anchors.right = undefined
-                rectangle.anchors.bottom = undefined
-                topLeftHandle.anchors.left = rectangle.left
-                topLeftHandle.anchors.top = rectangle.top
-                topRightHandle.anchors.right = rectangle.right
-                topRightHandle.anchors.top = rectangle.top
-                bottomLeftHandle.anchors.left = rectangle.left
-                bottomLeftHandle.anchors.bottom = rectangle.bottom
-                bottomRightHandle.anchors.right = rectangle.right
-                bottomRightHandle.anchors.bottom = rectangle.bottom
-            }
-            onPositionChanged: {
-                rectangle.x = snapX(rectangle.x + rectangle.width / 2) - rectangle.width / 2
-                rectangle.y = snapY(rectangle.y + rectangle.height / 2) - rectangle.height / 2
-                rectChanged(rectangle)
-            }
-            onReleased: {
-                rectChanged(rectangle)
-                rectangle.anchors.top = topLeftHandle.top
-                rectangle.anchors.left = topLeftHandle.left
-                rectangle.anchors.right = bottomRightHandle.right
-                rectangle.anchors.bottom = bottomRightHandle.bottom
-                topLeftHandle.anchors.left = undefined
-                topLeftHandle.anchors.top = undefined
-                topRightHandle.anchors.right = undefined
-                topRightHandle.anchors.top = undefined
-                bottomLeftHandle.anchors.left = undefined
-                bottomLeftHandle.anchors.bottom = undefined
-                bottomRightHandle.anchors.right = undefined
-                bottomRightHandle.anchors.bottom = undefined
-            }
-        }
+            onDoubleClicked: _positionDragLocked = !_positionDragLocked
+        }        
     }
     Rectangle {
         // Provides contrasting thick line to above rectangle.
@@ -180,13 +145,65 @@ Item {
     }
     Rectangle {
         id: positionHandle
-        color: Qt.rgba(0, 0, 0, item.enabled? 0.5 : 0.2)
+        opacity: item.enabled? 0.5 : 0.2
         border.width: borderSize
         border.color: handleColor
         width: handleSize * 2
         height: handleSize * 2
         radius: width / 2
         anchors.centerIn: rectangle
+        gradient: Gradient {
+            GradientStop {
+                position: (_positionDragLocked || positionMouseArea.pressed)? 0.0 : 1.0
+                color: 'black'
+            }
+            GradientStop {
+                position: (_positionDragLocked || positionMouseArea.pressed)? 1.0 : 0.0
+                color: 'white'
+            }
+        }
+    }
+    MouseArea {
+        id: positionMouseArea
+        anchors.fill: _positionDragLocked? rectangle : positionHandle
+        acceptedButtons: Qt.LeftButton
+        cursorShape: Qt.SizeAllCursor
+        drag.target: rectangle
+        onDoubleClicked: _positionDragLocked = !_positionDragLocked
+        onEntered: {
+            rectangle.anchors.top = undefined
+            rectangle.anchors.left = undefined
+            rectangle.anchors.right = undefined
+            rectangle.anchors.bottom = undefined
+            topLeftHandle.anchors.left = rectangle.left
+            topLeftHandle.anchors.top = rectangle.top
+            topRightHandle.anchors.right = rectangle.right
+            topRightHandle.anchors.top = rectangle.top
+            bottomLeftHandle.anchors.left = rectangle.left
+            bottomLeftHandle.anchors.bottom = rectangle.bottom
+            bottomRightHandle.anchors.right = rectangle.right
+            bottomRightHandle.anchors.bottom = rectangle.bottom
+        }
+        onPositionChanged: {
+            rectangle.x = snapX(rectangle.x + rectangle.width / 2) - rectangle.width / 2
+            rectangle.y = snapY(rectangle.y + rectangle.height / 2) - rectangle.height / 2
+            rectChanged(rectangle)
+        }
+        onReleased: {
+            rectChanged(rectangle)
+            rectangle.anchors.top = topLeftHandle.top
+            rectangle.anchors.left = topLeftHandle.left
+            rectangle.anchors.right = bottomRightHandle.right
+            rectangle.anchors.bottom = bottomRightHandle.bottom
+            topLeftHandle.anchors.left = undefined
+            topLeftHandle.anchors.top = undefined
+            topRightHandle.anchors.right = undefined
+            topRightHandle.anchors.top = undefined
+            bottomLeftHandle.anchors.left = undefined
+            bottomLeftHandle.anchors.bottom = undefined
+            bottomRightHandle.anchors.right = undefined
+            bottomRightHandle.anchors.bottom = undefined            
+        }
     }
     Rectangle {
         id: topLeftHandle
