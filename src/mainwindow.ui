@@ -1019,6 +1019,9 @@
    <property name="text">
     <string>540p</string>
    </property>
+   <property name="shortcut">
+    <string>F8</string>
+   </property>
   </action>
   <action name="actionPreview720">
    <property name="checkable">
@@ -1026,6 +1029,9 @@
    </property>
    <property name="text">
     <string>720p</string>
+   </property>
+   <property name="shortcut">
+    <string>F9</string>
    </property>
   </action>
   <action name="actionPreviewNone">
@@ -1035,6 +1041,9 @@
    <property name="text">
     <string>None</string>
    </property>
+   <property name="shortcut">
+    <string>F6</string>
+   </property>
   </action>
   <action name="actionPreview360">
    <property name="checkable">
@@ -1042,6 +1051,9 @@
    </property>
    <property name="text">
     <string>360p</string>
+   </property>
+   <property name="shortcut">
+    <string>F7</string>
    </property>
   </action>
  </widget>
