@@ -37,7 +37,9 @@ Rectangle {
         var before = multitrack.scaleFactor
 
         toolbar.scaleSlider.value = value
-        scrollView.flickableItem.contentX = (targetX * multitrack.scaleFactor / before) - offset
+
+        if (!settings.timelineCenterPlayhead)
+            scrollView.flickableItem.contentX = (targetX * multitrack.scaleFactor / before) - offset
 
         for (var i = 0; i < tracksRepeater.count; i++)
             tracksRepeater.itemAt(i).redrawWaveforms(false)
@@ -635,6 +637,7 @@ Rectangle {
     Connections {
         target: multitrack
         onLoaded: toolbar.scaleSlider.value = Math.pow(multitrack.scaleFactor - 0.01, 1.0 / 3.0)
+        onScaleFactorChanged: if (settings.timelineCenterPlayhead) Logic.scrollIfNeeded()
     }
 
     // This provides continuous scrolling at the left/right edges.

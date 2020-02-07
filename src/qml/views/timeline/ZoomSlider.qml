@@ -52,8 +52,12 @@ Rectangle {
                 var targetX = scrollView.flickableItem.contentX + scrollView.width / 2
                 var offset = targetX - scrollView.flickableItem.contentX
                 var before = multitrack.scaleFactor
+
                 setScaleFactor()
-                scrollView.flickableItem.contentX = (targetX * multitrack.scaleFactor / before) - offset
+
+                if (!settings.timelineCenterPlayhead)
+                    scrollView.flickableItem.contentX = (targetX * multitrack.scaleFactor / before) - offset
+
                 for (var i = 0; i < tracksRepeater.count; i++)
                     tracksRepeater.itemAt(i).redrawWaveforms(false)
             }
