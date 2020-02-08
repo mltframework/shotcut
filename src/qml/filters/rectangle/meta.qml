@@ -5,6 +5,7 @@ Metadata {
     type: Metadata.Filter
     objectName: 'rectangle'
     name: qsTr('Rectangle')
+    isHidden: true
     mlt_service: 'webvfx'
     qml: 'ui.qml'
     vui: 'vui.qml'
