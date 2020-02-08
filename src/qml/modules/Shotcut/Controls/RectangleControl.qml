@@ -129,11 +129,6 @@ Item {
         anchors.left: topLeftHandle.left
         anchors.right: bottomRightHandle.right
         anchors.bottom: bottomRightHandle.bottom
-        MouseArea {
-            anchors.fill: parent
-            acceptedButtons: Qt.LeftButton
-            onDoubleClicked: _positionDragLocked = !_positionDragLocked
-        }        
     }
     Rectangle {
         // Provides contrasting thick line to above rectangle.
