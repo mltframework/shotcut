@@ -136,6 +136,7 @@ Item {
     }
 
     function updateFilterRect(position) {
+        if (blockUpdate) return
         var rect
 
         if (position !== null) {
@@ -196,11 +197,12 @@ Item {
             onPresetSelected: {
                 setRatioControls()
                 setRectControls()
-                fillColorPicker.value = filter.get('color')
+                blockUpdate = true
+                fillColorPicker.colors = filter.getGradient('color')
                 borderColorPicker.value = filter.get('border.color')
                 borderWidthSpinner.value = filter.get('border.width')
+                blockUpdate = false
                 positionKeyframesButton.checked = filter.keyframeCount(rectProperty) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
-                filter.blockSignals = true
                 middleValueRadius = filter.getDouble('radius', filter.animateIn)
                 filter.set(middleValueRect, filter.getRect(rectProperty, filter.animateIn + 1))
                 if (filter.animateIn > 0) {
@@ -211,7 +213,6 @@ Item {
                     endValueRadius = filter.getDouble('radius', filter.duration - 1)
                     filter.set(endValueRect, filter.getRect(rectProperty, filter.duration - 1))
                 }
-                filter.blockSignals = false
             }
         }
 
@@ -353,7 +354,7 @@ Item {
                 id: borderColorPicker
                 eyedropper: false
                 alpha: true
-                onValueChanged: filter.set('border.color', value)
+                onValueChanged: if (!blockUpdate) filter.set('border.color', value)
             }
             Label {
                 text: qsTr('Thickness')
@@ -365,7 +366,7 @@ Item {
                 Layout.columnSpan: 3
                 minimumValue: 0
                 decimals: 0
-                onValueChanged: filter.set('border.width', value)
+                onValueChanged: if (!blockUpdate) filter.set('border.width', value)
             }
         }
 
