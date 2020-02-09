@@ -27,7 +27,7 @@
 #include <QOffscreenSurface>
 #include <QMutex>
 #include <QThread>
-#include <QRect>
+#include <QRectF>
 #include <QTimer>
 #include "mltcontroller.h"
 #include "sharedframe.h"
@@ -48,7 +48,7 @@ typedef void* ( *thread_function_t )( void* );
 class GLWidget : public QQuickWidget, public Controller, protected QOpenGLFunctions
 {
     Q_OBJECT
-    Q_PROPERTY(QRect rect READ rect NOTIFY rectChanged)
+    Q_PROPERTY(QRectF rect READ rect NOTIFY rectChanged)
     Q_PROPERTY(int grid READ grid NOTIFY gridChanged)
     Q_PROPERTY(bool snapToGrid READ snapToGrid NOTIFY snapToGridChanged)
     Q_PROPERTY(float zoom READ zoom NOTIFY zoomChanged)
@@ -83,7 +83,7 @@ public:
 
     QObject* videoWidget() { return this; }
     Filter* glslManager() const { return m_glslManager; }
-    QRect rect() const { return m_rect; }
+    QRectF rect() const { return m_rect; }
     int grid() const { return m_grid; }
     float zoom() const { return m_zoom * MLT.profile().width() / m_rect.width(); }
     QPoint offset() const;
@@ -118,7 +118,7 @@ signals:
     void toggleZoom(bool);
 
 private:
-    QRect m_rect;
+    QRectF m_rect;
     int m_grid;
     GLuint m_texture[3];
     QOpenGLShaderProgram* m_shader;

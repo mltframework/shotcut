@@ -191,7 +191,7 @@ void GLWidget::setBlankScene()
 
 void GLWidget::resizeGL(int width, int height)
 {
-    int x, y, w, h;
+    double x, y, w, h;
     double this_aspect = (double) width / height;
     double video_aspect = profile().dar();
 
@@ -213,8 +213,8 @@ void GLWidget::resizeGL(int width, int height)
         w = height * video_aspect;
         h = height;
     }
-    x = (width - w) / 2;
-    y = (height - h) / 2;
+    x = (width - w) / 2.0;
+    y = (height - h) / 2.0;
     m_rect.setRect(x, y, w, h);
     emit rectChanged();
 }
@@ -348,8 +348,8 @@ void GLWidget::paintGL()
 #ifndef QT_NO_DEBUG
     QOpenGLFunctions* f = quickWindow()->openglContext()->functions();
 #endif
-    int width = this->width() * devicePixelRatio();
-    int height = this->height() * devicePixelRatio();
+    float width = this->width() * devicePixelRatio();
+    float height = this->height() * devicePixelRatio();
 
     glDisable(GL_BLEND);
     glDisable(GL_DEPTH_TEST);
@@ -424,10 +424,10 @@ void GLWidget::paintGL()
     QVector<QVector2D> vertices;
     width = m_rect.width() * devicePixelRatio();
     height = m_rect.height() * devicePixelRatio();
-    vertices << QVector2D(float(-width)/2.0f, float(-height)/2.0f);
-    vertices << QVector2D(float(-width)/2.0f, float( height)/2.0f);
-    vertices << QVector2D(float( width)/2.0f, float(-height)/2.0f);
-    vertices << QVector2D(float( width)/2.0f, float( height)/2.0f);
+    vertices << QVector2D(-width/2.0f, -height/2.0f);
+    vertices << QVector2D(-width/2.0f, height/2.0f);
+    vertices << QVector2D(width/2.0f, -height/2.0f);
+    vertices << QVector2D(width/2.0f, height/2.0f);
     m_shader->enableAttributeArray(m_vertexLocation);
     check_error(f);
     m_shader->setAttributeArray(m_vertexLocation, vertices.constData());
