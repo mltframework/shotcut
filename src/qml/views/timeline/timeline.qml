@@ -95,7 +95,6 @@ Rectangle {
         anchors.fill: parent
         acceptedButtons: Qt.RightButton
         onClicked: menu.popup()
-        onWheel: Logic.onMouseWheel(wheel)
     }
 
     DropArea {
@@ -235,6 +234,8 @@ Rectangle {
                 else
                     scim = false
             }
+            onWheel: Logic.onMouseWheel(wheel)
+
             Timer {
                 id: scrubTimer
                 interval: 25
@@ -276,7 +277,7 @@ Rectangle {
         
                     MouseArea {
                         width: tracksContainer.width + headerWidth
-                        height: trackHeaders.height + 30 // 30 is padding
+                        height: Math.max(trackHeaders.height + 30, root.height - ruler.height - toolbar.height)
                         acceptedButtons: Qt.NoButton
                         onWheel: Logic.onMouseWheel(wheel)
 

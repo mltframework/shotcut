@@ -115,10 +115,10 @@ function onMouseWheel(wheel) {
     if ((wheel.modifiers & Qt.ControlModifier) || (wheel.modifiers & Qt.ShiftModifier)) {
         // Zoom
         if (wheel.modifiers & Qt.ControlModifier) {
-            adjustZoom(wheel.angleDelta.y / 720, wheel.x)
+            adjustZoom(wheel.angleDelta.y / 2000, wheel.x)
         }
         if (wheel.modifiers & Qt.ShiftModifier) {
-            multitrack.trackHeight = Math.max(10, multitrack.trackHeight + wheel.angleDelta.y / 5)
+            multitrack.trackHeight = Math.max(10, multitrack.trackHeight + wheel.angleDelta.y / 25)
         }
     } else {
         // Scroll
@@ -132,12 +132,15 @@ function onMouseWheel(wheel) {
                 scrollView.flickableItem.contentX = clamp(scrollView.flickableItem.contentX - x, 0, maxWidth)
             scrollView.flickableItem.contentY = clamp(scrollView.flickableItem.contentY - y, 0, maxHeight)
         } else {
-            // Vertical only mouse wheel requires modifier for vertical scroll.
-            var y = Math.round(wheel.angleDelta.y / 5)
-            if ((wheel.modifiers & Qt.AltModifier) || (wheel.modifiers & Qt.MetaModifier))
-                scrollView.flickableItem.contentX = clamp(scrollView.flickableItem.contentX - y, 0, maxWidth)
-            else
-                scrollView.flickableItem.contentY = clamp(scrollView.flickableItem.contentY - y, 0, maxHeight)
+            // Vertical only mouse wheel requires modifier for horizontal scroll.
+            var n
+            if ((wheel.modifiers & Qt.AltModifier) || (wheel.modifiers & Qt.MetaModifier)) {
+                n = Math.round(wheel.angleDelta.x / 2)
+                scrollView.flickableItem.contentX = clamp(scrollView.flickableItem.contentX - n, 0, maxWidth)
+            } else {
+                n = Math.round(wheel.angleDelta.y / 2)
+                scrollView.flickableItem.contentY = clamp(scrollView.flickableItem.contentY - n, 0, maxHeight)
+            }
         }
     }
 }
