@@ -132,14 +132,14 @@ function onMouseWheel(wheel) {
                 scrollView.flickableItem.contentX = clamp(scrollView.flickableItem.contentX - x, 0, maxWidth)
             scrollView.flickableItem.contentY = clamp(scrollView.flickableItem.contentY - y, 0, maxHeight)
         } else {
-            // Vertical only mouse wheel requires modifier for horizontal scroll.
+            // Vertical only mouse wheel requires modifier for vertical scroll.
             var n
             if ((wheel.modifiers & Qt.AltModifier) || (wheel.modifiers & Qt.MetaModifier)) {
                 n = Math.round(wheel.angleDelta.x / 2)
-                scrollView.flickableItem.contentX = clamp(scrollView.flickableItem.contentX - n, 0, maxWidth)
+                scrollView.flickableItem.contentY = clamp(scrollView.flickableItem.contentY - n, 0, maxHeight)
             } else {
                 n = Math.round(wheel.angleDelta.y / 2)
-                scrollView.flickableItem.contentY = clamp(scrollView.flickableItem.contentY - n, 0, maxHeight)
+                scrollView.flickableItem.contentX = clamp(scrollView.flickableItem.contentX - n, 0, maxWidth)
             }
         }
     }
