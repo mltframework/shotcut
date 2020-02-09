@@ -3186,6 +3186,7 @@ void MainWindow::on_actionProgressive_triggered(bool checked)
         MLT.pause();
     if (MLT.consumer()) {
         MLT.profile().set_progressive(checked);
+        MLT.updatePreviewProfile();
         MLT.restart();
     }
     Settings.setPlayerProgressive(checked);
