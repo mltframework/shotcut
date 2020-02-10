@@ -123,8 +123,12 @@ Mlt::Producer* AvformatProducerWidget::newProducer(Mlt::Profile& profile)
         p = new Mlt::Producer(profile, s.toUtf8().constData());
         p->set(kShotcutProducerProperty, "avformat");
     }
-    if (p->is_valid())
+    if (p->is_valid()) {
         p->set("video_delay", double(ui->syncSlider->value()) / 1000);
+        if (ui->pitchCheckBox->checkState() == Qt::Checked) {
+            m_producer->set("warp_pitch", 1);
+        }
+    }
     return p;
 }
 
@@ -223,7 +227,7 @@ void AvformatProducerWidget::recreateProducer()
 {
     Mlt::Producer* p = newProducer(MLT.profile());
     p->pass_list(*m_producer, "audio_index, video_index, force_aspect_ratio,"
-                 "video_delay, force_progressive, force_tff, set.force_full_luma, color_range,"
+                 "video_delay, force_progressive, force_tff, set.force_full_luma, color_range, warp_pitch,"
                  kAspectRatioNumerator ","
                  kAspectRatioDenominator ","
                  kShotcutHashProperty ","
@@ -275,6 +279,16 @@ void AvformatProducerWidget::onFrameDecoded()
     ui->durationSpinBox->setValue(m_producer->get_length());
     m_recalcDuration = false;
     ui->speedSpinBox->setValue(warpSpeed);
+    if (warpSpeed == 1.0) {
+        ui->pitchCheckBox->setEnabled(false);
+    } else {
+        ui->pitchCheckBox->setEnabled(true);
+    }
+    if (m_producer->get_int("warp_pitch") == 1) {
+        ui->pitchCheckBox->setCheckState(Qt::Checked);
+    } else {
+        ui->pitchCheckBox->setCheckState(Qt::Unchecked);
+    }
     ui->rangeComboBox->setEnabled(true);
 
     // populate the track combos
@@ -508,6 +522,7 @@ void AvformatProducerWidget::onFrameDecoded()
 void AvformatProducerWidget::on_resetButton_clicked()
 {
     ui->speedSpinBox->setValue(1.0);
+    ui->pitchCheckBox->setCheckState(Qt::Unchecked);
     Mlt::Producer* p = newProducer(MLT.profile());
     ui->durationSpinBox->setValue(m_defaultDuration);
     ui->syncSlider->setValue(0);
@@ -607,8 +622,25 @@ void AvformatProducerWidget::on_speedSpinBox_editingFinished()
         return;
     if (ui->speedSpinBox->value() == GetSpeedFromProducer(producer()))
         return;
+    if (ui->speedSpinBox->value() == 1.0) {
+        ui->pitchCheckBox->setEnabled(false);
+    } else {
+        ui->pitchCheckBox->setEnabled(true);
+    }
     m_recalcDuration = true;
     recreateProducer();
+}
+
+void AvformatProducerWidget::on_pitchCheckBox_stateChanged(int state)
+{
+    if (!m_producer)
+        return;
+    if (state == Qt::Unchecked) {
+        m_producer->set("warp_pitch", 0);
+    } else {
+        m_producer->set("warp_pitch", 1);
+    }
+    emit modified();
 }
 
 void AvformatProducerWidget::on_syncSlider_valueChanged(int value)

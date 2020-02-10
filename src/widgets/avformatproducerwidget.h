@@ -73,6 +73,8 @@ private slots:
 
     void on_speedSpinBox_editingFinished();
 
+    void on_pitchCheckBox_stateChanged(int state);
+
     void on_syncSlider_valueChanged(int value);
 
     void on_actionOpenFolder_triggered();
