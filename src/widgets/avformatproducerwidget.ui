@@ -48,8 +48,8 @@
     </widget>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_6">
-     <item>
+    <layout class="QGridLayout" name="gridLayout_1">
+     <item row="0" column="0">
       <widget class="QLabel" name="speedLabel">
        <property name="text">
         <string>Speed</string>
@@ -59,7 +59,7 @@
        </property>
       </widget>
      </item>
-     <item>
+     <item row="0" column="1">
       <widget class="QDoubleSpinBox" name="speedSpinBox">
        <property name="focusPolicy">
         <enum>Qt::StrongFocus</enum>
@@ -93,7 +93,17 @@
        </property>
       </widget>
      </item>
-     <item>
+     <item  row="0" column="2">
+      <widget class="QCheckBox" name="pitchCheckBox">
+       <property name="text">
+        <string>Pitch Compensation</string>
+       </property>
+       <property name="toolTip">
+        <string>Apply pitch compensation when the speed is changed.</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
       <widget class="QLabel" name="durationLabel">
        <property name="text">
         <string>Duration</string>
@@ -103,7 +113,7 @@
        </property>
       </widget>
      </item>
-     <item>
+     <item row="1" column="1">
       <widget class="TimeSpinBox" name="durationSpinBox">
        <property name="focusPolicy">
         <enum>Qt::StrongFocus</enum>
@@ -122,8 +132,8 @@
        </property>
       </widget>
      </item>
-     <item>
-      <spacer name="horizontalSpacer_4">
+     <item row="1" column="2">
+      <spacer name="horizontalSpacer_2">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
@@ -146,7 +156,7 @@
       <attribute name="title">
        <string>Video</string>
       </attribute>
-      <layout class="QGridLayout" name="gridLayout">
+      <layout class="QGridLayout" name="gridLayout_2">
        <item row="5" column="0" colspan="3">
         <spacer name="verticalSpacer_3">
          <property name="orientation">
@@ -293,7 +303,7 @@
           </widget>
          </item>
          <item>
-          <spacer name="horizontalSpacer_2">
+          <spacer name="horizontalSpacer_3">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
            </property>
@@ -318,7 +328,7 @@
         </widget>
        </item>
        <item row="0" column="0" colspan="3">
-        <layout class="QHBoxLayout" name="horizontalLayout_4">
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
          <item>
           <widget class="QLabel" name="trackLabel">
            <property name="text">
@@ -337,7 +347,7 @@
           </widget>
          </item>
          <item>
-          <spacer name="horizontalSpacer_5">
+          <spacer name="horizontalSpacer_4">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
            </property>
@@ -352,7 +362,7 @@
         </layout>
        </item>
        <item row="2" column="2">
-        <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <layout class="QHBoxLayout" name="horizontalLayout_4">
          <item>
           <widget class="QSpinBox" name="aspectNumSpinBox">
            <property name="alignment">
@@ -414,7 +424,7 @@
         </layout>
        </item>
        <item row="3" column="2">
-        <layout class="QHBoxLayout" name="horizontalLayout_9">
+        <layout class="QHBoxLayout" name="horizontalLayout_5">
          <item>
           <widget class="QComboBox" name="scanComboBox">
            <item>
@@ -444,7 +454,7 @@
           </widget>
          </item>
          <item>
-          <spacer name="horizontalSpacer_9">
+          <spacer name="horizontalSpacer_5">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
            </property>
@@ -464,7 +474,7 @@
       <attribute name="title">
        <string>Audio</string>
       </attribute>
-      <layout class="QGridLayout" name="gridLayout_2">
+      <layout class="QGridLayout" name="gridLayout_3">
        <item row="0" column="0">
         <widget class="QLabel" name="trackLabel_2">
          <property name="text">
@@ -476,12 +486,12 @@
         </widget>
        </item>
        <item row="0" column="1">
-        <layout class="QHBoxLayout" name="horizontalLayout_8">
+        <layout class="QHBoxLayout" name="horizontalLayout_6">
          <item>
           <widget class="QComboBox" name="audioTrackComboBox"/>
          </item>
          <item>
-          <spacer name="horizontalSpacer_7">
+          <spacer name="horizontalSpacer_6">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
            </property>
@@ -634,9 +644,9 @@
         </widget>
        </item>
        <item row="3" column="1">
-        <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <layout class="QHBoxLayout" name="horizontalLayout_7">
          <item>
-          <spacer name="horizontalSpacer_6">
+          <spacer name="horizontalSpacer_7">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
            </property>
@@ -729,7 +739,7 @@
     </widget>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_5">
+    <layout class="QHBoxLayout" name="horizontalLayout_8">
      <item>
       <widget class="QPushButton" name="resetButton">
        <property name="text">
@@ -759,7 +769,7 @@
       </widget>
      </item>
      <item>
-      <spacer name="horizontalSpacer_3">
+      <spacer name="horizontalSpacer_9">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
