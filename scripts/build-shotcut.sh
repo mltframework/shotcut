@@ -1622,6 +1622,7 @@ function configure_compile_install_subproject {
     if [ "$TARGET_OS" = "Darwin" ]; then
       cmd sed -e 's/-Wl,-Bsymbolic//' -i .bak Makefile
       cmd sed -e 's/-Wl,-soname=$(LIBNAME)$(DYNAMIC_EXTENSION).$(DYNAMIC_ABI_VERSION)//' -i .bak Makefile
+      cmd sed -e 's/\.so/\.dylib/' -i .bak Makefile
     elif [ "$TARGET_OS" = "Win32" -o "$TARGET_OS" = "Win64" ]; then
       cmd grep -q fftw3 rubberband.pc.in || sed 's/-lrubberband/-lrubberband -lfftw3-3 -lsamplerate/' -i rubberband.pc.in
     fi
@@ -1711,6 +1712,12 @@ function configure_compile_install_subproject {
       X265LIB=$(otool -D "$FINAL_INSTALL_DIR"/lib/libx265.dylib | tail -n 1)
       log X265LIB=$X265LIB
       cmd install_name_tool -id "$FINAL_INSTALL_DIR"/lib/$(basename "$X265LIB") "$FINAL_INSTALL_DIR"/lib/libx265.dylib
+    fi
+    if test "rubberband" = "$1" -a "Darwin" = "$TARGET_OS" ; then
+      # replace @rpath with full path to lib
+      RUBBERBANDLIB=$(otool -D "$FINAL_INSTALL_DIR"/lib/librubberband.dylib | tail -n 1)
+      log RUBBERBANDLIB=$RUBBERBANDLIB
+      cmd install_name_tool -id "$FINAL_INSTALL_DIR"/lib/$(basename "$RUBBERBANDLIB") "$FINAL_INSTALL_DIR"/lib/librubberband.dylib
     fi
   fi
   feedback_progress Done installing $1
