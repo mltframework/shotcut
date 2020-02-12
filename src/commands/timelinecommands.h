@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2019 Meltytech, LLC
+ * Copyright (c) 2013-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -310,12 +310,12 @@ private:
 class AddTransitionCommand : public QUndoCommand
 {
 public:
-    AddTransitionCommand(MultitrackModel& model, int trackIndex, int clipIndex, int position, bool ripple, QUndoCommand * parent = 0);
+    AddTransitionCommand(TimelineDock& timeline, int trackIndex, int clipIndex, int position, bool ripple, QUndoCommand * parent = 0);
     void redo();
     void undo();
     int getTransitionIndex() const { return m_transitionIndex; }
 private:
-    MultitrackModel& m_model;
+    TimelineDock& m_timeline;
     int m_trackIndex;
     int m_clipIndex;
     int m_position;

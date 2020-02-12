@@ -613,15 +613,15 @@ bool FadeOutCommand::mergeWith(const QUndoCommand *other)
     return true;
 }
 
-AddTransitionCommand::AddTransitionCommand(MultitrackModel &model, int trackIndex, int clipIndex, int position, bool ripple, QUndoCommand *parent)
+AddTransitionCommand::AddTransitionCommand(TimelineDock& timeline, int trackIndex, int clipIndex, int position, bool ripple, QUndoCommand *parent)
     : QUndoCommand(parent)
-    , m_model(model)
+    , m_timeline(timeline)
     , m_trackIndex(trackIndex)
     , m_clipIndex(clipIndex)
     , m_position(position)
     , m_transitionIndex(-1)
     , m_ripple(ripple)
-    , m_undoHelper(model)
+    , m_undoHelper(*m_timeline.model())
     , m_rippleAllTracks(Settings.timelineRippleAllTracks())
 {
     setText(QObject::tr("Add transition"));
@@ -631,7 +631,7 @@ void AddTransitionCommand::redo()
 {
     LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "position" << m_position;
     m_undoHelper.recordBeforeState();
-    m_transitionIndex = m_model.addTransition(m_trackIndex, m_clipIndex, m_position, m_ripple, m_rippleAllTracks);
+    m_transitionIndex = m_timeline.model()->addTransition(m_trackIndex, m_clipIndex, m_position, m_ripple, m_rippleAllTracks);
     LOG_DEBUG() << "m_transitionIndex" << m_transitionIndex;
     m_undoHelper.recordAfterState();
 }
@@ -640,7 +640,10 @@ void AddTransitionCommand::undo()
 {
     if (m_transitionIndex >= 0) {
         LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "position" << m_position;
+        m_timeline.blockSelection(false);
+        m_timeline.setSelection();
         m_undoHelper.undoChanges();
+        m_timeline.setSelection(QList<QPoint>() << QPoint(m_clipIndex, m_trackIndex));
     }
 }
 

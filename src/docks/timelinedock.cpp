@@ -1278,7 +1278,7 @@ void TimelineDock::onTopLevelChanged(bool floating)
 void TimelineDock::onTransitionAdded(int trackIndex, int clipIndex, int position, bool ripple)
 {
     setSelection(); // cleared
-    Timeline::AddTransitionCommand* command = new Timeline::AddTransitionCommand(m_model, trackIndex, clipIndex, position, ripple);
+    Timeline::AddTransitionCommand* command = new Timeline::AddTransitionCommand(*this, trackIndex, clipIndex, position, ripple);
     MAIN.undoStack()->push(command);
     // Select the transition.
     setSelection(QList<QPoint>() << QPoint(command->getTransitionIndex(), trackIndex));
