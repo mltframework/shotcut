@@ -39,7 +39,7 @@ Rectangle {
         toolbar.scaleSlider.value = value
 
         if (!settings.timelineCenterPlayhead)
-            scrollView.flickableItem.contentX = (targetX * multitrack.scaleFactor / before) - offset
+            scrollView.flickableItem.contentX = Logic.clamp((targetX * multitrack.scaleFactor / before) - offset, 0, Logic.scrollMax().x)
 
         for (var i = 0; i < tracksRepeater.count; i++)
             tracksRepeater.itemAt(i).redrawWaveforms(false)
