@@ -1546,6 +1546,11 @@ function configure_compile_install_subproject {
   # Configure
   feedback_status Configuring $1
 
+  # Special hack for ffmpeg
+  if [ "ffmpeg" = "$1" ] && [ "$TARGET_OS" = "Win32" -o "$TARGET_OS" = "Win64" ]; then
+    cmd sed 's/fopen(/av_fopen_utf8(/' -i libavfilter/vf_lut3d.c
+  fi
+
   # Special hack for frei0r
   if test "frei0r" = "$1" -a ! -e configure ; then
     debug "Need to create configure for $1"
