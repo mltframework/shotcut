@@ -71,8 +71,8 @@ ENABLE_WEBVFX=1
 WEBVFX_HEAD=1
 WEBVFX_REVISION=
 ENABLE_RUBBERBAND=1
-RUBBERBAND_HEAD=0
-RUBBERBAND_REVISION=mlt_patches
+RUBBERBAND_HEAD=1
+RUBBERBAND_REVISION=
 # QT_INCLUDE_DIR="$(pkg-config --variable=prefix QtCore)/include"
 QT_INCLUDE_DIR=${QTDIR:+${QTDIR}/include}
 # QT_LIB_DIR="$(pkg-config --variable=prefix QtCore)/lib"
@@ -466,7 +466,7 @@ function set_globals {
   REPOLOCS[15]="git://github.com/FFmpeg/nv-codec-headers.git"
   REPOLOCS[16]="git://github.com/GPUOpen-LibrariesAndSDKs/AMF.git"
   REPOLOCS[17]="git://github.com/lu-zero/mfx_dispatch.git"
-  REPOLOCS[18]="git://github.com/bmatherly/rubberband.git"
+  REPOLOCS[18]="git://github.com/breakfastquay/rubberband.git"
 
   # REPOTYPE Array holds the repo types. (Yes, this might be redundant, but easy for me)
   REPOTYPES[0]="git"
