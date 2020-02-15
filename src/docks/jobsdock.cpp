@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2019 Meltytech, LLC
+ * Copyright (c) 2012-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -188,4 +188,14 @@ void JobsDock::on_actionRemove_triggered()
 void JobsDock::on_actionRemoveFinished_triggered()
 {
     JOBS.removeFinished();
+}
+
+void JobsDock::on_JobsDock_visibilityChanged(bool visible)
+{
+    if (visible) {
+        foreach (QLabel* label, ui->treeView->findChildren<QLabel*>()) {
+            label->setText(label->fontMetrics().elidedText(
+                               label->toolTip(), Qt::ElideMiddle, ui->treeView->columnWidth(JobQueue::COLUMN_OUTPUT)));
+        }
+    }
 }

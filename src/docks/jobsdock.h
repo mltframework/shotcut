@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2019 Meltytech, LLC
+ * Copyright (c) 2012-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -56,6 +56,7 @@ private slots:
     void on_treeView_doubleClicked(const QModelIndex &index);
     void on_actionRemove_triggered();
     void on_actionRemoveFinished_triggered();
+    void on_JobsDock_visibilityChanged(bool visible);
 };
 
 #endif // JOBSDOCK_H
