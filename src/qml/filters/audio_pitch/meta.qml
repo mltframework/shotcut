@@ -9,8 +9,8 @@ Metadata {
     qml: "ui.qml"
     isFavorite: false
     keyframes {
-        allowAnimateIn: false
-        allowAnimateOut: false
+        allowAnimateIn: true
+        allowAnimateOut: true
         simpleProperties: ['octaveshift']
         parameters: [
             Parameter {
