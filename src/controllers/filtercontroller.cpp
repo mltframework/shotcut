@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2019 Meltytech, LLC
+ * Copyright (c) 2014-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -232,6 +232,11 @@ void FilterController::removeCurrent()
 {
     if (m_currentFilterIndex > -1)
         m_attachedModel.remove(m_currentFilterIndex);
+}
+
+void FilterController::onProducerChanged()
+{
+    emit m_attachedModel.trackTitleChanged();
 }
 
 void FilterController::addMetadata(QmlMetadata* meta)

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2019 Meltytech, LLC
+ * Copyright (c) 2014-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -57,6 +57,7 @@ public slots:
     void onFilterInChanged(int delta, Mlt::Filter* filter = 0);
     void onFilterOutChanged(int delta, Mlt::Filter* filter = 0);
     void removeCurrent();
+    void onProducerChanged();
 
 private slots:
     void handleAttachedModelChange();

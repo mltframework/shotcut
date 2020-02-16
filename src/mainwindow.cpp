@@ -3027,6 +3027,8 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer* producer)
             connect(w, SIGNAL(modified()), SLOT(onProducerModified()));
             connect(w, SIGNAL(modified()), m_playlistDock, SLOT(onProducerModified()));
             connect(w, SIGNAL(modified()), m_timelineDock, SLOT(onProducerModified()));
+            connect(w, SIGNAL(modified()), m_keyframesDock, SLOT(onProducerModified()));
+            connect(w, SIGNAL(modified()), m_filterController, SLOT(onProducerChanged()));
         }
         scrollArea->setWidget(w);
         onProducerChanged();
