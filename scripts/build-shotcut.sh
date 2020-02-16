@@ -462,7 +462,7 @@ function set_globals {
   REPOLOCS[11]="git://github.com/anholt/libepoxy.git"
   REPOLOCS[12]="https://git.opus-codec.org/opus.git"
   REPOLOCS[13]="https://github.com/videolan/x265"
-  REPOLOCS[14]="https://bitbucket.org/eigen/eigen/get/3.2.4.tar.gz"
+  REPOLOCS[14]="https://gitlab.com/libeigen/eigen.git"
   REPOLOCS[15]="git://github.com/FFmpeg/nv-codec-headers.git"
   REPOLOCS[16]="git://github.com/GPUOpen-LibrariesAndSDKs/AMF.git"
   REPOLOCS[17]="git://github.com/lu-zero/mfx_dispatch.git"
@@ -483,7 +483,7 @@ function set_globals {
   REPOTYPES[11]="git"
   REPOTYPES[12]="git"
   REPOTYPES[13]="git"
-  REPOTYPES[14]="http-tgz"
+  REPOTYPES[14]="git"
   REPOTYPES[15]="git"
   REPOTYPES[16]="git"
   REPOTYPES[17]="git"
@@ -541,7 +541,7 @@ function set_globals {
   if test 0 = "$X265_HEAD" -a "$X265_REVISION" ; then
     REVISIONS[13]="$X265_REVISION"
   fi
-  REVISIONS[14]="eigen-eigen-10219c95fe65"
+  REVISIONS[14]="3.2.4"
   REVISIONS[15]="sdk/8.1"
   REVISIONS[16]=""
   REVISIONS[17]="1.25"
