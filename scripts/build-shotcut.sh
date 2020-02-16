@@ -1547,7 +1547,7 @@ function configure_compile_install_subproject {
   feedback_status Configuring $1
 
   # Special hack for ffmpeg
-  if [ "ffmpeg" = "$1" ] && [ "$TARGET_OS" = "Win32" -o "$TARGET_OS" = "Win64" ]; then
+  if [ "FFmpeg" = "$1" ] && [ "$TARGET_OS" = "Win32" -o "$TARGET_OS" = "Win64" ]; then
     cmd sed 's/fopen(/av_fopen_utf8(/' -i libavfilter/vf_lut3d.c
   fi
 
