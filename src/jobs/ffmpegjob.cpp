@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2019 Meltytech, LLC
+ * Copyright (c) 2016-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -56,6 +56,8 @@ void FfmpegJob::start()
     QProcess::start(ffmpegPath.absoluteFilePath(), m_args);
 #else
     m_args.prepend(ffmpegPath.absoluteFilePath());
+    m_args.prepend("3");
+    m_args.prepend("-n");
     QProcess::start("nice", m_args);
 #endif
     AbstractJob::start();

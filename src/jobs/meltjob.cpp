@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2019 Meltytech, LLC
+ * Copyright (c) 2012-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -108,6 +108,8 @@ void MeltJob::start()
     QProcess::start(meltPath.absoluteFilePath(), args);
 #else
     args.prepend(meltPath.absoluteFilePath());
+    args.prepend("3");
+    args.prepend("-n");
     QProcess::start("nice", args);
 #endif
     AbstractJob::start();
