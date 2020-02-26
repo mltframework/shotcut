@@ -919,142 +919,142 @@ not be inserted at detected scene changes.</string>
                   </property>
                   <item>
                    <property name="text">
-                    <string>64k</string>
+                    <string notr="true">64k</string>
                    </property>
                   </item>
                   <item>
                    <property name="text">
-                    <string>128k</string>
+                    <string notr="true">128k</string>
                    </property>
                   </item>
                   <item>
                    <property name="text">
-                    <string>256k</string>
+                    <string notr="true">256k</string>
                    </property>
                   </item>
                   <item>
                    <property name="text">
-                    <string>512k</string>
+                    <string notr="true">512k</string>
                    </property>
                   </item>
                   <item>
                    <property name="text">
-                    <string>768k</string>
+                    <string notr="true">768k</string>
                    </property>
                   </item>
                   <item>
                    <property name="text">
-                    <string>1M</string>
+                    <string notr="true">1M</string>
                    </property>
                   </item>
                   <item>
                    <property name="text">
-                    <string>1200k</string>
+                    <string notr="true">1200k</string>
                    </property>
                   </item>
                   <item>
                    <property name="text">
-                    <string>1500k</string>
+                    <string notr="true">1500k</string>
                    </property>
                   </item>
                   <item>
                    <property name="text">
-                    <string>2M</string>
+                    <string notr="true">2M</string>
                    </property>
                   </item>
                   <item>
                    <property name="text">
-                    <string>2500k</string>
+                    <string notr="true">2500k</string>
                    </property>
                   </item>
                   <item>
                    <property name="text">
-                    <string>3M</string>
+                    <string notr="true">3M</string>
                    </property>
                   </item>
                   <item>
                    <property name="text">
-                    <string>4M</string>
+                    <string notr="true">4M</string>
                    </property>
                   </item>
                   <item>
                    <property name="text">
-                    <string>5M</string>
+                    <string notr="true">5M</string>
                    </property>
                   </item>
                   <item>
                    <property name="text">
-                    <string>6M</string>
+                    <string notr="true">6M</string>
                    </property>
                   </item>
                   <item>
                    <property name="text">
-                    <string>8M</string>
+                    <string notr="true">8M</string>
                    </property>
                   </item>
                   <item>
                    <property name="text">
-                    <string>10M</string>
+                    <string notr="true">10M</string>
                    </property>
                   </item>
                   <item>
                    <property name="text">
-                    <string>12M</string>
+                    <string notr="true">12M</string>
                    </property>
                   </item>
                   <item>
                    <property name="text">
-                    <string>14M</string>
+                    <string notr="true">14M</string>
                    </property>
                   </item>
                   <item>
                    <property name="text">
-                    <string>16M</string>
+                    <string notr="true">16M</string>
                    </property>
                   </item>
                   <item>
                    <property name="text">
-                    <string>18M</string>
+                    <string notr="true">18M</string>
                    </property>
                   </item>
                   <item>
                    <property name="text">
-                    <string>20M</string>
+                    <string notr="true">20M</string>
                    </property>
                   </item>
                   <item>
                    <property name="text">
-                    <string>25M</string>
+                    <string notr="true">25M</string>
                    </property>
                   </item>
                   <item>
                    <property name="text">
-                    <string>30M</string>
+                    <string notr="true">30M</string>
                    </property>
                   </item>
                   <item>
                    <property name="text">
-                    <string>40M</string>
+                    <string notr="true">40M</string>
                    </property>
                   </item>
                   <item>
                    <property name="text">
-                    <string>50M</string>
+                    <string notr="true">50M</string>
                    </property>
                   </item>
                   <item>
                    <property name="text">
-                    <string>60M</string>
+                    <string notr="true">60M</string>
                    </property>
                   </item>
                   <item>
                    <property name="text">
-                    <string>70M</string>
+                    <string notr="true">70M</string>
                    </property>
                   </item>
                   <item>
                    <property name="text">
-                    <string>80M</string>
+                    <string notr="true">80M</string>
                    </property>
                   </item>
                  </widget>
@@ -1409,42 +1409,42 @@ in temporal compression</string>
                   </property>
                   <item>
                    <property name="text">
-                    <string>8000</string>
+                    <string notr="true">8000</string>
                    </property>
                   </item>
                   <item>
                    <property name="text">
-                    <string>12000</string>
+                    <string notr="true">12000</string>
                    </property>
                   </item>
                   <item>
                    <property name="text">
-                    <string>16000</string>
+                    <string notr="true">16000</string>
                    </property>
                   </item>
                   <item>
                    <property name="text">
-                    <string>22050</string>
+                    <string notr="true">22050</string>
                    </property>
                   </item>
                   <item>
                    <property name="text">
-                    <string>32000</string>
+                    <string notr="true">32000</string>
                    </property>
                   </item>
                   <item>
                    <property name="text">
-                    <string>44100</string>
+                    <string notr="true">44100</string>
                    </property>
                   </item>
                   <item>
                    <property name="text">
-                    <string>48000</string>
+                    <string notr="true">48000</string>
                    </property>
                   </item>
                   <item>
                    <property name="text">
-                    <string>96000</string>
+                    <string notr="true">96000</string>
                    </property>
                   </item>
                  </widget>
@@ -1536,62 +1536,67 @@ in temporal compression</string>
                   </property>
                   <item>
                    <property name="text">
-                    <string>16k</string>
+                    <string notr="true">16k</string>
                    </property>
                   </item>
                   <item>
                    <property name="text">
-                    <string>32k</string>
+                    <string notr="true">32k</string>
                    </property>
                   </item>
                   <item>
                    <property name="text">
-                    <string>48k</string>
+                    <string notr="true">48k</string>
                    </property>
                   </item>
                   <item>
                    <property name="text">
-                    <string>64k</string>
+                    <string notr="true">64k</string>
                    </property>
                   </item>
                   <item>
                    <property name="text">
-                    <string>96k</string>
+                    <string notr="true">96k</string>
                    </property>
                   </item>
                   <item>
                    <property name="text">
-                    <string>128k</string>
+                    <string notr="true">128k</string>
                    </property>
                   </item>
                   <item>
                    <property name="text">
-                    <string>192k</string>
+                    <string notr="true">192k</string>
                    </property>
                   </item>
                   <item>
                    <property name="text">
-                    <string>220k</string>
+                    <string notr="true">220k</string>
                    </property>
                   </item>
                   <item>
                    <property name="text">
-                    <string>256k</string>
+                    <string notr="true">256k</string>
                    </property>
                   </item>
                   <item>
                    <property name="text">
-                    <string>384k</string>
+                    <string notr="true">384k</string>
                    </property>
                   </item>
                   <item>
                    <property name="text">
-                    <string>512k</string>
+                    <string notr="true">448k</string>
                    </property>
                   </item>
                   <item>
                    <property name="text">
-                    <string>1M</string>
+                    <string notr="true">512k</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string notr="true">1M</string>
                    </property>
                   </item>
                  </widget>
