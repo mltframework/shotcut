@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2019 Meltytech, LLC
+ * Copyright (c) 2012-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -471,7 +471,7 @@ bool Player::event(QEvent* event)
 void Player::play(double speed)
 {
     // Start from beginning if trying to start at the end.
-    if (m_position >= m_duration - 1) {
+    if (m_position >= m_duration - 1 && !MLT.isMultitrack()) {
         emit seeked(m_previousIn);
         m_position = m_previousIn;
     }
