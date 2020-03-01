@@ -3893,9 +3893,10 @@ void MainWindow::on_actionExportEDL_triggered()
 
 void MainWindow::on_actionExportFrame_triggered()
 {
-    if (Settings.playerGPU()) {
+    if (Settings.playerGPU() || Settings.playerPreviewScale()) {
         Mlt::GLWidget* glw = qobject_cast<Mlt::GLWidget*>(MLT.videoWidget());
         connect(glw, SIGNAL(imageReady()), SLOT(onGLWidgetImageReady()));
+        MLT.setPreviewScale(0);
         glw->requestImage();
         MLT.refreshConsumer();
     } else {
@@ -3907,8 +3908,10 @@ void MainWindow::onGLWidgetImageReady()
 {
     Mlt::GLWidget* glw = qobject_cast<Mlt::GLWidget*>(MLT.videoWidget());
     QImage image = glw->image();
-    if (Settings.playerGPU())
+    if (Settings.playerGPU() || Settings.playerPreviewScale()) {
         disconnect(glw, SIGNAL(imageReady()), this, 0);
+        MLT.setPreviewScale(Settings.playerPreviewScale());
+    }
     if (!image.isNull()) {
         QString path = Settings.savePath();
         QString caption = tr("Export Frame");

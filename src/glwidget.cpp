@@ -973,6 +973,11 @@ void FrameRenderer::showFrame(Mlt::Frame frame)
     }
     emit frameDisplayed(m_displayFrame);
 
+    if (m_imageRequested) {
+        m_imageRequested = false;
+        emit imageReady();
+    }
+
     m_semaphore.release();
 }
 
