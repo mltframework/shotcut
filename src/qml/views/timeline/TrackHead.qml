@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2018 Meltytech, LLC
+ * Copyright (c) 2013-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +16,7 @@
  */
 
 import QtQuick 2.0
-import QtQuick.Controls 1.0
+import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.0
 import QtQuick.Layouts 1.0
 import Shotcut.Controls 1.0
@@ -128,7 +128,7 @@ Rectangle {
                 visible: focus
                 width: parent.width
                 text: trackName
-                onAccepted: {
+                onEditingFinished: {
                     timeline.setTrackName(index, text)
                     focus = false
                 }
