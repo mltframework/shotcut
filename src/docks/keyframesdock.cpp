@@ -49,6 +49,7 @@ KeyframesDock::KeyframesDock(QmlProducer* qmlProducer, QWidget *parent)
     toggleViewAction()->setIcon(windowIcon());
     setMinimumWidth(300);
     m_qview.setFocusPolicy(Qt::StrongFocus);
+    m_qview.quickWindow()->setPersistentSceneGraph(false);
     setWidget(&m_qview);
 
     QmlUtilities::setCommonProperties(m_qview.rootContext());

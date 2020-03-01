@@ -64,6 +64,7 @@ TimelineDock::TimelineDock(QWidget *parent) :
     m_quickView.rootContext()->setContextProperty("multitrack", &m_model);
     m_quickView.setResizeMode(QQuickWidget::SizeRootObjectToView);
     m_quickView.setClearColor(palette().window().color());
+    m_quickView.quickWindow()->setPersistentSceneGraph(false);
 
     connect(&m_model, SIGNAL(modified()), this, SLOT(clearSelectionIfInvalid()));
     connect(&m_model, &MultitrackModel::inserted, this, &TimelineDock::onInserted, Qt::QueuedConnection);
