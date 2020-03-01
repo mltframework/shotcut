@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2019 Meltytech, LLC
+ * Copyright (c) 2013-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -312,6 +312,7 @@ Rectangle {
             parent.dragged(clipRoot, mouse)
         }
         onReleased: {
+            root.stopScrolling = false
             if (!doubleClickTimer.isFirstRelease && doubleClickTimer.running) {
                 // double click
                 timeline.position = Math.round(clipRoot.x / multitrack.scaleFactor)
@@ -320,7 +321,6 @@ Rectangle {
                 // single click
                 doubleClickTimer.isFirstRelease = false
 
-                root.stopScrolling = false
                 parent.y = 0
                 var delta = parent.x - startX
                 if (Math.abs(delta) >= 1.0 || trackIndex !== originalTrackIndex) {
