@@ -83,6 +83,7 @@ void LumaMixTransition::on_invertCheckBox_clicked(bool checked)
     if (transition && transition->is_valid()) {
         transition->set("invert", checked);
         MLT.refreshConsumer();
+        emit modified();
     }
 }
 
@@ -104,6 +105,7 @@ void LumaMixTransition::on_softnessSlider_valueChanged(int value)
             transition->set("softness", value / 100.0);
         }
         MLT.refreshConsumer();
+        emit modified();
     }
 }
 
@@ -148,7 +150,7 @@ Mlt::Transition *LumaMixTransition::getTransition(const QString &name)
         }
         service.reset(service->producer());
     }
-    return 0;
+    return nullptr;
 }
 
 void LumaMixTransition::updateCustomLumaLabel(Mlt::Transition &transition)
@@ -212,5 +214,6 @@ void LumaMixTransition::on_lumaCombo_activated(int index)
         }
         updateCustomLumaLabel(*transition);
         MLT.refreshConsumer();
+        emit modified();
     }
 }

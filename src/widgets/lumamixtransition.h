@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2014 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2014-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,6 +33,9 @@ class LumaMixTransition : public QWidget
 public:
     explicit LumaMixTransition(Mlt::Producer &transition, QWidget *parent = 0);
     ~LumaMixTransition();
+    
+signals:
+    void modified();
     
 private slots:
     void on_invertCheckBox_clicked(bool checked);

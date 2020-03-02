@@ -3000,6 +3000,8 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer* producer)
     else if (producer->parent().get(kShotcutTransitionProperty)) {
         w = new LumaMixTransition(producer->parent(), this);
         scrollArea->setWidget(w);
+        if (-1 != w->metaObject()->indexOfSignal("modified()"))
+            connect(w, SIGNAL(modified()), SLOT(onProducerModified()));
         return w;
     } else if (playlist_type == producer->type()) {
         int trackIndex = m_timelineDock->currentTrack();
