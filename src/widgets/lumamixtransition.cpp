@@ -86,15 +86,20 @@ void LumaMixTransition::on_invertCheckBox_clicked(bool checked)
     }
 }
 
+static void setColor(Mlt::Transition* transition, int value)
+{
+    qreal r = qreal(value) / 100.0;
+    QColor color = QColor::fromRgbF(r, r, r);
+    QString resource = QString("color:%1").arg(color.name());
+    transition->set("resource", resource.toLatin1().constData());
+}
+
 void LumaMixTransition::on_softnessSlider_valueChanged(int value)
 {
     QScopedPointer<Mlt::Transition> transition(getTransition("luma"));
     if (transition && transition->is_valid()) {
         if (kLumaComboCutIndex == ui->lumaCombo->currentIndex()) {
-            qreal r = qreal(value) / 100.0;
-            QColor color = QColor::fromRgbF(r, r, r);
-            QString resource = QString("color:%1").arg(color.name());
-            transition->set("resource", resource.toLatin1().constData());
+            setColor(transition.data(), value);
         } else {
             transition->set("softness", value / 100.0);
         }
@@ -174,9 +179,10 @@ void LumaMixTransition::on_lumaCombo_activated(int index)
         if (index == kLumaComboDissolveIndex) {
             transition->set("resource", "");
             ui->softnessLabel->setText(tr("Softness"));
+            transition->set("softness", ui->softnessSlider->value() / 100.0);
         } else if (index == kLumaComboCutIndex) { // Cut
             ui->softnessLabel->setText(tr("Position"));
-            ui->softnessSlider->setValue(50);
+            setColor(transition.data(), ui->softnessSlider->value());
         } else if (index == kLumaComboCustomIndex) {
             ui->softnessLabel->setText(tr("Softness"));
             // Custom file
