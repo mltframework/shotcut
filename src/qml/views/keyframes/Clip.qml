@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2016-2018 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2016-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -227,7 +226,6 @@ Rectangle {
             (animateInMouseArea.drag.active || animateOutMouseArea.drag.active)? Qt.PointingHandCursor :
             Qt.ArrowCursor
         onClicked: menu.popup()
-        onWheel: zoomByWheel(wheel)
     }
 
     TimelineTriangle {

@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2013-2018 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2013-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -49,8 +48,15 @@ Rectangle {
                 setScaleFactor()
         }
         onPressedChanged: {
-            if (!pressed)
+            if (!pressed) {
+                var targetX = scrollView.flickableItem.contentX + scrollView.width / 2
+                var offset = targetX - scrollView.flickableItem.contentX
+                var before = timeScale
+
                 setScaleFactor()
+                
+                scrollView.flickableItem.contentX = (targetX * timeScale / before) - offset
+            }
         }
     }
 }

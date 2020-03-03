@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2019 Meltytech, LLC
+ * Copyright (c) 2017-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -49,12 +49,19 @@ Rectangle {
         afterClip.generateWaveform()
     }
 
-    function setZoom(value) {
+    function setZoom(value, targetX) {
+        if (!targetX)
+            targetX = scrollView.flickableItem.contentX + scrollView.width / 2
+        var offset = targetX - scrollView.flickableItem.contentX
+        var before = timeScale
+
         keyframesToolbar.scaleSlider.value = value
+
+        scrollView.flickableItem.contentX = Logic.clamp((targetX * timeScale / before) - offset, 0, Logic.scrollMax().x)
     }
 
-    function adjustZoom(by) {
-        setZoom(keyframesToolbar.scaleSlider.value + by)
+    function adjustZoom(by, targetX) {
+        setZoom(keyframesToolbar.scaleSlider.value + by, targetX)
     }
 
     function zoomIn() {
@@ -67,15 +74,6 @@ Rectangle {
 
     function resetZoom() {
         setZoom(1.0)
-    }
-
-    function zoomByWheel(wheel) {
-        if (wheel.modifiers & Qt.ControlModifier) {
-            adjustZoom(wheel.angleDelta.y / 720)
-        }
-        if (wheel.modifiers & Qt.ShiftModifier) {
-            multitrack.trackHeight = Math.max(10, multitrack.trackHeight + wheel.angleDelta.y / 5)
-        }
     }
 
     MouseArea {
@@ -161,6 +159,7 @@ Rectangle {
             focus: true
             hoverEnabled: true
             onClicked: producer.position = (scrollView.flickableItem.contentX + mouse.x) / timeScale
+            onWheel: Logic.onMouseWheel(wheel)
             onDoubleClicked: {
                 // Figure out which parameter row that is in.
                 for (var i = 0; i < parametersRepeater.count; i++) {
@@ -243,9 +242,12 @@ Rectangle {
                     // workaround to fix https://github.com/mltframework/shotcut/issues/777
                     flickableItem.onContentXChanged: rulerFlickable.contentX = flickableItem.contentX
 
-                    Item {
+                    MouseArea {
                         width: tracksContainer.width + headerWidth
                         height: trackHeaders.height + 30 // 30 is padding
+                        acceptedButtons: Qt.NoButton
+                        onWheel: Logic.onMouseWheel(wheel)
+
                         Column {
                             Rectangle {
                                 width: 1
