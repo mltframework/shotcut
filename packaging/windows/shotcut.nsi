@@ -92,13 +92,20 @@ Section "Install Program Files"
 SectionEnd
 
 ; Optional section (can be disabled by the user)
-Section "Create Start Menu Shortcuts"
+Section "Create Start Menu Shortcut"
 
   ;CreateDirectory "$SMPROGRAMS\Shotcut"
   ;CreateShortCut "$SMPROGRAMS\Shotcut\Uninstall.lnk" "$INSTDIR\uninstall.exe" "" "$INSTDIR\uninstall.exe" 0
   SetShellVarContext all
   CreateShortCut "$SMPROGRAMS\Shotcut.lnk" "$INSTDIR\shotcut.exe" "" "$INSTDIR\shotcut.exe" 0
-  
+
+SectionEnd
+
+; Opt in section (can be enabled by the user)
+Section /o "Create Desktop Shortcut (Icon)"
+
+  SetShellVarContext all
+  CreateShortCut "$DESKTOP\Shotcut.lnk" "$INSTDIR\shotcut.exe" "" "$INSTDIR\shotcut.exe" 0
 
 SectionEnd
 
