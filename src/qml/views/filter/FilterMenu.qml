@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2018 Meltytech, LLC
+ * Copyright (c) 2014-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -70,6 +70,11 @@ Rectangle {
                         parent.savedFilter.checked = true
                     }
                 }
+                Keys.onReturnPressed: {
+                    menuListView.itemSelected(menuListView.currentIndex)
+                    event.accepted = true
+                }
+                Keys.onEnterPressed: Keys.onReturnPressed(event)
                 Keys.onEscapePressed: {
                     if (text !== '')
                         text = ''
@@ -78,7 +83,6 @@ Rectangle {
                 }
                 Keys.onUpPressed: menuListView.selectPrevious()
                 Keys.onDownPressed: menuListView.selectNext()
-                onAccepted: menuListView.itemSelected(menuListView.currentIndex)
             }
             ToolButton {
                 id: clearButton
