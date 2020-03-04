@@ -316,12 +316,12 @@
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="436"/>
         <source>Bottom Field First</source>
-        <translation>Bottom Field First</translation>
+        <translation>Letztes Feld zuerst</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="441"/>
         <source>Top Field First</source>
-        <translation>Top Field First</translation>
+        <translation>Erstes Feld zuertst</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="465"/>
@@ -8670,12 +8670,12 @@ Die meisten Benutzer müssen diese Einstellung nicht verändern.</translation>
         <location filename="../src/qml/filters/audio_pitch/meta.qml" line="7"/>
         <location filename="../src/qml/filters/audio_pitch/meta.qml" line="17"/>
         <source>Pitch</source>
-        <translation type="unfinished"></translation>
+        <translation type="Pitch"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/corners/meta.qml" line="23"/>
         <source>Corners</source>
-        <translation type="unfinished"></translation>
+        <translation type="Ecken"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/corners/meta.qml" line="32"/>
@@ -8720,17 +8720,17 @@ Die meisten Benutzer müssen diese Einstellung nicht verändern.</translation>
     <message>
         <location filename="../src/qml/filters/corners/meta.qml" line="96"/>
         <source>Stretch X</source>
-        <translation type="unfinished"></translation>
+        <translation type="Strecke X"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/corners/meta.qml" line="104"/>
         <source>Stretch Y</source>
-        <translation type="unfinished"></translation>
+        <translation type="Strecke Y"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/corners/meta.qml" line="112"/>
         <source>Interpolator</source>
-        <translation type="unfinished"></translation>
+        <translation type="Interpolator"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/corners/meta.qml" line="120"/>
@@ -8745,12 +8745,12 @@ Die meisten Benutzer müssen diese Einstellung nicht verändern.</translation>
     <message>
         <location filename="../src/qml/filters/corners/meta.qml" line="136"/>
         <source>Enable Stretch</source>
-        <translation type="unfinished"></translation>
+        <translation type="Aktiviere strecken"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/corners/meta.qml" line="144"/>
         <source>Transparent Background</source>
-        <translation type="unfinished"></translation>
+        <translation type="Transparenter Hintergrund"></translation>
     </message>
 </context>
 <context>
@@ -9276,7 +9276,7 @@ Die meisten Benutzer müssen diese Einstellung nicht verändern.</translation>
     <message>
         <location filename="../src/qml/filters/alpha_adjust/ui.qml" line="62"/>
         <source>No Change</source>
-        <translation>Keine Änderung</translation>
+        <translation>Keine Änderungen</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/alpha_adjust/ui.qml" line="63"/>
