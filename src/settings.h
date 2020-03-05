@@ -93,6 +93,8 @@ public:
     void setEncodeAdvanced(bool);
     bool showConvertClipDialog() const;
     void setShowConvertClipDialog(bool);
+    bool encodeParallelProcessing() const;
+    void setEncodeParallelProcessing(bool);
 
     int playerAudioChannels() const;
     void setPlayerAudioChannels(int);

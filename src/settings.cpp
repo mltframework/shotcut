@@ -286,6 +286,16 @@ void ShotcutSettings::setShowConvertClipDialog(bool b)
     settings.setValue("showConvertClipDialog", b);
 }
 
+bool ShotcutSettings::encodeParallelProcessing() const
+{
+    return settings.value("encode/parallelProcessing", false).toBool();
+}
+
+void ShotcutSettings::setEncodeParallelProcessing(bool b)
+{
+    settings.setValue("encode/parallelProcessing", b);
+}
+
 int ShotcutSettings::playerAudioChannels() const
 {
     return settings.value("player/audioChannels", 2).toInt();

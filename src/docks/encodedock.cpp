@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2019 Meltytech, LLC
+ * Copyright (c) 2012-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -68,6 +68,7 @@ EncodeDock::EncodeDock(QWidget *parent) :
     ui->parallelCheckbox->setChecked(false);
     ui->parallelCheckbox->setHidden(true);
 #else
+    ui->parallelCheckbox->setChecked(Settings.encodeParallelProcessing());
     ui->videoCodecThreadsSpinner->setMaximum(QThread::idealThreadCount());
 #endif
     if (QThread::idealThreadCount() < 3)
@@ -2016,4 +2017,9 @@ void EncodeDock::on_audioQualitySpinner_valueChanged(int aq)
         aq = TO_ABSOLUTE(0, 500, aq);
     QString s("aq=%1");
     ui->audioQualitySuffixLabel->setText(s.arg(aq));
+}
+
+void EncodeDock::on_parallelCheckbox_clicked(bool checked)
+{
+    Settings.setEncodeParallelProcessing(checked);
 }
