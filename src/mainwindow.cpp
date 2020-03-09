@@ -1878,6 +1878,10 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
             } else {
                 Settings.setTimelineRipple(!Settings.timelineRipple());
             }
+        } else {
+            m_timelineDock->show();
+            m_timelineDock->raise();
+            m_timelineDock->replace(-1, -1);
         }
         break;
     case Qt::Key_S:

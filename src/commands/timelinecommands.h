@@ -522,6 +522,21 @@ private:
     bool m_trackAdded;
 };
 
+class ReplaceCommand : public QUndoCommand
+{
+public:
+    ReplaceCommand(MultitrackModel& model, int trackIndex, int clipIndex, const QString& xml, QUndoCommand* parent = nullptr);
+    void redo();
+    void undo();
+private:
+    MultitrackModel& m_model;
+    int m_trackIndex;
+    int m_clipIndex;
+    QString m_xml;
+    bool m_isFirstRedo;
+    UndoHelper m_undoHelper;
+};
+
 } // namespace Timeline
 
 #endif

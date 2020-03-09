@@ -653,6 +653,11 @@ Rectangle {
             text: qsTr('Lift')
             onTriggered: timeline.lift(trackIndex, index)
         }
+        MenuItem {
+            text: qsTr('Replace')
+            onTriggered: timeline.replace(trackIndex, index)
+        }
+
         MenuSeparator {
             visible: !isBlank && !isTransition
         }

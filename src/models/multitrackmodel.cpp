@@ -3071,6 +3071,39 @@ void MultitrackModel::reload(bool asynchronous)
     }
 }
 
+void MultitrackModel::replace(int trackIndex, int clipIndex, Mlt::Producer& clip, bool copyFilters)
+{
+    int i = m_trackList.at(trackIndex).mlt_index;
+    QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
+    if (track) {
+//        LOG_DEBUG() << __FUNCTION__ << "replace" << position << MLT.XML(&clip);
+        Mlt::Playlist playlist(*track);
+        int clipPlaytime = clip.get_playtime();
+        int in = clip.get_in();
+        int out = clip.get_out();
+        QScopedPointer<Mlt::Producer> oldClip(playlist.get_clip(clipIndex));
+        if (oldClip && oldClip->is_valid()) {
+            clipPlaytime = oldClip->get_playtime();
+            if (in > 0 || out == clip.get_playtime() - 1)
+                out = in + clipPlaytime - 1;
+            else
+                in = out - clipPlaytime + 1;
+            clip.set_in_and_out(in, out);
+            if (copyFilters) {
+                Mlt::Controller::copyFilters(oldClip->parent(), clip);
+                Mlt::Controller::adjustFilters(clip, 0);
+            }
+        }
+        beginRemoveRows(index(trackIndex), clipIndex, clipIndex);        
+        playlist.remove(clipIndex);
+        endRemoveRows();
+        beginInsertRows(index(trackIndex), clipIndex, clipIndex);        
+        playlist.insert_blank(clipIndex, clipPlaytime - 1);
+        endInsertRows();
+        overwrite(trackIndex, clip, playlist.clip_start(clipIndex), false);
+    }
+}
+
 void MultitrackModel::close()
 {
     if (!m_tractor) return;

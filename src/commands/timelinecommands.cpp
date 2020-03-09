@@ -1180,6 +1180,37 @@ void DetachAudioCommand::undo()
     }
 }
 
+ReplaceCommand::ReplaceCommand(MultitrackModel& model, int trackIndex, int clipIndex,
+    const QString& xml, QUndoCommand* parent)
+    : QUndoCommand(parent)
+    , m_model(model)
+    , m_trackIndex(trackIndex)
+    , m_clipIndex(clipIndex)
+    , m_xml(xml)
+    , m_isFirstRedo(true)
+    , m_undoHelper(model)
+{
+    setText(QObject::tr("Replace timeline clip"));
+    m_undoHelper.recordBeforeState();
+}
+
+void ReplaceCommand::redo()
+{
+    LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex;
+    if (!m_isFirstRedo)
+        m_undoHelper.recordBeforeState();
+    Mlt::Producer clip(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
+    m_model.replace(m_trackIndex, m_clipIndex, clip);
+    m_undoHelper.recordAfterState();
+}
+
+void ReplaceCommand::undo()
+{
+    LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex;
+    m_undoHelper.undoChanges();
+    m_isFirstRedo = false;
+}
+
 } // namespace
 
 #include "moc_timelinecommands.cpp"

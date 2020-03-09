@@ -849,6 +849,29 @@ void TimelineDock::onProducerModified()
     emitSelectedChanged(QVector<int>() << MultitrackModel::NameRole);
 }
 
+void TimelineDock::replace(int trackIndex, int clipIndex, const QString& xml)
+{
+    if (!m_model.trackList().count() || MAIN.isSourceClipMyProject())
+        return;
+    if (trackIndex < 0)
+        trackIndex = currentTrack();
+    if (isTrackLocked(trackIndex)) {
+        pulseLockButtonOnTrack(trackIndex);
+        return;
+    }
+    if (clipIndex < 0)
+        clipIndex = clipIndexAtPlayhead(trackIndex);
+    if (MLT.isSeekableClip() || MLT.savedProducer() || !xml.isEmpty()) {
+        Q_ASSERT(trackIndex >= 0 && clipIndex >= 0);
+        QString xmlToUse = !xml.isEmpty()? xml
+            : MLT.XML(MLT.isClip()? nullptr : MLT.savedProducer());
+        MAIN.undoStack()->push(
+            new Timeline::ReplaceCommand(m_model, trackIndex, clipIndex, xmlToUse));
+    } else if (!MLT.isSeekableClip()) {
+        emit showStatusMessage(kNonSeekableWarning);
+    }
+}
+
 void TimelineDock::setTrackName(int trackIndex, const QString &value)
 {
     MAIN.undoStack()->push(

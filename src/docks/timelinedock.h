@@ -150,6 +150,7 @@ public slots:
     void selectAll();
     bool blockSelection(bool block);
     void onProducerModified();
+    void replace(int trackIndex, int clipIndex, const QString& xml = QString());
 
 protected:
     void dragEnterEvent(QDragEnterEvent* event);
