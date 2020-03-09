@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2015-2017 Meltytech, LLC
- * Author: Brian Matherly <code@brianmatherly.com>
+ * Copyright (c) 2015-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,7 +21,6 @@
 #include "scopewidget.h"
 #include <QMutex>
 #include <QImage>
-#include <QTime>
 
 class AudioWaveformScopeWidget Q_DECL_FINAL : public ScopeWidget
 {
@@ -40,19 +38,23 @@ private:
     
     // Functions run in GUI thread.
     void paintEvent(QPaintEvent*) Q_DECL_OVERRIDE;
+    void mouseMoveEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
+    void leaveEvent(QEvent *event) Q_DECL_OVERRIDE;
 
     // Members accessed only in scope thread (no thread protection).
-    SharedFrame m_frame;
     QImage m_renderWave;
-    QTime m_refreshTime;
     int m_graphTopPadding;
     int m_graphLeftPadding;
     int m_channels;
+
+    // Members accessed only in GUI thread (no thread protection).
+    int m_cursorPos;
 
     // Members accessed in multiple threads (mutex protected).
     QMutex m_mutex;
     QImage m_displayWave;
     QImage m_displayGrid;
+    SharedFrame m_frame;
 };
 
 #endif // AUDIOWAVEFORMSCOPEWIDGET_H
