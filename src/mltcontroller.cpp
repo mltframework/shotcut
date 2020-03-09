@@ -276,7 +276,7 @@ void Controller::onJackStarted(int position)
     if (m_producer) {
         m_producer->set_speed(1);
         m_producer->seek(position);
-        refreshConsumer();
+        Controller::refreshConsumer();
     }
 }
 
