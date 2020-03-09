@@ -23,6 +23,7 @@
 #include <QPainter>
 #include <QResizeEvent>
 #include <QToolTip>
+#include <cmath>
 
 static const qreal MAX_AMPLITUDE = 32768.0;
 
