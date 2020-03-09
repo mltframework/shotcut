@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2015-2016 Meltytech, LLC
- * Author: Brian Matherly <code@brianmatherly.com>
+ * Copyright (c) 2015-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,9 +16,13 @@
  */
 
 #include "audiowaveformscopewidget.h"
+
 #include <Logger.h>
+
+#include <QMouseEvent>
 #include <QPainter>
 #include <QResizeEvent>
+#include <QToolTip>
 
 static const qreal MAX_AMPLITUDE = 32768.0;
 
@@ -50,9 +53,9 @@ static int graphCenterY(const QSize& widgetSize, int channel, int maxChan, int p
 AudioWaveformScopeWidget::AudioWaveformScopeWidget()
   : ScopeWidget("AudioWaveform")
   , m_renderWave()
-  , m_refreshTime()
   , m_graphTopPadding(0)
   , m_channels(0)
+  , m_cursorPos(-1)
   , m_mutex(QMutex::NonRecursive)
   , m_displayWave()
   , m_displayGrid()
@@ -60,7 +63,7 @@ AudioWaveformScopeWidget::AudioWaveformScopeWidget()
     LOG_DEBUG() << "begin";
     setAutoFillBackground(true);
     setMinimumSize(100, 100);
-    m_refreshTime.start();
+    setMouseTracking(true);
     LOG_DEBUG() << "end";
 }
 
@@ -72,11 +75,10 @@ void AudioWaveformScopeWidget::refreshScope(const QSize& size, bool full)
 {
     m_mutex.lock();
     QSize prevSize = m_displayWave.size();
-    m_mutex.unlock();
-
     while (m_queue.count() > 0) {
         m_frame = m_queue.pop();
     }
+    m_mutex.unlock();
 
     // Check if a full refresh should be forced.
     int channels = 2;
@@ -86,11 +88,6 @@ void AudioWaveformScopeWidget::refreshScope(const QSize& size, bool full)
     if (prevSize != size || channels != m_channels) {
         m_channels = channels;
         full = true;
-    }
-
-    if (!full && m_refreshTime.elapsed() < 90) {
-        // Limit refreshes to 90ms unless there is a good reason.
-        return;
     }
 
     if (full) {
@@ -112,7 +109,6 @@ void AudioWaveformScopeWidget::refreshScope(const QSize& size, bool full)
     p.setPen(pen);
 
     if (m_frame.is_valid() && m_frame.get_audio_samples() > 0) {
-
         int samples = m_frame.get_audio_samples();
         int16_t* audio = (int16_t*)m_frame.get_audio();
         int waveAmplitude = graphHeight(size, m_channels, m_graphTopPadding) / 2;
@@ -131,8 +127,10 @@ void AudioWaveformScopeWidget::refreshScope(const QSize& size, bool full)
             QPoint low;
             int lastX = 0;
             const int16_t* q = audio + c;
-            qreal max = *q;
-            qreal min = *q;
+            // Invert the polarity because QT draws from top to bottom.
+            int16_t value = *q * -1;
+            qreal max = value;
+            qreal min = value;
 
             for (int i = 0; i <= samples; i++)
             {
@@ -158,9 +156,10 @@ void AudioWaveformScopeWidget::refreshScope(const QSize& size, bool full)
                     min = tmp;
                 }
 
-                if (*q > max) max = *q;
-                if (*q < min) min = *q;
+                if (value > max) max = value;
+                if (value < min) min = value;
                 q += m_channels;
+                value = *q * -1;
             }
             p.restore();
         }
@@ -171,8 +170,6 @@ void AudioWaveformScopeWidget::refreshScope(const QSize& size, bool full)
     m_mutex.lock();
     m_displayWave.swap(m_renderWave);
     m_mutex.unlock();
-
-    m_refreshTime.restart();
 }
 
 void AudioWaveformScopeWidget::createGrid(const QSize& size)
@@ -242,7 +239,54 @@ void AudioWaveformScopeWidget::paintEvent(QPaintEvent*)
     p.drawImage(rect(), m_displayGrid, m_displayGrid.rect());
     p.drawImage(rect(), m_displayWave, m_displayWave.rect());
     m_mutex.unlock();
+
+    if (m_cursorPos > -1) {
+        p.setPen(palette().text().color().rgb());
+        p.drawLine(m_cursorPos, 0, m_cursorPos, height());
+    }
+
     p.end();
+}
+
+void AudioWaveformScopeWidget::mouseMoveEvent(QMouseEvent *event)
+{
+    QMutexLocker locker(&m_mutex);
+    if (!m_frame.is_valid()) return;
+
+    int channels = m_frame.get_audio_channels();
+    int samples = m_frame.get_audio_samples();
+    int16_t* audio = (int16_t*)m_frame.get_audio();
+    if (samples < 10 || channels < 1) return;
+
+    qreal position = (qreal)event->pos().x() / (qreal)width();
+    int sample = (qreal)samples * position;
+    QString text = tr("Sample: %1\n").arg(QString::number(sample+1));
+
+    for (int c = 0; c < channels; c++)
+    {
+        const int16_t* q = audio + (channels * sample) + c;
+        qreal scaledValue = (qreal)*q / MAX_AMPLITUDE;
+        qreal dbValue = 20 * log(fabs(scaledValue));
+        if (dbValue < 0.01 && dbValue > -0.01) dbValue = 0.0;
+        text += tr("Ch: %1: %2 (%3 dBFS)").arg(QString::number(c+1)).arg(QString::number(scaledValue, 'f', 2)).arg(QString::number(dbValue, 'f', 2));
+        if ( c != channels -1 )
+        {
+            text += "\n";
+        }
+    }
+
+    locker.unlock();
+
+    m_cursorPos = event->pos().x();
+    QToolTip::showText(event->globalPos(), text);
+    update();
+}
+
+void AudioWaveformScopeWidget::leaveEvent(QEvent *event)
+{
+    Q_UNUSED(event);
+    m_cursorPos = -1;
+    update();
 }
 
 QString AudioWaveformScopeWidget::getTitle()
