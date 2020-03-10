@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Meltytech, LLC
+ * Copyright (c) 2018-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@
 #include "postjobaction.h"
 #include "mainwindow.h"
 #include "docks/playlistdock.h"
+#include "shotcut_mlt_properties.h"
 
 // For file time functions in FilePropertiesPostJobAction::doAction();
 #include <utime.h>
@@ -45,10 +46,32 @@ void FilePropertiesPostJobAction::doAction()
 #endif
 }
 
-void ReverseFilePostJobAction::doAction()
+void ReverseOpenPostJobAction::doAction()
 {
     FilePropertiesPostJobAction::doAction();
     QFile::remove(m_fileNameToRemove);
     MAIN.open(m_dstFile);
     MAIN.playlistDock()->on_actionAppendCut_triggered();
+}
+
+void ReverseReplacePostJobAction::doAction()
+{
+    FilePropertiesPostJobAction::doAction();
+    QFile::remove(m_fileNameToRemove);
+    Mlt::Producer producer(MLT.profile(), m_dstFile.toUtf8().constData());
+    if (producer.is_valid()) {
+        if (!qstrcmp(producer.get("mlt_service"), "avformat")) {
+            producer.set("mlt_service", "avformat-novalidate");
+            producer.set("mute_on_pause", 0);
+        }
+        MLT.lockCreationTime(&producer);
+        MAIN.getHash(producer);
+        // lookup the current track and clip index by UUID
+        int trackIndex = -1;
+        int clipIndex = -1;
+        QScopedPointer<Mlt::ClipInfo> info(MAIN.timelineClipInfoByUuid(m_uuid, trackIndex, clipIndex));
+        if (trackIndex >= 0 && clipIndex >= 0) {
+            MAIN.replaceInTimeline(trackIndex, clipIndex, MLT.XML(&producer));
+        }
+    }
 }

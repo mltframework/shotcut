@@ -109,6 +109,9 @@ public:
     void newProject(const QString& filename, bool isProjectFolder = false);
     void addCustomProfile(const QString& name, QMenu* menu, QAction* action, QActionGroup* group);
     void removeCustomProfiles(const QStringList& profiles, QDir &dir, QMenu* menu, QAction* action);
+    QUuid timelineClipUuid(int trackIndex, int clipIndex);
+    void replaceInTimeline(int trackIndex, int clipIndex, const QString& xml = QString());
+    Mlt::ClipInfo* timelineClipInfoByUuid(const QUuid& uuid, int& trackIndex, int& clipIndex);
 
 signals:
     void audioChannelsChanged();

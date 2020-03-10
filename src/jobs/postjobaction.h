@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Meltytech, LLC
+ * Copyright (c) 2018-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@
 #define POSTJOBACTION_H
 
 #include <QString>
+#include <QUuid>
 
 class PostJobAction
 {
@@ -42,10 +43,10 @@ protected:
     QString m_dstFile;
 };
 
-class ReverseFilePostJobAction : public FilePropertiesPostJobAction
+class ReverseOpenPostJobAction : public FilePropertiesPostJobAction
 {
 public:
-    ReverseFilePostJobAction(const QString& srcFile, const QString& dstFile, const QString& fileNameToRemove)
+    ReverseOpenPostJobAction(const QString& srcFile, const QString& dstFile, const QString& fileNameToRemove)
         : FilePropertiesPostJobAction(srcFile, dstFile)
         , m_fileNameToRemove(fileNameToRemove)
         {}
@@ -53,6 +54,21 @@ public:
 
 private:
     QString m_fileNameToRemove;
+};
+
+class ReverseReplacePostJobAction : public FilePropertiesPostJobAction
+{
+public:
+    ReverseReplacePostJobAction(const QString& srcFile, const QString& dstFile, const QString& fileNameToRemove, const QUuid& srcUuid)
+        : FilePropertiesPostJobAction(srcFile, dstFile)
+        , m_fileNameToRemove(fileNameToRemove)
+        , m_uuid(srcUuid)
+        {}
+    void doAction();
+
+private:
+    QString m_fileNameToRemove;
+    QUuid m_uuid;
 };
 
 #endif // POSTJOBACTION_H

@@ -926,7 +926,21 @@ void AvformatProducerWidget::on_reverseButton_clicked()
             MeltJob* meltJob = new MeltJob(filename, meltArgs,
                 m_producer->get_int("meta.media.frame_rate_num"), m_producer->get_int("meta.media.frame_rate_den"));
             meltJob->setLabel(tr("Reverse %1").arg(Util::baseName(resource)));
-            meltJob->setPostJobAction(new ReverseFilePostJobAction(resource, filename, tmpFileName));
+            if (m_producer->get(kMultitrackItemProperty)) {
+                QString s = QString::fromLatin1(m_producer->get(kMultitrackItemProperty));
+                QVector<QStringRef> parts = s.splitRef(':');
+                if (parts.length() == 2) {
+                    int clipIndex = parts[0].toInt();
+                    int trackIndex = parts[1].toInt();
+                    QUuid uuid = MAIN.timelineClipUuid(trackIndex, clipIndex);
+                    if (!uuid.isNull()) {
+                        meltJob->setPostJobAction(new ReverseReplacePostJobAction(resource, filename, tmpFileName, uuid.toByteArray()));
+                        JOBS.add(meltJob);
+                        return;
+                    }
+                }
+            }
+            meltJob->setPostJobAction(new ReverseOpenPostJobAction(resource, filename, tmpFileName));
             JOBS.add(meltJob);
         }
     }

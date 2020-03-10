@@ -4289,3 +4289,21 @@ void MainWindow::on_actionPreview720_triggered(bool checked)
         setPreviewScale(720);
     }
 }
+
+QUuid MainWindow::timelineClipUuid(int trackIndex, int clipIndex)
+{
+    QScopedPointer<Mlt::ClipInfo> info(m_timelineDock->getClipInfo(trackIndex, clipIndex));
+    if (info && info->cut && info->cut->is_valid())
+        return MLT.ensureHasUuid(*info->cut);
+    return QUuid();
+}
+
+void MainWindow::replaceInTimeline(int trackIndex, int clipIndex, const QString& xml)
+{
+    m_timelineDock->replace(trackIndex, clipIndex, xml);
+}
+
+Mlt::ClipInfo* MainWindow::timelineClipInfoByUuid(const QUuid& uuid, int& trackIndex, int& clipIndex)
+{
+    return m_timelineDock->model()->findClipByUuid(uuid, trackIndex, clipIndex);
+}
