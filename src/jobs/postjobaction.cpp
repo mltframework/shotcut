@@ -66,6 +66,7 @@ void ReverseReplacePostJobAction::doAction()
         }
         MLT.lockCreationTime(&producer);
         MAIN.getHash(producer);
+        producer.set_in_and_out(m_in, -1);
         // lookup the current track and clip index by UUID
         int trackIndex = -1;
         int clipIndex = -1;

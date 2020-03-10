@@ -59,16 +59,18 @@ private:
 class ReverseReplacePostJobAction : public FilePropertiesPostJobAction
 {
 public:
-    ReverseReplacePostJobAction(const QString& srcFile, const QString& dstFile, const QString& fileNameToRemove, const QUuid& srcUuid)
+    ReverseReplacePostJobAction(const QString& srcFile, const QString& dstFile, const QString& fileNameToRemove, const QUuid& srcUuid, int in)
         : FilePropertiesPostJobAction(srcFile, dstFile)
         , m_fileNameToRemove(fileNameToRemove)
         , m_uuid(srcUuid)
+        , m_in(in)
         {}
     void doAction();
 
 private:
     QString m_fileNameToRemove;
     QUuid m_uuid;
+    int m_in;
 };
 
 #endif // POSTJOBACTION_H
