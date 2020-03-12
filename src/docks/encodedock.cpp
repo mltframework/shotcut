@@ -1862,7 +1862,7 @@ void EncodeDock::on_heightSpinner_editingFinished()
 void EncodeDock::on_advancedButton_clicked(bool checked)
 {
     ui->advancedCheckBox->setVisible(checked);
-    ui->streamButton->setVisible(checked);
+    ui->streamButton->setVisible(false);
     ui->formatLabel->setVisible(checked);
     ui->formatCombo->setVisible(checked);
     ui->tabWidget->setVisible(checked);
