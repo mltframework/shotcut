@@ -812,19 +812,29 @@ void AvformatProducerWidget::on_reverseButton_clicked()
         QStringList ffmpegArgs;
         QString nameFilter;
         QString ffmpegSuffix = "mov";
+        int in = -1;
 
         ffmpegArgs << "-loglevel" << "verbose";
         ffmpegArgs << "-i" << resource;
         ffmpegArgs << "-max_muxing_queue_size" << "9999";
         // set trim options
-        if (m_producer->get(kFilterInProperty))
-            ffmpegArgs << "-ss" << QString::fromLatin1(m_producer->get_time(kFilterInProperty, mlt_time_clock)).replace(',', '.');
-        else
+        if (m_producer->get(kFilterInProperty)) {
+            in = m_producer->get_int(kFilterInProperty);
+            int ss = qMax(0, in - qRound(m_producer->get_fps() * 15.0));
+            auto s = QString::fromLatin1(m_producer->frames_to_time(ss, mlt_time_clock));
+            ffmpegArgs << "-ss" << s.replace(',', '.');
+        } else {
             ffmpegArgs << "-ss" << QString::fromLatin1(m_producer->get_time("in", mlt_time_clock)).replace(',', '.').replace(',', '.');
-        if (m_producer->get(kFilterOutProperty))
-            ffmpegArgs << "-to" << QString::fromLatin1(m_producer->get_time(kFilterOutProperty, mlt_time_clock)).replace(',', '.');
-        else
+        }
+        if (m_producer->get(kFilterOutProperty)) {
+            int out = m_producer->get_int(kFilterOutProperty);
+            int to = qMin(m_producer->get_playtime() - 1, out + qRound(m_producer->get_fps() * 15.0));
+            in = to - out - 1;
+            auto s = QString::fromLatin1(m_producer->frames_to_time(to, mlt_time_clock));
+            ffmpegArgs << "-to" << s.replace(',', '.');
+        } else {
             ffmpegArgs << "-to" << QString::fromLatin1(m_producer->get_time("out", mlt_time_clock)).replace(',', '.');
+        }
         // transcode all streams except data, subtitles, and attachments
         ffmpegArgs << "-map" << "0:V?" << "-map" << "0:a?" << "-map_metadata" << "0" << "-ignore_unknown";
         if (ui->rangeComboBox->currentIndex())
@@ -934,7 +944,7 @@ void AvformatProducerWidget::on_reverseButton_clicked()
                     int trackIndex = parts[1].toInt();
                     QUuid uuid = MAIN.timelineClipUuid(trackIndex, clipIndex);
                     if (!uuid.isNull()) {
-                        meltJob->setPostJobAction(new ReverseReplacePostJobAction(resource, filename, tmpFileName, uuid.toByteArray()));
+                        meltJob->setPostJobAction(new ReverseReplacePostJobAction(resource, filename, tmpFileName, uuid.toByteArray(), in));
                         JOBS.add(meltJob);
                         return;
                     }
