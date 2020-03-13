@@ -88,6 +88,7 @@ AvformatProducerWidget::AvformatProducerWidget(QWidget *parent)
     , m_userDefinedCaption(false)
 {
     ui->setupUi(this);
+    ui->timelineDurationText->setFixedWidth(ui->durationSpinBox->width());
     ui->filenameLabel->setFrame(true);
     Util::setColorsToHighlight(ui->filenameLabel, QPalette::Base);
     if (Settings.playerGPU())
@@ -277,6 +278,16 @@ void AvformatProducerWidget::onFrameDecoded()
     ui->filenameLabel->setToolTip(resource);
     ui->notesTextEdit->setPlainText(QString::fromUtf8(m_producer->get(kCommentProperty)));
     ui->durationSpinBox->setValue(m_producer->get_length());
+    if (m_producer->get(kFilterInProperty) && m_producer->get(kFilterOutProperty)) {
+        auto duration = m_producer->get_int(kFilterOutProperty) - m_producer->get_int(kFilterInProperty) + 1;
+        ui->timelineDurationLabel->show();
+        ui->timelineDurationText->setText(m_producer->frames_to_time(duration));
+        ui->timelineDurationText->show();
+    } else {
+        ui->timelineDurationLabel->hide();
+        ui->timelineDurationLabel->setText(QString());
+        ui->timelineDurationText->hide();
+    }
     m_recalcDuration = false;
     ui->speedSpinBox->setValue(warpSpeed);
     if (warpSpeed == 1.0) {
