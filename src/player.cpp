@@ -45,7 +45,7 @@ Player::Player(QWidget *parent)
     , m_zoomToggleFactor(Settings.playerZoom() == 0.0f? 1.0f : Settings.playerZoom())
     , m_pauseAfterOpen(false)
     , m_monitorScreen(-1)
-    , m_currentTransport(0)
+    , m_currentTransport(nullptr)
 {
     setObjectName("Player");
     Mlt::Controller::singleton();
@@ -225,10 +225,10 @@ Player::Player(QWidget *parent)
         tr("Zoom 25%"), this, SLOT(onZoomTriggered()))->setData(0.25f);
     m_zoomMenu->addAction(
         QIcon::fromTheme("zoom-out", QIcon(":/icons/oxygen/32x32/actions/zoom-out")),
-        tr("Zoom 50%"), this, SLOT(onZoomTriggered()))->setData(0.5f);;
+        tr("Zoom 50%"), this, SLOT(onZoomTriggered()))->setData(0.5f);
     m_zoomMenu->addAction(
         QIcon::fromTheme("zoom-original", QIcon(":/icons/oxygen/32x32/actions/zoom-original")),
-        tr("Zoom 100%"), this, SLOT(onZoomTriggered()))->setData(1.0f);;
+        tr("Zoom 100%"), this, SLOT(onZoomTriggered()))->setData(1.0f);
     m_zoomMenu->addAction(
         QIcon::fromTheme("zoom-in", QIcon(":/icons/oxygen/32x32/actions/zoom-in")),
         tr("Zoom 200%"), this, SLOT(onZoomTriggered()))->setData(2.0f);
@@ -937,7 +937,7 @@ void Player::setPauseAfterOpen(bool pause)
 
 Player::TabIndex Player::tabIndex() const
 {
-    return (TabIndex)m_tabs->currentIndex();
+    return TabIndex(m_tabs->currentIndex());
 }
 
 //----------------------------------------------------------------------------
