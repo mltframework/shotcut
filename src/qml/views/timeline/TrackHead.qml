@@ -137,27 +137,6 @@ Rectangle {
         RowLayout {
             spacing: 8
             ToolButton {
-                id: muteButton
-                implicitWidth: 18
-                implicitHeight: 18
-                iconName: isMute ? 'audio-volume-muted' : 'audio-volume-high'
-                iconSource: isMute ? 'qrc:///icons/oxygen/32x32/status/audio-volume-muted.png' : 'qrc:///icons/oxygen/32x32/status/audio-volume-high.png'
-                onClicked: timeline.toggleTrackMute(index)
-                tooltip: isMute? qsTr('Unmute') : qsTr('Mute')
-            }
-
-            ToolButton {
-                id: hideButton
-                visible: isVideo
-                implicitWidth: 18
-                implicitHeight: 18
-                iconName: isHidden ? 'layer-visible-off' : 'layer-visible-on'
-                iconSource: isHidden? 'qrc:///icons/oxygen/32x32/actions/layer-visible-off.png' : 'qrc:///icons/oxygen/32x32/actions/layer-visible-on.png'
-                onClicked: timeline.toggleTrackHidden(index)
-                tooltip: isHidden? qsTr('Show') : qsTr('Hide')
-            }
-
-            ToolButton {
                 id: lockButton
                 implicitWidth: 18
                 implicitHeight: 18
@@ -183,6 +162,27 @@ Rectangle {
                         duration: 200
                     }
                 }
+            }
+
+            ToolButton {
+                id: muteButton
+                implicitWidth: 18
+                implicitHeight: 18
+                iconName: isMute ? 'audio-volume-muted' : 'audio-volume-high'
+                iconSource: isMute ? 'qrc:///icons/oxygen/32x32/status/audio-volume-muted.png' : 'qrc:///icons/oxygen/32x32/status/audio-volume-high.png'
+                onClicked: timeline.toggleTrackMute(index)
+                tooltip: isMute? qsTr('Unmute') : qsTr('Mute')
+            }
+
+            ToolButton {
+                id: hideButton
+                visible: isVideo
+                implicitWidth: 18
+                implicitHeight: 18
+                iconName: isHidden ? 'layer-visible-off' : 'layer-visible-on'
+                iconSource: isHidden? 'qrc:///icons/oxygen/32x32/actions/layer-visible-off.png' : 'qrc:///icons/oxygen/32x32/actions/layer-visible-on.png'
+                onClicked: timeline.toggleTrackHidden(index)
+                tooltip: isHidden? qsTr('Show') : qsTr('Hide')
             }
 
             ToolButton {
