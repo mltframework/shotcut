@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2019 Meltytech, LLC
+ * Copyright (c) 2013-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -113,10 +113,13 @@ Rectangle {
                 // Remove the placeholder inserted in onDraggedToTrack
                 if (placeHolderAdded) {
                     placeHolderAdded = false
+                    root.resetDrag()
                     multitrack.reload(true)
                 }
-                if (!timeline.moveClip(fromTrack, toTrack, clipIndex, frame, settings.timelineRipple))
+                if (!timeline.moveClip(fromTrack, toTrack, clipIndex, frame, settings.timelineRipple)) {
                     clip.x = clip.originalX
+                    clip.trackIndex = clip.originalTrackIndex
+                }
             }
             onDragged: {
                 if (toolbar.scrub) {

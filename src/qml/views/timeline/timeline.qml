@@ -83,6 +83,10 @@ Rectangle {
         return tracksRepeater.itemAt(index)
     }
 
+    function resetDrag() {
+        dragDelta = Qt.point(0, 0)
+    }
+
     property int headerWidth: 140
     property int currentTrack: 0
     property color selectedTrackColor: Qt.rgba(0.8, 0.8, 0, 0.3);

@@ -909,6 +909,14 @@ bool TimelineDock::moveClip(int fromTrack, int toTrack, int clipIndex, int posit
         if (m_updateCommand)
             m_updateCommand->setPosition(toTrack, clipIndex, position);
     } else {
+        // Check for locked tracks
+        auto trackDelta = toTrack - fromTrack;
+        for (const auto& clip : selection()) {
+            auto trackIndex = clip.y() + trackDelta;
+            if (isTrackLocked(trackIndex))
+                return false;
+        }
+
         // Workaround bug #326 moving clips between tracks stops allowing drag-n-drop
         // into Timeline, which appeared with Qt 5.6 upgrade.
         emit clipMoved(fromTrack, toTrack, clipIndex, position, ripple);
