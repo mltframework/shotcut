@@ -161,10 +161,28 @@ Rectangle {
                 id: lockButton
                 implicitWidth: 18
                 implicitHeight: 18
+                height: width
                 iconName: isLocked ? 'object-locked' : 'object-unlocked'
                 iconSource: isLocked ? 'qrc:///icons/oxygen/32x32/status/object-locked.png' : 'qrc:///icons/oxygen/32x32/status/object-unlocked.png'
                 onClicked: timeline.setTrackLock(index, !isLocked)
                 tooltip: isLocked? qsTr('Unlock track') : qsTr('Lock track')
+
+                SequentialAnimation {
+                    id: lockButtonAnim
+                    loops: 2
+                    NumberAnimation {
+                        target: lockButton
+                        property: 'width'
+                        to: 32
+                        duration: 200
+                    }
+                    NumberAnimation {
+                        target: lockButton
+                        property: 'width'
+                        to: 18
+                        duration: 200
+                    }
+                }
             }
 
             ToolButton {
