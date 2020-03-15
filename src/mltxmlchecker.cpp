@@ -227,6 +227,7 @@ void MltXmlChecker::processProperties()
             m_resource.hash = p.second;
         } else if (isNumericProperty(p.first)) {
             checkNumericString(p.second);
+        } else if (p.first == "resource" && mlt_service == "webvfx" && fixWebVfxPath(p.second)) {
         } else if (readResourceProperty(p.first, p.second)) {
 #ifdef Q_OS_WIN
             fixVersion1701WindowsPathBug(p.second);
@@ -253,11 +254,8 @@ void MltXmlChecker::processProperties()
         m_properties = newProperties;
         newProperties.clear();
         foreach (MltProperty p, m_properties) {
-            if (p.first == "resource" && mlt_service == "webvfx") {
-                fixWebVfxPath(p.second);
-
             // Fix some properties if re-linked file.
-            } else if (p.first == kShotcutHashProperty) {
+            if (p.first == kShotcutHashProperty) {
                 if (!m_resource.newHash.isEmpty())
                     p.second = m_resource.newHash;
             } else if (p.first == kShotcutCaptionProperty) {
@@ -322,16 +320,23 @@ bool MltXmlChecker::fixWebVfxPath(QString& resource)
     if (fi.isAbsolute()) {
         QDir appPath(QCoreApplication::applicationDirPath());
 
-#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
+#if defined(Q_OS_MAC)
+        // Leave the MacOS directory
+        appPath.cdUp();
+#elif defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
         // Leave the bin directory on Linux.
         appPath.cdUp();
 #endif
         if (!resource.startsWith(appPath.path())) {
             // Locate "share/shotcut" and replace the front of it with appPath.
             int i = resource.indexOf("/share/shotcut/");
+#if defined(Q_OS_MAC)
+            if (i == -1)
+                i = resource.indexOf("/Resources/shotcut/");
+#endif
             if (i >= 0) {
                 resource.replace(0, i, appPath.path());
-                m_isCorrected = true;
+                m_isUpdated = true;
                 return true;
             }
         }
