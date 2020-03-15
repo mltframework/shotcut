@@ -377,7 +377,9 @@ bool MltXmlChecker::readResourceProperty(const QString& name, QString& value)
         m_resource.prefix = getPrefix(name, value);
         // Save the resource name (minus prefix) for later check for unlinked files.
         m_resource.info.setFile(value.mid(m_resource.prefix.size()));
-        if (!isNetworkResource(value) && m_resource.info.isRelative())
+        auto driveSeparators = value.midRef(1, 2);
+        auto hasDriveLetter = driveSeparators == ":/" || driveSeparators == ":\\";
+        if (!isNetworkResource(value) && m_resource.info.isRelative() && !hasDriveLetter)
             m_resource.info.setFile(m_fileInfo.canonicalPath(), m_resource.info.filePath());
         return true;
     }
