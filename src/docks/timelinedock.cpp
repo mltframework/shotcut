@@ -850,6 +850,10 @@ void TimelineDock::onProducerModified()
 
 void TimelineDock::replace(int trackIndex, int clipIndex, const QString& xml)
 {
+    if (!MLT.isClip() && !MLT.savedProducer()) {
+        showStatusMessage(tr("There is nothing in the Source player."));
+        return;
+    }
     if (!m_model.trackList().count() || MAIN.isSourceClipMyProject())
         return;
     if (trackIndex < 0)
@@ -860,6 +864,11 @@ void TimelineDock::replace(int trackIndex, int clipIndex, const QString& xml)
     }
     if (clipIndex < 0)
         clipIndex = clipIndexAtPlayhead(trackIndex);
+    Mlt::Producer producer(producerForClip(trackIndex, clipIndex));
+    if (producer.is_valid() && producer.type() == tractor_type) {
+        showStatusMessage(tr("You cannot replace a transition."));
+        return;
+    }
     if (MLT.isSeekableClip() || MLT.savedProducer() || !xml.isEmpty()) {
         Q_ASSERT(trackIndex >= 0 && clipIndex >= 0);
         QString xmlToUse = !xml.isEmpty()? xml

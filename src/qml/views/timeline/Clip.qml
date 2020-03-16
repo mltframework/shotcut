@@ -654,6 +654,7 @@ Rectangle {
             onTriggered: timeline.lift(trackIndex, index)
         }
         MenuItem {
+            visible: !isTransition
             text: qsTr('Replace')
             onTriggered: timeline.replace(trackIndex, index)
         }
