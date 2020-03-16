@@ -1016,8 +1016,6 @@ void EncodeDock::runMelt(const QString& target, int realtime)
     }
 }
 
-#if LIBMLT_VERSION_INT >= MLT_VERSION_CPP_UPDATED
-
 class FindAnalysisFilterParser : public Mlt::Parser
 {
 private:
@@ -1098,8 +1096,6 @@ void EncodeDock::enqueueAnalysis()
         }
     }
 }
-
-#endif
 
 void EncodeDock::enqueueMelt(const QString& target, int realtime)
 {
@@ -1400,9 +1396,7 @@ void EncodeDock::on_encodeButton_clicked()
                 threadCount = qMin(threadCount - 1, 4);
             else
                 threadCount = 1;
-#if LIBMLT_VERSION_INT >= MLT_VERSION_CPP_UPDATED
             enqueueAnalysis();
-#endif
             enqueueMelt(m_outputFilename, Settings.playerGPU()? -1 : -threadCount);
         }
         else if (MLT.producer()->get_int(kBackgroundCaptureProperty)) {

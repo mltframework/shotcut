@@ -296,7 +296,6 @@ int QmlFilter::savePreset(const QStringList &propertyNames, const QString &name)
             dir.cd(objectNameOrService());
     }
     QString preset = name.isEmpty()? tr("(defaults)") : QString::fromUtf8(QUrl::toPercentEncoding(name));
-#if LIBMLT_VERSION_INT >= ((6<<16)+(9<<8))
     // Convert properties to YAML string.
     char* yamlStr = properties.serialise_yaml();
     QString yaml = yamlStr;
@@ -308,9 +307,6 @@ int QmlFilter::savePreset(const QStringList &propertyNames, const QString &name)
     }
     yamlFile.write(yaml.toUtf8());
     yamlFile.close();
-#else
-    properties.save(dir.filePath(preset).toUtf8().constData());
-#endif
     loadPresets();
     return m_presets.indexOf(name);
 }
@@ -555,7 +551,6 @@ void QmlFilter::preset(const QString &name)
 
     auto fileName = dir.filePath(QUrl::toPercentEncoding(name));
 
-#if LIBMLT_VERSION_INT >= ((6<<16)+(9<<8))
     // Detect the preset file format
     bool isYaml = false;
     QFile presetFile(fileName);
@@ -595,9 +590,6 @@ void QmlFilter::preset(const QString &name)
         // Load from legacy preset file
         m_filter.load(fileName.toUtf8().constData());
     }
-#else
-    m_filter.load(fileName.toUtf8().constData());
-#endif
 
     emit changed();
 }
@@ -649,18 +641,11 @@ bool QmlFilter::isAtLeastVersion(const QString& version)
 
 AnalyzeDelegate::AnalyzeDelegate(Mlt::Filter& filter)
     : QObject(0)
-#if LIBMLT_VERSION_INT >= MLT_VERSION_CPP_UPDATED
     , m_uuid(QUuid::createUuid())
     , m_serviceName(filter.get("mlt_service"))
 {
     filter.set(kShotcutHashProperty, m_uuid.toByteArray().data());
 }
-#else
-    , m_filter(filter)
-{}
-#endif
-
-#if LIBMLT_VERSION_INT >= MLT_VERSION_CPP_UPDATED
 
 class FindFilterParser : public Mlt::Parser
 {
@@ -753,14 +738,11 @@ void AnalyzeDelegate::updateJob(EncodeJob* job, const QString& results)
     }
 }
 
-#endif
-
 void AnalyzeDelegate::onAnalyzeFinished(AbstractJob *job, bool isSuccess)
 {
     QString fileName = job->objectName();
 
     if (isSuccess) {
-#if LIBMLT_VERSION_INT >= MLT_VERSION_CPP_UPDATED
         QString results = resultsFromXml(fileName, m_serviceName);
         if (!results.isEmpty()) {
             // look for filters by UUID in each pending export job.
@@ -794,13 +776,6 @@ void AnalyzeDelegate::onAnalyzeFinished(AbstractJob *job, bool isSuccess)
             }
             emit MAIN.filterController()->attachedModel()->changed();
         }
-#else
-        QString results = resultsFromXml(fileName, m_filter.get("mlt_service"));
-        if (!results.isEmpty()) {
-            updateFilter(m_filter, results);
-            emit MAIN.filterController()->attachedModel()->changed();
-        }
-#endif
     } else if (!job->property("filename").isNull()) {
         QFile file(job->property("filename").toString());
         if (file.exists() && file.size() == 0)
