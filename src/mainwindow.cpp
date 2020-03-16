@@ -1878,10 +1878,15 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
             } else {
                 Settings.setTimelineRipple(!Settings.timelineRipple());
             }
-        } else {
+        } else if (isMultitrackValid()) {
             m_timelineDock->show();
             m_timelineDock->raise();
-            m_timelineDock->replace(-1, -1);
+            if (MLT.isClip() || m_timelineDock->selection().isEmpty()) {
+                m_timelineDock->replace(-1, -1);
+            } else {
+                auto& selected = m_timelineDock->selection().first();
+                m_timelineDock->replace(selected.y(), selected.x());
+            }
         }
         break;
     case Qt::Key_S:
@@ -2042,7 +2047,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
             m_playlistDock->show();
             m_playlistDock->raise();
             m_playlistDock->on_removeButton_clicked();
-        } else {
+        } else if (isMultitrackValid()) {
             m_timelineDock->show();
             m_timelineDock->raise();
             m_timelineDock->removeSelection();
