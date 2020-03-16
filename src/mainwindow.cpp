@@ -1772,11 +1772,15 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
             m_timelineDock->show();
             m_timelineDock->raise();
             m_timelineDock->copyToSource();
-        } else {
+        } else if (isMultitrackValid()) {
             m_timelineDock->show();
             m_timelineDock->raise();
-            if (!m_timelineDock->selection().isEmpty())
-                m_timelineDock->copyClip(m_timelineDock->selection().first().y(), m_timelineDock->selection().first().x());
+            if (m_timelineDock->selection().isEmpty()) {
+                m_timelineDock->copyClip(-1, -1);
+            } else {
+                auto& selected = m_timelineDock->selection().first();
+                m_timelineDock->copyClip(selected.y(), selected.x());
+            }
         }
         break;
     case Qt::Key_D:

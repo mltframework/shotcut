@@ -677,6 +677,10 @@ void TimelineDock::selectMultitrack()
 
 void TimelineDock::copyClip(int trackIndex, int clipIndex)
 {
+    if (trackIndex < 0)
+        trackIndex = currentTrack();
+    if (clipIndex < 0)
+        clipIndex = clipIndexAtPlayhead(trackIndex);
     Q_ASSERT(trackIndex >= 0 && clipIndex >= 0);
     QScopedPointer<Mlt::ClipInfo> info(getClipInfo(trackIndex, clipIndex));
     if (info) {
