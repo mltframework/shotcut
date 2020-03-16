@@ -112,12 +112,12 @@ Mlt::ClipInfo *TimelineDock::getClipInfo(int trackIndex, int clipIndex)
     return result;
 }
 
-Mlt::Producer *TimelineDock::producerForClip(int trackIndex, int clipIndex)
+Mlt::Producer TimelineDock::producerForClip(int trackIndex, int clipIndex)
 {
-    Mlt::Producer* result = nullptr;
+    Mlt::Producer result;
     Mlt::ClipInfo* info = getClipInfo(trackIndex, clipIndex);
     if (info) {
-        result = new Mlt::Producer(info->producer);
+        result = Mlt::Producer(info->producer);
         delete info;
     }
     return result;
@@ -565,9 +565,8 @@ void TimelineDock::remove(int trackIndex, int clipIndex)
         return;
     }
     Q_ASSERT(trackIndex >= 0 && clipIndex >= 0);
-    Mlt::Producer* clip = producerForClip(trackIndex, clipIndex);
-    if (clip) {
-        delete clip;
+    Mlt::Producer clip = producerForClip(trackIndex, clipIndex);
+    if (clip.is_valid()) {
         MAIN.undoStack()->push(
             new Timeline::RemoveCommand(m_model, trackIndex, clipIndex));
     }
@@ -582,9 +581,9 @@ void TimelineDock::lift(int trackIndex, int clipIndex)
         return;
     }
     if (trackIndex < 0 || clipIndex < 0) return;
-    QScopedPointer<Mlt::Producer> clip(producerForClip(trackIndex, clipIndex));
-    if (clip) {
-        if (clip->is_blank())
+    Mlt::Producer clip(producerForClip(trackIndex, clipIndex));
+    if (clip.is_valid()) {
+        if (clip.is_blank())
             return;
         MAIN.undoStack()->push(
             new Timeline::LiftCommand(m_model, trackIndex, clipIndex));
