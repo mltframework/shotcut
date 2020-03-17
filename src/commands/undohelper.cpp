@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2019 Meltytech, LLC
+ * Copyright (c) 2015-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -202,6 +202,9 @@ void UndoHelper::undoChanges()
                 Q_ASSERT(!(m_hints & SkipXML) && "Cannot restore clip without stored XML");
                 Q_ASSERT(!info.xml.isEmpty());
                 Mlt::Producer restoredClip(MLT.profile(), "xml-string", info.xml.toUtf8().constData());
+                if (restoredClip.type() == tractor_type) {
+                    restoredClip.set("mlt_type", "mlt_producer");
+                }
                 playlist.insert(restoredClip, currentIndex, info.frame_in, info.frame_out);
             }
             m_model.endInsertRows();
@@ -332,6 +335,9 @@ void UndoHelper::restoreAffectedTracks()
                 Q_ASSERT(!(m_hints & SkipXML) && "Cannot restore clip without stored XML");
                 Q_ASSERT(!info.xml.isEmpty());
                 Mlt::Producer restoredClip(MLT.profile(), "xml-string", info.xml.toUtf8().constData());
+                if (restoredClip.type() == tractor_type) {
+                    restoredClip.set("mlt_type", "mlt_producer");
+                }
                 playlist.append(restoredClip, info.frame_in, info.frame_out);
             }
             m_model.endInsertRows();
