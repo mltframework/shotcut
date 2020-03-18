@@ -487,7 +487,7 @@ void GLWidget::mouseMoveEvent(QMouseEvent* event)
 {
     QQuickWidget::mouseMoveEvent(event);
     if (event->isAccepted()) return;
-    if (event->modifiers() == Qt::ShiftModifier && m_producer) {
+    if (event->modifiers() == Qt::AltModifier && m_producer) {
         emit seekTo(m_producer->get_length() * event->x() / width());
         return;
     }
