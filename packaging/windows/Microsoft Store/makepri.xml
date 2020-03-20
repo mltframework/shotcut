@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<resources targetOsVersion="10.0.0" majorVersion="1">
+	<index root="\" startIndexAt="\">
+		<default>
+			<qualifier name="Language" value="en"/>
+			<!-- <qualifier name="Contrast" value="standard"/> -->
+			<!-- <qualifier name="Scale" value="400"/> -->
+			<!-- <qualifier name="Scale" value="200"/> -->
+			<!-- <qualifier name="Scale" value="150"/> -->
+			<!-- <qualifier name="Scale" value="125"/> -->
+			<!-- <qualifier name="Scale" value="100"/> -->
+			<!-- <qualifier name="TargetSize" value="256"/> -->
+			<!-- <qualifier name="TargetSize" value="16"/> -->
+			<!-- <qualifier name="TargetSize" value="24"/> -->
+			<!-- <qualifier name="TargetSize" value="32"/> -->
+			<!-- <qualifier name="TargetSize" value="48"/> -->
+			<!-- <qualifier name="HomeRegion" value="001"/> -->
+			<!-- <qualifier name="TargetSize" value="256"/> -->
+			<!-- <qualifier name="LayoutDirection" value="LTR"/> -->
+			<!-- <qualifier name="Theme" value="dark"/> -->
+			<!-- <qualifier name="AlternateForm" value="UNPLATED"/> -->
+			<!-- <qualifier name="DXFeatureLevel" value="DX9"/> -->
+			<!-- <qualifier name="Configuration" value=""/> -->
+			<!-- <qualifier name="DeviceFamily" value="Universal"/> -->
+			<!-- <qualifier name="Custom" value=""/> -->
+		</default>
+		<indexer-config type="folder" foldernameAsQualifier="true" filenameAsQualifier="true" qualifierDelimiter=".">
+			<exclude type="tree" value="lib" doNotTraverse="true" doNotIndex="true"/>
+			<exclude type="tree" value="share" doNotTraverse="true" doNotIndex="true"/>
+			<exclude type="extension" value=".dll" doNotTraverse="true" doNotIndex="true"/>
+			<exclude type="extension" value=".exe" doNotTraverse="true" doNotIndex="true"/>
+			<exclude type="extension" value=".xml" doNotTraverse="true" doNotIndex="true"/>
+			<exclude type="extension" value=".txt" doNotTraverse="true" doNotIndex="true"/>
+			<exclude type="extension" value=".conf" doNotTraverse="true" doNotIndex="true"/>
+		</indexer-config>
+		<indexer-config type="resw" convertDotsToSlashes="true" initialPath=""/>
+		<indexer-config type="resjson" initialPath=""/>
+		<indexer-config type="PRI"/>
+	</index>
+	<!--<index startIndexAt="Start Index Here" root="Root Here">-->
+	<!--        <indexer-config type="resfiles" qualifierDelimiter="."/>-->
+	<!--        <indexer-config type="priinfo" emitStrings="true" emitPaths="true" emitEmbeddedData="true"/>-->
+	<!--</index>-->
+</resources>
