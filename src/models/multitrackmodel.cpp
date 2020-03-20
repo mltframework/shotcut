@@ -3111,8 +3111,11 @@ void MultitrackModel::replace(int trackIndex, int clipIndex, Mlt::Producer& clip
             if (producer.is_valid()) {
                 Mlt::Tractor tractor(MLT_TRACTOR(producer.get_parent()));
                 Q_ASSERT(tractor.is_valid());
-                Mlt::Producer cut(clip.cut(in - transitionIn, in - 1));
-                tractor.set_track(cut, 1);
+                Mlt::Producer track(tractor.track(1));
+                if (!qstrcmp(track.parent().get(kShotcutHashProperty), oldClip.parent().get(kShotcutHashProperty))) {
+                    Mlt::Producer cut(clip.cut(in - transitionIn, in - 1));
+                    tractor.set_track(cut, 1);
+                }
             }
         }
         // Handle transition on the right
@@ -3121,8 +3124,11 @@ void MultitrackModel::replace(int trackIndex, int clipIndex, Mlt::Producer& clip
             if (producer.is_valid()) {
                 Mlt::Tractor tractor(MLT_TRACTOR(producer.get_parent()));
                 Q_ASSERT(tractor.is_valid());
-                Mlt::Producer cut(clip.cut(out + 1, out + transitionOut));
-                tractor.set_track(cut, 0);
+                Mlt::Producer track(tractor.track(0));
+                if (!qstrcmp(track.parent().get(kShotcutHashProperty), oldClip.parent().get(kShotcutHashProperty))) {
+                    Mlt::Producer cut(clip.cut(out + 1, out + transitionOut));
+                    tractor.set_track(cut, 0);
+                }
             }
         }
     }
