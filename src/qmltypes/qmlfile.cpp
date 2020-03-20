@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2019 Meltytech, LLC
+ * Copyright (c) 2014-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,20 +32,21 @@ QString QmlFile::getUrl()
     return m_url.toString();
 }
 
-void QmlFile::setUrl(const QString& text)
+void QmlFile::setUrl(QString text)
 {
-    QString textWithSlashes = text;
-    QUrl url = textWithSlashes.replace('\\', "/");
+    QUrl url = text.replace('\\', "/");
     QUrl::FormattingOptions options =
             QUrl::RemoveScheme |
             QUrl::RemovePassword |
             QUrl::RemoveUserInfo |
             QUrl::RemovePort |
-            QUrl::RemoveAuthority |
             QUrl::RemoveQuery;
 #ifdef Q_OS_WIN
     // If the scheme is a drive letter, do not remove it.
     if (url.scheme().size() == 1)
+        options ^= QUrl::RemoveScheme;
+    // QUrl removes the host from a UNC path when removing the scheme.
+    else if (text.startsWith("file://") && text.size() > 9 && text[9] != ':')
         options ^= QUrl::RemoveScheme;
 
     QUrl adj = url.adjusted(options);
@@ -56,8 +57,10 @@ void QmlFile::setUrl(const QString& text)
     // The scheme is removed but only "://" (not 3 slashes) between scheme and path.
     if (s.size() > 2 && s[0] == '/' && s[2]  == ':') {
         // Remove the leading slash.
-        s = s.right(s.size() - 1);
-        adj = QUrl(s);
+        adj = s.mid(1);
+    } else if (s.startsWith("file://")) { // UNC path
+        // Remove the scheme.
+        adj = s.mid(5);
     }
 #else
     QUrl adj = url.adjusted(options);

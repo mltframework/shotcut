@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2019 Meltytech, LLC
+ * Copyright (c) 2014-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@ class QmlFile : public QObject
 public:
     explicit QmlFile(QObject *parent = 0);
     QString getUrl();
-    void setUrl(const QString& text);
+    void setUrl(QString text);
     QString getFileName();
     QString getPath();
     QString getFilePath();
