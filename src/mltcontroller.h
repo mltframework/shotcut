@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2019 Meltytech, LLC
+ * Copyright (c) 2011-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -123,7 +123,7 @@ public:
     QUuid uuid(Mlt::Properties &properties) const;
     void setUuid(Mlt::Properties &properties, QUuid uid) const;
     QUuid ensureHasUuid(Mlt::Properties& properties) const;
-    static void copyFilters(Mlt::Producer& fromProducer, Mlt::Producer& toProducer);
+    static void copyFilters(Mlt::Producer& fromProducer, Mlt::Producer& toProducer, bool fromClipboard = false);
     void copyFilters(Mlt::Producer* producer = nullptr);
     void pasteFilters(Mlt::Producer* producer = nullptr);
     static void adjustFilters(Mlt::Producer& producer, int startIndex);

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2019 Meltytech, LLC
+ * Copyright (c) 2011-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1034,9 +1034,12 @@ QUuid Controller::ensureHasUuid(Mlt::Properties& properties) const
     return newUid;
 }
 
-void Controller::copyFilters(Producer& fromProducer, Producer& toProducer)
+void Controller::copyFilters(Producer& fromProducer, Producer& toProducer, bool fromClipboard)
 {
+    int in = fromProducer.get(kFilterInProperty)? fromProducer.get_int(kFilterInProperty) : fromProducer.get_in();
+    int out = fromProducer.get(kFilterOutProperty)? fromProducer.get_int(kFilterOutProperty) : fromProducer.get_out();
     int count = fromProducer.filter_count();
+    
     for (int i = 0; i < count; i++) {
         QScopedPointer<Mlt::Filter> fromFilter(fromProducer.filter(i));
         if (fromFilter && fromFilter->is_valid() && !fromFilter->get_int("_loader") && fromFilter->get("mlt_service")) {
@@ -1044,6 +1047,13 @@ void Controller::copyFilters(Producer& fromProducer, Producer& toProducer)
             if (toFilter.is_valid()) {
                 toFilter.inherit(*fromFilter);
                 toProducer.attach(toFilter);
+
+                if (!fromClipboard) {
+                    toFilter.set(kFilterInProperty, fromFilter->get_in() - in);
+                    if (fromFilter->get_out() != out) {
+                        toFilter.set(kFilterOutProperty, fromFilter->get_out() - fromFilter->get_in());
+                    }
+                }
             }
         }
     }
@@ -1067,7 +1077,7 @@ void Controller::pasteFilters(Mlt::Producer* producer)
                       : nullptr;
     if (targetProducer) {
         int j = targetProducer->filter_count();
-        copyFilters(*m_filtersClipboard, *targetProducer);
+        copyFilters(*m_filtersClipboard, *targetProducer, true);
         adjustFilters(*targetProducer, j);
     }
 }
@@ -1075,14 +1085,15 @@ void Controller::pasteFilters(Mlt::Producer* producer)
 void Controller::adjustFilters(Producer& producer, int index)
 {
     bool changed = false;
+    int in = producer.get(kFilterInProperty)? producer.get_int(kFilterInProperty) : producer.get_in();
+    int out = producer.get(kFilterOutProperty)? producer.get_int(kFilterOutProperty): producer.get_out();
     int n = producer.filter_count();
+
     for (; index < n; index++) {
         QScopedPointer<Mlt::Filter> filter(producer.filter(index));
 
         if (filter && filter->is_valid()) {
             QString filterName = filter->get(kShotcutFilterProperty);
-            int in = producer.get(kFilterInProperty)? producer.get_int(kFilterInProperty) : producer.get_in();
-            int out = producer.get(kFilterOutProperty)? producer.get_int(kFilterOutProperty): producer.get_out();
             if (filterName.startsWith("fadeIn") && !filter->get(kShotcutAnimInProperty)) {
                 // Convert legacy fadeIn filters.
                 filter->set(kShotcutAnimInProperty, filter->get_length());
@@ -1092,7 +1103,13 @@ void Controller::adjustFilters(Producer& producer, int index)
                 filter->set(kShotcutAnimOutProperty, filter->get_length());
             }
             if (!filter->get_int("_loader")) {
-                filter->set_in_and_out(in, out);
+                int filterIn = in;
+                int filterOut = out;
+                if (filter->get(kFilterInProperty))
+                    filterIn += filter->get_int(kFilterInProperty);
+                if (filter->get(kFilterOutProperty))
+                    filterOut = qMin(filterIn + filter->get_int(kFilterOutProperty), out);
+                filter->set_in_and_out(filterIn, filterOut);
                 changed = true;
 
                 if (filterName == "fadeOutBrightness") {
