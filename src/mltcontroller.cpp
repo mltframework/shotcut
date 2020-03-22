@@ -468,10 +468,9 @@ bool Controller::saveXML(const QString& filename, Service* service, bool withRel
         c.set("time_format", "clock");
         c.set("no_meta", 1);
         c.set("store", "shotcut");
-        if (withRelativePaths) {
-            c.set("root", fi.absolutePath().toUtf8().constData());
-            c.set("no_root", 1);
-        }
+        c.set("root", withRelativePaths? fi.absolutePath().toUtf8().constData() : "");
+        c.set("root", "");
+        c.set("no_root", 1);
         c.set("title", QString("Shotcut version ").append(SHOTCUT_VERSION).toUtf8().constData());
         c.connect(s);
         c.start();
