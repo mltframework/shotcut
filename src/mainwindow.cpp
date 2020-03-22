@@ -1259,6 +1259,12 @@ void MainWindow::open(QString url, const Mlt::Properties* properties)
     LOG_DEBUG() << url;
     bool modified = false;
     MltXmlChecker checker;
+    QFileInfo info(url);
+
+    if (info.isRelative()) {
+        QDir pwd(QDir::currentPath());
+        url = pwd.filePath(url);
+    }
     if (url.endsWith(".mlt") || url.endsWith(".xml")) {
         if (url != untitledFileName()) {
             showStatusMessage(tr("Opening %1").arg(url));
