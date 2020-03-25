@@ -109,8 +109,8 @@ Rectangle {
                 iconSource: 'qrc:///icons/oxygen/32x32/actions/media-skip-backward.png'
                 onClicked: {
                     if (delegateIndex >= 0) {
-                        root.selection = [keyframes.seekPrevious()]
                         root.currentTrack = delegateIndex
+                        root.selection = [keyframes.seekPrevious()]
                     } else {
                         Logic.seekPreviousSimple()
                     }
@@ -166,8 +166,8 @@ Rectangle {
                 iconSource: 'qrc:///icons/oxygen/32x32/actions/media-skip-forward.png'
                 onClicked: {
                     if (delegateIndex >= 0) {
-                        root.selection = [keyframes.seekNext()]
                         root.currentTrack = delegateIndex
+                        root.selection = [keyframes.seekNext()]
                     } else {
                         Logic.seekNextSimple()
                     }
