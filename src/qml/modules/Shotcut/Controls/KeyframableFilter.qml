@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Meltytech, LLC
+ * Copyright (c) 2019-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -112,13 +112,14 @@ Item {
             blockUpdate = true
             if (filter.animateIn > 0 || filter.animateOut > 0) {
                 // Reset all of the simple keyframes.
-                for (var i in keyframableParameters)
-                    filter.resetProperty(keyframableParameters[i])
-                filter.animateIn = filter.animateOut = 0
+                resetSimpleKeyframes()
+                filter.animateIn = 0
+                blockUpdate = false
+                filter.animateOut = 0
             } else {
                 filter.clearSimpleAnimation(parameter)
+                blockUpdate = false
             }
-            blockUpdate = false
             // Set this keyframe value.
             filter.set(parameter, value, getPosition())
         } else {

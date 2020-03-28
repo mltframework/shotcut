@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2019 Meltytech, LLC
+ * Copyright (c) 2013-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,17 +20,15 @@ import QtQuick.Controls 1.0
 import QtQuick.Layouts 1.0
 import Shotcut.Controls 1.0
 
-Item {
+KeyframableFilter {
     width: 350
     height: 150
-    property bool blockUpdate: true
-    property double startRotateValue: 0.0
-    property double middleRotateValue: 0.0
-    property double endRotateValue: 0.0
-    property double startScaleValue: 1.0
-    property double middleScaleValue: 1.0
-    property double endScaleValue: 1.0
     property bool isAtLeastVersion4: filter.isAtLeastVersion('4')
+
+    keyframableParameters: ['transition.fix_rotate_x', 'transition.scale_x', 'transition.scale_y']
+    startValues: [0.0, 1.0, 1.0]
+    middleValues: [0.0, 1.0, 1.0]
+    endValues: [0.0, 1.0, 1.0]
 
     Component.onCompleted: {
         if (isAtLeastVersion4 && filter.get('transition.invert_scale') != 1) {
@@ -52,66 +50,21 @@ Item {
             filter.set('transition.threads', 0)
             filter.savePreset(preset.parameters)
         } else {
-            middleRotateValue = filter.getDouble('transition.fix_rotate_x', filter.animateIn)
-            middleScaleValue = filter.getDouble('transition.scale_x', filter.animateIn)
-            if (filter.animateIn > 0) {
-                startRotateValue = filter.getDouble('transition.fix_rotate_x', 0)
-                startScaleValue = filter.getDouble('transition.scale_x', 0)
-            }
-            if (filter.animateOut > 0) {
-                endRotateValue = filter.getDouble('transition.fix_rotate_x', filter.duration - 1)
-                endScaleValue = filter.getDouble('transition.scale_x', filter.duration - 1)
-            }
+            initializeSimpleKeyframes()
         }
         setControls()
-    }
-
-    function getPosition() {
-        return Math.max(producer.position - (filter.in - producer.in), 0)
     }
 
     function setControls() {
         var position = getPosition()
         blockUpdate = true
         rotationSlider.value = filter.getDouble('transition.fix_rotate_x', position)
-        scaleSlider.enabled = rotationSlider.enabled = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1)
+        rotationSlider.enabled = scaleSlider.enabled = isSimpleKeyframesActive()
         var scale = filter.getDouble('transition.scale_x', position)
         scaleSlider.value = isAtLeastVersion4? scale * 100 : 100 / scale
         xOffsetSlider.value = filter.getDouble('transition.ox', position) * -1
         yOffsetSlider.value = filter.getDouble('transition.oy', position) * -1
         blockUpdate = false
-    }
-
-    function updateFilterRotation(position) {
-        if (blockUpdate) return
-        var value = rotationSlider.value
-
-        if (position !== null) {
-            if (position <= 0 && filter.animateIn > 0)
-                startRotateValue = value
-            else if (position >= filter.duration - 1 && filter.animateOut > 0)
-                endRotateValue = value
-            else
-                middleRotateValue = value
-        }
-
-        if (filter.animateIn > 0 || filter.animateOut > 0) {
-            filter.resetProperty('transition.fix_rotate_x')
-            rotationKeyframesButton.checked = false
-            if (filter.animateIn > 0) {
-                filter.set('transition.fix_rotate_x', startRotateValue, 0)
-                filter.set('transition.fix_rotate_x', middleRotateValue, filter.animateIn - 1)
-            }
-            if (filter.animateOut > 0) {
-                filter.set('transition.fix_rotate_x', middleRotateValue, filter.duration - filter.animateOut)
-                filter.set('transition.fix_rotate_x', endRotateValue, filter.duration - 1)
-            }
-        } else if (!rotationKeyframesButton.checked) {
-            filter.resetProperty('transition.fix_rotate_x')
-            filter.set('transition.fix_rotate_x', middleRotateValue)
-        } else if (position !== null) {
-            filter.set('transition.fix_rotate_x', value, position)
-        }
     }
 
     function getScaleValue() {
@@ -125,14 +78,15 @@ Item {
     function updateFilterScale(position) {
         if (blockUpdate) return
         var value = getScaleValue()
+        var index = 1
 
         if (position !== null) {
             if (position <= 0 && filter.animateIn > 0)
-                startScaleValue = value
+                startValues[index] = value
             else if (position >= filter.duration - 1 && filter.animateOut > 0)
-                endScaleValue = value
+                endValues[index] = value
             else
-                middleScaleValue = value
+                middleValues[index] = value
         }
 
         if (filter.animateIn > 0 || filter.animateOut > 0) {
@@ -140,28 +94,33 @@ Item {
             filter.resetProperty('transition.scale_y')
             scaleKeyframesButton.checked = false
             if (filter.animateIn > 0) {
-                filter.set('transition.scale_x', startScaleValue, 0)
-                filter.set('transition.scale_x', middleScaleValue, filter.animateIn - 1)
-                filter.set('transition.scale_y', startScaleValue, 0)
-                filter.set('transition.scale_y', middleScaleValue, filter.animateIn - 1)
+                filter.set('transition.scale_x', startValues[index], 0)
+                filter.set('transition.scale_x', middleValues[index], filter.animateIn - 1)
+                filter.set('transition.scale_y', startValues[index], 0)
+                filter.set('transition.scale_y', middleValues[index], filter.animateIn - 1)
             }
             if (filter.animateOut > 0) {
-                filter.set('transition.scale_x', middleScaleValue, filter.duration - filter.animateOut)
-                filter.set('transition.scale_x', endScaleValue, filter.duration - 1)
-                filter.set('transition.scale_y', middleScaleValue, filter.duration - filter.animateOut)
-                filter.set('transition.scale_y', endScaleValue, filter.duration - 1)
+                filter.set('transition.scale_x', middleValues[index], filter.duration - filter.animateOut)
+                filter.set('transition.scale_x', endValues[index], filter.duration - 1)
+                filter.set('transition.scale_y', middleValues[index], filter.duration - filter.animateOut)
+                filter.set('transition.scale_y', endValues[index], filter.duration - 1)
             }
         } else if (!scaleKeyframesButton.checked) {
             filter.resetProperty('transition.scale_x')
-            filter.set('transition.scale_x', middleScaleValue)
+            filter.set('transition.scale_x', middleValues[index])
             filter.resetProperty('transition.scale_y')
-            filter.set('transition.scale_y', middleScaleValue)
+            filter.set('transition.scale_y', middleValues[index])
         } else if (position !== null) {
             filter.set('transition.scale_x', value, position)
             filter.set('transition.scale_y', value, position)
         }
     }
 
+    function updateSimpleKeyframes() {
+        updateFilter('transition.fix_rotate_x', rotationSlider.value, rotationKeyframesButton)
+        updateFilterScale(null)
+    }
+    
     GridLayout {
         anchors.fill: parent
         anchors.margins: 8
@@ -176,25 +135,14 @@ Item {
             parameters: ['transition.fix_rotate_x', 'transition.scale_x', 'transition.ox', 'transition.oy']
             Layout.columnSpan: 3
             onBeforePresetLoaded: {
-                filter.resetProperty('transition.fix_rotate_x')
-                filter.resetProperty('transition.scale_x')
-                filter.resetProperty('transition.scale_y')
+                resetSimpleKeyframes()
                 filter.resetProperty('transition.ox')
                 filter.resetProperty('transition.oy')
             }
             onPresetSelected: {
                 filter.set('transition.scale_y', filter.get('transition.scale_x'))
                 setControls()
-                middleRotateValue = filter.getDouble('transition.fix_rotate_x', filter.animateIn)
-                middleScaleValue = filter.getDouble('transition.scale_x', filter.animateIn)
-                if (filter.animateIn > 0) {
-                    startRotateValue = filter.getDouble('transition.fix_rotate_x', 0)
-                    startScaleValue = filter.getDouble('transition.scale_x', 0)
-                }
-                if (filter.animateOut > 0) {
-                    endRotateValue = filter.getDouble('transition.fix_rotate_x', filter.duration - 1)
-                    endScaleValue = filter.getDouble('transition.scale_x', filter.duration - 1)
-                }
+                initializeSimpleKeyframes()
             }
         }
 
@@ -206,7 +154,7 @@ Item {
             decimals: 1
             spinnerWidth: 110
             suffix: qsTr(' deg', 'degrees')
-            onValueChanged: updateFilterRotation(getPosition())
+            onValueChanged: updateFilter('transition.fix_rotate_x', value, rotationKeyframesButton, getPosition())
         }
         UndoButton {
             onClicked: rotationSlider.value = 0
@@ -215,24 +163,8 @@ Item {
             id: rotationKeyframesButton
             checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('transition.fix_rotate_x') > 0
             onToggled: {
-                var value = rotationSlider.value
-                if (checked) {
-                    blockUpdate = true
-                    if (filter.animateIn > 0 || filter.animateOut > 0) {
-                        filter.resetProperty('transition.scale_x')
-                        filter.resetProperty('transition.scale_y')
-                        filter.set('transition.scale_x', middleScaleValue)
-                        filter.set('transition.scale_y', middleScaleValue)
-                        scaleSlider.enabled = true
-                    }
-                    filter.clearSimpleAnimation('transition.fix_rotate_x')
-                    blockUpdate = false
-                    filter.set('transition.fix_rotate_x', value, getPosition())
-                } else {
-                    filter.resetProperty('transition.fix_rotate_x')
-                    filter.set('transition.fix_rotate_x', value)
-                }
-                checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('transition.fix_rotate_x') > 0
+                toggleKeyframes(checked, 'transition.fix_rotate_x', rotationSlider.value)
+                setControls()
             }
         }
 
@@ -260,12 +192,12 @@ Item {
                 if (checked) {
                     blockUpdate = true
                     if (filter.animateIn > 0 || filter.animateOut > 0) {
-                        filter.resetProperty('transition.fix_rotate_x')
-                        filter.set('transition.fix_rotate_x', middleRotateValue)
-                        rotationSlider.enabled = true
+                        resetSimpleKeyframes()
+                        filter.animateIn = filter.animateOut = 0
+                    } else {
+                        filter.clearSimpleAnimation('transition.scale_x')
+                        filter.clearSimpleAnimation('transition.scale_y')
                     }
-                    filter.clearSimpleAnimation('transition.scale_x')
-                    filter.clearSimpleAnimation('transition.scale_y')
                     blockUpdate = false
                     filter.set('transition.scale_x', value, getPosition())
                     filter.set('transition.scale_y', value, getPosition())
@@ -275,7 +207,7 @@ Item {
                     filter.set('transition.scale_x', value)
                     filter.set('transition.scale_y', value)
                 }
-                checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('transition.scale_x') > 0
+                setControls()
             }
         }
 
@@ -344,11 +276,10 @@ Item {
 
     Connections {
         target: filter
-        onChanged: setControls()
-        onInChanged: { updateFilterRotation(null); updateFilterScale(null) }
-        onOutChanged: { updateFilterRotation(null); updateFilterScale(null) }
-        onAnimateInChanged: { updateFilterRotation(null); updateFilterScale(null) }
-        onAnimateOutChanged: { updateFilterRotation(null); updateFilterScale(null) }
+        onInChanged: updateSimpleKeyframes()
+        onOutChanged: updateSimpleKeyframes()
+        onAnimateInChanged: updateSimpleKeyframes()
+        onAnimateOutChanged: updateSimpleKeyframes()
     }
 
     Connections {
