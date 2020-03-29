@@ -19,14 +19,6 @@ Metadata {
                 isCurve: true
                 minimum: 0
                 maximum: 1
-            },
-            Parameter {
-                name: qsTr('Matrix')
-                property: '1'
-                isSimple: true
-                isCurve: true
-                minimum: 0
-                maximum: 1
             }
         ]
     }
