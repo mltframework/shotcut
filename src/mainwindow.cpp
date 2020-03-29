@@ -4315,9 +4315,17 @@ QUuid MainWindow::timelineClipUuid(int trackIndex, int clipIndex)
     return QUuid();
 }
 
-void MainWindow::replaceInTimeline(int trackIndex, int clipIndex, const QString& xml)
+void MainWindow::replaceInTimeline(const QUuid& uuid, Mlt::Producer& producer)
 {
-    m_timelineDock->replace(trackIndex, clipIndex, xml);
+    int trackIndex = -1;
+    int clipIndex = -1;
+    // lookup the current track and clip index by UUID
+    QScopedPointer<Mlt::ClipInfo> info(MAIN.timelineClipInfoByUuid(uuid, trackIndex, clipIndex));
+
+    if (trackIndex >= 0 && clipIndex >= 0) {
+        getHash(producer);
+        m_timelineDock->replace(trackIndex, clipIndex, MLT.XML(&producer));
+    }
 }
 
 Mlt::ClipInfo* MainWindow::timelineClipInfoByUuid(const QUuid& uuid, int& trackIndex, int& clipIndex)

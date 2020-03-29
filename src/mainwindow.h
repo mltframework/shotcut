@@ -110,7 +110,7 @@ public:
     void addCustomProfile(const QString& name, QMenu* menu, QAction* action, QActionGroup* group);
     void removeCustomProfiles(const QStringList& profiles, QDir &dir, QMenu* menu, QAction* action);
     QUuid timelineClipUuid(int trackIndex, int clipIndex);
-    void replaceInTimeline(int trackIndex, int clipIndex, const QString& xml = QString());
+    void replaceInTimeline(const QUuid& uuid, Mlt::Producer& producer);
     Mlt::ClipInfo* timelineClipInfoByUuid(const QUuid& uuid, int& trackIndex, int& clipIndex);
 
 signals:

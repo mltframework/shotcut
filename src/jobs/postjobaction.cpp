@@ -65,14 +65,7 @@ void ReverseReplacePostJobAction::doAction()
             producer.set("mute_on_pause", 0);
         }
         MLT.lockCreationTime(&producer);
-        MAIN.getHash(producer);
         producer.set_in_and_out(m_in, -1);
-        // lookup the current track and clip index by UUID
-        int trackIndex = -1;
-        int clipIndex = -1;
-        QScopedPointer<Mlt::ClipInfo> info(MAIN.timelineClipInfoByUuid(m_uuid, trackIndex, clipIndex));
-        if (trackIndex >= 0 && clipIndex >= 0) {
-            MAIN.replaceInTimeline(trackIndex, clipIndex, MLT.XML(&producer));
-        }
+        MAIN.replaceInTimeline(m_uuid, producer);
     }
 }
