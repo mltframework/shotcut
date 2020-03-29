@@ -806,7 +806,7 @@ void TimelineDock::onRowsRemoved(const QModelIndex& parent, int first, int last)
                 else if (i.y() > last)
                     newSelection << QPoint(i.x(), i.y() - n);
             }
-        }            
+        }
         setSelection(newSelection);
         if (!parent.isValid())
             model()->reload(true);
@@ -854,7 +854,7 @@ void TimelineDock::onProducerModified()
 
 void TimelineDock::replace(int trackIndex, int clipIndex, const QString& xml)
 {
-    if (!MLT.isClip() && !MLT.savedProducer()) {
+    if (xml.isEmpty() && !MLT.isClip() && !MLT.savedProducer()) {
         showStatusMessage(tr("There is nothing in the Source player."));
         return;
     }
