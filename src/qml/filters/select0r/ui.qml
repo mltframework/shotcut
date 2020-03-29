@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2019 Meltytech, LLC
+ * Copyright (c) 2015-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -279,11 +279,11 @@ Item {
             implicitWidth: 180
             model: ListModel {
                 id: operationModel
-                ListElement { text: qsTr('Write on Clear'); value: 0.0 }
-                ListElement { text: qsTr('Maximum');        value: 0.3 }
-                ListElement { text: qsTr('Minimum');        value: 0.5 }
-                ListElement { text: qsTr('Add');            value: 0.7 }
-                ListElement { text: qsTr('Subtract');       value: 1.0 }
+                ListElement { text: qsTr('Overwrite'); value: 0.0 }
+                ListElement { text: qsTr('Maximum');   value: 0.3 }
+                ListElement { text: qsTr('Minimum');   value: 0.5 }
+                ListElement { text: qsTr('Add');       value: 0.7 }
+                ListElement { text: qsTr('Subtract');  value: 1.0 }
             }
             onCurrentIndexChanged: filter.set(operationParam, operationModel.get(currentIndex).value )
         }

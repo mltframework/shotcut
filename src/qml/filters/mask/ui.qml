@@ -179,7 +179,7 @@ Item {
         ComboBox {
             id: operationCombo
             implicitWidth: 180
-            model: [qsTr('Write on Clear'), qsTr('Maximum'), qsTr('Minimum'), qsTr('Add'), qsTr('Subtract')]
+            model: [qsTr('Overwrite'), qsTr('Maximum'), qsTr('Minimum'), qsTr('Add'), qsTr('Subtract')]
             onCurrentIndexChanged: filter.set(paramOperation, currentIndex / 4)
         }
         UndoButton {

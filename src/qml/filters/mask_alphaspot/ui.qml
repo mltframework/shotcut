@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2018 Meltytech, LLC
+ * Copyright (c) 2017-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -180,7 +180,7 @@ Item {
         ComboBox {
             id: operationCombo
             implicitWidth: 180
-            model: [qsTr('Write on Clear'), qsTr('Maximum'), qsTr('Minimum'), qsTr('Add'), qsTr('Subtract')]
+            model: [qsTr('Overwrite'), qsTr('Maximum'), qsTr('Minimum'), qsTr('Add'), qsTr('Subtract')]
             onCurrentIndexChanged: filter.set(paramOperation, currentIndex / 4)
         }
         UndoButton {
