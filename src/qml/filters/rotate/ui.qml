@@ -146,7 +146,10 @@ KeyframableFilter {
             }
         }
 
-        Label { text: qsTr('Rotation') }
+        Label {
+            text: qsTr('Rotation')
+            Layout.alignment: Qt.AlignRight
+        }
         SliderSpinner {
             id: rotationSlider
             minimumValue: -360
@@ -211,7 +214,10 @@ KeyframableFilter {
             }
         }
 
-        Label { text: qsTr('X offset') }
+        Label {
+            text: qsTr('X offset')
+            Layout.alignment: Qt.AlignRight
+        }
         SliderSpinner {
             id: xOffsetSlider
             minimumValue: -5000
@@ -240,7 +246,10 @@ KeyframableFilter {
             }
         }
 
-        Label { text: qsTr('Y offset') }
+        Label {
+            text: qsTr('Y offset')
+            Layout.alignment: Qt.AlignRight
+        }
         SliderSpinner {
             id: yOffsetSlider
             minimumValue: -5000
