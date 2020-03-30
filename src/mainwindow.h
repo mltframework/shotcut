@@ -112,6 +112,7 @@ public:
     QUuid timelineClipUuid(int trackIndex, int clipIndex);
     void replaceInTimeline(const QUuid& uuid, Mlt::Producer& producer);
     Mlt::ClipInfo* timelineClipInfoByUuid(const QUuid& uuid, int& trackIndex, int& clipIndex);
+    void replaceAllByHash(const QString& hash, Mlt::Producer& producer);
 
 signals:
     void audioChannelsChanged();

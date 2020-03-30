@@ -69,3 +69,17 @@ void ReverseReplacePostJobAction::doAction()
         MAIN.replaceInTimeline(m_uuid, producer);
     }
 }
+
+void ConvertReplacePostJobAction::doAction()
+{
+    FilePropertiesPostJobAction::doAction();
+    Mlt::Producer producer(MLT.profile(), m_dstFile.toUtf8().constData());
+    if (producer.is_valid()) {
+        if (!qstrcmp(producer.get("mlt_service"), "avformat")) {
+            producer.set("mlt_service", "avformat-novalidate");
+            producer.set("mute_on_pause", 0);
+        }
+        MLT.lockCreationTime(&producer);
+        MAIN.replaceAllByHash(m_hash, producer);
+    }
+}

@@ -798,7 +798,7 @@ void AvformatProducerWidget::convert(TranscodeDialog& dialog)
             args << "-y" << filename;
             FfmpegJob* job = new FfmpegJob(filename, args, false);
             job->setLabel(tr("Convert %1").arg(Util::baseName(filename)));
-            job->setPostJobAction(new FilePropertiesPostJobAction(resource, filename));
+            job->setPostJobAction(new ConvertReplacePostJobAction(resource, filename, MAIN.getHash(*m_producer)));
             JOBS.add(job);
         }
     }
@@ -947,6 +947,7 @@ void AvformatProducerWidget::on_reverseButton_clicked()
             MeltJob* meltJob = new MeltJob(filename, meltArgs,
                 m_producer->get_int("meta.media.frame_rate_num"), m_producer->get_int("meta.media.frame_rate_den"));
             meltJob->setLabel(tr("Reverse %1").arg(Util::baseName(resource)));
+
             if (m_producer->get(kMultitrackItemProperty)) {
                 QString s = QString::fromLatin1(m_producer->get(kMultitrackItemProperty));
                 QVector<QStringRef> parts = s.splitRef(':');
@@ -1053,4 +1054,9 @@ void AvformatProducerWidget::on_filenameLabel_editingFinished()
         }
         emit modified();
     }
+}
+
+void AvformatProducerWidget::on_convertButton_clicked()
+{
+    on_actionFFmpegConvert_triggered();
 }

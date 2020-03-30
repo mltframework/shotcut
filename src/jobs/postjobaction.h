@@ -73,4 +73,17 @@ private:
     int m_in;
 };
 
+class ConvertReplacePostJobAction : public FilePropertiesPostJobAction
+{
+public:
+    ConvertReplacePostJobAction(const QString& srcFile, const QString& dstFile, const QString& srcHash)
+        : FilePropertiesPostJobAction(srcFile, dstFile)
+        , m_hash(srcHash)
+        {}
+    void doAction();
+
+private:
+    QString m_hash;
+};
+
 #endif // POSTJOBACTION_H

@@ -83,6 +83,7 @@ public:
     Q_INVOKABLE void copyToSource();
     Q_INVOKABLE static void openProperties();
     void emitSelectedChanged(const QVector<int> &roles);
+    void replaceClipsWithHash(const QString& hash, Mlt::Producer& producer);
 
 signals:
     void currentTrackChanged();

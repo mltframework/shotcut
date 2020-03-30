@@ -541,7 +541,7 @@ void MainWindow::setupSettingsMenu()
     group = new QActionGroup(this);
     group->addAction(ui->actionOneField);
     group->addAction(ui->actionLinearBlend);
-    
+
 #if LIBMLT_VERSION_INT >= MLT_VERSION_PREVIEW_SCALE
     m_previewScaleGroup = new QActionGroup(this);
     m_previewScaleGroup->addAction(ui->actionPreviewNone);
@@ -1320,7 +1320,7 @@ void MainWindow::open(QString url, const Mlt::Properties* properties)
 
         open(MLT.producer());
         if (url.startsWith(AutoSaveFile::path())) {
-            QMutexLocker locker(&m_autosaveMutex);          
+            QMutexLocker locker(&m_autosaveMutex);
             if (m_autosaveFile && m_autosaveFile->managedFileName() != untitledFileName()) {
                 m_recentDock->add(m_autosaveFile->managedFileName());
                 LOG_INFO() << m_autosaveFile->managedFileName();
@@ -3480,7 +3480,7 @@ void MainWindow::onExternalTriggered(QAction *action)
         m_previewScaleGroup->setEnabled(false);
     } else {
         setPreviewScale(Settings.playerPreviewScale());
-        m_previewScaleGroup->setEnabled(true);       
+        m_previewScaleGroup->setEnabled(true);
     }
 #endif
 }
@@ -4331,4 +4331,26 @@ void MainWindow::replaceInTimeline(const QUuid& uuid, Mlt::Producer& producer)
 Mlt::ClipInfo* MainWindow::timelineClipInfoByUuid(const QUuid& uuid, int& trackIndex, int& clipIndex)
 {
     return m_timelineDock->model()->findClipByUuid(uuid, trackIndex, clipIndex);
+}
+
+void MainWindow::replaceAllByHash(const QString& hash, Mlt::Producer& producer)
+{
+    getHash(producer);
+    m_recentDock->add(producer.get("resource"));
+    if (MLT.isClip() && MLT.producer() && getHash(*MLT.producer()) == hash) {
+        producer.set_in_and_out(MLT.producer()->get_in(), MLT.producer()->get_out());
+        MLT.copyFilters(*MLT.producer(), producer);
+        MLT.close();
+        m_player->setPauseAfterOpen(true);
+        open(new Mlt::Producer(producer));
+    }
+    if (playlist()) {
+        // Append to playlist
+        producer.set(kPlaylistIndexProperty, playlist()->count());
+        MAIN.undoStack()->push(
+            new Playlist::AppendCommand(*m_playlistDock->model(), MLT.XML(&producer)));
+    }
+    if (isMultitrackValid()) {
+        m_timelineDock->replaceClipsWithHash(hash, producer);
+    }
 }

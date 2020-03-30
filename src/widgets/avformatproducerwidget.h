@@ -101,6 +101,8 @@ private slots:
 
     void on_filenameLabel_editingFinished();
 
+    void on_convertButton_clicked();
+
 private:
     Ui::AvformatProducerWidget *ui;
     int m_defaultDuration;

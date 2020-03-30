@@ -1327,3 +1327,59 @@ void TimelineDock::onTransitionAdded(int trackIndex, int clipIndex, int position
     // Select the transition.
     setSelection(QList<QPoint>() << QPoint(command->getTransitionIndex(), trackIndex));
 }
+
+class FindProducersByHashParser : public Mlt::Parser
+{
+private:
+    QString m_hash;
+    QList<Mlt::Producer> m_producers;
+
+public:
+    FindProducersByHashParser(const QString& hash)
+        : Mlt::Parser()
+        , m_hash(hash)
+    {}
+
+    QList<Mlt::Producer>& producers() { return m_producers; }
+
+    int on_start_filter(Mlt::Filter*) { return 0; }
+    int on_start_producer(Mlt::Producer* producer) {
+        if (producer->is_cut() && MAIN.getHash(producer->parent()) == m_hash)
+            m_producers << Mlt::Producer(producer);
+        return 0;
+    }
+    int on_end_producer(Mlt::Producer*) { return 0; }
+    int on_start_playlist(Mlt::Playlist*) { return 0; }
+    int on_end_playlist(Mlt::Playlist*) { return 0; }
+    int on_start_tractor(Mlt::Tractor*) { return 0; }
+    int on_end_tractor(Mlt::Tractor*) { return 0; }
+    int on_start_multitrack(Mlt::Multitrack*) { return 0; }
+    int on_end_multitrack(Mlt::Multitrack*) { return 0; }
+    int on_start_track() { return 0; }
+    int on_end_track() { return 0; }
+    int on_end_filter(Mlt::Filter*) { return 0; }
+    int on_start_transition(Mlt::Transition*) { return 0; }
+    int on_end_transition(Mlt::Transition*) { return 0; }
+};
+
+void TimelineDock::replaceClipsWithHash(const QString& hash, Mlt::Producer& producer)
+{
+    FindProducersByHashParser parser(hash);
+    parser.start(*model()->tractor());
+    auto n = parser.producers().size();
+    if (n > 1)
+        MAIN.undoStack()->beginMacro(tr("Replace %1 timeline clips").arg(n));
+    for (auto& clip : parser.producers()) {
+        int trackIndex = -1;
+        int clipIndex = -1;
+        // lookup the current track and clip index by UUID
+        QScopedPointer<Mlt::ClipInfo> info(MAIN.timelineClipInfoByUuid(clip.get(kUuidProperty), trackIndex, clipIndex));
+
+        if (trackIndex >= 0 && clipIndex >= 0) {
+            producer.set_in_and_out(clip.get_in(), clip.get_out());
+            replace(trackIndex, clipIndex, MLT.XML(&producer));
+        }
+    }
+    if (n > 1)
+        MAIN.undoStack()->endMacro();
+}

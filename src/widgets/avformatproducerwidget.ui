@@ -822,6 +822,16 @@
       </widget>
      </item>
      <item>
+      <widget class="QPushButton" name="convertButton">
+       <property name="toolTip">
+        <string>Convert to Edit-friendly</string>
+       </property>
+       <property name="text">
+        <string>Convert...</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QPushButton" name="menuButton">
        <property name="toolTip">
         <string>Display a menu of additional actions</string>
@@ -909,6 +919,7 @@
   <tabstop>rangeComboBox</tabstop>
   <tabstop>resetButton</tabstop>
   <tabstop>reverseButton</tabstop>
+  <tabstop>convertButton</tabstop>
   <tabstop>menuButton</tabstop>
   <tabstop>audioTrackComboBox</tabstop>
   <tabstop>syncSlider</tabstop>
