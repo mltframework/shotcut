@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2019 Meltytech, LLC
+ * Copyright (c) 2014-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -50,6 +50,7 @@ public:
     static bool convertDecimalPoints(QString& str, QChar decimalPoint);
     static void showFrameRateDialog(const QString& caption, int numerator, QDoubleSpinBox* spinner, QWidget* parent = Q_NULLPTR);
     static QTemporaryFile* writableTemporaryFile(const QString& filePath = QString(), const QString& templateName = QString());
+    static void applyCustomProperties(Mlt::Producer& destination, Mlt::Producer& source, int in, int out);
 };
 
 #endif // UTIL_H

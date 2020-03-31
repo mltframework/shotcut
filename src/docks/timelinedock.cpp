@@ -1376,7 +1376,23 @@ void TimelineDock::replaceClipsWithHash(const QString& hash, Mlt::Producer& prod
         QScopedPointer<Mlt::ClipInfo> info(MAIN.timelineClipInfoByUuid(clip.get(kUuidProperty), trackIndex, clipIndex));
 
         if (trackIndex >= 0 && clipIndex >= 0) {
-            producer.set_in_and_out(clip.get_in(), clip.get_out());
+            int in = clip.get_in();
+            int out = clip.get_out();
+
+            // Factor in a transition left of the clip.
+            QScopedPointer<Mlt::ClipInfo> info2(getClipInfo(trackIndex, clipIndex - 1));
+            if (info2 && info2->producer && info2->producer->is_valid()
+                      && info2->producer->get(kShotcutTransitionProperty)) {
+                in -= info2->frame_count;
+            }
+            // Factor in a transition right of the clip.
+            info2.reset(getClipInfo(trackIndex, clipIndex + 1));
+            if (info2 && info2->producer && info2->producer->is_valid()
+                      && info2->producer->get(kShotcutTransitionProperty)) {
+                out += info2->frame_count;
+            }
+            Util::applyCustomProperties(producer, *info->producer, in, out);
+
             replace(trackIndex, clipIndex, MLT.XML(&producer));
         }
     }

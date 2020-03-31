@@ -4324,6 +4324,7 @@ void MainWindow::replaceInTimeline(const QUuid& uuid, Mlt::Producer& producer)
 
     if (trackIndex >= 0 && clipIndex >= 0) {
         getHash(producer);
+        Util::applyCustomProperties(producer, *info->producer, producer.get_in(), producer.get_out());
         m_timelineDock->replace(trackIndex, clipIndex, MLT.XML(&producer));
     }
 }
@@ -4338,11 +4339,11 @@ void MainWindow::replaceAllByHash(const QString& hash, Mlt::Producer& producer)
     getHash(producer);
     m_recentDock->add(producer.get("resource"));
     if (MLT.isClip() && MLT.producer() && getHash(*MLT.producer()) == hash) {
-        producer.set_in_and_out(MLT.producer()->get_in(), MLT.producer()->get_out());
+        Util::applyCustomProperties(producer, *MLT.producer(), MLT.producer()->get_in(), MLT.producer()->get_out());
         MLT.copyFilters(*MLT.producer(), producer);
         MLT.close();
         m_player->setPauseAfterOpen(true);
-        open(new Mlt::Producer(producer));
+        open(new Mlt::Producer(MLT.profile(), "xml-string", MLT.XML(&producer).toUtf8().constData()));
     }
     if (playlist()) {
         // Append to playlist
