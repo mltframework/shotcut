@@ -40,14 +40,17 @@ void QmlFile::setUrl(QString text)
             QUrl::RemovePassword |
             QUrl::RemoveUserInfo |
             QUrl::RemovePort |
+            QUrl::RemoveAuthority |
             QUrl::RemoveQuery;
 #ifdef Q_OS_WIN
     // If the scheme is a drive letter, do not remove it.
-    if (url.scheme().size() == 1)
+    if (url.scheme().size() == 1) {
         options ^= QUrl::RemoveScheme;
     // QUrl removes the host from a UNC path when removing the scheme.
-    else if (text.startsWith("file://") && text.size() > 9 && text[9] != ':')
+    } else if (text.startsWith("file://") && text.size() > 9 && text[9] != ':') {
         options ^= QUrl::RemoveScheme;
+        options ^= QUrl::RemoveAuthority;
+    }
 
     QUrl adj = url.adjusted(options);
     QString s = adj.toString();
