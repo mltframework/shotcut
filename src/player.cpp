@@ -700,7 +700,7 @@ void Player::updateSelection()
 
 void Player::onInChanged(int in)
 {
-    if (in != m_previousIn) {
+    if (in != m_previousIn && in >= 0) {
         int delta = in - MLT.producer()->get_in();
         MLT.setIn(in);
         emit inChanged(delta);
@@ -711,7 +711,7 @@ void Player::onInChanged(int in)
 
 void Player::onOutChanged(int out)
 {
-    if (out != m_previousOut) {
+    if (out != m_previousOut && out >= 0) {
         int delta = out - MLT.producer()->get_out();
         MLT.setOut(out);
         emit outChanged(delta);
@@ -945,22 +945,22 @@ Player::TabIndex Player::tabIndex() const
 
 static inline float IEC_dB ( float fScale )
 {
-	float dB = 0.0f;
+    float dB = 0.0f;
 
-	if (fScale < 0.025f)	    // IEC_Scale(-60.0f)
-		dB = (fScale / 0.0025f) - 70.0f;
-	else if (fScale < 0.075f)	// IEC_Scale(-50.0f)
-		dB = (fScale - 0.025f) / 0.005f - 60.0f;
-	else if (fScale < 0.15f)	// IEC_Scale(-40.0f)
-		dB = (fScale - 0.075f) / 0.0075f - 50.0f;
-	else if (fScale < 0.3f)		// IEC_Scale(-30.0f)
-		dB = (fScale - 0.15f) / 0.015f - 40.0f;
-	else if (fScale < 0.5f)		// IEC_Scale(-20.0f)
-		dB = (fScale - 0.3f) / 0.02f - 30.0f;
-	else /* if (fScale < 1.0f)	// IED_Scale(0.0f)) */
-		dB = (fScale - 0.5f) / 0.025f - 20.0f;
+    if (fScale < 0.025f)	    // IEC_Scale(-60.0f)
+        dB = (fScale / 0.0025f) - 70.0f;
+    else if (fScale < 0.075f)	// IEC_Scale(-50.0f)
+        dB = (fScale - 0.025f) / 0.005f - 60.0f;
+    else if (fScale < 0.15f)	// IEC_Scale(-40.0f)
+        dB = (fScale - 0.075f) / 0.0075f - 50.0f;
+    else if (fScale < 0.3f)		// IEC_Scale(-30.0f)
+        dB = (fScale - 0.15f) / 0.015f - 40.0f;
+    else if (fScale < 0.5f)		// IEC_Scale(-20.0f)
+        dB = (fScale - 0.3f) / 0.02f - 30.0f;
+    else /* if (fScale < 1.0f)	// IED_Scale(0.0f)) */
+        dB = (fScale - 0.5f) / 0.025f - 20.0f;
 
-	return (dB > -0.001f && dB < 0.001f ? 0.0f : dB);
+    return (dB > -0.001f && dB < 0.001f ? 0.0f : dB);
 }
 
 void Player::onVolumeChanged(int volume)
