@@ -21,14 +21,14 @@ import QtQuick.Layouts 1.1
 import Shotcut.Controls 1.0
 
 KeyframableFilter {
-    property string corner1x: '0'
-    property string corner1y: '1'
-    property string corner2x: '2'
-    property string corner2y: '3'
-    property string corner3x: '4'
-    property string corner3y: '5'
-    property string corner4x: '6'
-    property string corner4y: '7'
+    property string corner1xProperty: '0'
+    property string corner1yProperty: '1'
+    property string corner2xProperty: '2'
+    property string corner2yProperty: '3'
+    property string corner3xProperty: '4'
+    property string corner3yProperty: '5'
+    property string corner4xProperty: '6'
+    property string corner4yProperty: '7'
     property string enablestretch: '8'
     property string stretchx: '9'
     property string stretchy: '10'
@@ -51,24 +51,43 @@ KeyframableFilter {
     property double featheralphaDefault: 0.01
     property double alphaoperationDefault: 0
 
-    keyframableParameters: [corner1x, corner1y, corner2x, corner2y, corner3x, corner3y, corner4x, corner4y, stretchx, stretchy, featheralpha]
+    property var cornerProperties: ['shotcut:corner1', 'shotcut:corner2', 'shotcut:corner3', 'shotcut:corner4']
+    property var corners: [
+        Qt.rect(corner1xDefault, corner1yDefault, 0, 0),
+        Qt.rect(corner2xDefault, corner2yDefault, 0, 0),
+        Qt.rect(corner3xDefault, corner3yDefault, 0, 0),
+        Qt.rect(corner4xDefault, corner4yDefault, 0, 0)]
+    property var cornerStartValues: ['_shotcut:corner1StartValue', '_shotcut:corner2StartValue', '_shotcut:corner3StartValue', '_shotcut:corner4StartValue']
+    property var cornerMiddleValues: ['_shotcut:corner1MiddleValue', '_shotcut:corner2MiddleValue', '_shotcut:corner3MiddleValue', '_shotcut:corner4MiddleValue']
+    property var cornerEndValues: ['_shotcut:corner1EndValue', '_shotcut:corner2EndValue', '_shotcut:corner3EndValue', '_shotcut:corner4EndValue']
+
+    keyframableParameters: [corner1xProperty, corner1yProperty, corner2xProperty, corner2yProperty, corner3xProperty, corner3yProperty, corner4xProperty, corner4yProperty, stretchx, stretchy, featheralpha]
     startValues: [corner1xDefault, corner1yDefault, corner2xDefault, corner2yDefault, corner3xDefault, corner3yDefault, corner4xDefault, corner4yDefault, stretchxDefault, stretchyDefault, featheralphaDefault]
-    middleValues: startValues
-    endValues: startValues
+    middleValues: [corner1xDefault, corner1yDefault, corner2xDefault, corner2yDefault, corner3xDefault, corner3yDefault, corner4xDefault, corner4yDefault, stretchxDefault, stretchyDefault, featheralphaDefault]
+    endValues: [corner1xDefault, corner1yDefault, corner2xDefault, corner2yDefault, corner3xDefault, corner3yDefault, corner4xDefault, corner4yDefault, stretchxDefault, stretchyDefault, featheralphaDefault]
 
     width: 350
     height: 450
 
     Component.onCompleted: {
+        filter.blockSignals = true
+        var cornersString = JSON.stringify(corners)
+        for (var i in cornerStartValues)
+            filter.set(cornerStartValues[i], corners[i])
+        for (i in cornerMiddleValues)
+            filter.set(cornerMiddleValues[i], corners[i])
+        for (i in cornerEndValues)
+            filter.set(cornerEndValues[i], corners[i])
         if (filter.isNew) {
-            filter.set(corner1x, corner1xDefault)
-            filter.set(corner1y, corner1yDefault)
-            filter.set(corner2x, corner2xDefault)
-            filter.set(corner2y, corner2yDefault)
-            filter.set(corner3x, corner3xDefault)
-            filter.set(corner3y, corner3yDefault)
-            filter.set(corner4x, corner4xDefault)
-            filter.set(corner4y, corner4yDefault)
+            filters.set()
+            filter.set(corner1xProperty, corner1xDefault)
+            filter.set(corner1yProperty, corner1yDefault)
+            filter.set(corner2xProperty, corner2xDefault)
+            filter.set(corner2yProperty, corner2yDefault)
+            filter.set(corner3xProperty, corner3xDefault)
+            filter.set(corner3yProperty, corner3yDefault)
+            filter.set(corner4xProperty, corner4xDefault)
+            filter.set(corner4yProperty, corner4yDefault)
             filter.set(enablestretch, 1)
             filter.set(stretchx, stretchxDefault)
             filter.set(stretchy, stretchyDefault)
@@ -76,11 +95,46 @@ KeyframableFilter {
             filter.set(transparentbackground, 1)
             filter.set(alphaoperation, alphaoperationDefault)
             filter.set(featheralpha, featheralphaDefault)
+            for (i in corners)
+                filter.set(cornerProperties[i], corners[i])
             filter.savePreset(preset.parameters)
         } else {
             initializeSimpleKeyframes()
+
+            var position = getPosition()
+            cornersString = filter.get(cornerProperties[0])
+            if (cornersString) {
+                for (i in corners)
+                    corners[i] = filter.getRect(cornerProperties[i], position)
+            } else {
+                corners[0].x = filter.getDouble(corner1xProperty, position)
+                corners[0].y = filter.getDouble(corner1yProperty, position)
+                corners[1].x = filter.getDouble(corner2xProperty, position)
+                corners[1].y = filter.getDouble(corner2yProperty, position)
+                corners[2].x = filter.getDouble(corner3xProperty, position)
+                corners[2].y = filter.getDouble(corner3yProperty, position)
+                corners[3].x = filter.getDouble(corner4xProperty, position)
+                corners[3].y = filter.getDouble(corner4yProperty, position)
+                for (i in cornerProperties)
+                    filter.set(cornerProperties[i], corners[i])
+            }
+            for (i in cornerMiddleValues)
+                filter.set(cornerMiddleValues[i], filter.getRect(cornerProperties[i], filter.animateIn + 1))
+            if (filter.animateIn > 0) {
+                for (i in cornerStartValues)
+                    filter.set(cornerStartValues[i], filter.getRect(cornerProperties[i], 0))
+            }
+            if (filter.animateOut > 0) {
+                for (i in cornerEndValues)
+                    filter.set(cornerEndValues[i], filter.getRect(cornerProperties[i], filter.duration - 1))
+            }
         }
+        filter.blockSignals = false
         setControls()
+        if (filter.isNew) {
+            for (i in cornerProperties)
+                filter.set(cornerProperties[i], filter.getRect(cornerProperties[i]))
+        }
     }
 
     function sliderValue(slider) {
@@ -94,20 +148,24 @@ KeyframableFilter {
     function setControls() {
         var position = getPosition()
         blockUpdate = true
-        setSliderValue(corner1xSlider, filter.getDouble(corner1x, position))
-        setSliderValue(corner1ySlider, filter.getDouble(corner1y, position))
-        setSliderValue(corner2xSlider, filter.getDouble(corner2x, position))
-        setSliderValue(corner2ySlider, filter.getDouble(corner2y, position))
-        setSliderValue(corner3xSlider, filter.getDouble(corner3x, position))
-        setSliderValue(corner3ySlider, filter.getDouble(corner3y, position))
-        setSliderValue(corner4xSlider, filter.getDouble(corner4x, position))
-        setSliderValue(corner4ySlider, filter.getDouble(corner4y, position))
         stretchxSlider.value = (1.0 - filter.getDouble(stretchx, position)) * stretchxSlider.maximumValue
         stretchySlider.value = (1.0 - filter.getDouble(stretchy, position)) * stretchySlider.maximumValue
         interpolatorCombo.currentIndex = Math.round(filter.getDouble(interpolator) * 6)
         alphaoperationCombo.currentIndex = filter.get(transparentbackground) === '1'?
                     Math.round(filter.getDouble(alphaoperation) * 4) + 1 : 0
         featheralphaSlider.value = filter.getDouble(featheralpha, position) * featheralphaSlider.maximumValue
+
+        for (var i in corners)
+            corners[i] = filter.getRect(cornerProperties[i], position)
+        setSliderValue(corner1xSlider, corners[0].x)
+        setSliderValue(corner1ySlider, corners[0].y)
+        setSliderValue(corner2xSlider, corners[1].x)
+        setSliderValue(corner2ySlider, corners[1].y)
+        setSliderValue(corner3xSlider, corners[2].x)
+        setSliderValue(corner3ySlider, corners[2].y)
+        setSliderValue(corner4xSlider, corners[3].x)
+        setSliderValue(corner4ySlider, corners[3].y)
+
         blockUpdate = false
         enableControls(isSimpleKeyframesActive())
     }
@@ -117,17 +175,79 @@ KeyframableFilter {
     }
 
     function updateSimpleKeyframes() {
-        updateFilter(corner1x, corner1xSlider.value / corner1xSlider.maximumValue, corner1xKeyframesButton)
-        updateFilter(corner1y, corner1ySlider.value / corner1ySlider.maximumValue, corner1yKeyframesButton)
-        updateFilter(corner2x, corner2xSlider.value / corner2xSlider.maximumValue, corner2xKeyframesButton)
-        updateFilter(corner2y, corner2ySlider.value / corner2ySlider.maximumValue, corner2yKeyframesButton)
-        updateFilter(corner3x, corner3xSlider.value / corner3xSlider.maximumValue, corner3xKeyframesButton)
-        updateFilter(corner3y, corner3ySlider.value / corner3ySlider.maximumValue, corner3yKeyframesButton)
-        updateFilter(corner4x, corner4xSlider.value / corner4xSlider.maximumValue, corner4xKeyframesButton)
-        updateFilter(corner4y, corner4ySlider.value / corner4ySlider.maximumValue, corner4yKeyframesButton)
+        updateFilter(corner1xProperty, sliderValue(corner1xSlider), corner1KeyframesButton)
+        updateFilter(corner1yProperty, sliderValue(corner1ySlider), corner1KeyframesButton)
+        updateFilter(corner2xProperty, sliderValue(corner2xSlider), corner1KeyframesButton)
+        updateFilter(corner2yProperty, sliderValue(corner2ySlider), corner1KeyframesButton)
+        updateFilter(corner3xProperty, sliderValue(corner3xSlider), corner1KeyframesButton)
+        updateFilter(corner3yProperty, sliderValue(corner3ySlider), corner1KeyframesButton)
+        updateFilter(corner4xProperty, sliderValue(corner4xSlider), corner1KeyframesButton)
+        updateFilter(corner4yProperty, sliderValue(corner4ySlider), corner1KeyframesButton)
         updateFilter(stretchx, stretchxSlider.value / stretchxSlider.maximumValue, stretchxKeyframesButton)
         updateFilter(stretchy, stretchySlider.value / stretchySlider.maximumValue, stretchyKeyframesButton)
         updateFilter(featheralpha, featheralphaSlider.value / featheralphaSlider.maximumValue, featheralphaKeyframesButton)
+        updateFilterCorners()
+    }
+
+    function resetFilter() {
+        filter.resetProperty(corner1xProperty)
+        filter.resetProperty(corner1yProperty)
+        filter.resetProperty(corner2xProperty)
+        filter.resetProperty(corner2yProperty)
+        filter.resetProperty(corner3xProperty)
+        filter.resetProperty(corner3yProperty)
+        filter.resetProperty(corner4xProperty)
+        filter.resetProperty(corner4yProperty)
+        for (var i in cornerProperties)
+            filter.resetProperty(cornerProperties[i])
+    }
+
+    function setFilterCorners(corners, position) {
+        for (var i in cornerProperties)
+            filter.set(cornerProperties[i], corners[i], 1.0, position)
+        filter.set(corner1xProperty, corners[0].x, position)
+        filter.set(corner1yProperty, corners[0].y, position)
+        filter.set(corner2xProperty, corners[1].x, position)
+        filter.set(corner2yProperty, corners[1].y, position)
+        filter.set(corner3xProperty, corners[2].x, position)
+        filter.set(corner3yProperty, corners[2].y, position)
+        filter.set(corner4xProperty, corners[3].x, position)
+        filter.set(corner4yProperty, corners[3].y, position)
+    }
+
+    function updateFilterCorners(position) {
+        if (blockUpdate) return
+        if (position !== null) {
+            filter.blockSignals = true
+            if (position <= 0 && filter.animateIn > 0) {
+                for (var i in cornerStartValues)
+                    filter.set(cornerStartValues[i], corners[i])
+            } else if (position >= filter.duration - 1 && filter.animateOut > 0) {
+                for (i in cornerEndValues)
+                    filter.set(cornerEndValues[i], corners[i])
+            } else {
+                for (i in cornerMiddleValues)
+                    filter.set(cornerMiddleValues[i], corners[i])
+            }
+            filter.blockSignals = false
+        }
+
+        if (filter.animateIn > 0 || filter.animateOut > 0) {
+            resetFilter()
+            if (filter.animateIn > 0) {
+                setFilterCorners([filter.getRect(cornerStartValues[0]),filter.getRect(cornerStartValues[1]),filter.getRect(cornerStartValues[2]),filter.getRect(cornerStartValues[3])], 0)
+                setFilterCorners([filter.getRect(cornerMiddleValues[0]),filter.getRect(cornerMiddleValues[1]),filter.getRect(cornerMiddleValues[2]),filter.getRect(cornerMiddleValues[3])], filter.animateIn - 1)
+            }
+            if (filter.animateOut > 0) {
+                setFilterCorners([filter.getRect(cornerMiddleValues[0]),filter.getRect(cornerMiddleValues[1]),filter.getRect(cornerMiddleValues[2]),filter.getRect(cornerMiddleValues[3])], filter.duration - filter.animateOut)
+                setFilterCorners([filter.getRect(cornerEndValues[0]),filter.getRect(cornerEndValues[1]),filter.getRect(cornerEndValues[2]),filter.getRect(cornerEndValues[3])], filter.duration - 1)
+            }
+        } else if (filter.keyframeCount(corner1xProperty) <= 0) {
+            resetFilter()
+            setFilterCorners([filter.getRect(cornerMiddleValues[0]),filter.getRect(cornerMiddleValues[1]),filter.getRect(cornerMiddleValues[2]),filter.getRect(cornerMiddleValues[3])], -1)
+        } else if (position !== null) {
+            setFilterCorners(corners, position)
+        }
     }
 
     GridLayout {
@@ -141,7 +261,7 @@ KeyframableFilter {
         }
         Preset {
             id: preset
-            parameters: [corner1x, corner1y, corner2x, corner2y, corner3x, corner3y, corner4x, corner4y, stretchx, stretchy, interpolator, transparentbackground, featheralpha, alphaoperation]
+            parameters: [corner1xProperty, corner1yProperty, corner2xProperty, corner2yProperty, corner3xProperty, corner3yProperty, corner4xProperty, corner4yProperty, stretchx, stretchy, interpolator, transparentbackground, featheralpha, alphaoperation, cornerProperties[0], cornerProperties[1], cornerProperties[2], cornerProperties[4]]
             Layout.columnSpan: 3
             onBeforePresetLoaded: {
                 resetSimpleKeysframes()
@@ -149,6 +269,19 @@ KeyframableFilter {
             onPresetSelected: {
                 setControls()
                 initializeSimpleKeyframes()
+                corner1KeyframesButton.checked = filter.keyframeCount(corner1xProperty) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
+                filter.blockSignals = true
+                for (i in cornerMiddleValues)
+                    filter.set(cornerMiddleValues[i], filter.getRect(cornerProperties[i], filter.animateIn + 1))
+                if (filter.animateIn > 0) {
+                    for (i in cornerStartValues)
+                        filter.set(cornerStartValues[i], filter.getRect(cornerProperties[i], 0))
+                }
+                if (filter.animateOut > 0) {
+                    for (i in cornerEndValues)
+                        filter.set(cornerEndValues[i], filter.getRect(cornerProperties[i], filter.duration - 1))
+                }
+                filter.blockSignals = false
             }
         }
 
@@ -164,22 +297,57 @@ KeyframableFilter {
             stepSize: 0.1
             decimals: 2
             suffix: ' %'
-            onValueChanged: updateFilter(corner1x, sliderValue(corner1xSlider), corner1xKeyframesButton, getPosition())
+            onValueChanged: {
+                var newValue = sliderValue(corner1xSlider)
+                if (corners[0].x !== newValue) {
+                    corners[0].x = newValue
+                    updateFilterCorners(getPosition())
+                }
+            }
         }
         UndoButton {
             onClicked: setSliderValue(corner1xSlider, corner1xDefault)
         }
         KeyframesButton {
-            id: corner1xKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(corner1x) > 0
+            id: corner1KeyframesButton
+            Layout.rowSpan: 8
+            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(corner1xProperty) > 0
             onToggled: {
-                toggleKeyframes(checked, corner1x, sliderValue(corner1xSlider))
+                toggleKeyframes(checked, corner1xProperty, corners[0].x)
+                toggleKeyframes(checked, corner1yProperty, corners[0].y)
+                toggleKeyframes(checked, corner2xProperty, corners[1].x)
+                toggleKeyframes(checked, corner2yProperty, corners[1].y)
+                toggleKeyframes(checked, corner3xProperty, corners[2].x)
+                toggleKeyframes(checked, corner3yProperty, corners[2].y)
+                toggleKeyframes(checked, corner4xProperty, corners[3].x)
+                toggleKeyframes(checked, corner4yProperty, corners[3].y)
+                for (var i in corners) {
+                    if (checked) {
+                        blockUpdate = true
+                        if (filter.animateIn > 0 || filter.animateOut > 0) {
+                            // Reset all of the simple keyframes.
+                            resetSimpleKeyframes()
+                            filter.animateIn = 0
+                            blockUpdate = false
+                            filter.animateOut = 0
+                        } else {
+                            filter.clearSimpleAnimation(cornerProperties[i])
+                            blockUpdate = false
+                        }
+                        // Set this keyframe value.
+                        filter.set(cornerProperties[i], corners[i], 1.0, getPosition())
+                    } else {
+                        // Remove keyframes and set the parameter.
+                        filter.resetProperty(cornerProperties[i])
+                        filter.set(parameter, corners[i])
+                    }
+                }
                 setControls()
             }
         }
 
         Label {
-            text: qsTr('Corner 1 Y')
+            text: qsTr('Y')
             Layout.alignment: Qt.AlignRight
 
         }
@@ -190,18 +358,16 @@ KeyframableFilter {
             stepSize: 0.1
             decimals: 2
             suffix: ' %'
-            onValueChanged: updateFilter(corner1y, sliderValue(corner1ySlider), corner1yKeyframesButton, getPosition())
+            onValueChanged: {
+                var newValue = sliderValue(corner1ySlider)
+                if (corners[0].y !== newValue) {
+                    corners[0].y = newValue
+                    updateFilterCorners(getPosition())
+                }
+            }
         }
         UndoButton {
             onClicked: setSliderValue(corner1ySlider, corner1yDefault)
-        }
-        KeyframesButton {
-            id: corner1yKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(corner1y) > 0
-            onToggled: {
-                toggleKeyframes(checked, corner1y, sliderValue(corner1ySlider))
-                setControls()
-            }
         }
 
         Label {
@@ -216,22 +382,20 @@ KeyframableFilter {
             stepSize: 0.1
             decimals: 2
             suffix: ' %'
-            onValueChanged: updateFilter(corner2x, sliderValue(corner2xSlider), corner2xKeyframesButton, getPosition())
+            onValueChanged: {
+                var newValue = sliderValue(corner2xSlider)
+                if (corners[1].x !== newValue) {
+                    corners[1].x = newValue
+                    updateFilterCorners(getPosition())
+                }
+            }
         }
         UndoButton {
             onClicked: setSliderValue(corner2xSlider, corner2xDefault)
         }
-        KeyframesButton {
-            id: corner2xKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(corner2x) > 0
-            onToggled: {
-                toggleKeyframes(checked, corner2x, sliderValue(corner2xSlider))
-                setControls()
-            }
-        }
 
         Label {
-            text: qsTr('Corner 2 Y')
+            text: qsTr('Y')
             Layout.alignment: Qt.AlignRight
 
         }
@@ -242,21 +406,19 @@ KeyframableFilter {
             stepSize: 0.1
             decimals: 2
             suffix: ' %'
-            onValueChanged: updateFilter(corner2y, sliderValue(corner2ySlider), corner2yKeyframesButton, getPosition())
+            onValueChanged: {
+                var newValue = sliderValue(corner2ySlider)
+                if (corners[1].y !== newValue) {
+                    corners[1].y = newValue
+                    updateFilterCorners(getPosition())
+                }
+            }
         }
         UndoButton {
             onClicked: setSliderValue(corner2ySlider, corner2yDefault)
         }
-        KeyframesButton {
-            id: corner2yKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(corner2y) > 0
-            onToggled: {
-                toggleKeyframes(checked, corner2y, sliderValue(corner2ySlider))
-                setControls()
-            }
-        }
 
- Label {
+        Label {
             text: qsTr('Corner 3 X')
             Layout.alignment: Qt.AlignRight
 
@@ -268,22 +430,20 @@ KeyframableFilter {
             stepSize: 0.1
             decimals: 2
             suffix: ' %'
-            onValueChanged: updateFilter(corner3x, sliderValue(corner3xSlider), corner3xKeyframesButton, getPosition())
+            onValueChanged: {
+                var newValue = sliderValue(corner3xSlider)
+                if (corners[2].x !== newValue) {
+                    corners[2].x = newValue
+                    updateFilterCorners(getPosition())
+                }
+            }
         }
         UndoButton {
             onClicked: setSliderValue(corner3xSlider, corner3xDefault)
         }
-        KeyframesButton {
-            id: corner3xKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(corner3x) > 0
-            onToggled: {
-                toggleKeyframes(checked, corner3x, sliderValue(corner3xSlider))
-                setControls()
-            }
-        }
 
         Label {
-            text: qsTr('Corner 3 Y')
+            text: qsTr('Y')
             Layout.alignment: Qt.AlignRight
 
         }
@@ -294,18 +454,16 @@ KeyframableFilter {
             stepSize: 0.1
             decimals: 2
             suffix: ' %'
-            onValueChanged: updateFilter(corner3y, sliderValue(corner3ySlider), corner3yKeyframesButton, getPosition())
+            onValueChanged: {
+                var newValue = sliderValue(corner3ySlider)
+                if (corners[2].y !== newValue) {
+                    corners[2].y = newValue
+                    updateFilterCorners(getPosition())
+                }
+            }
         }
         UndoButton {
             onClicked: setSliderValue(corner3ySlider, corner3yDefault)
-        }
-        KeyframesButton {
-            id: corner3yKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(corner3y) > 0
-            onToggled: {
-                toggleKeyframes(checked, corner3y, sliderValue(corner3ySlider))
-                setControls()
-            }
         }
 
         Label {
@@ -320,22 +478,20 @@ KeyframableFilter {
             stepSize: 0.1
             decimals: 2
             suffix: ' %'
-            onValueChanged: updateFilter(corner4x, sliderValue(corner4xSlider), corner4xKeyframesButton, getPosition())
+            onValueChanged: {
+                var newValue = sliderValue(corner4xSlider)
+                if (corners[3].x !== newValue) {
+                    corners[3].x = newValue
+                    updateFilterCorners(getPosition())
+                }
+            }
         }
         UndoButton {
             onClicked: setSliderValue(corner4xSlider, corner4xDefault)
         }
-        KeyframesButton {
-            id: corner4xKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(corner4x) > 0
-            onToggled: {
-                toggleKeyframes(checked, corner4x, sliderValue(corner4xSlider))
-                setControls()
-            }
-        }
 
         Label {
-            text: qsTr('Corner 4 Y')
+            text: qsTr('Y')
             Layout.alignment: Qt.AlignRight
 
         }
@@ -346,18 +502,16 @@ KeyframableFilter {
             stepSize: 0.1
             decimals: 2
             suffix: ' %'
-            onValueChanged: updateFilter(corner4y, sliderValue(corner4ySlider), corner4yKeyframesButton, getPosition())
+            onValueChanged: {
+                var newValue = sliderValue(corner4ySlider)
+                if (corners[3].y !== newValue) {
+                    corners[3].y = newValue
+                    updateFilterCorners(getPosition())
+                }
+            }
         }
         UndoButton {
             onClicked: setSliderValue(corner4ySlider, corner4yDefault)
-        }
-        KeyframesButton {
-            id: corner4yKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(corner4y) > 0
-            onToggled: {
-                toggleKeyframes(checked, corner4y, sliderValue(corner4ySlider))
-                setControls()
-            }
         }
 
         Label {
@@ -386,7 +540,7 @@ KeyframableFilter {
         }
 
         Label {
-            text: qsTr('Stretch Y')
+            text: qsTr('Y')
             Layout.alignment: Qt.AlignRight
         }
         SliderSpinner {
@@ -484,6 +638,7 @@ KeyframableFilter {
 
     Connections {
         target: filter
+        onChanged: setControls()
         onInChanged: updateSimpleKeyframes()
         onOutChanged: updateSimpleKeyframes()
         onAnimateInChanged: updateSimpleKeyframes()
