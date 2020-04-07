@@ -37,7 +37,7 @@ VuiBase {
 
     property bool blockUpdate: false
     property real zoom: (video.zoom > 0)? video.zoom : 1.0
-    property int handleSize: Math.max(Math.round(16 / zoom), 8)
+    property int handleSize: Math.max(Math.round(20 / zoom), 8)
     property real handleOffset: handleSize / 2
     property int borderSize: Math.max(Math.round(4 / zoom), 3)
     property color handleColor: 'white'

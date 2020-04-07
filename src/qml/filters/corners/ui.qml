@@ -79,7 +79,6 @@ KeyframableFilter {
         for (i in cornerEndValues)
             filter.set(cornerEndValues[i], corners[i])
         if (filter.isNew) {
-            filters.set()
             filter.set(corner1xProperty, corner1xDefault)
             filter.set(corner1yProperty, corner1yDefault)
             filter.set(corner2xProperty, corner2xDefault)
@@ -96,7 +95,7 @@ KeyframableFilter {
             filter.set(alphaoperation, alphaoperationDefault)
             filter.set(featheralpha, featheralphaDefault)
             for (i in corners)
-                filter.set(cornerProperties[i], corners[i])
+                filter.set(cornerProperties[i], '' + corners[i].x + ' ' + corners[i].y)
             filter.savePreset(preset.parameters)
         } else {
             initializeSimpleKeyframes()
@@ -132,8 +131,7 @@ KeyframableFilter {
         filter.blockSignals = false
         setControls()
         if (filter.isNew) {
-            for (i in cornerProperties)
-                filter.set(cornerProperties[i], filter.getRect(cornerProperties[i]))
+            filter.set(cornerProperties[0], filter.getRect(cornerProperties[0]))
         }
     }
 
@@ -261,17 +259,17 @@ KeyframableFilter {
         }
         Preset {
             id: preset
-            parameters: [corner1xProperty, corner1yProperty, corner2xProperty, corner2yProperty, corner3xProperty, corner3yProperty, corner4xProperty, corner4yProperty, stretchx, stretchy, interpolator, transparentbackground, featheralpha, alphaoperation, cornerProperties[0], cornerProperties[1], cornerProperties[2], cornerProperties[4]]
+            parameters: [corner1xProperty, corner1yProperty, corner2xProperty, corner2yProperty, corner3xProperty, corner3yProperty, corner4xProperty, corner4yProperty, stretchx, stretchy, interpolator, transparentbackground, featheralpha, alphaoperation, cornerProperties[0], cornerProperties[1], cornerProperties[2], cornerProperties[3]]
             Layout.columnSpan: 3
             onBeforePresetLoaded: {
-                resetSimpleKeysframes()
+                resetSimpleKeyframes()
             }
             onPresetSelected: {
                 setControls()
                 initializeSimpleKeyframes()
                 corner1KeyframesButton.checked = filter.keyframeCount(corner1xProperty) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
                 filter.blockSignals = true
-                for (i in cornerMiddleValues)
+                for (var i in cornerMiddleValues)
                     filter.set(cornerMiddleValues[i], filter.getRect(cornerProperties[i], filter.animateIn + 1))
                 if (filter.animateIn > 0) {
                     for (i in cornerStartValues)
