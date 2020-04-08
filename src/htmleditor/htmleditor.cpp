@@ -491,6 +491,7 @@ void HtmlEditor::formatBulletedList()
 void HtmlEditor::formatFontName()
 {
     QStringList families = QFontDatabase().families();
+    families.removeOne("qtquickcontorols");
     bool ok = false;
     QString family = QInputDialog::getItem(this, tr("Font"), tr("Select font:"),
                                            families, 0, false, &ok);
