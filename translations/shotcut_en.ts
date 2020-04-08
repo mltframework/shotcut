@@ -1889,7 +1889,7 @@ Click to change</source>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="14"/>
         <location filename="../src/htmleditor/htmleditor.cpp" line="162"/>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="748"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="749"/>
         <source>HTML Editor</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2297,47 +2297,47 @@ Do you want to save your changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="495"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="496"/>
         <source>Font</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="495"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="496"/>
         <source>Select font:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="505"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="506"/>
         <source>Font Size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="505"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="506"/>
         <source>Size in points:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="641"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="642"/>
         <source>Open %1 ?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="642"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="643"/>
         <source>Open link</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="651"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="652"/>
         <source>Text Outline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="668"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="669"/>
         <source>Text Shadow</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="748"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="749"/>
         <source>%1[*] - %2</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8555,57 +8555,22 @@ Most users do not need to change this.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/meta.qml" line="32"/>
-        <source>Corner 1 X</source>
+        <location filename="../src/qml/filters/corners/meta.qml" line="33"/>
+        <source>Corners</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/meta.qml" line="40"/>
-        <source>Corner 1 Y</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/corners/meta.qml" line="48"/>
-        <source>Corner 2 X</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/corners/meta.qml" line="56"/>
-        <source>Corner 2 Y</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/corners/meta.qml" line="64"/>
-        <source>Corner 3 X</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/corners/meta.qml" line="72"/>
-        <source>Corner 3 Y</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/corners/meta.qml" line="80"/>
-        <source>Corner 4 X</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/corners/meta.qml" line="88"/>
-        <source>Corner 4 Y</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/corners/meta.qml" line="96"/>
+        <location filename="../src/qml/filters/corners/meta.qml" line="39"/>
         <source>Stretch X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/meta.qml" line="104"/>
+        <location filename="../src/qml/filters/corners/meta.qml" line="47"/>
         <source>Stretch Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/meta.qml" line="112"/>
+        <location filename="../src/qml/filters/corners/meta.qml" line="55"/>
         <source>Feathering</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9290,7 +9255,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/chromahold/ui.qml" line="50"/>
         <location filename="../src/qml/filters/color/ui.qml" line="121"/>
         <location filename="../src/qml/filters/contrast/ui.qml" line="144"/>
-        <location filename="../src/qml/filters/corners/ui.qml" line="139"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="257"/>
         <location filename="../src/qml/filters/crop/ui.qml" line="84"/>
         <location filename="../src/qml/filters/distort/ui.qml" line="78"/>
         <location filename="../src/qml/filters/dither/ui.qml" line="69"/>
@@ -10520,102 +10485,77 @@ Click &quot;Open&quot; to load a file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="156"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="287"/>
         <source>Corner 1 X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="182"/>
-        <source>Corner 1 Y</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="208"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="372"/>
         <source>Corner 2 X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="234"/>
-        <source>Corner 2 Y</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="260"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="420"/>
         <source>Corner 3 X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="286"/>
-        <source>Corner 3 Y</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="312"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="468"/>
         <source>Corner 4 X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="338"/>
-        <source>Corner 4 Y</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="364"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="516"/>
         <source>Stretch X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="389"/>
-        <source>Stretch Y</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="414"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="566"/>
         <source>Interpolator</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="420"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="572"/>
         <source>Nearest Neighbor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="420"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="572"/>
         <source>Bilinear</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="420"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="572"/>
         <source>Bicubic Smooth</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="420"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="572"/>
         <source>Bicubic Sharp</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="420"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="572"/>
         <source>Spline 4x4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="420"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="572"/>
         <source>Spline 6x6</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="420"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="572"/>
         <source>Lanzcos</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="433"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="585"/>
         <source>Alpha Operation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="439"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="591"/>
         <location filename="../src/qml/filters/mask/ui.qml" line="182"/>
         <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="183"/>
         <location filename="../src/qml/filters/select0r/ui.qml" line="283"/>
@@ -10623,7 +10563,7 @@ Click &quot;Open&quot; to load a file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="439"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="591"/>
         <location filename="../src/qml/filters/mask/ui.qml" line="182"/>
         <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="183"/>
         <location filename="../src/qml/filters/select0r/ui.qml" line="284"/>
@@ -10631,12 +10571,12 @@ Click &quot;Open&quot; to load a file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="439"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="591"/>
         <source>Opaque</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="439"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="591"/>
         <location filename="../src/qml/filters/mask/ui.qml" line="182"/>
         <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="183"/>
         <location filename="../src/qml/filters/select0r/ui.qml" line="282"/>
@@ -10644,13 +10584,13 @@ Click &quot;Open&quot; to load a file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="454"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="606"/>
         <source>Feathering</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="55"/>
-        <location filename="../src/qml/filters/corners/ui.qml" line="439"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="591"/>
         <location filename="../src/qml/filters/gradient/ui.qml" line="377"/>
         <location filename="../src/qml/filters/mask/ui.qml" line="182"/>
         <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="183"/>
@@ -10659,7 +10599,7 @@ Click &quot;Open&quot; to load a file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="439"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="591"/>
         <location filename="../src/qml/filters/mask/ui.qml" line="182"/>
         <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="183"/>
         <location filename="../src/qml/filters/select0r/ui.qml" line="286"/>
@@ -10811,6 +10751,11 @@ Click &quot;Open&quot; to load a file.</source>
     <message>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="300"/>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="359"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="348"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="396"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="444"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="492"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="541"/>
         <source>Y</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11165,7 +11110,7 @@ Click &quot;Open&quot; to load a file.</source>
     <message>
         <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="189"/>
         <source></source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="199"/>
@@ -12326,8 +12271,23 @@ Click &quot;Open&quot; to load a file.</source>
 <context>
     <name>vui</name>
     <message>
-        <location filename="../src/qml/filters/corners/vui.qml" line="258"/>
+        <location filename="../src/qml/filters/corners/vui.qml" line="267"/>
         <source>1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/corners/vui.qml" line="292"/>
+        <source>2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/corners/vui.qml" line="317"/>
+        <source>3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/corners/vui.qml" line="342"/>
+        <source>4</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
