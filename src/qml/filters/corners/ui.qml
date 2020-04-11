@@ -29,13 +29,13 @@ KeyframableFilter {
     property string corner3yProperty: '5'
     property string corner4xProperty: '6'
     property string corner4yProperty: '7'
-    property string enablestretch: '8'
-    property string stretchx: '9'
-    property string stretchy: '10'
-    property string interpolator: '11'
-    property string transparentbackground: '12'
-    property string featheralpha: '13'
-    property string alphaoperation: '14'
+    property string enablestretchProperty: '8'
+    property string stretchxProperty: '9'
+    property string stretchyProperty: '10'
+    property string interpolatorProperty: '11'
+    property string transparentProperty: '12'
+    property string featherProperty: '13'
+    property string alphaOpProperty: '14'
 
     property double corner1xDefault: 1/3
     property double corner1yDefault: 1/3
@@ -61,7 +61,7 @@ KeyframableFilter {
     property var cornerMiddleValues: ['_shotcut:corner1MiddleValue', '_shotcut:corner2MiddleValue', '_shotcut:corner3MiddleValue', '_shotcut:corner4MiddleValue']
     property var cornerEndValues: ['_shotcut:corner1EndValue', '_shotcut:corner2EndValue', '_shotcut:corner3EndValue', '_shotcut:corner4EndValue']
 
-    keyframableParameters: [corner1xProperty, corner1yProperty, corner2xProperty, corner2yProperty, corner3xProperty, corner3yProperty, corner4xProperty, corner4yProperty, stretchx, stretchy, featheralpha]
+    keyframableParameters: [corner1xProperty, corner1yProperty, corner2xProperty, corner2yProperty, corner3xProperty, corner3yProperty, corner4xProperty, corner4yProperty, stretchxProperty, stretchyProperty, featherProperty]
     startValues: [corner1xDefault, corner1yDefault, corner2xDefault, corner2yDefault, corner3xDefault, corner3yDefault, corner4xDefault, corner4yDefault, stretchxDefault, stretchyDefault, featheralphaDefault]
     middleValues: [corner1xDefault, corner1yDefault, corner2xDefault, corner2yDefault, corner3xDefault, corner3yDefault, corner4xDefault, corner4yDefault, stretchxDefault, stretchyDefault, featheralphaDefault]
     endValues: [corner1xDefault, corner1yDefault, corner2xDefault, corner2yDefault, corner3xDefault, corner3yDefault, corner4xDefault, corner4yDefault, stretchxDefault, stretchyDefault, featheralphaDefault]
@@ -87,13 +87,13 @@ KeyframableFilter {
             filter.set(corner3yProperty, corner3yDefault)
             filter.set(corner4xProperty, corner4xDefault)
             filter.set(corner4yProperty, corner4yDefault)
-            filter.set(enablestretch, 1)
-            filter.set(stretchx, stretchxDefault)
-            filter.set(stretchy, stretchyDefault)
-            filter.set(interpolator, interpolatorDefault)
-            filter.set(transparentbackground, 1)
-            filter.set(alphaoperation, alphaoperationDefault)
-            filter.set(featheralpha, featheralphaDefault)
+            filter.set(enablestretchProperty, 1)
+            filter.set(stretchxProperty, stretchxDefault)
+            filter.set(stretchyProperty, stretchyDefault)
+            filter.set(interpolatorProperty, interpolatorDefault)
+            filter.set(transparentProperty, 1)
+            filter.set(alphaOpProperty, alphaoperationDefault)
+            filter.set(featherProperty, featheralphaDefault)
             for (i in corners)
                 filter.set(cornerProperties[i], '' + corners[i].x + ' ' + corners[i].y)
             filter.savePreset(preset.parameters)
@@ -146,12 +146,12 @@ KeyframableFilter {
     function setControls() {
         var position = getPosition()
         blockUpdate = true
-        stretchxSlider.value = (1.0 - filter.getDouble(stretchx, position)) * stretchxSlider.maximumValue
-        stretchySlider.value = (1.0 - filter.getDouble(stretchy, position)) * stretchySlider.maximumValue
-        interpolatorCombo.currentIndex = Math.round(filter.getDouble(interpolator) * 6)
-        alphaoperationCombo.currentIndex = filter.get(transparentbackground) === '1'?
-                    Math.round(filter.getDouble(alphaoperation) * 4) + 1 : 0
-        featheralphaSlider.value = filter.getDouble(featheralpha, position) * featheralphaSlider.maximumValue
+        stretchxSlider.value = (1.0 - filter.getDouble(stretchxProperty, position)) * stretchxSlider.maximumValue
+        stretchySlider.value = (1.0 - filter.getDouble(stretchyProperty, position)) * stretchySlider.maximumValue
+        interpolatorCombo.currentIndex = Math.round(filter.getDouble(interpolatorProperty) * 6)
+        alphaoperationCombo.currentIndex = filter.get(transparentProperty) === '1'?
+                    Math.round(filter.getDouble(alphaOpProperty) * 4) + 1 : 0
+        featheralphaSlider.value = filter.getDouble(featherProperty, position) * featheralphaSlider.maximumValue
 
         for (var i in corners)
             corners[i] = filter.getRect(cornerProperties[i], position)
@@ -181,9 +181,9 @@ KeyframableFilter {
         updateFilter(corner3yProperty, sliderValue(corner3ySlider), corner1KeyframesButton)
         updateFilter(corner4xProperty, sliderValue(corner4xSlider), corner1KeyframesButton)
         updateFilter(corner4yProperty, sliderValue(corner4ySlider), corner1KeyframesButton)
-        updateFilter(stretchx, stretchxSlider.value / stretchxSlider.maximumValue, stretchxKeyframesButton)
-        updateFilter(stretchy, stretchySlider.value / stretchySlider.maximumValue, stretchyKeyframesButton)
-        updateFilter(featheralpha, featheralphaSlider.value / featheralphaSlider.maximumValue, featheralphaKeyframesButton)
+        updateFilter(stretchxProperty, stretchxSlider.value / stretchxSlider.maximumValue, stretchxKeyframesButton)
+        updateFilter(stretchyProperty, stretchySlider.value / stretchySlider.maximumValue, stretchyKeyframesButton)
+        updateFilter(featherProperty, featheralphaSlider.value / featheralphaSlider.maximumValue, featheralphaKeyframesButton)
         updateFilterCorners()
     }
 
@@ -259,7 +259,7 @@ KeyframableFilter {
         }
         Preset {
             id: preset
-            parameters: [corner1xProperty, corner1yProperty, corner2xProperty, corner2yProperty, corner3xProperty, corner3yProperty, corner4xProperty, corner4yProperty, stretchx, stretchy, interpolator, transparentbackground, featheralpha, alphaoperation, cornerProperties[0], cornerProperties[1], cornerProperties[2], cornerProperties[3]]
+            parameters: [corner1xProperty, corner1yProperty, corner2xProperty, corner2yProperty, corner3xProperty, corner3yProperty, corner4xProperty, corner4yProperty, stretchxProperty, stretchyProperty, interpolatorProperty, transparentProperty, featherProperty, alphaOpProperty, cornerProperties[0], cornerProperties[1], cornerProperties[2], cornerProperties[3]]
             Layout.columnSpan: 3
             onBeforePresetLoaded: {
                 resetSimpleKeyframes()
@@ -523,16 +523,16 @@ KeyframableFilter {
             stepSize: 0.1
             decimals: 2
             suffix: ' %'
-            onValueChanged: updateFilter(stretchx, 1.0 - stretchxSlider.value / stretchxSlider.maximumValue, stretchxKeyframesButton, getPosition())
+            onValueChanged: updateFilter(stretchxProperty, 1.0 - stretchxSlider.value / stretchxSlider.maximumValue, stretchxKeyframesButton, getPosition())
         }
         UndoButton {
             onClicked: stretchxSlider.value = stretchxDefault * stretchxSlider.maximumValue
         }
         KeyframesButton {
             id: stretchxKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(stretchx) > 0
+            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(stretchxProperty) > 0
             onToggled: {
-                toggleKeyframes(checked, stretchx, 1.0 - stretchxSlider.value / stretchxSlider.maximumValue)
+                toggleKeyframes(checked, stretchxProperty, 1.0 - stretchxSlider.value / stretchxSlider.maximumValue)
                 setControls()
             }
         }
@@ -548,16 +548,16 @@ KeyframableFilter {
             stepSize: 0.1
             decimals: 2
             suffix: ' %'
-            onValueChanged: updateFilter(stretchy, 1.0 - stretchySlider.value / stretchySlider.maximumValue, stretchyKeyframesButton, getPosition())
+            onValueChanged: updateFilter(stretchyProperty, 1.0 - stretchySlider.value / stretchySlider.maximumValue, stretchyKeyframesButton, getPosition())
         }
         UndoButton {
             onClicked: stretchySlider.value = stretchyDefault * stretchySlider.maximumValue
         }
         KeyframesButton {
             id: stretchyKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(stretchy) > 0
+            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(stretchyProperty) > 0
             onToggled: {
-                toggleKeyframes(checked, stretchy, 1.0 - stretchySlider.value / stretchySlider.maximumValue)
+                toggleKeyframes(checked, stretchyProperty, 1.0 - stretchySlider.value / stretchySlider.maximumValue)
                 setControls()
             }
         }
@@ -572,7 +572,7 @@ KeyframableFilter {
             model: [qsTr('Nearest Neighbor'), qsTr('Bilinear'), qsTr('Bicubic Smooth'), qsTr('Bicubic Sharp'), qsTr('Spline 4x4'), qsTr('Spline 6x6'), qsTr('Lanzcos')]
             onActivated: {
                 enabled = false
-                filter.set(interpolator, index / 6)
+                filter.set(interpolatorProperty, index / 6)
                 enabled = true
             }
         }
@@ -591,8 +591,8 @@ KeyframableFilter {
             model: [qsTr('Opaque'), qsTr('Overwrite'), qsTr('Maximum'), qsTr('Minimum'), qsTr('Add'), qsTr('Subtract')]
             onActivated: {
                 enabled = false
-                filter.set(transparentbackground, index > 0)
-                filter.set(alphaoperation, (index - 1) / 4)
+                filter.set(transparentProperty, index > 0)
+                filter.set(alphaOpProperty, (index - 1) / 4)
                 enabled = true
             }
         }
@@ -615,17 +615,17 @@ KeyframableFilter {
             stepSize: 0.1
             decimals: 2
             suffix: ' %'
-            onValueChanged: updateFilter(featheralpha, featheralphaSlider.value / featheralphaSlider.maximumValue, featheralphaKeyframesButton, getPosition())
+            onValueChanged: updateFilter(featherProperty, featheralphaSlider.value / featheralphaSlider.maximumValue, featheralphaKeyframesButton, getPosition())
         }
         UndoButton {
             onClicked: featheralphaSlider.value = featheralphaDefault * featheralphaSlider.maximumValue
         }
         KeyframesButton {
             id: featheralphaKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(featheralpha) > 0
+            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(featherProperty) > 0
             onToggled: {
                 enableControls(true)
-                toggleKeyframes(checked, featheralpha, featheralphaSlider.value / featheralphaSlider.maximumValue)
+                toggleKeyframes(checked, featherProperty, featheralphaSlider.value / featheralphaSlider.maximumValue)
             }
         }
 
