@@ -16,7 +16,7 @@
     <message>
         <location filename="../src/dialogs/addencodepresetdialog.ui" line="53"/>
         <source>Make final changes to the preset including removing items you do not want to include, or copy/paste the clipboard.</source>
-        <translation>Urobte konečné zmeny prednastavenia vrátane odstránenia položiek, ktoré nechce zahrnúť, alebo kopírovať/vložiť do schránky.</translation>
+        <translation>Vytvorí konečné zmeny predvolieb vrátane odstránenia položiek, ktoré nechce zahrnúť, alebo kopírovať/vložiť do schránky.</translation>
     </message>
 </context>
 <context>
@@ -29,7 +29,7 @@
     <message>
         <location filename="../src/widgets/alsawidget.ui" line="26"/>
         <source>ALSA Audio</source>
-        <translation>Zvuk ALSA</translation>
+        <translation>Audio ALSA</translation>
     </message>
     <message>
         <location filename="../src/widgets/alsawidget.ui" line="54"/>
@@ -44,7 +44,7 @@
     <message>
         <location filename="../src/widgets/alsawidget.ui" line="71"/>
         <source>default</source>
-        <translation>Východzie</translation>
+        <translation>východzie</translation>
     </message>
     <message>
         <location filename="../src/widgets/alsawidget.ui" line="78"/>
@@ -57,7 +57,7 @@
     <message>
         <location filename="../src/models/attachedfiltersmodel.cpp" line="142"/>
         <source>Audio</source>
-        <translation>Zvuk</translation>
+        <translation>Audio</translation>
     </message>
     <message>
         <location filename="../src/models/attachedfiltersmodel.cpp" line="144"/>
@@ -67,7 +67,7 @@
     <message>
         <location filename="../src/models/attachedfiltersmodel.cpp" line="146"/>
         <source>Video</source>
-        <translation>Obraz</translation>
+        <translation>Video</translation>
     </message>
 </context>
 <context>
@@ -75,57 +75,57 @@
     <message>
         <location filename="../src/widgets/scopes/audioloudnessscopewidget.cpp" line="82"/>
         <source>Momentary Loudness</source>
-        <translation type="unfinished"></translation>
+        <translation>Momentálna hlasitosť</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/audioloudnessscopewidget.cpp" line="85"/>
         <source>Short Term Loudness</source>
-        <translation type="unfinished"></translation>
+        <translation>Krátkodobá hlasitosť</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/audioloudnessscopewidget.cpp" line="88"/>
         <source>Integrated Loudness</source>
-        <translation type="unfinished"></translation>
+        <translation>Integrovaná hlasitosť</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/audioloudnessscopewidget.cpp" line="91"/>
         <source>Loudness Range</source>
-        <translation type="unfinished"></translation>
+        <translation>Rozsah hlasitosti</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/audioloudnessscopewidget.cpp" line="94"/>
         <source>Peak</source>
-        <translation type="unfinished">Vrchol</translation>
+        <translation>Špička</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/audioloudnessscopewidget.cpp" line="97"/>
         <source>True Peak</source>
-        <translation type="unfinished"></translation>
+        <translation>Skutočná špička</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/audioloudnessscopewidget.cpp" line="103"/>
         <source>Configure Graphs</source>
-        <translation type="unfinished"></translation>
+        <translation>Konfigurovať grafy</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/audioloudnessscopewidget.cpp" line="110"/>
         <source>Reset</source>
-        <translation type="unfinished">Nastaviť znovu</translation>
+        <translation>Vynulovať</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/audioloudnessscopewidget.cpp" line="111"/>
         <source>Reset the measurement.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vynulovať meranie.</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/audioloudnessscopewidget.cpp" line="118"/>
         <source>Time Since Reset</source>
-        <translation type="unfinished"></translation>
+        <translation>Čas od vynulovania</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/audioloudnessscopewidget.cpp" line="167"/>
         <source>Audio Loudness</source>
-        <translation type="unfinished"></translation>
+        <translation>Hlasitosť audia</translation>
     </message>
 </context>
 <context>
@@ -133,39 +133,39 @@
     <message>
         <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="90"/>
         <source>Audio Peak Meter</source>
-        <translation>Merač hladín zvuku</translation>
+        <translation>Merač úrovne audia</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="107"/>
         <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="109"/>
         <source>L</source>
-        <translation>L</translation>
+        <translation>Ľ</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="107"/>
         <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="109"/>
         <source>R</source>
-        <translation type="unfinished"></translation>
+        <translation>P</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="109"/>
         <source>C</source>
-        <translation>V</translation>
+        <translation>S</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="109"/>
         <source>LF</source>
-        <translation type="unfinished"></translation>
+        <translation>ĽP</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="109"/>
         <source>Ls</source>
-        <translation type="unfinished"></translation>
+        <translation>Ľo</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="109"/>
         <source>Rs</source>
-        <translation type="unfinished"></translation>
+        <translation>Po</translation>
     </message>
 </context>
 <context>
@@ -173,25 +173,37 @@
     <message>
         <location filename="../src/widgets/scopes/audiospectrumscopewidget.cpp" line="212"/>
         <source>Audio Spectrum</source>
-        <translation>Zvukové spektrum</translation>
+        <translation>Audio spektrum</translation>
     </message>
 </context>
 <context>
     <name>AudioWaveformScopeWidget</name>
     <message>
-        <location filename="../src/widgets/scopes/audiowaveformscopewidget.cpp" line="184"/>
+        <location filename="../src/widgets/scopes/audiowaveformscopewidget.cpp" line="182"/>
         <source>0</source>
         <translation>0</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/audiowaveformscopewidget.cpp" line="185"/>
+        <location filename="../src/widgets/scopes/audiowaveformscopewidget.cpp" line="183"/>
         <source>-inf</source>
         <translation>-inf</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/audiowaveformscopewidget.cpp" line="250"/>
+        <location filename="../src/widgets/scopes/audiowaveformscopewidget.cpp" line="264"/>
+        <source>Sample: %1
+</source>
+        <translation>Príklad: %1
+</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/scopes/audiowaveformscopewidget.cpp" line="272"/>
+        <source>Ch: %1: %2 (%3 dBFS)</source>
+        <translation>K: %1: %2 (%3 dBFS)</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/scopes/audiowaveformscopewidget.cpp" line="295"/>
         <source>Audio Waveform</source>
-        <translation>Zvuková vlna</translation>
+        <translation>Tvarová vlna audia</translation>
     </message>
 </context>
 <context>
@@ -202,308 +214,341 @@
         <translation>Formulár</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="27"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="60"/>
         <source>Comments:</source>
-        <translation>Poznámky:</translation>
+        <translation>Komentáre:</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="55"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="149"/>
         <source>Speed</source>
         <translation>Rýchlosť</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="99"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="129"/>
         <source>Duration</source>
-        <translation>Doba trvania</translation>
+        <translation>Trvanie</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="147"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="207"/>
         <source>Video</source>
-        <translation>Obraz</translation>
+        <translation>Video</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="285"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="345"/>
         <source>Broadcast Limited (MPEG)</source>
-        <translation type="unfinished"></translation>
+        <translation>Limitované vysielanie (MPEG)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="290"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="350"/>
         <source>Full (JPEG)</source>
-        <translation type="unfinished"></translation>
+        <translation>Plný (JPEG)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="325"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="471"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="385"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="531"/>
         <source>Track</source>
         <translation>Stopa</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="313"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="373"/>
         <source>Aspect ratio</source>
         <translation>Pomer strán</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="378"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="438"/>
         <source>:</source>
         <translation>:</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="166"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="226"/>
         <source>Scan mode</source>
-        <translation>Režim prehľadávania</translation>
+        <translation>Režim skenovania</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="422"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="482"/>
         <source>Interlaced</source>
         <translation>Prekladaný</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="427"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="487"/>
         <source>Progressive</source>
         <translation>Progresívny</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="229"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="259"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="557"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="587"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="289"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="319"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="617"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="647"/>
         <source>Codec</source>
         <translation>Kodek</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="176"/>
-        <source>Color Range</source>
-        <translation type="unfinished"></translation>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="88"/>
+        <source>Timeline</source>
+        <translation>Časová os</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="234"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="264"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="178"/>
+        <source>Apply pitch compensation when the speed is changed.</source>
+        <translation>Pri zmene rýchlosti použije kompenzáciu výšky tónu.</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="181"/>
+        <source>Pitch Compensation</source>
+        <translation>Kompenzácia výšky tónu</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="236"/>
+        <source>Color Range</source>
+        <translation>Farebný rozsah</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="294"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="324"/>
         <source>Resolution</source>
         <translation>Rozlíšenie</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="239"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="269"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="299"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="329"/>
         <source>Frame rate</source>
-        <translation>Snímkovanie</translation>
+        <translation>Snímková frekvencia</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="244"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="304"/>
         <source>Pixel format</source>
         <translation>Formát pixelu</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="249"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="577"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="717"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="309"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="637"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="777"/>
         <source>Name</source>
         <translation>Názov</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="254"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="582"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="722"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="314"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="642"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="782"/>
         <source>Value</source>
         <translation>Hodnota</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="274"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="572"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="602"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="334"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="632"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="662"/>
         <source>Format</source>
         <translation>Formát</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="436"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="496"/>
         <source>Bottom Field First</source>
-        <translation>Najprv dolné pole</translation>
+        <translation>Najprv spodná polsnímka</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="441"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="501"/>
         <source>Top Field First</source>
-        <translation>Najprv horné pole</translation>
+        <translation>Najprv horná polsnímka</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="465"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="525"/>
         <source>Audio</source>
         <translation>Zvuk</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="562"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="592"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="622"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="652"/>
         <source>Channels</source>
         <translation>Kanály</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="567"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="597"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="627"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="657"/>
         <source>Sample rate</source>
-        <translation>Vzorkovanie</translation>
+        <translation>Snímková frekvencia</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="610"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="670"/>
         <source>Adjust the audio/video synchronization. The center position is equivalent to no alteration.</source>
-        <translation>Upraviť zladenie zvuku/obrazu. Stredná poloha sa rovná žiadnej zmene.</translation>
+        <translation>Nastaví synchronizáciu audia/videa. Stredná poloha je ekvivalent žiadnej zmeny.</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="629"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="689"/>
         <source>Sync</source>
         <translation>Synchronizovať</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="654"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="714"/>
         <source> ms</source>
         <translation> ms</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="683"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="743"/>
         <source>Metadata</source>
-        <translation>Popis</translation>
+        <translation>Metaúdaje</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="736"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="813"/>
         <source>Reset</source>
-        <translation>Nastaviť znovu</translation>
+        <translation>Vynulovať</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="750"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="827"/>
+        <source>Convert to Edit-friendly</source>
+        <translation>Konvertovať na priateľskú úpravu</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="830"/>
+        <source>Convert...</source>
+        <translation>Konvertovať...</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="837"/>
         <source>Display a menu of additional actions</source>
-        <translation>Zobraziť ponuku dodatočných činností</translation>
+        <translation>Zobraziť ponuku prídavných akcií</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="792"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="866"/>
         <source>Show in Folder</source>
-        <translation>Ukázať v zložke</translation>
+        <translation>Zobraziť v priečinku</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="797"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="871"/>
         <source>Copy Full File Path</source>
         <translation>Kopírovať celú súborovú cestu</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="802"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="876"/>
         <source>More Information...</source>
-        <translation type="unfinished"></translation>
+        <translation>Viac informácií...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="807"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="881"/>
         <source>Start Integrity Check Job</source>
-        <translation type="unfinished"></translation>
+        <translation>Spustiť úlohu overovania integrity</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="812"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="886"/>
         <source>Convert to Edit-friendly...</source>
-        <translation type="unfinished"></translation>
+        <translation>Konvertovať na priateľskú úpravu...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="822"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="896"/>
         <source>Set Creation Time...</source>
-        <translation type="unfinished"></translation>
+        <translation>Nastaviť čas vytvorenia...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="743"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="770"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="820"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="818"/>
         <source>Reverse...</source>
-        <translation type="unfinished"></translation>
+        <translation>Obrátiť chod...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="817"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="912"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="891"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="985"/>
         <source>Extract Sub-clip...</source>
-        <translation type="unfinished"></translation>
+        <translation>Rozbaliť medzizáber...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="306"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="342"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="336"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="372"/>
         <source>None</source>
         <translation>Žiadny</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="363"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="393"/>
         <source>All</source>
-        <translation type="unfinished"></translation>
+        <translation>Všetko</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="441"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="471"/>
         <source>(variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>(premenná)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="482"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="512"/>
         <source>This file is variable frame rate, which is not reliable for editing. Do you want to convert it to an edit-friendly format?
 
 If yes, choose a format below and then click OK to choose a file name. After choosing a file name, a job is created. When it is done, double-click the job to open it.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Tento súbor má premenlivú frekvenciu snímkovania, čo nie je spoľahlivé pre upravovanie. Chcete ho previesť na formát priateľský pre úpravy?
+
+Pokiaľ áno, vyberte formát nižšie a potom kliknite na OK pre výber názvu súboru. Po zvolení názvu súboru je vytvorená úloha. Keď je hotová, dvakrát kliknite na úlohu pre jej otvorenie.
+</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="495"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="525"/>
         <source>This file does not support seeking and cannot be used for editing. Do you want to convert it to an edit-friendly format?
 
 If yes, choose a format below and then click OK to choose a file name. After choosing a file name, a job is created. When it is done, double-click the job to open it.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Tento súbor nepodporuje prehľadávanie a nemožno ho použiť pre úpravu. Chcete ho previesť na formát priateľský pre úpravy?
+
+Pokiaľ áno, vyberte formát nižšie a potom kliknite na OK pre výber názvu súboru. Po zvolení názvu súboru je vytvorená úloha. Keď je hotová, dvakrát kliknite na úlohu pre jej otvorenie.
+
+</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="683"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="766"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="731"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="814"/>
         <source>Choose an edit-friendly format below and then click OK to choose a file name. After choosing a file name, a job is created. When it is done, double-click the job to open it.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Vyberte formát priateľský pre úpravy a potom kliknite na OK pre výber názvu súboru. Po zvolení názvu súboru je vytvorená úloha. Keď je hotová, dvakrát kliknite na úlohu pre jej otvorenie.
+</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="718"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="820"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="766"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="878"/>
         <source>MP4 (*.mp4);;All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>MP4 (*.mp4);;Všetky súbory (*)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="730"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="843"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="778"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="901"/>
         <source>MOV (*.mov);;All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>MOV (*.mov);;Všetky súbory (*)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="736"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="854"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="784"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="912"/>
         <source>MKV (*.mkv);;All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>MKV (*.mkv);;Všetky súbory (*)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="740"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="788"/>
         <source>Converted</source>
-        <translation type="unfinished"></translation>
+        <translation>Konvertované</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="757"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="888"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="805"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="946"/>
         <source>Convert %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Konvertovať %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="858"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="916"/>
         <source>Reversed</source>
-        <translation type="unfinished"></translation>
+        <translation>Obrátený chod</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="896"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="954"/>
         <source>Reverse %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Obrátiť chod %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="911"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="984"/>
         <source>Sub-clip</source>
-        <translation type="unfinished"></translation>
+        <translation>Medzizáber</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="913"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="986"/>
         <source>%1 (*.%2);;All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 (*.%2);;Všetky súbory (*)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="951"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1024"/>
         <source>Extract sub-clip %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Rozbaliť medzizáber %1</translation>
     </message>
 </context>
 <context>
@@ -517,7 +562,7 @@ If yes, choose a format below and then click OK to choose a file name. After cho
         <location filename="../src/widgets/avfoundationproducerwidget.ui" line="26"/>
         <location filename="../src/widgets/avfoundationproducerwidget.cpp" line="78"/>
         <source>Audio/Video Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Audio/video zariadenie</translation>
     </message>
     <message>
         <location filename="../src/widgets/avfoundationproducerwidget.ui" line="39"/>
@@ -530,12 +575,12 @@ If yes, choose a format below and then click OK to choose a file name. After cho
     <message>
         <location filename="../src/widgets/avfoundationproducerwidget.ui" line="47"/>
         <source>Video Input</source>
-        <translation>Obrazový vstup</translation>
+        <translation>Video vstup</translation>
     </message>
     <message>
         <location filename="../src/widgets/avfoundationproducerwidget.ui" line="66"/>
         <source>Audio Input</source>
-        <translation>Zvukový vstup</translation>
+        <translation>Audio vstup</translation>
     </message>
 </context>
 <context>
@@ -543,12 +588,12 @@ If yes, choose a format below and then click OK to choose a file name. After cho
     <message>
         <location filename="../src/qml/views/timeline/Clip.qml" line="629"/>
         <source>Cut</source>
-        <translation type="unfinished">Vystrihnúť</translation>
+        <translation>Vystrihnúť</translation>
     </message>
     <message>
         <location filename="../src/qml/views/timeline/Clip.qml" line="641"/>
         <source>Copy</source>
-        <translation type="unfinished">Kopírovať</translation>
+        <translation>Kopírovať</translation>
     </message>
     <message>
         <location filename="../src/qml/views/timeline/Clip.qml" line="648"/>
@@ -558,36 +603,41 @@ If yes, choose a format below and then click OK to choose a file name. After cho
     <message>
         <location filename="../src/qml/views/timeline/Clip.qml" line="653"/>
         <source>Lift</source>
-        <translation>Vyzdvihnúť</translation>
+        <translation>Vyňať</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/Clip.qml" line="661"/>
-        <source>Split At Playhead (S)</source>
-        <translation>Rozdeliť v polohe prehrávania (S)</translation>
+        <location filename="../src/qml/views/timeline/Clip.qml" line="658"/>
+        <source>Replace</source>
+        <translation>Nahradiť</translation>
     </message>
     <message>
         <location filename="../src/qml/views/timeline/Clip.qml" line="667"/>
+        <source>Split At Playhead (S)</source>
+        <translation>Rozdeliť na snímacej hlave (S)</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/views/timeline/Clip.qml" line="673"/>
         <source>Merge with next clip</source>
-        <translation type="unfinished"></translation>
+        <translation>Zlúčiť s ďalším klipom</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/Clip.qml" line="672"/>
+        <location filename="../src/qml/views/timeline/Clip.qml" line="678"/>
         <source>Detach Audio</source>
-        <translation type="unfinished"></translation>
+        <translation>Odpojiť audio</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/Clip.qml" line="677"/>
+        <location filename="../src/qml/views/timeline/Clip.qml" line="683"/>
         <source>Update Thumbnails</source>
-        <translation type="unfinished"></translation>
+        <translation>Obnoviť miniatúry</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/keyframes/Clip.qml" line="491"/>
-        <location filename="../src/qml/views/timeline/Clip.qml" line="693"/>
+        <location filename="../src/qml/views/keyframes/Clip.qml" line="489"/>
+        <location filename="../src/qml/views/timeline/Clip.qml" line="699"/>
         <source>Rebuild Audio Waveform</source>
-        <translation>Obnoviť zvukovú vlnu</translation>
+        <translation>Obnoviť tvarovú vlnu audia</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/Clip.qml" line="698"/>
+        <location filename="../src/qml/views/timeline/Clip.qml" line="704"/>
         <source>Properties</source>
         <translation>Vlastnosti</translation>
     </message>
@@ -673,7 +723,7 @@ If yes, choose a format below and then click OK to choose a file name. After cho
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/ColorPicker.qml" line="62"/>
         <source>Please choose a color</source>
-        <translation>Zvoľte prosím farbu</translation>
+        <translation>Zvoľte si, prosím, farbu</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/ColorPicker.qml" line="86"/>
@@ -709,118 +759,118 @@ If yes, choose a format below and then click OK to choose a file name. After cho
     <message>
         <location filename="../src/widgets/countproducerwidget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Formulár</translation>
+        <translation>Formulár</translation>
     </message>
     <message>
         <location filename="../src/widgets/countproducerwidget.ui" line="26"/>
         <source>Count</source>
-        <translation type="unfinished"></translation>
+        <translation>Počet</translation>
     </message>
     <message>
         <location filename="../src/widgets/countproducerwidget.ui" line="41"/>
         <source>Direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Smer</translation>
     </message>
     <message>
         <location filename="../src/widgets/countproducerwidget.ui" line="74"/>
         <source>Style</source>
-        <translation type="unfinished"></translation>
+        <translation>Štýl</translation>
     </message>
     <message>
         <location filename="../src/widgets/countproducerwidget.ui" line="107"/>
         <source>Sound</source>
-        <translation type="unfinished"></translation>
+        <translation>Zvuk</translation>
     </message>
     <message>
         <location filename="../src/widgets/countproducerwidget.ui" line="110"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Silent - No sound&lt;/p&gt;&lt;p&gt;2-Pop - A 1kHz beep exactly two seconds before the out point&lt;/p&gt;&lt;p&gt;Frame 0 - A 1kHz beep at frame 0 of every second&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ticho - bez zvuku&lt;/p&gt;&lt;p&gt;2-pípnutia - pípnutie 1 kHz po dobu presne dvoch sekúnd pred koncovým bodom&lt;/p&gt;&lt;p&gt;Snímka 0 - pípnutie 1 kHz na snímku 0 každú sekundu&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/widgets/countproducerwidget.ui" line="143"/>
         <source>Background</source>
-        <translation type="unfinished">Pozadie</translation>
+        <translation>Pozadie</translation>
     </message>
     <message>
         <location filename="../src/widgets/countproducerwidget.ui" line="146"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;None - No background&lt;/p&gt;&lt;p&gt;Clock  - Film style clock animation&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Žiadne - bez pozadia&lt;/p&gt;&lt;p&gt;Hodiny - animácia hodín vo filmovom štýle&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/widgets/countproducerwidget.ui" line="179"/>
         <source>Drop Frame</source>
-        <translation type="unfinished"></translation>
+        <translation>Zahodiť snímku</translation>
     </message>
     <message>
         <location filename="../src/widgets/countproducerwidget.ui" line="182"/>
         <source>Use SMPTE style drop-frame counting for non-integer frame rates. The clock and timecode will advance two frames every minute if necessary to keep time with wall clock time.</source>
-        <translation type="unfinished"></translation>
+        <translation>Použiť počítanie zahodených snímok v štýle SMPTE pre neceločíselné rýchlosti snímkovania. Hodiny a časový kód vykonajú v prípade potreby presun na predošlý dátum každú minútu, pre zachovanie času podľa nástenných hodín.</translation>
     </message>
     <message>
         <location filename="../src/widgets/countproducerwidget.ui" line="189"/>
         <source>Duration</source>
-        <translation type="unfinished">Doba trvania</translation>
+        <translation>Trvanie</translation>
     </message>
     <message>
         <location filename="../src/widgets/countproducerwidget.cpp" line="39"/>
         <source>Down</source>
-        <translation type="unfinished"></translation>
+        <translation>Dole</translation>
     </message>
     <message>
         <location filename="../src/widgets/countproducerwidget.cpp" line="40"/>
         <source>Up</source>
-        <translation type="unfinished"></translation>
+        <translation>Hore</translation>
     </message>
     <message>
         <location filename="../src/widgets/countproducerwidget.cpp" line="43"/>
         <source>Seconds</source>
-        <translation type="unfinished"></translation>
+        <translation>sekúnd</translation>
     </message>
     <message>
         <location filename="../src/widgets/countproducerwidget.cpp" line="44"/>
         <source>Seconds + 1</source>
-        <translation type="unfinished"></translation>
+        <translation>sekúnd + 1</translation>
     </message>
     <message>
         <location filename="../src/widgets/countproducerwidget.cpp" line="45"/>
         <source>Frames</source>
-        <translation type="unfinished"></translation>
+        <translation>snímok</translation>
     </message>
     <message>
         <location filename="../src/widgets/countproducerwidget.cpp" line="46"/>
         <source>Timecode</source>
-        <translation type="unfinished">Časový kód</translation>
+        <translation>Časový kód</translation>
     </message>
     <message>
         <location filename="../src/widgets/countproducerwidget.cpp" line="47"/>
         <location filename="../src/widgets/countproducerwidget.cpp" line="55"/>
         <source>Clock</source>
-        <translation type="unfinished"></translation>
+        <translation>Hodiny</translation>
     </message>
     <message>
         <location filename="../src/widgets/countproducerwidget.cpp" line="50"/>
         <source>2-Pop</source>
-        <translation type="unfinished"></translation>
+        <translation>2-pípnutia</translation>
     </message>
     <message>
         <location filename="../src/widgets/countproducerwidget.cpp" line="51"/>
         <source>Silent</source>
-        <translation type="unfinished"></translation>
+        <translation>Tichý</translation>
     </message>
     <message>
         <location filename="../src/widgets/countproducerwidget.cpp" line="52"/>
         <source>Frame 0</source>
-        <translation type="unfinished"></translation>
+        <translation>Snímka 0</translation>
     </message>
     <message>
         <location filename="../src/widgets/countproducerwidget.cpp" line="56"/>
         <source>None</source>
-        <translation type="unfinished"></translation>
+        <translation>Žiadny</translation>
     </message>
     <message>
         <location filename="../src/widgets/countproducerwidget.cpp" line="222"/>
         <source>Count: %1 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Počet: %1 %2</translation>
     </message>
 </context>
 <context>
@@ -828,7 +878,7 @@ If yes, choose a format below and then click OK to choose a file name. After cho
     <message>
         <location filename="../src/dialogs/customprofiledialog.ui" line="14"/>
         <source>Add Custom Video Mode</source>
-        <translation>Pridať vlastný obrazový režim</translation>
+        <translation>Pridať vlastný video režim</translation>
     </message>
     <message>
         <location filename="../src/dialogs/customprofiledialog.ui" line="29"/>
@@ -873,22 +923,22 @@ If yes, choose a format below and then click OK to choose a file name. After cho
     <message>
         <location filename="../src/dialogs/customprofiledialog.ui" line="267"/>
         <source>Frames/sec</source>
-        <translation>Snímkov za sekundu</translation>
+        <translation>snímok/sek</translation>
     </message>
     <message>
         <location filename="../src/dialogs/customprofiledialog.ui" line="373"/>
         <source>Scan mode</source>
-        <translation>Režim prehľadávania</translation>
+        <translation>Režim skenovania</translation>
     </message>
     <message>
         <location filename="../src/dialogs/customprofiledialog.ui" line="405"/>
         <source>&lt;small&gt;(Leave Name blank to skip saving a preset and use a temporary or project-specific Video Mode.)&lt;/small&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;small&gt;(Ponechajte názov prázdny pre preskočenie uloženia predvoľby a použite dočasný alebo projektom určený video režim.)&lt;/small&gt;</translation>
     </message>
     <message>
         <location filename="../src/dialogs/customprofiledialog.cpp" line="122"/>
         <source>Video Mode Frames/sec</source>
-        <translation type="unfinished"></translation>
+        <translation>Video režim snímok/sek</translation>
     </message>
 </context>
 <context>
@@ -917,7 +967,7 @@ If yes, choose a format below and then click OK to choose a file name. After cho
     <message>
         <location filename="../src/widgets/decklinkproducerwidget.ui" line="85"/>
         <source>Please be aware that not every card model supports automatic signal detection, and not all cards support all of the signal modes.</source>
-        <translation>Buďte si prosím vedomí, že nie každý model karty podporuje automatické zistenie signálu, a že nie všetky karty podporujú všetky režimy signálu.</translation>
+        <translation>Majte, prosím, na pamäti, že nie každý model karty podporuje automatické zistenie signálu, a že nie všetky karty podporujú všetky režimy signálu.</translation>
     </message>
     <message>
         <location filename="../src/widgets/decklinkproducerwidget.cpp" line="30"/>
@@ -949,7 +999,7 @@ If yes, choose a format below and then click OK to choose a file name. After cho
         <location filename="../src/widgets/directshowvideowidget.ui" line="26"/>
         <location filename="../src/widgets/directshowvideowidget.cpp" line="96"/>
         <source>Audio/Video Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Audio/video zariadenie</translation>
     </message>
     <message>
         <location filename="../src/widgets/directshowvideowidget.ui" line="52"/>
@@ -960,12 +1010,12 @@ If yes, choose a format below and then click OK to choose a file name. After cho
     <message>
         <location filename="../src/widgets/directshowvideowidget.ui" line="60"/>
         <source>Video Input</source>
-        <translation>Obrazový vstup</translation>
+        <translation>Video vstup</translation>
     </message>
     <message>
         <location filename="../src/widgets/directshowvideowidget.ui" line="70"/>
         <source>Audio Input</source>
-        <translation>Zvukový vstup</translation>
+        <translation>Audio vstup</translation>
     </message>
 </context>
 <context>
@@ -986,12 +1036,12 @@ If yes, choose a format below and then click OK to choose a file name. After cho
     <message>
         <location filename="../src/docks/encodedock.ui" line="24"/>
         <source>Export</source>
-        <translation type="unfinished"></translation>
+        <translation>Export</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="51"/>
         <source>&lt;b&gt;Presets&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Predvoľby</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="64"/>
@@ -1001,22 +1051,22 @@ If yes, choose a format below and then click OK to choose a file name. After cho
     <message>
         <location filename="../src/docks/encodedock.ui" line="95"/>
         <source>Add current settings as a new custom preset</source>
-        <translation>Pridať terajšie nastavenia ako nové vlastné prednastavenie</translation>
+        <translation>Pridať súčasné nastavenie ako novú vlastnú predvoľbu</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="109"/>
         <source>Delete currently selected preset</source>
-        <translation>Zmazať teraz vybrané prednastavenie</translation>
+        <translation>Odstrániť súčasne vybranú predvoľbu</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="175"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Export Help&lt;/span&gt;&lt;/p&gt;&lt;p&gt;The defaults create a H.264/AAC MP4 file, which is suitable for most users and purposes. Choose a &lt;span style=&quot; font-weight:600;&quot;&gt;Preset&lt;/span&gt; at the left before deciding to use the &lt;span style=&quot; font-weight:600;&quot;&gt;Advanced&lt;/span&gt; mode. The &lt;span style=&quot; font-weight:600;&quot;&gt;Advanced&lt;/span&gt; mode does not prevent creating an invalid combination of options!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Nápoveda exportu&lt;/span&gt;&lt;/p&gt;&lt;p&gt;V predvolenom nastavení sa vytvorí súbor H.264/AAC MP4, ktorý je vhodný pre väčšinu užívateľov a účelov. Vyberte &lt;span style=&quot; font-weight:600;&quot;&gt;predvoľbu&lt;/span&gt; naľavo, pred rozhodnutím použiť režim &lt;span style=&quot; font-weight:600;&quot;&gt;Pokročilé&lt;/span&gt;. Režim &lt;span style=&quot; font-weight:600;&quot;&gt;Pokročilé&lt;/span&gt; nezabráni vytvoreniu neplatnej kombinácie možností!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="193"/>
         <source>From</source>
-        <translation type="unfinished"></translation>
+        <translation>Z</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="223"/>
@@ -1026,17 +1076,17 @@ If yes, choose a format below and then click OK to choose a file name. After cho
     <message>
         <location filename="../src/docks/encodedock.ui" line="259"/>
         <source>Use hardware encoder</source>
-        <translation type="unfinished"></translation>
+        <translation>Použiť hardvérový kódovač</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="266"/>
         <source>Configure...</source>
-        <translation type="unfinished"></translation>
+        <translation>Konfigurovať...</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="300"/>
         <source>Video</source>
-        <translation>Obraz</translation>
+        <translation>Video</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="761"/>
@@ -1046,7 +1096,7 @@ If yes, choose a format below and then click OK to choose a file name. After cho
     <message>
         <location filename="../src/docks/encodedock.ui" line="354"/>
         <source>Field order</source>
-        <translation>Poradie polí</translation>
+        <translation>Poradie polsnímok</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="364"/>
@@ -1061,7 +1111,7 @@ If yes, choose a format below and then click OK to choose a file name. After cho
     <message>
         <location filename="../src/docks/encodedock.ui" line="324"/>
         <source>Scan mode</source>
-        <translation>Režim prehľadávania</translation>
+        <translation>Režim skenovania</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="383"/>
@@ -1081,7 +1131,7 @@ If yes, choose a format below and then click OK to choose a file name. After cho
     <message>
         <location filename="../src/docks/encodedock.ui" line="698"/>
         <source>Frames/sec</source>
-        <translation>Snímkov za sekundu</translation>
+        <translation>snímok/sek</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="726"/>
@@ -1091,22 +1141,22 @@ If yes, choose a format below and then click OK to choose a file name. After cho
     <message>
         <location filename="../src/docks/encodedock.ui" line="626"/>
         <source>Bottom Field First</source>
-        <translation>Najprv dolné pole</translation>
+        <translation>Najprv spodná polsnímka</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="631"/>
         <source>Top Field First</source>
-        <translation>Najprv horné pole</translation>
+        <translation>Najprv horná polsnímka</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="417"/>
         <source>One Field (fast)</source>
-        <translation>Jedno pole (rýchle)</translation>
+        <translation>Jedno polsnímka (rýchle)</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="422"/>
         <source>Linear Blend (fast)</source>
-        <translation>Lineárne miešanie (rýchle)</translation>
+        <translation>Lineárne zmiešavanie (rýchle)</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="427"/>
@@ -1121,7 +1171,7 @@ If yes, choose a format below and then click OK to choose a file name. After cho
     <message>
         <location filename="../src/docks/encodedock.ui" line="334"/>
         <source>Deinterlacer</source>
-        <translation>Odstránenie prekladania</translation>
+        <translation>Rozkladač</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="660"/>
@@ -1146,7 +1196,7 @@ If yes, choose a format below and then click OK to choose a file name. After cho
     <message>
         <location filename="../src/docks/encodedock.ui" line="771"/>
         <source>Use preview scaling</source>
-        <translation type="unfinished"></translation>
+        <translation>Použiť zmenu mierky náhľadu</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="778"/>
@@ -1156,13 +1206,12 @@ test if turning this off helps. For example, some
 interlaced AVCHD in conjunction with the YADIF
 deinterlacer has been reported as problematic
 with parallel processing enabled.</source>
-        <translation>Toto umožňuje spracovanie viacej vlákien.
-Niekedy to môže byť problém. Môžete
-vyskúšať, či vypnutie tejto funkcie pomôže.
-Napríklad niektoré prekladané AVCHD
-v spojení s rušením prekladania YADIF
-bola oznámené ako problematické pri
-povolení súbežného spracovania.</translation>
+        <translation>To umožňuje viacvláknové spracovania obrázkov.
+Niekedy to môže byť problém a môžete
+skúsiť, či vám pomôže vypnutie. Napríklad niektoré
+prekladané AVCHD v spojení s rozkladačom
+YADIF boli označené ako problematické
+s povoleným paralelným spracovaním.</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="786"/>
@@ -1195,12 +1244,12 @@ povolení súbežného spracovania.</translation>
         <location filename="../src/docks/encodedock.ui" line="884"/>
         <source>A fixed GOP means that keyframes will
 not be inserted at detected scene changes.</source>
-        <translation type="unfinished"></translation>
+        <translation>Pevná GOP znamená, že kľúčové snímky nebudú vkladané u zistených zmien scény.</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="888"/>
         <source>Fixed</source>
-        <translation type="unfinished">Pevná</translation>
+        <translation>Pevná</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="912"/>
@@ -1209,160 +1258,15 @@ not be inserted at detected scene changes.</source>
         <translation>Priemerný bitový tok</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="922"/>
-        <location filename="../src/docks/encodedock.ui" line="1554"/>
-        <source>64k</source>
-        <translation>64k</translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="927"/>
-        <location filename="../src/docks/encodedock.ui" line="1564"/>
-        <source>128k</source>
-        <translation>128k</translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="932"/>
-        <location filename="../src/docks/encodedock.ui" line="1579"/>
-        <source>256k</source>
-        <translation>256k</translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="937"/>
-        <location filename="../src/docks/encodedock.ui" line="1589"/>
-        <source>512k</source>
-        <translation>512k</translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="942"/>
-        <source>768k</source>
-        <translation>768k</translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="947"/>
-        <location filename="../src/docks/encodedock.ui" line="1594"/>
-        <source>1M</source>
-        <translation>1M</translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="952"/>
-        <source>1200k</source>
-        <translation>1200k</translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="957"/>
-        <source>1500k</source>
-        <translation>1500k</translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="962"/>
-        <source>2M</source>
-        <translation>2M</translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="967"/>
-        <source>2500k</source>
-        <translation>2500k</translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="972"/>
-        <source>3M</source>
-        <translation>3M</translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="977"/>
-        <source>4M</source>
-        <translation>4M</translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="982"/>
-        <source>5M</source>
-        <translation>5M</translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="987"/>
-        <source>6M</source>
-        <translation>6M</translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="992"/>
-        <source>8M</source>
-        <translation>8M</translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="997"/>
-        <source>10M</source>
-        <translation>10M</translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="1002"/>
-        <source>12M</source>
-        <translation>12M</translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="1007"/>
-        <source>14M</source>
-        <translation>14M</translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="1012"/>
-        <source>16M</source>
-        <translation>16M</translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="1017"/>
-        <source>18M</source>
-        <translation>18M</translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="1022"/>
-        <source>20M</source>
-        <translation>20M</translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="1027"/>
-        <source>25M</source>
-        <translation>25M</translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="1032"/>
-        <source>30M</source>
-        <translation>30M</translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="1037"/>
-        <source>40M</source>
-        <translation>40M</translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="1042"/>
-        <source>50M</source>
-        <translation>50M</translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="1047"/>
-        <source>60M</source>
-        <translation>60M</translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="1052"/>
-        <source>70M</source>
-        <translation>70M</translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="1057"/>
-        <source>80M</source>
-        <translation>80M</translation>
-    </message>
-    <message>
         <location filename="../src/docks/encodedock.ui" line="1065"/>
-        <location filename="../src/docks/encodedock.ui" line="1602"/>
+        <location filename="../src/docks/encodedock.ui" line="1607"/>
         <source>b/s</source>
         <translation>b/s</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1087"/>
         <source>Disable video</source>
-        <translation>Zakázať obraz</translation>
+        <translation>Zakázať video</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1094"/>
@@ -1393,71 +1297,71 @@ v dočasnom zhustení</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1189"/>
-        <location filename="../src/docks/encodedock.ui" line="1644"/>
+        <location filename="../src/docks/encodedock.ui" line="1649"/>
         <source>Rate control</source>
-        <translation>Ovládanie toku</translation>
+        <translation>Ovládanie frekvencie</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1202"/>
-        <location filename="../src/docks/encodedock.ui" line="1657"/>
+        <location filename="../src/docks/encodedock.ui" line="1662"/>
         <source>Average Bitrate</source>
-        <translation>Priemerný bitový tok</translation>
+        <translation>Priemerná prenosová rýchlosť</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1207"/>
-        <location filename="../src/docks/encodedock.ui" line="1662"/>
+        <location filename="../src/docks/encodedock.ui" line="1667"/>
         <source>Constant Bitrate</source>
-        <translation>Konštantný bitový tok</translation>
+        <translation>Konštantná prenosová rýchlosť</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1212"/>
-        <location filename="../src/docks/encodedock.ui" line="1667"/>
+        <location filename="../src/docks/encodedock.ui" line="1672"/>
         <source>Quality-based VBR</source>
         <translation>Na kvalite založený VBR</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1217"/>
         <source>Constrained VBR</source>
-        <translation type="unfinished"></translation>
+        <translation>Vynútená VBR</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1240"/>
         <source>Buffer size</source>
-        <translation>Veľkosť vyrovnávacej pamäte</translation>
+        <translation>Veľkosť zásobníka</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1262"/>
         <source>KiB</source>
-        <translation>KiB</translation>
+        <translation>kB</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1284"/>
-        <location filename="../src/docks/encodedock.ui" line="1690"/>
+        <location filename="../src/docks/encodedock.ui" line="1695"/>
         <source>Quality</source>
         <translation>Kvalita</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1296"/>
-        <location filename="../src/docks/encodedock.ui" line="1702"/>
+        <location filename="../src/docks/encodedock.ui" line="1707"/>
         <source> %</source>
         <translation> %</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1312"/>
-        <location filename="../src/docks/encodedock.ui" line="1718"/>
+        <location filename="../src/docks/encodedock.ui" line="1723"/>
         <source>TextLabel</source>
-        <translation>Textový popis</translation>
+        <translation>Textová návesť</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1334"/>
         <location filename="../src/docks/encodedock.ui" line="1517"/>
         <source>Bitrate</source>
-        <translation>Bitový tok</translation>
+        <translation>Prenosová rýchlosť</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1345"/>
         <source>Audio</source>
-        <translation>Zvuk</translation>
+        <translation>Audio</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1354"/>
@@ -1467,62 +1371,22 @@ v dočasnom zhustení</translation>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1366"/>
         <source>The number of audio channels in the output.</source>
-        <translation type="unfinished"></translation>
+        <translation>Počet audio kanálov na výstupe</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1370"/>
         <source>1 (mono)</source>
-        <translation type="unfinished"></translation>
+        <translation>1 (mono)</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1375"/>
         <source>2 (stereo)</source>
-        <translation type="unfinished"></translation>
+        <translation>2 (stereo)</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1380"/>
         <source>6 (5.1)</source>
-        <translation type="unfinished">6 (5.1)</translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="1412"/>
-        <source>8000</source>
-        <translation>8000</translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="1417"/>
-        <source>12000</source>
-        <translation>12000</translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="1422"/>
-        <source>16000</source>
-        <translation>16000</translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="1427"/>
-        <source>22050</source>
-        <translation>22050</translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="1432"/>
-        <source>32000</source>
-        <translation>32000</translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="1437"/>
-        <source>44100</source>
-        <translation>44100</translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="1442"/>
-        <source>48000</source>
-        <translation>48000</translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="1447"/>
-        <source>96000</source>
-        <translation>96000</translation>
+        <translation>6 (5.1)</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1455"/>
@@ -1532,257 +1396,225 @@ v dočasnom zhustení</translation>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1477"/>
         <source>Sample rate</source>
-        <translation>Vzorkovanie</translation>
+        <translation>Snímková frekvencia</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1539"/>
-        <source>16k</source>
-        <translation>16k</translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="1544"/>
-        <source>32k</source>
-        <translation>32k</translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="1549"/>
-        <source>48k</source>
-        <translation>48k</translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="1559"/>
-        <source>96k</source>
-        <translation>96k</translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="1569"/>
-        <source>192k</source>
-        <translation type="unfinished">192k</translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="1574"/>
-        <source>220k</source>
-        <translation>220k</translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="1584"/>
-        <source>384k</source>
-        <translation>384k</translation>
-    </message>
-    <message>
-        <location filename="../src/docks/encodedock.ui" line="1624"/>
+        <location filename="../src/docks/encodedock.ui" line="1629"/>
         <source>Disable audio</source>
-        <translation>Zakázať zvuk</translation>
+        <translation>Zakázať audio</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1741"/>
+        <location filename="../src/docks/encodedock.ui" line="1746"/>
         <source>Other</source>
         <translation>Iné</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1783"/>
-        <location filename="../src/docks/encodedock.cpp" line="879"/>
-        <location filename="../src/docks/encodedock.cpp" line="1353"/>
-        <location filename="../src/docks/encodedock.cpp" line="1788"/>
+        <location filename="../src/docks/encodedock.ui" line="1788"/>
+        <location filename="../src/docks/encodedock.cpp" line="880"/>
+        <location filename="../src/docks/encodedock.cpp" line="1350"/>
+        <location filename="../src/docks/encodedock.cpp" line="1783"/>
         <source>Export File</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportovať súbor</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1793"/>
+        <location filename="../src/docks/encodedock.ui" line="1798"/>
         <source>Reset options to defaults</source>
-        <translation>Nastaviť voľby znovu na východzie</translation>
+        <translation>Vynulovať možnosti na východzie</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1796"/>
+        <location filename="../src/docks/encodedock.ui" line="1801"/>
         <source>Reset</source>
-        <translation>Nastaviť znovu</translation>
+        <translation>Vynulovať</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1803"/>
+        <location filename="../src/docks/encodedock.ui" line="1808"/>
         <source>Advanced</source>
-        <translation type="unfinished"></translation>
+        <translation>Pokročilé</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1813"/>
+        <location filename="../src/docks/encodedock.ui" line="1818"/>
         <source>Always start in Advanced mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Vždy začať v režime Pokročilé</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1823"/>
-        <location filename="../src/docks/encodedock.cpp" line="1498"/>
-        <location filename="../src/docks/encodedock.cpp" line="1505"/>
-        <location filename="../src/docks/encodedock.cpp" line="1616"/>
+        <location filename="../src/docks/encodedock.ui" line="1828"/>
+        <location filename="../src/docks/encodedock.cpp" line="1493"/>
+        <location filename="../src/docks/encodedock.cpp" line="1500"/>
+        <location filename="../src/docks/encodedock.cpp" line="1611"/>
         <source>Stream</source>
-        <translation>Prúd</translation>
+        <translation>Tok</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1850"/>
-        <location filename="../src/docks/encodedock.cpp" line="1333"/>
-        <location filename="../src/docks/encodedock.cpp" line="1421"/>
-        <location filename="../src/docks/encodedock.cpp" line="1435"/>
+        <location filename="../src/docks/encodedock.ui" line="1855"/>
+        <location filename="../src/docks/encodedock.cpp" line="1330"/>
+        <location filename="../src/docks/encodedock.cpp" line="1416"/>
+        <location filename="../src/docks/encodedock.cpp" line="1430"/>
         <source>Stop Capture</source>
         <translation>Zastaviť zachytávanie</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="101"/>
+        <location filename="../src/docks/encodedock.cpp" line="102"/>
         <source>Automatic from extension</source>
         <translation>Automaticky podľa prípony</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="109"/>
-        <location filename="../src/docks/encodedock.cpp" line="119"/>
+        <location filename="../src/docks/encodedock.cpp" line="110"/>
+        <location filename="../src/docks/encodedock.cpp" line="120"/>
         <source>Default for format</source>
         <translation>Východzie pre formát</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="387"/>
+        <location filename="../src/docks/encodedock.cpp" line="388"/>
         <source>Timeline</source>
-        <translation type="unfinished">Časová os</translation>
+        <translation>Časová os</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="389"/>
+        <location filename="../src/docks/encodedock.cpp" line="390"/>
         <source>Playlist</source>
-        <translation type="unfinished">Zoznam</translation>
+        <translation>Zoznam prehrávania</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="391"/>
+        <location filename="../src/docks/encodedock.cpp" line="392"/>
         <source>Each Playlist Item</source>
-        <translation type="unfinished"></translation>
+        <translation>Každú položku zoznamu prehrávania</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="394"/>
-        <location filename="../src/docks/encodedock.cpp" line="399"/>
+        <location filename="../src/docks/encodedock.cpp" line="395"/>
+        <location filename="../src/docks/encodedock.cpp" line="400"/>
         <source>Source</source>
-        <translation type="unfinished">Zdroj</translation>
+        <translation>Zdroj</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="406"/>
+        <location filename="../src/docks/encodedock.cpp" line="407"/>
         <source>You must enter numeric values using &apos;%1&apos; as the decimal point.</source>
-        <translation type="unfinished"></translation>
+        <translation>Číselné hodnoty musíte zadať použitím &apos;%1&apos; ako desatinnej čiarky.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="414"/>
-        <location filename="../src/docks/encodedock.cpp" line="1280"/>
-        <location filename="../src/docks/encodedock.cpp" line="1281"/>
+        <location filename="../src/docks/encodedock.cpp" line="415"/>
+        <location filename="../src/docks/encodedock.cpp" line="1277"/>
+        <location filename="../src/docks/encodedock.cpp" line="1278"/>
         <source>Custom</source>
         <translation>Vlastné</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="450"/>
+        <location filename="../src/docks/encodedock.cpp" line="451"/>
         <source>Stock</source>
         <translation>Továrenské</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="453"/>
+        <location filename="../src/docks/encodedock.cpp" line="454"/>
         <source>Default</source>
-        <translation type="unfinished"></translation>
+        <translation>Východzie</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="931"/>
+        <location filename="../src/docks/encodedock.cpp" line="932"/>
         <source>You cannot write to a file that is in your project.
 Try again with a different folder or file name.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nemôžete zapisovať do súboru, ktorý je vo vašom projekte.
+Skúste to znovu s iným priečinkom alebo názvom súboru.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1081"/>
+        <location filename="../src/docks/encodedock.cpp" line="1080"/>
         <source>Shotcut found filters that require analysis jobs that have not run.
 Do you want to run the analysis jobs now?</source>
-        <translation type="unfinished"></translation>
+        <translation>Shotcut našiel filtre vyžadované analytickými úlohami, ktoré sa nespustili.
+Chcete teraz spustiť analytické úlohy?</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1353"/>
-        <location filename="../src/docks/encodedock.cpp" line="1790"/>
+        <location filename="../src/docks/encodedock.cpp" line="1350"/>
+        <location filename="../src/docks/encodedock.cpp" line="1785"/>
         <source>Capture File</source>
         <translation>Zachytiť súbor</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1356"/>
+        <location filename="../src/docks/encodedock.cpp" line="1353"/>
         <source>%1 (*.%2);;All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 (*.%2);;Všetky súbory (*)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1358"/>
+        <location filename="../src/docks/encodedock.cpp" line="1355"/>
         <source>Determined by Export (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Určené na export (*)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1377"/>
+        <location filename="../src/docks/encodedock.cpp" line="1374"/>
         <source>The drive you chose only has %1 MiB of free space.
 Do you still want to continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>Na vami zvolenej jednotke je len %1 MB voľného miesta.
+Stále ešte chcete pokračovať?</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1384"/>
+        <location filename="../src/docks/encodedock.cpp" line="1381"/>
         <source>Do not show this anymore.</source>
         <comment>Export free disk space warning dialog</comment>
-        <translation type="unfinished"></translation>
+        <translation>Toto už viac nezobrazovať.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1389"/>
+        <location filename="../src/docks/encodedock.cpp" line="1386"/>
         <source>Export canceled.</source>
-        <translation type="unfinished"></translation>
+        <translation>Export prerušený.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1493"/>
-        <location filename="../src/docks/encodedock.cpp" line="1514"/>
+        <location filename="../src/docks/encodedock.cpp" line="1488"/>
+        <location filename="../src/docks/encodedock.cpp" line="1509"/>
         <source>Stop Stream</source>
-        <translation>Zastaviť prúd</translation>
+        <translation>Zastaviť tok</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1506"/>
+        <location filename="../src/docks/encodedock.cpp" line="1501"/>
         <source>Enter the network protocol scheme, address, port, and parameters as an URL:</source>
         <translation>Zadajte schému sieťového protokolu, adresu, prípojku a parametre ako adresu URL:</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1551"/>
+        <location filename="../src/docks/encodedock.cpp" line="1546"/>
         <source>Add Export Preset</source>
-        <translation type="unfinished"></translation>
+        <translation>Pridať predvoľbu exportu</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1593"/>
+        <location filename="../src/docks/encodedock.cpp" line="1588"/>
         <source>Delete Preset</source>
-        <translation>Zmazať prednastavenie</translation>
+        <translation>Zmazať predvoľbu</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1594"/>
+        <location filename="../src/docks/encodedock.cpp" line="1589"/>
         <source>Are you sure you want to delete %1?</source>
-        <translation>Istotne chcete zmazať %1?</translation>
+        <translation>Naozaj chcete zmazať %1?</translation>
     </message>
     <message>
+        <location filename="../src/docks/encodedock.cpp" line="1715"/>
         <location filename="../src/docks/encodedock.cpp" line="1720"/>
-        <location filename="../src/docks/encodedock.cpp" line="1725"/>
         <source>None</source>
-        <translation type="unfinished"></translation>
+        <translation>Žiadny</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1774"/>
+        <location filename="../src/docks/encodedock.cpp" line="1769"/>
         <source>KiB (%1s)</source>
-        <translation>KiB (%1s)</translation>
+        <translation>kB (%1s)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1896"/>
+        <location filename="../src/docks/encodedock.cpp" line="1891"/>
         <source>Detecting hardware encoders...</source>
-        <translation type="unfinished"></translation>
+        <translation>Zisťujem hardvérové kódovače...</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1929"/>
+        <location filename="../src/docks/encodedock.cpp" line="1924"/>
         <source>Nothing found</source>
-        <translation type="unfinished"></translation>
+        <translation>Nič nebolo nájdené</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1932"/>
+        <location filename="../src/docks/encodedock.cpp" line="1927"/>
         <source>Found %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Nájdené %1</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1944"/>
+        <location filename="../src/docks/encodedock.cpp" line="1939"/>
         <source>Configure Hardware Encoding</source>
-        <translation type="unfinished"></translation>
+        <translation>Konfigurovať hardvérové kódovanie</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1965"/>
+        <location filename="../src/docks/encodedock.cpp" line="1960"/>
         <source>Export Frames/sec</source>
-        <translation type="unfinished"></translation>
+        <translation>Export snímok/sek</translation>
     </message>
 </context>
 <context>
@@ -1795,33 +1627,33 @@ Do you still want to continue?</source>
     <message>
         <location filename="../src/jobs/encodejob.cpp" line="39"/>
         <source>Open the output file in the Shotcut player</source>
-        <translation>Otvoriť výstupný súbor v prehrávači Shotcut</translation>
+        <translation>Otvorí výstupný súbor v prehrávači Shotcut</translation>
     </message>
     <message>
         <location filename="../src/jobs/encodejob.cpp" line="43"/>
         <location filename="../src/jobs/encodejob.cpp" line="44"/>
         <source>Show In Folder</source>
-        <translation>Ukázať v zložke</translation>
+        <translation>Zobraziť v priečinku</translation>
     </message>
     <message>
         <location filename="../src/jobs/encodejob.cpp" line="48"/>
         <source>Measure Video Quality...</source>
-        <translation>Zmerať akosť obrazu</translation>
+        <translation>Zmerať kvalitu videa</translation>
     </message>
     <message>
         <location filename="../src/jobs/encodejob.cpp" line="57"/>
         <source>Video Quality Report</source>
-        <translation>Správa o akosti obrazu</translation>
+        <translation>Správa o kvalite videa</translation>
     </message>
     <message>
         <location filename="../src/jobs/encodejob.cpp" line="58"/>
         <source>Text Documents (*.txt);;All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Textové dokumenty (*.txt);;Všetky súbory (*)</translation>
     </message>
     <message>
         <location filename="../src/jobs/encodejob.cpp" line="132"/>
         <source>Export job failed; trying again without Parallel processing.</source>
-        <translation type="unfinished"></translation>
+        <translation>Zlyhala úloha exportu; skúste to znova bez paralélneho spracovania.</translation>
     </message>
 </context>
 <context>
@@ -1829,17 +1661,17 @@ Do you still want to continue?</source>
     <message>
         <location filename="../src/jobs/ffmpegjob.cpp" line="37"/>
         <source>Open</source>
-        <translation type="unfinished">Otvoriť</translation>
+        <translation>Otvoriť</translation>
     </message>
     <message>
         <location filename="../src/jobs/ffmpegjob.cpp" line="41"/>
         <source>Check %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontrola %1</translation>
     </message>
     <message>
-        <location filename="../src/jobs/ffmpegjob.cpp" line="68"/>
+        <location filename="../src/jobs/ffmpegjob.cpp" line="70"/>
         <source>FFmpeg Log</source>
-        <translation type="unfinished"></translation>
+        <translation>Záznam hlásení FFmpeg</translation>
     </message>
 </context>
 <context>
@@ -1847,7 +1679,7 @@ Do you still want to continue?</source>
     <message>
         <location filename="../src/jobs/ffprobejob.cpp" line="56"/>
         <source>More Information</source>
-        <translation type="unfinished"></translation>
+        <translation>Viac informácií</translation>
     </message>
 </context>
 <context>
@@ -1855,43 +1687,43 @@ Do you still want to continue?</source>
     <message>
         <location filename="../src/dialogs/filedatedialog.cpp" line="42"/>
         <source>%1 File Date</source>
-        <translation type="unfinished"></translation>
+        <translation>Dátum súboru %1</translation>
     </message>
     <message>
         <location filename="../src/dialogs/filedatedialog.cpp" line="98"/>
         <source>Current Value</source>
-        <translation type="unfinished"></translation>
+        <translation>Súčasná hodnota</translation>
     </message>
     <message>
         <location filename="../src/dialogs/filedatedialog.cpp" line="102"/>
         <source>Now</source>
-        <translation type="unfinished"></translation>
+        <translation>Teraz</translation>
     </message>
     <message>
         <location filename="../src/dialogs/filedatedialog.cpp" line="112"/>
         <source>System - Modified</source>
-        <translation type="unfinished"></translation>
+        <translation>Systém - upravený</translation>
     </message>
     <message>
         <location filename="../src/dialogs/filedatedialog.cpp" line="113"/>
         <source>System - Created</source>
-        <translation type="unfinished"></translation>
+        <translation>Systém - vytvorený</translation>
     </message>
     <message>
         <location filename="../src/dialogs/filedatedialog.cpp" line="122"/>
         <source>Metadata - Creation Time</source>
-        <translation type="unfinished"></translation>
+        <translation>Metaúdaje - čas vytvorenia</translation>
     </message>
     <message>
         <location filename="../src/dialogs/filedatedialog.cpp" line="127"/>
         <source>Metadata - QuickTime date</source>
-        <translation type="unfinished"></translation>
+        <translation>Metaúdaje - dátum QuickTime</translation>
     </message>
 </context>
 <context>
     <name>FilterController</name>
     <message>
-        <location filename="../src/controllers/filtercontroller.cpp" line="214"/>
+        <location filename="../src/controllers/filtercontroller.cpp" line="209"/>
         <source>Only one %1 filter is allowed.</source>
         <translation>Je povolený len jeden filter %1.</translation>
     </message>
@@ -1904,44 +1736,44 @@ Do you still want to continue?</source>
         <translation>hľadanie</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/filter/FilterMenu.qml" line="89"/>
+        <location filename="../src/qml/views/filter/FilterMenu.qml" line="93"/>
         <source>Clear search</source>
-        <translation type="unfinished"></translation>
+        <translation>Vymazať hľadanie</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/filter/FilterMenu.qml" line="107"/>
+        <location filename="../src/qml/views/filter/FilterMenu.qml" line="111"/>
         <source>Show favorite filters</source>
-        <translation>Ukázať obľúbené filtre</translation>
+        <translation>Zobraziť obľúbené filtre</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/filter/FilterMenu.qml" line="117"/>
+        <location filename="../src/qml/views/filter/FilterMenu.qml" line="121"/>
         <source>Show video filters</source>
-        <translation>Ukázať obrazové filtre</translation>
+        <translation>Zobraziť video filtre</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/filter/FilterMenu.qml" line="127"/>
+        <location filename="../src/qml/views/filter/FilterMenu.qml" line="131"/>
         <source>Show audio filters</source>
-        <translation>Ukázať zvukové filtre</translation>
+        <translation>Zobraziť audio filtre</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/filter/FilterMenu.qml" line="140"/>
+        <location filename="../src/qml/views/filter/FilterMenu.qml" line="144"/>
         <source>Close menu</source>
         <translation>Zavrieť ponuku</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/filter/FilterMenu.qml" line="106"/>
+        <location filename="../src/qml/views/filter/FilterMenu.qml" line="110"/>
         <source>Favorite</source>
-        <translation type="unfinished"></translation>
+        <translation>Obľúbené</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/filter/FilterMenu.qml" line="116"/>
+        <location filename="../src/qml/views/filter/FilterMenu.qml" line="120"/>
         <source>Video</source>
-        <translation>Obraz</translation>
+        <translation>Video</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/filter/FilterMenu.qml" line="126"/>
+        <location filename="../src/qml/views/filter/FilterMenu.qml" line="130"/>
         <source>Audio</source>
-        <translation>Zvuk</translation>
+        <translation>Audio</translation>
     </message>
 </context>
 <context>
@@ -1962,7 +1794,7 @@ Do you still want to continue?</source>
     <message>
         <location filename="../src/widgets/gdigrabwidget.ui" line="33"/>
         <source>The vertical coordinate from the top edge when using a fixed capture region.</source>
-        <translation>Zvislá súradnica od horného okraja pri používaní pevnej oblasti zachytávania.</translation>
+        <translation>Vertikálna súradnica od horného okraja pri používaní pevnej oblasti zachytávania.</translation>
     </message>
     <message>
         <location filename="../src/widgets/gdigrabwidget.ui" line="49"/>
@@ -1977,22 +1809,22 @@ Do you still want to continue?</source>
     <message>
         <location filename="../src/widgets/gdigrabwidget.ui" line="69"/>
         <source>Audio Input</source>
-        <translation>Zvukový vstup</translation>
+        <translation>Audio vstup</translation>
     </message>
     <message>
         <location filename="../src/widgets/gdigrabwidget.ui" line="79"/>
         <source>Width of the capture region</source>
-        <translation>Šírka oblasti zachytenia</translation>
+        <translation>Šírka oblasti zachytávania</translation>
     </message>
     <message>
         <location filename="../src/widgets/gdigrabwidget.ui" line="92"/>
         <source>Draw the mouse cursor</source>
-        <translation>Kresliť kurzor myši</translation>
+        <translation>Vykresliť kurzor myši</translation>
     </message>
     <message>
         <location filename="../src/widgets/gdigrabwidget.ui" line="105"/>
         <source>Choose an audio input method to use during capture.</source>
-        <translation>Vyberte spôsob zvukového vstupu, ktorý sa použije počas zachytávania.</translation>
+        <translation>Vyberte metódu audio vstupu použitú počas zachytávania.</translation>
     </message>
     <message>
         <location filename="../src/widgets/gdigrabwidget.ui" line="109"/>
@@ -2013,7 +1845,7 @@ Do you still want to continue?</source>
     <message>
         <location filename="../src/widgets/gdigrabwidget.ui" line="131"/>
         <source>Show the capture region</source>
-        <translation>Ukázať oblasť zachytenia</translation>
+        <translation>Ukázať oblasť zachytávania</translation>
     </message>
     <message>
         <location filename="../src/widgets/gdigrabwidget.ui" line="138"/>
@@ -2028,7 +1860,7 @@ Do you still want to continue?</source>
     <message>
         <location filename="../src/widgets/gdigrabwidget.ui" line="161"/>
         <source>The horizontal coordinate from the left edge when using a fixed capture region.</source>
-        <translation>Vodorovná súradnica od ľavého okraja pri používaní pevnej oblasti zachytávania.</translation>
+        <translation>Horizontálna súradnica od ľavého okraja pri použití pevnej oblasti zachytávania.</translation>
     </message>
     <message>
         <location filename="../src/widgets/gdigrabwidget.ui" line="177"/>
@@ -2050,7 +1882,7 @@ This program requires OpenGL version 2.0
 with the framebuffer object extension.</source>
         <translation>Chyba:
 Tento program vyžaduje OpenGL vo verzii 2.0
-s rozšírením framebufferového objektu.</translation>
+s príponou zásobníka snímok objektu.</translation>
     </message>
 </context>
 <context>
@@ -2058,18 +1890,19 @@ s rozšírením framebufferového objektu.</translation>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/GradientControl.qml" line="64"/>
         <source>Color #%1</source>
-        <translation type="unfinished"></translation>
+        <translation>Farba #%1</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/GradientControl.qml" line="82"/>
         <source>Color: %1
 Click to change</source>
-        <translation type="unfinished"></translation>
+        <translation>Farba: %1
+Kliknite pre zmenu</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/GradientControl.qml" line="190"/>
         <source> colors</source>
-        <translation type="unfinished"></translation>
+        <translation> farieb</translation>
     </message>
 </context>
 <context>
@@ -2077,14 +1910,14 @@ Click to change</source>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="14"/>
         <location filename="../src/htmleditor/htmleditor.cpp" line="162"/>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="748"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="749"/>
         <source>HTML Editor</source>
         <translation>Editor HTML</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="36"/>
         <source>&amp;Edit</source>
-        <translation>Úpravy</translation>
+        <translation>Up&amp;raviť</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="52"/>
@@ -2164,7 +1997,7 @@ Click to change</source>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="292"/>
         <source>&amp;Redo</source>
-        <translation>&amp;Znova</translation>
+        <translation>&amp;Vpred</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="295"/>
@@ -2194,7 +2027,7 @@ Click to change</source>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="328"/>
         <source>&amp;Paste</source>
-        <translation>Vložiť</translation>
+        <translation>&amp;Prilepiť</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="331"/>
@@ -2204,7 +2037,7 @@ Click to change</source>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="340"/>
         <source>Select A&amp;ll</source>
-        <translation>Vybrať všetko</translation>
+        <translation>Vybr&amp;ať všetko</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="343"/>
@@ -2214,7 +2047,7 @@ Click to change</source>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="355"/>
         <source>&amp;Bold</source>
-        <translation>Tučné</translation>
+        <translation>&amp;Tučné</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="358"/>
@@ -2224,7 +2057,7 @@ Click to change</source>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="370"/>
         <source>&amp;Italic</source>
-        <translation>Kurzíva</translation>
+        <translation>&amp;Kurzíva</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="373"/>
@@ -2234,7 +2067,7 @@ Click to change</source>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="385"/>
         <source>&amp;Underline</source>
-        <translation>Podtrhnutie</translation>
+        <translation>Pod&amp;trhnuté</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="388"/>
@@ -2244,52 +2077,52 @@ Click to change</source>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="400"/>
         <source>&amp;Strikethrough</source>
-        <translation>Preškrtnutie</translation>
+        <translation>Preškrtnuté</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="409"/>
         <source>Align &amp;Left</source>
-        <translation>Zarovnať vľavo</translation>
+        <translation>Zarovnať &amp;vľavo</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="418"/>
         <source>Align &amp;Center</source>
-        <translation>Zarovnať na stred</translation>
+        <translation>Zarovnať na &amp;stred</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="427"/>
         <source>Align &amp;Right</source>
-        <translation>Zarovnať vpravo</translation>
+        <translation>Zarovnať v&amp;pravo</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="436"/>
         <source>Align &amp;Justify</source>
-        <translation>Zarovnať do bloku</translation>
+        <translation>Zarovnať do &amp;bloku</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="445"/>
         <source>I&amp;ncrease Indent</source>
-        <translation>Zväčšiť odsadenie</translation>
+        <translation>Z&amp;väčšiť odsadenie</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="454"/>
         <source>&amp;Decrease Indent</source>
-        <translation>Zmenšiť odsadenie</translation>
+        <translation>Z&amp;menšiť odsadenie</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="466"/>
         <source>Bulle&amp;ted List</source>
-        <translation>Odrážkový zoznam</translation>
+        <translation>Zoznam &amp;odrážok</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="478"/>
         <source>&amp;Numbered List</source>
-        <translation>Číslovaný zoznam</translation>
+        <translation>Čí&amp;slovaný zoznam</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="487"/>
         <source>Insert &amp;Image...</source>
-        <translation>Vložiť obrázok...</translation>
+        <translation>Vložiť &amp;obrázok...</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="496"/>
@@ -2374,17 +2207,17 @@ Click to change</source>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="584"/>
         <source>Text &amp;Color...</source>
-        <translation>Farba textu...</translation>
+        <translation>&amp;Farba textu...</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="589"/>
         <source>Bac&amp;kground Color...</source>
-        <translation>Farba pozadia...</translation>
+        <translation>Farba &amp;pozadia...</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="597"/>
         <source>Font Si&amp;ze...</source>
-        <translation>Veľkosť písma...</translation>
+        <translation>Veľ&amp;kosť písma...</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.ui" line="606"/>
@@ -2443,7 +2276,7 @@ Chcete uložiť svoje zmeny?</translation>
     <message>
         <location filename="../src/htmleditor/htmleditor.cpp" line="250"/>
         <source>Common Graphics (*.png *.jpg *.jpeg *.gif *.svg);;</source>
-        <translation type="unfinished"></translation>
+        <translation>Bežná grafika (*.png *.jpg *.jpeg *.gif *.svg);;</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.cpp" line="251"/>
@@ -2463,7 +2296,7 @@ Chcete uložiť svoje zmeny?</translation>
     <message>
         <location filename="../src/htmleditor/htmleditor.cpp" line="254"/>
         <source>Scalable Vector Graphics (*.svg);;</source>
-        <translation type="unfinished"></translation>
+        <translation>Scalable Vector Graphics (*.svg);;</translation>
     </message>
     <message>
         <location filename="../src/htmleditor/htmleditor.cpp" line="255"/>
@@ -2486,47 +2319,47 @@ Chcete uložiť svoje zmeny?</translation>
         <translation>Zadať adresu (URL)</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="495"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="496"/>
         <source>Font</source>
         <translation>Písmo</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="495"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="496"/>
         <source>Select font:</source>
         <translation>Vybrať písmo:</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="505"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="506"/>
         <source>Font Size</source>
         <translation>Veľkosť písma</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="505"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="506"/>
         <source>Size in points:</source>
         <translation>Veľkosť v bodoch:</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="641"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="642"/>
         <source>Open %1 ?</source>
         <translation>Otvoriť %1 ?</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="642"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="643"/>
         <source>Open link</source>
         <translation>Otvoriť odkaz</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="651"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="652"/>
         <source>Text Outline</source>
         <translation>Obrys textu</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="668"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="669"/>
         <source>Text Shadow</source>
         <translation>Tieň textu</translation>
     </message>
     <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="748"/>
+        <location filename="../src/htmleditor/htmleditor.cpp" line="749"/>
         <source>%1[*] - %2</source>
         <translation>%1[*] - %2</translation>
     </message>
@@ -2541,7 +2374,7 @@ Chcete uložiť svoje zmeny?</translation>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="27"/>
         <source>Comments:</source>
-        <translation>Poznámky:</translation>
+        <translation>Komentáre:</translation>
     </message>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="61"/>
@@ -2561,7 +2394,7 @@ Chcete uložiť svoje zmeny?</translation>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="134"/>
         <source>Pixel aspect ratio</source>
-        <translation>Pomer strán pixelu</translation>
+        <translation>Pomer strán v pixeloch</translation>
     </message>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="165"/>
@@ -2571,7 +2404,7 @@ Chcete uložiť svoje zmeny?</translation>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="193"/>
         <source>Image sequence</source>
-        <translation>Obrázková sekvencia</translation>
+        <translation>Sekvencia obrázkov</translation>
     </message>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="200"/>
@@ -2591,27 +2424,27 @@ Chcete uložiť svoje zmeny?</translation>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="254"/>
         <source>Display a menu of additional actions</source>
-        <translation>Zobraziť ponuku dodatočných činností</translation>
+        <translation>Zobraziť ponuku prídavných akcií</translation>
     </message>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="296"/>
         <source>Copy Full File Path</source>
-        <translation>Kopírovať celú súborovú cestu</translation>
+        <translation>Skopírovať celú súborovú cestu</translation>
     </message>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="301"/>
         <source>Show in Folder</source>
-        <translation>Ukázať v zložke</translation>
+        <translation>Zobraziť v priečinku</translation>
     </message>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="306"/>
         <source>Set Creation Time...</source>
-        <translation type="unfinished"></translation>
+        <translation>Nastaviť čas vytvorenia...</translation>
     </message>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="122"/>
         <source>Make the current duration value the default value</source>
-        <translation>Urobiť z terajšej doby trvania východziu hodnotu</translation>
+        <translation>Vytvorí zo súčasnej doby trvania východziu hodnotu</translation>
     </message>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="125"/>
@@ -2621,7 +2454,7 @@ Chcete uložiť svoje zmeny?</translation>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="247"/>
         <source>Reset</source>
-        <translation>Nastaviť znovu</translation>
+        <translation>Vynulovať</translation>
     </message>
     <message>
         <location filename="../src/widgets/imageproducerwidget.cpp" line="235"/>
@@ -2632,7 +2465,7 @@ Chcete uložiť svoje zmeny?</translation>
         <location filename="../src/widgets/imageproducerwidget.cpp" line="247"/>
         <location filename="../src/widgets/imageproducerwidget.cpp" line="263"/>
         <source>Reloading image sequence...</source>
-        <translation>Znovu sa nahráva sekvencia obrázkov...</translation>
+        <translation>Znovu sa načítava sekvencia obrázkov...</translation>
     </message>
 </context>
 <context>
@@ -2645,7 +2478,7 @@ Chcete uložiť svoje zmeny?</translation>
     <message>
         <location filename="../src/widgets/isingwidget.ui" line="26"/>
         <source>Ising Model</source>
-        <translation>Model Ising</translation>
+        <translation>Issingov model</translation>
     </message>
     <message>
         <location filename="../src/widgets/isingwidget.ui" line="41"/>
@@ -2655,12 +2488,12 @@ Chcete uložiť svoje zmeny?</translation>
     <message>
         <location filename="../src/widgets/isingwidget.ui" line="106"/>
         <source>Border Growth</source>
-        <translation>Rast okraja</translation>
+        <translation>Nárast okraja</translation>
     </message>
     <message>
         <location filename="../src/widgets/isingwidget.ui" line="174"/>
         <source>Spontaneous Growth</source>
-        <translation>Prirodzený rast</translation>
+        <translation>Prirodzený nárast</translation>
     </message>
 </context>
 <context>
@@ -2673,12 +2506,12 @@ Chcete uložiť svoje zmeny?</translation>
     <message>
         <location filename="../src/widgets/jackproducerwidget.ui" line="26"/>
         <source>JACK Audio</source>
-        <translation>JACK Audio</translation>
+        <translation>Audio JACK</translation>
     </message>
     <message>
         <location filename="../src/widgets/jackproducerwidget.ui" line="36"/>
         <source>You need to manually connect the JACK input ports.</source>
-        <translation>Potrebujete sa ručne pripojiť ku vstupným prípojkám JACK.</translation>
+        <translation>Potrebujete sa manuálne pripojiť vstupným JACK portom.</translation>
     </message>
 </context>
 <context>
@@ -2686,17 +2519,17 @@ Chcete uložiť svoje zmeny?</translation>
     <message>
         <location filename="../src/jobqueue.cpp" line="57"/>
         <source>pending</source>
-        <translation>zostáva</translation>
+        <translation>nevyriešené</translation>
     </message>
     <message>
         <location filename="../src/jobqueue.cpp" line="63"/>
         <source>Estimated Hours:Minutes:Seconds</source>
-        <translation type="unfinished"></translation>
+        <translation>Odhadované hodiny:minúty:sekundy</translation>
     </message>
     <message>
         <location filename="../src/jobqueue.cpp" line="100"/>
         <source>Elapsed Hours:Minutes:Seconds</source>
-        <translation type="unfinished"></translation>
+        <translation>Uplynulé hodiny:minúty:sekundy</translation>
     </message>
     <message>
         <location filename="../src/jobqueue.cpp" line="103"/>
@@ -2706,7 +2539,7 @@ Chcete uložiť svoje zmeny?</translation>
     <message>
         <location filename="../src/jobqueue.cpp" line="106"/>
         <source>failed</source>
-        <translation>nepodarilo sa</translation>
+        <translation>zlyhalo</translation>
     </message>
 </context>
 <context>
@@ -2721,9 +2554,7 @@ Chcete uložiť svoje zmeny?</translation>
         <source>Stop automatically processing the next pending job in
 the list. This does not stop a currently running job. Right-
 -click a job to open a menu to stop a currently running job.</source>
-        <translation>Zastaviť automatické spracovanie ďalšej čakajúcej úlohy
-v zozname. Toto nezastaví teraz bežiacu úlohu. Klepnite pravým
-tlačítkom myši na úlohu pre otvorenie ponuky pre zastavenie teraz bežiacej úlohy.</translation>
+        <translation>Zastaví automatické spracovanie ďalšej čakajúcej úlohy v zozname. Toto nezastaví teraz bežiacu úlohu. Kliknite pravým tlačidlom myši na úlohu pre otvorenie ponuky pre zastavenie súčasnej bežiacej úlohy.</translation>
     </message>
     <message>
         <location filename="../src/docks/jobsdock.ui" line="109"/>
@@ -2733,7 +2564,7 @@ tlačítkom myši na úlohu pre otvorenie ponuky pre zastavenie teraz bežiacej 
     <message>
         <location filename="../src/docks/jobsdock.ui" line="119"/>
         <source>Remove all of the completed and failed jobs from the list</source>
-        <translation>Odstrániť všetky hotové a neúspešné úlohy zo zoznamu</translation>
+        <translation>Odstráni všetky hotové a neúspešné úlohy zo zoznamu</translation>
     </message>
     <message>
         <location filename="../src/docks/jobsdock.ui" line="122"/>
@@ -2743,7 +2574,7 @@ tlačítkom myši na úlohu pre otvorenie ponuky pre zastavenie teraz bežiacej 
     <message>
         <location filename="../src/docks/jobsdock.ui" line="129"/>
         <source>Display a menu of additional actions</source>
-        <translation>Zobraziť ponuku dodatočných činností</translation>
+        <translation>Zobrazí ponuku prídavných akcií</translation>
     </message>
     <message>
         <location filename="../src/docks/jobsdock.ui" line="156"/>
@@ -2753,12 +2584,12 @@ tlačítkom myši na úlohu pre otvorenie ponuky pre zastavenie teraz bežiacej 
     <message>
         <location filename="../src/docks/jobsdock.ui" line="159"/>
         <source>Stop the currently selected job</source>
-        <translation>Zastaviť teraz vybranú úlohu</translation>
+        <translation>Zastaviť súčasne vybranú úlohu</translation>
     </message>
     <message>
         <location filename="../src/docks/jobsdock.ui" line="164"/>
         <source>View Log</source>
-        <translation>Zobraziť hlásenia</translation>
+        <translation>Zobraziť záznamy hlásení</translation>
     </message>
     <message>
         <location filename="../src/docks/jobsdock.ui" line="167"/>
@@ -2773,23 +2604,23 @@ tlačítkom myši na úlohu pre otvorenie ponuky pre zastavenie teraz bežiacej 
     <message>
         <location filename="../src/docks/jobsdock.ui" line="175"/>
         <source>Restart a stopped job</source>
-        <translation>Obnoviť zastavenú úlohu</translation>
+        <translation>Reštartovať zastavenú úlohu</translation>
     </message>
     <message>
         <location filename="../src/docks/jobsdock.ui" line="180"/>
         <source>Remove</source>
-        <translation type="unfinished">Odstrániť</translation>
+        <translation>Odstrániť</translation>
     </message>
     <message>
         <location filename="../src/docks/jobsdock.ui" line="185"/>
         <location filename="../src/docks/jobsdock.ui" line="188"/>
         <source>Remove Finished</source>
-        <translation type="unfinished"></translation>
+        <translation>Odstrániť ukončené</translation>
     </message>
     <message>
         <location filename="../src/docks/jobsdock.cpp" line="141"/>
         <source>Job Log</source>
-        <translation>Hlásenia z úloh</translation>
+        <translation>Záznam hlásení o úlohách</translation>
     </message>
 </context>
 <context>
@@ -2797,22 +2628,22 @@ tlačítkom myši na úlohu pre otvorenie ponuky pre zastavenie teraz bežiacej 
     <message>
         <location filename="../src/qml/views/keyframes/Keyframe.qml" line="115"/>
         <source>Keyframe Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Typ kľúčovej snímky</translation>
     </message>
     <message>
         <location filename="../src/qml/views/keyframes/Keyframe.qml" line="118"/>
         <source>Discrete</source>
-        <translation type="unfinished"></translation>
+        <translation>Diskrétny</translation>
     </message>
     <message>
         <location filename="../src/qml/views/keyframes/Keyframe.qml" line="125"/>
         <source>Linear</source>
-        <translation type="unfinished"></translation>
+        <translation>Lineárny</translation>
     </message>
     <message>
         <location filename="../src/qml/views/keyframes/Keyframe.qml" line="132"/>
         <source>Smooth</source>
-        <translation type="unfinished"></translation>
+        <translation>Plynulý</translation>
     </message>
     <message>
         <location filename="../src/qml/views/keyframes/Keyframe.qml" line="141"/>
@@ -2825,17 +2656,17 @@ tlačítkom myši na úlohu pre otvorenie ponuky pre zastavenie teraz bežiacej 
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/KeyframesButton.qml" line="49"/>
         <source>Use Keyframes for this parameter</source>
-        <translation type="unfinished"></translation>
+        <translation>Pre tento parameter použiť kľúčové snímky</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/KeyframesButton.qml" line="69"/>
         <source>Confirm Removing Keyframes</source>
-        <translation type="unfinished"></translation>
+        <translation>Potvrdiť odstránenie kľúčových snímok</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/KeyframesButton.qml" line="70"/>
         <source>This will remove all keyframes for this parameter.&lt;p&gt;Do you still want to do this?</source>
-        <translation type="unfinished"></translation>
+        <translation>Toto odstráni všetky kľúčové snímky pre tento parameter.&lt;p&gt;Stále to chcete urobiť?</translation>
     </message>
 </context>
 <context>
@@ -2843,7 +2674,7 @@ tlačítkom myši na úlohu pre otvorenie ponuky pre zastavenie teraz bežiacej 
     <message>
         <location filename="../src/docks/keyframesdock.cpp" line="41"/>
         <source>Keyframes</source>
-        <translation type="unfinished"></translation>
+        <translation>Kľúčové snímky</translation>
     </message>
 </context>
 <context>
@@ -2851,17 +2682,17 @@ tlačítkom myši na úlohu pre otvorenie ponuky pre zastavenie teraz bežiacej 
     <message>
         <location filename="../src/models/keyframesmodel.cpp" line="72"/>
         <source>Discrete</source>
-        <translation type="unfinished"></translation>
+        <translation>Diskrétny</translation>
     </message>
     <message>
         <location filename="../src/models/keyframesmodel.cpp" line="75"/>
         <source>Linear</source>
-        <translation type="unfinished"></translation>
+        <translation>Lineárny</translation>
     </message>
     <message>
         <location filename="../src/models/keyframesmodel.cpp" line="78"/>
         <source>Smooth</source>
-        <translation type="unfinished"></translation>
+        <translation>Plynulý</translation>
     </message>
 </context>
 <context>
@@ -2869,37 +2700,37 @@ tlačítkom myši na úlohu pre otvorenie ponuky pre zastavenie teraz bežiacej 
     <message>
         <location filename="../src/qml/views/keyframes/KeyframesToolbar.qml" line="42"/>
         <source>Display a menu of additional actions</source>
-        <translation>Zobraziť ponuku dodatočných činností</translation>
+        <translation>Zobraziť ponuku prídavných akcií</translation>
     </message>
     <message>
         <location filename="../src/qml/views/keyframes/KeyframesToolbar.qml" line="57"/>
         <source>Set the filter start</source>
-        <translation type="unfinished"></translation>
+        <translation>Nastaviť filter štartu</translation>
     </message>
     <message>
         <location filename="../src/qml/views/keyframes/KeyframesToolbar.qml" line="66"/>
         <source>Set the filter end</source>
-        <translation type="unfinished"></translation>
+        <translation>Nastaviť filter konca</translation>
     </message>
     <message>
         <location filename="../src/qml/views/keyframes/KeyframesToolbar.qml" line="75"/>
         <source>Set the first simple keyframe</source>
-        <translation type="unfinished"></translation>
+        <translation>Nastaviť prvú jednoduchú snímku</translation>
     </message>
     <message>
         <location filename="../src/qml/views/keyframes/KeyframesToolbar.qml" line="84"/>
         <source>Set the second simple keyframe</source>
-        <translation type="unfinished"></translation>
+        <translation>Nastaviť druhú jednoduchú snímku</translation>
     </message>
     <message>
         <location filename="../src/qml/views/keyframes/KeyframesToolbar.qml" line="99"/>
         <source>Zoom timeline out (-)</source>
-        <translation type="unfinished"></translation>
+        <translation>Oddialiť časovú os (-)</translation>
     </message>
     <message>
         <location filename="../src/qml/views/keyframes/KeyframesToolbar.qml" line="113"/>
         <source>Zoom timeline in (+)</source>
-        <translation type="unfinished"></translation>
+        <translation>Priblížiť časovú os (+)</translation>
     </message>
 </context>
 <context>
@@ -2948,12 +2779,12 @@ tlačítkom myši na úlohu pre otvorenie ponuky pre zastavenie teraz bežiacej 
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="38"/>
         <source>Video</source>
-        <translation>Obraz</translation>
+        <translation>Video</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="57"/>
         <source>Dissolve</source>
-        <translation>Prelínať sa</translation>
+        <translation>Prelínať</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="62"/>
@@ -2963,107 +2794,107 @@ tlačítkom myši na úlohu pre otvorenie ponuky pre zastavenie teraz bežiacej 
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="67"/>
         <source>Bar Horizontal</source>
-        <translation>Pruh vodorovne</translation>
+        <translation>Horizontálny pruh</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="72"/>
         <source>Bar Vertical</source>
-        <translation>Pruh zvisle</translation>
+        <translation>Vertikálny pruh</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="77"/>
         <source>Barn Door Horizontal</source>
-        <translation>Vráta na stodole vodorovne</translation>
+        <translation>Horizontálne vrátka</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="82"/>
         <source>Barn Door Vertical</source>
-        <translation>Vráta na stodole zvisle</translation>
+        <translation>Vertikálne vrátka</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="87"/>
         <source>Barn Door Diagonal SW-NE</source>
-        <translation>Vráta na stodole diagonálne JZ-SV</translation>
+        <translation>Diagonálne vrátka JZ-SV</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="92"/>
         <source>Barn Door Diagonal NW-SE</source>
-        <translation>Vráta na stodole diagonálne SZ-JV</translation>
+        <translation>Diagonálne vrátka SZ-JV</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="97"/>
         <source>Diagonal Top Left</source>
-        <translation>Diagonálne nahor vľavo</translation>
+        <translation>Diagonálne vľavo nahor</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="102"/>
         <source>Diagonal Top Right</source>
-        <translation>Diagonálne nahor vpravo</translation>
+        <translation>Diagonálne vpravo nahor</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="107"/>
         <source>Matrix Waterfall Horizontal</source>
-        <translation>Matrix vodopád vodorovne</translation>
+        <translation>Matrica horizontálneho vodopádu</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="112"/>
         <source>Matrix Waterfall Vertical</source>
-        <translation>Matrix vodopád zvisle</translation>
+        <translation>Matrica vertikálneho vodopádu</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="117"/>
         <source>Matrix Snake Horizontal</source>
-        <translation>Matrix had vodorovne</translation>
+        <translation>Matrica horizontálneho hada</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="122"/>
         <source>Matrix Snake Parallel Horizontal</source>
-        <translation>Matrix had súbežne vodorovne</translation>
+        <translation>Matrica horizontálneho rovnobežného hada</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="127"/>
         <source>Matrix Snake Vertical</source>
-        <translation>Matrix had zvislo</translation>
+        <translation>Matrica vertikálneho hada</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="132"/>
         <source>Matrix Snake Parallel Vertical</source>
-        <translation>Matrix had súbežne zvislo</translation>
+        <translation>Matrica vertikálneho rovnobežného hada</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="137"/>
         <source>Barn V Up</source>
-        <translation>Stodola V nahor</translation>
+        <translation>Vrátka V nahor</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="142"/>
         <source>Iris Circle</source>
-        <translation>Kruh dúhy</translation>
+        <translation>Kruh dúhovky</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="147"/>
         <source>Double Iris</source>
-        <translation>Dvojitá dúha</translation>
+        <translation>Dvojitá dúhovka</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="152"/>
         <source>Iris Box</source>
-        <translation>Obdĺžnik dúhy</translation>
+        <translation>Schránka dúhovky</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="157"/>
         <source>Box Bottom Right</source>
-        <translation>Obdĺžnik dole vpravo</translation>
+        <translation>Schránka vpravo dole</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="162"/>
         <source>Box Bottom Left</source>
-        <translation>Obdĺžnik dole vľavo</translation>
+        <translation>Schránka vľavo dole</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="167"/>
         <source>Box Right Center</source>
-        <translation>Obdĺžnik vpravo stred</translation>
+        <translation>Schránka vpravo v strede</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="172"/>
@@ -3078,30 +2909,30 @@ tlačítkom myši na úlohu pre otvorenie ponuky pre zastavenie teraz bežiacej 
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="200"/>
         <source>TextLabel</source>
-        <translation>Textový popis</translation>
+        <translation>Textová návesť</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="207"/>
         <source>Swap the appearance of the A and B clips</source>
-        <translation>Vymeniť zobrazenie záberov A a B</translation>
+        <translation>Vymeniť zobrazenie klipov A a B</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="210"/>
         <source>Invert Wipe</source>
-        <translation>Obrátiť stieranie obrazu</translation>
+        <translation>Obrátiť chod stierania</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="219"/>
-        <location filename="../src/widgets/lumamixtransition.cpp" line="176"/>
-        <location filename="../src/widgets/lumamixtransition.cpp" line="181"/>
-        <location filename="../src/widgets/lumamixtransition.cpp" line="194"/>
+        <location filename="../src/widgets/lumamixtransition.cpp" line="183"/>
+        <location filename="../src/widgets/lumamixtransition.cpp" line="189"/>
+        <location filename="../src/widgets/lumamixtransition.cpp" line="202"/>
         <source>Softness</source>
         <translation>Mäkkosť</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="232"/>
         <source>Change the softness of the edge of the wipe</source>
-        <translation>Zmeniť jemnosť okraja stierania obrazu</translation>
+        <translation>Zmeniť mäkkosť okraja stierania</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="248"/>
@@ -3112,16 +2943,16 @@ tlačítkom myši na úlohu pre otvorenie ponuky pre zastavenie teraz bežiacej 
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="263"/>
         <source>Audio</source>
-        <translation>Zvuk</translation>
+        <translation>Audio</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="275"/>
         <source>Automatically fade-out the audio of clip A
 and fade-in the audio of clip B over the
 duration of the transition.</source>
-        <translation>Automaticky zoslabiť zvuk záberu A
-a zosilniť zvuk záberu B po dobu
-trvania prechodu.</translation>
+        <translation>Automaticky zoslabovať audio klipu A
+a zosilňovať audio klipu B
+počas trvania prechodu.</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="280"/>
@@ -3134,15 +2965,15 @@ trvania prechodu.</translation>
 course of the transition. Instead, set a
 fixed mixing level, or choose only clip A&apos;s
 audio (0%) or clip B&apos;s audio (100%).</source>
-        <translation>Nemeňte zvukové úrovne počas
-toku prechodu. Namiesto toho nastavte
-pevnú úroveň miešania, alebo vyberte iba zvuk
-záberu A (0%) alebo zvuk záberu B (100%).</translation>
+        <translation>Nemeniť zvukové úrovne počas
+trvania prechodu. Namiesto toho nastaviť
+pevnú úroveň zmiešavania, alebo vybrať iba audio
+klipu A (0%) alebo audio klipu B (100%).</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="300"/>
         <source>Mix:</source>
-        <translation>Miešanie:</translation>
+        <translation>Zmiešavanie:</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="310"/>
@@ -3156,12 +2987,12 @@ záberu A (0%) alebo zvuk záberu B (100%).</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.cpp" line="47"/>
-        <location filename="../src/widgets/lumamixtransition.cpp" line="178"/>
+        <location filename="../src/widgets/lumamixtransition.cpp" line="186"/>
         <source>Position</source>
         <translation>Poloha</translation>
     </message>
     <message>
-        <location filename="../src/widgets/lumamixtransition.cpp" line="187"/>
+        <location filename="../src/widgets/lumamixtransition.cpp" line="195"/>
         <source>Open File</source>
         <translation>Otvoriť súbor</translation>
     </message>
@@ -3181,37 +3012,37 @@ záberu A (0%) alebo zvuk záberu B (100%).</translation>
     <message>
         <location filename="../src/mainwindow.ui" line="66"/>
         <source>&amp;View</source>
-        <translation>Pohľad</translation>
+        <translation>&amp;Zobraziť</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="70"/>
         <source>Layout</source>
-        <translation type="unfinished"></translation>
+        <translation>Usporiadanie</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="90"/>
         <source>&amp;Edit</source>
-        <translation>Úpravy</translation>
+        <translation>&amp;Upraviť</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="98"/>
         <source>&amp;Help</source>
-        <translation>Nápoveda</translation>
+        <translation>&amp;Nápoveda</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="111"/>
         <source>Settings</source>
-        <translation>Nastavenia</translation>
+        <translation>Na&amp;stavenia</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="115"/>
         <source>Audio Channels</source>
-        <translation type="unfinished"></translation>
+        <translation>Audio kanály</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="123"/>
         <source>Deinterlacer</source>
-        <translation>Odstránenie prekladania</translation>
+        <translation>Rozkladač</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="132"/>
@@ -3221,7 +3052,7 @@ záberu A (0%) alebo zvuk záberu B (100%).</translation>
     <message>
         <location filename="../src/mainwindow.ui" line="141"/>
         <source>Video Mode</source>
-        <translation>Obrazový režim</translation>
+        <translation>Video režim</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="147"/>
@@ -3241,37 +3072,37 @@ záberu A (0%) alebo zvuk záberu B (100%).</translation>
     <message>
         <location filename="../src/mainwindow.ui" line="166"/>
         <source>Gamma</source>
-        <translation>Gamma</translation>
+        <translation>Gama</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="173"/>
         <source>Display Method</source>
-        <translation>Spôsob zobrazenia</translation>
+        <translation>Metóda zobrazovania</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="182"/>
         <source>App Data Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Priečinok údajov aplikácie</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="189"/>
         <source>Preview Scaling</source>
-        <translation type="unfinished"></translation>
+        <translation>Zmena mierky náhľadu</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="227"/>
         <source>Toolbar</source>
-        <translation>Nástrojový pruh</translation>
+        <translation>Lišta nástrojov</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="273"/>
         <source>&amp;Open File...</source>
-        <translation>&amp;Otvoriť súbor</translation>
+        <translation>&amp;Otvoriť súbor...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="276"/>
         <source>Open a video, audio or image file</source>
-        <translation>Otvoriť video, zvukový alebo obrázkový súbor</translation>
+        <translation>Otvoriť video, audio alebo obrázkový súbor</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="279"/>
@@ -3281,12 +3112,12 @@ záberu A (0%) alebo zvuk záberu B (100%).</translation>
     <message>
         <location filename="../src/mainwindow.ui" line="287"/>
         <source>E&amp;xit</source>
-        <translation>U&amp;končiť</translation>
+        <translation>&amp;Koniec</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="290"/>
         <source>Quit the application</source>
-        <translation>Ukončiť program</translation>
+        <translation>Ukončí program</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="293"/>
@@ -3301,7 +3132,7 @@ záberu A (0%) alebo zvuk záberu B (100%).</translation>
     <message>
         <location filename="../src/mainwindow.ui" line="306"/>
         <source>About Qt</source>
-        <translation>O Qt</translation>
+        <translation>O aplikácii Qt</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="314"/>
@@ -3312,7 +3143,7 @@ záberu A (0%) alebo zvuk záberu B (100%).</translation>
         <location filename="../src/mainwindow.ui" line="317"/>
         <location filename="../src/mainwindow.ui" line="976"/>
         <source>Open a device, stream or generator</source>
-        <translation>Otvoriť zariadenie, stream alebo generátor</translation>
+        <translation>Otvoriť zariadenie, tok alebo generátor</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="320"/>
@@ -3327,7 +3158,7 @@ záberu A (0%) alebo zvuk záberu B (100%).</translation>
     <message>
         <location filename="../src/mainwindow.ui" line="335"/>
         <source>Save project as a MLT XML file</source>
-        <translation>Uložiť projekt ako MLT XML súbor</translation>
+        <translation>Uloží projekt ako MLT XML súbor</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="338"/>
@@ -3342,7 +3173,7 @@ záberu A (0%) alebo zvuk záberu B (100%).</translation>
     <message>
         <location filename="../src/mainwindow.ui" line="349"/>
         <source>Save project to a different MLT XML file</source>
-        <translation>Uložiť projekt do iného MLT XML súboru</translation>
+        <translation>Uloží projekt do iného MLT XML súboru</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="352"/>
@@ -3352,12 +3183,12 @@ záberu A (0%) alebo zvuk záberu B (100%).</translation>
     <message>
         <location filename="../src/mainwindow.ui" line="361"/>
         <source>Export</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportovať</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="364"/>
         <source>Show the Export panel</source>
-        <translation type="unfinished"></translation>
+        <translation>Zobrazí panel exportu</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="373"/>
@@ -3367,7 +3198,7 @@ záberu A (0%) alebo zvuk záberu B (100%).</translation>
     <message>
         <location filename="../src/mainwindow.ui" line="382"/>
         <source>&amp;Redo</source>
-        <translation>&amp;Znova</translation>
+        <translation>&amp;Vpred</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="387"/>
@@ -3381,7 +3212,7 @@ záberu A (0%) alebo zvuk záberu B (100%).</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="401"/>
-        <location filename="../src/mainwindow.cpp" line="3045"/>
+        <location filename="../src/mainwindow.cpp" line="3069"/>
         <source>Enter Full Screen</source>
         <translation>Vstúpiť do režimu na celú obrazovku</translation>
     </message>
@@ -3393,12 +3224,12 @@ záberu A (0%) alebo zvuk záberu B (100%).</translation>
     <message>
         <location filename="../src/mainwindow.ui" line="413"/>
         <source>Peak Meter</source>
-        <translation>Merač hladín</translation>
+        <translation>Merač špičiek</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="416"/>
         <source>Show or hide the audio peak meter</source>
-        <translation>Ukázať alebo skryť merač hladín zvuku</translation>
+        <translation>Zobrazí alebo skryje merač špičiek audia</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="425"/>
@@ -3409,16 +3240,16 @@ záberu A (0%) alebo zvuk záberu B (100%).</translation>
     <message>
         <location filename="../src/mainwindow.ui" line="434"/>
         <source>Recent</source>
-        <translation>Naposledy otevřené</translation>
+        <translation>Nedávno otvorené</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="443"/>
         <source>Playlist</source>
-        <translation>Zoznam</translation>
+        <translation>Zoznam prehrávania</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="452"/>
-        <location filename="../src/mainwindow.cpp" line="372"/>
+        <location filename="../src/mainwindow.cpp" line="374"/>
         <source>History</source>
         <translation>História</translation>
     </message>
@@ -3440,37 +3271,37 @@ záberu A (0%) alebo zvuk záberu B (100%).</translation>
     <message>
         <location filename="../src/mainwindow.ui" line="491"/>
         <source>GPU Effects (unstable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Efekty GPU (nestabilné)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="494"/>
         <source>Use GPU filters</source>
-        <translation type="unfinished"></translation>
+        <translation>Použiť GPU filtre</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="505"/>
         <source>1 (mono)</source>
-        <translation type="unfinished"></translation>
+        <translation>1 (mono)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="513"/>
         <source>2 (stereo)</source>
-        <translation type="unfinished"></translation>
+        <translation>2 (stereo)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="521"/>
         <source>6 (5.1)</source>
-        <translation type="unfinished">6 (5.1)</translation>
+        <translation>6 (5.1)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="532"/>
         <source>One Field (fast)</source>
-        <translation>Jedno pole (rýchle)</translation>
+        <translation>Jedno polsnímka (rýchle)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="540"/>
         <source>Linear Blend (fast)</source>
-        <translation>Lineárne miešanie (rýchle)</translation>
+        <translation>Lineárne zmiešavanie (rýchle)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="548"/>
@@ -3517,7 +3348,7 @@ záberu A (0%) alebo zvuk záberu B (100%).</translation>
     <message>
         <location filename="../src/mainwindow.ui" line="621"/>
         <source>Use JACK Audio</source>
-        <translation>Použiť JACK Audio</translation>
+        <translation>Použiť audio JACK</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="630"/>
@@ -3527,7 +3358,7 @@ záberu A (0%) alebo zvuk záberu B (100%).</translation>
     <message>
         <location filename="../src/mainwindow.ui" line="633"/>
         <source>Modify the video image or audio</source>
-        <translation>Upraviť obraz videa alebo zvuk</translation>
+        <translation>Upraviť obrázok videa alebo audio</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="638"/>
@@ -3569,32 +3400,32 @@ záberu A (0%) alebo zvuk záberu B (100%).</translation>
         <location filename="../src/mainwindow.ui" line="684"/>
         <location filename="../src/mainwindow.ui" line="687"/>
         <source>Restore Default Layout</source>
-        <translation>Obnoviť východzie rozvrhnutie</translation>
+        <translation>Navrátiť východzie usporiadanie</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="695"/>
         <source>Show Title Bars</source>
-        <translation>Ukázať titulkové prúžky</translation>
+        <translation>Zobraziť lištu titulkov</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="703"/>
         <source>Show Toolbar</source>
-        <translation>Ukázať nástrojový pruh</translation>
+        <translation>Zobraziť lištu nástrojov</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="708"/>
         <source>Upgrade...</source>
-        <translation>Vylepšiť...</translation>
+        <translation>Povýšiť verziu...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="713"/>
         <source>Open MLT XML As Clip...</source>
-        <translation>Otvoriť MLT XML ako záber...</translation>
+        <translation>Otvoriť MLT XML ako klip...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="716"/>
         <source>Open a MLT XML project file as a virtual clip</source>
-        <translation>Otvoriť MLT XML súbor projektu ako virtuálny záber.</translation>
+        <translation>Otvorí MLT XML súbor projektu ako virtuálny klip.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="727"/>
@@ -3609,7 +3440,7 @@ záberu A (0%) alebo zvuk záberu B (100%).</translation>
     <message>
         <location filename="../src/mainwindow.ui" line="743"/>
         <source>Scrub Audio</source>
-        <translation>Hrať zvuk</translation>
+        <translation>Snímať audio</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="778"/>
@@ -3620,7 +3451,7 @@ záberu A (0%) alebo zvuk záberu B (100%).</translation>
     <message>
         <location filename="../src/mainwindow.ui" line="783"/>
         <source>Application Log...</source>
-        <translation>Hlásenia programu...</translation>
+        <translation>Záznam hlásení programu...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="791"/>
@@ -3651,119 +3482,119 @@ záberu A (0%) alebo zvuk záberu B (100%).</translation>
     <message>
         <location filename="../src/mainwindow.ui" line="834"/>
         <source>Cu&amp;t</source>
-        <translation type="unfinished">Vystrihnúť</translation>
+        <translation>Vy&amp;strihnúť</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="837"/>
         <source>Ctrl+X</source>
-        <translation type="unfinished">Ctrl+X</translation>
+        <translation>Ctrl+X</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="849"/>
         <source>&amp;Copy</source>
-        <translation type="unfinished">Kopírovať</translation>
+        <translation>&amp;Kopírovať</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="852"/>
         <source>Ctrl+C</source>
-        <translation type="unfinished">Ctrl+C</translation>
+        <translation>Ctrl+C</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="864"/>
         <source>&amp;Paste</source>
-        <translation type="unfinished">Vložiť</translation>
+        <translation>&amp;Prilepiť</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="867"/>
         <source>Ctrl+V</source>
-        <translation type="unfinished">Ctrl+V</translation>
+        <translation>Ctrl+V</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="872"/>
         <source>Export EDL...</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportovať EDL...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="877"/>
         <source>Export Frame...</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportovať snímku...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="880"/>
         <source>Ctrl+Shift+E</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Shift+E</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="885"/>
         <source>Export Video...</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportovať video...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="888"/>
         <source>Ctrl+E</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+E</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="893"/>
         <source>Set...</source>
-        <translation type="unfinished"></translation>
+        <translation>Nastaviť...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="898"/>
         <source>Show...</source>
-        <translation type="unfinished"></translation>
+        <translation>Zobraziť...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="901"/>
         <source>Show</source>
-        <translation type="unfinished"></translation>
+        <translation>Zobraziť</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="910"/>
         <location filename="../src/mainwindow.ui" line="913"/>
         <source>Keyframes</source>
-        <translation type="unfinished"></translation>
+        <translation>Kľúčové snímky</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="918"/>
         <source>New</source>
-        <translation type="unfinished"></translation>
+        <translation>Nový</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="921"/>
         <source>Ctrl+N</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+N</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="926"/>
         <source>Keyboard Shortcuts...</source>
-        <translation type="unfinished"></translation>
+        <translation>Klávesové skratky...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="929"/>
         <source>F1</source>
-        <translation type="unfinished"></translation>
+        <translation>F1</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="939"/>
         <source>Playlist Project</source>
-        <translation type="unfinished"></translation>
+        <translation>Zoznam prehrávania projektu</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="944"/>
         <source>Timeline Project</source>
-        <translation type="unfinished"></translation>
+        <translation>Časová os projektu</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="949"/>
         <source>Clip-only Project</source>
-        <translation type="unfinished"></translation>
+        <translation>Len klip projektu</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="959"/>
         <location filename="../src/mainwindow.ui" line="964"/>
         <source>Remove...</source>
-        <translation type="unfinished"></translation>
+        <translation>Odstrániť...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="973"/>
@@ -3773,17 +3604,17 @@ záberu A (0%) alebo zvuk záberu B (100%).</translation>
     <message>
         <location filename="../src/mainwindow.ui" line="987"/>
         <source>Clear Recent on Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Zmazať nedávne súbory pri ukončení</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="995"/>
         <source>Show Text Under Icons</source>
-        <translation type="unfinished"></translation>
+        <translation>Zobrazovať text pod ikonami</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1003"/>
         <source>Show Small Icons</source>
-        <translation type="unfinished"></translation>
+        <translation>Zobrazovať malé ikony</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1012"/>
@@ -3793,37 +3624,37 @@ záberu A (0%) alebo zvuk záberu B (100%).</translation>
     <message>
         <location filename="../src/mainwindow.ui" line="1020"/>
         <source>540p</source>
-        <translation type="unfinished">540p</translation>
+        <translation>540p</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1023"/>
         <source>F8</source>
-        <translation type="unfinished"></translation>
+        <translation>F8</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1031"/>
         <source>720p</source>
-        <translation type="unfinished">720p</translation>
+        <translation>720p</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1034"/>
         <source>F9</source>
-        <translation type="unfinished"></translation>
+        <translation>F9</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1045"/>
         <source>F6</source>
-        <translation type="unfinished"></translation>
+        <translation>F6</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1053"/>
         <source>360p</source>
-        <translation type="unfinished">360p</translation>
+        <translation>360p</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1056"/>
         <source>F7</source>
-        <translation type="unfinished"></translation>
+        <translation>F7</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="126"/>
@@ -3832,14 +3663,16 @@ záberu A (0%) alebo zvuk záberu B (100%).</translation>
 Please install it using your package manager. It may be named libjack0, jack-audio-connection-kit, jack, or similar.</source>
         <translation>Chyba: Tento program vyžaduje knižnicu JACK 1.
 
-Nainštalujte ju prosím pomocou správcu balíčkov. Môže byť pomenovaná libjack0, jack-audio-connection-kit, jack, alebo podobne.</translation>
+Nainštalujte ju, prosím, použitím správcu zbalenia. Môže byť pomenovaná libjack0, jack-audio-connection-kit, jack, alebo podobne.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="134"/>
         <source>Error: This program requires the SDL 2 library.
 
 Please install it using your package manager. It may be named libsdl2-2.0-0, SDL2, or similar.</source>
-        <translation type="unfinished"></translation>
+        <translation>Chyba: Tento program vyžaduje knižnicu SDL 2.
+
+Nainštalujte ju, prosím, použitím pakovača. Môže byť pomenovaná libsdl2-2.0-0, SDL2, alebo podobne.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="201"/>
@@ -3857,140 +3690,145 @@ Please install it using your package manager. It may be named libsdl2-2.0-0, SDL
         <translation>Ctrl+Shift+Z</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="584"/>
+        <location filename="../src/mainwindow.cpp" line="586"/>
         <source>Screen %1 (%2 x %3 @ %4 Hz)</source>
-        <translation type="unfinished"></translation>
+        <translation>Obrazovka %1 (%2 x %3 @ %4 Hz)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="618"/>
+        <location filename="../src/mainwindow.cpp" line="620"/>
         <source>Off</source>
         <translation>Vypnuté</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="621"/>
+        <location filename="../src/mainwindow.cpp" line="623"/>
         <source>Internal</source>
         <translation>Interné</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="624"/>
+        <location filename="../src/mainwindow.cpp" line="626"/>
         <source>External</source>
-        <translation>Vonkajšie</translation>
+        <translation>Externé</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="638"/>
+        <location filename="../src/mainwindow.cpp" line="640"/>
         <source>DeckLink Keyer</source>
         <translation>Kľúčovač DeckLink</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="864"/>
+        <location filename="../src/mainwindow.cpp" line="866"/>
         <source>Color</source>
         <translation>Farba</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="866"/>
+        <location filename="../src/mainwindow.cpp" line="868"/>
         <source>Text</source>
         <translation>Text</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="869"/>
+        <location filename="../src/mainwindow.cpp" line="871"/>
         <source>Noise</source>
         <translation>Šum</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="871"/>
+        <location filename="../src/mainwindow.cpp" line="873"/>
         <source>Ising</source>
         <translation>Ising</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="873"/>
+        <location filename="../src/mainwindow.cpp" line="875"/>
         <source>Lissajous</source>
         <translation>Lissajous</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="875"/>
+        <location filename="../src/mainwindow.cpp" line="877"/>
         <source>Plasma</source>
         <translation>Plazma</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="877"/>
+        <location filename="../src/mainwindow.cpp" line="879"/>
         <source>Color Bars</source>
         <translation>Farebné pruhy</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="879"/>
-        <source>Audio Tone</source>
-        <translation>Zvukový tón</translation>
-    </message>
-    <message>
         <location filename="../src/mainwindow.cpp" line="881"/>
-        <source>Count</source>
-        <translation type="unfinished"></translation>
+        <source>Audio Tone</source>
+        <translation>Audio tón</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="884"/>
+        <location filename="../src/mainwindow.cpp" line="883"/>
+        <source>Count</source>
+        <translation>Počet</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="886"/>
         <source>Video4Linux</source>
         <translation>Video4Linux</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="885"/>
+        <location filename="../src/mainwindow.cpp" line="887"/>
         <source>PulseAudio</source>
         <translation>PulseAudio</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="886"/>
+        <location filename="../src/mainwindow.cpp" line="888"/>
         <source>JACK Audio</source>
-        <translation>JACK Audio</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="887"/>
-        <source>ALSA Audio</source>
-        <translation>Zvuk ALSA</translation>
+        <translation>Audio JACK</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="889"/>
-        <source>Audio/Video Device</source>
-        <translation type="unfinished"></translation>
+        <source>ALSA Audio</source>
+        <translation>Audio ALSA</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="892"/>
+        <location filename="../src/mainwindow.cpp" line="891"/>
+        <source>Audio/Video Device</source>
+        <translation>Audio/video zariadenie</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="894"/>
         <source>SDI/HDMI</source>
         <translation>SDI/HDMI</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="914"/>
         <location filename="../src/mainwindow.cpp" line="916"/>
-        <location filename="../src/mainwindow.cpp" line="1326"/>
-        <location filename="../src/mainwindow.cpp" line="3672"/>
+        <location filename="../src/mainwindow.cpp" line="918"/>
+        <location filename="../src/mainwindow.cpp" line="1334"/>
+        <location filename="../src/mainwindow.cpp" line="3696"/>
         <source>Failed to open </source>
-        <translation>Nepodarilo sa otvoriť</translation>
+        <translation>Pri otváraní zlyhalo </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="942"/>
+        <location filename="../src/mainwindow.cpp" line="944"/>
         <source>The file you opened uses GPU effects, but GPU effects are not enabled.
 
 GPU effects are EXPERIMENTAL, UNSTABLE and UNSUPPORTED! Unsupported means do not report bugs about it.
 
 Do you want to enable GPU effects and restart?</source>
-        <translation type="unfinished"></translation>
+        <translation>Súbor, ktorý ste otvorili, používa efekty GPU, ale efekty GPU nie sú povolené. 
+
+Efekty GPU sú EXPERIMENTÁLNE, NESTABILNÉ a NEPODPOROVANÉ! Nepodporované znamená, že sa o nich nehlásia chyby.
+
+Chcete povoliť efekty GPU a reštartovať?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="963"/>
+        <location filename="../src/mainwindow.cpp" line="965"/>
         <source>The file you opened uses CPU effects that are incompatible with GPU effects, but GPU effects are enabled.
 Do you want to disable GPU effects and restart?</source>
-        <translation type="unfinished"></translation>
+        <translation>Súbor, ktorý ste otvorili, používa efekty procesora, ktoré sa nezlučujú s efektami grafického procesora. Tieto však nie sú povolené.
+Chcete zakázať efekty grafického procesora a program spustiť znovu?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="986"/>
+        <location filename="../src/mainwindow.cpp" line="988"/>
         <source>Repaired</source>
         <translation>Opravené</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1009"/>
+        <location filename="../src/mainwindow.cpp" line="1011"/>
         <source>Repairing the project failed.</source>
-        <translation>Opravenie projektu sa nepodarilo.</translation>
+        <translation>Zlyhala oprava projektu</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1021"/>
+        <location filename="../src/mainwindow.cpp" line="1023"/>
         <source>Shotcut noticed some problems in your project.
 Do you want Shotcut to try to repair it?
 
@@ -4003,105 +3841,105 @@ Ak zvolíte Áno, Shotcut vytvorí kópiu vášho projektu
 s &quot;- Opravené&quot; v názve súboru a otvorí ju.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1057"/>
+        <location filename="../src/mainwindow.cpp" line="1059"/>
         <source>Auto-saved files exist. Do you want to recover them now?</source>
         <translation>Automaticky uložené súbory existujú. Chcete ich teraz obnoviť?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1172"/>
+        <location filename="../src/mainwindow.cpp" line="1174"/>
         <source>You cannot add a project to itself!</source>
-        <translation type="unfinished"></translation>
+        <translation>Nemôžete pridať projekt do seba samého!</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1207"/>
+        <location filename="../src/mainwindow.cpp" line="1209"/>
         <source>There was an error saving. Please try again.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vznikla chyba pri ukladaní. Skúste to, prosím, znovu.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1262"/>
+        <location filename="../src/mainwindow.cpp" line="1270"/>
         <source>Opening %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Otváranie %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1360"/>
-        <location filename="../src/mainwindow.cpp" line="3632"/>
+        <location filename="../src/mainwindow.cpp" line="1368"/>
+        <location filename="../src/mainwindow.cpp" line="3656"/>
         <source>Open File</source>
         <translation>Otvoriť súbor</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1640"/>
+        <location filename="../src/mainwindow.cpp" line="1648"/>
         <source>Untitled</source>
-        <translation type="unfinished"></translation>
+        <translation>nepomenované</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1656"/>
+        <location filename="../src/mainwindow.cpp" line="1664"/>
         <source>About Shotcut</source>
         <translation>O programe Shotcut</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1657"/>
+        <location filename="../src/mainwindow.cpp" line="1665"/>
         <source>&lt;h1&gt;Shotcut version %1&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;https://www.shotcut.org/&quot;&gt;Shotcut&lt;/a&gt; is a free, open source, cross platform video editor.&lt;/p&gt;&lt;small&gt;&lt;p&gt;Copyright &amp;copy; 2011-2020 &lt;a href=&quot;https://www.meltytech.com/&quot;&gt;Meltytech&lt;/a&gt;, LLC&lt;/p&gt;&lt;p&gt;Licensed under the &lt;a href=&quot;https://www.gnu.org/licenses/gpl.html&quot;&gt;GNU General Public License v3.0&lt;/a&gt;&lt;/p&gt;&lt;p&gt;This program proudly uses the following projects:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://www.qt.io/&quot;&gt;Qt&lt;/a&gt; application and UI framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; multimedia authoring framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; multimedia format and codec libraries&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; H.264 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; VP8 and VP9 encoders&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; MP3 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt; video plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; audio plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;DefaultIcon&lt;/a&gt; icon collection by &lt;a href=&quot;http://www.interactivemania.com/&quot;&gt;interactivemania&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt;Oxygen&lt;/a&gt; icon collection&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;The source code used to build this program can be downloaded from &lt;a href=&quot;https://www.shotcut.org/&quot;&gt;shotcut.org&lt;/a&gt;.&lt;/p&gt;This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.&lt;/small&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;h1&gt;Shotcut verzia %1&lt;/h1&gt;&lt;a href=&quot;http://www.shotcut.org/&quot;&gt;Shotcut&lt;/a&gt; je voľný, s otvoreným zdrojovým kódom, viacplatformový video editor.&lt;small&gt;&lt;p&gt;Copyright &amp;copy; 2011-2020 &lt;a href=&quot;http://www.meltytech.com/&quot;&gt;Meltytech&lt;/a&gt; LLC &lt;/p&gt;&lt;p&gt;Licencované pod &lt;a href=&quot;http://www.gnu.org/licenses/gpl.html&quot;&gt;GNU General Public License v3.0&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Tento program hrdo používa nasledujúce projekty:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;http://www.qt-project.org/&quot;&gt;Qt&lt;/a&gt; aplikácia a konštrukčný systém pre užívateľské rozhranie.&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; systém multimediálnej autorizácie&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; knižnice multimediálnych formátov a kodekov &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; H.264 kódovač&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; VP8 a VP9 kódovače&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; MP3 kódovač&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt; rozšírenia pre video&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; rozšírenia pre audio &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;DefaultIcon&lt;/a&gt; kolekcia ikon od &lt;a href=&quot;http://www.interactivemania.com/&quot;&gt;interactivemania&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt;Oxygen&lt;/a&gt; kolekcia ikon &lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;Zdrojový kód použitý pre zostavenie programu možno stiahnuť z &lt;a href=&quot;http://www.shotcut.org/&quot;&gt;shotcut.org&lt;/a&gt;.&lt;/p&gt;Tento program je šírený s nádejou, že bude užitočný, ale BEZ AKEJKOĽVEK ZÁRUKY; dokonca bez predpokladanej záruky OBCHODOVATEĽNOSTI alebo VHODNOSTI PRE URČITÝ ÚČEL.&lt;p&gt;Slovenský preklad pripravil: Jozef Matta&lt;/p&gt;&lt;/small&gt;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2207"/>
+        <location filename="../src/mainwindow.cpp" line="2228"/>
         <source>Non-Broadcast</source>
-        <translation>Nestandardné</translation>
+        <translation>Nevysielané</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2212"/>
+        <location filename="../src/mainwindow.cpp" line="2233"/>
         <source>DVD Widescreen NTSC</source>
         <translation>Širokouhlé DVD NTSC</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2213"/>
+        <location filename="../src/mainwindow.cpp" line="2234"/>
         <source>DVD Widescreen PAL</source>
         <translation>Širokouhlé DVD PAL</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2224"/>
+        <location filename="../src/mainwindow.cpp" line="2245"/>
         <source>Square 1080p 30 fps</source>
-        <translation type="unfinished"></translation>
+        <translation>Štvorcové 1080p 30 snímok/s</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2225"/>
+        <location filename="../src/mainwindow.cpp" line="2246"/>
         <source>Square 1080p 60 fps</source>
-        <translation type="unfinished"></translation>
+        <translation>Štvorcové 1080p 60 snímok/s</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2226"/>
+        <location filename="../src/mainwindow.cpp" line="2247"/>
         <source>Vertical HD 30 fps</source>
-        <translation type="unfinished"></translation>
+        <translation>Vertikálne HD 30 snímok/s</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2227"/>
+        <location filename="../src/mainwindow.cpp" line="2248"/>
         <source>Vertical HD 60 fps</source>
-        <translation type="unfinished"></translation>
+        <translation>Vertikálne HD 60 snímok/s</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2228"/>
+        <location filename="../src/mainwindow.cpp" line="2249"/>
         <source>Custom</source>
         <translation>Vlastné</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2258"/>
-        <location filename="../src/mainwindow.cpp" line="2517"/>
+        <location filename="../src/mainwindow.cpp" line="2279"/>
+        <location filename="../src/mainwindow.cpp" line="2538"/>
         <source>Saved %1</source>
         <translation>Uložené %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2509"/>
-        <location filename="../src/mainwindow.cpp" line="2531"/>
+        <location filename="../src/mainwindow.cpp" line="2530"/>
+        <location filename="../src/mainwindow.cpp" line="2552"/>
         <source>Save XML</source>
         <translation>Uložiť XML</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2532"/>
+        <location filename="../src/mainwindow.cpp" line="2553"/>
         <source>MLT XML (*.mlt)</source>
         <translation>MLT XML (*.mlt)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2551"/>
+        <location filename="../src/mainwindow.cpp" line="2572"/>
         <source>The project has been modified.
 Do you want to save your changes?</source>
         <translation>Projekt bol pozmenený.
@@ -4109,184 +3947,196 @@ Do you want to save your changes?</source>
 Chcete uložiť vaše zmeny?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2580"/>
+        <location filename="../src/mainwindow.cpp" line="2601"/>
         <source>There are incomplete jobs.
 Do you want to still want to exit?</source>
         <translation>Sú tu nedokončené úlohy.
 Stále chcete ukončiť program?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2593"/>
+        <location filename="../src/mainwindow.cpp" line="2614"/>
         <source>An export is in progress.
 Do you want to still want to exit?</source>
-        <translation type="unfinished"></translation>
+        <translation>Prebieha exportovanie.
+Napriek tomu chcete program ukončiť?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3048"/>
+        <location filename="../src/mainwindow.cpp" line="3072"/>
         <source>Exit Full Screen</source>
-        <translation>Opustiť režim na celú obrazovku</translation>
+        <translation>Ukončiť režim celej obrazovky</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3061"/>
+        <location filename="../src/mainwindow.cpp" line="3085"/>
         <source>GPU effects are not supported</source>
-        <translation type="unfinished"></translation>
+        <translation>Efekty GPU nie sú podporované</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3167"/>
+        <location filename="../src/mainwindow.cpp" line="3191"/>
         <source>Click here to check for a new version of Shotcut.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kliknite tu pre kontrolu novej verzie programu Shotcut.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3313"/>
+        <location filename="../src/mainwindow.cpp" line="3337"/>
         <source>You must restart Shotcut to switch to the new language.
 Do you want to restart now?</source>
         <translation>Musíte reštartovať Shotcut pre prepnutie ho do nového jazyka.
 Chcete ho reštartovať teraz?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3354"/>
+        <location filename="../src/mainwindow.cpp" line="3378"/>
         <source>Failed to connect to JACK.
 Please verify that JACK is installed and running.</source>
         <translation>Nepodarilo sa spojiť s JACKom.
 Overte prosím, či je JACK nainštalovaný a beží.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3363"/>
+        <location filename="../src/mainwindow.cpp" line="3387"/>
         <source>GPU effects are experimental and may cause instability on some systems. Some CPU effects are incompatible with GPU effects and will be disabled. A project created with GPU effects can not be converted to a CPU only project later.
 
 Do you want to enable GPU effects and restart Shotcut?</source>
-        <translation type="unfinished"></translation>
+        <translation>Efekty GPU sú pokusné a môžu spôsobiť nestabilitu niektorých systémov.
+Niektoré efekty CPU sa s efektami GPU nezlučujú a budú zakázané. Projekt vytvorený použitím efektov GPU nemožno neskôr konvertovať na projekt len s efektami CPU.
+
+Chcete povoliť efekty GPU a Shotcut spustiť znovu?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3385"/>
+        <location filename="../src/mainwindow.cpp" line="3409"/>
         <source>Shotcut must restart to disable GPU effects.
 
 Disable GPU effects and restart?</source>
-        <translation type="unfinished"></translation>
+        <translation>Shotcut sa musí reštartovať kvôli zákazu efektov grafického procesora.
+
+Zakázať efekty grafického procesora a spustiť program znovu?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3610"/>
+        <location filename="../src/mainwindow.cpp" line="3634"/>
         <source>Do you want to automatically check for updates in the future?</source>
-        <translation type="unfinished"></translation>
+        <translation>Chcete v budúcnosti automaticky kontrolovať aktualizácie?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3617"/>
+        <location filename="../src/mainwindow.cpp" line="3641"/>
         <source>Do not show this anymore.</source>
         <comment>Automatic upgrade check dialog</comment>
-        <translation type="unfinished"></translation>
+        <translation>Toto už viac nezobrazovať.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3633"/>
+        <location filename="../src/mainwindow.cpp" line="3657"/>
         <source>MLT XML (*.mlt);;All Files (*)</source>
         <translation>MLT XML (*.mlt);;Všetky súbory (*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3650"/>
+        <location filename="../src/mainwindow.cpp" line="3674"/>
         <source>The decimal point of the MLT XML file
 you want to open is incompatible.
 
 Do you want to continue to open this MLT XML file?</source>
-        <translation type="unfinished"></translation>
+        <translation>Desatinná čiarka súboru MLT XML
+ktorý chcete otvoriť, nie je kompatibilná.
+
+Chcete pokračovať v otváraní tohto súboru MLT XML?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3713"/>
+        <location filename="../src/mainwindow.cpp" line="3737"/>
         <source>You must restart Shotcut to change the display method.
 Do you want to restart now?</source>
         <translation>Musíte reštartovať Shotcut pre zmenu metódy zobrazenia.
 Chcete ho reštartovať teraz?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3735"/>
+        <location filename="../src/mainwindow.cpp" line="3759"/>
         <source>Application Log</source>
-        <translation>Hlásenia programu</translation>
+        <translation>Záznam hlásení programu</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3774"/>
+        <location filename="../src/mainwindow.cpp" line="3798"/>
         <source>Shotcut version %1 is available! Click here to get it.</source>
-        <translation type="unfinished"></translation>
+        <translation>Je dostupná verzia %1 programu Shotcut. Kliknite tu na jej získanie.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3780"/>
+        <location filename="../src/mainwindow.cpp" line="3804"/>
         <source>You are running the latest version of Shotcut.</source>
-        <translation type="unfinished"></translation>
+        <translation>Máte spustenú najnovšiu verziu programu Shotcut.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3790"/>
+        <location filename="../src/mainwindow.cpp" line="3814"/>
         <source>Failed to read version.json when checking. Click here to go to the Web site.</source>
-        <translation type="unfinished"></translation>
+        <translation>Pri kontrole došlo k zlyhaniu čítania verzie .json. Kliknite sem pre prechod na internetovú stránku.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3839"/>
+        <location filename="../src/mainwindow.cpp" line="3863"/>
         <source>Export EDL</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportovať EDL</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3840"/>
+        <location filename="../src/mainwindow.cpp" line="3864"/>
         <source>EDL (*.edl);;All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>EDL (*.edl);;Všetky súbory (*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3886"/>
+        <location filename="../src/mainwindow.cpp" line="3910"/>
         <source>A JavaScript error occurred during export.</source>
-        <translation type="unfinished"></translation>
+        <translation>Počas exportu došlo k chybe v Java skripte.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3889"/>
+        <location filename="../src/mainwindow.cpp" line="3913"/>
         <source>Failed to open export-edl.js</source>
-        <translation type="unfinished"></translation>
+        <translation>Zlyhanie pri otváraní export-edl.js</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3914"/>
+        <location filename="../src/mainwindow.cpp" line="3941"/>
         <source>Export Frame</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportovať snímku</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3915"/>
+        <location filename="../src/mainwindow.cpp" line="3942"/>
         <source>PNG (*.png);;BMP (*.bmp);;JPEG (*.jpg *.jpeg);;PPM (*.ppm);;TIFF (*.tif *.tiff);;WebP (*.webp);;All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>PNG (*.png);;BMP (*.bmp);;JPEG (*.jpg *.jpeg);;PPM (*.ppm);;TIFF (*.tif *.tiff);;WebP (*.webp);;Všetky súbory (*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3935"/>
+        <location filename="../src/mainwindow.cpp" line="3962"/>
         <source>Unable to export frame.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nemožno exportovať snímku.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3943"/>
+        <location filename="../src/mainwindow.cpp" line="3970"/>
         <source>You must restart Shotcut to change the data directory.
 Do you want to continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>Musíte reštartovať Shotcut kvôli zmene priečinka údajov.
+Chcete pokračovať?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3952"/>
+        <location filename="../src/mainwindow.cpp" line="3979"/>
         <source>Data Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Priečinok údajov</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4035"/>
+        <location filename="../src/mainwindow.cpp" line="4062"/>
         <source>Add Custom Layout</source>
-        <translation type="unfinished"></translation>
+        <translation>Pridať vlastné usporiadanie</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4036"/>
+        <location filename="../src/mainwindow.cpp" line="4063"/>
         <source>Name</source>
         <translation>Názov</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4064"/>
+        <location filename="../src/mainwindow.cpp" line="4091"/>
         <source>Remove Video Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Odstrániť režim videa</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4078"/>
+        <location filename="../src/mainwindow.cpp" line="4105"/>
         <source>Remove Layout</source>
-        <translation type="unfinished"></translation>
+        <translation>Odstrániť usporiadanie</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4207"/>
+        <location filename="../src/mainwindow.cpp" line="4234"/>
         <source>GPU effects are EXPERIMENTAL, UNSTABLE and UNSUPPORTED! Unsupported means do not report bugs about it.
 
 Do you want to disable GPU effects and restart Shotcut?</source>
-        <translation type="unfinished"></translation>
+        <translation>Efekty GPU sú EXPERIMENTÁLNE, NESTABILNÉ a NEPODPOROVANÉ! Nepodporované znamená, že sa o nich nehlásia chyby. 
+
+Chcete zakázať efekty GPU a reštartovať Shotcut?</translation>
     </message>
 </context>
 <context>
@@ -4309,16 +4159,16 @@ Do you want to disable GPU effects and restart Shotcut?</source>
     <message>
         <location filename="../src/jobs/meltjob.cpp" line="51"/>
         <source>Open the output file in the Shotcut player</source>
-        <translation>Otvoriť výstupný súbor v prehrávači Shotcut</translation>
+        <translation>Otvorí výstupný súbor v prehrávači Shotcut</translation>
     </message>
     <message>
         <location filename="../src/jobs/meltjob.cpp" line="55"/>
         <location filename="../src/jobs/meltjob.cpp" line="56"/>
         <source>Show In Folder</source>
-        <translation>Ukázať v zložke</translation>
+        <translation>Zobraziť v priečinku</translation>
     </message>
     <message>
-        <location filename="../src/jobs/meltjob.cpp" line="137"/>
+        <location filename="../src/jobs/meltjob.cpp" line="139"/>
         <source>MLT XML</source>
         <translation>MLT XML</translation>
     </message>
@@ -4328,36 +4178,36 @@ Do you want to disable GPU effects and restart Shotcut?</source>
     <message>
         <location filename="../src/mvcp/meltedclipsmodel.cpp" line="92"/>
         <source>%1 GiB</source>
-        <translation>%1 GiB</translation>
+        <translation>%1 GB</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedclipsmodel.cpp" line="95"/>
         <source>%1 MiB</source>
-        <translation>%1 MiB</translation>
+        <translation>%1 MB</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedclipsmodel.cpp" line="98"/>
         <source>%1 KiB</source>
-        <translation>%1 KiB</translation>
+        <translation>%1 kB</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedclipsmodel.cpp" line="99"/>
         <source>%1 B</source>
-        <translation>%1 B</translation>
+        <translation>%1 b</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/mvcp/meltedclipsmodel.cpp" line="102"/>
         <source>%n item(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n položka</numerusform>
+            <numerusform>%n položky</numerusform>
+            <numerusform>%n položiek</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedclipsmodel.cpp" line="117"/>
         <source>Clip</source>
-        <translation>Záber</translation>
+        <translation>Klip</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedclipsmodel.cpp" line="117"/>
@@ -4370,12 +4220,12 @@ Do you want to disable GPU effects and restart Shotcut?</source>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.ui" line="18"/>
         <source>Melted Playlist</source>
-        <translation>Zoznam záberov videoservera</translation>
+        <translation>Zoznam prehrávania MLT súborov</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.ui" line="67"/>
         <source>Add something to the playlist</source>
-        <translation>Pridať niečo do zoznamu záberov</translation>
+        <translation>Pridať niečo do zoznamu prehrávania</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.ui" line="84"/>
@@ -4385,7 +4235,7 @@ Do you want to disable GPU effects and restart Shotcut?</source>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.ui" line="98"/>
         <source>Display a menu of additional actions</source>
-        <translation>Zobraziť ponuku dodatočných činností</translation>
+        <translation>Zobraziť ponuku prídavných akcií</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.ui" line="128"/>
@@ -4400,7 +4250,7 @@ Do you want to disable GPU effects and restart Shotcut?</source>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.ui" line="142"/>
         <source>Open As Clip</source>
-        <translation>Otvoriť ako záber</translation>
+        <translation>Otvoriť ako klip</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.ui" line="145"/>
@@ -4415,12 +4265,12 @@ Do you want to disable GPU effects and restart Shotcut?</source>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.ui" line="155"/>
         <source>Goto</source>
-        <translation>Ísť na</translation>
+        <translation>Prejsť na</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.ui" line="158"/>
         <source>Go to the start of this cut in the playlist</source>
-        <translation>Ísť na začiatok tohto strihu v zozname záberov.</translation>
+        <translation>Prejsť na začiatok tohto strihu v zozname prehrávania</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.ui" line="163"/>
@@ -4430,17 +4280,17 @@ Do you want to disable GPU effects and restart Shotcut?</source>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.ui" line="166"/>
         <source>Remove all items from the playlist</source>
-        <translation>Odstrániť všetky položky zo zoznamu záberov</translation>
+        <translation>Odstrániť všetky položky zo zoznamu prehrávania</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.ui" line="171"/>
         <source>Wipe</source>
-        <translation>Vymazať</translation>
+        <translation>Zotierať</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.ui" line="174"/>
         <source>Remove all items before the currently playing clip</source>
-        <translation>Odstrániť všetky položky pred teraz prehrávaným záberom</translation>
+        <translation>Odstráni všetky položky pred súčasne prehrávaným klipom</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.ui" line="179"/>
@@ -4450,7 +4300,7 @@ Do you want to disable GPU effects and restart Shotcut?</source>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.ui" line="182"/>
         <source>Remove all items except the currently playing clip</source>
-        <translation>Odstrániť všetky položky okrem teraz prehrávaného záberu</translation>
+        <translation>Odstráni všetky položky okrem súčasne prehrávaného klipu</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.cpp" line="198"/>
@@ -4460,7 +4310,7 @@ Do you want to disable GPU effects and restart Shotcut?</source>
 IMPORTANT: You cannot Undo this action!
 
 Do you want to continue?</source>
-        <translation>&quot;Odstrániť všetko&quot; odstráni všetky zábery v zozname záberov.
+        <translation>&quot;Odstrániť všetko&quot; odstráni všetky klipy v zozname prehrávania.
 
 DÔLEŽITÉ: Tento krok nemožno vrátiť späť!
 
@@ -4474,7 +4324,7 @@ except the currently playing clip.
 IMPORTANT: You cannot Undo this action!
 
 Do you want to continue?</source>
-        <translation>&quot;Vyčistiť&quot; odstráni všetky zábery v zozname záberov okrem teraz prehrávaného záberu.
+        <translation>&quot;Vyčistiť&quot; odstráni všetky klipy v zozname prehrávania okrem súčasne prehrávaného klipu.
 
 DÔLEŽITÉ: Tento krok nemožno vrátiť späť!
 
@@ -4486,22 +4336,22 @@ Chcete pokračovať?</translation>
     <message>
         <location filename="../src/mvcp/meltedplaylistmodel.cpp" line="112"/>
         <source>#</source>
-        <translation>Č.</translation>
+        <translation>#</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistmodel.cpp" line="114"/>
         <source>Clip</source>
-        <translation>Záber</translation>
+        <translation>Klip</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistmodel.cpp" line="116"/>
         <source>In</source>
-        <translation>Začiatok záberu</translation>
+        <translation>Od</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistmodel.cpp" line="118"/>
         <source>Out</source>
-        <translation>Koniec záberu</translation>
+        <translation>Do</translation>
     </message>
 </context>
 <context>
@@ -4509,7 +4359,7 @@ Chcete pokračovať?</translation>
     <message>
         <location filename="../src/mvcp/meltedserverdock.ui" line="18"/>
         <source>Melted Server</source>
-        <translation>Videoserver</translation>
+        <translation>Video server MLT súborov</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedserverdock.ui" line="52"/>
@@ -4540,14 +4390,14 @@ p, li { white-space: pre-wrap; }
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Jedno kliknutie&lt;/span&gt; na jednotku pre otvorenie jej zoznamu skladieb.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Jedno kliknutie&lt;/span&gt; na jednotku pre otvorenie jej zoznamu prehrávania.&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Dvojité kliknutie&lt;/span&gt; na jednotku pre jej ovládanie v prehrávači, alebo &lt;span style=&quot; font-weight:600;&quot;&gt;kliknutie pravým tlačítkom myši&lt;/span&gt; na jednotku pre činnosti spojené s ovládaním pohybu v nej.&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Jedno kliknutie&lt;/span&gt; na položku v zozname skladieb pre jej vybranie pre operácie úprav (napr. Vložiť).&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Dvojklik&lt;/span&gt; na jednotku pre jej ovládanie v prehrávači, alebo &lt;span style=&quot; font-weight:600;&quot;&gt;kliknutie pravým tlačítkom myši&lt;/span&gt; na jednotku pre činnosti spojené s ovládaním pohybu v nej.&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Jedno kliknutie&lt;/span&gt; na položku v zozname prehrávania pre jej vybranie pre operácie úprav (napr. Vložiť).&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Dvojité kliknutie&lt;/span&gt; na položku v zozname skladieb pre prehľadávanie jednotky.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Dvojklik&lt;/span&gt; na položku v zozname prehrávania pre prehľadávanie jednotky.&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Potiahnuť a pustiť&lt;/span&gt; zo stromu so súbormi serveru do zoznamu skladieb, alebo &lt;span style=&quot; font-weight:600;&quot;&gt;jedno kliknutie&lt;/span&gt; na záber pre jeho vybranie pre použitie s činnosťami &lt;span style=&quot; font-weight:600;&quot;&gt;Pridať&lt;/span&gt; a &lt;span style=&quot; font-weight:600;&quot;&gt;Vložiť&lt;/span&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Potiahnuť a pustiť&lt;/span&gt; zo stromu so súbormi servera do zoznamu prehrávania, alebo &lt;span style=&quot; font-weight:600;&quot;&gt;jedno kliknutie&lt;/span&gt; na klip pre jeho vybranie pre použitie s akciami &lt;span style=&quot; font-weight:600;&quot;&gt;Pridať&lt;/span&gt; a &lt;span style=&quot; font-weight:600;&quot;&gt;Vložiť&lt;/span&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedserverdock.ui" line="195"/>
@@ -4557,7 +4407,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/mvcp/meltedserverdock.ui" line="208"/>
         <source>Display a menu of additional actions</source>
-        <translation>Zobraziť ponuku dodatočných činností</translation>
+        <translation>Zobraziť ponuku prídavných akcií</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedserverdock.ui" line="238"/>
@@ -4587,7 +4437,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/mvcp/meltedserverdock.ui" line="263"/>
         <source>Map Clips Root</source>
-        <translation>Zmapovať koreň záberu</translation>
+        <translation>Zmapovať koreň klipov</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedserverdock.cpp" line="152"/>
@@ -4597,7 +4447,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/mvcp/meltedserverdock.cpp" line="257"/>
         <source>Choose Directory</source>
-        <translation>Vybrať adresár</translation>
+        <translation>Vybrať priečinok</translation>
     </message>
 </context>
 <context>
@@ -4615,7 +4465,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/mvcp/meltedunitsmodel.cpp" line="111"/>
         <source>unknown</source>
-        <translation>neznámy</translation>
+        <translation>neznáme</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedunitsmodel.cpp" line="112"/>
@@ -4658,12 +4508,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/glwidget.cpp" line="506"/>
         <source>You cannot drag from Project.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nemôžete preťahovať z projektu.</translation>
     </message>
     <message>
         <location filename="../src/glwidget.cpp" line="509"/>
         <source>You cannot drag a non-seekable source</source>
-        <translation type="unfinished"></translation>
+        <translation>Nemožno pretiahnuť nevyhľadateľný zdroj</translation>
     </message>
 </context>
 <context>
@@ -4671,7 +4521,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/mvcp/mvcpthread.cpp" line="165"/>
         <source>unknown</source>
-        <translation>neznámy</translation>
+        <translation>neznáme</translation>
     </message>
     <message>
         <location filename="../src/mvcp/mvcpthread.cpp" line="166"/>
@@ -4681,7 +4531,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/mvcp/mvcpthread.cpp" line="167"/>
         <source>offline</source>
-        <translation>nepripojené</translation>
+        <translation>bez pripojenia</translation>
     </message>
     <message>
         <location filename="../src/mvcp/mvcpthread.cpp" line="168"/>
@@ -4719,7 +4569,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/widgets/networkproducerwidget.ui" line="26"/>
         <source>Network Stream</source>
-        <translation>Sieťový stream</translation>
+        <translation>Priepustnosť siete</translation>
     </message>
     <message>
         <location filename="../src/widgets/networkproducerwidget.ui" line="41"/>
@@ -4743,54 +4593,56 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/widgets/newprojectfolder.ui" line="181"/>
         <location filename="../src/widgets/newprojectfolder.ui" line="198"/>
         <source>PushButton</source>
-        <translation type="unfinished"></translation>
+        <translation>Tlačidlo stlačenia</translation>
     </message>
     <message>
         <location filename="../src/widgets/newprojectfolder.ui" line="224"/>
         <source>Start</source>
-        <translation>Začiatok</translation>
+        <translation>Štart</translation>
     </message>
     <message>
         <location filename="../src/widgets/newprojectfolder.ui" line="211"/>
         <source>A folder with this name will be created containing
 a project file with the same name.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bude vytvorený priečinok s týmto názvom, ktorý bude
+obsahovať súbor s projektom s rovnakým názvom.</translation>
     </message>
     <message>
         <location filename="../src/widgets/newprojectfolder.ui" line="152"/>
         <source>Projects folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Priečinok projektov</translation>
     </message>
     <message>
         <location filename="../src/widgets/newprojectfolder.ui" line="256"/>
         <source>Project name</source>
-        <translation type="unfinished"></translation>
+        <translation>Názov projektu</translation>
     </message>
     <message>
         <location filename="../src/widgets/newprojectfolder.ui" line="246"/>
         <source>Video mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Video režim</translation>
     </message>
     <message>
         <location filename="../src/widgets/newprojectfolder.ui" line="194"/>
         <source>This is the folder to contain Shotcut project folders.
 A folder will be created in this folder for each project.</source>
-        <translation type="unfinished"></translation>
+        <translation>Toto je priečinok, ktorý obsahuje položky s projektami programu Shotcut.
+V tomto priečinku bude pre každý projekt vytvorený priečinok.</translation>
     </message>
     <message>
         <location filename="../src/widgets/newprojectfolder.ui" line="308"/>
         <source>Automatic means the resolution and frame rate are based on the &lt;b&gt;first&lt;/b&gt; file you &lt;b&gt;add&lt;/b&gt; to your project. If the first file is not a video clip (for example, image or audio), then it will be 1920x1080p 25 fps.</source>
-        <translation type="unfinished"></translation>
+        <translation>Automaticky znamená, že rozlíšenie a snímkovanie sú založené na &lt;b&gt;prvom&lt;/b&gt; súbore, ktorý &lt;b&gt;pridáte&lt;/b&gt; do svojho projektu. Pokiaľ sa pri prvom súbore nejedná o videoklip (napríklad obrázok alebo audio), potom to bude 1920x1080p 25 snímok/s.</translation>
     </message>
     <message>
         <location filename="../src/widgets/newprojectfolder.ui" line="59"/>
         <source>Recent Projects</source>
-        <translation type="unfinished"></translation>
+        <translation>Nedávne projekty</translation>
     </message>
     <message>
         <location filename="../src/widgets/newprojectfolder.ui" line="136"/>
         <source>New Project</source>
-        <translation type="unfinished"></translation>
+        <translation>Nový projekt</translation>
     </message>
     <message>
         <location filename="../src/widgets/newprojectfolder.ui" line="350"/>
@@ -4805,12 +4657,12 @@ A folder will be created in this folder for each project.</source>
     <message>
         <location filename="../src/widgets/newprojectfolder.ui" line="360"/>
         <source>Remove...</source>
-        <translation type="unfinished"></translation>
+        <translation>Odstrániť...</translation>
     </message>
     <message>
         <location filename="../src/widgets/newprojectfolder.cpp" line="121"/>
         <source>Projects Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Priečinok projektov</translation>
     </message>
     <message>
         <location filename="../src/widgets/newprojectfolder.cpp" line="150"/>
@@ -4820,20 +4672,23 @@ A folder will be created in this folder for each project.</source>
     <message>
         <location filename="../src/widgets/newprojectfolder.cpp" line="167"/>
         <source>Remove Video Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Odstrániť režim videa</translation>
     </message>
     <message>
         <location filename="../src/widgets/newprojectfolder.cpp" line="196"/>
         <source>There is already a project with that name.
 Try again with a different name.</source>
-        <translation type="unfinished"></translation>
+        <translation>Projekt s týmto názvom už existuje.
+Skúste to znovu s iným názvom.</translation>
     </message>
     <message>
         <location filename="../src/widgets/newprojectfolder.cpp" line="204"/>
         <source>Unable to create folder %1
 Perhaps you do not have permission.
 Try again with a different folder.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nemožno vytvoriť priečinok %1
+Možno nemáte oprávnenie.
+Skúste to znovu s iným priečinkom.</translation>
     </message>
 </context>
 <context>
@@ -4894,13 +4749,13 @@ Try again with a different folder.</source>
         <location filename="../src/openotherdialog.cpp" line="51"/>
         <location filename="../src/openotherdialog.cpp" line="138"/>
         <source>JACK Audio</source>
-        <translation>JACK Audio</translation>
+        <translation>Audio JACK</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="53"/>
         <location filename="../src/openotherdialog.cpp" line="140"/>
         <source>ALSA Audio</source>
-        <translation>Zvuk ALSA</translation>
+        <translation>Audio ALSA</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="56"/>
@@ -4914,7 +4769,7 @@ Try again with a different folder.</source>
         <location filename="../src/openotherdialog.cpp" line="67"/>
         <location filename="../src/openotherdialog.cpp" line="142"/>
         <source>Audio/Video Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Audio/video zariadenie</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="72"/>
@@ -4966,13 +4821,13 @@ Try again with a different folder.</source>
         <location filename="../src/openotherdialog.cpp" line="102"/>
         <location filename="../src/openotherdialog.cpp" line="162"/>
         <source>Audio Tone</source>
-        <translation>Zvukový tón</translation>
+        <translation>Audio tón</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="106"/>
         <location filename="../src/openotherdialog.cpp" line="164"/>
         <source>Count</source>
-        <translation type="unfinished"></translation>
+        <translation>Počet</translation>
     </message>
 </context>
 <context>
@@ -4980,37 +4835,37 @@ Try again with a different folder.</source>
     <message>
         <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="118"/>
         <source>Seek to previous keyframe</source>
-        <translation type="unfinished"></translation>
+        <translation>Prehľadať po predošlú kľúčovú snímku</translation>
     </message>
     <message>
         <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="118"/>
         <source>Seek backwards</source>
-        <translation type="unfinished"></translation>
+        <translation>Prehľadávať dozadu</translation>
     </message>
     <message>
         <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="132"/>
         <source>Add a keyframe at play head</source>
-        <translation type="unfinished"></translation>
+        <translation>Pridať kľúčovú snímku za snímaciu hlavu</translation>
     </message>
     <message>
         <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="153"/>
         <source>Delete the selected keyframe</source>
-        <translation type="unfinished"></translation>
+        <translation>Odstrániť vybranú kľúčovú snímku</translation>
     </message>
     <message>
         <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="175"/>
         <source>Seek to next keyframe</source>
-        <translation type="unfinished"></translation>
+        <translation>Prehľadať po ďalšiu kľúčovú snímku</translation>
     </message>
     <message>
         <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="175"/>
         <source>Seek forwards</source>
-        <translation type="unfinished"></translation>
+        <translation>Prehľadávať dopredu</translation>
     </message>
     <message>
         <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="186"/>
         <source>Unlock track</source>
-        <translation type="unfinished"></translation>
+        <translation>Odomknúť stopu</translation>
     </message>
     <message>
         <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="186"/>
@@ -5071,157 +4926,157 @@ Try again with a different folder.</source>
     <message>
         <location filename="../src/player.cpp" line="67"/>
         <source>Project</source>
-        <translation type="unfinished">Projekt</translation>
+        <translation>Projekt</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="149"/>
         <source>Adjust the audio volume</source>
-        <translation>Upraviť hlasitosť zvuku</translation>
+        <translation>Nastaviť hlasitosť zvuku</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="168"/>
         <source>Silence the audio</source>
-        <translation>Umlčať zvuk</translation>
+        <translation>Stíšiť audio</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="183"/>
         <source>Transport Controls</source>
-        <translation>Ovládanie presunu</translation>
+        <translation>Riadenie presunu</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="190"/>
         <source>Current position</source>
-        <translation>Terajšia poloha</translation>
+        <translation>Súčasná poloha</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="194"/>
         <source>Total Duration</source>
-        <translation>Celková doba trvania</translation>
+        <translation>Celkové trvanie</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="199"/>
         <source>In Point</source>
-        <translation>Počiatočný bod</translation>
+        <translation>Po bod</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="203"/>
         <source>Selected Duration</source>
-        <translation>Vybraná doba trvania</translation>
+        <translation>Vybrané trvanie</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="219"/>
         <source>Zoom Fit</source>
-        <translation>Prispôsobiť veľkosť</translation>
+        <translation>Prispôsobiť priblíženie</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="222"/>
         <source>Zoom 10%</source>
-        <translation type="unfinished">Zväčšenie 200% {10%?}</translation>
+        <translation>Priblíženie 10%</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="225"/>
         <source>Zoom 25%</source>
-        <translation type="unfinished">Zväčšenie 200% {25%?}</translation>
+        <translation>Priblíženie 25%</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="228"/>
         <source>Zoom 50%</source>
-        <translation>Zväčšenie 50%</translation>
+        <translation>Priblíženie 50%</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="231"/>
         <source>Zoom 100%</source>
-        <translation>Zväčšenie 100%</translation>
+        <translation>Priblíženie 100%</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="234"/>
         <source>Zoom 200%</source>
-        <translation>Zväčšenie 200%</translation>
+        <translation>Priblíženie 200%</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="254"/>
         <source>Toggle zoom</source>
-        <translation>Prepnúť zväčšenie</translation>
+        <translation>Prepnúť priblíženie</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="262"/>
         <source>2x2 Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Mriežka 2x2</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="267"/>
         <source>3x3 Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Mriežka 3x3</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="271"/>
         <source>4x4 Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Mriežka 4x4</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="275"/>
         <source>16x16 Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Mriežka 16x16</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="283"/>
         <source>10 Pixel Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Mriežka 10 pixelov</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="572"/>
         <source>Not Seekable</source>
-        <translation type="unfinished"></translation>
+        <translation>Neprehľadávateľný</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="279"/>
         <source>20 Pixel Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Mriežka 20 pixelov</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="237"/>
         <source>Zoom 300%</source>
-        <translation type="unfinished">Zväčšenie 200% {300%?}</translation>
+        <translation>Priblíženie 300%</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="240"/>
         <source>Zoom 400%</source>
-        <translation type="unfinished">Zväčšenie 200% {400%?}</translation>
+        <translation>Priblíženie 400%</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="243"/>
         <source>Zoom 500%</source>
-        <translation type="unfinished">Zväčšenie 200% {500%?}</translation>
+        <translation>Priblíženie 500%</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="246"/>
         <source>Zoom 750%</source>
-        <translation type="unfinished">Zväčšenie 200% {750%?}</translation>
+        <translation>Priblíženie 750%</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="249"/>
         <source>Zoom 1000%</source>
-        <translation type="unfinished">Zväčšenie 200% {1000%?}</translation>
+        <translation>Priblíženie 1000%</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="287"/>
         <source>80/90% Safe Areas</source>
-        <translation type="unfinished"></translation>
+        <translation>Bezpečná oblasť 80/90%</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="291"/>
         <source>EBU R95 Safe Areas</source>
-        <translation type="unfinished"></translation>
+        <translation>Bezpečná oblasť EBU R95</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="296"/>
         <source>Snapping</source>
-        <translation type="unfinished"></translation>
+        <translation>Prichytávanie</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="305"/>
         <source>Toggle grid display on the player</source>
-        <translation type="unfinished"></translation>
+        <translation>Prepnúť zobrazenie mriežky na prehrávači</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="391"/>
@@ -5301,7 +5156,7 @@ Try again with a different folder.</source>
     <message>
         <location filename="../src/player.cpp" line="420"/>
         <source>Show the volume control</source>
-        <translation>Ukázať ovládanie hlasitosti</translation>
+        <translation>Zobraziť ovládanie hlasitosti</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="486"/>
@@ -5316,12 +5171,12 @@ Try again with a different folder.</source>
     <message>
         <location filename="../src/player.cpp" line="999"/>
         <source>Unmute</source>
-        <translation type="unfinished"></translation>
+        <translation>Zrušiť stlmenie</translation>
     </message>
     <message>
         <location filename="../src/player.cpp" line="1004"/>
         <source>Mute</source>
-        <translation type="unfinished">Stlmiť</translation>
+        <translation>Stlmiť</translation>
     </message>
 </context>
 <context>
@@ -5329,7 +5184,7 @@ Try again with a different folder.</source>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="18"/>
         <source>Playlist</source>
-        <translation>Zoznam</translation>
+        <translation>Zoznam prehrávania</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="59"/>
@@ -5345,20 +5200,20 @@ p, li { white-space: pre-wrap; }
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:16px; margin-left:-24px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Dvakrát kliknite&lt;/span&gt; na položku v zozname záberov pre jej otvorenie v prehrávači.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:-24px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Môžete sa voľne dívať na zábery bez toho, aby ste ich nutne pridali do zoznamu záberov alebo ich zavreli.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:-24px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Pre skrátenie alebo upravenie položky v zozname záberov na ňu pre jej otvorenie &lt;span style=&quot; font-weight:600;&quot;&gt;dvakrát kliknite&lt;/span&gt;, urobte zmeny a potom kliknite na &lt;span style=&quot; font-weight:600;&quot;&gt;Obnoviť&lt;/span&gt;.&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:-24px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Ťahajte a púšťajte&lt;/span&gt; pre preusporiadanie položiek.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;p style=&quot; margin-top:12px; margin-bottom:16px; margin-left:-24px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Dvakrát kliknite&lt;/span&gt; na položku v zozname prehrávania pre jej otvorenie v prehrávači.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:-24px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Môžete mať voľný náhľad bez jej nutného pridania do zoznamu prehrávania alebo ju zatvorte.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:-24px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Pre skrátenie alebo úpravu položiek v zozname prehrávania pre jej otvorenie &lt;span style=&quot; font-weight:600;&quot;&gt;dvakrát na na ňu kliknite&lt;/span&gt;, urobte zmeny a potom kliknite na &lt;span style=&quot; font-weight:600;&quot;&gt;Obnoviť&lt;/span&gt;.&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:16px; margin-left:-24px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Ťahajte a pusťte&lt;/span&gt; pre zmenu usporiadania položiek.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="92"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Double-click a playlist item to open it in the player.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dvojkliknite na položku v zozname záberov pre jej otvorenie v prehrávači.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Pre otvorenie v prehrávači dvakrát kliknite na položku v zozname prehrávania.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="145"/>
         <source>Add the Source to the playlist</source>
-        <translation type="unfinished"></translation>
+        <translation>Pridať zdroj do zoznamu prehrávania</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="162"/>
@@ -5374,24 +5229,24 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/docks/playlistdock.ui" line="193"/>
         <location filename="../src/docks/playlistdock.ui" line="430"/>
         <source>View as tiles</source>
-        <translation type="unfinished"></translation>
+        <translation>Zobraziť ako dlaždice</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="207"/>
         <location filename="../src/docks/playlistdock.ui" line="441"/>
         <source>View as icons</source>
-        <translation type="unfinished"></translation>
+        <translation>Zobraziť ako ikony</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="221"/>
         <location filename="../src/docks/playlistdock.ui" line="419"/>
         <source>View as details</source>
-        <translation type="unfinished"></translation>
+        <translation>Zobraziť ako podrobnosti</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="235"/>
         <source>Display a menu of additional actions</source>
-        <translation>Zobraziť ponuku dodatočných činností</translation>
+        <translation>Zobraziť ponuku prídavných akcií</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="291"/>
@@ -5416,12 +5271,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/docks/playlistdock.ui" line="328"/>
         <source>Set Creation Time...</source>
-        <translation type="unfinished"></translation>
+        <translation>Nastaviť čas vytvorenia...</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="333"/>
         <source>Goto</source>
-        <translation>Ísť na</translation>
+        <translation>Prejsť na</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="265"/>
@@ -5432,53 +5287,53 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/docks/playlistdock.ui" line="271"/>
         <source>Shift+V</source>
-        <translation type="unfinished"></translation>
+        <translation>Shift+V</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="280"/>
         <location filename="../src/docks/playlistdock.ui" line="283"/>
         <source>Append</source>
-        <translation type="unfinished"></translation>
+        <translation>Pripojiť</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="286"/>
         <source>Shift+A</source>
-        <translation type="unfinished"></translation>
+        <translation>Shift+A</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="304"/>
         <source>Shift+B</source>
-        <translation type="unfinished"></translation>
+        <translation>Shift+B</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="309"/>
         <source>Open </source>
-        <translation type="unfinished"></translation>
+        <translation>Otvoriť</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="312"/>
         <source>Open the clip in the Source player</source>
-        <translation type="unfinished"></translation>
+        <translation>Otvorí klip v zdrojovom prehrávači</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="315"/>
         <source>Return</source>
-        <translation type="unfinished"></translation>
+        <translation>Enter</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="323"/>
         <source>Shift+X</source>
-        <translation type="unfinished"></translation>
+        <translation>Shift+X</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="336"/>
         <source>Go to the start of this clip in the Project player</source>
-        <translation type="unfinished"></translation>
+        <translation>Prejsť na začiatok klipu v prehrávači projektu</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="339"/>
         <source>Shift+Return</source>
-        <translation type="unfinished"></translation>
+        <translation>Shift+Enter</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="344"/>
@@ -5488,7 +5343,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/docks/playlistdock.ui" line="347"/>
         <source>Remove all items from the playlist</source>
-        <translation>Odstrániť všetky položky zo zoznamu záberov</translation>
+        <translation>Odstráni všetky položky zo zoznamu prehrávania</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="355"/>
@@ -5499,33 +5354,33 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/docks/playlistdock.ui" line="363"/>
         <location filename="../src/docks/playlistdock.ui" line="366"/>
         <source>In and Out - Left/Right</source>
-        <translation>Začiatok a koniec záberu - vľavo/vpravo</translation>
+        <translation>Od a do - vľavo/vpravo</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="374"/>
         <location filename="../src/docks/playlistdock.ui" line="377"/>
         <source>In and Out - Top/Bottom</source>
-        <translation>Začiatok a koniec záberu - hore/dolu</translation>
+        <translation>Od a do - hore/dolu</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="385"/>
         <source>In Only - Small</source>
-        <translation>Iba začiatok záberu - malý</translation>
+        <translation>Len od - malé</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="393"/>
         <source>In Only - Large</source>
-        <translation>Iba začiatok záberu - veľký</translation>
+        <translation>Len do - veľké</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="398"/>
         <source>Add Selected to Timeline</source>
-        <translation type="unfinished"></translation>
+        <translation>Pridať vybrané na časovú os</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="460"/>
         <source>Play After Open</source>
-        <translation type="unfinished"></translation>
+        <translation>Prehrať po otvorení</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="465"/>
@@ -5535,47 +5390,47 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/docks/playlistdock.ui" line="468"/>
         <source>Ctrl+Shift+A</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Shift+A</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="473"/>
         <source>Select None</source>
-        <translation type="unfinished"></translation>
+        <translation>Nevybrať nič</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="476"/>
         <source>Ctrl+Shift+D</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Shift+D</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="481"/>
         <source>Update Thumbnails</source>
-        <translation type="unfinished"></translation>
+        <translation>Obnoviť miniatúry</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="403"/>
         <source>Sort By Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Triediť podľa názvu</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="408"/>
         <source>Sort By Date</source>
-        <translation type="unfinished"></translation>
+        <translation>Triediť podľa dátumu</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="416"/>
         <source>Details</source>
-        <translation type="unfinished"></translation>
+        <translation>Detaily</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="427"/>
         <source>Tiles</source>
-        <translation type="unfinished"></translation>
+        <translation>Dlaždice</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="438"/>
         <source>Icons</source>
-        <translation type="unfinished"></translation>
+        <translation>Ikony</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="446"/>
@@ -5585,38 +5440,38 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/docks/playlistdock.ui" line="449"/>
         <source>Open a copy of the clip in the Source player</source>
-        <translation type="unfinished"></translation>
+        <translation>Otvorí a skopíruje klip v zdrojovom prehrávači</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="452"/>
         <source>Shift+C</source>
-        <translation type="unfinished"></translation>
+        <translation>Shift+C</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="303"/>
         <source>Sort</source>
-        <translation type="unfinished"></translation>
+        <translation>Triediť</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="310"/>
         <source>View mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Režim zobrazenia</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="317"/>
         <source>Thumbnails</source>
-        <translation>Náhľady</translation>
+        <translation>Miniatúry</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="414"/>
         <location filename="../src/docks/playlistdock.cpp" line="671"/>
         <source>You cannot insert a playlist into a playlist!</source>
-        <translation>Nemôžete vložiť zoznam záberov do zoznamu záberov!</translation>
+        <translation>Nemôžete vložiť zoznam prehrávania do zoznamu prehrávania!</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="426"/>
         <source>Remove %1 playlist items</source>
-        <translation type="unfinished"></translation>
+        <translation>Odstrániť %1 položky zoznamu prehrávania</translation>
     </message>
 </context>
 <context>
@@ -5624,37 +5479,37 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/models/playlistmodel.cpp" line="362"/>
         <source>#</source>
-        <translation>Č.</translation>
+        <translation>#</translation>
     </message>
     <message>
         <location filename="../src/models/playlistmodel.cpp" line="364"/>
         <source>Thumbnails</source>
-        <translation>Náhľady</translation>
+        <translation>Miniatúry</translation>
     </message>
     <message>
         <location filename="../src/models/playlistmodel.cpp" line="366"/>
         <source>Clip</source>
-        <translation>Záber</translation>
+        <translation>Klip</translation>
     </message>
     <message>
         <location filename="../src/models/playlistmodel.cpp" line="368"/>
         <source>In</source>
-        <translation>Začiatok záberu</translation>
+        <translation>Dnu</translation>
     </message>
     <message>
         <location filename="../src/models/playlistmodel.cpp" line="370"/>
         <source>Duration</source>
-        <translation>Doba trvania</translation>
+        <translation>Trvanie</translation>
     </message>
     <message>
         <location filename="../src/models/playlistmodel.cpp" line="372"/>
         <source>Start</source>
-        <translation>Začiatok</translation>
+        <translation>Štart</translation>
     </message>
     <message>
         <location filename="../src/models/playlistmodel.cpp" line="374"/>
         <source>Date</source>
-        <translation type="unfinished"></translation>
+        <translation>Dátum</translation>
     </message>
 </context>
 <context>
@@ -5667,12 +5522,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="72"/>
         <source>Delete</source>
-        <translation>Zmazať</translation>
+        <translation>Odstrániť</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="84"/>
         <source>Save Preset</source>
-        <translation>Uložiť prednastavenie</translation>
+        <translation>Uložiť predvoľbu</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="101"/>
@@ -5694,12 +5549,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="140"/>
         <source>Delete Preset</source>
-        <translation>Zmazať prednastavenie</translation>
+        <translation>Zmazať predvoľbu</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="149"/>
         <source>Are you sure you want to delete %1?</source>
-        <translation>Istotne chcete zmazať %1?</translation>
+        <translation>Istotne chcete odstrániť %1?</translation>
     </message>
 </context>
 <context>
@@ -5730,7 +5585,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/mvcp/qconsole.cpp" line="759"/>
         <source>Redo</source>
-        <translation>Znova</translation>
+        <translation>Vpred</translation>
     </message>
     <message>
         <location filename="../src/mvcp/qconsole.cpp" line="760"/>
@@ -5760,7 +5615,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/mvcp/qconsole.cpp" line="765"/>
         <source>Paste</source>
-        <translation>Vložiť</translation>
+        <translation>Prilepiť</translation>
     </message>
     <message>
         <location filename="../src/mvcp/qconsole.cpp" line="766"/>
@@ -5770,12 +5625,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/mvcp/qconsole.cpp" line="767"/>
         <source>Delete</source>
-        <translation>Zmazať</translation>
+        <translation>Odstrániť</translation>
     </message>
     <message>
         <location filename="../src/mvcp/qconsole.cpp" line="768"/>
         <source>Del</source>
-        <translation>Klávesa Delete</translation>
+        <translation>Del</translation>
     </message>
     <message>
         <location filename="../src/mvcp/qconsole.cpp" line="769"/>
@@ -5803,27 +5658,27 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/commands/playlistcommands.cpp" line="32"/>
         <source>Append playlist item %1</source>
-        <translation>Pripojiť položku zoznamu záberov %1</translation>
+        <translation>Pripojiť k zoznamu prehrávania položku %1</translation>
     </message>
     <message>
         <location filename="../src/commands/playlistcommands.cpp" line="54"/>
         <source>Insert playist item %1</source>
-        <translation>Vložiť položku zoznamu skladieb %1</translation>
+        <translation>Vložiť do zoznamu prehrávania položku %1</translation>
     </message>
     <message>
         <location filename="../src/commands/playlistcommands.cpp" line="76"/>
         <source>Update playlist item %1</source>
-        <translation>Obnoviť položku zoznamu záberov %1</translation>
+        <translation>Obnoviť zo zoznamu prehrávania položku %1</translation>
     </message>
     <message>
         <location filename="../src/commands/playlistcommands.cpp" line="114"/>
         <source>Remove playlist item %1</source>
-        <translation>Odstrániť položku zoznamu záberov %1</translation>
+        <translation>Odstrániť zo zoznamu prehrávania položku %1</translation>
     </message>
     <message>
         <location filename="../src/commands/playlistcommands.cpp" line="135"/>
         <source>Clear playlist</source>
-        <translation>Vyprázdniť zoznam záberov</translation>
+        <translation>Vyčistiť zoznam prehrávania</translation>
     </message>
     <message>
         <location filename="../src/commands/playlistcommands.cpp" line="166"/>
@@ -5833,17 +5688,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/commands/playlistcommands.cpp" line="189"/>
         <source>Sort playlist by %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Odstrániť predvoľbu</translation>
     </message>
     <message>
         <location filename="../src/commands/playlistcommands.cpp" line="222"/>
         <source>Trim playlist item %1 in</source>
-        <translation type="unfinished"></translation>
+        <translation>Orezať zoznam prehrávania od %1</translation>
     </message>
     <message>
         <location filename="../src/commands/playlistcommands.cpp" line="260"/>
         <source>Trim playlist item %1 out</source>
-        <translation type="unfinished"></translation>
+        <translation>Orezať zoznam prehrávania po %1</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="34"/>
@@ -5863,7 +5718,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="141"/>
         <source>Lift from track</source>
-        <translation>Vyzdvihnúť zo stopy</translation>
+        <translation>Vyňať zo stopy</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="168"/>
@@ -5878,7 +5733,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="217"/>
         <source>Merge adjacent clips</source>
-        <translation type="unfinished"></translation>
+        <translation>Zlúčiť susedné klipy</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="241"/>
@@ -5903,37 +5758,37 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="343"/>
         <source>Move %1 timelime clips</source>
-        <translation type="unfinished"></translation>
+        <translation>Presunúť %1 na časovej osi</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="345"/>
         <source>Move timelime clip</source>
-        <translation type="unfinished"></translation>
+        <translation>Presunúť klip časovej osi</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="439"/>
         <source>Trim clip in point</source>
-        <translation>Orezať záber na bode</translation>
+        <translation>Orezať klip od bodu</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="487"/>
         <source>Trim clip out point</source>
-        <translation>Orezať záber mimo bodu</translation>
+        <translation>Orezať klip po bod</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="533"/>
         <source>Split clip</source>
-        <translation>Rozdeliť záber</translation>
+        <translation>Rozdeliť klip</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="559"/>
         <source>Adjust fade in</source>
-        <translation>Nastaviť postupné zosilnenie</translation>
+        <translation>Nastaviť zjavovanie</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="592"/>
         <source>Adjust fade out</source>
-        <translation>Nastaviť postupné zoslabenie</translation>
+        <translation>Nastaviť vytrácanie</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="627"/>
@@ -5945,68 +5800,73 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="659"/>
         <source>Trim transition in point</source>
-        <translation>Orezať prechod na bode</translation>
+        <translation>Orezať prechod od bodu</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="702"/>
         <source>Trim transition out point</source>
-        <translation>Orezať prechod mimo bod</translation>
+        <translation>Orezať prechod po bod</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="791"/>
         <location filename="../src/commands/timelinecommands.cpp" line="826"/>
         <source>Remove transition</source>
-        <translation type="unfinished"></translation>
+        <translation>Odstrániť prechod</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="904"/>
         <source>Add video track</source>
-        <translation>Pridať obrazovú stopu</translation>
+        <translation>Pridať video stopu</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="906"/>
         <source>Add audio track</source>
-        <translation>Pridať zvukovú stopu</translation>
+        <translation>Pridať audio stopu</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="931"/>
         <source>Insert audio track</source>
-        <translation>Vložiť do zvukovej stopy</translation>
+        <translation>Vložiť do audio stopy</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="933"/>
         <source>Insert video track</source>
-        <translation>Vložiť do obrazovej stopy</translation>
+        <translation>Vložiť do video stopy</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="956"/>
         <source>Remove audio track</source>
-        <translation>Odstrániť zvukovú stopu</translation>
+        <translation>Odstrániť audio stopu</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="958"/>
         <source>Remove video track</source>
-        <translation>Odstrániť obrazovú stopu</translation>
+        <translation>Odstrániť video stopu</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="1013"/>
         <source>Change track blend mode</source>
-        <translation>Zmeniť režim splynutia stopy</translation>
+        <translation>Zmeniť režim zmiešavania stopy</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="1053"/>
         <source>Change clip properties</source>
-        <translation>Zmeniť vlastnosti záberu</translation>
+        <translation>Zmeniť vlastnosti klipu</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="1098"/>
         <source>Detach Audio</source>
-        <translation type="unfinished"></translation>
+        <translation>Odpojiť audio</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3276"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="1193"/>
+        <source>Replace timeline clip</source>
+        <translation>Nahradiť klip časovej osi</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="3300"/>
         <source>You cannot add a project to itself!</source>
-        <translation type="unfinished"></translation>
+        <translation>Nemôžete pridať projekt do seba samého!</translation>
     </message>
     <message>
         <location filename="../src/mltxmlchecker.cpp" line="122"/>
@@ -6015,13 +5875,15 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/util.cpp" line="113"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="745"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="865"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="919"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="793"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="923"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="992"/>
         <source>Unable to write file %1
 Perhaps you do not have permission.
 Try again with a different folder.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nemožno zapísať súbor %1
+Možno nemáte oprávnenie.
+Skúste to znovu s iným priečinkom.</translation>
     </message>
     <message>
         <location filename="../src/util.cpp" line="131"/>
@@ -6036,7 +5898,7 @@ Try again with a different folder.</source>
     <message>
         <location filename="../src/util.cpp" line="135"/>
         <source>Master</source>
-        <translation type="unfinished"></translation>
+        <translation>Hlavné</translation>
     </message>
     <message>
         <location filename="../src/util.cpp" line="290"/>
@@ -6044,19 +5906,22 @@ Try again with a different folder.</source>
 more standard %1 = %2/1001.
 
 Do you want to use %1 = %2/1001 instead?</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadaná hodnota je veľmi podobná bežnej hodnote,
+viac štandardné %1 = %2/1001.
+
+Chcete namiesto toho použiť %1 = %2/1001?</translation>
     </message>
     <message>
         <location filename="../src/widgets/colorproducerwidget.cpp" line="27"/>
         <location filename="../src/widgets/textproducerwidget.cpp" line="27"/>
         <source>transparent</source>
         <comment>Open Other &gt; Color</comment>
-        <translation type="unfinished"></translation>
+        <translation>priehľadný</translation>
     </message>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="36"/>
         <source>You cannot add a non-seekable source.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nemožno pridať nevyhľadateľný zdroj.</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.cpp" line="317"/>
@@ -6084,10 +5949,10 @@ Do you want to use %1 = %2/1001 instead?</source>
     <message>
         <location filename="../src/qmltypes/qmlfilter.cpp" line="298"/>
         <source>(defaults)</source>
-        <translation>(východie)</translation>
+        <translation>(východzie)</translation>
     </message>
     <message>
-        <location filename="../src/qmltypes/qmlfilter.cpp" line="381"/>
+        <location filename="../src/qmltypes/qmlfilter.cpp" line="377"/>
         <source>Analyze %1</source>
         <translation>Analyzovať %1</translation>
     </message>
@@ -6097,12 +5962,12 @@ Do you want to use %1 = %2/1001 instead?</source>
     <message>
         <location filename="../src/docks/recentdock.ui" line="24"/>
         <source>Recent</source>
-        <translation>Naposledy otevřené</translation>
+        <translation>Nedávno otvorené</translation>
     </message>
     <message>
         <location filename="../src/docks/recentdock.ui" line="46"/>
         <source>Show only files with name matching text</source>
-        <translation>Ukázať iba súbory s názvom zodpovedajúcim textu</translation>
+        <translation>Ukázať iba súbory so zhodným textom názvu</translation>
     </message>
     <message>
         <location filename="../src/docks/recentdock.ui" line="49"/>
@@ -6123,7 +5988,7 @@ Do you want to use %1 = %2/1001 instead?</source>
     <message>
         <location filename="../src/controllers/scopecontroller.cpp" line="39"/>
         <source>Scopes</source>
-        <translation>Pohľady</translation>
+        <translation>Náhľady grafov</translation>
     </message>
 </context>
 <context>
@@ -6136,7 +6001,7 @@ Do you want to use %1 = %2/1001 instead?</source>
     <message>
         <location filename="../src/widgets/servicepresetwidget.ui" line="25"/>
         <source>Preset</source>
-        <translation>Prednastavenie</translation>
+        <translation>Predvoľba</translation>
     </message>
     <message>
         <location filename="../src/widgets/servicepresetwidget.ui" line="45"/>
@@ -6146,7 +6011,7 @@ Do you want to use %1 = %2/1001 instead?</source>
     <message>
         <location filename="../src/widgets/servicepresetwidget.ui" line="52"/>
         <source>Delete</source>
-        <translation>Zmazať</translation>
+        <translation>Odstrániť</translation>
     </message>
     <message>
         <location filename="../src/widgets/servicepresetwidget.cpp" line="92"/>
@@ -6156,7 +6021,7 @@ Do you want to use %1 = %2/1001 instead?</source>
     <message>
         <location filename="../src/widgets/servicepresetwidget.cpp" line="99"/>
         <source>Save Preset</source>
-        <translation>Uložiť prednastavenie</translation>
+        <translation>Uložiť predvoľbu</translation>
     </message>
     <message>
         <location filename="../src/widgets/servicepresetwidget.cpp" line="100"/>
@@ -6166,12 +6031,12 @@ Do you want to use %1 = %2/1001 instead?</source>
     <message>
         <location filename="../src/widgets/servicepresetwidget.cpp" line="168"/>
         <source>Delete Preset</source>
-        <translation>Zmazať prednastavenie</translation>
+        <translation>Odstrániť predvoľbu</translation>
     </message>
     <message>
         <location filename="../src/widgets/servicepresetwidget.cpp" line="169"/>
         <source>Are you sure you want to delete %1?</source>
-        <translation>Istotne chcete zmazať %1?</translation>
+        <translation>Naozaj chcete odstrániť %1?</translation>
     </message>
 </context>
 <context>
@@ -6187,197 +6052,197 @@ Do you want to use %1 = %2/1001 instead?</source>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="50"/>
         <source>Bottom Left</source>
-        <translation>Dole vľavo</translation>
+        <translation>Vľavo dole</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="55"/>
         <source>Bottom Right</source>
-        <translation>Dole vpravo</translation>
+        <translation>Vpravo dole</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="60"/>
         <source>Top Left</source>
-        <translation>Hore vľavo</translation>
+        <translation>Vľavo hore</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="65"/>
         <source>Top Right</source>
-        <translation>Hore vpravo</translation>
+        <translation>Vpravo hore</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="72"/>
         <source>Slide In From Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Posunúť zľava</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="74"/>
         <source>Slide In From Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Posunúť zprava</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="76"/>
         <source>Slide In From Top</source>
-        <translation type="unfinished"></translation>
+        <translation>Posunúť zhora</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="78"/>
         <source>Slide In From Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Posunúť zdola</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="82"/>
         <source>Slide Out Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Posunúť doľava</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="84"/>
         <source>Slide Out Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Posunúť doprava</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="86"/>
         <source>Slide Out Top</source>
-        <translation type="unfinished"></translation>
+        <translation>Posunúť nahor</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="88"/>
         <source>Slide Out Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Posunúť nadol</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="93"/>
         <source>Slow Zoom In</source>
-        <translation type="unfinished"></translation>
+        <translation>Pomaly priblížiť</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="95"/>
         <source>Slow Zoom Out</source>
-        <translation type="unfinished"></translation>
+        <translation>Pomaly oddialiť</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="97"/>
         <source>Slow Pan Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Panoráma pomaly doľava</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="98"/>
         <source>Slow Move Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Pomaly posunúť doľava</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="100"/>
         <source>Slow Pan Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Panoráma pomaly doprava</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="101"/>
         <source>Slow Move Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Pomaly posunúť doprava</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="103"/>
         <source>Slow Pan Up</source>
-        <translation type="unfinished"></translation>
+        <translation>Panoráma pomaly nahor</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="104"/>
         <source>Slow Move Up</source>
-        <translation type="unfinished"></translation>
+        <translation>Pomaly posunúť nahor</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="106"/>
         <source>Slow Pan Down</source>
-        <translation type="unfinished"></translation>
+        <translation>Panoráma pomaly nadol</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="107"/>
         <source>Slow Move Down</source>
-        <translation type="unfinished"></translation>
+        <translation>Pomaly posunúť nadol</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="109"/>
         <source>Slow Zoom In, Pan Up Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Pomaly približovať, panoráma vľavo nahor</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="110"/>
         <source>Slow Zoom In, Move Up Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Pomaly približovať, posúvať vľavo nahor</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="112"/>
         <source>Slow Zoom In, Pan Down Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Pomaly približovať, panoráma vpravo nadol</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="113"/>
         <source>Slow Zoom In, Move Down Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Pomaly približovať, posúvať vpravo nadol</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="115"/>
         <source>Slow Zoom Out, Pan Up Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Pomaly oddiaľovať, panoráma vpravo nahor</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="116"/>
         <source>Slow Zoom Out, Move Up Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Pomaly oddiaľovať, posúvať vpravo nahor</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="118"/>
         <source>Slow Zoom Out, Pan Down Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Pomaly oddiaľovať, panoráma vľavo nadol</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="119"/>
         <source>Slow Zoom Out, Move Down Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Pomaly oddiaľovať, posúvať vľavo nadol</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="121"/>
         <source>Slow Zoom In, Hold Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Pomaly približovať, pridržiavať dole</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="123"/>
         <source>Slow Zoom In, Hold Top</source>
-        <translation type="unfinished"></translation>
+        <translation>Pomaly približovať, pridržiavať hore</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="125"/>
         <source>Slow Zoom In, Hold Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Pomaly približovať, pridržiavať vľavo</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="127"/>
         <source>Slow Zoom In, Hold Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Pomaly približovať, pridržiavať vpravo</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="129"/>
         <source>Slow Zoom Out, Hold Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Pomaly oddiaľovať, pridržiavať dole</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="131"/>
         <source>Slow Zoom Out, Hold Top</source>
-        <translation type="unfinished"></translation>
+        <translation>Pomaly oddiaľovať, pridržiavať hore</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="133"/>
         <source>Slow Zoom Out, Hold Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Pomaly oddiaľovať, pridržiavať vľavo</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="135"/>
         <source>Slow Zoom Out, Hold Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Pomaly oddiaľovať, pridržiavať vpravo</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="293"/>
         <source>Preset</source>
-        <translation>Prednastavenie</translation>
+        <translation>Predvoľba</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="318"/>
@@ -6397,7 +6262,7 @@ Do you want to use %1 = %2/1001 instead?</source>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="404"/>
         <source>Fit</source>
-        <translation>Umiestniť</translation>
+        <translation>Prispôsobiť</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="413"/>
@@ -6412,7 +6277,7 @@ Do you want to use %1 = %2/1001 instead?</source>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="439"/>
         <source>Horizontal fit</source>
-        <translation>Vodorovne umiestnenie</translation>
+        <translation>Prispôsobiť horizontálne</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="444"/>
@@ -6422,7 +6287,7 @@ Do you want to use %1 = %2/1001 instead?</source>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="451"/>
         <source>Center</source>
-        <translation>Stred</translation>
+        <translation>V strede</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="458"/>
@@ -6432,7 +6297,7 @@ Do you want to use %1 = %2/1001 instead?</source>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="472"/>
         <source>Vertical fit</source>
-        <translation>Zvislé umiestnenie</translation>
+        <translation>Prispôsobiť vertikálne</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="477"/>
@@ -6443,7 +6308,7 @@ Do you want to use %1 = %2/1001 instead?</source>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="484"/>
         <source>Middle</source>
         <comment>Size and Position video filter</comment>
-        <translation>Stred</translation>
+        <translation>V strede</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="491"/>
@@ -6454,13 +6319,13 @@ Do you want to use %1 = %2/1001 instead?</source>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="149"/>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="168"/>
         <source>Shake 1 Second - Scaled</source>
-        <translation type="unfinished"></translation>
+        <translation>Trasenie 1 sekunda - s mierkou</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="158"/>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="177"/>
         <source>Shake 1 Second - Unscaled</source>
-        <translation type="unfinished"></translation>
+        <translation>Trasenie 1 sekunda - bez mierky</translation>
     </message>
 </context>
 <context>
@@ -6473,7 +6338,7 @@ Do you want to use %1 = %2/1001 instead?</source>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="87"/>
         <source>Italic</source>
-        <translation type="unfinished"></translation>
+        <translation>Kurzíva</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="148"/>
@@ -6483,7 +6348,7 @@ Do you want to use %1 = %2/1001 instead?</source>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="186"/>
         <source>Use font size</source>
-        <translation type="unfinished"></translation>
+        <translation>Použiť veľkosť písma</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="201"/>
@@ -6503,7 +6368,7 @@ Do you want to use %1 = %2/1001 instead?</source>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="235"/>
         <source>Padding</source>
-        <translation>Odstup</translation>
+        <translation>Výplň</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="249"/>
@@ -6518,7 +6383,7 @@ Do you want to use %1 = %2/1001 instead?</source>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="330"/>
         <source>Horizontal fit</source>
-        <translation>Vodorovne umiestnenie</translation>
+        <translation>Prispôsobiť horizontálne</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="335"/>
@@ -6528,7 +6393,7 @@ Do you want to use %1 = %2/1001 instead?</source>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="341"/>
         <source>Center</source>
-        <translation>Stred</translation>
+        <translation>V strede</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="347"/>
@@ -6538,7 +6403,7 @@ Do you want to use %1 = %2/1001 instead?</source>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="360"/>
         <source>Vertical fit</source>
-        <translation>Zvislé umiestnenie</translation>
+        <translation>Prispôsobiť vertikálne</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="365"/>
@@ -6549,7 +6414,7 @@ Do you want to use %1 = %2/1001 instead?</source>
         <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="371"/>
         <source>Middle</source>
         <comment>Text video filter</comment>
-        <translation>Stred</translation>
+        <translation>V strede</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="377"/>
@@ -6572,12 +6437,12 @@ Do you want to use %1 = %2/1001 instead?</source>
     <message>
         <location filename="../src/widgets/textproducerwidget.ui" line="39"/>
         <source>Type or paste the text here</source>
-        <translation type="unfinished"></translation>
+        <translation>Tu vpíšte alebo prilepte text</translation>
     </message>
     <message>
         <location filename="../src/widgets/textproducerwidget.ui" line="48"/>
         <source>Background color...</source>
-        <translation type="unfinished"></translation>
+        <translation>Farba pozadia...</translation>
     </message>
     <message>
         <location filename="../src/widgets/textproducerwidget.ui" line="61"/>
@@ -6587,12 +6452,12 @@ Do you want to use %1 = %2/1001 instead?</source>
     <message>
         <location filename="../src/widgets/textproducerwidget.ui" line="86"/>
         <source>Text attributes are available in the &lt;b&gt;Filters&lt;/b&gt; panel after clicking &lt;b&gt;OK&lt;/b&gt;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vlastnosti textu sú dostupné na paneli &lt;b&gt;Filtre&lt;/b&gt; po kliknutí na &lt;b&gt;OK&lt;/b&gt;.</translation>
     </message>
     <message>
         <location filename="../src/widgets/textproducerwidget.cpp" line="93"/>
         <source>Edit your text using the Filters panel.</source>
-        <translation type="unfinished"></translation>
+        <translation>Upravte text použitím panela filtrov.</translation>
     </message>
 </context>
 <context>
@@ -6610,7 +6475,7 @@ Do you want to use %1 = %2/1001 instead?</source>
     <message>
         <location filename="../src/dialogs/textviewerdialog.cpp" line="46"/>
         <source>Text Documents (*.txt);;All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Textové dokumenty (*.txt);;Všetky súbory (*)</translation>
     </message>
 </context>
 <context>
@@ -6618,17 +6483,17 @@ Do you want to use %1 = %2/1001 instead?</source>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="101"/>
         <source>Duration: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Trvanie: %1</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="104"/>
         <source>In: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Od: %1</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="106"/>
         <source>Start: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Štart: %1</translation>
     </message>
 </context>
 <context>
@@ -6652,34 +6517,49 @@ Do you want to use %1 = %2/1001 instead?</source>
         <translation>Časová os</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="157"/>
+        <location filename="../src/docks/timelinedock.cpp" line="158"/>
         <source>This track is locked</source>
         <translation>Táto stopa je zamknutá</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="400"/>
+        <location filename="../src/docks/timelinedock.cpp" line="401"/>
         <source>Failed to open </source>
-        <translation>Nepodarilo sa otvoriť</translation>
+        <translation>Zlyhanie pri otváraní</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="403"/>
+        <location filename="../src/docks/timelinedock.cpp" line="404"/>
         <source>You must save to Copy Timeline to Source.</source>
-        <translation type="unfinished"></translation>
+        <translation>Musíte uložiť pre skopírovanie časovej osi do zdroja.</translation>
     </message>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="616"/>
         <source>Remove %1 from timeline</source>
-        <translation type="unfinished"></translation>
+        <translation>Odstrániť %1 z časovej osi</translation>
     </message>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="639"/>
         <source>Lift %1 from timeline</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyňať %1 z časovej osi</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1110"/>
+        <location filename="../src/docks/timelinedock.cpp" line="858"/>
+        <source>There is nothing in the Source player.</source>
+        <translation>V zdrojovom prehrávači nič nie je.</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/timelinedock.cpp" line="873"/>
+        <source>You cannot replace a transition.</source>
+        <translation>Nemôžete nahradiť prechod.</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/timelinedock.cpp" line="1162"/>
         <source>You cannot split a transition.</source>
         <translation>Nemôžete rozdeliť prechod.</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/timelinedock.cpp" line="1379"/>
+        <source>Replace %1 timeline clips</source>
+        <translation>Nahradiť %1 klipy časovej osi</translation>
     </message>
 </context>
 <context>
@@ -6731,7 +6611,7 @@ Do you want to use %1 = %2/1001 instead?</source>
     <message>
         <location filename="../src/widgets/timelinepropertieswidget.cpp" line="34"/>
         <source>%L1 fps</source>
-        <translation>%L1 fps</translation>
+        <translation>%L1 sním/s</translation>
     </message>
     <message>
         <location filename="../src/widgets/timelinepropertieswidget.cpp" line="36"/>
@@ -6754,89 +6634,89 @@ Do you want to use %1 = %2/1001 instead?</source>
     <message>
         <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="115"/>
         <source>Scrub while dragging</source>
-        <translation>Pri ťahaní záberov do alebo na časovej osi prehrávať rýchlo snímku za snímkou. Časová poloha prehrávača sleduje vodorovnú polohu myši na časovej osi</translation>
+        <translation>Snímať počas ťahania</translation>
     </message>
     <message>
         <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="125"/>
         <source>Ripple trim and drop</source>
-        <translation>Skrátiť ťahaním a posunúť, a zahodiť</translation>
+        <translation>Orezať  zvlnenie a pustiť</translation>
     </message>
     <message>
         <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="126"/>
         <source>Ripple</source>
-        <translation>Vložiť a posunúť</translation>
+        <translation>Zvlnenie</translation>
     </message>
     <message>
         <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="137"/>
         <source>Ripple edits across all tracks</source>
-        <translation type="unfinished"></translation>
+        <translation>Upraviť zvlnenie naprieč všetkými stopami</translation>
     </message>
     <message>
         <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="138"/>
         <source>Ripple All</source>
-        <translation type="unfinished"></translation>
+        <translation>Zvlniť všetko</translation>
     </message>
     <message>
         <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="198"/>
         <source>Display a menu of additional actions</source>
-        <translation>Zobraziť ponuku dodatočných činností</translation>
+        <translation>Zobraziť ponuku prídavných akcií</translation>
     </message>
     <message>
         <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="206"/>
         <source>Cut - Copy the current clip to the Source
 player and ripple delete it</source>
-        <translation type="unfinished"></translation>
+        <translation>Vystrihnúť - skopíruje súčasný klip do zdrojového
+prehrávača a odstráni jeho zvlnenie</translation>
     </message>
     <message>
         <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="215"/>
         <source>Copy - Copy the current clip to the Source player (C)</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopírovať - skopíruje súčasný klip do zdrojového prehrávača (C)</translation>
     </message>
     <message>
         <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="224"/>
         <source>Paste - Insert clip into the current track
 shifting following clips to the right (V)</source>
-        <translation type="unfinished"></translation>
+        <translation>Prilepiť - vloží klip do súčasnej stopy
+posunutím nasledujúcich klipov doprava (V) </translation>
     </message>
     <message>
         <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="232"/>
         <source>Append to the current track (A)</source>
-        <translation type="unfinished"></translation>
+        <translation>Pripojiť k súčasnej stope (A)</translation>
     </message>
     <message>
         <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="240"/>
         <source>Ripple Delete - Remove current clip
 shifting following clips to the left (X)</source>
-        <translation>Vytiahnuť - Odstrániť terajší záber.
-Zmazať záber a spojiť predošlý a nasledujúci záber.
-Nasledujúce zábery sú posunuté vľavo (X)</translation>
+        <translation>Odstrániť zvlnenie - Odstráni súčasný klip presunutím nasledujúcich klipov doľava (X)</translation>
     </message>
     <message>
         <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="248"/>
         <source>Lift - Remove current clip without
 affecting position of other clips (Z)</source>
-        <translation>Vyzdvihnúť - Odstrániť terajší záber
-bez ovplyvnenia polohy iných záberov (Z)</translation>
+        <translation>Vyňať - odstráni súčasný klip bez
+ovplyvnenia polohy iných klipov (Z)</translation>
     </message>
     <message>
         <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="256"/>
         <source>Overwrite clip onto the current track (B)</source>
-        <translation>Prepísať záber na terajšej stope (B)</translation>
+        <translation>Prepísať klip na terajšej stope (B)</translation>
     </message>
     <message>
         <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="264"/>
         <source>Split At Playhead (S)</source>
-        <translation>Rozdeliť v polohe prehrávania (S)</translation>
+        <translation>Rozdeliť na snímacej hlave (S)</translation>
     </message>
     <message>
         <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="272"/>
         <source>Zoom timeline out (-)</source>
-        <translation type="unfinished"></translation>
+        <translation>Oddialiť časovú os (-)</translation>
     </message>
     <message>
         <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="280"/>
         <source>Zoom timeline in (+)</source>
-        <translation type="unfinished"></translation>
+        <translation>Priblížiť časovú os (+)</translation>
     </message>
 </context>
 <context>
@@ -6880,39 +6760,39 @@ bez ovplyvnenia polohy iných záberov (Z)</translation>
 <context>
     <name>TrackHead</name>
     <message>
-        <location filename="../src/qml/views/timeline/TrackHead.qml" line="146"/>
+        <location filename="../src/qml/views/timeline/TrackHead.qml" line="174"/>
         <source>Unmute</source>
-        <translation type="unfinished"></translation>
+        <translation>Zrušiť stlmenie</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/TrackHead.qml" line="146"/>
+        <location filename="../src/qml/views/timeline/TrackHead.qml" line="174"/>
         <source>Mute</source>
         <translation>Stlmiť</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/TrackHead.qml" line="157"/>
+        <location filename="../src/qml/views/timeline/TrackHead.qml" line="185"/>
         <source>Show</source>
-        <translation type="unfinished"></translation>
+        <translation>Zobraziť</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/TrackHead.qml" line="157"/>
+        <location filename="../src/qml/views/timeline/TrackHead.qml" line="185"/>
         <source>Hide</source>
         <translation>Skryť</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/TrackHead.qml" line="167"/>
+        <location filename="../src/qml/views/timeline/TrackHead.qml" line="147"/>
         <source>Unlock track</source>
-        <translation type="unfinished"></translation>
+        <translation>Odomknúť stopu</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/TrackHead.qml" line="167"/>
+        <location filename="../src/qml/views/timeline/TrackHead.qml" line="147"/>
         <source>Lock track</source>
         <translation>Zamknúť stopu</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/TrackHead.qml" line="177"/>
+        <location filename="../src/qml/views/timeline/TrackHead.qml" line="195"/>
         <source>Filters</source>
-        <translation type="unfinished">Filtre</translation>
+        <translation>Filtre</translation>
     </message>
 </context>
 <context>
@@ -6925,7 +6805,7 @@ bez ovplyvnenia polohy iných záberov (Z)</translation>
     <message>
         <location filename="../src/widgets/trackpropertieswidget.ui" line="38"/>
         <source>Blend mode</source>
-        <translation>Režim splynutia</translation>
+        <translation>Režim zmiešavania</translation>
     </message>
     <message>
         <location filename="../src/widgets/trackpropertieswidget.cpp" line="36"/>
@@ -6942,7 +6822,7 @@ bez ovplyvnenia polohy iných záberov (Z)</translation>
         <location filename="../src/widgets/trackpropertieswidget.cpp" line="44"/>
         <location filename="../src/widgets/trackpropertieswidget.cpp" line="76"/>
         <source>Over</source>
-        <translation>Kladenie nad seba</translation>
+        <translation>Nad</translation>
     </message>
     <message>
         <location filename="../src/widgets/trackpropertieswidget.cpp" line="45"/>
@@ -6952,57 +6832,57 @@ bez ovplyvnenia polohy iných záberov (Z)</translation>
     <message>
         <location filename="../src/widgets/trackpropertieswidget.cpp" line="46"/>
         <source>Saturate</source>
-        <translation>Sýtosť</translation>
+        <translation>Nasýtenie</translation>
     </message>
     <message>
         <location filename="../src/widgets/trackpropertieswidget.cpp" line="47"/>
         <source>Multiply</source>
-        <translation>Súčin</translation>
+        <translation>Vynásobenie</translation>
     </message>
     <message>
         <location filename="../src/widgets/trackpropertieswidget.cpp" line="48"/>
         <source>Screen</source>
-        <translation>Obrazovka</translation>
+        <translation>Zaclonenie</translation>
     </message>
     <message>
         <location filename="../src/widgets/trackpropertieswidget.cpp" line="49"/>
         <source>Overlay</source>
-        <translation>Prekrytie</translation>
+        <translation>Prekrývanie</translation>
     </message>
     <message>
         <location filename="../src/widgets/trackpropertieswidget.cpp" line="50"/>
         <source>Darken</source>
-        <translation>Stmavnutie</translation>
+        <translation>Stmavenie</translation>
     </message>
     <message>
         <location filename="../src/widgets/trackpropertieswidget.cpp" line="51"/>
         <source>Dodge</source>
-        <translation>Hustota farby-</translation>
+        <translation>Vyhýbanie</translation>
     </message>
     <message>
         <location filename="../src/widgets/trackpropertieswidget.cpp" line="52"/>
         <source>Burn</source>
-        <translation>Hustota farby+</translation>
+        <translation>Prepálenie</translation>
     </message>
     <message>
         <location filename="../src/widgets/trackpropertieswidget.cpp" line="53"/>
         <source>Hard Light</source>
-        <translation>Ostré svetlo</translation>
+        <translation>Tvrdé svetlo</translation>
     </message>
     <message>
         <location filename="../src/widgets/trackpropertieswidget.cpp" line="54"/>
         <source>Soft Light</source>
-        <translation>Tlmené svetlo</translation>
+        <translation>Mäkké svetlo</translation>
     </message>
     <message>
         <location filename="../src/widgets/trackpropertieswidget.cpp" line="55"/>
         <source>Difference</source>
-        <translation>Rozdiel</translation>
+        <translation>Rozdielové</translation>
     </message>
     <message>
         <location filename="../src/widgets/trackpropertieswidget.cpp" line="56"/>
         <source>Exclusion</source>
-        <translation>Vylúčenie</translation>
+        <translation>Negácia</translation>
     </message>
     <message>
         <location filename="../src/widgets/trackpropertieswidget.cpp" line="57"/>
@@ -7012,7 +6892,7 @@ bez ovplyvnenia polohy iných záberov (Z)</translation>
     <message>
         <location filename="../src/widgets/trackpropertieswidget.cpp" line="58"/>
         <source>HSL Saturation</source>
-        <translation>Sýtosť HSL</translation>
+        <translation>Nasýtenie HSL</translation>
     </message>
     <message>
         <location filename="../src/widgets/trackpropertieswidget.cpp" line="59"/>
@@ -7022,7 +6902,7 @@ bez ovplyvnenia polohy iných záberov (Z)</translation>
     <message>
         <location filename="../src/widgets/trackpropertieswidget.cpp" line="60"/>
         <source>HSL Luminosity</source>
-        <translation>Svietivosť HSL</translation>
+        <translation>Svetlosť HSL</translation>
     </message>
 </context>
 <context>
@@ -7035,58 +6915,58 @@ bez ovplyvnenia polohy iných záberov (Z)</translation>
     <message>
         <location filename="../src/dialogs/transcodedialog.ui" line="44"/>
         <source>good</source>
-        <translation type="unfinished"></translation>
+        <translation>dobrý</translation>
     </message>
     <message>
         <location filename="../src/dialogs/transcodedialog.ui" line="54"/>
         <source>better</source>
-        <translation type="unfinished"></translation>
+        <translation>lepší</translation>
     </message>
     <message>
         <location filename="../src/dialogs/transcodedialog.ui" line="64"/>
         <source>best</source>
-        <translation type="unfinished"></translation>
+        <translation>najlepší</translation>
     </message>
     <message>
         <location filename="../src/dialogs/transcodedialog.ui" line="97"/>
         <source>medium</source>
-        <translation type="unfinished"></translation>
+        <translation>stzredný</translation>
     </message>
     <message>
         <location filename="../src/dialogs/transcodedialog.ui" line="107"/>
         <source>large</source>
-        <translation type="unfinished"></translation>
+        <translation>veľký</translation>
     </message>
     <message>
         <location filename="../src/dialogs/transcodedialog.ui" line="117"/>
         <source>biggest</source>
-        <translation type="unfinished"></translation>
+        <translation>najväčší</translation>
     </message>
     <message>
         <location filename="../src/dialogs/transcodedialog.ui" line="139"/>
         <source>Do not show this anymore.</source>
         <comment>Convert to edit-friendly format dialog</comment>
-        <translation type="unfinished"></translation>
+        <translation>Toto už viac nezobrazovať.</translation>
     </message>
     <message>
         <location filename="../src/dialogs/transcodedialog.cpp" line="29"/>
         <source>Convert to Edit-friendly...</source>
-        <translation type="unfinished"></translation>
+        <translation>Konvertovať na priateľskú úpravu...</translation>
     </message>
     <message>
         <location filename="../src/dialogs/transcodedialog.cpp" line="49"/>
         <source>Lossy: I-frame–only %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Stratové: len I-snímka %1</translation>
     </message>
     <message>
         <location filename="../src/dialogs/transcodedialog.cpp" line="52"/>
         <source>Intermediate: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Stredové: %1</translation>
     </message>
     <message>
         <location filename="../src/dialogs/transcodedialog.cpp" line="55"/>
         <source>Lossless: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Bezstratové: %1</translation>
     </message>
 </context>
 <context>
@@ -7094,7 +6974,7 @@ bez ovplyvnenia polohy iných záberov (Z)</translation>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/UndoButton.qml" line="24"/>
         <source>Reset to default</source>
-        <translation>Nastaviť znovu na východzie</translation>
+        <translation>Vynulovať na východzie</translation>
     </message>
 </context>
 <context>
@@ -7102,37 +6982,37 @@ bez ovplyvnenia polohy iných záberov (Z)</translation>
     <message>
         <location filename="../src/dialogs/unlinkedfilesdialog.ui" line="14"/>
         <source>Missing Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Chýbajúce súbory</translation>
     </message>
     <message>
         <location filename="../src/dialogs/unlinkedfilesdialog.ui" line="26"/>
         <source>There are missing files in your project. Double-click each row to locate a file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vo vašom projekte chýbajú súbory. Dvakrát kliknite na každý riadok pre určenie miesta súboru.</translation>
     </message>
     <message>
         <location filename="../src/dialogs/unlinkedfilesdialog.ui" line="78"/>
         <source>This looks at every file in a folder to see if it matches any of the missing files.</source>
-        <translation type="unfinished"></translation>
+        <translation>Toto prezerá každý súbor v priečinku a zisťuje, či sa zhoduje s niektorým z chýbajúcich súborov.</translation>
     </message>
     <message>
         <location filename="../src/dialogs/unlinkedfilesdialog.ui" line="81"/>
         <source>Search in Folder...</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyhľadávať v priečinku...</translation>
     </message>
     <message>
         <location filename="../src/dialogs/unlinkedfilesdialog.cpp" line="42"/>
         <source>Missing</source>
-        <translation type="unfinished"></translation>
+        <translation>Chýbajúce</translation>
     </message>
     <message>
         <location filename="../src/dialogs/unlinkedfilesdialog.cpp" line="43"/>
         <source>Replacement</source>
-        <translation type="unfinished"></translation>
+        <translation>Nahradenie</translation>
     </message>
     <message>
         <location filename="../src/dialogs/unlinkedfilesdialog.cpp" line="56"/>
         <source>Open File</source>
-        <translation type="unfinished">Otvoriť súbor</translation>
+        <translation>Otvoriť súbor</translation>
     </message>
 </context>
 <context>
@@ -7165,7 +7045,7 @@ bez ovplyvnenia polohy iných záberov (Z)</translation>
     <message>
         <location filename="../src/widgets/video4linuxwidget.ui" line="82"/>
         <source>fps</source>
-        <translation>fps</translation>
+        <translation>sním/s</translation>
     </message>
     <message>
         <location filename="../src/widgets/video4linuxwidget.ui" line="102"/>
@@ -7175,7 +7055,7 @@ bez ovplyvnenia polohy iných záberov (Z)</translation>
     <message>
         <location filename="../src/widgets/video4linuxwidget.ui" line="115"/>
         <source>Frame rate</source>
-        <translation>Snímkovanie</translation>
+        <translation>Snímková frekvencia</translation>
     </message>
     <message>
         <location filename="../src/widgets/video4linuxwidget.ui" line="125"/>
@@ -7230,7 +7110,7 @@ bez ovplyvnenia polohy iných záberov (Z)</translation>
     <message>
         <location filename="../src/widgets/video4linuxwidget.ui" line="213"/>
         <source>Audio Input</source>
-        <translation>Zvukový vstup</translation>
+        <translation>Audio vstup</translation>
     </message>
     <message>
         <location filename="../src/widgets/video4linuxwidget.ui" line="223"/>
@@ -7273,12 +7153,12 @@ bez ovplyvnenia polohy iných záberov (Z)</translation>
     <message>
         <location filename="../src/widgets/scopes/videohistogramscopewidget.cpp" line="101"/>
         <source>Luma</source>
-        <translation type="unfinished"></translation>
+        <translation>Jas</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videohistogramscopewidget.cpp" line="106"/>
         <source>Red</source>
-        <translation type="unfinished"></translation>
+        <translation>Červená</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videohistogramscopewidget.cpp" line="111"/>
@@ -7294,17 +7174,18 @@ bez ovplyvnenia polohy iných záberov (Z)</translation>
         <location filename="../src/widgets/scopes/videohistogramscopewidget.cpp" line="200"/>
         <source>Value: %1
 IRE: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Hodnota: %1
+IRE: %2</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videohistogramscopewidget.cpp" line="204"/>
         <source>Value: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Hodnota: %1</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videohistogramscopewidget.cpp" line="212"/>
         <source>Video Histogram</source>
-        <translation type="unfinished"></translation>
+        <translation>Histogram videa</translation>
     </message>
 </context>
 <context>
@@ -7327,17 +7208,17 @@ IRE: %2</source>
     <message>
         <location filename="../src/jobs/videoqualityjob.cpp" line="45"/>
         <source>Show In Folder</source>
-        <translation>Ukázať v zložke</translation>
+        <translation>Zobraziť v priečinku</translation>
     </message>
     <message>
         <location filename="../src/jobs/videoqualityjob.cpp" line="49"/>
         <source>Measure %1</source>
-        <translation>Merať %1</translation>
+        <translation>Zmerať %1</translation>
     </message>
     <message>
         <location filename="../src/jobs/videoqualityjob.cpp" line="88"/>
         <source>Video Quality Measurement</source>
-        <translation>Meranie akosti obrazu</translation>
+        <translation>Zmerá kvalitu videa</translation>
     </message>
 </context>
 <context>
@@ -7345,22 +7226,22 @@ IRE: %2</source>
     <message>
         <location filename="../src/widgets/scopes/videorgbparadescopewidget.cpp" line="131"/>
         <source>255</source>
-        <translation type="unfinished">255</translation>
+        <translation>255</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videorgbparadescopewidget.cpp" line="135"/>
         <source>191</source>
-        <translation type="unfinished">191</translation>
+        <translation>191</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videorgbparadescopewidget.cpp" line="139"/>
         <source>127</source>
-        <translation type="unfinished">127</translation>
+        <translation>127</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videorgbparadescopewidget.cpp" line="143"/>
         <source>64</source>
-        <translation type="unfinished">64</translation>
+        <translation>64</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videorgbparadescopewidget.cpp" line="147"/>
@@ -7370,7 +7251,7 @@ IRE: %2</source>
     <message>
         <location filename="../src/widgets/scopes/videorgbparadescopewidget.cpp" line="157"/>
         <source>Red</source>
-        <translation type="unfinished"></translation>
+        <translation>Červená</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videorgbparadescopewidget.cpp" line="159"/>
@@ -7387,18 +7268,21 @@ IRE: %2</source>
         <source>Channel: %1
 Pixel: %2
 Value: %3</source>
-        <translation type="unfinished"></translation>
+        <translation>Kanál: %1
+Pixel: %2
+Hodnota: %3</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videorgbparadescopewidget.cpp" line="177"/>
         <source>Channel: %1
 Value: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Kanál: %1
+Hodnota: %2</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videorgbparadescopewidget.cpp" line="184"/>
         <source>Video RGB Parade</source>
-        <translation type="unfinished"></translation>
+        <translation>Predviesť RGB video</translation>
     </message>
 </context>
 <context>
@@ -7406,22 +7290,22 @@ Value: %2</source>
     <message>
         <location filename="../src/widgets/scopes/videorgbwaveformscopewidget.cpp" line="127"/>
         <source>255</source>
-        <translation type="unfinished">255</translation>
+        <translation>255</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videorgbwaveformscopewidget.cpp" line="131"/>
         <source>191</source>
-        <translation type="unfinished">191</translation>
+        <translation>191</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videorgbwaveformscopewidget.cpp" line="135"/>
         <source>127</source>
-        <translation type="unfinished">127</translation>
+        <translation>127</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videorgbwaveformscopewidget.cpp" line="139"/>
         <source>64</source>
-        <translation type="unfinished">64</translation>
+        <translation>64</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videorgbwaveformscopewidget.cpp" line="143"/>
@@ -7432,17 +7316,18 @@ Value: %2</source>
         <location filename="../src/widgets/scopes/videorgbwaveformscopewidget.cpp" line="159"/>
         <source>Pixel: %1
 Value: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Pixel: %1
+Hodnota: %2</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videorgbwaveformscopewidget.cpp" line="163"/>
         <source>Value: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Hodnota: %1</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videorgbwaveformscopewidget.cpp" line="170"/>
         <source>Video RGB Waveform</source>
-        <translation type="unfinished"></translation>
+        <translation>Tvarová vlna RGB videa</translation>
     </message>
 </context>
 <context>
@@ -7450,13 +7335,14 @@ Value: %2</source>
     <message>
         <location filename="../src/widgets/scopes/videovectorscopewidget.cpp" line="53"/>
         <source>Video Vector</source>
-        <translation type="unfinished"></translation>
+        <translation>Vektor videa</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videovectorscopewidget.cpp" line="242"/>
         <source>U: %1
 V: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>U: %1
+V: %2</translation>
     </message>
 </context>
 <context>
@@ -7464,7 +7350,7 @@ V: %2</source>
     <message>
         <location filename="../src/widgets/scopes/videowaveformscopewidget.cpp" line="119"/>
         <source>100</source>
-        <translation type="unfinished">100</translation>
+        <translation>100</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videowaveformscopewidget.cpp" line="123"/>
@@ -7476,17 +7362,18 @@ V: %2</source>
         <location filename="../src/widgets/scopes/videowaveformscopewidget.cpp" line="144"/>
         <source>Pixel: %1
 IRE: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Pixel: %1
+IRE: %2</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videowaveformscopewidget.cpp" line="148"/>
         <source>IRE: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>IRE: %1</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videowaveformscopewidget.cpp" line="155"/>
         <source>Video Waveform</source>
-        <translation>Obrazová vlna</translation>
+        <translation>Tvarová vlna videa</translation>
     </message>
 </context>
 <context>
@@ -7499,17 +7386,17 @@ IRE: %2</source>
     <message>
         <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="122"/>
         <source>y</source>
-        <translation type="unfinished"></translation>
+        <translation>y</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="125"/>
         <source>R</source>
-        <translation type="unfinished"></translation>
+        <translation>R</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="127"/>
         <source>G</source>
-        <translation type="unfinished"></translation>
+        <translation>G</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="129"/>
@@ -7524,32 +7411,32 @@ IRE: %2</source>
     <message>
         <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="134"/>
         <source>U</source>
-        <translation type="unfinished"></translation>
+        <translation>U</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="136"/>
         <source>V</source>
-        <translation type="unfinished"></translation>
+        <translation>V</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="150"/>
         <source>Pick a pixel from the source player</source>
-        <translation type="unfinished"></translation>
+        <translation>Naberie pixel zo zdrojového prehrávača</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="156"/>
         <source>Lock/Unlock the selected pixel</source>
-        <translation type="unfinished"></translation>
+        <translation>Zamknúť/odomknúť vybrané pixely</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="248"/>
         <source>%1x</source>
-        <translation type="unfinished"></translation>
+        <translation>%1x</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="296"/>
         <source>Video Zoom</source>
-        <translation type="unfinished"></translation>
+        <translation>Priblížiť video</translation>
     </message>
 </context>
 <context>
@@ -7562,7 +7449,7 @@ IRE: %2</source>
     <message>
         <location filename="../src/widgets/webvfxproducer.ui" line="23"/>
         <source>Make background transparent</source>
-        <translation>Urobiť pozadie priehľadné</translation>
+        <translation>Vytvoriť priehľadné pozadie</translation>
     </message>
     <message>
         <location filename="../src/widgets/webvfxproducer.ui" line="30"/>
@@ -7610,12 +7497,12 @@ IRE: %2</source>
     <message>
         <location filename="../src/widgets/x11grabwidget.ui" line="66"/>
         <source>The horizontal coordinate from the left edge when using a fixed capture region.</source>
-        <translation>Vodorovná súradnica od ľavého okraja pri používaní pevnej oblasti zachytávania.</translation>
+        <translation>Horizontálna súradnica od ľavého okraja pri použití pevnej oblasti zachytávania.</translation>
     </message>
     <message>
         <location filename="../src/widgets/x11grabwidget.ui" line="82"/>
         <source>The vertical coordinate from the top edge when using a fixed capture region.</source>
-        <translation>Zvislá súradnica od horného okraja pri používaní pevnej oblasti zachytávania.</translation>
+        <translation>Vertikálna súradnica od horného okraja pri použití pevnej oblasti zachytávania.</translation>
     </message>
     <message>
         <location filename="../src/widgets/x11grabwidget.ui" line="92"/>
@@ -7658,17 +7545,17 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
     <message>
         <location filename="../src/widgets/x11grabwidget.ui" line="142"/>
         <source>Show the capture region</source>
-        <translation>Ukázať oblasť zachytenia</translation>
+        <translation>Ukázať oblasť zachytávania</translation>
     </message>
     <message>
         <location filename="../src/widgets/x11grabwidget.ui" line="149"/>
         <source>Audio Input</source>
-        <translation>Zvukový vstup</translation>
+        <translation>Audio vstup</translation>
     </message>
     <message>
         <location filename="../src/widgets/x11grabwidget.ui" line="172"/>
         <source>Choose an audio input method to use during capture.</source>
-        <translation>Vyberte spôsob zvukového vstupu, ktorý sa použije počas zachytávania.</translation>
+        <translation>Vyberte spôsob audio vstupu, ktorý sa použije počas zachytávania.</translation>
     </message>
     <message>
         <location filename="../src/widgets/x11grabwidget.ui" line="176"/>
@@ -7693,7 +7580,7 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
     <message>
         <location filename="../src/widgets/x11grabwidget.ui" line="206"/>
         <source>Draw the mouse cursor</source>
-        <translation>Kresliť kurzor myši</translation>
+        <translation>Vykresliť kurzor myši</translation>
     </message>
     <message>
         <location filename="../src/widgets/x11grabwidget.ui" line="216"/>
@@ -7708,7 +7595,7 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
     <message>
         <location filename="../src/widgets/x11grabwidget.ui" line="252"/>
         <source>Width of the capture region</source>
-        <translation>Šírka oblasti zachytenia</translation>
+        <translation>Šírka oblasti zachytávania</translation>
     </message>
     <message>
         <location filename="../src/widgets/x11grabwidget.ui" line="265"/>
@@ -7726,32 +7613,32 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
     <message>
         <location filename="../src/qml/scopes/audioloudness/audioloudnessscope.qml" line="118"/>
         <source>Momentary Loudness.</source>
-        <translation type="unfinished"></translation>
+        <translation>Momentálna hlasitosť.</translation>
     </message>
     <message>
         <location filename="../src/qml/scopes/audioloudness/audioloudnessscope.qml" line="152"/>
         <source>Short-term Loudness.</source>
-        <translation type="unfinished"></translation>
+        <translation>Krátkodobá hlasitosť.</translation>
     </message>
     <message>
         <location filename="../src/qml/scopes/audioloudness/audioloudnessscope.qml" line="186"/>
         <source>Integrated Loudness.</source>
-        <translation type="unfinished"></translation>
+        <translation>Integrovaná hlasitosť.</translation>
     </message>
     <message>
         <location filename="../src/qml/scopes/audioloudness/audioloudnessscope.qml" line="220"/>
         <source>Loudness Range.</source>
-        <translation type="unfinished"></translation>
+        <translation>Rozsah hlasitosti.</translation>
     </message>
     <message>
         <location filename="../src/qml/scopes/audioloudness/audioloudnessscope.qml" line="254"/>
         <source>Peak.</source>
-        <translation type="unfinished"></translation>
+        <translation>Špička.</translation>
     </message>
     <message>
         <location filename="../src/qml/scopes/audioloudness/audioloudnessscope.qml" line="288"/>
         <source>True Peak.</source>
-        <translation type="unfinished"></translation>
+        <translation>Skutočná špička.</translation>
     </message>
 </context>
 <context>
@@ -7774,33 +7661,33 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
     <message>
         <location filename="../src/qml/views/filter/filterview.qml" line="157"/>
         <source>Copy the filters</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopírovať filtre</translation>
     </message>
     <message>
         <location filename="../src/qml/views/filter/filterview.qml" line="167"/>
         <source>Paste filters</source>
-        <translation type="unfinished"></translation>
+        <translation>Prilepiť filtre</translation>
     </message>
 </context>
 <context>
     <name>keyframes</name>
     <message>
-        <location filename="../src/qml/views/keyframes/keyframes.qml" line="430"/>
+        <location filename="../src/qml/views/keyframes/keyframes.qml" line="432"/>
         <source>Show Audio Waveforms</source>
-        <translation>Ukázať zvukové vlny</translation>
+        <translation>Zobraziť tvarovú vlnu audia</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/keyframes/keyframes.qml" line="448"/>
+        <location filename="../src/qml/views/keyframes/keyframes.qml" line="450"/>
         <source>Show Video Thumbnails</source>
-        <translation>Ukázať náhľady obrazu</translation>
+        <translation>Zobraziť miniatúry videa</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/keyframes/keyframes.qml" line="454"/>
+        <location filename="../src/qml/views/keyframes/keyframes.qml" line="456"/>
         <source>Center the Playhead</source>
-        <translation type="unfinished"></translation>
+        <translation>Vycentrovať snímaciu hlavu</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/keyframes/keyframes.qml" line="461"/>
+        <location filename="../src/qml/views/keyframes/keyframes.qml" line="463"/>
         <source>Reload</source>
         <translation>Nahrať znova</translation>
     </message>
@@ -7815,7 +7702,7 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
     <message>
         <location filename="../src/main.cpp" line="145"/>
         <source>Hide upgrade prompt and menu item.</source>
-        <translation type="unfinished"></translation>
+        <translation>Skryť výzvu na aktualizáciu a položku v ponuke.</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="148"/>
@@ -7825,47 +7712,47 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
     <message>
         <location filename="../src/main.cpp" line="151"/>
         <source>Clear Recent on Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Zmazať nedávne súbory pri ukončení</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="154"/>
         <source>The directory for app configuration and data.</source>
-        <translation type="unfinished"></translation>
+        <translation>Priečinok pre údaje a konfiguráciu aplikácie.</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="155"/>
         <source>directory</source>
-        <translation type="unfinished"></translation>
+        <translation>priečinok</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="158"/>
         <source>The scale factor for a high-DPI screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Faktor mierky pre vysoké rozlíšenie DPI obrazovky</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="159"/>
         <source>number</source>
-        <translation type="unfinished"></translation>
+        <translation>číslo</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="162"/>
         <source>A semicolon-separated list of scale factors for each screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Zoznam faktorov mierky každej obrazovky oddelený bodkočiarkou</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="163"/>
         <source>list</source>
-        <translation type="unfinished"></translation>
+        <translation>zoznam</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="166"/>
         <source>Zero or more files or folders to open</source>
-        <translation type="unfinished"></translation>
+        <translation>Nulový alebo väčší počet súborov alebo priečinkov na otvorenie</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="333"/>
         <source>Loading plugins...</source>
-        <translation>Nahrávajú sa prídavné moduly...</translation>
+        <translation>Nahrávanie rozšírení...</translation>
     </message>
 </context>
 <context>
@@ -7873,12 +7760,12 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
     <message>
         <location filename="../src/qml/filters/alpha_adjust/meta.qml" line="24"/>
         <source>Alpha Channel: Adjust</source>
-        <translation>Alfa kanál: Prispôsobiť</translation>
+        <translation>Alfa kanál: Nastaviť</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/alpha_view/meta.qml" line="24"/>
         <source>Alpha Channel: View</source>
-        <translation>Alfa kanál: Vidieť</translation>
+        <translation>Alfa kanál: Zobraziť</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_balance/meta.qml" line="7"/>
@@ -7904,37 +7791,37 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
     <message>
         <location filename="../src/qml/filters/audio_channelcopy/meta.qml" line="7"/>
         <source>Copy Channel</source>
-        <translation>Kopírovanie kanálu</translation>
+        <translation>Kopírovať kanál</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/meta.qml" line="7"/>
         <source>Compressor</source>
-        <translation>Zmenšovač dynamického rozsahu pôvodného signálu (kompresor)</translation>
+        <translation>Kompresor</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_delay/meta.qml" line="7"/>
         <source>Delay</source>
-        <translation>Ozvena</translation>
+        <translation>Odozva</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_expander/meta.qml" line="7"/>
         <source>Expander</source>
-        <translation>Zväčšovač dynamického rozsahu pôvodného signálu (expander)</translation>
+        <translation>Expandér</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_fadein/meta.qml" line="8"/>
         <source>Fade In Audio</source>
-        <translation>Postupne zosilniť zvuk</translation>
+        <translation>Zosilňovať audio</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_fadeout/meta.qml" line="8"/>
         <source>Fade Out Audio</source>
-        <translation>Postupne zoslabiť zvuk</translation>
+        <translation>Zoslabovať audio</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_gain/meta.qml" line="7"/>
         <source>Gain / Volume</source>
-        <translation>Zosilnenie/Hlasitosť</translation>
+        <translation>Zisk/Hlasitosť</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_gain/meta.qml" line="17"/>
@@ -7949,17 +7836,17 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
     <message>
         <location filename="../src/qml/filters/audio_highpass/meta.qml" line="7"/>
         <source>High Pass</source>
-        <translation>Horná pásmová priepust</translation>
+        <translation>Horná pásmová priepustnosť</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_limiter/meta.qml" line="7"/>
         <source>Limiter</source>
-        <translation>Obmedzovač (limiter)</translation>
+        <translation>Obmedzovač</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_lowpass/meta.qml" line="7"/>
         <source>Low Pass</source>
-        <translation>Dolná pásmová priepust</translation>
+        <translation>Dolná pásmová priepustnosť</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_mono/meta.qml" line="7"/>
@@ -7974,22 +7861,22 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
     <message>
         <location filename="../src/qml/filters/audio_normalize_1p/meta.qml" line="7"/>
         <source>Normalize: One Pass</source>
-        <translation type="unfinished"></translation>
+        <translation>Normalizovať: Jeden prechod</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_normalize_2p/meta.qml" line="7"/>
         <source>Normalize: Two Pass</source>
-        <translation type="unfinished"></translation>
+        <translation>Normalizovať: Dva prechody</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_notch/meta.qml" line="7"/>
         <source>Notch</source>
-        <translation>Pásmová zádrž s úzkym kmitočtovým pásmom</translation>
+        <translation>Zárez</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_pan/meta.qml" line="7"/>
         <source>Pan</source>
-        <translation>Vyváženie (panoráma)</translation>
+        <translation>Panoráma</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/meta.qml" line="7"/>
@@ -7999,7 +7886,7 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
     <message>
         <location filename="../src/qml/filters/audio_swapchannels/meta.qml" line="7"/>
         <source>Swap Channels</source>
-        <translation>Výmena kanálov</translation>
+        <translation>Prehodiť kanály</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bluescreen0r/meta.qml" line="24"/>
@@ -8009,32 +7896,32 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
     <message>
         <location filename="../src/qml/filters/brightness/meta.qml" line="6"/>
         <source>Brightness</source>
-        <translation type="unfinished">Jas</translation>
+        <translation>Jas</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/color/meta.qml" line="6"/>
         <source>Color Grading</source>
-        <translation>Stupňovanie farieb</translation>
+        <translation>Stupňovanie farby</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/color/meta.qml" line="14"/>
         <source>Shadows (Lift)</source>
-        <translation>Tiene</translation>
+        <translation>Tiene (vyňať)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/color/meta.qml" line="19"/>
         <source>Midtones (Gamma)</source>
-        <translation>Stredové tóny (gamma)</translation>
+        <translation>Stredné tóny (gama)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/color/meta.qml" line="24"/>
         <source>Highlights (Gain)</source>
-        <translation>Svetlé miesta (zosilnenie)</translation>
+        <translation>Zvýraznenia (zisk)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/contrast/meta.qml" line="6"/>
         <source>Contrast</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontrast</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dust/meta.qml" line="6"/>
@@ -8044,7 +7931,7 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
     <message>
         <location filename="../src/qml/filters/dynamictext/meta.qml" line="7"/>
         <source>Text: Simple</source>
-        <translation type="unfinished"></translation>
+        <translation>Text: Jednoduchý</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/meta.qml" line="18"/>
@@ -8053,64 +7940,64 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
         <location filename="../src/qml/filters/timer/meta.qml" line="18"/>
         <location filename="../src/qml/filters/webvfx_clip/meta.qml" line="17"/>
         <source>Position / Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Poloha / veľkosť</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fadein_brightness/meta.qml" line="7"/>
         <location filename="../src/qml/filters/fadein_movit/meta.qml" line="7"/>
         <source>Fade In Video</source>
-        <translation>Rozvidnievať obraz</translation>
+        <translation>Zjavovanie videa</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fadeout_brightness/meta.qml" line="7"/>
         <location filename="../src/qml/filters/fadeout_movit/meta.qml" line="7"/>
         <source>Fade Out Video</source>
-        <translation>Stmavovať obraz</translation>
+        <translation>Vytrácanie videa</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/grain/meta.qml" line="6"/>
         <source>Old Film: Grain</source>
-        <translation>Starý film: Zrno</translation>
+        <translation>Starý film: Zrnenie</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/hue_lightness_saturation/meta.qml" line="23"/>
         <source>Hue/Lightness/Saturation</source>
-        <translation type="unfinished"></translation>
+        <translation>Odtieň/svetlosť/nasýtenie</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/invert/meta.qml" line="6"/>
         <source>Invert Colors</source>
-        <translation>Obrátenie farieb</translation>
+        <translation>Invertovať farby</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/keyspillm0pup/meta.qml" line="24"/>
         <source>Key Spill: Advanced</source>
-        <translation>Čistenie masky: Pokročilé</translation>
+        <translation>Kľúčové rozlievanie: Pokročilé</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/lenscorrection/meta.qml" line="23"/>
         <source>Lens Correction</source>
-        <translation type="unfinished"></translation>
+        <translation>Korekcia šošoviek</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/lenscorrection/meta.qml" line="32"/>
         <source>X Center</source>
-        <translation type="unfinished"></translation>
+        <translation>Stred X</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/lenscorrection/meta.qml" line="40"/>
         <source>Y Center</source>
-        <translation type="unfinished"></translation>
+        <translation>Stred Y</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/lenscorrection/meta.qml" line="48"/>
         <source>Correction at Center</source>
-        <translation type="unfinished"></translation>
+        <translation>Oprava v strede</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/lenscorrection/meta.qml" line="56"/>
         <source>Correction at Edges</source>
-        <translation type="unfinished"></translation>
+        <translation>Oprava na okrajoch</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/lines/meta.qml" line="6"/>
@@ -8120,26 +8007,26 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
     <message>
         <location filename="../src/qml/filters/lut3d/meta.qml" line="23"/>
         <source>LUT (3D)</source>
-        <translation type="unfinished"></translation>
+        <translation>LUT (3D)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask/meta.qml" line="6"/>
         <source>Mask</source>
-        <translation type="unfinished"></translation>
+        <translation>Maska</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask/meta.qml" line="16"/>
         <location filename="../src/qml/filters/mask_alphaspot/meta.qml" line="16"/>
         <location filename="../src/qml/filters/rgbsplit0r/meta.qml" line="40"/>
         <source>Horizontal</source>
-        <translation>Vodorovný</translation>
+        <translation>Horizontálny</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask/meta.qml" line="24"/>
         <location filename="../src/qml/filters/mask_alphaspot/meta.qml" line="24"/>
         <location filename="../src/qml/filters/rgbsplit0r/meta.qml" line="32"/>
         <source>Vertical</source>
-        <translation>Zvislý</translation>
+        <translation>Vertikálny</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask/meta.qml" line="32"/>
@@ -8163,17 +8050,17 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
     <message>
         <location filename="../src/qml/filters/mosaic/meta.qml" line="23"/>
         <source>Mosaic</source>
-        <translation type="unfinished"></translation>
+        <translation>Mozaika</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/movit_diffusion/meta.qml" line="6"/>
         <source>Diffusion</source>
-        <translation>Difúzia</translation>
+        <translation>Rozptyl</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/oldfilm/meta.qml" line="6"/>
         <source>Old Film: Projector</source>
-        <translation>Starý film: Premietací prístroj</translation>
+        <translation>Starý film: Premietačka</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/opacity/meta.qml" line="7"/>
@@ -8183,7 +8070,7 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
     <message>
         <location filename="../src/qml/filters/rotate/meta.qml" line="7"/>
         <source>Rotate and Scale</source>
-        <translation type="unfinished"></translation>
+        <translation>Otočiť a zmeniť veľkosť</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/rotate/meta.qml" line="18"/>
@@ -8193,42 +8080,42 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
     <message>
         <location filename="../src/qml/filters/rotate/meta.qml" line="26"/>
         <source>Scale</source>
-        <translation>Merítko</translation>
+        <translation>Zmena veľkosti</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/rotate/meta.qml" line="35"/>
         <source>X offset</source>
-        <translation>Posun x</translation>
+        <translation>Posuv x</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/rotate/meta.qml" line="39"/>
         <source>Y offset</source>
-        <translation>Posun y</translation>
+        <translation>Posuv y</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/select0r/meta.qml" line="24"/>
         <source>Chroma Key: Advanced</source>
-        <translation>Farebné zakrývanie: Pokročilé</translation>
+        <translation>Kľúčovacia farebnosť: Pokročilá</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sepia/meta.qml" line="6"/>
         <source>Sepia Tone</source>
-        <translation>Hnedý odtieň</translation>
+        <translation>Odtieň sépia</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sketch/meta.qml" line="6"/>
         <source>Sketch</source>
-        <translation type="unfinished"></translation>
+        <translation>Náčrtok</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/spillsuppress/meta.qml" line="24"/>
         <source>Key Spill: Simple</source>
-        <translation>Čistenie masky: Jednoduché</translation>
+        <translation>Kľúčovacie rozlievanie: Jednoduché</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/stabilize/meta.qml" line="6"/>
         <source>Stabilize</source>
-        <translation>Ustálenie</translation>
+        <translation>Stabilizácia</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/tcolor/meta.qml" line="6"/>
@@ -8238,7 +8125,7 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
     <message>
         <location filename="../src/qml/filters/unpremultiply/meta.qml" line="23"/>
         <source>Unpremultiply Alpha</source>
-        <translation type="unfinished"></translation>
+        <translation>Zrušiť predbežné násobenie alfa</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/wave/meta.qml" line="6"/>
@@ -8248,28 +8135,79 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
     <message>
         <location filename="../src/qml/filters/webvfx_circular_frame/meta.qml" line="7"/>
         <source>Crop: Circle</source>
-        <translation type="unfinished"></translation>
+        <translation>Orezanie: Kruh</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/halftone/meta.qml" line="6"/>
         <source>Halftone</source>
-        <translation type="unfinished"></translation>
+        <translation>Poltón</translation>
     </message>
     <message>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="7"/>
+        <source>Hemispherical to Equirectangular</source>
+        <translation>Pologuľové až rovnobežné</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="41"/>
+        <source>FrontX</source>
+        <translation>Predné X</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="49"/>
+        <source>FrontY</source>
+        <translation>Predné Y</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="57"/>
+        <source>FrontUp</source>
+        <translation>Predné hore</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="65"/>
+        <source>BackX</source>
+        <translation>Zadné X</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="73"/>
+        <source>BackY</source>
+        <translation>Zadné Y</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="81"/>
+        <source>BackUp</source>
+        <translation>Zadné hore</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="89"/>
+        <source>Fov</source>
+        <translation>Zorné pole</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="97"/>
         <location filename="../src/qml/filters/halftone/meta.qml" line="16"/>
         <location filename="../src/qml/filters/webvfx_circular_frame/meta.qml" line="16"/>
         <source>Radius</source>
         <translation>Polomer</translation>
     </message>
     <message>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="105"/>
+        <source>NadirRadius</source>
+        <translation>Polomer nadiru</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="113"/>
+        <source>nadirCorrectionStart</source>
+        <translation>Štart opravy nadiru</translation>
+    </message>
+    <message>
         <location filename="../src/qml/filters/halftone/meta.qml" line="24"/>
         <source>Cyan</source>
-        <translation type="unfinished"></translation>
+        <translation>Zelenomodrá</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/halftone/meta.qml" line="32"/>
         <source>Magenta</source>
-        <translation type="unfinished"></translation>
+        <translation>Purpurová</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/halftone/meta.qml" line="40"/>
@@ -8279,63 +8217,63 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
     <message>
         <location filename="../src/qml/filters/spot_remover/meta.qml" line="7"/>
         <source>Spot Remover</source>
-        <translation type="unfinished"></translation>
+        <translation>Odstraňovač škvŕn</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/timer/meta.qml" line="7"/>
         <source>Timer</source>
-        <translation type="unfinished"></translation>
+        <translation>Časovač</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/levels/meta.qml" line="6"/>
         <location filename="../src/qml/filters/posterize/meta.qml" line="16"/>
         <source>Levels</source>
-        <translation type="unfinished"></translation>
+        <translation>Úrovne</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/levels/meta.qml" line="15"/>
         <source>Input Black</source>
-        <translation type="unfinished"></translation>
+        <translation>Vstupná čierna</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/levels/meta.qml" line="23"/>
         <source>Input White</source>
-        <translation type="unfinished"></translation>
+        <translation>Vstupná biela</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/levels/meta.qml" line="31"/>
         <source>Gamma</source>
-        <translation>Gamma</translation>
+        <translation>Gama</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask_alphaspot/meta.qml" line="6"/>
         <source>Mask: Simple Shape</source>
-        <translation type="unfinished"></translation>
+        <translation>Maska: Jednoduchý tvar</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask_apply/meta.qml" line="6"/>
         <source>Mask: Apply</source>
-        <translation type="unfinished"></translation>
+        <translation>Maska: Použiť</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask_shape/meta.qml" line="6"/>
         <source>Mask: From File</source>
-        <translation type="unfinished"></translation>
+        <translation>Maska: Zo súboru</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_noisegate/meta.qml" line="7"/>
         <source>Noise Gate</source>
-        <translation type="unfinished"></translation>
+        <translation>Šumová brána</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_noisegate/meta.qml" line="16"/>
         <source>Key Filter: Low Frequency</source>
-        <translation type="unfinished"></translation>
+        <translation>Kľúčovací filter: Nízka frekvencia</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_noisegate/meta.qml" line="24"/>
         <source>Key Filter: High Frequency</source>
-        <translation type="unfinished"></translation>
+        <translation>Kľúčovací filter: Vysoká frekvencia</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_noisegate/meta.qml" line="32"/>
@@ -8352,47 +8290,47 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
     <message>
         <location filename="../src/qml/filters/audio_noisegate/meta.qml" line="48"/>
         <source>Hold</source>
-        <translation type="unfinished"></translation>
+        <translation>Pridržať</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_noisegate/meta.qml" line="56"/>
         <source>Decay</source>
-        <translation type="unfinished"></translation>
+        <translation>Rozklad</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_noisegate/meta.qml" line="64"/>
         <source>Range</source>
-        <translation type="unfinished"></translation>
+        <translation>Rozsah</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/waveform/meta.qml" line="7"/>
         <source>Audio Waveform Visualization</source>
-        <translation type="unfinished"></translation>
+        <translation>Vizualizácia tvarovej vlny audia</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/chromahold/meta.qml" line="23"/>
         <source>Chroma Hold</source>
-        <translation type="unfinished"></translation>
+        <translation>Pridržať farebnosť</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/grid/meta.qml" line="6"/>
         <source>Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Mriežka</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/grid/meta.qml" line="15"/>
         <source>Rows</source>
-        <translation type="unfinished"></translation>
+        <translation>Riadky</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/grid/meta.qml" line="23"/>
         <source>Columns</source>
-        <translation type="unfinished"></translation>
+        <translation>Stĺpce</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/aech0r/meta.qml" line="6"/>
         <source>Analog Echo</source>
-        <translation type="unfinished"></translation>
+        <translation>Analógová ozvena</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/distort/meta.qml" line="23"/>
@@ -8402,48 +8340,48 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
     <message>
         <location filename="../src/qml/filters/distort/meta.qml" line="32"/>
         <source>Amplitude</source>
-        <translation>Rozkmit</translation>
+        <translation>Amplitúda</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/distort/meta.qml" line="40"/>
         <location filename="../src/qml/filters/glitch/meta.qml" line="32"/>
         <source>Frequency</source>
-        <translation>Kmitočet</translation>
+        <translation>Frekvencia</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/distort/meta.qml" line="48"/>
         <source>Velocity</source>
-        <translation type="unfinished"></translation>
+        <translation>Rýchlosť</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/glitch/meta.qml" line="23"/>
         <source>Glitch</source>
-        <translation type="unfinished"></translation>
+        <translation>Rušivý impulz</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/glitch/meta.qml" line="40"/>
         <source>Block height</source>
-        <translation type="unfinished"></translation>
+        <translation>Výška bloku</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/glitch/meta.qml" line="48"/>
         <source>Shift intensity</source>
-        <translation type="unfinished"></translation>
+        <translation>Intenzita posunu</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/glitch/meta.qml" line="56"/>
         <source>Color intensity</source>
-        <translation type="unfinished"></translation>
+        <translation>Intenzita farby</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/rgbsplit0r/meta.qml" line="23"/>
         <source>RGB Shift</source>
-        <translation type="unfinished"></translation>
+        <translation>Posun RGB</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blur_exponential/meta.qml" line="23"/>
         <source>Blur: Exponential</source>
-        <translation type="unfinished"></translation>
+        <translation>Rozostrenie: Exponenciálne</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blur_exponential/meta.qml" line="33"/>
@@ -8456,103 +8394,98 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
     <message>
         <location filename="../src/qml/filters/blur_gaussian/meta.qml" line="23"/>
         <source>Blur: Gaussian</source>
-        <translation type="unfinished"></translation>
+        <translation>Rozostrenie: Gaussovo</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blur_lowpass/meta.qml" line="23"/>
         <source>Blur: Low Pass</source>
-        <translation type="unfinished"></translation>
+        <translation>Rozostrenie: Dolné pásmo priepustnosti</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/crop/meta.qml" line="6"/>
         <source>Crop: Source</source>
-        <translation type="unfinished"></translation>
+        <translation>Orezanie: Zdroj</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/flip/meta.qml" line="6"/>
         <source>Flip</source>
-        <translation type="unfinished"></translation>
+        <translation>Preklopiť</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/hqdn3d/meta.qml" line="23"/>
         <source>Reduce Noise: HQDN3D</source>
-        <translation type="unfinished"></translation>
+        <translation>Redukcia šumu: HQDN3D</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/hqdn3d/meta.qml" line="32"/>
         <source>Spatial</source>
-        <translation type="unfinished"></translation>
+        <translation>Priestorová</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/hqdn3d/meta.qml" line="40"/>
         <source>Temporal</source>
-        <translation type="unfinished"></translation>
+        <translation>Dočasná</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/noise_fast/meta.qml" line="23"/>
         <source>Noise: Fast</source>
-        <translation type="unfinished"></translation>
+        <translation>Šum: Hustý</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/noise_keyframes/meta.qml" line="23"/>
         <source>Noise: Keyframes</source>
-        <translation type="unfinished"></translation>
+        <translation>Šum: Kľúčové snímky</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/smartblur/meta.qml" line="24"/>
         <source>Reduce Noise: Smart Blur</source>
-        <translation type="unfinished"></translation>
+        <translation>Redukcia šumu: Chytré rozostrenie</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/meta.qml" line="6"/>
         <source>Text: HTML</source>
-        <translation type="unfinished"></translation>
+        <translation>Text: HTML</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx_clip/meta.qml" line="7"/>
         <source>Crop: Rectangle</source>
-        <translation type="unfinished"></translation>
+        <translation>Orezanie: Obdĺžnik</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/rectangle/meta.qml" line="7"/>
         <source>Rectangle</source>
-        <translation type="unfinished"></translation>
+        <translation>Obdĺžnik</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/rectangle/meta.qml" line="23"/>
         <location filename="../src/qml/filters/webvfx_clip/meta.qml" line="22"/>
         <source>Corner radius</source>
-        <translation type="unfinished"></translation>
+        <translation>Polomer rohu</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx_swirl/meta.qml" line="7"/>
         <source>Swirl</source>
-        <translation type="unfinished"></translation>
+        <translation>Zvírenie</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx_threejs_text/meta.qml" line="7"/>
         <source>Text: 3D</source>
-        <translation type="unfinished"></translation>
+        <translation>Text: 3D</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/meta.qml" line="6"/>
         <source>Blend Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Režim zmiešavania</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dither/meta.qml" line="6"/>
         <source>Dither</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/dither/meta.qml" line="24"/>
-        <source>Matrix</source>
-        <translation type="unfinished"></translation>
+        <translation>Rozptyl šumu</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/elastic_scale/meta.qml" line="23"/>
         <source>Elastic Scale</source>
-        <translation type="unfinished"></translation>
+        <translation>Pružná mierka</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/elastic_scale/meta.qml" line="33"/>
@@ -8562,47 +8495,47 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
     <message>
         <location filename="../src/qml/filters/elastic_scale/meta.qml" line="41"/>
         <source>Linear width</source>
-        <translation type="unfinished"></translation>
+        <translation>Lineárna šírka</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/elastic_scale/meta.qml" line="49"/>
         <source>Linear scale factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Faktor lineárnej mierky</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/elastic_scale/meta.qml" line="57"/>
         <source>Non-Linear scale factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Faktor nelineárnej mierky</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/posterize/meta.qml" line="6"/>
         <source>Posterize</source>
-        <translation type="unfinished"></translation>
+        <translation>Plagátovanie</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/nervous/meta.qml" line="6"/>
         <source>Nervous</source>
-        <translation type="unfinished"></translation>
+        <translation>Nervózny</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/nosync/meta.qml" line="6"/>
         <source>No Sync</source>
-        <translation type="unfinished"></translation>
+        <translation>Bez synchronizácie</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/nosync/meta.qml" line="16"/>
         <source>Offset</source>
-        <translation type="unfinished"></translation>
+        <translation>Posuv</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/trails/meta.qml" line="6"/>
         <source>Trails</source>
-        <translation type="unfinished"></translation>
+        <translation>Cestičky</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vertigo/meta.qml" line="23"/>
         <source>Vertigo</source>
-        <translation type="unfinished"></translation>
+        <translation>Závrat</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vertigo/meta.qml" line="33"/>
@@ -8612,12 +8545,12 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
     <message>
         <location filename="../src/qml/filters/vertigo/meta.qml" line="41"/>
         <source>Zoom</source>
-        <translation>Zväčšenie</translation>
+        <translation>Priblíženie</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx_choppy/meta.qml" line="7"/>
         <source>Choppy</source>
-        <translation type="unfinished"></translation>
+        <translation>Popraskaný</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx_choppy/meta.qml" line="16"/>
@@ -8627,98 +8560,125 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
     <message>
         <location filename="../src/qml/filters/gradient/meta.qml" line="7"/>
         <source>Gradient</source>
-        <translation type="unfinished"></translation>
+        <translation>Stupňovitosť</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/scanlines/meta.qml" line="6"/>
         <source>Scan Lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Skenovať riadky </translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_pitch/meta.qml" line="7"/>
         <location filename="../src/qml/filters/audio_pitch/meta.qml" line="17"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/meta.qml" line="25"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="25"/>
+        <location filename="../src/qml/filters/bigsh0t_transform_360/meta.qml" line="25"/>
         <source>Pitch</source>
-        <translation type="unfinished"></translation>
+        <translation>Výška tónu</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/bigsh0t_eq_mask/meta.qml" line="7"/>
+        <source>360: Equirectangular Mask</source>
+        <translation>Rovnobežná maska</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/bigsh0t_eq_mask/meta.qml" line="17"/>
+        <source>hfov0</source>
+        <translation>horizontálne zorné pole 0</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/bigsh0t_eq_mask/meta.qml" line="25"/>
+        <source>hfov1</source>
+        <translation>horizontálne zorné pole 1</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/bigsh0t_eq_mask/meta.qml" line="33"/>
+        <source>vfov0</source>
+        <translation>vertikálne zorné pole 0</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/bigsh0t_eq_mask/meta.qml" line="41"/>
+        <source>vfov1</source>
+        <translation>vertikálne zorné pole 1</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/meta.qml" line="7"/>
+        <source>Equirectangular to Rectilinear</source>
+        <translation>Rovnobežné na priamočiare</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/meta.qml" line="17"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="17"/>
+        <location filename="../src/qml/filters/bigsh0t_transform_360/meta.qml" line="17"/>
+        <source>Yaw</source>
+        <translation>Yaw</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/meta.qml" line="33"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="33"/>
+        <location filename="../src/qml/filters/bigsh0t_transform_360/meta.qml" line="33"/>
+        <source>Roll</source>
+        <translation>Rolovať</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/meta.qml" line="41"/>
+        <source>FOV</source>
+        <translation>Zorné pole</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/meta.qml" line="49"/>
+        <source>Fisheye</source>
+        <translation>Rybie oko</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/bigsh0t_rect_to_eq/meta.qml" line="7"/>
+        <source>Rectilinear to Equirectangular</source>
+        <translation>Priamočiare na rovnobežné</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/bigsh0t_rect_to_eq/meta.qml" line="17"/>
+        <source>hfov</source>
+        <translation>horizontálne zorné pole</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/bigsh0t_rect_to_eq/meta.qml" line="25"/>
+        <source>vfov</source>
+        <translation>vertikálne zorné pole</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/meta.qml" line="7"/>
+        <source>Stabilize 360</source>
+        <translation>Stabilizovať 360</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/bigsh0t_transform_360/meta.qml" line="7"/>
+        <source>Transform 360</source>
+        <translation>Transformovať 360</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/corners/meta.qml" line="23"/>
+        <source>Corner Pin</source>
+        <translation>Rohový špendlík</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/corners/meta.qml" line="33"/>
         <source>Corners</source>
-        <translation type="unfinished"></translation>
+        <translation>Rohy</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/meta.qml" line="32"/>
-        <source>Corner 1 X</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/corners/meta.qml" line="40"/>
-        <source>Corner 1 Y</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/corners/meta.qml" line="48"/>
-        <source>Corner 2 X</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/corners/meta.qml" line="56"/>
-        <source>Corner 2 Y</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/corners/meta.qml" line="64"/>
-        <source>Corner 3 X</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/corners/meta.qml" line="72"/>
-        <source>Corner 3 Y</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/corners/meta.qml" line="80"/>
-        <source>Corner 4 X</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/corners/meta.qml" line="88"/>
-        <source>Corner 4 Y</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/corners/meta.qml" line="96"/>
+        <location filename="../src/qml/filters/corners/meta.qml" line="39"/>
         <source>Stretch X</source>
-        <translation type="unfinished"></translation>
+        <translation>Napnúť X</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/meta.qml" line="104"/>
+        <location filename="../src/qml/filters/corners/meta.qml" line="47"/>
         <source>Stretch Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Napnúť Y</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/meta.qml" line="112"/>
-        <source>Interpolator</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/corners/meta.qml" line="120"/>
-        <source>Feather Alpha</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/corners/meta.qml" line="128"/>
-        <source>Alpha Operation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/corners/meta.qml" line="136"/>
-        <source>Enable Stretch</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/corners/meta.qml" line="144"/>
-        <source>Transparent Background</source>
-        <translation type="unfinished"></translation>
+        <location filename="../src/qml/filters/corners/meta.qml" line="55"/>
+        <source>Feathering</source>
+        <translation>Zmäkčenie okrajov</translation>
     </message>
 </context>
 <context>
@@ -8731,7 +8691,7 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
     <message>
         <location filename="../src/qml/filters/size_position/meta_affine.qml" line="19"/>
         <source>Position / Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Poloha / veľkosť</translation>
     </message>
 </context>
 <context>
@@ -8739,7 +8699,7 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
     <message>
         <location filename="../src/qml/filters/blur/meta_boxblur.qml" line="6"/>
         <source>Blur: Box</source>
-        <translation type="unfinished"></translation>
+        <translation>Rozostrenie: Schránka</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blur/meta_boxblur.qml" line="17"/>
@@ -8757,7 +8717,7 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
     <message>
         <location filename="../src/qml/filters/dance/meta_dance.qml" line="7"/>
         <source>Audio Dance Visualization</source>
-        <translation type="unfinished"></translation>
+        <translation>Vizualizácia tanca audia</translation>
     </message>
 </context>
 <context>
@@ -8775,7 +8735,7 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
     <message>
         <location filename="../src/qml/filters/saturation/meta_frei0r.qml" line="6"/>
         <source>Saturation</source>
-        <translation>Sýtosť</translation>
+        <translation>Nasýtenie</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/saturation/meta_frei0r.qml" line="16"/>
@@ -8816,7 +8776,7 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
     <message>
         <location filename="../src/qml/filters/lightshow/meta_lightshow.qml" line="7"/>
         <source>Audio Light Visualization</source>
-        <translation type="unfinished"></translation>
+        <translation>Vizualizácia svetla audia</translation>
     </message>
 </context>
 <context>
@@ -8830,12 +8790,12 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
         <location filename="../src/qml/filters/blur/meta_movit.qml" line="16"/>
         <location filename="../src/qml/filters/glow/meta_movit.qml" line="16"/>
         <source>Radius</source>
-        <translation>Polomer</translation>
+        <translation>Dosah</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/brightness/meta_movit.qml" line="6"/>
         <source>Brightness</source>
-        <translation type="unfinished">Jas</translation>
+        <translation>Jas</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/brightness/meta_movit.qml" line="18"/>
@@ -8853,22 +8813,22 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
     <message>
         <location filename="../src/qml/filters/color/meta_movit.qml" line="14"/>
         <source>Shadows (Lift)</source>
-        <translation>Tiene</translation>
+        <translation>Tiene (vyňať)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/color/meta_movit.qml" line="19"/>
         <source>Midtones (Gamma)</source>
-        <translation>Stredové tóny (gamma)</translation>
+        <translation>Stredné tóny (gama)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/color/meta_movit.qml" line="24"/>
         <source>Highlights (Gain)</source>
-        <translation>Svetlé miesta (zosilnenie)</translation>
+        <translation>Zvýraznenie (zisk)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/contrast/meta_movit.qml" line="6"/>
         <source>Contrast</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontrast</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/glow/meta_movit.qml" line="6"/>
@@ -8878,12 +8838,12 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
     <message>
         <location filename="../src/qml/filters/glow/meta_movit.qml" line="24"/>
         <source>Highlight blurriness</source>
-        <translation>Rozmazanosť svetlého miesta</translation>
+        <translation>Rozostrenie zvýraznenia</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/glow/meta_movit.qml" line="32"/>
         <source>Highlight cutoff</source>
-        <translation>Prerušenie zvýraznenia</translation>
+        <translation>Orezanie zvýraznenia</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mirror/meta_movit.qml" line="6"/>
@@ -8898,7 +8858,7 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
     <message>
         <location filename="../src/qml/filters/saturation/meta_movit.qml" line="6"/>
         <source>Saturation</source>
-        <translation>Sýtosť</translation>
+        <translation>Nasýtenie</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sharpen/meta_movit.qml" line="6"/>
@@ -8933,12 +8893,12 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
     <message>
         <location filename="../src/qml/filters/size_position/meta_movit.qml" line="21"/>
         <source>Position / Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Poloha / veľkosť</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vignette/meta_movit.qml" line="6"/>
         <source>Vignette</source>
-        <translation>Neostré okraje</translation>
+        <translation>Medailón</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vignette/meta_movit.qml" line="16"/>
@@ -8958,12 +8918,12 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
     <message>
         <location filename="../src/qml/filters/flip/meta_movit.qml" line="6"/>
         <source>Flip</source>
-        <translation type="unfinished"></translation>
+        <translation>Preklopiť</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/crop/meta_movit.qml" line="6"/>
         <source>Crop: Source</source>
-        <translation type="unfinished"></translation>
+        <translation>Orezanie: Zdroj</translation>
     </message>
 </context>
 <context>
@@ -8971,17 +8931,17 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
     <message>
         <location filename="../src/qml/filters/vignette/meta_oldfilm.qml" line="6"/>
         <source>Vignette</source>
-        <translation>Neostré okraje</translation>
+        <translation>Medailón</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vignette/meta_oldfilm.qml" line="17"/>
         <source>Radius</source>
-        <translation>Polomer</translation>
+        <translation>Dosah</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vignette/meta_oldfilm.qml" line="25"/>
         <source>Feathering</source>
-        <translation>Mäkký výberový okraj</translation>
+        <translation>Zmäkčenie okrajov</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vignette/meta_oldfilm.qml" line="33"/>
@@ -8994,7 +8954,7 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
     <message>
         <location filename="../src/qml/filters/spectrum/meta_spectrum.qml" line="7"/>
         <source>Audio Spectrum Visualization</source>
-        <translation type="unfinished"></translation>
+        <translation>Vizualizácia spektra audia</translation>
     </message>
 </context>
 <context>
@@ -9002,17 +8962,17 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
     <message>
         <location filename="../src/qml/filters/webvfx/templates/webvfx/Basic/Simple Scroll/simple_scroll_ui.qml" line="40"/>
         <source>Direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Smer</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/templates/webvfx/Basic/Simple Scroll/simple_scroll_ui.qml" line="43"/>
         <source>Up</source>
-        <translation type="unfinished"></translation>
+        <translation>Hore</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/templates/webvfx/Basic/Simple Scroll/simple_scroll_ui.qml" line="43"/>
         <source>Down</source>
-        <translation type="unfinished"></translation>
+        <translation>Dole</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/templates/webvfx/Basic/Simple Scroll/simple_scroll_ui.qml" line="43"/>
@@ -9055,7 +9015,7 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
     <message>
         <location filename="../src/qml/htmleditor/text_outline.qml" line="109"/>
         <source>Please choose a color</source>
-        <translation>Zvoľte prosím farbu</translation>
+        <translation>Zvoľte si, prosím, farbu</translation>
     </message>
 </context>
 <context>
@@ -9075,7 +9035,7 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
     <message>
         <location filename="../src/qml/htmleditor/text_shadow.qml" line="54"/>
         <source>Vertical</source>
-        <translation>Zvislý</translation>
+        <translation>Vertikálny</translation>
     </message>
     <message>
         <location filename="../src/qml/htmleditor/text_shadow.qml" line="69"/>
@@ -9100,110 +9060,110 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
     <message>
         <location filename="../src/qml/htmleditor/text_shadow.qml" line="143"/>
         <source>Please choose a color</source>
-        <translation>Zvoľte prosím farbu</translation>
+        <translation>Zvoľte si, prosím, farbu</translation>
     </message>
 </context>
 <context>
     <name>timeline</name>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="146"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="150"/>
         <source>Master</source>
-        <translation type="unfinished"></translation>
+        <translation>Hlavné</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="162"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="166"/>
         <source>Filters</source>
-        <translation type="unfinished">Filtre</translation>
+        <translation>Filtre</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="369"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="373"/>
         <source>Insert</source>
         <translation>Vložiť</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="369"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="373"/>
         <source>Overwrite</source>
         <translation>Prepísať</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="433"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="437"/>
         <source>Add Audio Track</source>
-        <translation>Pridať zvukovú stopu</translation>
+        <translation>Pridať  audio stopu</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="438"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="442"/>
         <source>Add Video Track</source>
-        <translation>Pridať obrazovú stopu</translation>
+        <translation>Pridať video stopu</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="443"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="447"/>
         <source>Insert Track</source>
         <translation>Vložiť stopu</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="448"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="452"/>
         <source>Remove Track</source>
         <translation>Odstrániť stopu</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="454"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="458"/>
         <source>Select All</source>
         <translation>Vybrať všetko</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="459"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="463"/>
         <source>Select None</source>
-        <translation type="unfinished"></translation>
+        <translation>Nevybrať nič</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="468"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="472"/>
         <source>Ripple All Tracks</source>
-        <translation>Vložiť a posunúť všetky stopy</translation>
+        <translation>Snímať všetky stopy</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="475"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="479"/>
         <source>Copy Timeline to Source</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopírovať časovú osu do zdroja</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="482"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="486"/>
         <source>Make Tracks Shorter</source>
-        <translation>Urobiť stopy kratšie</translation>
+        <translation>Vytvoriť kratšie stopy</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="487"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="491"/>
         <source>Make Tracks Taller</source>
-        <translation>Urobiť stopy vyššie</translation>
+        <translation>Vytvoriť vyššie stopy</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="496"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="500"/>
         <source>Show Audio Waveforms</source>
-        <translation>Ukázať zvukové vlny</translation>
+        <translation>Zobraziť tvarovú vlnu audia</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="516"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="520"/>
         <source>Show Video Thumbnails</source>
-        <translation>Ukázať náhľady obrazu</translation>
+        <translation>Zobraziť miniatúry videa</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="522"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="526"/>
         <source>Center the Playhead</source>
-        <translation type="unfinished"></translation>
+        <translation>Vycentrovať snímaciu hlavu</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="531"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="535"/>
         <source>Properties</source>
         <translation>Vlastnosti</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="535"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="539"/>
         <source>Reload</source>
         <translation>Nahrať znova</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="492"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="496"/>
         <source>Reset Track Height</source>
-        <translation type="unfinished"></translation>
+        <translation>Vynulovať výšku stopy</translation>
     </message>
 </context>
 <context>
@@ -9211,17 +9171,17 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
     <message>
         <location filename="../src/qml/filters/webvfx/templates/webvfx/Basic/Two Column Scroll/two_column_scroll_ui.qml" line="40"/>
         <source>Direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Smer</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/templates/webvfx/Basic/Two Column Scroll/two_column_scroll_ui.qml" line="43"/>
         <source>Up</source>
-        <translation type="unfinished"></translation>
+        <translation>Hore</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/templates/webvfx/Basic/Two Column Scroll/two_column_scroll_ui.qml" line="43"/>
         <source>Down</source>
-        <translation type="unfinished"></translation>
+        <translation>Dole</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx/templates/webvfx/Basic/Two Column Scroll/two_column_scroll_ui.qml" line="43"/>
@@ -9238,38 +9198,39 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
     <name>ui</name>
     <message>
         <location filename="../src/qml/filters/alpha_adjust/ui.qml" line="54"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="173"/>
         <source>Mode</source>
         <translation>Režim</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/alpha_adjust/ui.qml" line="62"/>
         <source>No Change</source>
-        <translation>Žiadna zmena</translation>
+        <translation>Bez zmeny</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/alpha_adjust/ui.qml" line="63"/>
         <source>Shave</source>
-        <translation>Ostrihať</translation>
+        <translation>Oholiť</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/alpha_adjust/ui.qml" line="64"/>
         <source>Shrink Hard</source>
-        <translation>Silné zužovanie</translation>
+        <translation>Silné zmrštenie</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/alpha_adjust/ui.qml" line="65"/>
         <source>Shrink Soft</source>
-        <translation>Mierne zužovanie</translation>
+        <translation>Mierne zmrštenie</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/alpha_adjust/ui.qml" line="66"/>
         <source>Grow Hard</source>
-        <translation>Silné roztiahnutie</translation>
+        <translation>Silný nárast</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/alpha_adjust/ui.qml" line="67"/>
         <source>Grow Soft</source>
-        <translation>Mierne roztiahnutie</translation>
+        <translation>Mierny nárast</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/alpha_adjust/ui.qml" line="68"/>
@@ -9288,6 +9249,9 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/alpha_adjust/ui.qml" line="80"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="296"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="355"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="414"/>
         <location filename="../src/qml/filters/blur_exponential/ui.qml" line="86"/>
         <location filename="../src/qml/filters/blur_gaussian/ui.qml" line="86"/>
         <location filename="../src/qml/filters/blur_lowpass/ui.qml" line="86"/>
@@ -9316,17 +9280,17 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
     <message>
         <location filename="../src/qml/filters/alpha_view/ui.qml" line="54"/>
         <source>Gray Alpha</source>
-        <translation>Šedá alfa</translation>
+        <translation>Alfa sivej</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/alpha_view/ui.qml" line="55"/>
         <source>Red &amp; Gray Alpha</source>
-        <translation>Červená a šedá alfa</translation>
+        <translation>Alfa červenej a sivej</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/alpha_view/ui.qml" line="56"/>
         <source>Checkered Background</source>
-        <translation>Kockované pozadie</translation>
+        <translation>Šachovnicové pozadie</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/alpha_view/ui.qml" line="57"/>
@@ -9336,7 +9300,7 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
     <message>
         <location filename="../src/qml/filters/alpha_view/ui.qml" line="58"/>
         <source>Gray Background</source>
-        <translation>Šedé pozadie</translation>
+        <translation>Sivé pozadie</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/alpha_view/ui.qml" line="59"/>
@@ -9383,6 +9347,12 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
         <location filename="../src/qml/filters/audio_pan/ui.qml" line="103"/>
         <location filename="../src/qml/filters/audio_pitch/ui.qml" line="118"/>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="106"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_mask/ui.qml" line="48"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/ui.qml" line="58"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="103"/>
+        <location filename="../src/qml/filters/bigsh0t_rect_to_eq/ui.qml" line="43"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="133"/>
+        <location filename="../src/qml/filters/bigsh0t_transform_360/ui.qml" line="48"/>
         <location filename="../src/qml/filters/bluescreen0r/ui.qml" line="50"/>
         <location filename="../src/qml/filters/blur_exponential/ui.qml" line="68"/>
         <location filename="../src/qml/filters/blur_gaussian/ui.qml" line="68"/>
@@ -9391,10 +9361,10 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
         <location filename="../src/qml/filters/chromahold/ui.qml" line="50"/>
         <location filename="../src/qml/filters/color/ui.qml" line="121"/>
         <location filename="../src/qml/filters/contrast/ui.qml" line="144"/>
-        <location filename="../src/qml/filters/corners/ui.qml" line="130"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="258"/>
         <location filename="../src/qml/filters/crop/ui.qml" line="84"/>
         <location filename="../src/qml/filters/distort/ui.qml" line="78"/>
-        <location filename="../src/qml/filters/dither/ui.qml" line="70"/>
+        <location filename="../src/qml/filters/dither/ui.qml" line="69"/>
         <location filename="../src/qml/filters/dust/ui.qml" line="48"/>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="269"/>
         <location filename="../src/qml/filters/elastic_scale/ui.qml" line="81"/>
@@ -9422,7 +9392,7 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
         <location filename="../src/qml/filters/posterize/ui.qml" line="65"/>
         <location filename="../src/qml/filters/rectangle/ui.qml" line="184"/>
         <location filename="../src/qml/filters/rgbsplit0r/ui.qml" line="70"/>
-        <location filename="../src/qml/filters/rotate/ui.qml" line="171"/>
+        <location filename="../src/qml/filters/rotate/ui.qml" line="130"/>
         <location filename="../src/qml/filters/select0r/ui.qml" line="109"/>
         <location filename="../src/qml/filters/sepia/ui.qml" line="38"/>
         <location filename="../src/qml/filters/sketch/ui.qml" line="53"/>
@@ -9441,13 +9411,13 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
         <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="68"/>
         <location filename="../src/qml/filters/white/ui.qml" line="65"/>
         <source>Preset</source>
-        <translation>Prednastavenie</translation>
+        <translation>Predvoľba</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_bandpass/ui.qml" line="63"/>
         <location filename="../src/qml/filters/audio_notch/ui.qml" line="62"/>
         <source>Center frequency</source>
-        <translation>Stredový kmitočet</translation>
+        <translation>Stredná frekvencia</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_bandpass/ui.qml" line="82"/>
@@ -9461,7 +9431,7 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
         <location filename="../src/qml/filters/audio_lowpass/ui.qml" line="82"/>
         <location filename="../src/qml/filters/audio_notch/ui.qml" line="98"/>
         <source>Rolloff rate</source>
-        <translation>Rýchlosť poklesu</translation>
+        <translation>Prenosová frekvencia</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_bandpass/ui.qml" line="119"/>
@@ -9470,7 +9440,7 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
         <location filename="../src/qml/filters/audio_lowpass/ui.qml" line="99"/>
         <location filename="../src/qml/filters/audio_notch/ui.qml" line="115"/>
         <source>Dry</source>
-        <translation>Pôvodný (nefiltrovaný) signál</translation>
+        <translation>Suchý</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_bandpass/ui.qml" line="128"/>
@@ -9479,7 +9449,7 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
         <location filename="../src/qml/filters/audio_lowpass/ui.qml" line="107"/>
         <location filename="../src/qml/filters/audio_notch/ui.qml" line="123"/>
         <source>Wet</source>
-        <translation>Filtrovaný signál</translation>
+        <translation>Mokrý</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_basstreble/ui.qml" line="201"/>
@@ -9490,7 +9460,7 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
         <location filename="../src/qml/filters/audio_basstreble/ui.qml" line="223"/>
         <source>Middle</source>
         <comment>Bass &amp; Treble audio filter</comment>
-        <translation>Stred</translation>
+        <translation>Stredné tóny</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_basstreble/ui.qml" line="245"/>
@@ -9501,13 +9471,13 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
         <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="32"/>
         <location filename="../src/qml/filters/audio_swapchannels/ui.qml" line="32"/>
         <source>Front left</source>
-        <translation type="unfinished"></translation>
+        <translation>Predný ľavý</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="33"/>
         <location filename="../src/qml/filters/audio_swapchannels/ui.qml" line="33"/>
         <source>Front right</source>
-        <translation type="unfinished"></translation>
+        <translation>Predný pravý</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="34"/>
@@ -9516,25 +9486,25 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="543"/>
         <location filename="../src/qml/filters/elastic_scale/ui.qml" line="101"/>
         <source>Center</source>
-        <translation>Stred</translation>
+        <translation>Stredný</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="35"/>
         <location filename="../src/qml/filters/audio_swapchannels/ui.qml" line="35"/>
         <source>Low frequency</source>
-        <translation type="unfinished"></translation>
+        <translation>Nízka frekvencia</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="36"/>
         <location filename="../src/qml/filters/audio_swapchannels/ui.qml" line="36"/>
         <source>Left surround</source>
-        <translation type="unfinished"></translation>
+        <translation>Ľavé okolie</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="37"/>
         <location filename="../src/qml/filters/audio_swapchannels/ui.qml" line="37"/>
         <source>Right surround</source>
-        <translation type="unfinished"></translation>
+        <translation>Pravé okolie</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="55"/>
@@ -9544,7 +9514,7 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
     <message>
         <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="61"/>
         <source>to</source>
-        <translation type="unfinished"></translation>
+        <translation>do</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="81"/>
@@ -9556,13 +9526,13 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="83"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="70"/>
         <source>The balance between the RMS and peak envelope followers. RMS is generally better for subtle, musical compression and peak is better for heavier, fast compression and percussion.</source>
-        <translation>Rovnováha medzi obálkami RMS a vrcholmi. RMS je všeobecne lepšia pre jemnú hudobnú kompresiu, a vrchol je lepšie prispôsobený pre rýchlu, silnejšiu kompresiu alebo bicie.</translation>
+        <translation>Rovnováha medzi RMS a špičkovými obalmi. RMS je všeobecne lepší pre jemnú hudobnú kompresiu a špičkový je lepšie prispôsobený pre ťažšiu, rýchlejšiu kompresiu a bicie.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="90"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="77"/>
         <source>Peak</source>
-        <translation>Vrchol</translation>
+        <translation>Špička</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="102"/>
@@ -9582,7 +9552,7 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="140"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="127"/>
         <source>The point at which the compressor will start to kick in.</source>
-        <translation>Bod, na ktorom kompresor začne zmenšovať dynamický rozsah pôvodného signálu.</translation>
+        <translation>Bod, na ktorom kompresor začne skopávať.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="158"/>
@@ -9594,7 +9564,7 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="160"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="147"/>
         <source>The gain reduction ratio used when the signal level exceeds the threshold.</source>
-        <translation>Pomer zmenšenia zosilnenia použitý, keď úroveň signálu prekročí prah.</translation>
+        <translation>Pomer zníženia zisku použitý, keď úroveň signálu prekročí prahovú hodnotu.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="177"/>
@@ -9612,24 +9582,24 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="197"/>
         <source>Makeup gain</source>
-        <translation>Vyrovnávacie zosilnenie</translation>
+        <translation>Upraviť zisk</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="199"/>
         <source>The gain of the makeup input signal.</source>
-        <translation>Zosilnenie použité na signál pre vyrovnanie celkovej straty na hlasitosti.</translation>
+        <translation>Zvýšenie použité na signál pre vyrovnanie celkovej straty na hlasitosti.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="274"/>
         <location filename="../src/qml/filters/audio_limiter/ui.qml" line="190"/>
         <source>Gain Reduction</source>
-        <translation type="unfinished"></translation>
+        <translation>Zníženie zisku</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="276"/>
         <location filename="../src/qml/filters/audio_limiter/ui.qml" line="192"/>
         <source>Status indicator showing the gain reduction applied by the compressor.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ukazovateľ stavu znázorňujúci zníženie zisku aplikovaného kompresorom.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="292"/>
@@ -9639,17 +9609,17 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
     <message>
         <location filename="../src/qml/filters/audio_delay/ui.qml" line="61"/>
         <source>Delay</source>
-        <translation>Ozvena</translation>
+        <translation>Odozva</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_delay/ui.qml" line="63"/>
         <source>The neutral delay time is 2 seconds. Times above 2 seconds will have reduced quality and times below will have increased CPU usage.</source>
-        <translation>Neutrálny čas oneskorenia je 2 sekundy. Doby trvania dlhšie než 2 sekundy budú mať zmenšenú akosť a tie pod zvýšia zaťaženie procesora.</translation>
+        <translation>Neutrálny čas odozvy je 2 sekundy. Čas dlhší než 2 sekundy znižuje kvalitu a kratší čas zvyšuje zaťaženie procesora.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_delay/ui.qml" line="81"/>
         <source>Feedback</source>
-        <translation>Navrátenie</translation>
+        <translation>Spätná väzba</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="184"/>
@@ -9685,32 +9655,32 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
         <location filename="../src/qml/filters/audio_highpass/ui.qml" line="60"/>
         <location filename="../src/qml/filters/audio_lowpass/ui.qml" line="63"/>
         <source>Cutoff frequency</source>
-        <translation>Kmitočet ukončenia</translation>
+        <translation>Medzná frekvencia</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_limiter/ui.qml" line="73"/>
         <source>Input gain</source>
-        <translation>Vstupné zosilnenie</translation>
+        <translation>Vstupný zisk</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_limiter/ui.qml" line="75"/>
         <source>Gain that is applied to the input stage. Can be used to trim gain to bring it roughly under the limit or to push the signal against the limit.</source>
-        <translation>Zosilnenie, ktoré je použité na vstupnú úroveň. Dá sa použiť na orezanie zosilnenia, aby sa dostalo zhruba pod hranicu, alebo ku postrčeniu signálu proti medzi.</translation>
+        <translation>Zisk použitý na vstupnú úroveň. Dá sa použiť na orezanie zisku, aby sa dostal zhruba pod limit, alebo k potlačeniu signálu oproti limitu.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_limiter/ui.qml" line="93"/>
         <source>Limit</source>
-        <translation>Obmedzenie</translation>
+        <translation>Limit</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_limiter/ui.qml" line="95"/>
         <source>The maximum output amplitude. Peaks over this level will be attenuated as smoothly as possible to bring them as close as possible to this level.</source>
-        <translation>Najväčší výstupný rozkmit. Vrcholové hodnoty nad touto zvukovou hladinou budú zoslabené tak jemne, ako je to len možné, aby boli privedené na túto úroveň zvuku.</translation>
+        <translation>Najväčšia výstupná amplitúda. Špičky nad touto úrovňou sa zoslabia tak jemne, ako je to len možné, aby sa čo najviac priblížili tejto úrovni.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_limiter/ui.qml" line="115"/>
         <source>The time taken for the limiter&apos;s attenuation to return to 0 dB&apos;s.</source>
-        <translation>Čas vzatý zoslabením limiteru (kompresia dynamiky - zmenšenie dynamického rozsahu spracovávaného signálu, limiter - kompresný pomer nastavený na maximum) pre návrat na 0 dB.</translation>
+        <translation>Čas potrebný na návrat útlmu obmedzovača na 0 dB.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="97"/>
@@ -9721,89 +9691,89 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
     <message>
         <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="99"/>
         <source>The target loudness of the output in LUFS.</source>
-        <translation type="unfinished"></translation>
+        <translation>Cieľová hlasitosť výstupu v LUFS.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="116"/>
         <source>Analysis Window</source>
-        <translation type="unfinished"></translation>
+        <translation>Okno analýzy</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="118"/>
         <source>The amount of history to use to calculate the input loudness.</source>
-        <translation type="unfinished"></translation>
+        <translation>Množstvo histórie pre použitie na výpočet vstupnej hlasitosti.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="135"/>
         <source>Maximum Gain</source>
-        <translation type="unfinished"></translation>
+        <translation>Maximálny zisk</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="137"/>
         <source>The maximum that the gain can be increased.</source>
-        <translation type="unfinished"></translation>
+        <translation>Maximum, ktoré môže zvýšiť zisk.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="154"/>
         <source>Minimum Gain</source>
-        <translation type="unfinished"></translation>
+        <translation>Minimálny zisk</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="156"/>
         <source>The maximum that the gain can be decreased.</source>
-        <translation type="unfinished"></translation>
+        <translation>Maximum, ktoré môže znížiť zisk.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="173"/>
         <source>Maximum Rate</source>
-        <translation type="unfinished"></translation>
+        <translation>Maximálna frekvencia</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="175"/>
         <source>The maximum rate that the gain can be changed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Maximálna frekvencia, ktorá môže meniť zisk.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="250"/>
         <source>Input Loudness</source>
-        <translation type="unfinished"></translation>
+        <translation>Vstupná hlasitosť</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="252"/>
         <source>Status indicator showing the loudness measured on the input.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ukazovateľ stavu zobrazujúci hlasitosť nameranú na vstupe.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="268"/>
         <source>Output Gain</source>
-        <translation type="unfinished"></translation>
+        <translation>Výstupný zisk</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="270"/>
         <source>Status indicator showing the gain being applied.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ukazovateľ stavu zobrazujúci použité zosilnenie.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="285"/>
         <source>Reset</source>
-        <translation type="unfinished">Nastaviť znovu</translation>
+        <translation>Vynulovať</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="287"/>
         <source>Status indicator showing when the loudness measurement is reset.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ukazovateľ stavu zobrazujúci vynulovanie merania hlasitosti.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_normalize_2p/ui.qml" line="31"/>
         <location filename="../src/qml/filters/stabilize/ui.qml" line="46"/>
         <source>Analyzing...</source>
-        <translation>Analyzuje sa...</translation>
+        <translation>Analyzovanie...</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_normalize_2p/ui.qml" line="34"/>
         <location filename="../src/qml/filters/stabilize/ui.qml" line="49"/>
         <source>Analysis complete.</source>
-        <translation>Rozbor dokončený.</translation>
+        <translation>Analýza ukončená.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_normalize_2p/ui.qml" line="38"/>
@@ -9812,6 +9782,7 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_normalize_2p/ui.qml" line="74"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="177"/>
         <location filename="../src/qml/filters/stabilize/ui.qml" line="170"/>
         <source>Analyze</source>
         <translation>Analyzovať</translation>
@@ -9851,12 +9822,12 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="117"/>
         <source>Room size</source>
-        <translation>Miestnosť</translation>
+        <translation>Veľkosť miestnosti</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="119"/>
         <source>The size of the room, in meters. Excessively large, and excessively small values will make it sound a bit unrealistic. Values of around 30 sound good.</source>
-        <translation type="unfinished"></translation>
+        <translation>Veľkosť miestnosti v metroch. Nadmerne veľké a neprimerane malé hodnoty dávajú nereálny zvuk. Hodnoty okolo 30 znejú dobre.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="136"/>
@@ -9866,22 +9837,22 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="155"/>
         <source>Damping</source>
-        <translation>Tlmenie</translation>
+        <translation>Útlm</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="157"/>
         <source>This controls the high frequency damping (a lowpass filter), values near 1 will make it sound very bright, values near 0 will make it sound very dark.</source>
-        <translation>Ovládanie zoslabenia vysokých kmitočtov (filter spodnej pásmovej priepustnosti), hodnoty blízke 1 povedú k veľmi jasnému zvuku, hodnoty blízke 0 vrátia veľmi tmavý zvuk.</translation>
+        <translation>Toto ovláda útlm vysokých frekvencií (filter dolnej pásmovej priepustnosti), hodnoty blízke 1 povedú k veľmi jasnému zvuku, hodnoty blízke 0 vrátia veľmi temný zvuk.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="175"/>
         <source>Input bandwidth</source>
-        <translation>Šírka pásma vstupu</translation>
+        <translation>Vstupná šírka pásma</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="177"/>
         <source>This is like a damping control for the input, it has a similar effect to the damping control, but is subtly different.</source>
-        <translation>Podobné ovládaniu tlmenia pre vstup, má podobný účinok na ovládanie tlmenia, ale je veľmi ľahko odlišné.</translation>
+        <translation>Toto je podobné ovládaniu útlmu pre vstup, má podobný účinok na ovládanie útlmu, ale je jemne odlišné.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="195"/>
@@ -9891,7 +9862,7 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="197"/>
         <source>The amount of dry signal to be mixed with the reverberated signal.</source>
-        <translation>Množstvo nespracovaného signálu ku zmiešaniu so signálom, na ktorom bol použitý dozvuk.</translation>
+        <translation>Množstvo nespracovaného (suchého) signálu na zmiešanie so signálom dozvuku.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="215"/>
@@ -9916,19 +9887,19 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
     <message>
         <location filename="../src/qml/filters/audio_swapchannels/ui.qml" line="56"/>
         <source>Swap</source>
-        <translation type="unfinished"></translation>
+        <translation>Prehodiť</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_swapchannels/ui.qml" line="62"/>
         <source>with</source>
-        <translation type="unfinished"></translation>
+        <translation>s</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bluescreen0r/ui.qml" line="64"/>
         <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="109"/>
         <location filename="../src/qml/filters/select0r/ui.qml" line="120"/>
         <source>Key color</source>
-        <translation>Farba masky</translation>
+        <translation>Kľúčová farba</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bluescreen0r/ui.qml" line="82"/>
@@ -9944,12 +9915,12 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
     <message>
         <location filename="../src/qml/filters/color/ui.qml" line="174"/>
         <source>Midtones (Gamma)</source>
-        <translation>Stredové tóny (gamma)</translation>
+        <translation>Stredné tóny (gama)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/color/ui.qml" line="204"/>
         <source>Highlights (Gain)</source>
-        <translation>Svetlé miesta (zosilnenie)</translation>
+        <translation>Zvýraznenie (zosilnenie)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/crop/ui.qml" line="126"/>
@@ -9985,26 +9956,26 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
         <location filename="../src/qml/filters/levels/ui.qml" line="192"/>
         <location filename="../src/qml/filters/timer/ui.qml" line="55"/>
         <source>Bottom Left</source>
-        <translation>Dole vľavo</translation>
+        <translation>Vľavo dole</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="68"/>
         <location filename="../src/qml/filters/levels/ui.qml" line="192"/>
         <location filename="../src/qml/filters/timer/ui.qml" line="60"/>
         <source>Bottom Right</source>
-        <translation>Dole vpravo</translation>
+        <translation>Vpravo dole</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="73"/>
         <location filename="../src/qml/filters/levels/ui.qml" line="192"/>
         <source>Top Left</source>
-        <translation>Hore vľavo</translation>
+        <translation>Vľavo hore</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="78"/>
         <location filename="../src/qml/filters/levels/ui.qml" line="192"/>
         <source>Top Right</source>
-        <translation>Hore vpravo</translation>
+        <translation>Vpravo hore</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="83"/>
@@ -10014,132 +9985,132 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="88"/>
         <source>Slide In From Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Posunúť zľava</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="90"/>
         <source>Slide In From Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Posunúť sprava</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="92"/>
         <source>Slide In From Top</source>
-        <translation type="unfinished"></translation>
+        <translation>Posunúť zhora</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="94"/>
         <source>Slide In From Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Posunúť zdola</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="98"/>
         <source>Slide Out Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Posunúť doľava</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="100"/>
         <source>Slide Out Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Posunúť doprava</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="102"/>
         <source>Slide Out Top</source>
-        <translation type="unfinished"></translation>
+        <translation>Posunúť nahor</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="104"/>
         <source>Slide Out Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Posunúť nadol</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="108"/>
         <source>Slow Zoom In</source>
-        <translation type="unfinished"></translation>
+        <translation>Pomaly priblížiť</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="110"/>
         <source>Slow Zoom Out</source>
-        <translation type="unfinished"></translation>
+        <translation>Pomaly oddialiť</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="112"/>
         <source>Slow Pan Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Panoráma pomaly doľava</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="113"/>
         <source>Slow Move Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Pomaly posunúť doľava</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="115"/>
         <source>Slow Pan Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Panoráma pomaly doprava</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="116"/>
         <source>Slow Move Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Pomaly posunúť doprava</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="118"/>
         <source>Slow Pan Up</source>
-        <translation type="unfinished"></translation>
+        <translation>Panoráma pomaly nahor</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="119"/>
         <source>Slow Move Up</source>
-        <translation type="unfinished"></translation>
+        <translation>Pomaly posunúť nahor</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="121"/>
         <source>Slow Pan Down</source>
-        <translation type="unfinished"></translation>
+        <translation>Panoráma pomaly nadol</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="122"/>
         <source>Slow Move Down</source>
-        <translation type="unfinished"></translation>
+        <translation>Pomaly posunúť nadol</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="124"/>
         <source>Slow Zoom In, Pan Up Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Pomaly priblížiť, panoráma vľavo nahor</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="125"/>
         <source>Slow Zoom In, Move Up Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Pomaly približovať, posúvať vľavo nahor</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="127"/>
         <source>Slow Zoom In, Pan Down Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Pomaly priblížiť, panoráma vpravo nadol</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="128"/>
         <source>Slow Zoom In, Move Down Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Pomaly približovať, posúvať vpravo nadol</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="130"/>
         <source>Slow Zoom Out, Pan Up Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Pomaly oddiaľovať, panoráma vpravo nahor</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="131"/>
         <source>Slow Zoom Out, Move Up Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Pomaly oddiaľovať, posúvať vpravo nahor</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="133"/>
         <source>Slow Zoom Out, Pan Down Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Pomaly oddiaľovať, panoráma vľavo nadol</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="134"/>
         <source>Slow Zoom Out, Move Down Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Pomaly oddiaľovať, posúvať vľavo nadol</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="202"/>
@@ -10150,7 +10121,7 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="204"/>
         <source>Italic</source>
-        <translation type="unfinished"></translation>
+        <translation>Kurzíva</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="295"/>
@@ -10166,7 +10137,7 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="328"/>
         <source># (Hash sign)</source>
-        <translation type="unfinished"></translation>
+        <translation># (hašovací znak)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="332"/>
@@ -10198,7 +10169,7 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="388"/>
         <source>Use font size</source>
-        <translation type="unfinished"></translation>
+        <translation>Použiť veľkosť písma</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="403"/>
@@ -10222,7 +10193,7 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="437"/>
         <source>Padding</source>
-        <translation>Odstup</translation>
+        <translation>Výplň</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="451"/>
@@ -10237,18 +10208,18 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="532"/>
         <source>Horizontal fit</source>
-        <translation>Vodorovne umiestnenie</translation>
+        <translation>Prispôsobiť horizontálne</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="562"/>
         <source>Vertical fit</source>
-        <translation>Zvislé umiestnenie</translation>
+        <translation>Prispôsobiť vertikálne</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="573"/>
         <source>Middle</source>
         <comment>Text video filter</comment>
-        <translation>Stred</translation>
+        <translation>Na stred</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fadein_brightness/ui.qml" line="82"/>
@@ -10256,7 +10227,7 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
         <location filename="../src/qml/filters/fadeout_brightness/ui.qml" line="82"/>
         <location filename="../src/qml/filters/fadeout_movit/ui.qml" line="79"/>
         <source>Adjust opacity instead of fade with black</source>
-        <translation>Prispôsobiť nepriehľadnosť namiesto prelínania sa s čiernou</translation>
+        <translation>Nastaviť nepriehľadnú namiesto vytrácania do čiernej</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/grain/ui.qml" line="60"/>
@@ -10273,7 +10244,7 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
     <message>
         <location filename="../src/qml/filters/hue_lightness_saturation/ui.qml" line="65"/>
         <source>Hue</source>
-        <translation type="unfinished"></translation>
+        <translation>Odtieň</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/hue_lightness_saturation/ui.qml" line="80"/>
@@ -10284,7 +10255,7 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
     <message>
         <location filename="../src/qml/filters/hue_lightness_saturation/ui.qml" line="95"/>
         <source>Saturation</source>
-        <translation>Sýtosť</translation>
+        <translation>Nasýtenie</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="132"/>
@@ -10304,22 +10275,22 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
     <message>
         <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="161"/>
         <source>Transparency</source>
-        <translation>Priehľadnosť</translation>
+        <translation>Priehľadná</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="161"/>
         <source>Edge Inwards</source>
-        <translation>Zahrnutý okraj</translation>
+        <translation>Vnútri okrajov</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="161"/>
         <source>Edge Outwards</source>
-        <translation>Vylúčený okraj</translation>
+        <translation>Mimo okrajov</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="169"/>
         <source>Tolerance</source>
-        <translation>Dovolená ochýlka</translation>
+        <translation>Tolerancia</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="186"/>
@@ -10331,12 +10302,12 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
     <message>
         <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="203"/>
         <source>Hue gate</source>
-        <translation>Filter odtieňa</translation>
+        <translation>Brána odtieňa</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="220"/>
         <source>Saturation threshold</source>
-        <translation>Prah sýtosti</translation>
+        <translation>Prah nasýtenia</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="237"/>
@@ -10347,13 +10318,13 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="48"/>
         <location filename="../src/qml/filters/gradient/ui.qml" line="370"/>
         <source>Blend mode</source>
-        <translation>Režim splynutia</translation>
+        <translation>Režim zmiešavania</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="53"/>
         <location filename="../src/qml/filters/gradient/ui.qml" line="375"/>
         <source>Over</source>
-        <translation>Kladenie nad seba</translation>
+        <translation>Nad</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="54"/>
@@ -10368,43 +10339,43 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="56"/>
         <location filename="../src/qml/filters/gradient/ui.qml" line="378"/>
         <source>Saturate</source>
-        <translation>Sýtosť</translation>
+        <translation>Nasýtenie</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="57"/>
         <location filename="../src/qml/filters/gradient/ui.qml" line="379"/>
         <source>Multiply</source>
-        <translation>Súčin</translation>
+        <translation>Vynásobenie</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="58"/>
         <location filename="../src/qml/filters/gradient/ui.qml" line="380"/>
         <source>Screen</source>
-        <translation>Obrazovka</translation>
+        <translation>Zaclonenie</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="59"/>
         <location filename="../src/qml/filters/gradient/ui.qml" line="381"/>
         <source>Overlay</source>
-        <translation>Prekrytie</translation>
+        <translation>Prekrývanie</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="60"/>
         <location filename="../src/qml/filters/gradient/ui.qml" line="382"/>
         <source>Darken</source>
-        <translation>Stmavnutie</translation>
+        <translation>Stmavenie</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="61"/>
         <location filename="../src/qml/filters/gradient/ui.qml" line="383"/>
         <source>Dodge</source>
-        <translation>Hustota farby-</translation>
+        <translation>Vyhýbanie</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="62"/>
         <location filename="../src/qml/filters/gradient/ui.qml" line="384"/>
         <source>Burn</source>
-        <translation>Hustota farby+</translation>
+        <translation>Prepálenie</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="63"/>
@@ -10416,19 +10387,19 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="64"/>
         <location filename="../src/qml/filters/gradient/ui.qml" line="386"/>
         <source>Soft Light</source>
-        <translation>Tlmené svetlo</translation>
+        <translation>Mäkké svetlo</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="65"/>
         <location filename="../src/qml/filters/gradient/ui.qml" line="387"/>
         <source>Difference</source>
-        <translation>Rozdiel</translation>
+        <translation>Rozdielové</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="66"/>
         <location filename="../src/qml/filters/gradient/ui.qml" line="388"/>
         <source>Exclusion</source>
-        <translation>Vylúčenie</translation>
+        <translation>Negácia</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="67"/>
@@ -10440,7 +10411,7 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="68"/>
         <location filename="../src/qml/filters/gradient/ui.qml" line="390"/>
         <source>HSL Saturation</source>
-        <translation>Sýtosť HSL</translation>
+        <translation>Nasýtenie HSL</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="69"/>
@@ -10452,25 +10423,25 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="70"/>
         <location filename="../src/qml/filters/gradient/ui.qml" line="392"/>
         <source>HSL Luminosity</source>
-        <translation>Svietivosť HSL</translation>
+        <translation>Svetlosť HSL</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="243"/>
         <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="274"/>
         <source>De-Key</source>
-        <translation>Obrysové obrážanie</translation>
+        <translation>Odkľúčovať</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="243"/>
         <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="274"/>
         <source>Desaturate</source>
-        <translation>Odsýtenie</translation>
+        <translation>Znížiť nasýtenie</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="243"/>
         <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="274"/>
         <source>Adjust Luma</source>
-        <translation>Upravenie lumy</translation>
+        <translation>Nastaviť jas</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="251"/>
@@ -10490,7 +10461,7 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
     <message>
         <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="301"/>
         <source>Show mask</source>
-        <translation>Ukázať masku</translation>
+        <translation>Zobraziť masku</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="311"/>
@@ -10500,22 +10471,22 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
     <message>
         <location filename="../src/qml/filters/lenscorrection/ui.qml" line="101"/>
         <source>X Center</source>
-        <translation type="unfinished"></translation>
+        <translation>Stred X</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/lenscorrection/ui.qml" line="126"/>
         <source>Y Center</source>
-        <translation type="unfinished"></translation>
+        <translation>Stred Y</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/lenscorrection/ui.qml" line="151"/>
         <source>Correction at Center</source>
-        <translation type="unfinished"></translation>
+        <translation>Oprava v strede</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/lenscorrection/ui.qml" line="176"/>
         <source>Correction at Edges</source>
-        <translation type="unfinished"></translation>
+        <translation>Oprava na okrajoch</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/lines/ui.qml" line="63"/>
@@ -10539,7 +10510,8 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
         <location filename="../src/qml/filters/lut3d/ui.qml" line="57"/>
         <source>No 3D LUT file loaded.
 Click &quot;Open&quot; to load a file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nenačítaný žiadny súbor LUT 3D.
+Kliknite na Otvoriť pre načítanie súboru.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/lut3d/ui.qml" line="86"/>
@@ -10550,27 +10522,67 @@ Click &quot;Open&quot; to load a file.</source>
     <message>
         <location filename="../src/qml/filters/lut3d/ui.qml" line="90"/>
         <source>Open 3D LUT File</source>
-        <translation type="unfinished"></translation>
+        <translation>Otvoriť súbor LUT 3D</translation>
     </message>
     <message>
+        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/ui.qml" line="84"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="147"/>
+        <location filename="../src/qml/filters/bigsh0t_rect_to_eq/ui.qml" line="63"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="205"/>
+        <location filename="../src/qml/filters/bigsh0t_transform_360/ui.qml" line="70"/>
         <location filename="../src/qml/filters/lut3d/ui.qml" line="102"/>
         <source>Interpolation</source>
-        <translation type="unfinished">Interpolácia</translation>
+        <translation>Interpolácia</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/ui.qml" line="99"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="167"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="291"/>
+        <location filename="../src/qml/filters/bigsh0t_transform_360/ui.qml" line="85"/>
+        <source>Yaw</source>
+        <translation>Yaw</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/ui.qml" line="117"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="185"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="350"/>
+        <location filename="../src/qml/filters/bigsh0t_transform_360/ui.qml" line="103"/>
+        <source>Pitch</source>
+        <translation>Výška tónu</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/ui.qml" line="135"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="203"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="409"/>
+        <location filename="../src/qml/filters/bigsh0t_transform_360/ui.qml" line="121"/>
+        <source>Roll</source>
+        <translation>Rolovať</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/ui.qml" line="153"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="241"/>
+        <source>FOV</source>
+        <translation>Zorné pole</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/ui.qml" line="171"/>
+        <source>Fisheye</source>
+        <translation>Rybie oko</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/lut3d/ui.qml" line="108"/>
         <source>Nearest</source>
-        <translation type="unfinished"></translation>
+        <translation>Najbližší</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/lut3d/ui.qml" line="108"/>
         <source>Trilinear</source>
-        <translation type="unfinished"></translation>
+        <translation>Trilineárna</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/lut3d/ui.qml" line="108"/>
         <source>Tetrahedral</source>
-        <translation type="unfinished"></translation>
+        <translation>Štvorboká</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask/ui.qml" line="176"/>
@@ -10580,13 +10592,77 @@ Click &quot;Open&quot; to load a file.</source>
         <translation>Operácia</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask/ui.qml" line="182"/>
-        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="183"/>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="282"/>
-        <source>Write on Clear</source>
-        <translation>Zapísať pri vymazaní</translation>
+        <location filename="../src/qml/filters/corners/ui.qml" line="288"/>
+        <source>Corner 1 X</source>
+        <translation>Roh 1 X</translation>
     </message>
     <message>
+        <location filename="../src/qml/filters/corners/ui.qml" line="373"/>
+        <source>Corner 2 X</source>
+        <translation>Roh 2 X</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/corners/ui.qml" line="421"/>
+        <source>Corner 3 X</source>
+        <translation>Roh 3 X</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/corners/ui.qml" line="469"/>
+        <source>Corner 4 X</source>
+        <translation>Roh 4 X</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/corners/ui.qml" line="517"/>
+        <source>Stretch X</source>
+        <translation>Napnúť X</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/corners/ui.qml" line="567"/>
+        <source>Interpolator</source>
+        <translation>Interpolátor</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/corners/ui.qml" line="573"/>
+        <source>Nearest Neighbor</source>
+        <translation>Najbližší sused</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/corners/ui.qml" line="573"/>
+        <source>Bilinear</source>
+        <translation>Bilineárna</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/corners/ui.qml" line="573"/>
+        <source>Bicubic Smooth</source>
+        <translation>Bikubické vyhladenie</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/corners/ui.qml" line="573"/>
+        <source>Bicubic Sharp</source>
+        <translation>Bikubické zostrenie</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/corners/ui.qml" line="573"/>
+        <source>Spline 4x4</source>
+        <translation>Interpolačná krivka 4x4</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/corners/ui.qml" line="573"/>
+        <source>Spline 6x6</source>
+        <translation>Interpolačná krivka 6x6</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/corners/ui.qml" line="573"/>
+        <source>Lanzcos</source>
+        <translation>Lanzcos</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/corners/ui.qml" line="586"/>
+        <source>Alpha Operation</source>
+        <translation>Operácia alfa</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/corners/ui.qml" line="592"/>
         <location filename="../src/qml/filters/mask/ui.qml" line="182"/>
         <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="183"/>
         <location filename="../src/qml/filters/select0r/ui.qml" line="283"/>
@@ -10594,6 +10670,7 @@ Click &quot;Open&quot; to load a file.</source>
         <translation>Najvyššia hodnota</translation>
     </message>
     <message>
+        <location filename="../src/qml/filters/corners/ui.qml" line="592"/>
         <location filename="../src/qml/filters/mask/ui.qml" line="182"/>
         <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="183"/>
         <location filename="../src/qml/filters/select0r/ui.qml" line="284"/>
@@ -10601,7 +10678,26 @@ Click &quot;Open&quot; to load a file.</source>
         <translation>Najnižšia hodnota</translation>
     </message>
     <message>
+        <location filename="../src/qml/filters/corners/ui.qml" line="592"/>
+        <source>Opaque</source>
+        <translation>Nepriehľadná</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/corners/ui.qml" line="592"/>
+        <location filename="../src/qml/filters/mask/ui.qml" line="182"/>
+        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="183"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="282"/>
+        <source>Overwrite</source>
+        <translation>Prepísať</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/corners/ui.qml" line="607"/>
+        <source>Feathering</source>
+        <translation>Mäkký výberový okraj</translation>
+    </message>
+    <message>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="55"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="592"/>
         <location filename="../src/qml/filters/gradient/ui.qml" line="377"/>
         <location filename="../src/qml/filters/mask/ui.qml" line="182"/>
         <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="183"/>
@@ -10610,6 +10706,7 @@ Click &quot;Open&quot; to load a file.</source>
         <translation>Pridať</translation>
     </message>
     <message>
+        <location filename="../src/qml/filters/corners/ui.qml" line="592"/>
         <location filename="../src/qml/filters/mask/ui.qml" line="182"/>
         <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="183"/>
         <location filename="../src/qml/filters/select0r/ui.qml" line="286"/>
@@ -10627,19 +10724,19 @@ Click &quot;Open&quot; to load a file.</source>
         <location filename="../src/qml/filters/mask/ui.qml" line="197"/>
         <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="198"/>
         <source>Rectangle</source>
-        <translation type="unfinished"></translation>
+        <translation>Obdĺžnik</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask/ui.qml" line="197"/>
         <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="198"/>
         <source>Ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation>Elipsa</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask/ui.qml" line="197"/>
         <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="198"/>
         <source>Triangle</source>
-        <translation type="unfinished"></translation>
+        <translation>Trojuholník</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask/ui.qml" line="197"/>
@@ -10649,13 +10746,28 @@ Click &quot;Open&quot; to load a file.</source>
         <translation>Diamant</translation>
     </message>
     <message>
+        <location filename="../src/qml/filters/bigsh0t_eq_mask/ui.qml" line="70"/>
+        <location filename="../src/qml/filters/bigsh0t_rect_to_eq/ui.qml" line="78"/>
         <location filename="../src/qml/filters/gradient/ui.qml" line="64"/>
         <location filename="../src/qml/filters/mask/ui.qml" line="206"/>
         <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="207"/>
         <location filename="../src/qml/filters/rgbsplit0r/ui.qml" line="110"/>
         <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="202"/>
         <source>Horizontal</source>
-        <translation>Vodorovný</translation>
+        <translation>Horizontálny</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/bigsh0t_eq_mask/ui.qml" line="75"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_mask/ui.qml" line="116"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="418"/>
+        <source>Start</source>
+        <translation>Štart</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/bigsh0t_eq_mask/ui.qml" line="93"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_mask/ui.qml" line="134"/>
+        <source>End</source>
+        <translation>Koniec</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gradient/ui.qml" line="224"/>
@@ -10665,25 +10777,27 @@ Click &quot;Open&quot; to load a file.</source>
     <message>
         <location filename="../src/qml/filters/gradient/ui.qml" line="230"/>
         <source>Linear</source>
-        <translation type="unfinished"></translation>
+        <translation>Lineárny</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gradient/ui.qml" line="239"/>
         <source>Radial</source>
-        <translation type="unfinished"></translation>
+        <translation>Radiálny</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gradient/ui.qml" line="271"/>
         <source>Colors</source>
-        <translation type="unfinished"></translation>
+        <translation>Farby</translation>
     </message>
     <message>
+        <location filename="../src/qml/filters/bigsh0t_eq_mask/ui.qml" line="111"/>
+        <location filename="../src/qml/filters/bigsh0t_rect_to_eq/ui.qml" line="96"/>
         <location filename="../src/qml/filters/mask/ui.qml" line="227"/>
         <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="228"/>
         <location filename="../src/qml/filters/rgbsplit0r/ui.qml" line="85"/>
         <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="219"/>
         <source>Vertical</source>
-        <translation>Zvislý</translation>
+        <translation>Vertikálny</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask/ui.qml" line="269"/>
@@ -10695,9 +10809,9 @@ Click &quot;Open&quot; to load a file.</source>
     <message>
         <location filename="../src/qml/filters/mask/ui.qml" line="290"/>
         <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="291"/>
-        <location filename="../src/qml/filters/rotate/ui.qml" line="201"/>
+        <location filename="../src/qml/filters/rotate/ui.qml" line="150"/>
         <source>Rotation</source>
-        <translation>Otočenie</translation>
+        <translation>Rotácia</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask/ui.qml" line="308"/>
@@ -10707,6 +10821,23 @@ Click &quot;Open&quot; to load a file.</source>
         <translation>Mäkkosť</translation>
     </message>
     <message>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="162"/>
+        <source>Alignment</source>
+        <translation>Zarovnať</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="221"/>
+        <source>Lens</source>
+        <translation>Šošovky</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="226"/>
+        <source>Projection</source>
+        <translation>Projekcia</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="259"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="400"/>
         <location filename="../src/qml/filters/halftone/ui.qml" line="101"/>
         <location filename="../src/qml/filters/movit_diffusion/ui.qml" line="34"/>
         <location filename="../src/qml/filters/webvfx_circular_frame/ui.qml" line="102"/>
@@ -10714,54 +10845,86 @@ Click &quot;Open&quot; to load a file.</source>
         <translation>Polomer</translation>
     </message>
     <message>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="277"/>
+        <source>Front</source>
+        <translation>Predný</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="282"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="341"/>
+        <source>X</source>
+        <translation>X</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="300"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="359"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="349"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="397"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="445"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="493"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="542"/>
+        <source>Y</source>
+        <translation>Y</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="336"/>
+        <source>Back</source>
+        <translation>Zadný</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="395"/>
+        <source>Nadir</source>
+        <translation>Nadir</translation>
+    </message>
+    <message>
         <location filename="../src/qml/filters/halftone/ui.qml" line="126"/>
         <source>Cyan</source>
-        <translation type="unfinished"></translation>
+        <translation>Zelenomodrá</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/halftone/ui.qml" line="151"/>
         <source>Magenta</source>
-        <translation type="unfinished"></translation>
+        <translation>Purpurová</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/movit_diffusion/ui.qml" line="52"/>
         <source>Blurriness</source>
-        <translation>Rozmazanosť</translation>
+        <translation>Rozostrenie</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/oldfilm/ui.qml" line="71"/>
         <source>Vertical amount</source>
-        <translation>Zvislé množstvo</translation>
+        <translation>Vertikálne množstvo</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/oldfilm/ui.qml" line="86"/>
         <source>Vertical frequency</source>
-        <translation>Zvislý kmitočet</translation>
+        <translation>Vertikálna frekvencia</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/oldfilm/ui.qml" line="102"/>
         <source>Brightness up</source>
-        <translation>Jas nahor</translation>
+        <translation>Zvýšiť jas</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/oldfilm/ui.qml" line="117"/>
         <source>Brightness down</source>
-        <translation>Jas dolu</translation>
+        <translation>Znížiť jas</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/oldfilm/ui.qml" line="132"/>
         <source>Brightness frequency</source>
-        <translation>Častosť jasu</translation>
+        <translation>Frekvencia jasu</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/oldfilm/ui.qml" line="148"/>
         <source>Uneven develop up</source>
-        <translation>Vyvinutie viacej nepravidelností</translation>
+        <translation>Zvýšenie vývinu nepravidelností</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/oldfilm/ui.qml" line="163"/>
         <source>Uneven develop down</source>
-        <translation>Vyvinutie menej nepravidelností</translation>
+        <translation>Zníženie vývinu nepravidelností</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/oldfilm/ui.qml" line="178"/>
@@ -10771,29 +10934,29 @@ Click &quot;Open&quot; to load a file.</source>
     <message>
         <location filename="../src/qml/filters/mask/ui.qml" line="299"/>
         <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="300"/>
-        <location filename="../src/qml/filters/rotate/ui.qml" line="208"/>
+        <location filename="../src/qml/filters/rotate/ui.qml" line="159"/>
         <location filename="../src/qml/filters/webvfx_ruttetraizer/ui.qml" line="159"/>
         <location filename="../src/qml/filters/webvfx_ruttetraizer/ui.qml" line="175"/>
         <location filename="../src/qml/filters/white/ui.qml" line="154"/>
         <source> deg</source>
         <comment>degrees</comment>
-        <translation type="unfinished"></translation>
+        <translation>stupňov</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/rotate/ui.qml" line="240"/>
+        <location filename="../src/qml/filters/rotate/ui.qml" line="175"/>
         <location filename="../src/qml/filters/webvfx_ruttetraizer/ui.qml" line="136"/>
         <source>Scale</source>
-        <translation>Merítko</translation>
+        <translation>Mierka</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/rotate/ui.qml" line="282"/>
+        <location filename="../src/qml/filters/rotate/ui.qml" line="218"/>
         <source>X offset</source>
-        <translation>Posun x</translation>
+        <translation>Posuv x</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/rotate/ui.qml" line="311"/>
+        <location filename="../src/qml/filters/rotate/ui.qml" line="250"/>
         <source>Y offset</source>
-        <translation>Posun y</translation>
+        <translation>Posuv y</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/select0r/ui.qml" line="143"/>
@@ -10808,12 +10971,12 @@ Click &quot;Open&quot; to load a file.</source>
     <message>
         <location filename="../src/qml/filters/select0r/ui.qml" line="156"/>
         <source>Hue-Chroma-Intensity</source>
-        <translation type="unfinished"></translation>
+        <translation>Odtieň-farebnosť-intenzita</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/select0r/ui.qml" line="166"/>
         <source>Red delta</source>
-        <translation>Červená delta</translation>
+        <translation>Delta červenej</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/select0r/ui.qml" line="166"/>
@@ -10823,17 +10986,17 @@ Click &quot;Open&quot; to load a file.</source>
     <message>
         <location filename="../src/qml/filters/select0r/ui.qml" line="183"/>
         <source>Green delta</source>
-        <translation>Zelená delta</translation>
+        <translation>Delta zelenej</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/select0r/ui.qml" line="183"/>
         <source>Chroma delta</source>
-        <translation>Delta chromy</translation>
+        <translation>Delta farebnosti</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/select0r/ui.qml" line="200"/>
         <source>Blue delta</source>
-        <translation>Modrá delta</translation>
+        <translation>Delta modrej</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/select0r/ui.qml" line="200"/>
@@ -10843,7 +11006,7 @@ Click &quot;Open&quot; to load a file.</source>
     <message>
         <location filename="../src/qml/filters/select0r/ui.qml" line="225"/>
         <source>Box</source>
-        <translation>Krabica</translation>
+        <translation>Schránka</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/select0r/ui.qml" line="226"/>
@@ -10863,12 +11026,12 @@ Click &quot;Open&quot; to load a file.</source>
     <message>
         <location filename="../src/qml/filters/select0r/ui.qml" line="245"/>
         <source>Fat</source>
-        <translation>Silný</translation>
+        <translation>Tlstý</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/select0r/ui.qml" line="246"/>
         <source>Normal</source>
-        <translation>Normálne</translation>
+        <translation>Normálny</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/select0r/ui.qml" line="247"/>
@@ -10878,27 +11041,27 @@ Click &quot;Open&quot; to load a file.</source>
     <message>
         <location filename="../src/qml/filters/sepia/ui.qml" line="52"/>
         <source>Yellow-Blue</source>
-        <translation>Žltomodrá</translation>
+        <translation>Žltá-modrá</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sepia/ui.qml" line="67"/>
         <source>Cyan-Red</source>
-        <translation>Modrozelenočervená</translation>
+        <translation>Zelenomodrá-červená</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sketch/ui.qml" line="64"/>
         <source>Line Width</source>
-        <translation type="unfinished"></translation>
+        <translation>Šírka riadka</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sketch/ui.qml" line="81"/>
         <source>Line Height</source>
-        <translation type="unfinished"></translation>
+        <translation>Výška riadka</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sketch/ui.qml" line="98"/>
         <source>Contrast</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontrast</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/chromahold/ui.qml" line="64"/>
@@ -10911,47 +11074,47 @@ Click &quot;Open&quot; to load a file.</source>
     <message>
         <location filename="../src/qml/filters/smartblur/ui.qml" line="68"/>
         <source>Blur Radius</source>
-        <translation type="unfinished"></translation>
+        <translation>Dosah rozostrenia</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/smartblur/ui.qml" line="70"/>
         <source>The radius of the gaussian blur.</source>
-        <translation type="unfinished"></translation>
+        <translation>Dosah gaussovho rozostrenia</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/smartblur/ui.qml" line="87"/>
         <source>Blur Strength</source>
-        <translation type="unfinished"></translation>
+        <translation>Intenzita rozostrenia</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/smartblur/ui.qml" line="89"/>
         <source>The strength of the gaussian blur.</source>
-        <translation type="unfinished"></translation>
+        <translation>Intenzita gaussovho rozostrenia</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/smartblur/ui.qml" line="108"/>
         <source>If the difference between the original pixel and the blurred pixel is less than threshold, the pixel will be replaced with the blurred pixel.</source>
-        <translation type="unfinished"></translation>
+        <translation>Pokiaľ je rozdiel medzi pôvodným pixelom a rozostreným pixelom menšia než prahová hodnota, pixel bude nahradený rozostreným pixelom.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/aech0r/ui.qml" line="86"/>
         <source>Fade</source>
-        <translation type="unfinished"></translation>
+        <translation>Vytrácanie</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/aech0r/ui.qml" line="103"/>
         <source>Fade period</source>
-        <translation type="unfinished"></translation>
+        <translation>Perióda vytrácania</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/aech0r/ui.qml" line="125"/>
         <source>Lighter</source>
-        <translation type="unfinished"></translation>
+        <translation>Zjasňovač</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/aech0r/ui.qml" line="133"/>
         <source>Plans fade</source>
-        <translation type="unfinished"></translation>
+        <translation>Plocha vytrácania</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/aech0r/ui.qml" line="167"/>
@@ -10972,13 +11135,13 @@ Click &quot;Open&quot; to load a file.</source>
     <message>
         <location filename="../src/qml/filters/aech0r/ui.qml" line="199"/>
         <source>Comparison</source>
-        <translation type="unfinished"></translation>
+        <translation>Porovnanie</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/aech0r/ui.qml" line="150"/>
         <location filename="../src/qml/filters/levels/ui.qml" line="178"/>
         <source>Red</source>
-        <translation type="unfinished"></translation>
+        <translation>Červená</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/levels/ui.qml" line="178"/>
@@ -10988,32 +11151,32 @@ Click &quot;Open&quot; to load a file.</source>
     <message>
         <location filename="../src/qml/filters/levels/ui.qml" line="187"/>
         <source>Histogram</source>
-        <translation type="unfinished"></translation>
+        <translation>Histogram</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/levels/ui.qml" line="205"/>
         <source>Input Black</source>
-        <translation type="unfinished"></translation>
+        <translation>Vstupná čierna</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/levels/ui.qml" line="225"/>
         <source>Input White</source>
-        <translation type="unfinished"></translation>
+        <translation>Vstupná biela</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/levels/ui.qml" line="245"/>
         <source>Gamma</source>
-        <translation>Gamma</translation>
+        <translation>Gama</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/levels/ui.qml" line="265"/>
         <source>Output Black</source>
-        <translation type="unfinished"></translation>
+        <translation>Výstupná čierna</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/levels/ui.qml" line="280"/>
         <source>Output White</source>
-        <translation type="unfinished"></translation>
+        <translation>Výstupná biela</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/stabilize/ui.qml" line="29"/>
@@ -11023,12 +11186,12 @@ Click &quot;Open&quot; to load a file.</source>
     <message>
         <location filename="../src/qml/filters/stabilize/ui.qml" line="90"/>
         <source>Select a file to store analysis results.</source>
-        <translation>Vyberte súbor pre uloženie výsledkov rozboru.</translation>
+        <translation>Vyberte súbor pre uloženie výsledkov analýzy.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/stabilize/ui.qml" line="126"/>
         <source>&lt;b&gt;Analyze Options&lt;/b&gt;</source>
-        <translation>&lt;b&gt;Voľby pre analýzu&lt;/b&gt;</translation>
+        <translation>&lt;b&gt;Možnosti analýzy&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/stabilize/ui.qml" line="131"/>
@@ -11043,17 +11206,62 @@ Click &quot;Open&quot; to load a file.</source>
     <message>
         <location filename="../src/qml/filters/stabilize/ui.qml" line="189"/>
         <source>&lt;b&gt;Filter Options&lt;/b&gt;</source>
-        <translation>&lt;b&gt;Voľby pre filter&lt;/b&gt;</translation>
+        <translation>&lt;b&gt;Možnosti filtra&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/stabilize/ui.qml" line="194"/>
         <location filename="../src/qml/filters/vertigo/ui.qml" line="113"/>
         <source>Zoom</source>
-        <translation>Zväčšenie</translation>
+        <translation>Priblíženie</translation>
     </message>
     <message>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="189"/>
+        <source></source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="199"/>
+        <source>Browse...</source>
+        <translation>Prehľadávať...</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="220"/>
+        <source>Analysis</source>
+        <translation>Analýza</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="225"/>
+        <source>Sample Radius</source>
+        <translation>Dosah snímky</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="243"/>
+        <source>Search Radius</source>
+        <translation>Dosah hľadania</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="279"/>
+        <source>Track Points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="283"/>
+        <source>Use backwards-facing track points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="314"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="373"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="432"/>
         <location filename="../src/qml/filters/stabilize/ui.qml" line="214"/>
         <source>Smoothing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="332"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="391"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="450"/>
+        <source>Time Bias</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -11082,7 +11290,7 @@ Click &quot;Open&quot; to load a file.</source>
     <message>
         <location filename="../src/qml/filters/distort/ui.qml" line="145"/>
         <source>Velocity</source>
-        <translation type="unfinished"></translation>
+        <translation>Rýchlosť</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vertigo/ui.qml" line="88"/>
@@ -11254,17 +11462,19 @@ Click &quot;Open&quot; to load a file.</source>
     <message>
         <location filename="../src/qml/filters/timer/ui.qml" line="155"/>
         <source>Direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Smer</translation>
     </message>
     <message>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="318"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="377"/>
         <location filename="../src/qml/filters/timer/ui.qml" line="161"/>
         <source>Up</source>
-        <translation type="unfinished"></translation>
+        <translation>Hore</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/timer/ui.qml" line="162"/>
         <source>Down</source>
-        <translation type="unfinished"></translation>
+        <translation>Dole</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/timer/ui.qml" line="170"/>
@@ -11282,13 +11492,15 @@ Click &quot;Open&quot; to load a file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="261"/>
         <location filename="../src/qml/filters/gradient/ui.qml" line="255"/>
         <location filename="../src/qml/filters/nosync/ui.qml" line="82"/>
         <location filename="../src/qml/filters/timer/ui.qml" line="231"/>
         <source>Offset</source>
-        <translation type="unfinished"></translation>
+        <translation>Posuv</translation>
     </message>
     <message>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="185"/>
         <location filename="../src/qml/filters/mask_shape/ui.qml" line="211"/>
         <source>File</source>
         <translation type="unfinished"></translation>
@@ -11467,7 +11679,7 @@ Click &quot;Open&quot; to load a file.</source>
         <location filename="../src/qml/filters/grid/ui.qml" line="166"/>
         <location filename="../src/qml/filters/grid/ui.qml" line="202"/>
         <source>Columns</source>
-        <translation type="unfinished"></translation>
+        <translation>Stĺpce</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/webvfx_swirl/ui.qml" line="42"/>
@@ -11477,33 +11689,33 @@ Click &quot;Open&quot; to load a file.</source>
     <message>
         <location filename="../src/qml/filters/glitch/ui.qml" line="123"/>
         <source>Block height</source>
-        <translation type="unfinished"></translation>
+        <translation>Výška bloku</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/glitch/ui.qml" line="148"/>
         <source>Shift intensity</source>
-        <translation type="unfinished"></translation>
+        <translation>Intenzita posunu</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/glitch/ui.qml" line="173"/>
         <source>Color intensity</source>
-        <translation type="unfinished"></translation>
+        <translation>Intenzita farby</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/hqdn3d/ui.qml" line="88"/>
         <source>Spatial</source>
-        <translation type="unfinished"></translation>
+        <translation>Priestorová</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/hqdn3d/ui.qml" line="113"/>
         <source>Temporal</source>
-        <translation type="unfinished"></translation>
+        <translation>Dočasná</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/rectangle/ui.qml" line="301"/>
         <location filename="../src/qml/filters/webvfx_clip/ui.qml" line="294"/>
         <source>Corner radius</source>
-        <translation type="unfinished"></translation>
+        <translation>Polomer rohu</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/rectangle/ui.qml" line="333"/>
@@ -11516,14 +11728,64 @@ Click &quot;Open&quot; to load a file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dither/ui.qml" line="88"/>
+        <location filename="../src/qml/filters/dither/ui.qml" line="86"/>
         <location filename="../src/qml/filters/posterize/ui.qml" line="82"/>
         <source>Levels</source>
+        <translation>Úrovne</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/dither/ui.qml" line="111"/>
+        <source>Matrix</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dither/ui.qml" line="113"/>
-        <source>Matrix</source>
+        <location filename="../src/qml/filters/dither/ui.qml" line="117"/>
+        <source>2x2 Magic Square</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/dither/ui.qml" line="117"/>
+        <source>4x4 Magic Square</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/dither/ui.qml" line="117"/>
+        <source>4x4 Ordered</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/dither/ui.qml" line="117"/>
+        <source>4x4 Lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/dither/ui.qml" line="118"/>
+        <source>6x6 90 Degree Halftone</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/dither/ui.qml" line="118"/>
+        <source>6x6 Ordered</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/dither/ui.qml" line="118"/>
+        <source>8x8 Ordered</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/dither/ui.qml" line="119"/>
+        <source>Order-3 Clustered</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/dither/ui.qml" line="119"/>
+        <source>Order-4 Ordered</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/dither/ui.qml" line="119"/>
+        <source>Order-8 Ordered</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -11534,7 +11796,7 @@ Click &quot;Open&quot; to load a file.</source>
     <message>
         <location filename="../src/qml/filters/elastic_scale/ui.qml" line="127"/>
         <source>Linear width</source>
-        <translation type="unfinished"></translation>
+        <translation>Lineárna šírka</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/elastic_scale/ui.qml" line="129"/>
@@ -11544,7 +11806,7 @@ Click &quot;Open&quot; to load a file.</source>
     <message>
         <location filename="../src/qml/filters/elastic_scale/ui.qml" line="153"/>
         <source>Linear scale factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Faktor lineárnej mierky</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/elastic_scale/ui.qml" line="155"/>
@@ -11554,7 +11816,7 @@ Click &quot;Open&quot; to load a file.</source>
     <message>
         <location filename="../src/qml/filters/elastic_scale/ui.qml" line="179"/>
         <source>Non-Linear scale factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Faktor nelineárnej mierky</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/elastic_scale/ui.qml" line="181"/>
@@ -11581,12 +11843,12 @@ Click &quot;Open&quot; to load a file.</source>
     <message>
         <location filename="../src/qml/filters/audio_noisegate/ui.qml" line="116"/>
         <source>Key Filter: Low Frequency</source>
-        <translation type="unfinished"></translation>
+        <translation>Kľúčovací filter: Nízka frekvencia</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_noisegate/ui.qml" line="141"/>
         <source>Key Filter: High Frequency</source>
-        <translation type="unfinished"></translation>
+        <translation>Kľúčovací filter: Vysoká frekvencia</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_noisegate/ui.qml" line="169"/>
@@ -11596,17 +11858,17 @@ Click &quot;Open&quot; to load a file.</source>
     <message>
         <location filename="../src/qml/filters/audio_noisegate/ui.qml" line="223"/>
         <source>Hold</source>
-        <translation type="unfinished"></translation>
+        <translation>Pridržať</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_noisegate/ui.qml" line="247"/>
         <source>Decay</source>
-        <translation type="unfinished"></translation>
+        <translation>Rozklad</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_noisegate/ui.qml" line="271"/>
         <source>Range</source>
-        <translation type="unfinished"></translation>
+        <translation>Rozsah</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_pitch/ui.qml" line="140"/>
@@ -11626,81 +11888,6 @@ Click &quot;Open&quot; to load a file.</source>
     <message>
         <location filename="../src/qml/filters/audio_pitch/ui.qml" line="179"/>
         <source>Specify the speed change that should be compensated for. 2x will halve the pitch to compensate for the speed being doubled.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="163"/>
-        <source>Corner 1 X</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="189"/>
-        <source>Corner 1 Y</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="215"/>
-        <source>Corner 2 X</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="241"/>
-        <source>Corner 2 Y</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="267"/>
-        <source>Corner 3 X</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="293"/>
-        <source>Corner 3 Y</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="319"/>
-        <source>Corner 4 X</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="345"/>
-        <source>Corner 4 Y</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="371"/>
-        <source>Stretch X</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="397"/>
-        <source>Stretch Y</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="423"/>
-        <source>Interpolator</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="449"/>
-        <source>Feather Alpha</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="475"/>
-        <source>Alpha Operation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="503"/>
-        <source>Enable Stretch</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="517"/>
-        <source>Transparent Background</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -11762,7 +11949,7 @@ Click &quot;Open&quot; to load a file.</source>
     <message>
         <location filename="../src/qml/filters/dance/ui_dance.qml" line="138"/>
         <source>Up</source>
-        <translation type="unfinished"></translation>
+        <translation>Hore</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dance/ui_dance.qml" line="140"/>
@@ -11772,7 +11959,7 @@ Click &quot;Open&quot; to load a file.</source>
     <message>
         <location filename="../src/qml/filters/dance/ui_dance.qml" line="156"/>
         <source>Down</source>
-        <translation type="unfinished"></translation>
+        <translation>Dole</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dance/ui_dance.qml" line="158"/>
@@ -11813,7 +12000,7 @@ Click &quot;Open&quot; to load a file.</source>
         <location filename="../src/qml/filters/dance/ui_dance.qml" line="220"/>
         <location filename="../src/qml/filters/dance/ui_dance.qml" line="238"/>
         <source> deg</source>
-        <translation type="unfinished"></translation>
+        <translation>stupňov</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dance/ui_dance.qml" line="228"/>
@@ -12186,6 +12373,29 @@ Click &quot;Open&quot; to load a file.</source>
         <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="322"/>
         <source>Threshold</source>
         <translation>Prah</translation>
+    </message>
+</context>
+<context>
+    <name>vui</name>
+    <message>
+        <location filename="../src/qml/filters/corners/vui.qml" line="267"/>
+        <source>1</source>
+        <translation>1</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/corners/vui.qml" line="292"/>
+        <source>2</source>
+        <translation type="unfinished">2</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/corners/vui.qml" line="317"/>
+        <source>3</source>
+        <translation type="unfinished">3</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/corners/vui.qml" line="342"/>
+        <source>4</source>
+        <translation type="unfinished">4</translation>
     </message>
 </context>
 </TS>
