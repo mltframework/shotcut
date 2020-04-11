@@ -232,6 +232,7 @@ KeyframableFilter {
 
         if (filter.animateIn > 0 || filter.animateOut > 0) {
             resetFilter()
+            corner1KeyframesButton.checked = false
             if (filter.animateIn > 0) {
                 setFilterCorners([filter.getRect(cornerStartValues[0]),filter.getRect(cornerStartValues[1]),filter.getRect(cornerStartValues[2]),filter.getRect(cornerStartValues[3])], 0)
                 setFilterCorners([filter.getRect(cornerMiddleValues[0]),filter.getRect(cornerMiddleValues[1]),filter.getRect(cornerMiddleValues[2]),filter.getRect(cornerMiddleValues[3])], filter.animateIn - 1)
@@ -337,7 +338,7 @@ KeyframableFilter {
                     } else {
                         // Remove keyframes and set the parameter.
                         filter.resetProperty(cornerProperties[i])
-                        filter.set(parameter, corners[i])
+                        filter.set(cornerProperties[i], corners[i])
                     }
                 }
                 setControls()
