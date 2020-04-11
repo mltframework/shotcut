@@ -925,8 +925,14 @@ bool TimelineDock::moveClip(int fromTrack, int toTrack, int clipIndex, int posit
         auto trackDelta = toTrack - fromTrack;
         for (const auto& clip : selection()) {
             auto trackIndex = clip.y() + trackDelta;
-            if (isTrackLocked(trackIndex))
+            if (isTrackLocked(clip.y())) {
+                pulseLockButtonOnTrack(clip.y());
                 return false;
+            }
+            if (isTrackLocked(trackIndex)) {
+                pulseLockButtonOnTrack(trackIndex);
+                return false;
+            }
         }
 
         // Workaround bug #326 moving clips between tracks stops allowing drag-n-drop
