@@ -2993,10 +2993,8 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer* producer)
     else if (service.startsWith("avformat") || shotcutProducer == "avformat")
         w = new AvformatProducerWidget(this);
     else if (MLT.isImageProducer(producer)) {
-        ImageProducerWidget* ipw = new ImageProducerWidget(this);
-        connect(m_player, SIGNAL(outChanged(int)), ipw, SLOT(updateDuration()));
-        connect(m_timelineDock, SIGNAL(imageDurationChanged()), ipw, SLOT(updateDuration()));
-        w = ipw;
+        w = new ImageProducerWidget(this);
+        connect(m_player, SIGNAL(outChanged(int)), w, SLOT(updateDuration()));
     }
     else if (service == "decklink" || resource.contains("decklink"))
         w = new DecklinkProducerWidget(this);
@@ -3052,6 +3050,9 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer* producer)
             connect(w, SIGNAL(modified()), m_timelineDock, SLOT(onProducerModified()));
             connect(w, SIGNAL(modified()), m_keyframesDock, SLOT(onProducerModified()));
             connect(w, SIGNAL(modified()), m_filterController, SLOT(onProducerChanged()));
+        }
+        if (-1 != w->metaObject()->indexOfSlot("updateDuration()")) {
+            connect(m_timelineDock, SIGNAL(durationChanged()), w, SLOT(updateDuration()));
         }
         scrollArea->setWidget(w);
         onProducerChanged();

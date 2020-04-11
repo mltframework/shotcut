@@ -40,6 +40,9 @@ public:
     Mlt::Producer* newProducer(Mlt::Profile&);
     void setProducer(Mlt::Producer*);
 
+public slots:
+    void updateDuration();
+
 signals:
     void producerChanged(Mlt::Producer*);
     void producerReopened();

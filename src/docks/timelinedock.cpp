@@ -1008,17 +1008,18 @@ bool TimelineDock::trimClipIn(int trackIndex, int clipIndex, int oldClipIndex, i
         }
         clipIndex = m_model.trimClipIn(trackIndex, clipIndex, delta, ripple, Settings.timelineRippleAllTracks());
 
-        // Update duration in properties for image clip.
-        QScopedPointer<Mlt::ClipInfo> info(getClipInfo(trackIndex, clipIndex));
-        if (info && MLT.isImageProducer(info->producer) && !info->producer->get_int(kShotcutSequenceProperty))
-            emit imageDurationChanged();
-
         m_trimDelta += delta;
         m_trimCommand.reset(new Timeline::TrimClipInCommand(m_model, trackIndex, oldClipIndex, m_trimDelta, ripple, false));
         if (m_updateCommand && m_updateCommand->trackIndex() == trackIndex && m_updateCommand->clipIndex() == clipIndex)
             m_updateCommand->setPosition(trackIndex, clipIndex, m_updateCommand->position() + delta);
     }
     else return false;
+
+    // Update duration in properties
+    QScopedPointer<Mlt::ClipInfo> info(getClipInfo(trackIndex, clipIndex));
+    if (info && !info->producer->get_int(kShotcutSequenceProperty))
+        emit durationChanged();
+
     return true;
 }
 
@@ -1055,17 +1056,18 @@ bool TimelineDock::trimClipOut(int trackIndex, int clipIndex, int delta, bool ri
         }
         m_model.trimClipOut(trackIndex, clipIndex, delta, ripple, Settings.timelineRippleAllTracks());
 
-        // Update duration in properties for image clip.
-        QScopedPointer<Mlt::ClipInfo> info(getClipInfo(trackIndex, clipIndex));
-        if (info && MLT.isImageProducer(info->producer) && !info->producer->get_int(kShotcutSequenceProperty))
-            emit imageDurationChanged();
-
         m_trimDelta += delta;
         m_trimCommand.reset(new Timeline::TrimClipOutCommand(m_model, trackIndex, clipIndex, m_trimDelta, ripple, false));
         if (m_updateCommand && m_updateCommand->trackIndex() == trackIndex && m_updateCommand->clipIndex() == clipIndex)
             m_updateCommand->setPosition(trackIndex, clipIndex,-1);
     }
     else return false;
+
+    // Update duration in properties
+    QScopedPointer<Mlt::ClipInfo> info(getClipInfo(trackIndex, clipIndex));
+    if (info && !info->producer->get_int(kShotcutSequenceProperty))
+        emit durationChanged();
+
     return true;
 }
 

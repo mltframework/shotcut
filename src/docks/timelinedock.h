@@ -102,7 +102,7 @@ signals:
     void clipCopied();
     void clipMoved(int fromTrack, int toTrack, int clipIndex, int position, bool ripple);
     void filteredClicked();
-    void imageDurationChanged();
+    void durationChanged();
     void transitionAdded(int trackIndex, int clipIndex, int position, bool ripple);
 
 public slots:
