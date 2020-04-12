@@ -31,6 +31,7 @@ SOURCES += main.cpp\
     widgets/toneproducerwidget.cpp \
     widgets/alsawidget.cpp \
     widgets/x11grabwidget.cpp \
+    widgets/blipproducerwidget.cpp \
     player.cpp \
     glwidget.cpp \
     widgets/servicepresetwidget.cpp \
@@ -149,6 +150,7 @@ HEADERS  += mainwindow.h \
     widgets/toneproducerwidget.h \
     widgets/alsawidget.h \
     widgets/x11grabwidget.h \
+    widgets/blipproducerwidget.h \
     player.h \
     glwidget.h \
     widgets/servicepresetwidget.h \
@@ -266,6 +268,7 @@ FORMS    += mainwindow.ui \
     widgets/servicepresetwidget.ui \
     widgets/avformatproducerwidget.ui \
     widgets/imageproducerwidget.ui \
+    widgets/blipproducerwidget.ui \
     docks/recentdock.ui \
     docks/encodedock.ui \
     dialogs/addencodepresetdialog.ui \
