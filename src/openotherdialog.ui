@@ -205,6 +205,13 @@
         </item>
        </layout>
       </widget>
+      <widget class="QWidget" name="blipTab">
+       <layout class="QVBoxLayout" name="verticalLayout_20">
+        <item>
+         <widget class="BlipProducerWidget" name="blipWidget" native="true"/>
+        </item>
+       </layout>
+      </widget>
      </widget>
     </widget>
    </item>
@@ -333,6 +340,12 @@
    <class>TextProducerWidget</class>
    <extends>QWidget</extends>
    <header>widgets/textproducerwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>BlipProducerWidget</class>
+   <extends>QWidget</extends>
+   <header>widgets/blipproducerwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

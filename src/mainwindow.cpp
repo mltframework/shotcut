@@ -40,6 +40,7 @@
 #include "widgets/avformatproducerwidget.h"
 #include "widgets/imageproducerwidget.h"
 #include "widgets/webvfxproducer.h"
+#include "widgets/blipproducerwidget.h"
 #include "docks/recentdock.h"
 #include "docks/encodedock.h"
 #include "docks/jobsdock.h"
@@ -881,6 +882,8 @@ void MainWindow::setupOpenOtherMenu()
         otherMenu->addAction(tr("Audio Tone"), this, SLOT(onOpenOtherTriggered()))->setObjectName("tone");
     if (mltProducers->get_data("count"))
         otherMenu->addAction(tr("Count"), this, SLOT(onOpenOtherTriggered()))->setObjectName("count");
+    if (mltProducers->get_data("blipflash"))
+        otherMenu->addAction(tr("Blip Flash"), this, SLOT(onOpenOtherTriggered()))->setObjectName("blipflash");
 
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
     otherMenu->addAction(tr("Video4Linux"), this, SLOT(onOpenOtherTriggered()))->setObjectName("v4l2");
@@ -3016,6 +3019,8 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer* producer)
         w = new ToneProducerWidget(this);
     else if (service == "count")
         w = new CountProducerWidget(this);
+    else if (service == "blipflash")
+        w = new BlipProducerWidget(this);
     else if (producer->parent().get(kShotcutTransitionProperty)) {
         w = new LumaMixTransition(producer->parent(), this);
         scrollArea->setWidget(w);
@@ -4200,6 +4205,8 @@ void MainWindow::onOpenOtherTriggered()
         onOpenOtherTriggered(new ToneProducerWidget(this));
     else if (sender()->objectName() == "count")
         onOpenOtherTriggered(new CountProducerWidget(this));
+    else if (sender()->objectName() == "blipflash")
+        onOpenOtherTriggered(new BlipProducerWidget(this));
     else if (sender()->objectName() == "v4l2")
         onOpenOtherTriggered(new Video4LinuxWidget(this));
     else if (sender()->objectName() == "pulse")
