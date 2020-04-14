@@ -409,9 +409,11 @@ unix:!mac {
     desktop.path = $$PREFIX/share/applications
     mime.files = $$PWD/../packaging/linux/org.shotcut.Shotcut.xml
     mime.path = $$PREFIX/share/mime/packages
-    icons.files = $$PWD/../packaging/linux/org.shotcut.Shotcut.png
-    icons.path = $$PREFIX/share/icons/hicolor/64x64/apps
+    icon64.files = $$PWD/../packaging/linux/icons/64x64/org.shotcut.Shotcut.png
+    icon64.path = $$PREFIX/share/icons/hicolor/64x64/apps
+    icon128.files = $$PWD/../packaging/linux/icons/128x128/org.shotcut.Shotcut.png
+    icon128.path = $$PREFIX/share/icons/hicolor/128x128/apps
     man.files = $$PWD/../packaging/linux/shotcut.1
     man.path = $$PREFIX/share/man/man1
-    INSTALLS += metainfo desktop mime icons man
+    INSTALLS += metainfo desktop mime icon64 icon128 man
 }
