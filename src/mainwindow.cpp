@@ -601,6 +601,14 @@ void MainWindow::setupSettingsMenu()
         action->setData(QString("sdi"));
         m_externalGroup->addAction(action);
     }
+    
+    Mlt::Consumer ndi(MLT.profile(), "ndi");
+    if (ndi.is_valid()) {
+        QAction* action = new QAction("NDI Output", this);
+        action->setCheckable(true);
+        action->setData(QString("ndi:Shotcut Output"));
+        m_externalGroup->addAction(action);
+    }
 #endif
 
     Mlt::Profile profile;
