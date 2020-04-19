@@ -329,21 +329,18 @@ void Util::applyCustomProperties(Mlt::Producer& destination, Mlt::Producer& sour
     p.clear("video_delay");
     p.clear("color_range");
     p.clear("speed");
-    p.clear("warp_resource");
     p.clear("warp_speed");
     p.clear("warp_pitch");
     p.clear(kAspectRatioNumerator);
     p.clear(kAspectRatioDenominator);
     p.clear(kCommentProperty);
-    p.clear(kShotcutCaptionProperty);
     p.clear(kShotcutProducerProperty);
     p.clear(kDefaultAudioIndexProperty);
     destination.pass_list(source, "mlt_service, audio_index, video_index, force_progressive, force_tff,"
-                       "force_aspect_ratio, video_delay, color_range, warp_resource, warp_speed, warp_pitch,"
+                       "force_aspect_ratio, video_delay, color_range, warp_speed, warp_pitch,"
                        kAspectRatioNumerator ","
                        kAspectRatioDenominator ","
                        kCommentProperty ","
-                       kShotcutCaptionProperty ","
                        kShotcutProducerProperty ","
                        kDefaultAudioIndexProperty);
     if (!destination.get("_shotcut:resource")) {
@@ -351,9 +348,15 @@ void Util::applyCustomProperties(Mlt::Producer& destination, Mlt::Producer& sour
         destination.set("_shotcut:length", destination.get("length"));
     }
     if (!qstrcmp("timewarp", source.get("mlt_service"))) {
-        QString resource = QString("%1:%2:%3").arg("timewarp").arg(source.get("warp_speed")).arg(destination.get("_shotcut:resource"));
+        QString resource = destination.get("_shotcut:resource");
+        auto speed = qAbs(source.get_double("warp_speed"));
+        auto caption = QString("%1 (%2x)").arg(Util::baseName(resource)).arg(speed);
+        destination.set(kShotcutCaptionProperty, caption.toUtf8().constData());
+
+        destination.set("warp_resource", resource.toUtf8().constData());
+        resource = QString("%1:%2:%3").arg("timewarp").arg(source.get("warp_speed")).arg(resource);
         destination.set("resource", resource.toUtf8().constData());
-        double speedRatio = 1.0 / source.get_double("warp_speed");
+        double speedRatio = 1.0 / speed;
         int length = qRound(destination.get_length() * speedRatio);
         destination.set("length", destination.frames_to_time(length, mlt_time_clock));
     } else {
