@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2018 Meltytech, LLC
+ * Copyright (c) 2014-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,9 +20,12 @@
 #include "mltcontroller.h"
 #include "util.h"
 #include "shotcut_mlt_properties.h"
-#include <QCamera>
+#include "Logger.h"
 #include <QString>
-#include <QAudioDeviceInfo>
+#include <QDir>
+#include <QFileInfo>
+#include <QProcess>
+#include <QRegularExpression>
 
 DirectShowVideoWidget::DirectShowVideoWidget(QWidget *parent) :
     QWidget(parent),
@@ -31,10 +34,49 @@ DirectShowVideoWidget::DirectShowVideoWidget(QWidget *parent) :
     ui->setupUi(this);
     Util::setColorsToHighlight(ui->label);
 #ifdef Q_OS_WIN
-    foreach (const QByteArray &deviceName, QCamera::availableDevices())
-        ui->videoCombo->addItem(QCamera::deviceDescription(deviceName));
-    foreach (const QAudioDeviceInfo &deviceInfo, QAudioDeviceInfo::availableDevices(QAudio::AudioInput))
-        ui->audioCombo->addItem(deviceInfo.deviceName());
+    QFileInfo ffmpegPath(qApp->applicationDirPath(), "ffmpeg");
+    QProcess proc;
+    QStringList args;
+    args << "-hide_banner" << "-list_devices" << "true" << "-f" << "dshow" << "-i" << "dummy";
+    LOG_DEBUG() << ffmpegPath.absoluteFilePath() << args;
+    proc.setStandardOutputFile(QProcess::nullDevice());
+    proc.setReadChannel(QProcess::StandardError);
+    proc.start(ffmpegPath.absoluteFilePath(), args, QIODevice::ReadOnly);
+    bool started = proc.waitForStarted(2000);
+    bool finished = false;
+    QCoreApplication::processEvents();
+    if (started) {
+        finished = proc.waitForFinished(4000);
+        QCoreApplication::processEvents();
+    }
+
+    bool isVideo = true;
+    QString description;
+    QString name;
+    if (started && finished && proc.exitStatus() == QProcess::NormalExit) {
+        QString output = proc.readAll();
+        foreach (const QString& line, output.split(QRegularExpression("[\r\n]"), QString::SkipEmptyParts)) {
+            if (line.contains("DirectShow audio devices"))
+                isVideo = false;
+            auto i = line.indexOf("]  \"");
+            if (i > -1) {
+                description = line.mid(i + 4).replace('\"', "");
+            } else {
+                QString s("]     Alternative name \"");
+                i = line.indexOf(s);
+                if (i > -1) {
+                    name = line.mid(i + s.size()).replace('\"', "");
+                    LOG_DEBUG() << (isVideo? "video" : "audio") << description << name;
+                    if (isVideo) {
+                        ui->videoCombo->addItem(description, name);
+                    } else {
+                        ui->audioCombo->addItem(description, name);
+                    }
+                }
+            }
+        }
+    }
+
     if (ui->videoCombo->count() > 1)
         ui->videoCombo->setCurrentIndex(1);
     if (ui->audioCombo->count() > 1)
@@ -51,13 +93,14 @@ Mlt::Producer *DirectShowVideoWidget::newProducer(Mlt::Profile& profile)
 {
     Mlt::Producer* p = 0;
     if (ui->videoCombo->currentIndex() > 0) {
+        LOG_DEBUG() << ui->videoCombo->currentData().toString();
         p = new Mlt::Producer(profile, QString("dshow:video=%1")
-                          .arg(ui->videoCombo->currentText())
+                          .arg(ui->videoCombo->currentData().toString())
                           .toUtf8().constData());
     }
     if (ui->audioCombo->currentIndex() > 0) {
         Mlt::Producer* audio = new Mlt::Producer(profile,
-            QString("dshow:audio=%1").arg(ui->audioCombo->currentText())
+            QString("dshow:audio=%1").arg(ui->audioCombo->currentData().toString())
                                      .toLatin1().constData());
         if (p && p->is_valid() && audio->is_valid()) {
             Mlt::Tractor* tractor = new Mlt::Tractor;
@@ -78,11 +121,11 @@ Mlt::Producer *DirectShowVideoWidget::newProducer(Mlt::Profile& profile)
         p = new Mlt::Producer(profile, "color:");
         if (ui->videoCombo->currentIndex() > 0) {
             p->set("resource", QString("dshow:video=%1")
-                   .arg(ui->videoCombo->currentText())
+                   .arg(ui->videoCombo->currentData().toString())
                    .toUtf8().constData());
         }
         if (ui->audioCombo->currentIndex() > 0) {
-            QString resource = QString("dshow:audio=%1").arg(ui->audioCombo->currentText());
+            QString resource = QString("dshow:audio=%1").arg(ui->audioCombo->currentData().toString());
             if (ui->videoCombo->currentIndex() > 0) {
                 p->set("resource2", resource.toUtf8().constData());
             } else {
@@ -106,7 +149,7 @@ void DirectShowVideoWidget::setProducer(Mlt::Producer *producer)
     if (resource.startsWith(videoDevice)) {
         QStringRef name = resource.midRef(qstrlen(videoDevice));
         for (int i = 1; i < ui->videoCombo->count(); i++) {
-            if (ui->videoCombo->itemText(i) == name) {
+            if (ui->videoCombo->itemData(i).toString() == name) {
                 ui->videoCombo->setCurrentIndex(i);
                 break;
             }
@@ -114,7 +157,7 @@ void DirectShowVideoWidget::setProducer(Mlt::Producer *producer)
     } else if (resource.startsWith(audioDevice)) {
         QStringRef name = resource.midRef(qstrlen(audioDevice));
         for (int i = 1; i < ui->audioCombo->count(); i++) {
-            if (ui->audioCombo->itemText(i) == name) {
+            if (ui->audioCombo->itemData(i).toString() == name) {
                 ui->audioCombo->setCurrentIndex(i);
                 break;
             }
@@ -123,7 +166,7 @@ void DirectShowVideoWidget::setProducer(Mlt::Producer *producer)
     if (resource2.startsWith(audioDevice)) {
         QStringRef name = resource2.midRef(qstrlen(audioDevice));
         for (int i = 1; i < ui->audioCombo->count(); i++) {
-            if (ui->audioCombo->itemText(i) == name) {
+            if (ui->audioCombo->itemData(i).toString() == name) {
                 ui->audioCombo->setCurrentIndex(i);
                 break;
             }
