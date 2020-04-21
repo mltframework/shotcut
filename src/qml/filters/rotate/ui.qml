@@ -22,7 +22,7 @@ import Shotcut.Controls 1.0
 
 KeyframableFilter {
     width: 350
-    height: 150
+    height: 180
     property bool isAtLeastVersion4: filter.isAtLeastVersion('4')
 
     keyframableParameters: ['transition.fix_rotate_x', 'transition.scale_x', 'transition.scale_y']
@@ -48,6 +48,7 @@ KeyframableFilter {
             filter.set('transition.ox', 0)
             filter.set('transition.oy', 0)
             filter.set('transition.threads', 0)
+            filter.set('background', 'color:#00000000')
             filter.savePreset(preset.parameters)
         } else {
             initializeSimpleKeyframes()
@@ -65,6 +66,12 @@ KeyframableFilter {
         xOffsetSlider.value = filter.getDouble('transition.ox', position) * -1
         yOffsetSlider.value = filter.getDouble('transition.oy', position) * -1
         blockUpdate = false
+
+        var s = filter.get('background')
+        if (s.substring(0, 6) === 'color:')
+            bgColor.value = s.substring(6)
+        else if  (s.substring(0, 7) === 'colour:')
+            bgColor.value = s.substring(7)
     }
 
     function getScaleValue() {
@@ -132,7 +139,7 @@ KeyframableFilter {
         }
         Preset {
             id: preset
-            parameters: ['transition.fix_rotate_x', 'transition.scale_x', 'transition.ox', 'transition.oy']
+            parameters: ['transition.fix_rotate_x', 'transition.scale_x', 'transition.ox', 'transition.oy', 'background']
             Layout.columnSpan: 3
             onBeforePresetLoaded: {
                 resetSimpleKeyframes()
@@ -278,8 +285,26 @@ KeyframableFilter {
             }
         }
 
+        Label {
+            text: qsTr('Background color')
+            Layout.alignment: Qt.AlignRight
+        }
+        ColorPicker {
+            id: bgColor
+            eyedropper: true
+            alpha: true
+            onValueChanged: filter.set('background', 'color:' + value)
+        }
+        UndoButton {
+            visible: bgColor.visible
+            onClicked: bgColor.value = '#00000000'
+        }
         Item {
-            Layout.fillHeight: true;
+            Layout.fillWidth: true
+        }
+
+        Item {
+            Layout.fillHeight: true
         }
     }
 

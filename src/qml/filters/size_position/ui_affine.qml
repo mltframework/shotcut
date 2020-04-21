@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2014-2018 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2014-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,6 +23,7 @@ SizePositionUI {
     rectProperty: 'transition.rect'
     valignProperty: 'transition.valign'
     halignProperty: 'transition.halign'
+    backgroundProperty: 'background'
     Component.onCompleted: {
         if (filter.isNew) {
             filter.set('transition.threads', 0)

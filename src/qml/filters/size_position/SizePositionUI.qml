@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2019 Meltytech, LLC
+ * Copyright (c) 2014-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,13 +27,14 @@ Item {
     property string rectProperty
     property string valignProperty
     property string halignProperty
+    property string backgroundProperty
     property rect filterRect
     property string startValue: '_shotcut:startValue'
     property string middleValue: '_shotcut:middleValue'
     property string endValue:  '_shotcut:endValue'
 
     width: 350
-    height: 180
+    height: 200
 
     Component.onCompleted: {
         filter.blockSignals = true
@@ -183,6 +184,8 @@ Item {
             filter.set(rectProperty,   '0%/0%:100%x100%')
             filter.set(valignProperty, 'top')
             filter.set(halignProperty, 'left')
+            if (backgroundProperty)
+                filter.set(backgroundProperty, 'color:#00000000')
             filter.savePreset(preset.parameters)
         } else {
             if (legacyRectProperty !== null) {
@@ -261,6 +264,13 @@ Item {
             middleRadioButton.checked = true
         else if (align === 'bottom')
             bottomRadioButton.checked = true
+        if (backgroundProperty) {
+            var s = filter.get(backgroundProperty)
+            if (s.substring(0, 6) === 'color:')
+                bgColor.value = s.substring(6)
+            else if  (s.substring(0, 7) === 'colour:')
+                bgColor.value = s.substring(7)
+        }
     }
 
     function setKeyframedControls() {
@@ -500,6 +510,28 @@ Item {
             }
         }
         Item { Layout.fillWidth: true }
+
+        Label {
+            text: qsTr('Background color')
+            Layout.alignment: Qt.AlignRight
+            visible: bgColor.visible
+        }
+        ColorPicker {
+            id: bgColor
+            visible: !!backgroundProperty
+            Layout.columnSpan: 3
+            eyedropper: true
+            alpha: true
+            onValueChanged: filter.set(backgroundProperty, 'color:' + value)
+        }
+        UndoButton {
+            visible: bgColor.visible
+            onClicked: bgColor.value = '#00000000'
+        }
+        Item {
+            Layout.fillWidth: true
+            visible: bgColor.visible
+        }
 
         Item { Layout.fillHeight: true }
     }
