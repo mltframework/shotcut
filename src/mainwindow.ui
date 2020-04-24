@@ -97,6 +97,7 @@
     <property name="title">
      <string>&amp;Help</string>
     </property>
+    <addaction name="actionTopics"/>
     <addaction name="actionKeyboardShortcuts"/>
     <addaction name="actionUpgrade"/>
     <addaction name="actionFAQ"/>
@@ -925,9 +926,6 @@
    <property name="text">
     <string>Keyboard Shortcuts...</string>
    </property>
-   <property name="shortcut">
-    <string>F1</string>
-   </property>
   </action>
   <action name="actionLayoutPlayer">
    <property name="text">
@@ -1054,6 +1052,14 @@
    </property>
    <property name="shortcut">
     <string>F7</string>
+   </property>
+  </action>
+  <action name="actionTopics">
+   <property name="text">
+    <string>Topics</string>
+   </property>
+   <property name="shortcut">
+    <string>F1</string>
    </property>
   </action>
  </widget>

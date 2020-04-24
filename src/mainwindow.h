@@ -338,6 +338,7 @@ private slots:
     void on_actionPreview360_triggered(bool checked);
     void on_actionPreview540_triggered(bool checked);
     void on_actionPreview720_triggered(bool checked);
+    void on_actionTopics_triggered();
 };
 
 #define MAIN MainWindow::singleton()

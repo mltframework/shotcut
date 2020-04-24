@@ -4353,3 +4353,8 @@ void MainWindow::replaceAllByHash(const QString& hash, Mlt::Producer& producer)
         m_timelineDock->replaceClipsWithHash(hash, producer);
     }
 }
+
+void MainWindow::on_actionTopics_triggered()
+{
+    QDesktopServices::openUrl(QUrl("https://www.shotcut.org/howtos/"));
+}
