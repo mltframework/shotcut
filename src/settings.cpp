@@ -323,7 +323,9 @@ void ShotcutSettings::setPlayerDeinterlacer(const QString& s)
 
 QString ShotcutSettings::playerExternal() const
 {
-    return settings.value("player/external", "").toString();
+    auto result = settings.value("player/external", "").toString();
+    // "sdi" is no longer supported DVEO VidPort
+    return result == "sdi"? "" : result;
 }
 
 void ShotcutSettings::setPlayerExternal(const QString& s)
