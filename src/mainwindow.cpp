@@ -593,16 +593,6 @@ void MainWindow::setupSettingsMenu()
         m_externalGroup->addAction(action);
     }
 
-#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
-    Mlt::Consumer linsys(MLT.profile(), "sdi");
-    if (linsys.is_valid()) {
-        QAction* action = new QAction("DVEO VidPort", this);
-        action->setCheckable(true);
-        action->setData(QString("sdi"));
-        m_externalGroup->addAction(action);
-    }
-#endif
-
     Mlt::Profile profile;
     Mlt::Consumer decklink(profile, "decklink:");
     if (decklink.is_valid()) {
