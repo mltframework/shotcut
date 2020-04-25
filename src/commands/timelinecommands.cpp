@@ -1175,7 +1175,7 @@ void DetachAudioCommand::undo()
         if (clip.is_valid()) {
             clip.parent().set("audio_index", m_audioIndex.toLatin1().constData());
             QModelIndex modelIndex = m_model.makeIndex(m_trackIndex, m_clipIndex);
-            emit m_model.dataChanged(modelIndex, modelIndex, QVector<int>() << MultitrackModel::AudioIndexRole);
+            emit m_model.dataChanged(modelIndex, modelIndex, QVector<int>() << MultitrackModel::AudioIndexRole << MultitrackModel::AudioLevelsRole);
         }
     }
 }
