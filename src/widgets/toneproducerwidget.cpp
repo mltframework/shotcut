@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2018 Meltytech, LLC
+ * Copyright (c) 2015-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -66,7 +66,7 @@ void ToneProducerWidget::on_frequencySpinBox_valueChanged(int value)
     if (m_producer) {
         m_producer->set("frequency", value);
         m_producer->set(kShotcutDetailProperty, detail().toUtf8().constData());
-        emit producerChanged(producer());
+        emit modified();
     }
 }
 
@@ -75,7 +75,7 @@ void ToneProducerWidget::on_levelSpinBox_valueChanged(int value)
     if (m_producer) {
         m_producer->set("level", value);
         m_producer->set(kShotcutDetailProperty, detail().toUtf8().constData());
-        emit producerChanged(producer());
+        emit modified();
     }
 }
 

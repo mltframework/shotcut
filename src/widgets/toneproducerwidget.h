@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2015-2018 Meltytech, LLC
- * Author: Brian Matherly <code@brianmatherly.com>
+ * Copyright (c) 2015-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,7 +39,7 @@ public:
     void loadPreset(Mlt::Properties&);
 
 signals:
-    void producerChanged(Mlt::Producer*);
+    void modified();
 
 private slots:
     void on_frequencySpinBox_valueChanged(int);
