@@ -713,10 +713,12 @@ bool MultitrackModel::moveClip(int fromTrack, int toTrack, int clipIndex,
                     }
                     insertOrAdjustBlankAt(trackList, clipStart, duration);
                     consolidateBlanks(playlist, fromTrack);
+                    emit modified();
                 } else if (fromTrack == toTrack && (playlist.is_blank_at(position) || targetIndex == clipIndex) &&
                           (playlist.is_blank_at(position + length - 1) || targetIndexEnd == clipIndex)) {
                     // Reposition the clip within its current blank spot.
                     moveClipInBlank(playlist, toTrack, clipIndex, position, ripple, rippleAllTracks);
+                    emit modified();
                 } else {
                     int clipPlaytime = clip.get_playtime();
                     int clipStart = playlist.clip_start(clipIndex);
@@ -764,6 +766,8 @@ bool MultitrackModel::moveClip(int fromTrack, int toTrack, int clipIndex,
                 // Overwrite with clip
                 if (position + clip.get_playtime() >= 0)
                     overwrite(toTrack, clip, position, false /* seek */);
+                else
+                    emit modified();
             }
         }
         result = true;
