@@ -45,6 +45,7 @@ FiltersDock::FiltersDock(MetadataModel* metadataModel, AttachedFiltersModel* att
     setMinimumWidth(300);
     m_qview.setFocusPolicy(Qt::StrongFocus);
     m_qview.quickWindow()->setPersistentSceneGraph(false);
+    m_qview.setAttribute(Qt::WA_AcceptTouchEvents);
     setWidget(&m_qview);
 #ifdef Q_OS_MAC
     setFeatures(DockWidgetClosable | DockWidgetMovable);
