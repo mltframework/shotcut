@@ -621,7 +621,7 @@ Rectangle {
     Menu {
         id: menu
         function show() {
-//            mergeItem.visible = timeline.mergeClipWithNext(trackIndex, index, true)
+            mergeItem.visible = timeline.mergeClipWithNext(trackIndex, index, true)
             popup()
         }
         MenuItem {
@@ -669,7 +669,6 @@ Rectangle {
         }
         MenuItem {
             id: mergeItem
-            visible: false
             text: qsTr('Merge with next clip')
             onTriggered: timeline.mergeClipWithNext(trackIndex, index, false)
         }

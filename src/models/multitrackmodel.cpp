@@ -2976,18 +2976,26 @@ bool MultitrackModel::mergeClipWithNext(int trackIndex, int clipIndex, bool dryr
     if (dryrun)
         return true;
 
-    playlist.resize_clip(clipIndex, clip1.frame_in, clip1.frame_out + clip2.frame_count);
-    QModelIndex modelIndex = createIndex(clipIndex, trackIndex);
+    // Consolidate filters
+    QStringList filters {"fadeInVolume", "fadeOutVolume", "fadeInBrightness", "fadeOutBrightness", "fadeInMovit", "fadeOutMovit"};
+    for (const auto& s : filters) {
+        QScopedPointer<Mlt::Filter> filter(getFilter(s, clip1.producer));
+        if (filter && filter->is_valid()) {
+            filter.reset(getFilter(s, clip2.producer));
+            if (filter && filter->is_valid()) {
+                clip2.producer->detach(*filter);
+            }
+        }
+    }
+    Mlt::Controller::copyFilters(*clip2.producer, *clip1.producer);
+    QModelIndex modelIndex = createIndex(clipIndex, 0, trackIndex);
     QVector<int> roles;
-    roles << DurationRole;
-    roles << InPointRole;
+    roles << FadeInRole;
+    roles << FadeOutRole;
     emit dataChanged(modelIndex, modelIndex, roles);
 
-    beginRemoveRows(index(trackIndex), clipIndex + 1, clipIndex + 1);
-    playlist.remove(clipIndex + 1);
-    endRemoveRows();
-
-    adjustClipFilters(*clip1.producer, clip1.frame_in, clip1.frame_out, 0, -clip2.frame_count);
+    removeClip(trackIndex, clipIndex + 1, false);
+    trimClipOut(trackIndex, clipIndex, -clip2.frame_count, false, false);
 
     emit modified();
     return true;
@@ -3101,10 +3109,10 @@ void MultitrackModel::replace(int trackIndex, int clipIndex, Mlt::Producer& clip
             Mlt::Controller::copyFilters(oldClip.parent(), clip);
             Mlt::Controller::adjustFilters(clip, 0);
         }
-        beginRemoveRows(index(trackIndex), clipIndex, clipIndex);        
+        beginRemoveRows(index(trackIndex), clipIndex, clipIndex);
         playlist.remove(clipIndex);
         endRemoveRows();
-        beginInsertRows(index(trackIndex), clipIndex, clipIndex);        
+        beginInsertRows(index(trackIndex), clipIndex, clipIndex);
         playlist.insert_blank(clipIndex, clipPlaytime - 1);
         endInsertRows();
         overwrite(trackIndex, clip, playlist.clip_start(clipIndex), false);
