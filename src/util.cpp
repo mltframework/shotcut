@@ -336,13 +336,19 @@ void Util::applyCustomProperties(Mlt::Producer& destination, Mlt::Producer& sour
     p.clear(kCommentProperty);
     p.clear(kShotcutProducerProperty);
     p.clear(kDefaultAudioIndexProperty);
+    p.clear(kOriginalInProperty);
+    p.clear(kOriginalOutProperty);
+    p.clear(kOriginalResourceProperty);
     destination.pass_list(source, "mlt_service, audio_index, video_index, force_progressive, force_tff,"
                        "force_aspect_ratio, video_delay, color_range, warp_speed, warp_pitch,"
                        kAspectRatioNumerator ","
                        kAspectRatioDenominator ","
                        kCommentProperty ","
                        kShotcutProducerProperty ","
-                       kDefaultAudioIndexProperty);
+                       kDefaultAudioIndexProperty ","
+                       kOriginalInProperty ","
+                       kOriginalOutProperty ","
+                       kOriginalResourceProperty);
     if (!destination.get("_shotcut:resource")) {
         destination.set("_shotcut:resource", destination.get("resource"));
         destination.set("_shotcut:length", destination.get("length"));

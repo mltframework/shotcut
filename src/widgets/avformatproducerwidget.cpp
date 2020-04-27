@@ -809,8 +809,45 @@ void AvformatProducerWidget::convert(TranscodeDialog& dialog)
     }
 }
 
+bool AvformatProducerWidget::revertToOriginalResource()
+{
+    QString resource = m_producer->get(kOriginalResourceProperty);
+    if (!resource.isEmpty()) {
+        m_producer->set(kOriginalResourceProperty, nullptr, 0);
+        if (m_producer->get(kMultitrackItemProperty)) {
+            QString s = QString::fromLatin1(m_producer->get(kMultitrackItemProperty));
+            QVector<QStringRef> parts = s.splitRef(':');
+            if (parts.length() == 2) {
+                int clipIndex = parts[0].toInt();
+                int trackIndex = parts[1].toInt();
+                QUuid uuid = MAIN.timelineClipUuid(trackIndex, clipIndex);
+                if (!uuid.isNull()) {
+                    Mlt::Producer producer(MLT.profile(), resource.toUtf8().constData());
+                    if (producer.is_valid()) {
+                        if (!qstrcmp(producer.get("mlt_service"), "avformat")) {
+                            producer.set("mlt_service", "avformat-novalidate");
+                            producer.set("mute_on_pause", 0);
+                        }
+                        MLT.lockCreationTime(&producer);
+                        producer.set_in_and_out(m_producer->get_int(kOriginalInProperty), m_producer->get_int(kOriginalOutProperty));
+                        MAIN.replaceInTimeline(uuid, producer);
+                        return true;
+                    }
+                }
+            }
+        } else {
+            MAIN.open(resource);
+            return true;
+        }
+    }
+    return false;
+}
+
 void AvformatProducerWidget::on_reverseButton_clicked()
 {
+    if (revertToOriginalResource())
+        return;
+
     TranscodeDialog dialog(tr("Choose an edit-friendly format below and then click OK to choose a file name. "
                               "After choosing a file name, a job is created. "
                               "When it is done, double-click the job to open it.\n"),
@@ -829,6 +866,13 @@ void AvformatProducerWidget::on_reverseButton_clicked()
         QString nameFilter;
         QString ffmpegSuffix = "mov";
         int in = -1;
+
+        // Save these properties for revertToOriginalResource()
+        m_producer->set(kOriginalResourceProperty, resource.toUtf8().constData());
+        m_producer->set(kOriginalInProperty, m_producer->get(kFilterInProperty)?
+            m_producer->get_time(kFilterInProperty, mlt_time_clock) : m_producer->get_time("in", mlt_time_clock));
+        m_producer->set(kOriginalOutProperty, m_producer->get(kFilterOutProperty)?
+            m_producer->get_time(kFilterOutProperty, mlt_time_clock) : m_producer->get_time("out", mlt_time_clock));
 
         ffmpegArgs << "-loglevel" << "verbose";
         ffmpegArgs << "-i" << resource;
