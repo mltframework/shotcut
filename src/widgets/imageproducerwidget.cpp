@@ -28,6 +28,9 @@
 #include <QMenu>
 #include <QClipboard>
 
+// This legacy property is only used in this widget.
+#define kShotcutResourceProperty "shotcut_resource"
+
 ImageProducerWidget::ImageProducerWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::ImageProducerWidget),
