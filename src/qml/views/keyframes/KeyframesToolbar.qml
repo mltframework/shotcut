@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2019 Meltytech, LLC
+ * Copyright (c) 2016-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -47,8 +47,8 @@ ToolBar {
         }
         Button { // separator
             enabled: false
-            implicitWidth: 1
-            implicitHeight: 18
+            implicitWidth: 2
+            implicitHeight: settings.smallIcons? 14 : (hiddenButton.implicitHeight - 8)
         }
         ToolButton {
             implicitWidth: settings.smallIcons? 18 : hiddenButton.implicitWidth
@@ -88,8 +88,8 @@ ToolBar {
         }
         Button { // separator
             enabled: false
-            implicitWidth: 1
-            implicitHeight: 18
+            implicitWidth: 2
+            implicitHeight: settings.smallIcons? 14 : (hiddenButton.implicitHeight - 8)
         }
         ToolButton {
             implicitWidth: settings.smallIcons? 18 : hiddenButton.implicitWidth
