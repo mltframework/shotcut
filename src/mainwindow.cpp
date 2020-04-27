@@ -1161,7 +1161,7 @@ bool MainWindow::isSourceClipMyProject(QString resource)
 {
     if (m_player->tabIndex() == Player::ProjectTabIndex && MLT.savedProducer() && MLT.savedProducer()->is_valid())
         resource = QString::fromUtf8(MLT.savedProducer()->get("resource"));
-    if (QDir(resource) == QDir(fileName())) {
+    if (!resource.isEmpty() && QDir(resource) == QDir(fileName())) {
         QMessageBox dialog(QMessageBox::Information,
                            qApp->applicationName(),
                            tr("You cannot add a project to itself!"),

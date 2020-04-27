@@ -1071,8 +1071,43 @@ bool TimelineDock::trimClipOut(int trackIndex, int clipIndex, int delta, bool ri
     return true;
 }
 
+static QString convertUrlsToXML(const QString& xml)
+{
+    if (xml.startsWith("file://")) {
+        Mlt::Playlist playlist(MLT.profile());
+        QList<QUrl> urls;
+        for (const auto& s : xml.split(',')) {
+            QUrl url(s);
+            urls << Util::removeFileScheme(url);
+        }
+        for (const auto& path : Util::sortedFileList(urls)) {
+            if (MAIN.isSourceClipMyProject(path)) continue;
+            Mlt::Producer p(MLT.profile(), path.toUtf8().constData());
+            if (p.is_valid()) {
+                // Convert MLT XML to a virtual clip.
+                if (!qstrcmp(p.get("mlt_service"), "xml")) {
+                    p.set(kShotcutVirtualClip, 1);
+                    p.set("resource", path.toUtf8().constData());
+                }
+                // Convert avformat to avformat-novalidate so that XML loads faster.
+                if (!qstrcmp(p.get("mlt_service"), "avformat")) {
+                    p.set("mlt_service", "avformat-novalidate");
+                    p.set("mute_on_pause", 0);
+                }
+                MLT.setImageDurationFromDefault(&p);
+                MLT.lockCreationTime(&p);
+                p.get_length_time(mlt_time_clock);
+                playlist.append(p);
+            }
+        }
+        return MLT.XML(&playlist);
+    }
+    return xml;
+}
+
 void TimelineDock::insert(int trackIndex, int position, const QString &xml, bool seek)
 {
+    // Validations
     if (trackIndex < 0)
         trackIndex = currentTrack();
     if (isTrackLocked(trackIndex)) {
@@ -1080,8 +1115,15 @@ void TimelineDock::insert(int trackIndex, int position, const QString &xml, bool
         return;
     }
     if (MAIN.isSourceClipMyProject()) return;
+
+    // Handle drop from file manager to empty project.
+    if ((!MLT.producer() || !MLT.producer()->is_valid()) && xml.startsWith("file://")) {
+        QUrl url = xml.split(',').first();
+        MAIN.open(Util::removeFileScheme(url));
+    }
+
     if (MLT.isSeekableClip() || MLT.savedProducer() || !xml.isEmpty()) {
-        QString xmlToUse = !xml.isEmpty()? xml
+        QString xmlToUse = !xml.isEmpty()? convertUrlsToXML(xml)
             : MLT.XML(MLT.isClip()? nullptr : MLT.savedProducer());
         if (position < 0)
             position = m_position;
@@ -1102,6 +1144,7 @@ void TimelineDock::onInserted(int trackIndex, int clipIndex)
 
 void TimelineDock::overwrite(int trackIndex, int position, const QString &xml, bool seek)
 {
+    // Validations
     if (trackIndex < 0)
         trackIndex = currentTrack();
     if (isTrackLocked(trackIndex)) {
@@ -1109,8 +1152,15 @@ void TimelineDock::overwrite(int trackIndex, int position, const QString &xml, b
         return;
     }
     if (MAIN.isSourceClipMyProject()) return;
+
+    // Handle drop from file manager to empty project.
+    if ((!MLT.producer() || !MLT.producer()->is_valid()) && xml.startsWith("file://")) {
+        QUrl url = xml.split(',').first();
+        MAIN.open(Util::removeFileScheme(url));
+    }
+
     if (MLT.isSeekableClip() || MLT.savedProducer() || !xml.isEmpty()) {
-        QString xmlToUse = !xml.isEmpty()? xml
+        QString xmlToUse = !xml.isEmpty()? convertUrlsToXML(xml)
             : MLT.XML(MLT.isClip()? nullptr : MLT.savedProducer());
         if (position < 0)
             position = m_position;

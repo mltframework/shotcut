@@ -104,13 +104,13 @@ Rectangle {
     DropArea {
         anchors.fill: parent
         onEntered: {
-            if (drag.formats.indexOf('application/vnd.mlt+xml') >= 0)
+            if (drag.formats.indexOf('application/vnd.mlt+xml') >= 0 || drag.hasUrls)
                 drag.acceptProposedAction()
         }
         onExited: Logic.dropped()
         onPositionChanged: {
-            if (drag.formats.indexOf('application/vnd.mlt+xml') >= 0)
-                Logic.dragging(drag, drag.text)
+            if (drag.formats.indexOf('application/vnd.mlt+xml') >= 0 || drag.hasUrls)
+                Logic.dragging(drag, parseInt(drag.text))
         }
         onDropped: {
             if (drop.formats.indexOf('application/vnd.mlt+xml') >= 0) {
@@ -118,6 +118,9 @@ Rectangle {
                     Logic.acceptDrop(drop.getDataAsString('application/vnd.mlt+xml'))
                     drop.acceptProposedAction()
                 }
+            } else if (drop.hasUrls) {
+                Logic.acceptDrop(drop.urls)
+                drop.acceptProposedAction()
             }
             Logic.dropped()
         }
