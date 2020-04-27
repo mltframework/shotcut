@@ -5,7 +5,7 @@
 
 ## Install
 
-**Warning**: Shotcut is currently in very early stage and active development. So do not expect a final product for now.
+**Warning**: Shotcut is still in active development. So, do not expect a final product for now.
 
 Binaries are regularly built and are available at https://www.shotcut.org, on the Download section.
 
@@ -37,7 +37,11 @@ GPLv3. See [COPYING](COPYING).
 
 ### Qt Creator
 
-The fastest way to build and try Shotcut dev version is probably using [Qt Creator](https://www.qt.io/download#qt-creator).
+The fastest way to build and try Shotcut development version is probably using [Qt Creator](https://www.qt.io/download#qt-creator).
+
+To make this easier, we provide [SDKs](https://shotcut.org/notes/) on the web site with each release that includes
+Shotcut and all of its dependencies. These SDK pages also include setup instructions and tips on how to compile
+MLT and other dependencies after updating.
 
 ### From command line
 
