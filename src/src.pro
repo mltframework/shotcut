@@ -10,6 +10,7 @@ TEMPLATE = app
 win32:DEFINES += QT_STATIC
 
 SOURCES += main.cpp\
+    dialogs/systemsyncdialog.cpp \
     mainwindow.cpp \
     mltcontroller.cpp \
     scrubbar.cpp \
@@ -129,6 +130,7 @@ SOURCES += main.cpp\
 mac: OBJECTIVE_SOURCES = macos.mm
 
 HEADERS  += mainwindow.h \
+    dialogs/systemsyncdialog.h \
     mltcontroller.h \
     scrubbar.h \
     openotherdialog.h \
@@ -249,6 +251,7 @@ HEADERS  += mainwindow.h \
     widgets/playlistlistview.h
 
 FORMS    += mainwindow.ui \
+    dialogs/systemsyncdialog.ui \
     openotherdialog.ui \
     widgets/plasmawidget.ui \
     widgets/lissajouswidget.ui \

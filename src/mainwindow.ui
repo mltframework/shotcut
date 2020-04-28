@@ -209,6 +209,7 @@
     <addaction name="menuInterpolation"/>
     <addaction name="menuExternal"/>
     <addaction name="menuGamma"/>
+    <addaction name="actionSync"/>
     <addaction name="separator"/>
     <addaction name="actionUser_Interface"/>
     <addaction name="menuLanguage"/>
@@ -1060,6 +1061,14 @@
    </property>
    <property name="shortcut">
     <string>F1</string>
+   </property>
+  </action>
+  <action name="actionSync">
+   <property name="text">
+    <string>Synchronization...</string>
+   </property>
+   <property name="toolTip">
+    <string>Synchronization</string>
    </property>
   </action>
  </widget>

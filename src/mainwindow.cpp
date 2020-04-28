@@ -76,6 +76,7 @@
 #include "dialogs/listselectiondialog.h"
 #include "widgets/textproducerwidget.h"
 #include "qmltypes/qmlprofile.h"
+#include "dialogs/systemsyncdialog.h"
 
 #include <QtWidgets>
 #include <Logger.h>
@@ -4357,4 +4358,12 @@ void MainWindow::replaceAllByHash(const QString& hash, Mlt::Producer& producer)
 void MainWindow::on_actionTopics_triggered()
 {
     QDesktopServices::openUrl(QUrl("https://www.shotcut.org/howtos/"));
+}
+
+void MainWindow::on_actionSync_triggered()
+{
+    auto dialog = new SystemSyncDialog(this);
+    dialog->show();
+    dialog->raise();
+    dialog->activateWindow();
 }

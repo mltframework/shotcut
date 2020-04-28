@@ -129,6 +129,8 @@ public:
     void setPlayerZoom(float);
     int playerPreviewScale() const;
     void setPlayerPreviewScale(int);
+    int playerVideoDelayMs() const;
+    void setPlayerVideoDelayMs(int);
 
     QString playlistThumbnails() const;
     void setPlaylistThumbnails(const QString&);

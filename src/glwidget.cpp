@@ -679,6 +679,7 @@ int GLWidget::reconfigure(bool isMulti)
             m_consumer->set("0.drop_max", qRound(profile().fps() / 4.0));
             if (property("keyer").isValid())
                 m_consumer->set("0.keyer", property("keyer").toInt());
+            m_consumer->set("0.video_delay", Settings.playerVideoDelayMs());
         }
         else {
             if (!profile().progressive())
@@ -690,6 +691,7 @@ int GLWidget::reconfigure(bool isMulti)
             m_consumer->set("drop_max", qRound(profile().fps() / 4.0));
             if (property("keyer").isValid())
                 m_consumer->set("keyer", property("keyer").toInt());
+            m_consumer->set("video_delay", Settings.playerVideoDelayMs());
         }
         if (m_glslManager) {
             if (!m_threadStartEvent)

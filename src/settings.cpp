@@ -469,6 +469,16 @@ void ShotcutSettings::setPlayerPreviewScale(int i)
     settings.setValue("player/previewScale", i);
 }
 
+int ShotcutSettings::playerVideoDelayMs() const
+{
+    return settings.value("player/videoDelayMs", 0).toInt();
+}
+
+void ShotcutSettings::setPlayerVideoDelayMs(int i)
+{
+    settings.setValue("player/videoDelayMs", i);
+}
+
 QString ShotcutSettings::playlistThumbnails() const
 {
     return settings.value("playlist/thumbnails", "small").toString();
