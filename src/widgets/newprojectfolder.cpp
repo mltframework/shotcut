@@ -261,10 +261,13 @@ void NewProjectFolder::setColors()
 
 void NewProjectFolder::setProjectFolderButtonText(const QString& text)
 {
-    QString elidedText = ui->projectsFolderButton->fontMetrics().elidedText(text, Qt::ElideLeft, ui->recentListView->width() / 1.5);
+    auto path = QDir::toNativeSeparators(text);
+    QString elidedText = ui->projectsFolderButton->fontMetrics().elidedText(path, Qt::ElideLeft, ui->recentListView->width() / 1.5);
     ui->projectsFolderButton->setText(elidedText);
-    if (text != elidedText)
-        ui->projectsFolderButton->setToolTip(text);
+    if (path != elidedText)
+        ui->projectsFolderButton->setToolTip(path);
+    else
+        ui->projectsFolderButton->setToolTip(ui->label->toolTip());
 }
 
 void NewProjectFolder::on_recentListView_doubleClicked(const QModelIndex& index)
