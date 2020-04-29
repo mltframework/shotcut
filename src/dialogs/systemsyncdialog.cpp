@@ -42,6 +42,7 @@ void SystemSyncDialog::on_syncSlider_sliderReleased()
 
 void SystemSyncDialog::on_syncSpinBox_editingFinished()
 {
+    ui->syncSlider->setValue(ui->syncSpinBox->value());
     Settings.setPlayerVideoDelayMs(ui->syncSpinBox->value());
     MLT.consumerChanged();
 }
@@ -49,5 +50,12 @@ void SystemSyncDialog::on_syncSpinBox_editingFinished()
 void SystemSyncDialog::on_buttonBox_rejected()
 {
     Settings.setPlayerVideoDelayMs(m_oldValue);
+    MLT.consumerChanged();
+}
+
+void SystemSyncDialog::on_undoButton_clicked()
+{
+    ui->syncSlider->setValue(0);
+    Settings.setPlayerVideoDelayMs(0);
     MLT.consumerChanged();
 }

@@ -11,13 +11,13 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Player Synchronization</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="QLabel" name="label">
      <property name="text">
-      <string>Use this to set your system playback audio/video synchronization</string>
+      <string>Adjust your playback audio/video synchronization</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -32,57 +32,6 @@
      <property name="topMargin">
       <number>20</number>
      </property>
-     <item row="0" column="0">
-      <widget class="QLabel" name="syncLabel">
-       <property name="text">
-        <string>Video delay</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1">
-      <widget class="QSlider" name="syncSlider">
-       <property name="toolTip">
-        <string>Adjust the audio/video synchronization. The center position is equivalent to no alteration.</string>
-       </property>
-       <property name="maximum">
-        <number>1000</number>
-       </property>
-       <property name="singleStep">
-        <number>10</number>
-       </property>
-       <property name="pageStep">
-        <number>100</number>
-       </property>
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="tickPosition">
-        <enum>QSlider::TicksBelow</enum>
-       </property>
-       <property name="tickInterval">
-        <number>100</number>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0">
-      <spacer name="horizontalSpacer_4">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Ignored</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
      <item row="1" column="1">
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
@@ -103,8 +52,25 @@
          <property name="suffix">
           <string> ms</string>
          </property>
+         <property name="minimum">
+          <number>-250</number>
+         </property>
          <property name="maximum">
-          <number>1000</number>
+          <number>250</number>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="undoButton">
+         <property name="text">
+          <string notr="true"/>
+         </property>
+         <property name="icon">
+          <iconset theme="edit-undo" resource="../../icons/resources.qrc">
+           <normaloff>:/icons/oxygen/32x32/actions/edit-undo.png</normaloff>:/icons/oxygen/32x32/actions/edit-undo.png</iconset>
+         </property>
+         <property name="autoDefault">
+          <bool>false</bool>
          </property>
         </widget>
        </item>
@@ -122,6 +88,45 @@
         </spacer>
        </item>
       </layout>
+     </item>
+     <item row="0" column="1">
+      <widget class="QSlider" name="syncSlider">
+       <property name="minimum">
+        <number>-250</number>
+       </property>
+       <property name="maximum">
+        <number>250</number>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="syncLabel">
+       <property name="text">
+        <string>Video offset</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <spacer name="horizontalSpacer_4">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Ignored</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
      </item>
     </layout>
    </item>
@@ -154,7 +159,9 @@
   <tabstop>syncSlider</tabstop>
   <tabstop>syncSpinBox</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="../../icons/resources.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>buttonBox</sender>
@@ -195,28 +202,12 @@
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>220</x>
-     <y>82</y>
+     <x>365</x>
+     <y>69</y>
     </hint>
     <hint type="destinationlabel">
-     <x>227</x>
-     <y>116</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>syncSpinBox</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>syncSlider</receiver>
-   <slot>setValue(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>200</x>
-     <y>107</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>196</x>
-     <y>75</y>
+     <x>247</x>
+     <y>98</y>
     </hint>
    </hints>
   </connection>

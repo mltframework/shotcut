@@ -39,6 +39,8 @@ private slots:
 
     void on_buttonBox_rejected();
 
+    void on_undoButton_clicked();
+
 private:
     Ui::SystemSyncDialog *ui;
     int m_oldValue;
