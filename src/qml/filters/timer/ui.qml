@@ -142,9 +142,11 @@ Item {
                 ListElement { text: QT_TR_NOOP('HH:MM:SS.S'); format: "HH:MM:SS.S" }
                 ListElement { text: QT_TR_NOOP('MM:SS'); format: "MM:SS" }
                 ListElement { text: QT_TR_NOOP('MM:SS.SS'); format: "MM:SS.SS" }
+                ListElement { text: QT_TR_NOOP('MM:SS.SSS'); format: "MM:SS.SSS" }
                 ListElement { text: QT_TR_NOOP('SS'); format: "SS" }
                 ListElement { text: QT_TR_NOOP('SS.S'); format: "SS.S" }
                 ListElement { text: QT_TR_NOOP('SS.SS'); format: "SS.SS" }
+                ListElement { text: QT_TR_NOOP('SS.SSS'); format: "SS.SSS" }
             }
             onCurrentIndexChanged: {
                 filter.set('format', model.get(currentIndex).format)
