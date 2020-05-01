@@ -120,7 +120,7 @@ Rectangle {
 
             ToolButton {
                 id: addButton
-                visible: delegateIndex >= 0 && isCurve
+                visible: delegateIndex >= 0
                 implicitWidth: 18
                 implicitHeight: 18
                 iconName: 'chronometer';

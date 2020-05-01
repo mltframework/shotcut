@@ -17,6 +17,7 @@ Metadata {
                 name: qsTr('Position / Size')
                 property: 'rect'
                 isSimple: true
+                isRectangle: true
             }
         ]
     }

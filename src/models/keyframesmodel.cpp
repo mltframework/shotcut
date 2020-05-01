@@ -345,27 +345,41 @@ void KeyframesModel::addKeyframe(int parameterIndex, int position)
 {
     if (m_filter && parameterIndex < m_propertyNames.count()) {
         QString name = m_propertyNames[parameterIndex];
-        // Get the value from the existing position.
-        double value = m_filter->getDouble(name, position);
-        Mlt::Animation anim = m_filter->getAnimation(name);
-        if (anim.is_valid() && !anim.is_key(position)) {
-            mlt_keyframe_type keyframeType = m_filter->getKeyframeType(anim, position, mlt_keyframe_type(-1));
-            // Simply adding a keyframe does not change the current value of
-            // the filter parameter. So, no need to trigger a bunch of signals
-            // and refresh the consumer. Besides, refreshing the consumer is
-            // some how causing the player to seek ahead by one frame inadvertently
-            // such that changing the parameter value causes the addition of a
-            // keyframe just after this one. MLT.refreshConsumer() with
-            // frame-dropping enabled may have dropped video of the most recent
-            // frame from the producer, but Shotcut does not know about it
-            // because it did not receive a "consumer-frame-show" event for it.
-            m_filter->blockSignals(true);
-            m_filter->set(name, value, position, keyframeType);
-            for (auto& key : m_metadata->keyframes()->parameter(m_metadataIndex[parameterIndex])->gangedProperties())
-                m_filter->set(key, value, position, keyframeType);
-            m_filter->blockSignals(false);
-            onFilterChanged(name);
+        auto parameter = m_metadata->keyframes()->parameter(m_metadataIndex[parameterIndex]);
+        if (parameter->isRectangle()) {
+            auto value = m_filter->getRect(name, position);
+            Mlt::Animation anim = m_filter->getAnimation(name);
+            if (anim.is_valid() && !anim.is_key(position)) {
+                mlt_keyframe_type keyframeType = m_filter->getKeyframeType(anim, position, mlt_keyframe_type(-1));
+                m_filter->blockSignals(true);
+                m_filter->set(name, value, 1.0, position, keyframeType);
+                m_filter->blockSignals(false);
+            }
+        } else if (parameter->isCurve()) {
+            // Get the value from the existing position.
+            double value = m_filter->getDouble(name, position);
+            Mlt::Animation anim = m_filter->getAnimation(name);
+            if (anim.is_valid() && !anim.is_key(position)) {
+                mlt_keyframe_type keyframeType = m_filter->getKeyframeType(anim, position, mlt_keyframe_type(-1));
+                // Simply adding a keyframe does not change the current value of
+                // the filter parameter. So, no need to trigger a bunch of signals
+                // and refresh the consumer. Besides, refreshing the consumer is
+                // some how causing the player to seek ahead by one frame inadvertently
+                // such that changing the parameter value causes the addition of a
+                // keyframe just after this one. MLT.refreshConsumer() with
+                // frame-dropping enabled may have dropped video of the most recent
+                // frame from the producer, but Shotcut does not know about it
+                // because it did not receive a "consumer-frame-show" event for it.
+                m_filter->blockSignals(true);
+                m_filter->set(name, value, position, keyframeType);
+                for (auto& key : parameter->gangedProperties())
+                    m_filter->set(key, value, position, keyframeType);
+                m_filter->blockSignals(false);
+            }
+        } else {
+            emit keyframeAdded(name, position);
         }
+        onFilterChanged(name);
     }
 }
 

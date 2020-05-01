@@ -19,6 +19,7 @@ Metadata {
                 name: qsTr('Position / Size')
                 property: 'transition.rect'
                 isSimple: true
+                isRectangle: true
             }
         ]
     }

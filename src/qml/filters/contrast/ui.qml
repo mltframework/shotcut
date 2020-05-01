@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2018 Meltytech, LLC
+ * Copyright (c) 2016-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -223,5 +223,19 @@ Item {
     Connections {
         target: producer
         onPositionChanged: setControls()
+    }
+
+    Connections {
+        target: parameters
+        onKeyframeAdded: {
+            middleValue = filter.getDouble(parameter, position) / gainFactor
+            filter.set("gain_r", middleValue * gainFactor, position)
+            filter.set("gain_g", middleValue * gainFactor, position)
+            filter.set("gain_b", middleValue * gainFactor, position)
+            var gamma = (1.0 - middleValue) * gammaFactor
+            filter.set("gamma_r", gamma, position)
+            filter.set("gamma_g", gamma, position)
+            filter.set("gamma_b", gamma, position)
+        }
     }
 }

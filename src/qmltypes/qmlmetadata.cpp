@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2019 Meltytech, LLC
+ * Copyright (c) 2013-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -183,5 +183,6 @@ QmlKeyframesParameter::QmlKeyframesParameter(QObject* parent)
     , m_isCurve(false)
     , m_minimum(0.0)
     , m_maximum(0.0)
+    , m_isRectangle(false)
 {
 }

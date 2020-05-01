@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2018 Meltytech, LLC
+ * Copyright (c) 2013-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,6 +35,7 @@ class QmlKeyframesParameter : public QObject
     Q_PROPERTY(bool isCurve MEMBER m_isCurve NOTIFY changed)
     Q_PROPERTY(double minimum MEMBER m_minimum NOTIFY changed)
     Q_PROPERTY(double maximum MEMBER m_maximum NOTIFY changed)
+    Q_PROPERTY(bool isRectangle MEMBER m_isRectangle NOTIFY changed)
 
 public:
     explicit QmlKeyframesParameter(QObject* parent = 0);
@@ -46,6 +47,7 @@ public:
     bool isCurve() const { return m_isCurve; }
     double minimum() const { return m_minimum; }
     double maximum() const { return m_maximum; }
+    bool isRectangle() const { return m_isRectangle; }
 
 signals:
     void changed();
@@ -58,6 +60,7 @@ private:
     bool m_isCurve;
     double m_minimum;
     double m_maximum;
+    bool m_isRectangle;
 };
 
 class QmlKeyframesMetadata : public QObject

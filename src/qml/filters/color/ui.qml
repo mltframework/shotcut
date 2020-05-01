@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2019 Meltytech, LLC
+ * Copyright (c) 2014-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -525,5 +525,29 @@ Item {
     Connections {
         target: producer
         onPositionChanged: loadValues()
+    }
+
+    Connections {
+        target: parameters
+        onKeyframeAdded: {
+            var n
+            switch (parameter) {
+            case 'lift_r':
+                n = filter.getDouble(parameter, position)
+                filter.set('lift_g', n, position)
+                filter.set('lift_b', n, position)
+                break;
+            case 'gamma_r':
+                n = filter.getDouble(parameter, position)
+                filter.set('gamma_g', n, position)
+                filter.set('gamma_b', n, position)
+                break;
+            case 'gain_r':
+                n = filter.getDouble(parameter, position)
+                filter.set('gain_g', n, position)
+                filter.set('gain_b', n, position)
+                break;
+            }
+        }
     }
 }

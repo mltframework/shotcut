@@ -320,4 +320,12 @@ KeyframableFilter {
         target: producer
         onPositionChanged: setControls()
     }
+
+    Connections {
+        target: parameters
+        onKeyframeAdded: {
+            var n = filter.getDouble(parameter, position)
+            filter.set(parameter, n, position)
+        }
+    }
 }
