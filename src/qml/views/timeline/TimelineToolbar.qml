@@ -19,6 +19,7 @@ import QtQuick 2.2
 import QtQuick.Controls 1.0
 import QtQuick.Layouts 1.0
 import QtGraphicalEffects 1.0
+import Shotcut.Controls 1.0 as Shotcut
 
 ToolBar {
     property alias scrub: scrubButton.checked
@@ -96,49 +97,44 @@ ToolBar {
             implicitWidth: 2
             implicitHeight: settings.smallIcons? 14 : (hiddenButton.implicitHeight - 8)
         }
-        ToolButton {
+        Shotcut.ToolBarToggle {
             id: snapButton
-            checkable: true
             checked: settings.timelineSnap
             iconName: 'snap'
             iconSource: 'qrc:///icons/oxygen/32x32/actions/snap.png'
             tooltip: qsTr('Toggle snapping')
-            onClicked: settings.timelineSnap = checked
             implicitWidth: settings.smallIcons? 18 : hiddenButton.implicitWidth
             implicitHeight: implicitWidth
+            onClicked: settings.timelineSnap = !settings.timelineSnap
         }
-        ToolButton {
+        Shotcut.ToolBarToggle {
             id: scrubButton
-            checkable: true
             iconName: 'scrub_drag'
             iconSource: 'qrc:///icons/oxygen/32x32/actions/scrub_drag.png'
             tooltip: qsTr('Scrub while dragging')
             implicitWidth: settings.smallIcons? 18 : hiddenButton.implicitWidth
             implicitHeight: implicitWidth
+            onClicked: checked = !checked
         }
-        ToolButton {
+        Shotcut.ToolBarToggle {
             id: rippleButton
-            checkable: true
             checked: settings.timelineRipple
             iconName: 'target'
             iconSource: 'qrc:///icons/oxygen/32x32/actions/target.png'
             tooltip: qsTr('Ripple trim and drop')
-            text: qsTr('Ripple')
-            onClicked: settings.timelineRipple = checked
             implicitWidth: settings.smallIcons? 18 : hiddenButton.implicitWidth
             implicitHeight: implicitWidth
+            onClicked: settings.timelineRipple = !settings.timelineRipple
         }
-        ToolButton {
+        Shotcut.ToolBarToggle {
             id: rippleAllButton
-            checkable: true
             checked: settings.timelineRippleAllTracks
             iconName: 'ripple-all'
             iconSource: 'qrc:///icons/oxygen/32x32/actions/ripple-all.png'
             tooltip: qsTr('Ripple edits across all tracks')
-            text: qsTr('Ripple All')
-            onClicked: settings.timelineRippleAllTracks = checked
             implicitWidth: settings.smallIcons? 18 : hiddenButton.implicitWidth
             implicitHeight: implicitWidth
+            onClicked: settings.timelineRippleAllTracks = !settings.timelineRippleAllTracks
         }
         Button { // separator
             enabled: false
@@ -157,39 +153,6 @@ ToolBar {
             action: zoomInAction
             implicitWidth: settings.smallIcons? 18 : hiddenButton.implicitWidth
             implicitHeight: implicitWidth
-        }
-
-        ColorOverlay {
-            id: snapColorEffect
-            visible: settings.timelineSnap
-            anchors.fill: snapButton
-            source: snapButton
-            color: checkedColor
-            cached: true
-        }
-        ColorOverlay {
-            id: scrubColorEffect
-            visible: scrubButton.checked
-            anchors.fill: scrubButton
-            source: scrubButton
-            color: checkedColor
-            cached: true
-        }
-        ColorOverlay {
-            id: rippleColorEffect
-            visible: settings.timelineRipple
-            anchors.fill: rippleButton
-            source: rippleButton
-            color: checkedColor
-            cached: true
-        }
-        ColorOverlay {
-            id: rippleAllColorEffect
-            visible: settings.timelineRippleAllTracks
-            anchors.fill: rippleAllButton
-            source: rippleAllButton
-            color: checkedColor
-            cached: true
         }
     }
 
