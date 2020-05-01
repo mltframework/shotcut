@@ -109,7 +109,7 @@ Rectangle {
 
     Image {
         id: outThumbnail
-        visible: settings.timelineShowThumbnails
+        visible: settings.timelineShowThumbnails && parent.height > 20
         anchors.right: parent.right
         anchors.top: parent.top
         anchors.topMargin: parent.border.width
@@ -123,7 +123,7 @@ Rectangle {
 
     Image {
         id: inThumbnail
-        visible: settings.timelineShowThumbnails
+        visible: settings.timelineShowThumbnails && parent.height > 20
         anchors.left: parent.left
         anchors.top: parent.top
         anchors.topMargin: parent.border.width
@@ -145,7 +145,7 @@ Rectangle {
     Row {
         id: waveform
         visible: !isBlank && settings.timelineShowWaveforms && (parseInt(audioIndex) > -1 || audioIndex === 'all')
-        height: isAudio? parent.height : parent.height / 2
+        height: (isAudio || parent.height <= 20)? parent.height : parent.height / 2
         anchors.left: parent.left
         anchors.bottom: parent.bottom
         anchors.margins: parent.border.width
