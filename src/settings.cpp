@@ -500,6 +500,17 @@ void ShotcutSettings::setPlaylistAutoplay(bool b)
     settings.setValue("playlist/autoplay", b);
 }
 
+bool ShotcutSettings::timelineDragScrub() const
+{
+    return settings.value("timeline/dragScrub", false).toBool();
+}
+
+void ShotcutSettings::setTimelineDragScrub(bool b)
+{
+    settings.setValue("timeline/dragScrub", b);
+    emit timelineDragScrubChanged();
+}
+
 bool ShotcutSettings::timelineShowWaveforms() const
 {
     return settings.value("timeline/waveforms", true).toBool();

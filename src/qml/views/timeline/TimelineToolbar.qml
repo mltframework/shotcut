@@ -109,12 +109,13 @@ ToolBar {
         }
         Shotcut.ToolBarToggle {
             id: scrubButton
+            checked: settings.timelineDragScrub
             iconName: 'scrub_drag'
             iconSource: 'qrc:///icons/oxygen/32x32/actions/scrub_drag.png'
             tooltip: qsTr('Scrub while dragging')
             implicitWidth: settings.smallIcons? 18 : hiddenButton.implicitWidth
             implicitHeight: implicitWidth
-            onClicked: checked = !checked
+            onClicked: settings.timelineDragScrub = !settings.timelineDragScrub
         }
         Shotcut.ToolBarToggle {
             id: rippleButton

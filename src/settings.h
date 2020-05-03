@@ -26,6 +26,7 @@
 class ShotcutSettings : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(bool timelineDragScrub READ timelineDragScrub WRITE setTimelineDragScrub NOTIFY timelineDragScrubChanged)
     Q_PROPERTY(bool timelineShowWaveforms READ timelineShowWaveforms WRITE setTimelineShowWaveforms NOTIFY timelineShowWaveformsChanged)
     Q_PROPERTY(bool timelineShowThumbnails READ timelineShowThumbnails WRITE setTimelineShowThumbnails NOTIFY timelineShowThumbnailsChanged)
     Q_PROPERTY(bool timelineRipple READ timelineRipple WRITE setTimelineRipple NOTIFY timelineRippleChanged)
@@ -137,6 +138,8 @@ public:
     bool playlistAutoplay() const;
     void setPlaylistAutoplay(bool);
 
+    bool timelineDragScrub() const;
+    void setTimelineDragScrub(bool);
     bool timelineShowWaveforms() const;
     void setTimelineShowWaveforms(bool);
     bool timelineShowThumbnails() const;
@@ -203,6 +206,7 @@ public:
 signals:
     void openPathChanged();
     void savePathChanged();
+    void timelineDragScrubChanged();
     void timelineShowWaveformsChanged();
     void timelineShowThumbnailsChanged();
     void timelineRippleChanged();
