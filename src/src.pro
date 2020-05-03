@@ -26,6 +26,7 @@ SOURCES += main.cpp\
     widgets/colorbarswidget.cpp \
     widgets/countproducerwidget.cpp \
     widgets/noisewidget.cpp \
+    widgets/producerpreviewwidget.cpp \
     widgets/pulseaudiowidget.cpp \
     widgets/screenselector.cpp \
     widgets/jackproducerwidget.cpp \
@@ -47,6 +48,7 @@ SOURCES += main.cpp\
     dialogs/filedatedialog.cpp \
     jobqueue.cpp \
     docks/jobsdock.cpp \
+    dialogs/slideshowgeneratordialog.cpp \
     dialogs/textviewerdialog.cpp \
     models/playlistmodel.cpp \
     docks/playlistdock.cpp \
@@ -121,6 +123,7 @@ SOURCES += main.cpp\
     docks/keyframesdock.cpp \
     qmltypes/qmlproducer.cpp \
     models/keyframesmodel.cpp \
+    widgets/slideshowgeneratorwidget.cpp \
     widgets/textproducerwidget.cpp \
     dialogs/listselectiondialog.cpp \
     widgets/newprojectfolder.cpp \
@@ -146,6 +149,7 @@ HEADERS  += mainwindow.h \
     widgets/colorbarswidget.h \
     widgets/countproducerwidget.h \
     widgets/noisewidget.h \
+    widgets/producerpreviewwidget.h \
     widgets/pulseaudiowidget.h \
     widgets/screenselector.h \
     widgets/jackproducerwidget.h \
@@ -167,6 +171,7 @@ HEADERS  += mainwindow.h \
     dialogs/filedatedialog.h \
     jobqueue.h \
     docks/jobsdock.h \
+    dialogs/slideshowgeneratordialog.h \
     dialogs/textviewerdialog.h \
     models/playlistmodel.h \
     docks/playlistdock.h \
@@ -244,6 +249,7 @@ HEADERS  += mainwindow.h \
     docks/keyframesdock.h \
     qmltypes/qmlproducer.h \
     models/keyframesmodel.h \
+    widgets/slideshowgeneratorwidget.h \
     widgets/textproducerwidget.h \
     dialogs/listselectiondialog.h \
     widgets/newprojectfolder.h \

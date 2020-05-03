@@ -398,6 +398,11 @@ p, li { white-space: pre-wrap; }
     <string>Add Selected to Timeline</string>
    </property>
   </action>
+  <action name="actionAddToSlideshow">
+   <property name="text">
+    <string>Add Selected to Slideshow</string>
+   </property>
+  </action>
   <action name="actionSortByName">
    <property name="text">
     <string>Sort By Name</string>

@@ -118,6 +118,8 @@ private slots:
 
     void on_actionAddToTimeline_triggered();
 
+    void on_actionAddToSlideshow_triggered();
+
     void on_updateButton_clicked();
 
     void updateViewModeFromActions();
