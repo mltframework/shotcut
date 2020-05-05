@@ -558,7 +558,7 @@ QString Controller::XML(Service* service, bool withProfile, bool withMetadata)
 {
     static const char* propertyName = "string";
     Consumer c(profile(), "xml", propertyName);
-    Service s(service? service->get_service() : m_producer->get_service());
+    Service s(service? service->get_service() : (m_producer && m_producer->is_valid())? m_producer->get_service() : nullptr);
     if (!s.is_valid())
         return "";
     int ignore = s.get_int("ignore_points");
