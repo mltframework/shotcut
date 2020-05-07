@@ -369,7 +369,7 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties& preset)
         else // 1 (best, NOT 100%) - 31 (worst)
             ui->videoQualitySpinner->setValue(TO_RELATIVE(31, 1, videoQuality));
     }
-    on_videoCodecCombo_currentIndexChanged(ui->videoCodecCombo->currentIndex());
+    on_videoCodecCombo_currentIndexChanged(ui->videoCodecCombo->currentIndex(), true);
     on_audioRateControlCombo_activated(ui->audioRateControlCombo->currentIndex());
     on_videoRateControlCombo_activated(ui->videoRateControlCombo->currentIndex());
 }
@@ -1785,19 +1785,21 @@ void EncodeDock::on_fromCombo_currentIndexChanged(int index)
         ui->encodeButton->setText(tr("Capture File"));
 }
 
-void EncodeDock::on_videoCodecCombo_currentIndexChanged(int index)
+void EncodeDock::on_videoCodecCombo_currentIndexChanged(int index, bool ignorePreset)
 {
     Q_UNUSED(index)
     QString vcodec = ui->videoCodecCombo->currentText();
     if (vcodec.contains("nvenc")) {
-        QString newValue;
-        foreach (QString line, ui->advancedTextEdit->toPlainText().split("\n")) {
-            if (!line.startsWith("preset=")) {
-                newValue += line;
-                newValue += "\n";
+        if (!ignorePreset) {
+            QString newValue;
+            foreach (QString line, ui->advancedTextEdit->toPlainText().split("\n")) {
+                if (!line.startsWith("preset=")) {
+                    newValue += line;
+                    newValue += "\n";
+                }
             }
+            ui->advancedTextEdit->setPlainText(newValue);
         }
-        ui->advancedTextEdit->setPlainText(newValue);
         if (vcodec.contains("hevc"))
             ui->bFramesSpinner->setValue(0);
         ui->dualPassCheckbox->setChecked(false);

@@ -97,7 +97,7 @@ private slots:
 
     void on_fromCombo_currentIndexChanged(int index);
 
-    void on_videoCodecCombo_currentIndexChanged(int index);
+    void on_videoCodecCombo_currentIndexChanged(int index, bool ignorePreset = false);
 
     void on_audioCodecCombo_currentIndexChanged(int index);
 
