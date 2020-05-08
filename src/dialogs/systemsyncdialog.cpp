@@ -27,6 +27,7 @@ SystemSyncDialog::SystemSyncDialog(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->syncSlider->setValue(Settings.playerVideoDelayMs());
+    ui->applyButton->hide();
 }
 
 SystemSyncDialog::~SystemSyncDialog()
@@ -36,26 +37,43 @@ SystemSyncDialog::~SystemSyncDialog()
 
 void SystemSyncDialog::on_syncSlider_sliderReleased()
 {
-    Settings.setPlayerVideoDelayMs(ui->syncSlider->value());
-    MLT.consumerChanged();
+    setDelay(ui->syncSlider->value());
 }
 
 void SystemSyncDialog::on_syncSpinBox_editingFinished()
 {
     ui->syncSlider->setValue(ui->syncSpinBox->value());
-    Settings.setPlayerVideoDelayMs(ui->syncSpinBox->value());
-    MLT.consumerChanged();
+    setDelay(ui->syncSpinBox->value());
 }
 
 void SystemSyncDialog::on_buttonBox_rejected()
 {
-    Settings.setPlayerVideoDelayMs(m_oldValue);
-    MLT.consumerChanged();
+    setDelay(m_oldValue);
 }
 
 void SystemSyncDialog::on_undoButton_clicked()
 {
     ui->syncSlider->setValue(0);
-    Settings.setPlayerVideoDelayMs(0);
-    MLT.consumerChanged();
+    setDelay(0);
+}
+
+void SystemSyncDialog::on_syncSpinBox_valueChanged(int arg1)
+{
+    Q_UNUSED(arg1)
+    ui->applyButton->show();
+}
+
+void SystemSyncDialog::on_applyButton_clicked()
+{
+    setDelay(ui->syncSpinBox->value());
+}
+
+void SystemSyncDialog::setDelay(int delay)
+{
+    if (delay != Settings.playerVideoDelayMs()) {
+        Settings.setPlayerVideoDelayMs(delay);
+        MLT.consumerChanged();
+    }
+    ui->applyButton->hide();
+
 }

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>546</width>
+    <height>205</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -29,66 +29,6 @@
    </item>
    <item>
     <layout class="QGridLayout" name="gridLayout">
-     <property name="topMargin">
-      <number>20</number>
-     </property>
-     <item row="1" column="1">
-      <layout class="QHBoxLayout" name="horizontalLayout">
-       <item>
-        <spacer name="horizontalSpacer_2">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
-        <widget class="QSpinBox" name="syncSpinBox">
-         <property name="suffix">
-          <string> ms</string>
-         </property>
-         <property name="minimum">
-          <number>-250</number>
-         </property>
-         <property name="maximum">
-          <number>250</number>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="undoButton">
-         <property name="text">
-          <string notr="true"/>
-         </property>
-         <property name="icon">
-          <iconset theme="edit-undo" resource="../../icons/resources.qrc">
-           <normaloff>:/icons/oxygen/32x32/actions/edit-undo.png</normaloff>:/icons/oxygen/32x32/actions/edit-undo.png</iconset>
-         </property>
-         <property name="autoDefault">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <spacer name="horizontalSpacer_3">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-      </layout>
-     </item>
      <item row="0" column="1">
       <widget class="QSlider" name="syncSlider">
        <property name="minimum">
@@ -102,6 +42,23 @@
        </property>
       </widget>
      </item>
+     <item row="0" column="3">
+      <widget class="QPushButton" name="undoButton">
+       <property name="toolTip">
+        <string>Reset to default value 0</string>
+       </property>
+       <property name="text">
+        <string notr="true"/>
+       </property>
+       <property name="icon">
+        <iconset theme="edit-undo" resource="../../icons/resources.qrc">
+         <normaloff>:/icons/oxygen/32x32/actions/edit-undo.png</normaloff>:/icons/oxygen/32x32/actions/edit-undo.png</iconset>
+       </property>
+       <property name="autoDefault">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
      <item row="0" column="0">
       <widget class="QLabel" name="syncLabel">
        <property name="text">
@@ -112,21 +69,25 @@
        </property>
       </widget>
      </item>
-     <item row="1" column="0">
-      <spacer name="horizontalSpacer_4">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
+     <item row="1" column="2">
+      <widget class="QPushButton" name="applyButton">
+       <property name="text">
+        <string>Apply</string>
        </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Ignored</enum>
+      </widget>
+     </item>
+     <item row="0" column="2">
+      <widget class="QSpinBox" name="syncSpinBox">
+       <property name="suffix">
+        <string> ms</string>
        </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
+       <property name="minimum">
+        <number>-250</number>
        </property>
-      </spacer>
+       <property name="maximum">
+        <number>250</number>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>
@@ -157,7 +118,6 @@
  </widget>
  <tabstops>
   <tabstop>syncSlider</tabstop>
-  <tabstop>syncSpinBox</tabstop>
  </tabstops>
  <resources>
   <include location="../../icons/resources.qrc"/>

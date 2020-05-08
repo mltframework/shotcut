@@ -41,9 +41,15 @@ private slots:
 
     void on_undoButton_clicked();
 
+    void on_syncSpinBox_valueChanged(int arg1);
+
+    void on_applyButton_clicked();
+
 private:
     Ui::SystemSyncDialog *ui;
     int m_oldValue;
+
+    void setDelay(int delay);
 };
 
 #endif // SYSTEMSYNCDIALOG_H
