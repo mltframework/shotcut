@@ -1683,6 +1683,8 @@ void MainWindow::on_actionAbout_Shotcut_triggered()
 
 void MainWindow::keyPressEvent(QKeyEvent* event)
 {
+    if (event->isAccepted()) return;
+
     bool handled = true;
 
     switch (event->key()) {
