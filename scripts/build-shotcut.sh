@@ -460,7 +460,7 @@ function set_globals {
   REPOLOCS[9]="git://github.com/mltframework/webvfx.git"
   REPOLOCS[10]="git://github.com/georgmartius/vid.stab.git"
   REPOLOCS[11]="git://github.com/anholt/libepoxy.git"
-  REPOLOCS[12]="https://git.opus-codec.org/opus.git"
+  REPOLOCS[12]="https://github.com/xiph/opus.git"
   REPOLOCS[13]="https://github.com/videolan/x265"
   REPOLOCS[14]="https://gitlab.com/libeigen/eigen.git"
   REPOLOCS[15]="git://github.com/FFmpeg/nv-codec-headers.git"
