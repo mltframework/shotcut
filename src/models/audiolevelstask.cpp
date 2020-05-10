@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2019 Meltytech, LLC
+ * Copyright (c) 2013-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -130,6 +130,7 @@ Mlt::Producer* AudioLevelsTask::tempProducer()
             if (producer->get("audio_index")) {
                 m_tempProducer->pass_property(*producer, "audio_index");
             }
+            m_tempProducer->set("video_index", -1);
         }
     }
     return m_tempProducer.data();
