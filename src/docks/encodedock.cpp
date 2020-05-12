@@ -369,7 +369,7 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties& preset)
         else // 1 (best, NOT 100%) - 31 (worst)
             ui->videoQualitySpinner->setValue(TO_RELATIVE(31, 1, videoQuality));
     }
-    on_videoCodecCombo_currentIndexChanged(ui->videoCodecCombo->currentIndex(), true);
+    onVideoCodecComboChanged(ui->videoCodecCombo->currentIndex(), true);
     on_audioRateControlCombo_activated(ui->audioRateControlCombo->currentIndex());
     on_videoRateControlCombo_activated(ui->videoRateControlCombo->currentIndex());
 }
@@ -1256,6 +1256,50 @@ void EncodeDock::filterX265Params(QStringList& other)
     }
 }
 
+void EncodeDock::onVideoCodecComboChanged(int index, bool ignorePreset)
+{
+    Q_UNUSED(index)
+    QString vcodec = ui->videoCodecCombo->currentText();
+    if (vcodec.contains("nvenc")) {
+        if (!ignorePreset) {
+            QString newValue;
+            foreach (QString line, ui->advancedTextEdit->toPlainText().split("\n")) {
+                if (!line.startsWith("preset=")) {
+                    newValue += line;
+                    newValue += "\n";
+                }
+            }
+            ui->advancedTextEdit->setPlainText(newValue);
+        }
+        if (vcodec.contains("hevc"))
+            ui->bFramesSpinner->setValue(0);
+        ui->dualPassCheckbox->setChecked(false);
+        ui->dualPassCheckbox->setEnabled(false);
+    } else if (vcodec.endsWith("_amf")) {
+        if (vcodec.startsWith("hevc_"))
+            ui->bFramesSpinner->setValue(0);
+        ui->dualPassCheckbox->setChecked(false);
+        ui->dualPassCheckbox->setEnabled(false);
+    } else if (vcodec.endsWith("_qsv")) {
+        if (vcodec.startsWith("hevc_") && !ui->advancedTextEdit->toPlainText().contains("load_plugin="))
+            ui->advancedTextEdit->appendPlainText("\nload_plugin=hevc_hw\n");
+        ui->dualPassCheckbox->setChecked(false);
+        ui->dualPassCheckbox->setEnabled(false);
+    } else if (vcodec.endsWith("_videotoolbox")) {
+        if (ui->videoRateControlCombo->currentIndex() == RateControlQuality) {
+            ui->videoRateControlCombo->setCurrentIndex(RateControlAverage);
+        }
+        ui->dualPassCheckbox->setChecked(false);
+        ui->dualPassCheckbox->setEnabled(false);
+    } else if (vcodec.endsWith("_vaapi")) {
+        ui->dualPassCheckbox->setChecked(false);
+        ui->dualPassCheckbox->setEnabled(false);
+    } else {
+        ui->dualPassCheckbox->setEnabled(true);
+    }
+    on_videoQualitySpinner_valueChanged(ui->videoQualitySpinner->value());
+}
+
 static double getBufferSize(Mlt::Properties& preset, const char* property)
 {
     double size = preset.get_double(property);
@@ -1780,48 +1824,9 @@ void EncodeDock::on_fromCombo_currentIndexChanged(int index)
         ui->encodeButton->setText(tr("Capture File"));
 }
 
-void EncodeDock::on_videoCodecCombo_currentIndexChanged(int index, bool ignorePreset)
+void EncodeDock::on_videoCodecCombo_currentIndexChanged(int index)
 {
-    Q_UNUSED(index)
-    QString vcodec = ui->videoCodecCombo->currentText();
-    if (vcodec.contains("nvenc")) {
-        if (!ignorePreset) {
-            QString newValue;
-            foreach (QString line, ui->advancedTextEdit->toPlainText().split("\n")) {
-                if (!line.startsWith("preset=")) {
-                    newValue += line;
-                    newValue += "\n";
-                }
-            }
-            ui->advancedTextEdit->setPlainText(newValue);
-        }
-        if (vcodec.contains("hevc"))
-            ui->bFramesSpinner->setValue(0);
-        ui->dualPassCheckbox->setChecked(false);
-        ui->dualPassCheckbox->setEnabled(false);
-    } else if (vcodec.endsWith("_amf")) {
-        if (vcodec.startsWith("hevc_"))
-            ui->bFramesSpinner->setValue(0);
-        ui->dualPassCheckbox->setChecked(false);
-        ui->dualPassCheckbox->setEnabled(false);
-    } else if (vcodec.endsWith("_qsv")) {
-        if (vcodec.startsWith("hevc_") && !ui->advancedTextEdit->toPlainText().contains("load_plugin="))
-            ui->advancedTextEdit->appendPlainText("\nload_plugin=hevc_hw\n");
-        ui->dualPassCheckbox->setChecked(false);
-        ui->dualPassCheckbox->setEnabled(false);
-    } else if (vcodec.endsWith("_videotoolbox")) {
-        if (ui->videoRateControlCombo->currentIndex() == RateControlQuality) {
-            ui->videoRateControlCombo->setCurrentIndex(RateControlAverage);
-        }
-        ui->dualPassCheckbox->setChecked(false);
-        ui->dualPassCheckbox->setEnabled(false);
-    } else if (vcodec.endsWith("_vaapi")) {
-        ui->dualPassCheckbox->setChecked(false);
-        ui->dualPassCheckbox->setEnabled(false);
-    } else {
-        ui->dualPassCheckbox->setEnabled(true);
-    }
-    on_videoQualitySpinner_valueChanged(ui->videoQualitySpinner->value());
+    onVideoCodecComboChanged(index);
 }
 
 void EncodeDock::on_audioCodecCombo_currentIndexChanged(int index)

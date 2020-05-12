@@ -97,7 +97,7 @@ private slots:
 
     void on_fromCombo_currentIndexChanged(int index);
 
-    void on_videoCodecCombo_currentIndexChanged(int index, bool ignorePreset = false);
+    void on_videoCodecCombo_currentIndexChanged(int index);
 
     void on_audioCodecCombo_currentIndexChanged(int index);
 
@@ -160,6 +160,7 @@ private:
     void resetOptions();
     Mlt::Producer* fromProducer() const;
     static void filterX265Params(QStringList& other);
+    void onVideoCodecComboChanged(int index, bool ignorePreset = false);
 };
 
 #endif // ENCODEDOCK_H
