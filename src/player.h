@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2019 Meltytech, LLC
+ * Copyright (c) 2012-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -42,6 +42,7 @@ class QLabel;
 class QPropertyAnimation;
 class QPushButton;
 class QMenu;
+class NewProjectFolder;
 
 class Player : public QWidget
 {
@@ -58,9 +59,8 @@ public:
     void setOut(int);
     void setMarkers(const QList<int>&);
     QSize videoSize() const;
-    int position() const {
-        return m_position;
-    }
+    int position() const { return m_position; }
+    NewProjectFolder* projectWidget() const { return m_projectWidget; }
     void moveVideoToScreen(int screen = -1);
     void setPauseAfterOpen(bool pause);
     TabIndex tabIndex() const;
@@ -165,7 +165,7 @@ private:
     QPropertyAnimation* m_statusFadeOut;
     QTimer m_statusTimer;
     QMenu* m_zoomMenu;
-    QWidget* m_projectWidget;
+    NewProjectFolder* m_projectWidget;
 
 private slots:
     void updateSelection();

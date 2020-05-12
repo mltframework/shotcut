@@ -88,16 +88,7 @@ void NewProjectFolder::showEvent(QShowEvent*)
         }
     }
 
-    // Update recent projects.
-    m_model.clear();
-    foreach (QString s, Settings.recent()) {
-        if (s.endsWith(".mlt")) {
-            QStandardItem* item = new QStandardItem(Util::baseName(s));
-            item->setToolTip(QDir::toNativeSeparators(s));
-            m_model.appendRow(item);
-        }
-    }
-
+    updateRecentProjects();
     setProjectFolderButtonText(Settings.projectsFolder());
     m_isOpening = false;
 }
@@ -114,6 +105,18 @@ bool NewProjectFolder::event(QEvent* event)
     if (event->type() == QEvent::PaletteChange)
         setColors();
     return result;
+}
+
+void NewProjectFolder::updateRecentProjects()
+{
+    m_model.clear();
+    foreach (QString s, Settings.recent()) {
+        if (s.endsWith(".mlt")) {
+            QStandardItem* item = new QStandardItem(Util::baseName(s));
+            item->setToolTip(QDir::toNativeSeparators(s));
+            m_model.appendRow(item);
+        }
+    }
 }
 
 void NewProjectFolder::on_projectsFolderButton_clicked()

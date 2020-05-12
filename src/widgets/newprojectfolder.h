@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2019 Meltytech, LLC
+ * Copyright (c) 2018-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -43,6 +43,9 @@ protected:
     void showEvent(QShowEvent*);
     void hideEvent(QHideEvent*);
     bool event(QEvent* event);
+
+public slots:
+    void updateRecentProjects();
 
 private slots:
     void on_projectsFolderButton_clicked();

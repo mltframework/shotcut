@@ -41,6 +41,7 @@
 #include "widgets/imageproducerwidget.h"
 #include "widgets/webvfxproducer.h"
 #include "widgets/blipproducerwidget.h"
+#include "widgets/newprojectfolder.h"
 #include "docks/recentdock.h"
 #include "docks/encodedock.h"
 #include "docks/jobsdock.h"
@@ -272,6 +273,7 @@ MainWindow::MainWindow()
     connect(m_recentDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onRecentDockTriggered(bool)));
     connect(ui->actionRecent, SIGNAL(triggered()), this, SLOT(onRecentDockTriggered()));
     connect(this, SIGNAL(openFailed(QString)), m_recentDock, SLOT(remove(QString)));
+    connect(m_recentDock, &RecentDock::deleted, m_player->projectWidget(), &NewProjectFolder::updateRecentProjects);
 
     m_playlistDock = new PlaylistDock(this);
     m_playlistDock->hide();
