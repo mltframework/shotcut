@@ -2432,13 +2432,24 @@ void MultitrackModel::adjustBackgroundDuration()
 
 void MultitrackModel::adjustServiceFilterDurations(Mlt::Service& service, int duration)
 {
-    int n = service.filter_count();
-    for (int i = 0; i < n; i++) {
-        QScopedPointer<Mlt::Filter> filter(service.filter(i));
-        if (filter && filter->is_valid() && !filter->get_int("_loader") && filter->get_in() <= 0) {
-            filter->set_in_and_out(0, duration - 1);
+    // Use kFilterOutProperty to track duration changes
+    if (service.get(kFilterOutProperty)) {
+        int oldOut = service.get_int(kFilterOutProperty);
+        int n = service.filter_count();
+        for (int i = 0; i < n; i++) {
+            QScopedPointer<Mlt::Filter> filter(service.filter(i));
+            if (filter && filter->is_valid() && !filter->get_int("_loader")) {
+                int in = filter->get_in();
+                int out = filter->get_out();
+                // Only change out if it is pinned (same as old track duration)
+                if (out == oldOut || in < 0) {
+                    out = duration - 1;
+                    filter->set_in_and_out(qMax(in, 0), out);
+                }
+            }
         }
     }
+    service.set(kFilterOutProperty, duration - 1);
 }
 
 void MultitrackModel::adjustTrackFilters()
