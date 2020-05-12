@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2012-2017 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2012-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,6 +36,7 @@ public:
 
 signals:
     void itemActivated(const QString& url);
+    void deleted(const QString& url);
 
 public slots:
     void add(const QString&);
@@ -54,6 +54,8 @@ private:
 private slots:
     void on_listWidget_activated(const QModelIndex& i);
     void on_lineEdit_textChanged(const QString& search);
+    void on_actionDelete_triggered();
+    void on_listWidget_customContextMenuRequested(const QPoint& pos);
 };
 
 #endif // RECENTDOCK_H
