@@ -26,90 +26,90 @@ import Shotcut.Controls 1.0
 
 
 Item {
-	property string methodParam: 'av.method'
-	property string methodDefault: 'garrote'
-	property var methodValues: ['soft', 'garrote', 'hard']
+    property string methodParam: 'av.method'
+    property string methodDefault: 'garrote'
+    property var methodValues: ['soft', 'garrote', 'hard']
 
-	property string nstepsParam: 'av.nsteps'
-	property int nstepsDefault: 7
+    property string nstepsParam: 'av.nsteps'
+    property int nstepsDefault: 7
 
-	property string thresholdParam: 'av.threshold'
-	property double thresholdDefault: 10
+    property string thresholdParam: 'av.threshold'
+    property double thresholdDefault: 10
 
-	property string percentParam: 'av.percent'
-	property double percentDefault: 85
+    property string percentParam: 'av.percent'
+    property double percentDefault: 85
 
-	property var allParams: [methodParam, nstepsParam, thresholdParam, percentParam]
+    property var allParams: [methodParam, nstepsParam, thresholdParam, percentParam]
 
 
     width: 350
     height: 350
 
 
-	function getComboIndex (value, values) {
-		for ( var i = 0 ; i < values.length ; ++i ) {
-			if ( values[i] == value ) {
-				return i
-			}
-		}
-		return -1
-	}
-
-
-	function setControls () {
-		idMethod.currentIndex = getComboIndex(filter.get(methodParam), methodValues)
-		idNsteps.value = parseInt(filter.get(nstepsParam))
-		idThreshold.value = filter.getDouble(thresholdParam)
-		idPercent.value = filter.getDouble(percentParam)
-	}
-
-
-	function getMaxSteps () {
-		var min = Math.min(profile.width, profile.height)
-
-		var i = 1
-		while ( Math.pow(2,i) <= min ) {
-			++i
-		}
-
-		return i - 1
-	}
-
-
-	Component.onCompleted: {
-		filter.blockSignals = true
-        if ( filter.isNew ) {
-			// Custom preset
-			filter.set(methodParam, 'garrote')
-			filter.set(nstepsParam, 5)
-			filter.set(thresholdParam, 7)
-			filter.set(percentParam, 85)
-			filter.savePreset(allParams, qsTr('Light'))
-
-			// Custom preset
-			filter.set(methodParam, 'garrote')
-			filter.set(nstepsParam, 7)
-			filter.set(thresholdParam, 10)
-			filter.set(percentParam, 85)
-			filter.savePreset(allParams, qsTr('Medium'))
-
-			// Custom preset
-			filter.set(methodParam, 'garrote')
-			filter.set(nstepsParam, 8)
-			filter.set(thresholdParam, 16)
-			filter.set(percentParam, 85)
-			filter.savePreset(allParams, qsTr('Heavy'))
-
-			// Default preset
-			filter.set(methodParam, methodDefault)
-			filter.set(nstepsParam, nstepsDefault)
-			filter.set(thresholdParam, thresholdDefault)
-			filter.set(percentParam, percentDefault)
-			filter.savePreset(allParams)
+    function getComboIndex (value, values) {
+        for ( var i = 0 ; i < values.length ; ++i ) {
+            if ( values[i] == value ) {
+                return i
+            }
         }
-		filter.blockSignals = false
+        return -1
+    }
 
-		setControls()
+
+    function setControls () {
+        idMethod.currentIndex = getComboIndex(filter.get(methodParam), methodValues)
+        idNsteps.value = parseInt(filter.get(nstepsParam))
+        idThreshold.value = filter.getDouble(thresholdParam)
+        idPercent.value = filter.getDouble(percentParam)
+    }
+
+
+    function getMaxSteps () {
+        var min = Math.min(profile.width, profile.height)
+
+        var i = 1
+        while ( Math.pow(2,i) <= min ) {
+            ++i
+        }
+
+        return i - 1
+    }
+
+
+    Component.onCompleted: {
+        filter.blockSignals = true
+        if ( filter.isNew ) {
+            // Custom preset
+            filter.set(methodParam, 'garrote')
+            filter.set(nstepsParam, 5)
+            filter.set(thresholdParam, 7)
+            filter.set(percentParam, 85)
+            filter.savePreset(allParams, qsTr('Light'))
+
+            // Custom preset
+            filter.set(methodParam, 'garrote')
+            filter.set(nstepsParam, 7)
+            filter.set(thresholdParam, 10)
+            filter.set(percentParam, 85)
+            filter.savePreset(allParams, qsTr('Medium'))
+
+            // Custom preset
+            filter.set(methodParam, 'garrote')
+            filter.set(nstepsParam, 8)
+            filter.set(thresholdParam, 16)
+            filter.set(percentParam, 85)
+            filter.savePreset(allParams, qsTr('Heavy'))
+
+            // Default preset
+            filter.set(methodParam, methodDefault)
+            filter.set(nstepsParam, nstepsDefault)
+            filter.set(thresholdParam, thresholdDefault)
+            filter.set(percentParam, percentDefault)
+            filter.savePreset(allParams)
+        }
+        filter.blockSignals = false
+
+        setControls()
     }
 
 
@@ -118,7 +118,7 @@ Item {
         anchors.fill: parent
         anchors.margins: 8
 
-		// Row split
+        // Row split
 
         Label {
             text: qsTr('Preset')
@@ -131,7 +131,7 @@ Item {
             onPresetSelected: setControls()
         }
 
-		// Row split
+        // Row split
 
         Label {
             text: qsTr('Method')
@@ -147,7 +147,7 @@ Item {
             onClicked: idMethod.currentIndex = getComboIndex(methodDefault, methodValues)
         }
 
-		// Row split
+        // Row split
 
         Label {
             text: qsTr('Decompose')
@@ -163,7 +163,7 @@ Item {
             onClicked: idNsteps.value = nstepsDefault
         }
 
-		// Row split
+        // Row split
 
         Label {
             text: qsTr('Threshold')
@@ -179,7 +179,7 @@ Item {
             onClicked: idThreshold.value = thresholdDefault
         }
 
-		// Row split
+        // Row split
 
         Label {
             text: qsTr('Percent')
@@ -189,38 +189,38 @@ Item {
             id: idPercent
             minimumValue: 0
             maximumValue: 100
-			suffix: ' %'
+            suffix: ' %'
             onValueChanged: filter.set(percentParam, value)
         }
         UndoButton {
             onClicked: idPercent.value = percentDefault
         }
 
-		// Row split
+        // Row split
 
         Label {
             text: qsTr('Max decompositions for the current video mode') + ': ' + getMaxSteps()
             Layout.alignment: Qt.AlignHCenter
-			Layout.columnSpan: 3
+            Layout.columnSpan: 3
         }
 
-		// Row split
+        // Row split
 
         Label {
             text: qsTr('More information') + ': <a href="http://ffmpeg.org/ffmpeg-all.html#vaguedenoiser">FFmpeg vaguedenoiser</a>'
             Layout.alignment: Qt.AlignHCenter
-			Layout.columnSpan: 3
+            Layout.columnSpan: 3
 
-			MouseArea {
-				anchors.fill: parent
-				acceptedButtons: Qt.NoButton
-				cursorShape: parent.hoveredLink ? Qt.PointingHandCursor : Qt.ArrowCursor
-			}
+            MouseArea {
+                anchors.fill: parent
+                acceptedButtons: Qt.NoButton
+                cursorShape: parent.hoveredLink ? Qt.PointingHandCursor : Qt.ArrowCursor
+            }
 
-			onLinkActivated: Qt.openUrlExternally(link)
+            onLinkActivated: Qt.openUrlExternally(link)
         }
 
-		// Filler
+        // Filler
 
         Item {
             Layout.columnSpan: 3

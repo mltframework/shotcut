@@ -24,7 +24,7 @@ import org.shotcut.qml 1.0
 Metadata {
     type: Metadata.Filter
     name: qsTr('Reduce Noise: Wavelet')
-	objectName: 'vaguedenoiser'
+    objectName: 'vaguedenoiser'
     mlt_service: 'avfilter.vaguedenoiser'
     qml: 'ui.qml'
 
