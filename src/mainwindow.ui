@@ -927,6 +927,9 @@
    <property name="text">
     <string>Keyboard Shortcuts...</string>
    </property>
+   <property name="shortcut">
+    <string>?</string>
+   </property>
   </action>
   <action name="actionLayoutPlayer">
    <property name="text">
