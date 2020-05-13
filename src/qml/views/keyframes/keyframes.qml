@@ -130,11 +130,10 @@ Rectangle {
 //                            isLocked: model.locked
                             width: headerWidth
                             height: Logic.trackHeight(isCurve)
-                            current: false // index === currentTrack
+                            current: index === currentTrack
 //                            onIsLockedChanged: parametersRepeater.itemAt(index).isLocked = isLocked
                             onClicked: {
                                 currentTrack = index
-//                                timeline.selectTrackHead(currentTrack)
                             }
                         }
                     }
@@ -261,7 +260,7 @@ Rectangle {
                                 model: parameters
                                 Rectangle {
                                     width: tracksContainer.width
-                                    color: (false /*index === currentTrack*/)? selectedTrackColor : (index % 2)? activePalette.alternateBase : activePalette.base
+                                    color: (index === currentTrack)? selectedTrackColor : (index % 2)? activePalette.alternateBase : activePalette.base
                                     height: Logic.trackHeight(model.isCurve)
                                 }
                             }

@@ -2162,6 +2162,18 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
             filterController()->currentFilter()->setAnimateOut(i);
         }
         break;
+    case Qt::Key_Semicolon:
+        if (filterController()->currentFilter() && m_filtersDock->qmlProducer() && m_keyframesDock->currentParameter() >= 0) {
+            auto position = m_filtersDock->qmlProducer()->position() - (filterController()->currentFilter()->in() - m_filtersDock->qmlProducer()->in());
+            auto parameterIndex = m_keyframesDock->currentParameter();
+            if (m_keyframesDock->model().isKeyframe(parameterIndex, position)) {
+                auto keyframeIndex = m_keyframesDock->model().keyframeIndex(parameterIndex, position);
+                m_keyframesDock->model().remove(parameterIndex, keyframeIndex);
+            } else {
+                m_keyframesDock->model().addKeyframe(parameterIndex, position);
+            }
+        }
+        break;
     default:
         handled = false;
         break;

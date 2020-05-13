@@ -43,6 +43,7 @@ public:
     KeyframesModel& model() { return m_model; }
     Q_INVOKABLE int seekPrevious();
     Q_INVOKABLE int seekNext();
+    int currentParameter() const;
 
 signals:
     void changed(); /// Notifies when a filter parameter changes.
@@ -71,8 +72,6 @@ private:
     QmlFilter m_emptyQmlFilter;
     KeyframesModel m_model;
     QmlProducer* m_qmlProducer;
-
-    int currentParameter() const;
 };
 
 #endif // KEYFRAMESDOCK_H
