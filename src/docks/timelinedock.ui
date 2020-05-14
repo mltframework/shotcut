@@ -13,7 +13,7 @@
   <property name="minimumSize">
    <size>
     <width>200</width>
-    <height>100</height>
+    <height>200</height>
    </size>
   </property>
   <property name="acceptDrops">
@@ -33,6 +33,12 @@
    <string>Timeline</string>
   </property>
   <widget class="QWidget" name="dockWidgetContents">
+   <property name="minimumSize">
+    <size>
+     <width>200</width>
+     <height>200</height>
+    </size>
+   </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <property name="leftMargin">
      <number>0</number>
