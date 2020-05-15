@@ -3117,7 +3117,10 @@ void MultitrackModel::replace(int trackIndex, int clipIndex, Mlt::Producer& clip
             in = out - clipPlaytime + 1;
         clip.set_in_and_out(in, out);
         if (copyFilters) {
-            Mlt::Controller::copyFilters(oldClip.parent(), clip);
+            auto parent = oldClip.parent();
+            parent.set(kFilterInProperty, oldClip.get_in());
+            parent.set(kFilterOutProperty, oldClip.get_out());
+            Mlt::Controller::copyFilters(parent, clip);
             Mlt::Controller::adjustFilters(clip, 0);
         }
         beginRemoveRows(index(trackIndex), clipIndex, clipIndex);
