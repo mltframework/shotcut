@@ -1596,6 +1596,11 @@ in temporal compression</string>
                   </item>
                   <item>
                    <property name="text">
+                    <string notr="true">640k</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
                     <string notr="true">1M</string>
                    </property>
                   </item>
