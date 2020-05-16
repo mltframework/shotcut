@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2019 Meltytech, LLC
+ * Copyright (c) 2014-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@ Item {
     height: 200
     
     function setEnabled() {
-        if (filter.get('center') == 1) {
+        if (filter.get('center') === '1') {
             biasslider.enabled = true
             biasundo.enabled = true
             topslider.enabled = false
@@ -52,6 +52,15 @@ Item {
             rightundo.enabled = true
         }
     }
+
+    function setControls() {
+        centerCheckBox.checked = filter.get('center') === '1'
+        biasslider.value = filter.get('center_bias')
+        topslider.value = filter.get('top')
+        bottomslider.value = filter.get('bottom')
+        leftslider.value = filter.get('left')
+        rightslider.value = filter.get('right')
+    }
     
     Component.onCompleted: {
         if (filter.isNew) {
@@ -64,14 +73,8 @@ Item {
             filter.set("right", 0);
             centerCheckBox.checked = false
             filter.savePreset(defaultParameters)
-
-            biasslider.value = +filter.get('center_bias')
-            topslider.value = +filter.get('top')
-            bottomslider.value = +filter.get('bottom')
-            leftslider.value = +filter.get('left')
-            rightslider.value = +filter.get('right')
         }
-        centerCheckBox.checked = filter.get('center') == '1'
+        setControls()
         setEnabled()
     }
 
@@ -88,12 +91,7 @@ Item {
             Layout.columnSpan: 2
             parameters: defaultParameters
             onPresetSelected: {
-                centerCheckBox.checked = filter.get('center') == '1'
-                biasslider.value = +filter.get('center_bias')
-                topslider.value = +filter.get('top')
-                bottomslider.value = +filter.get('bottom')
-                leftslider.value = +filter.get('left')
-                rightslider.value = +filter.get('right')
+                setControls()
                 setEnabled()
             }
         }
@@ -101,7 +99,6 @@ Item {
         CheckBox {
             id: centerCheckBox
             text: qsTr('Center')
-            checked: filter.get('center') == '1'
             property bool isReady: false
             Component.onCompleted: isReady = true
             onClicked: {
@@ -128,10 +125,9 @@ Item {
         }
         SliderSpinner {
             id: biasslider
-            minimumValue: -Math.max(producerWidth, producerHeight) / 2
-            maximumValue: Math.max(producerWidth, producerHeight) / 2
+            minimumValue: Math.round(-Math.max(producerWidth, producerHeight) / 2)
+            maximumValue: Math.round(Math.max(producerWidth, producerHeight) / 2)
             suffix: ' px'
-            value: +filter.get('center_bias')
             onValueChanged: filter.set('center_bias', value)
         }
         UndoButton {
@@ -148,7 +144,6 @@ Item {
             minimumValue: 0
             maximumValue: producerHeight
             suffix: ' px'
-            value: +filter.get('top')
             onValueChanged: filter.set('top', value)
         }
         UndoButton {
@@ -165,7 +160,6 @@ Item {
             minimumValue: 0
             maximumValue: producerHeight
             suffix: ' px'
-            value: +filter.get('bottom')
             onValueChanged: filter.set('bottom', value)
         }
         UndoButton {
@@ -182,7 +176,6 @@ Item {
             minimumValue: 0
             maximumValue: producerWidth
             suffix: ' px'
-            value: +filter.get('left')
             onValueChanged: filter.set('left', value)
         }
         UndoButton {
@@ -199,7 +192,6 @@ Item {
             minimumValue: 0
             maximumValue: producerWidth
             suffix: ' px'
-            value: +filter.get('right')
             onValueChanged: filter.set('right', value)
         }
         UndoButton {
