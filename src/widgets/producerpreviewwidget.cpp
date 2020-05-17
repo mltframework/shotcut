@@ -103,7 +103,11 @@ void ProducerPreviewWidget::ProducerPreviewWidget::stop()
         m_queue.pop();
     }
     m_future.waitForFinished();
-    delete m_producer;
+    if(m_producer)
+    {
+        delete m_producer;
+        m_producer = nullptr;
+    }
 }
 
 void ProducerPreviewWidget::seeked(int position)
@@ -118,10 +122,6 @@ void ProducerPreviewWidget::timerEvent(QTimerEvent*)
         QueueItem item = m_queue.pop();
         m_imageLabel->setPixmap(item.pixmap);
         m_scrubber->onSeek(item.position);
-    }
-    else
-    {
-        qDebug() << "No Pixmap";
     }
 }
 

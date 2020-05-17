@@ -799,7 +799,7 @@ void PlaylistDock::on_actionAddToTimeline_triggered()
             playlist.append(*info->producer, info->frame_in, info->frame_out);
         }
     }
-    emit addAllTimeline(&playlist);
+    emit addAllTimeline(&playlist, true);
 }
 
 void PlaylistDock::on_actionAddToSlideshow_triggered()
@@ -825,7 +825,7 @@ void PlaylistDock::on_actionAddToSlideshow_triggered()
         {
             if ( slideshow->count() > 0 )
             {
-                emit addAllTimeline(slideshow);
+                emit addAllTimeline(slideshow, false);
             }
             delete slideshow;
         }

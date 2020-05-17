@@ -23,6 +23,7 @@
 #include "shotcut_mlt_properties.h"
 #include "widgets/producerpreviewwidget.h"
 
+#include <MltFilter.h>
 #include <MltTransition.h>
 
 #include <QComboBox>
@@ -33,6 +34,13 @@
 
 #include <math.h>
 
+enum
+{
+    ASPECT_CONVERSION_PAD_BLACK = 0,
+    ASPECT_CONVERSION_CROP_CENTER = 1,
+    ASPECT_CONVERSION_CROP_PAN = 2,
+};
+
 SlideshowGeneratorWidget::SlideshowGeneratorWidget(Mlt::Playlist* clips, QWidget *parent)
     : QWidget(parent)
     , m_clips(clips)
@@ -42,22 +50,45 @@ SlideshowGeneratorWidget::SlideshowGeneratorWidget(Mlt::Playlist* clips, QWidget
 
     grid->addWidget(new QLabel(tr("Clip Duration")), 0, 0, Qt::AlignRight);
     m_clipDurationSpinner = new QSpinBox();
+    m_clipDurationSpinner->setToolTip(tr("Set the duration of each clip in the slideshow."));
+    m_clipDurationSpinner->setSuffix(" s");
     m_clipDurationSpinner->setMinimum(4);
     m_clipDurationSpinner->setMaximum(600);
     m_clipDurationSpinner->setValue(10);
     connect(m_clipDurationSpinner, SIGNAL(valueChanged(int)), this, SLOT(on_parameterChanged()));
     grid->addWidget(m_clipDurationSpinner, 0, 1);
 
-    grid->addWidget(new QLabel(tr("Transition Duration")), 1, 0, Qt::AlignRight);
+    grid->addWidget(new QLabel(tr("Aspect Ratio conversion")), 1, 0, Qt::AlignRight);
+    m_aspectConversionCombo = new QComboBox();
+    m_aspectConversionCombo->addItem(tr("Pad Black"));
+    m_aspectConversionCombo->addItem(tr("Crop Center"));
+    m_aspectConversionCombo->addItem(tr("Crop and Pan"));
+    m_aspectConversionCombo->setToolTip(tr("Choose an aspect ratio conversion method."));
+    m_aspectConversionCombo->setCurrentIndex(ASPECT_CONVERSION_CROP_CENTER);
+    connect(m_aspectConversionCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(on_parameterChanged()));
+    grid->addWidget(m_aspectConversionCombo, 1, 1);
+
+    grid->addWidget(new QLabel(tr("Zoom Effect")), 2, 0, Qt::AlignRight);
+    m_zoomPercentSpinner = new QSpinBox();
+    m_zoomPercentSpinner->setToolTip(tr("Set the percentage of the zoom in effect.\n0% will result in no zoom effect."));
+    m_zoomPercentSpinner->setSuffix(" %");
+    m_zoomPercentSpinner->setMinimum(0);
+    m_zoomPercentSpinner->setMaximum(50);
+    m_zoomPercentSpinner->setValue(10);
+    connect(m_zoomPercentSpinner, SIGNAL(valueChanged(int)), this, SLOT(on_parameterChanged()));
+    grid->addWidget(m_zoomPercentSpinner, 2, 1);
+
+    grid->addWidget(new QLabel(tr("Transition Duration")), 3, 0, Qt::AlignRight);
     m_transitionDurationSpinner = new QSpinBox();
     m_transitionDurationSpinner->setToolTip(tr("Set the duration of the transition.\nMay not be longer than half the duration of the clip.\nIf the duration is 0, no transition will be created."));
+    m_transitionDurationSpinner->setSuffix(" s");
     m_transitionDurationSpinner->setMinimum(0);
     m_transitionDurationSpinner->setMaximum(10);
     m_transitionDurationSpinner->setValue(2);
     connect(m_transitionDurationSpinner, SIGNAL(valueChanged(int)), this, SLOT(on_parameterChanged()));
-    grid->addWidget(m_transitionDurationSpinner, 1, 1);
+    grid->addWidget(m_transitionDurationSpinner, 3, 1);
 
-    grid->addWidget(new QLabel(tr("Transition Type")), 2, 0, Qt::AlignRight);
+    grid->addWidget(new QLabel(tr("Transition Type")), 4, 0, Qt::AlignRight);
     m_transitionStyleCombo = new QComboBox();
     m_transitionStyleCombo->addItem(tr("Random"));
     m_transitionStyleCombo->addItem(tr("Dissolve"));
@@ -86,21 +117,22 @@ SlideshowGeneratorWidget::SlideshowGeneratorWidget(Mlt::Playlist* clips, QWidget
     m_transitionStyleCombo->setToolTip(tr("Choose a transition effect"));
     m_transitionStyleCombo->setCurrentIndex(1);
     connect(m_transitionStyleCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(on_parameterChanged()));
-    grid->addWidget(m_transitionStyleCombo, 2, 1);
+    grid->addWidget(m_transitionStyleCombo, 4, 1);
 
-    grid->addWidget(new QLabel(tr("Transition Softness")), 3, 0, Qt::AlignRight);
+    grid->addWidget(new QLabel(tr("Transition Softness")), 5, 0, Qt::AlignRight);
     m_softnessSpinner = new QSpinBox();
+    m_softnessSpinner->setToolTip(tr("Change the softness of the edge of the wipe."));
+    m_softnessSpinner->setSuffix(" %");
     m_softnessSpinner->setMaximum(100);
     m_softnessSpinner->setMinimum(0);
     m_softnessSpinner->setValue(20);
-    m_softnessSpinner->setToolTip(tr("Change the softness of the edge of the wipe"));
     connect(m_softnessSpinner, SIGNAL(valueChanged(int)), this, SLOT(on_parameterChanged()));
-    grid->addWidget(m_softnessSpinner, 3, 1);
+    grid->addWidget(m_softnessSpinner, 5, 1);
 
     m_preview = new ProducerPreviewWidget();
-    grid->addWidget(m_preview, 4, 0, 1, 2, Qt::AlignCenter);
+    grid->addWidget(m_preview, 6, 0, 1, 2, Qt::AlignCenter);
 
-    m_preview->start(getSlideshow());
+    on_parameterChanged();
 }
 
 SlideshowGeneratorWidget::~SlideshowGeneratorWidget()
@@ -115,15 +147,33 @@ Mlt::Playlist* SlideshowGeneratorWidget::getSlideshow()
     int count = m_clips->count();
     Mlt::Playlist* slideshow = new Mlt::Playlist(*m_clips->profile());
 
+    // Copy clips
     for (int i = 0; i < count; i++)
     {
         Mlt::ClipInfo* c = m_clips->clip_info(i, &info);
         if (c)
         {
-            slideshow->append(*c->producer, c->frame_in, c->frame_in + framesPerClip - 1);
+            Mlt::Producer producer(*c->producer->profile(), "xml-string", MLT.XML(c->producer).toUtf8().constData());
+            slideshow->append(producer, c->frame_in, c->frame_in + framesPerClip - 1);
         }
     }
 
+    // Add filters
+    if (m_zoomPercentSpinner->value() > 0 || m_aspectConversionCombo->currentIndex() != ASPECT_CONVERSION_PAD_BLACK)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            Mlt::ClipInfo* c = slideshow->clip_info(i, &info);
+            if (c)
+            {
+                Mlt::Filter filter(*c->producer->profile(), "affine");
+                applyAffineFilterProperties(&filter, c->producer, c->frame_in + framesPerClip - 1);
+                c->producer->attach(filter);
+            }
+        }
+    }
+
+    // Add transitions
     int framesPerTransition = ceil((double)m_transitionDurationSpinner->value() * m_clips->profile()->fps());
     if (framesPerTransition > (framesPerClip / 2 - 1))
     {
@@ -148,7 +198,7 @@ Mlt::Playlist* SlideshowGeneratorWidget::getSlideshow()
 
             // Add luma transition
             Mlt::Transition luma(*m_clips->profile(), Settings.playerGPU()? "movit.luma_mix" : "luma");
-            applyLumaProperties(&luma);
+            applyLumaTransitionProperties(&luma);
             slideshow->mix_add(i + 1, &luma);
 
             count++;
@@ -159,7 +209,98 @@ Mlt::Playlist* SlideshowGeneratorWidget::getSlideshow()
     return slideshow;
 }
 
-void SlideshowGeneratorWidget::applyLumaProperties(Mlt::Transition* luma)
+void SlideshowGeneratorWidget::applyAffineFilterProperties(Mlt::Filter* filter, Mlt::Producer* producer, int endPosition)
+{
+    mlt_rect beginRect;
+    mlt_rect endRect;
+    beginRect.x = 0;
+    beginRect.y = 0;
+    beginRect.w = producer->profile()->width();
+    beginRect.h = producer->profile()->height();
+    beginRect.o = 1;
+    endRect.x = beginRect.x;
+    endRect.y = beginRect.y;
+    endRect.w = beginRect.w;
+    endRect.h = beginRect.h;
+    endRect.o = 1;
+
+    if(m_aspectConversionCombo->currentIndex() != ASPECT_CONVERSION_PAD_BLACK)
+    {
+        double destDar = producer->profile()->dar();
+        double sourceW = producer->get_double("meta.media.width");
+        double sourceH = producer->get_double("meta.media.height");
+        double sourceAr = producer->get_double("aspect_ratio");
+        double sourceDar = destDar;
+        if( sourceW && sourceH && sourceAr )
+        {
+            sourceDar = sourceW * sourceAr / sourceH;
+        }
+
+        if(sourceDar > destDar)
+        {
+            // Crop sides to fit height
+            beginRect.w = (double)producer->profile()->width() * sourceDar / destDar;
+            beginRect.h = producer->profile()->height();
+            beginRect.y = 0;
+            endRect.w = beginRect.w;
+            endRect.h = beginRect.h;
+            endRect.y = beginRect.y;
+            if(m_aspectConversionCombo->currentIndex() == ASPECT_CONVERSION_CROP_CENTER)
+            {
+                beginRect.x = ((double)producer->profile()->width() - beginRect.w) / 2.0;
+                endRect.x = beginRect.x;
+            }
+            else
+            {
+                beginRect.x = 0;
+                endRect.x = (double)producer->profile()->width() - endRect.w;
+            }
+        }
+        else if(destDar > sourceDar)
+        {
+            // Crop top and bottom to fit width.
+            beginRect.w = producer->profile()->width();
+            beginRect.h = (double)producer->profile()->height() * destDar / sourceDar;
+            beginRect.x = 0;
+            endRect.w = beginRect.w;
+            endRect.h = beginRect.h;
+            endRect.x = beginRect.x;
+            if(m_aspectConversionCombo->currentIndex() == ASPECT_CONVERSION_CROP_CENTER)
+            {
+                beginRect.y = ((double)producer->profile()->height() - beginRect.h) / 2.0;
+                endRect.y = beginRect.y;
+            }
+            else
+            {
+                beginRect.y = 0;
+                endRect.y =  (double)producer->profile()->height() - endRect.h;;
+            }
+        }
+    }
+
+    if (m_zoomPercentSpinner->value() != 0)
+    {
+        double zoom = m_zoomPercentSpinner->value();
+        endRect.x = endRect.x - (zoom * endRect.w / 2.0 / 100.0);
+        endRect.y = endRect.y - (zoom * endRect.h / 2.0 / 100.0);
+        endRect.w = endRect.w + (zoom * endRect.w / 100.0);
+        endRect.h = endRect.h + (zoom * endRect.h / 100.0);;
+    }
+
+    filter->anim_set( "transition.rect", beginRect, 0);
+    filter->anim_set( "transition.rect", endRect, endPosition);
+    filter->set("transition.fill", 1);
+    filter->set("transition.distort", 0);
+    filter->set("transition.valign", "middle");
+    filter->set("transition.halign", "center");
+    filter->set("transition.threads", 0);
+    filter->set("background", "color:#000000");
+    filter->set("shotcut:filter", "affineSizePosition");
+    filter->set("shotcut:animIn", producer->frames_to_time(endPosition, mlt_time_clock));
+    filter->set("shotcut:animOut", producer->frames_to_time(0, mlt_time_clock));
+}
+
+void SlideshowGeneratorWidget::applyLumaTransitionProperties(Mlt::Transition* luma)
 {
     int index = m_transitionStyleCombo->currentIndex();
 
@@ -195,6 +336,7 @@ void SlideshowGeneratorWidget::on_parameterChanged()
         m_transitionStyleCombo->setEnabled(true);
         m_softnessSpinner->setEnabled(true);
     }
+
     m_preview->stop();
     m_preview->start(getSlideshow());
 }

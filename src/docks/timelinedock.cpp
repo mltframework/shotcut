@@ -1180,14 +1180,14 @@ void TimelineDock::onOverWritten(int trackIndex, int clipIndex)
     setSelection(QList<QPoint>() << QPoint(clipIndex, trackIndex));
 }
 
-void TimelineDock::appendFromPlaylist(Mlt::Playlist *playlist)
+void TimelineDock::appendFromPlaylist(Mlt::Playlist *playlist, bool copy)
 {
     int trackIndex = currentTrack();
     if (isTrackLocked(trackIndex)) {
         pulseLockButtonOnTrack(trackIndex);
         return;
     }
-    m_model.appendFromPlaylist(playlist, trackIndex);
+    m_model.appendFromPlaylist(playlist, copy, trackIndex);
     selectClipUnderPlayhead();
 }
 

@@ -24,7 +24,9 @@ class QComboBox;
 class QSlider;
 class QSpinBox;
 namespace Mlt {
+    class Filter;
     class Playlist;
+    class Producer;
     class Transition;
 }
 class ProducerPreviewWidget;
@@ -43,9 +45,12 @@ private slots:
     void on_parameterChanged();
 
 private:
-    void applyLumaProperties(Mlt::Transition* luma);
+    void applyAffineFilterProperties(Mlt::Filter* filter, Mlt::Producer* producer, int endPosition);
+    void applyLumaTransitionProperties(Mlt::Transition* luma);
 
     QSpinBox* m_clipDurationSpinner;
+    QComboBox* m_aspectConversionCombo;
+    QSpinBox* m_zoomPercentSpinner;
     QSpinBox* m_transitionDurationSpinner;
     QComboBox* m_transitionStyleCombo;
     QSpinBox* m_softnessSpinner;
