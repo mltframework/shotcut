@@ -468,6 +468,13 @@ bool Player::event(QEvent* event)
     return result;
 }
 
+void Player::keyPressEvent(QKeyEvent* event)
+{
+    QWidget::keyPressEvent(event);
+    if (!event->isAccepted())
+        MAIN.keyPressEvent(event);
+}
+
 void Player::play(double speed)
 {
     // Start from beginning if trying to start at the end.

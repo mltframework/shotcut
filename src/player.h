@@ -112,6 +112,7 @@ public slots:
 protected:
     void resizeEvent(QResizeEvent* event);
     bool event(QEvent* event);
+    void keyPressEvent(QKeyEvent* event) override;
 
 private:
     void setupActions(QWidget* widget);
