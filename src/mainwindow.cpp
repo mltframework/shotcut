@@ -1685,7 +1685,7 @@ void MainWindow::on_actionAbout_Shotcut_triggered()
 
 void MainWindow::keyPressEvent(QKeyEvent* event)
 {
-    if (event->isAccepted()) return;
+    if (event->isAccepted() && event->key() != Qt::Key_F12) return;
 
     bool handled = true;
 
@@ -2125,7 +2125,8 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         m_timelineDock->model()->reload();
         m_keyframesDock->model().reload();
         break;
-    case Qt::Key_F1:
+    case Qt::Key_F12:
+        LOG_DEBUG() << "event isAccepted:" << event->isAccepted();
         LOG_DEBUG() << "Current focusWidget:" << QApplication::focusWidget();
         LOG_DEBUG() << "Current focusObject:" << QApplication::focusObject();
         LOG_DEBUG() << "Current focusWindow:" << QApplication::focusWindow();
