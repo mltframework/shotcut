@@ -41,8 +41,9 @@ SlideshowGeneratorDialog::SlideshowGeneratorDialog(QWidget* parent, Mlt::Playlis
     VLayout->addWidget(m_buttonBox);
     connect(m_buttonBox, SIGNAL(clicked(QAbstractButton*)), this, SLOT(clicked(QAbstractButton*)));
 
-    this->setLayout (VLayout);
-    this->setModal(true);
+    setLayout(VLayout);
+    setModal(true);
+    layout()->setSizeConstraint(QLayout::SetFixedSize);
 }
 
 Mlt::Playlist* SlideshowGeneratorDialog::getSlideshow()

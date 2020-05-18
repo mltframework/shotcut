@@ -31,7 +31,7 @@
 #include <MltProducer.h>
 #include <MltProfile.h>
 
-ProducerPreviewWidget::ProducerPreviewWidget()
+ProducerPreviewWidget::ProducerPreviewWidget(double dar)
   : QWidget()
   , m_previewSize(320, 320)
   , m_seekTo(-1)
@@ -41,6 +41,10 @@ ProducerPreviewWidget::ProducerPreviewWidget()
   , m_generateFrames(false)
 {
     LOG_DEBUG() << "begin";
+    int height = lrint((double)320 / dar);
+    height -= height %2;
+    m_previewSize.setHeight( height );
+
     QVBoxLayout* layout = new QVBoxLayout();
     layout->setContentsMargins(0, 0, 0, 0);
     layout->setSpacing(0);
@@ -74,10 +78,6 @@ void ProducerPreviewWidget::start(Mlt::Producer* producer)
     if( m_producer )
     {
         // Set up the preview display and timer
-        int height = lrint(320 / m_producer->profile()->dar());
-        height -= height %2;
-        m_previewSize.setHeight( height );
-        m_imageLabel->setFixedSize(m_previewSize);
         m_scrubber->setFramerate(m_producer->profile()->fps());
         m_scrubber->setScale(m_producer->get_length());
         // Display preview at half frame rate.
@@ -108,6 +108,18 @@ void ProducerPreviewWidget::ProducerPreviewWidget::stop()
         delete m_producer;
         m_producer = nullptr;
     }
+    while( m_queue.count() > 0 )
+    {
+        m_queue.pop();
+    }
+    m_seekTo = 0;
+    m_scrubber->onSeek(0);
+    m_scrubber->setScale(0);
+}
+
+void ProducerPreviewWidget::showText(QString text)
+{
+    m_imageLabel->setText(text);
 }
 
 void ProducerPreviewWidget::seeked(int position)

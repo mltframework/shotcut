@@ -18,6 +18,8 @@
 #ifndef SLIDESHOWGENERATORWIDGET_H
 #define SLIDESHOWGENERATORWIDGET_H
 
+#include <QFuture>
+#include <QMutex>
 #include <QWidget>
 
 class QComboBox;
@@ -45,8 +47,20 @@ private slots:
     void on_parameterChanged();
 
 private:
-    void applyAffineFilterProperties(Mlt::Filter* filter, Mlt::Producer* producer, int endPosition);
-    void applyLumaTransitionProperties(Mlt::Transition* luma);
+    struct SlideshowConfig
+    {
+        int clipDuration;
+        int aspectConversion;
+        int zoomPercent;
+        int transitionDuration;
+        int transitionStyle;
+        int transitionSoftness;
+    };
+
+    void applyAffineFilterProperties(Mlt::Filter* filter, SlideshowConfig& config, Mlt::Producer* producer, int endPosition);
+    void applyLumaTransitionProperties(Mlt::Transition* luma, SlideshowConfig& config);
+    void generatePreviewSlideshow();
+    Q_INVOKABLE void startPreview();
 
     QSpinBox* m_clipDurationSpinner;
     QComboBox* m_aspectConversionCombo;
@@ -56,6 +70,13 @@ private:
     QSpinBox* m_softnessSpinner;
     ProducerPreviewWidget* m_preview;
     Mlt::Playlist* m_clips;
+
+    // Mutext Protected Members
+    QFuture<void> m_future;
+    QMutex m_mutex;
+    bool m_refreshPreview;
+    SlideshowConfig m_config;
+    Mlt::Producer* m_previewProducer;
 };
 
 #endif // SLIDESHOWGENERATORWIDGET_H

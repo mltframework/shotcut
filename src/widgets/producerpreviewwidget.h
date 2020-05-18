@@ -35,11 +35,12 @@ class ProducerPreviewWidget : public QWidget
     Q_OBJECT
     
 public:
-    explicit ProducerPreviewWidget();
+    explicit ProducerPreviewWidget(double dar);
     virtual ~ProducerPreviewWidget();
 
     void start(Mlt::Producer* producer);
     void stop();
+    void showText(QString text);
 
 private slots:
     void seeked(int);
