@@ -200,7 +200,14 @@ public:
 
     QString projectsFolder() const;
     void setProjectsFolder(const QString& path);
-    
+
+    bool proxyEnabled() const;
+    void setProxyEnabled(bool);
+    QString proxyFolder() const;
+    void setProxyFolder(const QString& path);
+    bool proxyUseProjectFolder() const;
+    void setProxyUseProjectFolder(bool);
+
     int undoLimit() const;
 
 signals:

@@ -320,6 +320,10 @@ private slots:
     void on_actionPreview720_triggered(bool checked);
     void on_actionTopics_triggered();
     void on_actionSync_triggered();
+    void on_actionUseProxy_triggered(bool checked);
+    void on_actionProxyStorageSet_triggered();
+    void on_actionProxyStorageShow_triggered();
+    void on_actionProxyUseProjectFolder_triggered(bool checked);
 };
 
 #define MAIN MainWindow::singleton()

@@ -194,9 +194,25 @@
      <addaction name="actionPreview540"/>
      <addaction name="actionPreview720"/>
     </widget>
+    <widget class="QMenu" name="menuProxy">
+     <property name="title">
+      <string>Proxy</string>
+     </property>
+     <widget class="QMenu" name="menuStorage">
+      <property name="title">
+       <string>Storage</string>
+      </property>
+      <addaction name="actionProxyStorageSet"/>
+      <addaction name="actionProxyStorageShow"/>
+      <addaction name="actionProxyUseProjectFolder"/>
+     </widget>
+     <addaction name="actionUseProxy"/>
+     <addaction name="menuStorage"/>
+    </widget>
     <addaction name="actionProject"/>
     <addaction name="actionGPU"/>
     <addaction name="menuProfile"/>
+    <addaction name="menuProxy"/>
     <addaction name="menuAudioChannels"/>
     <addaction name="separator"/>
     <addaction name="actionPlayer"/>
@@ -1075,6 +1091,47 @@
    </property>
    <property name="toolTip">
     <string>Synchronization</string>
+   </property>
+  </action>
+  <action name="actionUseProxy">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Use Proxy</string>
+   </property>
+   <property name="shortcut">
+    <string>F4</string>
+   </property>
+  </action>
+  <action name="actionProxyStorageSet">
+   <property name="text">
+    <string>Set...</string>
+   </property>
+   <property name="toolTip">
+    <string>Set the proxy storage folder</string>
+   </property>
+  </action>
+  <action name="actionProxyStorageShow">
+   <property name="text">
+    <string>Show...</string>
+   </property>
+   <property name="toolTip">
+    <string>Show the proxy storage folder</string>
+   </property>
+  </action>
+  <action name="actionProxyUseProjectFolder">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Use Project Folder</string>
+   </property>
+   <property name="toolTip">
+    <string>Store proxies in the project folder if defined</string>
    </property>
   </action>
  </widget>

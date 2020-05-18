@@ -838,6 +838,11 @@ void MainWindow::setupSettingsMenu()
         ui->actionClearRecentOnExit->setChecked(Settings.clearRecent());
     }
 
+
+    // Initialze the proxy submenu
+    ui->actionUseProxy->setChecked(Settings.proxyEnabled());
+    ui->actionProxyUseProjectFolder->setChecked(Settings.proxyUseProjectFolder());
+
     LOG_DEBUG() << "end";
 }
 
@@ -4385,4 +4390,59 @@ void MainWindow::on_actionSync_triggered()
     dialog->show();
     dialog->raise();
     dialog->activateWindow();
+}
+
+void MainWindow::on_actionUseProxy_triggered(bool checked)
+{
+    // Save to the project AND app settings
+    Settings.setProxyEnabled(checked);
+    //TODO Convert the project resource properties and reload unless empty
+}
+
+void MainWindow::on_actionProxyStorageSet_triggered()
+{
+    // Present folder dialog just like App Data Directory
+    QString dirName = QFileDialog::getExistingDirectory(this, tr("Proxy Folder"), Settings.proxyFolder());
+    if (!dirName.isEmpty()) {
+        // Move the existing files
+        QDirIterator it(Settings.proxyFolder());
+        while (it.hasNext()) {
+            if (!it.filePath().isEmpty() && it.fileName() != "." && it.fileName() != "..") {
+                if (!QFile::exists(dirName + "/" + it.fileName())) {
+                    if (it.fileInfo().isDir()) {
+                        if (!QFile::rename(it.filePath(), dirName + "/" + it.fileName()))
+                            LOG_WARNING() << "Failed to move" << it.filePath() << "to" << dirName + "/" + it.fileName();
+                    } else {
+                        if (!QFile::copy(it.filePath(), dirName + "/" + it.fileName()))
+                            LOG_WARNING() << "Failed to copy" << it.filePath() << "to" << dirName + "/" + it.fileName();
+                    }
+                }
+            }
+            it.next();
+        }
+        Settings.setProxyFolder(dirName);
+        Settings.sync();
+    }
+}
+
+void MainWindow::on_actionProxyStorageShow_triggered()
+{
+    // Use project folder + "/proxies" if using project folder and enabled
+    QDir dir(MLT.projectFolder());
+    if (!MLT.projectFolder().isEmpty() && dir.exists() && Settings.proxyUseProjectFolder()) {
+        const char* subfolder = "proxies";
+        if (!dir.cd(subfolder)) {
+            if (dir.mkdir(subfolder))
+                dir.cd(subfolder);
+        }
+        Util::showInFolder(dir.path());
+    } else {
+        // Otherwise, use app setting
+        Util::showInFolder(Settings.proxyFolder());
+    }
+}
+
+void MainWindow::on_actionProxyUseProjectFolder_triggered(bool checked)
+{
+    Settings.setProxyUseProjectFolder(checked);
 }
