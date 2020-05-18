@@ -531,6 +531,7 @@ void Player::seek(int position)
     actionPlay->setIcon(m_playIcon);
     actionPlay->setText(tr("Play"));
     actionPlay->setToolTip(tr("Start playback (L)"));
+    m_playPosition = std::numeric_limits<int>::max();
 }
 
 void Player::reset()
@@ -682,7 +683,6 @@ void Player::onFrameDisplayed(const SharedFrame& frame)
         m_scrubber->onSeek(position);
         if (m_playPosition < m_previousOut && m_position >= m_previousOut) {
             seek(m_previousOut);
-            m_playPosition = std::numeric_limits<int>::max();
         }
     }
     if (position >= m_duration - 1)
