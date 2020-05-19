@@ -173,13 +173,6 @@ MainWindow::MainWindow()
     // OS X has a standard Full Screen shortcut we should use.
     ui->actionEnter_Full_Screen->setShortcut(QKeySequence((Qt::CTRL + Qt::META + Qt::Key_F)));
 #endif
-#ifdef Q_OS_WIN
-    // Fullscreen on Windows is not allowing popups and other app windows to appear.
-    delete ui->actionFullscreen;
-    ui->actionFullscreen = 0;
-    delete ui->actionEnter_Full_Screen;
-    ui->actionEnter_Full_Screen = 0;
-#endif
     setDockNestingEnabled(true);
     ui->statusBar->hide();
 
@@ -1099,11 +1092,13 @@ void MainWindow::doAutosave()
 void MainWindow::setFullScreen(bool isFullScreen)
 {
     if (isFullScreen) {
-#ifndef Q_OS_WIN
+#ifdef Q_OS_WIN
+        showMaximized();
+#else
         showFullScreen();
+#endif
         ui->actionEnter_Full_Screen->setVisible(false);
         ui->actionFullscreen->setVisible(false);
-#endif
     }
 }
 
@@ -3084,12 +3079,21 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer* producer)
 
 void MainWindow::on_actionEnter_Full_Screen_triggered()
 {
-    if (isFullScreen()) {
+#ifdef Q_OS_WIN
+    bool isFull = isMaximized();
+#else
+    bool isFull = isFullScreen();
+#endif
+    if (isFull) {
         showNormal();
         ui->actionEnter_Full_Screen->setText(tr("Enter Full Screen"));
     } else {
+#ifdef Q_OS_WIN
+        showMaximized();
+#else
         showFullScreen();
-        ui->actionEnter_Full_Screen->setText(tr("Exit Full Screen"));
+#endif
+        ui->actionEnter_Full_Screen->setText(tr("Enter Full Screen"));
     }
 }
 
