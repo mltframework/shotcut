@@ -153,6 +153,12 @@ void AvformatProducerWidget::updateDuration()
     }
 }
 
+void AvformatProducerWidget::rename()
+{
+    ui->filenameLabel->setFocus();
+    ui->filenameLabel->selectAll();
+}
+
 void AvformatProducerWidget::keyPressEvent(QKeyEvent* event)
 {
     if (ui->speedSpinBox->hasFocus() &&

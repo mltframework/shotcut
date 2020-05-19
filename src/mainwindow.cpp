@@ -2121,6 +2121,10 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
                 m_playlistDock->on_actionOpen_triggered();
         }
         break;
+    case Qt::Key_F2:
+        onPropertiesDockTriggered(true);
+        emit renameRequested();
+        break;
     case Qt::Key_F5:
         m_timelineDock->model()->reload();
         m_keyframesDock->model().reload();
@@ -3066,6 +3070,9 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer* producer)
         }
         if (-1 != w->metaObject()->indexOfSlot("updateDuration()")) {
             connect(m_timelineDock, SIGNAL(durationChanged()), w, SLOT(updateDuration()));
+        }
+        if (-1 != w->metaObject()->indexOfSlot("rename()")) {
+            connect(this, SIGNAL(renameRequested()), w, SLOT(rename()));
         }
         scrollArea->setWidget(w);
         onProducerChanged();

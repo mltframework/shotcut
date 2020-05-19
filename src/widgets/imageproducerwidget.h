@@ -45,6 +45,7 @@ signals:
 
 public slots:
     void updateDuration();
+    void rename();
 
 private slots:
     void on_resetButton_clicked();

@@ -42,6 +42,7 @@ public:
 
 public slots:
     void updateDuration();
+    void rename();
 
 signals:
     void producerChanged(Mlt::Producer*);

@@ -114,6 +114,12 @@ void ImageProducerWidget::updateDuration()
         ui->durationSpinBox->setValue(m_producer->get_playtime());
 }
 
+void ImageProducerWidget::rename()
+{
+    ui->filenameLabel->setFocus();
+    ui->filenameLabel->selectAll();
+}
+
 void ImageProducerWidget::reopen(Mlt::Producer* p)
 {
     double speed = m_producer->get_speed();

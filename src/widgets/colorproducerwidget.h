@@ -42,6 +42,9 @@ signals:
     void producerChanged(Mlt::Producer*);
     void modified();
 
+public slots:
+    void rename();
+
 private slots:
     void on_colorButton_clicked();
     void on_preset_selected(void* p);

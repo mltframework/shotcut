@@ -120,6 +120,7 @@ signals:
     void profileChanged();
     void openFailed(QString);
     void aboutToShutDown();
+    void renameRequested();
 
 protected:
     MainWindow();

@@ -126,6 +126,12 @@ void ColorProducerWidget::loadPreset(Mlt::Properties& p)
     ui->lineEdit->setText(caption);
 }
 
+void ColorProducerWidget::rename()
+{
+    ui->lineEdit->setFocus();
+    ui->lineEdit->selectAll();
+}
+
 void ColorProducerWidget::on_preset_selected(void* p)
 {
     Mlt::Properties* properties = (Mlt::Properties*) p;
