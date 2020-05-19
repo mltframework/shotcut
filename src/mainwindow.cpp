@@ -2120,6 +2120,10 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         onPropertiesDockTriggered(true);
         emit renameRequested();
         break;
+    case Qt::Key_F3:
+        onRecentDockTriggered(true);
+        m_recentDock->find();
+        break;
     case Qt::Key_F5:
         m_timelineDock->model()->reload();
         m_keyframesDock->model().reload();

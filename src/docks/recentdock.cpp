@@ -106,6 +106,12 @@ QString RecentDock::remove(const QString &s)
     return name;
 }
 
+void RecentDock::find()
+{
+    ui->lineEdit->setFocus();
+    ui->lineEdit->selectAll();
+}
+
 void RecentDock::keyPressEvent(QKeyEvent *event)
 {
     if (event->key() == Qt::Key_Backspace || event->key() == Qt::Key_Delete) {

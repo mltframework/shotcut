@@ -41,6 +41,7 @@ signals:
 public slots:
     void add(const QString&);
     QString remove(const QString& s);
+    void find();
 
 protected:
     void keyPressEvent(QKeyEvent* event);
