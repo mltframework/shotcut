@@ -204,7 +204,9 @@ PlaylistDock::PlaylistDock(QWidget *parent) :
 
     updateViewModeFromActions();
 
+    m_inChangedTimer.setInterval(kInOutChangedTimeoutMs);
     m_inChangedTimer.setSingleShot(true);
+    m_outChangedTimer.setInterval(kInOutChangedTimeoutMs);
     m_outChangedTimer.setSingleShot(true);
     connect(&m_inChangedTimer, SIGNAL(timeout()), this, SLOT(onInTimerFired()));
     connect(&m_outChangedTimer, SIGNAL(timeout()), this, SLOT(onOutTimerFired()));
@@ -484,12 +486,22 @@ void PlaylistDock::onProducerOpened()
 
 void PlaylistDock::onInChanged()
 {
-    m_inChangedTimer.start(kInOutChangedTimeoutMs);
+    // Order of in/out timers can be important, resolve the other first
+    if (m_outChangedTimer.isActive()) {
+        m_outChangedTimer.stop();
+        onOutTimerFired();
+    }
+    m_inChangedTimer.start();
 }
 
 void PlaylistDock::onOutChanged()
 {
-    m_outChangedTimer.start(kInOutChangedTimeoutMs);
+    // Order of in/out timers can be important, resolve the other first
+    if (m_inChangedTimer.isActive()) {
+        m_inChangedTimer.stop();
+        onInTimerFired();
+    }
+    m_outChangedTimer.start();
 }
 
 void PlaylistDock::on_actionOpen_triggered()

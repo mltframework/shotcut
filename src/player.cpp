@@ -23,6 +23,7 @@
 #include "settings.h"
 #include "util.h"
 #include "widgets/newprojectfolder.h"
+#include <Logger.h>
 
 #include <QtWidgets>
 #include <limits>
@@ -423,16 +424,24 @@ void Player::retranslateUi(QWidget* widget)
 
 void Player::setIn(int pos)
 {
+    LOG_DEBUG() << "in" << pos << "out" << m_previousOut;
+    // Changing out must come before in because mlt_playlist will automatically swap them if out < in
+    if (pos >= 0 && pos > m_previousOut) {
+        onOutChanged(m_duration - 1);
+        m_scrubber->setOutPoint(m_duration - 1);
+    }
     m_scrubber->setInPoint(pos);
-    if (pos >= 0 && pos > m_previousOut)
-        setOut(m_duration - 1);
 }
 
 void Player::setOut(int pos)
 {
+    LOG_DEBUG() << "in" << m_previousIn << "out" << pos;
+    // Changing in must come before out because mlt_playlist will automatically swap them if out < in
+    if (pos >= 0 && pos < m_previousIn) {
+        onInChanged(0);
+        m_scrubber->setInPoint(0);
+    }
     m_scrubber->setOutPoint(pos);
-    if (pos >= 0 && pos < m_previousIn)
-        setIn(0);
 }
 
 void Player::setMarkers(const QList<int> &markers)
