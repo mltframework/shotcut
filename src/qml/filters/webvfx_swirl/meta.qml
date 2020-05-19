@@ -7,4 +7,5 @@ Metadata {
     name: qsTr("Swirl")
     mlt_service: "webvfx"
     qml: "ui.qml"
+    isDeprecated: true
 }

@@ -123,6 +123,7 @@ class QmlMetadata : public QObject
     Q_PROPERTY(bool isClipOnly READ isClipOnly WRITE setIsClipOnly)
     Q_PROPERTY(bool isGpuCompatible READ isGpuCompatible() WRITE setIsGpuCompatible)
     Q_PROPERTY(QmlKeyframesMetadata* keyframes READ keyframes NOTIFY changed)
+    Q_PROPERTY(bool isDeprecated READ isDeprecated WRITE setIsDeprecated)
 
 public:
     enum PluginType {
@@ -166,6 +167,8 @@ public:
     bool isGpuCompatible() const { return m_isGpuCompatible; }
     void setIsGpuCompatible(bool isCompatible) { m_isGpuCompatible = isCompatible; }
     QmlKeyframesMetadata* keyframes() { return &m_keyframes; }
+    bool isDeprecated() const { return m_isDeprecated; }
+    void setIsDeprecated(bool deprecated) { m_isDeprecated = deprecated; }
 
 signals:
     void changed();
@@ -186,6 +189,7 @@ private:
     bool m_isClipOnly;
     bool m_isGpuCompatible;
     QmlKeyframesMetadata m_keyframes;
+    bool m_isDeprecated;
 };
 
 #endif // QMLMETADATA_H

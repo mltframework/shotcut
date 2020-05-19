@@ -7,4 +7,5 @@ Metadata {
     mlt_service: "webvfx"
     qml: "ui.qml"
     isFavorite: true
+    isDeprecated: true
 }

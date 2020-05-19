@@ -73,6 +73,9 @@ void FilterController::loadFilterMetadata() {
                         meta->setProperty("version", version);
                         meta->keyframes()->checkVersion(version);
                     }
+
+                    if (meta->isDeprecated())
+                        meta->setName(meta->name() + " " + tr("(DEPRECATED)"));
                 }
             } else if (!meta) {
                 LOG_WARNING() << component.errorString();
