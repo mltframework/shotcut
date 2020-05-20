@@ -1902,8 +1902,9 @@ void EncodeDock::on_hwencodeButton_clicked()
     dialog.setWindowModality(QmlApplication::dialogModality());
     dialog.setWindowTitle(tr("Configure Hardware Encoding"));
     dialog.setSelection(Settings.encodeHardware());
-    auto button = dialog.buttonBox()->addButton(tr("Detect"), QDialogButtonBox::RejectRole);
-    connect(button, &QPushButton::clicked, this, &EncodeDock::detectHardwareEncoders);
+    QPushButton* button = dialog.buttonBox()->addButton(tr("Detect"), QDialogButtonBox::ResetRole);
+    connect(button, SIGNAL(clicked()), &dialog, SLOT(reject()));
+    connect(button, SIGNAL(clicked()), this, SLOT(detectHardwareEncoders()));
 
     // Show the dialog.
     if (dialog.exec() == QDialog::Accepted) {
