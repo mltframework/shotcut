@@ -1890,45 +1890,7 @@ static QStringList codecs()
 void EncodeDock::on_hwencodeCheckBox_clicked(bool checked)
 {
     if (checked && Settings.encodeHardware().isEmpty()) {
-        MAIN.showStatusMessage(tr("Detecting hardware encoders..."));
-        QStringList hwlist;
-        QFileInfo ffmpegPath(qApp->applicationDirPath(), "ffmpeg");
-        foreach (const QString& codec, codecs()) {
-            LOG_INFO() << "checking for" << codec;
-            QProcess proc;
-            QStringList args;
-            args << "-hide_banner" << "-f" << "lavfi" << "-i" << "color=s=640x360" << "-frames" << "1" << "-an";
-            if (codec.endsWith("_vaapi"))
-                args << "-init_hw_device" << "vaapi=vaapi0:,connection_type=x11" << "-filter_hw_device" << "vaapi0" << "-vf" << "format=nv12,hwupload";
-            else if (codec == "hevc_qsv")
-                args << "-load_plugin" << "hevc_hw";
-            args << "-c:v" << codec << "-f" << "rawvideo" << "pipe:";
-            LOG_DEBUG() << ffmpegPath.absoluteFilePath() << args;
-            proc.setStandardOutputFile(QProcess::nullDevice());
-            proc.setReadChannel(QProcess::StandardError);
-            proc.start(ffmpegPath.absoluteFilePath(), args, QIODevice::ReadOnly);
-            bool started = proc.waitForStarted(2000);
-            bool finished = false;
-            QCoreApplication::processEvents();
-            if (started) {
-                finished = proc.waitForFinished(4000);
-                QCoreApplication::processEvents();
-            }
-            if (started && finished && proc.exitStatus() == QProcess::NormalExit && !proc.exitCode()) {
-                hwlist << codec;
-            } else {
-                QString output = proc.readAll();
-                foreach (const QString& line, output.split(QRegularExpression("[\r\n]"), QString::SkipEmptyParts))
-                    LOG_DEBUG() << line;
-            }
-        }
-        if (hwlist.isEmpty()) {
-            MAIN.showStatusMessage(tr("Nothing found"), 10);
-            ui->hwencodeCheckBox->setChecked(false);
-        } else {
-            MAIN.showStatusMessage(tr("Found %1").arg(hwlist.join(", ")));
-            Settings.setEncodeHardware(hwlist);
-        }
+        detectHardwareEncoders();
     }
     Settings.setEncodeUseHardware(ui->hwencodeCheckBox->isChecked());
     resetOptions();
@@ -1940,6 +1902,8 @@ void EncodeDock::on_hwencodeButton_clicked()
     dialog.setWindowModality(QmlApplication::dialogModality());
     dialog.setWindowTitle(tr("Configure Hardware Encoding"));
     dialog.setSelection(Settings.encodeHardware());
+    auto button = dialog.buttonBox()->addButton(tr("Detect"), QDialogButtonBox::RejectRole);
+    connect(button, &QPushButton::clicked, this, &EncodeDock::detectHardwareEncoders);
 
     // Show the dialog.
     if (dialog.exec() == QDialog::Accepted) {
@@ -1947,7 +1911,7 @@ void EncodeDock::on_hwencodeButton_clicked()
         if (dialog.selection().isEmpty()) {
             ui->hwencodeCheckBox->setChecked(false);
             Settings.setEncodeUseHardware(false);
-        }            
+        }
     }
 }
 
@@ -2018,4 +1982,47 @@ void EncodeDock::on_audioQualitySpinner_valueChanged(int aq)
 void EncodeDock::on_parallelCheckbox_clicked(bool checked)
 {
     Settings.setEncodeParallelProcessing(checked);
+}
+
+void EncodeDock::detectHardwareEncoders()
+{
+    MAIN.showStatusMessage(tr("Detecting hardware encoders..."));
+    QStringList hwlist;
+    QFileInfo ffmpegPath(qApp->applicationDirPath(), "ffmpeg");
+    foreach (const QString& codec, codecs()) {
+        LOG_INFO() << "checking for" << codec;
+        QProcess proc;
+        QStringList args;
+        args << "-hide_banner" << "-f" << "lavfi" << "-i" << "color=s=640x360" << "-frames" << "1" << "-an";
+        if (codec.endsWith("_vaapi"))
+            args << "-init_hw_device" << "vaapi=vaapi0:,connection_type=x11" << "-filter_hw_device" << "vaapi0" << "-vf" << "format=nv12,hwupload";
+        else if (codec == "hevc_qsv")
+            args << "-load_plugin" << "hevc_hw";
+        args << "-c:v" << codec << "-f" << "rawvideo" << "pipe:";
+        LOG_DEBUG() << ffmpegPath.absoluteFilePath() << args;
+        proc.setStandardOutputFile(QProcess::nullDevice());
+        proc.setReadChannel(QProcess::StandardError);
+        proc.start(ffmpegPath.absoluteFilePath(), args, QIODevice::ReadOnly);
+        bool started = proc.waitForStarted(2000);
+        bool finished = false;
+        QCoreApplication::processEvents();
+        if (started) {
+            finished = proc.waitForFinished(4000);
+            QCoreApplication::processEvents();
+        }
+        if (started && finished && proc.exitStatus() == QProcess::NormalExit && !proc.exitCode()) {
+            hwlist << codec;
+        } else {
+            QString output = proc.readAll();
+            foreach (const QString& line, output.split(QRegularExpression("[\r\n]"), QString::SkipEmptyParts))
+                LOG_DEBUG() << line;
+        }
+    }
+    if (hwlist.isEmpty()) {
+        MAIN.showStatusMessage(tr("Nothing found"), 10);
+        ui->hwencodeCheckBox->setChecked(false);
+    } else {
+        MAIN.showStatusMessage(tr("Found %1").arg(hwlist.join(", ")));
+        Settings.setEncodeHardware(hwlist);
+    }
 }

@@ -59,6 +59,11 @@ QStringList ListSelectionDialog::selection() const
     return result;
 }
 
+QDialogButtonBox *ListSelectionDialog::buttonBox() const
+{
+    return ui->buttonBox;
+}
+
 void ListSelectionDialog::onItemActivated(QListWidgetItem* item)
 {
     item->setCheckState(item->checkState() == Qt::Checked ? Qt::Unchecked : Qt::Checked);

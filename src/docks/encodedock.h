@@ -125,6 +125,8 @@ private slots:
 
     void on_parallelCheckbox_clicked(bool checked);
 
+    void detectHardwareEncoders();
+
 private:
     enum {
         RateControlAverage = 0,
