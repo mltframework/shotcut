@@ -1143,7 +1143,9 @@ QString MainWindow::getHash(Mlt::Properties& properties) const
         QString service = properties.get("mlt_service");
         QString resource = QString::fromUtf8(properties.get("resource"));
 
-        if (service == "timewarp")
+        if (properties.get_int(kIsProxyProperty) && properties.get(kOriginalResourceProperty))
+            resource = QString::fromUtf8(properties.get(kOriginalResourceProperty));
+        else if (service == "timewarp")
             resource = QString::fromUtf8(properties.get("warp_resource"));
         else if (service == "vidstab")
             resource = QString::fromUtf8(properties.get("filename"));
@@ -4357,22 +4359,31 @@ Mlt::ClipInfo* MainWindow::timelineClipInfoByUuid(const QUuid& uuid, int& trackI
     return m_timelineDock->model()->findClipByUuid(uuid, trackIndex, clipIndex);
 }
 
-void MainWindow::replaceAllByHash(const QString& hash, Mlt::Producer& producer)
+void MainWindow::replaceAllByHash(const QString& hash, Mlt::Producer& producer, bool isProxy)
 {
     getHash(producer);
-    m_recentDock->add(producer.get("resource"));
+    if (!isProxy)
+        m_recentDock->add(producer.get("resource"));
     if (MLT.isClip() && MLT.producer() && getHash(*MLT.producer()) == hash) {
         Util::applyCustomProperties(producer, *MLT.producer(), MLT.producer()->get_in(), MLT.producer()->get_out());
         MLT.copyFilters(*MLT.producer(), producer);
         MLT.close();
         m_player->setPauseAfterOpen(true);
         open(new Mlt::Producer(MLT.profile(), "xml-string", MLT.XML(&producer).toUtf8().constData()));
+    } else if (MLT.savedProducer() && getHash(*MLT.savedProducer()) == hash) {
+        Util::applyCustomProperties(producer, *MLT.savedProducer(), MLT.savedProducer()->get_in(), MLT.savedProducer()->get_out());
+        MLT.copyFilters(*MLT.savedProducer(), producer);
+        MLT.setSavedProducer(&producer);
     }
     if (playlist()) {
-        // Append to playlist
-        producer.set(kPlaylistIndexProperty, playlist()->count());
-        MAIN.undoStack()->push(
-            new Playlist::AppendCommand(*m_playlistDock->model(), MLT.XML(&producer)));
+        if (isProxy) {
+            //TODO replace all in playlist
+        } else {
+            // Append to playlist
+            producer.set(kPlaylistIndexProperty, playlist()->count());
+            MAIN.undoStack()->push(
+                new Playlist::AppendCommand(*m_playlistDock->model(), MLT.XML(&producer)));
+        }
     }
     if (isMultitrackValid()) {
         m_timelineDock->replaceClipsWithHash(hash, producer);
@@ -4394,7 +4405,6 @@ void MainWindow::on_actionSync_triggered()
 
 void MainWindow::on_actionUseProxy_triggered(bool checked)
 {
-    // Save to the project AND app settings
     Settings.setProxyEnabled(checked);
     //TODO Convert the project resource properties and reload unless empty
 }

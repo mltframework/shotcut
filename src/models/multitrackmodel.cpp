@@ -98,7 +98,9 @@ QVariant MultitrackModel::data(const QModelIndex &index, int role) const
                 if (info->producer && info->producer->is_valid()) {
                     result = info->producer->get(kShotcutCaptionProperty);
                     if (result.isNull()) {
-                        if (!::qstrcmp(info->producer->get("mlt_service"), "timewarp")) {
+                        if (info->producer->get_int(kIsProxyProperty) && info->producer->get(kOriginalResourceProperty)) {
+                            result = Util::baseName(QString::fromUtf8(info->producer->get(kOriginalResourceProperty)));
+                        } else if (!::qstrcmp(info->producer->get("mlt_service"), "timewarp")) {
                             result = Util::baseName(QString::fromUtf8(info->producer->get("warp_resource")));
                             double speed = ::fabs(info->producer->get_double("warp_speed"));
                             result = QString("%1 (%2x)").arg(result).arg(speed);

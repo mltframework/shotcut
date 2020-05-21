@@ -37,10 +37,12 @@ static bool ProducerIsTimewarp( Mlt::Producer* producer )
     return QString::fromUtf8(producer->get("mlt_service")) == "timewarp";
 }
 
-static QString GetFilenameFromProducer( Mlt::Producer* producer )
+static QString GetFilenameFromProducer(Mlt::Producer* producer, bool useOriginal = true)
 {
     QString resource;
-    if (ProducerIsTimewarp(producer)) {
+    if (useOriginal && producer->get(kOriginalResourceProperty)) {
+        resource = QString::fromUtf8(producer->get(kOriginalResourceProperty));
+    } else if (ProducerIsTimewarp(producer)) {
         resource = QString::fromUtf8(producer->get("warp_resource"));
     } else {
         resource = QString::fromUtf8(producer->get("resource"));
@@ -107,7 +109,7 @@ Mlt::Producer* AvformatProducerWidget::newProducer(Mlt::Profile& profile)
     Mlt::Producer* p = 0;
     if ( ui->speedSpinBox->value() == 1.0 )
     {
-        p = new Mlt::Producer(profile, GetFilenameFromProducer(producer()).toUtf8().constData());
+        p = new Mlt::Producer(profile, GetFilenameFromProducer(producer(), false).toUtf8().constData());
     }
     else
     {
@@ -119,7 +121,7 @@ Mlt::Producer* AvformatProducerWidget::newProducer(Mlt::Profile& profile)
         tempProps.set("speed", ui->speedSpinBox->value());
         QString warpspeed = QString::fromLatin1(tempProps.get("speed"));
 
-        QString filename = GetFilenameFromProducer(producer());
+        QString filename = GetFilenameFromProducer(producer(), false);
         QString s = QString("%1:%2:%3").arg("timewarp").arg(warpspeed).arg(filename);
         p = new Mlt::Producer(profile, s.toUtf8().constData());
         p->set(kShotcutProducerProperty, "avformat");
@@ -276,7 +278,7 @@ void AvformatProducerWidget::onFrameDecoded()
         m_defaultDuration = m_producer->get_length();
 
     double warpSpeed = GetSpeedFromProducer(producer());
-    QString resource = QDir::toNativeSeparators(GetFilenameFromProducer(producer()));
+    QString resource = GetFilenameFromProducer(producer());
     QString name = Util::baseName(resource);
     QString caption = m_producer->get(kShotcutCaptionProperty);
     if (caption.isEmpty() || caption.startsWith(name)) {
@@ -431,7 +433,8 @@ void AvformatProducerWidget::onFrameDecoded()
     int width = m_producer->get_int("meta.media.width");
     int height = m_producer->get_int("meta.media.height");
     if (width || height)
-        ui->videoTableWidget->setItem(1, 1, new QTableWidgetItem(QString("%1x%2").arg(width).arg(height)));
+        ui->videoTableWidget->setItem(1, 1, new QTableWidgetItem(QString("%1x%2 %3").arg(width).arg(height)
+                                      .arg(m_producer->get_int(kIsProxyProperty)? tr("(PROXY)") : "")));
 
     double sar = m_producer->get_double("meta.media.sample_aspect_num");
     if (m_producer->get_double("meta.media.sample_aspect_den") > 0)
@@ -690,6 +693,16 @@ void AvformatProducerWidget::on_menuButton_clicked()
     menu.addAction(ui->actionFFmpegConvert);
     menu.addAction(ui->actionExtractSubclip);
     menu.addAction(ui->actionSetFileDate);
+    if (m_producer->get_int("video_index") >= 0) {
+        auto submenu = menu.addMenu(tr("Proxy"));
+        submenu->addAction(ui->actionMakeProxy);
+        submenu->addAction(ui->actionDeleteProxy);
+        submenu->addAction(ui->actionDisableProxy);
+        if (m_producer->get_int(kDisableProxyProperty)) {
+            ui->actionMakeProxy->setDisabled(true);
+            ui->actionDisableProxy->setChecked(true);
+        }
+    }
     menu.exec(ui->menuButton->mapToGlobal(QPoint(0, 0)));
 }
 
@@ -758,7 +771,11 @@ void AvformatProducerWidget::convert(TranscodeDialog& dialog)
         args << "-i" << resource;
         args << "-max_muxing_queue_size" << "9999";
         // transcode all streams except data, subtitles, and attachments
-        args << "-map" << "0:V?" << "-map" << "0:a?" << "-map_metadata" << "0" << "-ignore_unknown";
+        if (m_producer->get_int("video_index") < m_producer->get_int("audio_index"))
+            args << "-map" << "0:V?" << "-map" << "0:a?";
+        else
+            args << "-map" << "0:a?" << "-map" << "0:V?";
+        args << "-map_metadata" << "0" << "-ignore_unknown";
         if (ui->rangeComboBox->currentIndex())
             args << "-vf" << "scale=flags=accurate_rnd+full_chroma_inp+full_chroma_int:in_range=full:out_range=full" << "-color_range" << "jpeg";
         else
@@ -1114,4 +1131,180 @@ void AvformatProducerWidget::on_filenameLabel_editingFinished()
 void AvformatProducerWidget::on_convertButton_clicked()
 {
     on_actionFFmpegConvert_triggered();
+}
+
+void AvformatProducerWidget::on_actionDisableProxy_triggered(bool checked)
+{
+    if (checked) {
+        producer()->set(kDisableProxyProperty, 1);
+    } else {
+        Mlt::Properties properties(producer());
+        properties.clear(kDisableProxyProperty);
+
+        // Generate proxy if it does not exist
+        if (Settings.proxyEnabled()) {
+            QString hash = MAIN.getHash(*producer());
+            QString fileName = hash + ".mkv";
+            // Use project folder + "/proxies" if using project folder and enabled
+            QDir dir(MLT.projectFolder());
+            if (!MLT.projectFolder().isEmpty() && dir.exists()) {
+                const char* subfolder = "proxies";
+                if (!dir.cd(subfolder)) {
+                    if (dir.mkdir(subfolder))
+                        dir.cd(subfolder);
+                }
+            } else {
+                // Otherwise, use app setting
+                dir = QDir(Settings.proxyFolder());
+            }
+            if (!dir.exists(fileName))
+                on_actionMakeProxy_triggered();
+        }
+    }
+}
+
+void AvformatProducerWidget::on_actionMakeProxy_triggered()
+{
+    // Always regenerate per preview scaling or 540 if not specified
+    QString resource = GetFilenameFromProducer(producer());
+    QStringList args;
+    QString hash = MAIN.getHash(*producer());
+    QString fileName = hash + ".mkv";
+    QString filters;
+    auto hwCodecs = Settings.encodeHardware();
+    QString hwFilters;
+
+    args << "-loglevel" << "verbose";
+    args << "-i" << resource;
+    args << "-max_muxing_queue_size" << "9999";
+    // transcode all streams except data, subtitles, and attachments
+    if (producer()->get_int("video_index") < producer()->get_int("audio_index"))
+        args << "-map" << "0:v?" << "-map" << "0:a?";
+    else
+        args << "-map" << "0:a?" << "-map" << "0:v?";
+    args << "-map_metadata" << "0" << "-ignore_unknown";
+    args << "-vf";
+
+    if (!ui->scanComboBox->currentIndex()) {
+        filters = QString("yadif=parity=%1,").arg(ui->fieldOrderComboBox->currentIndex()? "tff" : "bff");
+    }
+    filters += QString("scale=width=-2:height=%1").arg(Settings.playerPreviewScale()? Settings.playerPreviewScale() : 540);
+    if (hwCodecs.contains("h264_vaapi"))
+        hwFilters = ",format=nv12,hwupload";
+    if (ui->rangeComboBox->currentIndex()) {
+        args << filters + ":in_range=full:out_range=full" + hwFilters;
+        args << "-color_range" << "jpeg";
+    } else {
+        args << filters + ":in_range=mpeg:out_range=mpeg" + hwFilters;
+        args << "-color_range" << "mpeg";
+    }
+    switch (producer()->get_int("meta.media.colorspace")) {
+    case 601:
+        if (producer()->get_int("meta.media.height") == 576) {
+            args << "-color_primaries" << "bt470bg";
+            args << "-color_trc" << "smpte170m";
+            args << "-colorspace" << "bt470bg";
+        } else {
+            args << "-color_primaries" << "smpte170m";
+            args << "-color_trc" << "smpte170m";
+            args << "-colorspace" << "smpte170m";
+        }
+        break;
+    case 170:
+        args << "-color_primaries" << "smpte170m";
+        args << "-color_trc" << "smpte170m";
+        args << "-colorspace" << "smpte170m";
+        break;
+    case 240:
+        args << "-color_primaries" << "smpte240m";
+        args << "-color_trc" << "smpte240m";
+        args << "-colorspace" << "smpte240m";
+        break;
+    case 470:
+        args << "-color_primaries" << "bt470bg";
+        args << "-color_trc" << "bt470bg";
+        args << "-colorspace" << "bt470bg";
+        break;
+    default:
+        args << "-color_primaries" << "bt709";
+        args << "-color_trc" << "bt709";
+        args << "-colorspace" << "bt709";
+        break;
+    }
+    args << "-aspect" << QString("%1:%2").arg(ui->aspectNumSpinBox->value()).arg(ui->aspectDenSpinBox->value());
+    args << "-f" << "matroska" << "-codec:a" << "ac3" << "-b:a" << "256k";
+    if (hwCodecs.contains("h264_nvenc")) {
+        args << "-rc" << "constqp";
+        args << "-vglobal_quality" << "30";
+    } else if (hwCodecs.contains("h264_qsv") || hwCodecs.contains("h264_videotoolbox")) {
+        args << "-qscale" << "30";
+    } else if (hwCodecs.contains("h264_amf")) {
+        args << "-rc" << "cqp";
+        args << "-qp_i" << "30";
+        args << "-qp_p" << "30";
+    } else if (hwCodecs.contains("h264_vaapi")) {
+        args << "-init_hw_device" << "vaapi=vaapi0:,connection_type=x11" << "-filter_hw_device" << "vaapi0";
+        args << "-codec:v" << "h264_vaapi";
+        args << "-qp" << "30";
+    } else {
+        args << "-codec:v" << "libx264";
+        args << "-pix_fmt" << "yuv420p";
+        args << "-preset" << "veryfast";
+        args << "-crf" << "23";
+    }
+    args << "-g" << "1" << "-bf" << "0";
+
+    // Use project folder + "/proxies" if using project folder and enabled
+    QDir dir(MLT.projectFolder());
+    if (!MLT.projectFolder().isEmpty() && dir.exists() && Settings.proxyUseProjectFolder()) {
+        const char* subfolder = "proxies";
+        if (!dir.cd(subfolder)) {
+            if (dir.mkdir(subfolder))
+                dir.cd(subfolder);
+        }
+    } else {
+        // Otherwise, use app setting
+        dir = QDir(Settings.proxyFolder());
+    }
+    fileName = dir.filePath(fileName);
+
+    args << "-y" << fileName;
+
+    FfmpegJob* job = new FfmpegJob(fileName, args, false);
+    job->setLabel(tr("Make proxy for %1").arg(Util::baseName(fileName)));
+    job->setPostJobAction(new ProxyReplacePostJobAction(resource, fileName, hash));
+    JOBS.add(job);
+}
+
+void AvformatProducerWidget::on_actionDeleteProxy_triggered()
+{
+    // Delete the file if it exists
+    QString hash = MAIN.getHash(*producer());
+    QString fileName = hash + ".mkv";
+
+    // Use project folder + "/proxies" if using project folder and enabled
+    QDir dir(MLT.projectFolder());
+    if (!MLT.projectFolder().isEmpty() && dir.exists()) {
+        const char* subfolder = "proxies";
+        if (dir.cd(subfolder)) {
+            fileName = dir.filePath(fileName);
+            dir.remove(fileName);
+        }
+    }
+    // Otherwise, use app setting
+    dir = QDir(Settings.proxyFolder());
+    fileName = dir.filePath(fileName);
+    dir.remove(fileName);
+
+    // Replace with original
+    if (producer()->get_int(kIsProxyProperty) && producer()->get(kOriginalResourceProperty)) {
+        Mlt::Producer original(MLT.profile(), producer()->get(kOriginalResourceProperty));
+        if (original.is_valid()) {
+            if (!qstrcmp(original.get("mlt_service"), "avformat")) {
+                original.set("mlt_service", "avformat-novalidate");
+                original.set("mute_on_pause", 0);
+            }
+            MAIN.replaceAllByHash(hash, original, true);
+        }
+    }
 }

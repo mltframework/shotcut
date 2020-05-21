@@ -464,7 +464,9 @@ void PlaylistDock::on_actionSetFileDate_triggered()
         QString title = info->producer->get("mlt_service");
         QString resource = QString::fromUtf8(info->producer->get("resource"));
         QFileInfo fileInfo(resource);
-        if (!fileInfo.exists()) {
+        if (info->producer->get_int(kIsProxyProperty) && info->producer->get(kOriginalResourceProperty)) {
+            resource = QString::fromUtf8(info->producer->get(kOriginalResourceProperty));
+        } else if (!fileInfo.exists()) {
             resource = QString::fromUtf8(info->producer->get("warp_resource"));
             fileInfo = QFileInfo(resource);
         }

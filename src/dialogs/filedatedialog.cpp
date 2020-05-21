@@ -16,7 +16,7 @@
  */
 
 #include "filedatedialog.h"
-
+#include "shotcut_mlt_properties.h"
 #include "MltProducer.h"
 
 #include <QComboBox>
@@ -104,7 +104,9 @@ void FileDateDialog::populateDateOptions(Mlt::Producer* producer)
     // Add system info for the file.
     QString resource = QString::fromUtf8(producer->get("resource"));
     QFileInfo fileInfo(resource);
-    if (!fileInfo.exists()) {
+    if (producer->get_int(kIsProxyProperty) && producer->get(kOriginalResourceProperty)) {
+        resource = QString::fromUtf8(producer->get(kOriginalResourceProperty));
+    } else if (!fileInfo.exists()) {
         resource = QString::fromUtf8(producer->get("warp_resource"));
         fileInfo = QFileInfo(resource);
     }

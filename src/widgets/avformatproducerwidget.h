@@ -107,6 +107,12 @@ private slots:
 
     void on_convertButton_clicked();
 
+    void on_actionDisableProxy_triggered(bool checked);
+
+    void on_actionMakeProxy_triggered();
+
+    void on_actionDeleteProxy_triggered();
+
 private:
     Ui::AvformatProducerWidget *ui;
     int m_defaultDuration;

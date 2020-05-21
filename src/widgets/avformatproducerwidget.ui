@@ -896,6 +896,24 @@
     <string>Set Creation Time...</string>
    </property>
   </action>
+  <action name="actionDisableProxy">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Disable Proxy</string>
+   </property>
+  </action>
+  <action name="actionMakeProxy">
+   <property name="text">
+    <string>Make Proxy</string>
+   </property>
+  </action>
+  <action name="actionDeleteProxy">
+   <property name="text">
+    <string>Delete Proxy</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>

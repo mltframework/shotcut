@@ -234,6 +234,8 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
             if (info->producer && info->producer->is_valid())
                 result = info->producer->get(kShotcutDetailProperty);
             if (result.isNull()) {
+                if (info->producer->get_int(kIsProxyProperty) && info->producer->get(kOriginalResourceProperty))
+                    result = Util::baseName(QString::fromUtf8(info->producer->get(kOriginalResourceProperty)));
                 if (!::qstrcmp(info->producer->get("mlt_service"), "timewarp"))
                     result = QString::fromUtf8(info->producer->get("warp_resource"));
                 else

@@ -83,3 +83,17 @@ void ConvertReplacePostJobAction::doAction()
         MAIN.replaceAllByHash(m_hash, producer);
     }
 }
+
+void ProxyReplacePostJobAction::doAction()
+{
+    Mlt::Producer producer(MLT.profile(), m_dstFile.toUtf8().constData());
+    if (producer.is_valid()) {
+        producer.set(kIsProxyProperty, 1);
+        producer.set(kOriginalResourceProperty, m_srcFile.toUtf8().constData());
+        if (!qstrcmp(producer.get("mlt_service"), "avformat")) {
+            producer.set("mlt_service", "avformat-novalidate");
+            producer.set("mute_on_pause", 0);
+        }
+        MAIN.replaceAllByHash(m_hash, producer, true);
+    }
+}
