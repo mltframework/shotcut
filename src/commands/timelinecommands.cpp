@@ -39,8 +39,19 @@ void AppendCommand::redo()
 {
     LOG_DEBUG() << "trackIndex" << m_trackIndex;
     m_undoHelper.recordBeforeState();
-    Mlt::Producer producer(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
-    m_model.appendClip(m_trackIndex, producer);
+    Mlt::Producer clip(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
+    if (clip.type() == playlist_type) {
+        Mlt::Playlist playlist(clip);
+        int count = playlist.count();
+        for (int i = 0; i < count; i++) {
+            QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(i));
+            clip = Mlt::Producer(info->producer);
+            clip.set_in_and_out(info->frame_in, info->frame_out);
+            m_model.appendClip(m_trackIndex, clip);
+        }
+    } else {
+        m_model.appendClip(m_trackIndex, clip);
+    }
     m_undoHelper.recordAfterState();
 }
 

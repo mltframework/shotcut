@@ -45,7 +45,7 @@ signals:
     void clipOpened(Mlt::Producer* producer, bool play = false);
     void itemActivated(int start);
     void showStatusMessage(QString);
-    void addAllTimeline(Mlt::Playlist*, bool);
+    void addAllTimeline(Mlt::Playlist*);
 
 public slots:
     void incrementIndex();
