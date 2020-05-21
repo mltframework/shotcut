@@ -51,7 +51,7 @@ SlideshowGeneratorWidget::SlideshowGeneratorWidget(Mlt::Playlist* clips, QWidget
     QGridLayout* grid = new QGridLayout();
     setLayout(grid);
 
-    grid->addWidget(new QLabel(tr("Clip Duration")), 0, 0, Qt::AlignRight);
+    grid->addWidget(new QLabel(tr("Clip duration")), 0, 0, Qt::AlignRight);
     m_clipDurationSpinner = new QSpinBox();
     m_clipDurationSpinner->setToolTip(tr("Set the duration of each clip in the slideshow."));
     m_clipDurationSpinner->setSuffix(" s");
@@ -61,7 +61,7 @@ SlideshowGeneratorWidget::SlideshowGeneratorWidget(Mlt::Playlist* clips, QWidget
     connect(m_clipDurationSpinner, SIGNAL(valueChanged(int)), this, SLOT(on_parameterChanged()));
     grid->addWidget(m_clipDurationSpinner, 0, 1);
 
-    grid->addWidget(new QLabel(tr("Aspect Ratio Conversion")), 1, 0, Qt::AlignRight);
+    grid->addWidget(new QLabel(tr("Aspect ratio conversion")), 1, 0, Qt::AlignRight);
     m_aspectConversionCombo = new QComboBox();
     m_aspectConversionCombo->addItem(tr("Pad Black"));
     m_aspectConversionCombo->addItem(tr("Crop Center"));
@@ -71,7 +71,7 @@ SlideshowGeneratorWidget::SlideshowGeneratorWidget(Mlt::Playlist* clips, QWidget
     connect(m_aspectConversionCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(on_parameterChanged()));
     grid->addWidget(m_aspectConversionCombo, 1, 1);
 
-    grid->addWidget(new QLabel(tr("Zoom Effect")), 2, 0, Qt::AlignRight);
+    grid->addWidget(new QLabel(tr("Zoom effect")), 2, 0, Qt::AlignRight);
     m_zoomPercentSpinner = new QSpinBox();
     m_zoomPercentSpinner->setToolTip(tr("Set the percentage of the zoom-in effect.\n0% will result in no zoom effect."));
     m_zoomPercentSpinner->setSuffix(" %");
@@ -81,7 +81,7 @@ SlideshowGeneratorWidget::SlideshowGeneratorWidget(Mlt::Playlist* clips, QWidget
     connect(m_zoomPercentSpinner, SIGNAL(valueChanged(int)), this, SLOT(on_parameterChanged()));
     grid->addWidget(m_zoomPercentSpinner, 2, 1);
 
-    grid->addWidget(new QLabel(tr("Transition Duration")), 3, 0, Qt::AlignRight);
+    grid->addWidget(new QLabel(tr("Transition duration")), 3, 0, Qt::AlignRight);
     m_transitionDurationSpinner = new QSpinBox();
     m_transitionDurationSpinner->setToolTip(tr("Set the duration of the transition.\nMay not be longer than half the duration of the clip.\nIf the duration is 0, no transition will be created."));
     m_transitionDurationSpinner->setSuffix(" s");
@@ -91,7 +91,7 @@ SlideshowGeneratorWidget::SlideshowGeneratorWidget(Mlt::Playlist* clips, QWidget
     connect(m_transitionDurationSpinner, SIGNAL(valueChanged(int)), this, SLOT(on_parameterChanged()));
     grid->addWidget(m_transitionDurationSpinner, 3, 1);
 
-    grid->addWidget(new QLabel(tr("Transition Type")), 4, 0, Qt::AlignRight);
+    grid->addWidget(new QLabel(tr("Transition type")), 4, 0, Qt::AlignRight);
     m_transitionStyleCombo = new QComboBox();
     m_transitionStyleCombo->addItem(tr("Random"));
     m_transitionStyleCombo->addItem(tr("Dissolve"));
@@ -122,7 +122,7 @@ SlideshowGeneratorWidget::SlideshowGeneratorWidget(Mlt::Playlist* clips, QWidget
     connect(m_transitionStyleCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(on_parameterChanged()));
     grid->addWidget(m_transitionStyleCombo, 4, 1);
 
-    grid->addWidget(new QLabel(tr("Transition Softness")), 5, 0, Qt::AlignRight);
+    grid->addWidget(new QLabel(tr("Transition softness")), 5, 0, Qt::AlignRight);
     m_softnessSpinner = new QSpinBox();
     m_softnessSpinner->setToolTip(tr("Change the softness of the edge of the wipe."));
     m_softnessSpinner->setSuffix(" %");
