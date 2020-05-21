@@ -37,7 +37,7 @@ SlideshowGeneratorDialog::SlideshowGeneratorDialog(QWidget* parent, Mlt::Playlis
     m_sWidget = new SlideshowGeneratorWidget(&clips, this);
     VLayout->addWidget(m_sWidget);
 
-    m_buttonBox = new QDialogButtonBox(QDialogButtonBox::Apply | QDialogButtonBox::Close);
+    m_buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Close);
     VLayout->addWidget(m_buttonBox);
     connect(m_buttonBox, SIGNAL(clicked(QAbstractButton*)), this, SLOT(clicked(QAbstractButton*)));
 
@@ -54,9 +54,9 @@ Mlt::Playlist* SlideshowGeneratorDialog::getSlideshow()
 void SlideshowGeneratorDialog::clicked(QAbstractButton* button)
 {
     QDialogButtonBox::ButtonRole role = m_buttonBox->buttonRole(button);
-    if (role == QDialogButtonBox::ApplyRole)
+    if (role == QDialogButtonBox::AcceptRole)
     {
-        LOG_DEBUG() << "Apply";
+        LOG_DEBUG() << "Accept";
         accept();
     }
     else if (role == QDialogButtonBox::RejectRole)
