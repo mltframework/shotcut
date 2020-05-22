@@ -1189,7 +1189,7 @@ void AvformatProducerWidget::on_actionMakeProxy_triggered()
         filters = QString("yadif=parity=%1,").arg(ui->fieldOrderComboBox->currentIndex()? "tff" : "bff");
     }
     filters += QString("scale=width=-2:height=%1").arg(Settings.playerPreviewScale()? Settings.playerPreviewScale() : 540);
-    if (hwCodecs.contains("h264_vaapi"))
+    if (hwCodecs.contains("hevc_vaapi") || hwCodecs.contains("h264_vaapi"))
         hwFilters = ",format=nv12,hwupload";
     if (ui->rangeComboBox->currentIndex()) {
         args << filters + ":in_range=full:out_range=full" + hwFilters;
@@ -1233,19 +1233,30 @@ void AvformatProducerWidget::on_actionMakeProxy_triggered()
     }
     args << "-aspect" << QString("%1:%2").arg(ui->aspectNumSpinBox->value()).arg(ui->aspectDenSpinBox->value());
     args << "-f" << "matroska" << "-codec:a" << "ac3" << "-b:a" << "256k";
-    if (hwCodecs.contains("h264_nvenc")) {
+    if (hwCodecs.contains("hevc_nvenc")) {
+        args << "-codec:v" << "hevc_nvenc";
         args << "-rc" << "constqp";
         args << "-vglobal_quality" << "30";
-    } else if (hwCodecs.contains("h264_qsv") || hwCodecs.contains("h264_videotoolbox")) {
+    } else if (hwCodecs.contains("hevc_qsv")) {
+        args << "-load_plugin" << "hevc_hw";
+        args << "-codec:v" << "hevc_qsv";
         args << "-qscale" << "30";
-    } else if (hwCodecs.contains("h264_amf")) {
+    } else if (hwCodecs.contains("hevc_amf")) {
+        args << "-codec:v" << "hevc_amf";
         args << "-rc" << "cqp";
         args << "-qp_i" << "30";
         args << "-qp_p" << "30";
+    } else if (hwCodecs.contains("hevc_vaapi")) {
+        args << "-init_hw_device" << "vaapi=vaapi0:,connection_type=x11" << "-filter_hw_device" << "vaapi0";
+        args << "-codec:v" << "hevc_vaapi";
+        args << "-qp" << "30";
     } else if (hwCodecs.contains("h264_vaapi")) {
         args << "-init_hw_device" << "vaapi=vaapi0:,connection_type=x11" << "-filter_hw_device" << "vaapi0";
         args << "-codec:v" << "h264_vaapi";
         args << "-qp" << "30";
+    } else if (hwCodecs.contains("hevc_videotoolbox")) {
+        args << "-codec:v" << "hevc_videotoolbox";
+        args << "-qscale" << "30";
     } else {
         args << "-codec:v" << "libx264";
         args << "-pix_fmt" << "yuv420p";
