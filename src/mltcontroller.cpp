@@ -443,6 +443,147 @@ void Controller::refreshConsumer(bool scrubAudio)
     }
 }
 
+typedef QPair<QString, QString> MltProperty;
+
+void processProperties(QXmlStreamWriter& newXml, QVector<MltProperty>& properties, const QString& root)
+{
+    // Determine if this is a proxy resource
+    bool isProxy = false;
+    QString newResource;
+    for (const auto& p: properties) {
+        if (p.first == kIsProxyProperty) {
+            isProxy = true;
+        } else if (p.first == kOriginalResourceProperty) {
+            newResource = p.second;
+        } else if (newResource.isEmpty() && p.first == "resource") {
+            newResource = p.second;
+        }
+    }
+    QVector<MltProperty> newProperties;
+    if (isProxy) {
+        // Filter the properties
+        for (const auto& p: properties) {
+            // Replace the resource property if proxy
+            if (p.first == "resource") {
+                // Convert to relative
+                if (!root.isEmpty() && newResource.startsWith(root)) {
+                    if (root.endsWith('/'))
+                        newResource = newResource.mid(root.size());
+                    else
+                        newResource = newResource.mid(root.size() + 1);
+                }
+                newProperties << MltProperty(p.first, newResource);
+            // Remove special proxy and original resource properties
+            } else if (p.first != kIsProxyProperty && p.first != kOriginalResourceProperty) {
+                newProperties << MltProperty(p.first, p.second);
+            }
+        }
+        // Write all of the property elements
+        for (const auto& p : newProperties) {
+            newXml.writeStartElement("property");
+            newXml.writeAttribute("name", p.first);
+            newXml.writeCharacters(p.second);
+            newXml.writeEndElement();
+        }
+    } else {
+        // Write all of the property elements
+        for (const auto& p : properties) {
+            newXml.writeStartElement("property");
+            newXml.writeAttribute("name", p.first);
+            newXml.writeCharacters(p.second);
+            newXml.writeEndElement();
+        }
+    }
+    // Reset the saved properties
+    properties.clear();
+}
+
+bool removeProxiesFromXML(QString& fileName, const QString& root)
+{
+    QFile file(fileName);
+    QTemporaryFile tempFile(QFileInfo(fileName).dir().filePath("shotcut-XXXXXX.mlt"));
+    if (file.open(QIODevice::ReadOnly | QIODevice::Text) && tempFile.open()) {
+        tempFile.resize(0);
+        QXmlStreamReader xml(&file);
+        QXmlStreamWriter newXml(&tempFile);
+        bool isPropertyElement = false;
+        QVector<MltProperty> properties;
+
+        newXml.setAutoFormatting(true);
+        newXml.setAutoFormattingIndent(2);
+
+        while (!xml.atEnd()) {
+            switch (xml.readNext()) {
+            case QXmlStreamReader::Characters:
+                if (!isPropertyElement)
+                    newXml.writeCharacters(xml.text().toString());
+                break;
+            case QXmlStreamReader::Comment:
+                newXml.writeComment(xml.text().toString());
+                break;
+            case QXmlStreamReader::DTD:
+                newXml.writeDTD(xml.text().toString());
+                break;
+            case QXmlStreamReader::EntityReference:
+                newXml.writeEntityReference(xml.name().toString());
+                break;
+            case QXmlStreamReader::ProcessingInstruction:
+                newXml.writeProcessingInstruction(xml.processingInstructionTarget().toString(), xml.processingInstructionData().toString());
+                break;
+            case QXmlStreamReader::StartDocument:
+                newXml.writeStartDocument(xml.documentVersion().toString(), xml.isStandaloneDocument());
+                break;
+            case QXmlStreamReader::EndDocument:
+                newXml.writeEndDocument();
+                break;
+            case QXmlStreamReader::StartElement: {
+                const QString element = xml.name().toString();
+                if (element == "property") {
+                    // Save each property element but do not output yet
+                    const QString name = xml.attributes().value("name").toString();
+                    properties << MltProperty(name, xml.readElementText());
+                    isPropertyElement = true;
+                } else {
+                    // At the start of a non-property element
+                    isPropertyElement = false;
+                    processProperties(newXml, properties, root);
+                    // Write the new start element
+                    newXml.writeStartElement(xml.namespaceUri().toString(), element);
+                    for (const auto& a : xml.attributes()) {
+                        newXml.writeAttribute(a);
+                    }
+                }
+                break;
+            }
+            case QXmlStreamReader::EndElement:
+                // At the end of a non-property element
+                if (xml.name() != "property") {
+                    processProperties(newXml, properties, root);
+                    newXml.writeEndElement();
+                }
+                break;
+            default:
+                break;
+            }
+        }
+        if (tempFile.isOpen())
+            tempFile.close();
+
+        // Useful for debugging
+//        tempFile.open();
+//        LOG_DEBUG() << tempFile.readAll().constData();
+//        tempFile.close();
+
+        if (!xml.hasError()) {
+            fileName = tempFile.fileName();
+            LOG_DEBUG() << fileName;
+            tempFile.setAutoRemove(false);
+            return true;
+        }
+    }
+    return false;
+}
+
 bool Controller::saveXML(const QString& filename, Service* service, bool withRelativePaths, bool verify)
 {
     QMutexLocker locker(&m_saveXmlMutex);
@@ -460,6 +601,7 @@ bool Controller::saveXML(const QString& filename, Service* service, bool withRel
     Consumer c(profile(), "xml", mltFileName.toUtf8().constData());
     Service s(service? service->get_service() : m_producer->get_service());
     if (s.is_valid()) {
+        QString root = withRelativePaths? fi.absolutePath() : "";
         s.set(kShotcutProjectAudioChannels, m_audioChannels);
         s.set(kShotcutProjectFolder, m_projectFolder.isEmpty()? 0 : 1);
         int ignore = s.get_int("ignore_points");
@@ -468,7 +610,7 @@ bool Controller::saveXML(const QString& filename, Service* service, bool withRel
         c.set("time_format", "clock");
         c.set("no_meta", 1);
         c.set("store", "shotcut");
-        c.set("root", withRelativePaths? fi.absolutePath().toUtf8().constData() : "");
+        c.set("root", root.toUtf8().constData());
         c.set("no_root", 1);
         c.set("title", QString("Shotcut version ").append(SHOTCUT_VERSION).toUtf8().constData());
         c.connect(s);
@@ -476,78 +618,71 @@ bool Controller::saveXML(const QString& filename, Service* service, bool withRel
         if (ignore)
             s.set("ignore_points", ignore);
 
-        if (verify) {
-            // Check if the temp file is well-formed XML.
-            tmp.open();
-            QXmlStreamReader xml(&tmp);
-            while (!xml.atEnd())
-                xml.readNext();
-            tmp.close();
-            if (!xml.hasError()) {
-                // QFile::rename() can fail and remove the destination file. See its docs.
-                // So, save an existing target file as a backup.
-                QString backupName;
-                if (QFile::exists(filename)) {
-                    QTemporaryFile backupTmp;
-                    backupTmp.setFileTemplate(
-                        QString("%1/%2 - backup - XXXXXX.mlt").arg(fi.absolutePath()).arg(fi.completeBaseName()));
-                    // Only remove the backup file if we successfully move the temp file to target.
-                    backupTmp.setAutoRemove(false);
-                    QFile existingFile(filename);
-                    if (existingFile.open(QIODevice::ReadOnly)) {
-                        // Copy contents of existing file to temporary backup file.
-                        backupTmp.open();
-                        backupName = backupTmp.fileName();
-                        LOG_DEBUG() << "copy to backup" << filename << backupName;
-                        QByteArray buffer;
-                        while (!(buffer = existingFile.read(1048576LL /*1MiB*/)).isEmpty()) {
-                            backupTmp.write(buffer);
-                        }
-                        if (existingFile.error() != QFileDevice::NoError) {
-                            LOG_ERROR() << "backup error" << existingFile.errorString();
-                            return false;
-                        }
-                        if (backupTmp.size() != existingFile.size()) {
-                            LOG_ERROR() << "backup file size problem: existing file size" << existingFile.size() << ", backup file size" << backupTmp.size();
-                            return false;
-                        }
-                        backupTmp.close();
-                        existingFile.close();
-                        // Remove the existing file as its name becomes the target for rename.
-                        if (!existingFile.remove()) {
-                            LOG_ERROR() << "failed to remove existing file" << filename;
-                            return false;
-                        }
-                    } else {
-                        // Do not overwrite the backup file.
-                        LOG_ERROR() << "failed to open existing file" << filename << "for backup:" << existingFile.errorString();
+        if (removeProxiesFromXML(mltFileName, root)) {
+            tmp.remove();
+            tmp.setFileName(mltFileName);
+
+            // QFile::rename() can fail and remove the destination file. See its docs.
+            // So, save an existing target file as a backup.
+            QString backupName;
+            if (QFile::exists(filename)) {
+                QTemporaryFile backupTmp;
+                backupTmp.setFileTemplate(
+                    QString("%1/%2 - backup - XXXXXX.mlt").arg(fi.absolutePath()).arg(fi.completeBaseName()));
+                // Only remove the backup file if we successfully move the temp file to target.
+                backupTmp.setAutoRemove(false);
+                QFile existingFile(filename);
+                if (existingFile.open(QIODevice::ReadOnly)) {
+                    // Copy contents of existing file to temporary backup file.
+                    backupTmp.open();
+                    backupName = backupTmp.fileName();
+                    LOG_DEBUG() << "copy to backup" << filename << backupName;
+                    QByteArray buffer;
+                    while (!(buffer = existingFile.read(1048576LL /*1MiB*/)).isEmpty()) {
+                        backupTmp.write(buffer);
+                    }
+                    if (existingFile.error() != QFileDevice::NoError) {
+                        LOG_ERROR() << "backup error" << existingFile.errorString();
                         return false;
                     }
+                    if (backupTmp.size() != existingFile.size()) {
+                        LOG_ERROR() << "backup file size problem: existing file size" << existingFile.size() << ", backup file size" << backupTmp.size();
+                        return false;
+                    }
+                    backupTmp.close();
+                    existingFile.close();
+                    // Remove the existing file as its name becomes the target for rename.
+                    if (!existingFile.remove()) {
+                        LOG_ERROR() << "failed to remove existing file" << filename;
+                        return false;
+                    }
+                } else {
+                    // Do not overwrite the backup file.
+                    LOG_ERROR() << "failed to open existing file" << filename << "for backup:" << existingFile.errorString();
+                    return false;
                 }
-                // If the file is good, then move it into place.
-                LOG_DEBUG() << "rename" << mltFileName << filename;
-                tmp.setAutoRemove(false);
-                int attempts = 5;
-                for (int i = 0; i < attempts; i++) {
-                    if (tmp.rename(filename)) {
-                        // Double-check the rename operation.
-                        if (QFile::exists(filename) && QFile::exists(backupName))
-                            QFile::remove(backupName);
-                        return true;
-                    } 
-                    LOG_WARNING() << "rename failed, trying again";
-                    
-#ifdef Q_OS_WIN
-                    ::Sleep(200);
-#else
-                    ::usleep(200000);
-#endif
-                }
-                LOG_ERROR() << "rename failed" << mltFileName << filename;
-                return false;
             }
-        } else {
-            return true;
+            // If the file is good, then move it into place.
+            LOG_DEBUG() << "rename" << mltFileName << filename;
+            tmp.setAutoRemove(false);
+            int attempts = 5;
+            for (int i = 0; i < attempts; i++) {
+                if (tmp.rename(filename)) {
+                    // Double-check the rename operation.
+                    if (QFile::exists(filename) && QFile::exists(backupName))
+                        QFile::remove(backupName);
+                    return true;
+                }
+                LOG_WARNING() << "rename failed, trying again";
+
+#ifdef Q_OS_WIN
+                ::Sleep(200);
+#else
+                ::usleep(200000);
+#endif
+            }
+            LOG_ERROR() << "rename failed" << mltFileName << filename;
+            return false;
         }
     }
     return false;

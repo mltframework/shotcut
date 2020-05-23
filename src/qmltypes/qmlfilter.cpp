@@ -332,7 +332,7 @@ void QmlFilter::analyze(bool isAudio)
     int disable = m_filter.get_int("disable");
     m_filter.set("disable", 0);
     if (!isAudio) m_filter.set("analyze", 1);
-    MLT.saveXML(tmp->fileName(), &service, false, false);
+    MLT.saveXML(tmp->fileName(), &service, false /* without relative paths */, false /* without verify */);
     if (!isAudio) m_filter.set("analyze", 0);
     m_filter.set("disable", disable);
 
