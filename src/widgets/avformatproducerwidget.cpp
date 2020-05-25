@@ -826,7 +826,7 @@ void AvformatProducerWidget::convert(TranscodeDialog& dialog)
             args << "-y" << filename;
             FfmpegJob* job = new FfmpegJob(filename, args, false);
             job->setLabel(tr("Convert %1").arg(Util::baseName(filename)));
-            job->setPostJobAction(new ConvertReplacePostJobAction(resource, filename, MAIN.getHash(*m_producer)));
+            job->setPostJobAction(new ConvertReplacePostJobAction(resource, filename, Util::getHash(*m_producer)));
             JOBS.add(job);
         }
     }
@@ -1143,7 +1143,7 @@ void AvformatProducerWidget::on_actionDisableProxy_triggered(bool checked)
 
         // Generate proxy if it does not exist
         if (Settings.proxyEnabled()) {
-            QString hash = MAIN.getHash(*producer());
+            QString hash = Util::getHash(*producer());
             QString fileName = hash + ".mp4";
             if (!ProxyManager::dir().exists(fileName))
                 on_actionMakeProxy_triggered();
@@ -1166,7 +1166,7 @@ void AvformatProducerWidget::on_actionMakeProxy_triggered()
 void AvformatProducerWidget::on_actionDeleteProxy_triggered()
 {
     // Delete the file if it exists
-    QString hash = MAIN.getHash(*producer());
+    QString hash = Util::getHash(*producer());
     QString fileName = hash + ".mp4";
     QDir dir = ProxyManager::dir();
     fileName = dir.filePath(fileName);

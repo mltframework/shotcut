@@ -1116,47 +1116,6 @@ QString MainWindow::untitledFileName() const
     return dir.filePath("__untitled__.mlt");
 }
 
-QString MainWindow::getFileHash(const QString& path) const
-{
-    // This routine is intentionally copied from Kdenlive.
-    QFile file(path);
-    if (file.open(QIODevice::ReadOnly)) {
-        QByteArray fileData;
-         // 1 MB = 1 second per 450 files (or faster)
-         // 10 MB = 9 seconds per 450 files (or faster)
-        if (file.size() > 1000000*2) {
-            fileData = file.read(1000000);
-            if (file.seek(file.size() - 1000000))
-                fileData.append(file.readAll());
-        } else {
-            fileData = file.readAll();
-        }
-        file.close();
-        return QCryptographicHash::hash(fileData, QCryptographicHash::Md5).toHex();
-    }
-    return QString();
-}
-
-QString MainWindow::getHash(Mlt::Properties& properties) const
-{
-    QString hash = properties.get(kShotcutHashProperty);
-    if (hash.isEmpty()) {
-        QString service = properties.get("mlt_service");
-        QString resource = QString::fromUtf8(properties.get("resource"));
-
-        if (properties.get_int(kIsProxyProperty) && properties.get(kOriginalResourceProperty))
-            resource = QString::fromUtf8(properties.get(kOriginalResourceProperty));
-        else if (service == "timewarp")
-            resource = QString::fromUtf8(properties.get("warp_resource"));
-        else if (service == "vidstab")
-            resource = QString::fromUtf8(properties.get("filename"));
-        QString hash = getFileHash(resource);
-        if (!hash.isEmpty())
-            properties.set(kShotcutHashProperty, hash.toLatin1().constData());
-    }
-    return hash;
-}
-
 void MainWindow::setProfile(const QString &profile_name)
 {
     LOG_DEBUG() << profile_name;
@@ -2527,7 +2486,7 @@ void MainWindow::onProducerOpened(bool withReopen)
     if (MLT.isClip()) {
         m_player->enableTab(Player::SourceTabIndex);
         m_player->switchToTab(Player::SourceTabIndex);
-        getHash(*MLT.producer());
+        Util::getHash(*MLT.producer());
         ui->actionPaste->setEnabled(true);
     }
     QMutexLocker locker(&m_autosaveMutex);
@@ -3348,7 +3307,7 @@ void MainWindow::processMultipleFiles()
                 MLT.setImageDurationFromDefault(&p);
                 MLT.lockCreationTime(&p);
                 p.get_length_time(mlt_time_clock);
-                MAIN.getHash(p);
+                Util::getHash(p);
                 undoStack()->push(new Playlist::AppendCommand(*m_playlistDock->model(), MLT.XML(&p), false));
                 m_recentDock->add(filename.toUtf8().constData());
             }
@@ -4349,7 +4308,7 @@ void MainWindow::replaceInTimeline(const QUuid& uuid, Mlt::Producer& producer)
     QScopedPointer<Mlt::ClipInfo> info(MAIN.timelineClipInfoByUuid(uuid, trackIndex, clipIndex));
 
     if (trackIndex >= 0 && clipIndex >= 0) {
-        getHash(producer);
+        Util::getHash(producer);
         Util::applyCustomProperties(producer, *info->producer, producer.get_in(), producer.get_out());
         m_timelineDock->replace(trackIndex, clipIndex, MLT.XML(&producer));
     }
@@ -4362,16 +4321,16 @@ Mlt::ClipInfo* MainWindow::timelineClipInfoByUuid(const QUuid& uuid, int& trackI
 
 void MainWindow::replaceAllByHash(const QString& hash, Mlt::Producer& producer, bool isProxy)
 {
-    getHash(producer);
+    Util::getHash(producer);
     if (!isProxy)
         m_recentDock->add(producer.get("resource"));
-    if (MLT.isClip() && MLT.producer() && getHash(*MLT.producer()) == hash) {
+    if (MLT.isClip() && MLT.producer() && Util::getHash(*MLT.producer()) == hash) {
         Util::applyCustomProperties(producer, *MLT.producer(), MLT.producer()->get_in(), MLT.producer()->get_out());
         MLT.copyFilters(*MLT.producer(), producer);
         MLT.close();
         m_player->setPauseAfterOpen(true);
         open(new Mlt::Producer(MLT.profile(), "xml-string", MLT.XML(&producer).toUtf8().constData()));
-    } else if (MLT.savedProducer() && getHash(*MLT.savedProducer()) == hash) {
+    } else if (MLT.savedProducer() && Util::getHash(*MLT.savedProducer()) == hash) {
         Util::applyCustomProperties(producer, *MLT.savedProducer(), MLT.savedProducer()->get_in(), MLT.savedProducer()->get_out());
         MLT.copyFilters(*MLT.savedProducer(), producer);
         MLT.setSavedProducer(&producer);

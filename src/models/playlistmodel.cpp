@@ -248,7 +248,7 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
                 result = QString::fromUtf8(info->producer->get("mlt_service"));
         }
         if (!info->producer->get(kShotcutHashProperty))
-            MAIN.getHash(*info->producer);
+            Util::getHash(*info->producer);
         return result;
     }
     case FIELD_IN:

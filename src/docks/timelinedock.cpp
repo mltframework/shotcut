@@ -1404,7 +1404,7 @@ public:
 
     int on_start_filter(Mlt::Filter*) { return 0; }
     int on_start_producer(Mlt::Producer* producer) {
-        if (producer->is_cut() && MAIN.getHash(producer->parent()) == m_hash)
+        if (producer->is_cut() && Util::getHash(producer->parent()) == m_hash)
             m_producers << Mlt::Producer(producer);
         return 0;
     }

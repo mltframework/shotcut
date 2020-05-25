@@ -21,6 +21,7 @@
 #include <QString>
 #include <QPalette>
 #include <QUrl>
+#include <MltProperties.h>
 
 class QWidget;
 class QDoubleSpinBox;
@@ -51,6 +52,8 @@ public:
     static void showFrameRateDialog(const QString& caption, int numerator, QDoubleSpinBox* spinner, QWidget* parent = Q_NULLPTR);
     static QTemporaryFile* writableTemporaryFile(const QString& filePath = QString(), const QString& templateName = QString());
     static void applyCustomProperties(Mlt::Producer& destination, Mlt::Producer& source, int in, int out);
+    static QString getFileHash(const QString& path);
+    static QString getHash(Mlt::Properties& properties);
 };
 
 #endif // UTIL_H

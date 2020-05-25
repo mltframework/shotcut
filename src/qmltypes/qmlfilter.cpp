@@ -421,7 +421,7 @@ QString QmlFilter::timeFromFrames(int frames, TimeFormat format)
 void QmlFilter::getHash()
 {
     if (m_filter.is_valid())
-        MAIN.getHash(m_filter);
+        Util::getHash(m_filter);
 }
 
 int QmlFilter::in()

@@ -166,7 +166,7 @@ QVariant MultitrackModel::data(const QModelIndex &index, int role) const
             case IsTransitionRole:
                 return isTransition(playlist, index.row());
             case FileHashRole:
-                return MAIN.getHash(*info->producer);
+                return Util::getHash(*info->producer);
             case SpeedRole: {
                 double speed = 1.0;
                 if (info->producer && info->producer->is_valid()) {

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2019 Meltytech, LLC
+ * Copyright (c) 2016-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,8 +18,8 @@
 #include "unlinkedfilesdialog.h"
 #include "ui_unlinkedfilesdialog.h"
 #include "settings.h"
-#include "mainwindow.h"
 #include "mltxmlchecker.h"
+#include "util.h"
 #include <Logger.h>
 #include <QFileDialog>
 #include <QStringList>
@@ -59,7 +59,7 @@ void UnlinkedFilesDialog::on_tableView_doubleClicked(const QModelIndex& index)
 
         QModelIndex firstColIndex = model->index(index.row(), MltXmlChecker::MissingColumn);
         QModelIndex secondColIndex = model->index(index.row(), MltXmlChecker::ReplacementColumn);
-        QString hash = MAIN.getFileHash(filenames[0]);
+        QString hash = Util::getFileHash(filenames[0]);
         if (hash == model->data(firstColIndex, MltXmlChecker::ShotcutHashRole)) {
             // If the hashes match set icon to OK.
             QIcon icon(":/icons/oxygen/32x32/status/task-complete.png");
@@ -95,7 +95,7 @@ bool UnlinkedFilesDialog::lookInDir(const QDir& dir, bool recurse)
     }
     if (outstanding)
     foreach (const QString& fileName, dir.entryList(QDir::Files | QDir::Readable | QDir::NoDotAndDotDot)) {
-        QString hash = MAIN.getFileHash(dir.absoluteFilePath(fileName));
+        QString hash = Util::getFileHash(dir.absoluteFilePath(fileName));
         for (int row = 0; row < model->rowCount(); row++) {
             QModelIndex replacementIndex = model->index(row, MltXmlChecker::ReplacementColumn);
             if (model->data(replacementIndex, MltXmlChecker::ShotcutHashRole).isNull()) {

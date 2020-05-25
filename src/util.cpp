@@ -30,6 +30,7 @@
 #include <QDoubleSpinBox>
 #include <QTemporaryFile>
 #include <QApplication>
+#include <QCryptographicHash>
 
 #include <MltProducer.h>
 #include <Logger.h>
@@ -373,4 +374,45 @@ void Util::applyCustomProperties(Mlt::Producer& destination, Mlt::Producer& sour
         destination.set("length", destination.get("_shotcut:length"));
     }
     destination.set_in_and_out(in, out);
+}
+
+QString Util::getFileHash(const QString& path)
+{
+    // This routine is intentionally copied from Kdenlive.
+    QFile file(path);
+    if (file.open(QIODevice::ReadOnly)) {
+        QByteArray fileData;
+         // 1 MB = 1 second per 450 files (or faster)
+         // 10 MB = 9 seconds per 450 files (or faster)
+        if (file.size() > 1000000*2) {
+            fileData = file.read(1000000);
+            if (file.seek(file.size() - 1000000))
+                fileData.append(file.readAll());
+        } else {
+            fileData = file.readAll();
+        }
+        file.close();
+        return QCryptographicHash::hash(fileData, QCryptographicHash::Md5).toHex();
+    }
+    return QString();
+}
+
+QString Util::getHash(Mlt::Properties& properties)
+{
+    QString hash = properties.get(kShotcutHashProperty);
+    if (hash.isEmpty()) {
+        QString service = properties.get("mlt_service");
+        QString resource = QString::fromUtf8(properties.get("resource"));
+
+        if (properties.get_int(kIsProxyProperty) && properties.get(kOriginalResourceProperty))
+            resource = QString::fromUtf8(properties.get(kOriginalResourceProperty));
+        else if (service == "timewarp")
+            resource = QString::fromUtf8(properties.get("warp_resource"));
+        else if (service == "vidstab")
+            resource = QString::fromUtf8(properties.get("filename"));
+        QString hash = getFileHash(resource);
+        if (!hash.isEmpty())
+            properties.set(kShotcutHashProperty, hash.toLatin1().constData());
+    }
+    return hash;
 }

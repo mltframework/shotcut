@@ -72,8 +72,6 @@ public:
     void setFullScreen(bool isFullScreen);
     QString removeFileScheme(QUrl& url);
     QString untitledFileName() const;
-    QString getFileHash(const QString& path) const;
-    QString getHash(Mlt::Properties& properties) const;
     void setProfile(const QString& profile_name);
     QString fileName() const { return m_currentFile; }
     bool isSourceClipMyProject(QString resource = MLT.resource());
