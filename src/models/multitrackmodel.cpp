@@ -25,6 +25,7 @@
 #include "shotcut_mlt_properties.h"
 #include "controllers/filtercontroller.h"
 #include "qmltypes/qmlmetadata.h"
+#include "proxymanager.h"
 
 #include <QScopedPointer>
 #include <QApplication>
@@ -98,14 +99,10 @@ QVariant MultitrackModel::data(const QModelIndex &index, int role) const
                 if (info->producer && info->producer->is_valid()) {
                     result = info->producer->get(kShotcutCaptionProperty);
                     if (result.isNull()) {
-                        if (info->producer->get_int(kIsProxyProperty) && info->producer->get(kOriginalResourceProperty)) {
-                            result = Util::baseName(QString::fromUtf8(info->producer->get(kOriginalResourceProperty)));
-                        } else if (!::qstrcmp(info->producer->get("mlt_service"), "timewarp")) {
-                            result = Util::baseName(QString::fromUtf8(info->producer->get("warp_resource")));
+                        result = Util::baseName(ProxyManager::resource(*info->producer));
+                        if (!::qstrcmp(info->producer->get("mlt_service"), "timewarp")) {
                             double speed = ::fabs(info->producer->get_double("warp_speed"));
                             result = QString("%1 (%2x)").arg(result).arg(speed);
-                        } else {
-                            result = Util::baseName(QString::fromUtf8(info->resource));
                         }
                     }
                     if (result == "<producer>")

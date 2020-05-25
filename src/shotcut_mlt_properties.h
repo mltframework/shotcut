@@ -51,7 +51,7 @@
 // hide the VUI when the play head is not over the clip with the current filter.
 #define kShotcutVuiMetaProperty "meta.shotcut.vui"
 #define kDefaultAudioIndexProperty "shotcut:defaultAudioIndex"
-#define kOriginalResourceProperty "shotcut:originalResource"
+#define kOriginalResourceProperty "shotcut:resource"
 #define kOriginalInProperty "shotcut:originalIn"
 #define kOriginalOutProperty "shotcut:originalOut"
 #define kDisableProxyProperty "shotcut:disableProxy"

@@ -29,6 +29,7 @@
 #include "widgets/playlistlistview.h"
 #include "util.h"
 #include "commands/playlistcommands.h"
+#include "proxymanager.h"
 #include <Logger.h>
 
 #include <QMenu>
@@ -462,14 +463,8 @@ void PlaylistDock::on_actionSetFileDate_triggered()
     QScopedPointer<Mlt::ClipInfo> info(m_model.playlist()->clip_info(i));
     if (info && info->producer && info->producer->is_valid()) {
         QString title = info->producer->get("mlt_service");
-        QString resource = QString::fromUtf8(info->producer->get("resource"));
+        QString resource = ProxyManager::resource(*info->producer);
         QFileInfo fileInfo(resource);
-        if (info->producer->get_int(kIsProxyProperty) && info->producer->get(kOriginalResourceProperty)) {
-            resource = QString::fromUtf8(info->producer->get(kOriginalResourceProperty));
-        } else if (!fileInfo.exists()) {
-            resource = QString::fromUtf8(info->producer->get("warp_resource"));
-            fileInfo = QFileInfo(resource);
-        }
         if (fileInfo.exists()) {
            title = fileInfo.baseName();
         }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2019 Meltytech, LLC
+ * Copyright (c) 2012-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,6 +34,7 @@
 #include "settings.h"
 #include "database.h"
 #include "mainwindow.h"
+#include "proxymanager.h"
 
 static void deleteQImage(QImage* image)
 {
@@ -234,12 +235,7 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
             if (info->producer && info->producer->is_valid())
                 result = info->producer->get(kShotcutDetailProperty);
             if (result.isNull()) {
-                if (info->producer->get_int(kIsProxyProperty) && info->producer->get(kOriginalResourceProperty))
-                    result = Util::baseName(QString::fromUtf8(info->producer->get(kOriginalResourceProperty)));
-                if (!::qstrcmp(info->producer->get("mlt_service"), "timewarp"))
-                    result = QString::fromUtf8(info->producer->get("warp_resource"));
-                else
-                    result = QString::fromUtf8(info->resource);
+                result = ProxyManager::resource(*info->producer);
                 if (!result.isEmpty() && QFileInfo(result).isRelative()) {
                     QString basePath = QFileInfo(MAIN.fileName()).canonicalPath();
                     result = QFileInfo(basePath, result).filePath();
