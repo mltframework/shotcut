@@ -4406,8 +4406,39 @@ void MainWindow::on_actionSync_triggered()
 
 void MainWindow::on_actionUseProxy_triggered(bool checked)
 {
-    Settings.setProxyEnabled(checked);
-    //TODO Convert the project resource properties and reload unless empty
+    QScopedPointer<QTemporaryFile> tmp(Util::writableTemporaryFile(m_currentFile, "shotcut-XXXXXX.mlt"));
+    QString fileName = tmp->fileName();
+
+    LOG_DEBUG() << fileName;
+    if (MLT.producer() && saveXML(fileName)) {
+        MltXmlChecker checker;
+
+        Settings.setProxyEnabled(checked);
+        checker.check(fileName);
+        if (!isXmlRepaired(checker, fileName))
+            return;
+        if (checker.isUpdated())
+            fileName = checker.tempFileName();
+
+        // Open the temporary file
+        if (!MLT.open(QDir::fromNativeSeparators(fileName), QDir::fromNativeSeparators(m_currentFile))) {
+            auto position = m_player->position();
+            m_undoStack->clear();
+            m_player->stop();
+            m_player->setPauseAfterOpen(true);
+            open(MLT.producer());
+            MLT.seek(m_player->position());
+            m_player->seek(position);
+            //TODO prompt user if they want to create missing proxies
+        } else if (fileName != untitledFileName()) {
+            showStatusMessage(tr("Failed to open ") + fileName);
+            emit openFailed(fileName);
+        }
+    } else if (MLT.producer()) {
+        showSaveError();
+    } else {
+        Settings.setProxyEnabled(checked);
+    }
 }
 
 void MainWindow::on_actionProxyStorageSet_triggered()
