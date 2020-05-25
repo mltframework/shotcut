@@ -537,10 +537,10 @@ void MltXmlChecker::checkForProxy(const QString& mlt_service, QVector<MltXmlChec
         if (proxyDir.exists(fileName) || projectDir.exists(fileName)) {
             for (auto& p : properties) {
                 if (p.first == "resource") {
-                    if (proxyDir.exists(fileName))
-                        p.second = proxyDir.filePath(fileName);
-                    else
+                    if (projectDir.exists(fileName))
                         p.second = projectDir.filePath(fileName);
+                    else
+                        p.second = proxyDir.filePath(fileName);
                     break;
                 }
             }
