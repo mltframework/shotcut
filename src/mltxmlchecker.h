@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2019 Meltytech, LLC
+ * Copyright (c) 2014-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -73,6 +73,7 @@ private:
     bool fixVersion1701WindowsPathBug(QString& value);
     void checkIncludesSelf(QVector<MltProperty>& properties);
     void checkLumaAlphaOver(const QString& mlt_service, QVector<MltProperty>& properties);
+    void checkForProxy(const QString& mlt_service, QVector<MltProperty>& properties);
 
     QXmlStreamReader m_xml;
     QXmlStreamWriter m_newXml;
