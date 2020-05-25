@@ -41,7 +41,9 @@ public:
 
     static QDir dir();
     static QString resource(Mlt::Producer& producer);
-    static void generateVideoProxy(Mlt::Producer& producer, bool fullRange, ScanMode scanMode = Automatic, const QPoint& aspectRatio = QPoint());
+    static void generateVideoProxy(Mlt::Producer& producer, bool fullRange,
+        ScanMode scanMode = Automatic, const QPoint& aspectRatio = QPoint());
+    static bool filterXML(QString& fileName, const QString& root);
 };
 
 #endif // PROXYMANAGER_H
