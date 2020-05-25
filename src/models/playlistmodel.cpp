@@ -226,8 +226,13 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
             // Prefer caption for display
             if (info->producer && info->producer->is_valid())
                 result = info->producer->get(kShotcutCaptionProperty);
-            if (result.isNull())
-                result = Util::baseName(QString::fromUtf8(info->resource));
+            if (result.isNull()) {
+                result = Util::baseName(ProxyManager::resource(*info->producer));
+                if (!::qstrcmp(info->producer->get("mlt_service"), "timewarp")) {
+                    double speed = ::qAbs(info->producer->get_double("warp_speed"));
+                    result = QString("%1 (%2x)").arg(result).arg(speed);
+                }
+            }
             if (result == "<producer>" && info->producer && info->producer->is_valid())
                 result = QString::fromUtf8(info->producer->get("mlt_service"));
         } else {

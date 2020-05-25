@@ -44,6 +44,9 @@ public:
     static void generateVideoProxy(Mlt::Producer& producer, bool fullRange,
         ScanMode scanMode = Automatic, const QPoint& aspectRatio = QPoint());
     static bool filterXML(QString& fileName, const QString& root);
+    static bool fileExists(Mlt::Producer& producer);
+    static bool filePending(Mlt::Producer& producer);
+    static bool generateIfNotExists(Mlt::Producer& producer);
 };
 
 #endif // PROXYMANAGER_H

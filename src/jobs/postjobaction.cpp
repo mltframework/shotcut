@@ -19,6 +19,7 @@
 #include "mainwindow.h"
 #include "docks/playlistdock.h"
 #include "shotcut_mlt_properties.h"
+#include <Logger.h>
 
 // For file time functions in FilePropertiesPostJobAction::doAction();
 #include <utime.h>
@@ -86,14 +87,24 @@ void ConvertReplacePostJobAction::doAction()
 
 void ProxyReplacePostJobAction::doAction()
 {
-    Mlt::Producer producer(MLT.profile(), m_dstFile.toUtf8().constData());
-    if (producer.is_valid()) {
-        producer.set(kIsProxyProperty, 1);
-        producer.set(kOriginalResourceProperty, m_srcFile.toUtf8().constData());
-        if (!qstrcmp(producer.get("mlt_service"), "avformat")) {
-            producer.set("mlt_service", "avformat-novalidate");
-            producer.set("mute_on_pause", 0);
+    QFileInfo info(m_dstFile);
+    QString newFileName = info.path() + "/" + info.baseName() + "." + info.suffix();
+    if (QFile::rename(m_dstFile, newFileName)) {
+        Mlt::Producer producer(MLT.profile(), newFileName.toUtf8().constData());
+        if (producer.is_valid()) {
+            producer.set(kIsProxyProperty, 1);
+            producer.set(kOriginalResourceProperty, m_srcFile.toUtf8().constData());
+            if (!qstrcmp(producer.get("mlt_service"), "avformat")) {
+                producer.set("mlt_service", "avformat-novalidate");
+                producer.set("mute_on_pause", 0);
+            }
+            MAIN.replaceAllByHash(m_hash, producer, true);
+        } else {
+            LOG_WARNING() << "proxy file is invalid" << newFileName;
+            QFile::remove(m_dstFile);
         }
-        MAIN.replaceAllByHash(m_hash, producer, true);
+    } else {
+        LOG_WARNING() << "failed to rename" << m_dstFile << "as" << newFileName;
+        QFile::remove(m_dstFile);
     }
 }

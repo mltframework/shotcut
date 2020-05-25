@@ -27,6 +27,7 @@
 #include "shotcut_mlt_properties.h"
 #include "settings.h"
 #include "util.h"
+#include "proxymanager.h"
 
 #include <QAction>
 #include <QtQml>
@@ -548,9 +549,10 @@ void TimelineDock::append(int trackIndex)
     }
     if (MAIN.isSourceClipMyProject()) return;
     if (MLT.isSeekableClip() || MLT.savedProducer()) {
+        Mlt::Producer producer(MLT.isClip()? MLT.producer() : MLT.savedProducer());
+        ProxyManager::generateIfNotExists(producer);
         MAIN.undoStack()->push(
-            new Timeline::AppendCommand(m_model, trackIndex,
-                MLT.XML(MLT.isClip()? nullptr : MLT.savedProducer())));
+            new Timeline::AppendCommand(m_model, trackIndex, MLT.XML(&producer)));
         selectClipUnderPlayhead();
     } else if (!MLT.isSeekableClip()) {
         emit showStatusMessage(kNonSeekableWarning);
@@ -1089,6 +1091,8 @@ static QString convertUrlsToXML(const QString& xml)
                 if (!qstrcmp(p.get("mlt_service"), "xml")) {
                     p.set(kShotcutVirtualClip, 1);
                     p.set("resource", path.toUtf8().constData());
+                } else{
+                    ProxyManager::generateIfNotExists(p);
                 }
                 // Convert avformat to avformat-novalidate so that XML loads faster.
                 if (!qstrcmp(p.get("mlt_service"), "avformat")) {
@@ -1124,8 +1128,14 @@ void TimelineDock::insert(int trackIndex, int position, const QString &xml, bool
     }
 
     if (MLT.isSeekableClip() || MLT.savedProducer() || !xml.isEmpty()) {
-        QString xmlToUse = !xml.isEmpty()? convertUrlsToXML(xml)
-            : MLT.XML(MLT.isClip()? nullptr : MLT.savedProducer());
+        QString xmlToUse;
+        if (xml.isEmpty()) {
+            Mlt::Producer producer(MLT.isClip()? MLT.producer() : MLT.savedProducer());
+            ProxyManager::generateIfNotExists(producer);
+            xmlToUse = MLT.XML(&producer);
+        } else {
+            xmlToUse = convertUrlsToXML(xml);
+        }
         if (position < 0)
             position = m_position;
         if (m_model.trackList().size() == 0)
@@ -1161,8 +1171,14 @@ void TimelineDock::overwrite(int trackIndex, int position, const QString &xml, b
     }
 
     if (MLT.isSeekableClip() || MLT.savedProducer() || !xml.isEmpty()) {
-        QString xmlToUse = !xml.isEmpty()? convertUrlsToXML(xml)
-            : MLT.XML(MLT.isClip()? nullptr : MLT.savedProducer());
+        QString xmlToUse;
+        if (xml.isEmpty()) {
+            Mlt::Producer producer(MLT.isClip()? MLT.producer() : MLT.savedProducer());
+            ProxyManager::generateIfNotExists(producer);
+            xmlToUse = MLT.XML(&producer);
+        } else {
+            xmlToUse = convertUrlsToXML(xml);
+        }
         if (position < 0)
             position = m_position;
         if (m_model.trackList().size() == 0)

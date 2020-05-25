@@ -349,9 +349,10 @@ void PlaylistDock::on_actionAppendCut_triggered()
     if (MLT.producer() && MLT.producer()->is_valid() && !MAIN.isSourceClipMyProject()) {
         if (MLT.isSeekableClip()
             || (MLT.savedProducer() && MLT.isSeekable(MLT.savedProducer()))) {
+            Mlt::Producer producer(MLT.isClip()? MLT.producer() : MLT.savedProducer());
+            ProxyManager::generateIfNotExists(producer);
             MAIN.undoStack()->push(
-                new Playlist::AppendCommand(m_model,
-                    MLT.XML(MLT.isClip()? nullptr : MLT.savedProducer())));
+                new Playlist::AppendCommand(m_model, MLT.XML(&producer)));
             MLT.producer()->set(kPlaylistIndexProperty, m_model.playlist()->count());
             setUpdateButtonEnabled(true);
         } else {
@@ -398,6 +399,7 @@ void PlaylistDock::on_actionUpdate_triggered()
     if (!info || MAIN.isSourceClipMyProject()) return;
     if (MLT.producer()->type() != playlist_type) {
         if (MLT.isSeekable()) {
+            ProxyManager::generateIfNotExists(*MLT.producer());
             MAIN.undoStack()->push(new Playlist::UpdateCommand(m_model, MLT.XML(), index.row()));
             MLT.producer()->set(kPlaylistIndexProperty, index.row() + 1);
             setUpdateButtonEnabled(true);
@@ -653,6 +655,7 @@ void PlaylistDock::onDropped(const QMimeData *data, int row)
                 MLT.lockCreationTime(producer);
                 producer->get_length_time(mlt_time_clock);
                 if (MLT.isSeekable(producer)) {
+                    ProxyManager::generateIfNotExists(*producer);
                     if (row == -1)
                         MAIN.undoStack()->push(new Playlist::AppendCommand(m_model, MLT.XML(producer)));
                     else
@@ -684,11 +687,13 @@ void PlaylistDock::onDropped(const QMimeData *data, int row)
             } else if (MAIN.isSourceClipMyProject()) {
                 return;
             } else if (MLT.isSeekable()) {
+                Mlt::Producer p(MLT.profile(), "xml-string", data->data(Mlt::XmlMimeType).constData());
+                ProxyManager::generateIfNotExists(p);
                 if (row == -1) {
-                    MAIN.undoStack()->push(new Playlist::AppendCommand(m_model, data->data(Mlt::XmlMimeType)));
+                    MAIN.undoStack()->push(new Playlist::AppendCommand(m_model, MLT.XML(&p)));
                     MLT.producer()->set(kPlaylistIndexProperty, m_model.playlist()->count());
                 } else {
-                    MAIN.undoStack()->push(new Playlist::InsertCommand(m_model, data->data(Mlt::XmlMimeType), row));
+                    MAIN.undoStack()->push(new Playlist::InsertCommand(m_model, MLT.XML(&p), row));
                     MLT.producer()->set(kPlaylistIndexProperty, row + 1);
                 }
                 setUpdateButtonEnabled(true);
@@ -847,6 +852,11 @@ void PlaylistDock::onProducerChanged(Mlt::Producer* producer)
         return;
     MAIN.undoStack()->push(new Playlist::UpdateCommand(m_model, MLT.XML(producer), index));
     setUpdateButtonEnabled(false);
+}
+
+void PlaylistDock::refreshTableView()
+{
+    ui->tableView->resizeColumnsToContents();
 }
 
 

@@ -20,6 +20,7 @@
 #include "mltcontroller.h"
 #include "shotcut_mlt_properties.h"
 #include "settings.h"
+#include "proxymanager.h"
 #include <Logger.h>
 
 
@@ -55,6 +56,7 @@ void AppendCommand::redo()
             longTask.reportProgress(QObject::tr("Appending"), i, count);
             QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(i));
             Mlt::Producer clip = Mlt::Producer(info->producer);
+            ProxyManager::generateIfNotExists(clip);
             clip.set_in_and_out(info->frame_in, info->frame_out);
             m_model.appendClip(m_trackIndex, clip);
         }
@@ -97,10 +99,12 @@ void InsertCommand::redo()
         while (i--) {
             QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(i));
             clip = Mlt::Producer(info->producer);
+            ProxyManager::generateIfNotExists(clip);
             clip.set_in_and_out(info->frame_in, info->frame_out);
             m_model.insertClip(m_trackIndex, clip, m_position, m_rippleAllTracks, false);
         }
     } else {
+        ProxyManager::generateIfNotExists(clip);
         m_model.insertClip(m_trackIndex, clip, m_position, m_rippleAllTracks, m_seek);
     }
     m_undoHelper.recordAfterState();
@@ -136,11 +140,13 @@ void OverwriteCommand::redo()
         for (int i = 0; i < playlist.count(); i++) {
             QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(i));
             clip = Mlt::Producer(info->producer);
+            ProxyManager::generateIfNotExists(clip);
             clip.set_in_and_out(info->frame_in, info->frame_out);
             m_model.overwrite(m_trackIndex, clip, position, false);
             position += info->frame_count;
         }
     } else {
+        ProxyManager::generateIfNotExists(clip);
         m_model.overwrite(m_trackIndex, clip, m_position, m_seek);
     }
     m_undoHelper.recordAfterState();

@@ -169,6 +169,7 @@ public:
     void setPreviewScale(int scale);
     void updatePreviewProfile();
     static void purgeMemoryPool();
+    static bool fullRange(Mlt::Producer& producer);
 
 protected:
     Mlt::Repository* m_repo;

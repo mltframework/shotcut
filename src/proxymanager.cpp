@@ -64,10 +64,16 @@ void ProxyManager::generateVideoProxy(Mlt::Producer& producer, bool fullRange, S
     QString resource = ProxyManager::resource(producer);
     QStringList args;
     QString hash = producer.get(kShotcutHashProperty);
-    QString fileName = hash + ".mp4";
+    QString fileName = ProxyManager::dir().filePath(hash + ".pending.mp4");
     QString filters;
     auto hwCodecs = Settings.encodeHardware();
     QString hwFilters;
+
+    // Touch file to make it in progress
+    QFile file(fileName);
+    file.open(QIODevice::WriteOnly);
+    file.resize(0);
+    file.close();
 
     args << "-loglevel" << "verbose";
     args << "-i" << resource;
@@ -166,7 +172,6 @@ void ProxyManager::generateVideoProxy(Mlt::Producer& producer, bool fullRange, S
         args << "-crf" << "23";
     }
     args << "-g" << "1" << "-bf" << "0";
-    fileName = ProxyManager::dir().filePath(fileName);
     args << "-y" << fileName;
 
     FfmpegJob* job = new FfmpegJob(fileName, args, false);
@@ -311,6 +316,52 @@ bool ProxyManager::filterXML(QString& fileName, const QString& root)
             LOG_DEBUG() << fileName;
             tempFile.setAutoRemove(false);
             return true;
+        }
+    }
+    return false;
+}
+
+bool ProxyManager::fileExists(Mlt::Producer& producer)
+{
+    QDir proxyDir(Settings.proxyFolder());
+    QDir projectDir(MLT.projectFolder());
+    QString fileName = Util::getHash(producer) + ".mp4";
+    return (projectDir.cd("proxies") && projectDir.exists(fileName)) || proxyDir.exists(fileName);
+}
+
+bool ProxyManager::filePending(Mlt::Producer& producer)
+{
+    QDir proxyDir(Settings.proxyFolder());
+    QDir projectDir(MLT.projectFolder());
+    QString fileName = Util::getHash(producer) + ".pending.mp4";
+    return (projectDir.cd("proxies") && projectDir.exists(fileName)) || proxyDir.exists(fileName);
+}
+
+// Returns true if the producer exists and was updated with proxy info
+bool ProxyManager::generateIfNotExists(Mlt::Producer& producer)
+{
+    if (Settings.proxyEnabled() && producer.is_valid() && !producer.get_int(kDisableProxyProperty)) {
+        QString service = QString::fromLatin1(producer.get("mlt_service"));
+        if (ProxyManager::fileExists(producer)) {
+            QDir proxyDir(Settings.proxyFolder());
+            QDir projectDir(MLT.projectFolder());
+            if (service.startsWith("avformat")) {
+                QString fileName = Util::getHash(producer) + ".mp4";
+                producer.set(kIsProxyProperty, 1);
+                producer.set(kOriginalResourceProperty, producer.get("resource"));
+                if (projectDir.exists(fileName)) {
+                    producer.set("resource", projectDir.filePath(fileName).toUtf8().constData());
+                } else {
+                    producer.set("resource", proxyDir.filePath(fileName).toUtf8().constData());
+                }
+                return true;
+            }
+        } else if (!filePending(producer)) {
+            if (service.startsWith("avformat")) {
+                // Tag this producer so we do not try to generate proxy again in this session
+                delete producer.get_frame();
+                ProxyManager::generateVideoProxy(producer, MLT.fullRange(producer));
+            }
         }
     }
     return false;
