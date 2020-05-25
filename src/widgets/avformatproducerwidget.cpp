@@ -33,10 +33,21 @@
 #include "proxymanager.h"
 #include <QtWidgets>
 
+static bool ProducerIsTimewarp( Mlt::Producer* producer )
+{
+    return QString::fromUtf8(producer->get("mlt_service")) == "timewarp";
+}
+
 static QString GetFilenameFromProducer(Mlt::Producer* producer, bool useOriginal = true)
 {
-    QString resource = useOriginal? ProxyManager::resource(*producer)
-                                  : QString::fromUtf8(producer->get("resource"));
+    QString resource;
+    if (useOriginal && producer->get(kOriginalResourceProperty)) {
+        resource = QString::fromUtf8(producer->get(kOriginalResourceProperty));
+    } else if (ProducerIsTimewarp(producer)) {
+        resource = QString::fromUtf8(producer->get("warp_resource"));
+    } else {
+        resource = QString::fromUtf8(producer->get("resource"));
+    }
     if (QFileInfo(resource).isRelative()) {
         QString basePath = QFileInfo(MAIN.fileName()).canonicalPath();
         QFileInfo fi(basePath, resource);
@@ -48,7 +59,7 @@ static QString GetFilenameFromProducer(Mlt::Producer* producer, bool useOriginal
 static double GetSpeedFromProducer( Mlt::Producer* producer )
 {
     double speed = 1.0;
-    if (!::qstrcmp(producer->get("mlt_service"), "timewarp")) {
+    if (ProducerIsTimewarp(producer)) {
         speed = fabs(producer->get_double("warp_speed"));
     }
     return speed;
