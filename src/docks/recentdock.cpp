@@ -143,6 +143,6 @@ void RecentDock::on_listWidget_customContextMenuRequested(const QPoint& pos)
     if (ui->listWidget->currentIndex().isValid()) {
         QMenu menu(this);
         menu.addAction(ui->actionDelete);
-        menu.exec(mapToGlobal(pos));
+        menu.exec(mapToGlobal(pos + QPoint(0, ui->lineEdit->height())));
     }
 }

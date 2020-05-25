@@ -73,7 +73,10 @@
   </widget>
   <action name="actionDelete">
    <property name="text">
-    <string>Delete</string>
+    <string>Remove</string>
+   </property>
+   <property name="toolTip">
+    <string>Remove</string>
    </property>
   </action>
  </widget>
