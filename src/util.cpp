@@ -410,7 +410,7 @@ QString Util::getHash(Mlt::Properties& properties)
             resource = QString::fromUtf8(properties.get("warp_resource"));
         else if (service == "vidstab")
             resource = QString::fromUtf8(properties.get("filename"));
-        QString hash = getFileHash(resource);
+        hash = getFileHash(resource);
         if (!hash.isEmpty())
             properties.set(kShotcutHashProperty, hash.toLatin1().constData());
     }
