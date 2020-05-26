@@ -234,6 +234,30 @@ int PlaylistDock::position()
     return result;
 }
 
+void PlaylistDock::replaceClipsWithHash(const QString& hash, Mlt::Producer& producer)
+{
+    QList<Mlt::Producer> producers;
+    for (int i = 0; i < m_model.rowCount(); ++i) {
+        QScopedPointer<Mlt::Producer> clip(m_model.playlist()->get_clip(i));
+        if (Util::getHash(clip->parent()) == hash) {
+            clip->set(kPlaylistIndexProperty, i + 1);
+            producers << *clip;
+        }
+    }
+    auto n = producers.size();
+    if (n > 1) {
+        MAIN.undoStack()->beginMacro(tr("Replace %1 playlist items").arg(n));
+    }
+    for (auto& clip : producers) {
+        Util::applyCustomProperties(producer, clip.parent(), clip.get_in(), clip.get_out());
+        MAIN.undoStack()->push(
+            new Playlist::ReplaceCommand(m_model, MLT.XML(&producer), clip.get_int(kPlaylistIndexProperty) - 1));
+    }
+    if (n > 1) {
+        MAIN.undoStack()->endMacro();
+    }
+}
+
 void PlaylistDock::incrementIndex()
 {
     QModelIndex index = m_view->currentIndex();

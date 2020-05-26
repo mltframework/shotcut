@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2019 Meltytech, LLC
+ * Copyright (c) 2013-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -285,6 +285,32 @@ bool TrimClipOutCommand::mergeWith(const QUndoCommand *other)
         return false;
     m_newOut = that->m_newOut;
     return true;
+}
+
+ReplaceCommand::ReplaceCommand(PlaylistModel& model, const QString& xml, int row, QUndoCommand* parent)
+    : QUndoCommand(parent)
+    , m_model(model)
+    , m_newXml(xml)
+    , m_row(row)
+{
+    setText(QObject::tr("Replace playlist item %1").arg(row + 1));
+    QScopedPointer<Mlt::ClipInfo> info(m_model.playlist()->clip_info(row));
+    info->producer->set_in_and_out(info->frame_in, info->frame_out);
+    m_oldXml = MLT.XML(info->producer);
+}
+
+void ReplaceCommand::redo()
+{
+    LOG_DEBUG() << "row" << m_row;
+    Mlt::Producer producer(MLT.profile(), "xml-string", m_newXml.toUtf8().constData());
+    m_model.update(m_row, producer, true);
+}
+
+void ReplaceCommand::undo()
+{
+    LOG_DEBUG() << "row" << m_row;
+    Mlt::Producer producer(MLT.profile(), "xml-string", m_oldXml.toUtf8().constData());
+    m_model.update(m_row, producer, true);
 }
 
 } // namespace Playlist

@@ -68,7 +68,7 @@ void ProxyManager::generateVideoProxy(Mlt::Producer& producer, bool fullRange, S
     // Always regenerate per preview scaling or 540 if not specified
     QString resource = ProxyManager::resource(producer);
     QStringList args;
-    QString hash = producer.get(kShotcutHashProperty);
+    QString hash = Util::getHash(producer);
     QString fileName = ProxyManager::dir().filePath(hash + kProxyPendingVideoExtension);
     QString filters;
     auto hwCodecs = Settings.encodeHardware();

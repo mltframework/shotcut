@@ -652,7 +652,7 @@ void PlaylistModel::remove(int row)
         emit modified();
 }
 
-void PlaylistModel::update(int row, Mlt::Producer& producer)
+void PlaylistModel::update(int row, Mlt::Producer& producer, bool copyFilters)
 {
     if (!m_playlist) return;
     int in = producer.get_in();
@@ -660,6 +660,12 @@ void PlaylistModel::update(int row, Mlt::Producer& producer)
     producer.set_in_and_out(0, producer.get_length() - 1);
     QThreadPool::globalInstance()->start(
         new UpdateThumbnailTask(this, producer, in, out, row), 1);
+    if (copyFilters) {
+        Mlt::Producer oldClip(m_playlist->get_clip(row));
+        Q_ASSERT(oldClip.is_valid());
+        Mlt::Controller::copyFilters(oldClip.parent(), producer);
+        Mlt::Controller::adjustFilters(producer);
+    }
     m_playlist->remove(row);
     m_playlist->insert(producer, row, in, out);
     emit dataChanged(createIndex(row, 0), createIndex(row, columnCount()));

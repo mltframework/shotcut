@@ -36,6 +36,7 @@
 #include <Logger.h>
 #include "shotcut_mlt_properties.h"
 #include "qmltypes/qmlapplication.h"
+#include "proxymanager.h"
 
 QString Util::baseName(const QString &filePath)
 {
@@ -136,9 +137,7 @@ QString Util::producerTitle(const Mlt::Producer& producer)
         return QObject::tr("Master");
     if (p.get(kShotcutCaptionProperty))
         return QString::fromUtf8(p.get(kShotcutCaptionProperty));
-    if (p.get("resource"))
-        return Util::baseName(QString::fromUtf8(p.get("resource")));
-    return result;
+    return Util::baseName(ProxyManager::resource(p));
 }
 
 QString Util::removeFileScheme(QUrl& url)

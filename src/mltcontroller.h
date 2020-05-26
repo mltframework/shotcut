@@ -126,7 +126,7 @@ public:
     static void copyFilters(Mlt::Producer& fromProducer, Mlt::Producer& toProducer, bool fromClipboard = false);
     void copyFilters(Mlt::Producer* producer = nullptr);
     void pasteFilters(Mlt::Producer* producer = nullptr);
-    static void adjustFilters(Mlt::Producer& producer, int startIndex);
+    static void adjustFilters(Mlt::Producer& producer, int startIndex = 0);
     bool hasFiltersOnClipboard() const {
         return m_filtersClipboard->is_valid() && m_filtersClipboard->filter_count() > 0;
     }

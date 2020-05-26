@@ -4337,7 +4337,7 @@ void MainWindow::replaceAllByHash(const QString& hash, Mlt::Producer& producer, 
     }
     if (playlist()) {
         if (isProxy) {
-            //TODO replace all in playlist
+            m_playlistDock->replaceClipsWithHash(hash, producer);
         } else {
             // Append to playlist
             producer.set(kPlaylistIndexProperty, playlist()->count());

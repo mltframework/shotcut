@@ -3090,7 +3090,7 @@ void MultitrackModel::replace(int trackIndex, int clipIndex, Mlt::Producer& clip
             parent.set(kFilterInProperty, oldClip.get_in());
             parent.set(kFilterOutProperty, oldClip.get_out());
             Mlt::Controller::copyFilters(parent, clip);
-            Mlt::Controller::adjustFilters(clip, 0);
+            Mlt::Controller::adjustFilters(clip);
         }
         beginRemoveRows(index(trackIndex), clipIndex, clipIndex);
         playlist.remove(clipIndex);
