@@ -848,11 +848,10 @@ void Controller::setOut(int out)
                         QmlMetadata* meta = MAIN.filterController()->metadataForService(filter.data());
                         if (meta && meta->keyframes()) {
                             foreach (QString name, meta->keyframes()->simpleProperties()) {
-                                const char* propertyName = name.toUtf8().constData();
-                                if (!filter->get_animation(propertyName))
+                                if (!filter->get_animation(name.toUtf8().constData()))
                                     // Cause a string property to be interpreted as animated value.
-                                    filter->anim_get_double(propertyName, 0, filter->get_length());
-                                Mlt::Animation animation = filter->get_animation(propertyName);
+                                    filter->anim_get_double(name.toUtf8().constData(), 0, filter->get_length());
+                                Mlt::Animation animation = filter->get_animation(name.toUtf8().constData());
                                 if (animation.is_valid()) {
                                     int n = animation.key_count();
                                     if (n > 1) {
@@ -1128,11 +1127,10 @@ void Controller::adjustFilters(Producer& producer, int index)
                     QmlMetadata* meta = MAIN.filterController()->metadataForService(filter.data());
                     if (meta && meta->keyframes()) {
                         foreach (QString name, meta->keyframes()->simpleProperties()) {
-                            const char* propertyName = name.toUtf8().constData();
-                            if (!filter->get_animation(propertyName))
+                            if (!filter->get_animation(name.toUtf8().constData()))
                                 // Cause a string property to be interpreted as animated value.
-                                filter->anim_get_double(propertyName, 0, filter->get_length());
-                            Mlt::Animation animation = filter->get_animation(propertyName);
+                                filter->anim_get_double(name.toUtf8().constData(), 0, filter->get_length());
+                            Mlt::Animation animation = filter->get_animation(name.toUtf8().constData());
                             if (animation.is_valid()) {
                                 int n = animation.key_count();
                                 if (n > 1) {
