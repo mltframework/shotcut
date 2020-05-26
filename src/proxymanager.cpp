@@ -30,6 +30,9 @@
 #include <QXmlStreamWriter>
 #include <Logger.h>
 
+static const char* kProxyVideoExtension = ".mp4";
+static const char* kProxyPendingVideoExtension = ".pending.mp4";
+
 QDir ProxyManager::dir()
 {
     // Use project folder + "/proxies" if using project folder and enabled
@@ -64,7 +67,7 @@ void ProxyManager::generateVideoProxy(Mlt::Producer& producer, bool fullRange, S
     QString resource = ProxyManager::resource(producer);
     QStringList args;
     QString hash = producer.get(kShotcutHashProperty);
-    QString fileName = ProxyManager::dir().filePath(hash + ".pending.mp4");
+    QString fileName = ProxyManager::dir().filePath(hash + kProxyPendingVideoExtension);
     QString filters;
     auto hwCodecs = Settings.encodeHardware();
     QString hwFilters;
@@ -325,7 +328,7 @@ bool ProxyManager::fileExists(Mlt::Producer& producer)
 {
     QDir proxyDir(Settings.proxyFolder());
     QDir projectDir(MLT.projectFolder());
-    QString fileName = Util::getHash(producer) + ".mp4";
+    QString fileName = Util::getHash(producer) + kProxyVideoExtension;
     return (projectDir.cd("proxies") && projectDir.exists(fileName)) || proxyDir.exists(fileName);
 }
 
@@ -333,7 +336,7 @@ bool ProxyManager::filePending(Mlt::Producer& producer)
 {
     QDir proxyDir(Settings.proxyFolder());
     QDir projectDir(MLT.projectFolder());
-    QString fileName = Util::getHash(producer) + ".pending.mp4";
+    QString fileName = Util::getHash(producer) + kProxyPendingVideoExtension;
     return (projectDir.cd("proxies") && projectDir.exists(fileName)) || proxyDir.exists(fileName);
 }
 
@@ -346,7 +349,7 @@ bool ProxyManager::generateIfNotExists(Mlt::Producer& producer)
             QDir proxyDir(Settings.proxyFolder());
             QDir projectDir(MLT.projectFolder());
             if (service.startsWith("avformat")) {
-                QString fileName = Util::getHash(producer) + ".mp4";
+                QString fileName = Util::getHash(producer) + kProxyVideoExtension;
                 producer.set(kIsProxyProperty, 1);
                 producer.set(kOriginalResourceProperty, producer.get("resource"));
                 if (projectDir.exists(fileName)) {
@@ -365,4 +368,9 @@ bool ProxyManager::generateIfNotExists(Mlt::Producer& producer)
         }
     }
     return false;
+}
+
+const char* ProxyManager::videoFilenameExtension()
+{
+    return kProxyVideoExtension;
 }

@@ -1144,7 +1144,7 @@ void AvformatProducerWidget::on_actionDisableProxy_triggered(bool checked)
         // Generate proxy if it does not exist
         if (Settings.proxyEnabled()) {
             QString hash = Util::getHash(*producer());
-            QString fileName = hash + ".mp4";
+            QString fileName = hash + ProxyManager::videoFilenameExtension();
             if (!ProxyManager::dir().exists(fileName))
                 on_actionMakeProxy_triggered();
         }
@@ -1167,7 +1167,7 @@ void AvformatProducerWidget::on_actionDeleteProxy_triggered()
 {
     // Delete the file if it exists
     QString hash = Util::getHash(*producer());
-    QString fileName = hash + ".mp4";
+    QString fileName = hash + ProxyManager::videoFilenameExtension();
     QDir dir = ProxyManager::dir();
     fileName = dir.filePath(fileName);
     dir.remove(fileName);

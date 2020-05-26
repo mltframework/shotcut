@@ -532,7 +532,7 @@ void MltXmlChecker::checkForProxy(const QString& mlt_service, QVector<MltXmlChec
         }
         QDir proxyDir(Settings.proxyFolder());
         QDir projectDir(QFileInfo(m_tempFile->fileName()).dir());
-        QString fileName = hash + ".mp4";
+        QString fileName = hash + ProxyManager::videoFilenameExtension();
         projectDir.cd("proxies");
         if (proxyDir.exists(fileName) || projectDir.exists(fileName)) {
             for (auto& p : properties) {

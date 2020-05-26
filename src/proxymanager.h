@@ -47,6 +47,7 @@ public:
     static bool fileExists(Mlt::Producer& producer);
     static bool filePending(Mlt::Producer& producer);
     static bool generateIfNotExists(Mlt::Producer& producer);
+    static const char* videoFilenameExtension();
 };
 
 #endif // PROXYMANAGER_H
