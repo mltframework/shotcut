@@ -113,6 +113,8 @@ private slots:
 
     void on_actionDeleteProxy_triggered();
 
+    void on_actionCopyHashCode_triggered();
+
 private:
     Ui::AvformatProducerWidget *ui;
     int m_defaultDuration;

@@ -914,6 +914,11 @@
     <string>Delete Proxy</string>
    </property>
   </action>
+  <action name="actionCopyHashCode">
+   <property name="text">
+    <string>Copy Hash Code</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>

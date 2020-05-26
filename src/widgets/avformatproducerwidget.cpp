@@ -688,6 +688,7 @@ void AvformatProducerWidget::on_menuButton_clicked()
     if (!MLT.resource().contains("://")) // not a network stream
         menu.addAction(ui->actionOpenFolder);
     menu.addAction(ui->actionCopyFullFilePath);
+    menu.addAction(ui->actionCopyHashCode);
     menu.addAction(ui->actionFFmpegInfo);
     menu.addAction(ui->actionFFmpegIntegrityCheck);
     menu.addAction(ui->actionFFmpegConvert);
@@ -1186,4 +1187,12 @@ void AvformatProducerWidget::on_actionDeleteProxy_triggered()
             MAIN.replaceAllByHash(hash, original, true);
         }
     }
+}
+
+void AvformatProducerWidget::on_actionCopyHashCode_triggered()
+{
+    qApp->clipboard()->setText(Util::getHash(*producer()));
+    QMessageBox::information(this, qApp->applicationName(),
+                             Util::getHash(*producer()),
+                             QMessageBox::Ok);
 }
