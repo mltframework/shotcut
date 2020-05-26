@@ -1169,8 +1169,11 @@ void AvformatProducerWidget::on_actionDeleteProxy_triggered()
     QString hash = Util::getHash(*producer());
     QString fileName = hash + ProxyManager::videoFilenameExtension();
     QDir dir = ProxyManager::dir();
-    fileName = dir.filePath(fileName);
-    dir.remove(fileName);
+    dir.remove(dir.filePath(fileName));
+
+    // Delete the pending file if it exists));
+    fileName = hash + ProxyManager::pendingVideoExtension();
+    dir.remove(dir.filePath(fileName));
 
     // Replace with original
     if (producer()->get_int(kIsProxyProperty) && producer()->get(kOriginalResourceProperty)) {

@@ -212,7 +212,6 @@
     <addaction name="actionProject"/>
     <addaction name="actionGPU"/>
     <addaction name="menuProfile"/>
-    <addaction name="menuProxy"/>
     <addaction name="menuAudioChannels"/>
     <addaction name="separator"/>
     <addaction name="actionPlayer"/>
@@ -221,6 +220,7 @@
     <addaction name="actionRealtime"/>
     <addaction name="actionProgressive"/>
     <addaction name="menuPreviewScaling"/>
+    <addaction name="menuProxy"/>
     <addaction name="menuDeinterlacer"/>
     <addaction name="menuInterpolation"/>
     <addaction name="menuExternal"/>

@@ -105,6 +105,13 @@ void JobQueue::onFinished(AbstractJob* job, bool isSuccess, QString time)
             item->setText(tr("failed").append(' ').append(time));
             icon = QIcon(":/icons/oxygen/32x32/status/task-reject.png");
         }
+
+        // Remove any touched or incomplete pending proxy files
+        if (job->stopped() || !isSuccess)
+        if (job->objectName().contains("proxies") && job->objectName().contains(".pending")) {
+            QFile::remove(job->objectName());
+        }
+
         item = JOBS.item(item->row(), JobQueue::COLUMN_ICON);
         if (item)
             item->setIcon(icon);

@@ -32,6 +32,8 @@
 
 static const char* kProxyVideoExtension = ".mp4";
 static const char* kProxyPendingVideoExtension = ".pending.mp4";
+static const float kProxyResolutionRatio = 1.3f;
+static const int   kFallbackProxyResolution = 540;
 
 QDir ProxyManager::dir()
 {
@@ -94,7 +96,7 @@ void ProxyManager::generateVideoProxy(Mlt::Producer& producer, bool fullRange, S
     } else if (scanMode != Progressive) {
         filters = QString("yadif=parity=%1,").arg(scanMode == InterlacedTopFieldFirst? "tff" : "bff");
     }
-    filters += QString("scale=width=-2:height=%1").arg(Settings.playerPreviewScale()? Settings.playerPreviewScale() : 540);
+    filters += QString("scale=width=-2:height=%1").arg(resolution());
     if (Settings.encodeUseHardware() && (hwCodecs.contains("hevc_vaapi") || hwCodecs.contains("h264_vaapi"))) {
         hwFilters = ",format=nv12,hwupload";
     }
@@ -363,7 +365,11 @@ bool ProxyManager::generateIfNotExists(Mlt::Producer& producer)
             if (service.startsWith("avformat")) {
                 // Tag this producer so we do not try to generate proxy again in this session
                 delete producer.get_frame();
-                ProxyManager::generateVideoProxy(producer, MLT.fullRange(producer));
+                auto threshold = qRound(kProxyResolutionRatio * resolution());
+                LOG_DEBUG() << producer.get_int("meta.media.width") << "x" << producer.get_int("meta.media.height") << "threshold" << threshold;
+                if (producer.get_int("meta.media.width") > threshold && producer.get_int("meta.media.height") > threshold) {
+                    ProxyManager::generateVideoProxy(producer, MLT.fullRange(producer));
+                }
             }
         }
     }
@@ -373,4 +379,14 @@ bool ProxyManager::generateIfNotExists(Mlt::Producer& producer)
 const char* ProxyManager::videoFilenameExtension()
 {
     return kProxyVideoExtension;
+}
+
+const char* ProxyManager::pendingVideoExtension()
+{
+    return kProxyPendingVideoExtension;
+}
+
+int ProxyManager::resolution()
+{
+    return Settings.playerPreviewScale()? Settings.playerPreviewScale() : kFallbackProxyResolution;
 }
