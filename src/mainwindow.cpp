@@ -77,6 +77,7 @@
 #include "dialogs/listselectiondialog.h"
 #include "widgets/textproducerwidget.h"
 #include "qmltypes/qmlprofile.h"
+#include "dialogs/longuitask.h"
 #include "dialogs/systemsyncdialog.h"
 
 #include <QtWidgets>
@@ -3313,42 +3314,37 @@ void MainWindow::changeInterpolation(bool checked, const char* method)
     Settings.setPlayerInterpolation(method);
 }
 
-void AppendTask::run()
-{
-    foreach (QString filename, filenames) {
-        LOG_DEBUG() << filename;
-        Mlt::Producer p(MLT.profile(), filename.toUtf8().constData());
-        if (p.is_valid()) {
-            // Convert avformat to avformat-novalidate so that XML loads faster.
-            if (!qstrcmp(p.get("mlt_service"), "avformat")) {
-                p.set("mlt_service", "avformat-novalidate");
-                p.set("mute_on_pause", 0);
-            }
-            if (QDir::toNativeSeparators(filename) == QDir::toNativeSeparators(MAIN.fileName())) {
-                MAIN.showStatusMessage(QObject::tr("You cannot add a project to itself!"));
-                continue;
-            }
-            MLT.setImageDurationFromDefault(&p);
-            MLT.lockCreationTime(&p);
-            p.get_length_time(mlt_time_clock);
-            MAIN.getHash(p);
-            emit appendToPlaylist(MLT.XML(&p));
-        }
-    }
-    emit done();
-}
-
 void MainWindow::processMultipleFiles()
 {
-    if (m_multipleFiles.length() > 1) {
+    int count = m_multipleFiles.length();
+    if (count > 1) {
+        LongUiTask longTask(tr("Open Files"));
         m_playlistDock->show();
         m_playlistDock->raise();
-        AppendTask* task = new AppendTask(m_multipleFiles);
-        connect(task, SIGNAL(appendToPlaylist(QString)), SLOT(onAppendToPlaylist(QString)));
-        connect(task, SIGNAL(done()), SLOT(onAppendTaskDone()));
-        QThreadPool::globalInstance()->start(task, 9);
-        foreach (QString filename, m_multipleFiles)
-            m_recentDock->add(filename.toUtf8().constData());
+        for (int i = 0; i < count; i++) {
+            QString filename = m_multipleFiles.takeFirst();
+            LOG_DEBUG() << filename;
+            longTask.reportProgress(QFileInfo(filename).fileName(), i, count);
+            Mlt::Producer p(MLT.profile(), filename.toUtf8().constData());
+            if (p.is_valid()) {
+                // Convert avformat to avformat-novalidate so that XML loads faster.
+                if (!qstrcmp(p.get("mlt_service"), "avformat")) {
+                    p.set("mlt_service", "avformat-novalidate");
+                    p.set("mute_on_pause", 0);
+                }
+                if (QDir::toNativeSeparators(filename) == QDir::toNativeSeparators(MAIN.fileName())) {
+                    MAIN.showStatusMessage(QObject::tr("You cannot add a project to itself!"));
+                    continue;
+                }
+                MLT.setImageDurationFromDefault(&p);
+                MLT.lockCreationTime(&p);
+                p.get_length_time(mlt_time_clock);
+                MAIN.getHash(p);
+                undoStack()->push(new Playlist::AppendCommand(*m_playlistDock->model(), MLT.XML(&p), false));
+                m_recentDock->add(filename.toUtf8().constData());
+            }
+        }
+        emit m_playlistDock->model()->modified();
     }
     m_multipleFiles.clear();
     if (m_isPlaylistLoaded && Settings.playerGPU()) {
@@ -4164,17 +4160,6 @@ void MainWindow::on_actionLayoutRemove_triggered()
             }
         }
     }
-}
-
-void MainWindow::onAppendToPlaylist(const QString& xml)
-{
-    undoStack()->push(new Playlist::AppendCommand(*m_playlistDock->model(), xml, false));
-}
-
-void MainWindow::onAppendTaskDone()
-{
-    qApp->processEvents();
-    emit m_playlistDock->model()->modified();
 }
 
 void MainWindow::on_actionOpenOther2_triggered()

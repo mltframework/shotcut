@@ -15,14 +15,22 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "dialogs/longuitask.h"
 #include "timelinecommands.h"
 #include "mltcontroller.h"
 #include "shotcut_mlt_properties.h"
 #include "settings.h"
 #include <Logger.h>
+
+
 #include <QMetaObject>
 
 namespace Timeline {
+
+Mlt::Producer* deserializeProducer(QString& xml)
+{
+    return new Mlt::Producer(MLT.profile(), "xml-string", xml.toUtf8().constData());
+}
 
 AppendCommand::AppendCommand(MultitrackModel &model, int trackIndex, const QString &xml, QUndoCommand *parent)
     : QUndoCommand(parent)
@@ -34,24 +42,27 @@ AppendCommand::AppendCommand(MultitrackModel &model, int trackIndex, const QStri
     setText(QObject::tr("Append to track"));
 }
 
-
 void AppendCommand::redo()
 {
     LOG_DEBUG() << "trackIndex" << m_trackIndex;
+    LongUiTask longTask(QObject::tr("Append to Timeline"));
     m_undoHelper.recordBeforeState();
-    Mlt::Producer clip(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
-    if (clip.type() == playlist_type) {
-        Mlt::Playlist playlist(clip);
+    Mlt::Producer* producer = longTask.runAsync<Mlt::Producer*>(QObject::tr("Preparing"), deserializeProducer, m_xml);
+    if (producer->type() == playlist_type) {
+        Mlt::Playlist playlist(*producer);
         int count = playlist.count();
         for (int i = 0; i < count; i++) {
+            longTask.reportProgress(QObject::tr("Appending"), i, count);
             QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(i));
-            clip = Mlt::Producer(info->producer);
+            Mlt::Producer clip = Mlt::Producer(info->producer);
             clip.set_in_and_out(info->frame_in, info->frame_out);
             m_model.appendClip(m_trackIndex, clip);
         }
     } else {
-        m_model.appendClip(m_trackIndex, clip);
+        m_model.appendClip(m_trackIndex, *producer);
     }
+    longTask.reportProgress(QObject::tr("Finishing"), 0, 0);
+    delete producer;
     m_undoHelper.recordAfterState();
 }
 

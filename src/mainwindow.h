@@ -25,7 +25,6 @@
 #include <QNetworkAccessManager>
 #include <QScopedPointer>
 #include <QSharedPointer>
-#include <QRunnable>
 #include "mltcontroller.h"
 #include "mltxmlchecker.h"
 
@@ -49,24 +48,6 @@ class TimelineDock;
 class AutoSaveFile;
 class QNetworkReply;
 class KeyframesDock;
-
-class AppendTask : public QObject, public QRunnable
-{
-    Q_OBJECT
-public:
-    AppendTask(const QStringList& filenames)
-        : QRunnable()
-        , filenames(filenames)
-        {}
-    void run();
-
-signals:
-    void appendToPlaylist(QString);
-    void done();
-
-private:
-    const QStringList filenames;
-};
 
 class MainWindow : public QMainWindow
 {
@@ -324,8 +305,6 @@ private slots:
     void onLayoutTriggered(QAction*);
     void on_actionProfileRemove_triggered();
     void on_actionLayoutRemove_triggered();
-    void onAppendToPlaylist(const QString& xml);
-    void onAppendTaskDone();
     void on_actionOpenOther2_triggered();
     void onOpenOtherTriggered(QWidget* widget);
     void onOpenOtherTriggered();

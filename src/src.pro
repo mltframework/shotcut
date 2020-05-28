@@ -126,6 +126,7 @@ SOURCES += main.cpp\
     widgets/slideshowgeneratorwidget.cpp \
     widgets/textproducerwidget.cpp \
     dialogs/listselectiondialog.cpp \
+    dialogs/longuitask.cpp \
     widgets/newprojectfolder.cpp \
     qmltypes/webvfxtemplatesmodel.cpp \
     widgets/playlistlistview.cpp
@@ -252,6 +253,7 @@ HEADERS  += mainwindow.h \
     widgets/slideshowgeneratorwidget.h \
     widgets/textproducerwidget.h \
     dialogs/listselectiondialog.h \
+    dialogs/longuitask.h \
     widgets/newprojectfolder.h \
     qmltypes/webvfxtemplatesmodel.h \
     widgets/playlistlistview.h
