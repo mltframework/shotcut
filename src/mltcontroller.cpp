@@ -1261,6 +1261,11 @@ void Controller::updatePreviewProfile()
     m_previewProfile.set_explicit(true);
 }
 
+void Controller::purgeMemoryPool()
+{
+    ::mlt_pool_purge();
+}
+
 void TransportControl::play(double speed)
 {
     MLT.play(speed);

@@ -1434,6 +1434,7 @@ void EncodeDock::on_encodeButton_clicked()
         }
 
         if (seekable) {
+            MLT.purgeMemoryPool();
             // Batch encode
             int threadCount = QThread::idealThreadCount();
             if (threadCount > 2 && ui->parallelCheckbox->isChecked())

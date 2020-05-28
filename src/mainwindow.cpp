@@ -1277,6 +1277,7 @@ void MainWindow::open(QString url, const Mlt::Properties* properties)
             m_playlistDock->model()->close();
         if (multitrack())
             m_timelineDock->model()->close();
+        MLT.purgeMemoryPool();
         if (!isXmlRepaired(checker, url))
             return;
         modified = checkAutoSave(url);
@@ -3796,6 +3797,7 @@ void MainWindow::on_actionClose_triggered()
             m_playlistDock->model()->close();
         else
             onMultitrackClosed();
+        MLT.purgeMemoryPool();
         MLT.resetLocale();
     }
 }
