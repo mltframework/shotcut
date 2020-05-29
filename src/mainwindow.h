@@ -322,6 +322,8 @@ private slots:
     void on_actionProxyStorageSet_triggered();
     void on_actionProxyStorageShow_triggered();
     void on_actionProxyUseProjectFolder_triggered(bool checked);
+    void on_actionProxyUseHardware_triggered(bool checked);
+    void on_actionProxyConfigureHardware_triggered();
 };
 
 #define MAIN MainWindow::singleton()

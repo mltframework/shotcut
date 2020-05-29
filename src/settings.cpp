@@ -807,12 +807,12 @@ void ShotcutSettings::setProjectsFolder(const QString &path)
 
 bool ShotcutSettings::proxyEnabled() const
 {
-    return settings.value("proxyEnabled", false).toBool();
+    return settings.value("proxy/enabled", false).toBool();
 }
 
 void ShotcutSettings::setProxyEnabled(bool b)
 {
-    settings.setValue("proxyEnabled", b);
+    settings.setValue("proxy/enabled", b);
 }
 
 QString ShotcutSettings::proxyFolder() const
@@ -823,22 +823,32 @@ QString ShotcutSettings::proxyFolder() const
         if (dir.mkdir(subfolder))
             dir.cd(subfolder);
     }
-    return settings.value("proxyFolder", dir.path()).toString();
+    return settings.value("proxy/folder", dir.path()).toString();
 }
 
 void ShotcutSettings::setProxyFolder(const QString& path)
 {
-    settings.setValue("proxyFolder", path);
+    settings.setValue("proxy/folder", path);
 }
 
 bool ShotcutSettings::proxyUseProjectFolder() const
 {
-    return settings.value("proxyProjectFolder", true).toBool();
+    return settings.value("proxy/useProjectFolder", true).toBool();
 }
 
 void ShotcutSettings::setProxyUseProjectFolder(bool b)
 {
-    settings.setValue("proxyProjectFolder", b);
+    settings.setValue("proxy/useProjectFolder", b);
+}
+
+bool ShotcutSettings::proxyUseHardware() const
+{
+    return settings.value("proxy/useHardware", false).toBool();
+}
+
+void ShotcutSettings::setProxyUseHardware(bool b)
+{
+    settings.setValue("proxy/useHardware", b);
 }
 
 int ShotcutSettings::undoLimit() const

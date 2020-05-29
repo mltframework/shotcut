@@ -207,6 +207,8 @@ public:
     void setProxyFolder(const QString& path);
     bool proxyUseProjectFolder() const;
     void setProxyUseProjectFolder(bool);
+    bool proxyUseHardware() const;
+    void setProxyUseHardware(bool);
 
     int undoLimit() const;
 

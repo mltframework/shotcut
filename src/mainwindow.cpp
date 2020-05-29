@@ -843,6 +843,7 @@ void MainWindow::setupSettingsMenu()
     // Initialze the proxy submenu
     ui->actionUseProxy->setChecked(Settings.proxyEnabled());
     ui->actionProxyUseProjectFolder->setChecked(Settings.proxyUseProjectFolder());
+    ui->actionProxyUseHardware->setChecked(Settings.proxyUseHardware());
 
     LOG_DEBUG() << "end";
 }
@@ -4434,4 +4435,22 @@ void MainWindow::on_actionProxyStorageShow_triggered()
 void MainWindow::on_actionProxyUseProjectFolder_triggered(bool checked)
 {
     Settings.setProxyUseProjectFolder(checked);
+}
+
+void MainWindow::on_actionProxyUseHardware_triggered(bool checked)
+{
+    if (checked && Settings.encodeHardware().isEmpty()) {
+        if (!m_encodeDock->detectHardwareEncoders())
+            ui->actionProxyUseHardware->setChecked(false);
+    }
+    Settings.setProxyUseHardware(ui->actionProxyUseHardware->isChecked());
+}
+
+void MainWindow::on_actionProxyConfigureHardware_triggered()
+{
+    m_encodeDock->on_hwencodeButton_clicked();
+    if (Settings.encodeHardware().isEmpty()) {
+        ui->actionProxyUseHardware->setChecked(false);
+        Settings.setProxyUseHardware(false);
+    }
 }

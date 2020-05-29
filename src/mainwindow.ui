@@ -39,7 +39,7 @@
      <x>0</x>
      <y>0</y>
      <width>1270</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -208,6 +208,9 @@
      </widget>
      <addaction name="actionUseProxy"/>
      <addaction name="menuStorage"/>
+     <addaction name="separator"/>
+     <addaction name="actionProxyUseHardware"/>
+     <addaction name="actionProxyConfigureHardware"/>
     </widget>
     <addaction name="actionProject"/>
     <addaction name="actionGPU"/>
@@ -1132,6 +1135,19 @@
    </property>
    <property name="toolTip">
     <string>Store proxies in the project folder if defined</string>
+   </property>
+  </action>
+  <action name="actionProxyUseHardware">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Use Hardware Encoder</string>
+   </property>
+  </action>
+  <action name="actionProxyConfigureHardware">
+   <property name="text">
+    <string>Configure Hardware Encoder...</string>
    </property>
   </action>
  </widget>

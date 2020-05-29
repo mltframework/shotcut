@@ -60,6 +60,8 @@ public slots:
     void onAudioChannelsChanged();
     void onProducerOpened();
     void onProfileChanged();
+    void on_hwencodeButton_clicked();
+    bool detectHardwareEncoders();
 
 private slots:
     void on_presetsTree_clicked(const QModelIndex &index);
@@ -111,8 +113,6 @@ private slots:
 
     void on_hwencodeCheckBox_clicked(bool checked);
 
-    void on_hwencodeButton_clicked();
-
     void on_advancedCheckBox_clicked(bool checked);
 
     void on_fpsSpinner_editingFinished();
@@ -124,8 +124,6 @@ private slots:
     void on_audioQualitySpinner_valueChanged(int aq);
 
     void on_parallelCheckbox_clicked(bool checked);
-
-    void detectHardwareEncoders();
 
 private:
     enum {

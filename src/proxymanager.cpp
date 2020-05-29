@@ -97,7 +97,7 @@ void ProxyManager::generateVideoProxy(Mlt::Producer& producer, bool fullRange, S
         filters = QString("yadif=parity=%1,").arg(scanMode == InterlacedTopFieldFirst? "tff" : "bff");
     }
     filters += QString("scale=width=-2:height=%1").arg(resolution());
-    if (Settings.encodeUseHardware() && (hwCodecs.contains("hevc_vaapi") || hwCodecs.contains("h264_vaapi"))) {
+    if (Settings.proxyUseHardware() && (hwCodecs.contains("hevc_vaapi") || hwCodecs.contains("h264_vaapi"))) {
         hwFilters = ",format=nv12,hwupload";
     }
     if (fullRange) {
@@ -144,7 +144,7 @@ void ProxyManager::generateVideoProxy(Mlt::Producer& producer, bool fullRange, S
         args << "-aspect" << QString("%1:%2").arg(aspectRatio.x()).arg(aspectRatio.y());
     }
     args << "-f" << "mp4" << "-codec:a" << "ac3" << "-b:a" << "256k";
-    if (Settings.encodeUseHardware()) {
+    if (Settings.proxyUseHardware()) {
         if (hwCodecs.contains("hevc_nvenc")) {
             args << "-codec:v" << "hevc_nvenc";
             args << "-rc" << "constqp";
