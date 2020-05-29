@@ -61,6 +61,7 @@ void AppendCommand::redo()
             m_model.appendClip(m_trackIndex, clip);
         }
     } else {
+        ProxyManager::generateIfNotExists(*producer);
         m_model.appendClip(m_trackIndex, *producer);
     }
     longTask.reportProgress(QObject::tr("Finishing"), 0, 0);

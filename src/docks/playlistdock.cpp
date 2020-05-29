@@ -878,12 +878,6 @@ void PlaylistDock::onProducerChanged(Mlt::Producer* producer)
     setUpdateButtonEnabled(false);
 }
 
-void PlaylistDock::refreshTableView()
-{
-    ui->tableView->resizeColumnsToContents();
-}
-
-
 void PlaylistDock::updateViewModeFromActions()
 {
     PlaylistModel::ViewMode mode;

@@ -67,7 +67,6 @@ public slots:
     void on_actionSelectAll_triggered();
     void on_actionSelectNone_triggered();
     void onProducerChanged(Mlt::Producer* producer);
-    void refreshTableView();
 
 private slots:
     void on_menuButton_clicked();
