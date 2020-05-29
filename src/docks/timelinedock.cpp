@@ -1187,7 +1187,8 @@ void TimelineDock::appendFromPlaylist(Mlt::Playlist *playlist)
         pulseLockButtonOnTrack(trackIndex);
         return;
     }
-    m_model.appendFromPlaylist(playlist, trackIndex);
+    MAIN.undoStack()->push(
+        new Timeline::AppendCommand(m_model, trackIndex, MLT.XML(playlist)));
     selectClipUnderPlayhead();
 }
 

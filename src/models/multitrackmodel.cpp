@@ -1287,35 +1287,6 @@ void MultitrackModel::joinClips(int trackIndex, int clipIndex)
     }
 }
 
-void MultitrackModel::appendFromPlaylist(Mlt::Playlist *from, int trackIndex)
-{
-    createIfNeeded();
-    int i = m_trackList.at(trackIndex).mlt_index;
-    QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
-    if (track) {
-        Mlt::Playlist playlist(*track);
-        removeBlankPlaceholder(playlist, trackIndex);
-        i = playlist.count();
-        beginInsertRows(index(trackIndex), i, i + from->count() - 1);
-        for (int j = 0; j < from->count(); j++) {
-            QScopedPointer<Mlt::Producer> clip(from->get_clip(j));
-            if (!clip->is_blank()) {
-                QString xml = MLT.XML(&clip.data()->parent());
-                Mlt::Producer producer(MLT.profile(), "xml-string", xml.toUtf8().constData());
-                producer.set_in_and_out(0, producer.get_length() - 1);
-                playlist.append(producer.parent(), clip->get_in(), clip->get_out());
-                QModelIndex modelIndex = createIndex(j, 0, trackIndex);
-                AudioLevelsTask::start(producer.parent(), this, modelIndex);
-            } else {
-                playlist.blank(clip->get_out());
-            }
-        }
-        endInsertRows();
-        emit modified();
-        emit seeked(playlist.get_playtime());
-    }
-}
-
 void MultitrackModel::overwriteFromPlaylist(Mlt::Playlist& from, int trackIndex, int position)
 {
     int i = m_trackList.at(trackIndex).mlt_index;

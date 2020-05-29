@@ -19,7 +19,6 @@
 #include "mltcontroller.h"
 #include <QtWidgets>
 
-static const int margin = 14;        /// left and right margins
 static const int selectionSize = 14; /// the height of the top bar
 #ifndef CLAMP
 #define CLAMP(x, min, max) (((x) < (min))? (min) : ((x) > (max))? (max) : (x))
@@ -33,6 +32,7 @@ ScrubBar::ScrubBar(QWidget *parent)
     , m_max(1)
     , m_in(-1)
     , m_out(-1)
+    , m_margin(14) /// left and right margins
     , m_activeControl(CONTROL_NONE)
     , m_timecodeWidth(0)
 {
@@ -49,7 +49,7 @@ void ScrubBar::setScale(int maximum)
     }
     m_max = maximum;
     /// m_scale is the pixels per frame ratio
-    m_scale = (double) (width() - 2 * margin) / (double) maximum;
+    m_scale = (double) (width() - 2 * m_margin) / (double) maximum;
     if (m_scale == 0) m_scale = -1;
     m_secondsPerTick = qRound(double(m_timecodeWidth * 1.8) / m_scale / m_fps);
     if (m_secondsPerTick > 3600)
@@ -105,7 +105,7 @@ void ScrubBar::setMarkers(const QList<int> &list)
 
 void ScrubBar::mousePressEvent(QMouseEvent * event)
 {
-    int x = event->x() - margin;
+    int x = event->x() - m_margin;
     int in = m_in * m_scale;
     int out = m_out * m_scale;
     int head = m_head * m_scale;
@@ -128,7 +128,7 @@ void ScrubBar::mousePressEvent(QMouseEvent * event)
             const int offset = height() / 2;
             const int x = head;
             const int w = qAbs(x - head);
-            update(margin + x - offset, 0, w + 2 * offset, height());
+            update(m_margin + x - offset, 0, w + 2 * offset, height());
         }
     }
     emit seeked(pos);
@@ -142,7 +142,7 @@ void ScrubBar::mouseReleaseEvent(QMouseEvent * event)
 
 void ScrubBar::mouseMoveEvent(QMouseEvent * event)
 {
-    int x = event->x() - margin;
+    int x = event->x() - m_margin;
     int pos = CLAMP(x / m_scale, 0, m_max);
 
     if (event->buttons() & Qt::LeftButton) {
@@ -155,7 +155,7 @@ void ScrubBar::mouseMoveEvent(QMouseEvent * event)
             const int offset = height() / 2;
             const int x = head;
             const int w = qAbs(x - head);
-            update(margin + x - offset, 0, w + 2 * offset, height());
+            update(m_margin + x - offset, 0, w + 2 * offset, height());
             m_head = pos;
         }
         emit seeked(pos);
@@ -171,7 +171,7 @@ bool ScrubBar::onSeek(int value)
     const int offset = height() / 2;
     const int x = qMin(oldPos, m_cursorPosition);
     const int w = qAbs(oldPos - m_cursorPosition);
-    update(margin + x - offset, 0, w + 2 * offset, height());
+    update(m_margin + x - offset, 0, w + 2 * offset, height());
     return true;
 }
 
@@ -188,20 +188,20 @@ void ScrubBar::paintEvent(QPaintEvent *e)
     // draw pointer
     QPolygon pa(3);
     const int x = selectionSize / 2 - 1;
-    int head = margin + m_cursorPosition;
+    int head = m_margin + m_cursorPosition;
     pa.setPoints(3, head - x - 1, 0, head + x, 0, head, x);
     p.setBrush(palette().text().color());
     p.setPen(Qt::NoPen);
     p.drawPolygon(pa);
     p.setPen(pen);
     if (m_head >= 0) {
-        head = margin + m_head * m_scale;
+        head = m_margin + m_head * m_scale;
         p.drawLine(head, 0, head, height() - 1);
     }
 
     // draw in point
     if (m_in > -1) {
-        const int in = margin + m_in * m_scale;
+        const int in = m_margin + m_in * m_scale;
         pa.setPoints(3, in - selectionSize / 2, 0, in - selectionSize / 2, selectionSize - 1, in - 1, selectionSize / 2);
         p.setBrush(palette().text().color());
         p.setPen(Qt::NoPen);
@@ -212,7 +212,7 @@ void ScrubBar::paintEvent(QPaintEvent *e)
 
     // draw out point
     if (m_out > -1) {
-        const int out = margin + m_out * m_scale;
+        const int out = m_margin + m_out * m_scale;
         pa.setPoints(3, out + selectionSize / 2, 0, out + selectionSize / 2, selectionSize - 1, out, selectionSize / 2);
         p.setBrush(palette().text().color());
         p.setPen(Qt::NoPen);
@@ -240,7 +240,7 @@ void ScrubBar::updatePixmap()
     const int ratio = devicePixelRatio();
     const int l_width = width() * ratio;
     const int l_height = height() * ratio;
-    const int l_margin = margin * ratio;
+    const int l_margin = m_margin * ratio;
     const int l_selectionSize = selectionSize * ratio;
     const int l_interval = m_interval * ratio;
     const int l_timecodeWidth = m_timecodeWidth * ratio;

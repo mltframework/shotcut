@@ -19,6 +19,8 @@
 #include "ui_playlistdock.h"
 #include "dialogs/durationdialog.h"
 #include "dialogs/filedatedialog.h"
+#include "dialogs/longuitask.h"
+#include "dialogs/slideshowgeneratordialog.h"
 #include "mainwindow.h"
 #include "settings.h"
 #include "shotcut_mlt_properties.h"
@@ -300,6 +302,7 @@ void PlaylistDock::on_menuButton_clicked()
     menu.addAction(ui->actionSelectAll);
     menu.addAction(ui->actionSelectNone);
     menu.addAction(ui->actionAddToTimeline);
+    menu.addAction(ui->actionAddToSlideshow);
     menu.addSeparator();
 
     QMenu* sortByMenu = menu.addMenu(tr("Sort"));
@@ -798,6 +801,37 @@ void PlaylistDock::on_actionAddToTimeline_triggered()
         }
     }
     emit addAllTimeline(&playlist);
+}
+
+void PlaylistDock::on_actionAddToSlideshow_triggered()
+{
+    const QModelIndexList& indexes = m_view->selectionModel()->selectedIndexes();
+    Mlt::Playlist playlist(MLT.profile());
+    foreach (auto index, indexes) {
+        if (index.column()) continue;
+        QScopedPointer<Mlt::ClipInfo> info(m_model.playlist()->clip_info(index.row()));
+        if (info && info->producer) {
+            playlist.append(*info->producer, info->frame_in, info->frame_out);
+        }
+    }
+    if (playlist.count() <= 0 )
+    {
+        return;
+    }
+
+    SlideshowGeneratorDialog dialog(this, playlist);
+    if (dialog.exec() == QDialog::Accepted ) {
+        LongUiTask longTask(QObject::tr("Generate Slideshow"));
+        Mlt::Playlist* slideshow = longTask.runAsync<Mlt::Playlist*>(tr("Generating"), &dialog, &SlideshowGeneratorDialog::getSlideshow);
+        if (slideshow)
+        {
+            if ( slideshow->count() > 0 )
+            {
+                emit addAllTimeline(slideshow);
+            }
+            delete slideshow;
+        }
+    }
 }
 
 void PlaylistDock::on_updateButton_clicked()

@@ -47,6 +47,7 @@ public:
     QList<int> markers() const {
         return m_markers;
     }
+    void setMargin(int margin) { m_margin = margin; }
 
 signals:
     void seeked(int);
@@ -70,6 +71,7 @@ private:
     int m_max;
     int m_in;
     int m_out;
+    int m_margin;
     enum controls m_activeControl;
     QPixmap m_pixmap;
     int m_timecodeWidth;
