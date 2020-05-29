@@ -699,7 +699,9 @@ void AvformatProducerWidget::on_menuButton_clicked()
     if (m_producer->get_int("video_index") >= 0) {
         auto submenu = menu.addMenu(tr("Proxy"));
         submenu->addAction(ui->actionMakeProxy);
+#ifndef Q_OS_WIN
         submenu->addAction(ui->actionDeleteProxy);
+#endif
         submenu->addAction(ui->actionDisableProxy);
         submenu->addAction(ui->actionCopyHashCode);
         if (m_producer->get_int(kDisableProxyProperty)) {
@@ -1173,6 +1175,7 @@ void AvformatProducerWidget::on_actionDeleteProxy_triggered()
     QString hash = Util::getHash(*producer());
     QString fileName = hash + ProxyManager::videoFilenameExtension();
     QDir dir = ProxyManager::dir();
+    LOG_DEBUG() << "removing" << dir.filePath(fileName);
     dir.remove(dir.filePath(fileName));
 
     // Delete the pending file if it exists));
