@@ -839,7 +839,7 @@ void AvformatProducerWidget::convert(TranscodeDialog& dialog)
 bool AvformatProducerWidget::revertToOriginalResource()
 {
     QString resource = m_producer->get(kOriginalResourceProperty);
-    if (!resource.isEmpty()) {
+    if (!resource.isEmpty() && !m_producer->get_int(kIsProxyProperty)) {
         m_producer->set(kOriginalResourceProperty, nullptr, 0);
         if (m_producer->get(kMultitrackItemProperty)) {
             QString s = QString::fromLatin1(m_producer->get(kMultitrackItemProperty));
