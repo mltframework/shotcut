@@ -869,12 +869,14 @@ void Player::setStatusLabel(const QString &text, int timeoutSeconds, QAction* ac
             // Fade in.
             if (m_statusFadeIn->state() != QAbstractAnimation::Running && !m_statusTimer.isActive()) {
                 m_statusFadeIn->start();
-                m_statusTimer.start(timeoutSeconds * 1000);
+                if (timeoutSeconds > 0)
+                    m_statusTimer.start(timeoutSeconds * 1000);
             }
         }
     } else { // DirectX or software GL
         m_statusLabel->show();
-        QTimer::singleShot(timeoutSeconds * 1000, this, SLOT(onFadeOutFinished()));
+        if (timeoutSeconds > 0)
+            QTimer::singleShot(timeoutSeconds * 1000, this, SLOT(onFadeOutFinished()));
     }
 }
 
@@ -885,6 +887,7 @@ void Player::onFadeOutFinished()
     // DirectX or software GL
     if (Settings.drawMethod() != Qt::AA_UseDesktopOpenGL)
         m_statusLabel->hide();
+    showIdleStatus();
 }
 
 void Player::adjustScrollBars(float horizontal, float vertical)
@@ -921,6 +924,17 @@ double Player::setVolume(int volume)
     const double gain = double(volume) / VOLUME_KNEE;
     MLT.setVolume(gain);
     return gain;
+}
+
+void Player::showIdleStatus()
+{
+    if (Settings.proxyEnabled()) {
+        setStatusLabel(tr("Proxy mode is ON at %1p").arg(Settings.playerPreviewScale()), -1, nullptr);
+    } else if (Settings.playerPreviewScale() > 0) {
+        setStatusLabel(tr("Preview scaling is ON at %1p").arg(Settings.playerPreviewScale()), -1, nullptr);
+    } else {
+        setStatusLabel("", -1, nullptr);
+    }
 }
 
 void Player::moveVideoToScreen(int screen)
