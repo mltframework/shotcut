@@ -192,6 +192,8 @@ static void processProperties(QXmlStreamWriter& newXml, QVector<MltProperty>& pr
     // Determine if this is a proxy resource
     bool isProxy = false;
     QString newResource;
+    QString service;
+    QString speed = "1";
     for (const auto& p: properties) {
         if (p.first == kIsProxyProperty) {
             isProxy = true;
@@ -199,9 +201,14 @@ static void processProperties(QXmlStreamWriter& newXml, QVector<MltProperty>& pr
             newResource = p.second;
         } else if (newResource.isEmpty() && p.first == "resource") {
             newResource = p.second;
+        } else if (p.first == "mlt_service") {
+            service = p.second;
+        } else if (p.first == "warp_speed") {
+            speed = p.second;
         }
     }
     QVector<MltProperty> newProperties;
+    QVector<MltProperty>& propertiesRef = properties;
     if (isProxy) {
         // Filter the properties
         for (const auto& p: properties) {
@@ -214,27 +221,26 @@ static void processProperties(QXmlStreamWriter& newXml, QVector<MltProperty>& pr
                     else
                         newResource = newResource.mid(root.size() + 1);
                 }
+                if (service == "timewarp") {
+                    newProperties << MltProperty(p.first, QString("%1:%2").arg(speed).arg(newResource));
+                } else {
+                    newProperties << MltProperty(p.first, newResource);
+                }
+            } else if (p.first == "warp_resource") {
                 newProperties << MltProperty(p.first, newResource);
             // Remove special proxy and original resource properties
             } else if (p.first != kIsProxyProperty && p.first != kOriginalResourceProperty) {
                 newProperties << MltProperty(p.first, p.second);
             }
         }
-        // Write all of the property elements
-        for (const auto& p : newProperties) {
-            newXml.writeStartElement("property");
-            newXml.writeAttribute("name", p.first);
-            newXml.writeCharacters(p.second);
-            newXml.writeEndElement();
-        }
-    } else {
-        // Write all of the property elements
-        for (const auto& p : properties) {
-            newXml.writeStartElement("property");
-            newXml.writeAttribute("name", p.first);
-            newXml.writeCharacters(p.second);
-            newXml.writeEndElement();
-        }
+        propertiesRef = newProperties;
+    }
+    // Write all of the property elements
+    for (const auto& p : propertiesRef) {
+        newXml.writeStartElement("property");
+        newXml.writeAttribute("name", p.first);
+        newXml.writeCharacters(p.second);
+        newXml.writeEndElement();
     }
     // Reset the saved properties
     properties.clear();

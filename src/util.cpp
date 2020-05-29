@@ -356,12 +356,13 @@ void Util::applyCustomProperties(Mlt::Producer& destination, Mlt::Producer& sour
         destination.set("_shotcut:resource", destination.get("resource"));
         destination.set("_shotcut:length", destination.get("length"));
     }
+    QString resource = ProxyManager::resource(destination);
     if (!qstrcmp("timewarp", source.get("mlt_service"))) {
-        QString resource = destination.get("_shotcut:resource");
         auto speed = qAbs(source.get_double("warp_speed"));
         auto caption = QString("%1 (%2x)").arg(Util::baseName(resource)).arg(speed);
         destination.set(kShotcutCaptionProperty, caption.toUtf8().constData());
 
+        resource = destination.get("_shotcut:resource");
         destination.set("warp_resource", resource.toUtf8().constData());
         resource = QString("%1:%2:%3").arg("timewarp").arg(source.get("warp_speed")).arg(resource);
         destination.set("resource", resource.toUtf8().constData());
@@ -369,6 +370,10 @@ void Util::applyCustomProperties(Mlt::Producer& destination, Mlt::Producer& sour
         int length = qRound(destination.get_length() * speedRatio);
         destination.set("length", destination.frames_to_time(length, mlt_time_clock));
     } else {
+        auto caption = Util::baseName(resource);
+        destination.set(kShotcutCaptionProperty, caption.toUtf8().constData());
+
+        p.clear("warp_resource");
         destination.set("resource", destination.get("_shotcut:resource"));
         destination.set("length", destination.get("_shotcut:length"));
     }

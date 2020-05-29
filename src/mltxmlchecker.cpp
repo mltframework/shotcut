@@ -517,17 +517,21 @@ void MltXmlChecker::checkLumaAlphaOver(const QString& mlt_service, QVector<MltXm
 
 void MltXmlChecker::checkForProxy(const QString& mlt_service, QVector<MltXmlChecker::MltProperty>& properties)
 {
-    if (mlt_service.startsWith("avformat")) {
+    bool isTimewarp = mlt_service == "timewarp";
+    if (mlt_service.startsWith("avformat") || isTimewarp) {
         QString resource;
         QString hash;
+        QString speed = "1";
         for (auto& p : properties) {
-            if (p.first == "resource") {
+            if ((!isTimewarp && p.first == "resource") || p.first == "warp_resource") {
                 QFileInfo info(p.second);
                 if (info.isRelative())
                     info.setFile(m_fileInfo.canonicalPath(), p.second);
                 resource = info.filePath();
             } else if (p.first == kShotcutHashProperty) {
                 hash = p.second;
+            } else if (p.first == "warp_speed") {
+                speed = p.second;
             }
         }
         QDir proxyDir(Settings.proxyFolder());
@@ -537,10 +541,14 @@ void MltXmlChecker::checkForProxy(const QString& mlt_service, QVector<MltXmlChec
         if (proxyDir.exists(fileName) || projectDir.exists(fileName)) {
             for (auto& p : properties) {
                 if (p.first == "resource") {
-                    if (projectDir.exists(fileName))
+                    if (projectDir.exists(fileName)) {
                         p.second = projectDir.filePath(fileName);
-                    else
+                    } else {
                         p.second = proxyDir.filePath(fileName);
+                    }
+                    if (isTimewarp) {
+                        p.second = QString("%1:%2").arg(speed).arg(p.second);
+                    }
                     break;
                 }
             }

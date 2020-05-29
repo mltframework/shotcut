@@ -258,7 +258,10 @@ void AvformatProducerWidget::recreateProducer()
                  kShotcutSkipConvertProperty ","
                  kCommentProperty ","
                  kDefaultAudioIndexProperty ","
-                 kShotcutCaptionProperty);
+                 kShotcutCaptionProperty ","
+                 kOriginalResourceProperty ","
+                 kDisableProxyProperty ","
+                 kIsProxyProperty);
     Mlt::Controller::copyFilters(*m_producer, *p);
     if (m_producer->get(kMultitrackItemProperty)) {
         emit producerChanged(p);
