@@ -19,6 +19,7 @@
 #include "ui_playlistdock.h"
 #include "dialogs/durationdialog.h"
 #include "dialogs/filedatedialog.h"
+#include "dialogs/longuitask.h"
 #include "dialogs/slideshowgeneratordialog.h"
 #include "mainwindow.h"
 #include "settings.h"
@@ -820,7 +821,8 @@ void PlaylistDock::on_actionAddToSlideshow_triggered()
 
     SlideshowGeneratorDialog dialog(this, playlist);
     if (dialog.exec() == QDialog::Accepted ) {
-        Mlt::Playlist* slideshow = dialog.getSlideshow();
+        LongUiTask longTask(QObject::tr("Generate Slideshow"));
+        Mlt::Playlist* slideshow = longTask.runAsync<Mlt::Playlist*>(tr("Generating"), &dialog, &SlideshowGeneratorDialog::getSlideshow);
         if (slideshow)
         {
             if ( slideshow->count() > 0 )
