@@ -23,6 +23,7 @@
 #include "settings.h"
 #include "util.h"
 #include "widgets/newprojectfolder.h"
+#include "proxymanager.h"
 #include <Logger.h>
 
 #include <QtWidgets>
@@ -928,8 +929,10 @@ double Player::setVolume(int volume)
 
 void Player::showIdleStatus()
 {
-    if (Settings.proxyEnabled()) {
-        setStatusLabel(tr("Proxy mode is ON at %1p").arg(Settings.playerPreviewScale()), -1, nullptr);
+    if (Settings.proxyEnabled() && Settings.playerPreviewScale() > 0) {
+        setStatusLabel(tr("Proxy and preview scaling are ON at %1p").arg(ProxyManager::resolution()), -1, nullptr);
+    } else if (Settings.proxyEnabled()) {
+        setStatusLabel(tr("Proxy is ON at %1p").arg(ProxyManager::resolution()), -1, nullptr);
     } else if (Settings.playerPreviewScale() > 0) {
         setStatusLabel(tr("Preview scaling is ON at %1p").arg(Settings.playerPreviewScale()), -1, nullptr);
     } else {
