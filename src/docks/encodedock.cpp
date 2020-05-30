@@ -1964,7 +1964,7 @@ void EncodeDock::on_videoQualitySpinner_valueChanged(int vq)
     } else if (vcodec.endsWith("_vaapi")) {
         s = QString("vglobal_quality=%1").arg(TO_ABSOLUTE(51, 0, vq));
     } else {
-        s = QString("qscale=%1").arg(TO_ABSOLUTE(31, 0, vq));
+        s = QString("qscale=%1").arg(TO_ABSOLUTE(31, 1, vq));
     }
     ui->videoQualitySuffixLabel->setText(s);
 }
