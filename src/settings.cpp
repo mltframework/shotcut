@@ -817,7 +817,7 @@ void ShotcutSettings::setProxyEnabled(bool b)
 
 QString ShotcutSettings::proxyFolder() const
 {
-    QDir dir(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation));
+    QDir dir(appDataLocation());
     const char* subfolder = "proxies";
     if (!dir.cd(subfolder)) {
         if (dir.mkdir(subfolder))
