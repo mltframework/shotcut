@@ -72,8 +72,6 @@ public:
     void setFullScreen(bool isFullScreen);
     QString removeFileScheme(QUrl& url);
     QString untitledFileName() const;
-    QString getFileHash(const QString& path) const;
-    QString getHash(Mlt::Properties& properties) const;
     void setProfile(const QString& profile_name);
     QString fileName() const { return m_currentFile; }
     bool isSourceClipMyProject(QString resource = MLT.resource());
@@ -93,7 +91,7 @@ public:
     QUuid timelineClipUuid(int trackIndex, int clipIndex);
     void replaceInTimeline(const QUuid& uuid, Mlt::Producer& producer);
     Mlt::ClipInfo* timelineClipInfoByUuid(const QUuid& uuid, int& trackIndex, int& clipIndex);
-    void replaceAllByHash(const QString& hash, Mlt::Producer& producer);
+    void replaceAllByHash(const QString& hash, Mlt::Producer& producer, bool isProxy = false);
 
 signals:
     void audioChannelsChanged();
@@ -320,6 +318,12 @@ private slots:
     void on_actionPreview720_triggered(bool checked);
     void on_actionTopics_triggered();
     void on_actionSync_triggered();
+    void on_actionUseProxy_triggered(bool checked);
+    void on_actionProxyStorageSet_triggered();
+    void on_actionProxyStorageShow_triggered();
+    void on_actionProxyUseProjectFolder_triggered(bool checked);
+    void on_actionProxyUseHardware_triggered(bool checked);
+    void on_actionProxyConfigureHardware_triggered();
 };
 
 #define MAIN MainWindow::singleton()

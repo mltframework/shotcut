@@ -40,6 +40,7 @@ public:
         return &m_model;
     }
     int position();
+    void replaceClipsWithHash(const QString& hash, Mlt::Producer& producer);
 
 signals:
     void clipOpened(Mlt::Producer* producer, bool play = false);

@@ -29,6 +29,7 @@
 #include "widgets/playlistlistview.h"
 #include "util.h"
 #include "commands/playlistcommands.h"
+#include "proxymanager.h"
 #include <Logger.h>
 
 #include <QMenu>
@@ -233,6 +234,30 @@ int PlaylistDock::position()
     return result;
 }
 
+void PlaylistDock::replaceClipsWithHash(const QString& hash, Mlt::Producer& producer)
+{
+    QList<Mlt::Producer> producers;
+    for (int i = 0; i < m_model.rowCount(); ++i) {
+        QScopedPointer<Mlt::Producer> clip(m_model.playlist()->get_clip(i));
+        if (Util::getHash(clip->parent()) == hash) {
+            clip->set(kPlaylistIndexProperty, i + 1);
+            producers << *clip;
+        }
+    }
+    auto n = producers.size();
+    if (n > 1) {
+        MAIN.undoStack()->beginMacro(tr("Replace %1 playlist items").arg(n));
+    }
+    for (auto& clip : producers) {
+        Util::applyCustomProperties(producer, clip.parent(), clip.get_in(), clip.get_out());
+        MAIN.undoStack()->push(
+            new Playlist::ReplaceCommand(m_model, MLT.XML(&producer), clip.get_int(kPlaylistIndexProperty) - 1));
+    }
+    if (n > 1) {
+        MAIN.undoStack()->endMacro();
+    }
+}
+
 void PlaylistDock::incrementIndex()
 {
     QModelIndex index = m_view->currentIndex();
@@ -348,9 +373,10 @@ void PlaylistDock::on_actionAppendCut_triggered()
     if (MLT.producer() && MLT.producer()->is_valid() && !MAIN.isSourceClipMyProject()) {
         if (MLT.isSeekableClip()
             || (MLT.savedProducer() && MLT.isSeekable(MLT.savedProducer()))) {
+            Mlt::Producer producer(MLT.isClip()? MLT.producer() : MLT.savedProducer());
+            ProxyManager::generateIfNotExists(producer);
             MAIN.undoStack()->push(
-                new Playlist::AppendCommand(m_model,
-                    MLT.XML(MLT.isClip()? nullptr : MLT.savedProducer())));
+                new Playlist::AppendCommand(m_model, MLT.XML(&producer)));
             MLT.producer()->set(kPlaylistIndexProperty, m_model.playlist()->count());
             setUpdateButtonEnabled(true);
         } else {
@@ -397,6 +423,7 @@ void PlaylistDock::on_actionUpdate_triggered()
     if (!info || MAIN.isSourceClipMyProject()) return;
     if (MLT.producer()->type() != playlist_type) {
         if (MLT.isSeekable()) {
+            ProxyManager::generateIfNotExists(*MLT.producer());
             MAIN.undoStack()->push(new Playlist::UpdateCommand(m_model, MLT.XML(), index.row()));
             MLT.producer()->set(kPlaylistIndexProperty, index.row() + 1);
             setUpdateButtonEnabled(true);
@@ -462,12 +489,8 @@ void PlaylistDock::on_actionSetFileDate_triggered()
     QScopedPointer<Mlt::ClipInfo> info(m_model.playlist()->clip_info(i));
     if (info && info->producer && info->producer->is_valid()) {
         QString title = info->producer->get("mlt_service");
-        QString resource = QString::fromUtf8(info->producer->get("resource"));
+        QString resource = ProxyManager::resource(*info->producer);
         QFileInfo fileInfo(resource);
-        if (!fileInfo.exists()) {
-            resource = QString::fromUtf8(info->producer->get("warp_resource"));
-            fileInfo = QFileInfo(resource);
-        }
         if (fileInfo.exists()) {
            title = fileInfo.baseName();
         }
@@ -656,6 +679,7 @@ void PlaylistDock::onDropped(const QMimeData *data, int row)
                 MLT.lockCreationTime(producer);
                 producer->get_length_time(mlt_time_clock);
                 if (MLT.isSeekable(producer)) {
+                    ProxyManager::generateIfNotExists(*producer);
                     if (row == -1)
                         MAIN.undoStack()->push(new Playlist::AppendCommand(m_model, MLT.XML(producer)));
                     else
@@ -687,11 +711,13 @@ void PlaylistDock::onDropped(const QMimeData *data, int row)
             } else if (MAIN.isSourceClipMyProject()) {
                 return;
             } else if (MLT.isSeekable()) {
+                Mlt::Producer p(MLT.profile(), "xml-string", data->data(Mlt::XmlMimeType).constData());
+                ProxyManager::generateIfNotExists(p);
                 if (row == -1) {
-                    MAIN.undoStack()->push(new Playlist::AppendCommand(m_model, data->data(Mlt::XmlMimeType)));
+                    MAIN.undoStack()->push(new Playlist::AppendCommand(m_model, MLT.XML(&p)));
                     MLT.producer()->set(kPlaylistIndexProperty, m_model.playlist()->count());
                 } else {
-                    MAIN.undoStack()->push(new Playlist::InsertCommand(m_model, data->data(Mlt::XmlMimeType), row));
+                    MAIN.undoStack()->push(new Playlist::InsertCommand(m_model, MLT.XML(&p), row));
                     MLT.producer()->set(kPlaylistIndexProperty, row + 1);
                 }
                 setUpdateButtonEnabled(true);
@@ -851,7 +877,6 @@ void PlaylistDock::onProducerChanged(Mlt::Producer* producer)
     MAIN.undoStack()->push(new Playlist::UpdateCommand(m_model, MLT.XML(producer), index));
     setUpdateButtonEnabled(false);
 }
-
 
 void PlaylistDock::updateViewModeFromActions()
 {

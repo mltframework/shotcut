@@ -19,6 +19,7 @@
 #include <QLocale>
 #include <QStandardPaths>
 #include <QFile>
+#include <QDir>
 #include <Logger.h>
 
 static const QString APP_DATA_DIR_KEY("appdatadir");
@@ -802,6 +803,52 @@ QString ShotcutSettings::projectsFolder() const
 void ShotcutSettings::setProjectsFolder(const QString &path)
 {
     settings.setValue("projectsFolder", path);
+}
+
+bool ShotcutSettings::proxyEnabled() const
+{
+    return settings.value("proxy/enabled", false).toBool();
+}
+
+void ShotcutSettings::setProxyEnabled(bool b)
+{
+    settings.setValue("proxy/enabled", b);
+}
+
+QString ShotcutSettings::proxyFolder() const
+{
+    QDir dir(appDataLocation());
+    const char* subfolder = "proxies";
+    if (!dir.cd(subfolder)) {
+        if (dir.mkdir(subfolder))
+            dir.cd(subfolder);
+    }
+    return settings.value("proxy/folder", dir.path()).toString();
+}
+
+void ShotcutSettings::setProxyFolder(const QString& path)
+{
+    settings.setValue("proxy/folder", path);
+}
+
+bool ShotcutSettings::proxyUseProjectFolder() const
+{
+    return settings.value("proxy/useProjectFolder", true).toBool();
+}
+
+void ShotcutSettings::setProxyUseProjectFolder(bool b)
+{
+    settings.setValue("proxy/useProjectFolder", b);
+}
+
+bool ShotcutSettings::proxyUseHardware() const
+{
+    return settings.value("proxy/useHardware", false).toBool();
+}
+
+void ShotcutSettings::setProxyUseHardware(bool b)
+{
+    settings.setValue("proxy/useHardware", b);
 }
 
 int ShotcutSettings::undoLimit() const

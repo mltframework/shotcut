@@ -79,6 +79,7 @@
 #include "qmltypes/qmlprofile.h"
 #include "dialogs/longuitask.h"
 #include "dialogs/systemsyncdialog.h"
+#include "proxymanager.h"
 
 #include <QtWidgets>
 #include <Logger.h>
@@ -838,6 +839,12 @@ void MainWindow::setupSettingsMenu()
         ui->actionClearRecentOnExit->setChecked(Settings.clearRecent());
     }
 
+
+    // Initialze the proxy submenu
+    ui->actionUseProxy->setChecked(Settings.proxyEnabled());
+    ui->actionProxyUseProjectFolder->setChecked(Settings.proxyUseProjectFolder());
+    ui->actionProxyUseHardware->setChecked(Settings.proxyUseHardware());
+
     LOG_DEBUG() << "end";
 }
 
@@ -1108,45 +1115,6 @@ QString MainWindow::untitledFileName() const
     QDir dir = Settings.appDataLocation();
     if (!dir.exists()) dir.mkpath(dir.path());
     return dir.filePath("__untitled__.mlt");
-}
-
-QString MainWindow::getFileHash(const QString& path) const
-{
-    // This routine is intentionally copied from Kdenlive.
-    QFile file(path);
-    if (file.open(QIODevice::ReadOnly)) {
-        QByteArray fileData;
-         // 1 MB = 1 second per 450 files (or faster)
-         // 10 MB = 9 seconds per 450 files (or faster)
-        if (file.size() > 1000000*2) {
-            fileData = file.read(1000000);
-            if (file.seek(file.size() - 1000000))
-                fileData.append(file.readAll());
-        } else {
-            fileData = file.readAll();
-        }
-        file.close();
-        return QCryptographicHash::hash(fileData, QCryptographicHash::Md5).toHex();
-    }
-    return QString();
-}
-
-QString MainWindow::getHash(Mlt::Properties& properties) const
-{
-    QString hash = properties.get(kShotcutHashProperty);
-    if (hash.isEmpty()) {
-        QString service = properties.get("mlt_service");
-        QString resource = QString::fromUtf8(properties.get("resource"));
-
-        if (service == "timewarp")
-            resource = QString::fromUtf8(properties.get("warp_resource"));
-        else if (service == "vidstab")
-            resource = QString::fromUtf8(properties.get("filename"));
-        QString hash = getFileHash(resource);
-        if (!hash.isEmpty())
-            properties.set(kShotcutHashProperty, hash.toLatin1().constData());
-    }
-    return hash;
 }
 
 void MainWindow::setProfile(const QString &profile_name)
@@ -2519,7 +2487,7 @@ void MainWindow::onProducerOpened(bool withReopen)
     if (MLT.isClip()) {
         m_player->enableTab(Player::SourceTabIndex);
         m_player->switchToTab(Player::SourceTabIndex);
-        getHash(*MLT.producer());
+        Util::getHash(*MLT.producer());
         ui->actionPaste->setEnabled(true);
     }
     QMutexLocker locker(&m_autosaveMutex);
@@ -3340,7 +3308,7 @@ void MainWindow::processMultipleFiles()
                 MLT.setImageDurationFromDefault(&p);
                 MLT.lockCreationTime(&p);
                 p.get_length_time(mlt_time_clock);
-                MAIN.getHash(p);
+                Util::getHash(p);
                 undoStack()->push(new Playlist::AppendCommand(*m_playlistDock->model(), MLT.XML(&p), false));
                 m_recentDock->add(filename.toUtf8().constData());
             }
@@ -4298,6 +4266,7 @@ void MainWindow::on_actionPreviewNone_triggered(bool checked)
     if (checked) {
         Settings.setPlayerPreviewScale(0);
         setPreviewScale(0);
+        m_player->showIdleStatus();
     }
 }
 
@@ -4306,6 +4275,7 @@ void MainWindow::on_actionPreview360_triggered(bool checked)
     if (checked) {
         Settings.setPlayerPreviewScale(360);
         setPreviewScale(360);
+        m_player->showIdleStatus();
     }
 }
 
@@ -4314,6 +4284,7 @@ void MainWindow::on_actionPreview540_triggered(bool checked)
     if (checked) {
         Settings.setPlayerPreviewScale(540);
         setPreviewScale(540);
+        m_player->showIdleStatus();
     }
 }
 
@@ -4322,6 +4293,7 @@ void MainWindow::on_actionPreview720_triggered(bool checked)
     if (checked) {
         Settings.setPlayerPreviewScale(720);
         setPreviewScale(720);
+        m_player->showIdleStatus();
     }
 }
 
@@ -4341,7 +4313,7 @@ void MainWindow::replaceInTimeline(const QUuid& uuid, Mlt::Producer& producer)
     QScopedPointer<Mlt::ClipInfo> info(MAIN.timelineClipInfoByUuid(uuid, trackIndex, clipIndex));
 
     if (trackIndex >= 0 && clipIndex >= 0) {
-        getHash(producer);
+        Util::getHash(producer);
         Util::applyCustomProperties(producer, *info->producer, producer.get_in(), producer.get_out());
         m_timelineDock->replace(trackIndex, clipIndex, MLT.XML(&producer));
     }
@@ -4352,22 +4324,31 @@ Mlt::ClipInfo* MainWindow::timelineClipInfoByUuid(const QUuid& uuid, int& trackI
     return m_timelineDock->model()->findClipByUuid(uuid, trackIndex, clipIndex);
 }
 
-void MainWindow::replaceAllByHash(const QString& hash, Mlt::Producer& producer)
+void MainWindow::replaceAllByHash(const QString& hash, Mlt::Producer& producer, bool isProxy)
 {
-    getHash(producer);
-    m_recentDock->add(producer.get("resource"));
-    if (MLT.isClip() && MLT.producer() && getHash(*MLT.producer()) == hash) {
+    Util::getHash(producer);
+    if (!isProxy)
+        m_recentDock->add(producer.get("resource"));
+    if (MLT.isClip() && MLT.producer() && Util::getHash(*MLT.producer()) == hash) {
         Util::applyCustomProperties(producer, *MLT.producer(), MLT.producer()->get_in(), MLT.producer()->get_out());
         MLT.copyFilters(*MLT.producer(), producer);
         MLT.close();
         m_player->setPauseAfterOpen(true);
         open(new Mlt::Producer(MLT.profile(), "xml-string", MLT.XML(&producer).toUtf8().constData()));
+    } else if (MLT.savedProducer() && Util::getHash(*MLT.savedProducer()) == hash) {
+        Util::applyCustomProperties(producer, *MLT.savedProducer(), MLT.savedProducer()->get_in(), MLT.savedProducer()->get_out());
+        MLT.copyFilters(*MLT.savedProducer(), producer);
+        MLT.setSavedProducer(&producer);
     }
     if (playlist()) {
-        // Append to playlist
-        producer.set(kPlaylistIndexProperty, playlist()->count());
-        MAIN.undoStack()->push(
-            new Playlist::AppendCommand(*m_playlistDock->model(), MLT.XML(&producer)));
+        if (isProxy) {
+            m_playlistDock->replaceClipsWithHash(hash, producer);
+        } else {
+            // Append to playlist
+            producer.set(kPlaylistIndexProperty, playlist()->count());
+            MAIN.undoStack()->push(
+                new Playlist::AppendCommand(*m_playlistDock->model(), MLT.XML(&producer)));
+        }
     }
     if (isMultitrackValid()) {
         m_timelineDock->replaceClipsWithHash(hash, producer);
@@ -4385,4 +4366,96 @@ void MainWindow::on_actionSync_triggered()
     dialog->show();
     dialog->raise();
     dialog->activateWindow();
+}
+
+void MainWindow::on_actionUseProxy_triggered(bool checked)
+{
+    QScopedPointer<QTemporaryFile> tmp(Util::writableTemporaryFile(m_currentFile, "shotcut-XXXXXX.mlt"));
+    QString fileName = tmp->fileName();
+
+    LOG_DEBUG() << fileName;
+    if (MLT.producer() && saveXML(fileName)) {
+        MltXmlChecker checker;
+
+        Settings.setProxyEnabled(checked);
+        checker.check(fileName);
+        if (!isXmlRepaired(checker, fileName))
+            return;
+        if (checker.isUpdated())
+            fileName = checker.tempFileName();
+
+        // Open the temporary file
+        if (!MLT.open(QDir::fromNativeSeparators(fileName), QDir::fromNativeSeparators(m_currentFile))) {
+            auto position = m_player->position();
+            m_undoStack->clear();
+            m_player->stop();
+            m_player->setPauseAfterOpen(true);
+            open(MLT.producer());
+            MLT.seek(m_player->position());
+            m_player->seek(position);
+            //TODO prompt user if they want to create missing proxies
+        } else if (fileName != untitledFileName()) {
+            showStatusMessage(tr("Failed to open ") + fileName);
+            emit openFailed(fileName);
+        }
+    } else if (MLT.producer()) {
+        showSaveError();
+    } else {
+        Settings.setProxyEnabled(checked);
+        m_player->showIdleStatus();
+    }
+}
+
+void MainWindow::on_actionProxyStorageSet_triggered()
+{
+    // Present folder dialog just like App Data Directory
+    QString dirName = QFileDialog::getExistingDirectory(this, tr("Proxy Folder"), Settings.proxyFolder());
+    if (!dirName.isEmpty()) {
+        // Move the existing files
+        QDirIterator it(Settings.proxyFolder());
+        while (it.hasNext()) {
+            if (!it.filePath().isEmpty() && it.fileName() != "." && it.fileName() != "..") {
+                if (!QFile::exists(dirName + "/" + it.fileName())) {
+                    if (it.fileInfo().isDir()) {
+                        if (!QFile::rename(it.filePath(), dirName + "/" + it.fileName()))
+                            LOG_WARNING() << "Failed to move" << it.filePath() << "to" << dirName + "/" + it.fileName();
+                    } else {
+                        if (!QFile::copy(it.filePath(), dirName + "/" + it.fileName()))
+                            LOG_WARNING() << "Failed to copy" << it.filePath() << "to" << dirName + "/" + it.fileName();
+                    }
+                }
+            }
+            it.next();
+        }
+        Settings.setProxyFolder(dirName);
+        Settings.sync();
+    }
+}
+
+void MainWindow::on_actionProxyStorageShow_triggered()
+{
+    Util::showInFolder(ProxyManager::dir().path());
+}
+
+void MainWindow::on_actionProxyUseProjectFolder_triggered(bool checked)
+{
+    Settings.setProxyUseProjectFolder(checked);
+}
+
+void MainWindow::on_actionProxyUseHardware_triggered(bool checked)
+{
+    if (checked && Settings.encodeHardware().isEmpty()) {
+        if (!m_encodeDock->detectHardwareEncoders())
+            ui->actionProxyUseHardware->setChecked(false);
+    }
+    Settings.setProxyUseHardware(ui->actionProxyUseHardware->isChecked());
+}
+
+void MainWindow::on_actionProxyConfigureHardware_triggered()
+{
+    m_encodeDock->on_hwencodeButton_clicked();
+    if (Settings.encodeHardware().isEmpty()) {
+        ui->actionProxyUseHardware->setChecked(false);
+        Settings.setProxyUseHardware(false);
+    }
 }

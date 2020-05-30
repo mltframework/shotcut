@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Meltytech, LLC
+ * Copyright (c) 2019-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,8 +16,9 @@
  */
 
 #include "filedatedialog.h"
-
+#include "shotcut_mlt_properties.h"
 #include "MltProducer.h"
+#include "proxymanager.h"
 
 #include <QComboBox>
 #include <QDateTimeEdit>
@@ -102,12 +103,8 @@ void FileDateDialog::populateDateOptions(Mlt::Producer* producer)
     addDateToCombo(m_dtCombo, tr("Now"), QDateTime::currentDateTime());
 
     // Add system info for the file.
-    QString resource = QString::fromUtf8(producer->get("resource"));
+    QString resource = ProxyManager::resource(*producer);
     QFileInfo fileInfo(resource);
-    if (!fileInfo.exists()) {
-        resource = QString::fromUtf8(producer->get("warp_resource"));
-        fileInfo = QFileInfo(resource);
-    }
     if (fileInfo.exists()) {
         addDateToCombo(m_dtCombo, tr("System - Modified"), fileInfo.lastModified());
         addDateToCombo(m_dtCombo, tr("System - Created"), fileInfo.created());

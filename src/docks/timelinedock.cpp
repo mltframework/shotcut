@@ -27,6 +27,7 @@
 #include "shotcut_mlt_properties.h"
 #include "settings.h"
 #include "util.h"
+#include "proxymanager.h"
 
 #include <QAction>
 #include <QtQml>
@@ -548,9 +549,10 @@ void TimelineDock::append(int trackIndex)
     }
     if (MAIN.isSourceClipMyProject()) return;
     if (MLT.isSeekableClip() || MLT.savedProducer()) {
+        Mlt::Producer producer(MLT.isClip()? MLT.producer() : MLT.savedProducer());
+        ProxyManager::generateIfNotExists(producer);
         MAIN.undoStack()->push(
-            new Timeline::AppendCommand(m_model, trackIndex,
-                MLT.XML(MLT.isClip()? nullptr : MLT.savedProducer())));
+            new Timeline::AppendCommand(m_model, trackIndex, MLT.XML(&producer)));
         selectClipUnderPlayhead();
     } else if (!MLT.isSeekableClip()) {
         emit showStatusMessage(kNonSeekableWarning);
@@ -1089,6 +1091,8 @@ static QString convertUrlsToXML(const QString& xml)
                 if (!qstrcmp(p.get("mlt_service"), "xml")) {
                     p.set(kShotcutVirtualClip, 1);
                     p.set("resource", path.toUtf8().constData());
+                } else{
+                    ProxyManager::generateIfNotExists(p);
                 }
                 // Convert avformat to avformat-novalidate so that XML loads faster.
                 if (!qstrcmp(p.get("mlt_service"), "avformat")) {
@@ -1124,8 +1128,14 @@ void TimelineDock::insert(int trackIndex, int position, const QString &xml, bool
     }
 
     if (MLT.isSeekableClip() || MLT.savedProducer() || !xml.isEmpty()) {
-        QString xmlToUse = !xml.isEmpty()? convertUrlsToXML(xml)
-            : MLT.XML(MLT.isClip()? nullptr : MLT.savedProducer());
+        QString xmlToUse;
+        if (xml.isEmpty()) {
+            Mlt::Producer producer(MLT.isClip()? MLT.producer() : MLT.savedProducer());
+            ProxyManager::generateIfNotExists(producer);
+            xmlToUse = MLT.XML(&producer);
+        } else {
+            xmlToUse = convertUrlsToXML(xml);
+        }
         if (position < 0)
             position = m_position;
         if (m_model.trackList().size() == 0)
@@ -1161,8 +1171,14 @@ void TimelineDock::overwrite(int trackIndex, int position, const QString &xml, b
     }
 
     if (MLT.isSeekableClip() || MLT.savedProducer() || !xml.isEmpty()) {
-        QString xmlToUse = !xml.isEmpty()? convertUrlsToXML(xml)
-            : MLT.XML(MLT.isClip()? nullptr : MLT.savedProducer());
+        QString xmlToUse;
+        if (xml.isEmpty()) {
+            Mlt::Producer producer(MLT.isClip()? MLT.producer() : MLT.savedProducer());
+            ProxyManager::generateIfNotExists(producer);
+            xmlToUse = MLT.XML(&producer);
+        } else {
+            xmlToUse = convertUrlsToXML(xml);
+        }
         if (position < 0)
             position = m_position;
         if (m_model.trackList().size() == 0)
@@ -1404,7 +1420,7 @@ public:
 
     int on_start_filter(Mlt::Filter*) { return 0; }
     int on_start_producer(Mlt::Producer* producer) {
-        if (producer->is_cut() && MAIN.getHash(producer->parent()) == m_hash)
+        if (producer->is_cut() && Util::getHash(producer->parent()) == m_hash)
             m_producers << Mlt::Producer(producer);
         return 0;
     }
@@ -1436,24 +1452,34 @@ void TimelineDock::replaceClipsWithHash(const QString& hash, Mlt::Producer& prod
         QScopedPointer<Mlt::ClipInfo> info(MAIN.timelineClipInfoByUuid(clip.get(kUuidProperty), trackIndex, clipIndex));
 
         if (trackIndex >= 0 && clipIndex >= 0) {
-            int in = clip.get_in();
-            int out = clip.get_out();
+            if (info->producer->get_int(kIsProxyProperty)) {
+                // Not much to do on a proxy clip but change its resource
+                info->producer->set(kOriginalResourceProperty, producer.get("resource"));
+                auto caption = Util::baseName(ProxyManager::resource(*info->producer));
+                if (!::qstrcmp(info->producer->get("mlt_service"), "timewarp")) {
+                    caption = QString("%1 (%2x)").arg(caption).arg(info->producer->get("warp_speed"));
+                }
+                info->producer->set(kShotcutCaptionProperty, caption.toUtf8().constData());
+            } else {
+                int in = clip.get_in();
+                int out = clip.get_out();
 
-            // Factor in a transition left of the clip.
-            QScopedPointer<Mlt::ClipInfo> info2(getClipInfo(trackIndex, clipIndex - 1));
-            if (info2 && info2->producer && info2->producer->is_valid()
-                      && info2->producer->get(kShotcutTransitionProperty)) {
-                in -= info2->frame_count;
-            }
-            // Factor in a transition right of the clip.
-            info2.reset(getClipInfo(trackIndex, clipIndex + 1));
-            if (info2 && info2->producer && info2->producer->is_valid()
-                      && info2->producer->get(kShotcutTransitionProperty)) {
-                out += info2->frame_count;
-            }
-            Util::applyCustomProperties(producer, *info->producer, in, out);
+                // Factor in a transition left of the clip.
+                QScopedPointer<Mlt::ClipInfo> info2(getClipInfo(trackIndex, clipIndex - 1));
+                if (info2 && info2->producer && info2->producer->is_valid()
+                          && info2->producer->get(kShotcutTransitionProperty)) {
+                    in -= info2->frame_count;
+                }
+                // Factor in a transition right of the clip.
+                info2.reset(getClipInfo(trackIndex, clipIndex + 1));
+                if (info2 && info2->producer && info2->producer->is_valid()
+                          && info2->producer->get(kShotcutTransitionProperty)) {
+                    out += info2->frame_count;
+                }
+                Util::applyCustomProperties(producer, *info->producer, in, out);
 
-            replace(trackIndex, clipIndex, MLT.XML(&producer));
+                replace(trackIndex, clipIndex, MLT.XML(&producer));
+            }
         }
     }
     if (n > 1)

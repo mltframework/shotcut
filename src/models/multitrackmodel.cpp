@@ -25,6 +25,7 @@
 #include "shotcut_mlt_properties.h"
 #include "controllers/filtercontroller.h"
 #include "qmltypes/qmlmetadata.h"
+#include "proxymanager.h"
 
 #include <QScopedPointer>
 #include <QApplication>
@@ -98,12 +99,10 @@ QVariant MultitrackModel::data(const QModelIndex &index, int role) const
                 if (info->producer && info->producer->is_valid()) {
                     result = info->producer->get(kShotcutCaptionProperty);
                     if (result.isNull()) {
+                        result = Util::baseName(ProxyManager::resource(*info->producer));
                         if (!::qstrcmp(info->producer->get("mlt_service"), "timewarp")) {
-                            result = Util::baseName(QString::fromUtf8(info->producer->get("warp_resource")));
                             double speed = ::fabs(info->producer->get_double("warp_speed"));
                             result = QString("%1 (%2x)").arg(result).arg(speed);
-                        } else {
-                            result = Util::baseName(QString::fromUtf8(info->resource));
                         }
                     }
                     if (result == "<producer>")
@@ -167,7 +166,7 @@ QVariant MultitrackModel::data(const QModelIndex &index, int role) const
             case IsTransitionRole:
                 return isTransition(playlist, index.row());
             case FileHashRole:
-                return MAIN.getHash(*info->producer);
+                return Util::getHash(*info->producer);
             case SpeedRole: {
                 double speed = 1.0;
                 if (info->producer && info->producer->is_valid()) {
@@ -3091,7 +3090,7 @@ void MultitrackModel::replace(int trackIndex, int clipIndex, Mlt::Producer& clip
             parent.set(kFilterInProperty, oldClip.get_in());
             parent.set(kFilterOutProperty, oldClip.get_out());
             Mlt::Controller::copyFilters(parent, clip);
-            Mlt::Controller::adjustFilters(clip, 0);
+            Mlt::Controller::adjustFilters(clip);
         }
         beginRemoveRows(index(trackIndex), clipIndex, clipIndex);
         playlist.remove(clipIndex);

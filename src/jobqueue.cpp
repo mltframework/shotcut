@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2019 Meltytech, LLC
+ * Copyright (c) 2012-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,6 @@
 #include "jobqueue.h"
 #include <QtWidgets>
 #include <Logger.h>
-#include "mainwindow.h"
 #include "settings.h"
 
 JobQueue::JobQueue(QObject *parent) :
@@ -106,6 +105,13 @@ void JobQueue::onFinished(AbstractJob* job, bool isSuccess, QString time)
             item->setText(tr("failed").append(' ').append(time));
             icon = QIcon(":/icons/oxygen/32x32/status/task-reject.png");
         }
+
+        // Remove any touched or incomplete pending proxy files
+        if (job->stopped() || !isSuccess)
+        if (job->objectName().contains("proxies") && job->objectName().contains(".pending")) {
+            QFile::remove(job->objectName());
+        }
+
         item = JOBS.item(item->row(), JobQueue::COLUMN_ICON);
         if (item)
             item->setIcon(icon);

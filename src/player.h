@@ -108,6 +108,7 @@ public slots:
     void enableTab(TabIndex index, bool enabled = true);
     void onTabBarClicked(int index);
     void setStatusLabel(const QString& text, int timeoutSeconds, QAction* action);
+    void showIdleStatus();
 
 protected:
     void resizeEvent(QResizeEvent* event);

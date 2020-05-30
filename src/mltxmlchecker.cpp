@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2019 Meltytech, LLC
+ * Copyright (c) 2014-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,6 +19,9 @@
 #include "mltcontroller.h"
 #include "shotcut_mlt_properties.h"
 #include "util.h"
+#include "proxymanager.h"
+#include "settings.h"
+
 #include <QLocale>
 #include <QDir>
 #include <QCoreApplication>
@@ -249,6 +252,8 @@ void MltXmlChecker::processProperties()
         checkUnlinkedFile(mlt_service);
         checkIncludesSelf(newProperties);
         checkLumaAlphaOver(mlt_service, newProperties);
+        if (Settings.proxyEnabled())
+            checkForProxy(mlt_service, newProperties);
 
         // Second pass: amend property values.
         m_properties = newProperties;
@@ -505,6 +510,50 @@ void MltXmlChecker::checkLumaAlphaOver(const QString& mlt_service, QVector<MltXm
         }
         if (!found) {
             properties << MltProperty("alpha_over", "1");
+            m_isUpdated = true;
+        }
+    }
+}
+
+void MltXmlChecker::checkForProxy(const QString& mlt_service, QVector<MltXmlChecker::MltProperty>& properties)
+{
+    bool isTimewarp = mlt_service == "timewarp";
+    if (mlt_service.startsWith("avformat") || isTimewarp) {
+        QString resource;
+        QString hash;
+        QString speed = "1";
+        for (auto& p : properties) {
+            if ((!isTimewarp && p.first == "resource") || p.first == "warp_resource") {
+                QFileInfo info(p.second);
+                if (info.isRelative())
+                    info.setFile(m_fileInfo.canonicalPath(), p.second);
+                resource = info.filePath();
+            } else if (p.first == kShotcutHashProperty) {
+                hash = p.second;
+            } else if (p.first == "warp_speed") {
+                speed = p.second;
+            }
+        }
+        QDir proxyDir(Settings.proxyFolder());
+        QDir projectDir(QFileInfo(m_tempFile->fileName()).dir());
+        QString fileName = hash + ProxyManager::videoFilenameExtension();
+        projectDir.cd("proxies");
+        if (proxyDir.exists(fileName) || projectDir.exists(fileName)) {
+            for (auto& p : properties) {
+                if (p.first == "resource") {
+                    if (projectDir.exists(fileName)) {
+                        p.second = projectDir.filePath(fileName);
+                    } else {
+                        p.second = proxyDir.filePath(fileName);
+                    }
+                    if (isTimewarp) {
+                        p.second = QString("%1:%2").arg(speed).arg(p.second);
+                    }
+                    break;
+                }
+            }
+            properties << MltProperty(kIsProxyProperty, "1");
+            properties << MltProperty(kOriginalResourceProperty, resource);
             m_isUpdated = true;
         }
     }

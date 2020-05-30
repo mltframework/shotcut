@@ -86,4 +86,21 @@ private:
     QString m_hash;
 };
 
+class ProxyReplacePostJobAction : public PostJobAction
+{
+public:
+    ProxyReplacePostJobAction(const QString& srcFile, const QString& dstFile, const QString& srcHash)
+        : PostJobAction()
+        , m_srcFile(srcFile)
+        , m_dstFile(dstFile)
+        , m_hash(srcHash)
+        {}
+    void doAction();
+
+private:
+    QString m_srcFile;
+    QString m_dstFile;
+    QString m_hash;
+};
+
 #endif // POSTJOBACTION_H

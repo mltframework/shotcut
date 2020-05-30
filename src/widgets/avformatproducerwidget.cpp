@@ -30,6 +30,7 @@
 #include "mainwindow.h"
 #include "Logger.h"
 #include "qmltypes/qmlapplication.h"
+#include "proxymanager.h"
 #include <QtWidgets>
 
 static bool ProducerIsTimewarp( Mlt::Producer* producer )
@@ -37,10 +38,12 @@ static bool ProducerIsTimewarp( Mlt::Producer* producer )
     return QString::fromUtf8(producer->get("mlt_service")) == "timewarp";
 }
 
-static QString GetFilenameFromProducer( Mlt::Producer* producer )
+static QString GetFilenameFromProducer(Mlt::Producer* producer, bool useOriginal = true)
 {
     QString resource;
-    if (ProducerIsTimewarp(producer)) {
+    if (useOriginal && producer->get(kOriginalResourceProperty)) {
+        resource = QString::fromUtf8(producer->get(kOriginalResourceProperty));
+    } else if (ProducerIsTimewarp(producer)) {
         resource = QString::fromUtf8(producer->get("warp_resource"));
     } else {
         resource = QString::fromUtf8(producer->get("resource"));
@@ -56,8 +59,7 @@ static QString GetFilenameFromProducer( Mlt::Producer* producer )
 static double GetSpeedFromProducer( Mlt::Producer* producer )
 {
     double speed = 1.0;
-    if (ProducerIsTimewarp(producer) )
-    {
+    if (ProducerIsTimewarp(producer)) {
         speed = fabs(producer->get_double("warp_speed"));
     }
     return speed;
@@ -107,7 +109,7 @@ Mlt::Producer* AvformatProducerWidget::newProducer(Mlt::Profile& profile)
     Mlt::Producer* p = 0;
     if ( ui->speedSpinBox->value() == 1.0 )
     {
-        p = new Mlt::Producer(profile, GetFilenameFromProducer(producer()).toUtf8().constData());
+        p = new Mlt::Producer(profile, GetFilenameFromProducer(producer(), false).toUtf8().constData());
     }
     else
     {
@@ -119,7 +121,7 @@ Mlt::Producer* AvformatProducerWidget::newProducer(Mlt::Profile& profile)
         tempProps.set("speed", ui->speedSpinBox->value());
         QString warpspeed = QString::fromLatin1(tempProps.get("speed"));
 
-        QString filename = GetFilenameFromProducer(producer());
+        QString filename = GetFilenameFromProducer(producer(), false);
         QString s = QString("%1:%2:%3").arg("timewarp").arg(warpspeed).arg(filename);
         p = new Mlt::Producer(profile, s.toUtf8().constData());
         p->set(kShotcutProducerProperty, "avformat");
@@ -256,7 +258,10 @@ void AvformatProducerWidget::recreateProducer()
                  kShotcutSkipConvertProperty ","
                  kCommentProperty ","
                  kDefaultAudioIndexProperty ","
-                 kShotcutCaptionProperty);
+                 kShotcutCaptionProperty ","
+                 kOriginalResourceProperty ","
+                 kDisableProxyProperty ","
+                 kIsProxyProperty);
     Mlt::Controller::copyFilters(*m_producer, *p);
     if (m_producer->get(kMultitrackItemProperty)) {
         emit producerChanged(p);
@@ -276,7 +281,7 @@ void AvformatProducerWidget::onFrameDecoded()
         m_defaultDuration = m_producer->get_length();
 
     double warpSpeed = GetSpeedFromProducer(producer());
-    QString resource = QDir::toNativeSeparators(GetFilenameFromProducer(producer()));
+    QString resource = GetFilenameFromProducer(producer());
     QString name = Util::baseName(resource);
     QString caption = m_producer->get(kShotcutCaptionProperty);
     if (caption.isEmpty() || caption.startsWith(name)) {
@@ -431,7 +436,8 @@ void AvformatProducerWidget::onFrameDecoded()
     int width = m_producer->get_int("meta.media.width");
     int height = m_producer->get_int("meta.media.height");
     if (width || height)
-        ui->videoTableWidget->setItem(1, 1, new QTableWidgetItem(QString("%1x%2").arg(width).arg(height)));
+        ui->videoTableWidget->setItem(1, 1, new QTableWidgetItem(QString("%1x%2 %3").arg(width).arg(height)
+                                      .arg(m_producer->get_int(kIsProxyProperty)? tr("(PROXY)") : "")));
 
     double sar = m_producer->get_double("meta.media.sample_aspect_num");
     if (m_producer->get_double("meta.media.sample_aspect_den") > 0)
@@ -690,6 +696,19 @@ void AvformatProducerWidget::on_menuButton_clicked()
     menu.addAction(ui->actionFFmpegConvert);
     menu.addAction(ui->actionExtractSubclip);
     menu.addAction(ui->actionSetFileDate);
+    if (m_producer->get_int("video_index") >= 0) {
+        auto submenu = menu.addMenu(tr("Proxy"));
+        submenu->addAction(ui->actionMakeProxy);
+#ifndef Q_OS_WIN
+        submenu->addAction(ui->actionDeleteProxy);
+#endif
+        submenu->addAction(ui->actionDisableProxy);
+        submenu->addAction(ui->actionCopyHashCode);
+        if (m_producer->get_int(kDisableProxyProperty)) {
+            ui->actionMakeProxy->setDisabled(true);
+            ui->actionDisableProxy->setChecked(true);
+        }
+    }
     menu.exec(ui->menuButton->mapToGlobal(QPoint(0, 0)));
 }
 
@@ -758,7 +777,11 @@ void AvformatProducerWidget::convert(TranscodeDialog& dialog)
         args << "-i" << resource;
         args << "-max_muxing_queue_size" << "9999";
         // transcode all streams except data, subtitles, and attachments
-        args << "-map" << "0:V?" << "-map" << "0:a?" << "-map_metadata" << "0" << "-ignore_unknown";
+        if (m_producer->get_int("video_index") < m_producer->get_int("audio_index"))
+            args << "-map" << "0:V?" << "-map" << "0:a?";
+        else
+            args << "-map" << "0:a?" << "-map" << "0:V?";
+        args << "-map_metadata" << "0" << "-ignore_unknown";
         if (ui->rangeComboBox->currentIndex())
             args << "-vf" << "scale=flags=accurate_rnd+full_chroma_inp+full_chroma_int:in_range=full:out_range=full" << "-color_range" << "jpeg";
         else
@@ -809,7 +832,7 @@ void AvformatProducerWidget::convert(TranscodeDialog& dialog)
             args << "-y" << filename;
             FfmpegJob* job = new FfmpegJob(filename, args, false);
             job->setLabel(tr("Convert %1").arg(Util::baseName(filename)));
-            job->setPostJobAction(new ConvertReplacePostJobAction(resource, filename, MAIN.getHash(*m_producer)));
+            job->setPostJobAction(new ConvertReplacePostJobAction(resource, filename, Util::getHash(*m_producer)));
             JOBS.add(job);
         }
     }
@@ -818,7 +841,7 @@ void AvformatProducerWidget::convert(TranscodeDialog& dialog)
 bool AvformatProducerWidget::revertToOriginalResource()
 {
     QString resource = m_producer->get(kOriginalResourceProperty);
-    if (!resource.isEmpty()) {
+    if (!resource.isEmpty() && !m_producer->get_int(kIsProxyProperty)) {
         m_producer->set(kOriginalResourceProperty, nullptr, 0);
         if (m_producer->get(kMultitrackItemProperty)) {
             QString s = QString::fromLatin1(m_producer->get(kMultitrackItemProperty));
@@ -1114,4 +1137,68 @@ void AvformatProducerWidget::on_filenameLabel_editingFinished()
 void AvformatProducerWidget::on_convertButton_clicked()
 {
     on_actionFFmpegConvert_triggered();
+}
+
+void AvformatProducerWidget::on_actionDisableProxy_triggered(bool checked)
+{
+    if (checked) {
+        producer()->set(kDisableProxyProperty, 1);
+    } else {
+        Mlt::Properties properties(producer());
+        properties.clear(kDisableProxyProperty);
+
+        // Generate proxy if it does not exist
+        if (Settings.proxyEnabled()) {
+            QString hash = Util::getHash(*producer());
+            QString fileName = hash + ProxyManager::videoFilenameExtension();
+            if (!ProxyManager::dir().exists(fileName))
+                on_actionMakeProxy_triggered();
+        }
+    }
+}
+
+void AvformatProducerWidget::on_actionMakeProxy_triggered()
+{
+    bool fullRange = ui->rangeComboBox->currentIndex() == 1;
+    QPoint aspectRatio(ui->aspectNumSpinBox->value(), ui->aspectDenSpinBox->value());
+    ProxyManager::ScanMode scan = ProxyManager::Progressive;
+    if (!ui->scanComboBox->currentIndex())
+        scan = ui->fieldOrderComboBox->currentIndex()? ProxyManager::InterlacedTopFieldFirst
+                                                     : ProxyManager::InterlacedBottomFieldFirst;
+
+    ProxyManager::generateVideoProxy(*producer(), fullRange, scan, aspectRatio);
+}
+
+void AvformatProducerWidget::on_actionDeleteProxy_triggered()
+{
+    // Delete the file if it exists
+    QString hash = Util::getHash(*producer());
+    QString fileName = hash + ProxyManager::videoFilenameExtension();
+    QDir dir = ProxyManager::dir();
+    LOG_DEBUG() << "removing" << dir.filePath(fileName);
+    dir.remove(dir.filePath(fileName));
+
+    // Delete the pending file if it exists));
+    fileName = hash + ProxyManager::pendingVideoExtension();
+    dir.remove(dir.filePath(fileName));
+
+    // Replace with original
+    if (producer()->get_int(kIsProxyProperty) && producer()->get(kOriginalResourceProperty)) {
+        Mlt::Producer original(MLT.profile(), producer()->get(kOriginalResourceProperty));
+        if (original.is_valid()) {
+            if (!qstrcmp(original.get("mlt_service"), "avformat")) {
+                original.set("mlt_service", "avformat-novalidate");
+                original.set("mute_on_pause", 0);
+            }
+            MAIN.replaceAllByHash(hash, original, true);
+        }
+    }
+}
+
+void AvformatProducerWidget::on_actionCopyHashCode_triggered()
+{
+    qApp->clipboard()->setText(Util::getHash(*producer()));
+    QMessageBox::information(this, qApp->applicationName(),
+                             Util::getHash(*producer()),
+                             QMessageBox::Ok);
 }

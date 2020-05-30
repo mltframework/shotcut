@@ -30,11 +30,13 @@
 #include <QDoubleSpinBox>
 #include <QTemporaryFile>
 #include <QApplication>
+#include <QCryptographicHash>
 
 #include <MltProducer.h>
 #include <Logger.h>
 #include "shotcut_mlt_properties.h"
 #include "qmltypes/qmlapplication.h"
+#include "proxymanager.h"
 
 QString Util::baseName(const QString &filePath)
 {
@@ -135,9 +137,7 @@ QString Util::producerTitle(const Mlt::Producer& producer)
         return QObject::tr("Master");
     if (p.get(kShotcutCaptionProperty))
         return QString::fromUtf8(p.get(kShotcutCaptionProperty));
-    if (p.get("resource"))
-        return Util::baseName(QString::fromUtf8(p.get("resource")));
-    return result;
+    return Util::baseName(ProxyManager::resource(p));
 }
 
 QString Util::removeFileScheme(QUrl& url)
@@ -338,7 +338,9 @@ void Util::applyCustomProperties(Mlt::Producer& destination, Mlt::Producer& sour
     p.clear(kDefaultAudioIndexProperty);
     p.clear(kOriginalInProperty);
     p.clear(kOriginalOutProperty);
-    p.clear(kOriginalResourceProperty);
+    if (!p.get_int(kIsProxyProperty))
+        p.clear(kOriginalResourceProperty);
+    p.clear(kDisableProxyProperty);
     destination.pass_list(source, "mlt_service, audio_index, video_index, force_progressive, force_tff,"
                        "force_aspect_ratio, video_delay, color_range, warp_speed, warp_pitch,"
                        kAspectRatioNumerator ","
@@ -348,17 +350,19 @@ void Util::applyCustomProperties(Mlt::Producer& destination, Mlt::Producer& sour
                        kDefaultAudioIndexProperty ","
                        kOriginalInProperty ","
                        kOriginalOutProperty ","
-                       kOriginalResourceProperty);
+                       kOriginalResourceProperty ","
+                       kDisableProxyProperty);
     if (!destination.get("_shotcut:resource")) {
         destination.set("_shotcut:resource", destination.get("resource"));
         destination.set("_shotcut:length", destination.get("length"));
     }
+    QString resource = ProxyManager::resource(destination);
     if (!qstrcmp("timewarp", source.get("mlt_service"))) {
-        QString resource = destination.get("_shotcut:resource");
         auto speed = qAbs(source.get_double("warp_speed"));
         auto caption = QString("%1 (%2x)").arg(Util::baseName(resource)).arg(speed);
         destination.set(kShotcutCaptionProperty, caption.toUtf8().constData());
 
+        resource = destination.get("_shotcut:resource");
         destination.set("warp_resource", resource.toUtf8().constData());
         resource = QString("%1:%2:%3").arg("timewarp").arg(source.get("warp_speed")).arg(resource);
         destination.set("resource", resource.toUtf8().constData());
@@ -366,8 +370,53 @@ void Util::applyCustomProperties(Mlt::Producer& destination, Mlt::Producer& sour
         int length = qRound(destination.get_length() * speedRatio);
         destination.set("length", destination.frames_to_time(length, mlt_time_clock));
     } else {
+        auto caption = Util::baseName(resource);
+        destination.set(kShotcutCaptionProperty, caption.toUtf8().constData());
+
+        p.clear("warp_resource");
         destination.set("resource", destination.get("_shotcut:resource"));
         destination.set("length", destination.get("_shotcut:length"));
     }
     destination.set_in_and_out(in, out);
+}
+
+QString Util::getFileHash(const QString& path)
+{
+    // This routine is intentionally copied from Kdenlive.
+    QFile file(path);
+    if (file.open(QIODevice::ReadOnly)) {
+        QByteArray fileData;
+         // 1 MB = 1 second per 450 files (or faster)
+         // 10 MB = 9 seconds per 450 files (or faster)
+        if (file.size() > 1000000*2) {
+            fileData = file.read(1000000);
+            if (file.seek(file.size() - 1000000))
+                fileData.append(file.readAll());
+        } else {
+            fileData = file.readAll();
+        }
+        file.close();
+        return QCryptographicHash::hash(fileData, QCryptographicHash::Md5).toHex();
+    }
+    return QString();
+}
+
+QString Util::getHash(Mlt::Properties& properties)
+{
+    QString hash = properties.get(kShotcutHashProperty);
+    if (hash.isEmpty()) {
+        QString service = properties.get("mlt_service");
+        QString resource = QString::fromUtf8(properties.get("resource"));
+
+        if (properties.get_int(kIsProxyProperty) && properties.get(kOriginalResourceProperty))
+            resource = QString::fromUtf8(properties.get(kOriginalResourceProperty));
+        else if (service == "timewarp")
+            resource = QString::fromUtf8(properties.get("warp_resource"));
+        else if (service == "vidstab")
+            resource = QString::fromUtf8(properties.get("filename"));
+        hash = getFileHash(resource);
+        if (!hash.isEmpty())
+            properties.set(kShotcutHashProperty, hash.toLatin1().constData());
+    }
+    return hash;
 }

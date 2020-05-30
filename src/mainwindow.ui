@@ -39,7 +39,7 @@
      <x>0</x>
      <y>0</y>
      <width>1270</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -194,6 +194,24 @@
      <addaction name="actionPreview540"/>
      <addaction name="actionPreview720"/>
     </widget>
+    <widget class="QMenu" name="menuProxy">
+     <property name="title">
+      <string>Proxy</string>
+     </property>
+     <widget class="QMenu" name="menuStorage">
+      <property name="title">
+       <string>Storage</string>
+      </property>
+      <addaction name="actionProxyStorageSet"/>
+      <addaction name="actionProxyStorageShow"/>
+      <addaction name="actionProxyUseProjectFolder"/>
+     </widget>
+     <addaction name="actionUseProxy"/>
+     <addaction name="menuStorage"/>
+     <addaction name="separator"/>
+     <addaction name="actionProxyUseHardware"/>
+     <addaction name="actionProxyConfigureHardware"/>
+    </widget>
     <addaction name="actionProject"/>
     <addaction name="actionGPU"/>
     <addaction name="menuProfile"/>
@@ -205,6 +223,7 @@
     <addaction name="actionRealtime"/>
     <addaction name="actionProgressive"/>
     <addaction name="menuPreviewScaling"/>
+    <addaction name="menuProxy"/>
     <addaction name="menuDeinterlacer"/>
     <addaction name="menuInterpolation"/>
     <addaction name="menuExternal"/>
@@ -1075,6 +1094,60 @@
    </property>
    <property name="toolTip">
     <string>Synchronization</string>
+   </property>
+  </action>
+  <action name="actionUseProxy">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Use Proxy</string>
+   </property>
+   <property name="shortcut">
+    <string>F4</string>
+   </property>
+  </action>
+  <action name="actionProxyStorageSet">
+   <property name="text">
+    <string>Set...</string>
+   </property>
+   <property name="toolTip">
+    <string>Set the proxy storage folder</string>
+   </property>
+  </action>
+  <action name="actionProxyStorageShow">
+   <property name="text">
+    <string>Show...</string>
+   </property>
+   <property name="toolTip">
+    <string>Show the proxy storage folder</string>
+   </property>
+  </action>
+  <action name="actionProxyUseProjectFolder">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Use Project Folder</string>
+   </property>
+   <property name="toolTip">
+    <string>Store proxies in the project folder if defined</string>
+   </property>
+  </action>
+  <action name="actionProxyUseHardware">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Use Hardware Encoder</string>
+   </property>
+  </action>
+  <action name="actionProxyConfigureHardware">
+   <property name="text">
+    <string>Configure Hardware Encoder...</string>
    </property>
   </action>
  </widget>
