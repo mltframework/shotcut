@@ -156,8 +156,8 @@ void ProxyManager::generateVideoProxy(Mlt::Producer& producer, bool fullRange, S
             args << "-qscale" << "37";
         } else if (hwCodecs.contains("hevc_amf")) {
             args << "-codec:v" << "hevc_amf";
-            args << "-rc" << "cqp";
-            args << "-qp_i" << "37";
+            args << "-rc" << "1";
+            args << "-qp_i" << "32" << "-qp_p" << "32";
         } else if (hwCodecs.contains("hevc_vaapi")) {
             args << "-init_hw_device" << "vaapi=vaapi0:,connection_type=x11" << "-filter_hw_device" << "vaapi0";
             args << "-codec:v" << "hevc_vaapi";
