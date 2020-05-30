@@ -276,9 +276,9 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties& preset)
             else
                 ui->audioRateControlCombo->setCurrentIndex(RateControlQuality);
         }
-        else if (name == "vq") {
+        else if (name == "vq" || name == "vglobal_quality") {
             ui->videoRateControlCombo->setCurrentIndex(preset.get("vbufsize")? RateControlConstrained : RateControlQuality);
-            videoQuality = preset.get_int("vq");
+            videoQuality = preset.get_int(name.toUtf8().constData());
         }
         else if (name == "qscale") {
             ui->videoRateControlCombo->setCurrentIndex(preset.get("vbufsize")? RateControlConstrained : RateControlQuality);
@@ -731,6 +731,9 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
                     } else if (vcodec.endsWith("_vaapi")) {
                         setIfNotSet(p, "vglobal_quality", TO_ABSOLUTE(51, 0, vq));
                         setIfNotSet(p, "vq", TO_ABSOLUTE(51, 0, vq));
+                    } else if (vcodec.endsWith("_qsv")) {
+                        setIfNotSet(p, "vglobal_quality", TO_ABSOLUTE(51, 1, vq));
+                        setIfNotSet(p, "look_ahead", 1);
                     } else {
                         setIfNotSet(p, "qscale", TO_ABSOLUTE(31, 1, vq));
                     }
@@ -1963,6 +1966,8 @@ void EncodeDock::on_videoQualitySpinner_valueChanged(int vq)
         s = QString("qp_i=qp_p=qp_b=%1").arg(TO_ABSOLUTE(51, 0, vq));
     } else if (vcodec.endsWith("_vaapi")) {
         s = QString("vglobal_quality=%1").arg(TO_ABSOLUTE(51, 0, vq));
+    } else if (vcodec.endsWith("_qsv")) {
+        s = QString("vglobal_quality=%1").arg(TO_ABSOLUTE(51, 1, vq));
     } else {
         s = QString("qscale=%1").arg(TO_ABSOLUTE(31, 1, vq));
     }
