@@ -168,7 +168,7 @@ void ProxyManager::generateVideoProxy(Mlt::Producer& producer, bool fullRange, S
             args << "-qp" << "30";
         } else if (hwCodecs.contains("hevc_videotoolbox")) {
             args << "-codec:v" << "hevc_videotoolbox";
-            args << "-qscale" << "37";
+            args << "-b:v" << "2M";
         }
     }
     if (!args.contains("-codec:v")) {
