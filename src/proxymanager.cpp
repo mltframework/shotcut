@@ -144,6 +144,7 @@ void ProxyManager::generateVideoProxy(Mlt::Producer& producer, bool fullRange, S
         args << "-aspect" << QString("%1:%2").arg(aspectRatio.x()).arg(aspectRatio.y());
     }
     args << "-f" << "mp4" << "-codec:a" << "ac3" << "-b:a" << "256k";
+    args << "-pix_fmt" << "yuv420p";
     if (Settings.proxyUseHardware()) {
         if (hwCodecs.contains("hevc_nvenc")) {
             args << "-codec:v" << "hevc_nvenc";
@@ -172,7 +173,6 @@ void ProxyManager::generateVideoProxy(Mlt::Producer& producer, bool fullRange, S
     }
     if (!args.contains("-codec:v")) {
         args << "-codec:v" << "libx264";
-        args << "-pix_fmt" << "yuv420p";
         args << "-preset" << "veryfast";
         args << "-crf" << "23";
     }
