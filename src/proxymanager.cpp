@@ -149,26 +149,26 @@ void ProxyManager::generateVideoProxy(Mlt::Producer& producer, bool fullRange, S
         if (hwCodecs.contains("hevc_nvenc")) {
             args << "-codec:v" << "hevc_nvenc";
             args << "-rc" << "constqp";
-            args << "-vglobal_quality" << "30";
+            args << "-vglobal_quality" << "37";
         } else if (hwCodecs.contains("hevc_qsv")) {
             args << "-load_plugin" << "hevc_hw";
             args << "-codec:v" << "hevc_qsv";
-            args << "-qscale" << "30";
+            args << "-qscale" << "37";
         } else if (hwCodecs.contains("hevc_amf")) {
             args << "-codec:v" << "hevc_amf";
             args << "-rc" << "cqp";
-            args << "-qp_i" << "30";
+            args << "-qp_i" << "37";
         } else if (hwCodecs.contains("hevc_vaapi")) {
             args << "-init_hw_device" << "vaapi=vaapi0:,connection_type=x11" << "-filter_hw_device" << "vaapi0";
             args << "-codec:v" << "hevc_vaapi";
-            args << "-qp" << "30";
+            args << "-qp" << "37";
         } else if (hwCodecs.contains("h264_vaapi")) {
             args << "-init_hw_device" << "vaapi=vaapi0:,connection_type=x11" << "-filter_hw_device" << "vaapi0";
             args << "-codec:v" << "h264_vaapi";
             args << "-qp" << "30";
         } else if (hwCodecs.contains("hevc_videotoolbox")) {
             args << "-codec:v" << "hevc_videotoolbox";
-            args << "-qscale" << "30";
+            args << "-qscale" << "37";
         }
     }
     if (!args.contains("-codec:v")) {
