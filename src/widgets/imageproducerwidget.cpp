@@ -80,7 +80,6 @@ void ImageProducerWidget::setProducer(Mlt::Producer* p)
     updateDuration();
     resource = QDir::toNativeSeparators(resource);
     ui->filenameLabel->setToolTip(resource);
-    m_producer->set(kShotcutDetailProperty, resource.toUtf8().constData());
     ui->resolutionLabel->setText(QString("%1x%2 %3").arg(p->get("meta.media.width")).arg(p->get("meta.media.height"))
                                  .arg(m_producer->get_int(kIsProxyProperty)? tr("(PROXY)") : ""));
     ui->aspectNumSpinBox->blockSignals(true);
