@@ -81,7 +81,7 @@ Player::Player(QWidget *parent)
     Util::setColorsToHighlight(m_statusLabel, QPalette::Button);
     tabLayout->addWidget(m_statusLabel);
     tabLayout->addStretch(1);
-    if (Settings.drawMethod() == Qt::AA_UseDesktopOpenGL) {
+    if (Settings.drawMethod() != Qt::AA_UseOpenGLES) {
         QGraphicsOpacityEffect *effect = new QGraphicsOpacityEffect(this);
         m_statusLabel->setGraphicsEffect(effect);
         m_statusFadeIn = new QPropertyAnimation(effect, "opacity", this);
@@ -98,6 +98,8 @@ Player::Player(QWidget *parent)
         connect(&m_statusTimer, SIGNAL(timeout()), m_statusFadeOut, SLOT(start()));
         connect(m_statusFadeOut, SIGNAL(finished()), SLOT(onFadeOutFinished()));
         m_statusFadeOut->start();
+    } else {
+        connect(&m_statusTimer, SIGNAL(timeout()), SLOT(onFadeOutFinished()));
     }
 
     // Add the layouts for managing video view, scroll bars, and audio controls.
@@ -853,7 +855,7 @@ void Player::setStatusLabel(const QString &text, int timeoutSeconds, QAction* ac
     else
         disconnect(m_statusLabel, SIGNAL(clicked(bool)));
 
-    if (Settings.drawMethod() == Qt::AA_UseDesktopOpenGL) {
+    if (Settings.drawMethod() != Qt::AA_UseOpenGLES) {
         // Cancel the fade out.
         if (m_statusFadeOut->state() == QAbstractAnimation::Running) {
             m_statusFadeOut->stop();
@@ -874,10 +876,10 @@ void Player::setStatusLabel(const QString &text, int timeoutSeconds, QAction* ac
                     m_statusTimer.start(timeoutSeconds * 1000);
             }
         }
-    } else { // DirectX or software GL
+    } else { // DirectX
         m_statusLabel->show();
         if (timeoutSeconds > 0)
-            QTimer::singleShot(timeoutSeconds * 1000, this, SLOT(onFadeOutFinished()));
+            m_statusTimer.start(timeoutSeconds * 1000);
     }
 }
 
@@ -885,8 +887,8 @@ void Player::onFadeOutFinished()
 {
     m_statusLabel->disconnect(SIGNAL(clicked(bool)));
     m_statusLabel->setToolTip(QString());
-    // DirectX or software GL
-    if (Settings.drawMethod() != Qt::AA_UseDesktopOpenGL)
+    // DirectX
+    if (Settings.drawMethod() == Qt::AA_UseOpenGLES)
         m_statusLabel->hide();
     showIdleStatus();
 }
