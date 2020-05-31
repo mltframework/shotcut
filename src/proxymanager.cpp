@@ -21,6 +21,7 @@
 #include "shotcut_mlt_properties.h"
 #include "jobqueue.h"
 #include "jobs/ffmpegjob.h"
+#include "jobs/meltjob.h"
 #include "util.h"
 
 #include <QObject>
@@ -209,12 +210,16 @@ void ProxyManager::generateImageProxy(Mlt::Producer& producer)
     file.resize(0);
     file.close();
 
-    args << "-loglevel" << "verbose";
-    args << "-i" << resource;
-    args << "-vf" << QString("scale=width=-2:height=%1").arg(resolution());
-    args << "-y" << fileName;
+    auto width = producer.get_double("meta.media.width");
+    auto height = producer.get_double("meta.media.height");
+    args << "-verbose" << "-profile" << "square_pal";
+    args << resource << "out=0" << "-consumer";
+    args << QString("avformat:%1").arg(fileName);
+    args << QString("width=%1").arg(qRound(width / height * resolution()));
+    args << QString("height=%1").arg(resolution());
+    args << "pix_fmt=yuvj422p" << "color_range=full";
 
-    FfmpegJob* job = new FfmpegJob(fileName, args, false);
+    MeltJob* job = new MeltJob(fileName, args, 1, 1);
     job->setLabel(QObject::tr("Make proxy for %1").arg(Util::baseName(resource)));
     job->setPostJobAction(new ProxyReplacePostJobAction(resource, fileName, hash));
     JOBS.add(job);
