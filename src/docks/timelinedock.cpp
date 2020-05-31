@@ -1451,7 +1451,7 @@ void TimelineDock::replaceClipsWithHash(const QString& hash, Mlt::Producer& prod
         // lookup the current track and clip index by UUID
         QScopedPointer<Mlt::ClipInfo> info(MAIN.timelineClipInfoByUuid(clip.get(kUuidProperty), trackIndex, clipIndex));
 
-        if (trackIndex >= 0 && clipIndex >= 0) {
+        if (info && info->producer->is_valid() && trackIndex >= 0 && clipIndex >= 0) {
             if (info->producer->get_int(kIsProxyProperty)) {
                 // Not much to do on a proxy clip but change its resource
                 info->producer->set(kOriginalResourceProperty, producer.get("resource"));
