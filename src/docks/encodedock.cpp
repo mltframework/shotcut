@@ -112,10 +112,8 @@ EncodeDock::EncodeDock(QWidget *parent) :
     p = new Mlt::Properties(c.get_data("vcodec"));
     for (int i = 0; i < p->count(); i++) {
         if (qstrcmp("nvenc", p->get(i)) // redundant codec names nvenc_...
-            && qstrcmp("wrapped_avframe", p->get(i))
-            && qstrcmp("libx264rgb", p->get(i))) { // not usable
+            && qstrcmp("wrapped_avframe", p->get(i))) // not usable
             ui->videoCodecCombo->addItem(p->get(i));
-        }
     }
     delete p;
     ui->videoCodecCombo->model()->sort(0);
