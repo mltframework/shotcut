@@ -352,7 +352,7 @@ bool ProxyManager::filePending(Mlt::Producer& producer)
 // Returns true if the producer exists and was updated with proxy info
 bool ProxyManager::generateIfNotExists(Mlt::Producer& producer)
 {
-    if (Settings.proxyEnabled() && producer.is_valid() && !producer.get_int(kDisableProxyProperty)) {
+    if (Settings.proxyEnabled() && producer.is_valid() && !producer.get_int(kDisableProxyProperty) && !producer.get_int(kIsProxyProperty)) {
         QString service = QString::fromLatin1(producer.get("mlt_service"));
         if (ProxyManager::fileExists(producer)) {
             QDir proxyDir(Settings.proxyFolder());
