@@ -32,8 +32,16 @@
 
 static const char* kProxyVideoExtension = ".mp4";
 static const char* kProxyPendingVideoExtension = ".pending.mp4";
+static const char* kProxyImageExtension = ".jpg";
+static const char* kProxyPendingImageExtension = ".pending.jpg";
 static const float kProxyResolutionRatio = 1.3f;
 static const int   kFallbackProxyResolution = 540;
+
+static bool isValidImage(Mlt::Producer& producer)
+{
+    QString service = QString::fromLatin1(producer.get("mlt_service"));
+    return (service == "qimage" || service == "pixbuf") && !producer.get_int(kShotcutSequenceProperty);
+}
 
 QDir ProxyManager::dir()
 {
@@ -178,6 +186,32 @@ void ProxyManager::generateVideoProxy(Mlt::Producer& producer, bool fullRange, S
         args << "-crf" << "23";
     }
     args << "-g" << "1" << "-bf" << "0";
+    args << "-y" << fileName;
+
+    FfmpegJob* job = new FfmpegJob(fileName, args, false);
+    job->setLabel(QObject::tr("Make proxy for %1").arg(Util::baseName(resource)));
+    job->setPostJobAction(new ProxyReplacePostJobAction(resource, fileName, hash));
+    JOBS.add(job);
+}
+
+void ProxyManager::generateImageProxy(Mlt::Producer& producer)
+{
+    // Always regenerate per preview scaling or 540 if not specified
+    QString resource = ProxyManager::resource(producer);
+    QStringList args;
+    QString hash = Util::getHash(producer);
+    QString fileName = ProxyManager::dir().filePath(hash + kProxyPendingImageExtension);
+    QString filters;
+
+    // Touch file to make it in progress
+    QFile file(fileName);
+    file.open(QIODevice::WriteOnly);
+    file.resize(0);
+    file.close();
+
+    args << "-loglevel" << "verbose";
+    args << "-i" << resource;
+    args << "-vf" << QString("scale=width=-2:height=%1").arg(resolution());
     args << "-y" << fileName;
 
     FfmpegJob* job = new FfmpegJob(fileName, args, false);
@@ -337,7 +371,15 @@ bool ProxyManager::fileExists(Mlt::Producer& producer)
 {
     QDir proxyDir(Settings.proxyFolder());
     QDir projectDir(MLT.projectFolder());
-    QString fileName = Util::getHash(producer) + kProxyVideoExtension;
+    QString service = QString::fromLatin1(producer.get("mlt_service"));
+    QString fileName;
+    if (service.startsWith("avformat")) {
+        fileName = Util::getHash(producer) + kProxyVideoExtension;
+    } else if (isValidImage(producer)) {
+        fileName = Util::getHash(producer) + kProxyImageExtension;
+    } else {
+        return false;
+    }
     return (projectDir.cd("proxies") && projectDir.exists(fileName)) || proxyDir.exists(fileName);
 }
 
@@ -345,7 +387,15 @@ bool ProxyManager::filePending(Mlt::Producer& producer)
 {
     QDir proxyDir(Settings.proxyFolder());
     QDir projectDir(MLT.projectFolder());
-    QString fileName = Util::getHash(producer) + kProxyPendingVideoExtension;
+    QString service = QString::fromLatin1(producer.get("mlt_service"));
+    QString fileName;
+    if (service.startsWith("avformat")) {
+        fileName = Util::getHash(producer) + kProxyPendingVideoExtension;
+    } else if (isValidImage(producer)) {
+        fileName = Util::getHash(producer) + kProxyPendingImageExtension;
+    } else {
+        return false;
+    }
     return (projectDir.cd("proxies") && projectDir.exists(fileName)) || proxyDir.exists(fileName);
 }
 
@@ -357,17 +407,22 @@ bool ProxyManager::generateIfNotExists(Mlt::Producer& producer)
         if (ProxyManager::fileExists(producer)) {
             QDir proxyDir(Settings.proxyFolder());
             QDir projectDir(MLT.projectFolder());
+            QString fileName;
             if (service.startsWith("avformat")) {
-                QString fileName = Util::getHash(producer) + kProxyVideoExtension;
-                producer.set(kIsProxyProperty, 1);
-                producer.set(kOriginalResourceProperty, producer.get("resource"));
-                if (projectDir.exists(fileName)) {
-                    producer.set("resource", projectDir.filePath(fileName).toUtf8().constData());
-                } else {
-                    producer.set("resource", proxyDir.filePath(fileName).toUtf8().constData());
-                }
-                return true;
+                fileName = Util::getHash(producer) + kProxyVideoExtension;
+            } else if (isValidImage(producer)) {
+                fileName = Util::getHash(producer) + kProxyImageExtension;
+            } else {
+                return false;
             }
+            producer.set(kIsProxyProperty, 1);
+            producer.set(kOriginalResourceProperty, producer.get("resource"));
+            if (projectDir.exists(fileName)) {
+                producer.set("resource", projectDir.filePath(fileName).toUtf8().constData());
+            } else {
+                producer.set("resource", proxyDir.filePath(fileName).toUtf8().constData());
+            }
+            return true;
         } else if (!filePending(producer)) {
             if (service.startsWith("avformat")) {
                 // Tag this producer so we do not try to generate proxy again in this session
@@ -376,6 +431,14 @@ bool ProxyManager::generateIfNotExists(Mlt::Producer& producer)
                 LOG_DEBUG() << producer.get_int("meta.media.width") << "x" << producer.get_int("meta.media.height") << "threshold" << threshold;
                 if (producer.get_int("meta.media.width") > threshold && producer.get_int("meta.media.height") > threshold) {
                     ProxyManager::generateVideoProxy(producer, MLT.fullRange(producer));
+                }
+            } else if (isValidImage(producer)) {
+                // Tag this producer so we do not try to generate proxy again in this session
+                delete producer.get_frame();
+                auto threshold = qRound(kProxyResolutionRatio * resolution());
+                LOG_DEBUG() << producer.get_int("meta.media.width") << "x" << producer.get_int("meta.media.height") << "threshold" << threshold;
+                if (producer.get_int("meta.media.width") > threshold && producer.get_int("meta.media.height") > threshold) {
+                    ProxyManager::generateImageProxy(producer);
                 }
             }
         }
@@ -391,6 +454,16 @@ const char* ProxyManager::videoFilenameExtension()
 const char* ProxyManager::pendingVideoExtension()
 {
     return kProxyPendingVideoExtension;
+}
+
+const char* ProxyManager::imageFilenameExtension()
+{
+    return kProxyImageExtension;
+}
+
+const char* ProxyManager::pendingImageExtension()
+{
+    return kProxyImageExtension;
 }
 
 int ProxyManager::resolution()

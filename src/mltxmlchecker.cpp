@@ -556,5 +556,37 @@ void MltXmlChecker::checkForProxy(const QString& mlt_service, QVector<MltXmlChec
             properties << MltProperty(kOriginalResourceProperty, resource);
             m_isUpdated = true;
         }
+    } else if ((mlt_service == "qimage" || mlt_service == "pixbuf") && !properties.contains(MltProperty(kShotcutSequenceProperty, "1"))) {
+        QString resource;
+        QString hash;
+        for (auto& p : properties) {
+            if (p.first == "resource") {
+                QFileInfo info(p.second);
+                if (info.isRelative())
+                    info.setFile(m_fileInfo.canonicalPath(), p.second);
+                resource = info.filePath();
+            } else if (p.first == kShotcutHashProperty) {
+                hash = p.second;
+            }
+        }
+        QDir proxyDir(Settings.proxyFolder());
+        QDir projectDir(QFileInfo(m_tempFile->fileName()).dir());
+        QString fileName = hash + ProxyManager::imageFilenameExtension();
+        projectDir.cd("proxies");
+        if (proxyDir.exists(fileName) || projectDir.exists(fileName)) {
+            for (auto& p : properties) {
+                if (p.first == "resource") {
+                    if (projectDir.exists(fileName)) {
+                        p.second = projectDir.filePath(fileName);
+                    } else {
+                        p.second = proxyDir.filePath(fileName);
+                    }
+                    break;
+                }
+            }
+            properties << MltProperty(kIsProxyProperty, "1");
+            properties << MltProperty(kOriginalResourceProperty, resource);
+            m_isUpdated = true;
+        }
     }
 }

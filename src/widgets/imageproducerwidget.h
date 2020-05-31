@@ -74,6 +74,14 @@ private slots:
 
     void on_filenameLabel_editingFinished();
     
+    void on_actionDisableProxy_triggered(bool checked);
+
+    void on_actionMakeProxy_triggered();
+
+    void on_actionDeleteProxy_triggered();
+
+    void on_actionCopyHashCode_triggered();
+
 private:
     Ui::ImageProducerWidget *ui;
     int m_defaultDuration;

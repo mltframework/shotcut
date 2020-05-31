@@ -43,12 +43,15 @@ public:
     static QString resource(Mlt::Producer& producer);
     static void generateVideoProxy(Mlt::Producer& producer, bool fullRange,
         ScanMode scanMode = Automatic, const QPoint& aspectRatio = QPoint());
+    static void generateImageProxy(Mlt::Producer& producer);
     static bool filterXML(QString& fileName, const QString& root);
     static bool fileExists(Mlt::Producer& producer);
     static bool filePending(Mlt::Producer& producer);
     static bool generateIfNotExists(Mlt::Producer& producer);
     static const char* videoFilenameExtension();
     static const char* pendingVideoExtension();
+    static const char* imageFilenameExtension();
+    static const char* pendingImageExtension();
     static int resolution();
 };
 

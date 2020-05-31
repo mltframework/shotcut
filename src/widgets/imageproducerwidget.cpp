@@ -22,11 +22,13 @@
 #include "shotcut_mlt_properties.h"
 #include "util.h"
 #include "dialogs/filedatedialog.h"
+#include "proxymanager.h"
 #include <Logger.h>
 #include <QFileInfo>
 #include <QDir>
 #include <QMenu>
 #include <QClipboard>
+#include <QMessageBox>
 
 // This legacy property is only used in this widget.
 #define kShotcutResourceProperty "shotcut_resource"
@@ -79,7 +81,8 @@ void ImageProducerWidget::setProducer(Mlt::Producer* p)
     resource = QDir::toNativeSeparators(resource);
     ui->filenameLabel->setToolTip(resource);
     m_producer->set(kShotcutDetailProperty, resource.toUtf8().constData());
-    ui->resolutionLabel->setText(QString("%1x%2").arg(p->get("meta.media.width")).arg(p->get("meta.media.height")));
+    ui->resolutionLabel->setText(QString("%1x%2 %3").arg(p->get("meta.media.width")).arg(p->get("meta.media.height"))
+                                 .arg(m_producer->get_int(kIsProxyProperty)? tr("(PROXY)") : ""));
     ui->aspectNumSpinBox->blockSignals(true);
     if (p->get(kAspectRatioNumerator) && p->get(kAspectRatioDenominator)) {
         ui->aspectNumSpinBox->setValue(p->get_int(kAspectRatioNumerator));
@@ -154,7 +157,7 @@ void ImageProducerWidget::recreateProducer()
         m_producer->set("resource", resource.mid(resource.indexOf(':') + 1).toUtf8().constData());
     p->pass_list(*m_producer, "force_aspect_ratio," kAspectRatioNumerator ", resource, " kAspectRatioDenominator
         ", begin, ttl," kShotcutResourceProperty ", autolength, length," kShotcutSequenceProperty ", " kPlaylistIndexProperty
-        ", " kCommentProperty);
+        ", " kCommentProperty "," kOriginalResourceProperty "," kDisableProxyProperty "," kIsProxyProperty);
     Mlt::Controller::copyFilters(*m_producer, *p);
     if (m_producer->get(kMultitrackItemProperty)) {
         emit producerChanged(p);
@@ -295,6 +298,18 @@ void ImageProducerWidget::on_menuButton_clicked()
         menu.addAction(ui->actionOpenFolder);
     menu.addAction(ui->actionCopyFullFilePath);
     menu.addAction(ui->actionSetFileDate);
+    auto submenu = menu.addMenu(tr("Proxy"));
+    if (!producer()->get_int(kShotcutSequenceProperty))
+        submenu->addAction(ui->actionMakeProxy);
+#ifndef Q_OS_WIN
+    submenu->addAction(ui->actionDeleteProxy);
+#endif
+    submenu->addAction(ui->actionDisableProxy);
+    submenu->addAction(ui->actionCopyHashCode);
+    if (m_producer->get_int(kDisableProxyProperty)) {
+        ui->actionMakeProxy->setDisabled(true);
+        ui->actionDisableProxy->setChecked(true);
+    }
     menu.exec(ui->menuButton->mapToGlobal(QPoint(0, 0)));
 }
 
@@ -343,4 +358,57 @@ void ImageProducerWidget::on_filenameLabel_editingFinished()
         }
         emit modified();
     }
+}
+
+void ImageProducerWidget::on_actionDisableProxy_triggered(bool checked)
+{
+    if (checked) {
+        producer()->set(kDisableProxyProperty, 1);
+    } else {
+        Mlt::Properties properties(producer());
+        properties.clear(kDisableProxyProperty);
+
+        // Generate proxy if it does not exist
+        if (Settings.proxyEnabled()) {
+            QString hash = Util::getHash(*producer());
+            QString fileName = hash + ProxyManager::imageFilenameExtension();
+            if (!ProxyManager::dir().exists(fileName))
+                on_actionMakeProxy_triggered();
+        }
+    }
+}
+
+void ImageProducerWidget::on_actionMakeProxy_triggered()
+{
+    ProxyManager::generateImageProxy(*producer());
+}
+
+void ImageProducerWidget::on_actionDeleteProxy_triggered()
+{
+    // Delete the file if it exists
+    QString hash = Util::getHash(*producer());
+    QString fileName = hash + ProxyManager::imageFilenameExtension();
+    QDir dir = ProxyManager::dir();
+    LOG_DEBUG() << "removing" << dir.filePath(fileName);
+    dir.remove(dir.filePath(fileName));
+
+    // Delete the pending file if it exists));
+    fileName = hash + ProxyManager::pendingImageExtension();
+    dir.remove(dir.filePath(fileName));
+
+    // Replace with original
+    if (producer()->get_int(kIsProxyProperty) && producer()->get(kOriginalResourceProperty)) {
+        Mlt::Producer original(MLT.profile(), producer()->get(kOriginalResourceProperty));
+        if (original.is_valid()) {
+            MAIN.replaceAllByHash(hash, original, true);
+        }
+    }
+}
+
+void ImageProducerWidget::on_actionCopyHashCode_triggered()
+{
+    qApp->clipboard()->setText(Util::getHash(*producer()));
+    QMessageBox::information(this, qApp->applicationName(),
+                             Util::getHash(*producer()),
+                             QMessageBox::Ok);
 }

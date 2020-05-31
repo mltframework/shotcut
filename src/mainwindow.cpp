@@ -109,7 +109,7 @@ static bool eventDebugCallback(void **data)
     return false;
 }
 
-static const int AUTOSAVE_TIMEOUT_MS = 30000;
+static const int AUTOSAVE_TIMEOUT_MS = 60000;
 
 MainWindow::MainWindow()
     : QMainWindow(0)
