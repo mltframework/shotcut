@@ -1214,7 +1214,7 @@ void MainWindow::updateAutoSave()
         m_autosaveTimer.start();
 }
 
-void MainWindow::open(QString url, const Mlt::Properties* properties)
+void MainWindow::open(QString url, const Mlt::Properties* properties, bool play)
 {
     LOG_DEBUG() << url;
     bool modified = false;
@@ -1274,7 +1274,7 @@ void MainWindow::open(QString url, const Mlt::Properties* properties)
         Mlt::Properties* props = const_cast<Mlt::Properties*>(properties);
         if (props && props->is_valid())
             mlt_properties_inherit(MLT.producer()->get_properties(), props->get_properties());
-        m_player->setPauseAfterOpen(!MLT.isClip());
+        m_player->setPauseAfterOpen(!play || !MLT.isClip());
 
         if (MLT.producer() && MLT.producer()->is_valid())
             setAudioChannels(MLT.audioChannels());

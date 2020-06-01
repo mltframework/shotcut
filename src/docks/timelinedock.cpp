@@ -1124,7 +1124,7 @@ void TimelineDock::insert(int trackIndex, int position, const QString &xml, bool
     // Handle drop from file manager to empty project.
     if ((!MLT.producer() || !MLT.producer()->is_valid()) && xml.startsWith("file://")) {
         QUrl url = xml.split(',').first();
-        MAIN.open(Util::removeFileScheme(url));
+        MAIN.open(Util::removeFileScheme(url), nullptr, false /* play */ );
     }
 
     if (MLT.isSeekableClip() || MLT.savedProducer() || !xml.isEmpty()) {
@@ -1167,7 +1167,7 @@ void TimelineDock::overwrite(int trackIndex, int position, const QString &xml, b
     // Handle drop from file manager to empty project.
     if ((!MLT.producer() || !MLT.producer()->is_valid()) && xml.startsWith("file://")) {
         QUrl url = xml.split(',').first();
-        MAIN.open(Util::removeFileScheme(url));
+        MAIN.open(Util::removeFileScheme(url), nullptr, false /* play */ );
     }
 
     if (MLT.isSeekableClip() || MLT.savedProducer() || !xml.isEmpty()) {
