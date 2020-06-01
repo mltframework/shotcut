@@ -28,6 +28,7 @@
 #include "settings.h"
 #include "util.h"
 #include "proxymanager.h"
+#include "dialogs/longuitask.h"
 
 #include <QAction>
 #include <QtQml>
@@ -1077,14 +1078,17 @@ bool TimelineDock::trimClipOut(int trackIndex, int clipIndex, int delta, bool ri
 static QString convertUrlsToXML(const QString& xml)
 {
     if (xml.startsWith("file://")) {
+        LongUiTask longTask(QObject::tr("Drop Files"));
         Mlt::Playlist playlist(MLT.profile());
         QList<QUrl> urls;
         for (const auto& s : xml.split(',')) {
             QUrl url(s);
             urls << Util::removeFileScheme(url);
         }
+        int i = 0, count = urls.size();
         for (const auto& path : Util::sortedFileList(urls)) {
             if (MAIN.isSourceClipMyProject(path)) continue;
+            longTask.reportProgress(Util::baseName(path), i++, count);
             Mlt::Producer p(MLT.profile(), path.toUtf8().constData());
             if (p.is_valid()) {
                 // Convert MLT XML to a virtual clip.

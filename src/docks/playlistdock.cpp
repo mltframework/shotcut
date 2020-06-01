@@ -646,11 +646,14 @@ void PlaylistDock::onDropped(const QMimeData *data, int row)
 {
     bool resetIndex = true;
     if (data && data->hasUrls()) {
+        LongUiTask longTask(tr("Add Files"));
         int insertNextAt = row;
         bool first = true;
         QStringList fileNames = Util::sortedFileList(Util::expandDirectories(data->urls()));
-        foreach (QString path, fileNames) {
+        auto i = 0, count = fileNames.size();
+        for (const auto& path : fileNames) {
             if (MAIN.isSourceClipMyProject(path)) continue;
+            longTask.reportProgress(Util::baseName(path), i++, count);
             Mlt::Producer p(MLT.profile(), path.toUtf8().constData());
             if (p.is_valid()) {
                 // Convert MLT XML to a virtual clip.

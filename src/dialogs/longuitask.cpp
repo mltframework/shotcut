@@ -32,7 +32,7 @@ LongUiTask::LongUiTask(QString title)
 void LongUiTask::reportProgress(QString text, int value, int max)
 {
     setLabelText(text);
-    setRange(0, max);
+    setRange(0, max - 1);
     setValue(value);
     QCoreApplication::processEvents();
 }

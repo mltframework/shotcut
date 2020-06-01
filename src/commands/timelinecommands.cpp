@@ -96,7 +96,7 @@ void InsertCommand::redo()
     m_undoHelper.recordBeforeState();
     Mlt::Producer clip(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
     if (clip.type() == playlist_type) {
-        LongUiTask longTask(QObject::tr("Insert Multiple Files"));
+        LongUiTask longTask(QObject::tr("Add Files"));
         Mlt::Playlist playlist(clip);
         int n = playlist.count();
         int i = n;
@@ -140,7 +140,7 @@ void OverwriteCommand::redo()
     m_undoHelper.recordBeforeState();
     Mlt::Producer clip(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
     if (clip.type() == playlist_type) {
-        LongUiTask longTask(QObject::tr("Overwrite Multiple Files"));
+        LongUiTask longTask(QObject::tr("Add Files"));
         Mlt::Playlist playlist(clip);
         int position = m_position;
         int n = playlist.count();
