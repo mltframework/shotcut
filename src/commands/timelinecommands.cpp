@@ -21,6 +21,7 @@
 #include "shotcut_mlt_properties.h"
 #include "settings.h"
 #include "proxymanager.h"
+#include "dialogs/longuitask.h"
 #include <Logger.h>
 
 
@@ -95,11 +96,14 @@ void InsertCommand::redo()
     m_undoHelper.recordBeforeState();
     Mlt::Producer clip(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
     if (clip.type() == playlist_type) {
+        LongUiTask longTask(QObject::tr("Insert Multiple Files"));
         Mlt::Playlist playlist(clip);
-        int i = playlist.count();
+        int n = playlist.count();
+        int i = n;
         while (i--) {
             QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(i));
             clip = Mlt::Producer(info->producer);
+            longTask.reportProgress(QFileInfo(clip.get("resource")).fileName(), n - i + 1, n);
             ProxyManager::generateIfNotExists(clip);
             clip.set_in_and_out(info->frame_in, info->frame_out);
             m_model.insertClip(m_trackIndex, clip, m_position, m_rippleAllTracks, false);
@@ -136,11 +140,14 @@ void OverwriteCommand::redo()
     m_undoHelper.recordBeforeState();
     Mlt::Producer clip(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
     if (clip.type() == playlist_type) {
+        LongUiTask longTask(QObject::tr("Overwrite Multiple Files"));
         Mlt::Playlist playlist(clip);
         int position = m_position;
-        for (int i = 0; i < playlist.count(); i++) {
+        int n = playlist.count();
+        for (int i = 0; i < n; i++) {
             QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(i));
             clip = Mlt::Producer(info->producer);
+            longTask.reportProgress(QFileInfo(clip.get("resource")).fileName(), i, n);
             ProxyManager::generateIfNotExists(clip);
             clip.set_in_and_out(info->frame_in, info->frame_out);
             m_model.overwrite(m_trackIndex, clip, position, false);
