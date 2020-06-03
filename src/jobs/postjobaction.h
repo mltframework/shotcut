@@ -103,4 +103,17 @@ private:
     QString m_hash;
 };
 
+class ProxyFinalizePostJobAction : public PostJobAction
+{
+public:
+    ProxyFinalizePostJobAction(const QString& dstFile)
+        : PostJobAction()
+        , m_dstFile(dstFile)
+        {}
+    void doAction();
+
+private:
+    QString m_dstFile;
+};
+
 #endif // POSTJOBACTION_H

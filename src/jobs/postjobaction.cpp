@@ -108,3 +108,13 @@ void ProxyReplacePostJobAction::doAction()
         QFile::remove(m_dstFile);
     }
 }
+
+void ProxyFinalizePostJobAction::doAction()
+{
+    QFileInfo info(m_dstFile);
+    QString newFileName = info.path() + "/" + info.baseName() + "." + info.suffix();
+    if (!QFile::rename(m_dstFile, newFileName)) {
+        LOG_WARNING() << "failed to rename" << m_dstFile << "as" << newFileName;
+        QFile::remove(m_dstFile);
+    }
+}

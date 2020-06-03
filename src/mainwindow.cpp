@@ -2930,6 +2930,12 @@ Mlt::Playlist* MainWindow::playlist() const
     return m_playlistDock->model()->playlist();
 }
 
+bool MainWindow::isPlaylistValid() const
+{
+    return m_playlistDock->model()->playlist()
+        && m_playlistDock->model()->rowCount() > 0;
+}
+
 Mlt::Producer *MainWindow::multitrack() const
 {
     return m_timelineDock->model()->tractor();
@@ -4393,7 +4399,21 @@ void MainWindow::on_actionUseProxy_triggered(bool checked)
             open(MLT.producer());
             MLT.seek(m_player->position());
             m_player->seek(position);
-            //TODO prompt user if they want to create missing proxies
+
+            if (checked && (isPlaylistValid() || isMultitrackValid())) {
+                // Prompt user if they want to create missing proxies
+                QMessageBox dialog(QMessageBox::Question, qApp->applicationName(),
+                   tr("Do you want to create missing proxies for every file in this project?\n\n"
+                      "You must reopen your project after all proxy jobs are finished."),
+                   QMessageBox::No | QMessageBox::Yes, this);
+                dialog.setWindowModality(QmlApplication::dialogModality());
+                dialog.setDefaultButton(QMessageBox::Yes);
+                dialog.setEscapeButton(QMessageBox::No);
+                if (dialog.exec() == QMessageBox::Yes) {
+                    ProxyManager::generateIfNotExistsAll(*playlist());
+                    ProxyManager::generateIfNotExistsAll(*multitrack());
+                }
+            }
         } else if (fileName != untitledFileName()) {
             showStatusMessage(tr("Failed to open ") + fileName);
             emit openFailed(fileName);
@@ -4404,6 +4424,7 @@ void MainWindow::on_actionUseProxy_triggered(bool checked)
         Settings.setProxyEnabled(checked);
         m_player->showIdleStatus();
     }
+    m_player->showIdleStatus();
 }
 
 void MainWindow::on_actionProxyStorageSet_triggered()

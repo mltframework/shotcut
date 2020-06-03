@@ -435,9 +435,11 @@ void AvformatProducerWidget::onFrameDecoded()
 
     int width = m_producer->get_int("meta.media.width");
     int height = m_producer->get_int("meta.media.height");
-    if (width || height)
+    if (width || height) {
+        bool isProxy = m_producer->get_int(kIsProxyProperty) && m_producer->get(kOriginalResourceProperty);
         ui->videoTableWidget->setItem(1, 1, new QTableWidgetItem(QString("%1x%2 %3").arg(width).arg(height)
-                                      .arg(m_producer->get_int(kIsProxyProperty)? tr("(PROXY)") : "")));
+                                      .arg(isProxy? tr("(PROXY)") : "")));
+    }
 
     double sar = m_producer->get_double("meta.media.sample_aspect_num");
     if (m_producer->get_double("meta.media.sample_aspect_den") > 0)

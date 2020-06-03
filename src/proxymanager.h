@@ -42,17 +42,18 @@ public:
     static QDir dir();
     static QString resource(Mlt::Producer& producer);
     static void generateVideoProxy(Mlt::Producer& producer, bool fullRange,
-        ScanMode scanMode = Automatic, const QPoint& aspectRatio = QPoint());
-    static void generateImageProxy(Mlt::Producer& producer);
+        ScanMode scanMode = Automatic, const QPoint& aspectRatio = QPoint(), bool replace = true);
+    static void generateImageProxy(Mlt::Producer& producer, bool replace = true);
     static bool filterXML(QString& fileName, const QString& root);
     static bool fileExists(Mlt::Producer& producer);
     static bool filePending(Mlt::Producer& producer);
-    static bool generateIfNotExists(Mlt::Producer& producer);
+    static bool generateIfNotExists(Mlt::Producer& producer, bool replace = true);
     static const char* videoFilenameExtension();
     static const char* pendingVideoExtension();
     static const char* imageFilenameExtension();
     static const char* pendingImageExtension();
     static int resolution();
+    static void generateIfNotExistsAll(Mlt::Producer& producer);
 };
 
 #endif // PROXYMANAGER_H

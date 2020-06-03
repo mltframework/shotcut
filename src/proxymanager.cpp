@@ -72,7 +72,7 @@ QString ProxyManager::resource(Mlt::Producer& producer)
     return resource;
 }
 
-void ProxyManager::generateVideoProxy(Mlt::Producer& producer, bool fullRange, ScanMode scanMode, const QPoint& aspectRatio)
+void ProxyManager::generateVideoProxy(Mlt::Producer& producer, bool fullRange, ScanMode scanMode, const QPoint& aspectRatio, bool replace)
 {
     // Always regenerate per preview scaling or 540 if not specified
     QString resource = ProxyManager::resource(producer);
@@ -191,11 +191,15 @@ void ProxyManager::generateVideoProxy(Mlt::Producer& producer, bool fullRange, S
 
     FfmpegJob* job = new FfmpegJob(fileName, args, false);
     job->setLabel(QObject::tr("Make proxy for %1").arg(Util::baseName(resource)));
-    job->setPostJobAction(new ProxyReplacePostJobAction(resource, fileName, hash));
+    if (replace) {
+        job->setPostJobAction(new ProxyReplacePostJobAction(resource, fileName, hash));
+    } else {
+        job->setPostJobAction(new ProxyFinalizePostJobAction(fileName));
+    }
     JOBS.add(job);
 }
 
-void ProxyManager::generateImageProxy(Mlt::Producer& producer)
+void ProxyManager::generateImageProxy(Mlt::Producer& producer, bool replace)
 {
     // Always regenerate per preview scaling or 540 if not specified
     QString resource = ProxyManager::resource(producer);
@@ -221,7 +225,11 @@ void ProxyManager::generateImageProxy(Mlt::Producer& producer)
 
     MeltJob* job = new MeltJob(fileName, args, 1, 1);
     job->setLabel(QObject::tr("Make proxy for %1").arg(Util::baseName(resource)));
-    job->setPostJobAction(new ProxyReplacePostJobAction(resource, fileName, hash));
+    if (replace) {
+        job->setPostJobAction(new ProxyReplacePostJobAction(resource, fileName, hash));
+    } else {
+        job->setPostJobAction(new ProxyFinalizePostJobAction(fileName));
+    }
     JOBS.add(job);
 }
 
@@ -405,7 +413,7 @@ bool ProxyManager::filePending(Mlt::Producer& producer)
 }
 
 // Returns true if the producer exists and was updated with proxy info
-bool ProxyManager::generateIfNotExists(Mlt::Producer& producer)
+bool ProxyManager::generateIfNotExists(Mlt::Producer& producer, bool replace)
 {
     if (Settings.proxyEnabled() && producer.is_valid() && !producer.get_int(kDisableProxyProperty) && !producer.get_int(kIsProxyProperty)) {
         QString service = QString::fromLatin1(producer.get("mlt_service"));
@@ -435,7 +443,7 @@ bool ProxyManager::generateIfNotExists(Mlt::Producer& producer)
                 auto threshold = qRound(kProxyResolutionRatio * resolution());
                 LOG_DEBUG() << producer.get_int("meta.media.width") << "x" << producer.get_int("meta.media.height") << "threshold" << threshold;
                 if (producer.get_int("meta.media.width") > threshold && producer.get_int("meta.media.height") > threshold) {
-                    ProxyManager::generateVideoProxy(producer, MLT.fullRange(producer));
+                    ProxyManager::generateVideoProxy(producer, MLT.fullRange(producer), Automatic, QPoint(), replace);
                 }
             } else if (isValidImage(producer)) {
                 // Tag this producer so we do not try to generate proxy again in this session
@@ -443,7 +451,7 @@ bool ProxyManager::generateIfNotExists(Mlt::Producer& producer)
                 auto threshold = qRound(kProxyResolutionRatio * resolution());
                 LOG_DEBUG() << producer.get_int("meta.media.width") << "x" << producer.get_int("meta.media.height") << "threshold" << threshold;
                 if (producer.get_int("meta.media.width") > threshold && producer.get_int("meta.media.height") > threshold) {
-                    ProxyManager::generateImageProxy(producer);
+                    ProxyManager::generateImageProxy(producer, replace);
                 }
             }
         }
@@ -474,4 +482,45 @@ const char* ProxyManager::pendingImageExtension()
 int ProxyManager::resolution()
 {
     return Settings.playerPreviewScale()? Settings.playerPreviewScale() : kFallbackProxyResolution;
+}
+
+class FindNonProxyProducersParser : public Mlt::Parser
+{
+private:
+    QString m_hash;
+    QList<Mlt::Producer> m_producers;
+
+public:
+    FindNonProxyProducersParser() : Mlt::Parser() {}
+
+    QList<Mlt::Producer>& producers() { return m_producers; }
+
+    int on_start_filter(Mlt::Filter*) { return 0; }
+    int on_start_producer(Mlt::Producer* producer) {
+        if (!producer->parent().get_int(kIsProxyProperty))
+            m_producers << Mlt::Producer(producer);
+        return 0;
+    }
+    int on_end_producer(Mlt::Producer*) { return 0; }
+    int on_start_playlist(Mlt::Playlist*) { return 0; }
+    int on_end_playlist(Mlt::Playlist*) { return 0; }
+    int on_start_tractor(Mlt::Tractor*) { return 0; }
+    int on_end_tractor(Mlt::Tractor*) { return 0; }
+    int on_start_multitrack(Mlt::Multitrack*) { return 0; }
+    int on_end_multitrack(Mlt::Multitrack*) { return 0; }
+    int on_start_track() { return 0; }
+    int on_end_track() { return 0; }
+    int on_end_filter(Mlt::Filter*) { return 0; }
+    int on_start_transition(Mlt::Transition*) { return 0; }
+    int on_end_transition(Mlt::Transition*) { return 0; }
+};
+
+void ProxyManager::generateIfNotExistsAll(Mlt::Producer& producer)
+{
+    FindNonProxyProducersParser parser;
+    parser.start(producer);
+    for (auto& clip : parser.producers()) {
+        generateIfNotExists(clip, false /* replace */);
+        clip.set(kIsProxyProperty, 1);
+    }
 }

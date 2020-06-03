@@ -80,8 +80,9 @@ void ImageProducerWidget::setProducer(Mlt::Producer* p)
     updateDuration();
     resource = QDir::toNativeSeparators(resource);
     ui->filenameLabel->setToolTip(resource);
+    bool isProxy = m_producer->get_int(kIsProxyProperty) && m_producer->get(kOriginalResourceProperty);
     ui->resolutionLabel->setText(QString("%1x%2 %3").arg(p->get("meta.media.width")).arg(p->get("meta.media.height"))
-                                 .arg(m_producer->get_int(kIsProxyProperty)? tr("(PROXY)") : ""));
+                                 .arg(isProxy? tr("(PROXY)") : ""));
     ui->aspectNumSpinBox->blockSignals(true);
     if (p->get(kAspectRatioNumerator) && p->get(kAspectRatioDenominator)) {
         ui->aspectNumSpinBox->setValue(p->get_int(kAspectRatioNumerator));

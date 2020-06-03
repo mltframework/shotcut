@@ -66,6 +66,7 @@ public:
     FilterController* filterController() const { return m_filterController; }
     HtmlEditor* htmlEditor() const { return m_htmlEditor.data(); }
     Mlt::Playlist* playlist() const;
+    bool isPlaylistValid() const;
     Mlt::Producer* multitrack() const;
     bool isMultitrackValid() const;
     void doAutosave();
