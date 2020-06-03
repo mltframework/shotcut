@@ -24,6 +24,7 @@
 
 namespace Mlt {
     class Producer;
+    class Service;
 }
 
 class ProxyManager
@@ -40,7 +41,7 @@ public:
     };
 
     static QDir dir();
-    static QString resource(Mlt::Producer& producer);
+    static QString resource(Mlt::Service& producer);
     static void generateVideoProxy(Mlt::Producer& producer, bool fullRange,
         ScanMode scanMode = Automatic, const QPoint& aspectRatio = QPoint(), bool replace = true);
     static void generateImageProxy(Mlt::Producer& producer, bool replace = true);

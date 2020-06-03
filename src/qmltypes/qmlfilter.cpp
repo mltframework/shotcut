@@ -24,6 +24,7 @@
 #include "shotcut_mlt_properties.h"
 #include "settings.h"
 #include "util.h"
+#include "proxymanager.h"
 #include <Logger.h>
 
 #include <QDir>
@@ -370,8 +371,7 @@ void QmlFilter::analyze(bool isAudio)
         AnalyzeDelegate* delegate = new AnalyzeDelegate(m_filter);
         connect(job, &AbstractJob::finished, delegate, &AnalyzeDelegate::onAnalyzeFinished);
         connect(job, &AbstractJob::finished, this, &QmlFilter::analyzeFinished);
-        QFileInfo info(QString::fromUtf8(service.get("resource")));
-        job->setLabel(tr("Analyze %1").arg(info.fileName()));
+        job->setLabel(tr("Analyze %1").arg(Util::baseName(ProxyManager::resource(service))));
 
         // Touch the target .stab file. This prevents multiple jobs from trying
         // to write the same file.

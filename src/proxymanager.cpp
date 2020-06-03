@@ -61,7 +61,7 @@ QDir ProxyManager::dir()
     return dir;
 }
 
-QString ProxyManager::resource(Mlt::Producer& producer)
+QString ProxyManager::resource(Mlt::Service& producer)
 {
     QString resource = QString::fromUtf8(producer.get("resource"));
     if (producer.get_int(kIsProxyProperty) && producer.get(kOriginalResourceProperty)) {
