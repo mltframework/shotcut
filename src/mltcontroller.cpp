@@ -444,7 +444,7 @@ void Controller::refreshConsumer(bool scrubAudio)
     }
 }
 
-bool Controller::saveXML(const QString& filename, Service* service, bool withRelativePaths, bool verify)
+bool Controller::saveXML(const QString& filename, Service* service, bool withRelativePaths, bool verify, bool proxy)
 {
     QMutexLocker locker(&m_saveXmlMutex);
     QFileInfo fi(filename);
@@ -478,7 +478,7 @@ bool Controller::saveXML(const QString& filename, Service* service, bool withRel
         if (ignore)
             s.set("ignore_points", ignore);
 
-        if (ProxyManager::filterXML(mltFileName, root)) {
+        if (!proxy && ProxyManager::filterXML(mltFileName, root)) { // also verifies
             tmp.remove();
             tmp.setFileName(mltFileName);
 

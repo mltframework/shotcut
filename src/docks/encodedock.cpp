@@ -917,7 +917,8 @@ MeltJob* EncodeDock::createMeltJob(Mlt::Producer* service, const QString& target
     QScopedPointer<QTemporaryFile> tmp{Util::writableTemporaryFile(target)};
     tmp->open();
     tmp->close();
-    MLT.saveXML(tmp->fileName(), service, false /* without relative paths */, false /* without verify */);
+    auto isProxy = ui->previewScaleCheckBox->isChecked() && Settings.proxyEnabled();
+    MLT.saveXML(tmp->fileName(), service, false /* without relative paths */, false /* without verify */, isProxy);
 
     // parse xml
     QFile f1(tmp->fileName());
