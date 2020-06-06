@@ -4388,10 +4388,14 @@ void MainWindow::on_actionUseProxy_triggered(bool checked)
 
         Settings.setProxyEnabled(checked);
         checker.check(fileName);
-        if (!isXmlRepaired(checker, fileName))
+        if (!isXmlRepaired(checker, fileName)) {
+            QFile::remove(fileName);
             return;
-        if (checker.isUpdated())
+        }
+        if (checker.isUpdated()) {
+            QFile::remove(fileName);
             fileName = checker.tempFileName();
+        }
 
         // Open the temporary file
         if (!MLT.open(QDir::fromNativeSeparators(fileName), QDir::fromNativeSeparators(m_currentFile))) {
@@ -4428,6 +4432,7 @@ void MainWindow::on_actionUseProxy_triggered(bool checked)
         m_player->showIdleStatus();
     }
     m_player->showIdleStatus();
+    QFile::remove(fileName);
 }
 
 void MainWindow::on_actionProxyStorageSet_triggered()
