@@ -4376,7 +4376,7 @@ void MainWindow::on_actionSync_triggered()
 
 void MainWindow::on_actionUseProxy_triggered(bool checked)
 {
-    QScopedPointer<QTemporaryFile> tmp(Util::writableTemporaryFile(m_currentFile, "shotcut-XXXXXX.mlt"));
+    QScopedPointer<QTemporaryFile> tmp(new QTemporaryFile(QFileInfo(m_currentFile).dir().filePath("shotcut-XXXXXX.mlt")));
     tmp->open();
     tmp->close();
     QString fileName = tmp->fileName();
