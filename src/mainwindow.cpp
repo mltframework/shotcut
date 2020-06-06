@@ -4377,7 +4377,10 @@ void MainWindow::on_actionSync_triggered()
 void MainWindow::on_actionUseProxy_triggered(bool checked)
 {
     QScopedPointer<QTemporaryFile> tmp(Util::writableTemporaryFile(m_currentFile, "shotcut-XXXXXX.mlt"));
+    tmp->open();
+    tmp->close();
     QString fileName = tmp->fileName();
+    tmp.reset();
 
     LOG_DEBUG() << fileName;
     if (MLT.producer() && saveXML(fileName)) {
