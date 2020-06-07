@@ -43,7 +43,9 @@ FfmpegJob::FfmpegJob(const QString& name, const QStringList& args, bool isOpenLo
 
 FfmpegJob::~FfmpegJob()
 {
-
+    if (objectName().contains("proxies") && objectName().contains(".pending.")){
+        QFile::remove(objectName());
+    }
 }
 
 void FfmpegJob::start()
