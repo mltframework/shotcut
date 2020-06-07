@@ -3291,13 +3291,17 @@ void MainWindow::changeInterpolation(bool checked, const char* method)
 
 void MainWindow::processMultipleFiles()
 {
-    int count = m_multipleFiles.length();
+    if (m_multipleFiles.length() <= 0)
+        return;
+    QStringList multipleFiles = m_multipleFiles;
+    m_multipleFiles.clear();
+    int count = multipleFiles.length();
     if (count > 1) {
         LongUiTask longTask(tr("Open Files"));
         m_playlistDock->show();
         m_playlistDock->raise();
         for (int i = 0; i < count; i++) {
-            QString filename = m_multipleFiles.takeFirst();
+            QString filename = multipleFiles.takeFirst();
             LOG_DEBUG() << filename;
             longTask.reportProgress(QFileInfo(filename).fileName(), i, count);
             Mlt::Producer p(MLT.profile(), filename.toUtf8().constData());
@@ -3315,13 +3319,13 @@ void MainWindow::processMultipleFiles()
                 MLT.lockCreationTime(&p);
                 p.get_length_time(mlt_time_clock);
                 Util::getHash(p);
+                ProxyManager::generateIfNotExists(p);
                 undoStack()->push(new Playlist::AppendCommand(*m_playlistDock->model(), MLT.XML(&p), false));
                 m_recentDock->add(filename.toUtf8().constData());
             }
         }
         emit m_playlistDock->model()->modified();
     }
-    m_multipleFiles.clear();
     if (m_isPlaylistLoaded && Settings.playerGPU()) {
         updateThumbnails();
         m_isPlaylistLoaded = false;
