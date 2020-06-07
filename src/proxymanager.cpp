@@ -189,7 +189,7 @@ void ProxyManager::generateVideoProxy(Mlt::Producer& producer, bool fullRange, S
     args << "-g" << "1" << "-bf" << "0";
     args << "-y" << fileName;
 
-    FfmpegJob* job = new FfmpegJob(fileName, args, false);
+    FfmpegJob* job = new FfmpegJob(fileName, args, true);
     job->setLabel(QObject::tr("Make proxy for %1").arg(Util::baseName(resource)));
     if (replace) {
         job->setPostJobAction(new ProxyReplacePostJobAction(resource, fileName, hash));
