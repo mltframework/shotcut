@@ -313,9 +313,14 @@ void ImageProducerWidget::on_menuButton_clicked()
     menu.exec(ui->menuButton->mapToGlobal(QPoint(0, 0)));
 }
 
-static QString GetFilenameFromProducer( Mlt::Producer* producer )
+static QString GetFilenameFromProducer(Mlt::Producer* producer, bool useOriginal = true)
 {
-    QString resource = QString::fromUtf8(producer->get("resource"));;
+    QString resource;
+    if (useOriginal && producer->get(kOriginalResourceProperty)) {
+        resource = QString::fromUtf8(producer->get(kOriginalResourceProperty));
+    } else {
+        resource = QString::fromUtf8(producer->get("resource"));
+    }
     if (QFileInfo(resource).isRelative()) {
         QString basePath = QFileInfo(MAIN.fileName()).canonicalPath();
         QFileInfo fi(basePath, resource);
