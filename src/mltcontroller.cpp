@@ -479,7 +479,9 @@ bool Controller::saveXML(const QString& filename, Service* service, bool withRel
             s.set("ignore_points", ignore);
 
         if (!proxy && ProxyManager::filterXML(mltFileName, root)) { // also verifies
-            tmp.remove();
+            if (verify) {
+                tmp.remove();
+            }
             tmp.setFileName(mltFileName);
 
             // QFile::rename() can fail and remove the destination file. See its docs.

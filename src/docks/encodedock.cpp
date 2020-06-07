@@ -917,15 +917,17 @@ MeltJob* EncodeDock::createMeltJob(Mlt::Producer* service, const QString& target
     QScopedPointer<QTemporaryFile> tmp{Util::writableTemporaryFile(target)};
     tmp->open();
     tmp->close();
+    QString fileName = tmp->fileName();
+    tmp->remove();
     auto isProxy = ui->previewScaleCheckBox->isChecked() && Settings.proxyEnabled();
-    MLT.saveXML(tmp->fileName(), service, false /* without relative paths */, false /* without verify */, isProxy);
+    MLT.saveXML(fileName, service, false /* without relative paths */, false /* without verify */, isProxy);
 
     // parse xml
-    QFile f1(tmp->fileName());
+    QFile f1(fileName);
     f1.open(QIODevice::ReadOnly);
     QXmlSimpleReader xmlReader;
     QXmlInputSource xmlSource(&f1);
-    QDomDocument dom(tmp->fileName());
+    QDomDocument dom(fileName);
     dom.setContent(&xmlSource, &xmlReader);
     f1.close();
 

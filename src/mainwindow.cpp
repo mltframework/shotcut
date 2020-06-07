@@ -4384,6 +4384,7 @@ void MainWindow::on_actionUseProxy_triggered(bool checked)
     tmp->open();
     tmp->close();
     QString fileName = tmp->fileName();
+    tmp->remove();
     tmp.reset();
 
     LOG_DEBUG() << fileName;
