@@ -29,8 +29,10 @@
 #include <QTemporaryFile>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
+#include <QFile>
 #include <Logger.h>
 
+static const char* kProxySubfolder = "proxies";
 static const char* kProxyVideoExtension = ".mp4";
 static const char* kProxyPendingVideoExtension = ".pending.mp4";
 static const char* kProxyImageExtension = ".jpg";
@@ -49,10 +51,9 @@ QDir ProxyManager::dir()
     // Use project folder + "/proxies" if using project folder and enabled
     QDir dir(MLT.projectFolder());
     if (!MLT.projectFolder().isEmpty() && dir.exists() && Settings.proxyUseProjectFolder()) {
-        const char* subfolder = "proxies";
-        if (!dir.cd(subfolder)) {
-            if (dir.mkdir(subfolder))
-                dir.cd(subfolder);
+        if (!dir.cd(kProxySubfolder)) {
+            if (dir.mkdir(kProxySubfolder))
+                dir.cd(kProxySubfolder);
         }
     } else {
         // Otherwise, use app setting
@@ -393,7 +394,7 @@ bool ProxyManager::fileExists(Mlt::Producer& producer)
     } else {
         return false;
     }
-    return (projectDir.cd("proxies") && projectDir.exists(fileName)) || proxyDir.exists(fileName);
+    return (projectDir.cd(kProxySubfolder) && projectDir.exists(fileName)) || proxyDir.exists(fileName);
 }
 
 bool ProxyManager::filePending(Mlt::Producer& producer)
@@ -409,7 +410,7 @@ bool ProxyManager::filePending(Mlt::Producer& producer)
     } else {
         return false;
     }
-    return (projectDir.cd("proxies") && projectDir.exists(fileName)) || proxyDir.exists(fileName);
+    return (projectDir.cd(kProxySubfolder) && projectDir.exists(fileName)) || proxyDir.exists(fileName);
 }
 
 // Returns true if the producer exists and was updated with proxy info
@@ -523,4 +524,25 @@ void ProxyManager::generateIfNotExistsAll(Mlt::Producer& producer)
         generateIfNotExists(clip, false /* replace */);
         clip.set(kIsProxyProperty, 1);
     }
+}
+
+bool ProxyManager::removePending()
+{
+    bool foundAny = false;
+    QDir dir(MLT.projectFolder());
+    if (!MLT.projectFolder().isEmpty() && dir.exists()) {
+        dir.cd(kProxySubfolder);
+    } else {
+        dir = QDir(Settings.proxyFolder());
+    }
+    if (dir.exists()) {
+        dir.setNameFilters(QStringList() << "*.pending.*");
+        dir.setFilter(QDir::Files | QDir::NoDotAndDotDot | QDir::Writable);
+        for (const auto& s : dir.entryList()) {
+            LOG_INFO() << "removing" << dir.filePath(s);
+            foundAny |= QFile::remove(dir.filePath(s));
+        }
+    }
+    //TODO if any pending remove, let user know and offer to regenerate?
+    return foundAny;
 }

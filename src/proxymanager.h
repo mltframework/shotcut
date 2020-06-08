@@ -55,6 +55,7 @@ public:
     static const char* pendingImageExtension();
     static int resolution();
     static void generateIfNotExistsAll(Mlt::Producer& producer);
+    static bool removePending();
 };
 
 #endif // PROXYMANAGER_H

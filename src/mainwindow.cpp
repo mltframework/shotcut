@@ -470,6 +470,8 @@ MainWindow::MainWindow()
 
     QThreadPool::globalInstance()->setMaxThreadCount(qMin(4, QThreadPool::globalInstance()->maxThreadCount()));
 
+    ProxyManager::removePending();
+
     LOG_DEBUG() << "end";
 }
 

@@ -131,6 +131,7 @@ int Controller::open(const QString &url, const QString& urlToSave)
             if (m_producer->get_int(kShotcutProjectFolder)) {
                 QFileInfo info(url);
                 setProjectFolder(info.absolutePath());
+                ProxyManager::removePending();
             } else {
                 setProjectFolder(QString());
             }
