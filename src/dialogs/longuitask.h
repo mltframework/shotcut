@@ -27,19 +27,24 @@ class LongUiTask : public QProgressDialog
 public:
     explicit LongUiTask(QString title);
 
-    template <class Ret, class Func, class Arg>
-    Ret runAsync(QString text, Func&& f, Arg&& arg)
+    template <class Ret>
+    Ret wait(QString text, const QFuture<Ret>& future)
     {
         setLabelText(text);
         setRange(0, 0);
-        QFuture<Ret> future = QtConcurrent::run(f, arg);
-        while(!future.isFinished())
-        {
+        while (!future.isFinished()) {
             setValue(0);
             QCoreApplication::processEvents();
             QThread::msleep(100);
         }
         return future.result();
+    }
+
+    template <class Ret, class Func, class Arg>
+    Ret runAsync(QString text, Func&& f, Arg&& arg)
+    {
+        QFuture<Ret> future = QtConcurrent::run(f, arg);
+        return wait<Ret>(text, future);
     }
 
     void reportProgress(QString text, int value, int max);

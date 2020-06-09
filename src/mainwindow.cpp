@@ -4405,7 +4405,15 @@ void MainWindow::on_actionUseProxy_triggered(bool checked)
         }
 
         // Open the temporary file
-        if (!MLT.open(QDir::fromNativeSeparators(fileName), QDir::fromNativeSeparators(m_currentFile))) {
+        int result = 0;
+        {
+            LongUiTask longTask(checked? tr("Turn Proxy On") : tr("Turn Proxy Off"));
+            QFuture<int> future = QtConcurrent::run([=]() {
+                return MLT.open(QDir::fromNativeSeparators(fileName), QDir::fromNativeSeparators(m_currentFile));
+            });
+            result = longTask.wait<int>(tr("Converting"), future);
+        }
+        if (!result) {
             auto position = m_player->position();
             m_undoStack->clear();
             m_player->stop();
