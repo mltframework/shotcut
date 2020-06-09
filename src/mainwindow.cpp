@@ -4424,8 +4424,14 @@ void MainWindow::on_actionUseProxy_triggered(bool checked)
                 dialog.setDefaultButton(QMessageBox::Yes);
                 dialog.setEscapeButton(QMessageBox::No);
                 if (dialog.exec() == QMessageBox::Yes) {
-                    ProxyManager::generateIfNotExistsAll(*playlist());
-                    ProxyManager::generateIfNotExistsAll(*multitrack());
+                    Mlt::Producer producer(playlist());
+                    if (producer.is_valid()) {
+                        ProxyManager::generateIfNotExistsAll(producer);
+                    }
+                    producer = multitrack();
+                    if (producer.is_valid()) {
+                        ProxyManager::generateIfNotExistsAll(producer);
+                    }
                 }
             }
         } else if (fileName != untitledFileName()) {
