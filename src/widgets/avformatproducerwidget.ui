@@ -808,13 +808,6 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_8">
      <item>
-      <widget class="QPushButton" name="resetButton">
-       <property name="text">
-        <string>Reset</string>
-       </property>
-      </widget>
-     </item>
-     <item>
       <widget class="QPushButton" name="reverseButton">
        <property name="text">
         <string>Reverse...</string>
@@ -828,6 +821,13 @@
        </property>
        <property name="text">
         <string>Convert...</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="proxyButton">
+       <property name="text">
+        <string>Proxy</string>
        </property>
       </widget>
      </item>
@@ -919,6 +919,11 @@
     <string>Copy Hash Code</string>
    </property>
   </action>
+  <action name="actionReset">
+   <property name="text">
+    <string>Reset</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>
@@ -940,7 +945,6 @@
   <tabstop>scanComboBox</tabstop>
   <tabstop>fieldOrderComboBox</tabstop>
   <tabstop>rangeComboBox</tabstop>
-  <tabstop>resetButton</tabstop>
   <tabstop>reverseButton</tabstop>
   <tabstop>convertButton</tabstop>
   <tabstop>menuButton</tabstop>

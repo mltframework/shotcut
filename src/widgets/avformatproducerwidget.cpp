@@ -423,6 +423,7 @@ void AvformatProducerWidget::onFrameDecoded()
         ui->videoTableWidget->setItem(1, 1, new QTableWidgetItem(""));
         ui->videoTableWidget->setItem(2, 1, new QTableWidgetItem(""));
         ui->videoTableWidget->setItem(3, 1, new QTableWidgetItem(""));
+        ui->proxyButton->hide();
     }
 
     // Restore the previous tab, or select the first enabled tab.
@@ -546,22 +547,6 @@ void AvformatProducerWidget::onFrameDecoded()
             dialog.showCheckBox();
             convert(dialog);
         }
-    }
-}
-
-void AvformatProducerWidget::on_resetButton_clicked()
-{
-    ui->speedSpinBox->setValue(1.0);
-    ui->pitchCheckBox->setCheckState(Qt::Unchecked);
-    Mlt::Producer* p = newProducer(MLT.profile());
-    ui->durationSpinBox->setValue(m_defaultDuration);
-    ui->syncSlider->setValue(0);
-    Mlt::Controller::copyFilters(*m_producer, *p);
-    if (m_producer->get(kMultitrackItemProperty)) {
-        emit producerChanged(p);
-        delete p;
-    } else {
-        reopen(p);
     }
 }
 
@@ -690,6 +675,7 @@ void AvformatProducerWidget::on_actionOpenFolder_triggered()
 void AvformatProducerWidget::on_menuButton_clicked()
 {
     QMenu menu;
+    menu.addAction(ui->actionReset);
     if (!MLT.resource().contains("://")) // not a network stream
         menu.addAction(ui->actionOpenFolder);
     menu.addAction(ui->actionCopyFullFilePath);
@@ -698,19 +684,6 @@ void AvformatProducerWidget::on_menuButton_clicked()
     menu.addAction(ui->actionFFmpegConvert);
     menu.addAction(ui->actionExtractSubclip);
     menu.addAction(ui->actionSetFileDate);
-    if (m_producer->get_int("video_index") >= 0) {
-        auto submenu = menu.addMenu(tr("Proxy"));
-        submenu->addAction(ui->actionMakeProxy);
-#ifndef Q_OS_WIN
-        submenu->addAction(ui->actionDeleteProxy);
-#endif
-        submenu->addAction(ui->actionDisableProxy);
-        submenu->addAction(ui->actionCopyHashCode);
-        if (m_producer->get_int(kDisableProxyProperty)) {
-            ui->actionMakeProxy->setDisabled(true);
-            ui->actionDisableProxy->setChecked(true);
-        }
-    }
     menu.exec(ui->menuButton->mapToGlobal(QPoint(0, 0)));
 }
 
@@ -1203,4 +1176,38 @@ void AvformatProducerWidget::on_actionCopyHashCode_triggered()
     QMessageBox::information(this, qApp->applicationName(),
                              Util::getHash(*producer()),
                              QMessageBox::Ok);
+}
+
+void AvformatProducerWidget::on_proxyButton_clicked()
+{
+    if (m_producer->get_int("video_index") >= 0) {
+        QMenu menu;
+        menu.addAction(ui->actionMakeProxy);
+#ifndef Q_OS_WIN
+        menu.addAction(ui->actionDeleteProxy);
+#endif
+        menu.addAction(ui->actionDisableProxy);
+        menu.addAction(ui->actionCopyHashCode);
+        if (m_producer->get_int(kDisableProxyProperty)) {
+            ui->actionMakeProxy->setDisabled(true);
+            ui->actionDisableProxy->setChecked(true);
+        }
+        menu.exec(ui->proxyButton->mapToGlobal(QPoint(0, 0)));
+    }
+}
+
+void AvformatProducerWidget::on_actionReset_triggered()
+{
+    ui->speedSpinBox->setValue(1.0);
+    ui->pitchCheckBox->setCheckState(Qt::Unchecked);
+    Mlt::Producer* p = newProducer(MLT.profile());
+    ui->durationSpinBox->setValue(m_defaultDuration);
+    ui->syncSlider->setValue(0);
+    Mlt::Controller::copyFilters(*m_producer, *p);
+    if (m_producer->get(kMultitrackItemProperty)) {
+        emit producerChanged(p);
+        delete p;
+    } else {
+        reopen(p);
+    }
 }

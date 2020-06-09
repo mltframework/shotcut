@@ -249,6 +249,13 @@
       </widget>
      </item>
      <item>
+      <widget class="QPushButton" name="proxyButton">
+       <property name="text">
+        <string>Proxy</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QPushButton" name="menuButton">
        <property name="toolTip">
         <string>Display a menu of additional actions</string>

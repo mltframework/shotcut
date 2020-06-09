@@ -298,18 +298,6 @@ void ImageProducerWidget::on_menuButton_clicked()
         menu.addAction(ui->actionOpenFolder);
     menu.addAction(ui->actionCopyFullFilePath);
     menu.addAction(ui->actionSetFileDate);
-    auto submenu = menu.addMenu(tr("Proxy"));
-    if (!producer()->get_int(kShotcutSequenceProperty))
-        submenu->addAction(ui->actionMakeProxy);
-#ifndef Q_OS_WIN
-    submenu->addAction(ui->actionDeleteProxy);
-#endif
-    submenu->addAction(ui->actionDisableProxy);
-    submenu->addAction(ui->actionCopyHashCode);
-    if (m_producer->get_int(kDisableProxyProperty)) {
-        ui->actionMakeProxy->setDisabled(true);
-        ui->actionDisableProxy->setChecked(true);
-    }
     menu.exec(ui->menuButton->mapToGlobal(QPoint(0, 0)));
 }
 
@@ -416,4 +404,21 @@ void ImageProducerWidget::on_actionCopyHashCode_triggered()
     QMessageBox::information(this, qApp->applicationName(),
                              Util::getHash(*producer()),
                              QMessageBox::Ok);
+}
+
+void ImageProducerWidget::on_proxyButton_clicked()
+{
+    QMenu menu;
+    if (!producer()->get_int(kShotcutSequenceProperty))
+        menu.addAction(ui->actionMakeProxy);
+#ifndef Q_OS_WIN
+    menu.addAction(ui->actionDeleteProxy);
+#endif
+    menu.addAction(ui->actionDisableProxy);
+    menu.addAction(ui->actionCopyHashCode);
+    if (m_producer->get_int(kDisableProxyProperty)) {
+        ui->actionMakeProxy->setDisabled(true);
+        ui->actionDisableProxy->setChecked(true);
+    }
+    menu.exec(ui->proxyButton->mapToGlobal(QPoint(0, 0)));
 }

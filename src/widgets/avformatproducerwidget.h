@@ -59,8 +59,6 @@ private slots:
 
     void onFrameDecoded();
 
-    void on_resetButton_clicked();
-
     void on_videoTrackComboBox_activated(int index);
 
     void on_audioTrackComboBox_activated(int index);
@@ -114,6 +112,10 @@ private slots:
     void on_actionDeleteProxy_triggered();
 
     void on_actionCopyHashCode_triggered();
+
+    void on_proxyButton_clicked();
+
+    void on_actionReset_triggered();
 
 private:
     Ui::AvformatProducerWidget *ui;

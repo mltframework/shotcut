@@ -82,6 +82,8 @@ private slots:
 
     void on_actionCopyHashCode_triggered();
 
+    void on_proxyButton_clicked();
+
 private:
     Ui::ImageProducerWidget *ui;
     int m_defaultDuration;
