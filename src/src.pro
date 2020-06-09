@@ -11,6 +11,7 @@ win32:DEFINES += QT_STATIC
 
 SOURCES += main.cpp\
     dialogs/systemsyncdialog.cpp \
+    jobs/qimagejob.cpp \
     mainwindow.cpp \
     mltcontroller.cpp \
     proxymanager.cpp \
@@ -136,6 +137,7 @@ mac: OBJECTIVE_SOURCES = macos.mm
 
 HEADERS  += mainwindow.h \
     dialogs/systemsyncdialog.h \
+    jobs/qimagejob.h \
     mltcontroller.h \
     proxymanager.h \
     scrubbar.h \
