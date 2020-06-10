@@ -532,6 +532,8 @@ void MltXmlChecker::checkForProxy(const QString& mlt_service, QVector<MltXmlChec
                 hash = p.second;
             } else if (p.first == "warp_speed") {
                 speed = p.second;
+            } else if (p.first == kDisableProxyProperty && p.second == "1") {
+                return;
             }
         }
         QDir proxyDir(Settings.proxyFolder());
@@ -567,6 +569,8 @@ void MltXmlChecker::checkForProxy(const QString& mlt_service, QVector<MltXmlChec
                 resource = info.filePath();
             } else if (p.first == kShotcutHashProperty) {
                 hash = p.second;
+            } else if (p.first == kDisableProxyProperty && p.second == "1") {
+                return;
             }
         }
         QDir proxyDir(Settings.proxyFolder());

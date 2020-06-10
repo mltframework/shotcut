@@ -357,6 +357,15 @@ void ImageProducerWidget::on_actionDisableProxy_triggered(bool checked)
 {
     if (checked) {
         producer()->set(kDisableProxyProperty, 1);
+
+        // Replace with original
+        if (producer()->get_int(kIsProxyProperty) && producer()->get(kOriginalResourceProperty)) {
+            Mlt::Producer original(MLT.profile(), producer()->get(kOriginalResourceProperty));
+            if (original.is_valid()) {
+                original.set(kDisableProxyProperty, 1);
+                MAIN.replaceAllByHash(Util::getHash(original), original, true);
+            }
+        }
     } else {
         Mlt::Properties properties(producer());
         properties.clear(kDisableProxyProperty);

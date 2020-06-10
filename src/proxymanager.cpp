@@ -512,7 +512,6 @@ void ProxyManager::generateIfNotExistsAll(Mlt::Producer& producer)
     parser.start(producer);
     for (auto& clip : parser.producers()) {
         generateIfNotExists(clip, false /* replace */);
-        clip.set(kIsProxyProperty, 1);
     }
 }
 

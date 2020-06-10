@@ -340,7 +340,6 @@ void Util::applyCustomProperties(Mlt::Producer& destination, Mlt::Producer& sour
     p.clear(kOriginalOutProperty);
     if (!p.get_int(kIsProxyProperty))
         p.clear(kOriginalResourceProperty);
-    p.clear(kDisableProxyProperty);
     destination.pass_list(source, "mlt_service, audio_index, video_index, force_progressive, force_tff,"
                        "force_aspect_ratio, video_delay, color_range, warp_speed, warp_pitch,"
                        kAspectRatioNumerator ","
