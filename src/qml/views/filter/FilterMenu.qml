@@ -165,7 +165,7 @@ Rectangle {
                 function selectNext() {
                     do {
                         currentIndex = Math.min(currentIndex + 1, count - 1)
-                    } while (!currentItem.visible && currentIndex < count - 1)
+                    } while (currentItem !== null && !currentItem.visible && currentIndex < count - 1)
                 }
 
                 function selectPrevious() {

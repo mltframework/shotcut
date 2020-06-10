@@ -140,7 +140,7 @@ VideoZoomScopeWidget::VideoZoomScopeWidget()
     onZoomChanged(m_zoomWidget->getZoom());
 
     // Add HBoxLayout for tool buttons
-    QHBoxLayout* toolLayout = new QHBoxLayout(this);
+    QHBoxLayout* toolLayout = new QHBoxLayout();
     toolLayout->setContentsMargins(0, 0, 0, 0);
     toolLayout->setSpacing(0);
     glayout->addLayout(toolLayout, 13, 0, 1, 2);
