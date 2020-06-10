@@ -235,6 +235,10 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
             }
             if (result == "<producer>" && info->producer && info->producer->is_valid())
                 result = QString::fromUtf8(info->producer->get("mlt_service"));
+            if (Settings.viewMode() == kDetailedMode && info->producer && info->producer->is_valid()
+                    && info->producer->get_int(kIsProxyProperty)) {
+                result.append("\n" + tr("(PROXY)"));
+            }
         } else {
             // Prefer detail or full path for tooltip
             if (info->producer && info->producer->is_valid())
