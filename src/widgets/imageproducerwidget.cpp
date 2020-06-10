@@ -66,6 +66,8 @@ void ImageProducerWidget::setProducer(Mlt::Producer* p)
     QString resource;
     if (m_producer->get(kShotcutResourceProperty)) {
         resource = QString::fromUtf8(m_producer->get(kShotcutResourceProperty));
+    } else if (m_producer->get(kOriginalResourceProperty)) {
+        resource = QString::fromUtf8(m_producer->get(kOriginalResourceProperty));
     } else {
         resource = QString::fromUtf8(m_producer->get("resource"));
         p->set("ttl", 1);
@@ -339,11 +341,7 @@ void ImageProducerWidget::on_filenameLabel_editingFinished()
     if (m_producer) {
         auto caption = ui->filenameLabel->text();
         if (caption.isEmpty()) {
-            if (m_producer->get(kShotcutResourceProperty))
-                caption = QString::fromUtf8(m_producer->get(kShotcutResourceProperty));
-            else
-                caption = QString::fromUtf8(m_producer->get("resource"));
-            caption = Util::baseName(caption);
+            caption = Util::baseName(GetFilenameFromProducer(m_producer.data()));
             ui->filenameLabel->setText(caption);
             m_producer->set(kShotcutCaptionProperty, caption.toUtf8().constData());
         } else {
