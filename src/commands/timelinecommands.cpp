@@ -104,7 +104,7 @@ void InsertCommand::redo()
         while (i--) {
             QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(i));
             clip = Mlt::Producer(info->producer);
-            longTask.reportProgress(QFileInfo(clip.get("resource")).fileName(), n - i - 1, n);
+            longTask.reportProgress(QFileInfo(ProxyManager::resource(clip)).fileName(), n - i - 1, n);
             ProxyManager::generateIfNotExists(clip);
             clip.set_in_and_out(info->frame_in, info->frame_out);
             m_model.insertClip(m_trackIndex, clip, m_position, m_rippleAllTracks, false);
@@ -148,7 +148,7 @@ void OverwriteCommand::redo()
         for (int i = 0; i < n; i++) {
             QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(i));
             clip = Mlt::Producer(info->producer);
-            longTask.reportProgress(QFileInfo(clip.get("resource")).fileName(), i, n);
+            longTask.reportProgress(QFileInfo(ProxyManager::resource(clip)).fileName(), i, n);
             ProxyManager::generateIfNotExists(clip);
             clip.set_in_and_out(info->frame_in, info->frame_out);
             m_model.overwrite(m_trackIndex, clip, position, false);
