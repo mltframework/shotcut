@@ -34,12 +34,13 @@ Mlt::Producer* deserializeProducer(QString& xml)
     return new Mlt::Producer(MLT.profile(), "xml-string", xml.toUtf8().constData());
 }
 
-AppendCommand::AppendCommand(MultitrackModel &model, int trackIndex, const QString &xml, QUndoCommand *parent)
+AppendCommand::AppendCommand(MultitrackModel &model, int trackIndex, const QString &xml, bool skipProxy, QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_model(model)
     , m_trackIndex(trackIndex)
     , m_xml(xml)
     , m_undoHelper(m_model)
+    , m_skipProxy(skipProxy)
 {
     setText(QObject::tr("Append to track"));
 }
@@ -57,12 +58,12 @@ void AppendCommand::redo()
             longTask.reportProgress(QObject::tr("Appending"), i, count);
             QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(i));
             Mlt::Producer clip = Mlt::Producer(info->producer);
-            ProxyManager::generateIfNotExists(clip);
+            if (!m_skipProxy) ProxyManager::generateIfNotExists(clip);
             clip.set_in_and_out(info->frame_in, info->frame_out);
             m_model.appendClip(m_trackIndex, clip);
         }
     } else {
-        ProxyManager::generateIfNotExists(*producer);
+        if (!m_skipProxy) ProxyManager::generateIfNotExists(*producer);
         m_model.appendClip(m_trackIndex, *producer);
     }
     longTask.reportProgress(QObject::tr("Finishing"), 0, 0);

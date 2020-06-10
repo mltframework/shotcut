@@ -1200,7 +1200,7 @@ void TimelineDock::onOverWritten(int trackIndex, int clipIndex)
     setSelection(QList<QPoint>() << QPoint(clipIndex, trackIndex));
 }
 
-void TimelineDock::appendFromPlaylist(Mlt::Playlist *playlist)
+void TimelineDock::appendFromPlaylist(Mlt::Playlist *playlist, bool skipProxy)
 {
     int trackIndex = currentTrack();
     if (isTrackLocked(trackIndex)) {
@@ -1208,7 +1208,7 @@ void TimelineDock::appendFromPlaylist(Mlt::Playlist *playlist)
         return;
     }
     MAIN.undoStack()->push(
-        new Timeline::AppendCommand(m_model, trackIndex, MLT.XML(playlist)));
+        new Timeline::AppendCommand(m_model, trackIndex, MLT.XML(playlist), skipProxy));
     selectClipUnderPlayhead();
 }
 

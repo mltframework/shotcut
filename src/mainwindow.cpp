@@ -320,7 +320,7 @@ MainWindow::MainWindow()
     connect(m_timelineDock, SIGNAL(clipCopied()), SLOT(onClipCopied()));
     connect(m_timelineDock, SIGNAL(filteredClicked()), SLOT(onFiltersDockTriggered()));
     connect(m_playlistDock, SIGNAL(addAllTimeline(Mlt::Playlist*)), SLOT(onTimelineDockTriggered()));
-    connect(m_playlistDock, SIGNAL(addAllTimeline(Mlt::Playlist*)), SLOT(onAddAllToTimeline(Mlt::Playlist*)));
+    connect(m_playlistDock, SIGNAL(addAllTimeline(Mlt::Playlist*, bool)), SLOT(onAddAllToTimeline(Mlt::Playlist*, bool)));
     connect(m_player, SIGNAL(previousSought()), m_timelineDock, SLOT(seekPreviousEdit()));
     connect(m_player, SIGNAL(nextSought()), m_timelineDock, SLOT(seekNextEdit()));
 
@@ -508,7 +508,7 @@ void MainWindow::onTimelineClipSelected()
     }
 }
 
-void MainWindow::onAddAllToTimeline(Mlt::Playlist* playlist)
+void MainWindow::onAddAllToTimeline(Mlt::Playlist* playlist, bool skipProxy)
 {
     // We stop the player because of a bug on Windows that results in some
     // strange memory leak when using Add All To Timeline, more noticeable
@@ -517,7 +517,7 @@ void MainWindow::onAddAllToTimeline(Mlt::Playlist* playlist)
         m_player->pause();
     else
         m_player->stop();
-    m_timelineDock->appendFromPlaylist(playlist);
+    m_timelineDock->appendFromPlaylist(playlist, skipProxy);
 }
 
 MainWindow& MainWindow::singleton()

@@ -856,7 +856,7 @@ void PlaylistDock::on_actionAddToSlideshow_triggered()
         {
             if ( slideshow->count() > 0 )
             {
-                emit addAllTimeline(slideshow);
+                emit addAllTimeline(slideshow, /* skipProxy */ true);
             }
             delete slideshow;
         }
