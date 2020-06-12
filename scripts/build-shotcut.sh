@@ -73,6 +73,10 @@ WEBVFX_REVISION=
 ENABLE_RUBBERBAND=1
 RUBBERBAND_HEAD=1
 RUBBERBAND_REVISION=
+ENABLE_BIGSH0T=1
+BIGSH0T_HEAD=0
+BIGSH0T_REVISION=mingw
+
 # QT_INCLUDE_DIR="$(pkg-config --variable=prefix QtCore)/include"
 QT_INCLUDE_DIR=${QTDIR:+${QTDIR}/include}
 # QT_LIB_DIR="$(pkg-config --variable=prefix QtCore)/lib"
@@ -218,6 +222,9 @@ function to_key {
     ;;
     rubberband)
       echo 18
+    ;;
+    bigsh0t)
+      echo 19
     ;;
     *)
       echo UNKNOWN
@@ -422,6 +429,9 @@ function set_globals {
     if test "$ENABLE_RUBBERBAND" = 1 ; then
         SUBDIRS="rubberband $SUBDIRS"
     fi
+    if test "$ENABLE_BIGSH0T" = 1 ; then
+        SUBDIRS="$SUBDIRS bigsh0t"
+    fi
   fi
 
   if [ "$DEBUG_BUILD" = "1" ]; then
@@ -467,6 +477,8 @@ function set_globals {
   REPOLOCS[16]="git://github.com/GPUOpen-LibrariesAndSDKs/AMF.git"
   REPOLOCS[17]="git://github.com/lu-zero/mfx_dispatch.git"
   REPOLOCS[18]="git://github.com/breakfastquay/rubberband.git"
+  #TODO use https://bitbucket.org/leo_sutic/bigsh0t.git after pull request is merged
+  REPOLOCS[19]="https://bitbucket.org/dandennedy/bigsh0t.git"
 
   # REPOTYPE Array holds the repo types. (Yes, this might be redundant, but easy for me)
   REPOTYPES[0]="git"
@@ -488,6 +500,7 @@ function set_globals {
   REPOTYPES[16]="git"
   REPOTYPES[17]="git"
   REPOTYPES[18]="git"
+  REPOTYPES[19]="git"
 
   # And, set up the revisions
   REVISIONS[0]=""
@@ -548,6 +561,9 @@ function set_globals {
   REVISIONS[13]=""
   if test 0 = "$RUBBERBAND_HEAD" -a "$RUBBERBAND_REVISION" ; then
     REVISIONS[18]="$RUBBERBAND_REVISION"
+  fi
+  if test 0 = "$BIGSH0T_HEAD" -a "$BIGSH0T_REVISION" ; then
+    REVISIONS[19]="$BIGSH0T_REVISION"
   fi
 
   # Figure out the number of cores in the system. Used both by make and startup script
@@ -884,6 +900,17 @@ function set_globals {
   fi
   CFLAGS_[18]=$CFLAGS
   LDFLAGS_[18]=$LDFLAGS
+
+  #########
+  # bigsh0t
+  CONFIG[19]="cmake -DCMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR $CMAKE_DEBUG_FLAG"
+  if test "$TARGET_OS" = "Win32" -o "$TARGET_OS" = "Win64" ; then
+      CONFIG[19]="${CONFIG[19]} -DCMAKE_TOOLCHAIN_FILE=my.cmake"
+  elif test "$TARGET_OS" = "Darwin" ; then
+    CONFIG[19]="${CONFIG[19]} -DCMAKE_C_COMPILER=gcc-mp-5 -DCMAKE_CXX_COMPILER=g++-mp-5"
+  fi
+  CFLAGS_[19]=$CFLAGS
+  LDFLAGS_[19]=$LDFLAGS
 }
 
 ######################################################################
@@ -1085,7 +1112,7 @@ function clean_dirs {
 
 function get_win32_build {
 
-  if test "frei0r" = "$1" -o "vid.stab" = "$1" -o "x265" = "$1" ; then
+  if test "frei0r" = "$1" -o "vid.stab" = "$1" -o "x265" = "$1" -o "bigsh0t" = "$1" ; then
       debug "Fix cmake modules for $1"
       [ "x265" = "$1" ] && cd source
       cmd mkdir cmake 2>/dev/null
@@ -1709,6 +1736,12 @@ function configure_compile_install_subproject {
       # libopengl32.dll is added to prebuilts to make libtool build a dll for
       # libepoxy, but it is not an import lib for other projects.
       cmd rm "$FINAL_INSTALL_DIR"/lib/libopengl32.dll
+    elif test "bigsh0t" = "$1" ; then
+      if test "$TARGET_OS" = "Win32" -o "$TARGET_OS" = "Win64" ; then
+        cmd install -p -c *.dll "$FINAL_INSTALL_DIR"/lib/frei0r-1  || die "Unable to install $1"
+      else
+        cmd install -p -c *.so "$FINAL_INSTALL_DIR"/lib/frei0r-1  || die "Unable to install $1"
+      fi
     elif test "$MYCONFIG" != "" ; then
       cmd make install || die "Unable to install $1"
     fi
