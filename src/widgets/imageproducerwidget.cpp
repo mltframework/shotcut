@@ -365,16 +365,7 @@ void ImageProducerWidget::on_actionDisableProxy_triggered(bool checked)
             }
         }
     } else {
-        Mlt::Properties properties(producer());
-        properties.clear(kDisableProxyProperty);
-
-        // Generate proxy if it does not exist
-        if (Settings.proxyEnabled()) {
-            QString hash = Util::getHash(*producer());
-            QString fileName = hash + ProxyManager::imageFilenameExtension();
-            if (!ProxyManager::dir().exists(fileName))
-                on_actionMakeProxy_triggered();
-        }
+        producer()->Mlt::Properties::clear(kDisableProxyProperty);
     }
 }
 
