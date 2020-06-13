@@ -805,6 +805,8 @@ void AvformatProducerWidget::convert(TranscodeDialog& dialog)
 
             Settings.setSavePath(QFileInfo(filename).path());
             args << "-y" << filename;
+            m_producer->Mlt::Properties::clear(kOriginalResourceProperty);
+
             FfmpegJob* job = new FfmpegJob(filename, args, false);
             job->setLabel(tr("Convert %1").arg(Util::baseName(filename)));
             job->setPostJobAction(new ConvertReplacePostJobAction(resource, filename, Util::getHash(*m_producer)));
