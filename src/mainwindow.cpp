@@ -4382,78 +4382,81 @@ void MainWindow::on_actionSync_triggered()
 
 void MainWindow::on_actionUseProxy_triggered(bool checked)
 {
-    QScopedPointer<QTemporaryFile> tmp(new QTemporaryFile(QFileInfo(m_currentFile).dir().filePath("shotcut-XXXXXX.mlt")));
-    tmp->open();
-    tmp->close();
-    QString fileName = tmp->fileName();
-    tmp->remove();
-    tmp.reset();
+    if (MLT.producer()) {
+        QDir dir(m_currentFile.isEmpty()? QDir::tempPath() : QFileInfo(m_currentFile).dir());
+        QScopedPointer<QTemporaryFile> tmp(new QTemporaryFile(dir.filePath("shotcut-XXXXXX.mlt")));
+        tmp->open();
+        tmp->close();
+        QString fileName = tmp->fileName();
+        tmp->remove();
+        tmp.reset();
+        LOG_DEBUG() << fileName;
 
-    LOG_DEBUG() << fileName;
-    if (MLT.producer() && saveXML(fileName)) {
-        MltXmlChecker checker;
+        if (saveXML(fileName)) {
+            MltXmlChecker checker;
 
-        Settings.setProxyEnabled(checked);
-        checker.check(fileName);
-        if (!isXmlRepaired(checker, fileName)) {
-            QFile::remove(fileName);
-            return;
-        }
-        if (checker.isUpdated()) {
-            QFile::remove(fileName);
-            fileName = checker.tempFileName();
-        }
+            Settings.setProxyEnabled(checked);
+            checker.check(fileName);
+            if (!isXmlRepaired(checker, fileName)) {
+                QFile::remove(fileName);
+                return;
+            }
+            if (checker.isUpdated()) {
+                QFile::remove(fileName);
+                fileName = checker.tempFileName();
+            }
 
-        // Open the temporary file
-        int result = 0;
-        {
-            LongUiTask longTask(checked? tr("Turn Proxy On") : tr("Turn Proxy Off"));
-            QFuture<int> future = QtConcurrent::run([=]() {
-                return MLT.open(QDir::fromNativeSeparators(fileName), QDir::fromNativeSeparators(m_currentFile));
-            });
-            result = longTask.wait<int>(tr("Converting"), future);
-        }
-        if (!result) {
-            auto position = m_player->position();
-            m_undoStack->clear();
-            m_player->stop();
-            m_player->setPauseAfterOpen(true);
-            open(MLT.producer());
-            MLT.seek(m_player->position());
-            m_player->seek(position);
+            // Open the temporary file
+            int result = 0;
+            {
+                LongUiTask longTask(checked? tr("Turn Proxy On") : tr("Turn Proxy Off"));
+                QFuture<int> future = QtConcurrent::run([=]() {
+                    return MLT.open(QDir::fromNativeSeparators(fileName), QDir::fromNativeSeparators(m_currentFile));
+                });
+                result = longTask.wait<int>(tr("Converting"), future);
+            }
+            if (!result) {
+                auto position = m_player->position();
+                m_undoStack->clear();
+                m_player->stop();
+                m_player->setPauseAfterOpen(true);
+                open(MLT.producer());
+                MLT.seek(m_player->position());
+                m_player->seek(position);
 
-            if (checked && (isPlaylistValid() || isMultitrackValid())) {
-                // Prompt user if they want to create missing proxies
-                QMessageBox dialog(QMessageBox::Question, qApp->applicationName(),
-                   tr("Do you want to create missing proxies for every file in this project?\n\n"
-                      "You must reopen your project after all proxy jobs are finished."),
-                   QMessageBox::No | QMessageBox::Yes, this);
-                dialog.setWindowModality(QmlApplication::dialogModality());
-                dialog.setDefaultButton(QMessageBox::Yes);
-                dialog.setEscapeButton(QMessageBox::No);
-                if (dialog.exec() == QMessageBox::Yes) {
-                    Mlt::Producer producer(playlist());
-                    if (producer.is_valid()) {
-                        ProxyManager::generateIfNotExistsAll(producer);
-                    }
-                    producer = multitrack();
-                    if (producer.is_valid()) {
-                        ProxyManager::generateIfNotExistsAll(producer);
+                if (checked && (isPlaylistValid() || isMultitrackValid())) {
+                    // Prompt user if they want to create missing proxies
+                    QMessageBox dialog(QMessageBox::Question, qApp->applicationName(),
+                       tr("Do you want to create missing proxies for every file in this project?\n\n"
+                          "You must reopen your project after all proxy jobs are finished."),
+                       QMessageBox::No | QMessageBox::Yes, this);
+                    dialog.setWindowModality(QmlApplication::dialogModality());
+                    dialog.setDefaultButton(QMessageBox::Yes);
+                    dialog.setEscapeButton(QMessageBox::No);
+                    if (dialog.exec() == QMessageBox::Yes) {
+                        Mlt::Producer producer(playlist());
+                        if (producer.is_valid()) {
+                            ProxyManager::generateIfNotExistsAll(producer);
+                        }
+                        producer = multitrack();
+                        if (producer.is_valid()) {
+                            ProxyManager::generateIfNotExistsAll(producer);
+                        }
                     }
                 }
+            } else if (fileName != untitledFileName()) {
+                showStatusMessage(tr("Failed to open ") + fileName);
+                emit openFailed(fileName);
             }
-        } else if (fileName != untitledFileName()) {
-            showStatusMessage(tr("Failed to open ") + fileName);
-            emit openFailed(fileName);
+        } else {
+            ui->actionUseProxy->setChecked(!checked);
+            showSaveError();
         }
-    } else if (MLT.producer()) {
-        showSaveError();
+        QFile::remove(fileName);
     } else {
         Settings.setProxyEnabled(checked);
-        m_player->showIdleStatus();
     }
     m_player->showIdleStatus();
-    QFile::remove(fileName);
 }
 
 void MainWindow::on_actionProxyStorageSet_triggered()
