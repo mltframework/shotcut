@@ -450,7 +450,7 @@ void PlaylistModel::sort(int column, Qt::SortOrder order)
     QVector<QPair<QString, int>> indexMap(count);
     for (index = 0; index < count; index++) {
         QModelIndex modelIndex = createIndex(index, column);
-        QString key = data(modelIndex, Qt::DisplayRole).toString();
+        QString key = data(modelIndex, Qt::DisplayRole).toString().toLower();
         indexMap[index] = qMakePair(key, index);
     }
     // Sort the list.
