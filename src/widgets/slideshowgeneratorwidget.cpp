@@ -340,9 +340,14 @@ void SlideshowGeneratorWidget::on_parameterChanged()
     {
         m_transitionDurationSpinner->setValue(m_clipDurationSpinner->value() / 2);
     }
-    if (m_transitionDurationSpinner->value() == 0 )
+    if (m_transitionDurationSpinner->value() == 0)
     {
         m_transitionStyleCombo->setEnabled(false);
+        m_softnessSpinner->setEnabled(false);
+    }
+    else if (m_transitionStyleCombo->currentIndex() == 1)
+    {
+        m_transitionStyleCombo->setEnabled(true);
         m_softnessSpinner->setEnabled(false);
     }
     else
