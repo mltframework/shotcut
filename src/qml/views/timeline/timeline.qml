@@ -150,7 +150,7 @@ Rectangle {
                 visible: trackHeaderRepeater.count
                 z: 1
                 Label {
-                    text: qsTr('Master')
+                    text: qsTr('Output')
                     color: activePalette.windowText
                     elide: Qt.ElideRight
                     x: 8

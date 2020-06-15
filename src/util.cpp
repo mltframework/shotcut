@@ -134,7 +134,7 @@ QString Util::producerTitle(const Mlt::Producer& producer)
     if (p.get(kTrackNameProperty))
         return QObject::tr("Track: %1").arg(QString::fromUtf8(p.get(kTrackNameProperty)));
     if (tractor_type == p.type())
-        return QObject::tr("Master");
+        return QObject::tr("Output");
     if (p.get(kShotcutCaptionProperty))
         return QString::fromUtf8(p.get(kShotcutCaptionProperty));
     return Util::baseName(ProxyManager::resource(p));
