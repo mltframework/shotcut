@@ -197,6 +197,19 @@ Mlt::Playlist* SlideshowGeneratorWidget::getSlideshow()
     {
         for (int i = 0; i < count - 1; i++)
         {
+            Mlt::ClipInfo* c = slideshow->clip_info(i, &info);
+            if (c->frame_count < framesPerTransition)
+            {
+                // Do not add a transition if the first clip is too short
+                continue;
+            }
+            c = slideshow->clip_info(i + 1, &info);
+            if (c->frame_count < framesPerTransition)
+            {
+                // Do not add a transition if the second clip is too short
+                continue;
+            }
+
             // Create playlist mix
             slideshow->mix(i, framesPerTransition);
             QScopedPointer<Mlt::Producer> producer(slideshow->get_clip(i + 1));
