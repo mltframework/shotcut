@@ -17,6 +17,8 @@
 
 #include "scrubbar.h"
 #include "mltcontroller.h"
+
+#include <QToolTip>
 #include <QtWidgets>
 
 static const int selectionSize = 14; /// the height of the top bar
@@ -159,6 +161,10 @@ void ScrubBar::mouseMoveEvent(QMouseEvent * event)
             m_head = pos;
         }
         emit seeked(pos);
+    }
+    else if (event->buttons() == Qt::NoButton && MLT.producer()) {
+        QString text = QString::fromLatin1(MLT.producer()->frames_to_time(pos));
+        QToolTip::showText(event->globalPos(), text);
     }
 }
 
