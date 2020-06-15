@@ -1192,7 +1192,9 @@ void AvformatProducerWidget::on_proxyButton_clicked()
 {
     if (m_producer->get_int("video_index") >= 0) {
         QMenu menu;
-        menu.addAction(ui->actionMakeProxy);
+        if (ProxyManager::isValidVideo(*producer())) {
+            menu.addAction(ui->actionMakeProxy);
+        }
 #ifndef Q_OS_WIN
         menu.addAction(ui->actionDeleteProxy);
 #endif

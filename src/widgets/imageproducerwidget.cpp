@@ -407,8 +407,9 @@ void ImageProducerWidget::on_actionCopyHashCode_triggered()
 void ImageProducerWidget::on_proxyButton_clicked()
 {
     QMenu menu;
-    if (!producer()->get_int(kShotcutSequenceProperty))
+    if (ProxyManager::isValidImage(*producer())) {
         menu.addAction(ui->actionMakeProxy);
+    }
 #ifndef Q_OS_WIN
     menu.addAction(ui->actionDeleteProxy);
 #endif

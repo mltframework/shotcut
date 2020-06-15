@@ -48,6 +48,8 @@ public:
     static bool filterXML(QString& fileName, const QString& root);
     static bool fileExists(Mlt::Producer& producer);
     static bool filePending(Mlt::Producer& producer);
+    static bool isValidImage(Mlt::Producer& producer);
+    static bool isValidVideo(Mlt::Producer& producer);
     static bool generateIfNotExists(Mlt::Producer& producer, bool replace = true);
     static const char* videoFilenameExtension();
     static const char* pendingVideoExtension();

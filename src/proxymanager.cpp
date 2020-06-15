@@ -30,6 +30,7 @@
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 #include <QFile>
+#include <QImageReader>
 #include <Logger.h>
 
 static const char* kProxySubfolder = "proxies";
@@ -39,12 +40,15 @@ static const char* kProxyImageExtension = ".jpg";
 static const char* kProxyPendingImageExtension = ".pending.jpg";
 static const float kProxyResolutionRatio = 1.3f;
 static const int   kFallbackProxyResolution = 540;
-
-static bool isValidImage(Mlt::Producer& producer)
-{
-    QString service = QString::fromLatin1(producer.get("mlt_service"));
-    return (service == "qimage" || service == "pixbuf") && !producer.get_int(kShotcutSequenceProperty);
-}
+static const QStringList kPixFmtsWithAlpha = {"pal8", "argb", "rgba", "abgr",
+    "bgra", "yuva420p", "yuva422p", "yuva444p", "yuva420p9be", "yuva420p9le",
+    "yuva422p9be", "yuva422p9le", "yuva444p9be", "yuva444p9le", "yuva420p10be",
+    "yuva420p10le", "yuva422p10be", "yuva422p10le", "yuva444p10be", "yuva444p10le",
+    "yuva420p16be", "yuva420p16le", "yuva422p16be", "yuva422p16le", "yuva444p16be",
+    "yuva444p16le", "rgba64be", "rgba64le", "bgra64be", "bgra64le", "ya8",
+    "ya16le", "ya16be", "gbrap", "gbrap16le", "gbrap16be", "ayuv64le", "ayuv64be",
+    "gbrap12le", "gbrap12be", "gbrap10le", "gbrap10be", "gbrapf32be",
+    "gbrapf32le", "yuva422p12be", "yuva422p12le", "yuva444p12be", "yuva444p12le"};
 
 QDir ProxyManager::dir()
 {
@@ -403,13 +407,38 @@ bool ProxyManager::filePending(Mlt::Producer& producer)
     return (projectDir.cd(kProxySubfolder) && projectDir.exists(fileName)) || proxyDir.exists(fileName);
 }
 
+bool ProxyManager::isValidImage(Mlt::Producer& producer)
+{
+    QString service = QString::fromLatin1(producer.get("mlt_service"));
+    if ((service == "qimage" || service == "pixbuf") && !producer.get_int(kShotcutSequenceProperty)) {
+        QImageReader reader;
+        reader.setDecideFormatFromContent(true);
+        reader.setFileName(ProxyManager::resource(producer));
+        return reader.imageCount() == 1 && !reader.read().hasAlphaChannel();
+    }
+    return false;
+}
+
+bool ProxyManager::isValidVideo(Mlt::Producer& producer)
+{
+    QString service = QString::fromLatin1(producer.get("mlt_service"));
+    int video_index = producer.get_int("video_index");
+    // video_index -1 means no video
+    if (service.startsWith("avformat") && video_index != -1) {
+        QString key = QString("meta.media.%1.codec.pix_fmt").arg(video_index);
+        QString pix_fmt = QString::fromLatin1(producer.get(key.toLatin1().constData()));
+        LOG_DEBUG() << "pix_fmt =" << pix_fmt;
+        return !kPixFmtsWithAlpha.contains(pix_fmt);
+    }
+    return false;
+}
+
 // Returns true if the producer exists and was updated with proxy info
 bool ProxyManager::generateIfNotExists(Mlt::Producer& producer, bool replace)
 {
     if (Settings.proxyEnabled() && producer.is_valid() && !producer.get_int(kDisableProxyProperty) && !producer.get_int(kIsProxyProperty)) {
-        QString service = QString::fromLatin1(producer.get("mlt_service"));
         if (ProxyManager::fileExists(producer)) {
-            QDir proxyDir(Settings.proxyFolder());
+            QString service = QString::fromLatin1(producer.get("mlt_service"));
             QDir projectDir(MLT.projectFolder());
             QString fileName;
             if (service.startsWith("avformat")) {
@@ -424,11 +453,12 @@ bool ProxyManager::generateIfNotExists(Mlt::Producer& producer, bool replace)
             if (projectDir.exists(fileName)) {
                 producer.set("resource", projectDir.filePath(fileName).toUtf8().constData());
             } else {
+                QDir proxyDir(Settings.proxyFolder());
                 producer.set("resource", proxyDir.filePath(fileName).toUtf8().constData());
             }
             return true;
         } else if (!filePending(producer)) {
-            if (service.startsWith("avformat")) {
+            if (isValidVideo(producer)) {
                 // Tag this producer so we do not try to generate proxy again in this session
                 delete producer.get_frame();
                 auto threshold = qRound(kProxyResolutionRatio * resolution());
