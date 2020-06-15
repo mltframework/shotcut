@@ -150,13 +150,13 @@ QString Util::removeFileScheme(QUrl& url)
 
 static inline bool isValidGoProFirstFilePrefix(const QFileInfo& info)
 {
-    QStringList list {"GOPR", "GH01", "GS01"};
+    QStringList list {"GOPR", "GH01", "GS01", "GX01"};
     return list.contains(info.baseName().toUpper());
 }
 
 static inline bool isValidGoProPrefix(const QFileInfo& info)
 {
-    QStringList list {"GP", "GH", "GS"};
+    QStringList list {"GP", "GH", "GS", "GX"};
     return list.contains(info.baseName().toUpper());
 }
 
