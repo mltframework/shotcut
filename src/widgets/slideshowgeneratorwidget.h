@@ -23,6 +23,7 @@
 #include <QWidget>
 
 class QComboBox;
+class QDoubleSpinBox;
 class QSlider;
 class QSpinBox;
 namespace Mlt {
@@ -49,10 +50,10 @@ private slots:
 private:
     struct SlideshowConfig
     {
-        int clipDuration;
+        double clipDuration;
         int aspectConversion;
         int zoomPercent;
-        int transitionDuration;
+        double transitionDuration;
         int transitionStyle;
         int transitionSoftness;
     };
@@ -62,10 +63,10 @@ private:
     void generatePreviewSlideshow();
     Q_INVOKABLE void startPreview();
 
-    QSpinBox* m_clipDurationSpinner;
+    QDoubleSpinBox* m_clipDurationSpinner;
     QComboBox* m_aspectConversionCombo;
     QSpinBox* m_zoomPercentSpinner;
-    QSpinBox* m_transitionDurationSpinner;
+    QDoubleSpinBox* m_transitionDurationSpinner;
     QComboBox* m_transitionStyleCombo;
     QSpinBox* m_softnessSpinner;
     ProducerPreviewWidget* m_preview;

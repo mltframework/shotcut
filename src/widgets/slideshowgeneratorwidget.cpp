@@ -28,6 +28,7 @@
 
 #include <QComboBox>
 #include <QDebug>
+#include <QDoubleSpinBox>
 #include <QGridLayout>
 #include <QLabel>
 #include <QSpinBox>
@@ -52,13 +53,14 @@ SlideshowGeneratorWidget::SlideshowGeneratorWidget(Mlt::Playlist* clips, QWidget
     setLayout(grid);
 
     grid->addWidget(new QLabel(tr("Clip duration")), 0, 0, Qt::AlignRight);
-    m_clipDurationSpinner = new QSpinBox();
+    m_clipDurationSpinner = new QDoubleSpinBox();
     m_clipDurationSpinner->setToolTip(tr("Set the duration of each clip in the slideshow."));
     m_clipDurationSpinner->setSuffix(" s");
+    m_clipDurationSpinner->setDecimals(1);
     m_clipDurationSpinner->setMinimum(4);
     m_clipDurationSpinner->setMaximum(600);
     m_clipDurationSpinner->setValue(10);
-    connect(m_clipDurationSpinner, SIGNAL(valueChanged(int)), this, SLOT(on_parameterChanged()));
+    connect(m_clipDurationSpinner, SIGNAL(valueChanged(double)), this, SLOT(on_parameterChanged()));
     grid->addWidget(m_clipDurationSpinner, 0, 1);
 
     grid->addWidget(new QLabel(tr("Aspect ratio conversion")), 1, 0, Qt::AlignRight);
@@ -82,13 +84,14 @@ SlideshowGeneratorWidget::SlideshowGeneratorWidget(Mlt::Playlist* clips, QWidget
     grid->addWidget(m_zoomPercentSpinner, 2, 1);
 
     grid->addWidget(new QLabel(tr("Transition duration")), 3, 0, Qt::AlignRight);
-    m_transitionDurationSpinner = new QSpinBox();
+    m_transitionDurationSpinner = new QDoubleSpinBox();
     m_transitionDurationSpinner->setToolTip(tr("Set the duration of the transition.\nMay not be longer than half the duration of the clip.\nIf the duration is 0, no transition will be created."));
     m_transitionDurationSpinner->setSuffix(" s");
+    m_transitionDurationSpinner->setDecimals(1);
     m_transitionDurationSpinner->setMinimum(0);
     m_transitionDurationSpinner->setMaximum(10);
     m_transitionDurationSpinner->setValue(2);
-    connect(m_transitionDurationSpinner, SIGNAL(valueChanged(int)), this, SLOT(on_parameterChanged()));
+    connect(m_transitionDurationSpinner, SIGNAL(valueChanged(double)), this, SLOT(on_parameterChanged()));
     grid->addWidget(m_transitionDurationSpinner, 3, 1);
 
     grid->addWidget(new QLabel(tr("Transition type")), 4, 0, Qt::AlignRight);
@@ -156,7 +159,7 @@ Mlt::Playlist* SlideshowGeneratorWidget::getSlideshow()
     config = m_config;
     m_mutex.unlock();
 
-    int framesPerClip = ceil((double)config.clipDuration * m_clips->profile()->fps());
+    int framesPerClip = round(config.clipDuration * m_clips->profile()->fps());
     int count = m_clips->count();
     Mlt::Playlist* slideshow = new Mlt::Playlist(*m_clips->profile());
     Mlt::ClipInfo info;
@@ -190,7 +193,7 @@ Mlt::Playlist* SlideshowGeneratorWidget::getSlideshow()
     }
 
     // Add transitions
-    int framesPerTransition = ceil((double)config.transitionDuration * m_clips->profile()->fps());
+    int framesPerTransition = round(config.transitionDuration * m_clips->profile()->fps());
     if (framesPerTransition > (framesPerClip / 2 - 1))
     {
         framesPerTransition = (framesPerClip / 2 - 1);
