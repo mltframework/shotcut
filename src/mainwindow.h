@@ -129,6 +129,8 @@ private:
     void setAudioChannels(int channels);
     void showSaveError();
     void setPreviewScale(int scale);
+    void setVideoModeMenu();
+    void resetVideoModeMenu();
 
     Ui::MainWindow* ui;
     Player* m_player;

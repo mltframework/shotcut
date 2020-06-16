@@ -1198,6 +1198,40 @@ void MainWindow::setPreviewScale(int scale)
     MLT.refreshConsumer();
 }
 
+void MainWindow::setVideoModeMenu()
+{
+    // Find a matching video mode
+    for (const auto action : m_profileGroup->actions()) {
+        auto s = action->data().toString();
+        Mlt::Profile profile(s.toUtf8().constData());
+        if (MLT.profile().width() == profile.width() &&
+                MLT.profile().height() == profile.height() &&
+                MLT.profile().sample_aspect_num() == profile.sample_aspect_num() &&
+                MLT.profile().sample_aspect_den() == profile.sample_aspect_den() &&
+                MLT.profile().frame_rate_num() == profile.frame_rate_num() &&
+                MLT.profile().frame_rate_den() == profile.frame_rate_den() &&
+                MLT.profile().colorspace() == profile.colorspace() &&
+                MLT.profile().progressive() == profile.progressive()) {
+            // Select it
+            action->setChecked(true);
+            return;
+        }
+    }
+    // Choose Automatic if nothing found
+    m_profileGroup->actions().first()->setChecked(true);
+}
+
+void MainWindow::resetVideoModeMenu()
+{
+    // Change selected Video Mode back to Settings
+    for (const auto action : m_profileGroup->actions()) {
+        if (action->data().toString() == Settings.playerProfile()) {
+            action->setChecked(true);
+            break;
+        }
+    }
+}
+
 static void autosaveTask(MainWindow* p)
 {
     LOG_DEBUG_TIME();
@@ -1272,14 +1306,17 @@ void MainWindow::open(QString url, const Mlt::Properties* properties, bool play)
         LOG_INFO() << "decimal point" << MLT.decimalPoint();
     }
     QString urlToOpen = checker.isUpdated()? checker.tempFileName() : url;
-    if (!MLT.open(QDir::fromNativeSeparators(urlToOpen), QDir::fromNativeSeparators(url))) {
+    if (!MLT.open(QDir::fromNativeSeparators(urlToOpen), QDir::fromNativeSeparators(url))
+            && MLT.producer() && MLT.producer()->is_valid()) {
         Mlt::Properties* props = const_cast<Mlt::Properties*>(properties);
         if (props && props->is_valid())
             mlt_properties_inherit(MLT.producer()->get_properties(), props->get_properties());
         m_player->setPauseAfterOpen(!play || !MLT.isClip());
 
-        if (MLT.producer() && MLT.producer()->is_valid())
-            setAudioChannels(MLT.audioChannels());
+        setAudioChannels(MLT.audioChannels());
+        if (url.endsWith(".mlt") || url.endsWith(".xml")) {
+            setVideoModeMenu();
+        }
 
         open(MLT.producer());
         if (url.startsWith(AutoSaveFile::path())) {
@@ -2718,6 +2755,7 @@ void MainWindow::onPlaylistClosed()
 {
     closeProducer();
     setProfile(Settings.playerProfile());
+    resetVideoModeMenu();
     setAudioChannels(Settings.playerAudioChannels());
     setCurrentFile("");
     setWindowModified(false);
@@ -2748,6 +2786,7 @@ void MainWindow::onMultitrackClosed()
     setAudioChannels(Settings.playerAudioChannels());
     closeProducer();
     setProfile(Settings.playerProfile());
+    resetVideoModeMenu();
     setCurrentFile("");
     setWindowModified(false);
     m_undoStack->clear();

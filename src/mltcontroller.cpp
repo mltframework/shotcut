@@ -596,7 +596,7 @@ void Controller::setProfile(const QString& profile_name)
 {
     LOG_DEBUG() << "setting to profile" << (profile_name.isEmpty()? "Automatic" : profile_name);
     if (!profile_name.isEmpty()) {
-        Mlt::Profile tmp(profile_name.toLatin1().constData());
+        Mlt::Profile tmp(profile_name.toUtf8().constData());
         m_profile.set_colorspace(tmp.colorspace());
         m_profile.set_frame_rate(tmp.frame_rate_num(), tmp.frame_rate_den());
         m_profile.set_height(Util::coerceMultiple(tmp.height()));
