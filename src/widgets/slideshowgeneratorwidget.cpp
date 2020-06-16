@@ -75,7 +75,7 @@ SlideshowGeneratorWidget::SlideshowGeneratorWidget(Mlt::Playlist* clips, QWidget
     m_zoomPercentSpinner = new QSpinBox();
     m_zoomPercentSpinner->setToolTip(tr("Set the percentage of the zoom-in effect.\n0% will result in no zoom effect."));
     m_zoomPercentSpinner->setSuffix(" %");
-    m_zoomPercentSpinner->setMinimum(0);
+    m_zoomPercentSpinner->setMinimum(-50);
     m_zoomPercentSpinner->setMaximum(50);
     m_zoomPercentSpinner->setValue(10);
     connect(m_zoomPercentSpinner, SIGNAL(valueChanged(int)), this, SLOT(on_parameterChanged()));
@@ -173,7 +173,7 @@ Mlt::Playlist* SlideshowGeneratorWidget::getSlideshow()
     }
 
     // Add filters
-    if (config.zoomPercent > 0 || config.aspectConversion != ASPECT_CONVERSION_PAD_BLACK)
+    if (config.zoomPercent != 0 || config.aspectConversion != ASPECT_CONVERSION_PAD_BLACK)
     {
         for (int i = 0; i < count; i++)
         {
@@ -181,8 +181,10 @@ Mlt::Playlist* SlideshowGeneratorWidget::getSlideshow()
             if (c)
             {
                 Mlt::Filter filter(*c->producer->profile(), "affine");
-                applyAffineFilterProperties(&filter, config, c->producer, c->frame_in + framesPerClip - 1);
-                c->producer->attach(filter);
+                if(applyAffineFilterProperties(&filter, config, c->producer, c->frame_in + framesPerClip - 1))
+                {
+                    c->producer->attach(filter);
+                }
             }
         }
     }
@@ -236,7 +238,7 @@ Mlt::Playlist* SlideshowGeneratorWidget::getSlideshow()
     return slideshow;
 }
 
-void SlideshowGeneratorWidget::applyAffineFilterProperties(Mlt::Filter* filter, SlideshowConfig& config, Mlt::Producer* producer, int endPosition)
+bool SlideshowGeneratorWidget::applyAffineFilterProperties(Mlt::Filter* filter, SlideshowConfig& config, Mlt::Producer* producer, int endPosition)
 {
     mlt_rect beginRect;
     mlt_rect endRect;
@@ -251,18 +253,23 @@ void SlideshowGeneratorWidget::applyAffineFilterProperties(Mlt::Filter* filter, 
     endRect.h = beginRect.h;
     endRect.o = 1;
 
+    double destDar = producer->profile()->dar();
+    double sourceW = producer->get_double("meta.media.width");
+    double sourceH = producer->get_double("meta.media.height");
+    double sourceAr = producer->get_double("aspect_ratio");
+    double sourceDar = destDar;
+    if( sourceW && sourceH && sourceAr )
+    {
+        sourceDar = sourceW * sourceAr / sourceH;
+    }
+    if (sourceDar == destDar && config.zoomPercent == 0)
+    {
+        // No need for affine
+        return false;
+    }
+
     if(config.aspectConversion != ASPECT_CONVERSION_PAD_BLACK)
     {
-        double destDar = producer->profile()->dar();
-        double sourceW = producer->get_double("meta.media.width");
-        double sourceH = producer->get_double("meta.media.height");
-        double sourceAr = producer->get_double("aspect_ratio");
-        double sourceDar = destDar;
-        if( sourceW && sourceH && sourceAr )
-        {
-            sourceDar = sourceW * sourceAr / sourceH;
-        }
-
         if(sourceDar > destDar)
         {
             // Crop sides to fit height
@@ -300,18 +307,26 @@ void SlideshowGeneratorWidget::applyAffineFilterProperties(Mlt::Filter* filter, 
             else
             {
                 beginRect.y = 0;
-                endRect.y =  (double)producer->profile()->height() - endRect.h;;
+                endRect.y =  (double)producer->profile()->height() - endRect.h;
             }
         }
     }
 
-    if (config.zoomPercent != 0)
+    if (config.zoomPercent > 0)
     {
         double endScale = (double)config.zoomPercent / 100.0;
         endRect.x = endRect.x - (endScale * endRect.w / 2.0);
         endRect.y = endRect.y - (endScale * endRect.h / 2.0);
         endRect.w = endRect.w + (endScale * endRect.w);
-        endRect.h = endRect.h + (endScale * endRect.h);;
+        endRect.h = endRect.h + (endScale * endRect.h);
+    }
+    else if (config.zoomPercent < 0)
+    {
+        double beginScale = -1.0 * (double)config.zoomPercent / 100.0;
+        beginRect.x = beginRect.x - (beginScale * beginRect.w / 2.0);
+        beginRect.y = beginRect.y - (beginScale * beginRect.h / 2.0);
+        beginRect.w = beginRect.w + (beginScale * beginRect.w);
+        beginRect.h = beginRect.h + (beginScale * beginRect.h);
     }
 
     filter->anim_set( "transition.rect", beginRect, 0);
@@ -325,6 +340,7 @@ void SlideshowGeneratorWidget::applyAffineFilterProperties(Mlt::Filter* filter, 
     filter->set("shotcut:filter", "affineSizePosition");
     filter->set("shotcut:animIn", producer->frames_to_time(endPosition, mlt_time_clock));
     filter->set("shotcut:animOut", producer->frames_to_time(0, mlt_time_clock));
+    return true;
 }
 
 void SlideshowGeneratorWidget::applyLumaTransitionProperties(Mlt::Transition* luma, SlideshowConfig& config)
