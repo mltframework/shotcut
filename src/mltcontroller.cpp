@@ -977,7 +977,7 @@ int Controller::realTime() const
 void Controller::setImageDurationFromDefault(Service* service) const
 {
     if (service && service->is_valid()) {
-        if (isImageProducer(service)) {
+        if (isImageProducer(service) && !service->get_int("shotcut_sequence")) {
             service->set("ttl", 1);
             service->set("length", service->frames_to_time(qRound(m_profile.fps() * kMaxImageDurationSecs), mlt_time_clock));
             service->set("out", qRound(m_profile.fps() * Settings.imageDuration()) - 1);

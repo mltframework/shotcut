@@ -49,7 +49,12 @@ ImageProducerWidget::~ImageProducerWidget()
 
 Mlt::Producer* ImageProducerWidget::newProducer(Mlt::Profile& profile)
 {
-    Mlt::Producer* p = new Mlt::Producer(profile, m_producer->get("resource"));
+    QString resource = QString::fromUtf8(m_producer->get("resource"));
+    if (!resource.contains("?begin=") && m_producer->get("begin")) {
+        resource.append(QString("?begin=%1").arg(m_producer->get("begin")));
+    }
+    LOG_DEBUG() << resource;
+    Mlt::Producer* p = new Mlt::Producer(profile, resource.toUtf8().constData());
     if (p->is_valid()) {
         if (ui->durationSpinBox->value() > p->get_length())
             p->set("length", p->frames_to_time(ui->durationSpinBox->value(), mlt_time_clock));
@@ -150,14 +155,17 @@ void ImageProducerWidget::recreateProducer()
     if (!resource.startsWith("qimage:") && !resource.startsWith("pixbuf:")) {
         QString serviceName = m_producer->get("mlt_service");
         if (!serviceName.isEmpty()) {
+            if (QFileInfo(resource).isRelative()) {
+                QString basePath = QFileInfo(MAIN.fileName()).canonicalPath();
+                QFileInfo fi(basePath, resource);
+                resource = fi.filePath();
+            }
             resource.prepend(':').prepend(serviceName);
             m_producer->set("resource", resource.toUtf8().constData());
         }
     }
     Mlt::Producer* p = newProducer(MLT.profile());
-    if (resource.startsWith("qimage:") || resource.startsWith("pixbuf:"))
-        m_producer->set("resource", resource.mid(resource.indexOf(':') + 1).toUtf8().constData());
-    p->pass_list(*m_producer, "force_aspect_ratio," kAspectRatioNumerator ", resource, " kAspectRatioDenominator
+    p->pass_list(*m_producer, "force_aspect_ratio," kAspectRatioNumerator "," kAspectRatioDenominator
         ", begin, ttl," kShotcutResourceProperty ", autolength, length," kShotcutSequenceProperty ", " kPlaylistIndexProperty
         ", " kCommentProperty "," kOriginalResourceProperty "," kDisableProxyProperty "," kIsProxyProperty);
     Mlt::Controller::copyFilters(*m_producer, *p);
@@ -237,7 +245,7 @@ void ImageProducerWidget::on_sequenceCheckBox_clicked(bool checked)
         if (count) {
             m_producer->set("begin", begin.toLatin1().constData());
             int j = begin.toInt();
-            name.replace(i, count, begin.prepend('%').append('d'));
+            name.replace(i, count, QString("0%1d").arg(count).prepend('%'));
             QString serviceName = m_producer->get("mlt_service");
             if (!serviceName.isEmpty())
                 resource = serviceName + ":" + info.path() + "/" + name;
@@ -263,6 +271,7 @@ void ImageProducerWidget::on_sequenceCheckBox_clicked(bool checked)
         }
     }
     else {
+        m_producer->Mlt::Properties::clear("begin");
         m_producer->set("resource", m_producer->get(kShotcutResourceProperty));
         m_producer->set("length", m_producer->frames_to_time(qRound(MLT.profile().fps() * Mlt::kMaxImageDurationSecs), mlt_time_clock));
         ui->durationSpinBox->setValue(qRound(MLT.profile().fps() * Settings.imageDuration()));
@@ -308,6 +317,8 @@ static QString GetFilenameFromProducer(Mlt::Producer* producer, bool useOriginal
     QString resource;
     if (useOriginal && producer->get(kOriginalResourceProperty)) {
         resource = QString::fromUtf8(producer->get(kOriginalResourceProperty));
+    } else if (producer->get(kShotcutResourceProperty)) {
+        resource = QString::fromUtf8(producer->get(kShotcutResourceProperty));
     } else {
         resource = QString::fromUtf8(producer->get("resource"));
     }
