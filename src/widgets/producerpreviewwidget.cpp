@@ -63,6 +63,10 @@ ProducerPreviewWidget::ProducerPreviewWidget(double dar)
     connect(m_scrubber, SIGNAL(seeked(int)), this, SLOT(seeked(int)));
     layout->addWidget(m_scrubber);
 
+    m_posLabel = new QLabel();
+    m_posLabel->setAlignment(Qt::AlignCenter);
+    layout->addWidget(m_posLabel);
+
     LOG_DEBUG() << "end";
 }
 
@@ -115,6 +119,7 @@ void ProducerPreviewWidget::ProducerPreviewWidget::stop()
     m_seekTo = 0;
     m_scrubber->onSeek(0);
     m_scrubber->setScale(0);
+    m_posLabel->setText("");
 }
 
 void ProducerPreviewWidget::showText(QString text)
@@ -134,6 +139,7 @@ void ProducerPreviewWidget::timerEvent(QTimerEvent*)
         QueueItem item = m_queue.pop();
         m_imageLabel->setPixmap(item.pixmap);
         m_scrubber->onSeek(item.position);
+        m_posLabel->setText(item.positionText);
     }
 }
 
@@ -166,6 +172,7 @@ void ProducerPreviewWidget::frameGeneratorThread()
         QueueItem item;
         item.pixmap.convertFromImage(image);
         item.position = position;
+        item.positionText = QString::fromLatin1(m_producer->frame_time()) + QString(" / ") + QString::fromLatin1(m_producer->get_length_time());
         m_queue.push(item);
 
         // Seek to the next frame (every other frame with repeat)

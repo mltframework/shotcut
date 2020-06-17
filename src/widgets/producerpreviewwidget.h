@@ -52,6 +52,7 @@ private:
     QSize m_previewSize;
     QLabel* m_imageLabel;
     ScrubBar* m_scrubber;
+    QLabel* m_posLabel;
     int m_seekTo;
     int m_timerId;
     Mlt::Producer* m_producer;
@@ -59,6 +60,7 @@ private:
     {
         QPixmap pixmap;
         int position;
+        QString positionText;
     };
     DataQueue<QueueItem> m_queue;
     QFuture<void> m_future;
