@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2019 Meltytech, LLC
+ * Copyright (c) 2013-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,7 +26,6 @@ Rectangle {
     SystemPalette { id: activePalette }
 
     id: rulerTop
-    enabled: false
     height: 28
     color: activePalette.base
 
@@ -46,6 +45,17 @@ Rectangle {
                 color: activePalette.windowText
                 text: application.timecode(index * intervalSeconds * profile.fps + 2).substr(0, 8)
             }
+        }
+    }
+
+    MouseArea {
+        anchors.fill: parent
+        hoverEnabled: true
+        acceptedButtons: Qt.NoButton
+        onExited: bubbleHelp.hide()
+        onPositionChanged: {
+            var text = application.timecode(mouse.x / timeScale)
+            bubbleHelp.show(mouse.x + bubbleHelp.width - 8, mouse.y + 65, text)
         }
     }
 

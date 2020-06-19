@@ -229,17 +229,21 @@ Rectangle {
             // This provides continuous scrubbing and scimming at the left/right edges.
             focus: true
             hoverEnabled: true
-            onClicked: timeline.position = (scrollView.flickableItem.contentX + mouse.x) / multitrack.scaleFactor
+            onClicked: {
+                timeline.position = (scrollView.flickableItem.contentX + mouse.x) / multitrack.scaleFactor
+                bubbleHelp.hide()
+            }
             property bool scim: false
             onReleased: scim = false
             onExited: scim = false
             onPositionChanged: {
                 if (mouse.modifiers === (Qt.ShiftModifier | Qt.AltModifier) || mouse.buttons === Qt.LeftButton) {
                     timeline.position = (scrollView.flickableItem.contentX + mouse.x) / multitrack.scaleFactor
+                    bubbleHelp.hide()
                     scim = true
-                }
-                else
+                } else {
                     scim = false
+                }
             }
             onWheel: Logic.onMouseWheel(wheel)
 

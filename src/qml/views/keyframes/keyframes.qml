@@ -157,7 +157,10 @@ Rectangle {
             // This provides continuous scrubbing and scimming at the left/right edges.
             focus: true
             hoverEnabled: true
-            onClicked: producer.position = (scrollView.flickableItem.contentX + mouse.x) / timeScale
+            onClicked: {
+                producer.position = (scrollView.flickableItem.contentX + mouse.x) / timeScale
+                bubbleHelp.hide()
+            }
             onWheel: Logic.onMouseWheel(wheel)
             onDoubleClicked: {
                 // Figure out which parameter row that is in.
@@ -198,6 +201,7 @@ Rectangle {
             onPositionChanged: {
                 if (mouse.modifiers === (Qt.ShiftModifier | Qt.AltModifier) || mouse.buttons === Qt.LeftButton) {
                     producer.position = (scrollView.flickableItem.contentX + mouse.x) / timeScale
+                    bubbleHelp.hide()
                     scim = true
                 }
                 else
