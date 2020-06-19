@@ -1207,6 +1207,14 @@ void TimelineDock::appendFromPlaylist(Mlt::Playlist *playlist, bool skipProxy)
         pulseLockButtonOnTrack(trackIndex);
         return;
     }
+    // Workaround a bug with first slide of slideshow animation not working.
+    if (skipProxy) {
+        // Initialize the multitrack with a bogus clip and remove it.
+        Mlt::Producer producer(playlist->get_clip(0));
+        auto clipIndex = m_model.appendClip(trackIndex, producer);
+        if (clipIndex >= 0)
+            m_model.removeClip(trackIndex, clipIndex, Settings.timelineRippleAllTracks());
+    }
     MAIN.undoStack()->push(
         new Timeline::AppendCommand(m_model, trackIndex, MLT.XML(playlist), skipProxy));
     selectClipUnderPlayhead();
