@@ -42,7 +42,6 @@ FiltersDock::FiltersDock(MetadataModel* metadataModel, AttachedFiltersModel* att
     QIcon filterIcon = QIcon::fromTheme("view-filter", QIcon(":/icons/oxygen/32x32/actions/view-filter.png"));
     setWindowIcon(filterIcon);
     toggleViewAction()->setIcon(windowIcon());
-    setMinimumWidth(300);
     m_qview.setFocusPolicy(Qt::StrongFocus);
     m_qview.quickWindow()->setPersistentSceneGraph(false);
     m_qview.setAttribute(Qt::WA_AcceptTouchEvents);
