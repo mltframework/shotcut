@@ -1184,6 +1184,7 @@ void AvformatProducerWidget::on_actionCopyHashCode_triggered()
 {
     qApp->clipboard()->setText(Util::getHash(*producer()));
     QMessageBox::information(this, qApp->applicationName(),
+                             tr("The hash code below is already copied to your clipboard:\n\n") +
                              Util::getHash(*producer()),
                              QMessageBox::Ok);
 }
