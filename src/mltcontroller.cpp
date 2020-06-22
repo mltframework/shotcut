@@ -251,7 +251,7 @@ void Controller::pause()
     }
     if (m_jackFilter) {
         stopJack();
-        int position = m_producer->position();
+        int position = (m_producer && m_producer->is_valid())? m_producer->position() : 0;
         ++m_skipJackEvents;
         mlt_events_fire(m_jackFilter->get_properties(), "jack-seek", &position, NULL);
     }
