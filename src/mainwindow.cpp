@@ -1285,6 +1285,14 @@ void MainWindow::open(QString url, const Mlt::Properties* properties, bool play)
         if (!isXmlRepaired(checker, url))
             return;
         modified = checkAutoSave(url);
+        if (modified) {
+            if (checker.check(url)) {
+                if (!isCompatibleWithGpuMode(checker))
+                    return;
+            }
+            if (!isXmlRepaired(checker, url))
+                return;
+        }
         // let the new project change the profile
         if (modified || QFile::exists(url)) {
             MLT.profile().set_explicit(false);
