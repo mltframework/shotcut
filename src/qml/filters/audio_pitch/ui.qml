@@ -146,6 +146,7 @@ Item {
             minimumValue: -2.0
             maximumValue: 2.0
             decimals: 6
+            stepSize: 1.0/12.0 // 12 half steps in an octave
             spinnerWidth: 100
             onValueChanged: {
                 updateFilter(getPosition())
