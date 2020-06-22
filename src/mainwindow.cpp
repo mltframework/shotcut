@@ -4522,7 +4522,6 @@ void MainWindow::on_actionProxyStorageSet_triggered()
             dialog.setEscapeButton(QMessageBox::No);
             if (dialog.exec() == QMessageBox::Yes) {
                 // Move the existing files
-                QDirIterator it(oldFolder);
                 LongUiTask longTask(tr("Moving Files"));
                 int i = 0;
                 for (const auto& fileName : dirList) {
