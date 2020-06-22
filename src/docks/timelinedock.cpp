@@ -1091,17 +1091,21 @@ static QString convertUrlsToXML(const QString& xml)
             longTask.reportProgress(Util::baseName(path), i++, count);
             Mlt::Producer p(MLT.profile(), path.toUtf8().constData());
             if (p.is_valid()) {
+                // Convert avformat to avformat-novalidate so that XML loads faster.
+                if (!qstrcmp(p.get("mlt_service"), "avformat")) {
+                    if (!p.get_int("seekable")) {
+                        MAIN.showStatusMessage(QObject::tr("Not adding non-seekable file: ") + Util::baseName(path));
+                        continue;
+                    }
+                    p.set("mlt_service", "avformat-novalidate");
+                    p.set("mute_on_pause", 0);
+                }
                 // Convert MLT XML to a virtual clip.
                 if (!qstrcmp(p.get("mlt_service"), "xml")) {
                     p.set(kShotcutVirtualClip, 1);
                     p.set("resource", path.toUtf8().constData());
                 } else{
                     ProxyManager::generateIfNotExists(p);
-                }
-                // Convert avformat to avformat-novalidate so that XML loads faster.
-                if (!qstrcmp(p.get("mlt_service"), "avformat")) {
-                    p.set("mlt_service", "avformat-novalidate");
-                    p.set("mute_on_pause", 0);
                 }
                 MLT.setImageDurationFromDefault(&p);
                 MLT.lockCreationTime(&p);
