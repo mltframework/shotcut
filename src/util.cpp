@@ -151,18 +151,18 @@ QString Util::removeFileScheme(QUrl& url)
 static inline bool isValidGoProFirstFilePrefix(const QFileInfo& info)
 {
     QStringList list {"GOPR", "GH01", "GS01", "GX01"};
-    return list.contains(info.baseName().toUpper());
+    return list.contains(info.baseName().left(4).toUpper());
 }
 
 static inline bool isValidGoProPrefix(const QFileInfo& info)
 {
     QStringList list {"GP", "GH", "GS", "GX"};
-    return list.contains(info.baseName().toUpper());
+    return list.contains(info.baseName().left(2).toUpper());
 }
 
 static inline bool isValidGoProSuffix(const QFileInfo& info)
 {
-    QStringList list {"MP4", "LRV", "360"};
+    QStringList list {"MP4", "LRV", "360", "WAV"};
     return list.contains(info.suffix().toUpper());
 }
 
@@ -174,17 +174,19 @@ QStringList Util::sortedFileList(const QList<QUrl>& urls)
     // First look for GoPro main files.
     foreach (QUrl url, urls) {
         QFileInfo fi(removeFileScheme(url));
-        if (fi.baseName().size() == 8 && isValidGoProSuffix(fi) && isValidGoProFirstFilePrefix(fi))
+        if (fi.baseName().size() == 8 && isValidGoProSuffix(fi) && isValidGoProFirstFilePrefix(fi)) {
             goproFiles[fi.baseName().mid(4)] << fi.filePath();
+        }
     }
     // Then, look for GoPro split files.
     foreach (QUrl url, urls) {
         QFileInfo fi(removeFileScheme(url));
-        if (fi.baseName().size() == 8 && isValidGoProSuffix(fi) && isValidGoProPrefix(fi)) {
+        if (fi.baseName().size() == 8 && isValidGoProSuffix(fi) && isValidGoProPrefix(fi) && !isValidGoProFirstFilePrefix(fi)) {
             QString goproNumber = fi.baseName().mid(4);
             // Only if there is a matching main GoPro file.
-            if (goproFiles.contains(goproNumber) && goproFiles[goproNumber].size())
+            if (goproFiles.contains(goproNumber) && goproFiles[goproNumber].size()) {
                 goproFiles[goproNumber] << fi.filePath();
+            }
         }
     }
     // Next, sort the GoPro files.
