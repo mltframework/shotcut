@@ -4502,25 +4502,39 @@ void MainWindow::on_actionProxyStorageSet_triggered()
 {
     // Present folder dialog just like App Data Directory
     QString dirName = QFileDialog::getExistingDirectory(this, tr("Proxy Folder"), Settings.proxyFolder());
-    if (!dirName.isEmpty()) {
-        // Move the existing files
-        QDirIterator it(Settings.proxyFolder());
-        while (it.hasNext()) {
-            if (!it.filePath().isEmpty() && it.fileName() != "." && it.fileName() != "..") {
-                if (!QFile::exists(dirName + "/" + it.fileName())) {
-                    if (it.fileInfo().isDir()) {
-                        if (!QFile::rename(it.filePath(), dirName + "/" + it.fileName()))
-                            LOG_WARNING() << "Failed to move" << it.filePath() << "to" << dirName + "/" + it.fileName();
-                    } else {
-                        if (!QFile::copy(it.filePath(), dirName + "/" + it.fileName()))
-                            LOG_WARNING() << "Failed to copy" << it.filePath() << "to" << dirName + "/" + it.fileName();
+    if (!dirName.isEmpty() && dirName != Settings.proxyFolder()) {
+        auto oldFolder = Settings.proxyFolder();
+        Settings.setProxyFolder(dirName);
+        Settings.sync();
+
+        // Get a count for the progress dialog
+        auto oldDir = QDir(oldFolder);
+        auto dirList = oldDir.entryList(QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot);
+        auto count = dirList.size();
+
+        if (count > 0) {
+            // Prompt user if they want to create missing proxies
+            QMessageBox dialog(QMessageBox::Question, qApp->applicationName(),
+               tr("Do you want to move all files from the old folder to the new folder?"),
+               QMessageBox::No | QMessageBox::Yes, this);
+            dialog.setWindowModality(QmlApplication::dialogModality());
+            dialog.setDefaultButton(QMessageBox::Yes);
+            dialog.setEscapeButton(QMessageBox::No);
+            if (dialog.exec() == QMessageBox::Yes) {
+                // Move the existing files
+                QDirIterator it(oldFolder);
+                LongUiTask longTask(tr("Moving Files"));
+                int i = 0;
+                for (const auto& fileName : dirList) {
+                    if (!fileName.isEmpty() && !QFile::exists(dirName + "/" + fileName)) {
+                        LOG_DEBUG() << "moving" << oldDir.filePath(fileName) << "to" << dirName + "/" + fileName;
+                        longTask.reportProgress(fileName, i++, count);
+                        if (!QFile::rename(oldDir.filePath(fileName), dirName + "/" + fileName))
+                            LOG_WARNING() << "Failed to move" << oldDir.filePath(fileName);
                     }
                 }
             }
-            it.next();
         }
-        Settings.setProxyFolder(dirName);
-        Settings.sync();
     }
 }
 
