@@ -110,7 +110,7 @@ Rectangle {
         onExited: Logic.dropped()
         onPositionChanged: {
             if (drag.formats.indexOf('application/vnd.mlt+xml') >= 0 || drag.hasUrls)
-                Logic.dragging(drag, parseInt(drag.text))
+                Logic.dragging(drag, drag.hasUrls? 0 : parseInt(drag.text))
         }
         onDropped: {
             if (drop.formats.indexOf('application/vnd.mlt+xml') >= 0) {
