@@ -924,7 +924,7 @@ void MainWindow::open(Mlt::Producer* producer)
     // no else here because open() will delete the producer if open fails
     if (!MLT.setProducer(producer)) {
         emit producerOpened();
-        if (!MLT.profile().is_explicit() || MLT.isMultitrack() || MLT.isPlaylist())
+        if (!MLT.profile().is_explicit() || MLT.URL().endsWith(".mlt") || MLT.URL().endsWith(".xml"))
             emit profileChanged();
     }
     m_player->setFocus();
