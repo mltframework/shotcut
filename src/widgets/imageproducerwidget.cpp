@@ -377,6 +377,7 @@ void ImageProducerWidget::on_actionDisableProxy_triggered(bool checked)
         }
     } else {
         producer()->Mlt::Properties::clear(kDisableProxyProperty);
+        ui->actionMakeProxy->setEnabled(true);
     }
 }
 
