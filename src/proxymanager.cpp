@@ -427,10 +427,13 @@ bool ProxyManager::isValidVideo(Mlt::Producer& producer)
     if (service.startsWith("avformat") && video_index != -1) {
         QString key = QString("meta.media.%1.codec.pix_fmt").arg(video_index);
         QString pix_fmt = QString::fromLatin1(producer.get(key.toLatin1().constData()));
+        // Cover art is usually 90000 fps and should not be proxied
+        key = QString("meta.media.%1.codec.frame_rate").arg(video_index);
+        QString frame_rate = producer.get(key.toLatin1().constData());
         key = QString("meta.attr.%1.stream.alpha_mode.markup").arg(video_index);
         bool alpha_mode = producer.get_int(key.toLatin1().constData());
-        LOG_DEBUG() << "pix_fmt =" << pix_fmt << "alpha_mode =" << alpha_mode;
-        return !kPixFmtsWithAlpha.contains(pix_fmt) && !alpha_mode;
+        LOG_DEBUG() << "pix_fmt =" << pix_fmt << " codec.frame_rate =" << frame_rate << " alpha_mode =" << alpha_mode;
+        return !kPixFmtsWithAlpha.contains(pix_fmt) && !alpha_mode && frame_rate != "90000";
     }
     return false;
 }
