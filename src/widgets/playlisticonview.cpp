@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2019 Meltytech, LLC
+ * Copyright (c) 2016-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -153,6 +153,10 @@ void PlaylistIconView::paintEvent(QPaintEvent*)
 {
     QPainter painter(viewport());
     QPalette pal(palette());
+    const auto proxy = tr("P", "The first letter or symbol of \"proxy\"");
+    const auto oldFont = painter.font();
+    auto boldFont(oldFont);
+    boldFont.setBold(true);
     painter.fillRect(rect(), pal.base());
 
     if (!model())
@@ -206,9 +210,19 @@ void PlaylistIconView::paintEvent(QPaintEvent*)
             }
 
             painter.drawImage(imageRect, thumb);
+            QStringList nameParts = idx.data(Qt::DisplayRole).toString().split('\n');
+            if (nameParts.size() > 1) {
+                const auto indexPos = imageRect.topLeft() + QPoint(5, 15);
+                painter.setFont(boldFont);
+                painter.setPen(pal.color(QPalette::Dark).darker());
+                painter.drawText(indexPos, proxy);
+                painter.setPen(pal.color(QPalette::WindowText));
+                painter.drawText(indexPos - QPoint(1, 1), proxy);
+                painter.setFont(oldFont);
+            }
             painter.setPen(pal.color(QPalette::WindowText));
             painter.drawText(textRect, Qt::AlignCenter,
-                    painter.fontMetrics().elidedText(idx.data(Qt::DisplayRole).toString(), Qt::ElideMiddle, textRect.width()));
+                    painter.fontMetrics().elidedText(nameParts.first(), Qt::ElideMiddle, textRect.width()));
 
             if (!m_draggingOverPos.isNull() && itemRect.contains(m_draggingOverPos)) {
                 QAbstractItemView::DropIndicatorPosition dropPos =

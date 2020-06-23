@@ -60,7 +60,7 @@ public:
         const QImage thumb = index.data(Qt::DecorationRole).value<QImage>();
         const QString setting = Settings.playlistThumbnails();
         const int lineHeight = painter->fontMetrics().height();
-        const bool roomEnoughForAllDetails = lineHeight * 4 < thumb.height();
+        const bool roomEnoughForAllDetails = lineHeight * 5 < thumb.height();
         const QFont oldFont = painter->font();
         QFont boldFont(oldFont);
         boldFont.setBold(true);
@@ -87,7 +87,7 @@ public:
         painter->setFont(oldFont);
 
         QRect centeredTextRect = option.rect;
-        centeredTextRect.setHeight(lineHeight * (roomEnoughForAllDetails ? 4 : 2));
+        centeredTextRect.setHeight(lineHeight * (roomEnoughForAllDetails ? 5 : 3));
         centeredTextRect.moveCenter(option.rect.center());
 
         QRect textRect = centeredTextRect;
@@ -96,9 +96,14 @@ public:
         QPoint textPoint = textRect.topLeft();
         textPoint.setY(textPoint.y() + lineHeight);
         painter->setFont(boldFont);
+        QStringList nameParts = index.data(Qt::DisplayRole).toString().split('\n');
         painter->drawText(textPoint,
-                painter->fontMetrics().elidedText(index.data(Qt::DisplayRole).toString(), Qt::ElideMiddle, textRect.width()));
+                painter->fontMetrics().elidedText(nameParts.first(), Qt::ElideMiddle, textRect.width()));
         painter->setFont(oldFont);
+        if (nameParts.size() > 1) {
+            textPoint.setY(textPoint.y() + lineHeight);
+            painter->drawText(textPoint, nameParts.last());
+        }
 
         textPoint.setY(textPoint.y() + lineHeight);
         painter->drawText(textPoint, tr("Duration: %1").arg(index.data(PlaylistModel::FIELD_DURATION).toString()));

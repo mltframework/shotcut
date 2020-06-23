@@ -224,70 +224,76 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
         QString result;
         if (role == Qt::DisplayRole) {
             // Prefer caption for display
-            if (info->producer && info->producer->is_valid())
+            if (info->producer && info->producer->is_valid()) {
                 result = info->producer->get(kShotcutCaptionProperty);
-            if (result.isNull()) {
-                result = Util::baseName(ProxyManager::resource(*info->producer));
-                if (!::qstrcmp(info->producer->get("mlt_service"), "timewarp")) {
-                    double speed = ::qAbs(info->producer->get_double("warp_speed"));
-                    result = QString("%1 (%2x)").arg(result).arg(speed);
+                if (result.isEmpty()) {
+                    result = Util::baseName(ProxyManager::resource(*info->producer));
+                    if (!::qstrcmp(info->producer->get("mlt_service"), "timewarp")) {
+                        double speed = ::qAbs(info->producer->get_double("warp_speed"));
+                        result = QString("%1 (%2x)").arg(result).arg(speed);
+                    }
                 }
-            }
-            if (result == "<producer>" && info->producer && info->producer->is_valid())
-                result = QString::fromUtf8(info->producer->get("mlt_service"));
-            if (Settings.viewMode() == kDetailedMode && info->producer && info->producer->is_valid()
-                    && info->producer->get_int(kIsProxyProperty)) {
-                result.append("\n" + tr("(PROXY)"));
+                if (result == "<producer>") {
+                    result = QString::fromUtf8(info->producer->get("mlt_service"));
+                }
+                if (info->producer->get_int(kIsProxyProperty)) {
+                    result.append("\n" + tr("(PROXY)"));
+                }
             }
         } else {
             // Prefer detail or full path for tooltip
-            if (info->producer && info->producer->is_valid())
+            if (info->producer && info->producer->is_valid()) {
                 result = info->producer->get(kShotcutDetailProperty);
-            if (result.isNull()) {
-                result = ProxyManager::resource(*info->producer);
-                if (!result.isEmpty() && QFileInfo(result).isRelative()) {
-                    QString basePath = QFileInfo(MAIN.fileName()).canonicalPath();
-                    result = QFileInfo(basePath, result).filePath();
+                if (result.isEmpty()) {
+                    result = ProxyManager::resource(*info->producer);
+                    if (!result.isEmpty() && QFileInfo(result).isRelative()) {
+                        QString basePath = QFileInfo(MAIN.fileName()).canonicalPath();
+                        result = QFileInfo(basePath, result).filePath();
+                    }
+                    result = QDir::toNativeSeparators(result);
                 }
-                result = QDir::toNativeSeparators(result);
+                if ((result.isEmpty() || Util::baseName(result) == "<producer>")) {
+                    result = info->producer->get(kShotcutCaptionProperty);
+                }
+                if (result.isEmpty()) {
+                    result = QString::fromUtf8(info->producer->get("mlt_service"));
+                }
             }
-            if ((result.isNull() || Util::baseName(result) == "<producer>") && info->producer && info->producer->is_valid())
-                result = info->producer->get(kShotcutCaptionProperty);
-            if (result.isNull() && info->producer && info->producer->is_valid())
-                result = QString::fromUtf8(info->producer->get("mlt_service"));
         }
-        if (!info->producer->get(kShotcutHashProperty))
+        if (!info->producer->get(kShotcutHashProperty)) {
             Util::getHash(*info->producer);
+        }
         return result;
     }
     case FIELD_IN:
         if (info->producer && info->producer->is_valid()) {
             return info->producer->frames_to_time(info->frame_in);
-        } else
+        } else {
             return "";
+        }
     case FIELD_DURATION:
         if (info->producer && info->producer->is_valid()) {
             return info->producer->frames_to_time(info->frame_count);
-        } else
+        } else {
             return "";
+        }
     case FIELD_START:
         if (info->producer && info->producer->is_valid()) {
             return info->producer->frames_to_time(info->start);
-        }
-        else
+        } else {
             return "";
+        }
     case FIELD_DATE:
         if (info->producer && info->producer->is_valid()) {
             int64_t ms = info->producer->get_creation_time();
             if (!ms) {
                 return "";
-            }
-            else {
+            } else {
                return QDateTime::fromMSecsSinceEpoch(ms).toString("yyyy-MM-dd HH:mm:ss");
             }
-        }
-        else
+        } else {
             return "";
+        }
     case FIELD_THUMBNAIL:
         {
             QString setting = Settings.playlistThumbnails();
