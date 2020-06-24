@@ -419,12 +419,19 @@ bool ProxyManager::isValidImage(Mlt::Producer& producer)
     return false;
 }
 
-bool ProxyManager::isValidVideo(Mlt::Producer& producer)
+bool ProxyManager::isValidVideo(Mlt::Producer producer)
 {
     QString service = QString::fromLatin1(producer.get("mlt_service"));
     int video_index = producer.get_int("video_index");
     // video_index -1 means no video
-    if (service.startsWith("avformat") && video_index != -1) {
+    if (video_index < 0)
+        return false;
+    if (service == "avformat-novalidate") {
+        producer = Mlt::Producer(MLT.profile(), resource(producer).toUtf8().constData());
+        service = QString::fromLatin1(producer.get("mlt_service"));
+        producer.set("video_index", video_index);
+    }
+    if (service == "avformat") {
         QString key = QString("meta.media.%1.codec.pix_fmt").arg(video_index);
         QString pix_fmt = QString::fromLatin1(producer.get(key.toLatin1().constData()));
         // Cover art is usually 90000 fps and should not be proxied
