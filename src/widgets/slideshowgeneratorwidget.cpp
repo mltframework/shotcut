@@ -58,7 +58,7 @@ SlideshowGeneratorWidget::SlideshowGeneratorWidget(Mlt::Playlist* clips, QWidget
     m_clipDurationSpinner->setSuffix(" s");
     m_clipDurationSpinner->setDecimals(1);
     m_clipDurationSpinner->setMinimum(4);
-    m_clipDurationSpinner->setMaximum(600);
+    m_clipDurationSpinner->setMaximum(3600 * 4);
     m_clipDurationSpinner->setValue(10);
     connect(m_clipDurationSpinner, SIGNAL(valueChanged(double)), this, SLOT(on_parameterChanged()));
     grid->addWidget(m_clipDurationSpinner, 0, 1);
