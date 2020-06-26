@@ -8,6 +8,7 @@ Metadata {
     mlt_service: "frei0r.bigsh0t_eq_to_rect"
     objectName: "bigsh0t_eq_to_rect"
     qml: "ui.qml"
+    vui: "vui.qml"
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true
@@ -43,7 +44,7 @@ Metadata {
                 isSimple: true
                 isCurve: true
                 minimum: 0
-                maximum: 180
+                maximum: 720
             },
 			Parameter {
                 name: qsTr('Fisheye')
