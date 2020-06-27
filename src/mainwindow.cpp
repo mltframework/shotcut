@@ -1408,7 +1408,7 @@ void MainWindow::hideProducer()
 
     QScrollArea* scrollArea = (QScrollArea*) m_propertiesDock->widget();
     delete scrollArea->widget();
-    scrollArea->setWidget(0);
+    scrollArea->setWidget(nullptr);
     m_player->reset();
 
     QCoreApplication::processEvents();
@@ -2520,7 +2520,9 @@ void MainWindow::onProducerOpened(bool withReopen)
         }
     }
     else if (MLT.isMultitrack()) {
+        m_timelineDock->blockSelection(true);
         m_timelineDock->model()->load();
+        m_timelineDock->blockSelection(false);
         if (isMultitrackValid()) {
             m_player->setIn(-1);
             m_player->setOut(-1);
@@ -2529,6 +2531,9 @@ void MainWindow::onProducerOpened(bool withReopen)
             m_player->enableTab(Player::ProjectTabIndex);
             m_player->switchToTab(Player::ProjectTabIndex);
             m_timelineDock->selectMultitrack();
+            QTimer::singleShot(0, [=]() {
+                m_timelineDock->setSelection();
+            });
         }
     }
     if (MLT.isClip()) {
@@ -3004,6 +3009,7 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer* producer)
     if (!producer || !producer->is_valid()) {
         if (scrollArea->widget())
             scrollArea->widget()->deleteLater();
+        scrollArea->hide();
         return  w;
     } else {
         scrollArea->show();
@@ -3102,6 +3108,7 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer* producer)
         onProducerChanged();
     } else if (scrollArea->widget()) {
         scrollArea->widget()->deleteLater();
+        scrollArea->hide();
     }
     return w;
 }
