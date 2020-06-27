@@ -1,4 +1,5 @@
-/* Copyright (c) 2020 Meltytech, LLC
+/*
+ * Copyright (c) 2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -48,8 +49,7 @@ VuiBase {
         }
         onWheel: {
             var fov = filter.getDouble('fov', getPosition())
-            var n = (application.OS === 'OS X')? wheel.angleDelta.x : wheel.angleDelta.y
-            updateProperty('fov', clamp(fov + 0.03 * n, 0, 720))
+            updateProperty('fov', clamp(fov + 0.03 * wheel.angleDelta.y, 0, 720))
         }
     }
 
