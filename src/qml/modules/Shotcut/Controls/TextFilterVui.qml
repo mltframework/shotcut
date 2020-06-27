@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2019 Meltytech, LLC
+ * Copyright (c) 2014-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -119,7 +119,10 @@ VuiBase {
 
     Connections {
         target: filter
-        onChanged: setRectangleControl()
+        onChanged: {
+            setRectangleControl()
+            videoItem.enabled = filter.get('disable') !== '1'
+        }
     }
 
     Connections {

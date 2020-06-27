@@ -24,7 +24,13 @@ VuiBase {
     property var middleValues: []
     property var endValues: []
 
+    Connections {
+        target: filter
+        onChanged: mouseArea.enabled = filter.get('disable') !== '1'
+    }
+
     MouseArea {
+        id: mouseArea
         anchors.fill: parent
 
         property double startYaw

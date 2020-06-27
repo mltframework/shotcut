@@ -186,7 +186,9 @@ void FilterController::onFilterOutChanged(int delta, Mlt::Filter* filter)
 
 void FilterController::handleAttachedModelChange()
 {
-    MLT.refreshConsumer();
+    if (m_currentFilter) {
+        emit m_currentFilter->changed("disable");
+    }
 }
 
 void FilterController::handleAttachedModelAboutToReset()

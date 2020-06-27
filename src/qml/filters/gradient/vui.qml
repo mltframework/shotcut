@@ -145,6 +145,7 @@ VuiBase {
         target: filter
         onChanged: {
             setRectangleControl()
+            videoItem.enabled = filter.get('disable') !== '1'
         }
     }
 

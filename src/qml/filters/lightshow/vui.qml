@@ -71,6 +71,7 @@ VuiBase {
                 filterRect = newRect
                 rectangle.setHandles(filterRect)
             }
+            videoItem.enabled = filter.get('disable') !== '1'
         }
     }
 }

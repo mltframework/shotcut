@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2018 Meltytech, LLC
+ * Copyright (c) 2017-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -71,6 +71,7 @@ VuiBase {
                 filterRect = newRect
                 rectangle.setHandles(filterRect)
             }
+            videoItem.enabled = filter.get('disable') !== '1'
         }
     }
 }

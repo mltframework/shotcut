@@ -350,7 +350,10 @@ VuiBase {
 
     Connections {
         target: filter
-        onChanged: setCornersControl()
+        onChanged: {
+            setCornersControl()
+            videoItem.enabled = filter.get('disable') !== '1'
+        }
     }
 
     Connections {
