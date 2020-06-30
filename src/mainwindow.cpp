@@ -3009,7 +3009,6 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer* producer)
     if (!producer || !producer->is_valid()) {
         if (scrollArea->widget())
             scrollArea->widget()->deleteLater();
-        scrollArea->hide();
         return  w;
     } else {
         scrollArea->show();
@@ -3108,7 +3107,6 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer* producer)
         onProducerChanged();
     } else if (scrollArea->widget()) {
         scrollArea->widget()->deleteLater();
-        scrollArea->hide();
     }
     return w;
 }
