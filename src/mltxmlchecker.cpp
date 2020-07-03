@@ -29,6 +29,7 @@
 #include <QRegExp>
 #include <Logger.h>
 #include <clocale>
+#include <utime.h>
 
 static QString getPrefix(const QString& name, const QString& value);
 
@@ -541,6 +542,8 @@ void MltXmlChecker::checkForProxy(const QString& mlt_service, QVector<MltXmlChec
         QString fileName = hash + ProxyManager::videoFilenameExtension();
         projectDir.cd("proxies");
         if (proxyDir.exists(fileName) || projectDir.exists(fileName)) {
+            ::utime(proxyDir.filePath(fileName).toUtf8().constData(), nullptr);
+            ::utime(projectDir.filePath(fileName).toUtf8().constData(), nullptr);
             for (auto& p : properties) {
                 if (p.first == "resource") {
                     if (projectDir.exists(fileName)) {
@@ -578,6 +581,8 @@ void MltXmlChecker::checkForProxy(const QString& mlt_service, QVector<MltXmlChec
         QString fileName = hash + ProxyManager::imageFilenameExtension();
         projectDir.cd("proxies");
         if (proxyDir.exists(fileName) || projectDir.exists(fileName)) {
+            ::utime(proxyDir.filePath(fileName).toUtf8().constData(), nullptr);
+            ::utime(projectDir.filePath(fileName).toUtf8().constData(), nullptr);
             for (auto& p : properties) {
                 if (p.first == "resource") {
                     if (projectDir.exists(fileName)) {

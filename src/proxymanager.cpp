@@ -32,6 +32,7 @@
 #include <QFile>
 #include <QImageReader>
 #include <Logger.h>
+#include <utime.h>
 
 static const char* kProxySubfolder = "proxies";
 static const char* kProxyVideoExtension = ".mp4";
@@ -463,9 +464,11 @@ bool ProxyManager::generateIfNotExists(Mlt::Producer& producer, bool replace)
             producer.set(kIsProxyProperty, 1);
             producer.set(kOriginalResourceProperty, producer.get("resource"));
             if (projectDir.exists(fileName)) {
+                ::utime(projectDir.filePath(fileName).toUtf8().constData(), nullptr);
                 producer.set("resource", projectDir.filePath(fileName).toUtf8().constData());
             } else {
                 QDir proxyDir(Settings.proxyFolder());
+                ::utime(proxyDir.filePath(fileName).toUtf8().constData(), nullptr);
                 producer.set("resource", proxyDir.filePath(fileName).toUtf8().constData());
             }
             return true;
