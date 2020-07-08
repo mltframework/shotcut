@@ -333,6 +333,22 @@ void QmlFilter::analyze(bool isAudio)
     int disable = m_filter.get_int("disable");
     m_filter.set("disable", 0);
     if (!isAudio) m_filter.set("analyze", 1);
+
+    // Fix in/out points of filters on clip-only project.
+    if (MLT.isSeekableClip()) {
+        Mlt::Producer producer(MLT.profile(), "xml-string", MLT.XML().toUtf8().constData());
+        service = Mlt::Service(producer);
+        int producerIn = producer.get_in();
+        if (producerIn > 0) {
+            int n = producer.filter_count();
+            for (int i = 0; i < n; i++) {
+                Mlt::Filter filter(*producer.filter(i));
+                if (filter.get_in() > 0)
+                    filter.set_in_and_out(filter.get_in() - producerIn, filter.get_out() - producerIn);
+            }
+        }
+    }
+
     MLT.saveXML(tmp->fileName(), &service, false /* without relative paths */, false /* without verify */);
     if (!isAudio) m_filter.set("analyze", 0);
     m_filter.set("disable", disable);
