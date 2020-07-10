@@ -45,6 +45,11 @@
 static const int kOpenCaptureFileDelayMs = 1500;
 static const qint64 kFreeSpaceThesholdGB = 25LL * 1024 * 1024 * 1024;
 static const int kCustomPresetFileNameRole = Qt::UserRole + 1;
+#ifdef Q_OS_WIN
+    static const QString kNullTarget = "nul";
+#else
+    static const QString kNullTarget = "/dev/null";
+#endif
 
 static double getBufferSize(Mlt::Properties& preset, const char* property);
 
@@ -947,7 +952,7 @@ MeltJob* EncodeDock::createMeltJob(Mlt::Producer* service, const QString& target
     else
         dom.documentElement().insertAfter(consumerNode, profiles.at(profiles.length() - 1));
     consumerNode.setAttribute("mlt_service", "avformat");
-    consumerNode.setAttribute("target", mytarget);
+    consumerNode.setAttribute("target", pass == 1? kNullTarget : mytarget);
     collectProperties(consumerNode, realtime);
     if ("libx265" == ui->videoCodecCombo->currentText()) {
         if (pass == 1 || pass == 2) {
