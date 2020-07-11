@@ -440,22 +440,22 @@
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="904"/>
         <source>Disable Proxy</source>
-        <translation type="unfinished"></translation>
+        <translation>Zakázať proxy</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="909"/>
         <source>Make Proxy</source>
-        <translation type="unfinished"></translation>
+        <translation>Vytvoriť proxy</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="914"/>
         <source>Delete Proxy</source>
-        <translation type="unfinished"></translation>
+        <translation>Odstrániť proxy</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="919"/>
         <source>Copy Hash Code</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopírovať haš kód</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="813"/>
@@ -483,7 +483,7 @@
     <message>
         <location filename="../src/widgets/avformatproducerwidget.cpp" line="442"/>
         <source>(PROXY)</source>
-        <translation type="unfinished"></translation>
+        <translation>(PROXY)</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.cpp" line="486"/>
@@ -515,7 +515,7 @@ Pokiaľ áno, vyberte formát nižšie a potom kliknite na OK pre výber názvu 
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="830"/>
         <source>Proxy</source>
-        <translation type="unfinished"></translation>
+        <translation>proxy</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.cpp" line="731"/>
@@ -584,7 +584,9 @@ Pokiaľ áno, vyberte formát nižšie a potom kliknite na OK pre výber názvu 
         <source>The hash code below is already copied to your clipboard:
 
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Haš kód uvedený nižšie je už skopírovaný do vašej schránky:
+
+</translation>
     </message>
 </context>
 <context>
@@ -629,7 +631,7 @@ Pokiaľ áno, vyberte formát nižšie a potom kliknite na OK pre výber názvu 
     <message>
         <location filename="../src/widgets/blipproducerwidget.ui" line="26"/>
         <source>Blip Flash</source>
-        <translation type="unfinished"></translation>
+        <translation>Záblesk</translation>
     </message>
     <message>
         <location filename="../src/widgets/blipproducerwidget.ui" line="41"/>
@@ -639,12 +641,12 @@ Pokiaľ áno, vyberte formát nižšie a potom kliknite na OK pre výber názvu 
     <message>
         <location filename="../src/widgets/blipproducerwidget.ui" line="51"/>
         <source> seconds</source>
-        <translation type="unfinished"></translation>
+        <translation> sekúnd</translation>
     </message>
     <message>
         <location filename="../src/widgets/blipproducerwidget.cpp" line="85"/>
         <source>Period: %1s</source>
-        <translation type="unfinished"></translation>
+        <translation>Perióda: %1s</translation>
     </message>
 </context>
 <context>
@@ -1474,9 +1476,9 @@ v dočasnom zhustení</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1787"/>
-        <location filename="../src/docks/encodedock.cpp" line="883"/>
-        <location filename="../src/docks/encodedock.cpp" line="1400"/>
-        <location filename="../src/docks/encodedock.cpp" line="1829"/>
+        <location filename="../src/docks/encodedock.cpp" line="882"/>
+        <location filename="../src/docks/encodedock.cpp" line="1399"/>
+        <location filename="../src/docks/encodedock.cpp" line="1828"/>
         <source>Export File</source>
         <translation>Exportovať súbor</translation>
     </message>
@@ -1502,17 +1504,17 @@ v dočasnom zhustení</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1827"/>
-        <location filename="../src/docks/encodedock.cpp" line="1544"/>
-        <location filename="../src/docks/encodedock.cpp" line="1551"/>
-        <location filename="../src/docks/encodedock.cpp" line="1662"/>
+        <location filename="../src/docks/encodedock.cpp" line="1543"/>
+        <location filename="../src/docks/encodedock.cpp" line="1550"/>
+        <location filename="../src/docks/encodedock.cpp" line="1661"/>
         <source>Stream</source>
         <translation>Tok</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1854"/>
-        <location filename="../src/docks/encodedock.cpp" line="1380"/>
-        <location filename="../src/docks/encodedock.cpp" line="1467"/>
-        <location filename="../src/docks/encodedock.cpp" line="1481"/>
+        <location filename="../src/docks/encodedock.cpp" line="1379"/>
+        <location filename="../src/docks/encodedock.cpp" line="1466"/>
+        <location filename="../src/docks/encodedock.cpp" line="1480"/>
         <source>Stop Capture</source>
         <translation>Zastaviť zachytávanie</translation>
     </message>
@@ -1555,8 +1557,8 @@ v dočasnom zhustení</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="415"/>
+        <location filename="../src/docks/encodedock.cpp" line="1326"/>
         <location filename="../src/docks/encodedock.cpp" line="1327"/>
-        <location filename="../src/docks/encodedock.cpp" line="1328"/>
         <source>Custom</source>
         <translation>Vlastné</translation>
     </message>
@@ -1571,116 +1573,116 @@ v dočasnom zhustení</translation>
         <translation>Východzie</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="938"/>
+        <location filename="../src/docks/encodedock.cpp" line="937"/>
         <source>You cannot write to a file that is in your project.
 Try again with a different folder or file name.</source>
         <translation>Nemôžete zapisovať do súboru, ktorý je vo vašom projekte.
 Skúste to znovu s iným priečinkom alebo názvom súboru.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1086"/>
+        <location filename="../src/docks/encodedock.cpp" line="1085"/>
         <source>Shotcut found filters that require analysis jobs that have not run.
 Do you want to run the analysis jobs now?</source>
         <translation>Shotcut našiel filtre vyžadované analytickými úlohami, ktoré sa nespustili.
 Chcete teraz spustiť analytické úlohy?</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1400"/>
-        <location filename="../src/docks/encodedock.cpp" line="1831"/>
+        <location filename="../src/docks/encodedock.cpp" line="1399"/>
+        <location filename="../src/docks/encodedock.cpp" line="1830"/>
         <source>Capture File</source>
         <translation>Zachytiť súbor</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1403"/>
+        <location filename="../src/docks/encodedock.cpp" line="1402"/>
         <source>%1 (*.%2);;All Files (*)</source>
         <translation>%1 (*.%2);;Všetky súbory (*)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1405"/>
+        <location filename="../src/docks/encodedock.cpp" line="1404"/>
         <source>Determined by Export (*)</source>
         <translation>Určené na export (*)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1424"/>
+        <location filename="../src/docks/encodedock.cpp" line="1423"/>
         <source>The drive you chose only has %1 MiB of free space.
 Do you still want to continue?</source>
         <translation>Na vami zvolenej jednotke je len %1 MB voľného miesta.
 Stále ešte chcete pokračovať?</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1431"/>
+        <location filename="../src/docks/encodedock.cpp" line="1430"/>
         <source>Do not show this anymore.</source>
         <comment>Export free disk space warning dialog</comment>
         <translation>Toto už viac nezobrazovať.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1436"/>
+        <location filename="../src/docks/encodedock.cpp" line="1435"/>
         <source>Export canceled.</source>
         <translation>Export prerušený.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1539"/>
-        <location filename="../src/docks/encodedock.cpp" line="1560"/>
+        <location filename="../src/docks/encodedock.cpp" line="1538"/>
+        <location filename="../src/docks/encodedock.cpp" line="1559"/>
         <source>Stop Stream</source>
         <translation>Zastaviť tok</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1552"/>
+        <location filename="../src/docks/encodedock.cpp" line="1551"/>
         <source>Enter the network protocol scheme, address, port, and parameters as an URL:</source>
         <translation>Zadajte schému sieťového protokolu, adresu, prípojku a parametre ako adresu URL:</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1597"/>
+        <location filename="../src/docks/encodedock.cpp" line="1596"/>
         <source>Add Export Preset</source>
         <translation>Pridať predvoľbu exportu</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1639"/>
+        <location filename="../src/docks/encodedock.cpp" line="1638"/>
         <source>Delete Preset</source>
         <translation>Zmazať predvoľbu</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1640"/>
+        <location filename="../src/docks/encodedock.cpp" line="1639"/>
         <source>Are you sure you want to delete %1?</source>
         <translation>Naozaj chcete zmazať %1?</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1767"/>
+        <location filename="../src/docks/encodedock.cpp" line="1766"/>
         <source>None</source>
         <translation>Žiadny</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1815"/>
+        <location filename="../src/docks/encodedock.cpp" line="1814"/>
         <source>KiB (%1s)</source>
         <translation>kB (%1s)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1913"/>
+        <location filename="../src/docks/encodedock.cpp" line="1912"/>
         <source>Detect</source>
-        <translation type="unfinished"></translation>
+        <translation>Zistiť</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2000"/>
+        <location filename="../src/docks/encodedock.cpp" line="1999"/>
         <source>Detecting hardware encoders...</source>
         <translation>Zisťujem hardvérové kódovače...</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2033"/>
+        <location filename="../src/docks/encodedock.cpp" line="2032"/>
         <source>Nothing found</source>
         <translation>Nič nebolo nájdené</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2035"/>
+        <location filename="../src/docks/encodedock.cpp" line="2034"/>
         <source>Found %1</source>
         <translation>Nájdené %1</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1911"/>
+        <location filename="../src/docks/encodedock.cpp" line="1910"/>
         <source>Configure Hardware Encoding</source>
         <translation>Konfigurovať hardvérové kódovanie</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1935"/>
+        <location filename="../src/docks/encodedock.cpp" line="1934"/>
         <source>Export Frames/sec</source>
         <translation>Export snímok/sek</translation>
     </message>
@@ -1793,7 +1795,7 @@ Stále ešte chcete pokračovať?</translation>
     <message>
         <location filename="../src/controllers/filtercontroller.cpp" line="78"/>
         <source>(DEPRECATED)</source>
-        <translation type="unfinished"></translation>
+        <translation>(NESCHVÁLENÉ)</translation>
     </message>
     <message>
         <location filename="../src/controllers/filtercontroller.cpp" line="214"/>
@@ -2517,22 +2519,22 @@ Chcete uložiť svoje zmeny?</translation>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="321"/>
         <source>Disable Proxy</source>
-        <translation type="unfinished"></translation>
+        <translation>Zakázať proxy</translation>
     </message>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="326"/>
         <source>Make Proxy</source>
-        <translation type="unfinished"></translation>
+        <translation>Vytvoriť proxy</translation>
     </message>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="331"/>
         <source>Delete Proxy</source>
-        <translation type="unfinished"></translation>
+        <translation>Odstrániť proxy</translation>
     </message>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="336"/>
         <source>Copy Hash Code</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopírovať haš kód</translation>
     </message>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="122"/>
@@ -2552,7 +2554,7 @@ Chcete uložiť svoje zmeny?</translation>
     <message>
         <location filename="../src/widgets/imageproducerwidget.cpp" line="92"/>
         <source>(PROXY)</source>
-        <translation type="unfinished"></translation>
+        <translation>(PROXY)</translation>
     </message>
     <message>
         <location filename="../src/widgets/imageproducerwidget.cpp" line="257"/>
@@ -2570,12 +2572,14 @@ Chcete uložiť svoje zmeny?</translation>
         <source>The hash code below is already copied to your clipboard:
 
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Haš kód uvedený nižšie je už skopírovaný do vašej schránky:
+
+</translation>
     </message>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="254"/>
         <source>Proxy</source>
-        <translation type="unfinished"></translation>
+        <translation>proxy</translation>
     </message>
 </context>
 <context>
@@ -3202,12 +3206,12 @@ klipu A (0%) alebo audio klipu B (100%).</translation>
     <message>
         <location filename="../src/mainwindow.ui" line="199"/>
         <source>Proxy</source>
-        <translation type="unfinished"></translation>
+        <translation>proxy</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="203"/>
         <source>Storage</source>
-        <translation type="unfinished"></translation>
+        <translation>Úložisko</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="248"/>
@@ -3332,8 +3336,8 @@ klipu A (0%) alebo audio klipu B (100%).</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="422"/>
-        <location filename="../src/mainwindow.cpp" line="3125"/>
-        <location filename="../src/mainwindow.cpp" line="3132"/>
+        <location filename="../src/mainwindow.cpp" line="3123"/>
+        <location filename="../src/mainwindow.cpp" line="3130"/>
         <source>Enter Full Screen</source>
         <translation>Vstúpiť do režimu na celú obrazovku</translation>
     </message>
@@ -3382,7 +3386,7 @@ klipu A (0%) alebo audio klipu B (100%).</translation>
     <message>
         <location filename="../src/mainwindow.ui" line="485"/>
         <source>F11</source>
-        <translation type="unfinished">F11</translation>
+        <translation>F11</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="496"/>
@@ -3701,12 +3705,12 @@ klipu A (0%) alebo audio klipu B (100%).</translation>
     <message>
         <location filename="../src/mainwindow.ui" line="953"/>
         <source>?</source>
-        <translation type="unfinished"></translation>
+        <translation>?</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1085"/>
         <source>Topics</source>
-        <translation type="unfinished"></translation>
+        <translation>Témy</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1088"/>
@@ -3716,52 +3720,52 @@ klipu A (0%) alebo audio klipu B (100%).</translation>
     <message>
         <location filename="../src/mainwindow.ui" line="1093"/>
         <source>Synchronization...</source>
-        <translation type="unfinished"></translation>
+        <translation>Synchronizácia...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1096"/>
         <source>Synchronization</source>
-        <translation type="unfinished"></translation>
+        <translation>Synchronizácia</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1104"/>
         <source>Use Proxy</source>
-        <translation type="unfinished"></translation>
+        <translation>Použiť proxy</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1107"/>
         <source>F4</source>
-        <translation type="unfinished">F4</translation>
+        <translation>F4</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1115"/>
         <source>Set the proxy storage folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Nastavte priečinok úložiska proxy</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1123"/>
         <source>Show the proxy storage folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Zobraziť priečinok úložiska proxy</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1134"/>
         <source>Use Project Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Použiť priečinok projektu</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1137"/>
         <source>Store proxies in the project folder if defined</source>
-        <translation type="unfinished"></translation>
+        <translation>Ak je definovaný, ukladá sa proxy do priečinka projektu</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1145"/>
         <source>Use Hardware Encoder</source>
-        <translation type="unfinished"></translation>
+        <translation>Použiť hardvérový kódovač</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1150"/>
         <source>Configure Hardware Encoder...</source>
-        <translation type="unfinished"></translation>
+        <translation>Konfigurácia hardvérového kódovača...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="963"/>
@@ -3950,7 +3954,7 @@ Nainštalujte ju, prosím, použitím pakovača. Môže byť pomenovaná libsdl2
     <message>
         <location filename="../src/mainwindow.cpp" line="882"/>
         <source>Blip Flash</source>
-        <translation type="unfinished"></translation>
+        <translation>Záblesk</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="885"/>
@@ -3986,8 +3990,8 @@ Nainštalujte ju, prosím, použitím pakovača. Môže byť pomenovaná libsdl2
         <location filename="../src/mainwindow.cpp" line="915"/>
         <location filename="../src/mainwindow.cpp" line="917"/>
         <location filename="../src/mainwindow.cpp" line="1342"/>
-        <location filename="../src/mainwindow.cpp" line="3755"/>
-        <location filename="../src/mainwindow.cpp" line="4502"/>
+        <location filename="../src/mainwindow.cpp" line="3753"/>
+        <location filename="../src/mainwindow.cpp" line="4500"/>
         <source>Failed to open </source>
         <translation>Pri otváraní zlyhalo </translation>
     </message>
@@ -4056,7 +4060,7 @@ s &quot;- Opravené&quot; v názve súboru a otvorí ju.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1376"/>
-        <location filename="../src/mainwindow.cpp" line="3715"/>
+        <location filename="../src/mainwindow.cpp" line="3713"/>
         <source>Open File</source>
         <translation>Otvoriť súbor</translation>
     </message>
@@ -4155,73 +4159,74 @@ Do you want to still want to exit?</source>
 Napriek tomu chcete program ukončiť?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4466"/>
+        <location filename="../src/mainwindow.cpp" line="4464"/>
         <source>Turn Proxy On</source>
-        <translation type="unfinished"></translation>
+        <translation>Zapnúť proxy</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4466"/>
+        <location filename="../src/mainwindow.cpp" line="4464"/>
         <source>Turn Proxy Off</source>
-        <translation type="unfinished"></translation>
+        <translation>Vypnúť proxy</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4470"/>
+        <location filename="../src/mainwindow.cpp" line="4468"/>
         <source>Converting</source>
-        <translation type="unfinished"></translation>
+        <translation>Konvertovanie</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4484"/>
+        <location filename="../src/mainwindow.cpp" line="4482"/>
         <source>Do you want to create missing proxies for every file in this project?
 
 You must reopen your project after all proxy jobs are finished.</source>
-        <translation type="unfinished"></translation>
+        <translation>Chcete vytvoriť chýbajúce proxy pre každý súbor v tomto projekte?
+Po dokončení všetkých úloh proxy musíte znova otvoriť svoj projekt.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4519"/>
+        <location filename="../src/mainwindow.cpp" line="4517"/>
         <source>Proxy Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Priečinok proxy</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4533"/>
+        <location filename="../src/mainwindow.cpp" line="4531"/>
         <source>Do you want to move all files from the old folder to the new folder?</source>
-        <translation type="unfinished"></translation>
+        <translation>Chcete presunúť všetky súbory zo starého priečinka do nového priečinka?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4540"/>
+        <location filename="../src/mainwindow.cpp" line="4538"/>
         <source>Moving Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Presúvanie súborov</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3145"/>
+        <location filename="../src/mainwindow.cpp" line="3143"/>
         <source>GPU effects are not supported</source>
         <translation>Efekty GPU nie sú podporované</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3251"/>
+        <location filename="../src/mainwindow.cpp" line="3249"/>
         <source>Click here to check for a new version of Shotcut.</source>
         <translation>Kliknite tu pre kontrolu novej verzie programu Shotcut.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3356"/>
+        <location filename="../src/mainwindow.cpp" line="3354"/>
         <source>Open Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Otvoriť súbory</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3396"/>
+        <location filename="../src/mainwindow.cpp" line="3394"/>
         <source>You must restart Shotcut to switch to the new language.
 Do you want to restart now?</source>
         <translation>Musíte reštartovať Shotcut pre prepnutie ho do nového jazyka.
 Chcete ho reštartovať teraz?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3437"/>
+        <location filename="../src/mainwindow.cpp" line="3435"/>
         <source>Failed to connect to JACK.
 Please verify that JACK is installed and running.</source>
         <translation>Nepodarilo sa spojiť s JACKom.
 Overte prosím, či je JACK nainštalovaný a beží.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3446"/>
+        <location filename="../src/mainwindow.cpp" line="3444"/>
         <source>GPU effects are experimental and may cause instability on some systems. Some CPU effects are incompatible with GPU effects and will be disabled. A project created with GPU effects can not be converted to a CPU only project later.
 
 Do you want to enable GPU effects and restart Shotcut?</source>
@@ -4231,7 +4236,7 @@ Niektoré efekty CPU sa s efektami GPU nezlučujú a budú zakázané. Projekt v
 Chcete povoliť efekty GPU a Shotcut spustiť znovu?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3468"/>
+        <location filename="../src/mainwindow.cpp" line="3466"/>
         <source>Shotcut must restart to disable GPU effects.
 
 Disable GPU effects and restart?</source>
@@ -4240,23 +4245,23 @@ Disable GPU effects and restart?</source>
 Zakázať efekty grafického procesora a spustiť program znovu?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3693"/>
+        <location filename="../src/mainwindow.cpp" line="3691"/>
         <source>Do you want to automatically check for updates in the future?</source>
         <translation>Chcete v budúcnosti automaticky kontrolovať aktualizácie?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3700"/>
+        <location filename="../src/mainwindow.cpp" line="3698"/>
         <source>Do not show this anymore.</source>
         <comment>Automatic upgrade check dialog</comment>
         <translation>Toto už viac nezobrazovať.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3716"/>
+        <location filename="../src/mainwindow.cpp" line="3714"/>
         <source>MLT XML (*.mlt);;All Files (*)</source>
         <translation>MLT XML (*.mlt);;Všetky súbory (*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3733"/>
+        <location filename="../src/mainwindow.cpp" line="3731"/>
         <source>The decimal point of the MLT XML file
 you want to open is incompatible.
 
@@ -4267,101 +4272,101 @@ ktorý chcete otvoriť, nie je kompatibilná.
 Chcete pokračovať v otváraní tohto súboru MLT XML?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3796"/>
+        <location filename="../src/mainwindow.cpp" line="3794"/>
         <source>You must restart Shotcut to change the display method.
 Do you want to restart now?</source>
         <translation>Musíte reštartovať Shotcut pre zmenu metódy zobrazenia.
 Chcete ho reštartovať teraz?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3818"/>
+        <location filename="../src/mainwindow.cpp" line="3816"/>
         <source>Application Log</source>
         <translation>Záznam hlásení programu</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3858"/>
+        <location filename="../src/mainwindow.cpp" line="3856"/>
         <source>Shotcut version %1 is available! Click here to get it.</source>
         <translation>Je dostupná verzia %1 programu Shotcut. Kliknite tu na jej získanie.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3864"/>
+        <location filename="../src/mainwindow.cpp" line="3862"/>
         <source>You are running the latest version of Shotcut.</source>
         <translation>Máte spustenú najnovšiu verziu programu Shotcut.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3874"/>
+        <location filename="../src/mainwindow.cpp" line="3872"/>
         <source>Failed to read version.json when checking. Click here to go to the Web site.</source>
         <translation>Pri kontrole došlo k zlyhaniu čítania verzie .json. Kliknite sem pre prechod na internetovú stránku.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3923"/>
+        <location filename="../src/mainwindow.cpp" line="3921"/>
         <source>Export EDL</source>
         <translation>Exportovať EDL</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3924"/>
+        <location filename="../src/mainwindow.cpp" line="3922"/>
         <source>EDL (*.edl);;All Files (*)</source>
         <translation>EDL (*.edl);;Všetky súbory (*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3970"/>
+        <location filename="../src/mainwindow.cpp" line="3968"/>
         <source>A JavaScript error occurred during export.</source>
         <translation>Počas exportu došlo k chybe v Java skripte.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3973"/>
+        <location filename="../src/mainwindow.cpp" line="3971"/>
         <source>Failed to open export-edl.js</source>
         <translation>Zlyhanie pri otváraní export-edl.js</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4001"/>
+        <location filename="../src/mainwindow.cpp" line="3999"/>
         <source>Export Frame</source>
         <translation>Exportovať snímku</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4002"/>
+        <location filename="../src/mainwindow.cpp" line="4000"/>
         <source>PNG (*.png);;BMP (*.bmp);;JPEG (*.jpg *.jpeg);;PPM (*.ppm);;TIFF (*.tif *.tiff);;WebP (*.webp);;All Files (*)</source>
         <translation>PNG (*.png);;BMP (*.bmp);;JPEG (*.jpg *.jpeg);;PPM (*.ppm);;TIFF (*.tif *.tiff);;WebP (*.webp);;Všetky súbory (*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4022"/>
+        <location filename="../src/mainwindow.cpp" line="4020"/>
         <source>Unable to export frame.</source>
         <translation>Nemožno exportovať snímku.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4030"/>
+        <location filename="../src/mainwindow.cpp" line="4028"/>
         <source>You must restart Shotcut to change the data directory.
 Do you want to continue?</source>
         <translation>Musíte reštartovať Shotcut kvôli zmene priečinka údajov.
 Chcete pokračovať?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4039"/>
+        <location filename="../src/mainwindow.cpp" line="4037"/>
         <source>Data Directory</source>
         <translation>Priečinok údajov</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4122"/>
+        <location filename="../src/mainwindow.cpp" line="4120"/>
         <source>Add Custom Layout</source>
         <translation>Pridať vlastné usporiadanie</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4123"/>
+        <location filename="../src/mainwindow.cpp" line="4121"/>
         <source>Name</source>
         <translation>Názov</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4151"/>
+        <location filename="../src/mainwindow.cpp" line="4149"/>
         <source>Remove Video Mode</source>
         <translation>Odstrániť režim videa</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4165"/>
+        <location filename="../src/mainwindow.cpp" line="4163"/>
         <source>Remove Layout</source>
         <translation>Odstrániť usporiadanie</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4285"/>
+        <location filename="../src/mainwindow.cpp" line="4283"/>
         <source>GPU effects are EXPERIMENTAL, UNSTABLE and UNSUPPORTED! Unsupported means do not report bugs about it.
 
 Do you want to disable GPU effects and restart Shotcut?</source>
@@ -4752,7 +4757,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/models/multitrackmodel.cpp" line="112"/>
         <source>(PROXY)</source>
-        <translation type="unfinished"></translation>
+        <translation>(PROXY)</translation>
     </message>
 </context>
 <context>
@@ -5072,7 +5077,7 @@ Skúste to znovu s iným priečinkom.</translation>
         <location filename="../src/openotherdialog.cpp" line="110"/>
         <location filename="../src/openotherdialog.cpp" line="170"/>
         <source>Blip Flash</source>
-        <translation type="unfinished"></translation>
+        <translation>Záblesk</translation>
     </message>
 </context>
 <context>
@@ -5414,27 +5419,27 @@ Skúste to znovu s iným priečinkom.</translation>
         <translation>Zastaviť prehrávanie (K)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="935"/>
+        <location filename="../src/player.cpp" line="936"/>
         <source>Proxy and preview scaling are ON at %1p</source>
-        <translation type="unfinished"></translation>
+        <translation>Proxy a zmena mierky náhľadu je zapnutá na %1p</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="937"/>
+        <location filename="../src/player.cpp" line="938"/>
         <source>Proxy is ON at %1p</source>
-        <translation type="unfinished"></translation>
+        <translation>Proxy je zapnuté na %1p</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="939"/>
+        <location filename="../src/player.cpp" line="940"/>
         <source>Preview scaling is ON at %1p</source>
-        <translation type="unfinished"></translation>
+        <translation>Zmena mierky náhľadu je zapnutá na %1p</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="1034"/>
+        <location filename="../src/player.cpp" line="1035"/>
         <source>Unmute</source>
         <translation>Zrušiť stlmenie</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="1039"/>
+        <location filename="../src/player.cpp" line="1040"/>
         <source>Mute</source>
         <translation>Stlmiť</translation>
     </message>
@@ -5640,7 +5645,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/docks/playlistdock.ui" line="403"/>
         <source>Add Selected to Slideshow</source>
-        <translation type="unfinished"></translation>
+        <translation>Pridať vybraté do prezentácie</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="465"/>
@@ -5715,7 +5720,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="254"/>
         <source>Replace %1 playlist items</source>
-        <translation type="unfinished"></translation>
+        <translation>Nahradiť %1 položky zoznamu prehrávania</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="338"/>
@@ -5746,12 +5751,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="654"/>
         <source>Add Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Pridať súbory</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="859"/>
         <source>Generating</source>
-        <translation type="unfinished"></translation>
+        <translation>Generovanie</translation>
     </message>
 </context>
 <context>
@@ -5760,7 +5765,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/widgets/playlisticonview.cpp" line="156"/>
         <source>P</source>
         <comment>The first letter or symbol of &quot;proxy&quot;</comment>
-        <translation type="unfinished"></translation>
+        <translation>P</translation>
     </message>
 </context>
 <context>
@@ -5768,7 +5773,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/models/playlistmodel.cpp" line="240"/>
         <source>(PROXY)</source>
-        <translation type="unfinished"></translation>
+        <translation>(PROXY)</translation>
     </message>
     <message>
         <location filename="../src/models/playlistmodel.cpp" line="375"/>
@@ -5952,7 +5957,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/jobs/qimagejob.cpp" line="32"/>
         <source>Make proxy for %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Vytvoriť proxy pre %1</translation>
     </message>
 </context>
 <context>
@@ -6005,7 +6010,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/commands/playlistcommands.cpp" line="296"/>
         <source>Replace playlist item %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Nahradiť položku %1 zoznamu prehrávania</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="45"/>
@@ -6015,22 +6020,22 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="51"/>
         <source>Append to Timeline</source>
-        <translation type="unfinished"></translation>
+        <translation>Pripojiť na časovú os</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="53"/>
         <source>Preparing</source>
-        <translation type="unfinished"></translation>
+        <translation>Príprava</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="58"/>
         <source>Appending</source>
-        <translation type="unfinished"></translation>
+        <translation>Pridávanie</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="69"/>
         <source>Finishing</source>
-        <translation type="unfinished"></translation>
+        <translation>Ukončovanie</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="91"/>
@@ -6041,7 +6046,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/commands/timelinecommands.cpp" line="100"/>
         <location filename="../src/commands/timelinecommands.cpp" line="144"/>
         <source>Add Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Pridať súbory</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="135"/>
@@ -6197,12 +6202,12 @@ p, li { white-space: pre-wrap; }
         <translation>Nahradiť klip časovej osi</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3371"/>
+        <location filename="../src/mainwindow.cpp" line="3369"/>
         <source>You cannot add a project to itself!</source>
         <translation>Nemôžete pridať projekt do seba samého!</translation>
     </message>
     <message>
-        <location filename="../src/mltxmlchecker.cpp" line="125"/>
+        <location filename="../src/mltxmlchecker.cpp" line="126"/>
         <source>The file is not a MLT XML file.</source>
         <translation>Súbor nie je súborom MLT XML.</translation>
     </message>
@@ -6231,7 +6236,7 @@ Skúste to znovu s iným priečinkom.</translation>
     <message>
         <location filename="../src/util.cpp" line="137"/>
         <source>Output</source>
-        <translation type="unfinished"></translation>
+        <translation>Výstup</translation>
     </message>
     <message>
         <location filename="../src/util.cpp" line="292"/>
@@ -6259,12 +6264,12 @@ Chcete namiesto toho použiť %1 = %2/1001?</translation>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="1081"/>
         <source>Drop Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Pustiť súbory</translation>
     </message>
     <message>
         <location filename="../src/docks/timelinedock.cpp" line="1097"/>
         <source>Not adding non-seekable file: </source>
-        <translation type="unfinished"></translation>
+        <translation>Nepridané nevyhľadávateľné súbory: </translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.cpp" line="317"/>
@@ -6289,12 +6294,12 @@ Chcete namiesto toho použiť %1 = %2/1001?</translation>
     <message>
         <location filename="../src/docks/playlistdock.cpp" line="858"/>
         <source>Generate Slideshow</source>
-        <translation type="unfinished"></translation>
+        <translation>Vygenerovať prezentáciu</translation>
     </message>
     <message>
         <location filename="../src/proxymanager.cpp" line="198"/>
         <source>Make proxy for %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Vytvoriť proxy pre %1</translation>
     </message>
 </context>
 <context>
@@ -6305,7 +6310,7 @@ Chcete namiesto toho použiť %1 = %2/1001?</translation>
         <translation>(východzie)</translation>
     </message>
     <message>
-        <location filename="../src/qmltypes/qmlfilter.cpp" line="374"/>
+        <location filename="../src/qmltypes/qmlfilter.cpp" line="390"/>
         <source>Analyze %1</source>
         <translation>Analyzovať %1</translation>
     </message>
@@ -6313,23 +6318,23 @@ Chcete namiesto toho použiť %1 = %2/1001?</translation>
 <context>
     <name>RecentDock</name>
     <message>
-        <location filename="../src/docks/recentdock.ui" line="18"/>
+        <location filename="../src/docks/recentdock.ui" line="24"/>
         <source>Recent</source>
         <translation>Nedávno otvorené</translation>
     </message>
     <message>
-        <location filename="../src/docks/recentdock.ui" line="40"/>
+        <location filename="../src/docks/recentdock.ui" line="46"/>
         <source>Show only files with name matching text</source>
         <translation>Ukázať iba súbory so zhodným textom názvu</translation>
     </message>
     <message>
-        <location filename="../src/docks/recentdock.ui" line="43"/>
+        <location filename="../src/docks/recentdock.ui" line="49"/>
         <source>search</source>
         <translation>hľadanie</translation>
     </message>
     <message>
-        <location filename="../src/docks/recentdock.ui" line="70"/>
-        <location filename="../src/docks/recentdock.ui" line="73"/>
+        <location filename="../src/docks/recentdock.ui" line="76"/>
+        <location filename="../src/docks/recentdock.ui" line="79"/>
         <source>Remove</source>
         <translation>Odstrániť</translation>
     </message>
@@ -6677,7 +6682,7 @@ Chcete namiesto toho použiť %1 = %2/1001?</translation>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="515"/>
         <source>Background color</source>
-        <translation type="unfinished"></translation>
+        <translation>Farba pozadia</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="150"/>
@@ -6697,7 +6702,7 @@ Chcete namiesto toho použiť %1 = %2/1001?</translation>
     <message>
         <location filename="../src/dialogs/slideshowgeneratordialog.cpp" line="33"/>
         <source>Slideshow Generator - %1 Clips</source>
-        <translation type="unfinished"></translation>
+        <translation>Generátor prezentácie - %1 klipov</translation>
     </message>
 </context>
 <context>
@@ -6705,70 +6710,73 @@ Chcete namiesto toho použiť %1 = %2/1001?</translation>
     <message>
         <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="55"/>
         <source>Clip duration</source>
-        <translation type="unfinished"></translation>
+        <translation>Trvanie klipu</translation>
     </message>
     <message>
         <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="57"/>
         <source>Set the duration of each clip in the slideshow.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nastaví trvanie každého klipu v prezentácii.</translation>
     </message>
     <message>
         <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="66"/>
         <source>Aspect ratio conversion</source>
-        <translation type="unfinished"></translation>
+        <translation>Pomer strán konverzie</translation>
     </message>
     <message>
         <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="68"/>
         <source>Pad Black</source>
-        <translation type="unfinished"></translation>
+        <translation>Čierna vsuvka</translation>
     </message>
     <message>
         <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="69"/>
         <source>Crop Center</source>
-        <translation type="unfinished"></translation>
+        <translation>Orezať stred</translation>
     </message>
     <message>
         <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="70"/>
         <source>Crop and Pan</source>
-        <translation type="unfinished"></translation>
+        <translation>Orezať a panoráma</translation>
     </message>
     <message>
         <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="71"/>
         <source>Choose an aspect ratio conversion method.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyberte metódu konverzie pomeru strán.</translation>
     </message>
     <message>
         <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="76"/>
         <source>Zoom effect</source>
-        <translation type="unfinished"></translation>
+        <translation>Efekt priblíženia</translation>
     </message>
     <message>
         <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="78"/>
         <source>Set the percentage of the zoom-in effect.
 0% will result in no zoom effect.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nastavte percento efektu priblíženia.
+0% bude bez efektu priblíženia.</translation>
     </message>
     <message>
         <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="86"/>
         <source>Transition duration</source>
-        <translation type="unfinished"></translation>
+        <translation>Trvanie prechodu</translation>
     </message>
     <message>
         <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="88"/>
         <source>Set the duration of the transition.
 May not be longer than half the duration of the clip.
 If the duration is 0, no transition will be created.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nastavte trvanie prechodu.
+Nesmie byť dlhšie ako polovica trvania klipu.
+Ak je trvanie 0, prechod nebude vytváraný.</translation>
     </message>
     <message>
         <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="97"/>
         <source>Transition type</source>
-        <translation type="unfinished"></translation>
+        <translation>Typ prechodu</translation>
     </message>
     <message>
         <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="99"/>
         <source>Random</source>
-        <translation type="unfinished"></translation>
+        <translation>Náhodne</translation>
     </message>
     <message>
         <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="100"/>
@@ -6888,22 +6896,22 @@ If the duration is 0, no transition will be created.</source>
     <message>
         <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="123"/>
         <source>Choose a transition effect.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vybrať efekt prechodu</translation>
     </message>
     <message>
         <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="128"/>
         <source>Transition softness</source>
-        <translation type="unfinished"></translation>
+        <translation>Mäkký prechod</translation>
     </message>
     <message>
         <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="130"/>
         <source>Change the softness of the edge of the wipe.</source>
-        <translation type="unfinished"></translation>
+        <translation>Zmení mäkkosť hrán stierania.</translation>
     </message>
     <message>
         <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="392"/>
         <source>Generating Preview...</source>
-        <translation type="unfinished"></translation>
+        <translation>Generovanie náhľadu...</translation>
     </message>
 </context>
 <context>
@@ -6911,22 +6919,22 @@ If the duration is 0, no transition will be created.</source>
     <message>
         <location filename="../src/dialogs/systemsyncdialog.ui" line="14"/>
         <source>Player Synchronization</source>
-        <translation type="unfinished"></translation>
+        <translation>Synchronizácia prehrávača</translation>
     </message>
     <message>
         <location filename="../src/dialogs/systemsyncdialog.ui" line="20"/>
         <source>Adjust your playback audio/video synchronization</source>
-        <translation type="unfinished"></translation>
+        <translation>Upraví synchronizáciu audia/videa pri prehrávaní</translation>
     </message>
     <message>
         <location filename="../src/dialogs/systemsyncdialog.ui" line="48"/>
         <source>Reset to default value 0</source>
-        <translation type="unfinished"></translation>
+        <translation>Vynulovať na pôvodnú hodnotu 0</translation>
     </message>
     <message>
         <location filename="../src/dialogs/systemsyncdialog.ui" line="65"/>
         <source>Video offset</source>
-        <translation type="unfinished"></translation>
+        <translation>Posuv videa</translation>
     </message>
     <message>
         <location filename="../src/dialogs/systemsyncdialog.ui" line="75"/>
@@ -7123,7 +7131,7 @@ If the duration is 0, no transition will be created.</source>
 <context>
     <name>TimelineDock</name>
     <message>
-        <location filename="../src/docks/timelinedock.ui" line="27"/>
+        <location filename="../src/docks/timelinedock.ui" line="33"/>
         <source>Timeline</source>
         <translation>Časová os</translation>
     </message>
@@ -8618,7 +8626,7 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
     <message>
         <location filename="../src/qml/filters/bigsh0t_rect_to_eq/meta.qml" line="7"/>
         <source>360: Rectilinear to Equirectangular</source>
-        <translation type="unfinished"></translation>
+        <translation>360: Priamočiare na rovnobežné premietnutie gule</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_rect_to_eq/meta.qml" line="17"/>
@@ -8753,7 +8761,7 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
     <message>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="7"/>
         <source>360: Hemispherical to Equirectangular</source>
-        <translation type="unfinished"></translation>
+        <translation>360: Pologuľové na rovnobežné premietnutie gule</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="49"/>
@@ -8765,42 +8773,42 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
     <message>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="57"/>
         <source>Front X</source>
-        <translation type="unfinished"></translation>
+        <translation>X vpredu</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="65"/>
         <source>Front Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Y vpredu</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="73"/>
         <source>Front Up</source>
-        <translation type="unfinished"></translation>
+        <translation>Vpredu hore</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="81"/>
         <source>Back X</source>
-        <translation type="unfinished"></translation>
+        <translation>X vzadu</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="89"/>
         <source>Back Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Y vzadu</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="97"/>
         <source>Back Up</source>
-        <translation type="unfinished"></translation>
+        <translation>Vzadu hore</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="105"/>
         <source>Nadir Radius</source>
-        <translation type="unfinished"></translation>
+        <translation>Dosah podnožníka</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="113"/>
         <source>Nadir Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Začiatok podnožníka</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/halftone/meta.qml" line="24"/>
@@ -9187,27 +9195,27 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_mask/meta.qml" line="17"/>
         <source>Horizontal Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Začiatok horizontály</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_mask/meta.qml" line="25"/>
         <source>Horizontal End</source>
-        <translation type="unfinished"></translation>
+        <translation>Koniec horizontály</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_mask/meta.qml" line="33"/>
         <source>Vertical Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Začiatok vertikály</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_mask/meta.qml" line="41"/>
         <source>Vertical End</source>
-        <translation type="unfinished"></translation>
+        <translation>Koniec vertikály</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_to_rect/meta.qml" line="7"/>
         <source>360: Equirectangular to Rectilinear</source>
-        <translation type="unfinished"></translation>
+        <translation>360: Rovnobežné premietnutie gule na priamočiare</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_to_rect/meta.qml" line="18"/>
@@ -9262,17 +9270,17 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
     <message>
         <location filename="../src/qml/filters/bigsh0t_stabilize_360/meta.qml" line="7"/>
         <source>360: Stabilize</source>
-        <translation type="unfinished"></translation>
+        <translation>360: Stabilizovať</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_transform_360/meta.qml" line="7"/>
         <source>360: Transform</source>
-        <translation type="unfinished"></translation>
+        <translation>360: Transformovať</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vaguedenoiser/meta.qml" line="26"/>
         <source>Reduce Noise: Wavelet</source>
-        <translation type="unfinished"></translation>
+        <translation>Redukcia šumu: Vlnka</translation>
     </message>
 </context>
 <context>
@@ -9662,7 +9670,7 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
     <message>
         <location filename="../src/qml/views/timeline/timeline.qml" line="153"/>
         <source>Output</source>
-        <translation type="unfinished"></translation>
+        <translation>Výstup</translation>
     </message>
     <message>
         <location filename="../src/qml/views/timeline/timeline.qml" line="169"/>
@@ -11557,7 +11565,7 @@ Kliknite na Otvoriť pre načítanie súboru.</translation>
     <message>
         <location filename="../src/qml/filters/rotate/ui.qml" line="289"/>
         <source>Background color</source>
-        <translation type="unfinished"></translation>
+        <translation>Farba pozadia</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/select0r/ui.qml" line="143"/>
@@ -12049,7 +12057,7 @@ Kliknite na Otvoriť pre načítanie súboru.</translation>
     <message>
         <location filename="../src/qml/filters/timer/ui.qml" line="145"/>
         <source>MM:SS.SSS</source>
-        <translation type="unfinished"></translation>
+        <translation>MM:SS.SSS</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/timer/ui.qml" line="146"/>
@@ -12069,7 +12077,7 @@ Kliknite na Otvoriť pre načítanie súboru.</translation>
     <message>
         <location filename="../src/qml/filters/timer/ui.qml" line="149"/>
         <source>SS.SSS</source>
-        <translation type="unfinished"></translation>
+        <translation>SS.SSS</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/timer/ui.qml" line="157"/>
@@ -12510,47 +12518,47 @@ Kliknite na Otvoriť pre načítanie súboru.</translation>
     <message>
         <location filename="../src/qml/filters/vaguedenoiser/ui.qml" line="94"/>
         <source>Medium</source>
-        <translation type="unfinished"></translation>
+        <translation>Stredný</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vaguedenoiser/ui.qml" line="101"/>
         <source>Heavy</source>
-        <translation type="unfinished"></translation>
+        <translation>Hrubý</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vaguedenoiser/ui.qml" line="137"/>
         <source>Method</source>
-        <translation type="unfinished"></translation>
+        <translation>Metóda</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vaguedenoiser/ui.qml" line="143"/>
         <source>Soft</source>
-        <translation type="unfinished"></translation>
+        <translation>Jemný</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vaguedenoiser/ui.qml" line="143"/>
         <source>Garrote</source>
-        <translation type="unfinished"></translation>
+        <translation>Priškrtiť</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vaguedenoiser/ui.qml" line="153"/>
         <source>Decompose</source>
-        <translation type="unfinished"></translation>
+        <translation>Rozkladať</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vaguedenoiser/ui.qml" line="185"/>
         <source>Percent</source>
-        <translation type="unfinished"></translation>
+        <translation>Percent</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vaguedenoiser/ui.qml" line="202"/>
         <source>Max decompositions for the current video mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Maximálne rozklady pre aktuálny režim videa</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vaguedenoiser/ui.qml" line="210"/>
         <source>More information</source>
-        <translation type="unfinished"></translation>
+        <translation>Viac informácií</translation>
     </message>
 </context>
 <context>
