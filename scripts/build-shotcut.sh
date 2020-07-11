@@ -74,8 +74,8 @@ ENABLE_RUBBERBAND=1
 RUBBERBAND_HEAD=1
 RUBBERBAND_REVISION=
 ENABLE_BIGSH0T=1
-BIGSH0T_HEAD=0
-BIGSH0T_REVISION=mingw
+BIGSH0T_HEAD=1
+BIGSH0T_REVISION=
 
 # QT_INCLUDE_DIR="$(pkg-config --variable=prefix QtCore)/include"
 QT_INCLUDE_DIR=${QTDIR:+${QTDIR}/include}
@@ -477,8 +477,8 @@ function set_globals {
   REPOLOCS[16]="git://github.com/GPUOpen-LibrariesAndSDKs/AMF.git"
   REPOLOCS[17]="git://github.com/lu-zero/mfx_dispatch.git"
   REPOLOCS[18]="git://github.com/breakfastquay/rubberband.git"
-  #TODO use https://bitbucket.org/leo_sutic/bigsh0t.git after pull request is merged
-  REPOLOCS[19]="https://bitbucket.org/dandennedy/bigsh0t.git"
+#  REPOLOCS[19]="https://bitbucket.org/dandennedy/bigsh0t.git"
+  REPOLOCS[19]="https://bitbucket.org/leo_sutic/bigsh0t.git"
 
   # REPOTYPE Array holds the repo types. (Yes, this might be redundant, but easy for me)
   REPOTYPES[0]="git"
