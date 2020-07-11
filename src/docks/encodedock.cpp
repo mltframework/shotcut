@@ -732,7 +732,7 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
                         setIfNotSet(p, "vglobal_quality", TO_ABSOLUTE(51, 0, vq));
                         setIfNotSet(p, "vq", TO_ABSOLUTE(51, 0, vq));
                     } else if (vcodec.endsWith("_qsv")) {
-                        setIfNotSet(p, "vq", TO_ABSOLUTE(51, 1, vq));
+                        setIfNotSet(p, "qscale", TO_ABSOLUTE(51, 1, vq));
                     } else {
                         setIfNotSet(p, "qscale", TO_ABSOLUTE(31, 1, vq));
                     }
@@ -1969,7 +1969,7 @@ void EncodeDock::on_videoQualitySpinner_valueChanged(int vq)
     } else if (vcodec.endsWith("_vaapi")) {
         s = QString("vglobal_quality=%1").arg(TO_ABSOLUTE(51, 0, vq));
     } else if (vcodec.endsWith("_qsv")) {
-        s = QString("vq=%1").arg(TO_ABSOLUTE(51, 1, vq));
+        s = QString("qscale=%1").arg(TO_ABSOLUTE(51, 1, vq));
     } else {
         s = QString("qscale=%1").arg(TO_ABSOLUTE(31, 1, vq));
     }
