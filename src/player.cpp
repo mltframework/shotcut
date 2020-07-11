@@ -877,9 +877,13 @@ void Player::setStatusLabel(const QString &text, int timeoutSeconds, QAction* ac
             }
         }
     } else { // DirectX
-        m_statusLabel->show();
-        if (timeoutSeconds > 0)
-            m_statusTimer.start(timeoutSeconds * 1000);
+        if (text.isEmpty()) {
+            m_statusLabel->hide();
+        } else {
+            m_statusLabel->show();
+            if (timeoutSeconds > 0)
+                m_statusTimer.start(timeoutSeconds * 1000);
+        }
     }
 }
 
@@ -887,9 +891,6 @@ void Player::onFadeOutFinished()
 {
     m_statusLabel->disconnect(SIGNAL(clicked(bool)));
     m_statusLabel->setToolTip(QString());
-    // DirectX
-    if (Settings.drawMethod() == Qt::AA_UseOpenGLES)
-        m_statusLabel->hide();
     showIdleStatus();
 }
 
