@@ -83,7 +83,7 @@ KeyframableFilter {
         }
 
         Label {
-            text: qsTr('Levels')
+            text: qsTr('Levels', 'Dither video filter')
             Layout.alignment: Qt.AlignRight
         }
         SliderSpinner {

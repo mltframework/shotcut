@@ -241,7 +241,7 @@ Item {
             implicitWidth: 180
             model: ListModel {
                 id: edgeModel
-                ListElement { text: qsTr('Hard');   value: 0.0 }
+                ListElement { text: qsTr('Hard', 'Chroma Key Advanced filter');   value: 0.0 }
                 ListElement { text: qsTr('Fat');    value: 0.35 }
                 ListElement { text: qsTr('Normal'); value: 0.6 }
                 ListElement { text: qsTr('Thin');   value: 0.7 }

@@ -140,7 +140,7 @@ Item {
         ComboBox {
             id: idMethod
             implicitWidth: 180
-            model: [qsTr('Soft'), qsTr('Garrote'), qsTr('Hard')]
+            model: [qsTr('Soft'), qsTr('Garrote'), qsTr('Hard', 'Remove Noise Wavelet filter')]
             onCurrentIndexChanged: filter.set(methodParam, methodValues[currentIndex])
         }
         UndoButton {

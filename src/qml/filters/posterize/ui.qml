@@ -79,7 +79,7 @@ KeyframableFilter {
         }
 
         Label {
-            text: qsTr('Levels')
+            text: qsTr('Levels', 'Posterize filter')
             Layout.alignment: Qt.AlignRight
         }
         SliderSpinner {
