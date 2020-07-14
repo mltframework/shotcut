@@ -453,21 +453,21 @@ Item {
             id: leftRadioButton
             text: qsTr('Left')
             exclusiveGroup: halignGroup
-            enabled: fitRadioButton.checked
+            enabled: fitRadioButton.checked || fillRadioButton.checked
             onClicked: filter.set(halignProperty, 'left')
         }
         RadioButton {
             id: centerRadioButton
             text: qsTr('Center')
             exclusiveGroup: halignGroup
-            enabled: fitRadioButton.checked
+            enabled: fitRadioButton.checked || fillRadioButton.checked
             onClicked: filter.set(halignProperty, 'center')
         }
         RadioButton {
             id: rightRadioButton
             text: qsTr('Right')
             exclusiveGroup: halignGroup
-            enabled: fitRadioButton.checked
+            enabled: fitRadioButton.checked || fillRadioButton.checked
             onClicked: filter.set(halignProperty, 'right')
         }
         UndoButton {
@@ -486,21 +486,21 @@ Item {
             id: topRadioButton
             text: qsTr('Top')
             exclusiveGroup: valignGroup
-            enabled: fitRadioButton.checked
+            enabled: fitRadioButton.checked || fillRadioButton.checked
             onClicked: filter.set(valignProperty, 'top')
         }
         RadioButton {
             id: middleRadioButton
             text: qsTr('Middle', 'Size and Position video filter')
             exclusiveGroup: valignGroup
-            enabled: fitRadioButton.checked
+            enabled: fitRadioButton.checked || fillRadioButton.checked
             onClicked: filter.set(valignProperty, 'middle')
         }
         RadioButton {
             id: bottomRadioButton
             text: qsTr('Bottom')
             exclusiveGroup: valignGroup
-            enabled: fitRadioButton.checked
+            enabled: fitRadioButton.checked || fillRadioButton.checked
             onClicked: filter.set(valignProperty, 'bottom')
         }
         UndoButton {
