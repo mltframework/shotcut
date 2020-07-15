@@ -192,6 +192,15 @@ void TimelineDock::chooseClipAtPosition(int position, int& trackIndex, int& clip
         if (clipIndex != -1 && !isBlank(trackIndex, clipIndex))
             return;
     }
+
+    // As last resort choose blank on current track
+    trackIndex = currentTrack();
+    if (!isTrackLocked(trackIndex)) {
+        clipIndex = clipIndexAtPosition(trackIndex, position);
+        if (clipIndex != -1)
+            return;
+    }
+
     trackIndex = -1;
     clipIndex = -1;
 }
