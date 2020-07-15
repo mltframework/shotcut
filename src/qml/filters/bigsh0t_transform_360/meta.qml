@@ -8,6 +8,7 @@ Metadata {
     mlt_service: "frei0r.bigsh0t_transform_360"
     objectName: "bigsh0t_transform_360"
     qml: "ui.qml"
+    vui: "vui.qml"
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true
