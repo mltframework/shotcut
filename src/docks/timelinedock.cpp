@@ -142,6 +142,8 @@ int TimelineDock::clipIndexAtPosition(int trackIndex, int position)
         if (track) {
             Mlt::Playlist playlist(*track);
             result = playlist.get_clip_index_at(position);
+            if (result >= playlist.count())
+                result = -1;
         }
     }
     return result;
@@ -337,8 +339,10 @@ void TimelineDock::selectClipUnderPlayhead()
         return;
     }
 
-    setCurrentTrack(track);
-    setSelection(QList<QPoint>() << QPoint(clip, track));
+    if (track != -1) {
+        setCurrentTrack(track);
+        setSelection(QList<QPoint>() << QPoint(clip, track));
+    }
 }
 
 int TimelineDock::centerOfClip(int trackIndex, int clipIndex)
