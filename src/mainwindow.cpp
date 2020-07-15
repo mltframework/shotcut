@@ -3829,6 +3829,7 @@ void MainWindow::on_actionClose_triggered()
             m_playlistDock->model()->close();
         else
             onMultitrackClosed();
+        m_player->enableTab(Player::SourceTabIndex, false);
         MLT.purgeMemoryPool();
         MLT.resetLocale();
     }
