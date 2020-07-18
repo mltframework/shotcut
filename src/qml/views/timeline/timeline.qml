@@ -174,8 +174,13 @@ Rectangle {
                 }
                 MouseArea {
                     anchors.fill: parent
-                    acceptedButtons: Qt.LeftButton
-                    onClicked: timeline.selectMultitrack()
+                    acceptedButtons: Qt.LeftButton | Qt.RightButton
+                    onClicked: {
+                        timeline.selectMultitrack()
+                        if (mouse.button == Qt.RightButton) {
+                            menu.popup()
+                        }
+                    }
                 }
             }
             Flickable {
