@@ -116,7 +116,7 @@ public slots:
     void lift(int trackIndex, int clipIndex);
     void removeSelection(bool withCopy = false);
     void liftSelection();
-    void selectTrack(int by);
+    void incrementCurrentTrack(int by);
     void selectTrackHead(int trackIndex);
     void selectMultitrack();
     void copyClip(int trackIndex, int clipIndex);

@@ -669,7 +669,7 @@ void TimelineDock::liftSelection()
         MAIN.undoStack()->endMacro();
 }
 
-void TimelineDock::selectTrack(int by)
+void TimelineDock::incrementCurrentTrack(int by)
 {
     int newTrack = currentTrack();
     if (by < 0)

@@ -1998,7 +1998,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
                 newClipIndex = m_timelineDock->clipIndexAtPosition(trackIndex, m_navigationPosition);
             }
 
-            m_timelineDock->selectTrack(-1);
+            m_timelineDock->incrementCurrentTrack(-1);
 
             if (newClipIndex >= 0) {
                 newClipIndex = qMin(newClipIndex, m_timelineDock->clipCount(trackIndex) - 1);
@@ -2028,7 +2028,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
                 newClipIndex = m_timelineDock->clipIndexAtPosition(trackIndex, m_navigationPosition);
             }
 
-            m_timelineDock->selectTrack(1);
+            m_timelineDock->incrementCurrentTrack(1);
 
             if (newClipIndex >= 0) {
                 newClipIndex = qMin(newClipIndex, m_timelineDock->clipCount(trackIndex) - 1);
