@@ -450,6 +450,8 @@ void TimelineDock::clearSelectionIfInvalid()
 
 void TimelineDock::insertTrack()
 {
+    if (m_selection.selectedTrack != -1)
+        setSelection();
     MAIN.undoStack()->push(
                 new Timeline::InsertTrackCommand(m_model, currentTrack()));
 }
@@ -525,12 +527,16 @@ void TimelineDock::onProducerChanged(Mlt::Producer* after)
 
 void TimelineDock::addAudioTrack()
 {
+    if (m_selection.selectedTrack != -1)
+        setSelection();
     MAIN.undoStack()->push(
         new Timeline::AddTrackCommand(m_model, false));
 }
 
 void TimelineDock::addVideoTrack()
 {
+    if (m_selection.selectedTrack != -1)
+        setSelection();
     MAIN.undoStack()->push(
         new Timeline::AddTrackCommand(m_model, true));
 }
