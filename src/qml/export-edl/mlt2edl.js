@@ -1,5 +1,5 @@
 /*
- * MltXmlParser class Copyright (c) 2016-2018 Meltytech, LLC
+ * MltXmlParser class Copyright (c) 2016-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -225,7 +225,7 @@ MltXmlParser.prototype.createEdl = function() {
             srcLen.subtract(srcIn);
             // increment program tally
             progOut.add(srcLen);
-            if (sourceLinks[event.producer] && sourceLinks[event.producer].reel_name !== 'black') {
+            if (event.producer !== 'black' && sourceLinks[event.producer]) {
                 var reelName = sourceLinks[event.producer].reel_name;
                 reelName = (reelName + '         ').substring(0, 8);
                 if (event.transition[0] === 'D') {
