@@ -323,7 +323,7 @@ bool MltXmlChecker::fixWebVfxPath(QString& resource)
 {
     // The path, if absolute, should start with the Shotcut executable path.
     QFileInfo fi(resource);
-    if (fi.isAbsolute()) {
+    if (fi.isAbsolute() || Util::hasDriveLetter(resource)) {
         QDir appPath(QCoreApplication::applicationDirPath());
 
 #if defined(Q_OS_MAC)
@@ -388,9 +388,7 @@ bool MltXmlChecker::readResourceProperty(const QString& name, QString& value)
         m_resource.prefix = getPrefix(name, value);
         // Save the resource name (minus prefix) for later check for unlinked files.
         m_resource.info.setFile(value.mid(m_resource.prefix.size()));
-        auto driveSeparators = value.midRef(1, 2);
-        auto hasDriveLetter = driveSeparators == ":/" || driveSeparators == ":\\";
-        if (!isNetworkResource(value) && m_resource.info.isRelative() && !hasDriveLetter)
+        if (!isNetworkResource(value) && m_resource.info.isRelative() && !Util::hasDriveLetter(value))
             m_resource.info.setFile(m_fileInfo.canonicalPath(), m_resource.info.filePath());
         return true;
     }

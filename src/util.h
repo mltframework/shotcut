@@ -54,6 +54,7 @@ public:
     static void applyCustomProperties(Mlt::Producer& destination, Mlt::Producer& source, int in, int out);
     static QString getFileHash(const QString& path);
     static QString getHash(Mlt::Properties& properties);
+    static bool hasDriveLetter(const QString& path);
 };
 
 #endif // UTIL_H

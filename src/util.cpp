@@ -421,3 +421,9 @@ QString Util::getHash(Mlt::Properties& properties)
     }
     return hash;
 }
+
+bool Util::hasDriveLetter(const QString& path)
+{
+    auto driveSeparators = path.midRef(1, 2);
+    return driveSeparators == ":/" || driveSeparators == ":\\";
+}
