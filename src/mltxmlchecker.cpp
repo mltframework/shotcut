@@ -271,7 +271,7 @@ void MltXmlChecker::processProperties()
                 // We no longer save this (leaks absolute paths).
                 p.second.clear();
             } else if (p.first == "audio_index" || p.first == "video_index") {
-                fixStreamIndex(p.second);
+                fixStreamIndex(p);
             }
 
             if (!p.second.isEmpty())
@@ -460,18 +460,28 @@ bool MltXmlChecker::fixUnlinkedFile(QString& value)
             // Restore special prefix such as "plain:" or speed value.
             value.prepend(m_resource.prefix);
             m_isCorrected = true;
+
+            Mlt::Producer producer(MLT.profile(), m_resource.info.filePath().toUtf8().constData());
+            if (producer.is_valid() && !::qstrcmp(producer.get("mlt_service"), "avformat")) {
+                m_resource.audio_index = producer.get_int("audio_index");
+                m_resource.video_index = producer.get_int("video_index");
+            }
             return true;
         }
     }
     return false;
 }
 
-void MltXmlChecker::fixStreamIndex(QString& value)
+void MltXmlChecker::fixStreamIndex(MltProperty& property)
 {
     // Remove a stream index property if re-linked file is different.
     if (!m_resource.hash.isEmpty() && !m_resource.newHash.isEmpty()
         && m_resource.hash != m_resource.newHash) {
-        value.clear();
+        if (property.first == "audio_index") {
+            property.second = QString::number(m_resource.audio_index);
+        } else if (property.first == "video_index") {
+            property.second = QString::number(m_resource.video_index);
+        }
     }
 }
 
