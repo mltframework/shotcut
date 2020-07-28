@@ -58,7 +58,8 @@ private:
         int transitionSoftness;
     };
 
-    bool applyAffineFilterProperties(Mlt::Filter* filter, SlideshowConfig& config, Mlt::Producer* producer, int endPosition);
+    void attachAffineFilter(SlideshowConfig& config, Mlt::Producer* producer, int endPosition);
+    void attachBlurFilter(SlideshowConfig& config, Mlt::Producer* producer);
     void applyLumaTransitionProperties(Mlt::Transition* luma, SlideshowConfig& config);
     void generatePreviewSlideshow();
     Q_INVOKABLE void startPreview();

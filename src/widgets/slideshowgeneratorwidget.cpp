@@ -38,9 +38,10 @@
 
 enum
 {
-    ASPECT_CONVERSION_PAD_BLACK = 0,
-    ASPECT_CONVERSION_CROP_CENTER = 1,
-    ASPECT_CONVERSION_CROP_PAN = 2,
+    ASPECT_CONVERSION_PAD_BLACK,
+    ASPECT_CONVERSION_PAD_BLUR,
+    ASPECT_CONVERSION_CROP_CENTER,
+    ASPECT_CONVERSION_CROP_PAN,
 };
 
 SlideshowGeneratorWidget::SlideshowGeneratorWidget(Mlt::Playlist* clips, QWidget *parent)
@@ -66,6 +67,7 @@ SlideshowGeneratorWidget::SlideshowGeneratorWidget(Mlt::Playlist* clips, QWidget
     grid->addWidget(new QLabel(tr("Aspect ratio conversion")), 1, 0, Qt::AlignRight);
     m_aspectConversionCombo = new QComboBox();
     m_aspectConversionCombo->addItem(tr("Pad Black"));
+    m_aspectConversionCombo->addItem(tr("Pad Blur"));
     m_aspectConversionCombo->addItem(tr("Crop Center"));
     m_aspectConversionCombo->addItem(tr("Crop and Pan"));
     m_aspectConversionCombo->setToolTip(tr("Choose an aspect ratio conversion method."));
@@ -176,19 +178,13 @@ Mlt::Playlist* SlideshowGeneratorWidget::getSlideshow()
     }
 
     // Add filters
-    if (config.zoomPercent != 0 || config.aspectConversion != ASPECT_CONVERSION_PAD_BLACK)
+    for (int i = 0; i < count; i++)
     {
-        for (int i = 0; i < count; i++)
+        Mlt::ClipInfo* c = slideshow->clip_info(i, &info);
+        if (c && c->producer)
         {
-            Mlt::ClipInfo* c = slideshow->clip_info(i, &info);
-            if (c)
-            {
-                Mlt::Filter filter(*c->producer->profile(), "affine");
-                if(applyAffineFilterProperties(&filter, config, c->producer, c->frame_in + framesPerClip - 1))
-                {
-                    c->producer->attach(filter);
-                }
-            }
+            attachAffineFilter(config, c->producer, c->frame_in + framesPerClip - 1);
+            attachBlurFilter(config, c->producer);
         }
     }
 
@@ -241,8 +237,15 @@ Mlt::Playlist* SlideshowGeneratorWidget::getSlideshow()
     return slideshow;
 }
 
-bool SlideshowGeneratorWidget::applyAffineFilterProperties(Mlt::Filter* filter, SlideshowConfig& config, Mlt::Producer* producer, int endPosition)
+void SlideshowGeneratorWidget::attachAffineFilter(SlideshowConfig& config, Mlt::Producer* producer, int endPosition)
 {
+    if (config.zoomPercent == 0 &&
+        config.aspectConversion != ASPECT_CONVERSION_CROP_CENTER &&
+        config.aspectConversion != ASPECT_CONVERSION_CROP_PAN)
+    {
+        return;
+    }
+
     mlt_rect beginRect;
     mlt_rect endRect;
     beginRect.x = 0;
@@ -261,19 +264,20 @@ bool SlideshowGeneratorWidget::applyAffineFilterProperties(Mlt::Filter* filter, 
     double sourceH = producer->get_double("meta.media.height");
     double sourceAr = producer->get_double("aspect_ratio");
     double sourceDar = destDar;
-    if( sourceW && sourceH && sourceAr )
+    if (sourceW && sourceH && sourceAr)
     {
         sourceDar = sourceW * sourceAr / sourceH;
     }
     if (sourceDar == destDar && config.zoomPercent == 0)
     {
-        // No need for affine
-        return false;
+        // Aspect ratios match and no zoom. No need for affine.
+        return;
     }
 
-    if(config.aspectConversion != ASPECT_CONVERSION_PAD_BLACK)
+    if (config.aspectConversion == ASPECT_CONVERSION_CROP_CENTER ||
+        config.aspectConversion == ASPECT_CONVERSION_CROP_PAN)
     {
-        if(sourceDar > destDar)
+        if (sourceDar > destDar)
         {
             // Crop sides to fit height
             beginRect.w = (double)producer->profile()->width() * sourceDar / destDar;
@@ -293,7 +297,7 @@ bool SlideshowGeneratorWidget::applyAffineFilterProperties(Mlt::Filter* filter, 
                 endRect.x = (double)producer->profile()->width() - endRect.w;
             }
         }
-        else if(destDar > sourceDar)
+        else if (destDar > sourceDar)
         {
             // Crop top and bottom to fit width.
             beginRect.w = producer->profile()->width();
@@ -302,7 +306,7 @@ bool SlideshowGeneratorWidget::applyAffineFilterProperties(Mlt::Filter* filter, 
             endRect.w = beginRect.w;
             endRect.h = beginRect.h;
             endRect.x = beginRect.x;
-            if(config.aspectConversion == ASPECT_CONVERSION_CROP_CENTER)
+            if (config.aspectConversion == ASPECT_CONVERSION_CROP_CENTER)
             {
                 beginRect.y = ((double)producer->profile()->height() - beginRect.h) / 2.0;
                 endRect.y = beginRect.y;
@@ -332,18 +336,67 @@ bool SlideshowGeneratorWidget::applyAffineFilterProperties(Mlt::Filter* filter, 
         beginRect.h = beginRect.h + (beginScale * beginRect.h);
     }
 
-    filter->anim_set( "transition.rect", beginRect, 0);
-    filter->anim_set( "transition.rect", endRect, endPosition);
-    filter->set("transition.fill", 1);
-    filter->set("transition.distort", 0);
-    filter->set("transition.valign", "middle");
-    filter->set("transition.halign", "center");
-    filter->set("transition.threads", 0);
-    filter->set("background", "color:#000000");
-    filter->set("shotcut:filter", "affineSizePosition");
-    filter->set("shotcut:animIn", producer->frames_to_time(endPosition, mlt_time_clock));
-    filter->set("shotcut:animOut", producer->frames_to_time(0, mlt_time_clock));
-    return true;
+    Mlt::Filter filter(*producer->profile(), "affine");
+    filter.anim_set("transition.rect", beginRect, 0);
+    filter.anim_set("transition.rect", endRect, endPosition);
+    filter.set("transition.fill", 1);
+    filter.set("transition.distort", 0);
+    filter.set("transition.valign", "middle");
+    filter.set("transition.halign", "center");
+    filter.set("transition.threads", 0);
+    filter.set("background", "color:#000000");
+    filter.set("shotcut:filter", "affineSizePosition");
+    filter.set("shotcut:animIn", producer->frames_to_time(endPosition, mlt_time_clock));
+    filter.set("shotcut:animOut", producer->frames_to_time(0, mlt_time_clock));
+    producer->attach(filter);
+}
+
+void SlideshowGeneratorWidget::attachBlurFilter(SlideshowConfig& config, Mlt::Producer* producer)
+{
+    if (config.aspectConversion != ASPECT_CONVERSION_PAD_BLUR)
+    {
+        return;
+    }
+    mlt_rect rect;
+    rect.x = 0;
+    rect.y = 0;
+    rect.w = producer->profile()->width();
+    rect.h = producer->profile()->height();
+    rect.o = 1;
+
+    double destDar = producer->profile()->dar();
+    double sourceW = producer->get_double("meta.media.width");
+    double sourceH = producer->get_double("meta.media.height");
+    double sourceAr = producer->get_double("aspect_ratio");
+    double sourceDar = destDar;
+    if( sourceW && sourceH && sourceAr )
+    {
+        sourceDar = sourceW * sourceAr / sourceH;
+    }
+    if (sourceDar == destDar)
+    {
+        // Aspect ratios match. No need for pad.
+        return;
+    }
+
+    if (sourceDar > destDar)
+    {
+        // Blur top/bottom to pad.
+        rect.h = producer->profile()->height() * destDar / sourceDar;
+        rect.y = ((double)producer->profile()->height() - rect.h) / 2.0;
+    }
+    else if (destDar > sourceDar)
+    {
+        // Blur sides to pad.
+        rect.w = producer->profile()->width() * sourceDar / destDar;
+        rect.x = ((double)producer->profile()->width() - rect.w) / 2.0;
+    }
+
+    Mlt::Filter filter(*producer->profile(), "pillar_echo");
+    filter.set("rect", rect);
+    filter.set("blur", 4);
+    filter.set("shotcut:filter", "pillarEcho");
+    producer->attach(filter);
 }
 
 void SlideshowGeneratorWidget::applyLumaTransitionProperties(Mlt::Transition* luma, SlideshowConfig& config)
