@@ -39,9 +39,9 @@
 enum
 {
     ASPECT_CONVERSION_PAD_BLACK,
-    ASPECT_CONVERSION_PAD_BLUR,
     ASPECT_CONVERSION_CROP_CENTER,
     ASPECT_CONVERSION_CROP_PAN,
+    ASPECT_CONVERSION_PAD_BLUR,
 };
 
 SlideshowGeneratorWidget::SlideshowGeneratorWidget(Mlt::Playlist* clips, QWidget *parent)
@@ -67,9 +67,11 @@ SlideshowGeneratorWidget::SlideshowGeneratorWidget(Mlt::Playlist* clips, QWidget
     grid->addWidget(new QLabel(tr("Aspect ratio conversion")), 1, 0, Qt::AlignRight);
     m_aspectConversionCombo = new QComboBox();
     m_aspectConversionCombo->addItem(tr("Pad Black"));
-    m_aspectConversionCombo->addItem(tr("Pad Blur"));
     m_aspectConversionCombo->addItem(tr("Crop Center"));
     m_aspectConversionCombo->addItem(tr("Crop and Pan"));
+    if(MLT.repository()->filters()->property_exists("pillar_echo")) {
+        m_aspectConversionCombo->addItem(tr("Pad Blur"));
+    }
     m_aspectConversionCombo->setToolTip(tr("Choose an aspect ratio conversion method."));
     m_aspectConversionCombo->setCurrentIndex(ASPECT_CONVERSION_CROP_CENTER);
     connect(m_aspectConversionCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(on_parameterChanged()));
