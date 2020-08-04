@@ -47,7 +47,7 @@ KeyframesDock::KeyframesDock(QmlProducer* qmlProducer, QWidget *parent)
     QIcon icon = QIcon::fromTheme("chronometer", QIcon(":/icons/oxygen/32x32/actions/chronometer.png"));
     setWindowIcon(icon);
     toggleViewAction()->setIcon(windowIcon());
-    setMinimumWidth(300);
+    setMinimumSize(200, 200);
     m_qview.setFocusPolicy(Qt::StrongFocus);
     m_qview.quickWindow()->setPersistentSceneGraph(false);
     m_qview.setAttribute(Qt::WA_AcceptTouchEvents);
