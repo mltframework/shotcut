@@ -24,6 +24,7 @@ SizePositionUI {
     valignProperty: 'transition.valign'
     halignProperty: 'transition.halign'
     backgroundProperty: 'background'
+    rotationProperty: 'transition.fix_rotate_x'
     Component.onCompleted: {
         if (filter.isNew) {
             filter.set('transition.threads', 0)

@@ -29,9 +29,12 @@ Item {
     property alias rectangle: rectangle
     property color handleColor: Qt.rgba(1, 1, 1, enabled? 0.9 : 0.2)
     property int snapMargin: 10
+    property alias withRotation: rotationHandle.visible
+    property alias rotation: rotationGroup.rotation
     property bool _positionDragLocked: false
 
     signal rectChanged(Rectangle rect)
+    signal rotated(real degrees)
 
     function setHandles(rect) {
         if ( rect.width < 0 || rect.height < 0)
@@ -120,8 +123,14 @@ Item {
         return y
     }
 
+    function isRotated() {
+        //Math.abs(rotationGroup.rotation - 0) > 0.0001
+        return rotationGroup.rotation !== 0 || rotationLine.rotation !== 0
+    }
+
     Rectangle {
         id: rectangle
+        visible: !isRotated()
         color: 'transparent'
         border.width: borderSize
         border.color: handleColor
@@ -132,76 +141,143 @@ Item {
     }
     Rectangle {
         // Provides contrasting thick line to above rectangle.
+        visible: !isRotated()
         color: 'transparent'
         border.width: handleSize - borderSize
         border.color: Qt.rgba(0, 0, 0, item.enabled? 0.4 : 0.2)
         anchors.fill: rectangle
         anchors.margins: borderSize
     }
-    Rectangle {
-        id: positionHandle
-        opacity: item.enabled? 0.5 : 0.2
-        border.width: borderSize
-        border.color: handleColor
-        width: handleSize * 2
-        height: handleSize * 2
-        radius: width / 2
-        anchors.centerIn: rectangle
-        gradient: Gradient {
-            GradientStop {
-                position: (_positionDragLocked || positionMouseArea.pressed)? 0.0 : 1.0
-                color: 'black'
+
+    Item {
+        id: rotationGroup
+        anchors.fill: rectangle
+
+        Rectangle {
+            id: positionHandle
+            opacity: item.enabled? 0.5 : 0.2
+            border.width: borderSize
+            border.color: handleColor
+            width: handleSize * 2
+            height: handleSize * 2
+            radius: width / 2
+            anchors.centerIn: parent
+            z: 1
+            gradient: Gradient {
+                GradientStop {
+                    position: (_positionDragLocked || positionMouseArea.pressed)? 0.0 : 1.0
+                    color: 'black'
+                }
+                GradientStop {
+                    position: (_positionDragLocked || positionMouseArea.pressed)? 1.0 : 0.0
+                    color: 'white'
+                }
             }
-            GradientStop {
-                position: (_positionDragLocked || positionMouseArea.pressed)? 1.0 : 0.0
-                color: 'white'
+            function centerX() { return x + width / 2 }
+        }
+        MouseArea {
+            id: positionMouseArea
+            anchors.fill: _positionDragLocked? parent : positionHandle
+            acceptedButtons: Qt.LeftButton
+            cursorShape: Qt.SizeAllCursor
+            drag.target: rectangle
+            onDoubleClicked: _positionDragLocked = !_positionDragLocked
+            onEntered: {
+                rectangle.anchors.top = undefined
+                rectangle.anchors.left = undefined
+                rectangle.anchors.right = undefined
+                rectangle.anchors.bottom = undefined
+                topLeftHandle.anchors.left = rectangle.left
+                topLeftHandle.anchors.top = rectangle.top
+                topRightHandle.anchors.right = rectangle.right
+                topRightHandle.anchors.top = rectangle.top
+                bottomLeftHandle.anchors.left = rectangle.left
+                bottomLeftHandle.anchors.bottom = rectangle.bottom
+                bottomRightHandle.anchors.right = rectangle.right
+                bottomRightHandle.anchors.bottom = rectangle.bottom
             }
+            onPositionChanged: {
+                rectangle.x = snapX(rectangle.x + rectangle.width / 2) - rectangle.width / 2
+                rectangle.y = snapY(rectangle.y + rectangle.height / 2) - rectangle.height / 2
+                rectChanged(rectangle)
+            }
+            onReleased: {
+                rectChanged(rectangle)
+                rectangle.anchors.top = topLeftHandle.top
+                rectangle.anchors.left = topLeftHandle.left
+                rectangle.anchors.right = bottomRightHandle.right
+                rectangle.anchors.bottom = bottomRightHandle.bottom
+                topLeftHandle.anchors.left = undefined
+                topLeftHandle.anchors.top = undefined
+                topRightHandle.anchors.right = undefined
+                topRightHandle.anchors.top = undefined
+                bottomLeftHandle.anchors.left = undefined
+                bottomLeftHandle.anchors.bottom = undefined
+                bottomRightHandle.anchors.right = undefined
+                bottomRightHandle.anchors.bottom = undefined
+            }
+        }
+
+        Rectangle {
+            id: rotationHandle
+            visible: false
+            color: handleColor
+            opacity: item.enabled? 0.5 : 0.2
+            width: handleSize * 1.5
+            height: handleSize * 1.5
+            radius: width / 2
+            z: 1
+            anchors.centerIn: rotationGroup
+            anchors.verticalCenterOffset: -item.height / 4
+            border.width: borderSize
+            border.color: Qt.rgba(0, 0, 0, enabled? 0.9 : 0.2)
+            function centerX() { return x + width / 2 }
+            MouseArea {
+                id: rotationMouseArea
+                anchors.fill: parent
+                acceptedButtons: Qt.LeftButton
+                cursorShape: pressed? Qt.ClosedHandCursor : Qt.OpenHandCursor
+                drag.target: parent
+                property real startRotation: 0
+                function getRotationDegrees() {
+                    var radians = Math.atan2(rotationHandle.centerX() - positionHandle.centerX(), positionHandle.y - rotationHandle.y)
+                    if (radians < 0)
+                        radians += 2 * Math.PI
+                    return 180 / Math.PI * radians
+                }
+
+                onPressed: {
+                    parent.anchors.centerIn = undefined
+                    startRotation = rotationGroup.rotation
+                }
+                onPositionChanged: {
+                    var degrees = getRotationDegrees()
+                    rotated(startRotation + degrees)
+                    rotationLine.rotation = degrees
+                }
+                onReleased: {
+                    rotationLine.rotation = 0
+                    rotationGroup.rotation = startRotation + getRotationDegrees()
+                    parent.anchors.centerIn = rotationGroup
+                }
+            }
+        }
+        Rectangle {
+            id: rotationLine
+            height: -rotationHandle.anchors.verticalCenterOffset - rotationHandle.height + positionHandle.height / 2
+            anchors.horizontalCenter: positionHandle.horizontalCenter
+            anchors.bottom: positionHandle.verticalCenter
+            transformOrigin: Item.Bottom
+            width: 2
+            color: handleColor
+            visible: rotationHandle.visible
+            antialiasing: true
         }
     }
-    MouseArea {
-        id: positionMouseArea
-        anchors.fill: _positionDragLocked? rectangle : positionHandle
-        acceptedButtons: Qt.LeftButton
-        cursorShape: Qt.SizeAllCursor
-        drag.target: rectangle
-        onDoubleClicked: _positionDragLocked = !_positionDragLocked
-        onEntered: {
-            rectangle.anchors.top = undefined
-            rectangle.anchors.left = undefined
-            rectangle.anchors.right = undefined
-            rectangle.anchors.bottom = undefined
-            topLeftHandle.anchors.left = rectangle.left
-            topLeftHandle.anchors.top = rectangle.top
-            topRightHandle.anchors.right = rectangle.right
-            topRightHandle.anchors.top = rectangle.top
-            bottomLeftHandle.anchors.left = rectangle.left
-            bottomLeftHandle.anchors.bottom = rectangle.bottom
-            bottomRightHandle.anchors.right = rectangle.right
-            bottomRightHandle.anchors.bottom = rectangle.bottom
-        }
-        onPositionChanged: {
-            rectangle.x = snapX(rectangle.x + rectangle.width / 2) - rectangle.width / 2
-            rectangle.y = snapY(rectangle.y + rectangle.height / 2) - rectangle.height / 2
-            rectChanged(rectangle)
-        }
-        onReleased: {
-            rectChanged(rectangle)
-            rectangle.anchors.top = topLeftHandle.top
-            rectangle.anchors.left = topLeftHandle.left
-            rectangle.anchors.right = bottomRightHandle.right
-            rectangle.anchors.bottom = bottomRightHandle.bottom
-            topLeftHandle.anchors.left = undefined
-            topLeftHandle.anchors.top = undefined
-            topRightHandle.anchors.right = undefined
-            topRightHandle.anchors.top = undefined
-            bottomLeftHandle.anchors.left = undefined
-            bottomLeftHandle.anchors.bottom = undefined
-            bottomRightHandle.anchors.right = undefined
-            bottomRightHandle.anchors.bottom = undefined            
-        }
-    }
+
     Rectangle {
         id: topLeftHandle
+        visible: !isRotated()
         color: handleColor
         width: handleSize
         height: handleSize
@@ -235,6 +311,7 @@ Item {
 
     Rectangle {
         id: topRightHandle
+        visible: !isRotated()
         color: handleColor
         width: handleSize
         height: handleSize
@@ -270,6 +347,7 @@ Item {
 
     Rectangle {
         id: bottomLeftHandle
+        visible: !isRotated()
         color: handleColor
         width: handleSize
         height: handleSize
@@ -305,6 +383,7 @@ Item {
 
     Rectangle {
         id: bottomRightHandle
+        visible: !isRotated()
         color: handleColor
         width: handleSize
         height: handleSize
