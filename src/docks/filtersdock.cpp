@@ -44,11 +44,12 @@ FiltersDock::FiltersDock(MetadataModel* metadataModel, AttachedFiltersModel* att
     toggleViewAction()->setIcon(windowIcon());
     m_qview.setFocusPolicy(Qt::StrongFocus);
     m_qview.quickWindow()->setPersistentSceneGraph(false);
-    m_qview.setAttribute(Qt::WA_AcceptTouchEvents);
-    setWidget(&m_qview);
 #ifdef Q_OS_MAC
     setFeatures(DockWidgetClosable | DockWidgetMovable);
+#else
+    m_qview.setAttribute(Qt::WA_AcceptTouchEvents);
 #endif
+    setWidget(&m_qview);
 
     QmlUtilities::setCommonProperties(m_qview.rootContext());
     m_qview.rootContext()->setContextProperty("view", new QmlView(&m_qview));

@@ -50,7 +50,9 @@ KeyframesDock::KeyframesDock(QmlProducer* qmlProducer, QWidget *parent)
     setMinimumSize(200, 200);
     m_qview.setFocusPolicy(Qt::StrongFocus);
     m_qview.quickWindow()->setPersistentSceneGraph(false);
+#ifndef Q_OS_MAC
     m_qview.setAttribute(Qt::WA_AcceptTouchEvents);
+#endif
     setWidget(&m_qview);
 
     QmlUtilities::setCommonProperties(m_qview.rootContext());
