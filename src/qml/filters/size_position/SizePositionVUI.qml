@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.1
+import QtQuick 2.7
 import Shotcut.Controls 1.0
 
 VuiBase {
@@ -131,6 +131,94 @@ VuiBase {
         }
     }
 
+    function updateScale(scale) {
+        if (Math.abs(scale - filterRect.width / profile.width) > 0.01) {
+            var align = filter.get(halignProperty)
+            var centerX = filterRect.x + filterRect.width / 2
+            var rightX = filterRect.x + filterRect.width
+            filterRect.width = (profile.width * scale)
+            if (align === 'center' || align === 'middle') {
+                filterRect.x = centerX - filterRect.width / 2
+            } else if (align === 'right') {
+                filterRect.x = rightX - filterRect.width
+            }
+            var middleY = filterRect.y + filterRect.height / 2
+            var bottomY = filterRect.y + filterRect.height
+            align = filter.get(valignProperty)
+            filterRect.height = (profile.height * scale)
+            if (align === 'center' || align === 'middle') {
+                filterRect.y = middleY - filterRect.height / 2
+            } else if (align === 'bottom') {
+                filterRect.y = bottomY - filterRect.height
+            }
+            rectangle.setHandles(filterRect)
+            setFilter(getPosition())
+        }
+    }
+
+    function isFillMode() {
+        return filter.get(fillProperty) === '1' && filter.get(distortProperty) !== '1'
+    }
+
+    PinchArea {
+        anchors.fill: parent
+        pinch.minimumRotation: -360
+        pinch.maximumRotation: 360
+        pinch.minimumScale: 0.1
+        pinch.maximumScale: 10
+        property real currentScale: 1
+        property real currentRotation: 0
+        property bool noModifiers: true
+        Keys.onPressed: {
+            noModifiers = event.modifiers === Qt.NoModifier
+        }
+        Keys.onReleased: {
+            noModifiers = event.modifiers === Qt.NoModifier
+        }
+        onPinchStarted: {
+            currentRotation = rectangle.rotation
+            currentScale = filterRect.width / profile.width
+        }
+        onPinchUpdated: if (noModifiers) {
+            if (rotationProperty && Math.abs(pinch.rotation - 0) > 0.01) {
+                var degrees = currentRotation + pinch.rotation
+                if (Math.abs(degrees % 90) < 10)
+                    degrees = Math.round(rectangle.rotation / 90) * 90
+                rectangle.rotation = degrees
+                blockUpdate = true
+                updateRotation(rectangle.rotation % 360)
+                blockUpdate = false
+            }
+            // Pinch zoom conflicts too much with mouse wheel
+//            if (!blockUpdate && isFillMode()) {
+//                var scale = currentScale + (pinch.scale - 2) / 3
+//                if (Math.abs(scale - 1.0) < 0.05)
+//                    scale = 1.0
+//                updateScale(Math.min(scale, 10))
+//            }
+        }
+        MouseArea {
+            anchors.fill: parent
+            acceptedButtons: Qt.NoButton
+            scrollGestureEnabled: true
+            onWheel: {
+                if (rotationProperty && (wheel.modifiers & Qt.ControlModifier)) {
+                    var degrees = rectangle.rotation - wheel.angleDelta.y / 120 * 5
+                    if (Math.abs(degrees % 90) < 2)
+                        degrees = Math.round(rectangle.rotation / 90) * 90
+                    rectangle.rotation = degrees
+                    blockUpdate = true
+                    updateRotation(rectangle.rotation % 360)
+                    blockUpdate = false
+                } else if (!blockUpdate && isFillMode()) {
+                    var scale = filterRect.width / profile.width
+                    scale += wheel.angleDelta.y / 120 / 10
+                    updateScale(Math.min(scale, 10))
+                }
+            }
+        }
+    }
+
     Flickable {
         anchors.fill: parent
         interactive: false
@@ -162,54 +250,6 @@ VuiBase {
                     blockUpdate = true
                     updateRotation(degrees % 360)
                     blockUpdate = false
-                }
-            }
-        }
-    }
-
-    PinchArea {
-        anchors.fill: parent
-        pinch.minimumRotation: -360
-        pinch.maximumRotation: 360
-        pinch.minimumScale: 0.1
-        pinch.maximumScale: 10
-        MouseArea {
-            anchors.fill: parent
-            acceptedButtons: Qt.NoButton
-            cursorShape: Qt.SizeAllCursor
-            onWheel: {
-                if (rotationProperty && (wheel.modifiers & Qt.ControlModifier)) {
-                    rectangle.rotation += wheel.angleDelta.y / 120 * 5
-                    if (Math.abs(rectangle.rotation) < 4)
-                        rectangle.rotation = 0
-                    blockUpdate = true
-                    updateRotation(rectangle.rotation % 360)
-                    blockUpdate = false
-                } else if (!blockUpdate && filter.get(fillProperty) === '1' && filter.get(distortProperty) !== '1') {
-                    var scale = filterRect.width / profile.width
-                    scale += wheel.angleDelta.y / 120 / 10
-                    if (Math.abs(scale - filterRect.width / profile.width) > 0.01) {
-                        var align = filter.get(halignProperty)
-                        var centerX = filterRect.x + filterRect.width / 2
-                        var rightX = filterRect.x + filterRect.width
-                        filterRect.width = (profile.width * scale)
-                        if (align === 'center' || align === 'middle') {
-                            filterRect.x = centerX - filterRect.width / 2
-                        } else if (align === 'right') {
-                            filterRect.x = rightX - filterRect.width
-                        }
-                        var middleY = filterRect.y + filterRect.height / 2
-                        var bottomY = filterRect.y + filterRect.height
-                        align = filter.get(valignProperty)
-                        filterRect.height = (profile.height * scale)
-                        if (align === 'center' || align === 'middle') {
-                            filterRect.y = middleY - filterRect.height / 2
-                        } else if (align === 'bottom') {
-                            filterRect.y = bottomY - filterRect.height
-                        }
-                        rectangle.setHandles(filterRect)
-                        setFilter(getPosition())
-                    }
                 }
             }
         }

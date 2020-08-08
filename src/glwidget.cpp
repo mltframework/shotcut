@@ -75,9 +75,7 @@ GLWidget::GLWidget(QObject *parent)
     m_texture[0] = m_texture[1] = m_texture[2] = 0;
     quickWindow()->setPersistentOpenGLContext(true);
     quickWindow()->setPersistentSceneGraph(true);
-#ifndef Q_OS_MAC
     setAttribute(Qt::WA_AcceptTouchEvents);
-#endif
     quickWindow()->setClearBeforeRendering(false);
     setResizeMode(QQuickWidget::SizeRootObjectToView);
     QDir importPath = QmlUtilities::qmlDir();
