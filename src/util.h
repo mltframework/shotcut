@@ -39,7 +39,7 @@ public:
     static QString baseName(const QString &filePath);
     static void setColorsToHighlight(QWidget* widget, QPalette::ColorRole role = QPalette::Window);
     static void showInFolder(const QString &path);
-    static bool warnIfNotWritable(const QString& filePath, QWidget* parent, const QString& caption, bool remove = false);
+    static bool warnIfNotWritable(const QString& filePath, QWidget* parent, const QString& caption);
     static QString producerTitle(const Mlt::Producer& producer);
     static QString removeFileScheme(QUrl &url);
     static QStringList sortedFileList(const QList<QUrl>& urls);

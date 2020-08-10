@@ -880,7 +880,7 @@ void EncodeDock::collectProperties(QDomElement& node, int realtime)
 MeltJob* EncodeDock::createMeltJob(Mlt::Producer* service, const QString& target, int realtime, int pass)
 {
     QString caption = tr("Export File");
-    if (Util::warnIfNotWritable(target, this, caption, true /* remove */))
+    if (Util::warnIfNotWritable(target, this, caption))
         return nullptr;
 
     // if image sequence, change filename to include number

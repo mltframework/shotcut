@@ -102,14 +102,13 @@ void Util::showInFolder(const QString& path)
     QDesktopServices::openUrl(QUrl::fromLocalFile(info.isDir()? path : info.path()));
 }
 
-bool Util::warnIfNotWritable(const QString& filePath, QWidget* parent, const QString& caption, bool remove)
+bool Util::warnIfNotWritable(const QString& filePath, QWidget* parent, const QString& caption)
 {
     // Returns true if not writable.
     if (!filePath.isEmpty() && !filePath.contains("://")) {
         // Do a hard check by writing to the file.
-        QFile file(filePath);
-        file.open(QIODevice::WriteOnly | QIODevice::Append);
-        if (file.write("") < 0) {
+        QFileInfo file(filePath);
+        if (!file.isWritable()) {
             QFileInfo fi(filePath);
             QMessageBox::warning(parent, caption,
                                  QObject::tr("Unable to write file %1\n"
@@ -117,8 +116,6 @@ bool Util::warnIfNotWritable(const QString& filePath, QWidget* parent, const QSt
                                     "Try again with a different folder.")
                                  .arg(fi.fileName()));
             return true;
-        } else if (remove) {
-            file.remove();
         }
     }
     return false;
