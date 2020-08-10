@@ -3,11 +3,10 @@ import org.shotcut.qml 1.0
 
 Metadata {
     type: Metadata.Filter
-    objectName: 'webvfxCircularFrame'
-    name: qsTr("Crop: Circle")
-    mlt_service: "webvfx"
-    isHidden: true
-    qml: "ui.qml"
+    objectName: 'cropCircle'
+    name: qsTr('Crop: Circle')
+    mlt_service: 'qtcrop'
+    qml: 'ui.qml'
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true

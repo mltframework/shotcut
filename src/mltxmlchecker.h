@@ -73,6 +73,7 @@ private:
     bool fixVersion1701WindowsPathBug(QString& value);
     void checkIncludesSelf(QVector<MltProperty>& properties);
     void checkLumaAlphaOver(const QString& mlt_service, QVector<MltProperty>& properties);
+    void replaceWebVfxCropFilters(QString& mlt_service, QVector<MltProperty>& properties);
     void checkForProxy(const QString& mlt_service, QVector<MltProperty>& properties);
 
     QXmlStreamReader m_xml;

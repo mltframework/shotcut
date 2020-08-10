@@ -3,12 +3,11 @@ import org.shotcut.qml 1.0
 
 Metadata {
     type: Metadata.Filter
-    objectName: 'webvfxClip'
-    name: qsTr("Crop: Rectangle")
-    mlt_service: "webvfx"
-    isHidden: true
-    qml: "ui.qml"
-    vui: "vui.qml"
+    objectName: 'cropRectangle'
+    name: qsTr('Crop: Rectangle')
+    mlt_service: 'qtcrop'
+    qml: 'ui.qml'
+    vui: 'vui.qml'
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true
@@ -28,7 +27,6 @@ Metadata {
                 minimum: 0
                 maximum: 1
             }
-
         ]
     }
 }

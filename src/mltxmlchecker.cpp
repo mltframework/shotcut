@@ -253,6 +253,7 @@ void MltXmlChecker::processProperties()
         checkUnlinkedFile(mlt_service);
         checkIncludesSelf(newProperties);
         checkLumaAlphaOver(mlt_service, newProperties);
+        replaceWebVfxCropFilters(mlt_service, newProperties);
         if (Settings.proxyEnabled())
             checkForProxy(mlt_service, newProperties);
 
@@ -520,6 +521,40 @@ void MltXmlChecker::checkLumaAlphaOver(const QString& mlt_service, QVector<MltXm
         if (!found) {
             properties << MltProperty("alpha_over", "1");
             m_isUpdated = true;
+        }
+    }
+}
+
+void MltXmlChecker::replaceWebVfxCropFilters(QString& mlt_service, QVector<MltXmlChecker::MltProperty>& properties)
+{
+    if (mlt_service == "webvfx") {
+        for (auto& p : properties) {
+            if (p.first == "shotcut:filter" && p.second == "webvfxCircularFrame") {
+                p.second = "cropCircle";
+                properties << MltProperty("circle", "1");
+                m_isUpdated = true;
+                break;
+            }
+            if (p.first == "shotcut:filter" && p.second == "webvfxClip") {
+                p.second = "cropRectangle";
+                m_isUpdated = true;
+                break;
+            }
+        }
+        if (m_isUpdated) {
+            mlt_service = "qtcrop";
+            for (auto& p2 : properties) {
+                if (p2.first == "resource") {
+                    properties.removeOne(p2);
+                    break;
+                }
+            }
+            for (auto& p2 : properties) {
+                if (p2.first == "mlt_service") {
+                    p2.second = "qtcrop";
+                    break;
+                }
+            }
         }
     }
 }
