@@ -139,6 +139,15 @@ void FilterController::setCurrentFilter(int attachedIndex, bool isNew)
     }
     m_currentFilterIndex = attachedIndex;
 
+    // VUIs may instruct MLT filters to not render if they are doing the rendering
+    // theirself, for example, Text: Rich. Component.onDestruction is not firing.
+    if (m_mltFilter) {
+        if (m_mltFilter->get_int("_hide")) {
+            m_mltFilter->clear("_hide");
+            MLT.refreshConsumer();
+        }
+    }
+
     QmlMetadata* meta = m_attachedModel.getMetadata(m_currentFilterIndex);
     QmlFilter* filter = 0;
     if (meta) {

@@ -15,6 +15,7 @@ SOURCES += main.cpp\
     mainwindow.cpp \
     mltcontroller.cpp \
     proxymanager.cpp \
+    qmltypes/qmlrichtext.cpp \
     scrubbar.cpp \
     openotherdialog.cpp \
     controllers/filtercontroller.cpp \
@@ -140,6 +141,7 @@ HEADERS  += mainwindow.h \
     jobs/qimagejob.h \
     mltcontroller.h \
     proxymanager.h \
+    qmltypes/qmlrichtext.h \
     scrubbar.h \
     openotherdialog.h \
     controllers/filtercontroller.h \

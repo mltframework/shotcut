@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2019 Meltytech, LLC
+ * Copyright (c) 2013-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,6 +25,7 @@
 #include "qmltypes/qmlfilter.h"
 #include "qmltypes/qmlhtmleditor.h"
 #include "qmltypes/qmlmetadata.h"
+#include "qmltypes/qmlrichtext.h"
 #include "qmltypes/timelineitems.h"
 #include "qmltypes/webvfxtemplatesmodel.h"
 #include "settings.h"
@@ -50,6 +51,7 @@ void QmlUtilities::registerCommonTypes()
     qmlRegisterType<QmlMetadata>("org.shotcut.qml", 1, 0, "Metadata");
     qmlRegisterType<QmlKeyframesMetadata>();
     qmlRegisterType<QmlKeyframesParameter>("org.shotcut.qml", 1,0, "Parameter");
+    qmlRegisterType<QmlRichText>("org.shotcut.qml", 1, 0, "RichText");
     qmlRegisterType<KeyframesModel>("org.shotcut.qml", 1,0, "KeyframesModel");
     qmlRegisterType<QmlUtilities>("org.shotcut.qml", 1, 0, "Utilities");
     // MetadataModel is registered to access its MetadataFilter enum.
