@@ -97,6 +97,7 @@ GLWidget::GLWidget(QObject *parent)
     connect(quickWindow(), SIGNAL(sceneGraphInitialized()), SLOT(setBlankScene()), Qt::QueuedConnection);
     connect(quickWindow(), SIGNAL(beforeRendering()), SLOT(paintGL()), Qt::DirectConnection);
     connect(&m_refreshTimer, SIGNAL(timeout()), SLOT(onRefreshTimeout()));
+    connect(this, SIGNAL(rectChanged()), SIGNAL(zoomChanged()));
     LOG_DEBUG() << "end";
 }
 
