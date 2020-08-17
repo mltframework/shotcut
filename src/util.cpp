@@ -106,15 +106,17 @@ bool Util::warnIfNotWritable(const QString& filePath, QWidget* parent, const QSt
 {
     // Returns true if not writable.
     if (!filePath.isEmpty() && !filePath.contains("://")) {
-        // Do a hard check by writing to the file.
-        QFileInfo file(filePath);
-        if (!file.isWritable()) {
-            QFileInfo fi(filePath);
+        QFileInfo info(filePath);
+        if (!info.isDir()) {
+            info = QFileInfo(info.dir().path());
+        }
+        if (!info.isWritable()) {
+            info = QFileInfo(filePath);
             QMessageBox::warning(parent, caption,
                                  QObject::tr("Unable to write file %1\n"
                                     "Perhaps you do not have permission.\n"
                                     "Try again with a different folder.")
-                                 .arg(fi.fileName()));
+                                 .arg(info.fileName()));
             return true;
         }
     }
