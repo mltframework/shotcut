@@ -3,11 +3,9 @@ import org.shotcut.qml 1.0
 
 Metadata {
     type: Metadata.Filter
-    objectName: 'webvfxChoppy'
     name: qsTr('Choppy')
-    mlt_service: 'webvfx'
+    mlt_service: 'choppy'
     qml: 'ui.qml'
-    isHidden: true
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true

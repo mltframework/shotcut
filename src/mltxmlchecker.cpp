@@ -253,7 +253,10 @@ void MltXmlChecker::processProperties()
         checkUnlinkedFile(mlt_service);
         checkIncludesSelf(newProperties);
         checkLumaAlphaOver(mlt_service, newProperties);
+#if LIBMLT_VERSION_INT >= ((6<<16)+(23<<8))
         replaceWebVfxCropFilters(mlt_service, newProperties);
+        replaceWebVfxChoppyFilter(mlt_service, newProperties);
+#endif
         if (Settings.proxyEnabled())
             checkForProxy(mlt_service, newProperties);
 
@@ -552,6 +555,34 @@ void MltXmlChecker::replaceWebVfxCropFilters(QString& mlt_service, QVector<MltXm
             for (auto& p2 : properties) {
                 if (p2.first == "mlt_service") {
                     p2.second = "qtcrop";
+                    break;
+                }
+            }
+        }
+    }
+}
+
+void MltXmlChecker::replaceWebVfxChoppyFilter(QString& mlt_service, QVector<MltXmlChecker::MltProperty>& properties)
+{
+    if (mlt_service == "webvfx") {
+        for (auto& p : properties) {
+            if (p.first == "shotcut:filter" && p.second == "webvfxChoppy") {
+                properties.removeOne(p);
+                m_isUpdated = true;
+                break;
+            }
+        }
+        if (m_isUpdated) {
+            mlt_service = "choppy";
+            for (auto& p2 : properties) {
+                if (p2.first == "resource") {
+                    properties.removeOne(p2);
+                    break;
+                }
+            }
+            for (auto& p2 : properties) {
+                if (p2.first == "mlt_service") {
+                    p2.second = "choppy";
                     break;
                 }
             }
