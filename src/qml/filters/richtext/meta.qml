@@ -10,6 +10,7 @@ Metadata {
     vui: 'vui.qml'
     isFavorite: true
     isGpuCompatible: false
+    minimumVersion: '2'
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true

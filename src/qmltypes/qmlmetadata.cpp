@@ -155,6 +155,16 @@ void QmlMetadata::setIsClipOnly(bool isClipOnly)
     m_isClipOnly = isClipOnly;
 }
 
+bool QmlMetadata::isMltVersion(const QString &version)
+{
+    if (!m_minimumVersion.isEmpty()) {
+        LOG_DEBUG() << "MLT version:" << version << "Shotcut minimumVersion:" << m_minimumVersion;
+        if (QVersionNumber::fromString(version) < QVersionNumber::fromString(m_minimumVersion))
+            return false;
+    }
+    return true;
+}
+
 QmlKeyframesMetadata::QmlKeyframesMetadata(QObject* parent)
     : QObject(parent)
     , m_allowTrim(true)

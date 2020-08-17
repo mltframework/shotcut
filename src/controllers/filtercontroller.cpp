@@ -56,8 +56,17 @@ void FilterController::loadFilterMetadata() {
             QQmlComponent component(QmlUtilities::sharedEngine(), subdir.absoluteFilePath(fileName));
             QmlMetadata *meta = qobject_cast<QmlMetadata*>(component.create());
             if (meta) {
-                // Check if mlt_service is available.
-                if (mltFilters->get_data(meta->mlt_service().toLatin1().constData())) {
+                QScopedPointer<Mlt::Properties> mltMetadata(MLT.repository()->metadata(filter_type, meta->mlt_service().toLatin1().constData()));
+                QString version;
+                if (mltMetadata && mltMetadata->is_valid() && mltMetadata->get("version")) {
+                    version = QString::fromLatin1(mltMetadata->get("version"));
+                    if (version.startsWith("lavfi"))
+                        version.remove(0, 5);
+                }
+
+                    // Check if mlt_service is available.
+                if (mltFilters->get_data(meta->mlt_service().toLatin1().constData()) &&
+                        (version.isEmpty() || meta->isMltVersion(version))) {
                     LOG_DEBUG() << "added filter" << meta->name();
                     meta->loadSettings();
                     meta->setPath(subdir);
@@ -65,11 +74,7 @@ void FilterController::loadFilterMetadata() {
                     addMetadata(meta);
 
                     // Check if a keyframes minimum version is required.
-                    QScopedPointer<Mlt::Properties> mltMetadata(MLT.repository()->metadata(filter_type, meta->mlt_service().toLatin1().constData()));
-                    if (mltMetadata && mltMetadata->is_valid() && mltMetadata->get("version") && meta->keyframes()) {
-                        QString version = QString::fromLatin1(mltMetadata->get("version"));
-                        if (version.startsWith("lavfi"))
-                            version.remove(0, 5);
+                    if (!version.isEmpty() && meta->keyframes()) {
                         meta->setProperty("version", version);
                         meta->keyframes()->checkVersion(version);
                     }
