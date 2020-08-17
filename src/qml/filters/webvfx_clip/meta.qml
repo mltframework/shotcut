@@ -7,6 +7,7 @@ Metadata {
     name: qsTr("Crop: Rectangle")
     mlt_service: "webvfx"
     isHidden: true
+    isDeprecated: true
     qml: "ui.qml"
     vui: "vui.qml"
     keyframes {
