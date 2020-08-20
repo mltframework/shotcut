@@ -1373,7 +1373,8 @@ void MainWindow::openVideo()
 #ifdef Q_OS_MAC
     path.append("/*");
 #endif
-    QStringList filenames = QFileDialog::getOpenFileNames(this, tr("Open File"), path);
+    QStringList filenames = QFileDialog::getOpenFileNames(this, tr("Open File"), path,
+        tr("All Files (*);;MLT XML (*.mlt)"));
 
     if (filenames.length() > 0) {
         Settings.setOpenPath(QFileInfo(filenames.first()).path());
