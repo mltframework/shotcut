@@ -8,4 +8,5 @@ Metadata {
     qml: "ui.qml"
     isFavorite: true
     isDeprecated: true
+    isHidden: true
 }
