@@ -96,6 +96,7 @@ public slots:
     void setFileUrl(const QUrl &arg);
     void setText(const QString &arg);
     void saveAs(const QUrl &arg, const QString &fileType);
+    void insertTable(int rows = 1, int columns = 2, int border = 0);
 
 signals:
     void targetChanged();

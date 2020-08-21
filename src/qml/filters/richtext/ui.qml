@@ -27,8 +27,8 @@ Item {
     property string middleValue: '_shotcut:middleValue'
     property string endValue:  '_shotcut:endValue'
 
-    width: 500
-    height: 350
+    width: 350
+    height: 125
 
     Component.onCompleted: {
         filter.blockSignals = true
@@ -36,7 +36,7 @@ Item {
         filter.set(startValue, Qt.rect(0, 0, profile.width, profile.height))
         filter.set(endValue, Qt.rect(0, 0, profile.width, profile.height))
         if (filter.isNew) {
-            var presetParams = preset.parameters.slice()
+            var presetParams = [rectProperty]
             filter.set('html', '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
 <html><head><meta name="qrichtext" content="1" /><style type="text/css">
 p, li { white-space: pre-wrap; }
@@ -101,7 +101,7 @@ p, li { white-space: pre-wrap; }
 
             // Add default preset.
             filter.set(rectProperty, '0%/0%:100%x100%')
-            filter.savePreset(presetParams)
+            filter.savePreset(preset.presetParams)
         } else {
             filter.set(middleValue, filter.getRect(rectProperty, filter.animateIn + 1))
             if (filter.animateIn > 0)

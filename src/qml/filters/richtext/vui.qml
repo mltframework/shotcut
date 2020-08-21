@@ -18,7 +18,7 @@
 import QtQuick 2.7
 import QtQuick.Controls 1.4
 import QtQuick.Layouts 1.0
-import QtQuick.Dialogs 1.1
+import QtQuick.Dialogs 1.2
 import Shotcut.Controls 1.0
 import org.shotcut.qml 1.0
 
@@ -147,7 +147,7 @@ VuiBase {
                 id: toolbar
                 x: Math.min((parent.width + parent.x - width), Math.max((-parent.x * scale), textArea.x + rectangle.handleSize))
                 y: Math.min((parent.height + parent.y - height), Math.max((-parent.y * scale), (textArea.mapToItem(vui, 0, 0).y > height)? (textArea.y - height*scale) : (textArea.y + rectangle.handleSize)))
-                width: smallIcons? 325 : 450
+                width: smallIcons? 400 : 550
                 height: smallIcons? (hiddenButton.height - 4) : (hiddenButton.height + 4)
                 anchors.margins: 0
                 opacity: 0.7
@@ -246,6 +246,16 @@ VuiBase {
                             colorDialog.color = document.textColor
                             colorDialog.open()
                         }
+                    }
+                    Button { // separator
+                        enabled: false
+                        implicitWidth: 2
+                        implicitHeight: smallIcons? 14 : (hiddenButton.implicitHeight - 8)
+                    }
+                    ToolButton {
+                        action: insertTableAction
+                        implicitWidth: smallIcons? 18 : hiddenButton.implicitWidth
+                        implicitHeight: implicitWidth
                     }
                 }
             }
@@ -416,6 +426,13 @@ VuiBase {
             fontDialog.open()
         }
     }
+    Action {
+        id: insertTableAction
+        text: qsTr('Insert table')
+        iconName: 'view-grid'
+        iconSource: 'qrc:///icons/oxygen/32x32/actions/view-grid.png'
+        onTriggered: tableDialog.open()
+    }
 
     FileDialog {
         id: fileDialog
@@ -446,6 +463,58 @@ VuiBase {
     MessageDialog {
         id: errorDialog
         modality: Qt.ApplicationModal
+    }
+    Dialog {
+        id: tableDialog
+        title: qsTr('Insert Table')
+        standardButtons: StandardButton.Ok | StandardButton.Cancel
+        modality: Qt.WindowModal
+        GridLayout {
+            rows: 4
+            columns: 2
+            anchors.fill: parent
+            anchors.margins: 8
+
+            Label {
+                text: qsTr('Rows')
+                Layout.alignment: Qt.AlignRight
+            }
+            SpinBox {
+                id: rowsSpinner
+                value: 1
+                minimumValue: 1
+                maximumValue: 100
+                stepSize: 1
+                focus: true
+            }
+            Label {
+                text: qsTr('Columns')
+                Layout.alignment: Qt.AlignRight
+            }
+            SpinBox {
+                id: columnsSpinner
+                value: 2
+                minimumValue: 1
+                maximumValue: 100
+                stepSize: 1
+            }
+            Label {
+                text: qsTr('Border')
+                Layout.alignment: Qt.AlignRight
+            }
+            SpinBox {
+                id: borderSpinner
+                value: 0
+                minimumValue: 0
+                maximumValue: 100
+                stepSize: 1
+                suffix: ' px'
+            }
+            Item { Layout.fillHeight: true; height: columnsSpinner.height }
+        }
+        onAccepted: {
+            document.insertTable(rowsSpinner.value, columnsSpinner.value, borderSpinner.value)
+        }
     }
 
     RichText {

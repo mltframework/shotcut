@@ -113,6 +113,40 @@ void QmlRichText::saveAs(const QUrl &arg, const QString &fileType)
     setFileUrl(QUrl::fromLocalFile(localPath));
 }
 
+void QmlRichText::insertTable(int rows, int columns, int border)
+{
+    QTextCursor cursor = textCursor();
+    if (cursor.isNull())
+        return;
+    QString color = textColor().name(QColor::HexArgb);
+    QString html = QString(
+                "<style>"
+                "table { border-style: solid; border-color: %1 }"
+                "td { font: %2 %3 %4pt %5;"
+                "color: %1; vertical-align: top; }"
+                "</style>"
+                "<table width=100% cellspacing=0 cellpadding=%6 border=%6>")
+            .arg(color)
+            .arg(italic()?"italic":"normal").arg(bold()?"bold":"normal").arg(fontSize()).arg(fontFamily())
+            .arg(border);
+    for (auto i = 0; i < rows; ++i) {
+        html += "<tr>";
+        for (auto j = 0; j < columns; ++j) {
+            if (j == 0) {
+                html += QString("<td>%1 %2</td>").arg(tr("Row")).arg(i + 1);
+            } else {
+                html += QString("<td>%1 %2</td>").arg(tr("Column")).arg(j + 1);
+            }
+            if (border == 0 && j + 1 < columns) {
+                html += "<td width=5%></td>";
+            }
+        }
+        html += "</tr>";
+    }
+    html += "</table>";
+    textCursor().insertHtml(html);
+}
+
 QUrl QmlRichText::fileUrl() const
 {
     return m_fileUrl;
