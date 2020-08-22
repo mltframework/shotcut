@@ -32,6 +32,7 @@
 ****************************************************************************/
 
 #include "qmlrichtext.h"
+#include <Logger.h>
 
 #include <QtGui/QTextDocument>
 #include <QtGui/QTextCursor>
@@ -145,7 +146,29 @@ void QmlRichText::insertTable(int rows, int columns, int border)
         html += "</tr>";
     }
     html += "</table>";
-    textCursor().insertHtml(html);
+    cursor.insertHtml(html);
+}
+
+void QmlRichText::indentLess()
+{
+    QTextCursor cursor = textCursor();
+    if (cursor.isNull())
+        return;
+    auto indent = cursor.blockFormat().indent();
+    QTextBlockFormat format;
+    format.setIndent(qMax(indent - 1, 0));
+    cursor.mergeBlockFormat(format);
+}
+
+void QmlRichText::indentMore()
+{
+    QTextCursor cursor = textCursor();
+    if (cursor.isNull())
+        return;
+    auto indent = cursor.blockFormat().indent();
+    QTextBlockFormat format;
+    format.setIndent(indent + 1);
+    cursor.mergeBlockFormat(format);
 }
 
 QUrl QmlRichText::fileUrl() const

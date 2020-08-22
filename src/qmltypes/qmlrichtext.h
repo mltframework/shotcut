@@ -98,6 +98,8 @@ public slots:
     void setText(const QString &arg);
     void saveAs(const QUrl &arg, const QString &fileType);
     void insertTable(int rows = 1, int columns = 2, int border = 0);
+    void indentLess();
+    void indentMore();
 
 signals:
     void targetChanged();

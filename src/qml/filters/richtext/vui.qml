@@ -34,7 +34,7 @@ VuiBase {
     property string startValue: '_shotcut:startValue'
     property string middleValue: '_shotcut:middleValue'
     property string endValue:  '_shotcut:endValue'
-    property bool smallIcons: true // settings.smallIcons
+    property bool smallIcons: settings.smallIcons
 
 
     Component.onCompleted: {
@@ -147,7 +147,7 @@ VuiBase {
                 id: toolbar
                 x: Math.min((parent.width + parent.x - width), Math.max((-parent.x * scale), textArea.x + rectangle.handleSize))
                 y: Math.min((parent.height + parent.y - height), Math.max((-parent.y * scale), (textArea.mapToItem(vui, 0, 0).y > height)? (textArea.y - height*scale) : (textArea.y + rectangle.handleSize)))
-                width: smallIcons? 400 : 550
+                width: smallIcons? 360 : 520
                 height: smallIcons? (hiddenButton.height - 4) : (hiddenButton.height + 4)
                 anchors.margins: 0
                 opacity: 0.7
@@ -162,11 +162,6 @@ VuiBase {
                         action: menuAction
                         implicitWidth: smallIcons? 18 : hiddenButton.implicitWidth
                         implicitHeight: implicitWidth
-                    }
-                    Button { // separator
-                        enabled: false
-                        implicitWidth: 2
-                        implicitHeight: smallIcons? 14 : (hiddenButton.implicitHeight - 8)
                     }
                     ToolButton {
                         action: alignLeftAction
@@ -253,7 +248,12 @@ VuiBase {
                         implicitHeight: smallIcons? 14 : (hiddenButton.implicitHeight - 8)
                     }
                     ToolButton {
-                        action: insertTableAction
+                        action: decreaseIndentAction
+                        implicitWidth: smallIcons? 18 : hiddenButton.implicitWidth
+                        implicitHeight: implicitWidth
+                    }
+                    ToolButton {
+                        action: increaseIndentAction
                         implicitWidth: smallIcons? 18 : hiddenButton.implicitWidth
                         implicitHeight: implicitWidth
                     }
@@ -277,11 +277,15 @@ VuiBase {
         id: menu
         MenuItem { action: fileOpenAction }
         MenuItem { action: fileSaveAsAction }
+        MenuSeparator {}
         MenuItem { action: undoAction }
         MenuItem { action: redoAction }
         MenuItem { action: cutAction }
         MenuItem { action: copyAction }
         MenuItem { action: pasteAction }
+        MenuItem { action: selectAllAction }
+        MenuSeparator {}
+        MenuItem { action: insertTableAction }
     }
 
     Action {
@@ -350,6 +354,12 @@ VuiBase {
         iconName: 'edit-paste'
         iconSource: 'qrc:///icons/oxygen/32x32/actions/edit-copy.png'
         onTriggered: textArea.paste()
+    }
+    Action {
+        id: selectAllAction
+        text: qsTr('Select All')
+        shortcut: 'ctrl+a'
+        onTriggered: textArea.selectAll()
     }
 
     Action {
@@ -428,10 +438,24 @@ VuiBase {
     }
     Action {
         id: insertTableAction
-        text: qsTr('Insert table')
+        text: qsTr('Insert Table')
         iconName: 'view-grid'
         iconSource: 'qrc:///icons/oxygen/32x32/actions/view-grid.png'
         onTriggered: tableDialog.open()
+    }
+    Action {
+        id: decreaseIndentAction
+        text: qsTr('Decrease Indent')
+        iconName: 'format-indent-less'
+        iconSource: 'qrc:///icons/oxygen/32x32/actions/format-indent-less.png'
+        onTriggered: document.indentLess()
+    }
+    Action {
+        id: increaseIndentAction
+        text: qsTr('Insert Indent')
+        iconName: 'format-indent-more'
+        iconSource: 'qrc:///icons/oxygen/32x32/actions/format-indent-more.png'
+        onTriggered: document.indentMore()
     }
 
     FileDialog {
