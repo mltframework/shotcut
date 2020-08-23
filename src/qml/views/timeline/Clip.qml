@@ -109,7 +109,11 @@ Rectangle {
 
     Image {
         id: outThumbnail
-        visible: settings.timelineShowThumbnails && parent.height > 20
+        visible: !isBlank && settings.timelineShowThumbnails && parent.height > 20 &&
+                 ((clipRoot.x + x + width)   > scrollView.flickableItem.contentX) && // right edge
+                 ((clipRoot.x + x)           < scrollView.flickableItem.contentX + scrollView.width) && // left edge
+                 ((trackRoot.y + y + height) > scrollView.flickableItem.contentY) && // bottom edge
+                 ((trackRoot.y + y)          < scrollView.flickableItem.contentY + scrollView.height) // top edge
         anchors.right: parent.right
         anchors.top: parent.top
         anchors.topMargin: parent.border.width
@@ -123,7 +127,11 @@ Rectangle {
 
     Image {
         id: inThumbnail
-        visible: settings.timelineShowThumbnails && parent.height > 20
+        visible: !isBlank && settings.timelineShowThumbnails && parent.height > 20 &&
+                 ((clipRoot.x + x + width)   > scrollView.flickableItem.contentX) && // right edge
+                 ((clipRoot.x + x)           < scrollView.flickableItem.contentX + scrollView.width) && // left edge
+                 ((trackRoot.y + y + height) > scrollView.flickableItem.contentY) && // bottom edge
+                 ((trackRoot.y + y)          < scrollView.flickableItem.contentY + scrollView.height) // top edge
         anchors.left: parent.left
         anchors.top: parent.top
         anchors.topMargin: parent.border.width
@@ -155,6 +163,7 @@ Rectangle {
 
         Repeater {
             id: waveformRepeater
+            model: (clipRoot.width + waveform.maxWidth - 1) / waveform.maxWidth
             TimelineWaveform {
                 width: Math.min(waveform.innerWidth, waveform.maxWidth)
                 height: waveform.height
@@ -163,6 +172,10 @@ Rectangle {
                 inPoint: Math.round((clipRoot.inPoint + index * waveform.maxWidth / timeScale) * speed) * channels
                 outPoint: inPoint + Math.round(width / timeScale * speed) * channels
                 levels: audioLevels
+                active: ((clipRoot.x + x + width)   > scrollView.flickableItem.contentX) && // right edge
+                        ((clipRoot.x + x)           < scrollView.flickableItem.contentX + scrollView.width) && // left edge
+                        ((trackRoot.y + y + height) > scrollView.flickableItem.contentY) && // bottom edge
+                        ((trackRoot.y + y)          < scrollView.flickableItem.contentY + scrollView.height) // top edge
             }
         }
     }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2016 Meltytech, LLC
+ * Copyright (c) 2015-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,6 +17,7 @@
 
 #include "timelineitems.h"
 #include "mltcontroller.h"
+#include <Logger.h>
 
 #include <QQuickPaintedItem>
 #include <QPainter>
@@ -96,6 +97,7 @@ class TimelineWaveform : public QQuickPaintedItem
     Q_PROPERTY(QColor fillColor MEMBER m_color NOTIFY propertyChanged)
     Q_PROPERTY(int inPoint MEMBER m_inPoint NOTIFY inPointChanged)
     Q_PROPERTY(int outPoint MEMBER m_outPoint NOTIFY outPointChanged)
+    Q_PROPERTY(bool active MEMBER m_isActive NOTIFY propertyChanged)
 
 public:
     TimelineWaveform()
@@ -106,6 +108,8 @@ public:
 
     void paint(QPainter *painter)
     {
+        if (!m_isActive)
+            return;
         QVariantList data = m_audioLevels.toList();
         if (data.isEmpty())
             return;
@@ -116,6 +120,8 @@ public:
         const int inPoint = qRound(m_inPoint / MLT.profile().fps() * 25.0);
         const int outPoint = qRound(m_outPoint / MLT.profile().fps() * 25.0);
         const qreal indicesPrPixel = qreal(outPoint - inPoint) / width();
+
+//        LOG_DEBUG() << "In/out points" << inPoint << "/" << outPoint;
 
         QPainterPath path;
         path.moveTo(-1, height());
@@ -146,6 +152,7 @@ private:
     int m_inPoint;
     int m_outPoint;
     QColor m_color;
+    bool m_isActive {true};
 };
 
 void registerTimelineItems()
