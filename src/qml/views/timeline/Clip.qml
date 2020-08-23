@@ -163,7 +163,7 @@ Rectangle {
 
         Repeater {
             id: waveformRepeater
-            model: (clipRoot.width + waveform.maxWidth - 1) / waveform.maxWidth
+            model: Math.ceil(waveform.innerWidth / waveform.maxWidth)
             TimelineWaveform {
                 width: Math.min(waveform.innerWidth, waveform.maxWidth)
                 height: waveform.height

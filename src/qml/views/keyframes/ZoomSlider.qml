@@ -56,6 +56,8 @@ Rectangle {
                 setScaleFactor()
                 
                 scrollView.flickableItem.contentX = (targetX * timeScale / before) - offset
+
+                redrawWaveforms()
             }
         }
     }
