@@ -26,9 +26,11 @@ Item {
     property string startValue: '_shotcut:startValue'
     property string middleValue: '_shotcut:middleValue'
     property string endValue:  '_shotcut:endValue'
+    property string sizeProperty: '_shotcut:size'
+    property string specialPresetProperty: 'shotcut:preset'
 
     width: 350
-    height: 125
+    height: 150
 
     Component.onCompleted: {
         filter.blockSignals = true
@@ -47,6 +49,17 @@ p, li { white-space: pre-wrap; }
             filter.set('bgcolour', '#00000000')
 
             // Add some animated presets.
+            filter.animateIn = filter.duration
+            filter.set(specialPresetProperty, 'scroll-down')
+            filter.savePreset(['shotcut:animIn', specialPresetProperty], qsTr('Scroll Down'))
+            filter.set(specialPresetProperty, 'scroll-up')
+            filter.savePreset(['shotcut:animIn', specialPresetProperty], qsTr('Scroll Up'))
+            filter.set(specialPresetProperty, 'scroll-right')
+            filter.savePreset(['shotcut:animIn', specialPresetProperty], qsTr('Scroll Right'))
+            filter.set(specialPresetProperty, 'scroll-left')
+            filter.savePreset(['shotcut:animIn', specialPresetProperty], qsTr('Scroll Left'))
+            filter.resetProperty(specialPresetProperty)
+
             filter.animateIn = Math.round(profile.fps)
             filter.set(rectProperty,   '0=-100%/0%:100%x100%; :1.0=0%/0%:100%x100%')
             filter.savePreset(presetParams.concat('shotcut:animIn'), qsTr('Slide In From Left'))
@@ -72,36 +85,12 @@ p, li { white-space: pre-wrap; }
             filter.savePreset(presetParams.concat('shotcut:animIn'), qsTr('Slow Zoom In'))
             filter.set(rectProperty,   '0=-5%/-5%:110%x110%; -1=0%/0%:100%x100%')
             filter.savePreset(presetParams.concat('shotcut:animIn'), qsTr('Slow Zoom Out'))
-            filter.set(rectProperty,   '0=-5%/-5%:110%x110%; -1=-10%/-5%:110%x110%')
-            filter.deletePreset(qsTr('Slow Pan Left'))
-            filter.savePreset(presetParams.concat('shotcut:animIn'), qsTr('Slow Move Left'))
-            filter.set(rectProperty,   '0=-5%/-5%:110%x110%; -1=0%/-5%:110%x110%')
-            filter.deletePreset(qsTr('Slow Pan Right'))
-            filter.savePreset(presetParams.concat('shotcut:animIn'), qsTr('Slow Move Right'))
-            filter.set(rectProperty,   '0=-5%/-5%:110%x110%; -1=-5%/-10%:110%x110%')
-            filter.deletePreset(qsTr('Slow Pan Up'))
-            filter.savePreset(presetParams.concat('shotcut:animIn'), qsTr('Slow Move Up'))
-            filter.set(rectProperty,   '0=-5%/-5%:110%x110%; -1=-5%/0%:110%x110%')
-            filter.deletePreset(qsTr('Slow Pan Down'))
-            filter.savePreset(presetParams.concat('shotcut:animIn'), qsTr('Slow Move Down'))
-            filter.set(rectProperty,   '0=0%/0%:100%x100%; -1=-10%/-10%:110%x110%')
-            filter.deletePreset(qsTr('Slow Zoom In, Pan Up Left'))
-            filter.savePreset(presetParams.concat('shotcut:animIn'), qsTr('Slow Zoom In, Move Up Left'))
-            filter.set(rectProperty,   '0=0%/0%:100%x100%; -1=0%/0%:110%x110%')
-            filter.deletePreset(qsTr('Slow Zoom In, Pan Down Right'))
-            filter.savePreset(presetParams.concat('shotcut:animIn'), qsTr('Slow Zoom In, Move Down Right'))
-            filter.set(rectProperty,   '0=-10%/0%:110%x110%; -1=0%/0%:100%x100%')
-            filter.deletePreset(qsTr('Slow Zoom Out, Pan Up Right'))
-            filter.savePreset(presetParams.concat('shotcut:animIn'), qsTr('Slow Zoom Out, Move Up Right'))
-            filter.set(rectProperty,   '0=0%/-10%:110%x110%; -1=0%/0%:100%x100%')
-            filter.deletePreset(qsTr('Slow Zoom Out, Pan Down Left'))
-            filter.savePreset(presetParams.concat('shotcut:animIn'), qsTr('Slow Zoom Out, Move Down Left'))
-            filter.animateIn = 0
-            filter.resetProperty(rectProperty)
 
             // Add default preset.
+            filter.animateIn = 0
+            filter.resetProperty(rectProperty)
             filter.set(rectProperty, '0%/0%:100%x100%')
-            filter.savePreset(preset.presetParams)
+            filter.savePreset(preset.parameters)
         } else {
             filter.set(middleValue, filter.getRect(rectProperty, filter.animateIn + 1))
             if (filter.animateIn > 0)
@@ -160,16 +149,51 @@ p, li { white-space: pre-wrap; }
         var newValue = filter.getRect(rectProperty, position)
         if (filterRect !== newValue) {
             filterRect = newValue
-            rectX.text = filterRect.x.toFixed()
-            rectY.text = filterRect.y.toFixed()
-            rectW.text = filterRect.width.toFixed()
-            rectH.text = filterRect.height.toFixed()
+            rectX.value = filterRect.x
+            rectY.value = filterRect.y
+            rectW.value = filterRect.width
+            rectH.value = filterRect.height
         }
         var enabled = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1)
         rectX.enabled = enabled
         rectY.enabled = enabled
         rectW.enabled = enabled
         rectH.enabled = enabled
+
+        var document = filter.getRect(sizeProperty)
+        if (parseInt(sizeW.text) !== Math.round(document.width) || parseInt(sizeH.text) !== Math.round(document.height)) {
+            sizeW.text = Math.round(document.width)
+            sizeH.text = Math.round(document.height)
+            handleSpecialPreset()
+        }
+    }
+
+    function handleSpecialPreset() {
+        if (filter.get(specialPresetProperty)) {
+            var document = filter.getRect(sizeProperty)
+            filter.blockSignals = true
+            filter.resetProperty(rectProperty)
+            filter.animateIn = filter.duration
+            filter.blockSignals = false
+            var s
+            if (filter.get(specialPresetProperty) === 'scroll-down') {
+                s = '0=' + filterRect.x + '/-' + Math.round(document.height) + ':' + filterRect.width + 'x' + filterRect.height +
+                 '; -1=' + filterRect.x + '/' + profile.height + ':' + filterRect.width + 'x' + filterRect.height
+            } else if (filter.get(specialPresetProperty) === 'scroll-up') {
+                s = '0=' + filterRect.x + '/' + profile.height + ':' + filterRect.width + 'x' + filterRect.height +
+                 '; -1=' + filterRect.x + '/-' + Math.round(document.height) + ':' + filterRect.width + 'x' + filterRect.height
+            } else if (filter.get(specialPresetProperty) === 'scroll-right') {
+                s = '0=-' + Math.round(document.width) + '/' + filterRect.y + ':' + filterRect.width + 'x' + filterRect.height +
+                '; -1=' + profile.width + '/' + filterRect.y + ':' + filterRect.width + 'x' + filterRect.height
+            } else if (filter.get(specialPresetProperty) === 'scroll-left') {
+                s = '0=' + profile.width + '/' + filterRect.y + ':' + filterRect.width + 'x' + filterRect.height +
+                '; -1=-' + Math.round(document.width) + '/' + filterRect.y + ':' + filterRect.width + 'x' + filterRect.height
+            }
+            if (s) {
+                console.log(filter.get(specialPresetProperty) + ': ' + s)
+                filter.set(rectProperty, s)
+            }
+        }
     }
 
     ExclusiveGroup { id: sizeGroup }
@@ -191,8 +215,10 @@ p, li { white-space: pre-wrap; }
             Layout.columnSpan: 5
             onBeforePresetLoaded: {
                 filter.resetProperty(rectProperty)
+                filter.resetProperty(specialPresetProperty)
             }
             onPresetSelected: {
+                handleSpecialPreset()
                 setControls()
                 setKeyframedControls()
                 positionKeyframesButton.checked = filter.keyframeCount(rectProperty) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
@@ -207,48 +233,46 @@ p, li { white-space: pre-wrap; }
         }
 
         Label {
-            text: qsTr('Background')
-            Layout.alignment: Qt.AlignRight
-        }
-        ColorPicker {
-            id: bgColor
-            Layout.columnSpan: 3
-            eyedropper: false
-            alpha: true
-            onValueChanged: filter.set('bgcolour', value)
-        }
-        UndoButton {
-            onClicked: bgColor.value = '#00000000'
-        }
-        Item { Layout.fillWidth: true }
-
-        Label {
             text: qsTr('Position')
             Layout.alignment: Qt.AlignRight
         }
         RowLayout {
             Layout.columnSpan: 3
-            TextField {
+            SpinBox {
                 id: rectX
                 horizontalAlignment: Qt.AlignRight
-                onEditingFinished: if (filterRect.x !== parseFloat(text)) {
-                    filterRect.x = parseFloat(text)
-                    updateFilter(getPosition())
+                Layout.minimumWidth: 100
+                decimals: 0
+                stepSize: 1
+                minimumValue: -999999999
+                maximumValue: 999999999
+                onValueChanged: {
+                    if ((hovered || activeFocus) && Math.abs(filterRect.x - value) > 1) {
+                        filterRect.x = value
+                        updateFilter(getPosition())
+                    }
                 }
             }
             Label { text: ',' }
-            TextField {
+            SpinBox {
                 id: rectY
                 horizontalAlignment: Qt.AlignRight
-                onEditingFinished: if (filterRect.y !== parseFloat(text)) {
-                    filterRect.y = parseFloat(text)
-                    updateFilter(getPosition())
+                Layout.minimumWidth: 100
+                decimals: 0
+                stepSize: 1
+                minimumValue: -999999999
+                maximumValue: 999999999
+                onValueChanged: {
+                    if ((hovered || activeFocus) && Math.abs(filterRect.y - value) > 1) {
+                        filterRect.y = value
+                        updateFilter(getPosition())
+                    }
                 }
             }
         }
         UndoButton {
             onClicked: {
-                rectX.text = rectY.text = 0
+                rectX.value = rectY.value = 0
                 filterRect.x = filterRect.y = 0
                 updateFilter(getPosition())
             }
@@ -270,38 +294,90 @@ p, li { white-space: pre-wrap; }
         }
 
         Label {
-            text: qsTr('Size')
+            text: qsTr('Background size')
             Layout.alignment: Qt.AlignRight
         }
         RowLayout {
             Layout.columnSpan: 3
-            TextField {
+            SpinBox {
                 id: rectW
                 horizontalAlignment: Qt.AlignRight
-                onEditingFinished: if (filterRect.width !== parseFloat(text)) {
-                    filterRect.width = parseFloat(text)
-                    updateFilter(getPosition())
+                Layout.minimumWidth: 100
+                decimals: 0
+                stepSize: 1
+                minimumValue: -999999999
+                maximumValue: 999999999
+                onValueChanged: {
+                    if ((hovered || activeFocus) && Math.abs(filterRect.width - value) > 1) {
+                        filterRect.width = value
+                        updateFilter(getPosition())
+                    }
                 }
             }
             Label { text: 'x' }
-            TextField {
+            SpinBox {
                 id: rectH
                 horizontalAlignment: Qt.AlignRight
-                onEditingFinished: if (filterRect.height !== parseFloat(text)) {
-                    filterRect.height = parseFloat(text)
-                    updateFilter(getPosition())
+                Layout.minimumWidth: 100
+                decimals: 0
+                stepSize: 1
+                minimumValue: -999999999
+                maximumValue: 999999999
+                onValueChanged: {
+                    if ((hovered || activeFocus) && Math.abs(filterRect.height - value) > 1) {
+                        filterRect.height = value
+                        updateFilter(getPosition())
+                    }
                 }
             }
         }
         UndoButton {
             onClicked: {
-                rectW.text = profile.width
-                rectH.text = profile.height
+                rectW.value = profile.width
+                rectH.value = profile.height
                 filterRect.width = profile.width
                 filterRect.height = profile.height
                 updateFilter(getPosition())
             }
         }
+
+        Label {
+            text: qsTr('Text size')
+            Layout.alignment: Qt.AlignRight
+        }
+        RowLayout {
+            Layout.columnSpan: 3
+            TextField {
+                id: sizeW
+                horizontalAlignment: Qt.AlignRight
+                readOnly: true
+                opacity: 0.7
+            }
+            Label { text: 'x' }
+            TextField {
+                id: sizeH
+                horizontalAlignment: Qt.AlignRight
+                readOnly: true
+                opacity: 0.7
+            }
+        }
+        Item { Layout.columnSpan: 2; Layout.fillWidth: true }
+
+        Label {
+            text: qsTr('Background color')
+            Layout.alignment: Qt.AlignRight
+        }
+        ColorPicker {
+            id: bgColor
+            Layout.columnSpan: 3
+            eyedropper: false
+            alpha: true
+            onValueChanged: filter.set('bgcolour', value)
+        }
+        UndoButton {
+            onClicked: bgColor.value = '#00000000'
+        }
+        Item { Layout.fillWidth: true }
 
         Item { Layout.fillHeight: true }
     }

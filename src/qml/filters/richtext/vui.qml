@@ -34,6 +34,7 @@ VuiBase {
     property string startValue: '_shotcut:startValue'
     property string middleValue: '_shotcut:middleValue'
     property string endValue:  '_shotcut:endValue'
+    property string sizeProperty: '_shotcut:size'
     property bool smallIcons: settings.smallIcons
 
 
@@ -95,6 +96,7 @@ VuiBase {
             filter.set(rectProperty, filterRect, 1.0, position)
         }
         blockUpdate = false
+        filter.set(sizeProperty, Qt.rect(0, 0, document.size.width, document.size.height))
     }
 
     Flickable {
@@ -558,6 +560,7 @@ VuiBase {
             errorDialog.text = message
             errorDialog.visible = true
         }
+        onSizeChanged: filter.set(sizeProperty, Qt.rect(0, 0, document.size.width, document.size.height))
     }
 
     Connections {

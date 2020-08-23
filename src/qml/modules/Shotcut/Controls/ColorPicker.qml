@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2019 Meltytech, LLC
+ * Copyright (c) 2014-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -71,7 +71,7 @@ RowLayout {
             // they probably want to reset alpha to opaque.
             console.log('currentColor.a=' + currentColor.a + ' currentColor=' + currentColor + ' myColor=' + myColor)
             if (currentColor.a === 0 && !Qt.colorEqual(currentColor, myColor))
-                currentColor.a = 255
+                currentColor.a = 1.0
             // Assign the new color value. Unlike docs say, using currentColor
             // is actually more cross-platform compatible.
             value = currentColor

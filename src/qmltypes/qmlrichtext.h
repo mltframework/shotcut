@@ -64,6 +64,7 @@ class QmlRichText : public QObject
     Q_PROPERTY(int fontSize READ fontSize WRITE setFontSize NOTIFY fontSizeChanged)
     Q_PROPERTY(QUrl fileUrl READ fileUrl WRITE setFileUrl NOTIFY fileUrlChanged)
     Q_PROPERTY(QString text READ text WRITE setText NOTIFY textChanged)
+    Q_PROPERTY(QSizeF size READ size NOTIFY sizeChanged)
 
 public:
     QmlRichText();
@@ -86,6 +87,7 @@ public:
     int fontSize() const;
     QUrl fileUrl() const;
     QString text() const;
+    QSizeF size() const { return m_doc->size(); }
 
 public slots:
     void setBold(bool arg);
@@ -116,6 +118,7 @@ signals:
     void fileUrlChanged();
     void textChanged();
     void error(QString message);
+    void sizeChanged();
 
 private:
     void reset();

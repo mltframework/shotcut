@@ -58,8 +58,10 @@ void QmlRichText::setTarget(QQuickItem *target)
     QVariant doc = m_target->property("textDocument");
     if (doc.canConvert<QQuickTextDocument*>()) {
         QQuickTextDocument *qqdoc = doc.value<QQuickTextDocument*>();
-        if (qqdoc)
+        if (qqdoc) {
             m_doc = qqdoc->textDocument();
+            connect(m_doc, &QTextDocument::contentsChanged, this, &QmlRichText::sizeChanged);
+        }
     }
     emit targetChanged();
 }
