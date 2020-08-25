@@ -1108,7 +1108,7 @@ static QString convertUrlsToXML(const QString& xml)
         }
         int i = 0, count = urls.size();
         for (const auto& path : Util::sortedFileList(urls)) {
-            if (MAIN.isSourceClipMyProject(path)) continue;
+            if (MAIN.isSourceClipMyProject(path, /* withDialog */ false)) continue;
             longTask.reportProgress(Util::baseName(path), i++, count);
             Mlt::Producer p(MLT.profile(), path.toUtf8().constData());
             if (p.is_valid()) {

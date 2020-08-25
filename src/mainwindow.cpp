@@ -1126,20 +1126,22 @@ void MainWindow::setProfile(const QString &profile_name)
     emit profileChanged();
 }
 
-bool MainWindow::isSourceClipMyProject(QString resource)
+bool MainWindow::isSourceClipMyProject(QString resource, bool withDialog)
 {
     if (m_player->tabIndex() == Player::ProjectTabIndex && MLT.savedProducer() && MLT.savedProducer()->is_valid())
         resource = QString::fromUtf8(MLT.savedProducer()->get("resource"));
     if (!resource.isEmpty() && QDir(resource) == QDir(fileName())) {
-        QMessageBox dialog(QMessageBox::Information,
-                           qApp->applicationName(),
-                           tr("You cannot add a project to itself!"),
-                           QMessageBox::Ok,
-                           this);
-        dialog.setDefaultButton(QMessageBox::Ok);
-        dialog.setEscapeButton(QMessageBox::Ok);
-        dialog.setWindowModality(QmlApplication::dialogModality());
-        dialog.exec();
+        if (withDialog) {
+            QMessageBox dialog(QMessageBox::Information,
+                               qApp->applicationName(),
+                               tr("You cannot add a project to itself!"),
+                               QMessageBox::Ok,
+                               this);
+            dialog.setDefaultButton(QMessageBox::Ok);
+            dialog.setEscapeButton(QMessageBox::Ok);
+            dialog.setWindowModality(QmlApplication::dialogModality());
+            dialog.exec();
+        }
         return true;
     }
     return false;
