@@ -129,6 +129,9 @@ VuiBase {
                 id: textArea
                 transformOrigin: Item.TopLeft
                 scale: rectangle.heightScale
+                antialiasing: true
+                layer.smooth: true
+                smooth: true
                 x: filterRect.x * scale
                 y: filterRect.y * scale
                 width: filterRect.width * rectangle.widthScale / scale

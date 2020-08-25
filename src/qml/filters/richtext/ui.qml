@@ -42,7 +42,7 @@ Item {
             filter.set('html', '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
 <html><head><meta name="qrichtext" content="1" /><style type="text/css">
 p, li { white-space: pre-wrap; }
-</style></head><body style="font-family:sans-serif; font-size:72pt; font-weight:600; font-style:normal; color:#000000">
+</style></head><body style="font-family:sans-serif; font-size:72pt; font-weight:600; font-style:normal; color:#ffffff">
 <p align="center" style="margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px">Shotcut</p></body></html>
 ')
             filter.set('argument', '')
