@@ -23,7 +23,10 @@ import Shotcut.Controls 1.0
 Item {
     property int producerWidth: (producer.get('meta.media.width') === null)? profile.width :producer.get('meta.media.width')
     property int producerHeight: (producer.get('meta.media.height') === null)? profile.height : producer.get('meta.media.height')
+    property double widthScaleFactor: profile.width / producerWidth
+    property double heightScaleFactor: profile.height / producerHeight
     property var defaultParameters: ['left', 'right', 'top', 'bottom', 'center', 'center_bias']
+
     width: 350
     height: 200
     
@@ -65,6 +68,7 @@ Item {
     Component.onCompleted: {
         if (filter.isNew) {
             // Set default parameter values
+            filter.set('use_profile', '1')
             filter.set("center", 0);
             filter.set("center_bias", 0);
             filter.set("top", 0);
@@ -73,6 +77,16 @@ Item {
             filter.set("right", 0);
             centerCheckBox.checked = false
             filter.savePreset(defaultParameters)
+        } else {
+            if (filter.get('use_profile') !== '1') {
+                filter.blockSignals = true
+                filter.set('use_profile', '1')
+                filter.set('top', Math.round(filter.getDouble('top') * heightScaleFactor))
+                filter.set('bottom', Math.round(filter.getDouble('bottom') * heightScaleFactor))
+                filter.set('left', Math.round(filter.getDouble('left') * widthScaleFactor))
+                filter.blockSignals = false
+                filter.set('right', Math.round(filter.getDouble('right') * widthScaleFactor))
+            }
         }
         setControls()
         setEnabled()
@@ -125,8 +139,8 @@ Item {
         }
         SliderSpinner {
             id: biasslider
-            minimumValue: Math.round(-Math.max(producerWidth, producerHeight) / 2)
-            maximumValue: Math.round(Math.max(producerWidth, producerHeight) / 2)
+            minimumValue: Math.round(-Math.max(profile.width, profile.height) / 2)
+            maximumValue: Math.round(Math.max(profile.width, profile.height) / 2)
             suffix: ' px'
             onValueChanged: filter.set('center_bias', value)
         }
@@ -142,7 +156,7 @@ Item {
         SliderSpinner {
             id: topslider
             minimumValue: 0
-            maximumValue: producerHeight
+            maximumValue: profile.height
             suffix: ' px'
             onValueChanged: filter.set('top', value)
         }
@@ -158,7 +172,7 @@ Item {
         SliderSpinner {
             id: bottomslider
             minimumValue: 0
-            maximumValue: producerHeight
+            maximumValue: profile.height
             suffix: ' px'
             onValueChanged: filter.set('bottom', value)
         }
@@ -174,7 +188,7 @@ Item {
         SliderSpinner {
             id: leftslider
             minimumValue: 0
-            maximumValue: producerWidth
+            maximumValue: profile.width
             suffix: ' px'
             onValueChanged: filter.set('left', value)
         }
@@ -190,7 +204,7 @@ Item {
         SliderSpinner {
             id: rightslider
             minimumValue: 0
-            maximumValue: producerWidth
+            maximumValue: profile.width
             suffix: ' px'
             onValueChanged: filter.set('right', value)
         }
