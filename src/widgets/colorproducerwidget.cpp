@@ -60,19 +60,25 @@ ColorProducerWidget::~ColorProducerWidget()
 
 void ColorProducerWidget::on_colorButton_clicked()
 {
-    QColorDialog dialog;
+    if (!m_producer) {
+        return;
+    }
+    QColor color(QFileInfo(m_producer->get("resource")).baseName());
+    QColorDialog dialog(color);
     dialog.setOption(QColorDialog::ShowAlphaChannel);
     if (dialog.exec() == QDialog::Accepted) {
-        ui->colorLabel->setText(colorToString(dialog.currentColor()));
-        ui->colorLabel->setStyleSheet(QString("color: %1; background-color: %2")
-                                      .arg((dialog.currentColor().value() < 150)? "white":"black")
-                                      .arg(dialog.currentColor().name()));
-        if (m_producer) {
-            m_producer->set("resource", colorStringToResource(ui->colorLabel->text()).toLatin1().constData());
-            m_producer->set(kShotcutCaptionProperty, ui->colorLabel->text().toLatin1().constData());
-            m_producer->set(kShotcutDetailProperty, ui->colorLabel->text().toLatin1().constData());
-            emit producerChanged(m_producer.data());
+        auto newColor = dialog.currentColor();
+        if (newColor.alpha() == 0 && newColor != color) {
+            newColor.setAlpha(255);
         }
+        ui->colorLabel->setText(colorToString(newColor));
+        ui->colorLabel->setStyleSheet(QString("color: %1; background-color: %2")
+                                      .arg((newColor.value() < 150)? "white":"black")
+                                      .arg(newColor.name()));
+        m_producer->set("resource", colorStringToResource(ui->colorLabel->text()).toLatin1().constData());
+        m_producer->set(kShotcutCaptionProperty, ui->colorLabel->text().toLatin1().constData());
+        m_producer->set(kShotcutDetailProperty, ui->colorLabel->text().toLatin1().constData());
+        emit producerChanged(m_producer.data());
     }
 }
 
