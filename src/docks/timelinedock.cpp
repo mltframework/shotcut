@@ -1110,7 +1110,16 @@ static QString convertUrlsToXML(const QString& xml)
         for (const auto& path : Util::sortedFileList(urls)) {
             if (MAIN.isSourceClipMyProject(path, /* withDialog */ false)) continue;
             longTask.reportProgress(Util::baseName(path), i++, count);
-            Mlt::Producer p(MLT.profile(), path.toUtf8().constData());
+            Mlt::Producer p;
+            if (path.endsWith(".mlt") || path.endsWith(".xml")) {
+                p = Mlt::Producer(MLT.profile(), "xml", path.toUtf8().constData());
+                if (p.is_valid()) {
+                    p.set(kShotcutVirtualClip, 1);
+                    p.set("resource", path.toUtf8().constData());
+                }
+            } else {
+                p = Mlt::Producer(MLT.profile(), path.toUtf8().constData());
+            }
             if (p.is_valid()) {
                 // Convert avformat to avformat-novalidate so that XML loads faster.
                 if (!qstrcmp(p.get("mlt_service"), "avformat")) {
@@ -1121,13 +1130,7 @@ static QString convertUrlsToXML(const QString& xml)
                     p.set("mlt_service", "avformat-novalidate");
                     p.set("mute_on_pause", 0);
                 }
-                // Convert MLT XML to a virtual clip.
-                if (!qstrcmp(p.get("mlt_service"), "xml")) {
-                    p.set(kShotcutVirtualClip, 1);
-                    p.set("resource", path.toUtf8().constData());
-                } else{
-                    ProxyManager::generateIfNotExists(p);
-                }
+                ProxyManager::generateIfNotExists(p);
                 MLT.setImageDurationFromDefault(&p);
                 MLT.lockCreationTime(&p);
                 p.get_length_time(mlt_time_clock);
