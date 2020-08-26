@@ -69,8 +69,11 @@ SlideshowGeneratorWidget::SlideshowGeneratorWidget(Mlt::Playlist* clips, QWidget
     m_aspectConversionCombo->addItem(tr("Pad Black"));
     m_aspectConversionCombo->addItem(tr("Crop Center"));
     m_aspectConversionCombo->addItem(tr("Crop and Pan"));
-    if(MLT.repository()->filters()->property_exists("pillar_echo")) {
-        m_aspectConversionCombo->addItem(tr("Pad Blur"));
+    {
+        QScopedPointer<Mlt::Properties> mltFilters(MLT.repository()->filters());
+        if (mltFilters && mltFilters->property_exists("pillar_echo")) {
+            m_aspectConversionCombo->addItem(tr("Pad Blur"));
+        }
     }
     m_aspectConversionCombo->setToolTip(tr("Choose an aspect ratio conversion method."));
     m_aspectConversionCombo->setCurrentIndex(ASPECT_CONVERSION_CROP_CENTER);
