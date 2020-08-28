@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2019 Meltytech, LLC
+ * Copyright (c) 2014-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -117,6 +117,7 @@ GridLayout {
             italic: filter.get('style') === 'italic',
             weight: filter.getDouble('weight') / 10
         })
+        fontDialog.fontFamily = filter.get('family')
         fontSizeCheckBox.checked = parseInt(filter.get(useFontSizeProperty))
         refreshFontButton()
         setKeyframedControls()
@@ -159,7 +160,11 @@ GridLayout {
         Button {
             id: fontButton
             onClicked: {
-                fontDialog.font.pointSize = getPointSize()
+                if (fontSizeCheckBox.checked) {
+                    fontDialog.font.pointSize = getPointSize()
+                } else {
+                    fontDialog.font.pointSize = 48
+                }
                 fontDialog.open()
             }
             FontDialog {
@@ -178,7 +183,10 @@ GridLayout {
                     refreshFontButton()
                 }
                 onAccepted: fontFamily = font.family
-                onRejected: filter.set('family', fontFamily)
+                onRejected: {
+                    filter.set('family', fontFamily)
+                    refreshFontButton()
+                }
             }
         }
         CheckBox {
