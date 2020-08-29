@@ -20,7 +20,7 @@
 #include "scrubbar.h"
 #include "openotherdialog.h"
 #include "player.h"
-
+#include "defaultlayouts.h"
 #include "widgets/alsawidget.h"
 #include "widgets/colorbarswidget.h"
 #include "widgets/colorproducerwidget.h"
@@ -110,6 +110,8 @@ static bool eventDebugCallback(void **data)
 }
 
 static const int AUTOSAVE_TIMEOUT_MS = 60000;
+static const char* kReservedLayoutPrefix = "__%1";
+static const char* kLayoutSwitcherName("layoutSwitcherGrid");
 
 MainWindow::MainWindow()
     : QMainWindow(0)
@@ -240,6 +242,45 @@ MainWindow::MainWindow()
     readPlayerSettings();
     configureVideoWidget();
 
+    // setup the layout switcher
+    auto group = new QActionGroup(this);
+    group->addAction(ui->actionLayoutLogging);
+    group->addAction(ui->actionLayoutEditing);
+    group->addAction(ui->actionLayoutEffects);
+    group->addAction(ui->actionLayoutAudio);
+    group->addAction(ui->actionLayoutColor);
+    group->addAction(ui->actionLayoutPlayer);
+    switch (Settings.layoutMode()) {
+    case LayoutMode::Logging:
+        ui->actionLayoutLogging->setChecked(true);
+        break;
+    case LayoutMode::Editing:
+        ui->actionLayoutEditing->setChecked(true);
+        break;
+    case LayoutMode::Effects:
+        ui->actionLayoutEffects->setChecked(true);
+        break;
+    case LayoutMode::Color:
+        ui->actionLayoutColor->setChecked(true);
+        break;
+    case LayoutMode::Audio:
+        ui->actionLayoutAudio->setChecked(true);
+        break;
+    case LayoutMode::PlayerOnly:
+        ui->actionLayoutPlayer->setChecked(true);
+        break;
+    default:
+        break;
+    }
+    // Center the layout actions in the remaining toolbar space.
+    auto spacer = new QWidget;
+    spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    ui->mainToolBar->insertWidget(ui->dummyAction, spacer);
+    spacer = new QWidget;
+    spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    ui->mainToolBar->addWidget(spacer);
+    updateLayoutSwitcher();
+
 #ifndef SHOTCUT_NOUPGRADE
     if (Settings.noUpgrade() || qApp->property("noupgrade").toBool())
 #endif
@@ -263,14 +304,12 @@ MainWindow::MainWindow()
     QScrollArea* scroll = new QScrollArea;
     scroll->setWidgetResizable(true);
     m_propertiesDock->setWidget(scroll);
-    addDockWidget(Qt::LeftDockWidgetArea, m_propertiesDock);
     ui->menuView->addAction(m_propertiesDock->toggleViewAction());
     connect(m_propertiesDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onPropertiesDockTriggered(bool)));
     connect(ui->actionProperties, SIGNAL(triggered()), this, SLOT(onPropertiesDockTriggered()));
 
     m_recentDock = new RecentDock(this);
     m_recentDock->hide();
-    addDockWidget(Qt::RightDockWidgetArea, m_recentDock);
     m_recentDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_3));
     ui->menuView->addAction(m_recentDock->toggleViewAction());
     connect(m_recentDock, SIGNAL(itemActivated(QString)), this, SLOT(open(QString)));
@@ -281,7 +320,6 @@ MainWindow::MainWindow()
 
     m_playlistDock = new PlaylistDock(this);
     m_playlistDock->hide();
-    addDockWidget(Qt::LeftDockWidgetArea, m_playlistDock);
     m_playlistDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_4));
     ui->menuView->addAction(m_playlistDock->toggleViewAction());
     connect(m_playlistDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onPlaylistDockTriggered(bool)));
@@ -306,7 +344,6 @@ MainWindow::MainWindow()
 
     m_timelineDock = new TimelineDock(this);
     m_timelineDock->hide();
-    addDockWidget(Qt::BottomDockWidgetArea, m_timelineDock);
     m_timelineDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_5));
     ui->menuView->addAction(m_timelineDock->toggleViewAction());
     connect(m_timelineDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onTimelineDockTriggered(bool)));
@@ -337,7 +374,6 @@ MainWindow::MainWindow()
     m_filtersDock = new FiltersDock(m_filterController->metadataModel(), m_filterController->attachedModel(), this);
     m_filtersDock->setMinimumSize(400, 300);
     m_filtersDock->hide();
-    addDockWidget(Qt::LeftDockWidgetArea, m_filtersDock);
     m_filtersDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_6));
     ui->menuView->addAction(m_filtersDock->toggleViewAction());
     connect(m_filtersDock, SIGNAL(currentFilterRequested(int)), m_filterController, SLOT(setCurrentFilter(int)), Qt::QueuedConnection);
@@ -371,7 +407,6 @@ MainWindow::MainWindow()
 
     m_keyframesDock = new KeyframesDock(m_filtersDock->qmlProducer(), this);
     m_keyframesDock->hide();
-    addDockWidget(Qt::BottomDockWidgetArea, m_keyframesDock);
     m_keyframesDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_7));
     ui->menuView->addAction(m_keyframesDock->toggleViewAction());
     connect(m_keyframesDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onKeyframesDockTriggered(bool)));
@@ -386,7 +421,6 @@ MainWindow::MainWindow()
     m_historyDock->toggleViewAction()->setIcon(ui->actionHistory->icon());
     m_historyDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_8));
     m_historyDock->setMinimumWidth(150);
-    addDockWidget(Qt::RightDockWidgetArea, m_historyDock);
     ui->menuView->addAction(m_historyDock->toggleViewAction());
     connect(m_historyDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onHistoryDockTriggered(bool)));
     connect(ui->actionHistory, SIGNAL(triggered()), this, SLOT(onHistoryDockTriggered()));
@@ -400,7 +434,6 @@ MainWindow::MainWindow()
 
     m_encodeDock = new EncodeDock(this);
     m_encodeDock->hide();
-    addDockWidget(Qt::LeftDockWidgetArea, m_encodeDock);
     m_encodeDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_9));
     ui->menuView->addAction(m_encodeDock->toggleViewAction());
     connect(this, SIGNAL(producerOpened()), m_encodeDock, SLOT(onProducerOpened()));
@@ -427,23 +460,31 @@ MainWindow::MainWindow()
 
     m_jobsDock = new JobsDock(this);
     m_jobsDock->hide();
-    addDockWidget(Qt::RightDockWidgetArea, m_jobsDock);
     m_jobsDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_0));
     ui->menuView->addAction(m_jobsDock->toggleViewAction());
     connect(&JOBS, SIGNAL(jobAdded()), m_jobsDock, SLOT(onJobAdded()));
     connect(m_jobsDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onJobsDockTriggered(bool)));
     connect(ui->actionJobs, SIGNAL(triggered()), this, SLOT(onJobsDockTriggered()));
 
+    addDockWidget(Qt::LeftDockWidgetArea, m_propertiesDock);
+    addDockWidget(Qt::RightDockWidgetArea, m_recentDock);
+    addDockWidget(Qt::LeftDockWidgetArea, m_playlistDock);
+    addDockWidget(Qt::BottomDockWidgetArea, m_timelineDock);
+    addDockWidget(Qt::LeftDockWidgetArea, m_filtersDock);
+    addDockWidget(Qt::BottomDockWidgetArea, m_keyframesDock);
+    addDockWidget(Qt::RightDockWidgetArea, m_historyDock);
+    addDockWidget(Qt::LeftDockWidgetArea, m_encodeDock);
+    addDockWidget(Qt::RightDockWidgetArea, m_jobsDock);
     tabifyDockWidget(m_propertiesDock, m_playlistDock);
     tabifyDockWidget(m_playlistDock, m_filtersDock);
     tabifyDockWidget(m_filtersDock, m_encodeDock);
-    QDockWidget* audioWaveformDock = findChild<QDockWidget*>("AudioWaveformDock");
-    splitDockWidget(m_recentDock, audioWaveformDock, Qt::Vertical);
+    splitDockWidget(m_recentDock, findChild<QDockWidget*>("AudioWaveformDock"), Qt::Vertical);
     splitDockWidget(audioMeterDock, m_recentDock, Qt::Horizontal);
     tabifyDockWidget(m_recentDock, m_historyDock);
     tabifyDockWidget(m_historyDock, m_jobsDock);
     tabifyDockWidget(m_keyframesDock, m_timelineDock);
     m_recentDock->raise();
+    resetDockCorners();
 
     // Configure the View menu.
     ui->menuView->addSeparator();
@@ -459,11 +500,6 @@ MainWindow::MainWindow()
     connect(m_filterController, SIGNAL(currentFilterChanged(QmlFilter*, QmlMetadata*, int)), videoWidget, SLOT(setCurrentFilter(QmlFilter*, QmlMetadata*)));
 
     readWindowSettings();
-    setCorner(Qt::TopLeftCorner, Qt::LeftDockWidgetArea);
-    setCorner(Qt::TopRightCorner, Qt::RightDockWidgetArea);
-    setCorner(Qt::BottomLeftCorner, Qt::BottomDockWidgetArea);
-    setCorner(Qt::BottomRightCorner, Qt::BottomDockWidgetArea);
-    setDockNestingEnabled(true);
 
     setFocus();
     setCurrentFile("");
@@ -1243,6 +1279,14 @@ void MainWindow::resetVideoModeMenu()
     }
 }
 
+void MainWindow::resetDockCorners()
+{
+    setCorner(Qt::TopLeftCorner, Qt::LeftDockWidgetArea);
+    setCorner(Qt::TopRightCorner, Qt::RightDockWidgetArea);
+    setCorner(Qt::BottomLeftCorner, Qt::BottomDockWidgetArea);
+    setCorner(Qt::BottomRightCorner, Qt::BottomDockWidgetArea);
+}
+
 static void autosaveTask(MainWindow* p)
 {
     LOG_DEBUG_TIME();
@@ -1604,7 +1648,7 @@ void MainWindow::readWindowSettings()
         m_filtersDock->setFloating(false);
 #endif
     } else {
-        on_actionLayoutTimeline_triggered();
+        on_actionLayoutEditing_triggered();
     }
     LOG_DEBUG() << "end";
 }
@@ -3633,15 +3677,44 @@ void MainWindow::on_actionTutorials_triggered()
 
 void MainWindow::on_actionRestoreLayout_triggered()
 {
-    restoreGeometry(Settings.windowGeometryDefault());
-    restoreState(Settings.windowStateDefault());
-    on_actionLayoutTimeline_triggered();
-    ui->actionShowTitleBars->setChecked(true);
-    on_actionShowTitleBars_triggered(true);
-    ui->actionShowTextUnderIcons->setChecked(true);
-    on_actionShowTextUnderIcons_toggled(true);
-    ui->actionShowSmallIcons->setChecked(false);
-    on_actionShowSmallIcons_toggled(false);
+    auto mode = Settings.layoutMode();
+    if (mode > LayoutMode::Custom) {
+        // Clear the saved layout for this mode
+        Settings.setLayout(QString(kReservedLayoutPrefix).arg(mode), QByteArray(), QByteArray());
+        // Reset the layout mode so the current layout is saved as custom when trigger action
+        Settings.setLayoutMode();
+        switch (mode) {
+        case LayoutMode::Logging:
+            on_actionLayoutLogging_triggered();
+            break;
+        case LayoutMode::Editing:
+            on_actionLayoutEditing_triggered();
+            break;
+        case LayoutMode::Effects:
+            on_actionLayoutEffects_triggered();
+            break;
+        case LayoutMode::Color:
+            on_actionLayoutColor_triggered();
+            break;
+        case LayoutMode::Audio:
+            on_actionLayoutAudio_triggered();
+            break;
+        case LayoutMode::PlayerOnly:
+            on_actionLayoutPlayer_triggered();
+            break;
+        }
+    } else {
+        ui->actionLayoutLogging->actionGroup()->checkedAction()->setChecked(false);
+        restoreGeometry(Settings.windowGeometryDefault());
+        restoreState(Settings.windowStateDefault());
+        on_actionLayoutEditing_triggered();
+        ui->actionShowTitleBars->setChecked(true);
+        on_actionShowTitleBars_triggered(true);
+        ui->actionShowTextUnderIcons->setChecked(true);
+        on_actionShowTextUnderIcons_toggled(true);
+        ui->actionShowSmallIcons->setChecked(false);
+        on_actionShowSmallIcons_toggled(false);
+    }
 }
 
 void MainWindow::on_actionShowTitleBars_triggered(bool checked)
@@ -4083,43 +4156,99 @@ void MainWindow::on_actionKeyboardShortcuts_triggered()
     QDesktopServices::openUrl(QUrl("https://www.shotcut.org/howtos/keyboard-shortcuts/"));
 }
 
+void MainWindow::on_actionLayoutLogging_triggered()
+{
+    Settings.setLayout(QString(kReservedLayoutPrefix).arg(Settings.layoutMode()), QByteArray(), saveState());
+    Settings.setLayoutMode(LayoutMode::Logging);
+    auto state = Settings.layoutState(QString(kReservedLayoutPrefix).arg(LayoutMode::Logging));
+    if (state.isEmpty()) {
+        restoreState(kLayoutLoggingDefault);
+//        setCorner(Qt::TopLeftCorner, Qt::LeftDockWidgetArea);
+//        setCorner(Qt::TopRightCorner, Qt::RightDockWidgetArea);
+//        setCorner(Qt::BottomLeftCorner, Qt::LeftDockWidgetArea);
+//        setCorner(Qt::BottomRightCorner, Qt::RightDockWidgetArea);
+//        resizeDocks({m_playlistDock, m_propertiesDock},
+//            {qFloor(width() * 0.25), qFloor(width() * 0.25)}, Qt::Horizontal);
+    } else {
+        LOG_DEBUG() << state.toBase64();
+        restoreState(state);
+    }
+}
+
+void MainWindow::on_actionLayoutEditing_triggered()
+{
+    Settings.setLayout(QString(kReservedLayoutPrefix).arg(Settings.layoutMode()), QByteArray(), saveState());
+    Settings.setLayoutMode(LayoutMode::Editing);
+    auto state = Settings.layoutState(QString(kReservedLayoutPrefix).arg(LayoutMode::Editing));
+    if (state.isEmpty()) {
+        restoreState(kLayoutEditingDefault);
+//        resetDockCorners();
+    } else {
+        LOG_DEBUG() << state.toBase64();
+        restoreState(state);
+    }
+}
+
+void MainWindow::on_actionLayoutEffects_triggered()
+{
+    Settings.setLayout(QString(kReservedLayoutPrefix).arg(Settings.layoutMode()), QByteArray(), saveState());
+    Settings.setLayoutMode(LayoutMode::Effects);
+    auto state = Settings.layoutState(QString(kReservedLayoutPrefix).arg(LayoutMode::Effects));
+    if (state.isEmpty()) {
+        restoreState(kLayoutEffectsDefault);
+//        resetDockCorners();
+    } else {
+//        LOG_DEBUG() << state.toBase64();
+        restoreState(state);
+    }
+}
+
+void MainWindow::on_actionLayoutColor_triggered()
+{
+    Settings.setLayout(QString(kReservedLayoutPrefix).arg(Settings.layoutMode()), QByteArray(), saveState());
+    Settings.setLayoutMode(LayoutMode::Color);
+    auto state = Settings.layoutState(QString(kReservedLayoutPrefix).arg(LayoutMode::Color));
+    if (state.isEmpty()) {
+        restoreState(kLayoutColorDefault);
+//        setCorner(Qt::TopLeftCorner, Qt::LeftDockWidgetArea);
+//        setCorner(Qt::TopRightCorner, Qt::RightDockWidgetArea);
+//        setCorner(Qt::BottomLeftCorner, Qt::BottomDockWidgetArea);
+//        setCorner(Qt::BottomRightCorner, Qt::RightDockWidgetArea);
+    } else {
+//        LOG_DEBUG() << state.toBase64();
+        restoreState(state);
+    }
+}
+
+void MainWindow::on_actionLayoutAudio_triggered()
+{
+    Settings.setLayout(QString(kReservedLayoutPrefix).arg(Settings.layoutMode()), QByteArray(), saveState());
+    Settings.setLayoutMode(LayoutMode::Audio);
+    auto state = Settings.layoutState(QString(kReservedLayoutPrefix).arg(LayoutMode::Audio));
+    if (state.isEmpty()) {
+        restoreState(kLayoutAudioDefault);
+//        setCorner(Qt::TopLeftCorner, Qt::LeftDockWidgetArea);
+//        setCorner(Qt::TopRightCorner, Qt::RightDockWidgetArea);
+//        setCorner(Qt::BottomLeftCorner, Qt::BottomDockWidgetArea);
+//        setCorner(Qt::BottomRightCorner, Qt::RightDockWidgetArea);
+    } else {
+//        LOG_DEBUG() << state.toBase64();
+        restoreState(state);
+    }
+}
+
 void MainWindow::on_actionLayoutPlayer_triggered()
 {
-    restoreState(Settings.windowStateDefault());
-}
-
-void MainWindow::on_actionLayoutPlaylist_triggered()
-{
-    restoreState(Settings.windowStateDefault());
-    m_recentDock->show();
-    m_recentDock->raise();
-    m_playlistDock->show();
-    m_playlistDock->raise();
-}
-
-void MainWindow::on_actionLayoutTimeline_triggered()
-{
-    restoreState(Settings.windowStateDefault());
-    QDockWidget* audioMeterDock = findChild<QDockWidget*>("AudioPeakMeterDock");
-    if (audioMeterDock) {
-        audioMeterDock->show();
-        audioMeterDock->raise();
+    Settings.setLayout(QString(kReservedLayoutPrefix).arg(Settings.layoutMode()), QByteArray(), saveState());
+    Settings.setLayoutMode(LayoutMode::PlayerOnly);
+    auto state = Settings.layoutState(QString(kReservedLayoutPrefix).arg(LayoutMode::PlayerOnly));
+    if (state.isEmpty()) {
+        restoreState(kLayoutPlayerDefault);
+//        resetDockCorners();
+    } else {
+//        LOG_DEBUG() << state.toBase64();
+        restoreState(state);
     }
-    m_recentDock->show();
-    m_recentDock->raise();
-    m_filtersDock->show();
-    m_filtersDock->raise();
-    m_timelineDock->show();
-    m_timelineDock->raise();
-}
-
-void MainWindow::on_actionLayoutClip_triggered()
-{
-    restoreState(Settings.windowStateDefault());
-    m_recentDock->show();
-    m_recentDock->raise();
-    m_filtersDock->show();
-    m_filtersDock->raise();
 }
 
 void MainWindow::on_actionLayoutAdd_triggered()
@@ -4130,6 +4259,8 @@ void MainWindow::on_actionLayoutAdd_triggered()
                                          "", &ok);
     if (ok && !name.isEmpty()) {
         if (Settings.setLayout(name, saveGeometry(), saveState())) {
+            Settings.setLayoutMode();
+            ui->actionLayoutLogging->actionGroup()->checkedAction()->setChecked(false);
             Settings.sync();
             if (Settings.layouts().size() == 1) {
                 ui->menuLayout->addAction(ui->actionLayoutRemove);
@@ -4142,6 +4273,8 @@ void MainWindow::on_actionLayoutAdd_triggered()
 
 void MainWindow::onLayoutTriggered(QAction* action)
 {
+    Settings.setLayoutMode();
+    ui->actionLayoutLogging->actionGroup()->checkedAction()->setChecked(false);
     restoreGeometry(Settings.layoutGeometry(action->text()));
     restoreState(Settings.layoutState(action->text()));
 }
@@ -4311,12 +4444,14 @@ void MainWindow::on_actionShowTextUnderIcons_toggled(bool b)
 {
     ui->mainToolBar->setToolButtonStyle(b? Qt::ToolButtonTextUnderIcon : Qt::ToolButtonIconOnly);
     Settings.setTextUnderIcons(b);
+    updateLayoutSwitcher();
 }
 
 void MainWindow::on_actionShowSmallIcons_toggled(bool b)
 {
     ui->mainToolBar->setIconSize(b? QSize(16, 16) : QSize());
     Settings.setSmallIcons(b);
+    updateLayoutSwitcher();
 }
 
 void MainWindow::onPlaylistInChanged(int in)
@@ -4583,5 +4718,68 @@ void MainWindow::on_actionProxyConfigureHardware_triggered()
     if (Settings.encodeHardware().isEmpty()) {
         ui->actionProxyUseHardware->setChecked(false);
         Settings.setProxyUseHardware(false);
+    }
+}
+
+void MainWindow::updateLayoutSwitcher()
+{
+    if (Settings.textUnderIcons() && !Settings.smallIcons()) {
+        auto layoutSwitcher = findChild<QWidget*>(kLayoutSwitcherName);
+        if (layoutSwitcher) {
+            layoutSwitcher->show();
+            for (const auto& child : layoutSwitcher->findChildren<QToolButton*>()) {
+                child->show();
+            }
+        } else {
+            layoutSwitcher = new QWidget;
+            layoutSwitcher->setObjectName(kLayoutSwitcherName);
+            auto layoutGrid = new QGridLayout(layoutSwitcher);
+            layoutGrid->setContentsMargins(0, 0, 0, 0);
+            ui->mainToolBar->insertWidget(ui->dummyAction, layoutSwitcher);
+            auto button = new QToolButton;
+            button->setAutoRaise(true);
+            button->setDefaultAction(ui->actionLayoutLogging);
+            layoutGrid->addWidget(button, 0, 0, Qt::AlignCenter);
+            button = new QToolButton;
+            button->setAutoRaise(true);
+            button->setDefaultAction(ui->actionLayoutEditing);
+            layoutGrid->addWidget(button, 0, 1, Qt::AlignCenter);
+            button = new QToolButton;
+            button->setAutoRaise(true);
+            button->setDefaultAction(ui->actionLayoutEffects);
+            layoutGrid->addWidget(button, 0, 2, Qt::AlignCenter);
+            button = new QToolButton;
+            button->setAutoRaise(true);
+            button->setDefaultAction(ui->actionLayoutColor);
+            layoutGrid->addWidget(button, 1, 0, Qt::AlignCenter);
+            button = new QToolButton;
+            button->setAutoRaise(true);
+            button->setDefaultAction(ui->actionLayoutAudio);
+            layoutGrid->addWidget(button, 1, 1, Qt::AlignCenter);
+            button = new QToolButton;
+            button->setAutoRaise(true);
+            button->setDefaultAction(ui->actionLayoutPlayer);
+            layoutGrid->addWidget(button, 1, 2, Qt::AlignCenter);
+        }
+        ui->mainToolBar->removeAction(ui->actionLayoutLogging);
+        ui->mainToolBar->removeAction(ui->actionLayoutEditing);
+        ui->mainToolBar->removeAction(ui->actionLayoutEffects);
+        ui->mainToolBar->removeAction(ui->actionLayoutColor);
+        ui->mainToolBar->removeAction(ui->actionLayoutAudio);
+        ui->mainToolBar->removeAction(ui->actionLayoutPlayer);
+    } else {
+        auto layoutSwitcher = findChild<QWidget*>(kLayoutSwitcherName);
+        if (layoutSwitcher) {
+            layoutSwitcher->hide();
+            for (const auto& child : layoutSwitcher->findChildren<QToolButton*>()) {
+                child->hide();
+            }
+            ui->mainToolBar->insertAction(ui->dummyAction, ui->actionLayoutLogging);
+            ui->mainToolBar->insertAction(ui->dummyAction, ui->actionLayoutEditing);
+            ui->mainToolBar->insertAction(ui->dummyAction, ui->actionLayoutEffects);
+            ui->mainToolBar->insertAction(ui->dummyAction, ui->actionLayoutColor);
+            ui->mainToolBar->insertAction(ui->dummyAction, ui->actionLayoutAudio);
+            ui->mainToolBar->insertAction(ui->dummyAction, ui->actionLayoutPlayer);
+        }
     }
 }

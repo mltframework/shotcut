@@ -194,6 +194,8 @@ public:
     QByteArray layoutGeometry(const QString& name);
     QByteArray layoutState(const QString& name);
     bool removeLayout(const QString& name);
+    int layoutMode() const;
+    void setLayoutMode(int mode = 0);
 
     bool clearRecent() const;
     void setClearRecent(bool);

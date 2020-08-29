@@ -739,7 +739,12 @@ void ShotcutSettings::setAppDataLocally(const QString& location)
 
 QStringList ShotcutSettings::layouts() const
 {
-    return settings.value("layout/layouts").toStringList();
+    QStringList result;
+    for (const auto& s : settings.value("layout/layouts").toStringList()) {
+        if (!s.startsWith("__"))
+            result << s;
+    }
+    return result;
 }
 
 bool ShotcutSettings::setLayout(const QString& name, const QByteArray& geometry, const QByteArray& state)
@@ -783,6 +788,16 @@ bool ShotcutSettings::removeLayout(const QString& name)
         return true;
     }
     return false;
+}
+
+int ShotcutSettings::layoutMode() const
+{
+    return settings.value("layout/mode", 0).toInt();
+}
+
+void ShotcutSettings::setLayoutMode(int mode)
+{
+    settings.setValue("layout/mode", mode);
 }
 
 bool ShotcutSettings::clearRecent() const

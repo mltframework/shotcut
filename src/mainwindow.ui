@@ -69,9 +69,11 @@
      <property name="title">
       <string>Layout</string>
      </property>
-     <addaction name="actionLayoutTimeline"/>
-     <addaction name="actionLayoutClip"/>
-     <addaction name="actionLayoutPlaylist"/>
+     <addaction name="actionLayoutLogging"/>
+     <addaction name="actionLayoutEditing"/>
+     <addaction name="actionLayoutEffects"/>
+     <addaction name="actionLayoutColor"/>
+     <addaction name="actionLayoutAudio"/>
      <addaction name="actionLayoutPlayer"/>
      <addaction name="separator"/>
      <addaction name="actionRestoreLayout"/>
@@ -282,7 +284,13 @@
    <addaction name="actionHistory"/>
    <addaction name="actionEncode"/>
    <addaction name="actionJobs"/>
-   <addaction name="actionFullscreen"/>
+   <addaction name="dummyAction"/>
+   <addaction name="actionLayoutLogging"/>
+   <addaction name="actionLayoutEditing"/>
+   <addaction name="actionLayoutEffects"/>
+   <addaction name="actionLayoutColor"/>
+   <addaction name="actionLayoutAudio"/>
+   <addaction name="actionLayoutPlayer"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionOpen">
@@ -953,24 +961,48 @@
     <string>?</string>
    </property>
   </action>
-  <action name="actionLayoutPlayer">
+  <action name="actionLayoutAudio">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="text">
-    <string>Player</string>
+    <string>Audio</string>
+   </property>
+   <property name="toolTip">
+    <string>Switch to the audio layout</string>
    </property>
   </action>
-  <action name="actionLayoutPlaylist">
+  <action name="actionLayoutLogging">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="text">
-    <string>Playlist Project</string>
+    <string>Logging</string>
+   </property>
+   <property name="toolTip">
+    <string>Switch to the logging layout</string>
    </property>
   </action>
-  <action name="actionLayoutTimeline">
+  <action name="actionLayoutEditing">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="text">
-    <string>Timeline Project</string>
+    <string>Editing</string>
+   </property>
+   <property name="toolTip">
+    <string>Switch to the editing layout</string>
    </property>
   </action>
-  <action name="actionLayoutClip">
+  <action name="actionLayoutEffects">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="text">
-    <string>Clip-only Project</string>
+    <string>FX</string>
+   </property>
+   <property name="toolTip">
+    <string>Switch to the effects layout</string>
    </property>
   </action>
   <action name="actionLayoutAdd">
@@ -1148,6 +1180,36 @@
   <action name="actionProxyConfigureHardware">
    <property name="text">
     <string>Configure Hardware Encoder...</string>
+   </property>
+  </action>
+  <action name="actionLayoutColor">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Color</string>
+   </property>
+   <property name="toolTip">
+    <string>Switch to the color layout</string>
+   </property>
+  </action>
+  <action name="actionLayoutPlayer">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Player</string>
+   </property>
+   <property name="toolTip">
+    <string>Switch to the player only layout</string>
+   </property>
+  </action>
+  <action name="dummyAction">
+   <property name="text">
+    <string notr="true">X</string>
+   </property>
+   <property name="visible">
+    <bool>false</bool>
    </property>
   </action>
  </widget>

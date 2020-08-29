@@ -54,6 +54,16 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
+    enum LayoutMode {
+        Custom = 0,
+        Logging,
+        Editing,
+        Effects,
+        Color,
+        Audio,
+        PlayerOnly
+    };
+
     static MainWindow& singleton();
     ~MainWindow();
     void open(Mlt::Producer* producer);
@@ -131,6 +141,7 @@ private:
     void setPreviewScale(int scale);
     void setVideoModeMenu();
     void resetVideoModeMenu();
+    void resetDockCorners();
 
     Ui::MainWindow* ui;
     Player* m_player;
@@ -298,10 +309,12 @@ private slots:
     void on_actionAppDataShow_triggered();
     void on_actionNew_triggered();
     void on_actionKeyboardShortcuts_triggered();
+    void on_actionLayoutLogging_triggered();
+    void on_actionLayoutEditing_triggered();
+    void on_actionLayoutEffects_triggered();
+    void on_actionLayoutColor_triggered();
+    void on_actionLayoutAudio_triggered();
     void on_actionLayoutPlayer_triggered();
-    void on_actionLayoutPlaylist_triggered();
-    void on_actionLayoutTimeline_triggered();
-    void on_actionLayoutClip_triggered();
     void on_actionLayoutAdd_triggered();
     void onLayoutTriggered(QAction*);
     void on_actionProfileRemove_triggered();
@@ -327,6 +340,7 @@ private slots:
     void on_actionProxyUseProjectFolder_triggered(bool checked);
     void on_actionProxyUseHardware_triggered(bool checked);
     void on_actionProxyConfigureHardware_triggered();
+    void updateLayoutSwitcher();
 };
 
 #define MAIN MainWindow::singleton()

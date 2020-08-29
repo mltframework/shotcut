@@ -137,6 +137,7 @@ SOURCES += main.cpp\
 mac: OBJECTIVE_SOURCES = macos.mm
 
 HEADERS  += mainwindow.h \
+    defaultlayouts.h \
     dialogs/systemsyncdialog.h \
     jobs/qimagejob.h \
     mltcontroller.h \
