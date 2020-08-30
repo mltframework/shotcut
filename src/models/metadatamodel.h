@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2018 Meltytech, LLC
+ * Copyright (c) 2014-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -49,6 +49,14 @@ public:
         AudioFilter
     };
 
+    enum FilterMaskBits {
+        HiddenMaskBit = 1 << 0,
+        clipOnlyMaskBit = 1 << 1,
+        gpuIncompatibleMaskBit = 1 << 2,
+        gpuAlternativeMaskBit = 1 << 3,
+        needsGPUMaskBit = 1 << 4,
+    };
+
     explicit MetadataModel(QObject *parent = 0);
 
     // Implement QAbstractListModel
@@ -78,6 +86,9 @@ private:
     MetadataFilter m_filter;
     bool m_isClipProducer;
     QString m_search;
+    unsigned m_filterMask;
+
+    unsigned computeFilterMask(const QmlMetadata* meta);
 };
 
 #endif // METADATAMODEL_H

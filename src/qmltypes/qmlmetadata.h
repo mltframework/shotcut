@@ -132,6 +132,7 @@ public:
         Producer,
         Transition
     };
+    unsigned filterMask;
 
     explicit QmlMetadata(QObject *parent = 0);
     void loadSettings();

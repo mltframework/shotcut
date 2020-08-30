@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2018 Meltytech, LLC
+ * Copyright (c) 2014-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,7 +24,14 @@ MetadataModel::MetadataModel(QObject *parent)
     : QAbstractListModel(parent)
     , m_filter(FavoritesFilter)
     , m_isClipProducer(true)
+    , m_filterMask(HiddenMaskBit)
 {
+    if (Settings.playerGPU()) {
+        m_filterMask |= gpuIncompatibleMaskBit;
+        m_filterMask |= gpuAlternativeMaskBit;
+    } else {
+        m_filterMask |= needsGPUMaskBit;
+    }
 }
 
 int MetadataModel::rowCount(const QModelIndex&) const
@@ -110,6 +117,7 @@ void MetadataModel::add(QmlMetadata* data)
         }
     }
 
+    data->filterMask = computeFilterMask(data);
     beginInsertRows(QModelIndex(), i, i);
     m_list.insert(i, data);
     endInsertRows();
@@ -144,17 +152,25 @@ void MetadataModel::setSearch(const QString& search)
 bool MetadataModel::isVisible(int row) const
 {
     QmlMetadata* meta = m_list.at(row);
-    if (meta->isHidden()) return false;
-    if (meta->needsGPU() && !Settings.playerGPU()) return false;
-    if (!meta->needsGPU() && Settings.playerGPU() && !meta->gpuAlt().isEmpty()) return false;
-    if (!meta->isGpuCompatible() && Settings.playerGPU()) return false;
-    if (meta->isClipOnly() && !m_isClipProducer) return false;
+    if (meta->filterMask & m_filterMask) {
+        return false;
+    }
     if (m_search.isEmpty()) {
-        if (m_filter == FavoritesFilter && !meta->isFavorite()) return false;
-        if (m_filter == AudioFilter && !meta->isAudio()) return false;
-        if (m_filter == VideoFilter && meta->isAudio()) return false;
-    } else {
-        if (!meta->name().contains(m_search, Qt::CaseInsensitive)) return false;
+        switch (m_filter) {
+        case FavoritesFilter:
+            if (!meta->isFavorite()) return false;
+            break;
+        case VideoFilter:
+            if (meta->isAudio()) return false;
+            break;
+        case AudioFilter:
+            if (!meta->isAudio()) return false;
+            break;
+        default:
+            break;
+        }
+    } else if (!meta->name().contains(m_search, Qt::CaseInsensitive)) {
+        return false;
     }
     return true;
 }
@@ -163,5 +179,21 @@ void MetadataModel::setIsClipProducer(bool isClipProducer)
 {
     beginResetModel();
     m_isClipProducer = isClipProducer;
+    if (m_isClipProducer) {
+        m_filterMask &= ~clipOnlyMaskBit;
+    } else {
+        m_filterMask |= clipOnlyMaskBit;
+    }
     endResetModel();
+}
+
+unsigned MetadataModel::computeFilterMask(const QmlMetadata* meta)
+{
+    unsigned mask = 0;
+    if (meta->isHidden()) mask |= HiddenMaskBit;
+    if (meta->isClipOnly()) mask |= clipOnlyMaskBit;
+    if (!meta->isGpuCompatible()) mask |= gpuIncompatibleMaskBit;
+    if (!meta->needsGPU() && !meta->gpuAlt().isEmpty()) mask |= gpuAlternativeMaskBit;
+    if (meta->needsGPU()) mask |= needsGPUMaskBit;
+    return mask;
 }
