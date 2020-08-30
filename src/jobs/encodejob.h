@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2019 Meltytech, LLC
+ * Copyright (c) 2012-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,6 +28,7 @@ public:
 
 private slots:
     void onVideoQualityTriggered();
+    void onSpatialMediaTriggered();
 
 protected slots:
     void onFinished(int exitCode, QProcess::ExitStatus exitStatus);

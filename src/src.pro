@@ -19,6 +19,11 @@ SOURCES += main.cpp\
     scrubbar.cpp \
     openotherdialog.cpp \
     controllers/filtercontroller.cpp \
+    spatialmedia/box.cpp \
+    spatialmedia/container.cpp \
+    spatialmedia/mpeg4_container.cpp \
+    spatialmedia/sa3d.cpp \
+    spatialmedia/spatialmedia.cpp \
     widgets/plasmawidget.cpp \
     widgets/lissajouswidget.cpp \
     widgets/isingwidget.cpp \
@@ -146,6 +151,12 @@ HEADERS  += mainwindow.h \
     scrubbar.h \
     openotherdialog.h \
     controllers/filtercontroller.h \
+    spatialmedia/box.h \
+    spatialmedia/constants.h \
+    spatialmedia/container.h \
+    spatialmedia/mpeg4_container.h \
+    spatialmedia/sa3d.h \
+    spatialmedia/spatialmedia.h \
     widgets/plasmawidget.h \
     abstractproducerwidget.h \
     widgets/lissajouswidget.h \
