@@ -341,6 +341,7 @@ private slots:
     void on_actionProxyUseHardware_triggered(bool checked);
     void on_actionProxyConfigureHardware_triggered();
     void updateLayoutSwitcher();
+    void clearCurrentLayout();
 };
 
 #define MAIN MainWindow::singleton()

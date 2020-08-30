@@ -251,6 +251,8 @@ MainWindow::MainWindow()
     group->addAction(ui->actionLayoutColor);
     group->addAction(ui->actionLayoutPlayer);
     switch (Settings.layoutMode()) {
+    case LayoutMode::Custom:
+        break;
     case LayoutMode::Logging:
         ui->actionLayoutLogging->setChecked(true);
         break;
@@ -270,6 +272,7 @@ MainWindow::MainWindow()
         ui->actionLayoutPlayer->setChecked(true);
         break;
     default:
+        ui->actionLayoutEditing->setChecked(true);
         break;
     }
     // Center the layout actions in the remaining toolbar space.
@@ -1648,7 +1651,18 @@ void MainWindow::readWindowSettings()
         m_filtersDock->setFloating(false);
 #endif
     } else {
-        on_actionLayoutEditing_triggered();
+        restoreState(Settings.windowStateDefault());
+        QDockWidget* audioMeterDock = findChild<QDockWidget*>("AudioPeakMeterDock");
+        if (audioMeterDock) {
+            audioMeterDock->show();
+            audioMeterDock->raise();
+        }
+        m_recentDock->show();
+        m_recentDock->raise();
+        m_filtersDock->show();
+        m_filtersDock->raise();
+        m_timelineDock->show();
+        m_timelineDock->raise();
     }
     LOG_DEBUG() << "end";
 }
@@ -3704,10 +3718,21 @@ void MainWindow::on_actionRestoreLayout_triggered()
             break;
         }
     } else {
-        ui->actionLayoutLogging->actionGroup()->checkedAction()->setChecked(false);
-        restoreGeometry(Settings.windowGeometryDefault());
+        clearCurrentLayout();
         restoreState(Settings.windowStateDefault());
         on_actionLayoutEditing_triggered();
+        restoreState(Settings.windowStateDefault());
+        QDockWidget* audioMeterDock = findChild<QDockWidget*>("AudioPeakMeterDock");
+        if (audioMeterDock) {
+            audioMeterDock->show();
+            audioMeterDock->raise();
+        }
+        m_recentDock->show();
+        m_recentDock->raise();
+        m_filtersDock->show();
+        m_filtersDock->raise();
+        m_timelineDock->show();
+        m_timelineDock->raise();
         ui->actionShowTitleBars->setChecked(true);
         on_actionShowTitleBars_triggered(true);
         ui->actionShowTextUnderIcons->setChecked(true);
@@ -4260,7 +4285,7 @@ void MainWindow::on_actionLayoutAdd_triggered()
     if (ok && !name.isEmpty()) {
         if (Settings.setLayout(name, saveGeometry(), saveState())) {
             Settings.setLayoutMode();
-            ui->actionLayoutLogging->actionGroup()->checkedAction()->setChecked(false);
+            clearCurrentLayout();
             Settings.sync();
             if (Settings.layouts().size() == 1) {
                 ui->menuLayout->addAction(ui->actionLayoutRemove);
@@ -4274,8 +4299,7 @@ void MainWindow::on_actionLayoutAdd_triggered()
 void MainWindow::onLayoutTriggered(QAction* action)
 {
     Settings.setLayoutMode();
-    ui->actionLayoutLogging->actionGroup()->checkedAction()->setChecked(false);
-    restoreGeometry(Settings.layoutGeometry(action->text()));
+    clearCurrentLayout();
     restoreState(Settings.layoutState(action->text()));
 }
 
@@ -4781,5 +4805,13 @@ void MainWindow::updateLayoutSwitcher()
             ui->mainToolBar->insertAction(ui->dummyAction, ui->actionLayoutAudio);
             ui->mainToolBar->insertAction(ui->dummyAction, ui->actionLayoutPlayer);
         }
+    }
+}
+
+void MainWindow::clearCurrentLayout()
+{
+    auto currentLayout = ui->actionLayoutLogging->actionGroup()->checkedAction();
+    if (currentLayout) {
+        currentLayout->setChecked(false);
     }
 }

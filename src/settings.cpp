@@ -792,7 +792,7 @@ bool ShotcutSettings::removeLayout(const QString& name)
 
 int ShotcutSettings::layoutMode() const
 {
-    return settings.value("layout/mode", 0).toInt();
+    return settings.value("layout/mode", -1).toInt();
 }
 
 void ShotcutSettings::setLayoutMode(int mode)
