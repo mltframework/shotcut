@@ -9,7 +9,6 @@ Metadata {
     qml: "ui.qml"
     vui: 'vui.qml'
     isFavorite: true
-    isGpuCompatible: false
     minimumVersion: '2'
     keyframes {
         allowAnimateIn: true

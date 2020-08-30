@@ -99,6 +99,10 @@ VuiBase {
         filter.set(sizeProperty, Qt.rect(0, 0, document.size.width, document.size.height))
     }
 
+    function updateTextSize() {
+        filter.set(sizeProperty, Qt.rect(0, 0, document.size.width, document.size.height))
+    }
+
     Flickable {
         id: flickable
         anchors.fill: parent
@@ -146,6 +150,8 @@ VuiBase {
                     if (text.indexOf('__empty__') > -1) return
                     filter.set('html', text)
                 }
+                onContentWidthChanged: updateTextSize()
+                onContentHeightChanged: updateTextSize()
             }
 
             ToolBar {
@@ -563,7 +569,7 @@ VuiBase {
             errorDialog.text = message
             errorDialog.visible = true
         }
-        onSizeChanged: filter.set(sizeProperty, Qt.rect(0, 0, document.size.width, document.size.height))
+        onSizeChanged: updateTextSize()
     }
 
     Connections {
