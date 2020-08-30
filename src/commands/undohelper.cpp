@@ -202,8 +202,10 @@ void UndoHelper::undoChanges()
                 Q_ASSERT(!(m_hints & SkipXML) && "Cannot restore clip without stored XML");
                 Q_ASSERT(!info.xml.isEmpty());
                 Mlt::Producer restoredClip(MLT.profile(), "xml-string", info.xml.toUtf8().constData());
-                if (restoredClip.type() == tractor_type) {
+                if (restoredClip.type() == tractor_type) { // transition
                     restoredClip.set("mlt_type", "mlt_producer");
+                } else {
+                    fixTransitions(playlist, currentIndex, restoredClip);
                 }
                 playlist.insert(restoredClip, currentIndex, info.frame_in, info.frame_out);
             }
@@ -307,13 +309,17 @@ void UndoHelper::restoreAffectedTracks()
 {
     // Remove everything in the affected tracks.
     for (const auto& trackIndex : m_affectedTracks) {
-        auto mlt_index = m_model.trackList().at(trackIndex).mlt_index;
-        QScopedPointer<Mlt::Producer> producer(m_model.tractor()->multitrack()->track(mlt_index));
-        Mlt::Playlist playlist(*producer);
-        m_model.beginRemoveRows(m_model.index(trackIndex), 0, playlist.count() - 1);
-        UNDOLOG << "clearing track" << trackIndex;
-        playlist.clear();
-        m_model.endRemoveRows();
+        if (trackIndex >= 0 && trackIndex < m_model.trackList().size()) {
+            auto mlt_index = m_model.trackList().at(trackIndex).mlt_index;
+            Mlt::Producer producer = m_model.tractor()->multitrack()->track(mlt_index);
+            if (producer.is_valid()) {
+                Mlt::Playlist playlist(producer);
+                m_model.beginRemoveRows(m_model.index(trackIndex), 0, playlist.count() - 1);
+                UNDOLOG << "clearing track" << trackIndex;
+                playlist.clear();
+                m_model.endRemoveRows();
+            }
+        }
     }
 
     for (const auto& uid : m_insertedOrder) {
@@ -335,18 +341,51 @@ void UndoHelper::restoreAffectedTracks()
                 Q_ASSERT(!(m_hints & SkipXML) && "Cannot restore clip without stored XML");
                 Q_ASSERT(!info.xml.isEmpty());
                 Mlt::Producer restoredClip(MLT.profile(), "xml-string", info.xml.toUtf8().constData());
-                if (restoredClip.type() == tractor_type) {
+                if (restoredClip.type() == tractor_type) { // transition
                     restoredClip.set("mlt_type", "mlt_producer");
                 }
                 playlist.append(restoredClip, info.frame_in, info.frame_out);
+
             }
             m_model.endInsertRows();
-    
+
             QScopedPointer<Mlt::Producer> clip(playlist.get_clip(currentIndex));
             Q_ASSERT(currentIndex < playlist.count());
             Q_ASSERT(!clip.isNull());
             MLT.setUuid(*clip, uid);
             AudioLevelsTask::start(clip->parent(), &m_model, modelIndex);
         }
+    }
+    for (const auto& trackIndex : m_affectedTracks) {
+        if (trackIndex >= 0 && trackIndex < m_model.trackList().size()) {
+            auto mlt_index = m_model.trackList().at(trackIndex).mlt_index;
+            Mlt::Producer producer = m_model.tractor()->multitrack()->track(mlt_index);
+            if (producer.is_valid()) {
+                Mlt::Playlist playlist(producer);
+                for (auto currentIndex = 0; currentIndex < playlist.count(); currentIndex++) {
+                    Mlt::Producer clip = playlist.get_clip(currentIndex);
+                    fixTransitions(playlist, currentIndex, clip);
+                }
+            }
+        }
+    }
+}
+
+void UndoHelper::fixTransitions(Mlt::Playlist playlist, int clipIndex, Mlt::Producer clip)
+{
+    int transitionIndex = 0;
+    for (auto currentIndex : {clipIndex + 1, clipIndex - 1}) {
+        // Connect a transition on the right/left to the new producer.
+        Mlt::Producer producer(playlist.get_clip(currentIndex));
+        if (producer.is_valid() && producer.parent().get(kShotcutTransitionProperty)) {
+            Mlt::Tractor transition(producer.parent());
+            Mlt::Producer transitionClip(transition.track(transitionIndex));
+            if (transitionClip.is_valid() && transitionClip.parent().get_service() != clip.parent().get_service()) {
+                UNDOLOG << "Fixing transition at clip index" << currentIndex << "transition index" << transitionIndex;
+                transitionClip = clip.cut(transitionClip.get_in(), transitionClip.get_out());
+                transition.set_track(transitionClip, transitionIndex);
+            }
+        }
+        transitionIndex++;
     }
 }

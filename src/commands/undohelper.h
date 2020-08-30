@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2019 Meltytech, LLC
+ * Copyright (c) 2015-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -44,6 +44,7 @@ public:
 private:
     void debugPrintState();
     void restoreAffectedTracks();
+    void fixTransitions(Mlt::Playlist playlist, int clipIndex, Mlt::Producer clip);
 
     enum ChangeFlags {
         NoChange = 0x0,
