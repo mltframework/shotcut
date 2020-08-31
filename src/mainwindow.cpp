@@ -183,6 +183,7 @@ MainWindow::MainWindow()
 #ifdef Q_OS_MAC
     // Qt 5 on OS X supports the standard Full Screen window widget.
     ui->mainToolBar->removeAction(ui->actionFullscreen);
+    ui->actionEnter_Full_Screen->setVisible(false);
     // OS X has a standard Full Screen shortcut we should use.
     ui->actionEnter_Full_Screen->setShortcut(QKeySequence((Qt::CTRL + Qt::META + Qt::Key_F)));
 #endif
@@ -3197,7 +3198,7 @@ void MainWindow::on_actionEnter_Full_Screen_triggered()
 #else
         showFullScreen();
 #endif
-        ui->actionEnter_Full_Screen->setText(tr("Enter Full Screen"));
+        ui->actionEnter_Full_Screen->setText(tr("Exit Full Screen"));
     }
 }
 
