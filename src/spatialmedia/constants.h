@@ -21,18 +21,22 @@
 #include <string>
 
 #include <QtEndian>
-#define htobe16(x) qToBigEndian(x)
-#define htole16(x) qToLittleEndian(x)
-#define be16toh(x) qFromBigEndian(x)
-#define le16toh(x) qFromLittleEndian(x)
-#define htobe32(x) qToBigEndian(x)
-#define htole32(x) qToLittleEndian(x)
-#define be32toh(x) qFromBigEndian(x)
-#define le32toh(x) qFromLittleEndian(x)
-#define htobe64(x) qToBigEndian(x)
-#define htole64(x) qtoLittleEndian(x)
-#define be64toh(x) qFromBigEndian(x)
-#define le64toh(x) qFromLittleEndian(x)
+#if defined(Q_OS_WIN) || defined(Q_OS_MAC)
+#  define htobe16(x) qToBigEndian(x)
+#  define htole16(x) qToLittleEndian(x)
+#  define be16toh(x) qFromBigEndian(x)
+#  define le16toh(x) qFromLittleEndian(x)
+#  define htobe32(x) qToBigEndian(x)
+#  define htole32(x) qToLittleEndian(x)
+#  define be32toh(x) qFromBigEndian(x)
+#  define le32toh(x) qFromLittleEndian(x)
+#  define htobe64(x) qToBigEndian(x)
+#  define htole64(x) qtoLittleEndian(x)
+#  define be64toh(x) qFromBigEndian(x)
+#  define le64toh(x) qFromLittleEndian(x)
+#else
+#  include <endian.h>
+#endif
 
 struct AudioMetadata {
   AudioMetadata ( )  {
