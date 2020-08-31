@@ -19,7 +19,6 @@
 // Tool for loading mpeg4 files and manipulating atoms.
 #include <string.h>
 #include <iostream>
-#include <endian.h>
 
 #include "constants.h"
 #include "box.h"

@@ -18,6 +18,21 @@
  ****************************************************************************/
 
 #include <stdint.h>
+#include <string>
+
+#include <QtEndian>
+#define htobe16(x) qToBigEndian(x)
+#define htole16(x) qToLittleEndian(x)
+#define be16toh(x) qFromBigEndian(x)
+#define le16toh(x) qFromLittleEndian(x)
+#define htobe32(x) qToBigEndian(x)
+#define htole32(x) qToLittleEndian(x)
+#define be32toh(x) qFromBigEndian(x)
+#define le32toh(x) qFromLittleEndian(x)
+#define htobe64(x) qToBigEndian(x)
+#define htole64(x) qtoLittleEndian(x)
+#define be64toh(x) qFromBigEndian(x)
+#define le64toh(x) qFromLittleEndian(x)
 
 struct AudioMetadata {
   AudioMetadata ( )  {
