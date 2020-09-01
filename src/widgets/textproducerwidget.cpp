@@ -61,10 +61,10 @@ TextProducerWidget::~TextProducerWidget()
 
 void TextProducerWidget::on_colorButton_clicked()
 {
-    if (!m_producer) {
-        return;
+    QColor color = colorStringToResource(ui->colorLabel->text());
+    if (m_producer) {
+        color = QColor(QFileInfo(m_producer->get("resource")).baseName());
     }
-    QColor color(QFileInfo(m_producer->get("resource")).baseName());
     QColorDialog dialog(color);
     dialog.setOption(QColorDialog::ShowAlphaChannel);
     if (dialog.exec() == QDialog::Accepted) {
@@ -76,10 +76,12 @@ void TextProducerWidget::on_colorButton_clicked()
         ui->colorLabel->setStyleSheet(QString("color: %1; background-color: %2")
                                       .arg((dialog.currentColor().value() < 150)? "white":"black")
                                       .arg(dialog.currentColor().name()));
-        m_producer->set("resource", colorStringToResource(ui->colorLabel->text()).toLatin1().constData());
-        m_producer->set(kShotcutCaptionProperty, ui->colorLabel->text().toLatin1().constData());
-        m_producer->set(kShotcutDetailProperty, ui->colorLabel->text().toLatin1().constData());
-        emit producerChanged(m_producer.data());
+        if (m_producer) {
+            m_producer->set("resource", colorStringToResource(ui->colorLabel->text()).toLatin1().constData());
+            m_producer->set(kShotcutCaptionProperty, ui->colorLabel->text().toLatin1().constData());
+            m_producer->set(kShotcutDetailProperty, ui->colorLabel->text().toLatin1().constData());
+            emit producerChanged(m_producer.data());
+        }
     }
 }
 
