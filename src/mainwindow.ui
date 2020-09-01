@@ -481,18 +481,6 @@
     <string>History</string>
    </property>
   </action>
-  <action name="actionFullscreen">
-   <property name="icon">
-    <iconset theme="view-fullscreen" resource="../icons/resources.qrc">
-     <normaloff>:/icons/oxygen/32x32/actions/view-fullscreen.png</normaloff>:/icons/oxygen/32x32/actions/view-fullscreen.png</iconset>
-   </property>
-   <property name="text">
-    <string>Full Screen</string>
-   </property>
-   <property name="shortcut">
-    <string>F11</string>
-   </property>
-  </action>
   <action name="actionRealtime">
    <property name="checkable">
     <bool>true</bool>

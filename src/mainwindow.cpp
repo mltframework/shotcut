@@ -182,7 +182,6 @@ MainWindow::MainWindow()
     ui->setupUi(this);
 #ifdef Q_OS_MAC
     // Qt 5 on OS X supports the standard Full Screen window widget.
-    ui->mainToolBar->removeAction(ui->actionFullscreen);
     ui->actionEnter_Full_Screen->setVisible(false);
     // OS X has a standard Full Screen shortcut we should use.
     ui->actionEnter_Full_Screen->setShortcut(QKeySequence((Qt::CTRL + Qt::META + Qt::Key_F)));
@@ -194,8 +193,6 @@ MainWindow::MainWindow()
     connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(openVideo()));
     connect(ui->actionAbout_Qt, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
     connect(this, SIGNAL(producerOpened()), this, SLOT(onProducerOpened()));
-    if (ui->actionFullscreen)
-        connect(ui->actionFullscreen, SIGNAL(triggered()), this, SLOT(on_actionEnter_Full_Screen_triggered()));
     connect(ui->mainToolBar, SIGNAL(visibilityChanged(bool)), SLOT(onToolbarVisibilityChanged(bool)));
 
     // Accept drag-n-drop of files.
@@ -1157,7 +1154,6 @@ void MainWindow::setFullScreen(bool isFullScreen)
         showFullScreen();
 #endif
         ui->actionEnter_Full_Screen->setVisible(false);
-        ui->actionFullscreen->setVisible(false);
     }
 }
 
@@ -2215,6 +2211,9 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
     case Qt::Key_F5:
         m_timelineDock->model()->reload();
         m_keyframesDock->model().reload();
+        break;
+    case Qt::Key_F11:
+        on_actionEnter_Full_Screen_triggered();
         break;
     case Qt::Key_F12:
         LOG_DEBUG() << "event isAccepted:" << event->isAccepted();
