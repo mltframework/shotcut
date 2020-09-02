@@ -247,8 +247,11 @@ VuiBase {
                 onHeightScaleChanged: setHandles(filterRect)
                 onRectChanged: setFilter(getPosition())
                 onRotated: {
+                    if (Math.abs(degrees % 90) < 10)
+                        degrees = Math.round(degrees / 90) * 90
+                    degrees = degrees % 360
                     blockUpdate = true
-                    updateRotation(degrees % 360)
+                    updateRotation(degrees)
                     blockUpdate = false
                 }
             }
