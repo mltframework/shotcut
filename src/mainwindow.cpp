@@ -3036,11 +3036,13 @@ void MainWindow::changeTheme(const QString &theme)
         palette.setColor(QPalette::Disabled, QPalette::ButtonText, Qt::darkGray);
         QApplication::setPalette(palette);
         QIcon::setThemeName("dark");
+        QMetaObject::invokeMethod(&MAIN, "on_actionShowTextUnderIcons_toggled", Qt::QueuedConnection, Q_ARG(bool, Settings.textUnderIcons()));
     } else if (theme == "light") {
         QStyle* style = QStyleFactory::create("Fusion");
         QApplication::setStyle(style);
         QApplication::setPalette(style->standardPalette());
         QIcon::setThemeName("light");
+        QMetaObject::invokeMethod(&MAIN, "on_actionShowTextUnderIcons_toggled", Qt::QueuedConnection, Q_ARG(bool, Settings.textUnderIcons()));
     } else {
         QApplication::setStyle(qApp->property("system-style").toString());
         QIcon::setThemeName("oxygen");
