@@ -43,6 +43,7 @@ VuiBase {
         filter.set('_hide', 1)
         background.color = filter.get('bgcolour')
         textArea.text = filter.get('html')
+        fontSizeSpinBox.value = document.fontSize
     }
 
     function getPosition() {
@@ -442,8 +443,8 @@ VuiBase {
         iconName: 'font'
         iconSource: 'qrc:///icons/oxygen/32x32/actions/font.png'
         onTriggered: {
-            fontDialog.currentFont.family = document.fontFamily
-            fontDialog.currentFont.pointSize = document.fontSize
+            fontDialog.font.family = document.fontFamily
+            fontDialog.font.pointSize = document.fontSize
             fontDialog.open()
         }
     }
