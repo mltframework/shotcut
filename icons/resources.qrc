@@ -252,5 +252,8 @@
         <file>light/32x32/ripple-all.png</file>
         <file>oxygen/32x32/actions/ripple-all.png</file>
         <file>dark/32x32/ripple-all.png</file>
+        <file>dark/32x32/show-menu.png</file>
+        <file>light/32x32/show-menu.png</file>
+        <file>oxygen/32x32/actions/show-menu.png</file>
     </qresource>
 </RCC>

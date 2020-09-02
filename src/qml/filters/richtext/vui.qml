@@ -176,31 +176,6 @@ VuiBase {
                         implicitHeight: implicitWidth
                     }
                     ToolButton {
-                        action: alignLeftAction
-                        implicitWidth: smallIcons? 18 : hiddenButton.implicitWidth
-                        implicitHeight: implicitWidth
-                    }
-                    ToolButton {
-                        action: alignCenterAction
-                        implicitWidth: smallIcons? 18 : hiddenButton.implicitWidth
-                        implicitHeight: implicitWidth
-                    }
-                    ToolButton {
-                        action: alignRightAction
-                        implicitWidth: smallIcons? 18 : hiddenButton.implicitWidth
-                        implicitHeight: implicitWidth
-                    }
-                    ToolButton {
-                        action: alignJustifyAction
-                        implicitWidth: smallIcons? 18 : hiddenButton.implicitWidth
-                        implicitHeight: implicitWidth
-                    }
-                    Button { // separator
-                        enabled: false
-                        implicitWidth: 2
-                        implicitHeight: smallIcons? 14 : (hiddenButton.implicitHeight - 8)
-                    }
-                    ToolButton {
                         action: boldAction
                         implicitWidth: smallIcons? 18 : hiddenButton.implicitWidth
                         implicitHeight: implicitWidth
@@ -258,6 +233,26 @@ VuiBase {
                         enabled: false
                         implicitWidth: 2
                         implicitHeight: smallIcons? 14 : (hiddenButton.implicitHeight - 8)
+                    }
+                    ToolButton {
+                        action: alignLeftAction
+                        implicitWidth: smallIcons? 18 : hiddenButton.implicitWidth
+                        implicitHeight: implicitWidth
+                    }
+                    ToolButton {
+                        action: alignCenterAction
+                        implicitWidth: smallIcons? 18 : hiddenButton.implicitWidth
+                        implicitHeight: implicitWidth
+                    }
+                    ToolButton {
+                        action: alignRightAction
+                        implicitWidth: smallIcons? 18 : hiddenButton.implicitWidth
+                        implicitHeight: implicitWidth
+                    }
+                    ToolButton {
+                        action: alignJustifyAction
+                        implicitWidth: smallIcons? 18 : hiddenButton.implicitWidth
+                        implicitHeight: implicitWidth
                     }
                     ToolButton {
                         action: decreaseIndentAction
@@ -323,8 +318,8 @@ VuiBase {
     Action {
         id: menuAction
         tooltip: qsTr('Menu')
-        iconName: 'format-justify-fill'
-        iconSource: 'qrc:///icons/oxygen/32x32/actions/format-justify-fill.png'
+        iconName: 'show-menu'
+        iconSource: 'qrc:///icons/oxygen/32x32/actions/show-menu.png'
         onTriggered: menu.popup()
     }
     Action {

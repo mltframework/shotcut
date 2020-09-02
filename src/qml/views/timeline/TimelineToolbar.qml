@@ -160,8 +160,8 @@ ToolBar {
     Action {
         id: menuAction
         tooltip: qsTr('Display a menu of additional actions')
-        iconName: 'format-justify-fill'
-        iconSource: 'qrc:///icons/oxygen/32x32/actions/format-justify-fill.png'
+        iconName: 'show-menu'
+        iconSource: 'qrc:///icons/oxygen/32x32/actions/show-menu.png'
         onTriggered: menu.popup()
     }
 
