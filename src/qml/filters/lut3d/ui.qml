@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2019 Meltytech, LLC
+ * Copyright (c) 2016-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -60,7 +60,7 @@ Item {
 
     FileDialog {
         id: fileDialog
-        modality: Qt.WindowModal
+        modality: Qt.ApplicationModal
         selectMultiple: false
         selectFolder: false
         folder: settingsOpenPath

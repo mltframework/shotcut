@@ -471,7 +471,7 @@ VuiBase {
 
     FileDialog {
         id: fileDialog
-        modality: Qt.WindowModal
+        modality: Qt.ApplicationModal
         nameFilters: ["HTML files (*.html *.htm)", "Text files (*.txt)", "All files (*)"]
         onAccepted: {
             if (fileDialog.selectExisting)
@@ -483,7 +483,7 @@ VuiBase {
 
     FontDialog {
         id: fontDialog
-        modality: Qt.WindowModal
+        modality: Qt.ApplicationModal
         onAccepted: {
             document.fontFamily = font.family
             document.fontSize = font.pointSize
@@ -493,7 +493,7 @@ VuiBase {
         id: colorDialog
         color: 'black'
         showAlphaChannel: true
-        modality: Qt.WindowModal
+        modality: Qt.ApplicationModal
     }
     MessageDialog {
         id: errorDialog
@@ -503,7 +503,7 @@ VuiBase {
         id: tableDialog
         title: qsTr('Insert Table')
         standardButtons: StandardButton.Ok | StandardButton.Cancel
-        modality: Qt.WindowModal
+        modality: Qt.ApplicationModal
         GridLayout {
             rows: 4
             columns: 2
