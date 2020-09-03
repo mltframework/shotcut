@@ -287,7 +287,6 @@ Item {
         } else if (!rotationKeyframesButton.checked) {
             filter.resetProperty(rotationProperty)
             filter.set(rotationProperty, filter.getDouble(rotationMiddleValue))
-            console.log(rotationProperty + '=' + filter.getDouble(rotationMiddleValue))
         } else if (position !== null) {
             filter.set(rotationProperty, rotationSlider.value, position)
         }
@@ -363,6 +362,28 @@ Item {
         rectW.enabled = enabled
         rectH.enabled = enabled
         scaleSlider.enabled = enabled && filter.get(fillProperty) === '1' && filter.get(distortProperty) !== '1'
+    }
+
+    function toggleKeyframes(isEnabled, parameter, value) {
+        if (isEnabled) {
+            blockUpdate = true
+            if (filter.animateIn > 0 || filter.animateOut > 0) {
+                // Reset all of the simple keyframes.
+                resetSimpleKeyframes()
+                filter.animateIn = 0
+                blockUpdate = false
+                filter.animateOut = 0
+            } else {
+                filter.clearSimpleAnimation(parameter)
+                blockUpdate = false
+            }
+            // Set this keyframe value.
+            filter.set(parameter, value, getPosition())
+        } else {
+            // Remove keyframes and set the parameter.
+            filter.resetProperty(parameter)
+            filter.set(parameter, value)
+        }
     }
 
     ExclusiveGroup { id: sizeGroup }
@@ -456,7 +477,9 @@ Item {
             checked: filter.keyframeCount(rectProperty) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
             onToggled: {
                 if (checked) {
+                    blockUpdate = true
                     filter.clearSimpleAnimation(rectProperty)
+                    blockUpdate = false
                     filter.set(rectProperty, filterRect, 1.0, getPosition())
                 } else {
                     filter.resetProperty(rectProperty)
