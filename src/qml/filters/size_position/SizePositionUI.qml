@@ -217,11 +217,15 @@ Item {
         setControls()
         setKeyframedControls()
         if (filter.isNew)
-            filter.set(rectProperty, filter.getRect(rectProperty))
+            setFilter(getPosition())
     }
 
     function getPosition() {
         return Math.max(producer.position - (filter.in - producer.in), 0)
+    }
+
+    function isFillMode() {
+        return filter.get(fillProperty) === '1' && filter.get(distortProperty) !== '1'
     }
 
     function setFilter(position) {
@@ -332,6 +336,14 @@ Item {
         var position = getPosition()
         var newValue = filter.getRect(rectProperty, position)
         if (filterRect !== newValue) {
+            if (isFillMode()) {
+                // enforce the aspect ratio
+                if (producer.displayAspectRatio > 1.0) {
+                    newValue.height = newValue.width / producer.displayAspectRatio
+                } else {
+                    newValue.width = newValue.height * producer.displayAspectRatio
+                }
+            }
             filterRect = newValue
             rectX.value = filterRect.x.toFixed()
             rectY.value = filterRect.y.toFixed()
@@ -481,7 +493,7 @@ Item {
                         if (fillRadioButton.checked) {
                             var middleY = filterRect.y + filterRect.height / 2
                             var bottomY = filterRect.y + filterRect.height
-                            filterRect.height = rectH.value = Math.round(value * profile.height / profile.width)
+                            filterRect.height = rectH.value = Math.round(value / producer.displayAspectRatio)
                             if (middleRadioButton.checked) {
                                 filterRect.y = rectY.value = middleY - filterRect.height / 2
                             }
@@ -518,7 +530,7 @@ Item {
                         if (fillRadioButton.checked) {
                             var centerX = filterRect.x + filterRect.width / 2
                             var rightX = filterRect.x + filterRect.width
-                            filterRect.width = rectW.value = Math.round(value * profile.width / profile.height)
+                            filterRect.width = rectW.value = Math.round(value * producer.displayAspectRatio)
                             if (centerRadioButton.checked) {
                                 filterRect.x = rectX.value = centerX - filterRect.width / 2
                             }
@@ -526,7 +538,7 @@ Item {
                                 filterRect.x = rectX.value = rightX - filterRect.width
                             }
                             blockUpdate = true
-                            scaleSlider.value = Math.min(rectH.value / profile.height * 100, scaleSlider.maximumValue)
+                            scaleSlider.value = Math.min(filterRect.width / profile.width * 100, scaleSlider.maximumValue)
                             blockUpdate = false
                         }
                         setFilter(getPosition())
@@ -535,10 +547,19 @@ Item {
             }
         }
         UndoButton {
+            id: sizeUndoButton
             onClicked: {
                 filterRect.width = rectW.value = profile.width
                 filterRect.height = rectH.value = profile.height
-                scaleSlider.value = 100
+                if (isFillMode()) {
+                    // enforce the aspect ratio
+                    if (producer.displayAspectRatio > 1.0) {
+                        filterRect.height = rectH.value = filterRect.width / producer.displayAspectRatio
+                    } else {
+                        filterRect.width = rectW.value = filterRect.height * producer.displayAspectRatio
+                    }
+                }
+                scaleSlider.value = Math.min(filterRect.width / profile.width * 100, scaleSlider.maximumValue)
                 setFilter(getPosition())
             }
         }
@@ -568,7 +589,7 @@ Item {
                     }
                     var middleY = filterRect.y + filterRect.height / 2
                     var bottomY = filterRect.y + filterRect.height
-                    filterRect.height = rectH.value = (profile.height * scaleSlider.value / 100)
+                    filterRect.height = rectH.value = Math.round(filterRect.width / producer.displayAspectRatio)
                     if (middleRadioButton.checked) {
                         filterRect.y = rectY.value = middleY - filterRect.height / 2
                     } else if (bottomRadioButton.checked) {
@@ -580,7 +601,7 @@ Item {
         }
         UndoButton {
             enabled: scaleSlider.enabled
-            onClicked: scaleSlider.value = 100
+            onClicked: sizeUndoButton.clicked()
         }
         Label { text: qsTr('(Fill only)') }
 

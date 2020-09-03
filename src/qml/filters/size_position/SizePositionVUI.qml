@@ -145,7 +145,7 @@ VuiBase {
             var middleY = filterRect.y + filterRect.height / 2
             var bottomY = filterRect.y + filterRect.height
             align = filter.get(valignProperty)
-            filterRect.height = (profile.height * scale)
+            filterRect.height = Math.round(filterRect.width / rectangle.aspectRatio)
             if (align === 'center' || align === 'middle') {
                 filterRect.y = middleY - filterRect.height / 2
             } else if (align === 'bottom') {
@@ -247,7 +247,7 @@ VuiBase {
                 onHeightScaleChanged: setHandles(filterRect)
                 onRectChanged: setFilter(getPosition())
                 onRotated: {
-                    if (Math.abs(degrees % 90) < 10)
+                    if ((Math.abs(degrees) + 5) % 90 < 10)
                         degrees = Math.round(degrees / 90) * 90
                     degrees = degrees % 360
                     blockUpdate = true
