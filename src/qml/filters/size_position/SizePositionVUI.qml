@@ -160,6 +160,13 @@ VuiBase {
         return filter.get(fillProperty) === '1' && filter.get(distortProperty) !== '1'
     }
 
+    function snapRotation(degrees, strength) {
+        if ((Math.abs(degrees) + strength) % 90 < strength * 2) {
+            degrees = Math.round(degrees / 90) * 90
+        }
+        return degrees
+    }
+
     PinchArea {
         anchors.fill: parent
         pinch.minimumRotation: -360
@@ -182,9 +189,7 @@ VuiBase {
         onPinchUpdated: if (noModifiers) {
             if (rotationProperty && Math.abs(pinch.rotation - 0) > 0.01) {
                 var degrees = currentRotation + pinch.rotation
-                if (Math.abs(degrees % 90) < 10)
-                    degrees = Math.round(rectangle.rotation / 90) * 90
-                rectangle.rotation = degrees
+                rectangle.rotation = snapRotation(degrees, 4)
                 blockUpdate = true
                 updateRotation(rectangle.rotation % 360)
                 blockUpdate = false
@@ -204,9 +209,7 @@ VuiBase {
             onWheel: {
                 if (rotationProperty && (wheel.modifiers & Qt.ControlModifier)) {
                     var degrees = rectangle.rotation - wheel.angleDelta.y / 120 * 5
-                    if (Math.abs(degrees % 90) < 2)
-                        degrees = Math.round(rectangle.rotation / 90) * 90
-                    rectangle.rotation = degrees
+                    rectangle.rotation = snapRotation(degrees, 1.5)
                     blockUpdate = true
                     updateRotation(rectangle.rotation % 360)
                     blockUpdate = false
@@ -247,9 +250,7 @@ VuiBase {
                 onHeightScaleChanged: setHandles(filterRect)
                 onRectChanged: setFilter(getPosition())
                 onRotated: {
-                    if ((Math.abs(degrees) + 5) % 90 < 10)
-                        degrees = Math.round(degrees / 90) * 90
-                    degrees = degrees % 360
+                    degrees = snapRotation(degrees, 4) % 360
                     blockUpdate = true
                     updateRotation(degrees)
                     blockUpdate = false
