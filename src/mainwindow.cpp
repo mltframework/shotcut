@@ -4248,6 +4248,34 @@ void MainWindow::on_actionLayoutPlayer_triggered()
     }
 }
 
+void MainWindow::on_actionLayoutPlaylist_triggered()
+{
+    if (Settings.layoutMode() != LayoutMode::Custom) {
+        Settings.setLayout(QString(kReservedLayoutPrefix).arg(Settings.layoutMode()), QByteArray(), saveState());
+        Settings.setLayoutMode(LayoutMode::Custom);
+    }
+    clearCurrentLayout();
+    restoreState(Settings.windowStateDefault());
+    m_recentDock->show();
+    m_recentDock->raise();
+    m_playlistDock->show();
+    m_playlistDock->raise();
+}
+
+void MainWindow::on_actionLayoutClip_triggered()
+{
+    if (Settings.layoutMode() != LayoutMode::Custom) {
+        Settings.setLayout(QString(kReservedLayoutPrefix).arg(Settings.layoutMode()), QByteArray(), saveState());
+        Settings.setLayoutMode(LayoutMode::Custom);
+    }
+    clearCurrentLayout();
+    restoreState(Settings.windowStateDefault());
+    m_recentDock->show();
+    m_recentDock->raise();
+    m_filtersDock->show();
+    m_filtersDock->raise();
+}
+
 void MainWindow::on_actionLayoutAdd_triggered()
 {
     bool ok;

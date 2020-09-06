@@ -76,6 +76,9 @@
      <addaction name="actionLayoutAudio"/>
      <addaction name="actionLayoutPlayer"/>
      <addaction name="separator"/>
+     <addaction name="actionLayoutClip"/>
+     <addaction name="actionLayoutPlaylist"/>
+     <addaction name="separator"/>
      <addaction name="actionRestoreLayout"/>
      <addaction name="actionLayoutAdd"/>
     </widget>
@@ -1198,6 +1201,16 @@
    </property>
    <property name="visible">
     <bool>false</bool>
+   </property>
+  </action>
+  <action name="actionLayoutPlaylist">
+   <property name="text">
+    <string>Playlist Project</string>
+   </property>
+  </action>
+  <action name="actionLayoutClip">
+   <property name="text">
+    <string>Clip-only Project</string>
    </property>
   </action>
  </widget>

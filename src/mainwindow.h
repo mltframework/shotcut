@@ -315,6 +315,8 @@ private slots:
     void on_actionLayoutColor_triggered();
     void on_actionLayoutAudio_triggered();
     void on_actionLayoutPlayer_triggered();
+    void on_actionLayoutPlaylist_triggered();
+    void on_actionLayoutClip_triggered();
     void on_actionLayoutAdd_triggered();
     void onLayoutTriggered(QAction*);
     void on_actionProfileRemove_triggered();
