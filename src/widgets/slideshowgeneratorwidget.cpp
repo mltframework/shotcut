@@ -185,7 +185,9 @@ Mlt::Playlist* SlideshowGeneratorWidget::getSlideshow()
         Mlt::ClipInfo* c = slideshow->clip_info(i, &info);
         if (c && c->producer)
         {
-            delete c->producer->get_frame(); // makes avformat producer set meta.media.width and .height
+            if (!c->producer->property_exists("meta.media.width")) {
+                delete c->producer->get_frame(); // makes avformat producer set meta.media.width and .height
+            }
             attachAffineFilter(config, c->producer, c->frame_in + framesPerClip - 1);
             attachBlurFilter(config, c->producer);
         }
