@@ -19,6 +19,7 @@
 
 #include <Logger.h>
 #include "scrubbar.h"
+#include "mltcontroller.h"
 
 #include <QtConcurrent/QtConcurrent>
 #include <QHBoxLayout>
@@ -26,10 +27,6 @@
 #include <QLabel>
 #include <QProgressBar>
 #include <QVBoxLayout>
-
-#include <MltFrame.h>
-#include <MltProducer.h>
-#include <MltProfile.h>
 
 ProducerPreviewWidget::ProducerPreviewWidget(double dar)
   : QWidget()
@@ -82,10 +79,10 @@ void ProducerPreviewWidget::start(Mlt::Producer* producer)
     if( m_producer )
     {
         // Set up the preview display and timer
-        m_scrubber->setFramerate(m_producer->profile()->fps());
+        m_scrubber->setFramerate(MLT.profile().fps());
         m_scrubber->setScale(m_producer->get_length());
         // Display preview at half frame rate.
-        int miliseconds = 2* 1000.0 / m_producer->profile()->fps();
+        int miliseconds = 2* 1000.0 / MLT.profile().fps();
         m_timerId = startTimer(miliseconds);
         // Set up the producer frame generator
         m_seekTo = 0;

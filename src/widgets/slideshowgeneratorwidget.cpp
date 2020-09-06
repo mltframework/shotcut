@@ -23,9 +23,6 @@
 #include "shotcut_mlt_properties.h"
 #include "widgets/producerpreviewwidget.h"
 
-#include <MltFilter.h>
-#include <MltTransition.h>
-
 #include <QComboBox>
 #include <QDebug>
 #include <QDoubleSpinBox>
@@ -142,7 +139,7 @@ SlideshowGeneratorWidget::SlideshowGeneratorWidget(Mlt::Playlist* clips, QWidget
     connect(m_softnessSpinner, SIGNAL(valueChanged(int)), this, SLOT(on_parameterChanged()));
     grid->addWidget(m_softnessSpinner, 5, 1);
 
-    m_preview = new ProducerPreviewWidget(m_clips->profile()->dar());
+    m_preview = new ProducerPreviewWidget(MLT.profile().dar());
     grid->addWidget(m_preview, 6, 0, 1, 2, Qt::AlignCenter);
 
     on_parameterChanged();
@@ -166,7 +163,7 @@ Mlt::Playlist* SlideshowGeneratorWidget::getSlideshow()
     config = m_config;
     m_mutex.unlock();
 
-    int framesPerClip = round(config.clipDuration * m_clips->profile()->fps());
+    int framesPerClip = round(config.clipDuration * MLT.profile().fps());
     int count = m_clips->count();
     Mlt::Playlist* slideshow = new Mlt::Playlist(*m_clips->profile());
     Mlt::ClipInfo info;
@@ -195,7 +192,7 @@ Mlt::Playlist* SlideshowGeneratorWidget::getSlideshow()
     }
 
     // Add transitions
-    int framesPerTransition = round(config.transitionDuration * m_clips->profile()->fps());
+    int framesPerTransition = round(config.transitionDuration * MLT.profile().fps());
     if (framesPerTransition > (framesPerClip / 2 - 1))
     {
         framesPerTransition = (framesPerClip / 2 - 1);
@@ -256,8 +253,8 @@ void SlideshowGeneratorWidget::attachAffineFilter(SlideshowConfig& config, Mlt::
     mlt_rect endRect;
     beginRect.x = 0;
     beginRect.y = 0;
-    beginRect.w = producer->profile()->width();
-    beginRect.h = producer->profile()->height();
+    beginRect.w = MLT.profile().width();
+    beginRect.h = MLT.profile().height();
     beginRect.o = 1;
     endRect.x = beginRect.x;
     endRect.y = beginRect.y;
@@ -265,7 +262,7 @@ void SlideshowGeneratorWidget::attachAffineFilter(SlideshowConfig& config, Mlt::
     endRect.h = beginRect.h;
     endRect.o = 1;
 
-    double destDar = producer->profile()->dar();
+    double destDar = MLT.profile().dar();
     double sourceW = producer->get_double("meta.media.width");
     double sourceH = producer->get_double("meta.media.height");
     double sourceAr = producer->get_double("aspect_ratio");
@@ -286,41 +283,41 @@ void SlideshowGeneratorWidget::attachAffineFilter(SlideshowConfig& config, Mlt::
         if (sourceDar > destDar)
         {
             // Crop sides to fit height
-            beginRect.w = (double)producer->profile()->width() * sourceDar / destDar;
-            beginRect.h = producer->profile()->height();
+            beginRect.w = (double)MLT.profile().width() * sourceDar / destDar;
+            beginRect.h = MLT.profile().height();
             beginRect.y = 0;
             endRect.w = beginRect.w;
             endRect.h = beginRect.h;
             endRect.y = beginRect.y;
             if(config.aspectConversion == ASPECT_CONVERSION_CROP_CENTER)
             {
-                beginRect.x = ((double)producer->profile()->width() - beginRect.w) / 2.0;
+                beginRect.x = ((double)MLT.profile().width() - beginRect.w) / 2.0;
                 endRect.x = beginRect.x;
             }
             else
             {
                 beginRect.x = 0;
-                endRect.x = (double)producer->profile()->width() - endRect.w;
+                endRect.x = (double)MLT.profile().width() - endRect.w;
             }
         }
         else if (destDar > sourceDar)
         {
             // Crop top and bottom to fit width.
-            beginRect.w = producer->profile()->width();
-            beginRect.h = (double)producer->profile()->height() * destDar / sourceDar;
+            beginRect.w = MLT.profile().width();
+            beginRect.h = (double)MLT.profile().height() * destDar / sourceDar;
             beginRect.x = 0;
             endRect.w = beginRect.w;
             endRect.h = beginRect.h;
             endRect.x = beginRect.x;
             if (config.aspectConversion == ASPECT_CONVERSION_CROP_CENTER)
             {
-                beginRect.y = ((double)producer->profile()->height() - beginRect.h) / 2.0;
+                beginRect.y = ((double)MLT.profile().height() - beginRect.h) / 2.0;
                 endRect.y = beginRect.y;
             }
             else
             {
                 beginRect.y = 0;
-                endRect.y =  (double)producer->profile()->height() - endRect.h;
+                endRect.y =  (double)MLT.profile().height() - endRect.h;
             }
         }
     }
@@ -366,11 +363,11 @@ void SlideshowGeneratorWidget::attachBlurFilter(SlideshowConfig& config, Mlt::Pr
     mlt_rect rect;
     rect.x = 0;
     rect.y = 0;
-    rect.w = producer->profile()->width();
-    rect.h = producer->profile()->height();
+    rect.w = MLT.profile().width();
+    rect.h = MLT.profile().height();
     rect.o = 1;
 
-    double destDar = producer->profile()->dar();
+    double destDar = MLT.profile().dar();
     double sourceW = producer->get_double("meta.media.width");
     double sourceH = producer->get_double("meta.media.height");
     double sourceAr = producer->get_double("aspect_ratio");
@@ -388,14 +385,14 @@ void SlideshowGeneratorWidget::attachBlurFilter(SlideshowConfig& config, Mlt::Pr
     if (sourceDar > destDar)
     {
         // Blur top/bottom to pad.
-        rect.h = producer->profile()->height() * destDar / sourceDar;
-        rect.y = ((double)producer->profile()->height() - rect.h) / 2.0;
+        rect.h = MLT.profile().height() * destDar / sourceDar;
+        rect.y = ((double)MLT.profile().height() - rect.h) / 2.0;
     }
     else if (destDar > sourceDar)
     {
         // Blur sides to pad.
-        rect.w = producer->profile()->width() * sourceDar / destDar;
-        rect.x = ((double)producer->profile()->width() - rect.w) / 2.0;
+        rect.w = MLT.profile().width() * sourceDar / destDar;
+        rect.x = ((double)MLT.profile().width() - rect.w) / 2.0;
     }
 
     Mlt::Filter filter(*producer->profile(), "pillar_echo");
