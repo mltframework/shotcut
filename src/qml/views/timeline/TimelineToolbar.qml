@@ -257,6 +257,6 @@ ToolBar {
         tooltip: qsTr('Zoom timeline to fit (0)')
         iconName: 'zoom-fit-best'
         iconSource: 'qrc:///icons/oxygen/32x32/actions/zoom-fit-best.png'
-        onTriggered: root.zoomFit()
+        onTriggered: root.zoomToFit()
     }
 }
