@@ -155,6 +155,11 @@ ToolBar {
             implicitWidth: settings.smallIcons? 18 : hiddenButton.implicitWidth
             implicitHeight: implicitWidth
         }
+        ToolButton {
+            action: zoomFitAction
+            implicitWidth: settings.smallIcons? 18 : hiddenButton.implicitWidth
+            implicitHeight: implicitWidth
+        }
     }
 
     Action {
@@ -245,5 +250,13 @@ ToolBar {
         iconName: 'zoom-in'
         iconSource: 'qrc:///icons/oxygen/32x32/actions/zoom-in.png'
         onTriggered: root.zoomIn()
+    }
+
+    Action {
+        id: zoomFitAction
+        tooltip: qsTr('Zoom timeline to fit (0)')
+        iconName: 'zoom-fit-best'
+        iconSource: 'qrc:///icons/oxygen/32x32/actions/zoom-fit-best.png'
+        onTriggered: root.zoomFit()
     }
 }

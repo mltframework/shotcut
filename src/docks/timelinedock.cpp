@@ -236,31 +236,6 @@ int TimelineDock::currentTrack() const
     return m_quickView.rootObject()->property("currentTrack").toInt();
 }
 
-void TimelineDock::zoomIn()
-{
-    QMetaObject::invokeMethod(m_quickView.rootObject(), "zoomIn");
-}
-
-void TimelineDock::zoomOut()
-{
-    QMetaObject::invokeMethod(m_quickView.rootObject(), "zoomOut");
-}
-
-void TimelineDock::resetZoom()
-{
-    QMetaObject::invokeMethod(m_quickView.rootObject(), "resetZoom");
-}
-
-void TimelineDock::makeTracksShorter()
-{
-    QMetaObject::invokeMethod(m_quickView.rootObject(), "makeTracksShorter");
-}
-
-void TimelineDock::makeTracksTaller()
-{
-    QMetaObject::invokeMethod(m_quickView.rootObject(), "makeTracksTaller");
-}
-
 void TimelineDock::setSelectionFromJS(const QVariantList& list)
 {
     QList<QPoint> points;

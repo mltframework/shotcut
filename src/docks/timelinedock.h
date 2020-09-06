@@ -60,11 +60,6 @@ public:
     void setCurrentTrack(int currentTrack);
     int currentTrack() const;
     int clipCount(int trackIndex) const;
-    void zoomIn();
-    void zoomOut();
-    void resetZoom();
-    void makeTracksShorter();
-    void makeTracksTaller();
     void setSelectionFromJS(const QVariantList& list);
     void setSelection(QList<QPoint> selection = QList<QPoint>(), int trackIndex = -1, bool isMultitrack = false);
     QVariantList selectionForJS() const;
@@ -104,6 +99,12 @@ signals:
     void filteredClicked();
     void durationChanged();
     void transitionAdded(int trackIndex, int clipIndex, int position, bool ripple);
+    void zoomIn();
+    void zoomOut();
+    void zoomToFit();
+    void resetZoom();
+    void makeTracksShorter();
+    void makeTracksTaller();
 
 public slots:
     void addAudioTrack();

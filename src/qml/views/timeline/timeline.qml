@@ -57,6 +57,10 @@ Rectangle {
         adjustZoom(-0.0625)
     }
 
+    function zoomToFit() {
+        setZoom(Math.pow((scrollView.width - 50) * multitrack.scaleFactor / tracksContainer.width - 0.01, 1/3))
+    }
+
     function resetZoom() {
         setZoom(1.0)
     }
@@ -649,6 +653,12 @@ Rectangle {
                 trackHeaderRepeater.itemAt(i).selected = (i === selectedTrack)
             propertiesMenuItem.visible = (cornerstone.selected || (selectedTrack >= 0 && selectedTrack < trackHeaderRepeater.count))
         }
+        onZoomIn: zoomIn()
+        onZoomOut: zoomOut()
+        onZoomToFit: zoomToFit()
+        onResetZoom: resetZoom()
+        onMakeTracksShorter: makeTracksShorter()
+        onMakeTracksTaller: makeTracksTaller()
     }
 
     Connections {

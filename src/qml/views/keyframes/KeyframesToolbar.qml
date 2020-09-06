@@ -96,7 +96,7 @@ ToolBar {
             implicitHeight: implicitWidth
             action: Action {
                 id: zoomOutAction
-                tooltip: qsTr("Zoom timeline out (-)")
+                tooltip: qsTr("Zoom keyframes out (Alt+-)")
                 iconName: 'zoom-out'
                 iconSource: 'qrc:///icons/oxygen/32x32/actions/zoom-out.png'
                 onTriggered: root.zoomOut()
@@ -110,10 +110,21 @@ ToolBar {
             implicitHeight: implicitWidth
             action: Action {
                 id: zoomInAction
-                tooltip: qsTr("Zoom timeline in (+)")
+                tooltip: qsTr("Zoom keyframes in (Alt++)")
                 iconName: 'zoom-in'
                 iconSource: 'qrc:///icons/oxygen/32x32/actions/zoom-in.png'
                 onTriggered: root.zoomIn()
+            }
+        }
+        ToolButton {
+            implicitWidth: settings.smallIcons? 18 : hiddenButton.implicitWidth
+            implicitHeight: implicitWidth
+            action: Action {
+                id: zoomFitAction
+                tooltip: qsTr('Zoom keyframes to fit (Alt+0)')
+                iconName: 'zoom-fit-best'
+                iconSource: 'qrc:///icons/oxygen/32x32/actions/zoom-fit-best.png'
+                onTriggered: root.zoomFit()
             }
         }
     }

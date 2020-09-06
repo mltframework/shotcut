@@ -72,6 +72,10 @@ Rectangle {
         adjustZoom(-0.0625)
     }
 
+    function zoomToFit() {
+        setZoom(Math.pow((scrollView.width - 50) * timeScale / tracksContainer.width - 0.01, 1/3))
+    }
+
     function resetZoom() {
         setZoom(1.0)
     }
@@ -515,6 +519,7 @@ Rectangle {
         target: keyframes
         onZoomIn: zoomIn()
         onZoomOut: zoomOut()
+        onZoomToFit: zoomToFit()
         onResetZoom: resetZoom()
         onSeekPreviousSimple: Logic.seekPreviousSimple()
         onSeekNextSimple: Logic.seekNextSimple()

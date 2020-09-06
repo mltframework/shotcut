@@ -49,6 +49,7 @@ signals:
     void changed(); /// Notifies when a filter parameter changes.
     void zoomIn();
     void zoomOut();
+    void zoomToFit();
     void resetZoom();
     void seekPreviousSimple();
     void seekNextSimple();
