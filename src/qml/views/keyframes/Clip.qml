@@ -91,7 +91,8 @@ Rectangle {
 
     Image {
         id: outThumbnail
-        visible: settings.timelineShowThumbnails && outThumbnailVisible && metadata !== null && parent.height > 20 &&
+        visible: settings.timelineShowThumbnails && outThumbnailVisible && metadata !== null &&
+                 parent.height > 20 && x > inThumbnail.width &&
                  ((clipRoot.x + x + width)   > scrollView.flickableItem.contentX) && // right edge
                  ((clipRoot.x + x)           < scrollView.flickableItem.contentX + scrollView.width) && // left edge
                  ((trackRoot.y + y + height) > scrollView.flickableItem.contentY) && // bottom edge
