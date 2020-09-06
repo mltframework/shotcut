@@ -27,7 +27,7 @@ static const QColor TEXT_COLOR = {255, 255, 255, 127};
 
 
 VideoWaveformScopeWidget::VideoWaveformScopeWidget()
-  : ScopeWidget("VideoZoom")
+  : ScopeWidget("VideoWaveform")
   , m_frame()
   , m_renderImg()
   , m_mutex(QMutex::NonRecursive)

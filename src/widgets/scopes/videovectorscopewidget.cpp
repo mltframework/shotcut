@@ -29,7 +29,7 @@
 static const QColor LINE_COLOR = {255, 255, 255, 127};
 
 VideoVectorScopeWidget::VideoVectorScopeWidget()
-  : ScopeWidget("VideoZoom")
+  : ScopeWidget("VideoVector")
   , m_frame()
   , m_renderImg()
   , m_mutex(QMutex::NonRecursive)
