@@ -1648,18 +1648,7 @@ void MainWindow::readWindowSettings()
         m_filtersDock->setFloating(false);
 #endif
     } else {
-        restoreState(Settings.windowStateDefault());
-        QDockWidget* audioMeterDock = findChild<QDockWidget*>("AudioPeakMeterDock");
-        if (audioMeterDock) {
-            audioMeterDock->show();
-            audioMeterDock->raise();
-        }
-        m_recentDock->show();
-        m_recentDock->raise();
-        m_filtersDock->show();
-        m_filtersDock->raise();
-        m_timelineDock->show();
-        m_timelineDock->raise();
+        restoreState(kLayoutEditingDefault);
     }
     LOG_DEBUG() << "end";
 }
@@ -3694,53 +3683,34 @@ void MainWindow::on_actionTutorials_triggered()
 void MainWindow::on_actionRestoreLayout_triggered()
 {
     auto mode = Settings.layoutMode();
-    if (mode > LayoutMode::Custom) {
+    if (mode != LayoutMode::Custom) {
         // Clear the saved layout for this mode
         Settings.setLayout(QString(kReservedLayoutPrefix).arg(mode), QByteArray(), QByteArray());
         // Reset the layout mode so the current layout is saved as custom when trigger action
         Settings.setLayoutMode();
-        switch (mode) {
-        case LayoutMode::Logging:
-            on_actionLayoutLogging_triggered();
-            break;
-        case LayoutMode::Editing:
-            on_actionLayoutEditing_triggered();
-            break;
-        case LayoutMode::Effects:
-            on_actionLayoutEffects_triggered();
-            break;
-        case LayoutMode::Color:
-            on_actionLayoutColor_triggered();
-            break;
-        case LayoutMode::Audio:
-            on_actionLayoutAudio_triggered();
-            break;
-        case LayoutMode::PlayerOnly:
-            on_actionLayoutPlayer_triggered();
-            break;
-        }
-    } else {
-        clearCurrentLayout();
-        restoreState(Settings.windowStateDefault());
+    }
+    switch (mode) {
+    case LayoutMode::Custom:
+        ui->actionLayoutEditing->setChecked(true);
+        Q_FALLTHROUGH();
+    case LayoutMode::Editing:
         on_actionLayoutEditing_triggered();
-        restoreState(Settings.windowStateDefault());
-        QDockWidget* audioMeterDock = findChild<QDockWidget*>("AudioPeakMeterDock");
-        if (audioMeterDock) {
-            audioMeterDock->show();
-            audioMeterDock->raise();
-        }
-        m_recentDock->show();
-        m_recentDock->raise();
-        m_filtersDock->show();
-        m_filtersDock->raise();
-        m_timelineDock->show();
-        m_timelineDock->raise();
-        ui->actionShowTitleBars->setChecked(true);
-        on_actionShowTitleBars_triggered(true);
-        ui->actionShowTextUnderIcons->setChecked(true);
-        on_actionShowTextUnderIcons_toggled(true);
-        ui->actionShowSmallIcons->setChecked(false);
-        on_actionShowSmallIcons_toggled(false);
+        break;
+    case LayoutMode::Logging:
+        on_actionLayoutLogging_triggered();
+        break;
+    case LayoutMode::Effects:
+        on_actionLayoutEffects_triggered();
+        break;
+    case LayoutMode::Color:
+        on_actionLayoutColor_triggered();
+        break;
+    case LayoutMode::Audio:
+        on_actionLayoutAudio_triggered();
+        break;
+    case LayoutMode::PlayerOnly:
+        on_actionLayoutPlayer_triggered();
+        break;
     }
 }
 
@@ -4197,7 +4167,7 @@ void MainWindow::on_actionLayoutLogging_triggered()
 //        resizeDocks({m_playlistDock, m_propertiesDock},
 //            {qFloor(width() * 0.25), qFloor(width() * 0.25)}, Qt::Horizontal);
     } else {
-        LOG_DEBUG() << state.toBase64();
+//        LOG_DEBUG() << state.toBase64();
         restoreState(state);
     }
 }
@@ -4211,7 +4181,7 @@ void MainWindow::on_actionLayoutEditing_triggered()
         restoreState(kLayoutEditingDefault);
 //        resetDockCorners();
     } else {
-        LOG_DEBUG() << state.toBase64();
+//        LOG_DEBUG() << state.toBase64();
         restoreState(state);
     }
 }
