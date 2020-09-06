@@ -37,7 +37,15 @@ Item {
         filter.set(endValue, Qt.rect(0, 0, profile.width, profile.height))
         if (filter.isNew) {
             // Add default preset.
-            filter.set(rectProperty,   '25%/25%:50%x50%')
+            var rect
+            if (producer.displayAspectRatio > profile.aspectRatio) {
+                rect = Qt.rect(0, 0, profile.width, Math.round(profile.width / producer.displayAspectRatio))
+            } else {
+                rect = Qt.rect(0, 0, Math.round(profile.height * producer.displayAspectRatio), profile.height)
+            }
+            rect.x = Math.round((profile.width - rect.width) / 2)
+            rect.y = Math.round((profile.height - rect.height) / 2)
+            filter.set(rectProperty, '' + rect.x + '/' + rect.y + ':' + rect.width + 'x' + rect.height)
             filter.set("blur", 4)
             filter.savePreset(preset.parameters)
         } else {
@@ -111,7 +119,7 @@ Item {
     }
 
     GridLayout {
-        columns: 6
+        columns: 4
         anchors.fill: parent
         anchors.margins: 8
 
@@ -122,7 +130,7 @@ Item {
         Preset {
             id: preset
             parameters: [rectProperty]
-            Layout.columnSpan: 5
+            Layout.columnSpan: 3
             onBeforePresetLoaded: {
                 filter.resetProperty(rectProperty)
             }
@@ -145,7 +153,6 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
         RowLayout {
-            Layout.columnSpan: 3
             TextField {
                 id: rectX
                 horizontalAlignment: Qt.AlignRight
@@ -192,7 +199,6 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
         RowLayout {
-            Layout.columnSpan: 3
             TextField {
                 id: rectW
                 horizontalAlignment: Qt.AlignRight
