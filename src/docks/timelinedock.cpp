@@ -916,6 +916,24 @@ void TimelineDock::setTrackLock(int trackIndex, bool lock)
 
 bool TimelineDock::moveClip(int fromTrack, int toTrack, int clipIndex, int position, bool ripple)
 {
+    if (toTrack >= 0 && clipIndex >= 0) {
+        int length = 0;
+        int i = m_model.trackList().at(fromTrack).mlt_index;
+        Mlt::Producer track(m_model.tractor()->track(i));
+        if (track.is_valid()) {
+            Mlt::Playlist playlist(track);
+            length = playlist.clip_length(clipIndex);
+        }
+        i = m_model.trackList().at(toTrack).mlt_index;
+        track = Mlt::Producer(m_model.tractor()->track(i));
+        if (track.is_valid()) {
+            Mlt::Playlist playlist(track);
+            if (m_model.isTransition(playlist, playlist.get_clip_index_at(position)) ||
+                m_model.isTransition(playlist, playlist.get_clip_index_at(position + length - 1))) {
+                return false;
+            }
+        }
+    }
     if (selection().size() <= 1 && m_model.addTransitionValid(fromTrack, toTrack, clipIndex, position, ripple)) {
         emit transitionAdded(fromTrack, clipIndex, position, ripple);
         if (m_updateCommand)

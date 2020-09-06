@@ -379,11 +379,13 @@ void UndoHelper::fixTransitions(Mlt::Playlist playlist, int clipIndex, Mlt::Prod
         Mlt::Producer producer(playlist.get_clip(currentIndex));
         if (producer.is_valid() && producer.parent().get(kShotcutTransitionProperty)) {
             Mlt::Tractor transition(producer.parent());
-            Mlt::Producer transitionClip(transition.track(transitionIndex));
-            if (transitionClip.is_valid() && transitionClip.parent().get_service() != clip.parent().get_service()) {
-                UNDOLOG << "Fixing transition at clip index" << currentIndex << "transition index" << transitionIndex;
-                transitionClip = clip.cut(transitionClip.get_in(), transitionClip.get_out());
-                transition.set_track(transitionClip, transitionIndex);
+            if (transition.is_valid()) {
+                Mlt::Producer transitionClip(transition.track(transitionIndex));
+                if (transitionClip.is_valid() && transitionClip.parent().get_service() != clip.parent().get_service()) {
+                    UNDOLOG << "Fixing transition at clip index" << currentIndex << "transition index" << transitionIndex;
+                    transitionClip = clip.cut(transitionClip.get_in(), transitionClip.get_out());
+                    transition.set_track(transitionClip, transitionIndex);
+                }
             }
         }
         transitionIndex++;

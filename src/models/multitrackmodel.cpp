@@ -727,6 +727,7 @@ bool MultitrackModel::moveClip(int fromTrack, int toTrack, int clipIndex,
                     int clipStart = playlist.clip_start(clipIndex);
 
                     // Remove clip
+                    clearMixReferences(fromTrack, clipIndex);
                     beginRemoveRows(index(fromTrack), clipIndex, clipIndex);
                     playlist.remove(clipIndex);
                     endRemoveRows();
@@ -848,6 +849,7 @@ int MultitrackModel::overwriteClip(int trackIndex, Mlt::Producer& clip, int posi
                 AudioLevelsTask::start(clip.parent(), this, modelIndex);
             } else {
 //                LOG_DEBUG() << "remove item on right";
+                clearMixReferences(trackIndex, targetIndex);
                 beginRemoveRows(index(trackIndex), targetIndex, targetIndex);
                 playlist.remove(targetIndex);
                 endRemoveRows();
@@ -943,6 +945,7 @@ QString MultitrackModel::overwrite(int trackIndex, Mlt::Producer& clip, int posi
 //                LOG_DEBUG() << "length" << length << "item length" << playlist.clip_length(targetIndex);
                 length -= playlist.clip_length(targetIndex);
 //                LOG_DEBUG() << "delete item" << targetIndex;
+                clearMixReferences(trackIndex, targetIndex);
                 beginRemoveRows(index(trackIndex), targetIndex, targetIndex);
                 playlist.remove(targetIndex);
                 endRemoveRows();
@@ -1290,51 +1293,6 @@ void MultitrackModel::joinClips(int trackIndex, int clipIndex)
     }
 }
 
-void MultitrackModel::overwriteFromPlaylist(Mlt::Playlist& from, int trackIndex, int position)
-{
-    int i = m_trackList.at(trackIndex).mlt_index;
-    QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
-    if (track) {
-        Mlt::Playlist playlist(*track);
-        int targetIndex = playlist.get_clip_index_at(position);
-        if (targetIndex > 0) {
-            --targetIndex;
-            beginRemoveRows(index(trackIndex), targetIndex, targetIndex);
-            playlist.remove(targetIndex);
-            endRemoveRows();
-        }
-        if (targetIndex < playlist.count()) {
-            beginRemoveRows(index(trackIndex), targetIndex, targetIndex);
-            playlist.remove(targetIndex);
-            endRemoveRows();
-        }
-        if (targetIndex < playlist.count()) {
-            beginRemoveRows(index(trackIndex), targetIndex, targetIndex);
-            playlist.remove(targetIndex);
-            endRemoveRows();
-        }
-        if (from.count() > 0) {
-            beginInsertRows(index(trackIndex), targetIndex, targetIndex + from.count() - 1);
-            for (int i = 0; i < from.count(); i++) {
-                QScopedPointer<Mlt::Producer> clip(from.get_clip(i));
-                if (clip->is_blank()) {
-                    playlist.insert_blank(targetIndex, clip->get_out());
-                } else {
-                    playlist.insert(*clip, targetIndex);
-                    QModelIndex modelIndex = createIndex(targetIndex, 0, trackIndex);
-                    AudioLevelsTask::start(clip->parent(), this, modelIndex);
-                }
-                ++targetIndex;
-            }
-            endInsertRows();
-        }
-        consolidateBlanks(playlist, trackIndex);
-        emit modified();
-        emit seeked(position + playlist.get_playtime());
-    }
-
-}
-
 void MultitrackModel::fadeIn(int trackIndex, int clipIndex, int duration)
 {
     int i = m_trackList.at(trackIndex).mlt_index;
@@ -1612,8 +1570,10 @@ int MultitrackModel::addTransition(int trackIndex, int clipIndex, int position, 
             // Create mix
             beginInsertRows(index(trackIndex), targetIndex + 1, targetIndex + 1);
             playlist.mix(targetIndex, duration);
-            QScopedPointer<Mlt::Producer> producer(playlist.get_clip(targetIndex + 1));
-            producer->parent().set(kShotcutTransitionProperty, kShotcutDefaultTransition);
+            Mlt::Producer producer(playlist.get_clip(targetIndex + 1));
+            if (producer.is_valid()) {
+                producer.parent().set(kShotcutTransitionProperty, kShotcutDefaultTransition);
+            }
             endInsertRows();
 
             // Add transitions

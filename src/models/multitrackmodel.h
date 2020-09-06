@@ -148,7 +148,6 @@ public slots:
     void liftClip(int trackIndex, int clipIndex);
     void splitClip(int trackIndex, int clipIndex, int position);
     void joinClips(int trackIndex, int clipIndex);
-    void overwriteFromPlaylist(Mlt::Playlist& playlist, int trackIndex, int position);
     void fadeIn(int trackIndex, int clipIndex, int duration);
     void fadeOut(int trackIndex, int clipIndex, int duration);
     bool addTransitionValid(int fromTrack, int toTrack, int clipIndex, int position, bool ripple);
