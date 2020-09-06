@@ -19,7 +19,7 @@ import QtQuick 2.0
 import QtQuick.Controls 1.0
 
 Rectangle {
-    property real intervalSeconds: 5 * Math.max(1, Math.floor(1.5 / timeScale))
+    property real intervalSeconds: (timeScale > 5)? 1 : (5 * Math.max(1, Math.floor(1.5 / timeScale)))
 
     SystemPalette { id: activePalette }
 
