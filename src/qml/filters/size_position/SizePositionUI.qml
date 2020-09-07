@@ -626,7 +626,7 @@ Item {
             enabled: scaleSlider.enabled
             onClicked: sizeUndoButton.clicked()
         }
-        Label { text: qsTr('(Fill only)') }
+        Label { text: '<small>' + qsTr('(Fill only)') + '</small>' }
 
         Label {
             text: qsTr('Size mode')
@@ -666,7 +666,7 @@ Item {
                 filter.set(distortProperty, 0)
             }
         }
-        Item { Layout.fillWidth: true }
+        Item { width: 1 }
 
         Label {
             text: qsTr('Horizontal fit')
@@ -696,7 +696,7 @@ Item {
                 filter.set(halignProperty, 'left')
             }
         }
-        Item { Layout.fillWidth: true }
+        Item { width: 1 }
 
         Label {
             text: qsTr('Vertical fit')
@@ -726,7 +726,7 @@ Item {
                 filter.set(valignProperty, 'top')
             }
         }
-        Item { Layout.fillWidth: true }
+        Item { width: 1 }
 
         Label {
             text: qsTr('Rotation')
@@ -776,7 +776,7 @@ Item {
             onClicked: bgColor.value = '#00000000'
         }
         Item {
-            Layout.fillWidth: true
+            width: 1
             visible: bgColor.visible
         }
 
