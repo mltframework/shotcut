@@ -570,7 +570,7 @@ KeyframableFilter {
         ComboBox {
             id: interpolatorCombo
             implicitWidth: 180
-            model: [qsTr('Nearest Neighbor'), qsTr('Bilinear'), qsTr('Bicubic Smooth'), qsTr('Bicubic Sharp'), qsTr('Spline 4x4'), qsTr('Spline 6x6'), 'Lanczos]
+            model: [qsTr('Nearest Neighbor'), qsTr('Bilinear'), qsTr('Bicubic Smooth'), qsTr('Bicubic Sharp'), qsTr('Spline 4x4'), qsTr('Spline 6x6'), 'Lanczos']
             onActivated: {
                 enabled = false
                 filter.set(interpolatorProperty, index / 6)
