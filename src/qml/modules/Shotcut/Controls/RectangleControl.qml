@@ -35,6 +35,7 @@ Item {
 
     signal rectChanged(Rectangle rect)
     signal rotated(real degrees)
+    signal rotationReleased()
 
     function setHandles(rect) {
         if ( rect.width < 0 || rect.height < 0)
@@ -259,6 +260,7 @@ Item {
                     rotationLine.rotation = 0
                     rotationGroup.rotation = startRotation + getRotationDegrees()
                     parent.anchors.centerIn = rotationGroup
+                    rotationReleased()
                 }
             }
         }

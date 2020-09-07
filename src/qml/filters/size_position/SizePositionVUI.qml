@@ -255,6 +255,9 @@ VuiBase {
                     updateRotation(degrees)
                     blockUpdate = false
                 }
+                onRotationReleased: {
+                    rectangle.rotation = filter.getDouble(rotationProperty, getPosition())
+                }
             }
         }
     }
