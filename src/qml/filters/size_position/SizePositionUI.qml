@@ -598,7 +598,6 @@ Item {
             minimumValue: 0.1
             maximumValue: 1000
             decimals: 1
-            spinnerWidth: 110
             suffix: ' %'
             onValueChanged: {
                 if (!blockUpdate && Math.abs(value - filterRect.width * 100 / profile.width) > 0.1) {
@@ -740,7 +739,6 @@ Item {
             minimumValue: -360
             maximumValue: 360
             decimals: 1
-            spinnerWidth: 110
             suffix: qsTr(' °', 'degrees')
             onValueChanged: updateRotation(getPosition())
         }
