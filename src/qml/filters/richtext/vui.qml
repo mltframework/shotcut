@@ -203,12 +203,17 @@ VuiBase {
                     SpinBox {
                         id: fontSizeSpinBox
                         ToolTip { text: qsTr('Text size') }
-                        activeFocusOnPress: true
                         implicitWidth: 50
                         value: 0
                         maximumValue: Math.pow(2, 31)
                         property bool blockValue: false
-                        onValueChanged: if (!blockValue) document.fontSize = value
+                        onValueChanged: {
+                            if (!blockValue) {
+                                blockValue = true
+                                document.fontSize = value
+                                blockValue = false
+                            }
+                        }
                     }
                     ToolButton {
                         id: colorButton
@@ -557,9 +562,11 @@ VuiBase {
         textColor: colorDialog.color
         onTextChanged: textArea.text = text
         onFontSizeChanged: {
-            fontSizeSpinBox.blockValue = true
-            fontSizeSpinBox.value = document.fontSize
-            fontSizeSpinBox.blockValue = false
+            if (!fontSizeSpinBox.blockValue) {
+                fontSizeSpinBox.blockValue = true
+                fontSizeSpinBox.value = document.fontSize
+                fontSizeSpinBox.blockValue = false
+            }
         }
         onError: {
             errorDialog.text = message
