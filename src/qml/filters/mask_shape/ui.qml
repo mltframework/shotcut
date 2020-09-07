@@ -250,16 +250,16 @@ Item {
                 resourceCombo.updateResource(resourceCombo.currentIndex)
             }
         }
-        Item { Layout.fillWidth: true }
+        Item { width: 1 }
 
-        Item { Layout.fillWidth: true }
+        Item { width: 1 }
         Label {
             id: fileLabel
             Layout.columnSpan: 3
             ToolTip { id: fileLabelTip }
         }
 
-        Item { Layout.fillWidth: true }
+        Item { width: 1 }
         RowLayout {
             Layout.columnSpan: 3
             CheckBox {
@@ -270,7 +270,7 @@ Item {
             UndoButton {
                 onClicked: invertCheckBox.checked = false
             }
-            Item { Layout.fillWidth: true }
+            Item { width: 1 }
             CheckBox {
                 id: reverseCheckBox
                 text: qsTr('Reverse')
@@ -281,7 +281,7 @@ Item {
                 visible: reverseCheckBox.visible
                 onClicked: reverseCheckBox.checked = false
             }
-            Item { Layout.fillWidth: true }
+            Item { width: 1 }
         }
 
         Label {
@@ -306,7 +306,7 @@ Item {
         UndoButton {
             onClicked: brightnessRadioButton.checked = true
         }
-        Item { Layout.fillWidth: true }
+        Item { width: 1 }
 
         CheckBox {
             id: thresholdCheckBox
@@ -346,7 +346,7 @@ Item {
         UndoButton {
             onClicked: softnessSlider.value = 0
         }
-        Item { Layout.fillWidth: true }
+        Item { width: 1 }
 
     }
 

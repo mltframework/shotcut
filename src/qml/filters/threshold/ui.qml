@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Meltytech, LLC
+ * Copyright (c) 2019-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -109,7 +109,7 @@ KeyframableFilter {
             }
         }
 
-        Item { Layout.fillWidth: true }
+        Item { width: 1 }
         CheckBox {
             id: invertCheckbox
             text: qsTr('Invert')
@@ -118,7 +118,7 @@ KeyframableFilter {
         UndoButton {
             onClicked: invertCheckbox.checked = false
         }
-        Item { Layout.fillWidth: true }
+        Item { width: 1 }
 
         Label {}
         CheckBox {
@@ -129,7 +129,7 @@ KeyframableFilter {
         UndoButton {
             onClicked: useAlphaCheckbox.checked = false
         }
-        Item { Layout.fillWidth: true }
+        Item { width: 1 }
 
         Item {
             Layout.fillHeight: true

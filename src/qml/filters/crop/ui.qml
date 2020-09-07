@@ -123,7 +123,7 @@ Item {
             }
         }
         Item {
-            Layout.fillWidth: true;
+            width: 1
         }
         UndoButton {
             onClicked: {

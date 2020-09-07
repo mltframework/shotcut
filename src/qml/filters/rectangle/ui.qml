@@ -341,7 +341,7 @@ Item {
                  filter.setGradient('color', colors)
             }
         }
-        Item { Layout.fillWidth: true }
+        Item { width: 1 }
         
         Label {
             text: qsTr('Outline')

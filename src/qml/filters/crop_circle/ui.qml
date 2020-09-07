@@ -158,7 +158,7 @@ Item {
         UndoButton {
             onClicked: colorSwatch.value = '#FF000000'
         }
-        Item { Layout.fillWidth: true }
+        Item { width: 1 }
 
         Item {
             Layout.fillHeight: true

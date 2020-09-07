@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2019 Meltytech, LLC
+ * Copyright (c) 2018-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -181,7 +181,7 @@ Item {
         UndoButton {
             onClicked: channelCombo.currentIndex = 3
         }
-        Item { Layout.fillWidth: true }
+        Item { width: 1 }
 
         Label {
             text: qsTr('Histogram')
@@ -199,7 +199,7 @@ Item {
         UndoButton {
             onClicked: histogramCombo.currentIndex = 4
         }
-        Item { Layout.fillWidth: true }
+        Item { width: 1 }
 
         Label {
             text: qsTr('Input Black')
@@ -274,7 +274,7 @@ Item {
         UndoButton {
             onClicked: outputBlackSlider.value = 0
         }
-        Item { Layout.fillWidth: true }
+        Item { width: 1 }
 
         Label {
             text: qsTr('Output White')
@@ -289,7 +289,7 @@ Item {
         UndoButton {
             onClicked: outputWhiteSlider.value = 255
         }
-        Item { Layout.fillWidth: true }
+        Item { width: 1 }
 
         Item {
             Layout.fillHeight: true

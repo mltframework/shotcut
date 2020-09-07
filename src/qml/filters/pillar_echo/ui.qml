@@ -243,7 +243,7 @@ Item {
         UndoButton {
             onClicked: amountSlider.value = 20
         }
-        Item { Layout.fillWidth: true }
+        Item { width: 1 }
 
 
         Item { Layout.fillHeight: true }
