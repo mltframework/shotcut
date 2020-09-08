@@ -188,7 +188,7 @@ Mlt::Playlist* SlideshowGeneratorWidget::getSlideshow()
             if (!c->producer->property_exists("meta.media.width")) {
                 delete c->producer->get_frame(); // makes avformat producer set meta.media.width and .height
             }
-            attachAffineFilter(config, c->producer, c->frame_in + framesPerClip - 1);
+            attachAffineFilter(config, c->producer, c->frame_count - 1);
             attachBlurFilter(config, c->producer);
         }
     }
@@ -350,9 +350,9 @@ void SlideshowGeneratorWidget::attachAffineFilter(SlideshowConfig& config, Mlt::
     filter.set("transition.halign", "center");
     filter.set("transition.threads", 0);
     filter.set("background", "color:#000000");
-    filter.set("shotcut:filter", "affineSizePosition");
-    filter.set("shotcut:animIn", producer->frames_to_time(endPosition, mlt_time_clock));
-    filter.set("shotcut:animOut", producer->frames_to_time(0, mlt_time_clock));
+    filter.set(kShotcutFilterProperty, "affineSizePosition");
+    filter.set(kShotcutAnimInProperty, producer->frames_to_time(endPosition + 1, mlt_time_clock));
+    filter.set(kShotcutAnimOutProperty, producer->frames_to_time(0, mlt_time_clock));
     producer->attach(filter);
 }
 
@@ -400,7 +400,7 @@ void SlideshowGeneratorWidget::attachBlurFilter(SlideshowConfig& config, Mlt::Pr
     Mlt::Filter filter(MLT.profile(), "pillar_echo");
     filter.set("rect", rect);
     filter.set("blur", 4);
-    filter.set("shotcut:filter", "pillarEcho");
+    filter.set(kShotcutFilterProperty, "pillarEcho");
     producer->attach(filter);
 }
 
