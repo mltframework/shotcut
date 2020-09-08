@@ -209,7 +209,10 @@ VuiBase {
             onWheel: {
                 if (rotationProperty && (wheel.modifiers & Qt.ControlModifier)) {
                     var degrees = rectangle.rotation - wheel.angleDelta.y / 120 * 5
-                    rectangle.rotation = snapRotation(degrees, 1.5)
+                    if (!(wheel.modifiers & Qt.AltModifier)) {
+                        degrees = snapRotation(degrees, 1.5)
+                    }
+                    rectangle.rotation = degrees
                     blockUpdate = true
                     updateRotation(rectangle.rotation % 360)
                     blockUpdate = false
@@ -250,7 +253,9 @@ VuiBase {
                 onHeightScaleChanged: setHandles(filterRect)
                 onRectChanged: setFilter(getPosition())
                 onRotated: {
-                    degrees = snapRotation(degrees, 4) % 360
+                    if (!(mouse.modifiers & Qt.AltModifier)) {
+                        degrees = snapRotation(degrees, 4) % 360
+                    }
                     blockUpdate = true
                     updateRotation(degrees)
                     blockUpdate = false

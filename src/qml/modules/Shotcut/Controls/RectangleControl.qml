@@ -34,7 +34,7 @@ Item {
     property bool _positionDragLocked: false
 
     signal rectChanged(Rectangle rect)
-    signal rotated(real degrees)
+    signal rotated(real degrees, var mouse)
     signal rotationReleased()
 
     function setHandles(rect) {
@@ -253,7 +253,7 @@ Item {
                 }
                 onPositionChanged: {
                     var degrees = getRotationDegrees()
-                    rotated(startRotation + degrees)
+                    rotated(startRotation + degrees, mouse)
                     rotationLine.rotation = degrees
                 }
                 onReleased: {
