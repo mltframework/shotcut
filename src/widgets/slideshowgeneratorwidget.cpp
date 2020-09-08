@@ -165,7 +165,7 @@ Mlt::Playlist* SlideshowGeneratorWidget::getSlideshow()
 
     int framesPerClip = round(config.clipDuration * MLT.profile().fps());
     int count = m_clips->count();
-    Mlt::Playlist* slideshow = new Mlt::Playlist(*m_clips->profile());
+    Mlt::Playlist* slideshow = new Mlt::Playlist(MLT.profile());
     Mlt::ClipInfo info;
 
     // Copy clips
@@ -174,7 +174,7 @@ Mlt::Playlist* SlideshowGeneratorWidget::getSlideshow()
         Mlt::ClipInfo* c = m_clips->clip_info(i, &info);
         if (c)
         {
-            Mlt::Producer producer(*c->producer->profile(), "xml-string", MLT.XML(c->producer).toUtf8().constData());
+            Mlt::Producer producer(MLT.profile(), "xml-string", MLT.XML(c->producer).toUtf8().constData());
             slideshow->append(producer, c->frame_in, c->frame_in + framesPerClip - 1);
         }
     }
@@ -226,11 +226,11 @@ Mlt::Playlist* SlideshowGeneratorWidget::getSlideshow()
             producer->parent().set(kShotcutTransitionProperty, "lumaMix");
 
             // Add mix transition
-            Mlt::Transition crossFade(*m_clips->profile(), "mix:-1");
+            Mlt::Transition crossFade(MLT.profile(), "mix:-1");
             slideshow->mix_add(i + 1, &crossFade);
 
             // Add luma transition
-            Mlt::Transition luma(*m_clips->profile(), Settings.playerGPU()? "movit.luma_mix" : "luma");
+            Mlt::Transition luma(MLT.profile(), Settings.playerGPU()? "movit.luma_mix" : "luma");
             applyLumaTransitionProperties(&luma, config);
             slideshow->mix_add(i + 1, &luma);
 
@@ -341,7 +341,7 @@ void SlideshowGeneratorWidget::attachAffineFilter(SlideshowConfig& config, Mlt::
         beginRect.h = beginRect.h + (beginScale * beginRect.h);
     }
 
-    Mlt::Filter filter(*producer->profile(), "affine");
+    Mlt::Filter filter(MLT.profile(), "affine");
     filter.anim_set("transition.rect", beginRect, 0);
     filter.anim_set("transition.rect", endRect, endPosition);
     filter.set("transition.fill", 1);
@@ -397,7 +397,7 @@ void SlideshowGeneratorWidget::attachBlurFilter(SlideshowConfig& config, Mlt::Pr
         rect.x = ((double)MLT.profile().width() - rect.w) / 2.0;
     }
 
-    Mlt::Filter filter(*producer->profile(), "pillar_echo");
+    Mlt::Filter filter(MLT.profile(), "pillar_echo");
     filter.set("rect", rect);
     filter.set("blur", 4);
     filter.set("shotcut:filter", "pillarEcho");
