@@ -623,7 +623,10 @@ Item {
         }
         UndoButton {
             enabled: scaleSlider.enabled
-            onClicked: sizeUndoButton.clicked()
+            onClicked: {
+                var width = (producer.displayAspectRatio > 1.0)? profile.width : profile.height * producer.displayAspectRatio
+                scaleSlider.value = Math.min(width / profile.width * 100, scaleSlider.maximumValue)
+            }
         }
         Label { text: '<small>' + qsTr('(Fill only)') + '</small>' }
 
