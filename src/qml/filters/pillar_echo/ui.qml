@@ -37,14 +37,7 @@ Item {
         filter.set(endValue, Qt.rect(0, 0, profile.width, profile.height))
         if (filter.isNew) {
             // Add default preset.
-            var rect
-            if (producer.displayAspectRatio > profile.aspectRatio) {
-                rect = Qt.rect(0, 0, profile.width, Math.round(profile.width / producer.displayAspectRatio))
-            } else {
-                rect = Qt.rect(0, 0, Math.round(profile.height * producer.displayAspectRatio), profile.height)
-            }
-            rect.x = Math.round((profile.width - rect.width) / 2)
-            rect.y = Math.round((profile.height - rect.height) / 2)
+            var rect = defaultRect()
             filter.set(rectProperty, '' + rect.x + '/' + rect.y + ':' + rect.width + 'x' + rect.height)
             filter.set("blur", 4)
             filter.savePreset(preset.parameters)
@@ -60,6 +53,18 @@ Item {
         setKeyframedControls()
         if (filter.isNew)
             filter.set(rectProperty, filter.getRect(rectProperty))
+    }
+
+    function defaultRect() {
+        var result
+        if (producer.displayAspectRatio > profile.aspectRatio) {
+            result = Qt.rect(0, 0, profile.width, Math.round(profile.width / producer.displayAspectRatio))
+        } else {
+            result = Qt.rect(0, 0, Math.round(profile.height * producer.displayAspectRatio), profile.height)
+        }
+        result.x = Math.round((profile.width - result.width) / 2)
+        result.y = Math.round((profile.height - result.height) / 2)
+        return result
     }
 
     function getPosition() {
@@ -173,8 +178,9 @@ Item {
         }
         UndoButton {
             onClicked: {
-                rectX.text = rectY.text = 0
-                filterRect.x = filterRect.y = 0
+                var rect = defaultRect()
+                filterRect.x = rectX.text = rect.x
+                filterRect.y = rectY.text = rect.y
                 setFilter(getPosition())
             }
         }
@@ -219,10 +225,9 @@ Item {
         }
         UndoButton {
             onClicked: {
-                rectW.text = profile.width / 10
-                rectH.text = profile.height / 10
-                filterRect.width = profile.width / 10
-                filterRect.height = profile.height / 10
+                var rect = defaultRect()
+                filterRect.width = rectW.text = rect.width
+                filterRect.height = rectH.text = rect.height
                 setFilter(getPosition())
             }
         }
