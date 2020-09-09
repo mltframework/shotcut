@@ -246,7 +246,7 @@ Item {
             onValueChanged: filter.set("blur", value)
         }
         UndoButton {
-            onClicked: amountSlider.value = 20
+            onClicked: amountSlider.value = 4
         }
         Item { width: 1 }
 
