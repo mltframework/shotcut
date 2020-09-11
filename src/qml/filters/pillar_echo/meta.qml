@@ -3,8 +3,8 @@ import org.shotcut.qml 1.0
 
 Metadata {
     type: Metadata.Filter
-    objectName: 'pillarEcho'
-    name: qsTr('Pillar Echo')
+    objectName: 'blur_pad'
+    name: qsTr('Blur: Pad')
     mlt_service: 'pillar_echo'
     qml: 'ui.qml'
     vui: 'vui.qml'
