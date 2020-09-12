@@ -161,6 +161,16 @@ Rectangle {
                     anchors.verticalCenter: parent.verticalCenter
                     width: parent.width - 8
                 }
+                MouseArea {
+                    anchors.fill: parent
+                    acceptedButtons: Qt.LeftButton | Qt.RightButton
+                    onClicked: {
+                        timeline.selectMultitrack()
+                        if (mouse.button == Qt.RightButton) {
+                            menu.popup()
+                        }
+                    }
+                }
                 ToolButton {
                     visible: multitrack.filtered
                     anchors.right: parent.right
@@ -174,16 +184,6 @@ Rectangle {
                     onClicked: {
                         timeline.selectMultitrack()
                         timeline.filteredClicked()
-                    }
-                }
-                MouseArea {
-                    anchors.fill: parent
-                    acceptedButtons: Qt.LeftButton | Qt.RightButton
-                    onClicked: {
-                        timeline.selectMultitrack()
-                        if (mouse.button == Qt.RightButton) {
-                            menu.popup()
-                        }
                     }
                 }
             }
