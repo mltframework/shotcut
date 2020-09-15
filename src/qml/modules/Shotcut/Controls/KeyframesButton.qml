@@ -70,9 +70,13 @@ CheckBox {
         text: qsTr('This will remove all keyframes for this parameter.<p>Do you still want to do this?')
         standardButtons: StandardButton.Yes | StandardButton.No
         onYes: {
+            tooltip.isVisible = false
             checkbox.checked = false
             checkbox.toggled()
         }
-        onNo: checkbox.checked = true
+        onNo: {
+            tooltip.isVisible = false
+            checkbox.checked = true
+        }
     }
 }
