@@ -144,6 +144,14 @@ p, li { white-space: pre-wrap; }
         bgColor.value = filter.get('bgcolour')
     }
 
+    function getTextDimensions() {
+        var document = filter.getRect(sizeProperty)
+        if (bgColor.value.substring(0, 3) !== '#00') {
+            document.height = Math.max(document.height, filterRect.height)
+        }
+        return document
+    }
+
     function setKeyframedControls() {
         var position = getPosition()
         var newValue = filter.getRect(rectProperty, position)
@@ -160,7 +168,7 @@ p, li { white-space: pre-wrap; }
         rectW.enabled = enabled
         rectH.enabled = enabled
 
-        var document = filter.getRect(sizeProperty)
+        var document = getTextDimensions()
         if (parseInt(sizeW.text) !== Math.round(document.width) || parseInt(sizeH.text) !== Math.round(document.height)) {
             sizeW.text = Math.round(document.width)
             sizeH.text = Math.round(document.height)
@@ -170,7 +178,7 @@ p, li { white-space: pre-wrap; }
 
     function handleSpecialPreset() {
         if (filter.get(specialPresetProperty)) {
-            var document = filter.getRect(sizeProperty)
+            var document = getTextDimensions()
             filter.blockSignals = true
             filter.resetProperty(rectProperty)
             filter.animateIn = filter.duration
