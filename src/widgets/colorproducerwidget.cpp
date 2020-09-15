@@ -68,7 +68,9 @@ void ColorProducerWidget::on_colorButton_clicked()
     dialog.setOption(QColorDialog::ShowAlphaChannel);
     if (dialog.exec() == QDialog::Accepted) {
         auto newColor = dialog.currentColor();
-        if (newColor.alpha() == 0 && newColor != color) {
+        auto rgb = newColor;
+        rgb.setAlpha(color.alpha());
+        if (newColor.alpha() == 0 && rgb != color) {
             newColor.setAlpha(255);
         }
         ui->colorLabel->setText(colorToString(newColor));
