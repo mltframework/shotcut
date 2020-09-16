@@ -36,7 +36,7 @@ VuiBase {
     property string endValue:  '_shotcut:endValue'
     property string sizeProperty: '_shotcut:size'
     property bool smallIcons: settings.smallIcons
-
+    property url settingsSavePath: 'file:///' + settings.savePath
 
     Component.onCompleted: {
         setRectangleControl()
@@ -473,6 +473,7 @@ VuiBase {
     FileDialog {
         id: fileDialog
         modality: Qt.ApplicationModal
+        folder: settingsSavePath
         nameFilters: ["HTML files (*.html *.htm)", "Text files (*.txt)", "All files (*)"]
         onAccepted: {
             if (fileDialog.selectExisting)
