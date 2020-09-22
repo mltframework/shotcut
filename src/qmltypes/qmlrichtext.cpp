@@ -38,6 +38,8 @@
 #include <QtGui/QTextCursor>
 #include <QtGui/QFontDatabase>
 #include <QtCore/QFileInfo>
+#include <QGuiApplication>
+#include <QClipboard>
 
 QmlRichText::QmlRichText()
     : m_target(0)
@@ -171,6 +173,14 @@ void QmlRichText::indentMore()
     QTextBlockFormat format;
     format.setIndent(indent + 1);
     cursor.mergeBlockFormat(format);
+}
+
+void QmlRichText::pastePlain()
+{
+    QTextCursor cursor = textCursor();
+    if (cursor.isNull())
+        return;
+    cursor.insertText(QGuiApplication::clipboard()->text());
 }
 
 QUrl QmlRichText::fileUrl() const

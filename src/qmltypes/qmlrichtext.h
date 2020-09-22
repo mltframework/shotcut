@@ -102,6 +102,7 @@ public slots:
     void insertTable(int rows = 1, int columns = 2, int border = 0);
     void indentLess();
     void indentMore();
+    void pastePlain();
 
 signals:
     void targetChanged();

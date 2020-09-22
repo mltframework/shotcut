@@ -309,6 +309,7 @@ VuiBase {
         MenuItem { action: cutAction }
         MenuItem { action: copyAction }
         MenuItem { action: pasteAction }
+        MenuItem { action: pastePlainAction }
         MenuItem { action: selectAllAction }
         MenuSeparator {}
         MenuItem { action: insertTableAction }
@@ -378,8 +379,13 @@ VuiBase {
         text: qsTr('Paste')
         shortcut: 'ctrl+v'
         iconName: 'edit-paste'
-        iconSource: 'qrc:///icons/oxygen/32x32/actions/edit-copy.png'
+        iconSource: 'qrc:///icons/oxygen/32x32/actions/edit-paste.png'
         onTriggered: textArea.paste()
+    }
+    Action {
+        id: pastePlainAction
+        text: qsTr('Paste and Match Style')
+        onTriggered: document.pastePlain()
     }
     Action {
         id: selectAllAction
