@@ -88,7 +88,7 @@ Item {
     FileDialog {
         id: fileDialog
         title: qsTr( 'Select a file to store analysis results.' )
-        modality: Qt.ApplicationModal
+        modality: application.dialogModality
         selectExisting: false
         selectMultiple: false
         selectFolder: false

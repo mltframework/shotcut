@@ -169,7 +169,7 @@ Item {
     Shotcut.File { id: shapeFile }
     FileDialog {
         id: fileDialog
-        modality: Qt.ApplicationModal
+        modality: application.dialogModality
         selectMultiple: false
         selectFolder: false
         folder: settingsOpenPath

@@ -492,7 +492,7 @@ VuiBase {
 
     FileDialog {
         id: fileDialog
-        modality: Qt.ApplicationModal
+        modality: application.dialogModality
         folder: settingsSavePath
         nameFilters: ["HTML files (*.html *.htm)", "Text files (*.txt)", "All files (*)"]
         onAccepted: {

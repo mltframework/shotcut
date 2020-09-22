@@ -120,7 +120,7 @@ Item {
      id: selectAnalysisFile
      title: "File for motion analysis"
      folder: shortcuts.home
-        modality: Qt.ApplicationModal
+        modality: application.dialogModality
         selectMultiple: false
   selectExisting: false
         selectFolder: false
