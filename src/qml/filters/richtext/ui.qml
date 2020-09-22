@@ -142,6 +142,16 @@ p, li { white-space: pre-wrap; }
 
     function setControls() {
         bgColor.value = filter.get('bgcolour')
+        switch (filter.get('overflow-y')) {
+        case '':
+            automaticOverflowRadioButton.checked = true
+            break;
+        case '0':
+            hiddenOverflowRadioButton.checked = true
+            break;
+        default:
+            visibleOverflowRadioButton.checked = true
+        }
     }
 
     function getTextDimensions() {
@@ -219,7 +229,7 @@ p, li { white-space: pre-wrap; }
         }
         Preset {
             id: preset
-            parameters: [rectProperty, 'bgcolour']
+            parameters: [rectProperty, 'bgcolour', 'overflow-y']
             Layout.columnSpan: 5
             onBeforePresetLoaded: {
                 filter.resetProperty(rectProperty)
@@ -384,6 +394,43 @@ p, li { white-space: pre-wrap; }
         }
         UndoButton {
             onClicked: bgColor.value = '#00000000'
+        }
+        Item { Layout.fillWidth: true }
+
+        Label {
+            text: qsTr('Overflow')
+            Layout.alignment: Qt.AlignRight
+        }
+        RowLayout {
+            Layout.columnSpan: 3
+            ExclusiveGroup { id: overflowGroup }
+            RadioButton {
+                id: automaticOverflowRadioButton
+                text: qsTr('Automatic')
+                exclusiveGroup: overflowGroup
+                onClicked: {
+                    filter.set('overflow-y', '')
+                    filter.resetProperty('overflow-y')
+                }
+            }
+            RadioButton {
+                id: visibleOverflowRadioButton
+                text: qsTr('Visible')
+                exclusiveGroup: overflowGroup
+                onClicked: filter.set('overflow-y', 1)
+            }
+            RadioButton {
+                id: hiddenOverflowRadioButton
+                text: qsTr('Hidden')
+                exclusiveGroup: overflowGroup
+                onClicked: filter.set('overflow-y', 0)
+            }
+        }
+        UndoButton {
+            onClicked: {
+                filter.resetProperty('overflow-y')
+                automaticOverflowRadioButton.checked = true
+            }
         }
         Item { Layout.fillWidth: true }
 

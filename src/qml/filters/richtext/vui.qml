@@ -42,6 +42,7 @@ VuiBase {
         setRectangleControl()
         filter.set('_hide', 1)
         background.color = filter.get('bgcolour')
+        setTextAreaHeight()
         textArea.text = filter.get('html')
         fontSizeSpinBox.value = document.fontSize
     }
@@ -100,6 +101,19 @@ VuiBase {
         filter.set(sizeProperty, Qt.rect(0, 0, document.size.width, document.size.height))
     }
 
+    function setTextAreaHeight() {
+        switch (filter.get('overflow-y')) {
+        case '':
+            textArea.height = filterRect.height >= profile.height? Math.max(filterRect.height, textArea.contentHeight) : filterRect.height
+            break;
+        case '0': // hidden
+            textArea.height = filterRect.height
+            break;
+        default: // visible
+            textArea.height = Math.max(filterRect.height, textArea.contentHeight)
+        }
+    }
+
     function updateTextSize() {
         filter.set(sizeProperty, Qt.rect(0, 0, document.size.width, document.size.height))
     }
@@ -127,7 +141,7 @@ VuiBase {
                 x: rectangle.rectangle.x
                 y: rectangle.rectangle.y
                 width: rectangle.rectangle.width
-                height: rectangle.rectangle.height
+                height: textArea.height * rectangle.heightScale
             }
 
             TextArea {
@@ -140,7 +154,7 @@ VuiBase {
                 x: filterRect.x * scale
                 y: filterRect.y * scale
                 width: filterRect.width * rectangle.widthScale / scale
-                height: filterRect.height
+                height: background.height
                 backgroundVisible: false
                 frameVisible: false
                 textFormat: Qt.RichText
@@ -573,7 +587,6 @@ VuiBase {
             errorDialog.text = message
             errorDialog.visible = true
         }
-        onSizeChanged: updateTextSize()
     }
 
     Connections {
@@ -582,6 +595,7 @@ VuiBase {
             setRectangleControl()
             videoItem.enabled = filter.get('disable') !== '1'
             background.color = filter.get('bgcolour')
+            setTextAreaHeight()
         }
     }
 
