@@ -159,6 +159,19 @@ VuiBase {
                 frameVisible: false
                 textFormat: Qt.RichText
                 baseUrl: 'qrc:/'
+                menu: Menu {
+                    MenuItem { action: undoAction }
+                    MenuItem { action: redoAction }
+                    MenuSeparator {}
+                    MenuItem { action: cutAction }
+                    MenuItem { action: copyAction }
+                    MenuItem { action: pasteAction }
+                    MenuItem { action: pastePlainAction }
+                    MenuItem { action: deleteAction }
+                    MenuItem { action: clearAction }
+                    MenuSeparator {}
+                    MenuItem { action: selectAllAction }
+                }
                 text: '__empty__'
                 Component.onCompleted: forceActiveFocus()
                 onTextChanged: {
@@ -306,12 +319,13 @@ VuiBase {
         MenuSeparator {}
         MenuItem { action: undoAction }
         MenuItem { action: redoAction }
+        MenuSeparator {}
         MenuItem { action: cutAction }
         MenuItem { action: copyAction }
         MenuItem { action: pasteAction }
         MenuItem { action: pastePlainAction }
-        MenuItem { action: selectAllAction }
         MenuSeparator {}
+        MenuItem { action: selectAllAction }
         MenuItem { action: insertTableAction }
     }
 
@@ -384,8 +398,26 @@ VuiBase {
     }
     Action {
         id: pastePlainAction
-        text: qsTr('Paste and Match Style')
+        text: qsTr('Paste Text Only')
         onTriggered: document.pastePlain()
+    }
+    Action {
+        id: deleteAction
+        text: qsTr('Delete')
+        shortcut: 'del'
+        iconName: 'edit-delete'
+        iconSource: 'qrc:///icons/oxygen/32x32/actions/edit-delete.png'
+        onTriggered: textArea.remove(textArea.selectionStart, textArea.selectionEnd)
+    }
+    Action {
+        id: clearAction
+        text: qsTr('Clear')
+        iconName: 'edit-clear'
+        iconSource: 'qrc:///icons/oxygen/32x32/actions/edit-clear.png'
+        onTriggered: {
+            textArea.selectAll()
+            textArea.remove(textArea.selectionStart, textArea.selectionEnd)
+        }
     }
     Action {
         id: selectAllAction
