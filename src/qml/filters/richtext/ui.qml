@@ -48,6 +48,9 @@ p, li { white-space: pre-wrap; }
             filter.set('argument', '')
             filter.set('bgcolour', '#00000000')
 
+            filter.set(rectProperty,   '0%/66.66%:100%x33.34%')
+            filter.savePreset(presetParams, qsTr('Lower Third'))
+
             // Add some animated presets.
             filter.animateIn = filter.duration
             filter.set(specialPresetProperty, 'scroll-down')
