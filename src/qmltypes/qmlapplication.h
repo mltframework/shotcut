@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2019 Meltytech, LLC
+ * Copyright (c) 2014-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,6 +38,7 @@ class QmlApplication : public QObject
     Q_PROPERTY(QString OS READ OS CONSTANT)
     Q_PROPERTY(QRect mainWinRect READ mainWinRect);
     Q_PROPERTY(bool hasFiltersOnClipboard READ hasFiltersOnClipboard NOTIFY filtersCopied)
+    Q_PROPERTY(qreal devicePixelRatio READ devicePixelRatio CONSTANT)
 
 public:
     static QmlApplication& singleton();
@@ -54,6 +55,7 @@ public:
     Q_INVOKABLE static int audioChannels();
     Q_INVOKABLE static QString getNextProjectFile(const QString& filename);
     Q_INVOKABLE static bool isProjectFolder();
+    static qreal devicePixelRatio();
 
 signals:
     void paletteChanged();

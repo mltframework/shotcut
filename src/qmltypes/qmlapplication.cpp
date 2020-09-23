@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2019 Meltytech, LLC
+ * Copyright (c) 2013-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -152,5 +152,10 @@ bool QmlApplication::isProjectFolder()
 {
     QDir dir(MLT.projectFolder());
     return (!MLT.projectFolder().isEmpty() && dir.exists());
+}
+
+qreal QmlApplication::devicePixelRatio()
+{
+    return MAIN.devicePixelRatioF();
 }
 
