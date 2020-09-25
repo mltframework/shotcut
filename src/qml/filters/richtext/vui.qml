@@ -231,8 +231,9 @@ VuiBase {
                         id: fontSizeSpinBox
                         ToolTip { text: qsTr('Text size') }
                         implicitWidth: 50
-                        value: 0
-                        maximumValue: Math.pow(2, 31)
+                        value: 72
+                        minimumValue: 1
+                        maximumValue: 1000
                         property bool blockValue: false
                         onValueChanged: {
                             if (!blockValue) {
