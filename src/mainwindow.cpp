@@ -4170,6 +4170,7 @@ void MainWindow::on_actionLayoutLogging_triggered()
 //        LOG_DEBUG() << state.toBase64();
         restoreState(state);
     }
+    Settings.setWindowState(saveState());
 }
 
 void MainWindow::on_actionLayoutEditing_triggered()
@@ -4184,6 +4185,7 @@ void MainWindow::on_actionLayoutEditing_triggered()
 //        LOG_DEBUG() << state.toBase64();
         restoreState(state);
     }
+    Settings.setWindowState(saveState());
 }
 
 void MainWindow::on_actionLayoutEffects_triggered()
@@ -4198,6 +4200,7 @@ void MainWindow::on_actionLayoutEffects_triggered()
 //        LOG_DEBUG() << state.toBase64();
         restoreState(state);
     }
+    Settings.setWindowState(saveState());
 }
 
 void MainWindow::on_actionLayoutColor_triggered()
@@ -4215,6 +4218,7 @@ void MainWindow::on_actionLayoutColor_triggered()
 //        LOG_DEBUG() << state.toBase64();
         restoreState(state);
     }
+    Settings.setWindowState(saveState());
 }
 
 void MainWindow::on_actionLayoutAudio_triggered()
@@ -4232,6 +4236,7 @@ void MainWindow::on_actionLayoutAudio_triggered()
 //        LOG_DEBUG() << state.toBase64();
         restoreState(state);
     }
+    Settings.setWindowState(saveState());
 }
 
 void MainWindow::on_actionLayoutPlayer_triggered()
@@ -4246,6 +4251,7 @@ void MainWindow::on_actionLayoutPlayer_triggered()
 //        LOG_DEBUG() << state.toBase64();
         restoreState(state);
     }
+    Settings.setWindowState(saveState());
 }
 
 void MainWindow::on_actionLayoutPlaylist_triggered()
@@ -4260,6 +4266,7 @@ void MainWindow::on_actionLayoutPlaylist_triggered()
     m_recentDock->raise();
     m_playlistDock->show();
     m_playlistDock->raise();
+    Settings.setWindowState(saveState());
 }
 
 void MainWindow::on_actionLayoutClip_triggered()
@@ -4274,6 +4281,7 @@ void MainWindow::on_actionLayoutClip_triggered()
     m_recentDock->raise();
     m_filtersDock->show();
     m_filtersDock->raise();
+    Settings.setWindowState(saveState());
 }
 
 void MainWindow::on_actionLayoutAdd_triggered()
@@ -4301,6 +4309,7 @@ void MainWindow::onLayoutTriggered(QAction* action)
     Settings.setLayoutMode();
     clearCurrentLayout();
     restoreState(Settings.layoutState(action->text()));
+    Settings.setWindowState(saveState());
 }
 
 void MainWindow::on_actionProfileRemove_triggered()
