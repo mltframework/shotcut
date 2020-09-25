@@ -35,7 +35,7 @@ VuiBase {
     property string middleValue: '_shotcut:middleValue'
     property string endValue:  '_shotcut:endValue'
     property string sizeProperty: '_shotcut:size'
-    property bool smallIcons: settings.smallIcons
+    property bool smallIcons: settings.smallIcons || toolbar.maxWidth >= videoItem.width
     property url settingsSavePath: 'file:///' + settings.savePath
 
     Component.onCompleted: {
@@ -45,6 +45,7 @@ VuiBase {
         setTextAreaHeight()
         textArea.text = filter.get('html')
         fontSizeSpinBox.value = document.fontSize
+        toolbar.expanded = filter.get('_shotcut:toolbarCollapsed') !== '1'
     }
 
     function getPosition() {
@@ -184,9 +185,14 @@ VuiBase {
 
             ToolBar {
                 id: toolbar
+                property bool expanded: filter.get('_shotcut:toolbarCollapsed') !== '1'
+                property real maxWidth: 555
                 x: Math.min((parent.width + parent.x - width), Math.max((-parent.x * scale), textArea.x + rectangle.handleSize))
                 y: Math.min((parent.height + parent.y - height), Math.max((-parent.y * scale), (textArea.mapToItem(vui, 0, 0).y > height)? (textArea.y - height*scale) : (textArea.y + rectangle.handleSize)))
-                width: smallIcons? 360 : 520
+                width: expanded? (smallIcons? 380 : maxWidth) : 0
+                Behavior on width {
+                    NumberAnimation{ duration: 100 }
+                }
                 height: smallIcons? (hiddenButton.height - 4) : (hiddenButton.height + 4)
                 anchors.margins: 0
                 opacity: 0.7
@@ -201,36 +207,43 @@ VuiBase {
                         action: menuAction
                         implicitWidth: smallIcons? 18 : hiddenButton.implicitWidth
                         implicitHeight: implicitWidth
+                        visible: toolbar.expanded
                     }
                     ToolButton {
                         action: boldAction
                         implicitWidth: smallIcons? 18 : hiddenButton.implicitWidth
                         implicitHeight: implicitWidth
+                        visible: toolbar.expanded
                     }
                     ToolButton {
                         action: italicAction
                         implicitWidth: smallIcons? 18 : hiddenButton.implicitWidth
                         implicitHeight: implicitWidth
+                        visible: toolbar.expanded
                     }
                     ToolButton {
                         action: underlineAction
                         implicitWidth: smallIcons? 18 : hiddenButton.implicitWidth
                         implicitHeight: implicitWidth
+                        visible: toolbar.expanded
                     }
                     Button { // separator
                         enabled: false
                         implicitWidth: 2
                         implicitHeight: smallIcons? 14 : (hiddenButton.implicitHeight - 8)
+                        visible: toolbar.expanded
                     }
                     ToolButton {
                         action: fontFamilyAction
                         implicitWidth: smallIcons? 18 : hiddenButton.implicitWidth
                         implicitHeight: implicitWidth
+                        visible: toolbar.expanded
                     }
                     SpinBox {
                         id: fontSizeSpinBox
                         ToolTip { text: qsTr('Text size') }
                         implicitWidth: 50
+                        visible: toolbar.expanded
                         value: 72
                         minimumValue: 1
                         maximumValue: 1000
@@ -248,6 +261,7 @@ VuiBase {
                         tooltip: qsTr('Text color')
                         implicitWidth: toolbar.height - 4
                         implicitHeight: implicitWidth
+                        visible: toolbar.expanded
                         property var color : document.textColor
                         Rectangle {
                             id: colorRect
@@ -266,36 +280,55 @@ VuiBase {
                         enabled: false
                         implicitWidth: 2
                         implicitHeight: smallIcons? 14 : (hiddenButton.implicitHeight - 8)
+                        visible: toolbar.expanded
                     }
                     ToolButton {
                         action: alignLeftAction
                         implicitWidth: smallIcons? 18 : hiddenButton.implicitWidth
                         implicitHeight: implicitWidth
+                        visible: toolbar.expanded
                     }
                     ToolButton {
                         action: alignCenterAction
                         implicitWidth: smallIcons? 18 : hiddenButton.implicitWidth
                         implicitHeight: implicitWidth
+                        visible: toolbar.expanded
                     }
                     ToolButton {
                         action: alignRightAction
                         implicitWidth: smallIcons? 18 : hiddenButton.implicitWidth
                         implicitHeight: implicitWidth
+                        visible: toolbar.expanded
                     }
                     ToolButton {
                         action: alignJustifyAction
                         implicitWidth: smallIcons? 18 : hiddenButton.implicitWidth
                         implicitHeight: implicitWidth
+                        visible: toolbar.expanded
                     }
                     ToolButton {
                         action: decreaseIndentAction
                         implicitWidth: smallIcons? 18 : hiddenButton.implicitWidth
                         implicitHeight: implicitWidth
+                        visible: toolbar.expanded
                     }
                     ToolButton {
                         action: increaseIndentAction
                         implicitWidth: smallIcons? 18 : hiddenButton.implicitWidth
                         implicitHeight: implicitWidth
+                        visible: toolbar.expanded
+                    }
+                    ToolButton {
+                        id: expandCollapseButton
+                        implicitWidth: smallIcons? 18 : hiddenButton.implicitWidth
+                        implicitHeight: implicitWidth
+                        tooltip: toolbar.expanded? qsTr('Collapse Toolbar') : qsTr('Expand Toolbar')
+                        iconName: toolbar.expanded? 'media-seek-backward' : 'media-seek-forward'
+                        iconSource: toolbar.expanded? 'qrc:///icons/oxygen/32x32/actions/media-seek-backward.png' : 'qrc:///icons/oxygen/32x32/actions/media-seek-backward.png'
+                        onClicked: {
+                            toolbar.expanded = !toolbar.expanded
+                            filter.set('_shotcut:toolbarCollapsed', !toolbar.expanded)
+                        }
                     }
                 }
             }
