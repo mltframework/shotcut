@@ -106,7 +106,7 @@ public:
 
 signals:
     void audioChannelsChanged();
-    void producerOpened();
+    void producerOpened(bool withReopen = true);
     void profileChanged();
     void openFailed(QString);
     void aboutToShutDown();

@@ -192,7 +192,7 @@ MainWindow::MainWindow()
     // Connect UI signals.
     connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(openVideo()));
     connect(ui->actionAbout_Qt, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
-    connect(this, SIGNAL(producerOpened()), this, SLOT(onProducerOpened()));
+    connect(this, &MainWindow::producerOpened, this, &MainWindow::onProducerOpened);
     connect(ui->mainToolBar, SIGNAL(visibilityChanged(bool)), SLOT(onToolbarVisibilityChanged(bool)));
 
     // Accept drag-n-drop of files.
@@ -225,7 +225,7 @@ MainWindow::MainWindow()
     m_player = new Player;
     MLT.videoWidget()->installEventFilter(this);
     ui->centralWidget->layout()->addWidget(m_player);
-    connect(this, SIGNAL(producerOpened()), m_player, SLOT(onProducerOpened()));
+    connect(this, &MainWindow::producerOpened, m_player, &Player::onProducerOpened);
     connect(m_player, SIGNAL(showStatusMessage(QString)), this, SLOT(showStatusMessage(QString)));
     connect(m_player, SIGNAL(inChanged(int)), this, SLOT(onCutModified()));
     connect(m_player, SIGNAL(outChanged(int)), this, SLOT(onCutModified()));
@@ -3615,7 +3615,7 @@ void MainWindow::onProfileTriggered(QAction *action)
         QString xml = MLT.XML();
         setProfile(action->data().toString());
         MLT.restart(xml);
-        onProducerOpened(false);
+        emit producerOpened(false);
     } else {
         setProfile(action->data().toString());
     }
@@ -3649,7 +3649,7 @@ void MainWindow::on_actionAddCustomProfile_triggered()
         emit profileChanged();
         if (!xml.isEmpty()) {
             MLT.restart(xml);
-            onProducerOpened(false);
+            emit producerOpened(false);
         }
     }
 }
