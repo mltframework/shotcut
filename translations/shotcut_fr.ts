@@ -1477,8 +1477,8 @@ in temporal compression</source>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1787"/>
         <location filename="../src/docks/encodedock.cpp" line="882"/>
-        <location filename="../src/docks/encodedock.cpp" line="1399"/>
-        <location filename="../src/docks/encodedock.cpp" line="1828"/>
+        <location filename="../src/docks/encodedock.cpp" line="1434"/>
+        <location filename="../src/docks/encodedock.cpp" line="1863"/>
         <source>Export File</source>
         <translation>Exporter le fichier</translation>
     </message>
@@ -1504,17 +1504,17 @@ in temporal compression</source>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1827"/>
-        <location filename="../src/docks/encodedock.cpp" line="1543"/>
-        <location filename="../src/docks/encodedock.cpp" line="1550"/>
-        <location filename="../src/docks/encodedock.cpp" line="1661"/>
+        <location filename="../src/docks/encodedock.cpp" line="1578"/>
+        <location filename="../src/docks/encodedock.cpp" line="1585"/>
+        <location filename="../src/docks/encodedock.cpp" line="1696"/>
         <source>Stream</source>
         <translation>Flux</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1854"/>
-        <location filename="../src/docks/encodedock.cpp" line="1379"/>
-        <location filename="../src/docks/encodedock.cpp" line="1466"/>
-        <location filename="../src/docks/encodedock.cpp" line="1480"/>
+        <location filename="../src/docks/encodedock.cpp" line="1414"/>
+        <location filename="../src/docks/encodedock.cpp" line="1501"/>
+        <location filename="../src/docks/encodedock.cpp" line="1515"/>
         <source>Stop Capture</source>
         <translation>Arrêter la capture</translation>
     </message>
@@ -1557,8 +1557,8 @@ in temporal compression</source>
     </message>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="415"/>
-        <location filename="../src/docks/encodedock.cpp" line="1326"/>
-        <location filename="../src/docks/encodedock.cpp" line="1327"/>
+        <location filename="../src/docks/encodedock.cpp" line="1361"/>
+        <location filename="../src/docks/encodedock.cpp" line="1362"/>
         <source>Custom</source>
         <translation>Personnalisé</translation>
     </message>
@@ -1579,109 +1579,109 @@ Try again with a different folder or file name.</source>
         <translation>Vous ne pouvez pas écrire un fichier qui appartient à votre projet. Réessayez avec un dossier ou un nom de fichier différent.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1085"/>
+        <location filename="../src/docks/encodedock.cpp" line="1120"/>
         <source>Shotcut found filters that require analysis jobs that have not run.
 Do you want to run the analysis jobs now?</source>
         <translation>Shotcut a trouvé des filtres qui nécessitent des tâches d&apos;analyse qui n&apos;ont pas été effectuées.
 Voulez vous lancer ces tâches d&apos;analyses maintenant ?</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1399"/>
-        <location filename="../src/docks/encodedock.cpp" line="1830"/>
+        <location filename="../src/docks/encodedock.cpp" line="1434"/>
+        <location filename="../src/docks/encodedock.cpp" line="1865"/>
         <source>Capture File</source>
         <translation>Fichier de capture</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1402"/>
+        <location filename="../src/docks/encodedock.cpp" line="1437"/>
         <source>%1 (*.%2);;All Files (*)</source>
         <translation>%1 (*.%2);;Tous les fichiers (*)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1404"/>
+        <location filename="../src/docks/encodedock.cpp" line="1439"/>
         <source>Determined by Export (*)</source>
         <translation>Défini par l&apos;export (*)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1423"/>
+        <location filename="../src/docks/encodedock.cpp" line="1458"/>
         <source>The drive you chose only has %1 MiB of free space.
 Do you still want to continue?</source>
         <translation>Le disque que vous avez choisi n’a plus que %1 Mio d’espace disponible.
 Voulez-vous continuer ?</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1430"/>
+        <location filename="../src/docks/encodedock.cpp" line="1465"/>
         <source>Do not show this anymore.</source>
         <comment>Export free disk space warning dialog</comment>
         <translation>Ne plus afficher.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1435"/>
+        <location filename="../src/docks/encodedock.cpp" line="1470"/>
         <source>Export canceled.</source>
         <translation>Export annulé.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1538"/>
-        <location filename="../src/docks/encodedock.cpp" line="1559"/>
+        <location filename="../src/docks/encodedock.cpp" line="1573"/>
+        <location filename="../src/docks/encodedock.cpp" line="1594"/>
         <source>Stop Stream</source>
         <translation>Arrêter le Flux</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1551"/>
+        <location filename="../src/docks/encodedock.cpp" line="1586"/>
         <source>Enter the network protocol scheme, address, port, and parameters as an URL:</source>
         <translation>Entrer le type de protocole réseau, l’adresse, le port et les paramètres comme un URL :</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1596"/>
+        <location filename="../src/docks/encodedock.cpp" line="1631"/>
         <source>Add Export Preset</source>
         <translation>Ajouter un préréglage d’export</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1638"/>
+        <location filename="../src/docks/encodedock.cpp" line="1673"/>
         <source>Delete Preset</source>
         <translation>Supprimer une Préselection</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1639"/>
+        <location filename="../src/docks/encodedock.cpp" line="1674"/>
         <source>Are you sure you want to delete %1?</source>
         <translation>Voulez-vous vraiment supprimer %1 ?</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1766"/>
+        <location filename="../src/docks/encodedock.cpp" line="1801"/>
         <source>None</source>
         <translation>Aucun</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1814"/>
+        <location filename="../src/docks/encodedock.cpp" line="1849"/>
         <source>KiB (%1s)</source>
         <translation> Kio (%1s)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1912"/>
+        <location filename="../src/docks/encodedock.cpp" line="1947"/>
         <source>Detect</source>
         <translation>Détecter</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1999"/>
+        <location filename="../src/docks/encodedock.cpp" line="2034"/>
         <source>Detecting hardware encoders...</source>
         <translation>Détection d’encodeurs matériels…</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2032"/>
+        <location filename="../src/docks/encodedock.cpp" line="2067"/>
         <source>Nothing found</source>
         <translation>Aucun résultat</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2034"/>
+        <location filename="../src/docks/encodedock.cpp" line="2069"/>
         <source>Found %1</source>
         <translation>Trouvé %1</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1910"/>
+        <location filename="../src/docks/encodedock.cpp" line="1945"/>
         <source>Configure Hardware Encoding</source>
         <translation>Configurer l&apos;encodage matériel</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1934"/>
+        <location filename="../src/docks/encodedock.cpp" line="1969"/>
         <source>Export Frames/sec</source>
         <translation>Exporter les images/sec</translation>
     </message>
@@ -4046,7 +4046,7 @@ Veuillez l’installer avec votre gestionnaire de paquets. Elle peut se nommer l
         <location filename="../src/mainwindow.cpp" line="963"/>
         <location filename="../src/mainwindow.cpp" line="1397"/>
         <location filename="../src/mainwindow.cpp" line="3830"/>
-        <location filename="../src/mainwindow.cpp" line="4667"/>
+        <location filename="../src/mainwindow.cpp" line="4676"/>
         <source>Failed to open </source>
         <translation>Échec à l’ouverture </translation>
     </message>
@@ -4223,22 +4223,22 @@ Voulez-vous vraiment quitter ?</translation>
         <translation>Quitter le plein écran</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4631"/>
+        <location filename="../src/mainwindow.cpp" line="4640"/>
         <source>Turn Proxy On</source>
         <translation>Activer le Proxy</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4631"/>
+        <location filename="../src/mainwindow.cpp" line="4640"/>
         <source>Turn Proxy Off</source>
         <translation>Désactiver le Proxy</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4635"/>
+        <location filename="../src/mainwindow.cpp" line="4644"/>
         <source>Converting</source>
         <translation>En train de convertir</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4649"/>
+        <location filename="../src/mainwindow.cpp" line="4658"/>
         <source>Do you want to create missing proxies for every file in this project?
 
 You must reopen your project after all proxy jobs are finished.</source>
@@ -4247,17 +4247,17 @@ You must reopen your project after all proxy jobs are finished.</source>
 Vous devrez rouvrir votre projet après cette opération.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4684"/>
+        <location filename="../src/mainwindow.cpp" line="4693"/>
         <source>Proxy Folder</source>
         <translation>Dossier du Proxy</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4698"/>
+        <location filename="../src/mainwindow.cpp" line="4707"/>
         <source>Do you want to move all files from the old folder to the new folder?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4705"/>
+        <location filename="../src/mainwindow.cpp" line="4714"/>
         <source>Moving Files</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4416,27 +4416,27 @@ Voulez-vous continuer ?</translation>
         <translation>Répertoire des données</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4282"/>
+        <location filename="../src/mainwindow.cpp" line="4290"/>
         <source>Add Custom Layout</source>
         <translation>Ajouter une disposition personnalisée</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4283"/>
+        <location filename="../src/mainwindow.cpp" line="4291"/>
         <source>Name</source>
         <translation>Nom</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4314"/>
+        <location filename="../src/mainwindow.cpp" line="4323"/>
         <source>Remove Video Mode</source>
         <translation>Supprimer le mode vidéo</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4328"/>
+        <location filename="../src/mainwindow.cpp" line="4337"/>
         <source>Remove Layout</source>
         <translation>Supprimer l&apos;arrangement</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4448"/>
+        <location filename="../src/mainwindow.cpp" line="4457"/>
         <source>GPU effects are EXPERIMENTAL, UNSTABLE and UNSUPPORTED! Unsupported means do not report bugs about it.
 
 Do you want to disable GPU effects and restart Shotcut?</source>
@@ -6386,17 +6386,17 @@ Voulez-vous plutôt utiliser %1 = %2/1001 ?</translation>
 <context>
     <name>QmlRichText</name>
     <message>
-        <location filename="../src/qmltypes/qmlrichtext.cpp" line="112"/>
+        <location filename="../src/qmltypes/qmlrichtext.cpp" line="114"/>
         <source>Cannot save: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qmltypes/qmlrichtext.cpp" line="140"/>
+        <location filename="../src/qmltypes/qmlrichtext.cpp" line="142"/>
         <source>Row</source>
         <translation>Ligne</translation>
     </message>
     <message>
-        <location filename="../src/qmltypes/qmlrichtext.cpp" line="142"/>
+        <location filename="../src/qmltypes/qmlrichtext.cpp" line="144"/>
         <source>Column</source>
         <translation>Colonne</translation>
     </message>
@@ -7183,7 +7183,7 @@ If the duration is 0, no transition will be created.</source>
         <translation>Les attributs de texte sont accessibles dans le panneau &lt;b&gt;Filtres&lt;/b&gt; après avoir cliqué &lt;b&gt;OK&lt;/b&gt;.</translation>
     </message>
     <message>
-        <location filename="../src/widgets/textproducerwidget.cpp" line="101"/>
+        <location filename="../src/widgets/textproducerwidget.cpp" line="103"/>
         <source>Edit your text using the Filters panel.</source>
         <translation>Modifiez votre texte dans le panneau Filtres.</translation>
     </message>
@@ -8944,7 +8944,7 @@ La plupart des utilisateurs n’ont pas besoin de changer cela.</translation>
     <message>
         <location filename="../src/qml/filters/spot_remover/meta.qml" line="7"/>
         <source>Spot Remover</source>
-        <translation>Masquer Logo</translation>
+        <translation>Effaceur de taches</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/timer/meta.qml" line="7"/>
@@ -9053,11 +9053,6 @@ La plupart des utilisateurs n’ont pas besoin de changer cela.</translation>
         <location filename="../src/qml/filters/grid/meta.qml" line="23"/>
         <source>Columns</source>
         <translation>Colonnes</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/aech0r/meta.qml" line="6"/>
-        <source>Analog Echo</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/distort/meta.qml" line="23"/>
@@ -9416,7 +9411,7 @@ La plupart des utilisateurs n’ont pas besoin de changer cela.</translation>
     <message>
         <location filename="../src/qml/filters/pillar_echo/meta.qml" line="7"/>
         <source>Blur: Pad</source>
-        <translation type="unfinished"></translation>
+        <translation>Flou: Tampon</translation>
     </message>
 </context>
 <context>
@@ -9460,7 +9455,7 @@ La plupart des utilisateurs n’ont pas besoin de changer cela.</translation>
     <message>
         <location filename="../src/qml/filters/dance/meta_dance.qml" line="7"/>
         <source>Audio Dance Visualization</source>
-        <translation type="unfinished"></translation>
+        <translation>Visualisation audio-déformation</translation>
     </message>
 </context>
 <context>
@@ -9519,7 +9514,7 @@ La plupart des utilisateurs n’ont pas besoin de changer cela.</translation>
     <message>
         <location filename="../src/qml/filters/lightshow/meta_lightshow.qml" line="7"/>
         <source>Audio Light Visualization</source>
-        <translation type="unfinished"></translation>
+        <translation>Visualisation audio-lumière</translation>
     </message>
 </context>
 <context>
@@ -9697,7 +9692,7 @@ La plupart des utilisateurs n’ont pas besoin de changer cela.</translation>
     <message>
         <location filename="../src/qml/filters/spectrum/meta_spectrum.qml" line="7"/>
         <source>Audio Spectrum Visualization</source>
-        <translation>Visualization de la gamme audio</translation>
+        <translation>Visualisation du spectre audio</translation>
     </message>
 </context>
 <context>
@@ -10075,7 +10070,6 @@ La plupart des utilisateurs n’ont pas besoin de changer cela.</translation>
         <translation>Droite</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/aech0r/ui.qml" line="65"/>
         <location filename="../src/qml/filters/audio_balance/ui.qml" line="101"/>
         <location filename="../src/qml/filters/audio_bandpass/ui.qml" line="52"/>
         <location filename="../src/qml/filters/audio_basstreble/ui.qml" line="169"/>
@@ -10140,7 +10134,7 @@ La plupart des utilisateurs n’ont pas besoin de changer cela.</translation>
         <location filename="../src/qml/filters/posterize/ui.qml" line="65"/>
         <location filename="../src/qml/filters/rectangle/ui.qml" line="184"/>
         <location filename="../src/qml/filters/rgbsplit0r/ui.qml" line="70"/>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="209"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="230"/>
         <location filename="../src/qml/filters/rotate/ui.qml" line="137"/>
         <location filename="../src/qml/filters/select0r/ui.qml" line="109"/>
         <location filename="../src/qml/filters/sepia/ui.qml" line="38"/>
@@ -10731,66 +10725,67 @@ La plupart des utilisateurs n’ont pas besoin de changer cela.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="83"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="52"/>
         <source>Lower Third</source>
         <translation>Tiers inférieur</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="88"/>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="65"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="68"/>
         <source>Slide In From Left</source>
         <translation>Balayage depuis la gauche</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="90"/>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="67"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="70"/>
         <source>Slide In From Right</source>
         <translation>Balayage depuis la droite</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="92"/>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="69"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="72"/>
         <source>Slide In From Top</source>
         <translation>Balayage depuis le haut</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="94"/>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="71"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="74"/>
         <source>Slide In From Bottom</source>
         <translation>Balayage depuis le bas</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="98"/>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="75"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="78"/>
         <source>Slide Out Left</source>
         <translation>Balayage vers la gauche</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="100"/>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="77"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="80"/>
         <source>Slide Out Right</source>
         <translation>Balayage vers la droite</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="102"/>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="79"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="82"/>
         <source>Slide Out Top</source>
         <translation>Balayage vers le haut</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="104"/>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="81"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="84"/>
         <source>Slide Out Bottom</source>
         <translation>Balayage vers le bas</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="108"/>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="85"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="88"/>
         <source>Slow Zoom In</source>
         <translation>Zoom avant lent</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="110"/>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="87"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="90"/>
         <source>Slow Zoom Out</source>
         <translation>Zoom arrière lent</translation>
     </message>
@@ -10963,7 +10958,7 @@ La plupart des utilisateurs n’ont pas besoin de changer cela.</translation>
         <location filename="../src/qml/filters/gradient/ui.qml" line="303"/>
         <location filename="../src/qml/filters/pillar_echo/ui.qml" line="157"/>
         <location filename="../src/qml/filters/rectangle/ui.qml" line="220"/>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="236"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="257"/>
         <location filename="../src/qml/filters/spot_remover/ui.qml" line="142"/>
         <location filename="../src/qml/filters/waveform/ui.qml" line="137"/>
         <location filename="../src/qml/filters/webvfx_clip/ui.qml" line="213"/>
@@ -11720,40 +11715,60 @@ Cliquez sur « Ouvrir » pour charger un fichier.</translation>
         <translation>Décalage Y</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="54"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="57"/>
         <source>Scroll Down</source>
         <translation>Défilement vers le bas</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="56"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="59"/>
         <source>Scroll Up</source>
         <translation>Défilement vers le haut</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="58"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="61"/>
         <source>Scroll Right</source>
         <translation>Défilement vers la droite</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="60"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="63"/>
         <source>Scroll Left</source>
         <translation>Défilement vers la gauche</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="297"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="318"/>
         <source>Background size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="345"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="366"/>
         <source>Text size</source>
         <translation>Taille du texte</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="367"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="388"/>
         <location filename="../src/qml/filters/rotate/ui.qml" line="289"/>
         <source>Background color</source>
         <translation>Couleur du fond</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="404"/>
+        <source>Overflow</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="412"/>
+        <source>Automatic</source>
+        <translation>Automatique</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="421"/>
+        <source>Visible</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="427"/>
+        <source>Hidden</source>
+        <translation>Caché</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/select0r/ui.qml" line="143"/>
@@ -11896,22 +11911,6 @@ Cliquez sur « Ouvrir » pour charger un fichier.</translation>
         <translation>Si la différence entre le pixel original et le pixel flouté est inférieure au seuil, ce pixel sera remplacé par le pixel flouté.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/aech0r/ui.qml" line="78"/>
-        <source>Fade</source>
-        <translation>Fondu</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/aech0r/ui.qml" line="95"/>
-        <source>Fade period</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/aech0r/ui.qml" line="117"/>
-        <source>Lighter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/aech0r/ui.qml" line="142"/>
         <location filename="../src/qml/filters/levels/ui.qml" line="178"/>
         <location filename="../src/qml/filters/spillsuppress/ui.qml" line="46"/>
         <location filename="../src/qml/filters/tcolor/ui.qml" line="59"/>
@@ -11919,7 +11918,6 @@ Cliquez sur « Ouvrir » pour charger un fichier.</translation>
         <translation>Vert</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/aech0r/ui.qml" line="158"/>
         <location filename="../src/qml/filters/levels/ui.qml" line="178"/>
         <location filename="../src/qml/filters/spillsuppress/ui.qml" line="52"/>
         <location filename="../src/qml/filters/tcolor/ui.qml" line="83"/>
@@ -11927,7 +11925,6 @@ Cliquez sur « Ouvrir » pour charger un fichier.</translation>
         <translation>Bleu</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/aech0r/ui.qml" line="125"/>
         <location filename="../src/qml/filters/levels/ui.qml" line="178"/>
         <source>Red</source>
         <translation>Rouge</translation>
@@ -12457,7 +12454,7 @@ Cliquez sur « Ouvrir » pour charger un fichier.</translation>
     <message>
         <location filename="../src/qml/filters/waveform/ui.qml" line="185"/>
         <source>Fill the area under the waveform.</source>
-        <translation type="unfinished"></translation>
+        <translation>Remplir la zone sous la forme d&apos;ondes</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/waveform/ui.qml" line="190"/>
@@ -12524,7 +12521,7 @@ Cliquez sur « Ouvrir » pour charger un fichier.</translation>
     <message>
         <location filename="../src/qml/filters/rectangle/ui.qml" line="333"/>
         <source>Fill color</source>
-        <translation type="unfinished"></translation>
+        <translation>Couleur de remplissage</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/crop_rectangle/ui.qml" line="323"/>
@@ -13273,128 +13270,153 @@ Cliquez sur « Ouvrir » pour charger un fichier.</translation>
         <translation type="unfinished">4</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="205"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="244"/>
         <source>Text size</source>
         <translation>Taille du texte</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="220"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="261"/>
         <source>Text color</source>
         <translation>Couleur du texte</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="305"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="325"/>
+        <source>Collapse Toolbar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="325"/>
+        <source>Expand Toolbar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="368"/>
         <source>Open</source>
         <translation>Ouvrir</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="315"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="378"/>
         <source>Save As…</source>
         <translation>Enregistrer sous…</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="325"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="388"/>
         <source>Menu</source>
         <translation>Menu</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="332"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="395"/>
         <source>Undo</source>
         <translation>Annuler</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="340"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="403"/>
         <source>Redo</source>
         <translation>Rétablir</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="348"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="411"/>
         <source>Cut</source>
         <translation>Couper</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="356"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="419"/>
         <source>Copy</source>
         <translation>Copier</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="364"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="427"/>
         <source>Paste</source>
         <translation>Coller</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="372"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="435"/>
+        <source>Paste Text Only</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="440"/>
+        <source>Delete</source>
+        <translation>Supprimer</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="448"/>
+        <source>Clear</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="458"/>
         <source>Select All</source>
         <translation>Tout sélectionner</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="379"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="465"/>
         <source>Left</source>
         <translation>Gauche</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="388"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="474"/>
         <source>Center</source>
         <translation>Centre</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="397"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="483"/>
         <source>Right</source>
         <translation>Droite</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="406"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="492"/>
         <source>Justify</source>
         <translation>Justifié</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="415"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="501"/>
         <source>Bold</source>
         <translation>Gras</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="424"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="510"/>
         <source>Italic</source>
         <translation>Italique</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="433"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="519"/>
         <source>Underline</source>
         <translation>Souligné</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="442"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="528"/>
         <source>Font</source>
         <translation>Police</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="453"/>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="505"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="539"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="592"/>
         <source>Insert Table</source>
         <translation>Insérer Tableau</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="460"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="546"/>
         <source>Decrease Indent</source>
         <translation>Réduire retrait</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="467"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="553"/>
         <source>Insert Indent</source>
         <translation>Augmenter retrait</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="515"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="602"/>
         <source>Rows</source>
         <translation>Lignes</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="527"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="614"/>
         <source>Columns</source>
         <translation>Colonnes</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="538"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="625"/>
         <source>Border</source>
         <translation>Bordure</translation>
     </message>

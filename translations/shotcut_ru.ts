@@ -1477,8 +1477,8 @@ in temporal compression</source>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1787"/>
         <location filename="../src/docks/encodedock.cpp" line="882"/>
-        <location filename="../src/docks/encodedock.cpp" line="1399"/>
-        <location filename="../src/docks/encodedock.cpp" line="1828"/>
+        <location filename="../src/docks/encodedock.cpp" line="1434"/>
+        <location filename="../src/docks/encodedock.cpp" line="1863"/>
         <source>Export File</source>
         <translation>Экспорт</translation>
     </message>
@@ -1504,17 +1504,17 @@ in temporal compression</source>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1827"/>
-        <location filename="../src/docks/encodedock.cpp" line="1543"/>
-        <location filename="../src/docks/encodedock.cpp" line="1550"/>
-        <location filename="../src/docks/encodedock.cpp" line="1661"/>
+        <location filename="../src/docks/encodedock.cpp" line="1578"/>
+        <location filename="../src/docks/encodedock.cpp" line="1585"/>
+        <location filename="../src/docks/encodedock.cpp" line="1696"/>
         <source>Stream</source>
         <translation>Поток</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1854"/>
-        <location filename="../src/docks/encodedock.cpp" line="1379"/>
-        <location filename="../src/docks/encodedock.cpp" line="1466"/>
-        <location filename="../src/docks/encodedock.cpp" line="1480"/>
+        <location filename="../src/docks/encodedock.cpp" line="1414"/>
+        <location filename="../src/docks/encodedock.cpp" line="1501"/>
+        <location filename="../src/docks/encodedock.cpp" line="1515"/>
         <source>Stop Capture</source>
         <translation>Остановить захват изображения</translation>
     </message>
@@ -1557,8 +1557,8 @@ in temporal compression</source>
     </message>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="415"/>
-        <location filename="../src/docks/encodedock.cpp" line="1326"/>
-        <location filename="../src/docks/encodedock.cpp" line="1327"/>
+        <location filename="../src/docks/encodedock.cpp" line="1361"/>
+        <location filename="../src/docks/encodedock.cpp" line="1362"/>
         <source>Custom</source>
         <translation>Пользовательские настройки</translation>
     </message>
@@ -1580,109 +1580,109 @@ Try again with a different folder or file name.</source>
 Попробуйте ещё раз, изменив имя файла или папки.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1085"/>
+        <location filename="../src/docks/encodedock.cpp" line="1120"/>
         <source>Shotcut found filters that require analysis jobs that have not run.
 Do you want to run the analysis jobs now?</source>
         <translation>Обнаружены фильтры, для которых не выполнялся анализ.
 Хотите запустить анализ?</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1399"/>
-        <location filename="../src/docks/encodedock.cpp" line="1830"/>
+        <location filename="../src/docks/encodedock.cpp" line="1434"/>
+        <location filename="../src/docks/encodedock.cpp" line="1865"/>
         <source>Capture File</source>
         <translation>Файл захвата</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1402"/>
+        <location filename="../src/docks/encodedock.cpp" line="1437"/>
         <source>%1 (*.%2);;All Files (*)</source>
         <translation>%1 (*.%2);;Все файлы (*)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1404"/>
+        <location filename="../src/docks/encodedock.cpp" line="1439"/>
         <source>Determined by Export (*)</source>
         <translation>Определить при экспорте  (*)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1423"/>
+        <location filename="../src/docks/encodedock.cpp" line="1458"/>
         <source>The drive you chose only has %1 MiB of free space.
 Do you still want to continue?</source>
         <translation>На выбранном диске свободно всего %1 МиБ.
 Всё равно хотите продолжить?</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1430"/>
+        <location filename="../src/docks/encodedock.cpp" line="1465"/>
         <source>Do not show this anymore.</source>
         <comment>Export free disk space warning dialog</comment>
         <translation>Больше не показывать.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1435"/>
+        <location filename="../src/docks/encodedock.cpp" line="1470"/>
         <source>Export canceled.</source>
         <translation>Экспорт прерван.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1538"/>
-        <location filename="../src/docks/encodedock.cpp" line="1559"/>
+        <location filename="../src/docks/encodedock.cpp" line="1573"/>
+        <location filename="../src/docks/encodedock.cpp" line="1594"/>
         <source>Stop Stream</source>
         <translation>Остановить поток</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1551"/>
+        <location filename="../src/docks/encodedock.cpp" line="1586"/>
         <source>Enter the network protocol scheme, address, port, and parameters as an URL:</source>
         <translation>Укажите тип сетевого протокола, адрес, порт, URL-адрес:</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1596"/>
+        <location filename="../src/docks/encodedock.cpp" line="1631"/>
         <source>Add Export Preset</source>
         <translation>Добавить предустановку экспорта</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1638"/>
+        <location filename="../src/docks/encodedock.cpp" line="1673"/>
         <source>Delete Preset</source>
         <translation>Удалить предустановку</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1639"/>
+        <location filename="../src/docks/encodedock.cpp" line="1674"/>
         <source>Are you sure you want to delete %1?</source>
         <translation>Вы действительно хотите удалить %1?</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1766"/>
+        <location filename="../src/docks/encodedock.cpp" line="1801"/>
         <source>None</source>
         <translation>ничего</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1814"/>
+        <location filename="../src/docks/encodedock.cpp" line="1849"/>
         <source>KiB (%1s)</source>
         <translation>КиБ (%1s)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1912"/>
+        <location filename="../src/docks/encodedock.cpp" line="1947"/>
         <source>Detect</source>
         <translation>Обнаружить</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1999"/>
+        <location filename="../src/docks/encodedock.cpp" line="2034"/>
         <source>Detecting hardware encoders...</source>
         <translation>Обнаружение аппаратных кодировщиков...</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2032"/>
+        <location filename="../src/docks/encodedock.cpp" line="2067"/>
         <source>Nothing found</source>
         <translation>Ничего не найдено</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2034"/>
+        <location filename="../src/docks/encodedock.cpp" line="2069"/>
         <source>Found %1</source>
         <translation>Найден %1</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1910"/>
+        <location filename="../src/docks/encodedock.cpp" line="1945"/>
         <source>Configure Hardware Encoding</source>
         <translation>Настроить аппаратное кодирование</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1934"/>
+        <location filename="../src/docks/encodedock.cpp" line="1969"/>
         <source>Export Frames/sec</source>
         <translation>Экспорт Кадров/с</translation>
     </message>
@@ -3735,12 +3735,12 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     <message>
         <location filename="../src/mainwindow.ui" line="971"/>
         <source>Logging</source>
-        <translation type="unfinished"></translation>
+        <translation>Логирование</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="974"/>
         <source>Switch to the logging layout</source>
-        <translation type="unfinished"></translation>
+        <translation>Переключится на журнал логов</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="982"/>
@@ -4052,7 +4052,7 @@ Please install it using your package manager. It may be named libsdl2-2.0-0, SDL
         <location filename="../src/mainwindow.cpp" line="963"/>
         <location filename="../src/mainwindow.cpp" line="1397"/>
         <location filename="../src/mainwindow.cpp" line="3830"/>
-        <location filename="../src/mainwindow.cpp" line="4667"/>
+        <location filename="../src/mainwindow.cpp" line="4676"/>
         <source>Failed to open </source>
         <translation>Не удалось открыть </translation>
     </message>
@@ -4229,22 +4229,22 @@ Do you want to still want to exit?</source>
         <translation>Выйти из полноэкранного режима</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4631"/>
+        <location filename="../src/mainwindow.cpp" line="4640"/>
         <source>Turn Proxy On</source>
         <translation>Включить прокси</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4631"/>
+        <location filename="../src/mainwindow.cpp" line="4640"/>
         <source>Turn Proxy Off</source>
         <translation>Выключить прокси</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4635"/>
+        <location filename="../src/mainwindow.cpp" line="4644"/>
         <source>Converting</source>
         <translation>Преобразование</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4649"/>
+        <location filename="../src/mainwindow.cpp" line="4658"/>
         <source>Do you want to create missing proxies for every file in this project?
 
 You must reopen your project after all proxy jobs are finished.</source>
@@ -4253,31 +4253,33 @@ You must reopen your project after all proxy jobs are finished.</source>
 После всех изменений в прокси закройте и откройте проект заново.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4684"/>
+        <location filename="../src/mainwindow.cpp" line="4693"/>
         <source>Proxy Folder</source>
         <translation>Папка прокси</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4698"/>
+        <location filename="../src/mainwindow.cpp" line="4707"/>
         <source>Do you want to move all files from the old folder to the new folder?</source>
         <translation>Вы хотите переместить все файлы из старой папки в новую?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4705"/>
+        <location filename="../src/mainwindow.cpp" line="4714"/>
         <source>Moving Files</source>
         <translation>Перемещение файлов</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="3204"/>
         <source>GPU effects are not supported</source>
-        <translation>Эффекты ГП не поддерживаются</translation>
+        <translation>GPU эффекты не поддерживаются</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="151"/>
         <source>Error: Shotcut could not find the cairoblend frei0r plugin on your system.
 
 Please install frei0r plugins.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ошибка: Shotcut не удалось найти плагин cairoblend frei0r в вашей системе.
+
+Установите плагины frei0r.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="3305"/>
@@ -4422,27 +4424,27 @@ Do you want to continue?</source>
         <translation>Папка с данными</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4282"/>
+        <location filename="../src/mainwindow.cpp" line="4290"/>
         <source>Add Custom Layout</source>
         <translation>Добавить свою раскладку</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4283"/>
+        <location filename="../src/mainwindow.cpp" line="4291"/>
         <source>Name</source>
         <translation>Название</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4314"/>
+        <location filename="../src/mainwindow.cpp" line="4323"/>
         <source>Remove Video Mode</source>
         <translation>Удалить видеорежим</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4328"/>
+        <location filename="../src/mainwindow.cpp" line="4337"/>
         <source>Remove Layout</source>
         <translation>Удалить раскладку</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4448"/>
+        <location filename="../src/mainwindow.cpp" line="4457"/>
         <source>GPU effects are EXPERIMENTAL, UNSTABLE and UNSUPPORTED! Unsupported means do not report bugs about it.
 
 Do you want to disable GPU effects and restart Shotcut?</source>
@@ -6097,7 +6099,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="51"/>
         <source>Append to Timeline</source>
-        <translation>Добавить в шкалу времени</translation>
+        <translation>Добавить на шкалу времени</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="53"/>
@@ -6395,17 +6397,17 @@ Do you want to use %1 = %2/1001 instead?</source>
 <context>
     <name>QmlRichText</name>
     <message>
-        <location filename="../src/qmltypes/qmlrichtext.cpp" line="112"/>
+        <location filename="../src/qmltypes/qmlrichtext.cpp" line="114"/>
         <source>Cannot save: </source>
         <translation>Невозможно сохранить: </translation>
     </message>
     <message>
-        <location filename="../src/qmltypes/qmlrichtext.cpp" line="140"/>
+        <location filename="../src/qmltypes/qmlrichtext.cpp" line="142"/>
         <source>Row</source>
         <translation>Строка</translation>
     </message>
     <message>
-        <location filename="../src/qmltypes/qmlrichtext.cpp" line="142"/>
+        <location filename="../src/qmltypes/qmlrichtext.cpp" line="144"/>
         <source>Column</source>
         <translation>Столбец</translation>
     </message>
@@ -6721,7 +6723,7 @@ Do you want to use %1 = %2/1001 instead?</source>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="631"/>
         <source>(Fill only)</source>
-        <translation type="unfinished"></translation>
+        <translation>(Только заполнение)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="634"/>
@@ -6793,7 +6795,7 @@ Do you want to use %1 = %2/1001 instead?</source>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="745"/>
         <source> °</source>
         <comment>degrees</comment>
-        <translation type="unfinished"></translation>
+        <translation> °</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="763"/>
@@ -6856,7 +6858,7 @@ Do you want to use %1 = %2/1001 instead?</source>
     <message>
         <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="72"/>
         <source>Pad Blur</source>
-        <translation type="unfinished"></translation>
+        <translation>Нечеткая подложка</translation>
     </message>
     <message>
         <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="75"/>
@@ -7195,7 +7197,7 @@ If the duration is 0, no transition will be created.</source>
         <translation>Атрибуты текста доступны в панели &lt;b&gt;Фильтры&lt;/b&gt; после нажатия &lt;b&gt;OK&lt;/b&gt;.</translation>
     </message>
     <message>
-        <location filename="../src/widgets/textproducerwidget.cpp" line="101"/>
+        <location filename="../src/widgets/textproducerwidget.cpp" line="103"/>
         <source>Edit your text using the Filters panel.</source>
         <translation>Измените текст с помощью панели фильтров.</translation>
     </message>
@@ -7442,17 +7444,17 @@ affecting position of other clips (Z)</source>
     <message>
         <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="241"/>
         <source>Zoom timeline out (-)</source>
-        <translation>Отдалить шкалу времени (-)</translation>
+        <translation>Уменьшить шкалу времени (-)</translation>
     </message>
     <message>
         <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="249"/>
         <source>Zoom timeline in (+)</source>
-        <translation>Приблизить шкалу времени (+)</translation>
+        <translation>Увеличить шкалу времени (+)</translation>
     </message>
     <message>
         <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="257"/>
         <source>Zoom timeline to fit (0)</source>
-        <translation type="unfinished"></translation>
+        <translation>Увеличить шкалу времени по размеру (0)</translation>
     </message>
 </context>
 <context>
@@ -9072,11 +9074,6 @@ Most users do not need to change this.</source>
         <translation>Столбцы</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/aech0r/meta.qml" line="6"/>
-        <source>Analog Echo</source>
-        <translation>Аналоговое эхо</translation>
-    </message>
-    <message>
         <location filename="../src/qml/filters/distort/meta.qml" line="23"/>
         <source>Distort</source>
         <translation>Искажение</translation>
@@ -9428,12 +9425,12 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/richtext/meta.qml" line="7"/>
         <source>Text: Rich</source>
-        <translation type="unfinished"></translation>
+        <translation>Текст: RTF</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/pillar_echo/meta.qml" line="7"/>
         <source>Blur: Pad</source>
-        <translation type="unfinished"></translation>
+        <translation>Размытие: Планшет</translation>
     </message>
 </context>
 <context>
@@ -10092,7 +10089,6 @@ Most users do not need to change this.</source>
         <translation>Правый</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/aech0r/ui.qml" line="65"/>
         <location filename="../src/qml/filters/audio_balance/ui.qml" line="101"/>
         <location filename="../src/qml/filters/audio_bandpass/ui.qml" line="52"/>
         <location filename="../src/qml/filters/audio_basstreble/ui.qml" line="169"/>
@@ -10157,7 +10153,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/posterize/ui.qml" line="65"/>
         <location filename="../src/qml/filters/rectangle/ui.qml" line="184"/>
         <location filename="../src/qml/filters/rgbsplit0r/ui.qml" line="70"/>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="209"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="230"/>
         <location filename="../src/qml/filters/rotate/ui.qml" line="137"/>
         <location filename="../src/qml/filters/select0r/ui.qml" line="109"/>
         <location filename="../src/qml/filters/sepia/ui.qml" line="38"/>
@@ -10748,66 +10744,67 @@ Most users do not need to change this.</source>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="83"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="52"/>
         <source>Lower Third</source>
         <translation>Нижняя треть</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="88"/>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="65"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="68"/>
         <source>Slide In From Left</source>
         <translation>Выезд слева</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="90"/>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="67"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="70"/>
         <source>Slide In From Right</source>
         <translation>Выезд справа</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="92"/>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="69"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="72"/>
         <source>Slide In From Top</source>
         <translation>Выезд сверху</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="94"/>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="71"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="74"/>
         <source>Slide In From Bottom</source>
         <translation>Выезд снизу</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="98"/>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="75"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="78"/>
         <source>Slide Out Left</source>
         <translation>Отъезд влево</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="100"/>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="77"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="80"/>
         <source>Slide Out Right</source>
         <translation>Отъезд вправо</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="102"/>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="79"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="82"/>
         <source>Slide Out Top</source>
         <translation>Отъезд вверх</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="104"/>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="81"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="84"/>
         <source>Slide Out Bottom</source>
         <translation>Отъезд вниз</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="108"/>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="85"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="88"/>
         <source>Slow Zoom In</source>
         <translation>Медленное увеличение</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="110"/>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="87"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="90"/>
         <source>Slow Zoom Out</source>
         <translation>Медленное уменьшение</translation>
     </message>
@@ -10980,7 +10977,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/gradient/ui.qml" line="303"/>
         <location filename="../src/qml/filters/pillar_echo/ui.qml" line="157"/>
         <location filename="../src/qml/filters/rectangle/ui.qml" line="220"/>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="236"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="257"/>
         <location filename="../src/qml/filters/spot_remover/ui.qml" line="142"/>
         <location filename="../src/qml/filters/waveform/ui.qml" line="137"/>
         <location filename="../src/qml/filters/webvfx_clip/ui.qml" line="213"/>
@@ -11737,40 +11734,60 @@ Click &quot;Open&quot; to load a file.</source>
         <translation>смещение по Y</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="54"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="57"/>
         <source>Scroll Down</source>
         <translation>Прокрутить вниз</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="56"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="59"/>
         <source>Scroll Up</source>
         <translation>Прокрутить вверх</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="58"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="61"/>
         <source>Scroll Right</source>
         <translation>Прокрутить вправо</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="60"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="63"/>
         <source>Scroll Left</source>
         <translation>Прокрутить влево</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="297"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="318"/>
         <source>Background size</source>
         <translation>Размер фона</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="345"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="366"/>
         <source>Text size</source>
         <translation>Размер шрифта</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="367"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="388"/>
         <location filename="../src/qml/filters/rotate/ui.qml" line="289"/>
         <source>Background color</source>
         <translation>Цвет фона</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="404"/>
+        <source>Overflow</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="412"/>
+        <source>Automatic</source>
+        <translation>Автоматически</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="421"/>
+        <source>Visible</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="427"/>
+        <source>Hidden</source>
+        <translation>Скрытый</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/select0r/ui.qml" line="143"/>
@@ -11913,22 +11930,6 @@ Click &quot;Open&quot; to load a file.</source>
         <translation>Если разница между исходными и размытыми пикселами менее порогового значения, исходные пикселы будут заменены на размытые.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/aech0r/ui.qml" line="78"/>
-        <source>Fade</source>
-        <translation>Затухание</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/aech0r/ui.qml" line="95"/>
-        <source>Fade period</source>
-        <translation>Период затухания</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/aech0r/ui.qml" line="117"/>
-        <source>Lighter</source>
-        <translation>Нарастание</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/aech0r/ui.qml" line="142"/>
         <location filename="../src/qml/filters/levels/ui.qml" line="178"/>
         <location filename="../src/qml/filters/spillsuppress/ui.qml" line="46"/>
         <location filename="../src/qml/filters/tcolor/ui.qml" line="59"/>
@@ -11936,7 +11937,6 @@ Click &quot;Open&quot; to load a file.</source>
         <translation>Зеленый</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/aech0r/ui.qml" line="158"/>
         <location filename="../src/qml/filters/levels/ui.qml" line="178"/>
         <location filename="../src/qml/filters/spillsuppress/ui.qml" line="52"/>
         <location filename="../src/qml/filters/tcolor/ui.qml" line="83"/>
@@ -11944,7 +11944,6 @@ Click &quot;Open&quot; to load a file.</source>
         <translation>Синий</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/aech0r/ui.qml" line="125"/>
         <location filename="../src/qml/filters/levels/ui.qml" line="178"/>
         <source>Red</source>
         <translation>Красный</translation>
@@ -13290,128 +13289,153 @@ Click &quot;Open&quot; to load a file.</source>
         <translation>4</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="205"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="244"/>
         <source>Text size</source>
         <translation>Размер шрифта</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="220"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="261"/>
         <source>Text color</source>
         <translation>Цвет текста</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="305"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="325"/>
+        <source>Collapse Toolbar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="325"/>
+        <source>Expand Toolbar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="368"/>
         <source>Open</source>
         <translation>Открыть</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="315"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="378"/>
         <source>Save As…</source>
         <translation>Сохранить как...</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="325"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="388"/>
         <source>Menu</source>
         <translation>Меню</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="332"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="395"/>
         <source>Undo</source>
         <translation>Отменить</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="340"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="403"/>
         <source>Redo</source>
         <translation>Вернуть</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="348"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="411"/>
         <source>Cut</source>
         <translation>Нарезка с заголовком</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="356"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="419"/>
         <source>Copy</source>
         <translation>Скопировать</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="364"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="427"/>
         <source>Paste</source>
         <translation>Вставить</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="372"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="435"/>
+        <source>Paste Text Only</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="440"/>
+        <source>Delete</source>
+        <translation>Удалить</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="448"/>
+        <source>Clear</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="458"/>
         <source>Select All</source>
         <translation>Выделить все</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="379"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="465"/>
         <source>Left</source>
         <translation>Влево</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="388"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="474"/>
         <source>Center</source>
         <translation>Центральный</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="397"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="483"/>
         <source>Right</source>
         <translation>Вправо</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="406"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="492"/>
         <source>Justify</source>
         <translation>По ширине</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="415"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="501"/>
         <source>Bold</source>
         <translation>Жирный</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="424"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="510"/>
         <source>Italic</source>
         <translation>Курсив</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="433"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="519"/>
         <source>Underline</source>
         <translation>Подчёркнутый</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="442"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="528"/>
         <source>Font</source>
         <translation>Шрифт</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="453"/>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="505"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="539"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="592"/>
         <source>Insert Table</source>
         <translation>Вставить таблицу</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="460"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="546"/>
         <source>Decrease Indent</source>
         <translation>Уменьшить отступ</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="467"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="553"/>
         <source>Insert Indent</source>
         <translation>Вставить отступ</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="515"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="602"/>
         <source>Rows</source>
         <translation>Строки</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="527"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="614"/>
         <source>Columns</source>
         <translation>Столбцы</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="538"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="625"/>
         <source>Border</source>
         <translation>Граница</translation>
     </message>

@@ -1477,8 +1477,8 @@ v dočasnom zhustení</translation>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1787"/>
         <location filename="../src/docks/encodedock.cpp" line="882"/>
-        <location filename="../src/docks/encodedock.cpp" line="1399"/>
-        <location filename="../src/docks/encodedock.cpp" line="1828"/>
+        <location filename="../src/docks/encodedock.cpp" line="1434"/>
+        <location filename="../src/docks/encodedock.cpp" line="1863"/>
         <source>Export File</source>
         <translation>Exportovať súbor</translation>
     </message>
@@ -1504,17 +1504,17 @@ v dočasnom zhustení</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1827"/>
-        <location filename="../src/docks/encodedock.cpp" line="1543"/>
-        <location filename="../src/docks/encodedock.cpp" line="1550"/>
-        <location filename="../src/docks/encodedock.cpp" line="1661"/>
+        <location filename="../src/docks/encodedock.cpp" line="1578"/>
+        <location filename="../src/docks/encodedock.cpp" line="1585"/>
+        <location filename="../src/docks/encodedock.cpp" line="1696"/>
         <source>Stream</source>
         <translation>Tok</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1854"/>
-        <location filename="../src/docks/encodedock.cpp" line="1379"/>
-        <location filename="../src/docks/encodedock.cpp" line="1466"/>
-        <location filename="../src/docks/encodedock.cpp" line="1480"/>
+        <location filename="../src/docks/encodedock.cpp" line="1414"/>
+        <location filename="../src/docks/encodedock.cpp" line="1501"/>
+        <location filename="../src/docks/encodedock.cpp" line="1515"/>
         <source>Stop Capture</source>
         <translation>Zastaviť zachytávanie</translation>
     </message>
@@ -1557,8 +1557,8 @@ v dočasnom zhustení</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="415"/>
-        <location filename="../src/docks/encodedock.cpp" line="1326"/>
-        <location filename="../src/docks/encodedock.cpp" line="1327"/>
+        <location filename="../src/docks/encodedock.cpp" line="1361"/>
+        <location filename="../src/docks/encodedock.cpp" line="1362"/>
         <source>Custom</source>
         <translation>Vlastné</translation>
     </message>
@@ -1580,109 +1580,109 @@ Try again with a different folder or file name.</source>
 Skúste to znovu s iným priečinkom alebo názvom súboru.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1085"/>
+        <location filename="../src/docks/encodedock.cpp" line="1120"/>
         <source>Shotcut found filters that require analysis jobs that have not run.
 Do you want to run the analysis jobs now?</source>
         <translation>Shotcut našiel filtre vyžadované analytickými úlohami, ktoré sa nespustili.
 Chcete teraz spustiť analytické úlohy?</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1399"/>
-        <location filename="../src/docks/encodedock.cpp" line="1830"/>
+        <location filename="../src/docks/encodedock.cpp" line="1434"/>
+        <location filename="../src/docks/encodedock.cpp" line="1865"/>
         <source>Capture File</source>
         <translation>Zachytiť súbor</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1402"/>
+        <location filename="../src/docks/encodedock.cpp" line="1437"/>
         <source>%1 (*.%2);;All Files (*)</source>
         <translation>%1 (*.%2);;Všetky súbory (*)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1404"/>
+        <location filename="../src/docks/encodedock.cpp" line="1439"/>
         <source>Determined by Export (*)</source>
         <translation>Určené na export (*)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1423"/>
+        <location filename="../src/docks/encodedock.cpp" line="1458"/>
         <source>The drive you chose only has %1 MiB of free space.
 Do you still want to continue?</source>
         <translation>Na vami zvolenej jednotke je len %1 MB voľného miesta.
 Stále ešte chcete pokračovať?</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1430"/>
+        <location filename="../src/docks/encodedock.cpp" line="1465"/>
         <source>Do not show this anymore.</source>
         <comment>Export free disk space warning dialog</comment>
         <translation>Toto už viac nezobrazovať.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1435"/>
+        <location filename="../src/docks/encodedock.cpp" line="1470"/>
         <source>Export canceled.</source>
         <translation>Export prerušený.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1538"/>
-        <location filename="../src/docks/encodedock.cpp" line="1559"/>
+        <location filename="../src/docks/encodedock.cpp" line="1573"/>
+        <location filename="../src/docks/encodedock.cpp" line="1594"/>
         <source>Stop Stream</source>
         <translation>Zastaviť tok</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1551"/>
+        <location filename="../src/docks/encodedock.cpp" line="1586"/>
         <source>Enter the network protocol scheme, address, port, and parameters as an URL:</source>
         <translation>Zadajte schému sieťového protokolu, adresu, prípojku a parametre ako adresu URL:</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1596"/>
+        <location filename="../src/docks/encodedock.cpp" line="1631"/>
         <source>Add Export Preset</source>
         <translation>Pridať predvoľbu exportu</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1638"/>
+        <location filename="../src/docks/encodedock.cpp" line="1673"/>
         <source>Delete Preset</source>
         <translation>Zmazať predvoľbu</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1639"/>
+        <location filename="../src/docks/encodedock.cpp" line="1674"/>
         <source>Are you sure you want to delete %1?</source>
         <translation>Naozaj chcete zmazať %1?</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1766"/>
+        <location filename="../src/docks/encodedock.cpp" line="1801"/>
         <source>None</source>
         <translation>Žiadny</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1814"/>
+        <location filename="../src/docks/encodedock.cpp" line="1849"/>
         <source>KiB (%1s)</source>
         <translation>kB (%1s)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1912"/>
+        <location filename="../src/docks/encodedock.cpp" line="1947"/>
         <source>Detect</source>
         <translation>Zistiť</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1999"/>
+        <location filename="../src/docks/encodedock.cpp" line="2034"/>
         <source>Detecting hardware encoders...</source>
         <translation>Zisťujem hardvérové kódovače...</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2032"/>
+        <location filename="../src/docks/encodedock.cpp" line="2067"/>
         <source>Nothing found</source>
         <translation>Nič nebolo nájdené</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2034"/>
+        <location filename="../src/docks/encodedock.cpp" line="2069"/>
         <source>Found %1</source>
         <translation>Nájdené %1</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1910"/>
+        <location filename="../src/docks/encodedock.cpp" line="1945"/>
         <source>Configure Hardware Encoding</source>
         <translation>Konfigurovať hardvérové kódovanie</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1934"/>
+        <location filename="../src/docks/encodedock.cpp" line="1969"/>
         <source>Export Frames/sec</source>
         <translation>Export snímok/sek</translation>
     </message>
@@ -4051,7 +4051,7 @@ Nainštalujte ju, prosím, použitím pakovača. Môže byť pomenovaná libsdl2
         <location filename="../src/mainwindow.cpp" line="963"/>
         <location filename="../src/mainwindow.cpp" line="1397"/>
         <location filename="../src/mainwindow.cpp" line="3830"/>
-        <location filename="../src/mainwindow.cpp" line="4667"/>
+        <location filename="../src/mainwindow.cpp" line="4676"/>
         <source>Failed to open </source>
         <translation>Pri otváraní zlyhalo </translation>
     </message>
@@ -4229,22 +4229,22 @@ Napriek tomu chcete program ukončiť?</translation>
         <translation>Ukončiť režim celej obrazovky</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4631"/>
+        <location filename="../src/mainwindow.cpp" line="4640"/>
         <source>Turn Proxy On</source>
         <translation>Zapnúť proxy</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4631"/>
+        <location filename="../src/mainwindow.cpp" line="4640"/>
         <source>Turn Proxy Off</source>
         <translation>Vypnúť proxy</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4635"/>
+        <location filename="../src/mainwindow.cpp" line="4644"/>
         <source>Converting</source>
         <translation>Konvertovanie</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4649"/>
+        <location filename="../src/mainwindow.cpp" line="4658"/>
         <source>Do you want to create missing proxies for every file in this project?
 
 You must reopen your project after all proxy jobs are finished.</source>
@@ -4252,17 +4252,17 @@ You must reopen your project after all proxy jobs are finished.</source>
 Po dokončení všetkých úloh proxy musíte znova otvoriť svoj projekt.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4684"/>
+        <location filename="../src/mainwindow.cpp" line="4693"/>
         <source>Proxy Folder</source>
         <translation>Priečinok proxy</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4698"/>
+        <location filename="../src/mainwindow.cpp" line="4707"/>
         <source>Do you want to move all files from the old folder to the new folder?</source>
         <translation>Chcete presunúť všetky súbory zo starého priečinka do nového priečinka?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4705"/>
+        <location filename="../src/mainwindow.cpp" line="4714"/>
         <source>Moving Files</source>
         <translation>Presúvanie súborov</translation>
     </message>
@@ -4425,27 +4425,27 @@ Chcete pokračovať?</translation>
         <translation>Priečinok údajov</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4282"/>
+        <location filename="../src/mainwindow.cpp" line="4290"/>
         <source>Add Custom Layout</source>
         <translation>Pridať vlastné usporiadanie</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4283"/>
+        <location filename="../src/mainwindow.cpp" line="4291"/>
         <source>Name</source>
         <translation>Názov</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4314"/>
+        <location filename="../src/mainwindow.cpp" line="4323"/>
         <source>Remove Video Mode</source>
         <translation>Odstrániť režim videa</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4328"/>
+        <location filename="../src/mainwindow.cpp" line="4337"/>
         <source>Remove Layout</source>
         <translation>Odstrániť usporiadanie</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4448"/>
+        <location filename="../src/mainwindow.cpp" line="4457"/>
         <source>GPU effects are EXPERIMENTAL, UNSTABLE and UNSUPPORTED! Unsupported means do not report bugs about it.
 
 Do you want to disable GPU effects and restart Shotcut?</source>
@@ -6397,17 +6397,17 @@ Chcete namiesto toho použiť %1 = %2/1001?</translation>
 <context>
     <name>QmlRichText</name>
     <message>
-        <location filename="../src/qmltypes/qmlrichtext.cpp" line="112"/>
+        <location filename="../src/qmltypes/qmlrichtext.cpp" line="114"/>
         <source>Cannot save: </source>
         <translation>Nemožno uložiť: </translation>
     </message>
     <message>
-        <location filename="../src/qmltypes/qmlrichtext.cpp" line="140"/>
+        <location filename="../src/qmltypes/qmlrichtext.cpp" line="142"/>
         <source>Row</source>
         <translation>Riadok</translation>
     </message>
     <message>
-        <location filename="../src/qmltypes/qmlrichtext.cpp" line="142"/>
+        <location filename="../src/qmltypes/qmlrichtext.cpp" line="144"/>
         <source>Column</source>
         <translation>Stĺpec</translation>
     </message>
@@ -7197,7 +7197,7 @@ Ak je trvanie 0, prechod nebude vytváraný.</translation>
         <translation>Vlastnosti textu sú dostupné na paneli &lt;b&gt;Filtre&lt;/b&gt; po kliknutí na &lt;b&gt;OK&lt;/b&gt;.</translation>
     </message>
     <message>
-        <location filename="../src/widgets/textproducerwidget.cpp" line="101"/>
+        <location filename="../src/widgets/textproducerwidget.cpp" line="103"/>
         <source>Edit your text using the Filters panel.</source>
         <translation>Upravte text použitím panela filtrov.</translation>
     </message>
@@ -9072,11 +9072,6 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
         <translation>Stĺpce</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/aech0r/meta.qml" line="6"/>
-        <source>Analog Echo</source>
-        <translation>Analógová ozvena</translation>
-    </message>
-    <message>
         <location filename="../src/qml/filters/distort/meta.qml" line="23"/>
         <source>Distort</source>
         <translation>Skresliť</translation>
@@ -9433,7 +9428,7 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
     <message>
         <location filename="../src/qml/filters/pillar_echo/meta.qml" line="7"/>
         <source>Blur: Pad</source>
-        <translation type="unfinished"></translation>
+        <translation>Rozostrenie: Poduška</translation>
     </message>
 </context>
 <context>
@@ -10092,7 +10087,6 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
         <translation>Vpravo</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/aech0r/ui.qml" line="65"/>
         <location filename="../src/qml/filters/audio_balance/ui.qml" line="101"/>
         <location filename="../src/qml/filters/audio_bandpass/ui.qml" line="52"/>
         <location filename="../src/qml/filters/audio_basstreble/ui.qml" line="169"/>
@@ -10157,7 +10151,7 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
         <location filename="../src/qml/filters/posterize/ui.qml" line="65"/>
         <location filename="../src/qml/filters/rectangle/ui.qml" line="184"/>
         <location filename="../src/qml/filters/rgbsplit0r/ui.qml" line="70"/>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="209"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="230"/>
         <location filename="../src/qml/filters/rotate/ui.qml" line="137"/>
         <location filename="../src/qml/filters/select0r/ui.qml" line="109"/>
         <location filename="../src/qml/filters/sepia/ui.qml" line="38"/>
@@ -10748,66 +10742,67 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="83"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="52"/>
         <source>Lower Third</source>
         <translation>Spodná tretina</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="88"/>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="65"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="68"/>
         <source>Slide In From Left</source>
         <translation>Posunúť zľava</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="90"/>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="67"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="70"/>
         <source>Slide In From Right</source>
         <translation>Posunúť sprava</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="92"/>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="69"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="72"/>
         <source>Slide In From Top</source>
         <translation>Posunúť zhora</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="94"/>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="71"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="74"/>
         <source>Slide In From Bottom</source>
         <translation>Posunúť zdola</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="98"/>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="75"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="78"/>
         <source>Slide Out Left</source>
         <translation>Posunúť doľava</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="100"/>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="77"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="80"/>
         <source>Slide Out Right</source>
         <translation>Posunúť doprava</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="102"/>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="79"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="82"/>
         <source>Slide Out Top</source>
         <translation>Posunúť nahor</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="104"/>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="81"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="84"/>
         <source>Slide Out Bottom</source>
         <translation>Posunúť nadol</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="108"/>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="85"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="88"/>
         <source>Slow Zoom In</source>
         <translation>Pomaly priblížiť</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="110"/>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="87"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="90"/>
         <source>Slow Zoom Out</source>
         <translation>Pomaly oddialiť</translation>
     </message>
@@ -10980,7 +10975,7 @@ Väčšina užívateľov toto nepotrebuje meniť.</translation>
         <location filename="../src/qml/filters/gradient/ui.qml" line="303"/>
         <location filename="../src/qml/filters/pillar_echo/ui.qml" line="157"/>
         <location filename="../src/qml/filters/rectangle/ui.qml" line="220"/>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="236"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="257"/>
         <location filename="../src/qml/filters/spot_remover/ui.qml" line="142"/>
         <location filename="../src/qml/filters/waveform/ui.qml" line="137"/>
         <location filename="../src/qml/filters/webvfx_clip/ui.qml" line="213"/>
@@ -11737,40 +11732,60 @@ Kliknite na Otvoriť pre načítanie súboru.</translation>
         <translation>Posuv y</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="54"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="57"/>
         <source>Scroll Down</source>
         <translation>Posunúť nadol</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="56"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="59"/>
         <source>Scroll Up</source>
         <translation>Posunúť nahor</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="58"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="61"/>
         <source>Scroll Right</source>
         <translation>Posunúť doprava</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="60"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="63"/>
         <source>Scroll Left</source>
         <translation>Posunúť doľava</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="297"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="318"/>
         <source>Background size</source>
         <translation>Veľkosť pozadia</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="345"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="366"/>
         <source>Text size</source>
         <translation>Veľkosť textu</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="367"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="388"/>
         <location filename="../src/qml/filters/rotate/ui.qml" line="289"/>
         <source>Background color</source>
         <translation>Farba pozadia</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="404"/>
+        <source>Overflow</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="412"/>
+        <source>Automatic</source>
+        <translation>Automaticky</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="421"/>
+        <source>Visible</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="427"/>
+        <source>Hidden</source>
+        <translation>Skryté</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/select0r/ui.qml" line="143"/>
@@ -11913,22 +11928,6 @@ Kliknite na Otvoriť pre načítanie súboru.</translation>
         <translation>Pokiaľ je rozdiel medzi pôvodným pixelom a rozostreným pixelom menšia než prahová hodnota, pixel bude nahradený rozostreným pixelom.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/aech0r/ui.qml" line="78"/>
-        <source>Fade</source>
-        <translation>Vytrácanie</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/aech0r/ui.qml" line="95"/>
-        <source>Fade period</source>
-        <translation>Perióda vytrácania</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/aech0r/ui.qml" line="117"/>
-        <source>Lighter</source>
-        <translation>Zjasňovač</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/aech0r/ui.qml" line="142"/>
         <location filename="../src/qml/filters/levels/ui.qml" line="178"/>
         <location filename="../src/qml/filters/spillsuppress/ui.qml" line="46"/>
         <location filename="../src/qml/filters/tcolor/ui.qml" line="59"/>
@@ -11936,7 +11935,6 @@ Kliknite na Otvoriť pre načítanie súboru.</translation>
         <translation>Zelená</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/aech0r/ui.qml" line="158"/>
         <location filename="../src/qml/filters/levels/ui.qml" line="178"/>
         <location filename="../src/qml/filters/spillsuppress/ui.qml" line="52"/>
         <location filename="../src/qml/filters/tcolor/ui.qml" line="83"/>
@@ -11944,7 +11942,6 @@ Kliknite na Otvoriť pre načítanie súboru.</translation>
         <translation>Modrá</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/aech0r/ui.qml" line="125"/>
         <location filename="../src/qml/filters/levels/ui.qml" line="178"/>
         <source>Red</source>
         <translation>Červená</translation>
@@ -13290,128 +13287,153 @@ Kliknite na Otvoriť pre načítanie súboru.</translation>
         <translation>4</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="205"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="244"/>
         <source>Text size</source>
         <translation>Veľkosť textu</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="220"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="261"/>
         <source>Text color</source>
         <translation>Farba textu</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="305"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="325"/>
+        <source>Collapse Toolbar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="325"/>
+        <source>Expand Toolbar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="368"/>
         <source>Open</source>
         <translation>Otvoriť</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="315"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="378"/>
         <source>Save As…</source>
         <translation>Uložiť ako...</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="325"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="388"/>
         <source>Menu</source>
         <translation>Ponuka</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="332"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="395"/>
         <source>Undo</source>
         <translation>Späť</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="340"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="403"/>
         <source>Redo</source>
         <translation>Vpred</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="348"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="411"/>
         <source>Cut</source>
         <translation>Vystrihnúť</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="356"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="419"/>
         <source>Copy</source>
         <translation>Kopírovať</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="364"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="427"/>
         <source>Paste</source>
         <translation>Prilepiť</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="372"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="435"/>
+        <source>Paste Text Only</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="440"/>
+        <source>Delete</source>
+        <translation>Odstrániť</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="448"/>
+        <source>Clear</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="458"/>
         <source>Select All</source>
         <translation>Vybrať všetko</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="379"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="465"/>
         <source>Left</source>
         <translation>Vľavo</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="388"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="474"/>
         <source>Center</source>
         <translation>Stredný</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="397"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="483"/>
         <source>Right</source>
         <translation>Vpravo</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="406"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="492"/>
         <source>Justify</source>
         <translation>Zarovnať</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="415"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="501"/>
         <source>Bold</source>
         <translation>Tučné</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="424"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="510"/>
         <source>Italic</source>
         <translation>Kurzíva</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="433"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="519"/>
         <source>Underline</source>
         <translation>Podčiarknuté</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="442"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="528"/>
         <source>Font</source>
         <translation>Písmo</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="453"/>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="505"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="539"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="592"/>
         <source>Insert Table</source>
         <translation>Vložiť tabelátor</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="460"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="546"/>
         <source>Decrease Indent</source>
         <translation>Znížiť odsadenie</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="467"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="553"/>
         <source>Insert Indent</source>
         <translation>Vložiť odsadenie</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="515"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="602"/>
         <source>Rows</source>
         <translation>Riadky</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="527"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="614"/>
         <source>Columns</source>
         <translation>Stĺpce</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="538"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="625"/>
         <source>Border</source>
         <translation>Okraj</translation>
     </message>
