@@ -32,6 +32,7 @@ Item {
     property alias withRotation: rotationHandle.visible
     property alias rotation: rotationGroup.rotation
     property bool _positionDragLocked: false
+    property bool _positionDragEnabled: false
 
     signal rectChanged(Rectangle rect)
     signal rotated(real degrees, var mouse)
@@ -139,6 +140,17 @@ Item {
         anchors.left: topLeftHandle.left
         anchors.right: bottomRightHandle.right
         anchors.bottom: bottomRightHandle.bottom
+        focus: true
+        Keys.onPressed: {
+            if (event.key === Qt.Key_Shift) {
+                _positionDragEnabled = true
+            }
+        }
+        Keys.onReleased: {
+            if (event.key === Qt.Key_Shift) {
+                _positionDragEnabled = false
+            }
+        }
     }
     Rectangle {
         // Provides contrasting thick line to above rectangle.
@@ -166,19 +178,20 @@ Item {
             z: 1
             gradient: Gradient {
                 GradientStop {
-                    position: (_positionDragLocked || positionMouseArea.pressed)? 0.0 : 1.0
+                    position: (_positionDragLocked || _positionDragEnabled || positionMouseArea.pressed)? 0.0 : 1.0
                     color: 'black'
                 }
                 GradientStop {
-                    position: (_positionDragLocked || positionMouseArea.pressed)? 1.0 : 0.0
+                    position: (_positionDragLocked || _positionDragEnabled || positionMouseArea.pressed)? 1.0 : 0.0
                     color: 'white'
                 }
             }
             function centerX() { return x + width / 2 }
         }
+
         MouseArea {
             id: positionMouseArea
-            anchors.fill: _positionDragLocked? parent : positionHandle
+            anchors.fill: (_positionDragLocked || _positionDragEnabled)? parent : positionHandle
             acceptedButtons: Qt.LeftButton
             cursorShape: Qt.SizeAllCursor
             drag.target: rectangle
