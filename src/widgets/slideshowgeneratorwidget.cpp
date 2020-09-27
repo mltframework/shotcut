@@ -41,6 +41,8 @@ enum
     ASPECT_CONVERSION_PAD_BLUR,
 };
 
+static const int minTransitionFrames = 2;
+
 SlideshowGeneratorWidget::SlideshowGeneratorWidget(Mlt::Playlist* clips, QWidget *parent)
     : QWidget(parent)
     , m_clips(clips)
@@ -55,7 +57,7 @@ SlideshowGeneratorWidget::SlideshowGeneratorWidget(Mlt::Playlist* clips, QWidget
     m_clipDurationSpinner->setToolTip(tr("Set the duration of each clip in the slideshow."));
     m_clipDurationSpinner->setSuffix(" s");
     m_clipDurationSpinner->setDecimals(1);
-    m_clipDurationSpinner->setMinimum(4);
+    m_clipDurationSpinner->setMinimum(0.2);
     m_clipDurationSpinner->setMaximum(3600 * 4);
     m_clipDurationSpinner->setValue(10);
     connect(m_clipDurationSpinner, SIGNAL(valueChanged(double)), this, SLOT(on_parameterChanged()));
@@ -198,6 +200,10 @@ Mlt::Playlist* SlideshowGeneratorWidget::getSlideshow()
     if (framesPerTransition > (framesPerClip / 2 - 1))
     {
         framesPerTransition = (framesPerClip / 2 - 1);
+    }
+    if (framesPerTransition < minTransitionFrames)
+    {
+        framesPerTransition = 0;
     }
     if (framesPerTransition > 0)
     {
