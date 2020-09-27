@@ -159,3 +159,7 @@ qreal QmlApplication::devicePixelRatio()
     return MAIN.devicePixelRatioF();
 }
 
+void QmlApplication::showStatusMessage(const QString& message, int timeoutSeconds)
+{
+    MAIN.showStatusMessage(message, timeoutSeconds);
+}
