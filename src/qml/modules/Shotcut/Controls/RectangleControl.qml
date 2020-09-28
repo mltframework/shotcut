@@ -38,6 +38,10 @@ Item {
     signal rotated(real degrees, var mouse)
     signal rotationReleased()
 
+    Component.onCompleted: {
+        _positionDragLocked = filter.get('_shotcut:positionDragLocked') === '1'
+    }
+
     function setHandles(rect) {
         if ( rect.width < 0 || rect.height < 0)
             return
@@ -195,7 +199,10 @@ Item {
             acceptedButtons: Qt.LeftButton
             cursorShape: Qt.SizeAllCursor
             drag.target: rectangle
-            onDoubleClicked: _positionDragLocked = !_positionDragLocked
+            onDoubleClicked: {
+                _positionDragLocked = !_positionDragLocked
+                filter.set('_shotcut:positionDragLocked', _positionDragLocked)
+            }
             onEntered: {
                 rectangle.anchors.top = undefined
                 rectangle.anchors.left = undefined
