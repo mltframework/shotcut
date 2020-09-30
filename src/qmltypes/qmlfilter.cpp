@@ -130,11 +130,7 @@ void QmlFilter::set(QString name, QString value, int position)
     if (!m_filter.is_valid()) return;
     if (position < 0) {
         if (qstrcmp(m_filter.get(qUtf8Printable(name)), qUtf8Printable(value)))  {
-#if LIBMLT_VERSION_INT >= MLT_VERSION_SET_STRING 
             m_filter.set_string(qUtf8Printable(name), qUtf8Printable(value)) ;
-#else
-            m_filter.set(qUtf8Printable(name), qUtf8Printable(value)) ;
-#endif
             emit changed(name);
         }
     } else {

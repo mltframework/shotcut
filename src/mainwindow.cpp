@@ -589,15 +589,11 @@ void MainWindow::setupSettingsMenu()
     group->addAction(ui->actionOneField);
     group->addAction(ui->actionLinearBlend);
 
-#if LIBMLT_VERSION_INT >= MLT_VERSION_PREVIEW_SCALE
     m_previewScaleGroup = new QActionGroup(this);
     m_previewScaleGroup->addAction(ui->actionPreviewNone);
     m_previewScaleGroup->addAction(ui->actionPreview360);
     m_previewScaleGroup->addAction(ui->actionPreview540);
     m_previewScaleGroup->addAction(ui->actionPreview720);
-#else
-    delete ui->menuPreviewScaling;
-#endif
 
     //XXX workaround yadif crashing with mlt_transition
 //    group->addAction(ui->actionYadifTemporal);
@@ -1562,7 +1558,6 @@ void MainWindow::readPlayerSettings()
 
     setAudioChannels(Settings.playerAudioChannels());
 
-#if LIBMLT_VERSION_INT >= MLT_VERSION_PREVIEW_SCALE
     if (isExternalPeripheral) {
         setPreviewScale(0);
         m_previewScaleGroup->setEnabled(false);
@@ -1570,7 +1565,6 @@ void MainWindow::readPlayerSettings()
         setPreviewScale(Settings.playerPreviewScale());
         m_previewScaleGroup->setEnabled(true);
     }
-#endif
 
     QString deinterlacer = Settings.playerDeinterlacer();
     QString interpolation = Settings.playerInterpolation();
@@ -3587,7 +3581,6 @@ void MainWindow::onExternalTriggered(QAction *action)
     if (m_keyerMenu)
         m_keyerMenu->setEnabled(action->data().toString().startsWith("decklink"));
 
-#if LIBMLT_VERSION_INT >= MLT_VERSION_PREVIEW_SCALE
     // Preview scaling not permitted for SDI/HDMI
     if (isExternal) {
         setPreviewScale(0);
@@ -3596,7 +3589,6 @@ void MainWindow::onExternalTriggered(QAction *action)
         setPreviewScale(Settings.playerPreviewScale());
         m_previewScaleGroup->setEnabled(true);
     }
-#endif
 }
 
 void MainWindow::onKeyerTriggered(QAction *action)

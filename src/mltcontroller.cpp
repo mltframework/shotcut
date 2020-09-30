@@ -1228,7 +1228,6 @@ int Controller::filterOut(Playlist& playlist, int clipIndex)
 
 void Controller::setPreviewScale(int scale)
 {
-#if LIBMLT_VERSION_INT >= MLT_VERSION_PREVIEW_SCALE
     auto width = m_profile.width();
     auto height = m_profile.height();
     if (scale > 0) {
@@ -1244,7 +1243,6 @@ void Controller::setPreviewScale(int scale)
         m_consumer->set("width", width);
         m_consumer->set("height", height);
     }
-#endif
 }
 
 void Controller::updatePreviewProfile()

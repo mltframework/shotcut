@@ -37,9 +37,6 @@ class QQuickView;
 #   define MLT_LC_NAME     "LC_ALL"
 #endif
 
-#define MLT_VERSION_PREVIEW_SCALE ((6<<16)+(19<<8))
-#define MLT_VERSION_SET_STRING ((6<<16)+(19<<8))
-
 namespace Mlt {
 
 const int kMaxImageDurationSecs = 3600 * 4;
