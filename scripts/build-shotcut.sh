@@ -693,7 +693,7 @@ function set_globals {
 
   #####
   # mlt
-  CONFIG[1]="./configure --prefix=$FINAL_INSTALL_DIR --enable-gpl --enable-gpl3 --without-kde --disable-sdl $CONFIGURE_DEBUG_FLAG"
+  CONFIG[1]="./configure --prefix=$FINAL_INSTALL_DIR --enable-gpl --enable-gpl3 --without-kde --disable-sdl --disable-gdk --disable-gtk2 $CONFIGURE_DEBUG_FLAG"
   # Remember, if adding more of these, to update the post-configure check.
   [ "$QT_INCLUDE_DIR" ] && CONFIG[1]="${CONFIG[1]} --qt-includedir=$QT_INCLUDE_DIR"
   [ "$QT_LIB_DIR" ] && CONFIG[1]="${CONFIG[1]} --qt-libdir=$QT_LIB_DIR"
@@ -701,9 +701,9 @@ function set_globals {
     CONFIG[1]="${CONFIG[1]} --disable-sox"
   fi
   if test "$TARGET_OS" = "Win32" ; then
-    CONFIG[1]="${CONFIG[1]} --disable-dv --disable-kino --disable-vorbis --gdk-prefix=\"$FINAL_INSTALL_DIR\" --target-os=MinGW --target-arch=i686 --rename-melt=melt.exe"
+    CONFIG[1]="${CONFIG[1]} --disable-dv --disable-kino --disable-vorbis --target-os=MinGW --target-arch=i686 --rename-melt=melt.exe"
   elif test "$TARGET_OS" = "Win64" ; then
-	CONFIG[1]="${CONFIG[1]} --disable-dv --disable-kino --disable-vorbis --gdk-prefix=\"$FINAL_INSTALL_DIR\" --target-os=MinGW --target-arch=x86_64 --rename-melt=melt.exe"
+	CONFIG[1]="${CONFIG[1]} --disable-dv --disable-kino --disable-vorbis --target-os=MinGW --target-arch=x86_64 --rename-melt=melt.exe"
   fi
   CFLAGS_[1]="-I$FINAL_INSTALL_DIR/include $ASAN_CFLAGS $CFLAGS"
   if [ "$TARGET_OS" = "Darwin" ]; then
