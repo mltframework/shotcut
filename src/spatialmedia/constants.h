@@ -34,7 +34,7 @@
 #  define htole64(x) qtoLittleEndian(x)
 #  define be64toh(x) qFromBigEndian(x)
 #  define le64toh(x) qFromLittleEndian(x)
-#else
+#elif !defined(__FreeBSD__)
 #  include <endian.h>
 #endif
 
