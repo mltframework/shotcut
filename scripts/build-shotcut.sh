@@ -701,9 +701,9 @@ function set_globals {
     CONFIG[1]="${CONFIG[1]} --disable-sox"
   fi
   if test "$TARGET_OS" = "Win32" ; then
-    CONFIG[1]="${CONFIG[1]} --disable-dv --disable-kino --disable-vorbis --target-os=MinGW --target-arch=i686 --rename-melt=melt.exe"
+    CONFIG[1]="${CONFIG[1]} --disable-dv --disable-kino --disable-vorbis --gdk-prefix=\"$FINAL_INSTALL_DIR\" --target-os=MinGW --target-arch=i686 --rename-melt=melt.exe"
   elif test "$TARGET_OS" = "Win64" ; then
-	CONFIG[1]="${CONFIG[1]} --disable-dv --disable-kino --disable-vorbis --target-os=MinGW --target-arch=x86_64 --rename-melt=melt.exe"
+	CONFIG[1]="${CONFIG[1]} --disable-dv --disable-kino --disable-vorbis --gdk-prefix=\"$FINAL_INSTALL_DIR\" --target-os=MinGW --target-arch=x86_64 --rename-melt=melt.exe"
   fi
   CFLAGS_[1]="-I$FINAL_INSTALL_DIR/include $ASAN_CFLAGS $CFLAGS"
   if [ "$TARGET_OS" = "Darwin" ]; then
