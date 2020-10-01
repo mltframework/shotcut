@@ -31,7 +31,7 @@ Binaries are regularly built and are available at https://www.shotcut.org, on th
 
 GPLv3. See [COPYING](COPYING).
 
-## How to build
+## How to build this program
 
 **Warning**: building shotcut should only be reserved to beta testers or contributors who know what they are doing.
 
@@ -39,7 +39,7 @@ GPLv3. See [COPYING](COPYING).
 
 The fastest way to build and try Shotcut development version is probably using [Qt Creator](https://www.qt.io/download#qt-creator).
 
-To make this easier, we provide [SDKs](https://shotcut.org/notes/) on the web site with each release that includes
+To make this easier, we provide [SDKs](https://shotcut.org/notes/) on the website with each release that includes
 Shotcut and all of its dependencies. These SDK pages also include setup instructions and tips on how to compile
 MLT and other dependencies after updating.
 
