@@ -398,6 +398,11 @@ win32 {
         LIBS += -L$$PWD/../drmingw/x64/lib -lexchndl
     }
     RC_FILE = ../packaging/windows/shotcut.rc
+    QT += winextras
+    HEADERS += \
+    windowstools.h
+    SOURCES += \
+    windowstools.cpp
 }
 unix:!mac {
     QT += x11extras

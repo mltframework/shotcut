@@ -80,6 +80,9 @@
 #include "dialogs/longuitask.h"
 #include "dialogs/systemsyncdialog.h"
 #include "proxymanager.h"
+#ifdef Q_OS_WIN
+#include "windowstools.h"
+#endif
 
 #include <QtWidgets>
 #include <Logger.h>
@@ -2537,6 +2540,10 @@ void MainWindow::showEvent(QShowEvent* event)
 #ifndef SHOTCUT_NOUPGRADE
     if (!Settings.noUpgrade() && !qApp->property("noupgrade").toBool())
         QTimer::singleShot(0, this, SLOT(showUpgradePrompt()));
+#endif
+
+#ifdef Q_OS_WIN
+    WindowsTaskbarButton::getInstance().setParentWindow(this);
 #endif
 }
 
