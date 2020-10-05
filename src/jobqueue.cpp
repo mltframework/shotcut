@@ -19,6 +19,9 @@
 #include <QtWidgets>
 #include <Logger.h>
 #include "settings.h"
+#ifdef Q_OS_WIN
+#include "windowstools.h"
+#endif
 
 JobQueue::JobQueue(QObject *parent) :
     QStandardItemModel(0, COLUMN_COUNT, parent),
@@ -86,6 +89,9 @@ void JobQueue::onProgressUpdated(QStandardItem* standardItem, int percent)
             standardItem->setText(QString("%1% (%2)").arg(percent).arg(remaining));
         }
     }
+#ifdef Q_OS_WIN
+    WindowsTaskbarButton::getInstance().setProgress(percent);
+#endif
 }
 
 void JobQueue::onFinished(AbstractJob* job, bool isSuccess, QString time)
@@ -116,6 +122,10 @@ void JobQueue::onFinished(AbstractJob* job, bool isSuccess, QString time)
         if (item)
             item->setIcon(icon);
     }
+#ifdef Q_OS_WIN
+    WindowsTaskbarButton::getInstance().resetProgress();
+#endif
+
     startNextJob();
 }
 
