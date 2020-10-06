@@ -43,7 +43,6 @@ class QActionGroup;
 class FilterController;
 class ScopeController;
 class FiltersDock;
-class HtmlEditor;
 class TimelineDock;
 class AutoSaveFile;
 class QNetworkReply;
@@ -74,7 +73,6 @@ public:
     static void changeTheme(const QString& theme);
     PlaylistDock* playlistDock() const { return m_playlistDock; }
     FilterController* filterController() const { return m_filterController; }
-    HtmlEditor* htmlEditor() const { return m_htmlEditor.data(); }
     Mlt::Playlist* playlist() const;
     bool isPlaylistValid() const;
     Mlt::Producer* multitrack() const;
@@ -168,7 +166,6 @@ private:
     QStringList m_multipleFiles;
     bool m_isPlaylistLoaded;
     QActionGroup* m_languagesGroup;
-    QScopedPointer<HtmlEditor> m_htmlEditor;
     QSharedPointer<AutoSaveFile> m_autosaveFile;
     QMutex m_autosaveMutex;
     QTimer m_autosaveTimer;
@@ -202,7 +199,6 @@ public slots:
     QWidget* loadProducerWidget(Mlt::Producer* producer);
     void onProducerOpened(bool withReopen = true);
     void onGpuNotSupported();
-    void editHTML(const QString& fileName);
     void stepLeftOneFrame();
     void stepRightOneFrame();
     void stepLeftOneSecond();

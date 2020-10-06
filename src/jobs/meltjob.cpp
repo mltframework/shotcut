@@ -85,11 +85,7 @@ MeltJob::~MeltJob()
 void MeltJob::start()
 {
     QString shotcutPath = qApp->applicationDirPath();
-#ifdef Q_OS_WIN
-    QFileInfo meltPath(shotcutPath, "qmelt.exe");
-#else
-    QFileInfo meltPath(shotcutPath, "qmelt");
-#endif
+    QFileInfo meltPath(shotcutPath, "melt");
     setReadChannel(QProcess::StandardError);
     QStringList args;
     args << "-verbose";

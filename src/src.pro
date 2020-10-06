@@ -1,6 +1,6 @@
 CONFIG   += link_prl
 
-QT       += widgets opengl xml network printsupport qml quick sql webkitwidgets
+QT       += widgets opengl xml network printsupport qml quick sql
 QT       += multimedia websockets quickwidgets
 QT       += qml-private core-private quick-private gui-private
 
@@ -71,16 +71,12 @@ SOURCES += main.cpp\
     qmltypes/qmlapplication.cpp \
     qmltypes/qmlfile.cpp \
     qmltypes/qmlfilter.cpp \
-    qmltypes/qmlhtmleditor.cpp \
     qmltypes/qmlmetadata.cpp \
     qmltypes/timelineitems.cpp \
     qmltypes/qmlprofile.cpp \
-    htmleditor/htmleditor.cpp \
-    htmleditor/highlighter.cpp \
     settings.cpp \
     widgets/lineeditclear.cpp \
     leapnetworklistener.cpp \
-    widgets/webvfxproducer.cpp \
     database.cpp \
     widgets/gltestwidget.cpp \
     models/multitrackmodel.cpp \
@@ -136,7 +132,6 @@ SOURCES += main.cpp\
     dialogs/listselectiondialog.cpp \
     dialogs/longuitask.cpp \
     widgets/newprojectfolder.cpp \
-    qmltypes/webvfxtemplatesmodel.cpp \
     widgets/playlistlistview.cpp
 
 mac: OBJECTIVE_SOURCES = macos.mm
@@ -206,16 +201,12 @@ HEADERS  += mainwindow.h \
     qmltypes/qmlapplication.h \
     qmltypes/qmlfile.h \
     qmltypes/qmlfilter.h \
-    qmltypes/qmlhtmleditor.h \
     qmltypes/qmlmetadata.h \
     qmltypes/timelineitems.h \
     qmltypes/qmlprofile.h \
-    htmleditor/htmleditor.h \
-    htmleditor/highlighter.h \
     settings.h \
     widgets/lineeditclear.h \
     leapnetworklistener.h \
-    widgets/webvfxproducer.h \
     database.h \
     widgets/gltestwidget.h \
     models/multitrackmodel.h \
@@ -273,7 +264,6 @@ HEADERS  += mainwindow.h \
     dialogs/listselectiondialog.h \
     dialogs/longuitask.h \
     widgets/newprojectfolder.h \
-    qmltypes/webvfxtemplatesmodel.h \
     widgets/playlistlistview.h
 
 FORMS    += mainwindow.ui \
@@ -306,9 +296,6 @@ FORMS    += mainwindow.ui \
     docks/playlistdock.ui \
     dialogs/durationdialog.ui \
     dialogs/customprofiledialog.ui \
-    htmleditor/htmleditor.ui \
-    htmleditor/inserthtmldialog.ui \
-    widgets/webvfxproducer.ui \
     docks/timelinedock.ui \
     widgets/lumamixtransition.ui \
     widgets/directshowvideowidget.ui \
