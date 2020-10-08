@@ -1962,21 +1962,24 @@ function deploy_osx
   cmd mkdir -p PlugIns/mlt 2>/dev/null
   cmd cp "$FINAL_INSTALL_DIR"/lib/mlt/libmlt*.dylib PlugIns/mlt
   cmd cp -a "$FINAL_INSTALL_DIR"/share/mlt Resources
+  # Copy libvidstab here temporarily so it can be found by fixlibs.
+  cmd cp -p "$FINAL_INSTALL_DIR"/lib/libvidstab*.dylib .
   for lib in PlugIns/mlt/*; do
     log fixing library paths of "$lib"
     fixlibs "$lib"
   done
+  cmd rm libvidstab*.dylib
 
   # Qt plugins
   log Copying Qt plugins
   cmd mkdir -p PlugIns/qt/sqldrivers 2>/dev/null
   # try QTDIR first
   if [ -d "$QTDIR/plugins" ]; then
-    cmd cp -a "$QTDIR/plugins"/{audio,accessible,generic,iconengines,imageformats,mediaservice,platforms} PlugIns/qt
+    cmd cp -a "$QTDIR/plugins"/{audio,generic,iconengines,imageformats,mediaservice,platforms} PlugIns/qt
     cmd cp -p "$QTDIR/plugins/sqldrivers/libqsqlite.dylib" PlugIns/qt/sqldrivers
   # try Qt Creator next
   elif [ -d "/Applications/Qt Creator.app/Contents/PlugIns" ]; then
-    cmd cp -a "/Applications/Qt Creator.app/Contents/PlugIns"/{audio,accessible,generic,iconengines,imageformats,mediaservice,platforms,platforminputcontexts,platformthemes} PlugIns/qt
+    cmd cp -a "/Applications/Qt Creator.app/Contents/PlugIns"/{audio,generic,iconengines,imageformats,mediaservice,platforms,platforminputcontexts,platformthemes} PlugIns/qt
   fi
   for dir in PlugIns/qt/*; do
     for lib in $dir/*; do
