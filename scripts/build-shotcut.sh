@@ -34,14 +34,12 @@ ENABLE_MOVIT=1
 SUBDIRS=
 MOVIT_HEAD=0
 MOVIT_REVISION=origin/shotcut
-LIBEPOXY_REVISION="v1.3.1"
 X264_HEAD=0
 X264_REVISION="origin/stable"
 X265_HEAD=0
 X265_REVISION="origin/stable"
 LIBVPX_HEAD=1
 LIBVPX_REVISION=0
-ENABLE_LAME=1
 LIBOPUS_HEAD=0
 LIBOPUS_REVISION="v1.3.1"
 ENABLE_SWH_PLUGINS=1
@@ -181,9 +179,6 @@ function to_key {
     movit)
       echo 5
     ;;
-    lame)
-      echo 6
-    ;;
     shotcut)
       echo 7
     ;;
@@ -193,17 +188,11 @@ function to_key {
     vid.stab)
       echo 10
     ;;
-    libepoxy)
-      echo 11
-    ;;
     opus)
       echo 12
     ;;
     x265)
       echo 13
-    ;;
-    eigen)
-      echo 14
     ;;
     nv-codec-headers)
       echo 15
@@ -385,7 +374,7 @@ function set_globals {
         SUBDIRS="frei0r $SUBDIRS"
     fi
     if test "$ENABLE_MOVIT" = 1 && test "$MOVIT_HEAD" = 1 -o "$MOVIT_REVISION" != ""; then
-        SUBDIRS="libepoxy eigen movit $SUBDIRS"
+        SUBDIRS="movit $SUBDIRS"
     fi
     if test "$FFMPEG_SUPPORT_H264" = 1 && test "$X264_HEAD" = 1 -o "$X264_REVISION" != ""; then
         SUBDIRS="x264 $SUBDIRS"
@@ -395,9 +384,6 @@ function set_globals {
     fi
     if test "$FFMPEG_SUPPORT_LIBVPX" = 1 && test "$LIBVPX_HEAD" = 1 -o "$LIBVPX_REVISION" != ""; then
         SUBDIRS="libvpx $SUBDIRS"
-    fi
-    if test "$FFMPEG_SUPPORT_MP3" = 1 && test "$ENABLE_LAME" = 1; then
-        SUBDIRS="lame $SUBDIRS"
     fi
     if test "$FFMPEG_SUPPORT_OPUS" = 1 && test "$LIBOPUS_HEAD" = 1 -o "$LIBOPUS_REVISION" != ""; then
         SUBDIRS="opus $SUBDIRS"
@@ -455,14 +441,11 @@ function set_globals {
   REPOLOCS[3]="git://github.com/mirror/x264.git"
   REPOLOCS[4]="https://chromium.googlesource.com/webm/libvpx.git"
   REPOLOCS[5]="git://github.com/ddennedy/movit.git"
-  REPOLOCS[6]="https://ftp.osuosl.org/pub/blfs/conglomeration/lame/lame-3.99.5.tar.gz"
   REPOLOCS[7]="git://github.com/mltframework/shotcut.git"
   REPOLOCS[8]="http://ftp.us.debian.org/debian/pool/main/s/swh-plugins/swh-plugins_0.4.15+1.orig.tar.gz"
   REPOLOCS[10]="git://github.com/georgmartius/vid.stab.git"
-  REPOLOCS[11]="git://github.com/anholt/libepoxy.git"
   REPOLOCS[12]="https://github.com/xiph/opus.git"
   REPOLOCS[13]="https://github.com/videolan/x265"
-  REPOLOCS[14]="https://gitlab.com/libeigen/eigen.git"
   REPOLOCS[15]="git://github.com/FFmpeg/nv-codec-headers.git"
   REPOLOCS[16]="git://github.com/GPUOpen-LibrariesAndSDKs/AMF.git"
   REPOLOCS[17]="git://github.com/lu-zero/mfx_dispatch.git"
@@ -477,15 +460,12 @@ function set_globals {
   REPOTYPES[3]="git"
   REPOTYPES[4]="git"
   REPOTYPES[5]="git"
-  REPOTYPES[6]="http-tgz"
   REPOTYPES[7]="git"
   REPOTYPES[8]="http-tgz"
   REPOTYPES[9]="git"
   REPOTYPES[10]="git"
-  REPOTYPES[11]="git"
   REPOTYPES[12]="git"
   REPOTYPES[13]="git"
-  REPOTYPES[14]="git"
   REPOTYPES[15]="git"
   REPOTYPES[16]="git"
   REPOTYPES[17]="git"
@@ -518,7 +498,6 @@ function set_globals {
   if test 0 = "$MOVIT_HEAD" -a "$MOVIT_REVISION" ; then
     REVISIONS[5]="$MOVIT_REVISION"
   fi
-  REVISIONS[6]="lame-3.99.5"
   REVISIONS[7]=""
   if test 0 = "$SHOTCUT_HEAD" -a "$SHOTCUT_REVISION" ; then
     REVISIONS[7]="$SHOTCUT_REVISION"
@@ -527,10 +506,6 @@ function set_globals {
   REVISIONS[10]=""
   if test 0 = "$VIDSTAB_HEAD" -a "$VIDSTAB_REVISION" ; then
     REVISIONS[10]="$VIDSTAB_REVISION"
-  fi
-  REVISIONS[11]=""
-  if test "$LIBEPOXY_REVISION" ; then
-    REVISIONS[11]="$LIBEPOXY_REVISION"
   fi
   REVISIONS[12]=""
   if test 0 = "$LIBOPUS_HEAD" -a "$LIBOPUS_REVISION" ; then
@@ -544,7 +519,7 @@ function set_globals {
   REVISIONS[15]="sdk/8.1"
   REVISIONS[16]=""
   REVISIONS[17]="1.25"
-  REVISIONS[13]=""
+  REVISIONS[18]=""
   if test 0 = "$RUBBERBAND_HEAD" -a "$RUBBERBAND_REVISION" ; then
     REVISIONS[18]="$RUBBERBAND_REVISION"
   fi
@@ -750,21 +725,7 @@ function set_globals {
   else
     CFLAGS_[5]="$CFLAGS"
   fi
-  # include eigen and /usr/include for fftw3.h
-  CFLAGS_[5]="${CFLAGS_[5]} -I../eigen"
   LDFLAGS_[5]=$LDFLAGS
-
-  #####
-  # lame
-  CONFIG[6]="./configure --prefix=$FINAL_INSTALL_DIR --disable-decoder --disable-frontend $CONFIGURE_DEBUG_FLAG"
-  if test "$TARGET_OS" = "Win32" ; then
-    CONFIG[6]="${CONFIG[6]} --libdir=$FINAL_INSTALL_DIR/lib --host=x86-w64-mingw32"
-    CFLAGS_[6]="$CFLAGS -msse"
-  elif test "$TARGET_OS" = "Win64" ; then
-    CONFIG[6]="${CONFIG[6]} --libdir=$FINAL_INSTALL_DIR/lib --host=x86_64-w64-mingw32"
-    CFLAGS_[6]=$CFLAGS
-  fi
-  LDFLAGS_[6]=$LDFLAGS
 
   #####
   # shotcut
@@ -801,22 +762,6 @@ function set_globals {
   LDFLAGS_[10]=$LDFLAGS
 
   #####
-  # libepoxy
-  CONFIG[11]="./autogen.sh --prefix=$FINAL_INSTALL_DIR"
-  if test "$TARGET_OS" = "Win32" ; then
-    CONFIG[11]="${CONFIG[11]} --host=x86-w64-mingw32"
-    CFLAGS_[11]="$CFLAGS"
-  elif test "$TARGET_OS" = "Win64" ; then
-    CONFIG[11]="${CONFIG[11]} --host=x86_64-w64-mingw32"
-    CFLAGS_[11]="$CFLAGS"
-  elif test "$TARGET_OS" = "Darwin"; then
-    CFLAGS_[11]="$CFLAGS -I/opt/local/include"
-  else
-    CFLAGS_[11]="$CFLAGS"
-  fi
-  LDFLAGS_[11]=$LDFLAGS
-
-  #####
   # libopus
   CONFIG[12]="./configure --prefix=$FINAL_INSTALL_DIR"
   if test "$TARGET_OS" = "Win32" ; then
@@ -841,10 +786,6 @@ function set_globals {
     CONFIG[13]="cmake -DCMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -DENABLE_CLI=OFF $CMAKE_DEBUG_FLAG"
   fi
   LDFLAGS_[13]=$LDFLAGS
-
-  #######
-  # eigen - no build required
-  CONFIG[14]=""
 
   #######
   # nv-codec-headers
@@ -967,8 +908,8 @@ function prepare_feedback {
       NUMSTEPS=$(( $NUMSTEPS + 1 ))
     fi
     if test 1 = "$ENABLE_MOVIT" ; then
-      debug Adding 3 steps for get movit, libepoxy, and eigen
-      NUMSTEPS=$(( $NUMSTEPS + 3 ))
+      debug Adding 1 step for get movit
+      NUMSTEPS=$(( $NUMSTEPS + 1 ))
     fi
   fi
   if test 1 = "$GET" -a 1 = "$SOURCES_CLEAN" ; then
@@ -979,8 +920,8 @@ function prepare_feedback {
       NUMSTEPS=$(( $NUMSTEPS + 1 ))
     fi
     if test 1 = "$ENABLE_MOVIT" ; then
-      debug Adding 3 steps for clean movit, libepoxy, and eigen
-      NUMSTEPS=$(( $NUMSTEPS + 3 ))
+      debug Adding 1 steps for clean movit
+      NUMSTEPS=$(( $NUMSTEPS + 1 ))
     fi
   fi
   if test 1 = "$COMPILE_INSTALL" ; then
@@ -991,8 +932,8 @@ function prepare_feedback {
       NUMSTEPS=$(( $NUMSTEPS + 3 ))
     fi
     if test 1 = "$ENABLE_MOVIT" ; then
-      debug Adding 9 steps for compile-install movit, libepoxy, and eigen
-      NUMSTEPS=$(( $NUMSTEPS + 9 ))
+      debug Adding 3 steps for compile-install movit
+      NUMSTEPS=$(( $NUMSTEPS + 3 ))
     fi
   fi
   if test 1 = "$CREATE_STARTUP_SCRIPT" ; then
@@ -1371,7 +1312,7 @@ to make Shotcuts daily builds. It is the authoritative install reference:
 
 We cannot cover how to build all of Shotcut's dependencies from scratch here.
 On Linux, we rely upon Ubuntu's packages to provide most of the
-more mundane dependencies. The rest like x264, x265, libvpx, lame, libopus,
+more mundane dependencies. The rest like x264, x265, libvpx, libopus,
 FFmpeg, and frei0r are provided by the script.
 
 For macOS, we rely upon macports to provide the dependencies:
@@ -1683,12 +1624,6 @@ function configure_compile_install_subproject {
         cmd install -d "$FINAL_INSTALL_DIR"/lib/va
         cmd install -p -c /usr/lib/x86_64-linux-gnu/dri/*_drv_video.so "$FINAL_INSTALL_DIR"/lib/va
       fi
-    elif test "libepoxy" = "$1" && test "$TARGET_OS" = "Win32" -o "$TARGET_OS" = "Win64" ; then
-      cmd make install || die "Unable to install $1"
-      cmd install -p -c include/epoxy/wgl*.h "$FINAL_INSTALL_DIR"/include/epoxy
-      # libopengl32.dll is added to prebuilts to make libtool build a dll for
-      # libepoxy, but it is not an import lib for other projects.
-      cmd rm "$FINAL_INSTALL_DIR"/lib/libopengl32.dll
     elif test "bigsh0t" = "$1" ; then
       if test "$TARGET_OS" = "Win32" -o "$TARGET_OS" = "Win64" ; then
         cmd install -p -c *.dll "$FINAL_INSTALL_DIR"/lib/frei0r-1  || die "Unable to install $1"
