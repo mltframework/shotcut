@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2019 Meltytech, LLC
+ * Copyright (c) 2014-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -132,7 +132,7 @@ Rectangle {
             onClicked: filterMenu.open()
         }
         Button {
-            id: removeButton            
+            id: removeButton
             Layout.minimumWidth: height
             iconName: 'list-remove'
             enabled: selectedIndex > -1
@@ -160,7 +160,7 @@ Rectangle {
         Button {
             id: pasteButton
             Layout.minimumWidth: height
-            enabled: application.hasFiltersOnClipboard
+            enabled: application.hasFiltersOnClipboard && attachedfiltersmodel.isProducerSelected
             opacity: enabled ? 1.0 : 0.5
             iconName: 'edit-paste'
             iconSource: 'qrc:///icons/oxygen/32x32/actions/edit-paste.png'
