@@ -94,8 +94,11 @@ bool FiltersDock::event(QEvent *event)
 void FiltersDock::keyPressEvent(QKeyEvent *event)
 {
     QDockWidget::keyPressEvent(event);
-    if (event->key() == Qt::Key_F)
+    if (event->key() == Qt::Key_F) {
         event->ignore();
+    } else if (event->key() == Qt::Key_Left || event->key() == Qt::Key_Right) {
+        event->accept();
+    }
 }
 
 void FiltersDock::onSeeked(int position)
