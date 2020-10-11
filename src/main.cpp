@@ -298,6 +298,9 @@ int main(int argc, char **argv)
 #if defined(Q_OS_WIN) && defined(QT_DEBUG)
     ExcHndlInit();
 #endif
+#ifndef QT_DEBUG
+    ::qputenv("QT_LOGGING_RULES", "*.warning=false");
+#endif
 #if QT_VERSION >= 0x050600
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     for (int i = 1; i + 1 < argc; i++) {
