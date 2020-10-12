@@ -14,12 +14,15 @@ jobs:
 
       - name: Build
         run: |
-          apt-get update -qq && apt-get install -yqq s3cmd
           cd scripts
           VERSION=$(date +"%%y%%m%%d")
           docker run -v $PWD:/root/shotcut $IMAGE_NAME
-          ARCHIVE_NAME=shotcut-linux-x86_64-$VERSION.txz
-          mv shotcut.txz $ARCHIVE_NAME
-          s3cmd --no-check-certificate --access_key=${{ secrets.AWS_ACCESS_KEY }} \
-            --secret_key=${{ secrets.AWS_SECRET_KEY }} --verbose --human-readable-sizes \
-            --stop-on-error put $ARCHIVE_NAME s3://builds.us.meltytech/shotcut/
+          mv shotcut.txz shotcut-linux-x86_64-$VERSION.txz
+          mv src.tar.xz shotcut-src-$VERSION.txz
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          path: |
+            src.tar.xz
+            *.txz
