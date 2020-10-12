@@ -71,6 +71,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Build
+        shell: msys2 {0}
         run: |
           VERSION=$(date +"%y%m%d")
           echo VERSION=$VERSION
