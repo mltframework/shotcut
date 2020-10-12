@@ -14,5 +14,17 @@ jobs:
 
       - name: Build
         run: |
+          apt-get update -qq && apt-get install -yqq s3cmd
           cd scripts
           docker run -v $PWD:/root/shotcut $IMAGE_NAME
+          VERSION=$(date +"%%y%%m%%d")
+          ARCHIVE_NAME=shotcut-linux-x86_64-$VERSION.txz
+          mv shotcut.txz $ARCHIVE_NAME
+          s3cmd --no-check-certificate --access_key=${{ secrets.AWS_ACCESS_KEY }} \
+            --secret_key=${{ secrets.AWS_SECRET_KEY }} --verbose --human-readable-sizes \
+            --stop-on-error put $ARCHIVE_NAME s3://builds.us.meltytech/shotcut/
+
+#      - name: Upload to S3
+#        uses: jusbrasil/github-action-s3cmd@1.0.0
+#        with:
+#          args: ['--acl-public', 'put', "shotcut-linux-x86_64-$(date +"%%y%%m%%d").txz", 's3://builds.us.meltytech/shotcut/']
