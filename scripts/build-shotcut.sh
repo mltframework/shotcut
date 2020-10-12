@@ -831,25 +831,6 @@ function set_globals {
 ######################################################################
 
 #################################################################
-# feedback_init
-# $1 : ProgressBar maximum
-function feedback_init {
-  trace "Entering feedback_init @ = $@"
-  log Total number of steps needed to complete $1
-  log Press Ctrl+C to abort
-  PROGRESS=0
-  feedback_set_progress $PROGRESS
-}
-
-#################################################################
-# feedback_progress
-# $1 : ProgressBar position
-function feedback_set_progress {
-  trace "Entering feedback_set_progress @ = $@"
-  log Number of steps completed : $1
-}
-
-#################################################################
 # feedback_status
 # $@ status information
 function feedback_status {
@@ -876,72 +857,6 @@ function feedback_result {
   log "Process has finished. Reason: $@"
 }
 
-
-#################################################################
-# feedback_progress
-# $@ : Description of task completed
-# Increases the progressbar with 1 and sets the status to $@
-function feedback_progress {
-  trace "Entering feedback_progress @ = $@"
-  PROGRESS=$(( $PROGRESS + 1 ))
-  feedback_status $@
-  feedback_set_progress $PROGRESS
-}
-
-#################################################################
-# prepare_feedback
-# Function to prepare the feedback. E.g. set up max progress steps
-# Based on configuration read
-function prepare_feedback {
-  trace "Entering prepare_feedback @ = $@"
-  # Figure out the number of steps
-  # Get adds 8 if cleaning, 4 otherwise (2/1 pr. proj)
-  # Compile/Install adds 12 (3/proj)
-  # Script install adds 1
-  NUMSTEPS=0
-  if test 1 = "$GET" ; then
-    debug Adding 9 steps for get
-    NUMSTEPS=$(( $NUMSTEPS + 9 ))
-    if test 1 = "$ENABLE_FREI0R" ; then
-      debug Adding 1 step for get frei0r
-      NUMSTEPS=$(( $NUMSTEPS + 1 ))
-    fi
-    if test 1 = "$ENABLE_MOVIT" ; then
-      debug Adding 1 step for get movit
-      NUMSTEPS=$(( $NUMSTEPS + 1 ))
-    fi
-  fi
-  if test 1 = "$GET" -a 1 = "$SOURCES_CLEAN" ; then
-    debug Adding 9 steps for clean on get
-    NUMSTEPS=$(( $NUMSTEPS + 3 ))
-    if test 1 = "$ENABLE_FREI0R" ; then
-      debug Adding 1 step for clean frei0r
-      NUMSTEPS=$(( $NUMSTEPS + 1 ))
-    fi
-    if test 1 = "$ENABLE_MOVIT" ; then
-      debug Adding 1 steps for clean movit
-      NUMSTEPS=$(( $NUMSTEPS + 1 ))
-    fi
-  fi
-  if test 1 = "$COMPILE_INSTALL" ; then
-    debug Adding 27 steps for configure-compile-install
-    NUMSTEPS=$(( $NUMSTEPS + 27 ))
-    if test 1 = "$ENABLE_FREI0R" ; then
-      debug Adding 3 steps for compile-install frei0r
-      NUMSTEPS=$(( $NUMSTEPS + 3 ))
-    fi
-    if test 1 = "$ENABLE_MOVIT" ; then
-      debug Adding 3 steps for compile-install movit
-      NUMSTEPS=$(( $NUMSTEPS + 3 ))
-    fi
-  fi
-  if test 1 = "$CREATE_STARTUP_SCRIPT" ; then
-    debug Adding 1 step for script creating
-    NUMSTEPS=$(( $NUMSTEPS + 1 ))
-  fi
-  log Number of steps determined to $NUMSTEPS
-  feedback_init $NUMSTEPS
-}
 
 #################################################################
 # check_abort
@@ -993,7 +908,7 @@ function make_clean_dir {
   else
       cmd cd $1 && cmd make clean
   fi
-  feedback_progress Cleaned up in $1
+  feedback_status Cleaned up in $1
   cmd popd
 }
 
@@ -1265,7 +1180,7 @@ function get_subproject {
     get_win32_build "$1"
   fi
 
-  feedback_progress Done getting or updating source for $1
+  feedback_status Done getting or updating source for $1
   cmd popd
 }
 
@@ -1542,7 +1457,7 @@ function configure_compile_install_subproject {
   MYCONFIG=`lookup CONFIG $1`
   if test "$MYCONFIG" != ""; then
     cmd $MYCONFIG || die "Unable to configure $1"
-    feedback_progress Done configuring $1
+    feedback_status Done configuring $1
   fi
 
   # Special hack for mlt, post-configure
@@ -1568,7 +1483,7 @@ function configure_compile_install_subproject {
   elif test "$MYCONFIG" != ""; then
     cmd make -j$MAKEJ || die "Unable to build $1"
   fi
-  feedback_progress Done building $1
+  feedback_status Done building $1
 
   # Install
   feedback_status Installing $1
@@ -1645,7 +1560,7 @@ function configure_compile_install_subproject {
       cmd install_name_tool -id "$FINAL_INSTALL_DIR"/lib/$(basename "$RUBBERBANDLIB") "$FINAL_INSTALL_DIR"/lib/librubberband.dylib
     fi
   fi
-  feedback_progress Done installing $1
+  feedback_status Done installing $1
 
   # Reestablish
   cmd popd
@@ -2298,7 +2213,7 @@ End-of-shotcut-wrapper
   fi
   $SUDO cp $TMPFILE "$FINAL_INSTALL_DIR/../Shotcut.desktop" || die "Unable to create desktop file - cp failed"
 
-  feedback_progress Done creating startup and environment script
+  feedback_status Done creating startup and environment script
 
   cmd pushd "$INSTALL_DIR"
 
@@ -2444,7 +2359,6 @@ function main {
   log "Done checking for sudo requirement" 2>&1
 
   {
-  prepare_feedback
   perform_action
   } 2>&1
 
