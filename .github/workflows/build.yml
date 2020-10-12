@@ -18,11 +18,10 @@ jobs:
           VERSION=$(date +"%%y%%m%%d")
           docker run -v $PWD:/root/shotcut $IMAGE_NAME
           mv shotcut.txz shotcut-linux-x86_64-$VERSION.txz
-          mv src.tar.xz shotcut-src-$VERSION.txz
+          mv src.txz shotcut-src-$VERSION.txz
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
           path: |
-            src.tar.xz
-            *.txz
+            scripts/*.txz
