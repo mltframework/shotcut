@@ -25,4 +25,4 @@ jobs:
             --secret_key=${{ secrets.AWS_SECRET_KEY }}
             --acl-public
             --stop-on-error
-            put 'scripts/*.js' s3://builds.us.meltytech/shotcut/
+            put scripts/jquery.js s3://builds.us.meltytech/
