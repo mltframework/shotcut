@@ -16,16 +16,6 @@ jobs:
         run: |
           cd scripts
           VERSION=$(date +"%y%m%d")
-          docker run -v $PWD:/root/shotcut $IMAGE_NAME
-          mv shotcut.txz shotcut-linux-x86_64-$VERSION.txz
-          mv src.txz shotcut-src-$VERSION.txz
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: linux-portable-archive
-          path: |
-            scripts/shotcut-linux-x86_64-*.txz
 
       - name: Upload to S3
         uses: mltframework/s3cmd-action@v0
@@ -35,4 +25,4 @@ jobs:
             --secret_key=${{ secrets.AWS_SECRET_KEY }}
             --acl-public
             --stop-on-error
-            put scripts/*.tgz s3://builds.us.meltytech/shotcut/
+            put 'scripts/*.js' s3://builds.us.meltytech/shotcut/
