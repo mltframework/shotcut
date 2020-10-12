@@ -1,4 +1,4 @@
-name: build-shotcut-linux
+name: build-shotcut
 
 on: [push]
 
@@ -6,7 +6,7 @@ env:
   IMAGE_NAME: mltframework/shotcut-build:qt5.15.1-ubuntu18.04
 
 jobs:
-  build:
+  build-linux:
     runs-on: ubuntu-latest
 
     steps:
@@ -36,3 +36,47 @@ jobs:
             --acl-public
             --stop-on-error
             put scripts/*.txz s3://builds.us.meltytech/shotcut/
+
+  build-windows:
+    runs-on: windows-latest
+
+    steps:
+      - name: Setup MSYS2
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: MINGW64
+          update: true
+          install: >-
+            gcc git cmake nasm yasm unzip p7zip
+            mingw-w64-x86_64-libvorbis
+            mingw-w64-x86_64-libtheora
+            mingw-w64-x86_64-cairo
+            mingw-w64-x86_64-fftw
+            mingw-w64-x86_64-ladspa-sdk
+            mingw-w64-x86_64-libxml2
+            mingw-w64-x86_64-libsamplerate
+            mingw-w64-x86_64-libexif
+            mingw-w64-x86_64-eigen3
+            mingw-w64-x86_64-nsis
+            mingw-w64-x86_64-sox
+            mingw-w64-x86_64-dlfcn
+            mingw-w64-x86_64-rubberband
+            mingw-w64-x86_64-vid.stab
+            mingw-w64-x86_64-libepoxy
+            mingw-w64-x86_64-lame
+            mingw-w64-x86_64-openssl
+            mingw-w64-x86_64-osslsigncode
+            mingw-w64-x86_64-libmfx
+
+      - uses: actions/checkout@v2
+
+      - name: Build
+        run: |
+          VERSION=$(date +"%y%m%d")
+          echo VERSION=$VERSION
+          mkdir work
+          pushd work
+          git clone --depth 1 --branch release/4.3 git://github.com/ffmpeg/FFmpeg
+          pushd FFmpeg
+          #./configure --prefix="$PWD/../build" --disable-static --disable-doc --enable-gpl --enable-version3 --enable-shared --enable-runtime-cpudetect --enable-libtheora --enable-libvorbis --enable-libmp3lame --enable-libx264 --enable-libx265 --enable-libvpx --enable-libopus --enable-libmfx
+          #make -j3 all install
