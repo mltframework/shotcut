@@ -13,7 +13,7 @@ jobs:
           msystem: MINGW64
           update: true
           install: >-
-            gcc git cmake nasm yasm zip tar xz gzip bzip2
+            base-devel gcc git cmake nasm yasm zip tar xz gzip bzip2
             mingw-w64-x86_64-ninja
             mingw-w64-x86_64-libvorbis
             mingw-w64-x86_64-libtheora
@@ -61,20 +61,23 @@ jobs:
           tar -xJf qt-5.15.1-x64-mingw810.txz
           popd
           echo Running the build script
+          echo INSTALL_DIR=\"$PWD/build\" > build-shotcut.conf
+          echo SHOTCUT_VERSION=\"$VERSION\" >> build-shotcut.conf
           bash scripts/build-shotcut-msys2.sh
-          pushd "$HOME/build"
+          pushd build
           echo Packaging the portable zip
           zip -gr shotcut-win64-$VERSION.zip Shotcut
           echo Packaging the installer
           makensis shotcut.nsi
           mv shotcut-setup.exe shotcut-win64-$VERSION.exe
+          popd
           echo Done
 
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
           name: windows-portable
-          path: ../build/Shotcut/
+          path: ./build/Shotcut/
 
       - name: Upload packages to S3
         uses: mltframework/s3cmd-action@v0
