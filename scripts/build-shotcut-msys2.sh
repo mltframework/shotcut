@@ -83,7 +83,7 @@ export LDFLAGS=
 # usage
 # Reports legal options to this script
 function usage {
-  echo "Usage: $0 [-c config-file] [-o target-os] [-s] [-t] [-h]"
+  echo "Usage: $0 [-c config-file] [-h] [-s] [-v shotcut-version]"
   echo "Where:"
   echo -e "\t-c config-file\tDefaults to $CONFIGFILE"
   echo -e "\t-s\t\tbuild SDK"

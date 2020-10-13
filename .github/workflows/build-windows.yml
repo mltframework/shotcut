@@ -13,7 +13,7 @@ jobs:
           msystem: MINGW64
           update: true
           install: >-
-            gcc git cmake nasm yasm zip
+            gcc git cmake nasm yasm zip tar xz gzip bzip2
             mingw-w64-x86_64-ninja
             mingw-w64-x86_64-libvorbis
             mingw-w64-x86_64-libtheora
