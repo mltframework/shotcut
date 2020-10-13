@@ -314,6 +314,8 @@ RESOURCES += \
     ../other-resources.qrc
 
 OTHER_FILES += \
+    ../.github/workflows/build-linux.yml \
+    ../.github/workflows/build-windows.yml \
     ../COPYING \
     ../README.md \
     ../packaging/windows/shotcut.rc \
@@ -331,8 +333,7 @@ OTHER_FILES += \
     ../packaging/linux/org.shotcut.Shotcut.desktop \
     ../packaging/linux/org.shotcut.Shotcut.xml \
     ../packaging/linux/shotcut.1 \
-    ../.github/ISSUE_TEMPLATE.md \
-    ../.github/workflows/build.yml
+    ../.github/ISSUE_TEMPLATE.md
 
 INCLUDEPATH = ../CuteLogger/include
 

@@ -1,43 +1,9 @@
-name: build-shotcut
+name: build-shotcut-windows
 
 on: [push]
 
-env:
-  IMAGE_NAME: mltframework/shotcut-build:qt5.15.1-ubuntu18.04
-
 jobs:
-  build-linux:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Build
-        run: |
-          cd scripts
-          VERSION=$(date +"%y%m%d")
-          docker run -v $PWD:/root/shotcut $IMAGE_NAME
-          mv shotcut.txz shotcut-linux-x86_64-$VERSION.txz
-          mv src.txz shotcut-src-$VERSION.txz
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: linux-portable-archive
-          path: |
-            scripts/shotcut-linux-x86_64-*.txz
-
-      - name: Upload to S3
-        uses: mltframework/s3cmd-action@v0
-        with:
-          args: >-
-            --access_key=${{ secrets.AWS_ACCESS_KEY }}
-            --secret_key=${{ secrets.AWS_SECRET_KEY }}
-            --acl-public
-            --stop-on-error
-            put scripts/*.txz s3://builds.us.meltytech/shotcut/
-
-  build-windows:
+  build:
     runs-on: windows-latest
 
     steps:
@@ -81,19 +47,28 @@ jobs:
           VERSION=$(date +"%y%m%d")
           echo VERSION=$VERSION
           pushd "$HOME"
-          curl -LO https://s3.amazonaws.com/misc.meltymedia/shotcut-build/swh-plugins-win64-0.4.15.tar.xz
-          curl -LO https://s3.amazonaws.com/misc.meltymedia/shotcut-build/mlt-prebuilt-mingw64-v3.txz
+          echo Downloading prebuilt SWH LADSPA plugins
+          curl -LO --no-progress-meter https://s3.amazonaws.com/misc.meltymedia/shotcut-build/swh-plugins-win64-0.4.15.tar.xz
+          echo Downloading a few other prebuilt dependencies
+          curl -LO --no-progress-meter https://s3.amazonaws.com/misc.meltymedia/shotcut-build/mlt-prebuilt-mingw64-v3.txz
+          echo Extracting prebuilt dependencies
           tar -xJf mlt-prebuilt-mingw64-v3.txz
           mkdir Qt
           cd Qt
-          curl -LO https://s3.amazonaws.com/misc.meltymedia/shotcut-build/qt-5.15.1-x64-mingw810.txz
+          echo Downloading Qt
+          curl -LO --no-progress-meter https://s3.amazonaws.com/misc.meltymedia/shotcut-build/qt-5.15.1-x64-mingw810.txz
+          echo Extracting Qt
           tar -xJf qt-5.15.1-x64-mingw810.txz
           popd
+          echo Running the build script
           bash scripts/build-shotcut-msys2.sh
           pushd "$HOME/build"
+          echo Packaging the portable zip
           zip -gr shotcut-win64-$VERSION.zip Shotcut
+          echo Packaging the installer
           makensis shotcut.nsi
           mv shotcut-setup.exe shotcut-win64-$VERSION.exe
+          echo Done
 
       - name: Upload artifact
         uses: actions/upload-artifact@v2
