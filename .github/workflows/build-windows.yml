@@ -13,29 +13,33 @@ jobs:
           msystem: MINGW64
           update: true
           install: >-
-            base-devel gcc git cmake nasm yasm zip tar xz gzip bzip2
+            base-devel bzip2 coreutils git gzip tar xz zip
+            mingw-w64-x86_64-toolchain
+            mingw-w64-x86_64-cmake
+            mingw-w64-x86_64-nasm
             mingw-w64-x86_64-ninja
-            mingw-w64-x86_64-libvorbis
-            mingw-w64-x86_64-libtheora
-            mingw-w64-x86_64-cairo
-            mingw-w64-x86_64-fftw
-            mingw-w64-x86_64-libxml2
-            mingw-w64-x86_64-libsamplerate
-            mingw-w64-x86_64-libexif
-            mingw-w64-x86_64-eigen3
             mingw-w64-x86_64-nsis
-            mingw-w64-x86_64-sox
-            mingw-w64-x86_64-dlfcn
-            mingw-w64-x86_64-rubberband
-            mingw-w64-x86_64-vid.stab
-            mingw-w64-x86_64-libepoxy
-            mingw-w64-x86_64-lame
-            mingw-w64-x86_64-openssl
             mingw-w64-x86_64-osslsigncode
+            mingw-w64-x86_64-yasm
+            mingw-w64-x86_64-cairo
+            mingw-w64-x86_64-eigen3
+            mingw-w64-x86_64-dlfcn
+            mingw-w64-x86_64-fftw
+            mingw-w64-x86_64-lame
+            mingw-w64-x86_64-libepoxy
+            mingw-w64-x86_64-libexif
             mingw-w64-x86_64-libmfx
+            mingw-w64-x86_64-libsamplerate
+            mingw-w64-x86_64-libtheora
+            mingw-w64-x86_64-libvorbis
             mingw-w64-x86_64-libvpx
             mingw-w64-x86_64-libwebp
+            mingw-w64-x86_64-libxml2
+            mingw-w64-x86_64-openssl
             mingw-w64-x86_64-opus
+            mingw-w64-x86_64-rubberband
+            mingw-w64-x86_64-sox
+            mingw-w64-x86_64-vid.stab
             mingw-w64-x86_64-x264
             mingw-w64-x86_64-x265
 
@@ -59,9 +63,11 @@ jobs:
           curl -LO --no-progress-meter https://s3.amazonaws.com/misc.meltymedia/shotcut-build/qt-5.15.1-x64-mingw810.txz
           echo Extracting Qt
           tar -xJf qt-5.15.1-x64-mingw810.txz
+          CHECKOUT_DIR=$(popd)
           popd
           echo Running the build script
-          echo INSTALL_DIR=\"$PWD/build\" > build-shotcut.conf
+          echo INSTALL_DIR=\"$CHECKOUT_DIR/build\"
+          echo INSTALL_DIR=\"$CHECKOUT_DIR/build\" > build-shotcut.conf
           echo SHOTCUT_VERSION=\"$VERSION\" >> build-shotcut.conf
           bash scripts/build-shotcut-msys2.sh
           pushd build

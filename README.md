@@ -1,4 +1,6 @@
-![build-shotcut](https://github.com/mltframework/shotcut/workflows/build-shotcut/badge.svg)
+![build-shotcut-linux](https://github.com/mltframework/shotcut/workflows/build-shotcut-linux/badge.svg)
+![build-shotcut-windows](https://github.com/mltframework/shotcut/workflows/build-shotcut-windows/badge.svg)
+
 
 # Shotcut - a free, open source, cross-platform **video editor**
 
