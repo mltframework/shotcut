@@ -515,7 +515,6 @@ function set_globals {
   if test 0 = "$X265_HEAD" -a "$X265_REVISION" ; then
     REVISIONS[13]="$X265_REVISION"
   fi
-  REVISIONS[14]="3.2.4"
   REVISIONS[15]="sdk/8.1"
   REVISIONS[16]=""
   REVISIONS[17]="1.25"

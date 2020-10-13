@@ -315,8 +315,10 @@ RESOURCES += \
 
 OTHER_FILES += \
     ../COPYING \
+    ../README.md \
     ../packaging/windows/shotcut.rc \
     ../scripts/build-shotcut.sh \
+    ../scripts/build-shotcut-msys2.sh \
     ../packaging/macos/shotcut.icns \
     ../packaging/windows/shotcut.nsi \
     ../packaging/macos/Info.plist \
@@ -328,7 +330,9 @@ OTHER_FILES += \
     ../packaging/linux/org.shotcut.Shotcut.appdata.xml \
     ../packaging/linux/org.shotcut.Shotcut.desktop \
     ../packaging/linux/org.shotcut.Shotcut.xml \
-    ../packaging/linux/shotcut.1
+    ../packaging/linux/shotcut.1 \
+    ../.github/ISSUE_TEMPLATE.md \
+    ../.github/workflows/build.yml
 
 INCLUDEPATH = ../CuteLogger/include
 

@@ -47,12 +47,12 @@ jobs:
           msystem: MINGW64
           update: true
           install: >-
-            gcc git cmake nasm yasm unzip p7zip
+            gcc git cmake nasm yasm zip
+            mingw-w64-x86_64-ninja
             mingw-w64-x86_64-libvorbis
             mingw-w64-x86_64-libtheora
             mingw-w64-x86_64-cairo
             mingw-w64-x86_64-fftw
-            mingw-w64-x86_64-ladspa-sdk
             mingw-w64-x86_64-libxml2
             mingw-w64-x86_64-libsamplerate
             mingw-w64-x86_64-libexif
@@ -67,6 +67,11 @@ jobs:
             mingw-w64-x86_64-openssl
             mingw-w64-x86_64-osslsigncode
             mingw-w64-x86_64-libmfx
+            mingw-w64-x86_64-libvpx
+            mingw-w64-x86_64-libwebp
+            mingw-w64-x86_64-opus
+            mingw-w64-x86_64-x264
+            mingw-w64-x86_64-x265
 
       - uses: actions/checkout@v2
 
@@ -75,9 +80,33 @@ jobs:
         run: |
           VERSION=$(date +"%y%m%d")
           echo VERSION=$VERSION
-          mkdir work
-          pushd work
-          git clone --depth 1 --branch release/4.3 git://github.com/ffmpeg/FFmpeg
-          pushd FFmpeg
-          #./configure --prefix="$PWD/../build" --disable-static --disable-doc --enable-gpl --enable-version3 --enable-shared --enable-runtime-cpudetect --enable-libtheora --enable-libvorbis --enable-libmp3lame --enable-libx264 --enable-libx265 --enable-libvpx --enable-libopus --enable-libmfx
-          #make -j3 all install
+          pushd "$HOME"
+          curl -LO https://s3.amazonaws.com/misc.meltymedia/shotcut-build/swh-plugins-win64-0.4.15.tar.xz
+          curl -LO https://s3.amazonaws.com/misc.meltymedia/shotcut-build/mlt-prebuilt-mingw64-v3.txz
+          tar -xJf mlt-prebuilt-mingw64-v3.txz
+          mkdir Qt
+          cd Qt
+          curl -LO https://s3.amazonaws.com/misc.meltymedia/shotcut-build/qt-5.15.1-x64-mingw810.txz
+          tar -xJf qt-5.15.1-x64-mingw810.txz
+          popd
+          bash scripts/build-shotcut-msys2.sh
+          pushd "$HOME/build"
+          zip -gr shotcut-win64-$VERSION.zip Shotcut
+          makensis shotcut.nsi
+          mv shotcut-setup.exe shotcut-win64-$VERSION.exe
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: windows-portable
+          path: ../build/Shotcut/
+
+      - name: Upload packages to S3
+        uses: mltframework/s3cmd-action@v0
+        with:
+          args: >-
+            --access_key=${{ secrets.AWS_ACCESS_KEY }}
+            --secret_key=${{ secrets.AWS_SECRET_KEY }}
+            --acl-public
+            --stop-on-error
+            put ./build/*.{exe,zip} s3://builds.us.meltytech/shotcut/

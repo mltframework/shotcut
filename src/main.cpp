@@ -221,16 +221,13 @@ public:
         dir = applicationDirPath();
         if (!Settings.playerGPU() && Settings.drawMethod() == Qt::AA_UseSoftwareOpenGL) {
             if (QFile::exists(dir.filePath("opengl32sw.dll"))) {
-                if (!QFile::rename(dir.filePath("opengl32sw.dll"), dir.filePath("opengl32.dll"))) {
-                    LOG_ERROR() << "Failed to rename opengl32sw.dll";
+                if (!QFile::copy(dir.filePath("opengl32sw.dll"), dir.filePath("opengl32.dll"))) {
+                    LOG_WARNING() << "Failed to copy opengl32sw.dll as opengl32.dll";
                 }
             }
         } else if (QFile::exists(dir.filePath("opengl32.dll"))) {
-            // If the user installed their own opengl32.dll they might still have opengl32sw.dll,
-            // which must be removed.
-            QFile::remove(dir.filePath("opengl32sw.dll"));
-            if (!QFile::rename(dir.filePath("opengl32.dll"), dir.filePath("opengl32sw.dll"))) {
-                LOG_ERROR() << "Failed to rename opengl32.dll";
+            if (!QFile::remove(dir.filePath("opengl32.dll"))) {
+                LOG_ERROR() << "Failed to remove opengl32.dll";
             }
         }
         if (Settings.playerGPU()) {
