@@ -20,6 +20,7 @@ jobs:
             mingw-w64-x86_64-ninja
             mingw-w64-x86_64-nsis
             mingw-w64-x86_64-osslsigncode
+            mingw-w64-x86_64-python-pip
             mingw-w64-x86_64-yasm
             mingw-w64-x86_64-cairo
             mingw-w64-x86_64-eigen3
@@ -86,11 +87,14 @@ jobs:
           path: ./build/Shotcut/
 
       - name: Upload packages to S3
-        uses: mltframework/s3cmd-action@v0
-        with:
-          args: >-
-            --access_key=${{ secrets.AWS_ACCESS_KEY }}
-            --secret_key=${{ secrets.AWS_SECRET_KEY }}
-            --acl-public
-            --stop-on-error
-            put ./build/*.{exe,zip} s3://builds.us.meltytech/shotcut/
+        shell: msys2 {0}
+        run: |
+          echo Installing awscli
+          pip install awscli
+          export AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY }}
+          export AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_KEY }}
+          export AWS_DEFAULT_REGION=us-east-1
+          for file in build/*.{exe,zip}; do
+            echo Uploading "$file" to S3
+            aws s3 cp "$file" s3://builds.us.meltytech/shotcut/
+          done
