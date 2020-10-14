@@ -366,8 +366,8 @@ VuiBase {
     Action {
         id: fileOpenAction
         text: qsTr('Open')
-        iconName: 'document-open'
-        iconSource: 'qrc:///icons/oxygen/32x32/actions/document-open.png'
+        iconName: application.OS === 'OS X'? '' : 'document-open'
+        iconSource: application.OS === 'OS X'? '' : 'qrc:///icons/oxygen/32x32/actions/document-open.png'
         onTriggered: {
             fileDialog.selectExisting = true
             fileDialog.open()
@@ -376,8 +376,8 @@ VuiBase {
     Action {
         id: fileSaveAsAction
         text: qsTr('Save As…')
-        iconName: 'document-save'
-        iconSource: 'qrc:///icons/oxygen/32x32/actions/document-save.png'
+        iconName: application.OS === 'OS X'? '' : 'document-save'
+        iconSource: application.OS === 'OS X'? '' : 'qrc:///icons/oxygen/32x32/actions/document-save.png'
         onTriggered: {
             fileDialog.selectExisting = false
             fileDialog.open()
@@ -394,40 +394,40 @@ VuiBase {
         id: undoAction
         text: qsTr('Undo')
         shortcut: 'ctrl+z'
-        iconName: 'edit-undo'
-        iconSource: 'qrc:///icons/oxygen/32x32/actions/edit-undo.png'
+        iconName: application.OS === 'OS X'? '' : 'edit-undo'
+        iconSource: application.OS === 'OS X'? '' : 'qrc:///icons/oxygen/32x32/actions/edit-undo.png'
         onTriggered: textArea.undo()
     }
     Action {
         id: redoAction
         text: qsTr('Redo')
         shortcut: application.OS === 'Windows'? 'ctrl+y' : 'ctrl+shift+z'
-        iconName: 'edit-redo'
-        iconSource: 'qrc:///icons/oxygen/32x32/actions/edit-redo.png'
+        iconName: application.OS === 'OS X'? '' : 'edit-redo'
+        iconSource: application.OS === 'OS X'? '' : 'qrc:///icons/oxygen/32x32/actions/edit-redo.png'
         onTriggered: textArea.redo()
     }
     Action {
         id: cutAction
         text: qsTr('Cut')
         shortcut: 'ctrl+x'
-        iconName: 'edit-cut'
-        iconSource: 'qrc:///icons/oxygen/32x32/actions/edit-cut.png'
+        iconName: application.OS === 'OS X'? '' : 'edit-cut'
+        iconSource: application.OS === 'OS X'? '' : 'qrc:///icons/oxygen/32x32/actions/edit-cut.png'
         onTriggered: textArea.cut()
     }
     Action {
         id: copyAction
         text: qsTr('Copy')
         shortcut: 'ctrl+c'
-        iconName: 'edit-copy'
-        iconSource: 'qrc:///icons/oxygen/32x32/actions/edit-copy.png'
+        iconName: application.OS === 'OS X'? '' : 'edit-copy'
+        iconSource: application.OS === 'OS X'? '' : 'qrc:///icons/oxygen/32x32/actions/edit-copy.png'
         onTriggered: textArea.copy()
     }
     Action {
         id: pasteAction
         text: qsTr('Paste')
         shortcut: 'ctrl+v'
-        iconName: 'edit-paste'
-        iconSource: 'qrc:///icons/oxygen/32x32/actions/edit-paste.png'
+        iconName: application.OS === 'OS X'? '' : 'edit-paste'
+        iconSource: application.OS === 'OS X'? '' : 'qrc:///icons/oxygen/32x32/actions/edit-paste.png'
         onTriggered: textArea.paste()
     }
     Action {
@@ -439,15 +439,15 @@ VuiBase {
         id: deleteAction
         text: qsTr('Delete')
         shortcut: 'del'
-        iconName: 'edit-delete'
-        iconSource: 'qrc:///icons/oxygen/32x32/actions/edit-delete.png'
+        iconName: application.OS === 'OS X'? '' : 'edit-delete'
+        iconSource: application.OS === 'OS X'? '' : 'qrc:///icons/oxygen/32x32/actions/edit-delete.png'
         onTriggered: textArea.remove(textArea.selectionStart, textArea.selectionEnd)
     }
     Action {
         id: clearAction
         text: qsTr('Clear')
-        iconName: 'edit-clear'
-        iconSource: 'qrc:///icons/oxygen/32x32/actions/edit-clear.png'
+        iconName: application.OS === 'OS X'? '' : 'edit-clear'
+        iconSource: application.OS === 'OS X'? '' : 'qrc:///icons/oxygen/32x32/actions/edit-clear.png'
         onTriggered: {
             textArea.selectAll()
             textArea.remove(textArea.selectionStart, textArea.selectionEnd)
@@ -537,8 +537,8 @@ VuiBase {
     Action {
         id: insertTableAction
         text: qsTr('Insert Table')
-        iconName: 'view-grid'
-        iconSource: 'qrc:///icons/oxygen/32x32/actions/view-grid.png'
+        iconName: application.OS === 'OS X'? '' : 'view-grid'
+        iconSource: application.OS === 'OS X'? '' : 'qrc:///icons/oxygen/32x32/actions/view-grid.png'
         onTriggered: tableDialog.open()
     }
     Action {
