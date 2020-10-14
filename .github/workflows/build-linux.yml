@@ -20,6 +20,8 @@ jobs:
         run: |
           cd scripts
           VERSION=$(date +"%y%m%d")
+          echo CLEANUP=0 > build-shotcut.conf
+          echo SHOTCUT_VERSION=\"$VERSION\" >> build-shotcut.conf
           docker run -v $PWD:/root/shotcut $IMAGE_NAME
           mv shotcut.txz shotcut-linux-x86_64-$VERSION.txz
           mv src.txz shotcut-src-$VERSION.txz
@@ -27,9 +29,9 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
-          name: linux-portable-archive
+          name: linux-portable
           path: |
-            scripts/shotcut-linux-x86_64-*.txz
+            scripts/Shotcut/
 
       - name: Upload to S3
         uses: mltframework/s3cmd-action@v0
