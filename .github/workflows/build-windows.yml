@@ -102,7 +102,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: windows-portable
-          path: ./build/Shotcut/
+          path: ./build/shotcut-win64-*.zip
 
       - name: Upload packages to S3
         shell: msys2 {0}

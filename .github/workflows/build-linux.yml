@@ -31,7 +31,7 @@ jobs:
         with:
           name: linux-portable
           path: |
-            scripts/Shotcut/
+            scripts/shotcut-linux-x86_64-*.txz
 
       - name: Upload to S3
         uses: mltframework/s3cmd-action@v0
