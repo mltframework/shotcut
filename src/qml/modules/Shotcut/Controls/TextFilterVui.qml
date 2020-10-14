@@ -31,6 +31,7 @@ VuiBase {
     property string endValue:  '_shotcut:endValue'
 
     Component.onCompleted: {
+        application.showStatusMessage(qsTr('Click in rectangle + hold Shift to drag'))
         setRectangleControl()
     }
 

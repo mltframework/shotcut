@@ -24,6 +24,7 @@ VuiBase {
     property rect filterRect: filter.getRect(rectProperty)
 
     Component.onCompleted: {
+        application.showStatusMessage(qsTr('Click in rectangle + hold Shift to drag'))
         rectangle.setHandles(filter.getRect(rectProperty))
     }
 
