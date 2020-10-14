@@ -1,6 +1,10 @@
 name: build-shotcut-windows
 
-on: [push]
+on:
+  workflow_dispatch:
+  schedule:
+    # nightly
+    - cron: '0 1 * * *'
 
 jobs:
   build:
