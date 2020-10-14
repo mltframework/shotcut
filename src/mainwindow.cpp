@@ -39,7 +39,6 @@
 #include "widgets/x11grabwidget.h"
 #include "widgets/avformatproducerwidget.h"
 #include "widgets/imageproducerwidget.h"
-#include "widgets/webvfxproducer.h"
 #include "widgets/blipproducerwidget.h"
 #include "widgets/newprojectfolder.h"
 #include "docks/recentdock.h"
@@ -52,7 +51,6 @@
 #include "controllers/scopecontroller.h"
 #include "docks/filtersdock.h"
 #include "dialogs/customprofiledialog.h"
-#include "htmleditor/htmleditor.h"
 #include "settings.h"
 #include "leapnetworklistener.h"
 #include "database.h"
@@ -2489,34 +2487,32 @@ void MainWindow::dropEvent(QDropEvent *event)
 void MainWindow::closeEvent(QCloseEvent* event)
 {
     if (continueJobsRunning() && continueModified()) {
-        if (!m_htmlEditor || m_htmlEditor->close()) {
-            LOG_DEBUG() << "begin";
-            JOBS.cleanup();
-            writeSettings();
-            if (m_exitCode == EXIT_SUCCESS) {
-                MLT.stop();
-            } else {
-                if (multitrack())
-                    m_timelineDock->model()->close();
-                if (playlist())
-                    m_playlistDock->model()->close();
-                else
-                    onMultitrackClosed();
-            }
-            QThreadPool::globalInstance()->clear();
-            AudioLevelsTask::closeAll();
-            event->accept();
-            emit aboutToShutDown();
-            if (m_exitCode == EXIT_SUCCESS) {
-                QApplication::quit();
-                LOG_DEBUG() << "end";
-                ::_Exit(0);
-            } else {
-                QApplication::exit(m_exitCode);
-                LOG_DEBUG() << "end";
-            }
-            return;
+        LOG_DEBUG() << "begin";
+        JOBS.cleanup();
+        writeSettings();
+        if (m_exitCode == EXIT_SUCCESS) {
+            MLT.stop();
+        } else {
+            if (multitrack())
+                m_timelineDock->model()->close();
+            if (playlist())
+                m_playlistDock->model()->close();
+            else
+                onMultitrackClosed();
         }
+        QThreadPool::globalInstance()->clear();
+        AudioLevelsTask::closeAll();
+        event->accept();
+        emit aboutToShutDown();
+        if (m_exitCode == EXIT_SUCCESS) {
+            QApplication::quit();
+            LOG_DEBUG() << "end";
+            ::_Exit(0);
+        } else {
+            QApplication::exit(m_exitCode);
+            LOG_DEBUG() << "end";
+        }
+        return;
     }
     event->ignore();
 }
@@ -3116,8 +3112,6 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer* producer)
         w = new PlasmaWidget(this);
     else if (service == "frei0r.test_pat_B")
         w = new ColorBarsWidget(this);
-    else if (service == "webvfx")
-        w = new WebvfxProducer(this);
     else if (service == "tone")
         w = new ToneProducerWidget(this);
     else if (service == "count")
@@ -3203,45 +3197,6 @@ void MainWindow::onGpuNotSupported()
     LOG_WARNING() << "";
     QMessageBox::critical(this, qApp->applicationName(),
         tr("GPU effects are not supported"));
-}
-
-void MainWindow::editHTML(const QString &fileName)
-{
-    bool isNew = !m_htmlEditor;
-    if (isNew) {
-        m_htmlEditor.reset(new HtmlEditor);
-        m_htmlEditor->setWindowIcon(windowIcon());
-    }
-    m_htmlEditor->load(fileName);
-    m_htmlEditor->show();
-    m_htmlEditor->raise();
-
-    bool isExternal = false;
-    int screen = Settings.playerExternal().toInt(&isExternal);
-    isExternal = isExternal && (screen != QApplication::desktop()->screenNumber(this));
-
-    if (!isExternal) {
-        if (Settings.playerZoom() >= 1.0f) {
-            m_htmlEditor->changeZoom(100 * m_player->videoSize().width() / MLT.profile().width());
-            m_htmlEditor->resizeWebView(m_player->videoSize().width(), m_player->videoSize().height());
-        } else {
-            m_htmlEditor->changeZoom(100 * MLT.displayWidth() / MLT.profile().width());
-            m_htmlEditor->resizeWebView(MLT.displayWidth(), MLT.displayHeight());
-        }
-    } else {
-        m_htmlEditor->changeZoom(100);
-    }
-    if (isNew) {
-        // Center the new window over the main window.
-        QPoint point = pos();
-        QPoint halfSize(width(), height());
-        halfSize /= 2;
-        point += halfSize;
-        halfSize = QPoint(m_htmlEditor->width(), m_htmlEditor->height());
-        halfSize /= 2;
-        point -= halfSize;
-        m_htmlEditor->move(point);
-    }
 }
 
 void MainWindow::stepLeftOneFrame()
