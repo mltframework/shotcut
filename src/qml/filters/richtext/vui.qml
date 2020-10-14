@@ -189,11 +189,11 @@ VuiBase {
                 property real maxWidth: 555
                 x: Math.min((parent.width + parent.x - width), Math.max((-parent.x * scale), textArea.x + rectangle.handleSize))
                 y: Math.min((parent.height + parent.y - height), Math.max((-parent.y * scale), (textArea.mapToItem(vui, 0, 0).y > height)? (textArea.y - height*scale) : (textArea.y + rectangle.handleSize)))
-                width: expanded? (smallIcons? 380 : maxWidth) : 0
+                width: expanded? (smallIcons? 380 : maxWidth) : (hiddenButton.width + (smallIcons? 0 : 8))
                 Behavior on width {
                     NumberAnimation{ duration: 100 }
                 }
-                height: smallIcons? (hiddenButton.height - 4) : (hiddenButton.height + 4)
+                height: expanded? (smallIcons? (hiddenButton.height - 4) : (hiddenButton.height + 4)) : (smallIcons? hiddenButton.height - 8 : hiddenButton.height)
                 anchors.margins: 0
                 opacity: 0.7
                 transformOrigin: Item.TopLeft
