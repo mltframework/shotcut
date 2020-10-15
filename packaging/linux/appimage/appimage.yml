@@ -5,17 +5,15 @@ ingredients:
   packages:
     - libsdl2-2.0-0
     - libxkbcommon-x11-0
-  dist: xenial
+  dist: bionic
   sources: 
-    - deb http://us.archive.ubuntu.com/ubuntu/ xenial main universe
+    - deb http://us.archive.ubuntu.com/ubuntu/ bionic main universe
   script:
     - echo "multiarch-support" >> excludedeblist                                                                                         
                                                                                                                                          
 script:
-  - DLD=$(wget -q "https://api.github.com/repos/mltframework/shotcut/releases/latest"  -O - | grep -E "https.*linux-x86_64.*.txz" | cut -d'"' -f4)
-  - wget -q "$DLD" -O - | tar xJ -C usr/bin --strip=2
-  - wget "https://github.com/mltframework/shotcut/raw/master/icons/shotcut-logo-64.png" -O shotcut.png
-  - wget "https://github.com/mltframework/shotcut/raw/master/packaging/linux/org.shotcut.Shotcut.desktop" -O shotcut.desktop
+  - tar xJ -C usr/bin --strip=2 -f ../../../../scripts/shotcut-linux-x86_64-*.txz
+  - cp -p ../../../../icons/shotcut-logo-64.png shotcut.png
+  - cp -p ../../../../packaging/linux/org.shotcut.Shotcut.desktop shotcut.desktop
   - desktop-file-edit --set-key=Exec --set-value=shotcut shotcut.desktop
   - desktop-file-edit --set-key=Icon --set-value=shotcut shotcut.desktop
-

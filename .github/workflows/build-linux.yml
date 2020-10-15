@@ -25,6 +25,9 @@ jobs:
           docker run -v $PWD:/root/shotcut $IMAGE_NAME
           mv shotcut.txz shotcut-linux-x86_64-$VERSION.txz
           mv src.txz shotcut-src-$VERSION.txz
+          echo put version into AppImage
+          mkdir ../packaging/linux/Shotcut
+          echo $VERSION > ../packaging/linux/Shotcut/VERSION
 
       - name: Upload artifact
         uses: actions/upload-artifact@v2
@@ -33,7 +36,7 @@ jobs:
           path: |
             scripts/shotcut-linux-x86_64-*.txz
 
-      - name: Upload to S3
+      - name: Upload portable and source archives to S3
         uses: mltframework/s3cmd-action@v0
         with:
           args: >-
@@ -42,3 +45,20 @@ jobs:
             --acl-public
             --stop-on-error
             put scripts/*.txz s3://builds.us.meltytech/shotcut/
+
+      - name: Package AppImage
+        run: |
+          sudo apt install desktop-file-utils
+          cd packaging/linux
+          wget https://raw.githubusercontent.com/probonopd/AppImages/master/pkg2appimage
+          bash -ex pkg2appimage appimage/appimage.yml
+
+      - name: Upload AppImage to S3
+        uses: mltframework/s3cmd-action@v0
+        with:
+          args: >-
+            --access_key=${{ secrets.AWS_ACCESS_KEY }}
+            --secret_key=${{ secrets.AWS_SECRET_KEY }}
+            --acl-public
+            --stop-on-error
+            put packaging/linux/out/*.AppImage s3://builds.us.meltytech/shotcut/

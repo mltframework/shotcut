@@ -326,6 +326,7 @@ OTHER_FILES += \
     ../packaging/macos/Info.plist \
     ../icons/dark/index.theme \
     ../icons/light/index.theme \
+    ../packaging/linux/Makefile \
     ../packaging/linux/appimage/appimage.yml \
     ../packaging/linux/snap/snapcraft.yaml \
     ../packaging/linux/snap/package.mak \
