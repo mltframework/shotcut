@@ -333,7 +333,10 @@ OTHER_FILES += \
     ../packaging/linux/org.shotcut.Shotcut.desktop \
     ../packaging/linux/org.shotcut.Shotcut.xml \
     ../packaging/linux/shotcut.1 \
-    ../.github/ISSUE_TEMPLATE.md
+    ../.github/ISSUE_TEMPLATE.md \
+    ../scripts/codesign_and_notarize.sh \
+    ../scripts/notarize.sh \
+    ../scripts/staple.sh
 
 INCLUDEPATH = ../CuteLogger/include
 
