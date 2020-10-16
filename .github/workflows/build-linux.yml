@@ -57,6 +57,9 @@ jobs:
           cd packaging/linux
           wget https://raw.githubusercontent.com/probonopd/AppImages/master/pkg2appimage
           bash -ex pkg2appimage appimage/appimage.yml
+          FILENAME_VERSION=$(cat Shotcut/VERSION | tr -d .)
+          mv out/*.AppImage out/shotcut-linux-x86_64-$FILENAME_VERSION.AppImage
+          chmod +x out/shotcut-linux-x86_64-$FILENAME_VERSION.AppImage
 
       - name: Upload AppImage to S3
         uses: mltframework/s3cmd-action@v0
