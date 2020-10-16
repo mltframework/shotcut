@@ -53,8 +53,11 @@ jobs:
       - name: Build
         shell: msys2 {0}
         run: |
-          VERSION=$(date +"%y%m%d")
+          echo Preparing version
+          echo $(date +"%y.%m.%d") > VERSION
+          VERSION=$(cat VERSION)
           echo VERSION=$VERSION
+          FILENAME_VERSION=$(echo $VERSION | tr -d .)
           pushd "$HOME"
           echo Downloading prebuilt SWH LADSPA plugins
           curl -LO --no-progress-meter https://s3.amazonaws.com/misc.meltymedia/shotcut-build/swh-plugins-win64-0.4.15.tar.xz
@@ -88,12 +91,12 @@ jobs:
           osslsigncode sign -pkcs12 CodeSignCertificates.p12 -readpass CodeSignCertificates.pass -n "Shotcut" -i "https://www.meltytech.com" -t "http://timestamp.digicert.com" -in Shotcut/shotcut.exe -out Shotcut/shotcut-signed.exe
           mv Shotcut/shotcut-signed.exe Shotcut/shotcut.exe
           echo Packaging the portable zip
-          zip -gr shotcut-win64-$VERSION.zip Shotcut
+          zip -gr shotcut-win64-$FILENAME_VERSION.zip Shotcut
           echo Packaging the installer
           makensis shotcut.nsi
           echo Signing the installer
           osslsigncode sign -pkcs12 CodeSignCertificates.p12 -readpass CodeSignCertificates.pass -n "Shotcut Installer" -i "https://www.meltytech.com" -t "http://timestamp.digicert.com" -in shotcut-setup.exe -out shotcut-setup-signed.exe
-          mv shotcut-setup-signed.exe shotcut-win64-$VERSION.exe
+          mv shotcut-setup-signed.exe shotcut-win64-$FILENAME_VERSION.exe
           rm shotcut-setup.exe
           popd
           echo Done
