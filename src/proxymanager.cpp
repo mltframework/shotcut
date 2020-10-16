@@ -26,7 +26,6 @@
 
 #include <QObject>
 #include <QVector>
-#include <QTemporaryFile>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 #include <QFile>
@@ -289,88 +288,80 @@ static void processProperties(QXmlStreamWriter& newXml, QVector<MltProperty>& pr
     properties.clear();
 }
 
-bool ProxyManager::filterXML(QString& fileName, const QString& root)
+bool ProxyManager::filterXML(QString& xmlString, const QString& root)
 {
-    QFile file(fileName);
-    QTemporaryFile tempFile(QFileInfo(fileName).dir().filePath("shotcut-XXXXXX.mlt"));
-    if (file.open(QIODevice::ReadOnly | QIODevice::Text) && tempFile.open()) {
-        tempFile.resize(0);
-        QXmlStreamReader xml(&file);
-        QXmlStreamWriter newXml(&tempFile);
-        bool isPropertyElement = false;
-        QVector<MltProperty> properties;
+    QString output;
+    QXmlStreamReader xml(xmlString);
+    QXmlStreamWriter newXml(&output);
+    bool isPropertyElement = false;
+    QVector<MltProperty> properties;
 
-        newXml.setAutoFormatting(true);
-        newXml.setAutoFormattingIndent(2);
+    newXml.setAutoFormatting(true);
+    newXml.setAutoFormattingIndent(2);
 
-        while (!xml.atEnd()) {
-            switch (xml.readNext()) {
-            case QXmlStreamReader::Characters:
-                if (!isPropertyElement)
-                    newXml.writeCharacters(xml.text().toString());
-                break;
-            case QXmlStreamReader::Comment:
-                newXml.writeComment(xml.text().toString());
-                break;
-            case QXmlStreamReader::DTD:
-                newXml.writeDTD(xml.text().toString());
-                break;
-            case QXmlStreamReader::EntityReference:
-                newXml.writeEntityReference(xml.name().toString());
-                break;
-            case QXmlStreamReader::ProcessingInstruction:
-                newXml.writeProcessingInstruction(xml.processingInstructionTarget().toString(), xml.processingInstructionData().toString());
-                break;
-            case QXmlStreamReader::StartDocument:
-                newXml.writeStartDocument(xml.documentVersion().toString(), xml.isStandaloneDocument());
-                break;
-            case QXmlStreamReader::EndDocument:
-                newXml.writeEndDocument();
-                break;
-            case QXmlStreamReader::StartElement: {
-                const QString element = xml.name().toString();
-                if (element == "property") {
-                    // Save each property element but do not output yet
-                    const QString name = xml.attributes().value("name").toString();
-                    properties << MltProperty(name, xml.readElementText());
-                    isPropertyElement = true;
-                } else {
-                    // At the start of a non-property element
-                    isPropertyElement = false;
-                    processProperties(newXml, properties, root);
-                    // Write the new start element
-                    newXml.writeStartElement(xml.namespaceUri().toString(), element);
-                    for (const auto& a : xml.attributes()) {
-                        newXml.writeAttribute(a);
-                    }
+    while (!xml.atEnd()) {
+        switch (xml.readNext()) {
+        case QXmlStreamReader::Characters:
+            if (!isPropertyElement)
+                newXml.writeCharacters(xml.text().toString());
+            break;
+        case QXmlStreamReader::Comment:
+            newXml.writeComment(xml.text().toString());
+            break;
+        case QXmlStreamReader::DTD:
+            newXml.writeDTD(xml.text().toString());
+            break;
+        case QXmlStreamReader::EntityReference:
+            newXml.writeEntityReference(xml.name().toString());
+            break;
+        case QXmlStreamReader::ProcessingInstruction:
+            newXml.writeProcessingInstruction(xml.processingInstructionTarget().toString(), xml.processingInstructionData().toString());
+            break;
+        case QXmlStreamReader::StartDocument:
+            newXml.writeStartDocument(xml.documentVersion().toString(), xml.isStandaloneDocument());
+            break;
+        case QXmlStreamReader::EndDocument:
+            newXml.writeEndDocument();
+            break;
+        case QXmlStreamReader::StartElement: {
+            const QString element = xml.name().toString();
+            if (element == "property") {
+                // Save each property element but do not output yet
+                const QString name = xml.attributes().value("name").toString();
+                properties << MltProperty(name, xml.readElementText());
+                isPropertyElement = true;
+            } else {
+                // At the start of a non-property element
+                isPropertyElement = false;
+                processProperties(newXml, properties, root);
+                // Write the new start element
+                newXml.writeStartElement(xml.namespaceUri().toString(), element);
+                for (const auto& a : xml.attributes()) {
+                    newXml.writeAttribute(a);
                 }
-                break;
             }
-            case QXmlStreamReader::EndElement:
-                // At the end of a non-property element
-                if (xml.name() != "property") {
-                    processProperties(newXml, properties, root);
-                    newXml.writeEndElement();
-                }
-                break;
-            default:
-                break;
-            }
+            break;
         }
-        if (tempFile.isOpen())
-            tempFile.close();
+        case QXmlStreamReader::EndElement:
+            // At the end of a non-property element
+            if (xml.name() != "property") {
+                processProperties(newXml, properties, root);
+                newXml.writeEndElement();
+            }
+            break;
+        default:
+            break;
+        }
+    }
 
-        // Useful for debugging
+    // Useful for debugging
 //        tempFile.open();
 //        LOG_DEBUG() << tempFile.readAll().constData();
 //        tempFile.close();
 
-        if (!xml.hasError()) {
-            fileName = tempFile.fileName();
-            LOG_DEBUG() << fileName;
-            tempFile.setAutoRemove(false);
-            return true;
-        }
+    if (!xml.hasError()) {
+        xmlString = output;
+        return true;
     }
     return false;
 }

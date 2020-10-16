@@ -45,7 +45,7 @@ public:
     static void generateVideoProxy(Mlt::Producer& producer, bool fullRange,
         ScanMode scanMode = Automatic, const QPoint& aspectRatio = QPoint(), bool replace = true);
     static void generateImageProxy(Mlt::Producer& producer, bool replace = true);
-    static bool filterXML(QString& fileName, const QString& root);
+    static bool filterXML(QString& xml, const QString& root);
     static bool fileExists(Mlt::Producer& producer);
     static bool filePending(Mlt::Producer& producer);
     static bool isValidImage(Mlt::Producer& producer);

@@ -21,8 +21,7 @@
 #include <QMetaType>
 #include <QFileInfo>
 #include <QUuid>
-#include <QTemporaryFile>
-#include <QXmlStreamReader>
+#include <QSaveFile>
 #include <Logger.h>
 #include <Mlt.h>
 #include <cmath>
@@ -445,21 +444,12 @@ void Controller::refreshConsumer(bool scrubAudio)
     }
 }
 
-bool Controller::saveXML(const QString& filename, Service* service, bool withRelativePaths, bool verify, bool proxy)
+bool Controller::saveXML(const QString& filename, Service* service, bool withRelativePaths, bool proxy)
 {
     QMutexLocker locker(&m_saveXmlMutex);
     QFileInfo fi(filename);
-    QTemporaryFile tmp;
-    QString mltFileName = filename;
-    // First, write to a temp file.
-    if (verify) {
-        tmp.setFileTemplate(fi.absolutePath().append("/shotcut-XXXXXX.mlt"));
-        tmp.open();
-        tmp.close();
-        mltFileName = tmp.fileName();
-        LOG_DEBUG() << "writing temporary XML file" << mltFileName;
-    }
-    Consumer c(profile(), "xml", mltFileName.toUtf8().constData());
+    static const char* propertyName = "string";
+    Consumer c(profile(), "xml", proxy? filename.toUtf8().constData() : propertyName);
     Service s(service? service->get_service() : m_producer->get_service());
     if (s.is_valid()) {
         QString root = withRelativePaths? fi.absolutePath() : "";
@@ -478,74 +468,23 @@ bool Controller::saveXML(const QString& filename, Service* service, bool withRel
         c.start();
         if (ignore)
             s.set("ignore_points", ignore);
-
-        if (!proxy && ProxyManager::filterXML(mltFileName, root)) { // also verifies
-            if (verify) {
-                tmp.remove();
+        auto xml = QString::fromUtf8(c.get(propertyName));
+        if (!proxy && ProxyManager::filterXML(xml, root)) { // also verifies
+            QSaveFile file(filename);
+            if (!file.open(QIODevice::WriteOnly)) {
+                LOG_ERROR() << "failed to open MLT XML file for writing" << filename;
             }
-            tmp.setFileName(mltFileName);
-
-            // QFile::rename() can fail and remove the destination file. See its docs.
-            // So, save an existing target file as a backup.
-            QString backupName;
-            if (QFile::exists(filename)) {
-                QTemporaryFile backupTmp;
-                backupTmp.setFileTemplate(
-                    QString("%1/%2 - backup - XXXXXX.mlt").arg(fi.absolutePath()).arg(fi.completeBaseName()));
-                // Only remove the backup file if we successfully move the temp file to target.
-                backupTmp.setAutoRemove(false);
-                QFile existingFile(filename);
-                if (existingFile.open(QIODevice::ReadOnly)) {
-                    // Copy contents of existing file to temporary backup file.
-                    backupTmp.open();
-                    backupName = backupTmp.fileName();
-                    LOG_DEBUG() << "copy to backup" << filename << backupName;
-                    QByteArray buffer;
-                    while (!(buffer = existingFile.read(1048576LL /*1MiB*/)).isEmpty()) {
-                        backupTmp.write(buffer);
-                    }
-                    if (existingFile.error() != QFileDevice::NoError) {
-                        LOG_ERROR() << "backup error" << existingFile.errorString();
-                        return false;
-                    }
-                    if (backupTmp.size() != existingFile.size()) {
-                        LOG_ERROR() << "backup file size problem: existing file size" << existingFile.size() << ", backup file size" << backupTmp.size();
-                        return false;
-                    }
-                    backupTmp.close();
-                    existingFile.close();
-                    // Remove the existing file as its name becomes the target for rename.
-                    if (!existingFile.remove()) {
-                        LOG_ERROR() << "failed to remove existing file" << filename;
-                        return false;
-                    }
-                } else {
-                    // Do not overwrite the backup file.
-                    LOG_ERROR() << "failed to open existing file" << filename << "for backup:" << existingFile.errorString();
+            qint64 result = 0, written = 0;
+            auto data = xml.toUtf8();
+            LOG_DEBUG() << "writing to file" << filename;
+            while (written < data.size()) {
+                if ((result = file.write(data)) < 0) {
+                    LOG_ERROR() << "failed to save MLT XML to file" << filename;
                     return false;
                 }
+                written += result;
             }
-            // If the file is good, then move it into place.
-            LOG_DEBUG() << "rename" << mltFileName << filename;
-            tmp.setAutoRemove(false);
-            int attempts = 5;
-            for (int i = 0; i < attempts; i++) {
-                if (tmp.rename(filename)) {
-                    // Double-check the rename operation.
-                    if (QFile::exists(filename) && QFile::exists(backupName))
-                        QFile::remove(backupName);
-                    return true;
-                }
-                LOG_WARNING() << "rename failed, trying again";
-
-#ifdef Q_OS_WIN
-                ::Sleep(200);
-#else
-                ::usleep(200000);
-#endif
-            }
-            LOG_ERROR() << "rename failed" << mltFileName << filename;
-            return false;
+            return file.commit();
         }
     }
     return false;
