@@ -328,8 +328,7 @@ OTHER_FILES += \
     ../icons/light/index.theme \
     ../packaging/linux/Makefile \
     ../packaging/linux/appimage/appimage.yml \
-    ../packaging/linux/snap/snapcraft.yaml \
-    ../packaging/linux/snap/package.mak \
+    ../packaging/linux/snapcraft.yaml.in \
     ../packaging/linux/org.shotcut.Shotcut.appdata.xml \
     ../packaging/linux/org.shotcut.Shotcut.desktop \
     ../packaging/linux/org.shotcut.Shotcut.xml \

@@ -18,16 +18,19 @@ jobs:
 
       - name: Build
         run: |
+          echo Preparing version
+          echo $(date +"%y.%m.%d") > VERSION
+          VERSION=$(cat VERSION)
+          echo VERSION=$VERSION
+          FILENAME_VERSION=$(echo $VERSION | tr -d .)
           cd scripts
-          VERSION=$(date +"%y%m%d")
+          echo Making build script config file
           echo CLEANUP=0 > build-shotcut.conf
           echo SHOTCUT_VERSION=\"$VERSION\" >> build-shotcut.conf
           docker run -v $PWD:/root/shotcut $IMAGE_NAME
-          mv shotcut.txz shotcut-linux-x86_64-$VERSION.txz
-          mv src.txz shotcut-src-$VERSION.txz
-          echo put version into AppImage
-          mkdir ../packaging/linux/Shotcut
-          echo $VERSION > ../packaging/linux/Shotcut/VERSION
+          echo Renaming build artifacts
+          mv shotcut.txz shotcut-linux-x86_64-$FILENAME_VERSION.txz
+          mv src.txz shotcut-src-$FILENAME_VERSION.txz
 
       - name: Upload artifact
         uses: actions/upload-artifact@v2
@@ -49,6 +52,8 @@ jobs:
       - name: Package AppImage
         run: |
           sudo apt install desktop-file-utils
+          mkdir packaging/linux/Shotcut
+          cp VERSION packaging/linux/Shotcut/
           cd packaging/linux
           wget https://raw.githubusercontent.com/probonopd/AppImages/master/pkg2appimage
           bash -ex pkg2appimage appimage/appimage.yml
@@ -62,3 +67,21 @@ jobs:
             --acl-public
             --stop-on-error
             put packaging/linux/out/*.AppImage s3://builds.us.meltytech/shotcut/
+
+      - name: Install Snapcraft
+        uses: samuelmeuli/action-snapcraft@v1
+        with:
+          snapcraft_token: ${{ secrets.SNAPCRAFT_TOKEN }}
+          use_lxd: true
+      - name: Package snap
+        run: |
+          VERSION=$(cat VERSION)
+          mv scripts/shotcut-linux-x86_64-*.txz packaging/linux
+          cd packaging/linux
+          mkdir -p snap/gui
+          cp ../../icons/shotcut-logo-64.png snap/gui
+          sed 's|Icon=.*|Icon=${SNAP}/meta/gui/shotcut-logo-64.png|' org.shotcut.Shotcut.desktop > snap/gui/shotcut.desktop
+          FILENAME=$(ls *.txz)
+          sed "s/\$VERSION/${VERSION}/ ; s/\$FILENAME/${FILENAME}/" snapcraft.yaml.in > snap/snapcraft.yaml
+          sg lxd -c 'snapcraft --use-lxd'
+          snapcraft upload --release=edge shotcut_*.snap
