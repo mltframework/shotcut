@@ -919,7 +919,7 @@ MeltJob* EncodeDock::createMeltJob(Mlt::Producer* service, const QString& target
     QString fileName = tmp->fileName();
     tmp->remove();
     auto isProxy = ui->previewScaleCheckBox->isChecked() && Settings.proxyEnabled();
-    MLT.saveXML(fileName, service, false /* without relative paths */, isProxy);
+    MLT.saveXML(fileName, service, false /* without relative paths */, nullptr, isProxy);
 
     // parse xml
     QFile f1(fileName);

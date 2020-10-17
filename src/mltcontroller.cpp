@@ -22,6 +22,7 @@
 #include <QFileInfo>
 #include <QUuid>
 #include <QSaveFile>
+#include <QTextStream>
 #include <Logger.h>
 #include <Mlt.h>
 #include <cmath>
@@ -42,6 +43,7 @@ namespace Mlt {
 static const int kThumbnailOutSeekFactor = 5;
 static Controller* instance = nullptr;
 const QString XmlMimeType("application/vnd.mlt+xml");
+static const char* kMltXmlPropertyName = "string";
 
 Controller::Controller()
     : m_profile(kDefaultMltProfile)
@@ -444,12 +446,12 @@ void Controller::refreshConsumer(bool scrubAudio)
     }
 }
 
-bool Controller::saveXML(const QString& filename, Service* service, bool withRelativePaths, bool proxy)
+bool Controller::saveXML(const QString& filename, Service* service, bool withRelativePaths,
+                         QTemporaryFile* tempFile, bool proxy)
 {
     QMutexLocker locker(&m_saveXmlMutex);
     QFileInfo fi(filename);
-    static const char* propertyName = "string";
-    Consumer c(profile(), "xml", proxy? filename.toUtf8().constData() : propertyName);
+    Consumer c(profile(), "xml", proxy? filename.toUtf8().constData() : kMltXmlPropertyName);
     Service s(service? service->get_service() : m_producer->get_service());
     if (s.is_valid()) {
         QString root = withRelativePaths? fi.absolutePath() : "";
@@ -468,23 +470,32 @@ bool Controller::saveXML(const QString& filename, Service* service, bool withRel
         c.start();
         if (ignore)
             s.set("ignore_points", ignore);
-        auto xml = QString::fromUtf8(c.get(propertyName));
+        auto xml = QString::fromUtf8(c.get(kMltXmlPropertyName));
         if (!proxy && ProxyManager::filterXML(xml, root)) { // also verifies
-            QSaveFile file(filename);
-            if (!file.open(QIODevice::WriteOnly)) {
-                LOG_ERROR() << "failed to open MLT XML file for writing" << filename;
-            }
-            qint64 result = 0, written = 0;
-            auto data = xml.toUtf8();
-            LOG_DEBUG() << "writing to file" << filename;
-            while (written < data.size()) {
-                if ((result = file.write(data)) < 0) {
-                    LOG_ERROR() << "failed to save MLT XML to file" << filename;
+            if (tempFile) {
+                QTextStream stream(tempFile);
+                stream.setCodec("UTF-8");
+                stream << xml;
+                if (tempFile->error() != QFileDevice::NoError) {
+                    LOG_ERROR() << "error while writing MLT XML file" << tempFile->fileName() << ":" << tempFile->errorString();
                     return false;
                 }
-                written += result;
+            } else {
+                QSaveFile file(filename);
+                file.setDirectWriteFallback(true);
+                if (!file.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
+                    LOG_ERROR() << "failed to open MLT XML file for writing" << filename;
+                    return false;
+                }
+                QTextStream stream(&file);
+                stream.setCodec("UTF-8");
+                stream << xml;
+                if (file.error() != QFileDevice::NoError) {
+                    LOG_ERROR() << "error while writing MLT XML file" << filename << ":" << file.errorString();
+                    return false;
+                }
+                return file.commit();
             }
-            return file.commit();
         }
     }
     return false;
@@ -492,8 +503,7 @@ bool Controller::saveXML(const QString& filename, Service* service, bool withRel
 
 QString Controller::XML(Service* service, bool withProfile, bool withMetadata)
 {
-    static const char* propertyName = "string";
-    Consumer c(profile(), "xml", propertyName);
+    Consumer c(profile(), "xml", kMltXmlPropertyName);
     Service s(service? service->get_service() : (m_producer && m_producer->is_valid())? m_producer->get_service() : nullptr);
     if (!s.is_valid())
         return "";
@@ -510,7 +520,7 @@ QString Controller::XML(Service* service, bool withProfile, bool withMetadata)
     c.start();
     if (ignore)
         s.set("ignore_points", ignore);
-    return QString::fromUtf8(c.get(propertyName));
+    return QString::fromUtf8(c.get(kMltXmlPropertyName));
 }
 
 int Controller::consumerChanged()

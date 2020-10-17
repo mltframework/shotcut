@@ -71,10 +71,9 @@ void EncodeJob::onVideoQualityTriggered()
         if (Util::warnIfNotWritable(reportPath, &MAIN, caption))
             return;
 
-        // Get temp filename for the new XML.
+        // Get temp file for the new XML.
         QScopedPointer<QTemporaryFile> tmp(Util::writableTemporaryFile(reportPath));
         tmp->open();
-        tmp->close();
 
         // Generate the XML for the comparison.
         Mlt::Tractor tractor(MLT.profile());
@@ -86,7 +85,8 @@ void EncodeJob::onVideoQualityTriggered()
             tractor.set_track(encoded, 1);
             tractor.plant_transition(vqm);
             vqm.set("render", 0);
-            MLT.saveXML(tmp->fileName(), &tractor, false /* without relative paths */);
+            MLT.saveXML(tmp->fileName(), &tractor, false /* without relative paths */, tmp.data());
+            tmp->close();
 
             // Add consumer element to XML.
             QFile f1(tmp->fileName());

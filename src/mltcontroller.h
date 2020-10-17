@@ -22,6 +22,7 @@
 #include <QString>
 #include <QUuid>
 #include <QScopedPointer>
+#include <QTemporaryFile>
 #include <QMutex>
 #include <Mlt.h>
 #include "transportcontrol.h"
@@ -88,7 +89,8 @@ public:
     void onWindowResize();
     virtual void seek(int position);
     virtual void refreshConsumer(bool scrubAudio = false);
-    bool saveXML(const QString& filename, Service* service = nullptr, bool withRelativePaths = true, bool proxy = false);
+    bool saveXML(const QString& filename, Service* service = nullptr, bool withRelativePaths = true,
+                 QTemporaryFile* tempFile = nullptr, bool proxy = false);
     QString XML(Service* service = nullptr, bool withProfile = false, bool withMetadata = false);
     int consumerChanged();
     void setProfile(const QString& profile_name);

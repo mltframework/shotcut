@@ -320,11 +320,11 @@ void QmlFilter::analyze(bool isAudio)
 {
     Mlt::Service service(mlt_service(m_filter.get_data("service")));
 
-    // get temp filename for input xml
+    // get temp file for input xml
     QString filename(m_filter.get("filename"));
     QScopedPointer<QTemporaryFile> tmp(Util::writableTemporaryFile(filename));
     tmp->open();
-    tmp->close();
+
     m_filter.set("results", nullptr, 0);
     int disable = m_filter.get_int("disable");
     m_filter.set("disable", 0);
@@ -345,7 +345,9 @@ void QmlFilter::analyze(bool isAudio)
         }
     }
 
-    MLT.saveXML(tmp->fileName(), &service, false /* without relative paths */);
+    MLT.saveXML(tmp->fileName(), &service, false /* without relative paths */, tmp.data());
+    tmp->close();
+
     if (!isAudio) m_filter.set("analyze", 0);
     m_filter.set("disable", disable);
 
