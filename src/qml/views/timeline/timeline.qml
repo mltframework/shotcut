@@ -47,6 +47,8 @@ Rectangle {
 
     function adjustZoom(by, targetX) {
         setZoom(toolbar.scaleSlider.value + by, targetX)
+        if (settings.timelineScrollZoom)
+            Logic.scrollIfNeeded()
     }
 
     function zoomIn() {
@@ -543,6 +545,12 @@ Rectangle {
             checkable: true
             checked: settings.timelineCenterPlayhead
             onTriggered: settings.timelineCenterPlayhead = checked
+        }
+        MenuItem {
+            text: qsTr('Scroll to Playhead on Zoom')
+            checkable: true
+            checked: settings.timelineScrollZoom
+            onTriggered: settings.timelineScrollZoom = checked
         }
         MenuSeparator {}
         MenuItem {

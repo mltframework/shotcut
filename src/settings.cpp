@@ -588,6 +588,17 @@ void ShotcutSettings::setTimelineTrackHeight(int n)
     settings.setValue("timeline/trackHeight", n);
 }
 
+bool ShotcutSettings::timelineScrollZoom() const
+{
+    return settings.value("timeline/scrollZoom", false).toBool();
+}
+
+void ShotcutSettings::setTimelineScrollZoom(bool b)
+{
+    settings.setValue("timeline/scrollZoom", b);
+    emit timelineScrollZoomChanged();
+}
+
 QString ShotcutSettings::filterFavorite(const QString& filterName)
 {
     return settings.value("filter/favorite/" + filterName, "").toString();
