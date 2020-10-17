@@ -24,6 +24,7 @@
 #include <QAction>
 #include <QDialog>
 #include <QDir>
+#include <QTimer>
 #include <Logger.h>
 #include "mainwindow.h"
 #include "dialogs/textviewerdialog.h"
@@ -84,6 +85,15 @@ MeltJob::~MeltJob()
 
 void MeltJob::start()
 {
+    if (!m_xml) {
+        AbstractJob::start();
+        LOG_ERROR() << "the job XML is empty!";
+        appendToLog("Error: the job XML is empty!\n");
+        QTimer::singleShot(0, [=]() {
+            emit finished(this, false);
+        });
+        return;
+    }
     QString shotcutPath = qApp->applicationDirPath();
     QFileInfo meltPath(shotcutPath, "melt");
     setReadChannel(QProcess::StandardError);
