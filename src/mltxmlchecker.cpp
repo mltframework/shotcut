@@ -531,30 +531,31 @@ void MltXmlChecker::checkLumaAlphaOver(const QString& mlt_service, QVector<MltXm
 void MltXmlChecker::replaceWebVfxCropFilters(QString& mlt_service, QVector<MltXmlChecker::MltProperty>& properties)
 {
     if (mlt_service == "webvfx") {
+        auto isCrop = false;
         for (auto& p : properties) {
             if (p.first == "shotcut:filter" && p.second == "webvfxCircularFrame") {
                 p.second = "cropCircle";
                 properties << MltProperty("circle", "1");
-                m_isUpdated = true;
+                m_isUpdated = isCrop = true;
                 break;
             }
             if (p.first == "shotcut:filter" && p.second == "webvfxClip") {
                 p.second = "cropRectangle";
-                m_isUpdated = true;
+                m_isUpdated = isCrop = true;
                 break;
             }
         }
-        if (m_isUpdated) {
+        if (isCrop) {
             mlt_service = "qtcrop";
-            for (auto& p2 : properties) {
-                if (p2.first == "resource") {
-                    properties.removeOne(p2);
+            for (auto& p : properties) {
+                if (p.first == "resource") {
+                    properties.removeOne(p);
                     break;
                 }
             }
-            for (auto& p2 : properties) {
-                if (p2.first == "mlt_service") {
-                    p2.second = "qtcrop";
+            for (auto& p : properties) {
+                if (p.first == "mlt_service") {
+                    p.second = "qtcrop";
                     break;
                 }
             }
@@ -565,27 +566,56 @@ void MltXmlChecker::replaceWebVfxCropFilters(QString& mlt_service, QVector<MltXm
 void MltXmlChecker::replaceWebVfxChoppyFilter(QString& mlt_service, QVector<MltXmlChecker::MltProperty>& properties)
 {
     if (mlt_service == "webvfx") {
+        auto isChoppy = false;
+        QString shotcutFilter;
         for (auto& p : properties) {
-            if (p.first == "shotcut:filter" && p.second == "webvfxChoppy") {
-                properties.removeOne(p);
-                m_isUpdated = true;
-                break;
+            if (p.first == "shotcut:filter") {
+                shotcutFilter = p.second;
+                if (p.second == "webvfxChoppy") {
+                    properties.removeOne(p);
+                    m_isUpdated = isChoppy = true;
+                    break;
+                }
             }
         }
-        if (m_isUpdated) {
+        if (isChoppy) {
             mlt_service = "choppy";
-            for (auto& p2 : properties) {
-                if (p2.first == "resource") {
-                    properties.removeOne(p2);
+            for (auto& p : properties) {
+                if (p.first == "resource") {
+                    properties.removeOne(p);
                     break;
                 }
             }
-            for (auto& p2 : properties) {
-                if (p2.first == "mlt_service") {
-                    p2.second = "choppy";
+            for (auto& p : properties) {
+                if (p.first == "mlt_service") {
+                    p.second = "choppy";
                     break;
                 }
             }
+        } else if (shotcutFilter.isEmpty()) {
+            mlt_service = "qtext";
+            m_isUpdated = true;
+            for (auto& p : properties) {
+                if (p.first == "resource") {
+                    if (QFileInfo(p.second).isRelative()) {
+                        QDir projectDir(QFileInfo(m_tempFile->fileName()).dir());
+                        p.second = projectDir.filePath(p.second);
+                    }
+                    QFile file(p.second);
+                    if (file.open(QIODevice::ReadOnly)) {
+                        p.first = "html";
+                        p.second = QString::fromUtf8(file.readAll());
+                    }
+                    break;
+                }
+            }
+            for (auto& p : properties) {
+                if (p.first == "mlt_service") {
+                    p.second = "qtext";
+                    break;
+                }
+            }
+            properties << MltProperty("shotcut:filter", "richText");
         }
     }
 }
