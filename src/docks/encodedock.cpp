@@ -980,7 +980,7 @@ MeltJob* EncodeDock::createMeltJob(Mlt::Producer* service, const QString& target
 
 #ifdef Q_OS_WIN
     // Change pixel_ratio in qtext filters
-    if (MAIN.devicePixelRatio() > 1) {
+    if (MAIN.devicePixelRatioF() > 1) {
         auto pixelRatio = QString::number(MAIN.devicePixelRatioF());
         const auto filters = dom.elementsByTagName("filter");
         for (int i = 0; i < filters.length(); ++i) {

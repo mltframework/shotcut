@@ -168,6 +168,7 @@ MainWindow::MainWindow()
         QInternal::registerCallback(QInternal::EventNotifyCallback, eventDebugCallback);
 
     LOG_DEBUG() << "begin";
+    LOG_INFO() << "device pixel ratio =" << devicePixelRatioF();
 #ifndef Q_OS_WIN
     new GLTestWidget(this);
 #endif
