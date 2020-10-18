@@ -76,7 +76,6 @@ private:
     void replaceWebVfxCropFilters(QString& mlt_service, QVector<MltProperty>& properties);
     void replaceWebVfxChoppyFilter(QString& mlt_service, QVector<MltProperty>& properties);
     void checkForProxy(const QString& mlt_service, QVector<MltProperty>& properties);
-    void checkRichTextPixelRatio(const QString& mlt_service, QVector<MltProperty>& properties);
 
     QXmlStreamReader m_xml;
     QXmlStreamWriter m_newXml;

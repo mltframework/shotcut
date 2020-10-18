@@ -21,7 +21,6 @@
 #include "util.h"
 #include "proxymanager.h"
 #include "settings.h"
-#include "mainwindow.h"
 
 #include <QLocale>
 #include <QDir>
@@ -254,9 +253,6 @@ void MltXmlChecker::processProperties()
         checkUnlinkedFile(mlt_service);
         checkIncludesSelf(newProperties);
         checkLumaAlphaOver(mlt_service, newProperties);
-#ifdef Q_OS_WIN
-        checkRichTextPixelRatio(mlt_service, newProperties);
-#endif
 #if LIBMLT_VERSION_INT >= ((6<<16)+(23<<8))
         replaceWebVfxCropFilters(mlt_service, newProperties);
         replaceWebVfxChoppyFilter(mlt_service, newProperties);
@@ -523,7 +519,6 @@ void MltXmlChecker::checkLumaAlphaOver(const QString& mlt_service, QVector<MltXm
         for (auto& p : properties) {
             if (p.first == "alpha_over") {
                 found = true;
-                break;
             }
         }
         if (!found) {
@@ -705,34 +700,6 @@ void MltXmlChecker::checkForProxy(const QString& mlt_service, QVector<MltXmlChec
             properties << MltProperty(kIsProxyProperty, "1");
             properties << MltProperty(kOriginalResourceProperty, resource);
             m_isUpdated = true;
-        }
-    }
-}
-
-void MltXmlChecker::checkRichTextPixelRatio(const QString& mlt_service, QVector<MltXmlChecker::MltProperty>& properties)
-{
-    if (mlt_service == "qtext") {
-        bool found = false;
-        for (auto& p : properties) {
-            if (p.first == "html") {
-                found = true;
-                break;
-            }
-        }
-        if (found) {
-            found = false;
-            for (auto& p : properties) {
-                if (p.first == "pixel_ratio") {
-                    p.second = QString::number(MAIN.devicePixelRatioF());
-                    found = true;
-                    m_isUpdated = true;
-                    break;
-                }
-            }
-            if (!found) {
-                properties << MltProperty("pixel_ratio", QString::number(MAIN.devicePixelRatioF()));
-                m_isUpdated = true;
-            }
         }
     }
 }
