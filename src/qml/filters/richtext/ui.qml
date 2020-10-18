@@ -34,9 +34,6 @@ Item {
 
     Component.onCompleted: {
         filter.blockSignals = true
-        if (application.OS === 'Windows') {
-            filter.set('pixel_ratio', application.devicePixelRatio)
-        }
         filter.set(middleValue, Qt.rect(0, 0, profile.width, profile.height))
         filter.set(startValue, Qt.rect(0, 0, profile.width, profile.height))
         filter.set(endValue, Qt.rect(0, 0, profile.width, profile.height))
