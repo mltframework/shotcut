@@ -970,7 +970,7 @@ function deploy
   cmd cp -p "$QTDIR"/bin/{libEGL,libGLESv2,d3dcompiler_47}.dll .
 
   log Copying some libs from msys2
-  cmd cp -p /mingw64/bin/{libcrypto-1_1-x64,libssl-1_1-x64.dll}.dll .
+  cmd cp -p /mingw64/bin/{libcrypto-1_1-x64,libssl-1_1-x64}.dll .
   if [ "$DEBUG_BUILD" = "1" -o "$SDK" = "1" ]; then
     cmd cp -p "$SOURCE_DIR"/shotcut/drmingw/x64/bin/*.{dll,yes} .
   fi
