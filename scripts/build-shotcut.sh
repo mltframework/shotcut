@@ -1666,7 +1666,6 @@ function bundle_libs
          ($3 !~ /\/libm\./) &&
          ($3 !~ /\/libmvec\./) &&
          ($3 !~ /\/libnss_compat\./) &&
-         ($3 !~ /\/libnss_db\./) &&
          ($3 !~ /\/libnss_dns\./) &&
          ($3 !~ /\/libnss_files\./) &&
          ($3 !~ /\/libnss_hesiod\./) &&
@@ -1679,7 +1678,11 @@ function bundle_libs
          ($3 !~ /\/libutil\./) &&
          ($3 !~ /\/libstdc\+\+\./) &&
          ($3 !~ /\/libGL\./) &&
+         ($3 !~ /\/libGLdispatch\./) &&
+         ($3 !~ /\/libGLX\./) &&
          ($3 !~ /\/libEGL\./) &&
+         ($3 !~ /\/libgmp\./) &&
+         ($3 !~ /\/libgbm\./) &&
          ($3 !~ /\/libdrm/) &&
          ($3 !~ /\/libglapi\./) &&
          ($3 !~ /\/libxcb\./) &&
@@ -1695,13 +1698,11 @@ function bundle_libs
          ($3 !~ /\/libfreetype\./) &&
          ($3 !~ /\/libharfbuzz\./) &&
          ($3 !~ /\/libcom_err\./) &&
-         ($3 !~ /\/libcrypt\./) &&
          ($3 !~ /\/libexpat\./) &&
          ($3 !~ /\/libgcc_s\./) &&
          ($3 !~ /\/libglib-2.0\./) &&
          ($3 !~ /\/libgpg-error\./) &&
          ($3 !~ /\/libICE\./) &&
-         ($3 !~ /\/libkeyutils\./) &&
          ($3 !~ /\/libp11-kit\./) &&
          ($3 !~ /\/libSM\./) &&
          ($3 !~ /\/libusb-1.0\./) &&
