@@ -112,6 +112,12 @@ void MeltJob::start()
 #ifdef Q_OS_WIN
     if (m_isStreaming) args << "-getc";
     QProcess::start(meltPath.absoluteFilePath(), args);
+    QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
+    // These environment variables fix rich text rendering for high DPI
+    // fractional or otherwise.
+    env.insert("QT_ENABLE_HIGHDPI_SCALING", "1");
+    env.insert("QT_SCALE_FACTOR_ROUNDING_POLICY", "Rounding");
+    setProcessEnvironment(env);
 #else
     args.prepend(meltPath.absoluteFilePath());
     args.prepend("3");

@@ -978,41 +978,6 @@ MeltJob* EncodeDock::createMeltJob(Mlt::Producer* service, const QString& target
     for (int i = 0; i < playlists.length(); ++i)
         playlists.item(i).toElement().setAttribute("autoclose", 1);
 
-#ifdef Q_OS_WIN
-    // Change pixel_ratio in qtext filters
-    if (MAIN.devicePixelRatioF() > 1) {
-        auto pixelRatio = QString::number(MAIN.devicePixelRatioF());
-        const auto filters = dom.elementsByTagName("filter");
-        for (int i = 0; i < filters.length(); ++i) {
-            const auto properties = filters.item(i).toElement().elementsByTagName("property");
-            bool hasHTML = false;
-            bool hasPixelRatio = false;
-            for (int j = 0; j < properties.length(); ++j) {
-                const auto property = properties.item(j).toElement();
-                const auto name = property.attribute("name");
-                if (name == "html") {
-                    hasHTML = true;
-                } else if (name == "pixel_ratio") {
-                    hasPixelRatio = true;
-                    for (auto n = property.firstChild(); !n.isNull(); n = n.nextSibling()) {
-                        if (n.isText()) {
-                            n.toText().setNodeValue(pixelRatio);
-                            break;
-                        }
-                    }
-                    break;
-                }
-            }
-            if (hasHTML && !hasPixelRatio) {
-                auto property = dom.createElement("property");
-                property.setAttribute("name", "pixel_ratio");
-                property.appendChild(dom.createTextNode(pixelRatio));
-                filters.item(i).appendChild(property);
-            }
-        }
-    }
-#endif
-
     int frameRateNum = consumerNode.hasAttribute("frame_rate_num")? consumerNode.attribute("frame_rate_num").toInt() : MLT.profile().frame_rate_num();
     int frameRateDen = consumerNode.hasAttribute("frame_rate_den")? consumerNode.attribute("frame_rate_den").toInt() : MLT.profile().frame_rate_den();
     MeltJob* job = new EncodeJob(QDir::toNativeSeparators(target), dom.toString(2), frameRateNum, frameRateDen);
