@@ -955,6 +955,11 @@ function deploy
     cmd cp -p "$QTDIR"/bin/Qt5{Core,Gui,Multimedia,Network,OpenGL,Qml,QmlModels,QmlWorkerScript,Quick,QuickWidgets,Sql,Svg,WebSockets,Widgets,WinExtras,Xml}d.dll .
   fi
 
+  if [ "ENABLE_SWH_PLUGINS" != "1" ]; then
+    log Copying LADSPA plugins
+    cmd tar -xJf "$HOME/swh-plugins-win64-0.4.15.tar.xz"
+  fi
+
   log Copying some libs from mlt-prebuilt
   cmd cp -p /mingw64/bin/.dll
 
@@ -1057,10 +1062,6 @@ function deploy
     cmd rm lib/qml/QtQuick/Templates.2/qtquicktemplates2plugind.dll
     cmd rm lib/qml/QtQuick/VirtualKeyboard/Styles/qtvirtualkeyboardstylesplugind.dll
     cmd rm lib/qml/QtScxml/declarative_scxmld.dll
-  fi
-  if [ "ENABLE_SWH_PLUGINS" != "1" ]; then
-    log Copying LADSPA plugins
-    cmd tar -xJf "$HOME/swh-plugins-win64-0.4.15.tar.xz"
   fi
   printf "[Paths]\nPlugins=lib/qt5\nQml2Imports=lib/qml\n" > qt.conf
 
