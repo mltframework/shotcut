@@ -46,6 +46,7 @@ Database::Database(QObject *parent) :
     QThread(parent)
     , m_commitTimer(0)
     , m_isFailing(false)
+    , m_isOpened(false)
 {
 }
 
@@ -60,7 +61,7 @@ Database &Database::singleton(QWidget *parent)
 
 bool Database::upgradeVersion1()
 {
-    if (!QSqlDatabase::database().isOpen()) return false;
+    if (!m_isOpened) return false;
     bool success = false;
     QSqlQuery query;
     if (query.exec("CREATE TABLE thumbnails (hash TEXT PRIMARY KEY NOT NULL, accessed DATETIME NOT NULL, image BLOB);")) {
@@ -123,7 +124,7 @@ void Database::commitTransaction()
 
 bool Database::putThumbnail(const QString& hash, const QImage& image)
 {
-    if (!QSqlDatabase::database().isOpen()) return false;
+    if (!m_isOpened) return false;
     DatabaseJob job;
     job.type = DatabaseJob::PutThumbnail;
     job.hash = hash;
@@ -149,7 +150,7 @@ void Database::submitAndWaitForJob(DatabaseJob * job)
 
 QImage Database::getThumbnail(const QString &hash)
 {
-    if (!QSqlDatabase::database().isOpen()) return QImage();
+    if (!m_isOpened) return QImage();
     DatabaseJob job;
     job.type = DatabaseJob::GetThumbnail;
     job.hash = hash;
@@ -193,7 +194,7 @@ void Database::run()
 
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName(dir.filePath("db.sqlite3"));
-    db.open();
+    m_isOpened = db.open();
 
     m_commitTimer = new QTimer();
     m_commitTimer->setSingleShot(true);

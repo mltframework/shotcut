@@ -57,6 +57,7 @@ private:
     QWaitCondition m_waitForNewJob;
     QTimer * m_commitTimer;
     bool m_isFailing;
+    bool m_isOpened;
 };
 
 #define DB Database::singleton()
