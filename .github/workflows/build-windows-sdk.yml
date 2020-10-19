@@ -80,7 +80,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
-          name: windows-portable
+          name: windows-sdk
           path: ./build/shotcut-win64-sdk-*.zip
 
       - name: Upload packages to S3
