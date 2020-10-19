@@ -985,6 +985,7 @@ function deploy
   cmd cp -pr "$QTDIR"/plugins/{audio,generic,iconengines,imageformats,mediaservice,platforminputcontexts,platforms,sqldrivers} lib/qt5
   cmd cp -pr "$QTDIR"/qml lib
   sed -i "s/onClicked()/onClicked(mouse)/" lib/qml/QtQuick/Controls/Private/EditMenu_base.qml
+  cmd rm lib/qml/QtQuick/Controls/Private/EditMenu_base.qmlc
   cmd cp -pr "$QTDIR"/translations/qt_*.qm share/translations
   cmd cp -pr "$QTDIR"/translations/qtbase_*.qm share/translations
 
