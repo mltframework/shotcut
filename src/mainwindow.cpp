@@ -1873,6 +1873,13 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
             m_filtersDock->openFilterMenu();
         } else if (event->modifiers() == Qt::ShiftModifier) {
             filterController()->removeCurrent();
+#ifdef Q_OS_MAC
+        } else if ((event->modifiers() & Qt::ControlModifier) && (event->modifiers() & Qt::MetaModifier)) {
+            on_actionEnter_Full_Screen_triggered();
+#else
+        } else if ((event->modifiers() & Qt::ControlModifier) && (event->modifiers() & Qt::ShiftModifier)) {
+            on_actionEnter_Full_Screen_triggered();
+#endif
         } else {
             handled = false;
         }
