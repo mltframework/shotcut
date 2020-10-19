@@ -45,10 +45,18 @@ Rectangle {
             tracksRepeater.itemAt(i).redrawWaveforms(false)
     }
 
+    Timer {
+        id: scrollZoomTimer
+        interval: 100
+        onTriggered: {
+            Logic.scrollIfNeeded(true)
+        }
+    }
+
     function adjustZoom(by, targetX) {
         setZoom(toolbar.scaleSlider.value + by, targetX)
         if (settings.timelineScrollZoom)
-            Logic.scrollIfNeeded()
+            scrollZoomTimer.restart()
     }
 
     function zoomIn() {

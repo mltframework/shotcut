@@ -15,10 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-function scrollIfNeeded() {
+function scrollIfNeeded(center) {
     var x = timeline.position * multitrack.scaleFactor;
     if (!scrollView) return;
-    if (settings.timelineCenterPlayhead) {
+    if (settings.timelineCenterPlayhead || center) {
         if (x > scrollView.flickableItem.contentX + scrollView.width * 0.5)
             scrollView.flickableItem.contentX = x - scrollView.width * 0.5;
         else if (x < scrollView.width * 0.5)
