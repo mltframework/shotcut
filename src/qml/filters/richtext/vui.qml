@@ -181,6 +181,13 @@ VuiBase {
                 }
                 onContentWidthChanged: updateTextSize()
                 onContentHeightChanged: updateTextSize()
+                Keys.onPressed: {
+                    if (event.key === Qt.Key_V && (event.modifiers & Qt.ShiftModifier) &&
+                        (event.modifiers & Qt.ControlModifier || event.modifiers & Qt.MetaModifier)) {
+                        event.accepted = true
+                        document.pastePlain()
+                    }
+                }
             }
 
             ToolBar {
@@ -433,6 +440,7 @@ VuiBase {
     Action {
         id: pastePlainAction
         text: qsTr('Paste Text Only')
+        shortcut: 'ctrl+shift+v'
         onTriggered: document.pastePlain()
     }
     Action {
