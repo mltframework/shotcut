@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2019 Meltytech, LLC
+ * Copyright (c) 2011-2020 Meltytech, LLC
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -90,6 +90,7 @@ public:
     QImage image() const;
     void requestImage() const;
     bool snapToGrid() const { return m_snapToGrid; }
+    int maxTextureSize() const { return m_maxTextureSize; }
 
 public slots:
     void onFrameDisplayed(const SharedFrame& frame);
@@ -147,6 +148,7 @@ private:
     bool m_snapToGrid;
     QTimer m_refreshTimer;
     bool m_scrubAudio;
+    GLint m_maxTextureSize;
 
     static void on_frame_show(mlt_consumer, void* self, mlt_frame frame);
 

@@ -39,6 +39,7 @@ class QmlApplication : public QObject
     Q_PROPERTY(QRect mainWinRect READ mainWinRect);
     Q_PROPERTY(bool hasFiltersOnClipboard READ hasFiltersOnClipboard NOTIFY filtersCopied)
     Q_PROPERTY(qreal devicePixelRatio READ devicePixelRatio CONSTANT)
+    Q_PROPERTY(int maxTextureSize READ maxTextureSize CONSTANT)
 
 public:
     static QmlApplication& singleton();
@@ -57,6 +58,7 @@ public:
     Q_INVOKABLE static bool isProjectFolder();
     static qreal devicePixelRatio();
     Q_INVOKABLE void showStatusMessage(const QString& message, int timeoutSeconds = 5);
+    static int maxTextureSize();
 
 signals:
     void paletteChanged();

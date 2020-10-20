@@ -20,6 +20,7 @@
 #include "mltcontroller.h"
 #include "controllers/filtercontroller.h"
 #include "models/attachedfiltersmodel.h"
+#include "glwidget.h"
 #include <QApplication>
 #include <QSysInfo>
 #include <QCursor>
@@ -162,4 +163,10 @@ qreal QmlApplication::devicePixelRatio()
 void QmlApplication::showStatusMessage(const QString& message, int timeoutSeconds)
 {
     MAIN.showStatusMessage(message, timeoutSeconds);
+}
+
+int QmlApplication::maxTextureSize()
+{
+    Mlt::GLWidget* glw = qobject_cast<Mlt::GLWidget*>(MLT.videoWidget());
+    return glw? glw->maxTextureSize() : 0;
 }

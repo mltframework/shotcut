@@ -102,7 +102,9 @@ class TimelineWaveform : public QQuickPaintedItem
 public:
     TimelineWaveform()
     {
-        setAntialiasing(QPainter::Antialiasing);
+        setAntialiasing(false);
+        setOpaquePainting(true);
+        setRenderTarget(QQuickPaintedItem::FramebufferObject);
         connect(this, SIGNAL(propertyChanged()), this, SLOT(update()));
     }
 

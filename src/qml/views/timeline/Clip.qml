@@ -159,7 +159,7 @@ Rectangle {
         anchors.bottom: parent.bottom
         anchors.margins: parent.border.width
         opacity: isTrackMute ? 0.2 : 0.7
-        property int maxWidth: 10000
+        property int maxWidth: Math.max(application.maxTextureSize / 2, 2048)
         property int innerWidth: clipRoot.width - clipRoot.border.width * 2
 
         Repeater {

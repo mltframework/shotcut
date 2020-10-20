@@ -136,6 +136,8 @@ void GLWidget::initializeGL()
     LOG_INFO() << "OpenGL renderer" << QString::fromUtf8((const char*) glGetString(GL_RENDERER));
     LOG_INFO() << "OpenGL threaded?" << quickWindow()->openglContext()->supportsThreadedOpenGL();
     LOG_INFO() << "OpenGL ES?" << quickWindow()->openglContext()->isOpenGLES();
+    glGetIntegerv(GL_MAX_TEXTURE_SIZE, &m_maxTextureSize);
+    LOG_INFO() << "OpenGL maximum texture size =" << m_maxTextureSize;
 
     if (m_glslManager && quickWindow()->openglContext()->isOpenGLES()) {
         delete m_glslManager;
