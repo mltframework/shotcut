@@ -172,7 +172,6 @@ MainWindow::MainWindow()
 #ifndef Q_OS_WIN
     new GLTestWidget(this);
 #endif
-    Database::singleton(this);
     m_autosaveTimer.setSingleShot(true);
     m_autosaveTimer.setInterval(AUTOSAVE_TIMEOUT_MS);
     connect(&m_autosaveTimer, SIGNAL(timeout()), this, SLOT(onAutosaveTimeout()));
@@ -2540,6 +2539,7 @@ void MainWindow::showEvent(QShowEvent* event)
     on_actionShowSmallIcons_toggled(Settings.smallIcons());
 
     windowHandle()->installEventFilter(this);
+    Database::singleton(this);
 
 #ifndef SHOTCUT_NOUPGRADE
     if (!Settings.noUpgrade() && !qApp->property("noupgrade").toBool())
