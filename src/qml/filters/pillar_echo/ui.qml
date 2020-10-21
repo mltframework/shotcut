@@ -32,12 +32,12 @@ Item {
 
     Component.onCompleted: {
         filter.blockSignals = true
-        filter.set(middleValue, Qt.rect(0, 0, profile.width, profile.height))
-        filter.set(startValue, Qt.rect(0, 0, profile.width, profile.height))
-        filter.set(endValue, Qt.rect(0, 0, profile.width, profile.height))
+        var rect = defaultRect()
+        filter.set(middleValue, rect)
+        filter.set(startValue, rect)
+        filter.set(endValue, rect)
         if (filter.isNew) {
             // Add default preset.
-            var rect = defaultRect()
             filter.set(rectProperty, '' + rect.x + '/' + rect.y + ':' + rect.width + 'x' + rect.height)
             filter.set("blur", 4)
             filter.savePreset(preset.parameters)

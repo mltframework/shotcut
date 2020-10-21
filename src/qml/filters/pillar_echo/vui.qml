@@ -21,7 +21,7 @@ import Shotcut.Controls 1.0
 VuiBase {
     property string rectProperty: 'rect'
     property real zoom: (video.zoom > 0)? video.zoom : 1.0
-    property rect filterRect
+    property rect filterRect: Qt.rect(-1, -1, -1, -1)
     property bool blockUpdate: false
     property string startValue: '_shotcut:startValue'
     property string middleValue: '_shotcut:middleValue'
@@ -29,8 +29,6 @@ VuiBase {
 
     Component.onCompleted: {
         application.showStatusMessage(qsTr('Click in rectangle + hold Shift to drag'))
-        filterRect = filter.getRect(rectProperty, getPosition())
-        rectangle.setHandles(filterRect)
         setRectangleControl()
     }
 
@@ -119,7 +117,10 @@ VuiBase {
 
     Connections {
         target: filter
-        onChanged: setRectangleControl()
+        onChanged: {
+            setRectangleControl()
+            videoItem.enabled = filter.get('disable') !== '1'
+        }
     }
 
     Connections {
