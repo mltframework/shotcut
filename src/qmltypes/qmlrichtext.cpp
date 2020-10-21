@@ -373,6 +373,9 @@ void QmlRichText::setFontFamily(const QString &arg)
         return;
     QTextCharFormat format;
     format.setFontFamily(arg);
+    // Below is needed for Qt 5.15.1 on Windows.
+    // See https://bugreports.qt.io/browse/QTBUG-80475
+    format.setFontFamilies({arg});
     mergeFormatOnWordOrSelection(format);
     emit fontFamilyChanged();
 }
