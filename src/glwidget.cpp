@@ -138,6 +138,9 @@ void GLWidget::initializeGL()
     LOG_INFO() << "OpenGL ES?" << quickWindow()->openglContext()->isOpenGLES();
     glGetIntegerv(GL_MAX_TEXTURE_SIZE, &m_maxTextureSize);
     LOG_INFO() << "OpenGL maximum texture size =" << m_maxTextureSize;
+    GLint dims[2];
+    glGetIntegerv(GL_MAX_VIEWPORT_DIMS, &dims[0]);
+    LOG_INFO() << "OpenGL maximum viewport size =" << dims[0] << "x" << dims[1];
 
     if (m_glslManager && quickWindow()->openglContext()->isOpenGLES()) {
         delete m_glslManager;
