@@ -60,6 +60,9 @@ Rectangle {
 
                 for (var i = 0; i < tracksRepeater.count; i++)
                     tracksRepeater.itemAt(i).redrawWaveforms(false)
+
+                if (settings.timelineScrollZoom)
+                    scrollZoomTimer.restart()
             }
         }
     }
