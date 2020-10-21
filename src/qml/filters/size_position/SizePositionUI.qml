@@ -37,6 +37,7 @@ Item {
     property string rotationMiddleValue: '_shotcut:rotationMiddleValue'
     property string rotationEndValue:  '_shotcut:rotationEndValue'
     property bool blockUpdate: true
+    property rect defaultRect
 
     width: 425
     height: 250
@@ -50,6 +51,17 @@ Item {
         filter.set(middleValue, Qt.rect(0, 0, profile.width, profile.height))
         filter.set(startValue, Qt.rect(0, 0, profile.width, profile.height))
         filter.set(endValue, Qt.rect(0, 0, profile.width, profile.height))
+        // Compute the default rectangle used also for parameter undos
+        // Enforce the aspect ratio for fill mode
+        if (producer.displayAspectRatio > profile.aspectRatio) {
+            defaultRect.width = profile.width
+            defaultRect.height = defaultRect.width / producer.displayAspectRatio
+        } else {
+            defaultRect.height = profile.height
+            defaultRect.width = defaultRect.height * producer.displayAspectRatio
+        }
+        defaultRect.x = Math.round((profile.width - defaultRect.width) / 2)
+        defaultRect.y = Math.round((profile.height - defaultRect.height) / 2)
         if (filter.isNew) {
             filter.set(fillProperty, 0)
             filter.set(distortProperty, 0)
@@ -190,9 +202,10 @@ Item {
             filter.resetProperty(rectProperty)
 
             // Add default preset.
-            filter.set(rectProperty,   '0%/0%:100%x100%')
             if (backgroundProperty)
                 filter.set(backgroundProperty, 'color:#00000000')
+            filter.set(rectProperty, defaultRect)
+            filter.get(rectProperty)
             filter.savePreset(preset.parameters)
         } else {
             if (legacyRectProperty !== null) {
@@ -222,6 +235,10 @@ Item {
 
     function getPosition() {
         return Math.max(producer.position - (filter.in - producer.in), 0)
+    }
+
+    function isFitMode() {
+        return filter.get(fillProperty) === '0' && filter.get(distortProperty) === '0'
     }
 
     function isFillMode() {
@@ -337,7 +354,7 @@ Item {
         if (filterRect !== newValue) {
             if (isFillMode()) {
                 // enforce the aspect ratio
-                if (producer.displayAspectRatio > 1.0) {
+                if (producer.displayAspectRatio > profile.aspectRatio) {
                     newValue.height = newValue.width / producer.displayAspectRatio
                 } else {
                     newValue.width = newValue.height * producer.displayAspectRatio
@@ -361,7 +378,6 @@ Item {
         rectY.enabled = enabled
         rectW.enabled = enabled
         rectH.enabled = enabled
-        scaleSlider.enabled = enabled && filter.get(fillProperty) === '1' && filter.get(distortProperty) !== '1'
     }
 
     function toggleKeyframes(isEnabled, parameter, value) {
@@ -466,26 +482,42 @@ Item {
         }
         UndoButton {
             onClicked: {
-                rectX.value = rectY.value = 0
-                filterRect.x = filterRect.y = 0
+                filterRect.x = rectX.value = defaultRect.x
+                filterRect.y = rectY.value = defaultRect.y
                 setFilter(getPosition())
             }
         }
-        KeyframesButton {
-            id: positionKeyframesButton
-            Layout.rowSpan: 2
-            checked: filter.keyframeCount(rectProperty) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
-            onToggled: {
-                if (checked) {
-                    blockUpdate = true
-                    filter.clearSimpleAnimation(rectProperty)
-                    blockUpdate = false
-                    filter.set(rectProperty, filterRect, 1.0, getPosition())
-                } else {
-                    filter.resetProperty(rectProperty)
-                    filter.set(rectProperty, filterRect)
+        ColumnLayout {
+            Layout.rowSpan: 3
+            height: positionKeyframesButton.height * 3
+            SystemPalette { id: activePalette }
+            Rectangle {
+                color: activePalette.text
+                width: 1
+                height: positionKeyframesButton.height
+                anchors.horizontalCenter: positionKeyframesButton.horizontalCenter
+            }
+            KeyframesButton {
+                id: positionKeyframesButton
+                checked: filter.keyframeCount(rectProperty) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
+                onToggled: {
+                    if (checked) {
+                        blockUpdate = true
+                        filter.clearSimpleAnimation(rectProperty)
+                        blockUpdate = false
+                        filter.set(rectProperty, filterRect, 1.0, getPosition())
+                    } else {
+                        filter.resetProperty(rectProperty)
+                        filter.set(rectProperty, filterRect)
+                    }
+                    checked = filter.keyframeCount(rectProperty) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
                 }
-                checked = filter.keyframeCount(rectProperty) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
+            }
+            Rectangle {
+                color: activePalette.text
+                width: 1
+                height: positionKeyframesButton.height
+                anchors.horizontalCenter: positionKeyframesButton.horizontalCenter
             }
         }
 
@@ -513,20 +545,19 @@ Item {
                         } else if (rightRadioButton.checked) {
                             filterRect.x = rectX.value = rightX - filterRect.width
                         }
-                        if (fillRadioButton.checked) {
-                            var middleY = filterRect.y + filterRect.height / 2
-                            var bottomY = filterRect.y + filterRect.height
-                            filterRect.height = rectH.value = Math.round(value / producer.displayAspectRatio)
-                            if (middleRadioButton.checked) {
-                                filterRect.y = rectY.value = middleY - filterRect.height / 2
-                            }
-                            else if (bottomRadioButton.checked) {
-                                filterRect.y = rectY.value = bottomY - filterRect.height
-                            }
-                            blockUpdate = true
-                            scaleSlider.value = Math.min(rectW.value / profile.width * 100, scaleSlider.maximumValue)
-                            blockUpdate = false
+                        var aspectRatio = filterRect.width / filterRect.height
+                        var middleY = filterRect.y + filterRect.height / 2
+                        var bottomY = filterRect.y + filterRect.height
+                        filterRect.height = rectH.value = Math.round(value / aspectRatio)
+                        if (middleRadioButton.checked) {
+                            filterRect.y = rectY.value = middleY - filterRect.height / 2
                         }
+                        else if (bottomRadioButton.checked) {
+                            filterRect.y = rectY.value = bottomY - filterRect.height
+                        }
+                        blockUpdate = true
+                        scaleSlider.value = Math.min(rectW.value / profile.width * 100, scaleSlider.maximumValue)
+                        blockUpdate = false
                         setFilter(getPosition())
                     }
                 }
@@ -550,20 +581,19 @@ Item {
                         } else if (bottomRadioButton.checked) {
                             filterRect.y = rectY.value = bottomY - filterRect.height
                         }
-                        if (fillRadioButton.checked) {
-                            var centerX = filterRect.x + filterRect.width / 2
-                            var rightX = filterRect.x + filterRect.width
-                            filterRect.width = rectW.value = Math.round(value * producer.displayAspectRatio)
-                            if (centerRadioButton.checked) {
-                                filterRect.x = rectX.value = centerX - filterRect.width / 2
-                            }
-                            else if (rightRadioButton.checked) {
-                                filterRect.x = rectX.value = rightX - filterRect.width
-                            }
-                            blockUpdate = true
-                            scaleSlider.value = Math.min(filterRect.width / profile.width * 100, scaleSlider.maximumValue)
-                            blockUpdate = false
+                        var aspectRatio = filterRect.width / filterRect.height
+                        var centerX = filterRect.x + filterRect.width / 2
+                        var rightX = filterRect.x + filterRect.width
+                        filterRect.width = rectW.value = Math.round(value * aspectRatio)
+                        if (centerRadioButton.checked) {
+                            filterRect.x = rectX.value = centerX - filterRect.width / 2
                         }
+                        else if (rightRadioButton.checked) {
+                            filterRect.x = rectX.value = rightX - filterRect.width
+                        }
+                        blockUpdate = true
+                        scaleSlider.value = Math.min(filterRect.width / profile.width * 100, scaleSlider.maximumValue)
+                        blockUpdate = false
                         setFilter(getPosition())
                     }
                 }
@@ -572,16 +602,8 @@ Item {
         UndoButton {
             id: sizeUndoButton
             onClicked: {
-                filterRect.width = rectW.value = profile.width
-                filterRect.height = rectH.value = profile.height
-                if (isFillMode()) {
-                    // enforce the aspect ratio
-                    if (producer.displayAspectRatio > 1.0) {
-                        filterRect.height = rectH.value = filterRect.width / producer.displayAspectRatio
-                    } else {
-                        filterRect.width = rectW.value = filterRect.height * producer.displayAspectRatio
-                    }
-                }
+                filterRect.width = rectW.value = defaultRect.width
+                filterRect.height = rectH.value = defaultRect.height
                 scaleSlider.value = Math.min(filterRect.width / profile.width * 100, scaleSlider.maximumValue)
                 setFilter(getPosition())
             }
@@ -593,7 +615,6 @@ Item {
         }
         SliderSpinner {
             id: scaleSlider
-            enabled: fillRadioButton.checked
             Layout.columnSpan: 3
             minimumValue: 0.1
             maximumValue: 1000
@@ -601,6 +622,7 @@ Item {
             suffix: ' %'
             onValueChanged: {
                 if (!blockUpdate && Math.abs(value - filterRect.width * 100 / profile.width) > 0.1) {
+                    var aspectRatio = filterRect.width / filterRect.height
                     var centerX = filterRect.x + filterRect.width / 2
                     var rightX = filterRect.x + filterRect.width
                     filterRect.width = rectW.value = (profile.width * scaleSlider.value / 100)
@@ -611,7 +633,7 @@ Item {
                     }
                     var middleY = filterRect.y + filterRect.height / 2
                     var bottomY = filterRect.y + filterRect.height
-                    filterRect.height = rectH.value = Math.round(filterRect.width / producer.displayAspectRatio)
+                    filterRect.height = rectH.value = Math.round(filterRect.width / aspectRatio)
                     if (middleRadioButton.checked) {
                         filterRect.y = rectY.value = middleY - filterRect.height / 2
                     } else if (bottomRadioButton.checked) {
@@ -624,11 +646,14 @@ Item {
         UndoButton {
             enabled: scaleSlider.enabled
             onClicked: {
-                var width = (producer.displayAspectRatio > 1.0)? profile.width : profile.height * producer.displayAspectRatio
-                scaleSlider.value = Math.min(width / profile.width * 100, scaleSlider.maximumValue)
+                if (isFitMode()) {
+                    scaleSlider.value = 100
+                } else {
+                    var width = (producer.displayAspectRatio > 1.0)? profile.width : profile.height * producer.displayAspectRatio
+                    scaleSlider.value = Math.min(width / profile.width * 100, scaleSlider.maximumValue)
+                }
             }
         }
-        Label { text: '<small>' + qsTr('(Fill only)') + '</small>' }
 
         Label {
             text: qsTr('Size mode')
@@ -650,6 +675,13 @@ Item {
             onClicked: {
                 filter.set(fillProperty, 1)
                 filter.set(distortProperty, 0)
+                // enforce the aspect ratio
+                if (producer.displayAspectRatio > profile.aspectRatio) {
+                    filterRect.height = rectH.value = filterRect.width / producer.displayAspectRatio
+                } else {
+                    filterRect.width = rectW.value = filterRect.height * producer.displayAspectRatio
+                }
+                setFilter(getPosition())
             }
         }
         RadioButton {
@@ -663,8 +695,8 @@ Item {
         }
         UndoButton {
             onClicked: {
-                fillRadioButton.checked = true
-                filter.set(fillProperty, 1)
+                fitRadioButton.checked = true
+                filter.set(fillProperty, 0)
                 filter.set(distortProperty, 0)
             }
         }

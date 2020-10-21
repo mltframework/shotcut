@@ -136,6 +136,7 @@ VuiBase {
 
     function updateScale(scale) {
         if (Math.abs(scale - filterRect.width / profile.width) > 0.01) {
+            var aspectRatio = filterRect.width / filterRect.height
             var align = filter.get(halignProperty)
             var centerX = filterRect.x + filterRect.width / 2
             var rightX = filterRect.x + filterRect.width
@@ -148,7 +149,7 @@ VuiBase {
             var middleY = filterRect.y + filterRect.height / 2
             var bottomY = filterRect.y + filterRect.height
             align = filter.get(valignProperty)
-            filterRect.height = Math.round(filterRect.width / rectangle.aspectRatio)
+            filterRect.height = Math.round(filterRect.width / aspectRatio)
             if (align === 'center' || align === 'middle') {
                 filterRect.y = middleY - filterRect.height / 2
             } else if (align === 'bottom') {
@@ -157,10 +158,6 @@ VuiBase {
             rectangle.setHandles(filterRect)
             setFilter(getPosition())
         }
-    }
-
-    function isFillMode() {
-        return filter.get(fillProperty) === '1' && filter.get(distortProperty) !== '1'
     }
 
     function snapRotation(degrees, strength) {
@@ -198,7 +195,7 @@ VuiBase {
                 blockUpdate = false
             }
             // Pinch zoom conflicts too much with mouse wheel
-//            if (!blockUpdate && isFillMode()) {
+//            if (!blockUpdate) {
 //                var scale = currentScale + (pinch.scale - 2) / 3
 //                if (Math.abs(scale - 1.0) < 0.05)
 //                    scale = 1.0
@@ -219,7 +216,7 @@ VuiBase {
                     blockUpdate = true
                     updateRotation(rectangle.rotation % 360)
                     blockUpdate = false
-                } else if (!blockUpdate && isFillMode()) {
+                } else if (!blockUpdate) {
                     var scale = filterRect.width / profile.width
                     scale += wheel.angleDelta.y / 120 / 10
                     updateScale(Math.min(scale, 10))
