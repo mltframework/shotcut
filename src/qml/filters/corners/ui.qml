@@ -307,41 +307,57 @@ KeyframableFilter {
         UndoButton {
             onClicked: setSliderValue(corner1xSlider, corner1xDefault)
         }
-        KeyframesButton {
-            id: corner1KeyframesButton
+        ColumnLayout {
             Layout.rowSpan: 8
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(corner1xProperty) > 0
-            onToggled: {
-                toggleKeyframes(checked, corner1xProperty, corners[0].x)
-                toggleKeyframes(checked, corner1yProperty, corners[0].y)
-                toggleKeyframes(checked, corner2xProperty, corners[1].x)
-                toggleKeyframes(checked, corner2yProperty, corners[1].y)
-                toggleKeyframes(checked, corner3xProperty, corners[2].x)
-                toggleKeyframes(checked, corner3yProperty, corners[2].y)
-                toggleKeyframes(checked, corner4xProperty, corners[3].x)
-                toggleKeyframes(checked, corner4yProperty, corners[3].y)
-                for (var i in corners) {
-                    if (checked) {
-                        blockUpdate = true
-                        if (filter.animateIn > 0 || filter.animateOut > 0) {
-                            // Reset all of the simple keyframes.
-                            resetSimpleKeyframes()
-                            filter.animateIn = 0
-                            blockUpdate = false
-                            filter.animateOut = 0
+            height: corner1KeyframesButton.height * Layout.rowSpan
+            SystemPalette { id: activePalette }
+            Rectangle {
+                color: activePalette.text
+                width: 1
+                height: parent.height / 2
+                anchors.horizontalCenter: corner1KeyframesButton.horizontalCenter
+            }
+            KeyframesButton {
+                id: corner1KeyframesButton
+                checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(corner1xProperty) > 0
+                onToggled: {
+                    toggleKeyframes(checked, corner1xProperty, corners[0].x)
+                    toggleKeyframes(checked, corner1yProperty, corners[0].y)
+                    toggleKeyframes(checked, corner2xProperty, corners[1].x)
+                    toggleKeyframes(checked, corner2yProperty, corners[1].y)
+                    toggleKeyframes(checked, corner3xProperty, corners[2].x)
+                    toggleKeyframes(checked, corner3yProperty, corners[2].y)
+                    toggleKeyframes(checked, corner4xProperty, corners[3].x)
+                    toggleKeyframes(checked, corner4yProperty, corners[3].y)
+                    for (var i in corners) {
+                        if (checked) {
+                            blockUpdate = true
+                            if (filter.animateIn > 0 || filter.animateOut > 0) {
+                                // Reset all of the simple keyframes.
+                                resetSimpleKeyframes()
+                                filter.animateIn = 0
+                                blockUpdate = false
+                                filter.animateOut = 0
+                            } else {
+                                filter.clearSimpleAnimation(cornerProperties[i])
+                                blockUpdate = false
+                            }
+                            // Set this keyframe value.
+                            filter.set(cornerProperties[i], corners[i], 1.0, getPosition())
                         } else {
-                            filter.clearSimpleAnimation(cornerProperties[i])
-                            blockUpdate = false
+                            // Remove keyframes and set the parameter.
+                            filter.resetProperty(cornerProperties[i])
+                            filter.set(cornerProperties[i], corners[i])
                         }
-                        // Set this keyframe value.
-                        filter.set(cornerProperties[i], corners[i], 1.0, getPosition())
-                    } else {
-                        // Remove keyframes and set the parameter.
-                        filter.resetProperty(cornerProperties[i])
-                        filter.set(cornerProperties[i], corners[i])
                     }
+                    setControls()
                 }
-                setControls()
+            }
+            Rectangle {
+                color: activePalette.text
+                width: 1
+                height: parent.height / 2
+                anchors.horizontalCenter: corner1KeyframesButton.horizontalCenter
             }
         }
 
