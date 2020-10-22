@@ -590,7 +590,7 @@ void ShotcutSettings::setTimelineTrackHeight(int n)
 
 bool ShotcutSettings::timelineScrollZoom() const
 {
-    return settings.value("timeline/scrollZoom", false).toBool();
+    return settings.value("timeline/scrollZoom", true).toBool();
 }
 
 void ShotcutSettings::setTimelineScrollZoom(bool b)
