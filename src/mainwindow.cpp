@@ -4268,7 +4268,10 @@ void MainWindow::on_actionLayoutAdd_triggered()
 
 void MainWindow::onLayoutTriggered(QAction* action)
 {
-    Settings.setLayoutMode();
+    if (Settings.layoutMode() != LayoutMode::Custom) {
+        Settings.setLayout(QString(kReservedLayoutPrefix).arg(Settings.layoutMode()), QByteArray(), saveState());
+        Settings.setLayoutMode(LayoutMode::Custom);
+    }
     clearCurrentLayout();
     restoreState(Settings.layoutState(action->text()));
     Settings.setWindowState(saveState());
