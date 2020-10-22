@@ -21,6 +21,7 @@
 #include <QString>
 #include <QPalette>
 #include <QUrl>
+#include <QFileDialog>
 #include <MltProperties.h>
 
 class QWidget;
@@ -55,6 +56,7 @@ public:
     static QString getFileHash(const QString& path);
     static QString getHash(Mlt::Properties& properties);
     static bool hasDriveLetter(const QString& path);
+    static QFileDialog::Options getFileDialogOptions();
 };
 
 #endif // UTIL_H

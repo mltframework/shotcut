@@ -62,7 +62,8 @@ void EncodeJob::onVideoQualityTriggered()
     QString directory = Settings.encodePath();
     QString caption = tr("Video Quality Report");
     QString nameFilter = tr("Text Documents (*.txt);;All Files (*)");
-    QString reportPath= QFileDialog::getSaveFileName(&MAIN, caption, directory, nameFilter);
+    QString reportPath= QFileDialog::getSaveFileName(&MAIN, caption, directory, nameFilter,
+        nullptr, Util::getFileDialogOptions());
     if (!reportPath.isEmpty()) {
         QFileInfo fi(reportPath);
         if (fi.suffix().isEmpty())
@@ -121,7 +122,8 @@ void EncodeJob::onSpatialMediaTriggered()
             .arg(Settings.encodePath())
             .arg(info.completeBaseName())
             .arg(info.suffix());
-    QString filePath = QFileDialog::getSaveFileName(&MAIN, caption, directory);
+    QString filePath = QFileDialog::getSaveFileName(&MAIN, caption, directory, QString(),
+        nullptr, Util::getFileDialogOptions());
     if (!filePath.isEmpty()) {
         if (SpatialMedia::injectSpherical(objectName().toStdString(), filePath.toStdString())) {
             MAIN.showStatusMessage(tr("Successfully wrote %1").arg(QFileInfo(filePath).fileName()));

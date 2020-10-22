@@ -1407,7 +1407,8 @@ void EncodeDock::on_encodeButton_clicked()
         nameFilter = tr("%1 (*.%2);;All Files (*)").arg(ui->formatCombo->currentText()).arg(m_extension);
     else
         tr("Determined by Export (*)");
-    m_outputFilename = QFileDialog::getSaveFileName(this, caption, directory, nameFilter);
+    m_outputFilename = QFileDialog::getSaveFileName(this, caption, directory, nameFilter,
+        nullptr, Util::getFileDialogOptions());
     if (!m_outputFilename.isEmpty()) {
         QFileInfo fi(m_outputFilename);
         MLT.pause();

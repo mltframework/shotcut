@@ -192,7 +192,8 @@ void LumaMixTransition::on_lumaCombo_activated(int index)
 #ifdef Q_OS_MAC
             path.append("/*");
 #endif
-            QString filename = QFileDialog::getOpenFileName(this, tr("Open File"), path);
+            QString filename = QFileDialog::getOpenFileName(this, tr("Open File"), path,
+                    QString(), nullptr, Util::getFileDialogOptions());
             activateWindow();
             if (!filename.isEmpty()) {
                 transition->set("resource", filename.toUtf8().constData());

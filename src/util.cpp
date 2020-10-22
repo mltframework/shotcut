@@ -31,6 +31,7 @@
 #include <QTemporaryFile>
 #include <QApplication>
 #include <QCryptographicHash>
+#include <QtGlobal>
 
 #include <MltProducer.h>
 #include <Logger.h>
@@ -425,4 +426,14 @@ bool Util::hasDriveLetter(const QString& path)
 {
     auto driveSeparators = path.midRef(1, 2);
     return driveSeparators == ":/" || driveSeparators == ":\\";
+}
+
+QFileDialog::Options Util::getFileDialogOptions()
+{
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
+    if (qEnvironmentVariableIsSet("SNAP")) {
+        return QFileDialog::DontUseNativeDialog;
+    }
+#endif
+    return QFileDialog::Options();
 }

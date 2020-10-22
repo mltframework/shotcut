@@ -1425,8 +1425,9 @@ void MainWindow::openVideo()
 #ifdef Q_OS_MAC
     path.append("/*");
 #endif
+    LOG_DEBUG() << Util::getFileDialogOptions();
     QStringList filenames = QFileDialog::getOpenFileNames(this, tr("Open File"), path,
-        tr("All Files (*);;MLT XML (*.mlt)"));
+        tr("All Files (*);;MLT XML (*.mlt)"), nullptr, Util::getFileDialogOptions());
 
     if (filenames.length() > 0) {
         Settings.setOpenPath(QFileInfo(filenames.first()).path());
@@ -2650,7 +2651,8 @@ bool MainWindow::on_actionSave_As_triggered()
     if (!m_currentFile.isEmpty())
         path = m_currentFile;
     QString caption = tr("Save XML");
-    QString filename = QFileDialog::getSaveFileName(this, caption, path, tr("MLT XML (*.mlt)"));
+    QString filename = QFileDialog::getSaveFileName(this, caption, path,
+        tr("MLT XML (*.mlt)"), nullptr, Util::getFileDialogOptions());
     if (!filename.isEmpty()) {
         QFileInfo fi(filename);
         Settings.setSavePath(fi.path());
@@ -3750,7 +3752,7 @@ void MainWindow::on_actionOpenXML_triggered()
     path.append("/*");
 #endif
     QStringList filenames = QFileDialog::getOpenFileNames(this, tr("Open File"), path,
-        tr("MLT XML (*.mlt);;All Files (*)"));
+        tr("MLT XML (*.mlt);;All Files (*)"), nullptr, Util::getFileDialogOptions());
     if (filenames.length() > 0) {
         QString url = filenames.first();
         MltXmlChecker checker;
@@ -3959,7 +3961,8 @@ void MainWindow::on_actionExportEDL_triggered()
     // Dialog to get export file name.
     QString path = Settings.savePath();
     QString caption = tr("Export EDL");
-    QString saveFileName = QFileDialog::getSaveFileName(this, caption, path, tr("EDL (*.edl);;All Files (*)"));
+    QString saveFileName = QFileDialog::getSaveFileName(this, caption, path,
+        tr("EDL (*.edl);;All Files (*)"), nullptr, Util::getFileDialogOptions());
     if (!saveFileName.isEmpty()) {
         QFileInfo fi(saveFileName);
         if (fi.suffix() != "edl")
@@ -4038,7 +4041,8 @@ void MainWindow::onGLWidgetImageReady()
         QString path = Settings.savePath();
         QString caption = tr("Export Frame");
         QString nameFilter = tr("PNG (*.png);;BMP (*.bmp);;JPEG (*.jpg *.jpeg);;PPM (*.ppm);;TIFF (*.tif *.tiff);;WebP (*.webp);;All Files (*)");
-        QString saveFileName = QFileDialog::getSaveFileName(this, caption, path, nameFilter);
+        QString saveFileName = QFileDialog::getSaveFileName(this, caption, path, nameFilter,
+            nullptr, Util::getFileDialogOptions());
         if (!saveFileName.isEmpty()) {
             QFileInfo fi(saveFileName);
             if (fi.suffix().isEmpty())
@@ -4074,7 +4078,8 @@ void MainWindow::on_actionAppDataSet_triggered()
     dialog.setWindowModality(QmlApplication::dialogModality());
     if (dialog.exec() != QMessageBox::Yes) return;
 
-    QString dirName = QFileDialog::getExistingDirectory(this, tr("Data Directory"), Settings.appDataLocation());
+    QString dirName = QFileDialog::getExistingDirectory(this, tr("Data Directory"), Settings.appDataLocation(),
+        Util::getFileDialogOptions());
     if (!dirName.isEmpty()) {
         // Move the data files.
         QDirIterator it(Settings.appDataLocation());
@@ -4655,7 +4660,8 @@ void MainWindow::on_actionUseProxy_triggered(bool checked)
 void MainWindow::on_actionProxyStorageSet_triggered()
 {
     // Present folder dialog just like App Data Directory
-    QString dirName = QFileDialog::getExistingDirectory(this, tr("Proxy Folder"), Settings.proxyFolder());
+    QString dirName = QFileDialog::getExistingDirectory(this, tr("Proxy Folder"), Settings.proxyFolder(),
+        Util::getFileDialogOptions());
     if (!dirName.isEmpty() && dirName != Settings.proxyFolder()) {
         auto oldFolder = Settings.proxyFolder();
         Settings.setProxyFolder(dirName);

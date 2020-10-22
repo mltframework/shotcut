@@ -121,7 +121,8 @@ void NewProjectFolder::updateRecentProjects()
 
 void NewProjectFolder::on_projectsFolderButton_clicked()
 {
-    QString dirName = QFileDialog::getExistingDirectory(this, tr("Projects Folder"), Settings.projectsFolder());
+    QString dirName = QFileDialog::getExistingDirectory(this, tr("Projects Folder"), Settings.projectsFolder(),
+        Util::getFileDialogOptions());
     if (!dirName.isEmpty()) {
         setProjectFolderButtonText(dirName);
         Settings.setProjectsFolder(dirName);

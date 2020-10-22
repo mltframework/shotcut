@@ -790,7 +790,8 @@ void AvformatProducerWidget::convert(TranscodeDialog& dialog)
         }
         QFileInfo fi(resource);
         path = path.arg(fi.completeBaseName()).arg(tr("Converted"));
-        QString filename = QFileDialog::getSaveFileName(this, dialog.windowTitle(), path, nameFilter);
+        QString filename = QFileDialog::getSaveFileName(this, dialog.windowTitle(), path, nameFilter,
+            nullptr, Util::getFileDialogOptions());
         if (!filename.isEmpty()) {
             if (filename == QDir::toNativeSeparators(resource)) {
                 QMessageBox::warning(this, dialog.windowTitle(),
@@ -969,8 +970,10 @@ void AvformatProducerWidget::on_reverseButton_clicked()
         QFileInfo fi(resource);
         path = path.arg(fi.completeBaseName()).arg(tr("Reversed"));
         QString filename = QmlApplication::getNextProjectFile(path);
-        if (filename.isEmpty())
-            filename = QFileDialog::getSaveFileName(this, dialog.windowTitle(), path, nameFilter);
+        if (filename.isEmpty()) {
+            filename = QFileDialog::getSaveFileName(this, dialog.windowTitle(), path, nameFilter,
+                nullptr, Util::getFileDialogOptions());
+        }
         if (!filename.isEmpty()) {
             if (filename == QDir::toNativeSeparators(resource)) {
                 QMessageBox::warning(this, dialog.windowTitle(),
@@ -1038,7 +1041,8 @@ void AvformatProducerWidget::on_actionExtractSubclip_triggered()
     path = path.arg(fi.completeBaseName()).arg(tr("Sub-clip")).arg(fi.suffix());
     QString caption = tr("Extract Sub-clip...");
     QString nameFilter = tr("%1 (*.%2);;All Files (*)").arg(fi.suffix()).arg(fi.suffix());
-    QString filename = QFileDialog::getSaveFileName(this, caption, path, nameFilter);
+    QString filename = QFileDialog::getSaveFileName(this, caption, path, nameFilter,
+        nullptr, Util::getFileDialogOptions());
 
     if (!filename.isEmpty()) {
         if (filename == QDir::toNativeSeparators(resource)) {

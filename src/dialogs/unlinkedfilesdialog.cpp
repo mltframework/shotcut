@@ -53,7 +53,8 @@ void UnlinkedFilesDialog::on_tableView_doubleClicked(const QModelIndex& index)
 #ifdef Q_OS_MAC
     path.append("/*");
 #endif
-    QStringList filenames = QFileDialog::getOpenFileNames(this, tr("Open File"), path);
+    QStringList filenames = QFileDialog::getOpenFileNames(this, tr("Open File"), path,
+        QString(), nullptr, Util::getFileDialogOptions());
     if (filenames.length() > 0) {
         QAbstractItemModel* model = ui->tableView->model();
 
@@ -134,7 +135,8 @@ bool UnlinkedFilesDialog::lookInDir(const QDir& dir, bool recurse)
 
 void UnlinkedFilesDialog::on_searchFolderButton_clicked()
 {
-    QString dirName = QFileDialog::getExistingDirectory(this, windowTitle(), Settings.openPath());
+    QString dirName = QFileDialog::getExistingDirectory(this, windowTitle(), Settings.openPath(),
+        Util::getFileDialogOptions());
     if (!dirName.isEmpty()) {
         lookInDir(dirName);
     }
