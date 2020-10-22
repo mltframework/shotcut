@@ -26,6 +26,7 @@ class LongUiTask : public QProgressDialog
 {
 public:
     explicit LongUiTask(QString title);
+    ~LongUiTask();
 
     template <class Ret>
     Ret wait(QString text, const QFuture<Ret>& future)
@@ -48,6 +49,7 @@ public:
     }
 
     void reportProgress(QString text, int value, int max);
+    static void cancel();
 private:
 
 };

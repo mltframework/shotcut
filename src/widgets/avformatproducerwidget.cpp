@@ -31,6 +31,7 @@
 #include "Logger.h"
 #include "qmltypes/qmlapplication.h"
 #include "proxymanager.h"
+#include "dialogs/longuitask.h"
 #include <QtWidgets>
 
 static bool ProducerIsTimewarp( Mlt::Producer* producer )
@@ -516,10 +517,8 @@ void AvformatProducerWidget::onFrameDecoded()
     }
     ui->syncSlider->setValue(qRound(m_producer->get_double("video_delay") * 1000.0));
 
-    if (Settings.showConvertClipDialog()
-            && !m_producer->get_int(kShotcutSkipConvertProperty)
-            && !m_producer->get_int(kPlaylistIndexProperty)
-            && !m_producer->get(kMultitrackItemProperty)) {
+    if (Settings.showConvertClipDialog() && !m_producer->get_int(kShotcutSkipConvertProperty)) {
+        LongUiTask::cancel();
         m_producer->set(kShotcutSkipConvertProperty, true);
         if (isVariableFrameRate) {
             MLT.pause();
