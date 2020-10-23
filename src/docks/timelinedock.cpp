@@ -1095,7 +1095,7 @@ static QString convertUrlsToXML(const QString& xml)
         LongUiTask longTask(QObject::tr("Drop Files"));
         Mlt::Playlist playlist(MLT.profile());
         QList<QUrl> urls;
-        for (const auto& s : xml.split(',')) {
+        for (const auto& s : xml.split(",file://")) {
             QUrl url(s);
             urls << Util::removeFileScheme(url);
         }
@@ -1148,7 +1148,7 @@ void TimelineDock::insert(int trackIndex, int position, const QString &xml, bool
 
     // Handle drop from file manager to empty project.
     if ((!MLT.producer() || !MLT.producer()->is_valid()) && xml.startsWith("file://")) {
-        QUrl url = xml.split(',').first();
+        QUrl url = xml.split(",file://").first();
         MAIN.open(Util::removeFileScheme(url), nullptr, false /* play */ );
     }
 
@@ -1191,7 +1191,7 @@ void TimelineDock::overwrite(int trackIndex, int position, const QString &xml, b
 
     // Handle drop from file manager to empty project.
     if ((!MLT.producer() || !MLT.producer()->is_valid()) && xml.startsWith("file://")) {
-        QUrl url = xml.split(',').first();
+        QUrl url = xml.split(",file://").first();
         MAIN.open(Util::removeFileScheme(url), nullptr, false /* play */ );
     }
 
