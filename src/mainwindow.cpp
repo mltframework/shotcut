@@ -2312,8 +2312,8 @@ void MainWindow::buildVideoModeMenu(QMenu* topMenu, QMenu*& customMenu, QActionG
     topMenu->addAction(addProfile(group, "HD 1080p 25 fps", "atsc_1080p_25"));
     topMenu->addAction(addProfile(group, "HD 1080p 29.97 fps", "atsc_1080p_2997"));
     topMenu->addAction(addProfile(group, "HD 1080p 30 fps", "atsc_1080p_30"));
-    topMenu->addAction(addProfile(group, "HD 1080p 59.94 fps", "atsc_1080p_5994"));
     topMenu->addAction(addProfile(group, "HD 1080p 50 fps", "atsc_1080p_50"));
+    topMenu->addAction(addProfile(group, "HD 1080p 59.94 fps", "atsc_1080p_5994"));
     topMenu->addAction(addProfile(group, "HD 1080p 60 fps", "atsc_1080p_60"));
     topMenu->addAction(addProfile(group, "SD NTSC", "dv_ntsc"));
     topMenu->addAction(addProfile(group, "SD PAL", "dv_pal"));
