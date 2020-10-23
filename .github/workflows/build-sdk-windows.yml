@@ -1,4 +1,4 @@
-name: build-shotcut-windows-sdk
+name: build-shotcut-sdk-windows
 
 on:
   workflow_dispatch:
