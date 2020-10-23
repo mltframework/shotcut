@@ -19,10 +19,10 @@ function trackHeight(isCurves) {
     return isCurves? (multitrack.trackHeight * 2) : (multitrack.trackHeight < 30)? 20 : 36
 }
 
-function scrollIfNeeded() {
+function scrollIfNeeded(center) {
     var x = producer.position * timeScale;
     if (!scrollView) return;
-    if (settings.timelineCenterPlayhead) {
+    if (settings.timelineCenterPlayhead || center) {
         if (x > scrollView.flickableItem.contentX + scrollView.width * 0.5)
             scrollView.flickableItem.contentX = x - scrollView.width * 0.5;
         else if (x < scrollView.width * 0.5)

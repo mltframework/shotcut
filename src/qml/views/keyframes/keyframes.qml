@@ -60,8 +60,18 @@ Rectangle {
         scrollView.flickableItem.contentX = Logic.clamp((targetX * timeScale / before) - offset, 0, Logic.scrollMax().x)
     }
 
+    Timer {
+        id: scrollZoomTimer
+        interval: 100
+        onTriggered: {
+            Logic.scrollIfNeeded(true)
+        }
+    }
+
     function adjustZoom(by, targetX) {
         setZoom(keyframesToolbar.scaleSlider.value + by, targetX)
+        if (settings.timelineScrollZoom)
+            scrollZoomTimer.restart()
     }
 
     function zoomIn() {
@@ -464,6 +474,12 @@ Rectangle {
             checkable: true
             checked: settings.timelineCenterPlayhead
             onTriggered: settings.timelineCenterPlayhead = checked
+        }
+        MenuItem {
+            text: qsTr('Scroll to Playhead on Zoom')
+            checkable: true
+            checked: settings.timelineScrollZoom
+            onTriggered: settings.timelineScrollZoom = checked
         }
         MenuSeparator {}
         MenuItem {

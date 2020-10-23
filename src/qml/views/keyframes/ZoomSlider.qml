@@ -58,6 +58,9 @@ Rectangle {
                 scrollView.flickableItem.contentX = (targetX * timeScale / before) - offset
 
                 redrawWaveforms()
+
+                if (settings.timelineScrollZoom)
+                    scrollZoomTimer.restart()
             }
         }
     }
