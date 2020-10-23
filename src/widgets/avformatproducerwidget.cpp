@@ -518,9 +518,9 @@ void AvformatProducerWidget::onFrameDecoded()
     ui->syncSlider->setValue(qRound(m_producer->get_double("video_delay") * 1000.0));
 
     if (Settings.showConvertClipDialog() && !m_producer->get_int(kShotcutSkipConvertProperty)) {
-        LongUiTask::cancel();
-        m_producer->set(kShotcutSkipConvertProperty, true);
         if (isVariableFrameRate) {
+            m_producer->set(kShotcutSkipConvertProperty, true);
+            LongUiTask::cancel();
             MLT.pause();
             LOG_INFO() << resource << "is variable frame rate";
             TranscodeDialog dialog(tr("This file is variable frame rate, which is not reliable for editing. "
@@ -534,6 +534,8 @@ void AvformatProducerWidget::onFrameDecoded()
             convert(dialog);
         }
         if (QFile::exists(resource) && !MLT.isSeekable(m_producer.data())) {
+            m_producer->set(kShotcutSkipConvertProperty, true);
+            LongUiTask::cancel();
             MLT.pause();
             LOG_INFO() << resource << "is not seekable";
             TranscodeDialog dialog(tr("This file does not support seeking and cannot be used for editing. "

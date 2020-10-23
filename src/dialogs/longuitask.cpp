@@ -17,7 +17,6 @@
 
 #include "longuitask.h"
 #include "mainwindow.h"
-#include <QMutexLocker>
 
 static const char* kLongUiTask = "LongUiTask";
 static QMutex g_mutex;
@@ -31,13 +30,11 @@ LongUiTask::LongUiTask(QString title)
     setWindowModality(Qt::ApplicationModal);
     setMinimumDuration(2000);
     setRange(0, 0);
-    QMutexLocker locker(&g_mutex);
     g_instance = this;
 }
 
 LongUiTask::~LongUiTask()
 {
-    QMutexLocker locker(&g_mutex);
     g_instance = nullptr;
 }
 
@@ -51,8 +48,7 @@ void LongUiTask::reportProgress(QString text, int value, int max)
 
 void LongUiTask::cancel()
 {
-    QMutexLocker locker(&g_mutex);
     if (g_instance) {
-        g_instance->cancel();
+        g_instance->QProgressDialog::cancel();
     }
 }
