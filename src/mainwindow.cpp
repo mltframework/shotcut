@@ -1947,6 +1947,13 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
     case Qt::Key_P:
         if (event->modifiers() == Qt::ControlModifier) {
             Settings.setTimelineSnap(!Settings.timelineSnap());
+        } else if (event->modifiers() & Qt::ControlModifier) {
+            if (event->modifiers() & Qt::AltModifier) {
+                Settings.setTimelineScrollZoom(!Settings.timelineScrollZoom());
+            }
+            if (event->modifiers() & Qt::ShiftModifier) {
+                Settings.setTimelineCenterPlayhead(!Settings.timelineCenterPlayhead());
+            }
         }
         break;
     case Qt::Key_R:

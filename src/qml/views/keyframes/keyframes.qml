@@ -473,12 +473,14 @@ Rectangle {
             text: qsTr('Center the Playhead')
             checkable: true
             checked: settings.timelineCenterPlayhead
+            shortcut: 'Ctrl+Shift+P'
             onTriggered: settings.timelineCenterPlayhead = checked
         }
         MenuItem {
             text: qsTr('Scroll to Playhead on Zoom')
             checkable: true
             checked: settings.timelineScrollZoom
+            shortcut: 'Ctrl+Alt+P'
             onTriggered: settings.timelineScrollZoom = checked
         }
         MenuSeparator {}
