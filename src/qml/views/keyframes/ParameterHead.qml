@@ -140,14 +140,14 @@ Rectangle {
             ToolButton {
                 id: deleteButton
                 visible: delegateIndex >= 0
-                enabled: root.selection.length > 0
+                enabled: delegateIndex === root.currentTrack && root.selection.length > 0
                 implicitWidth: 18
                 implicitHeight: 18
                 iconName: 'edit-delete'
                 iconSource: 'qrc:///icons/oxygen/32x32/actions/edit-delete.png'
                 opacity: enabled? 1.0 : 0.5
                 onClicked: {
-                    parameters.remove(root.currentTrack, root.selection[0])
+                    parameters.remove(delegateIndex, root.selection[0])
                     root.selection = []
                 }
                 tooltip: qsTr('Delete the selected keyframe')
