@@ -36,6 +36,8 @@
 #include <Logger.h>
 
 static QString kNonSeekableWarning = QObject::tr("You cannot add a non-seekable source.");
+static auto kFileUrlProtocol = QStringLiteral("file://");
+static auto kFilesUrlDelimiter = QStringLiteral(",file://");
 
 TimelineDock::TimelineDock(QWidget *parent) :
     QDockWidget(parent),
@@ -1091,11 +1093,11 @@ bool TimelineDock::trimClipOut(int trackIndex, int clipIndex, int delta, bool ri
 
 static QString convertUrlsToXML(const QString& xml)
 {
-    if (xml.startsWith("file://")) {
+    if (xml.startsWith(kFileUrlProtocol)) {
         LongUiTask longTask(QObject::tr("Drop Files"));
         Mlt::Playlist playlist(MLT.profile());
         QList<QUrl> urls;
-        for (const auto& s : xml.split(",file://")) {
+        for (const auto& s : xml.split(kFilesUrlDelimiter)) {
             QUrl url(s);
             urls << Util::removeFileScheme(url);
         }
@@ -1147,8 +1149,8 @@ void TimelineDock::insert(int trackIndex, int position, const QString &xml, bool
     if (MAIN.isSourceClipMyProject()) return;
 
     // Handle drop from file manager to empty project.
-    if ((!MLT.producer() || !MLT.producer()->is_valid()) && xml.startsWith("file://")) {
-        QUrl url = xml.split(",file://").first();
+    if ((!MLT.producer() || !MLT.producer()->is_valid()) && xml.startsWith(kFileUrlProtocol)) {
+        QUrl url = xml.split(kFilesUrlDelimiter).first();
         MAIN.open(Util::removeFileScheme(url), nullptr, false /* play */ );
     }
 
@@ -1161,7 +1163,9 @@ void TimelineDock::insert(int trackIndex, int position, const QString &xml, bool
             xmlToUse = MLT.XML(&producer);
         } else {
             xmlToUse = convertUrlsToXML(xml);
-            selectBlocker.reset(new TimelineSelectionBlocker(*this));
+            if (xml.startsWith(kFileUrlProtocol) && xml.split(kFilesUrlDelimiter).size() > 1) {
+                selectBlocker.reset(new TimelineSelectionBlocker(*this));
+            }
         }
         if (position < 0)
             position = m_position;
@@ -1192,8 +1196,8 @@ void TimelineDock::overwrite(int trackIndex, int position, const QString &xml, b
     if (MAIN.isSourceClipMyProject()) return;
 
     // Handle drop from file manager to empty project.
-    if ((!MLT.producer() || !MLT.producer()->is_valid()) && xml.startsWith("file://")) {
-        QUrl url = xml.split(",file://").first();
+    if ((!MLT.producer() || !MLT.producer()->is_valid()) && xml.startsWith(kFileUrlProtocol)) {
+        QUrl url = xml.split(kFilesUrlDelimiter).first();
         MAIN.open(Util::removeFileScheme(url), nullptr, false /* play */ );
     }
 
@@ -1206,7 +1210,9 @@ void TimelineDock::overwrite(int trackIndex, int position, const QString &xml, b
             xmlToUse = MLT.XML(&producer);
         } else {
             xmlToUse = convertUrlsToXML(xml);
-            selectBlocker.reset(new TimelineSelectionBlocker(*this));
+            if (xml.startsWith(kFileUrlProtocol) && xml.split(kFilesUrlDelimiter).size() > 1) {
+                selectBlocker.reset(new TimelineSelectionBlocker(*this));
+            }
         }
         if (position < 0)
             position = m_position;
