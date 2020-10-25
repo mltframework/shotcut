@@ -1151,7 +1151,9 @@ void TimelineDock::insert(int trackIndex, int position, const QString &xml, bool
     // Handle drop from file manager to empty project.
     if ((!MLT.producer() || !MLT.producer()->is_valid()) && xml.startsWith(kFileUrlProtocol)) {
         QUrl url = xml.split(kFilesUrlDelimiter).first();
-        MAIN.open(Util::removeFileScheme(url), nullptr, false /* play */ );
+        Mlt::Properties properties;
+        properties.set(kShotcutSkipConvertProperty, 1);
+        MAIN.open(Util::removeFileScheme(url), &properties, false /* play */ );
     }
 
     if (MLT.isSeekableClip() || MLT.savedProducer() || !xml.isEmpty()) {
@@ -1198,7 +1200,9 @@ void TimelineDock::overwrite(int trackIndex, int position, const QString &xml, b
     // Handle drop from file manager to empty project.
     if ((!MLT.producer() || !MLT.producer()->is_valid()) && xml.startsWith(kFileUrlProtocol)) {
         QUrl url = xml.split(kFilesUrlDelimiter).first();
-        MAIN.open(Util::removeFileScheme(url), nullptr, false /* play */ );
+        Mlt::Properties properties;
+        properties.set(kShotcutSkipConvertProperty, 1);
+        MAIN.open(Util::removeFileScheme(url), &properties, false /* play */ );
     }
 
     if (MLT.isSeekableClip() || MLT.savedProducer() || !xml.isEmpty()) {
