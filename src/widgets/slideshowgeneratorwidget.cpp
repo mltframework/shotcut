@@ -406,7 +406,7 @@ void SlideshowGeneratorWidget::attachBlurFilter(SlideshowConfig& config, Mlt::Pr
     Mlt::Filter filter(MLT.profile(), "pillar_echo");
     filter.set("rect", rect);
     filter.set("blur", 4);
-    filter.set(kShotcutFilterProperty, "pillarEcho");
+    filter.set(kShotcutFilterProperty, "blur_pad");
     producer->attach(filter);
 }
 
