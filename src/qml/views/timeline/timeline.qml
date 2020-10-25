@@ -38,8 +38,8 @@ Rectangle {
 
         toolbar.scaleSlider.value = value
 
-        if (!settings.timelineCenterPlayhead)
-            scrollView.flickableItem.contentX = Logic.clamp((targetX * multitrack.scaleFactor / before) - offset, 0, Logic.scrollMax().x)
+        if (!settings.timelineCenterPlayhead && !settings.timelineScrollZoom)
+            scrollView.flickableItem.contentX = (targetX * multitrack.scaleFactor / before) - offset
 
         for (var i = 0; i < tracksRepeater.count; i++)
             tracksRepeater.itemAt(i).redrawWaveforms(false)
@@ -55,7 +55,7 @@ Rectangle {
 
     function adjustZoom(by, targetX) {
         setZoom(toolbar.scaleSlider.value + by, targetX)
-        if (settings.timelineScrollZoom)
+        if (settings.timelineScrollZoom && !settings.timelineCenterPlayhead)
             scrollZoomTimer.restart()
     }
 
