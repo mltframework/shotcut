@@ -51,6 +51,11 @@ TextProducerWidget::TextProducerWidget(QWidget *parent) :
     ui->colorLabel->setText(kTransparent);
     Util::setColorsToHighlight(ui->label_2);
     ui->preset->saveDefaultPreset(getPreset());
+    Mlt::Properties p;
+    p.set("resource", "#FF000000");
+    ui->preset->savePreset(p, tr("black"));
+    p.set("resource", "#00000000");
+    ui->preset->savePreset(p, tr("transparent"));
     ui->preset->loadPresets();
 }
 
