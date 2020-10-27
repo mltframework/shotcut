@@ -50,6 +50,8 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
 
             filter.set(rectProperty,   '0%/66.66%:100%x33.34%')
             filter.savePreset(presetParams, qsTr('Lower Third'))
+            filter.set(rectProperty,   '0%/0%:100%x100%')
+            filter.savePreset(presetParams, qsTr('Full Screen'))
 
             // Add some animated presets.
             filter.animateIn = filter.duration
@@ -92,7 +94,7 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
             // Add default preset.
             filter.animateIn = 0
             filter.resetProperty(rectProperty)
-            filter.set(rectProperty, '0%/0%:100%x100%')
+            filter.set(rectProperty, '0%/10%:100%x90%')
             filter.savePreset(preset.parameters)
         } else {
             filter.set(middleValue, filter.getRect(rectProperty, filter.animateIn + 1))
@@ -293,8 +295,8 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
         }
         UndoButton {
             onClicked: {
-                rectX.value = rectY.value = 0
-                filterRect.x = filterRect.y = 0
+                filterRect.x = rectX.value = 0
+                filterRect.y = rectY.value = 0.1 * profile.height
                 updateFilter(getPosition())
             }
         }
@@ -354,10 +356,8 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
         }
         UndoButton {
             onClicked: {
-                rectW.value = profile.width
-                rectH.value = profile.height
-                filterRect.width = profile.width
-                filterRect.height = profile.height
+                filterRect.width = rectW.value = profile.width
+                filterRect.height = rectH.value = Math.round(0.9 * profile.height)
                 updateFilter(getPosition())
             }
         }
