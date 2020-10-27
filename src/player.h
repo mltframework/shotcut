@@ -111,8 +111,8 @@ public slots:
     void showIdleStatus();
 
 protected:
-    void resizeEvent(QResizeEvent* event);
-    bool event(QEvent* event);
+    void resizeEvent(QResizeEvent* event) override;
+    bool event(QEvent* event) override;
     void keyPressEvent(QKeyEvent* event) override;
 
 private:

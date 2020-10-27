@@ -18,7 +18,6 @@
 #include "longuitask.h"
 #include "mainwindow.h"
 
-static const char* kLongUiTask = "LongUiTask";
 static QMutex g_mutex;
 static LongUiTask* g_instance = nullptr;
 

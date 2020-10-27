@@ -50,8 +50,6 @@ public:
 
     void reportProgress(QString text, int value, int max);
     static void cancel();
-private:
-
 };
 
 #endif // LONGUITASK_H
