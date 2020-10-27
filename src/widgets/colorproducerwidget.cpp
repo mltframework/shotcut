@@ -75,7 +75,8 @@ void ColorProducerWidget::on_colorButton_clicked()
         auto newColor = dialog.currentColor();
         auto rgb = newColor;
         rgb.setAlpha(color.alpha());
-        if (newColor.alpha() == 0 && rgb != color) {
+        if (newColor.alpha() == 0 && (rgb != color ||
+            (newColor == QColorConstants::Transparent && color == QColorConstants::Transparent))) {
             newColor.setAlpha(255);
         }
         ui->colorLabel->setText(colorToString(newColor));

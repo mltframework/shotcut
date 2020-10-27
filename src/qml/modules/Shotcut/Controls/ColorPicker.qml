@@ -70,7 +70,8 @@ RowLayout {
             // If the user changed color but left alpha at 0,
             // they probably want to reset alpha to opaque.
             console.log('currentColor.a=' + currentColor.a + ' currentColor=' + currentColor + ' myColor=' + myColor)
-            if (currentColor.a === 0 && !Qt.colorEqual(currentColor, myColor))
+            if (currentColor.a === 0 && (!Qt.colorEqual(currentColor, myColor) ||
+                                         (Qt.colorEqual(currentColor, 'transparent') && Qt.colorEqual(myColor, 'transparent'))))
                 currentColor.a = 1.0
             // Assign the new color value. Unlike docs say, using currentColor
             // is actually more cross-platform compatible.

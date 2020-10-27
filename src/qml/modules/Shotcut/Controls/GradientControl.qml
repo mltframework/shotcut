@@ -72,8 +72,8 @@ RowLayout {
                     // If the user changed color but left alpha at 0,
                     // they probably want to reset alpha to opaque.
                     console.log('currentColor.a=' + currentColor.a + ' currentColor=' + currentColor + ' myColor=' + myColor)
-                    if (currentColor.a === 0 && !Qt.colorEqual(currentColor, myColor))
-                        currentColor.a = 1.0
+                    if (currentColor.a === 0 && (!Qt.colorEqual(currentColor, myColor) ||
+                                                 (Qt.colorEqual(currentColor, 'transparent') && Qt.colorEqual(myColor, 'transparent'))))
                     parent.parent._setStopColor(handelRect.stopIndex, String(currentColor))
                 }
                 modality: Qt.ApplicationModal
