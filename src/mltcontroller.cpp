@@ -23,6 +23,7 @@
 #include <QUuid>
 #include <QSaveFile>
 #include <QTextStream>
+#include <QThreadPool>
 #include <Logger.h>
 #include <Mlt.h>
 #include <cmath>
@@ -885,7 +886,7 @@ QImage Controller::image(Producer& producer, int frameNumber, int width, int hei
 
 void Controller::updateAvformatCaching(int trackCount)
 {
-    int i = QThread::idealThreadCount() + trackCount * 2;
+    int i = QThreadPool::globalInstance()->maxThreadCount() + trackCount * 2;
     mlt_service_cache_set_size(nullptr, "producer_avformat", qMax(4, i));
 }
 
