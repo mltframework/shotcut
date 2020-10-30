@@ -29,7 +29,7 @@ static const QString kTransparent = QObject::tr("transparent", "Open Other > Col
 static QString colorToString(const QColor& color)
 {
     return (color == QColorConstants::Transparent) ? kTransparent
-                                : QString().sprintf("#%02X%02X%02X%02X",
+                                : QString::asprintf("#%02X%02X%02X%02X",
                                                     qAlpha(color.rgba()),
                                                     qRed(color.rgba()),
                                                     qGreen(color.rgba()),

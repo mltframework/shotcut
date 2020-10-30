@@ -258,7 +258,7 @@ void ScrubBar::updatePixmap()
     QPen pen;
 
     if (!isEnabled()) {
-        p.fillRect(0, 0, l_width, l_height, palette().background().color());
+        p.fillRect(0, 0, l_width, l_height, palette().window().color());
         p.end();
         update();
         return;

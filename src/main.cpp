@@ -80,13 +80,13 @@ static void mlt_log_handler(void *service, int mlt_level, const char *format, va
         if (service_name)
             message = QString("[%1 %2] ").arg(mlt_type).arg(service_name);
         else
-            message = QString().sprintf("[%s %p] ", mlt_type, service);
+            message = QString::asprintf("[%s %p] ", mlt_type, service);
         if (resource)
             message.append(QString("\"%1\" ").arg(resource));
-        message.append(QString().vsprintf(format, args));
+        message.append(QString::vasprintf(format, args));
         message.replace('\n', "");
     } else {
-        message = QString().vsprintf(format, args);
+        message = QString::vasprintf(format, args);
         message.replace('\n', "");
     }
     cuteLogger->write(cuteLoggerLevel, __FILE__, __LINE__, "MLT",
@@ -182,7 +182,7 @@ public:
             resourceArg = parser.positionalArguments();
 
         // Startup logging.
-        dir = Settings.appDataLocation();
+        dir.setPath(Settings.appDataLocation());
         if (!dir.exists()) dir.mkpath(dir.path());
         const QString logFileName = dir.filePath("shotcut-log.txt");
         QFile::remove(logFileName);
@@ -242,7 +242,7 @@ public:
 #endif
         // Load translations
         QString locale = Settings.language();
-        dir = applicationDirPath();
+        dir.setPath(applicationDirPath());
     #if defined(Q_OS_MAC)
         dir.cdUp();
         dir.cd("Resources");

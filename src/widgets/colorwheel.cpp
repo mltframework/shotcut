@@ -126,7 +126,7 @@ void ColorWheel::mouseReleaseEvent(QMouseEvent *event)
 void ColorWheel::resizeEvent(QResizeEvent *event)
 {
     m_image = QImage(event->size(), QImage::Format_ARGB32_Premultiplied);
-    m_image.fill(palette().background().color().rgb());
+    m_image.fill(palette().window().color().rgb());
 
     drawWheel();
     drawSlider();

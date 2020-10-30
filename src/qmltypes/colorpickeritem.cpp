@@ -47,8 +47,8 @@ void ColorPickerItem::screenSelected(const QRect& rect)
 void ColorPickerItem::grabColor()
 {
     QDesktopWidget* desktop = QApplication::desktop();
-    int screenNum = desktop->screenNumber(m_selectedRect.topLeft());
-    QScreen* screen = QGuiApplication::screens()[screenNum];
+
+    QScreen* screen = QGuiApplication::screenAt(m_selectedRect.topLeft());
     QPixmap screenGrab = screen->grabWindow(desktop->winId(),
         m_selectedRect.x(), m_selectedRect.y(), m_selectedRect.width(), m_selectedRect.height());
     QImage image = screenGrab.toImage();

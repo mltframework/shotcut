@@ -37,7 +37,7 @@ void AudioMeterWidget::setDbLabels(const QVector<int>& labels)
 {
     m_dbLabels = labels;
     if (m_dbLabels.size()) {
-        qSort(m_dbLabels);
+        std::sort(m_dbLabels.begin(), m_dbLabels.end());
         m_maxDb = m_dbLabels[m_dbLabels.size() - 1];
     }
     calcGraphRect();
@@ -109,7 +109,7 @@ void AudioMeterWidget::calcGraphRect()
         // Find the widest db label
         int dbLabelWidth = 0;
         for (int i = 0; i < dbLabelCount; i++) {
-            QString label = QString().sprintf("%d", m_dbLabels[i]);
+            QString label = QString::asprintf("%d", m_dbLabels[i]);
             int size = fontMetrics().width(label) + TEXT_PAD;
             dbLabelWidth = size > dbLabelWidth ? size : dbLabelWidth;
         }
@@ -151,7 +151,7 @@ void AudioMeterWidget::drawDbLabels(QPainter& p)
         y = m_graphRect.bottom() + textHeight + TEXT_PAD;
         for (int i = 0; i < dbLabelCount; i++) {
             int value = m_dbLabels[i];
-            QString label = QString().sprintf("%d", value);
+            QString label = QString::asprintf("%d", value);
             int labelWidth = fontMetrics().width(label);
             x = m_graphRect.left() + IEC_ScaleMax(value, m_maxDb) * m_graphRect.width() - labelWidth / 2;
             if (x + labelWidth > width()) {
@@ -167,7 +167,7 @@ void AudioMeterWidget::drawDbLabels(QPainter& p)
         int prevY = height();
         for (int i = 0; i < dbLabelCount; i++) {
             int value = m_dbLabels[i];
-            QString label = QString().sprintf("%d", value);
+            QString label = QString::asprintf("%d", value);
             x = m_graphRect.left() - fontMetrics().width(label) - TEXT_PAD;
             y = m_graphRect.bottom() - IEC_ScaleMax(value, m_maxDb) * m_graphRect.height() + textHeight / 2;
             if (y - textHeight < 0) {

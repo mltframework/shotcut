@@ -951,9 +951,9 @@ void Player::moveVideoToScreen(int screen)
         if (!m_videoScrollWidget->isFullScreen()) return;
         m_videoScrollWidget->showNormal();
         m_videoLayout->insertWidget(0, m_videoScrollWidget, 10);
-    } else if (QApplication::desktop()->screenCount() > 1) {
+    } else if (QGuiApplication::screens().size() > 1) {
         // -1 = find first screen the app is not using
-        for (int i = 0; screen == -1 && i < QApplication::desktop()->screenCount(); i++) {
+        for (int i = 0; screen == -1 && i < QGuiApplication::screens().size(); i++) {
             if (i != QApplication::desktop()->screenNumber(this))
                 screen = i;
         }
