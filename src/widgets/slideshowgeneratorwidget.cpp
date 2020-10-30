@@ -329,6 +329,28 @@ void SlideshowGeneratorWidget::attachAffineFilter(SlideshowConfig& config, Mlt::
             }
         }
     }
+    else
+    {
+        // Pad: modify rect to fit the aspect ratio of the source
+        if (sourceDar > destDar)
+        {
+            beginRect.w = MLT.profile().width();
+            beginRect.h = (double)MLT.profile().height() * destDar / sourceDar;
+            beginRect.x = 0;
+            beginRect.y = ((double)MLT.profile().height() - beginRect.h) / 2.0;
+        }
+        else if (destDar > sourceDar)
+        {
+            beginRect.w = (double)MLT.profile().width() * sourceDar / destDar;
+            beginRect.h = MLT.profile().height();
+            beginRect.x = ((double)MLT.profile().width() - beginRect.w) / 2.0;
+            beginRect.y = 0;
+        }
+        endRect.w = beginRect.w;
+        endRect.h = beginRect.h;
+        endRect.y = beginRect.y;
+        endRect.x = beginRect.x;
+    }
 
     if (config.zoomPercent > 0)
     {
