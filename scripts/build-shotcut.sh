@@ -23,6 +23,7 @@ ACTION_COMPILE_INSTALL=1
 CLEANUP=1
 ARCHIVE=1
 SOURCES_CLEAN=0
+SOURCES_CONFIGURE=1
 INSTALL_AS_ROOT=0
 DEBUG_BUILD=0
 ASAN_BUILD=0
@@ -1386,7 +1387,11 @@ function configure_compile_install_subproject {
   export LDFLAGS=`lookup LDFLAGS_ $1`
   log LDFLAGS=$LDFLAGS
 
+  MYCONFIG=`lookup CONFIG $1`
+
   # Configure
+  if [ "$SOURCES_CONFIGURE" = "1" ]; then
+
   feedback_status Configuring $1
 
   # Special hack for ffmpeg
@@ -1454,7 +1459,6 @@ function configure_compile_install_subproject {
     fi
   fi
 
-  MYCONFIG=`lookup CONFIG $1`
   if test "$MYCONFIG" != ""; then
     cmd $MYCONFIG || die "Unable to configure $1"
     feedback_status Done configuring $1
@@ -1475,6 +1479,8 @@ function configure_compile_install_subproject {
       cmd grep -q fftw3 rubberband.pc.in || sed 's/-lrubberband/-lrubberband -lfftw3-3 -lsamplerate/' -i rubberband.pc.in
     fi
   fi
+
+  fi # if [ "$SOURCES_CONFIGURE" = "1" ]
 
   # Compile
   feedback_status Building $1 - this could take some time
