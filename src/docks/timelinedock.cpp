@@ -1097,7 +1097,12 @@ static QString convertUrlsToXML(const QString& xml)
         LongUiTask longTask(QObject::tr("Drop Files"));
         Mlt::Playlist playlist(MLT.profile());
         QList<QUrl> urls;
-        for (const auto& s : xml.split(kFilesUrlDelimiter)) {
+        for (auto s : xml.split(kFilesUrlDelimiter)) {
+#ifdef Q_OS_WIN
+            if (!s.startsWith(kFileUrlProtocol)) {
+                s.prepend(kFileUrlProtocol);
+            }
+#endif
             QUrl url(s);
             urls << Util::removeFileScheme(url);
         }
