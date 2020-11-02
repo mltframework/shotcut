@@ -4,6 +4,12 @@
 
 # Shotcut - a free, open source, cross-platform **video editor**
 
+<div align="center">
+
+<img src="https://www.shotcut.org/assets/img/screenshots/Shotcut-18.11.18.png" alt="screenshot" />
+
+</div>
+
 - Features: https://www.shotcut.org/features/
 - Roadmap: https://www.shotcut.org/roadmap/
 
