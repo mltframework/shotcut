@@ -982,7 +982,7 @@ function deploy
 
   log Copying some plugins, qml, and translations from Qt
   cmd mkdir -p lib/qt5/sqldrivers
-  cmd cp -pr "$QTDIR"/plugins/{audio,generic,iconengines,imageformats,mediaservice,platforminputcontexts,platforms,sqldrivers} lib/qt5
+  cmd cp -pr "$QTDIR"/plugins/{audio,generic,iconengines,imageformats,mediaservice,platforms,sqldrivers,styles} lib/qt5
   cmd cp -pr "$QTDIR"/qml lib
   sed -i "s/onClicked()/onClicked(mouse)/" lib/qml/QtQuick/Controls/Private/EditMenu_base.qml
   cmd rm lib/qml/QtQuick/Controls/Private/EditMenu_base.qmlc

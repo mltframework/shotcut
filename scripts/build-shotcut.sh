@@ -1831,11 +1831,11 @@ function deploy_osx
   cmd mkdir -p PlugIns/qt/sqldrivers 2>/dev/null
   # try QTDIR first
   if [ -d "$QTDIR/plugins" ]; then
-    cmd cp -a "$QTDIR/plugins"/{audio,generic,iconengines,imageformats,mediaservice,platforms} PlugIns/qt
+    cmd cp -a "$QTDIR/plugins"/{audio,generic,iconengines,imageformats,mediaservice,platforms,styles} PlugIns/qt
     cmd cp -p "$QTDIR/plugins/sqldrivers/libqsqlite.dylib" PlugIns/qt/sqldrivers
   # try Qt Creator next
   elif [ -d "/Applications/Qt Creator.app/Contents/PlugIns" ]; then
-    cmd cp -a "/Applications/Qt Creator.app/Contents/PlugIns"/{audio,generic,iconengines,imageformats,mediaservice,platforms,platforminputcontexts,platformthemes} PlugIns/qt
+    cmd cp -a "/Applications/Qt Creator.app/Contents/PlugIns"/{audio,generic,iconengines,imageformats,mediaservice,platforms,styles} PlugIns/qt
   fi
   for dir in PlugIns/qt/*; do
     for lib in $dir/*; do
