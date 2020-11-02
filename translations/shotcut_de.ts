@@ -369,7 +369,7 @@
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="670"/>
         <source>Adjust the audio/video synchronization. The center position is equivalent to no alteration.</source>
-        <translation>Audio/Video Synchronizität einstellen. Die Mittelstellung bedeutet keine Veränderung.</translation>
+        <translation>Audio/Video Synchronität einstellen. Die Mittelstellung bedeutet keine Veränderung.</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="689"/>
