@@ -68,6 +68,9 @@ QVariant MetadataModel::data(const QModelIndex &index, int role) const
             case VisibleRole:
                 result = isVisible(index.row());
                 break;
+            case PluginTypeRole:
+                result = meta->type();
+                break;
         }
     }
 
@@ -98,6 +101,7 @@ QHash<int, QByteArray> MetadataModel::roleNames() const {
     roles[IsAudioRole] = "isAudio";
     roles[NeedsGpuRole] = "needsGpu";
     roles[VisibleRole] = "isVisible";
+    roles[PluginTypeRole] = "pluginType";
     return roles;
 }
 
@@ -165,6 +169,9 @@ bool MetadataModel::isVisible(int row) const
             break;
         case AudioFilter:
             if (!meta->isAudio()) return false;
+            break;
+        case LinkFilter:
+            if (meta->type() != QmlMetadata::Link) return false;
             break;
         default:
             break;

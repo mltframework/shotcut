@@ -23,7 +23,7 @@
 #include <QVariant>
 #include <QRectF>
 #include <QUuid>
-#include <MltFilter.h>
+#include <MltService.h>
 #include <MltProducer.h>
 #include <MltAnimation.h>
 
@@ -63,7 +63,7 @@ public:
     Q_ENUM(CurrentFilterIndex)
 
     explicit QmlFilter();
-    explicit QmlFilter(Mlt::Filter& mltFilter, const QmlMetadata* metadata, QObject *parent = nullptr);
+    explicit QmlFilter(Mlt::Service& mltService, const QmlMetadata* metadata, QObject *parent = nullptr);
     ~QmlFilter();
 
     bool isNew() const { return m_isNew; }
@@ -100,7 +100,7 @@ public:
     void setIn(int value);
     int out();
     void setOut(int value);
-    Mlt::Filter& filter() { return m_filter; }
+    Mlt::Service& service() { return m_service; }
     int animateIn();
     void setAnimateIn(int value);
     int animateOut();
@@ -130,7 +130,7 @@ signals:
 
 private:
     const QmlMetadata* m_metadata;
-    Mlt::Filter m_filter;
+    Mlt::Service m_service;
     Mlt::Producer m_producer;
     QString m_path;
     bool m_isNew;

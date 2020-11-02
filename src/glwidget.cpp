@@ -803,7 +803,7 @@ void GLWidget::setOffsetY(int y)
 
 void GLWidget::setCurrentFilter(QmlFilter* filter, QmlMetadata* meta)
 {
-    if (meta && QFile::exists(meta->vuiFilePath().toLocalFile())) {
+    if (meta && meta->type() == QmlMetadata::Filter && QFile::exists(meta->vuiFilePath().toLocalFile())) {
         filter->producer().set(kShotcutVuiMetaProperty, 1);
         rootContext()->setContextProperty("filter", filter);
         setSource(meta->vuiFilePath());

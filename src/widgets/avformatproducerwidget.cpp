@@ -112,7 +112,7 @@ Mlt::Producer* AvformatProducerWidget::newProducer(Mlt::Profile& profile)
     Mlt::Producer* p = 0;
     if ( ui->speedSpinBox->value() == 1.0 )
     {
-        p = new Mlt::Producer(profile, GetFilenameFromProducer(producer(), false).toUtf8().constData());
+        p = new Mlt::Chain(profile, GetFilenameFromProducer(producer(), false).toUtf8().constData());
     }
     else
     {
@@ -126,7 +126,7 @@ Mlt::Producer* AvformatProducerWidget::newProducer(Mlt::Profile& profile)
 
         QString filename = GetFilenameFromProducer(producer(), false);
         QString s = QString("%1:%2:%3").arg("timewarp").arg(warpspeed).arg(filename);
-        p = new Mlt::Producer(profile, s.toUtf8().constData());
+        p = new Mlt::Chain(profile, s.toUtf8().constData());
         p->set(kShotcutProducerProperty, "avformat");
     }
     if (p->is_valid()) {

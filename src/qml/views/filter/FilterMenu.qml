@@ -161,7 +161,18 @@ Rectangle {
                     }
                 }
             }
-            Shotcut.Button { // separator
+            ShotcutControls.ToggleButton {
+                id: lnkButton
+                visible: attachedfiltersmodel.supportsLinks
+                implicitWidth: 80
+                iconName: 'chronometer'
+                iconSource: 'qrc:///icons/oxygen/32x32/actions/chronometer.png'
+                text: qsTr('Time')
+                tooltip: qsTr('Show time filters')
+                exclusiveGroup: typeGroup
+                onClicked: if (checked) metadatamodel.filter = Shotcut.MetadataModel.LinkFilter
+            }
+            Button { // separator
                 enabled: false
                 implicitWidth: 1
                 implicitHeight: 20

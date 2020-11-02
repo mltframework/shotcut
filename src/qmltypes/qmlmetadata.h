@@ -130,7 +130,8 @@ public:
     enum PluginType {
         Filter,
         Producer,
-        Transition
+        Transition,
+        Link,
     };
     unsigned filterMask;
 

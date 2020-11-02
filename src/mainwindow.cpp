@@ -372,8 +372,8 @@ MainWindow::MainWindow()
     connect(this, SIGNAL(producerOpened()), m_filterController, SLOT(setProducer()));
     connect(m_filterController->attachedModel(), SIGNAL(changed()), SLOT(onFilterModelChanged()));
     connect(m_filtersDock, SIGNAL(changed()), SLOT(onFilterModelChanged()));
-    connect(m_filterController, SIGNAL(filterChanged(Mlt::Filter*)),
-            m_timelineDock->model(), SLOT(onFilterChanged(Mlt::Filter*)));
+    connect(m_filterController, SIGNAL(filterChanged(Mlt::Service*)),
+            m_timelineDock->model(), SLOT(onFilterChanged(Mlt::Service*)));
     connect(m_filterController->attachedModel(), SIGNAL(addedOrRemoved(Mlt::Producer*)),
             m_timelineDock->model(), SLOT(filterAddedOrRemoved(Mlt::Producer*)));
     connect(&QmlApplication::singleton(), SIGNAL(filtersPasted(Mlt::Producer*)),

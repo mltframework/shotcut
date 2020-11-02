@@ -166,7 +166,7 @@ public slots:
     bool removeTransitionByTrimInValid(int trackIndex, int clipIndex, int delta);
     bool removeTransitionByTrimOutValid(int trackIndex, int clipIndex, int delta);
     void filterAddedOrRemoved(Mlt::Producer *producer);
-    void onFilterChanged(Mlt::Filter* filter);
+    void onFilterChanged(Mlt::Service* service);
     void reload(bool asynchronous = false);
     void replace(int trackIndex, int clipIndex, Mlt::Producer& clip, bool copyFilters = true);
 

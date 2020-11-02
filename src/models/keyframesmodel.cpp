@@ -387,9 +387,9 @@ void KeyframesModel::setKeyframe(int parameterIndex, double value, int position,
 {
     if (m_filter && parameterIndex < m_propertyNames.count()) {
         QString name = m_propertyNames[parameterIndex];
-        m_filter->filter().anim_set(name.toUtf8().constData(), value, position, m_filter->duration(), mlt_keyframe_type(type));
+        m_filter->service().anim_set(name.toUtf8().constData(), value, position, m_filter->duration(), mlt_keyframe_type(type));
         foreach (name, m_metadata->keyframes()->parameter(m_metadataIndex[parameterIndex])->gangedProperties())
-            m_filter->filter().anim_set(name.toUtf8().constData(), value, position, m_filter->duration(), mlt_keyframe_type(type));
+            m_filter->service().anim_set(name.toUtf8().constData(), value, position, m_filter->duration(), mlt_keyframe_type(type));
         emit m_filter->changed();
         QModelIndex modelIndex = index(keyframeIndex(parameterIndex, position), 0, index(parameterIndex));
         emit dataChanged(modelIndex, modelIndex, QVector<int>() << NumericValueRole << NameRole);

@@ -2096,7 +2096,7 @@ void MultitrackModel::filterAddedOrRemoved(Mlt::Producer* producer)
     }
 }
 
-void MultitrackModel::onFilterChanged(Mlt::Filter* filter)
+void MultitrackModel::onFilterChanged(Mlt::Service* filter)
 {
     if (filter && filter->is_valid()) {
         Mlt::Service service(mlt_service(filter->get_data("service")));
@@ -2481,7 +2481,7 @@ void MultitrackModel::adjustClipFilters(Mlt::Producer& producer, int in, int out
                 // Update simple keyframes of non-current filters.
                 if (filter->get_int(kShotcutAnimOutProperty) > 0
                     && MAIN.filterController()->currentFilter()
-                    && MAIN.filterController()->currentFilter()->filter().get_filter() != filter.data()->get_filter()) {
+                    && MAIN.filterController()->currentFilter()->service().get_service() != filter.data()->get_service()) {
                     QmlMetadata* meta = MAIN.filterController()->metadataForService(filter.data());
                     if (meta && meta->keyframes()) {
                         foreach (QString name, meta->keyframes()->simpleProperties()) {

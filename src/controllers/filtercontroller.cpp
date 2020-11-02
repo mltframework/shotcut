@@ -28,8 +28,10 @@
 #include "qmltypes/qmlutilities.h"
 #include "qmltypes/qmlfilter.h"
 
+#include <MltLink.h>
+
 FilterController::FilterController(QObject* parent) : QObject(parent),
- m_mltFilter(0),
+ m_mltService(0),
  m_metadataModel(this),
  m_attachedModel(this),
  m_currentFilterIndex(QmlFilter::NoCurrentFilter)
@@ -44,6 +46,7 @@ FilterController::FilterController(QObject* parent) : QObject(parent),
 
 void FilterController::loadFilterMetadata() {
     QScopedPointer<Mlt::Properties> mltFilters(MLT.repository()->filters());
+    QScopedPointer<Mlt::Properties> mltLinks(MLT.repository()->links());
     QDir dir = QmlUtilities::qmlDir();
     dir.cd("filters");
     foreach (QString dirName, dir.entryList(QDir::AllDirs | QDir::NoDotAndDotDot | QDir::Executable)) {
@@ -78,10 +81,17 @@ void FilterController::loadFilterMetadata() {
                         meta->setProperty("version", version);
                         meta->keyframes()->checkVersion(version);
                     }
-
-                    if (meta->isDeprecated())
-                        meta->setName(meta->name() + " " + tr("(DEPRECATED)"));
                 }
+                else if (meta->type() == QmlMetadata::Link && mltLinks->get_data(meta->mlt_service().toLatin1().constData())) {
+                    LOG_DEBUG() << "added link" << meta->name();
+                    meta->loadSettings();
+                    meta->setPath(subdir);
+                    meta->setParent(0);
+                    addMetadata(meta);
+                }
+
+                if (meta->isDeprecated())
+                    meta->setName(meta->name() + " " + tr("(DEPRECATED)"));
             } else if (!meta) {
                 LOG_WARNING() << component.errorString();
             }
@@ -146,9 +156,9 @@ void FilterController::setCurrentFilter(int attachedIndex, bool isNew)
 
     // VUIs may instruct MLT filters to not render if they are doing the rendering
     // theirself, for example, Text: Rich. Component.onDestruction is not firing.
-    if (m_mltFilter) {
-        if (m_mltFilter->get_int("_hide")) {
-            m_mltFilter->clear("_hide");
+    if (m_mltService) {
+        if (m_mltService->get_int("_hide")) {
+            m_mltService->clear("_hide");
             MLT.refreshConsumer();
         }
     }
@@ -157,8 +167,9 @@ void FilterController::setCurrentFilter(int attachedIndex, bool isNew)
     QmlFilter* filter = 0;
     if (meta) {
         emit currentFilterChanged(nullptr, nullptr, QmlFilter::NoCurrentFilter);
-        m_mltFilter = m_attachedModel.getFilter(m_currentFilterIndex);
-        filter = new QmlFilter(*m_mltFilter, meta);
+        m_mltService = m_attachedModel.getService(m_currentFilterIndex);
+        if (!m_mltService) return;
+        filter = new QmlFilter(*m_mltService, meta);
         filter->setIsNew(isNew);
         connect(filter, SIGNAL(changed()), SLOT(onQmlFilterChanged()));
         connect(filter, SIGNAL(changed(QString)), SLOT(onQmlFilterChanged(const QString&)));
@@ -186,14 +197,14 @@ void FilterController::onFadeOutChanged()
 
 void FilterController::onFilterInChanged(int delta, Mlt::Filter* filter)
 {
-    if (delta && m_currentFilter && (!filter || m_currentFilter->filter().get_filter() == filter->get_filter())) {
+    if (delta && m_currentFilter && (!filter || m_currentFilter->service().get_service() == filter->get_service())) {
         emit m_currentFilter->inChanged(delta);
     }
 }
 
 void FilterController::onFilterOutChanged(int delta, Mlt::Filter* filter)
 {
-    if (delta && m_currentFilter && (!filter || m_currentFilter->filter().get_filter() == filter->get_filter())) {
+    if (delta && m_currentFilter && (!filter || m_currentFilter->service().get_service() == filter->get_service())) {
         emit m_currentFilter->outChanged(delta);
     }
 }
@@ -231,7 +242,7 @@ void FilterController::handleAttachDuplicateFailed(int index)
 
 void FilterController::onQmlFilterChanged()
 {
-    emit filterChanged(m_mltFilter);
+    emit filterChanged(m_mltService);
 }
 
 void FilterController::onQmlFilterChanged(const QString &name)

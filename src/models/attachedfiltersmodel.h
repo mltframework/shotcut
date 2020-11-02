@@ -30,6 +30,7 @@ class AttachedFiltersModel : public QAbstractListModel
     Q_OBJECT
     Q_PROPERTY(QString producerTitle READ producerTitle NOTIFY trackTitleChanged)
     Q_PROPERTY(bool isProducerSelected READ isProducerSelected NOTIFY isProducerSelectedChanged)
+    Q_PROPERTY(bool supportsLinks READ supportsLinks NOTIFY supportsLinksChanged)
 public:
     enum ModelRoles {
         TypeDisplayRole = Qt::UserRole + 1
@@ -37,11 +38,12 @@ public:
 
     explicit AttachedFiltersModel(QObject *parent = 0);
 
-    Mlt::Filter* getFilter(int row) const;
+    Mlt::Service* getService(int row) const;
     QmlMetadata* getMetadata(int row) const;
     void setProducer(Mlt::Producer* producer = 0);
     QString producerTitle() const;
     bool isProducerSelected() const;
+    bool supportsLinks() const;
     Mlt::Producer* producer() const { return m_producer.data(); }
 
     // QAbstractListModel Implementation
@@ -60,6 +62,7 @@ signals:
     void duplicateAddFailed(int index);
     void trackTitleChanged();
     void isProducerSelectedChanged();
+    void supportsLinksChanged();
     void addedOrRemoved(Mlt::Producer*);
 
 public slots:
@@ -70,15 +73,16 @@ public slots:
 private:
     static void producerChanged(mlt_properties owner, AttachedFiltersModel* model);
     void reset(Mlt::Producer *producer = 0);
+    int mltFilterIndex(int row) const;
+    int mltLinkIndex(int row) const;
 
     int m_dropRow;
     int m_removeRow;
+    int m_normFilterCount;
     QScopedPointer<Mlt::Producer> m_producer;
     QScopedPointer<Mlt::Event> m_event;
     typedef QList<QmlMetadata*> MetadataList;
     MetadataList m_metaList;
-    typedef QList<int> IndexMap;
-    IndexMap m_mltIndexMap;
 };
 
 #endif // ATTACHEDFILTERSMODEL_H
