@@ -83,7 +83,7 @@ public:
     bool allowAnimateOut() const { return m_allowAnimateOut; }
     QList<QString> simpleProperties() const { return m_simpleProperties; }
 
-    QQmlListProperty<QmlKeyframesParameter> parameters() { return QQmlListProperty<QmlKeyframesParameter>(this, &m_parameters); }
+    QQmlListProperty<QmlKeyframesParameter> parameters() { return QQmlListProperty<QmlKeyframesParameter>(this, m_parameters); }
     int parameterCount() const { return m_parameters.count(); }
     QmlKeyframesParameter *parameter(int index) const { return m_parameters[index]; }
     void checkVersion(const QString& version);

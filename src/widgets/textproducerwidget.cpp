@@ -30,7 +30,7 @@ static const int kPointSize = 60;
 
 static QString colorToString(const QColor& color)
 {
-    return (color == QColorConstants::Transparent) ? kTransparent
+    return (color == QColor(0, 0, 0, 0)) ? kTransparent
                                 : QString::asprintf("#%02X%02X%02X%02X",
                                                     qAlpha(color.rgba()),
                                                     qRed(color.rgba()),
@@ -75,9 +75,10 @@ void TextProducerWidget::on_colorButton_clicked()
     if (dialog.exec() == QDialog::Accepted) {
         auto newColor = dialog.currentColor();
         auto rgb = newColor;
+        auto transparent = QColor(0, 0, 0, 0);
         rgb.setAlpha(color.alpha());
         if (newColor.alpha() == 0 && (rgb != color ||
-            (newColor == QColorConstants::Transparent && color == QColorConstants::Transparent))) {
+            (newColor == transparent && color == transparent))) {
             newColor.setAlpha(255);
         }
         ui->colorLabel->setText(colorToString(newColor));

@@ -38,7 +38,7 @@
 #ifdef QT_NO_DEBUG
 #define check_error(fn) {}
 #else
-#define check_error(fn) { int err = fn->glGetError(); if (err != GL_NO_ERROR) { LOG_ERROR() << "GL error"  << Qt::hex << err << Qt::dec << "at" << __FILE__ << ":" << __LINE__; } }
+#define check_error(fn) { int err = fn->glGetError(); if (err != GL_NO_ERROR) { LOG_ERROR() << "GL error"  << hex << err << dec << "at" << __FILE__ << ":" << __LINE__; } }
 #endif
 
 #ifndef GL_TIMEOUT_IGNORED
