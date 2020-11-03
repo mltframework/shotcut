@@ -110,7 +110,7 @@ static bool eventDebugCallback(void **data)
     return false;
 }
 
-static const int AUTOSAVE_TIMEOUT_MS = 60000;
+static const int AUTOSAVE_TIMEOUT_MS = 30000;
 static const char* kReservedLayoutPrefix = "__%1";
 static const char* kLayoutSwitcherName("layoutSwitcherGrid");
 
@@ -172,9 +172,8 @@ MainWindow::MainWindow()
 #ifndef Q_OS_WIN
     new GLTestWidget(this);
 #endif
-    m_autosaveTimer.setSingleShot(true);
-    m_autosaveTimer.setInterval(AUTOSAVE_TIMEOUT_MS);
     connect(&m_autosaveTimer, SIGNAL(timeout()), this, SLOT(onAutosaveTimeout()));
+    m_autosaveTimer.start(AUTOSAVE_TIMEOUT_MS);
 
     // Initialize all QML types
     QmlUtilities::registerCommonTypes();
@@ -331,10 +330,8 @@ MainWindow::MainWindow()
     connect(m_playlistDock, SIGNAL(showStatusMessage(QString)), this, SLOT(showStatusMessage(QString)));
     connect(m_playlistDock->model(), SIGNAL(created()), this, SLOT(onPlaylistCreated()));
     connect(m_playlistDock->model(), SIGNAL(cleared()), this, SLOT(onPlaylistCleared()));
-    connect(m_playlistDock->model(), SIGNAL(cleared()), this, SLOT(updateAutoSave()));
     connect(m_playlistDock->model(), SIGNAL(closed()), this, SLOT(onPlaylistClosed()));
     connect(m_playlistDock->model(), SIGNAL(modified()), this, SLOT(onPlaylistModified()));
-    connect(m_playlistDock->model(), SIGNAL(modified()), this, SLOT(updateAutoSave()));
     connect(m_playlistDock->model(), SIGNAL(loaded()), this, SLOT(onPlaylistLoaded()));
     connect(this, SIGNAL(producerOpened()), m_playlistDock, SLOT(onProducerOpened()));
     if (!Settings.playerGPU())
@@ -358,7 +355,6 @@ MainWindow::MainWindow()
     connect(m_timelineDock->model(), SIGNAL(created()), SLOT(onMultitrackCreated()));
     connect(m_timelineDock->model(), SIGNAL(closed()), SLOT(onMultitrackClosed()));
     connect(m_timelineDock->model(), SIGNAL(modified()), SLOT(onMultitrackModified()));
-    connect(m_timelineDock->model(), SIGNAL(modified()), SLOT(updateAutoSave()));
     connect(m_timelineDock->model(), SIGNAL(durationChanged()), SLOT(onMultitrackDurationChanged()));
     connect(m_timelineDock, SIGNAL(clipOpened(Mlt::Producer*)), SLOT(openCut(Mlt::Producer*)));
     connect(m_timelineDock->model(), &MultitrackModel::seeked, this, &MainWindow::seekTimeline);
@@ -1292,14 +1288,28 @@ static void autosaveTask(MainWindow* p)
 
 void MainWindow::onAutosaveTimeout()
 {
-    if (isWindowModified())
+    if (isWindowModified()) {
         QtConcurrent::run(autosaveTask, this);
-}
-
-void MainWindow::updateAutoSave()
-{
-    if (!m_autosaveTimer.isActive())
-        m_autosaveTimer.start();
+    }
+    if (Util::isMemoryLow()) {
+        MLT.pause();
+        QMessageBox dialog(QMessageBox::Critical,
+                           qApp->applicationName(),
+                           tr("You are running low on available memory!\n\n"
+                              "Please close other applications or web browser tabs and retry.\n"
+                              "Or close, save, and restart Shotcut."),
+                           QMessageBox::Retry | QMessageBox::Close,
+                           this);
+        dialog.setDefaultButton(QMessageBox::Retry);
+        dialog.setEscapeButton(QMessageBox::Retry);
+        dialog.setWindowModality(QmlApplication::dialogModality());
+        if (dialog.exec() == QMessageBox::Close) {
+            m_exitCode = EXIT_RESTART;
+            QApplication::closeAllWindows();
+        } else {
+            onAutosaveTimeout();
+        }
+    }
 }
 
 void MainWindow::open(QString url, const Mlt::Properties* properties, bool play)
@@ -2557,6 +2567,7 @@ void MainWindow::showEvent(QShowEvent* event)
 #ifdef Q_OS_WIN
     WindowsTaskbarButton::getInstance().setParentWindow(this);
 #endif
+    onAutosaveTimeout();
 }
 
 void MainWindow::on_actionOpenOther_triggered()
@@ -2934,7 +2945,6 @@ void MainWindow::onCutModified()
 {
     if (!playlist() && !multitrack()) {
         setWindowModified(true);
-        updateAutoSave();
     }
     if (playlist())
         m_playlistDock->setUpdateButtonEnabled(true);
@@ -2943,14 +2953,12 @@ void MainWindow::onCutModified()
 void MainWindow::onProducerModified()
 {
     setWindowModified(true);
-    updateAutoSave();
 }
 
 void MainWindow::onFilterModelChanged()
 {
     MLT.refreshConsumer();
     setWindowModified(true);
-    updateAutoSave();
     if (playlist())
         m_playlistDock->setUpdateButtonEnabled(true);
 }

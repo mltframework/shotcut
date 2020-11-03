@@ -39,6 +39,16 @@
 #include "qmltypes/qmlapplication.h"
 #include "proxymanager.h"
 
+#ifdef Q_OS_WIN
+#include <windows.h>
+#endif
+
+#ifdef Q_OS_MAC
+static const unsigned int kLowMemoryThresholdPercent = 10U;
+#else
+static const unsigned int kLowMemoryThresholdKB = 256U * 1024U;
+#endif
+
 QString Util::baseName(const QString &filePath)
 {
     QString s = filePath;
@@ -436,4 +446,60 @@ QFileDialog::Options Util::getFileDialogOptions()
     }
 #endif
     return QFileDialog::Options();
+}
+
+bool Util::isMemoryLow()
+{
+#if defined(Q_OS_WIN)
+    unsigned int availableKB = UINT_MAX;
+    MEMORYSTATUSEX memory_status;
+    ZeroMemory(&memory_status, sizeof(MEMORYSTATUSEX));
+    memory_status.dwLength = sizeof(MEMORYSTATUSEX);
+    if (GlobalMemoryStatusEx(&memory_status)) {
+        availableKB = memory_status.ullAvailPhys / 1024UL;
+    }
+    LOG_INFO() << "available RAM = " << availableKB << "KB";
+    return availableKB < kLowMemoryThresholdKB;
+#elif defined(Q_OS_MAC)
+    QProcess p;
+    p.start("memory_pressure");
+    p.waitForFinished();
+    auto lines = p.readAllStandardOutput();
+    p.close();
+    for (const auto& line : lines.split('\n')) {
+        if (line.startsWith("System-wide memory free")) {
+            auto fields = line.split(':');
+            for (auto s : fields) {
+                bool ok = false;
+                auto percentage = s.replace('%', "").toUInt(&ok);
+                if (ok) {
+                    LOG_INFO() << percentage << '%';
+                    return percentage <= kLowMemoryThresholdPercent;
+                }
+            }
+        }
+    }
+    return false;
+#elif defined(Q_OS_LINUX)
+    unsigned int availableKB = UINT_MAX;
+    QFile meminfo("/proc/meminfo");
+    if (meminfo.open(QIODevice::ReadOnly)) {
+        for (auto line = meminfo.readLine(1024); availableKB == UINT_MAX && !line.isEmpty(); line = meminfo.readLine(1024)) {
+            if (line.startsWith("MemAvailable")) {
+                auto fields = line.split(' ');
+                for (const auto& s : fields) {
+                    bool ok = false;
+                    auto kB = s.toUInt(&ok);
+                    if (ok) {
+                        availableKB = kB;
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    meminfo.close();
+    LOG_INFO() << "available RAM = " << availableKB << "KB";
+    return availableKB < kLowMemoryThresholdKB;
+#endif
 }

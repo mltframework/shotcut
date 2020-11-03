@@ -57,6 +57,7 @@ public:
     static QString getHash(Mlt::Properties& properties);
     static bool hasDriveLetter(const QString& path);
     static QFileDialog::Options getFileDialogOptions();
+    static bool isMemoryLow();
 };
 
 #endif // UTIL_H
