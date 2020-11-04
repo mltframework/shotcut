@@ -252,6 +252,9 @@
    <property name="windowTitle">
     <string>Toolbar</string>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QToolButton:checked { color: palette(highlighted-text); background-color: palette(highlight); border: none; padding: 2px }</string>
+   </property>
    <property name="movable">
     <bool>false</bool>
    </property>
