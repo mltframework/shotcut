@@ -60,7 +60,7 @@ Box *SA3DBox::load ( std::fstream &fs, uint32_t iPos, uint32_t iEnd )
   if ( iPos < 0 )
        iPos = fs.tellg ( );
 
-  char tmp, name[4];
+  char name[4];
 
   fs.seekg( iPos );
   uint32_t iSize = readUint32 ( fs );
@@ -71,7 +71,7 @@ Box *SA3DBox::load ( std::fstream &fs, uint32_t iPos, uint32_t iEnd )
     iSize = (int32_t)readUint64 ( fs );
   }
 
-  if ( 0 != memcmp ( name, constants::TAG_SA3D, sizeof ( constants::TAG_SA3D ) ) )  {
+  if ( 0 != memcmp ( name, constants::TAG_SA3D, sizeof ( *constants::TAG_SA3D ) ) )  {
     std::cerr << "Error: box is not an SA3D box." << std::endl;
     return NULL;
   }
@@ -91,7 +91,7 @@ Box *SA3DBox::load ( std::fstream &fs, uint32_t iPos, uint32_t iEnd )
   pNewBox->m_iAmbisonicNormalization   = readUint8 ( fs );
   pNewBox->m_iNumChannels    = readUint32 ( fs );
 
-  for ( int i=0; i< pNewBox->m_iNumChannels; i++ )  {
+  for ( auto i = 0U; i< pNewBox->m_iNumChannels; i++ )  {
     uint32_t iVal = readUint32 ( fs );
     pNewBox->m_ChannelMap.push_back ( iVal );
   }
@@ -100,6 +100,7 @@ Box *SA3DBox::load ( std::fstream &fs, uint32_t iPos, uint32_t iEnd )
 
 Box *SA3DBox::create ( int32_t iNumChannels, AudioMetadata &amData )
 {
+  (void) amData; // unused
   // audio_metadata: dictionary ('ambisonic_type': string, 'ambisonic_order': int),
 
   SA3DBox *pNewBox = new SA3DBox ( );
@@ -127,8 +128,9 @@ Box *SA3DBox::create ( int32_t iNumChannels, AudioMetadata &amData )
   return pNewBox;
 }
 
-void SA3DBox::save ( std::fstream &fsIn, std::fstream &fsOut )
+void SA3DBox::save (std::fstream &fsIn, std::fstream &fsOut , int32_t)
 {
+  (void) fsIn; // unused
   //char tmp, name[4];
   uint64_t iSize = m_iContentSize;
  

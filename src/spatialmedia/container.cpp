@@ -44,13 +44,13 @@ Box *Container::load ( std::fstream &fs, uint32_t iPos, uint32_t iEnd )
 
   fs.seekg ( iPos );
   uint32_t iHeaderSize = 8;
-  uint32_t t, iSize = readUint32 ( fs );
+  uint32_t iSize = readUint32 ( fs );
   char name[4];
   fs.read ( name, 4 );
 
   int32_t iArrSize = (int32_t)(sizeof(constants::CONTAINERS_LIST)/sizeof(constants::CONTAINERS_LIST[0]));
   bool bIsBox = true;
-  for ( t=0; t<iArrSize; t++ )  {
+  for ( auto t=0; t<iArrSize; t++ )  {
     if ( memcmp ( name, constants::CONTAINERS_LIST[t], 4 ) == 0 )  {
       bIsBox = false;
       break;
@@ -89,7 +89,7 @@ Box *Container::load ( std::fstream &fs, uint32_t iPos, uint32_t iEnd )
   uint32_t iCurrentPos = 0;
   int16_t  iSampleDescVersion = 0;
   iArrSize = (int32_t)(sizeof(constants::SOUND_SAMPLE_DESCRIPTIONS)/sizeof(constants::SOUND_SAMPLE_DESCRIPTIONS[0]));
-  for ( t=0; t<iArrSize; t++ )  {
+  for ( auto t=0; t<iArrSize; t++ )  {
     if ( memcmp ( name, constants::SOUND_SAMPLE_DESCRIPTIONS[t], 4 ) == 0 )  {
       iCurrentPos = fs.tellg ( );
       fs.seekg ( iCurrentPos + 8 );

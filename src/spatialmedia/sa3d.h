@@ -45,7 +45,7 @@ class SA3DBox : public Box
 
     static Box *create ( int32_t iNumChannels, AudioMetadata & );
 
-    void save ( std::fstream &fsIn, std::fstream &fsOut );
+    virtual void save ( std::fstream &fsIn, std::fstream &fsOut, int32_t );
     const char *ambisonic_type_name ( );
     const char *ambisonic_channel_ordering_name ( );
     const char *ambisonic_normalization_name ( );

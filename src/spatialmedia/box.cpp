@@ -185,7 +185,7 @@ Box *Box::load ( std::fstream &fs, uint32_t iPos, uint32_t iEnd )
 //  if ( iPos < 1 ) // iPos is None:
 //       iPos = fs.tellg ( );
 
-  uint32_t iHeaderSize, tmp = 0;
+  uint32_t iHeaderSize = 0;
   uint64_t iSize = 0LL;
   char name[4];
 
@@ -319,13 +319,13 @@ void Box::index_copy ( std::fstream &fsIn, std::fstream &fsOut, Box *pBox, bool 
   writeUint32 ( fsOut, iHeader );
   writeUint32 ( fsOut, iValues );
   if ( bBigMode )  {
-   for ( int i=0; i<iValues; i++ )  {
+   for ( auto i = 0U; i<iValues; i++ )  {
       uint64_t iVal = readUint64 ( fsIn ) + iDelta;
       writeUint64 ( fsOut, iVal );
     }
   }
   else  {
-    for ( int i=0; i<iValues; i++ )  {
+    for ( auto i = 0U; i<iValues; i++ )  {
       uint32_t iVal = readUint32 ( fsIn ) + iDelta;
       writeUint32 ( fsOut, iVal );
     }
@@ -356,6 +356,7 @@ uint64_t Box::uint64FromCont ( int32_t &iIDX )
 
 void Box::index_copy_from_contents ( std::fstream &fsOut, Box *pBox, bool bBigMode, int32_t iDelta )
 {
+  (void) pBox; // unused
   int32_t iIDX = 0;
 
   uint32_t iHeader = uint32FromCont ( iIDX );
@@ -363,13 +364,13 @@ void Box::index_copy_from_contents ( std::fstream &fsOut, Box *pBox, bool bBigMo
   writeUint32 ( fsOut, iHeader );
   writeUint32 ( fsOut, iValues );
   if ( bBigMode )  {
-   for ( int i=0; i<iValues; i++ )  {
+   for ( auto i = 0U; i<iValues; i++ )  {
       uint64_t iVal = uint64FromCont ( iIDX ) + iDelta;
       writeUint64 ( fsOut, iVal );
     }
   }
   else  {
-    for ( int i=0; i<iValues; i++ )  {
+    for ( auto i = 0U; i<iValues; i++ )  {
       uint32_t iVal = uint32FromCont ( iIDX ) + iDelta;
       writeUint32 ( fsOut, iVal );
     }

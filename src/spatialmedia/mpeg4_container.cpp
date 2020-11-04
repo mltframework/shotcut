@@ -87,6 +87,7 @@ Mpeg4Container *Mpeg4Container::load ( std::fstream &fsIn ) //, uint32_t /* iPos
 
 void Mpeg4Container::merge ( Box *pElement )
 {
+  (void) pElement; // unused
   // Mpeg4 containers do not support merging."""
   std::cerr << "Cannot merge mpeg4 files" << std::endl;
   exit ( 0 );
