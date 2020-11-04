@@ -117,6 +117,8 @@ private slots:
 
     void on_actionReset_triggered();
 
+    void on_actionSetEquirectangular_triggered();
+
 private:
     Ui::AvformatProducerWidget *ui;
     int m_defaultDuration;

@@ -924,6 +924,11 @@
     <string>Reset</string>
    </property>
   </action>
+  <action name="actionSetEquirectangular">
+   <property name="text">
+    <string>Set Equirectangular...</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>

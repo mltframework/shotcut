@@ -32,6 +32,8 @@
 #include "qmltypes/qmlapplication.h"
 #include "proxymanager.h"
 #include "dialogs/longuitask.h"
+#include "spatialmedia/spatialmedia.h"
+
 #include <QtWidgets>
 
 static bool ProducerIsTimewarp( Mlt::Producer* producer )
@@ -704,6 +706,9 @@ void AvformatProducerWidget::on_menuButton_clicked()
     menu.addAction(ui->actionFFmpegConvert);
     menu.addAction(ui->actionExtractSubclip);
     menu.addAction(ui->actionSetFileDate);
+    if (GetFilenameFromProducer(producer()).toLower().endsWith(".mp4")) {
+        menu.addAction(ui->actionSetEquirectangular);
+    }
     menu.exec(ui->menuButton->mapToGlobal(QPoint(0, 0)));
 }
 
@@ -1247,5 +1252,25 @@ void AvformatProducerWidget::on_actionReset_triggered()
         delete p;
     } else {
         reopen(p);
+    }
+}
+
+void AvformatProducerWidget::on_actionSetEquirectangular_triggered()
+{
+    // Get the location and file name for the report.
+    QString caption = tr("Set Equirectangular Projection");
+    QFileInfo info(GetFilenameFromProducer(producer()));
+    QString directory = QString("%1/%2 - ERP.%3")
+            .arg(info.path())
+            .arg(info.completeBaseName())
+            .arg(info.suffix());
+    QString filePath = QFileDialog::getSaveFileName(&MAIN, caption, directory, QString(),
+        nullptr, Util::getFileDialogOptions());
+    if (!filePath.isEmpty()) {
+        if (SpatialMedia::injectSpherical(objectName().toStdString(), filePath.toStdString())) {
+            MAIN.showStatusMessage(tr("Successfully wrote %1").arg(QFileInfo(filePath).fileName()));
+        } else {
+            MAIN.showStatusMessage(tr("An error occurred saving the projection."));
+        }
     }
 }
