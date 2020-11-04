@@ -64,7 +64,7 @@ CheckBox {
     MessageDialog {
         id: confirmDialog
         visible: false
-        modality: Qt.ApplicationModal
+        modality: application.dialogModality
         icon: StandardIcon.Question
         title: qsTr("Confirm Removing Keyframes")
         text: qsTr('This will remove all keyframes for this parameter.<p>Do you still want to do this?')

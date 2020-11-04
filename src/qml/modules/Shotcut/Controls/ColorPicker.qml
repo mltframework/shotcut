@@ -77,7 +77,7 @@ RowLayout {
             // is actually more cross-platform compatible.
             value = currentColor
         }
-        modality: Qt.ApplicationModal
+        modality: application.dialogModality
     }
     
     Button {

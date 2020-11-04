@@ -4268,11 +4268,14 @@ void MainWindow::on_actionLayoutClip_triggered()
 
 void MainWindow::on_actionLayoutAdd_triggered()
 {
-    bool ok;
-    QString name = QInputDialog::getText(this, tr("Add Custom Layout"),
-                                         tr("Name"), QLineEdit::Normal,
-                                         "", &ok);
-    if (ok && !name.isEmpty()) {
+    QInputDialog dialog(this);
+    dialog.setInputMode(QInputDialog::TextInput);
+    dialog.setWindowTitle(tr("Add Custom Layout"));
+    dialog.setLabelText(tr("Name"));
+    dialog.setWindowModality(QmlApplication::dialogModality());
+    auto result = dialog.exec();
+    auto name = dialog.textValue();
+    if (result == QDialog::Accepted && !name.isEmpty()) {
         if (Settings.setLayout(name, saveGeometry(), saveState())) {
             Settings.setLayoutMode();
             clearCurrentLayout();

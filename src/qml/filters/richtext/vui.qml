@@ -580,7 +580,7 @@ VuiBase {
 
     FontDialog {
         id: fontDialog
-        modality: Qt.ApplicationModal
+        modality: application.dialogModality
         onAccepted: {
             document.fontFamily = font.family
             document.fontSize = font.pointSize
@@ -590,17 +590,17 @@ VuiBase {
         id: colorDialog
         color: 'black'
         showAlphaChannel: true
-        modality: Qt.ApplicationModal
+        modality: application.dialogModality
     }
     MessageDialog {
         id: errorDialog
-        modality: Qt.ApplicationModal
+        modality: application.dialogModality
     }
     Dialog {
         id: tableDialog
         title: qsTr('Insert Table')
         standardButtons: StandardButton.Ok | StandardButton.Cancel
-        modality: Qt.ApplicationModal
+        modality: application.dialogModality
         GridLayout {
             rows: 4
             columns: 2

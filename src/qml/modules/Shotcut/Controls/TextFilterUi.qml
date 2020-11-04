@@ -171,7 +171,7 @@ GridLayout {
                 id: fontDialog
                 title: "Please choose a font"
                 property string fontFamily: ''
-                modality: Qt.ApplicationModal
+                modality: application.dialogModality
                 onFontChanged: {
                     filter.set('family', font.family)
                     filter.set('weight', 10 * font.weight )

@@ -30,6 +30,7 @@
 #include "util.h"
 #include "commands/playlistcommands.h"
 #include "proxymanager.h"
+#include "qmltypes/qmlapplication.h"
 #include <Logger.h>
 
 #include <QMenu>
@@ -500,6 +501,7 @@ void PlaylistDock::on_actionSetFileDate_triggered()
            title = fileInfo.baseName();
         }
         FileDateDialog dialog(resource, info->producer, this);
+        dialog.setWindowModality(QmlApplication::dialogModality());
         dialog.exec();
     }
 }
@@ -854,6 +856,7 @@ void PlaylistDock::on_actionAddToSlideshow_triggered()
     }
 
     SlideshowGeneratorDialog dialog(this, playlist);
+    dialog.setWindowModality(QmlApplication::dialogModality());
     if (dialog.exec() == QDialog::Accepted ) {
         LongUiTask longTask(QObject::tr("Generate Slideshow"));
         Mlt::Playlist* slideshow = longTask.runAsync<Mlt::Playlist*>(tr("Generating"), &dialog, &SlideshowGeneratorDialog::getSlideshow);

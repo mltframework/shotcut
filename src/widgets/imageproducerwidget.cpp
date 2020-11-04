@@ -23,6 +23,7 @@
 #include "util.h"
 #include "dialogs/filedatedialog.h"
 #include "proxymanager.h"
+#include "qmltypes/qmlapplication.h"
 #include <Logger.h>
 #include <QFileInfo>
 #include <QDir>
@@ -344,6 +345,7 @@ void ImageProducerWidget::on_actionSetFileDate_triggered()
 {
     QString resource = GetFilenameFromProducer(producer());
     FileDateDialog dialog(resource, producer(), this);
+    dialog.setModal(QmlApplication::dialogModality());
     dialog.exec();
 }
 

@@ -371,7 +371,7 @@ Item {
                 }
                 FontDialog {
                     id: fontDialog
-                    modality: Qt.ApplicationModal
+                    modality: application.dialogModality
                     property string fontFamily: ''
                     onFontChanged: {
                         filter.set('family', font.family)

@@ -22,6 +22,7 @@
 #include "shotcut_mlt_properties.h"
 #include "util.h"
 #include "mltcontroller.h"
+#include "qmltypes/qmlapplication.h"
 #include "Logger.h"
 
 static const QString kTransparent = QObject::tr("transparent", "Open Other > Color");
@@ -71,6 +72,7 @@ void ColorProducerWidget::on_colorButton_clicked()
     }
     QColorDialog dialog(color);
     dialog.setOption(QColorDialog::ShowAlphaChannel);
+    dialog.setModal(QmlApplication::dialogModality());
     if (dialog.exec() == QDialog::Accepted) {
         auto newColor = dialog.currentColor();
         auto rgb = newColor;

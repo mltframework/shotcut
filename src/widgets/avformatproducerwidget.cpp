@@ -1114,6 +1114,7 @@ void AvformatProducerWidget::on_actionSetFileDate_triggered()
 {
     QString resource = GetFilenameFromProducer(producer());
     FileDateDialog dialog(resource, producer(), this);
+    dialog.setModal(QmlApplication::dialogModality());
     dialog.exec();
 }
 

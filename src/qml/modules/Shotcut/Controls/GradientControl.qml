@@ -76,7 +76,7 @@ RowLayout {
                                                  (Qt.colorEqual(currentColor, 'transparent') && Qt.colorEqual(myColor, 'transparent'))))
                     parent.parent._setStopColor(handelRect.stopIndex, String(currentColor))
                 }
-                modality: Qt.ApplicationModal
+                modality: application.dialogModality
             }
 
             ToolTip { text: qsTr('Color: %1\nClick to change').arg(color) }
