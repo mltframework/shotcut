@@ -85,7 +85,7 @@ MeltJob::~MeltJob()
 
 void MeltJob::start()
 {
-    if (!m_xml) {
+    if (m_args.isEmpty() && !m_xml) {
         AbstractJob::start();
         LOG_ERROR() << "the job XML is empty!";
         appendToLog("Error: the job XML is empty!\n");
