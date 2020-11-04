@@ -2627,6 +2627,7 @@ void MultitrackModel::removeTrack(int trackIndex)
         m_tractor->remove_track(track.mlt_index);
         m_trackList.removeAt(trackIndex);
         endRemoveRows();
+        MLT.updateAvformatCaching(m_tractor->count());
 
 //        foreach (Track t, m_trackList) LOG_DEBUG() << (t.type == VideoTrackType?"Video":"Audio") << "track number" << t.number << "mlt_index" << t.mlt_index;
 
