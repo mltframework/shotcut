@@ -110,7 +110,7 @@ static bool eventDebugCallback(void **data)
     return false;
 }
 
-static const int AUTOSAVE_TIMEOUT_MS = 30000;
+static const int AUTOSAVE_TIMEOUT_MS = 60000;
 static const char* kReservedLayoutPrefix = "__%1";
 static const char* kLayoutSwitcherName("layoutSwitcherGrid");
 
@@ -1297,17 +1297,23 @@ void MainWindow::onAutosaveTimeout()
                            qApp->applicationName(),
                            tr("You are running low on available memory!\n\n"
                               "Please close other applications or web browser tabs and retry.\n"
-                              "Or close, save, and restart Shotcut."),
-                           QMessageBox::Retry | QMessageBox::Close,
+                              "Or save and restart Shotcut."),
+                           QMessageBox::Retry | QMessageBox::Save | QMessageBox::Ignore,
                            this);
         dialog.setDefaultButton(QMessageBox::Retry);
-        dialog.setEscapeButton(QMessageBox::Retry);
+        dialog.setEscapeButton(QMessageBox::Ignore);
         dialog.setWindowModality(QmlApplication::dialogModality());
-        if (dialog.exec() == QMessageBox::Close) {
+        switch (dialog.exec()) {
+        case QMessageBox::Save:
+            on_actionSave_triggered();
             m_exitCode = EXIT_RESTART;
             QApplication::closeAllWindows();
-        } else {
+            break;
+        case QMessageBox::Retry:
             onAutosaveTimeout();
+            break;
+        default:
+            break;
         }
     }
 }
