@@ -109,12 +109,7 @@ Rectangle {
 
     Image {
         id: outThumbnail
-        visible: !isBlank && settings.timelineShowThumbnails &&
-                 parent.height > 20 && x > inThumbnail.width &&
-                 ((clipRoot.x + x + width)   > scrollView.flickableItem.contentX) && // right edge
-                 ((clipRoot.x + x)           < scrollView.flickableItem.contentX + scrollView.width) && // left edge
-                 ((trackRoot.y + y + height) > scrollView.flickableItem.contentY) && // bottom edge
-                 ((trackRoot.y + y)          < scrollView.flickableItem.contentY + scrollView.height) // top edge
+        visible: !isBlank && settings.timelineShowThumbnails && parent.height > 20 && x > inThumbnail.width
         anchors.right: parent.right
         anchors.top: parent.top
         anchors.topMargin: parent.border.width
@@ -128,11 +123,7 @@ Rectangle {
 
     Image {
         id: inThumbnail
-        visible: !isBlank && settings.timelineShowThumbnails && parent.height > 20 &&
-                 ((clipRoot.x + x + width)   > scrollView.flickableItem.contentX) && // right edge
-                 ((clipRoot.x + x)           < scrollView.flickableItem.contentX + scrollView.width) && // left edge
-                 ((trackRoot.y + y + height) > scrollView.flickableItem.contentY) && // bottom edge
-                 ((trackRoot.y + y)          < scrollView.flickableItem.contentY + scrollView.height) // top edge
+        visible: !isBlank && settings.timelineShowThumbnails && parent.height > 20
         anchors.left: parent.left
         anchors.top: parent.top
         anchors.topMargin: parent.border.width
