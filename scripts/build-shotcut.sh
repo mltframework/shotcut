@@ -1565,6 +1565,9 @@ function configure_compile_install_subproject {
       log RUBBERBANDLIB=$RUBBERBANDLIB
       cmd install_name_tool -id "$FINAL_INSTALL_DIR"/lib/$(basename "$RUBBERBANDLIB") "$FINAL_INSTALL_DIR"/lib/librubberband.dylib
     fi
+    if test "vid.stab" = "$1" -a "Darwin" = "$TARGET_OS" ; then
+      cmd sed -e 's/-fopenmp//' -i .bak "$FINAL_INSTALL_DIR/lib/pkgconfig/vidstab.pc"
+    fi
   fi
   feedback_status Done installing $1
 
