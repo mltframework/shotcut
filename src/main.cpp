@@ -44,6 +44,12 @@ extern "C"
 }
 #endif
 
+#ifdef Q_OS_WIN
+static const char* kDefaultScaleRoundPolicy = "RoundPreferFloor";
+#else
+static const char* kDefaultScaleRoundPolicy = "Round";
+#endif
+
 static void mlt_log_handler(void *service, int mlt_level, const char *format, va_list args)
 {
     if (mlt_level > mlt_log_get_level())
@@ -166,7 +172,7 @@ public:
         QCommandLineOption scalePolicyOption("QT_SCALE_FACTOR_ROUNDING_POLICY",
             QCoreApplication::translate("main", "How to handle a fractional display scale: %1")
                 .arg("Round, Ceil, Floor, RoundPreferFloor, PassThrough"),
-            QCoreApplication::translate("main", "string"), "RoundPreferFloor");
+            QCoreApplication::translate("main", "string"), kDefaultScaleRoundPolicy);
         parser.addOption(scalePolicyOption);
 #endif
         parser.addPositionalArgument("[FILE]...",
@@ -316,7 +322,7 @@ int main(int argc, char **argv)
     }
 #endif
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 14, 0))
-    QByteArray value("RoundPreferFloor");
+    QByteArray value(kDefaultScaleRoundPolicy);
     for (int i = 1; i + 1 < argc; i++) {
         if (!::qstrcmp("--QT_SCALE_FACTOR_ROUNDING_POLICY", argv[i])) {
             value = argv[i + 1];
