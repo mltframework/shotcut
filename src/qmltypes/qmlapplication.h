@@ -31,7 +31,7 @@ namespace Mlt {
 class QmlApplication : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(Qt::WindowModality dialogModality READ dialogModality);
+    Q_PROPERTY(Qt::WindowModality dialogModality READ dialogModality CONSTANT);
     Q_PROPERTY(QPoint mousePos READ mousePos);
     Q_PROPERTY(QColor toolTipBaseColor READ toolTipBaseColor NOTIFY paletteChanged)
     Q_PROPERTY(QColor toolTipTextColor READ toolTipTextColor NOTIFY paletteChanged)
