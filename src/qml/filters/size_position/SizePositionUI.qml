@@ -607,13 +607,23 @@ Item {
                 minimumValue: 0
                 maximumValue: 999999999
                 onValueChanged: {
-                    if (hovered && Math.abs(filterRect.width - value) >= 1) {
-                        scaleByWidth(value)
+                    if (hovered && !activeFocus && Math.abs(filterRect.width - value) >= 1) {
+                        if (isFillMode()) {
+                            scaleByWidth(value)
+                        } else {
+                            filterRect.width = value
+                            setFilter(getPosition())
+                        }
                     }
                 }
                 onEditingFinished: {
                     if (Math.abs(filterRect.width - value) >= 1) {
-                        scaleByWidth(value)
+                        if (isFillMode()) {
+                            scaleByWidth(value)
+                        } else {
+                            filterRect.width = value
+                            setFilter(getPosition())
+                        }
                     }
                 }
             }
@@ -627,13 +637,23 @@ Item {
                 minimumValue: 0
                 maximumValue: 999999999
                 onValueChanged: {
-                    if (hovered && Math.abs(filterRect.height - value) >= 1) {
-                        scaleByHeight(value)
+                    if (hovered && !activeFocus && Math.abs(filterRect.height - value) >= 1) {
+                        if (isFillMode()) {
+                            scaleByHeight(value)
+                        } else {
+                            filterRect.height = value
+                            setFilter(getPosition())
+                        }
                     }
                 }
                 onEditingFinished: {
                     if (Math.abs(filterRect.height - value) >= 1) {
-                        scaleByHeight(value)
+                        if (isFillMode()) {
+                            scaleByHeight(value)
+                        } else {
+                            filterRect.height = value
+                            setFilter(getPosition())
+                        }
                     }
                 }
             }
