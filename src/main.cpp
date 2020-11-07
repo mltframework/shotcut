@@ -162,6 +162,13 @@ public:
             QCoreApplication::translate("main", "A semicolon-separated list of scale factors for each screen"),
             QCoreApplication::translate("main", "list"));
         parser.addOption(scaleOption);
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 14, 0))
+        QCommandLineOption scalePolicyOption("QT_SCALE_FACTOR_ROUNDING_POLICY",
+            QCoreApplication::translate("main", "How to handle a fractional display scale: %1")
+                .arg("Round, Ceil, Floor, RoundPreferFloor, PassThrough"),
+            QCoreApplication::translate("main", "string"), "RoundPreferFloor");
+        parser.addOption(scalePolicyOption);
+#endif
         parser.addPositionalArgument("[FILE]...",
             QCoreApplication::translate("main", "Zero or more files or folders to open"));
         parser.process(arguments());
@@ -297,7 +304,7 @@ int main(int argc, char **argv)
 #ifndef QT_DEBUG
     ::qputenv("QT_LOGGING_RULES", "*.warning=false");
 #endif
-#if QT_VERSION >= 0x050600
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 6, 0))
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     for (int i = 1; i + 1 < argc; i++) {
         if (!::qstrcmp("--QT_SCALE_FACTOR", argv[i]) || !::qstrcmp("--QT_SCREEN_SCALE_FACTORS", argv[i])) {
@@ -307,6 +314,16 @@ int main(int argc, char **argv)
             break;
         }
     }
+#endif
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 14, 0))
+    QByteArray value("RoundPreferFloor");
+    for (int i = 1; i + 1 < argc; i++) {
+        if (!::qstrcmp("--QT_SCALE_FACTOR_ROUNDING_POLICY", argv[i])) {
+            value = argv[i + 1];
+            break;
+        }
+    }
+    ::qputenv("QT_SCALE_FACTOR_ROUNDING_POLICY", value);
 #endif
 #ifdef Q_OS_MAC
     // Launcher and Spotlight on macOS are not setting this environment
@@ -331,6 +348,7 @@ int main(int argc, char **argv)
     QSplashScreen splash(QPixmap(":/icons/shotcut-logo-320x320.png"));
     splash.showMessage(QCoreApplication::translate("main", "Loading plugins..."), Qt::AlignRight | Qt::AlignVCenter);
     splash.show();
+    a.processEvents();
 
     a.setProperty("system-style", a.style()->objectName());
     MainWindow::changeTheme(Settings.theme());
