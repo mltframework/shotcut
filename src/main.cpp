@@ -329,7 +329,9 @@ int main(int argc, char **argv)
             break;
         }
     }
-    ::qputenv("QT_SCALE_FACTOR_ROUNDING_POLICY", value);
+    if (!::qEnvironmentVariableIsSet("QT_SCALE_FACTOR_ROUNDING_POLICY")) {
+        ::qputenv("QT_SCALE_FACTOR_ROUNDING_POLICY", value);
+    }
 #endif
 #ifdef Q_OS_MAC
     // Launcher and Spotlight on macOS are not setting this environment
