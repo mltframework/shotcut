@@ -664,7 +664,7 @@ function set_globals {
   if test "$TARGET_OS" = "Win32" ; then
     CONFIG[1]="${CONFIG[1]} --disable-dv --disable-kino --disable-vorbis --gdk-prefix=\"$FINAL_INSTALL_DIR\" --target-os=MinGW --target-arch=i686 --rename-melt=melt.exe"
   elif test "$TARGET_OS" = "Win64" ; then
-	CONFIG[1]="${CONFIG[1]} --disable-dv --disable-kino --disable-vorbis --gdk-prefix=\"$FINAL_INSTALL_DIR\" --target-os=MinGW --target-arch=x86_64 --rename-melt=melt.exe"
+    CONFIG[1]="${CONFIG[1]} --disable-dv --disable-kino --disable-vorbis --gdk-prefix=\"$FINAL_INSTALL_DIR\" --target-os=MinGW --target-arch=x86_64 --rename-melt=melt.exe"
   fi
   CFLAGS_[1]="-I$FINAL_INSTALL_DIR/include $ASAN_CFLAGS $CFLAGS"
   if [ "$TARGET_OS" = "Darwin" ]; then
@@ -781,20 +781,20 @@ function set_globals {
   # x265
   CFLAGS_[13]=$CFLAGS
   if test "$TARGET_OS" = "Win32" -o "$TARGET_OS" = "Win64" ; then
-    CONFIG[13]="cmake -DCMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -DCMAKE_TOOLCHAIN_FILE=my.cmake -DENABLE_CLI=OFF $CMAKE_DEBUG_FLAG"
+    CONFIG[13]="cmake -DCMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -DCMAKE_TOOLCHAIN_FILE=my.cmake -DENABLE_CLI=OFF -DHIGH_BIT_DEPTH=ON $CMAKE_DEBUG_FLAG"
   else
-    CONFIG[13]="cmake -DCMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -DENABLE_CLI=OFF $CMAKE_DEBUG_FLAG"
+    CONFIG[13]="cmake -DCMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -DENABLE_CLI=OFF -DHIGH_BIT_DEPTH=ON $CMAKE_DEBUG_FLAG"
   fi
   LDFLAGS_[13]=$LDFLAGS
 
   #######
   # nv-codec-headers
   CONFIG[15]="sed -i s,/usr/local,$FINAL_INSTALL_DIR, Makefile"
-  
+
   #######
   # AMF - no build required
   CONFIG[16]=""
-  
+
   #######
   # QSV mfx_dispatch
   CONFIG[17]="./configure --prefix=$FINAL_INSTALL_DIR"
@@ -1917,7 +1917,7 @@ function deploy_osx
     done
     popd
   fi
-  
+
   if [ "$ARCHIVE" = "1" ]; then
     if [ "$SDK" = "1" ]; then
       log Making archive
