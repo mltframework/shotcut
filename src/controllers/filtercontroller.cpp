@@ -152,11 +152,12 @@ void FilterController::setCurrentFilter(int attachedIndex, bool isNew)
             MLT.refreshConsumer();
         }
     }
+    // Send signal that current filter is clearing.
+    emit currentFilterChanged(m_currentFilter.data(), nullptr, -1);
 
     QmlMetadata* meta = m_attachedModel.getMetadata(m_currentFilterIndex);
     QmlFilter* filter = 0;
     if (meta) {
-        emit currentFilterChanged(nullptr, nullptr, -1);
         m_mltFilter = m_attachedModel.getFilter(m_currentFilterIndex);
         filter = new QmlFilter(*m_mltFilter, meta);
         filter->setIsNew(isNew);

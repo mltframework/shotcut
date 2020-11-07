@@ -92,7 +92,7 @@ int KeyframesDock::seekNext()
 
 void KeyframesDock::setCurrentFilter(QmlFilter* filter, QmlMetadata* meta)
 {
-    if (!filter || !filter->producer().is_valid()) {
+    if (!meta || !filter || !filter->producer().is_valid()) {
         filter = &m_emptyQmlFilter;
         meta = &m_emptyQmlMetadata;
     }

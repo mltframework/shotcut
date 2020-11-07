@@ -67,7 +67,7 @@ FiltersDock::FiltersDock(MetadataModel* metadataModel, AttachedFiltersModel* att
 
 void FiltersDock::setCurrentFilter(QmlFilter* filter, QmlMetadata* meta, int index)
 {
-    if (filter && filter->producer().is_valid()) {
+    if (index > -1 && filter && filter->producer().is_valid()) {
         m_producer.setProducer(filter->producer());
     } else {
         Mlt::Producer emptyProducer(mlt_producer(0));
@@ -75,7 +75,7 @@ void FiltersDock::setCurrentFilter(QmlFilter* filter, QmlMetadata* meta, int ind
     }
     m_qview.rootContext()->setContextProperty("filter", filter);
     m_qview.rootContext()->setContextProperty("metadata", meta);
-    if (filter)
+    if (index > -1 && filter)
         connect(filter, SIGNAL(changed()), SIGNAL(changed()));
     else
         disconnect(this, SIGNAL(changed()));
