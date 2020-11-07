@@ -136,7 +136,7 @@ VuiBase {
 
     function updateScale(scale) {
         if (Math.abs(scale - filterRect.width / profile.width) > 0.01) {
-            var aspectRatio = filterRect.width / filterRect.height
+            var aspectRatio = filterRect.width / Math.max(filterRect.height, 1)
             var align = filter.get(halignProperty)
             var centerX = filterRect.x + filterRect.width / 2
             var rightX = filterRect.x + filterRect.width
@@ -149,7 +149,7 @@ VuiBase {
             var middleY = filterRect.y + filterRect.height / 2
             var bottomY = filterRect.y + filterRect.height
             align = filter.get(valignProperty)
-            filterRect.height = Math.round(filterRect.width / aspectRatio)
+            filterRect.height = Math.round(filterRect.width / Math.max(aspectRatio, 1))
             if (align === 'center' || align === 'middle') {
                 filterRect.y = middleY - filterRect.height / 2
             } else if (align === 'bottom') {

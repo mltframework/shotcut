@@ -38,6 +38,7 @@ Item {
     property string rotationEndValue:  '_shotcut:rotationEndValue'
     property bool blockUpdate: true
     property rect defaultRect
+    property real aspectRatio: producer.displayAspectRatio
 
     width: 425
     height: 250
@@ -226,6 +227,7 @@ Item {
             if (filter.animateOut > 0)
                 filter.set(rotationEndValue, filter.getRect(rotationProperty, filter.duration - 1))
         }
+        updateAspectRatio()
         filter.blockSignals = false
         setControls()
         setKeyframedControls()
@@ -243,6 +245,14 @@ Item {
 
     function isFillMode() {
         return filter.get(fillProperty) === '1' && filter.get(distortProperty) !== '1'
+    }
+
+    function updateAspectRatio() {
+        if (filter.get(fillProperty) === '1' && filter.get(distortProperty) === '0') {
+            aspectRatio = producer.displayAspectRatio
+        } else {
+            aspectRatio = filterRect.width / Math.max(filterRect.height, 1)
+        }
     }
 
     function setFilter(position) {
@@ -352,6 +362,7 @@ Item {
         var position = getPosition()
         var newValue = filter.getRect(rectProperty, position)
         if (filterRect !== newValue) {
+            updateAspectRatio()
             if (isFillMode()) {
                 // enforce the aspect ratio
                 if (producer.displayAspectRatio > profile.aspectRatio) {
@@ -400,6 +411,54 @@ Item {
             filter.resetProperty(parameter)
             filter.set(parameter, value)
         }
+    }
+
+    function scaleByWidth(value) {
+        var centerX = filterRect.x + filterRect.width / 2
+        var rightX = filterRect.x + filterRect.width
+        filterRect.width = value
+        if (centerRadioButton.checked) {
+            filterRect.x = rectX.value = centerX - filterRect.width / 2
+        } else if (rightRadioButton.checked) {
+            filterRect.x = rectX.value = rightX - filterRect.width
+        }
+        var middleY = filterRect.y + filterRect.height / 2
+        var bottomY = filterRect.y + filterRect.height
+        filterRect.height = rectH.value = Math.round(value / Math.max(aspectRatio, 1))
+        if (middleRadioButton.checked) {
+            filterRect.y = rectY.value = middleY - filterRect.height / 2
+        }
+        else if (bottomRadioButton.checked) {
+            filterRect.y = rectY.value = bottomY - filterRect.height
+        }
+        blockUpdate = true
+        scaleSlider.value = Math.min(rectW.value / profile.width * 100, scaleSlider.maximumValue)
+        blockUpdate = false
+        setFilter(getPosition())
+    }
+
+    function scaleByHeight(value) {
+        var middleY = filterRect.y + filterRect.height / 2
+        var bottomY = filterRect.y + filterRect.height
+        filterRect.height = value
+        if (middleRadioButton.checked) {
+            filterRect.y = rectY.value = middleY - filterRect.height / 2
+        } else if (bottomRadioButton.checked) {
+            filterRect.y = rectY.value = bottomY - filterRect.height
+        }
+        var centerX = filterRect.x + filterRect.width / 2
+        var rightX = filterRect.x + filterRect.width
+        filterRect.width = rectW.value = Math.round(value * aspectRatio)
+        if (centerRadioButton.checked) {
+            filterRect.x = rectX.value = centerX - filterRect.width / 2
+        }
+        else if (rightRadioButton.checked) {
+            filterRect.x = rectX.value = rightX - filterRect.width
+        }
+        blockUpdate = true
+        scaleSlider.value = Math.min(filterRect.width / profile.width * 100, scaleSlider.maximumValue)
+        blockUpdate = false
+        setFilter(getPosition())
     }
 
     ExclusiveGroup { id: sizeGroup }
@@ -457,7 +516,13 @@ Item {
                 minimumValue: -999999999
                 maximumValue: 999999999
                 onValueChanged: {
-                    if ((hovered || activeFocus) && Math.abs(filterRect.x - value) >= 1) {
+                    if (hovered && Math.abs(filterRect.x - value) >= 1) {
+                        filterRect.x = value
+                        setFilter(getPosition())
+                    }
+                }
+                onEditingFinished: {
+                    if (Math.abs(filterRect.x - value) >= 1) {
                         filterRect.x = value
                         setFilter(getPosition())
                     }
@@ -473,7 +538,13 @@ Item {
                 minimumValue: -999999999
                 maximumValue: 999999999
                 onValueChanged: {
-                    if ((hovered || activeFocus) && Math.abs(filterRect.y - value) >= 1) {
+                    if (hovered && Math.abs(filterRect.y - value) >= 1) {
+                        filterRect.y = value
+                        setFilter(getPosition())
+                    }
+                }
+                onEditingFinished: {
+                    if (Math.abs(filterRect.y - value) >= 1) {
                         filterRect.y = value
                         setFilter(getPosition())
                     }
@@ -536,29 +607,13 @@ Item {
                 minimumValue: 0
                 maximumValue: 999999999
                 onValueChanged: {
-                    if ((hovered || activeFocus) && Math.abs(filterRect.width - value) >= 1) {
-                        var centerX = filterRect.x + filterRect.width / 2
-                        var rightX = filterRect.x + filterRect.width
-                        filterRect.width = value
-                        if (centerRadioButton.checked) {
-                            filterRect.x = rectX.value = centerX - filterRect.width / 2
-                        } else if (rightRadioButton.checked) {
-                            filterRect.x = rectX.value = rightX - filterRect.width
-                        }
-                        var aspectRatio = filterRect.width / filterRect.height
-                        var middleY = filterRect.y + filterRect.height / 2
-                        var bottomY = filterRect.y + filterRect.height
-                        filterRect.height = rectH.value = Math.round(value / aspectRatio)
-                        if (middleRadioButton.checked) {
-                            filterRect.y = rectY.value = middleY - filterRect.height / 2
-                        }
-                        else if (bottomRadioButton.checked) {
-                            filterRect.y = rectY.value = bottomY - filterRect.height
-                        }
-                        blockUpdate = true
-                        scaleSlider.value = Math.min(rectW.value / profile.width * 100, scaleSlider.maximumValue)
-                        blockUpdate = false
-                        setFilter(getPosition())
+                    if (hovered && Math.abs(filterRect.width - value) >= 1) {
+                        scaleByWidth(value)
+                    }
+                }
+                onEditingFinished: {
+                    if (Math.abs(filterRect.width - value) >= 1) {
+                        scaleByWidth(value)
                     }
                 }
             }
@@ -572,29 +627,13 @@ Item {
                 minimumValue: 0
                 maximumValue: 999999999
                 onValueChanged: {
-                    if ((hovered || activeFocus) && Math.abs(filterRect.height - value) >= 1) {
-                        var middleY = filterRect.y + filterRect.height / 2
-                        var bottomY = filterRect.y + filterRect.height
-                        filterRect.height = value
-                        if (middleRadioButton.checked) {
-                            filterRect.y = rectY.value = middleY - filterRect.height / 2
-                        } else if (bottomRadioButton.checked) {
-                            filterRect.y = rectY.value = bottomY - filterRect.height
-                        }
-                        var aspectRatio = filterRect.width / filterRect.height
-                        var centerX = filterRect.x + filterRect.width / 2
-                        var rightX = filterRect.x + filterRect.width
-                        filterRect.width = rectW.value = Math.round(value * aspectRatio)
-                        if (centerRadioButton.checked) {
-                            filterRect.x = rectX.value = centerX - filterRect.width / 2
-                        }
-                        else if (rightRadioButton.checked) {
-                            filterRect.x = rectX.value = rightX - filterRect.width
-                        }
-                        blockUpdate = true
-                        scaleSlider.value = Math.min(filterRect.width / profile.width * 100, scaleSlider.maximumValue)
-                        blockUpdate = false
-                        setFilter(getPosition())
+                    if (hovered && Math.abs(filterRect.height - value) >= 1) {
+                        scaleByHeight(value)
+                    }
+                }
+                onEditingFinished: {
+                    if (Math.abs(filterRect.height - value) >= 1) {
+                        scaleByHeight(value)
                     }
                 }
             }
@@ -622,10 +661,9 @@ Item {
             suffix: ' %'
             onValueChanged: {
                 if (!blockUpdate && Math.abs(value - filterRect.width * 100 / profile.width) > 0.1) {
-                    var aspectRatio = filterRect.width / filterRect.height
                     var centerX = filterRect.x + filterRect.width / 2
                     var rightX = filterRect.x + filterRect.width
-                    filterRect.width = rectW.value = (profile.width * scaleSlider.value / 100)
+                    filterRect.width = rectW.value = (profile.width * value / 100)
                     if (centerRadioButton.checked) {
                         filterRect.x = rectX.value = centerX - filterRect.width / 2
                     } else if (rightRadioButton.checked) {
@@ -666,6 +704,7 @@ Item {
             onClicked: {
                 filter.set(fillProperty, 0)
                 filter.set(distortProperty, 0)
+                updateAspectRatio()
             }
         }
         RadioButton {
@@ -675,6 +714,7 @@ Item {
             onClicked: {
                 filter.set(fillProperty, 1)
                 filter.set(distortProperty, 0)
+                updateAspectRatio()
                 // enforce the aspect ratio
                 if (producer.displayAspectRatio > profile.aspectRatio) {
                     filterRect.height = rectH.value = filterRect.width / producer.displayAspectRatio
@@ -691,6 +731,7 @@ Item {
             onClicked: {
                 filter.set(fillProperty, 1)
                 filter.set(distortProperty, 1)
+                updateAspectRatio()
             }
         }
         UndoButton {
@@ -698,6 +739,7 @@ Item {
                 fitRadioButton.checked = true
                 filter.set(fillProperty, 0)
                 filter.set(distortProperty, 0)
+                updateAspectRatio()
             }
         }
         Item { width: 1 }
