@@ -80,7 +80,9 @@ QVariant KeyframesModel::data(const QModelIndex& index, int role) const
                         default:
                             break;
                         }
-                        return QString("%1 - %2").arg(m_filter->timeFromFrames(position)).arg(type);
+                        double value = m_filter->getDouble(name, position);
+                        QString units = m_metadata->keyframes()->parameter(m_metadataIndex[index.internalId()])->units();
+                        return QString("%1 - %2\n%3%4").arg(m_filter->timeFromFrames(position)).arg(type).arg(value).arg(units);
                     }
                     case FrameNumberRole:
                         return position;
@@ -118,9 +120,47 @@ QVariant KeyframesModel::data(const QModelIndex& index, int role) const
         case IsCurveRole:
             return m_metadata->keyframes()->parameter(m_metadataIndex[index.row()])->isCurve();
         case MinimumValueRole:
-            return m_metadata->keyframes()->parameter(m_metadataIndex[index.row()])->minimum();
+        {
+            QmlKeyframesParameter* param = m_metadata->keyframes()->parameter(m_metadataIndex[index.row()]);
+            if (param->minimum() != param->maximum()) {
+                return m_metadata->keyframes()->parameter(m_metadataIndex[index.row()])->minimum();
+            } else {
+                Mlt::Animation animation = m_filter->getAnimation(param->property());
+                double min = std::numeric_limits<double>::max();
+                if (animation.is_valid()) {
+                    for (int i = 0; i < animation.key_count(); i++) {
+                        int frame = animation.key_get_frame(i);
+                        if (frame >= 0) {
+                            double value = m_filter->getDouble(param->property(), frame);
+                            if (value < min) min = value;
+                        }
+                    }
+                }
+                if (min == std::numeric_limits<double>::max()) min = 0;
+                return min;
+            }
+        }
         case MaximumValueRole:
-            return m_metadata->keyframes()->parameter(m_metadataIndex[index.row()])->maximum();
+        {
+            QmlKeyframesParameter* param = m_metadata->keyframes()->parameter(m_metadataIndex[index.row()]);
+            if (param->minimum() != param->maximum()) {
+                return m_metadata->keyframes()->parameter(m_metadataIndex[index.row()])->maximum();
+            } else {
+                Mlt::Animation animation = m_filter->getAnimation(param->property());
+                double max = std::numeric_limits<double>::lowest();
+                if (animation.is_valid()) {
+                    for (int i = 0; i < animation.key_count(); i++) {
+                        int frame = animation.key_get_frame(i);
+                        if (frame >= 0) {
+                            double value = m_filter->getDouble(param->property(), frame);
+                            if (value > max) max = value;
+                        }
+                    }
+                }
+                if (max == std::numeric_limits<double>::lowest()) max = 0;
+                return max;
+            }
+        }
         default:
             break;
         }

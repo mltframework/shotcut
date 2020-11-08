@@ -79,7 +79,7 @@ Item {
     }
 
     GridLayout {
-        columns: 4
+        columns: 3
         anchors.fill: parent
         anchors.margins: 8
 
@@ -114,18 +114,11 @@ Item {
             onValueChanged: updateFilter(getPosition())
         }
         UndoButton {
-            onClicked: mapSlider.value = 0.0
-        }
-        KeyframesButton {
-            id: mapKeyframesButton
-            checked: filter.keyframeCount('map') > 0
-            onToggled: {
-                if (checked) {
-                    filter.set('map', mapSlider.value, getPosition())
-                } else {
-                    filter.resetProperty('map')
-                    filter.set('map', mapSlider.value)
-                }
+            onClicked: {
+                filter.resetProperty('map')
+                filter.set('map', 0.0, 0)
+                filter.set('map', filter.duration / profile.fps, filter.duration)
+                setControls()
             }
         }
 
@@ -149,7 +142,6 @@ Item {
         UndoButton {
             onClicked: modeCombo.currentIndex = 0
         }
-        Item {}
 
         Item {
             Layout.fillHeight: true

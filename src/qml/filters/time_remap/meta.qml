@@ -9,13 +9,18 @@ Metadata {
     qml: "ui.qml"
     isFavorite: false
     keyframes {
+        allowTrim: false
+        allowAnimateIn: false
+        allowAnimateOut: false
         parameters: [
             Parameter {
                 name: qsTr('Map')
                 property: 'map'
                 isSimple: false
-                isCurve: false
+                isCurve: true
                 minimum: 0
+                maximum: 0
+                units: 's'
             }
         ]
     }
