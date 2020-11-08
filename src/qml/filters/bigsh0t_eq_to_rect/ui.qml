@@ -15,14 +15,14 @@ Item {
     property double pitchStart : 0.0; property double pitchMiddle : 0.0; property double pitchEnd : 0.0;
     property double rollStart : 0.0; property double rollMiddle : 0.0; property double rollEnd : 0.0;
     property double fovStart : 0.0; property double fovMiddle : 0.0; property double fovEnd : 0.0;
- property double fisheyeStart : 0.0; property double fisheyeMiddle : 0.0; property double fisheyeEnd : 0.0;
+    property double fisheyeStart : 0.0; property double fisheyeMiddle : 0.0; property double fisheyeEnd : 0.0;
     property int interpolationValue : 0;
 
     Connections { target: filter; onChanged: setControls(); onInChanged: { updateProperty_yaw (null); } onOutChanged: { updateProperty_yaw (null); } onAnimateInChanged: { updateProperty_yaw (null); } onAnimateOutChanged: { updateProperty_yaw (null); } }
     Connections { target: filter; onChanged: setControls(); onInChanged: { updateProperty_pitch (null); } onOutChanged: { updateProperty_pitch (null); } onAnimateInChanged: { updateProperty_pitch (null); } onAnimateOutChanged: { updateProperty_pitch (null); } }
     Connections { target: filter; onChanged: setControls(); onInChanged: { updateProperty_roll (null); } onOutChanged: { updateProperty_roll (null); } onAnimateInChanged: { updateProperty_roll (null); } onAnimateOutChanged: { updateProperty_roll (null); } }
     Connections { target: filter; onChanged: setControls(); onInChanged: { updateProperty_fov (null); } onOutChanged: { updateProperty_fov (null); } onAnimateInChanged: { updateProperty_fov (null); } onAnimateOutChanged: { updateProperty_fov (null); } }
- Connections { target: filter; onChanged: setControls(); onInChanged: { updateProperty_fisheye (null); } onOutChanged: { updateProperty_fisheye (null); } onAnimateInChanged: { updateProperty_fisheye (null); } onAnimateOutChanged: { updateProperty_fisheye (null); } }
+    Connections { target: filter; onChanged: setControls(); onInChanged: { updateProperty_fisheye (null); } onOutChanged: { updateProperty_fisheye (null); } onAnimateInChanged: { updateProperty_fisheye (null); } onAnimateOutChanged: { updateProperty_fisheye (null); } }
     Connections { target: filter; onChanged: setControls(); onInChanged: { updateProperty_interpolation (); } onOutChanged: { updateProperty_interpolation (); } onAnimateInChanged: { updateProperty_interpolation (); } onAnimateOutChanged: { updateProperty_interpolation (); } }
 
     Component.onCompleted: {
@@ -30,7 +30,7 @@ Item {
         if (filter.isNew) { filter.set("pitch", 0); } else { pitchMiddle = filter.getDouble("pitch", filter.animateIn); if (filter.animateIn > 0) { pitchStart = filter.getDouble("pitch", 0); } if (filter.animateOut > 0) { pitchEnd = filter.getDouble("pitch", filter.duration - 1); } }
         if (filter.isNew) { filter.set("roll", 0); } else { rollMiddle = filter.getDouble("roll", filter.animateIn); if (filter.animateIn > 0) { rollStart = filter.getDouble("roll", 0); } if (filter.animateOut > 0) { rollEnd = filter.getDouble("roll", filter.duration - 1); } }
         if (filter.isNew) { filter.set("fov", 90); } else { fovMiddle = filter.getDouble("fov", filter.animateIn); if (filter.animateIn > 0) { fovStart = filter.getDouble("fov", 0); } if (filter.animateOut > 0) { fovEnd = filter.getDouble("fov", filter.duration - 1); } }
-  if (filter.isNew) { filter.set("fisheye", 0); } else { fisheyeMiddle = filter.getDouble("fisheye", filter.animateIn); if (filter.animateIn > 0) { fisheyeStart = filter.getDouble("fisheye", 0); } if (filter.animateOut > 0) { fisheyeEnd = filter.getDouble("fisheye", filter.duration - 1); } }
+        if (filter.isNew) { filter.set("fisheye", 0); } else { fisheyeMiddle = filter.getDouble("fisheye", filter.animateIn); if (filter.animateIn > 0) { fisheyeStart = filter.getDouble("fisheye", 0); } if (filter.animateOut > 0) { fisheyeEnd = filter.getDouble("fisheye", filter.duration - 1); } }
         if (filter.isNew) { filter.set("interpolation", 1); } else { interpolationValue = filter.get("interpolation"); }
 
         if (filter.isNew) {
@@ -46,7 +46,7 @@ Item {
         pitchSlider.value = filter.getDouble("pitch", position)
         rollSlider.value = filter.getDouble("roll", position)
         fovSlider.value = filter.getDouble("fov", position)
-  fisheyeSlider.value = filter.getDouble("fisheye", position)
+        fisheyeSlider.value = filter.getDouble("fisheye", position)
         interpolationComboBox.currentIndex = filter.get("interpolation")
         blockUpdate = false
     }
@@ -55,7 +55,7 @@ Item {
     function updateProperty_pitch (position) { if (blockUpdate) return; var value = pitchSlider.value; if (position !== null) { if (position <= 0 && filter.animateIn > 0) { pitchStart = value; } else if (position >= filter.duration - 1 && filter.animateOut > 0) { pitchEnd = value; } else { pitchMiddle = value; } } if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("pitch"); pitchKeyframesButton.checked = false; if (filter.animateIn > 0) { filter.set("pitch", pitchStart, 0); filter.set("pitch", pitchMiddle, filter.animateIn - 1); } if (filter.animateOut > 0) { filter.set("pitch", pitchMiddle, filter.duration - filter.animateOut); filter.set("pitch", pitchEnd, filter.duration - 1); } } else if (!pitchKeyframesButton.checked) { filter.resetProperty("pitch"); filter.set("pitch", pitchMiddle); } else if (position !== null) { filter.set("pitch", value, position); } }
     function updateProperty_roll (position) { if (blockUpdate) return; var value = rollSlider.value; if (position !== null) { if (position <= 0 && filter.animateIn > 0) { rollStart = value; } else if (position >= filter.duration - 1 && filter.animateOut > 0) { rollEnd = value; } else { rollMiddle = value; } } if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("roll"); rollKeyframesButton.checked = false; if (filter.animateIn > 0) { filter.set("roll", rollStart, 0); filter.set("roll", rollMiddle, filter.animateIn - 1); } if (filter.animateOut > 0) { filter.set("roll", rollMiddle, filter.duration - filter.animateOut); filter.set("roll", rollEnd, filter.duration - 1); } } else if (!rollKeyframesButton.checked) { filter.resetProperty("roll"); filter.set("roll", rollMiddle); } else if (position !== null) { filter.set("roll", value, position); } }
     function updateProperty_fov (position) { if (blockUpdate) return; var value = fovSlider.value; if (position !== null) { if (position <= 0 && filter.animateIn > 0) { fovStart = value; } else if (position >= filter.duration - 1 && filter.animateOut > 0) { fovEnd = value; } else { fovMiddle = value; } } if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("fov"); fovKeyframesButton.checked = false; if (filter.animateIn > 0) { filter.set("fov", fovStart, 0); filter.set("fov", fovMiddle, filter.animateIn - 1); } if (filter.animateOut > 0) { filter.set("fov", fovMiddle, filter.duration - filter.animateOut); filter.set("fov", fovEnd, filter.duration - 1); } } else if (!fovKeyframesButton.checked) { filter.resetProperty("fov"); filter.set("fov", fovMiddle); } else if (position !== null) { filter.set("fov", value, position); } }
- function updateProperty_fisheye (position) { if (blockUpdate) return; var value = fisheyeSlider.value; if (position !== null) { if (position <= 0 && filter.animateIn > 0) { fisheyeStart = value; } else if (position >= filter.duration - 1 && filter.animateOut > 0) { fisheyeEnd = value; } else { fisheyeMiddle = value; } } if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("fisheye"); fisheyeKeyframesButton.checked = false; if (filter.animateIn > 0) { filter.set("fisheye", fisheyeStart, 0); filter.set("fisheye", fisheyeMiddle, filter.animateIn - 1); } if (filter.animateOut > 0) { filter.set("fisheye", fisheyeMiddle, filter.duration - filter.animateOut); filter.set("fisheye", fisheyeEnd, filter.duration - 1); } } else if (!fisheyeKeyframesButton.checked) { filter.resetProperty("fisheye"); filter.set("fisheye", fisheyeMiddle); } else if (position !== null) { filter.set("fisheye", value, position); } }
+    function updateProperty_fisheye (position) { if (blockUpdate) return; var value = fisheyeSlider.value; if (position !== null) { if (position <= 0 && filter.animateIn > 0) { fisheyeStart = value; } else if (position >= filter.duration - 1 && filter.animateOut > 0) { fisheyeEnd = value; } else { fisheyeMiddle = value; } } if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("fisheye"); fisheyeKeyframesButton.checked = false; if (filter.animateIn > 0) { filter.set("fisheye", fisheyeStart, 0); filter.set("fisheye", fisheyeMiddle, filter.animateIn - 1); } if (filter.animateOut > 0) { filter.set("fisheye", fisheyeMiddle, filter.duration - filter.animateOut); filter.set("fisheye", fisheyeEnd, filter.duration - 1); } } else if (!fisheyeKeyframesButton.checked) { filter.resetProperty("fisheye"); filter.set("fisheye", fisheyeMiddle); } else if (position !== null) { filter.set("fisheye", value, position); } }
     function updateProperty_interpolation () { if (blockUpdate) return; var value = interpolationComboBox.currentIndex; filter.set("interpolation", value); }
 
     function getPosition() {
@@ -80,7 +80,7 @@ Item {
                 filter.resetProperty('pitch')
                 filter.resetProperty('roll')
                 filter.resetProperty('fov')
-    filter.resetProperty('fisheye')
+                filter.resetProperty('fisheye')
                 filter.resetProperty('interpolation')
             }
             onPresetSelected: {
@@ -88,7 +88,7 @@ Item {
                 pitchMiddle = filter.getDouble("pitch", filter.animateIn); if (filter.animateIn > 0) { pitchStart = filter.getDouble("pitch", 0); } if (filter.animateOut > 0) { pitchEnd = filter.getDouble("pitch", filter.duration - 1); }
                 rollMiddle = filter.getDouble("roll", filter.animateIn); if (filter.animateIn > 0) { rollStart = filter.getDouble("roll", 0); } if (filter.animateOut > 0) { rollEnd = filter.getDouble("roll", filter.duration - 1); }
                 fovMiddle = filter.getDouble("fov", filter.animateIn); if (filter.animateIn > 0) { fovStart = filter.getDouble("fov", 0); } if (filter.animateOut > 0) { fovEnd = filter.getDouble("fov", filter.duration - 1); }
-    fisheyeMiddle = filter.getDouble("fisheye", filter.animateIn); if (filter.animateIn > 0) { fisheyeStart = filter.getDouble("fisheye", 0); } if (filter.animateOut > 0) { fisheyeEnd = filter.getDouble("fisheye", filter.duration - 1); }
+                fisheyeMiddle = filter.getDouble("fisheye", filter.animateIn); if (filter.animateIn > 0) { fisheyeStart = filter.getDouble("fisheye", 0); } if (filter.animateOut > 0) { fisheyeEnd = filter.getDouble("fisheye", filter.duration - 1); }
                 interpolationValue = filter.get("interpolation");
                 setControls(null);
             }
@@ -178,7 +178,7 @@ Item {
             onClicked: fovSlider.value = 90
         }
 
-  Label {
+        Label {
             text: qsTr('Fisheye')
             Layout.alignment: Qt.AlignRight
         }
