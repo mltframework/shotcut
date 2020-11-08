@@ -204,7 +204,9 @@ void AudioLevelsTask::run()
                 updateTime.restart();
                 foreach (ProducerAndIndex p, m_producers) {
                     QVariantList* levelsCopy = new QVariantList(levels);
+                    p.first->lock();
                     p.first->set(kAudioLevelsProperty, levelsCopy, 0, (mlt_destructor) deleteQVariantList);
+                    p.first->unlock();
                     if (-1 != m_object->metaObject()->indexOfMethod("audioLevelsReady(QModelIndex)"))
                         QMetaObject::invokeMethod(m_object, "audioLevelsReady", Q_ARG(const QModelIndex&, p.second));
                 }
@@ -265,7 +267,9 @@ void AudioLevelsTask::run()
     if (levels.size() > 0 && !m_isCanceled) {
         foreach (ProducerAndIndex p, m_producers) {
             QVariantList* levelsCopy = new QVariantList(levels);
+            p.first->lock();
             p.first->set(kAudioLevelsProperty, levelsCopy, 0, (mlt_destructor) deleteQVariantList);
+            p.first->unlock();
             if (-1 != m_object->metaObject()->indexOfMethod("audioLevelsReady(QModelIndex)"))
                 QMetaObject::invokeMethod(m_object, "audioLevelsReady", Q_ARG(const QModelIndex&, p.second));
         }

@@ -140,11 +140,17 @@ QVariant MultitrackModel::data(const QModelIndex &index, int role) const
                 return info->fps;
             case IsAudioRole:
                 return m_trackList[index.internalId()].type == AudioTrackType;
-            case AudioLevelsRole:
-                if (info->producer->get_data(kAudioLevelsProperty))
-                    return QVariant::fromValue(*((QVariantList*) info->producer->get_data(kAudioLevelsProperty)));
-                else
-                    return QVariant();
+            case AudioLevelsRole: {
+                QVariant result;
+                if (info->producer && info->producer->is_valid()) {
+                    info->producer->lock();
+                    if (info->producer->get_data(kAudioLevelsProperty)) {
+                        result = QVariant::fromValue(*((QVariantList*) info->producer->get_data(kAudioLevelsProperty)));
+                    }
+                    info->producer->unlock();
+                }
+                return result;
+            }
             case FadeInRole: {
                 QScopedPointer<Mlt::Filter> filter(getFilter("fadeInVolume", info->producer));
                 if (!filter || !filter->is_valid())
