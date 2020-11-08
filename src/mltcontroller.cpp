@@ -127,7 +127,7 @@ int Controller::open(const QString &url, const QString& urlToSave)
         setPreviewScale(Settings.playerPreviewScale());
         if ( url.endsWith(".mlt") ) {
             // Load the number of audio channels being used when this project was created.
-            int channels = m_producer->get_int(kShotcutProjectAudioChannels);
+            int channels = newProducer->get_int(kShotcutProjectAudioChannels);
             if (!channels)
                 channels = 2;
             m_audioChannels = channels;
@@ -1013,6 +1013,22 @@ void Controller::copyFilters(Producer& fromProducer, Producer& toProducer, bool 
                     if (fromFilter->get_out() != out) {
                         toFilter.set(kFilterOutProperty, fromFilter->get_out() - fromFilter->get_in());
                     }
+                }
+            }
+        }
+    }
+
+    if (fromProducer.type() == chain_type && toProducer.type() == chain_type) {
+        Mlt::Chain fromChain(fromProducer);
+        Mlt::Chain toChain(toProducer);
+        count = fromChain.link_count();
+        for (int i = 0; i < count; i++) {
+            QScopedPointer<Mlt::Link> fromLink(fromChain.link(i));
+            if (fromLink && fromLink->is_valid() && fromLink->get("mlt_service")) {
+                Mlt::Link toLink(fromLink->get("mlt_service"));
+                if (toLink.is_valid()) {
+                    toLink.inherit(*fromLink);
+                    toChain.attach(toLink);
                 }
             }
         }

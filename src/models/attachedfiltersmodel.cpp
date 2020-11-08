@@ -425,7 +425,20 @@ void AttachedFiltersModel::reset(Mlt::Producer* producer)
     if (m_producer && m_producer->is_valid()) {
         Mlt::Event* event = m_producer->listen("service-changed", this, (mlt_listener)AttachedFiltersModel::producerChanged);
         m_event.reset(event);
-        int count = m_producer->filter_count();
+        int count = 0;
+        if (m_producer->type() == chain_type) {
+            Mlt::Chain chain(*m_producer.data());
+            count = chain.link_count();
+            for (int i = 0; i < count; i++) {
+                Mlt::Link* link = chain.link(i);
+                if (link && link->is_valid()) {
+                    QmlMetadata* newMeta = MAIN.filterController()->metadataForService(link);
+                    m_metaList.append(newMeta);
+                }
+                delete link;
+            }
+        }
+        count = m_producer->filter_count();
         for (int i = 0; i < count; i++) {
             Mlt::Filter* filter = m_producer->filter(i);
             if (filter && filter->is_valid()) {
