@@ -181,8 +181,8 @@ KeyframableFilter {
         updateFilter(corner3yProperty, sliderValue(corner3ySlider), corner1KeyframesButton)
         updateFilter(corner4xProperty, sliderValue(corner4xSlider), corner1KeyframesButton)
         updateFilter(corner4yProperty, sliderValue(corner4ySlider), corner1KeyframesButton)
-        updateFilter(stretchxProperty, stretchxSlider.value / stretchxSlider.maximumValue, stretchxKeyframesButton)
-        updateFilter(stretchyProperty, stretchySlider.value / stretchySlider.maximumValue, stretchyKeyframesButton)
+        updateFilter(stretchxProperty, 1.0 - stretchxSlider.value / stretchxSlider.maximumValue, stretchxKeyframesButton)
+        updateFilter(stretchyProperty, 1.0 - stretchySlider.value / stretchySlider.maximumValue, stretchyKeyframesButton)
         updateFilter(featherProperty, featheralphaSlider.value / featheralphaSlider.maximumValue, featheralphaKeyframesButton)
         updateFilterCorners()
     }
