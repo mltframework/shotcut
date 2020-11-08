@@ -154,7 +154,7 @@ Item {
             Layout.fillHeight: true
         }
 
-        Item {}
+        Label {}
         CheckBox {
             text: qsTr('Show grid')
             checked: false

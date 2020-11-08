@@ -9,11 +9,12 @@ import Shotcut.Controls 1.0
 
 Item {
     width: 350
-    height: 600
+    height: 625
     property bool blockUpdate: true
 
     property int interpolationValue : 0;
     property bool analyzeValue : false;
+    property bool transformWhenAnalyzingValue: false;
     property double sampleRadiusValue : 0.0;
     property double searchRadiusValue : 0.0;
     property double offsetValue : 0.0;
@@ -49,6 +50,7 @@ Item {
 
     Component.onCompleted: {
         if (filter.isNew) { filter.set("analyze", false); } else { analyzeValue = filter.get("analyze"); }
+        if (filter.isNew) { filter.set("transformWhenAnalyzing", true); } else { transformWhenAnalyzingValue = filter.get("transformWhenAnalyzing"); }
         if (filter.isNew) { filter.set("interpolation", 1); } else { interpolationValue = filter.get("interpolation"); }
         if (filter.isNew) { filter.set("sampleRadius", 16); } else { sampleRadiusValue = filter.getDouble("sampleRadius");}
         if (filter.isNew) { filter.set("searchRadius", 24); } else { searchRadiusValue = filter.getDouble("searchRadius");}
@@ -77,6 +79,7 @@ Item {
         var position = getPosition()
         blockUpdate = true
         analyzeCheckBox.checked = filter.get("analyze") == '1';
+        transformWhenAnalyzingCheckBox.checked = filter.get("transformWhenAnalyzing") == '1';
         interpolationComboBox.currentIndex = filter.get("interpolation")
         sampleRadiusSlider.value = filter.getDouble("sampleRadius")
         searchRadiusSlider.value = filter.getDouble("searchRadius")
@@ -98,6 +101,7 @@ Item {
     }
 
     function updateProperty_analyze () { if (blockUpdate) return; var value = analyzeCheckBox.checked; filter.set("analyze", value); }
+    function updateProperty_transformWhenAnalyzing() { if (blockUpdate) return; var value = transformWhenAnalyzingCheckBox.checked; filter.set("transformWhenAnalyzing", value); }
     function updateProperty_interpolation () { if (blockUpdate) return; var value = interpolationComboBox.currentIndex; filter.set("interpolation", value); }
     function updateProperty_sampleRadius (position) { if (blockUpdate) return; var value = sampleRadiusSlider.value; filter.set("sampleRadius", value); }
     function updateProperty_searchRadius (position) { if (blockUpdate) return; var value = searchRadiusSlider.value; filter.set("searchRadius", value); }
@@ -283,6 +287,14 @@ Item {
             text: qsTr('Analysis')
             Layout.alignment: Qt.AlignLeft
             Layout.columnSpan: 4
+        }
+
+        Label {}
+        CheckBox {
+            text: qsTr('Apply transform')
+            id: transformWhenAnalyzingCheckBox
+            Layout.columnSpan: 3
+            onCheckedChanged: updateProperty_transformWhenAnalyzing()
         }
 
         Label {
