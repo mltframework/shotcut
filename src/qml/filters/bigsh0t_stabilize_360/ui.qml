@@ -9,7 +9,7 @@ import Shotcut.Controls 1.0
 
 Item {
     width: 350
-    height: 550
+    height: 600
     property bool blockUpdate: true
 
  property int interpolationValue : 0;
@@ -28,6 +28,7 @@ Item {
  property double timeBiasYawValue : 0.0;
  property double timeBiasPitchValue : 0.0;
  property double timeBiasRollValue : 0.0;
+   property double clipOffsetValue: 0.0;
 
     Connections { target: filter; onChanged: setControls(); onInChanged: { updateProperty_interpolation (); } onOutChanged: { updateProperty_interpolation (); } onAnimateInChanged: { updateProperty_interpolation (); } onAnimateOutChanged: { updateProperty_interpolation (); } }
     Connections { target: filter; onChanged: setControls(); }
@@ -64,6 +65,7 @@ Item {
   if (filter.isNew) { filter.set("timeBiasYaw", 0); } else { timeBiasYawValue = filter.getDouble("timeBiasYaw");}
   if (filter.isNew) { filter.set("timeBiasPitch", 0); } else { timeBiasPitchValue = filter.getDouble("timeBiasPitch");}
   if (filter.isNew) { filter.set("timeBiasRoll", 0); } else { timeBiasRollValue = filter.getDouble("timeBiasRoll");}
+  if (filter.isNew) { filter.set("clipOffset", 0); } else { clipOffsetValue = filter.getDouble("clipOffset");}
 
         if (filter.isNew) {
             filter.savePreset(preset.parameters)
@@ -90,6 +92,7 @@ Item {
   timeBiasYawSlider.value = filter.getDouble("timeBiasYaw")
   timeBiasPitchSlider.value = filter.getDouble("timeBiasPitch")
   timeBiasRollSlider.value = filter.getDouble("timeBiasRoll")
+  clipOffsetTextField.text = filter.getDouble("clipOffset").toFixed(4)
 
         blockUpdate = false
     }
@@ -110,10 +113,19 @@ Item {
  function updateProperty_timeBiasYaw (position) { if (blockUpdate) return; var value = timeBiasYawSlider.value; filter.set("timeBiasYaw", value); }
  function updateProperty_timeBiasPitch (position) { if (blockUpdate) return; var value = timeBiasPitchSlider.value; filter.set("timeBiasPitch", value); }
  function updateProperty_timeBiasRoll (position) { if (blockUpdate) return; var value = timeBiasRollSlider.value; filter.set("timeBiasRoll", value); }
+ function updateProperty_clipOffset (position) { if (blockUpdate) return; var value = parseFloat(clipOffsetTextField.text); filter.set("clipOffset", value); }
 
 
     function getPosition() {
         return Math.max(producer.position - (filter.in - producer.in), 0)
+    }
+
+    function getFrameRate() {
+        return producer.getDouble("meta.media.frame_rate_num", getPosition()) / producer.getDouble("meta.media.frame_rate_den", getPosition())
+    }
+
+    function getClipOffset() {
+         return filter.in
     }
 
  FileDialog {
@@ -144,6 +156,12 @@ Item {
   updateProperty_analyze()
  }
 
+    function onClipOffsetUndo() {
+        clipOffsetTextField.text = (getClipOffset() / getFrameRate()).toFixed(4)
+        updateProperty_clipOffset()
+    }
+
+
     GridLayout {
         columns: 4
         anchors.fill: parent
@@ -171,6 +189,7 @@ Item {
     filter.resetProperty("timeBiasYaw")
     filter.resetProperty("timeBiasPitch")
     filter.resetProperty("timeBiasRoll")
+    filter.resetProperty("clipOffset")
             }
             onPresetSelected: {
                 sampleRadiusValue = filter.getDouble("sampleRadius");
@@ -186,6 +205,7 @@ Item {
     timeBiasYawValue = filter.getDouble("timeBiasYaw");
     timeBiasPitchValue = filter.getDouble("timeBiasPitch");
     timeBiasRollValue = filter.getDouble("timeBiasRoll");
+    clipOffsetValue = filter.get("clipOffset");
 
                 setControls(null);
             }
@@ -224,6 +244,23 @@ Item {
       implicitHeight: 20
             onClicked: selectAnalysisFile.open()
   }
+
+        Label {
+            text: qsTr('Start Offset')
+            Layout.alignment: Qt.AlignRight
+        }
+        TextField {
+            id: clipOffsetTextField
+            onEditingFinished: updateProperty_clipOffset()
+        }
+        Label {
+            text: qsTr('seconds')
+            Layout.fillWidth: true
+        }
+        UndoButton {
+            id: clipOffsetUndo
+            onClicked: onClipOffsetUndo()
+        }
 
         Label {
             text: qsTr('Interpolation')
@@ -481,7 +518,8 @@ Item {
             id: smoothRollUndo
             onClicked: smoothRollSlider.value = 120
         }
-  Label {
+
+        Label {
             text: qsTr('Time Bias')
             Layout.alignment: Qt.AlignRight
         }
@@ -492,7 +530,7 @@ Item {
             suffix: ' %'
             decimals: 0
             stepSize: 1
-   Layout.columnSpan: 2
+            Layout.columnSpan: 2
             onValueChanged: updateProperty_timeBiasRoll(getPosition())
         }
         UndoButton {

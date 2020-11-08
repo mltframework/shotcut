@@ -8,13 +8,14 @@ import Shotcut.Controls 1.0
 
 Item {
     width: 350
-    height: 150
+    height: 180
     property bool blockUpdate: true
 
     property double yawStart : 0.0; property double yawMiddle : 0.0; property double yawEnd : 0.0;
     property double pitchStart : 0.0; property double pitchMiddle : 0.0; property double pitchEnd : 0.0;
     property double rollStart : 0.0; property double rollMiddle : 0.0; property double rollEnd : 0.0;
     property int interpolationValue : 0;
+    property bool gridValue: false
 
     Connections { target: filter; onChanged: setControls(); onInChanged: { updateProperty_yaw (null); } onOutChanged: { updateProperty_yaw (null); } onAnimateInChanged: { updateProperty_yaw (null); } onAnimateOutChanged: { updateProperty_yaw (null); } }
     Connections { target: filter; onChanged: setControls(); onInChanged: { updateProperty_pitch (null); } onOutChanged: { updateProperty_pitch (null); } onAnimateInChanged: { updateProperty_pitch (null); } onAnimateOutChanged: { updateProperty_pitch (null); } }
@@ -26,6 +27,7 @@ Item {
         if (filter.isNew) { filter.set("pitch", 0); } else { pitchMiddle = filter.getDouble("pitch", filter.animateIn); if (filter.animateIn > 0) { pitchStart = filter.getDouble("pitch", 0); } if (filter.animateOut > 0) { pitchEnd = filter.getDouble("pitch", filter.duration - 1); } }
         if (filter.isNew) { filter.set("roll", 0); } else { rollMiddle = filter.getDouble("roll", filter.animateIn); if (filter.animateIn > 0) { rollStart = filter.getDouble("roll", 0); } if (filter.animateOut > 0) { rollEnd = filter.getDouble("roll", filter.duration - 1); } }
         if (filter.isNew) { filter.set("interpolation", 1); } else { interpolationValue = filter.get("interpolation"); }
+        if (filter.isNew) { filter.set("grid", false); } else { gridValue = filter.get("grid") == '1'; }
 
         if (filter.isNew) {
             filter.savePreset(preset.parameters)
@@ -40,6 +42,7 @@ Item {
         pitchSlider.value = filter.getDouble("pitch", position)
         rollSlider.value = filter.getDouble("roll", position)
         interpolationComboBox.currentIndex = filter.get("interpolation")
+        gridCheckBox.checked = filter.get("grid") == '1';
         blockUpdate = false
     }
 
@@ -47,6 +50,7 @@ Item {
     function updateProperty_pitch (position) { if (blockUpdate) return; var value = pitchSlider.value; if (position !== null) { if (position <= 0 && filter.animateIn > 0) { pitchStart = value; } else if (position >= filter.duration - 1 && filter.animateOut > 0) { pitchEnd = value; } else { pitchMiddle = value; } } if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("pitch"); pitchKeyframesButton.checked = false; if (filter.animateIn > 0) { filter.set("pitch", pitchStart, 0); filter.set("pitch", pitchMiddle, filter.animateIn - 1); } if (filter.animateOut > 0) { filter.set("pitch", pitchMiddle, filter.duration - filter.animateOut); filter.set("pitch", pitchEnd, filter.duration - 1); } } else if (!pitchKeyframesButton.checked) { filter.resetProperty("pitch"); filter.set("pitch", pitchMiddle); } else if (position !== null) { filter.set("pitch", value, position); } }
     function updateProperty_roll (position) { if (blockUpdate) return; var value = rollSlider.value; if (position !== null) { if (position <= 0 && filter.animateIn > 0) { rollStart = value; } else if (position >= filter.duration - 1 && filter.animateOut > 0) { rollEnd = value; } else { rollMiddle = value; } } if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("roll"); rollKeyframesButton.checked = false; if (filter.animateIn > 0) { filter.set("roll", rollStart, 0); filter.set("roll", rollMiddle, filter.animateIn - 1); } if (filter.animateOut > 0) { filter.set("roll", rollMiddle, filter.duration - filter.animateOut); filter.set("roll", rollEnd, filter.duration - 1); } } else if (!rollKeyframesButton.checked) { filter.resetProperty("roll"); filter.set("roll", rollMiddle); } else if (position !== null) { filter.set("roll", value, position); } }
     function updateProperty_interpolation () { if (blockUpdate) return; var value = interpolationComboBox.currentIndex; filter.set("interpolation", value); }
+    function updateProperty_grid () { if (blockUpdate) return; var value = gridCheckBox.checked; filter.set("grid", value); }
 
     function getPosition() {
         return Math.max(producer.position - (filter.in - producer.in), 0)
@@ -148,6 +152,15 @@ Item {
         }
         Item {
             Layout.fillHeight: true
+        }
+
+        Item {}
+        CheckBox {
+            text: qsTr('Show grid')
+            checked: false
+            id: gridCheckBox
+            Layout.columnSpan: 3
+            onCheckedChanged: updateProperty_grid()
         }
     }
 
