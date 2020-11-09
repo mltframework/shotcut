@@ -991,6 +991,9 @@ function deploy
 
   log Removing things not needed
   cmd rm lib/qt5/sqldrivers/{qsqlodbc,qsqlodbcd,qsqlpsql,qsqlpsqld}.dll
+  # colortap is not used by Shotcut and no plans to include it, but
+  # Kaspersky antivirus is flagging it and scaring people.
+  cmd rm lib/frei0r-1/colortap.dll
   if [ "$DEBUG_BUILD" != "1" -a "$SDK" != "1" ]; then
     cmd rm lib/qt5/audio/qtaudio_windowsd.dll
     cmd rm lib/qt5/generic/qtuiotouchplugind.dll
