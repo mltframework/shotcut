@@ -28,6 +28,7 @@
 #include <QThreadPool>
 #include <QMutex>
 #include <QTime>
+#include <QElapsedTimer>
 #include <Logger.h>
 
 static QList<AudioLevelsTask*> tasksList;
