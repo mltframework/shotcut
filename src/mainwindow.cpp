@@ -145,15 +145,6 @@ MainWindow::MainWindow()
         libSDL.unload();
     }
 #endif
-    if (!Settings.playerGPU()) {
-        QScopedPointer<Mlt::Properties> mltTransitions(MLT.repository()->transitions());
-        if (!mltTransitions || !mltTransitions->property_exists("frei0r.cairoblend")) {
-            QMessageBox::critical(this, qApp->applicationName(),
-                tr("Error: Shotcut could not find the cairoblend frei0r plugin on your system.\n\n"
-                   "Please install frei0r plugins."));
-            ::exit(EXIT_FAILURE);
-        }
-    }
 
     if (!qgetenv("OBSERVE_FOCUS").isEmpty()) {
         connect(qApp, &QApplication::focusChanged,

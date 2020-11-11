@@ -26,11 +26,13 @@
 #include "controllers/filtercontroller.h"
 #include "qmltypes/qmlmetadata.h"
 #include "proxymanager.h"
+#include "dialogs/longuitask.h"
 
 #include <QScopedPointer>
 #include <QApplication>
 #include <qmath.h>
 #include <QTimer>
+#include <QMessageBox>
 
 #include <Logger.h>
 
@@ -2392,6 +2394,20 @@ void MultitrackModel::adjustServiceFilterDurations(Mlt::Service& service, int du
     service.set(kFilterOutProperty, duration - 1);
 }
 
+bool MultitrackModel::warnIfInvalid(Mlt::Service& service)
+{
+    if (!service.is_valid()) {
+        const char* plugin = Settings.playerGPU()? "Movit overlay" : "frei0r cairoblend";
+        const char* plugins = Settings.playerGPU()? "Movit" : "frei0r";
+        LongUiTask::cancel();
+        QMessageBox::critical(&MAIN, qApp->applicationName(),
+            tr("Error: Shotcut could not find the %1 plugin on your system.\n\n"
+               "Please install the %2 plugins.").arg(plugin).arg(plugins));
+        return true;
+    }
+    return false;
+}
+
 void MultitrackModel::adjustTrackFilters()
 {
     if (!m_tractor) return;
@@ -2577,6 +2593,12 @@ int MultitrackModel::addVideoTrack()
 
     // Add the composite transition.
     Mlt::Transition composite(MLT.profile(), Settings.playerGPU()? "movit.overlay" : "frei0r.cairoblend");
+    if (!composite.is_valid() && !Settings.playerGPU()) {
+        composite = Mlt::Transition(MLT.profile(), "qtblend");
+    }
+    if (warnIfInvalid(composite)) {
+        return -1;
+    }
     composite.set("disable", 1);
     foreach (Track t, m_trackList) {
         if (t.type == VideoTrackType) {
@@ -2833,6 +2855,12 @@ void MultitrackModel::insertTrack(int trackIndex, TrackType type)
     if (type == VideoTrackType) {
         // Add the composite transition.
         Mlt::Transition composite(MLT.profile(), videoTransitionName);
+        if (!composite.is_valid() && !Settings.playerGPU()) {
+            composite = Mlt::Transition(MLT.profile(), "qtblend");
+        }
+        if (warnIfInvalid(composite)) {
+            return;
+        }
         if (lower) {
             QScopedPointer<Mlt::Service> consumer(lower->consumer());
             if (consumer->is_valid()) {

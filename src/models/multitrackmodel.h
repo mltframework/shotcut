@@ -193,6 +193,7 @@ private:
     bool isFiltered(Mlt::Producer* producer = 0) const;
     int getDuration();
     void adjustServiceFilterDurations(Mlt::Service& service, int duration);
+    bool warnIfInvalid(Mlt::Service& service);
 
     friend class UndoHelper;
 
