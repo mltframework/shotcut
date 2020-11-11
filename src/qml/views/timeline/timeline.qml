@@ -504,6 +504,7 @@ Rectangle {
         }
         Controls2.Menu {
             title: qsTr('Options')
+            width: 230
             Controls2.MenuItem {
                 text: qsTr("Ripple All Tracks")
                 checkable: true
