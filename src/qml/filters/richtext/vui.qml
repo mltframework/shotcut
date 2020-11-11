@@ -15,8 +15,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.7
-import QtQuick.Controls 1.4
+import QtQuick 2.12
+import QtQuick.Controls 1.4 as Controls1
+import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.0
 import QtQuick.Dialogs 1.2
 import Shotcut.Controls 1.0
@@ -106,13 +107,13 @@ VuiBase {
     function setTextAreaHeight() {
         switch (filter.get('overflow-y')) {
         case '':
-            textArea.height = filterRect.height >= profile.height? Math.max(filterRect.height, textArea.contentHeight) : filterRect.height
+            scrollView.height = filterRect.height >= profile.height? Math.max(filterRect.height, textArea.contentHeight) : filterRect.height
             break;
         case '0': // hidden
-            textArea.height = filterRect.height
+            scrollView.height = filterRect.height
             break;
         default: // visible
-            textArea.height = Math.max(filterRect.height, textArea.contentHeight)
+            scrollView.height = Math.max(filterRect.height, textArea.contentHeight)
         }
     }
 
@@ -123,6 +124,7 @@ VuiBase {
     Flickable {
         id: flickable
         anchors.fill: parent
+        flickableDirection: Flickable.VerticalFlick
         interactive: false
         clip: true
         contentWidth: video.rect.width * zoom
@@ -143,36 +145,56 @@ VuiBase {
                 x: rectangle.rectangle.x
                 y: rectangle.rectangle.y
                 width: rectangle.rectangle.width
-                height: textArea.height * rectangle.heightScale
+                height: scrollView.height * rectangle.heightScale
             }
 
-            TextArea {
-                id: textArea
+            ScrollView {
+                id: scrollView
                 transformOrigin: Item.TopLeft
                 scale: rectangle.heightScale
-                antialiasing: true
-                layer.smooth: true
-                smooth: true
                 x: filterRect.x * scale
                 y: filterRect.y * scale
                 width: filterRect.width * rectangle.widthScale / scale
-                height: background.height
-                backgroundVisible: false
-                frameVisible: false
+                padding: 0
+
+            TextArea {
+                id: textArea
+                padding: 0
                 textFormat: Qt.RichText
+                selectByMouse: true
+                persistentSelection: true
+                wrapMode: TextArea.Wrap
+                cursorDelegate: Rectangle {
+                    id: cursor
+                    visible: textArea.cursorVisible
+                    width: 2.5/scale
+                    color: 'white'
+                    SequentialAnimation {
+                        running: cursor.visible
+                        loops: Animation.Infinite
+                        NumberAnimation {
+                            target: cursor
+                            property: 'opacity'
+                            from: 0
+                            to: 1
+                            duration: 100
+                        }
+                        PauseAnimation { duration: 400 }
+                        NumberAnimation {
+                            target: cursor
+                            property: 'opacity'
+                            from: 1
+                            to: 0
+                            duration: 100
+                        }
+                        PauseAnimation { duration: 400 }
+                    }
+                }
                 baseUrl: 'qrc:/'
-                menu: Menu {
-                    MenuItem { action: undoAction }
-                    MenuItem { action: redoAction }
-                    MenuSeparator {}
-                    MenuItem { action: cutAction }
-                    MenuItem { action: copyAction }
-                    MenuItem { action: pasteAction }
-                    MenuItem { action: pastePlainAction }
-                    MenuItem { action: deleteAction }
-                    MenuItem { action: clearAction }
-                    MenuSeparator {}
-                    MenuItem { action: selectAllAction }
+                MouseArea {
+                    acceptedButtons: Qt.RightButton
+                    anchors.fill: parent
+                    onClicked: contextMenu.popup()
                 }
                 text: '__empty__'
                 Component.onCompleted: forceActiveFocus()
@@ -190,13 +212,14 @@ VuiBase {
                     }
                 }
             }
+            }
 
-            ToolBar {
+            Controls1.ToolBar {
                 id: toolbar
                 property bool expanded: filter.get('_shotcut:toolbarCollapsed') !== '1'
                 property real maxWidth: 555
-                x: Math.min((parent.width + parent.x - width), Math.max((-parent.x * scale), textArea.x + rectangle.handleSize))
-                y: Math.min((parent.height + parent.y - height), Math.max((-parent.y * scale), (textArea.mapToItem(vui, 0, 0).y > height)? (textArea.y - height*scale) : (textArea.y + rectangle.handleSize)))
+                x: Math.min((parent.width + parent.x - width), Math.max((-parent.x * scale), scrollView.x + rectangle.handleSize))
+                y: Math.min((parent.height + parent.y - height), Math.max((-parent.y * scale), (scrollView.mapToItem(vui, 0, 0).y > height)? (scrollView.y - height*scale) : (scrollView.y + rectangle.handleSize)))
                 width: expanded? (smallIcons? 380 : maxWidth) : (hiddenButton.width + (smallIcons? 0 : 8))
                 Behavior on width {
                     NumberAnimation{ duration: 100 }
@@ -206,48 +229,71 @@ VuiBase {
                 opacity: 0.7
                 transformOrigin: Item.TopLeft
                 scale: 1/zoom
+
                 RowLayout {
-                    ToolButton {
+                    Controls1.ToolButton {
                         id: hiddenButton
                         visible: false
                     }
-                    ToolButton {
-                        action: menuAction
+                    Controls1.ToolButton {
+                        tooltip: qsTr('Menu')
                         implicitWidth: smallIcons? 18 : hiddenButton.implicitWidth
                         implicitHeight: implicitWidth
                         visible: toolbar.expanded
+                        iconName: 'show-menu'
+                        iconSource: 'qrc:///icons/oxygen/32x32/actions/show-menu.png'
+                        onClicked: menu.popup()
                     }
-                    ToolButton {
-                        action: boldAction
+                    Controls1.ToolButton {
+                        tooltip: qsTr('Bold')
                         implicitWidth: smallIcons? 18 : hiddenButton.implicitWidth
                         implicitHeight: implicitWidth
                         visible: toolbar.expanded
+                        checkable: true
+                        iconName: 'format-text-bold'
+                        iconSource: 'qrc:///icons/oxygen/32x32/actions/format-text-bold.png'
+                        onClicked: document.bold = !document.bold
                     }
-                    ToolButton {
-                        action: italicAction
+                    Controls1.ToolButton {
+                        tooltip: qsTr('Italic')
                         implicitWidth: smallIcons? 18 : hiddenButton.implicitWidth
                         implicitHeight: implicitWidth
                         visible: toolbar.expanded
+                        checkable: true
+                        iconName: 'format-text-italic'
+                        iconSource: 'qrc:///icons/oxygen/32x32/actions/format-text-italic.png'
+                        onClicked: document.italic = !document.italic
                     }
-                    ToolButton {
-                        action: underlineAction
+                    Controls1.ToolButton {
+                        tooltip: qsTr('Underline')
                         implicitWidth: smallIcons? 18 : hiddenButton.implicitWidth
                         implicitHeight: implicitWidth
                         visible: toolbar.expanded
+                        checkable: true
+                        iconName: 'format-text-underline'
+                        iconSource: 'qrc:///icons/oxygen/32x32/actions/format-text-underline.png'
+                        onClicked: document.underline = !document.underline
                     }
-                    Button { // separator
+                    Controls1.Button { // separator
                         enabled: false
                         implicitWidth: 2
                         implicitHeight: smallIcons? 14 : (hiddenButton.implicitHeight - 8)
                         visible: toolbar.expanded
                     }
-                    ToolButton {
-                        action: fontFamilyAction
+                    Controls1.ToolButton {
+                        tooltip: qsTr('Font')
                         implicitWidth: smallIcons? 18 : hiddenButton.implicitWidth
                         implicitHeight: implicitWidth
                         visible: toolbar.expanded
+                        iconName: 'font'
+                        iconSource: 'qrc:///icons/oxygen/32x32/actions/font.png'
+                        onClicked: {
+                            fontDialog.font.family = document.fontFamily
+                            fontDialog.font.pointSize = document.fontSize
+                            fontDialog.open()
+                        }
                     }
-                    SpinBox {
+                    Controls1.SpinBox {
                         id: fontSizeSpinBox
                         ToolTip { text: qsTr('Text size') }
                         implicitWidth: 50
@@ -264,7 +310,7 @@ VuiBase {
                             }
                         }
                     }
-                    ToolButton {
+                    Controls1.ToolButton {
                         id: colorButton
                         tooltip: qsTr('Text color')
                         implicitWidth: toolbar.height - 4
@@ -284,49 +330,49 @@ VuiBase {
                             colorDialog.open()
                         }
                     }
-                    Button { // separator
+                    Controls1.Button { // separator
                         enabled: false
                         implicitWidth: 2
                         implicitHeight: smallIcons? 14 : (hiddenButton.implicitHeight - 8)
                         visible: toolbar.expanded
                     }
-                    ToolButton {
+                    Controls1.ToolButton {
                         action: alignLeftAction
                         implicitWidth: smallIcons? 18 : hiddenButton.implicitWidth
                         implicitHeight: implicitWidth
                         visible: toolbar.expanded
                     }
-                    ToolButton {
+                    Controls1.ToolButton {
                         action: alignCenterAction
                         implicitWidth: smallIcons? 18 : hiddenButton.implicitWidth
                         implicitHeight: implicitWidth
                         visible: toolbar.expanded
                     }
-                    ToolButton {
+                    Controls1.ToolButton {
                         action: alignRightAction
                         implicitWidth: smallIcons? 18 : hiddenButton.implicitWidth
                         implicitHeight: implicitWidth
                         visible: toolbar.expanded
                     }
-                    ToolButton {
+                    Controls1.ToolButton {
                         action: alignJustifyAction
                         implicitWidth: smallIcons? 18 : hiddenButton.implicitWidth
                         implicitHeight: implicitWidth
                         visible: toolbar.expanded
                     }
-                    ToolButton {
+                    Controls1.ToolButton {
                         action: decreaseIndentAction
                         implicitWidth: smallIcons? 18 : hiddenButton.implicitWidth
                         implicitHeight: implicitWidth
                         visible: toolbar.expanded
                     }
-                    ToolButton {
+                    Controls1.ToolButton {
                         action: increaseIndentAction
                         implicitWidth: smallIcons? 18 : hiddenButton.implicitWidth
                         implicitHeight: implicitWidth
                         visible: toolbar.expanded
                     }
-                    ToolButton {
+                    Controls1.ToolButton {
                         id: expandCollapseButton
                         implicitWidth: smallIcons? 18 : hiddenButton.implicitWidth
                         implicitHeight: implicitWidth
@@ -355,6 +401,21 @@ VuiBase {
     }
 
     Menu {
+        id: contextMenu
+        MenuItem { action: undoAction }
+        MenuItem { action: redoAction }
+        MenuSeparator {}
+        MenuItem { action: cutAction }
+        MenuItem { action: copyAction }
+        MenuItem { action: pasteAction }
+        MenuItem { action: pastePlainAction }
+        MenuItem { action: deleteAction }
+        MenuItem { action: clearAction }
+        MenuSeparator {}
+        MenuItem { action: selectAllAction }
+    }
+
+    Menu {
         id: menu
         MenuItem { action: fileOpenAction }
         MenuItem { action: fileSaveAsAction }
@@ -374,8 +435,8 @@ VuiBase {
     Action {
         id: fileOpenAction
         text: qsTr('Open')
-        iconName: application.OS === 'OS X'? '' : 'document-open'
-        iconSource: application.OS === 'OS X'? '' : 'qrc:///icons/oxygen/32x32/actions/document-open.png'
+        icon.name: application.OS === 'OS X'? '' : 'document-open'
+        icon.source: application.OS === 'OS X'? '' : 'qrc:///icons/oxygen/32x32/actions/document-open.png'
         onTriggered: {
             fileDialog.selectExisting = true
             fileDialog.open()
@@ -384,8 +445,8 @@ VuiBase {
     Action {
         id: fileSaveAsAction
         text: qsTr('Save As…')
-        iconName: application.OS === 'OS X'? '' : 'document-save'
-        iconSource: application.OS === 'OS X'? '' : 'qrc:///icons/oxygen/32x32/actions/document-save.png'
+        icon.name: application.OS === 'OS X'? '' : 'document-save'
+        icon.source: application.OS === 'OS X'? '' : 'qrc:///icons/oxygen/32x32/actions/document-save.png'
         onTriggered: {
             fileDialog.selectExisting = false
             fileDialog.open()
@@ -393,49 +454,48 @@ VuiBase {
     }
     Action {
         id: menuAction
-        tooltip: qsTr('Menu')
-        iconName: 'show-menu'
-        iconSource: 'qrc:///icons/oxygen/32x32/actions/show-menu.png'
+        icon.name: 'show-menu'
+        icon.source: 'qrc:///icons/oxygen/32x32/actions/show-menu.png'
         onTriggered: menu.popup()
     }
     Action {
         id: undoAction
         text: qsTr('Undo')
         shortcut: 'ctrl+z'
-        iconName: application.OS === 'OS X'? '' : 'edit-undo'
-        iconSource: application.OS === 'OS X'? '' : 'qrc:///icons/oxygen/32x32/actions/edit-undo.png'
+        icon.name: application.OS === 'OS X'? '' : 'edit-undo'
+        icon.source: application.OS === 'OS X'? '' : 'qrc:///icons/oxygen/32x32/actions/edit-undo.png'
         onTriggered: textArea.undo()
     }
     Action {
         id: redoAction
         text: qsTr('Redo')
         shortcut: application.OS === 'Windows'? 'ctrl+y' : 'ctrl+shift+z'
-        iconName: application.OS === 'OS X'? '' : 'edit-redo'
-        iconSource: application.OS === 'OS X'? '' : 'qrc:///icons/oxygen/32x32/actions/edit-redo.png'
+        icon.name: application.OS === 'OS X'? '' : 'edit-redo'
+        icon.source: application.OS === 'OS X'? '' : 'qrc:///icons/oxygen/32x32/actions/edit-redo.png'
         onTriggered: textArea.redo()
     }
     Action {
         id: cutAction
         text: qsTr('Cut')
         shortcut: 'ctrl+x'
-        iconName: application.OS === 'OS X'? '' : 'edit-cut'
-        iconSource: application.OS === 'OS X'? '' : 'qrc:///icons/oxygen/32x32/actions/edit-cut.png'
+        icon.name: application.OS === 'OS X'? '' : 'edit-cut'
+        icon.source: application.OS === 'OS X'? '' : 'qrc:///icons/oxygen/32x32/actions/edit-cut.png'
         onTriggered: textArea.cut()
     }
     Action {
         id: copyAction
         text: qsTr('Copy')
         shortcut: 'ctrl+c'
-        iconName: application.OS === 'OS X'? '' : 'edit-copy'
-        iconSource: application.OS === 'OS X'? '' : 'qrc:///icons/oxygen/32x32/actions/edit-copy.png'
+        icon.name: application.OS === 'OS X'? '' : 'edit-copy'
+        icon.source: application.OS === 'OS X'? '' : 'qrc:///icons/oxygen/32x32/actions/edit-copy.png'
         onTriggered: textArea.copy()
     }
     Action {
         id: pasteAction
         text: qsTr('Paste')
         shortcut: 'ctrl+v'
-        iconName: application.OS === 'OS X'? '' : 'edit-paste'
-        iconSource: application.OS === 'OS X'? '' : 'qrc:///icons/oxygen/32x32/actions/edit-paste.png'
+        icon.name: application.OS === 'OS X'? '' : 'edit-paste'
+        icon.source: application.OS === 'OS X'? '' : 'qrc:///icons/oxygen/32x32/actions/edit-paste.png'
         onTriggered: textArea.paste()
     }
     Action {
@@ -448,15 +508,15 @@ VuiBase {
         id: deleteAction
         text: qsTr('Delete')
         shortcut: 'del'
-        iconName: application.OS === 'OS X'? '' : 'edit-delete'
-        iconSource: application.OS === 'OS X'? '' : 'qrc:///icons/oxygen/32x32/actions/edit-delete.png'
+        icon.name: application.OS === 'OS X'? '' : 'edit-delete'
+        icon.source: application.OS === 'OS X'? '' : 'qrc:///icons/oxygen/32x32/actions/edit-delete.png'
         onTriggered: textArea.remove(textArea.selectionStart, textArea.selectionEnd)
     }
     Action {
         id: clearAction
         text: qsTr('Clear')
-        iconName: application.OS === 'OS X'? '' : 'edit-clear'
-        iconSource: application.OS === 'OS X'? '' : 'qrc:///icons/oxygen/32x32/actions/edit-clear.png'
+        icon.name: application.OS === 'OS X'? '' : 'edit-clear'
+        icon.source: application.OS === 'OS X'? '' : 'qrc:///icons/oxygen/32x32/actions/edit-clear.png'
         onTriggered: {
             textArea.selectAll()
             textArea.remove(textArea.selectionStart, textArea.selectionEnd)
@@ -469,7 +529,7 @@ VuiBase {
         onTriggered: textArea.selectAll()
     }
 
-    Action {
+    Controls1.Action {
         id: alignLeftAction
         text: qsTr('Left')
         iconName: 'format-justify-left'
@@ -478,7 +538,7 @@ VuiBase {
         checkable: true
         checked: document.alignment == Qt.AlignLeft
     }
-    Action {
+    Controls1.Action {
         id: alignCenterAction
         text: qsTr('Center')
         iconName: 'format-justify-center'
@@ -487,7 +547,7 @@ VuiBase {
         checkable: true
         checked: document.alignment == Qt.AlignHCenter
     }
-    Action {
+    Controls1.Action {
         id: alignRightAction
         text: qsTr('Right')
         iconName: 'format-justify-right'
@@ -496,7 +556,7 @@ VuiBase {
         checkable: true
         checked: document.alignment == Qt.AlignRight
     }
-    Action {
+    Controls1.Action {
         id: alignJustifyAction
         text: qsTr('Justify')
         iconName: 'format-justify-fill'
@@ -508,8 +568,8 @@ VuiBase {
     Action {
         id: boldAction
         text: qsTr('Bold')
-        iconName: 'format-text-bold'
-        iconSource: 'qrc:///icons/oxygen/32x32/actions/format-text-bold.png'
+        icon.name: 'format-text-bold'
+        icon.source: 'qrc:///icons/oxygen/32x32/actions/format-text-bold.png'
         onTriggered: document.bold = !document.bold
         checkable: true
         checked: document.bold
@@ -517,8 +577,8 @@ VuiBase {
     Action {
         id: italicAction
         text: qsTr('Italic')
-        iconName: 'format-text-italic'
-        iconSource: 'qrc:///icons/oxygen/32x32/actions/format-text-italic.png'
+        icon.name: 'format-text-italic'
+        icon.source: 'qrc:///icons/oxygen/32x32/actions/format-text-italic.png'
         onTriggered: document.italic = !document.italic
         checkable: true
         checked: document.italic
@@ -526,8 +586,8 @@ VuiBase {
     Action {
         id: underlineAction
         text: qsTr('Underline')
-        iconName: 'format-text-underline'
-        iconSource: 'qrc:///icons/oxygen/32x32/actions/format-text-underline.png'
+        icon.name: 'format-text-underline'
+        icon.source: 'qrc:///icons/oxygen/32x32/actions/format-text-underline.png'
         onTriggered: document.underline = !document.underline
         checkable: true
         checked: document.underline
@@ -535,8 +595,8 @@ VuiBase {
     Action {
         id: fontFamilyAction
         text: qsTr('Font')
-        iconName: 'font'
-        iconSource: 'qrc:///icons/oxygen/32x32/actions/font.png'
+        icon.name: 'font'
+        icon.source: 'qrc:///icons/oxygen/32x32/actions/font.png'
         onTriggered: {
             fontDialog.font.family = document.fontFamily
             fontDialog.font.pointSize = document.fontSize
@@ -546,18 +606,18 @@ VuiBase {
     Action {
         id: insertTableAction
         text: qsTr('Insert Table')
-        iconName: application.OS === 'OS X'? '' : 'view-grid'
-        iconSource: application.OS === 'OS X'? '' : 'qrc:///icons/oxygen/32x32/actions/view-grid.png'
+        icon.name: application.OS === 'OS X'? '' : 'view-grid'
+        icon.source: application.OS === 'OS X'? '' : 'qrc:///icons/oxygen/32x32/actions/view-grid.png'
         onTriggered: tableDialog.open()
     }
-    Action {
+    Controls1.Action {
         id: decreaseIndentAction
         text: qsTr('Decrease Indent')
         iconName: 'format-indent-less'
         iconSource: 'qrc:///icons/oxygen/32x32/actions/format-indent-less.png'
         onTriggered: document.indentLess()
     }
-    Action {
+    Controls1.Action {
         id: increaseIndentAction
         text: qsTr('Insert Indent')
         iconName: 'format-indent-more'
@@ -614,8 +674,8 @@ VuiBase {
             SpinBox {
                 id: rowsSpinner
                 value: 1
-                minimumValue: 1
-                maximumValue: 100
+                from: 1
+                to: 100
                 stepSize: 1
                 focus: true
             }
@@ -626,8 +686,8 @@ VuiBase {
             SpinBox {
                 id: columnsSpinner
                 value: 2
-                minimumValue: 1
-                maximumValue: 100
+                from: 1
+                to: 100
                 stepSize: 1
             }
             Label {
@@ -637,10 +697,9 @@ VuiBase {
             SpinBox {
                 id: borderSpinner
                 value: 0
-                minimumValue: 0
-                maximumValue: 100
+                from: 0
+                to: 100
                 stepSize: 1
-                suffix: ' px'
             }
             Item { Layout.fillHeight: true; height: columnsSpinner.height }
         }
