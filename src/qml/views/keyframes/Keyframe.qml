@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2019 Meltytech, LLC
+ * Copyright (c) 2018-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@
 import QtQuick 2.0
 import org.shotcut.qml 1.0
 import QtQuick.Controls 1.0
+import QtQuick.Controls 2.12 as Controls2
 import Shotcut.Controls 1.0
 import QtQuick.Window 2.2
 import 'Keyframes.js' as Logic
@@ -108,47 +109,36 @@ Rectangle {
         cursorShape: Qt.PointingHandCursor
     }
 
-    Menu {
+    Controls2.Menu {
         id: menu
-        Menu {
+        Controls2.Menu {
             id: keyframeTypeSubmenu
             title: qsTr('Keyframe Type')
-            ExclusiveGroup { id: keyframeTypeGroup }
-            MenuItem {
+            Controls2.MenuItem {
                 text: qsTr('Discrete')
                 checkable: true
                 checked: interpolation === KeyframesModel.DiscreteInterpolation
-                exclusiveGroup: keyframeTypeGroup
                 onTriggered: parameters.setInterpolation(parameterIndex, index, KeyframesModel.DiscreteInterpolation)
             }
-            MenuItem {
+            Controls2.MenuItem {
                 text: qsTr('Linear')
                 checkable: true
                 checked: interpolation === KeyframesModel.LinearInterpolation
-                exclusiveGroup: keyframeTypeGroup
                 onTriggered: parameters.setInterpolation(parameterIndex, index, KeyframesModel.LinearInterpolation)
             }
-            MenuItem {
+            Controls2.MenuItem {
                 text: qsTr('Smooth')
                 checkable: true
                 checked: interpolation === KeyframesModel.SmoothInterpolation
-                exclusiveGroup: keyframeTypeGroup
                 onTriggered: parameters.setInterpolation(parameterIndex, index, KeyframesModel.SmoothInterpolation)
             }
         }
-        MenuItem {
+        Controls2.MenuItem {
             id: removeMenuItem
             text: qsTr('Remove')
             onTriggered: {
                 parameters.remove(parameterIndex, index)
                 root.selection = []
-            }
-        }
-        onPopupVisibleChanged: {
-            if (visible && application.OS !== 'OS X' && __popupGeometry.height > 0) {
-                // Try to fix menu running off screen. This only works intermittently.
-                menu.__yOffset = Math.min(0, Screen.height - (__popupGeometry.y + __popupGeometry.height + 40))
-                menu.__xOffset = Math.min(0, Screen.width - (__popupGeometry.x + __popupGeometry.width))
             }
         }
         onAboutToShow: tooltip.isVisible = false

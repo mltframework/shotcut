@@ -18,6 +18,7 @@
 import QtQuick 2.2
 import QtQml.Models 2.1
 import QtQuick.Controls 1.0
+import QtQuick.Controls 2.12 as Controls2
 import Shotcut.Controls 1.0
 import QtGraphicalEffects 1.0
 import QtQuick.Window 2.2
@@ -457,128 +458,110 @@ Rectangle {
         fast: true
     }
 
-    Menu {
+    Controls2.Menu {
         id: menu
-        MenuItem {
+        Controls2.MenuItem {
             text: qsTr('Add Audio Track')
-            shortcut: 'Ctrl+U'
             onTriggered: timeline.addAudioTrack();
         }
-        MenuItem {
+        Controls2.MenuItem {
             text: qsTr('Add Video Track')
-            shortcut: 'Ctrl+I'
             onTriggered: timeline.addVideoTrack();
         }
-        MenuItem {
+        Controls2.MenuItem {
             text: qsTr('Insert Track')
-            shortcut: 'Ctrl+Alt+I'
             onTriggered: timeline.insertTrack()
         }
-        MenuItem {
+        Controls2.MenuItem {
             text: qsTr('Remove Track')
-            shortcut: 'Ctrl+Alt+U'
             onTriggered: timeline.removeTrack()
         }
-        MenuSeparator {}
-        MenuItem {
+        Controls2.MenuSeparator {}
+        Controls2.MenuItem {
             text: qsTr('Select All')
-            shortcut: 'Ctrl+A'
             onTriggered: timeline.selectAll()
         }
-        MenuItem {
+        Controls2.MenuItem {
             text: qsTr('Select None')
-            shortcut: 'Ctrl+D'
             onTriggered: {
                 timeline.selection = []
                 multitrack.reload()
             }
         }
-        MenuSeparator {}
-        MenuItem {
-            text: qsTr("Ripple All Tracks")
-            shortcut: 'Ctrl+Alt+R'
-            checkable: true
-            checked: settings.timelineRippleAllTracks
-            onTriggered: settings.timelineRippleAllTracks = checked
-        }
-        MenuItem {
-            text: qsTr('Copy Timeline to Source')
-            shortcut: 'Ctrl+Alt+C'
-            onTriggered: timeline.copyToSource()
-        }
-        MenuSeparator {}
-        MenuItem {
+        Controls2.MenuSeparator {}
+        Controls2.MenuItem {
             enabled: multitrack.trackHeight > 10
             text: qsTr('Make Tracks Shorter')
-            shortcut: 'Ctrl+-'
             onTriggered: makeTracksShorter()
         }
-        MenuItem {
+        Controls2.MenuItem {
             text: qsTr('Make Tracks Taller')
-            shortcut: 'Ctrl+='
             onTriggered: makeTracksTaller()
         }
-        MenuItem {
+        Controls2.MenuItem {
             text: qsTr('Reset Track Height')
             onTriggered: multitrack.trackHeight = 50
         }
-        MenuItem {
-            text: qsTr('Show Audio Waveforms')
-            checkable: true
-            checked: settings.timelineShowWaveforms
-            onTriggered: {
-                if (checked) {
-                    if (settings.timelineShowWaveforms) {
-                        settings.timelineShowWaveforms = checked
-                        for (var i = 0; i < tracksRepeater.count; i++)
-                            tracksRepeater.itemAt(i).redrawWaveforms()
+        Controls2.Menu {
+            title: qsTr('Options')
+            Controls2.MenuItem {
+                text: qsTr("Ripple All Tracks")
+                checkable: true
+                checked: settings.timelineRippleAllTracks
+                onTriggered: settings.timelineRippleAllTracks = checked
+            }
+            Controls2.MenuItem {
+                text: qsTr('Show Audio Waveforms')
+                checkable: true
+                checked: settings.timelineShowWaveforms
+                onTriggered: {
+                    if (checked) {
+                        if (settings.timelineShowWaveforms) {
+                            settings.timelineShowWaveforms = checked
+                            for (var i = 0; i < tracksRepeater.count; i++)
+                                tracksRepeater.itemAt(i).redrawWaveforms()
+                        } else {
+                            settings.timelineShowWaveforms = checked
+                            for (i = 0; i < tracksRepeater.count; i++)
+                                tracksRepeater.itemAt(i).remakeWaveforms(false)
+                        }
                     } else {
                         settings.timelineShowWaveforms = checked
-                        for (i = 0; i < tracksRepeater.count; i++)
-                            tracksRepeater.itemAt(i).remakeWaveforms(false)
                     }
-                } else {
-                    settings.timelineShowWaveforms = checked
                 }
             }
+            Controls2.MenuItem {
+                text: qsTr('Show Video Thumbnails')
+                checkable: true
+                checked: settings.timelineShowThumbnails
+                onTriggered: settings.timelineShowThumbnails = checked
+            }
+            Controls2.MenuItem {
+                text: qsTr('Center the Playhead')
+                checkable: true
+                checked: settings.timelineCenterPlayhead
+                onTriggered: settings.timelineCenterPlayhead = checked
+            }
+            Controls2.MenuItem {
+                text: qsTr('Scroll to Playhead on Zoom')
+                checkable: true
+                checked: settings.timelineScrollZoom
+                onTriggered: settings.timelineScrollZoom = checked
+            }
         }
-        MenuItem {
-            text: qsTr('Show Video Thumbnails')
-            checkable: true
-            checked: settings.timelineShowThumbnails
-            onTriggered: settings.timelineShowThumbnails = checked
+        Controls2.MenuItem {
+            text: qsTr('Copy Timeline to Source')
+            onTriggered: timeline.copyToSource()
         }
-        MenuItem {
-            text: qsTr('Center the Playhead')
-            checkable: true
-            checked: settings.timelineCenterPlayhead
-            shortcut: 'Ctrl+Shift+P'
-            onTriggered: settings.timelineCenterPlayhead = checked
-        }
-        MenuItem {
-            text: qsTr('Scroll to Playhead on Zoom')
-            checkable: true
-            checked: settings.timelineScrollZoom
-            shortcut: 'Ctrl+Alt+P'
-            onTriggered: settings.timelineScrollZoom = checked
-        }
-        MenuSeparator {}
-        MenuItem {
-            id: propertiesMenuItem
-            visible: false
-            text: qsTr('Properties')
-            onTriggered: timeline.openProperties()
-        }
-        MenuItem {
+        Controls2.MenuItem {
             text: qsTr('Reload')
             onTriggered: multitrack.reload()
         }
-        onPopupVisibleChanged: {
-            if (visible && application.OS === 'Windows' && __popupGeometry.height > 0) {
-                // Try to fix menu running off screen. This only works intermittently.
-                menu.__yOffset = Math.min(0, Screen.height - (__popupGeometry.y + __popupGeometry.height + 40))
-                menu.__xOffset = Math.min(0, Screen.width - (__popupGeometry.x + __popupGeometry.width))
-            }
+        Controls2.MenuItem {
+            id: propertiesMenuItem
+            enabled: false
+            text: qsTr('Properties')
+            onTriggered: timeline.openProperties()
         }
     }
 
@@ -669,7 +652,7 @@ Rectangle {
             var selectedTrack = timeline.selectedTrack()
             for (var i = 0; i < trackHeaderRepeater.count; i++)
                 trackHeaderRepeater.itemAt(i).selected = (i === selectedTrack)
-            propertiesMenuItem.visible = (cornerstone.selected || (selectedTrack >= 0 && selectedTrack < trackHeaderRepeater.count))
+            propertiesMenuItem.enabled = (cornerstone.selected || (selectedTrack >= 0 && selectedTrack < trackHeaderRepeater.count))
         }
         onZoomIn: zoomIn()
         onZoomOut: zoomOut()

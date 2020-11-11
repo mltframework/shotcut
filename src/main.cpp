@@ -27,6 +27,7 @@
 #include <QCommandLineParser>
 #include <framework/mlt_log.h>
 #include <QFile>
+#include <QQuickStyle>
 
 #ifdef Q_OS_MAC
     #include "macos.h"
@@ -358,6 +359,7 @@ int main(int argc, char **argv)
     splash.show();
     a.processEvents();
 
+    QQuickStyle::setStyle("Fusion");
     a.setProperty("system-style", a.style()->objectName());
     MainWindow::changeTheme(Settings.theme());
 
