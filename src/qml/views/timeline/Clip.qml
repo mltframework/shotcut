@@ -18,6 +18,7 @@
 import QtQuick 2.2
 import QtQuick.Controls 1.0
 import Shotcut.Controls 1.0
+import QtQuick.Controls 2.12 as Controls2
 import QtGraphicalEffects 1.0
 import QtQml.Models 2.2
 import QtQuick.Window 2.2
@@ -623,13 +624,13 @@ Rectangle {
             onExited: parent.opacity = 0
         }
     }
-    Menu {
+    Controls2.Menu {
         id: menu
         function show() {
-            mergeItem.visible = timeline.mergeClipWithNext(trackIndex, index, true)
+            mergeItem.enabled = timeline.mergeClipWithNext(trackIndex, index, true)
             popup()
         }
-        MenuItem {
+        Controls2.MenuItem {
             visible: !isBlank && !isTransition
             text: qsTr('Cut')
             onTriggered: {
@@ -641,49 +642,49 @@ Rectangle {
                 }
             }
         }
-        MenuItem {
-            visible: !isBlank && !isTransition
+        Controls2.MenuItem {
+            enabled: !isBlank && !isTransition
             text: qsTr('Copy')
             onTriggered: timeline.copyClip(trackIndex, index)
         }
-        MenuSeparator {
-            visible: !isBlank && !isTransition
+        Controls2.MenuSeparator {
+            enabled: !isBlank && !isTransition
         }
-        MenuItem {
+        Controls2.MenuItem {
             text: qsTr('Remove')
             onTriggered: timeline.remove(trackIndex, index)
         }
-        MenuItem {
-            visible: !isBlank
+        Controls2.MenuItem {
+            enabled: !isBlank
             text: qsTr('Lift')
             onTriggered: timeline.lift(trackIndex, index)
         }
-        MenuItem {
-            visible: !isTransition
+        Controls2.MenuItem {
+            enabled: !isTransition
             text: qsTr('Replace')
             onTriggered: timeline.replace(trackIndex, index)
         }
 
-        MenuSeparator {
-            visible: !isBlank && !isTransition
+        Controls2.MenuSeparator {
+            enabled: !isBlank && !isTransition
         }
-        MenuItem {
-            visible: !isBlank && !isTransition
+        Controls2.MenuItem {
+            enabled: !isBlank && !isTransition
             text: qsTr('Split At Playhead (S)')
             onTriggered: timeline.splitClip(trackIndex, index)
         }
-        MenuItem {
+        Controls2.MenuItem {
             id: mergeItem
             text: qsTr('Merge with next clip')
             onTriggered: timeline.mergeClipWithNext(trackIndex, index, false)
         }
-        MenuItem {
-            visible: !isBlank && !isTransition && !isAudio && (parseInt(audioIndex) > -1 || audioIndex === 'all')
+        Controls2.MenuItem {
+            enabled: !isBlank && !isTransition && !isAudio && (parseInt(audioIndex) > -1 || audioIndex === 'all')
             text: qsTr('Detach Audio')
             onTriggered: timeline.detachAudio(trackIndex, index)
         }
-        MenuItem {
-            visible: !isBlank && !isTransition && settings.timelineShowThumbnails && !isAudio
+        Controls2.MenuItem {
+            enabled: !isBlank && !isTransition && settings.timelineShowThumbnails && !isAudio
             text: qsTr('Update Thumbnails')
             onTriggered: {
                 var s = inThumbnail.source.toString()
@@ -698,25 +699,18 @@ Rectangle {
                 }
             }
         }
-        MenuItem {
-            visible: !isBlank && !isTransition && settings.timelineShowWaveforms
+        Controls2.MenuItem {
+            enabled: !isBlank && !isTransition && settings.timelineShowWaveforms
             text: qsTr('Rebuild Audio Waveform')
             onTriggered: timeline.remakeAudioLevels(trackIndex, index)
         }
-        MenuItem {
-            visible: !isBlank
+        Controls2.MenuItem {
+            enabled: !isBlank
             text: qsTr('Properties')
             onTriggered: {
                 clipRoot.forceActiveFocus()
                 clipRoot.clicked(clipRoot, null)
                 timeline.openProperties()
-            }
-        }
-        onPopupVisibleChanged: {
-            if (visible && application.OS !== 'OS X' && __popupGeometry.height > 0) {
-                // Try to fix menu running off screen. This only works intermittently.
-                menu.__yOffset = Math.min(0, Screen.height - (__popupGeometry.y + __popupGeometry.height + 40))
-                menu.__xOffset = Math.min(0, Screen.width - (__popupGeometry.x + __popupGeometry.width))
             }
         }
     }

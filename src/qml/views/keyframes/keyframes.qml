@@ -18,6 +18,7 @@
 import QtQuick 2.5
 import QtQml.Models 2.1
 import QtQuick.Controls 1.3
+import QtQuick.Controls 2.12 as Controls2
 import Shotcut.Controls 1.0
 import QtGraphicalEffects 1.0
 import QtQuick.Window 2.2
@@ -443,9 +444,10 @@ Rectangle {
         fast: true
     }
 
-    Menu {
+    Controls2.Menu {
         id: menu
-        MenuItem {
+        width: 220
+        Controls2.MenuItem {
             text: qsTr('Show Audio Waveforms')
             checkable: true
             checked: settings.timelineShowWaveforms
@@ -463,37 +465,28 @@ Rectangle {
                 }
             }
         }
-        MenuItem {
+        Controls2.MenuItem {
             text: qsTr('Show Video Thumbnails')
             checkable: true
             checked: settings.timelineShowThumbnails
             onTriggered: settings.timelineShowThumbnails = checked
         }
-        MenuItem {
+        Controls2.MenuItem {
             text: qsTr('Center the Playhead')
             checkable: true
             checked: settings.timelineCenterPlayhead
-            shortcut: 'Ctrl+Shift+P'
             onTriggered: settings.timelineCenterPlayhead = checked
         }
-        MenuItem {
+        Controls2.MenuItem {
             text: qsTr('Scroll to Playhead on Zoom')
             checkable: true
             checked: settings.timelineScrollZoom
-            shortcut: 'Ctrl+Alt+P'
             onTriggered: settings.timelineScrollZoom = checked
         }
-        MenuSeparator {}
-        MenuItem {
+        Controls2.MenuSeparator {}
+        Controls2.MenuItem {
             text: qsTr('Reload')
             onTriggered: parameters.reload()
-        }
-        onPopupVisibleChanged: {
-            if (visible && application.OS === 'Windows' && __popupGeometry.height > 0) {
-                // Try to fix menu running off screen. This only works intermittently.
-                menu.__yOffset = Math.min(0, Screen.height - (__popupGeometry.y + __popupGeometry.height + 40))
-                menu.__xOffset = Math.min(0, Screen.width - (__popupGeometry.x + __popupGeometry.width))
-            }
         }
     }
 
