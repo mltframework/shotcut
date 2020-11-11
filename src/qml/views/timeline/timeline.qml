@@ -488,19 +488,21 @@ Rectangle {
                 multitrack.reload()
             }
         }
-        Controls2.MenuSeparator {}
-        Controls2.MenuItem {
-            enabled: multitrack.trackHeight > 10
-            text: qsTr('Make Tracks Shorter')
-            onTriggered: makeTracksShorter()
-        }
-        Controls2.MenuItem {
-            text: qsTr('Make Tracks Taller')
-            onTriggered: makeTracksTaller()
-        }
-        Controls2.MenuItem {
-            text: qsTr('Reset Track Height')
-            onTriggered: multitrack.trackHeight = 50
+        Controls2.Menu {
+            title: qsTr('Track Height')
+            Controls2.MenuItem {
+                enabled: multitrack.trackHeight > 10
+                text: qsTr('Make Tracks Shorter')
+                onTriggered: makeTracksShorter()
+            }
+            Controls2.MenuItem {
+                text: qsTr('Make Tracks Taller')
+                onTriggered: makeTracksTaller()
+            }
+            Controls2.MenuItem {
+                text: qsTr('Reset Track Height')
+                onTriggered: multitrack.trackHeight = 50
+            }
         }
         Controls2.Menu {
             title: qsTr('Options')
