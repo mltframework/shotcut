@@ -632,7 +632,7 @@ Rectangle {
         }
         Controls2.MenuItem {
             visible: !isBlank && !isTransition
-            text: qsTr('Cut')
+            text: qsTr('Cut') + ' (Ctrl+X)'
             onTriggered: {
                 if (!trackRoot.isLocked) {
                     timeline.copyClip(trackIndex, index)
@@ -644,24 +644,24 @@ Rectangle {
         }
         Controls2.MenuItem {
             enabled: !isBlank && !isTransition
-            text: qsTr('Copy')
+            text: qsTr('Copy') + ' (Ctrl+C)'
             onTriggered: timeline.copyClip(trackIndex, index)
         }
         Controls2.MenuSeparator {
             enabled: !isBlank && !isTransition
         }
         Controls2.MenuItem {
-            text: qsTr('Remove')
+            text: qsTr('Remove') + ' (X)'
             onTriggered: timeline.remove(trackIndex, index)
         }
         Controls2.MenuItem {
             enabled: !isBlank
-            text: qsTr('Lift')
+            text: qsTr('Lift') + ' (Z)'
             onTriggered: timeline.lift(trackIndex, index)
         }
         Controls2.MenuItem {
             enabled: !isTransition
-            text: qsTr('Replace')
+            text: qsTr('Replace') + ' (R)'
             onTriggered: timeline.replace(trackIndex, index)
         }
 

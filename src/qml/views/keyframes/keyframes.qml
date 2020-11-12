@@ -446,7 +446,7 @@ Rectangle {
 
     Controls2.Menu {
         id: menu
-        width: 220
+        width: 310
         Controls2.MenuItem {
             text: qsTr('Show Audio Waveforms')
             checkable: true
@@ -472,20 +472,20 @@ Rectangle {
             onTriggered: settings.timelineShowThumbnails = checked
         }
         Controls2.MenuItem {
-            text: qsTr('Center the Playhead')
+            text: qsTr('Center the Playhead') + (application.OS != 'OS X'? ' (Ctrl+Shift+P)' : '')
             checkable: true
             checked: settings.timelineCenterPlayhead
             onTriggered: settings.timelineCenterPlayhead = checked
         }
         Controls2.MenuItem {
-            text: qsTr('Scroll to Playhead on Zoom')
+            text: qsTr('Scroll to Playhead on Zoom') + (application.OS != 'OS X'? ' (Ctrl+Alt+P)' : '')
             checkable: true
             checked: settings.timelineScrollZoom
             onTriggered: settings.timelineScrollZoom = checked
         }
         Controls2.MenuSeparator {}
         Controls2.MenuItem {
-            text: qsTr('Reload')
+            text: qsTr('Reload') + (application.OS != 'OS X'? ' (F5)' : '')
             onTriggered: parameters.reload()
         }
     }

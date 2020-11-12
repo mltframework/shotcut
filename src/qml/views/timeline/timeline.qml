@@ -460,29 +460,30 @@ Rectangle {
 
     Controls2.Menu {
         id: menu
+        width: 270
         Controls2.MenuItem {
-            text: qsTr('Add Audio Track')
+            text: qsTr('Add Audio Track') + (application.OS != 'OS X'? ' (Ctrl+U)' : '')
             onTriggered: timeline.addAudioTrack();
         }
         Controls2.MenuItem {
-            text: qsTr('Add Video Track')
+            text: qsTr('Add Video Track') + (application.OS != 'OS X'? ' (Ctrl+I)' : '')
             onTriggered: timeline.addVideoTrack();
         }
         Controls2.MenuItem {
-            text: qsTr('Insert Track')
+            text: qsTr('Insert Track') + (application.OS != 'OS X'? ' (Ctrl+Alt+I)' : '')
             onTriggered: timeline.insertTrack()
         }
         Controls2.MenuItem {
-            text: qsTr('Remove Track')
+            text: qsTr('Remove Track') + (application.OS != 'OS X'? ' (Ctrl+Alt+U)' : '')
             onTriggered: timeline.removeTrack()
         }
         Controls2.MenuSeparator {}
         Controls2.MenuItem {
-            text: qsTr('Select All')
+            text: qsTr('Select All') + (application.OS != 'OS X'? ' (Ctrl+A)' : '')
             onTriggered: timeline.selectAll()
         }
         Controls2.MenuItem {
-            text: qsTr('Select None')
+            text: qsTr('Select None') + (application.OS != 'OS X'? ' (Ctrl+D)' : '')
             onTriggered: {
                 timeline.selection = []
                 multitrack.reload()
@@ -490,25 +491,26 @@ Rectangle {
         }
         Controls2.Menu {
             title: qsTr('Track Height')
+            width: 210
             Controls2.MenuItem {
                 enabled: multitrack.trackHeight > 10
-                text: qsTr('Make Tracks Shorter')
+                text: qsTr('Make Tracks Shorter') + (application.OS != 'OS X'? ' (Ctrl+-)' : '')
                 onTriggered: makeTracksShorter()
             }
             Controls2.MenuItem {
-                text: qsTr('Make Tracks Taller')
+                text: qsTr('Make Tracks Taller') + (application.OS != 'OS X'? ' (Ctrl++)' : '')
                 onTriggered: makeTracksTaller()
             }
             Controls2.MenuItem {
-                text: qsTr('Reset Track Height')
+                text: qsTr('Reset Track Height') + (application.OS != 'OS X'? ' (Ctrl+=)' : '')
                 onTriggered: multitrack.trackHeight = 50
             }
         }
         Controls2.Menu {
             title: qsTr('Options')
-            width: 230
+            width: 310
             Controls2.MenuItem {
-                text: qsTr("Ripple All Tracks")
+                text: qsTr("Ripple All Tracks") + (application.OS != 'OS X'? ' (Ctrl+Alt+R)' : '')
                 checkable: true
                 checked: settings.timelineRippleAllTracks
                 onTriggered: settings.timelineRippleAllTracks = checked
@@ -540,24 +542,24 @@ Rectangle {
                 onTriggered: settings.timelineShowThumbnails = checked
             }
             Controls2.MenuItem {
-                text: qsTr('Center the Playhead')
+                text: qsTr('Center the Playhead') + (application.OS != 'OS X'? ' (Ctrl+Shift+P)' : '')
                 checkable: true
                 checked: settings.timelineCenterPlayhead
                 onTriggered: settings.timelineCenterPlayhead = checked
             }
             Controls2.MenuItem {
-                text: qsTr('Scroll to Playhead on Zoom')
+                text: qsTr('Scroll to Playhead on Zoom') + (application.OS != 'OS X'? ' (Ctrl+Alt+P)' : '')
                 checkable: true
                 checked: settings.timelineScrollZoom
                 onTriggered: settings.timelineScrollZoom = checked
             }
         }
         Controls2.MenuItem {
-            text: qsTr('Copy Timeline to Source')
+            text: qsTr('Copy Timeline to Source') + (application.OS != 'OS X'? ' (Ctrl+Alt+C)' : '')
             onTriggered: timeline.copyToSource()
         }
         Controls2.MenuItem {
-            text: qsTr('Reload')
+            text: qsTr('Reload') + (application.OS != 'OS X'? ' (F5)' : '')
             onTriggered: multitrack.reload()
         }
         Controls2.MenuItem {

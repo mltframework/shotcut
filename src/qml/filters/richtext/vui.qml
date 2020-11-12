@@ -402,6 +402,7 @@ VuiBase {
 
     Menu {
         id: contextMenu
+        width: 220
         MenuItem { action: undoAction }
         MenuItem { action: redoAction }
         MenuSeparator {}
@@ -417,6 +418,7 @@ VuiBase {
 
     Menu {
         id: menu
+        width: 220
         MenuItem { action: fileOpenAction }
         MenuItem { action: fileSaveAsAction }
         MenuSeparator {}
@@ -435,8 +437,6 @@ VuiBase {
     Action {
         id: fileOpenAction
         text: qsTr('Open')
-        icon.name: application.OS === 'OS X'? '' : 'document-open'
-        icon.source: application.OS === 'OS X'? '' : 'qrc:///icons/oxygen/32x32/actions/document-open.png'
         onTriggered: {
             fileDialog.selectExisting = true
             fileDialog.open()
@@ -445,8 +445,6 @@ VuiBase {
     Action {
         id: fileSaveAsAction
         text: qsTr('Save As…')
-        icon.name: application.OS === 'OS X'? '' : 'document-save'
-        icon.source: application.OS === 'OS X'? '' : 'qrc:///icons/oxygen/32x32/actions/document-save.png'
         onTriggered: {
             fileDialog.selectExisting = false
             fileDialog.open()
@@ -460,63 +458,42 @@ VuiBase {
     }
     Action {
         id: undoAction
-        text: qsTr('Undo')
-        shortcut: 'ctrl+z'
-        icon.name: application.OS === 'OS X'? '' : 'edit-undo'
-        icon.source: application.OS === 'OS X'? '' : 'qrc:///icons/oxygen/32x32/actions/edit-undo.png'
+        text: qsTr('Undo') + (application.OS != 'OS X'? ' (Ctrl+Z)' : '')
         onTriggered: textArea.undo()
     }
     Action {
         id: redoAction
-        text: qsTr('Redo')
-        shortcut: application.OS === 'Windows'? 'ctrl+y' : 'ctrl+shift+z'
-        icon.name: application.OS === 'OS X'? '' : 'edit-redo'
-        icon.source: application.OS === 'OS X'? '' : 'qrc:///icons/oxygen/32x32/actions/edit-redo.png'
+        text: qsTr('Redo') + (application.OS === 'Windows'? ' (Ctrl+Y)' : application.OS !== 'OS X'? ' (Ctrl+Shift+Z)' : '')
         onTriggered: textArea.redo()
     }
     Action {
         id: cutAction
-        text: qsTr('Cut')
-        shortcut: 'ctrl+x'
-        icon.name: application.OS === 'OS X'? '' : 'edit-cut'
-        icon.source: application.OS === 'OS X'? '' : 'qrc:///icons/oxygen/32x32/actions/edit-cut.png'
+        text: qsTr('Cut') + (application.OS != 'OS X'? ' (Ctrl+X)' : '')
         onTriggered: textArea.cut()
     }
     Action {
         id: copyAction
-        text: qsTr('Copy')
-        shortcut: 'ctrl+c'
-        icon.name: application.OS === 'OS X'? '' : 'edit-copy'
-        icon.source: application.OS === 'OS X'? '' : 'qrc:///icons/oxygen/32x32/actions/edit-copy.png'
+        text: qsTr('Copy') + (application.OS != 'OS X'? ' (Ctrl+C)' : '')
         onTriggered: textArea.copy()
     }
     Action {
         id: pasteAction
-        text: qsTr('Paste')
-        shortcut: 'ctrl+v'
-        icon.name: application.OS === 'OS X'? '' : 'edit-paste'
-        icon.source: application.OS === 'OS X'? '' : 'qrc:///icons/oxygen/32x32/actions/edit-paste.png'
+        text: qsTr('Paste') + (application.OS != 'OS X'? ' (Ctrl+V)' : '')
         onTriggered: textArea.paste()
     }
     Action {
         id: pastePlainAction
-        text: qsTr('Paste Text Only')
-        shortcut: 'ctrl+shift+v'
+        text: qsTr('Paste Text Only') + (application.OS != 'OS X'? ' (Ctrl+Shift+V)' : '')
         onTriggered: document.pastePlain()
     }
     Action {
         id: deleteAction
         text: qsTr('Delete')
-        shortcut: 'del'
-        icon.name: application.OS === 'OS X'? '' : 'edit-delete'
-        icon.source: application.OS === 'OS X'? '' : 'qrc:///icons/oxygen/32x32/actions/edit-delete.png'
         onTriggered: textArea.remove(textArea.selectionStart, textArea.selectionEnd)
     }
     Action {
         id: clearAction
         text: qsTr('Clear')
-        icon.name: application.OS === 'OS X'? '' : 'edit-clear'
-        icon.source: application.OS === 'OS X'? '' : 'qrc:///icons/oxygen/32x32/actions/edit-clear.png'
         onTriggered: {
             textArea.selectAll()
             textArea.remove(textArea.selectionStart, textArea.selectionEnd)
@@ -524,8 +501,7 @@ VuiBase {
     }
     Action {
         id: selectAllAction
-        text: qsTr('Select All')
-        shortcut: 'ctrl+a'
+        text: qsTr('Select All') + (application.OS != 'OS X'? ' (Ctrl+A)' : '')
         onTriggered: textArea.selectAll()
     }
 
@@ -606,8 +582,6 @@ VuiBase {
     Action {
         id: insertTableAction
         text: qsTr('Insert Table')
-        icon.name: application.OS === 'OS X'? '' : 'view-grid'
-        icon.source: application.OS === 'OS X'? '' : 'qrc:///icons/oxygen/32x32/actions/view-grid.png'
         onTriggered: tableDialog.open()
     }
     Controls1.Action {
