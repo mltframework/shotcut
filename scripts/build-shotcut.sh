@@ -1763,7 +1763,7 @@ function fixlibs()
       if [ $(echo "$lib" | grep -v '\.dylib$') ] && [ $(echo "$lib" | grep -v '\.so$') ]; then
         basename_lib="$basename_lib".dylib
       fi
-      [ ! -e "Frameworks/$basename_lib" ] && cmd cp --preserve=timestamps "$libpath" "Frameworks/$basename_lib"
+      cmd cp -n "$libpath" "Frameworks/$basename_lib"
       cmd install_name_tool -change "$lib" "@rpath/$basename_lib" "$target"
     fi
   done
