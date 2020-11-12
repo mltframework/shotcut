@@ -219,6 +219,8 @@ QVariant MultitrackModel::data(const QModelIndex &index, int role) const
             case IsCompositeRole: {
                 QScopedPointer<Mlt::Transition> transition(getTransition("frei0r.cairoblend", i));
                 if (!transition)
+                    transition.reset(getTransition("qtblend", i));
+                if (!transition)
                     transition.reset(getTransition("movit.overlay", i));
                 if (transition && transition->is_valid()) {
                     if (!transition->get_int("disable"))
@@ -371,9 +373,15 @@ void MultitrackModel::setTrackComposite(int row, bool composite)
         if (transition) {
             transition->set("disable", !composite);
         } else {
-            transition.reset(getTransition("movit.overlay", i));
-            if (transition)
+            transition.reset(getTransition("qtblend", i));
+            if (transition) {
                 transition->set("disable", !composite);
+            } else {
+                transition.reset(getTransition("movit.overlay", i));
+                if (transition) {
+                    transition->set("disable", !composite);
+                }
+            }
         }
         MLT.refreshConsumer();
 
@@ -2640,6 +2648,8 @@ void MultitrackModel::removeTrack(int trackIndex)
 
         // Remove transitions.
         if (!transition)
+            transition.reset(getTransition("qtblend", track.mlt_index));
+        if (!transition)
             transition.reset(getTransition("movit.overlay", track.mlt_index));
         if (transition)
             m_tractor->field()->disconnect_service(*transition);
@@ -2671,6 +2681,8 @@ void MultitrackModel::removeTrack(int trackIndex)
                 // Disable compositing on the bottom video track.
                 if (m_trackList[row].number == 0 && t.type == VideoTrackType) {
                     QScopedPointer<Mlt::Transition> transition(getTransition("frei0r.cairoblend", 1));
+                    if (!transition)
+                        transition.reset(getTransition("qtblend", 1));
                     if (!transition)
                         transition.reset(getTransition("movit.overlay", 1));
                     if (transition && transition->is_valid())
@@ -2785,7 +2797,11 @@ void MultitrackModel::insertTrack(int trackIndex, TrackType type)
     const char* videoTransitionName = Settings.playerGPU()? "movit.overlay" : "frei0r.cairoblend";
     if (type == VideoTrackType) {
         ++i;
-        lower.reset(getTransition(videoTransitionName, track.mlt_index));
+        auto transition = getTransition(videoTransitionName, track.mlt_index);
+        if (!transition) {
+            transition = getTransition("qtblend", track.mlt_index);
+        }
+        lower.reset();
     }
 
     if (trackIndex >= m_trackList.count()) {
@@ -3332,7 +3348,7 @@ Mlt::Transition *MultitrackModel::getTransition(const QString &name, int trackIn
         }
         service.reset(service->producer());
     }
-    return 0;
+    return nullptr;
 }
 
 Mlt::Filter *MultitrackModel::getFilter(const QString &name, int trackIndex) const
