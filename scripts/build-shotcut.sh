@@ -1666,7 +1666,7 @@ function bundle_libs
   basename_target=$(basename "$target")
   # See https://github.com/AppImage/pkg2appimage/blob/master/excludelist
   libs=$(ldd "$target" |
-    awk '($3  ~ /^\/(lib|usr)\//) &&
+    awk '(($3  ~ /^\/(lib|usr)\//) || ($3 == "not")) &&
          ($3 !~ /\/libld-linux\./) &&
          ($3 !~ /\/libld-linux-x86-64\./) &&
          ($3 !~ /\/libanl\./) &&
@@ -1729,7 +1729,7 @@ function bundle_libs
          {print $3}')
   for lib in $libs; do
     basename_lib=$(basename "$lib")
-    if [ "$basename_lib" != "$basename_target" ] && [ ! -e "$FINAL_INSTALL_DIR/$basename_lib" ]; then
+    if [ "$basename_lib" != "$basename_target" ] && [ ! -e "$FINAL_INSTALL_DIR/lib/$basename_lib" ]; then
       cmd cp --preserve=timestamps "$lib" "$FINAL_INSTALL_DIR/lib" || die "failed to copy $lib"
     fi
   done
@@ -1744,7 +1744,7 @@ function bundle_libs
 
 function fixlibs()
 {
-  log fixing and bundling library paths of $(basename "$1")
+  log bundling and fixing library paths of $(basename "$1")
   target=$(dirname "$1")/$(basename "$1")
   trace fixlibs $target
   basename_target=$(basename "$target")
@@ -1817,8 +1817,8 @@ function deploy_osx
   cmd cp -a "$FINAL_INSTALL_DIR"/bin/{melt,ffmpeg,ffplay,ffprobe} MacOS
   cmd mkdir -p Frameworks 2>/dev/null
   for exe in $(find MacOS -type f -perm +u+x -maxdepth 1); do
-    log fixing library paths of executable "$exe"
     fixlibs "$exe"
+    log fixing rpath of executable "$exe"
     cmd install_name_tool -delete_rpath "$FINAL_INSTALL_DIR/lib" "$exe" 2> /dev/null
     cmd install_name_tool -delete_rpath "$QTDIR/lib" "$exe" 2> /dev/null
     cmd install_name_tool -add_rpath "@executable_path/../Frameworks" "$exe"
@@ -1832,7 +1832,6 @@ function deploy_osx
   # Copy libvidstab here temporarily so it can be found by fixlibs.
   cmd cp -p "$FINAL_INSTALL_DIR"/lib/libvidstab*.dylib .
   for lib in PlugIns/mlt/*; do
-    log fixing library paths of "$lib"
     fixlibs "$lib"
   done
   cmd rm libvidstab*.dylib
@@ -1850,7 +1849,6 @@ function deploy_osx
   fi
   for dir in PlugIns/qt/*; do
     for lib in $dir/*; do
-      log fixing library paths of Qt plugin "$lib"
       fixlibs "$lib"
     done
   done
@@ -1873,7 +1871,6 @@ function deploy_osx
   cmd mkdir PlugIns/frei0r-1 2>/dev/null
   cmd cp -a "$FINAL_INSTALL_DIR"/lib/frei0r-1 PlugIns
   for lib in PlugIns/frei0r-1/*; do
-    log fixing library paths of frei0r plugin "$lib"
     fixlibs "$lib"
   done
 
@@ -1882,7 +1879,6 @@ function deploy_osx
   cmd mkdir PlugIns/ladspa 2>/dev/null
   cmd cp -a "$FINAL_INSTALL_DIR"/lib/ladspa/* PlugIns/ladspa
   for lib in PlugIns/ladspa/*; do
-    log fixing library paths of LADSPA plugin "$lib"
     fixlibs "$lib"
   done
   cmd rm *.bundled
