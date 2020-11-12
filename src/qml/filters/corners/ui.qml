@@ -594,7 +594,11 @@ KeyframableFilter {
             }
         }
         UndoButton {
-            onClicked: interpolatorCombo.currentIndex = interpolatorDefault * 6
+            onClicked: {
+                enabled = false
+                filter.set(interpolatorProperty, interpolatorDefault)
+                enabled = true
+            }
             Layout.columnSpan: 2
         }
 
@@ -615,7 +619,7 @@ KeyframableFilter {
         }
         UndoButton {
             Layout.columnSpan: 2
-            onClicked: alphaoperationCombo.currentIndex = filter.get(transparentBackground) === '1'?
+            onClicked: alphaoperationCombo.currentIndex = filter.get(transparentProperty) === '1'?
                            Math.round(alphaoperationDefault * 4) + 1 : 0
         }
 
