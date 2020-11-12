@@ -1604,6 +1604,7 @@ function configure_compile_install_all {
     for lib in "$FINAL_INSTALL_DIR"/{lib,lib/mlt,lib/frei0r-1,lib/ladspa,lib/va}/*.so*; do
       bundle_libs "$lib"
     done
+    cmd rm *.bundled
   fi
 
   feedback_status Done configuring, compiling and installing all sources
@@ -1660,8 +1661,9 @@ function sys_info {
 
 function bundle_libs
 {
-  target=$(dirname "$1")/$(basename "$1")
   log bundling library dependencies of $(basename "$1")
+  target=$(dirname "$1")/$(basename "$1")
+  basename_target=$(basename "$target")
   # See https://github.com/AppImage/pkg2appimage/blob/master/excludelist
   libs=$(ldd "$target" |
     awk '($3  ~ /^\/(lib|usr)\//) &&
@@ -1726,12 +1728,15 @@ function bundle_libs
          ($3 !~ /\/libcairo\./) \
          {print $3}')
   for lib in $libs; do
-    if [ $(basename "$lib") != $(basename "$target") ]; then
-      cmd cp -n --preserve=timestamps "$lib" "$FINAL_INSTALL_DIR/lib"
+    basename_lib=$(basename "$lib")
+    if [ "$basename_lib" != "$basename_target" ] && [ ! -e "$FINAL_INSTALL_DIR/$basename_lib" ]; then
+      cmd cp --preserve=timestamps "$lib" "$FINAL_INSTALL_DIR/lib" || die "failed to copy $lib"
     fi
   done
   for lib in $libs; do
-    if [ $(basename "$lib") != $(basename "$target") ]; then
+    basename_lib=$(basename "$lib")
+    if [ "$basename_lib" != "$basename_target" ] && [ ! -e "$basename_lib".bundled ]; then
+      touch "$basename_lib".bundled
       bundle_libs "$lib"
     fi
   done
@@ -1739,8 +1744,10 @@ function bundle_libs
 
 function fixlibs()
 {
+  log fixing and bundling library paths of $(basename "$1")
   target=$(dirname "$1")/$(basename "$1")
   trace fixlibs $target
+  basename_target=$(basename "$target")
   libs=$(otool -L "$target" |
     awk '/^\t@rpath\/Qt/ || /^\t\/opt\/local/ || /^\t\/Applications\// || /^\t\/Users\// || /^\tlibvidstab/ {print $1}')
 
@@ -1750,22 +1757,23 @@ function fixlibs()
   fi
 
   for lib in $libs; do
-    if [ $(basename "$lib") != $(basename "$target") ]; then
-      newlib=$(basename "$lib")
+    basename_lib=$(basename "$lib")
+    if [ "$basename_lib" != "$basename_target" ]; then
       libpath=$(echo $lib | sed "s|@rpath\/Qt|${QTDIR}\/lib\/Qt|")
       if [ $(echo "$lib" | grep -v '\.dylib$') ] && [ $(echo "$lib" | grep -v '\.so$') ]; then
-        newlib="$newlib".dylib
+        basename_lib="$basename_lib".dylib
       fi
-      cmd cp -n "$libpath" "Frameworks/$newlib" 2> /dev/null
-      cmd install_name_tool -change "$lib" "@rpath/$newlib" "$target"
+      [ ! -e "Frameworks/$basename_lib" ] && cmd cp --preserve=timestamps "$libpath" "Frameworks/$basename_lib"
+      cmd install_name_tool -change "$lib" "@rpath/$basename_lib" "$target"
     fi
   done
 
   libs=$(otool -L "$target" | awk '/^\t@rpath\// {print $1}')
   for lib in $libs; do
-    if [ $(basename "$lib") != $(basename "$target") ]; then
-      newlib=$(basename "$lib")
-      fixlibs "Frameworks/$newlib"
+    basename_lib=$(basename "$lib")
+    if [ "$basename_lib" != "$basename_target" ] && [ ! -e "$basename_lib".bundled ]; then
+      touch "$basename_lib".bundled
+      fixlibs "Frameworks/$basename_lib"
     fi
   done
 }
@@ -1877,6 +1885,7 @@ function deploy_osx
     log fixing library paths of LADSPA plugin "$lib"
     fixlibs "$lib"
   done
+  cmd rm *.bundled
 
   # Movit shaders
   log Copying Movit shaders
