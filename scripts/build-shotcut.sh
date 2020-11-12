@@ -1666,7 +1666,7 @@ function bundle_libs
   basename_target=$(basename "$target")
   # See https://github.com/AppImage/pkg2appimage/blob/master/excludelist
   libs=$(ldd "$target" |
-    awk '(($3  ~ /^\/(lib|usr)\//) || ($3 == "not")) &&
+    awk '($3  ~ /^\/(lib|usr)\//) &&
          ($3 !~ /\/libld-linux\./) &&
          ($3 !~ /\/libld-linux-x86-64\./) &&
          ($3 !~ /\/libanl\./) &&
