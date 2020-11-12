@@ -462,28 +462,28 @@ Rectangle {
         id: menu
         width: 270
         Controls2.MenuItem {
-            text: qsTr('Add Audio Track') + (application.OS != 'OS X'? ' (Ctrl+U)' : '')
+            text: qsTr('Add Audio Track') + (application.OS === 'OS X'? '    ⌘U' : ' (Ctrl+U)')
             onTriggered: timeline.addAudioTrack();
         }
         Controls2.MenuItem {
-            text: qsTr('Add Video Track') + (application.OS != 'OS X'? ' (Ctrl+I)' : '')
+            text: qsTr('Add Video Track') + (application.OS === 'OS X'? '    ⌘I' : ' (Ctrl+I)')
             onTriggered: timeline.addVideoTrack();
         }
         Controls2.MenuItem {
-            text: qsTr('Insert Track') + (application.OS != 'OS X'? ' (Ctrl+Alt+I)' : '')
+            text: qsTr('Insert Track') + (application.OS === 'OS X'? '    ⌥⌘I' : ' (Ctrl+Alt+I)')
             onTriggered: timeline.insertTrack()
         }
         Controls2.MenuItem {
-            text: qsTr('Remove Track') + (application.OS != 'OS X'? ' (Ctrl+Alt+U)' : '')
+            text: qsTr('Remove Track') + (application.OS === 'OS X'? '    ⌥⌘U' : ' (Ctrl+Alt+U)')
             onTriggered: timeline.removeTrack()
         }
         Controls2.MenuSeparator {}
         Controls2.MenuItem {
-            text: qsTr('Select All') + (application.OS != 'OS X'? ' (Ctrl+A)' : '')
+            text: qsTr('Select All') + (application.OS === 'OS X'? '    ⌘A' : ' (Ctrl+A)')
             onTriggered: timeline.selectAll()
         }
         Controls2.MenuItem {
-            text: qsTr('Select None') + (application.OS != 'OS X'? ' (Ctrl+D)' : '')
+            text: qsTr('Select None') + (application.OS === 'OS X'? '    ⌘D' : ' (Ctrl+D)')
             onTriggered: {
                 timeline.selection = []
                 multitrack.reload()
@@ -494,15 +494,15 @@ Rectangle {
             width: 210
             Controls2.MenuItem {
                 enabled: multitrack.trackHeight > 10
-                text: qsTr('Make Tracks Shorter') + (application.OS != 'OS X'? ' (Ctrl+-)' : '')
+                text: qsTr('Make Tracks Shorter') + (application.OS === 'OS X'? '    ⌘-' : ' (Ctrl+-)')
                 onTriggered: makeTracksShorter()
             }
             Controls2.MenuItem {
-                text: qsTr('Make Tracks Taller') + (application.OS != 'OS X'? ' (Ctrl++)' : '')
+                text: qsTr('Make Tracks Taller') + (application.OS === 'OS X'? '    ⌘+' : ' (Ctrl++)')
                 onTriggered: makeTracksTaller()
             }
             Controls2.MenuItem {
-                text: qsTr('Reset Track Height') + (application.OS != 'OS X'? ' (Ctrl+=)' : '')
+                text: qsTr('Reset Track Height') + (application.OS === 'OS X'? '    ⌘=' : ' (Ctrl+=)')
                 onTriggered: multitrack.trackHeight = 50
             }
         }
@@ -510,7 +510,7 @@ Rectangle {
             title: qsTr('Options')
             width: 310
             Controls2.MenuItem {
-                text: qsTr("Ripple All Tracks") + (application.OS != 'OS X'? ' (Ctrl+Alt+R)' : '')
+                text: qsTr("Ripple All Tracks") + (application.OS === 'OS X'? '    ⌥⌘R' : ' (Ctrl+Alt+R)')
                 checkable: true
                 checked: settings.timelineRippleAllTracks
                 onTriggered: settings.timelineRippleAllTracks = checked
@@ -542,24 +542,24 @@ Rectangle {
                 onTriggered: settings.timelineShowThumbnails = checked
             }
             Controls2.MenuItem {
-                text: qsTr('Center the Playhead') + (application.OS != 'OS X'? ' (Ctrl+Shift+P)' : '')
+                text: qsTr('Center the Playhead') + (application.OS === 'OS X'? '    ⇧⌘P' : ' (Ctrl+Shift+P)')
                 checkable: true
                 checked: settings.timelineCenterPlayhead
                 onTriggered: settings.timelineCenterPlayhead = checked
             }
             Controls2.MenuItem {
-                text: qsTr('Scroll to Playhead on Zoom') + (application.OS != 'OS X'? ' (Ctrl+Alt+P)' : '')
+                text: qsTr('Scroll to Playhead on Zoom') + (application.OS === 'OS X'? '    ⌥⌘P' : ' (Ctrl+Alt+P)')
                 checkable: true
                 checked: settings.timelineScrollZoom
                 onTriggered: settings.timelineScrollZoom = checked
             }
         }
         Controls2.MenuItem {
-            text: qsTr('Copy Timeline to Source') + (application.OS != 'OS X'? ' (Ctrl+Alt+C)' : '')
+            text: qsTr('Copy Timeline to Source') + (application.OS === 'OS X'? '    ⌥⌘C' : ' (Ctrl+Alt+C)')
             onTriggered: timeline.copyToSource()
         }
         Controls2.MenuItem {
-            text: qsTr('Reload') + (application.OS != 'OS X'? ' (F5)' : '')
+            text: qsTr('Reload') + (application.OS === 'OS X'? '    F5' : ' (F5)')
             onTriggered: multitrack.reload()
         }
         Controls2.MenuItem {

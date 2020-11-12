@@ -472,20 +472,20 @@ Rectangle {
             onTriggered: settings.timelineShowThumbnails = checked
         }
         Controls2.MenuItem {
-            text: qsTr('Center the Playhead') + (application.OS != 'OS X'? ' (Ctrl+Shift+P)' : '')
+            text: qsTr('Center the Playhead') + (application.OS === 'OS X'? '    ⇧⌘P' : ' (Ctrl+Shift+P)')
             checkable: true
             checked: settings.timelineCenterPlayhead
             onTriggered: settings.timelineCenterPlayhead = checked
         }
         Controls2.MenuItem {
-            text: qsTr('Scroll to Playhead on Zoom') + (application.OS != 'OS X'? ' (Ctrl+Alt+P)' : '')
+            text: qsTr('Scroll to Playhead on Zoom') + (application.OS === 'OS X'? '    ⌥⌘P' : ' (Ctrl+Alt+P)')
             checkable: true
             checked: settings.timelineScrollZoom
             onTriggered: settings.timelineScrollZoom = checked
         }
         Controls2.MenuSeparator {}
         Controls2.MenuItem {
-            text: qsTr('Reload') + (application.OS != 'OS X'? ' (F5)' : '')
+            text: qsTr('Reload') + (application.OS === 'OS X'? '    F5' : ' (F5)')
             onTriggered: parameters.reload()
         }
     }

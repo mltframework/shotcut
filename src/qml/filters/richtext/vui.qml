@@ -458,32 +458,32 @@ VuiBase {
     }
     Action {
         id: undoAction
-        text: qsTr('Undo') + (application.OS != 'OS X'? ' (Ctrl+Z)' : '')
+        text: qsTr('Undo') + (application.OS === 'OS X'? '    ⌘Z' : ' (Ctrl+Z)')
         onTriggered: textArea.undo()
     }
     Action {
         id: redoAction
-        text: qsTr('Redo') + (application.OS === 'Windows'? ' (Ctrl+Y)' : application.OS !== 'OS X'? ' (Ctrl+Shift+Z)' : '')
+        text: qsTr('Redo') + (application.OS === 'Windows'? ' (Ctrl+Y)' : application.OS === 'OS X'? '    ⇧⌘Z' : ' (Ctrl+Shift+Z)')
         onTriggered: textArea.redo()
     }
     Action {
         id: cutAction
-        text: qsTr('Cut') + (application.OS != 'OS X'? ' (Ctrl+X)' : '')
+        text: qsTr('Cut') + (application.OS === 'OS X'? '    ⌘X' : ' (Ctrl+X)')
         onTriggered: textArea.cut()
     }
     Action {
         id: copyAction
-        text: qsTr('Copy') + (application.OS != 'OS X'? ' (Ctrl+C)' : '')
+        text: qsTr('Copy') + (application.OS === 'OS X'? '    ⌘C' : ' (Ctrl+C)')
         onTriggered: textArea.copy()
     }
     Action {
         id: pasteAction
-        text: qsTr('Paste') + (application.OS != 'OS X'? ' (Ctrl+V)' : '')
+        text: qsTr('Paste') + (application.OS === 'OS X'? '    ⌘V' : ' (Ctrl+V)')
         onTriggered: textArea.paste()
     }
     Action {
         id: pastePlainAction
-        text: qsTr('Paste Text Only') + (application.OS != 'OS X'? ' (Ctrl+Shift+V)' : '')
+        text: qsTr('Paste Text Only') + (application.OS === 'OS X'? '    ⇧⌘V' : ' (Ctrl+Shift+V)')
         onTriggered: document.pastePlain()
     }
     Action {
@@ -501,7 +501,7 @@ VuiBase {
     }
     Action {
         id: selectAllAction
-        text: qsTr('Select All') + (application.OS != 'OS X'? ' (Ctrl+A)' : '')
+        text: qsTr('Select All') + (application.OS === 'OS X'? '    ⌘A' : ' (Ctrl+A)')
         onTriggered: textArea.selectAll()
     }
 

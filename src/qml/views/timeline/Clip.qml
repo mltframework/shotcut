@@ -632,7 +632,7 @@ Rectangle {
         }
         Controls2.MenuItem {
             visible: !isBlank && !isTransition
-            text: qsTr('Cut') + ' (Ctrl+X)'
+            text: qsTr('Cut') + (application.OS === 'OS X'? '    ⌘X' : ' (Ctrl+X)')
             onTriggered: {
                 if (!trackRoot.isLocked) {
                     timeline.copyClip(trackIndex, index)
@@ -644,24 +644,24 @@ Rectangle {
         }
         Controls2.MenuItem {
             enabled: !isBlank && !isTransition
-            text: qsTr('Copy') + ' (Ctrl+C)'
+            text: qsTr('Copy') + (application.OS === 'OS X'? '    ⌘C' : ' (Ctrl+C)')
             onTriggered: timeline.copyClip(trackIndex, index)
         }
         Controls2.MenuSeparator {
             enabled: !isBlank && !isTransition
         }
         Controls2.MenuItem {
-            text: qsTr('Remove') + ' (X)'
+            text: qsTr('Remove') + (application.OS === 'OS X'? '    X' : ' (X)')
             onTriggered: timeline.remove(trackIndex, index)
         }
         Controls2.MenuItem {
             enabled: !isBlank
-            text: qsTr('Lift') + ' (Z)'
+            text: qsTr('Lift') + (application.OS === 'OS X'? '    Z' : ' (Z)')
             onTriggered: timeline.lift(trackIndex, index)
         }
         Controls2.MenuItem {
             enabled: !isTransition
-            text: qsTr('Replace') + ' (R)'
+            text: qsTr('Replace') + (application.OS === 'OS X'? '    R' : ' (R)')
             onTriggered: timeline.replace(trackIndex, index)
         }
 
@@ -670,7 +670,7 @@ Rectangle {
         }
         Controls2.MenuItem {
             enabled: !isBlank && !isTransition
-            text: qsTr('Split At Playhead (S)')
+            text: qsTr('Split At Playhead') + (application.OS === 'OS X'? '    S' : ' (S)')
             onTriggered: timeline.splitClip(trackIndex, index)
         }
         Controls2.MenuItem {
