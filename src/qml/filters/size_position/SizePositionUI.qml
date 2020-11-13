@@ -424,7 +424,7 @@ Item {
         }
         var middleY = filterRect.y + filterRect.height / 2
         var bottomY = filterRect.y + filterRect.height
-        filterRect.height = rectH.value = Math.round(value / Math.max(aspectRatio, 1))
+        filterRect.height = rectH.value = Math.round(value / Math.max(aspectRatio, 1.0e-6))
         if (middleRadioButton.checked) {
             filterRect.y = rectY.value = middleY - filterRect.height / 2
         }
@@ -691,7 +691,7 @@ Item {
                     }
                     var middleY = filterRect.y + filterRect.height / 2
                     var bottomY = filterRect.y + filterRect.height
-                    filterRect.height = rectH.value = Math.round(filterRect.width / aspectRatio)
+                    filterRect.height = rectH.value = Math.round(filterRect.width / Math.max(aspectRatio, 1.0e-6))
                     if (middleRadioButton.checked) {
                         filterRect.y = rectY.value = middleY - filterRect.height / 2
                     } else if (bottomRadioButton.checked) {

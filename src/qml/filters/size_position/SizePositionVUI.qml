@@ -149,7 +149,7 @@ VuiBase {
             var middleY = filterRect.y + filterRect.height / 2
             var bottomY = filterRect.y + filterRect.height
             align = filter.get(valignProperty)
-            filterRect.height = Math.round(filterRect.width / Math.max(aspectRatio, 1))
+            filterRect.height = Math.round(filterRect.width / Math.max(aspectRatio, 1.0e-6))
             if (align === 'center' || align === 'middle') {
                 filterRect.y = middleY - filterRect.height / 2
             } else if (align === 'bottom') {
