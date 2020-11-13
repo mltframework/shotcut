@@ -152,6 +152,7 @@ Player::Player(QWidget *parent)
     m_savedVolume = MLT.volume();
     m_volumeSlider->setToolTip(tr("Adjust the audio volume"));
     connect(m_volumeSlider, SIGNAL(valueChanged(int)), this, SLOT(onVolumeChanged(int)));
+    connect(m_volumeSlider, &QAbstractSlider::sliderReleased, m_volumePopup, &QWidget::hide);
 
     // Add mute-volume buttons layout
 #ifdef Q_OS_MAC
@@ -174,7 +175,7 @@ Player::Player(QWidget *parent)
     m_muteButton->setChecked(Settings.playerMuted());
     onMuteButtonToggled(Settings.playerMuted());
     volumeLayoutH->addWidget(m_muteButton);
-    connect(m_muteButton, SIGNAL(toggled(bool)), this, SLOT(onMuteButtonToggled(bool)));
+    connect(m_muteButton, SIGNAL(clicked(bool)), this, SLOT(onMuteButtonToggled(bool)));
 
     // Add the scrub bar.
     m_scrubber = new ScrubBar(this);
@@ -1005,6 +1006,9 @@ void Player::onVolumeChanged(int volume)
     Settings.setPlayerVolume(volume);
     Settings.setPlayerMuted(false);
     m_muteButton->setChecked(false);
+    actionVolume->setIcon(QIcon::fromTheme("player-volume", QIcon(":/icons/oxygen/32x32/actions/player-volume.png")));
+    m_muteButton->setIcon(QIcon::fromTheme("audio-volume-muted", QIcon(":/icons/oxygen/32x32/status/audio-volume-muted.png")));
+    m_muteButton->setToolTip(tr("Mute"));
 }
 
 void Player::onCaptureStateChanged(bool active)
