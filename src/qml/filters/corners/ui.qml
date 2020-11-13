@@ -594,11 +594,7 @@ KeyframableFilter {
             }
         }
         UndoButton {
-            onClicked: {
-                enabled = false
-                filter.set(interpolatorProperty, interpolatorDefault)
-                enabled = true
-            }
+            onClicked: filter.set(interpolatorProperty, interpolatorDefault)
             Layout.columnSpan: 2
         }
 
@@ -619,8 +615,12 @@ KeyframableFilter {
         }
         UndoButton {
             Layout.columnSpan: 2
-            onClicked: alphaoperationCombo.currentIndex = filter.get(transparentProperty) === '1'?
-                           Math.round(alphaoperationDefault * 4) + 1 : 0
+            onClicked: {
+                alphaoperationCombo.currentIndex = filter.get(transparentProperty) === '1'?
+                    Math.round(alphaoperationDefault * 4) + 1 : 0
+                filter.set(transparentProperty, alphaoperationCombo.currentIndex > 0)
+                filter.set(alphaOpProperty, (alphaoperationCombo.currentIndex - 1) / 4)
+            }
         }
 
         Label {
