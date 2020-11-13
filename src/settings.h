@@ -184,7 +184,7 @@ public:
     void setNoUpgrade(bool value);
     bool checkUpgradeAutomatic();
     void setCheckUpgradeAutomatic(bool b);
-    bool askUpgradeAutmatic();
+    bool askUpgradeAutomatic();
     void setAskUpgradeAutomatic(bool b);
 
     void sync();

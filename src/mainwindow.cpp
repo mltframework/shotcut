@@ -3738,7 +3738,7 @@ void MainWindow::on_menuExternal_aboutToShow()
 
 void MainWindow::on_actionUpgrade_triggered()
 {
-    if (Settings.askUpgradeAutmatic()) {
+    if (Settings.askUpgradeAutomatic()) {
         QMessageBox dialog(QMessageBox::Question,
            qApp->applicationName(),
            tr("Do you want to automatically check for updates in the future?"),

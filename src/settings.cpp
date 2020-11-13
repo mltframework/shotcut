@@ -697,7 +697,7 @@ void ShotcutSettings::setCheckUpgradeAutomatic(bool b)
     settings.setValue("checkUpgradeAutomatic", b);
 }
 
-bool ShotcutSettings::askUpgradeAutmatic()
+bool ShotcutSettings::askUpgradeAutomatic()
 {
     return settings.value("askUpgradeAutmatic", true).toBool();
 }
