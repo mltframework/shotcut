@@ -106,6 +106,7 @@ public:
     Q_INVOKABLE int keyframeCount(const QString& name);
     mlt_keyframe_type getKeyframeType(Mlt::Animation& animation, int position, mlt_keyframe_type defaultType);
     Q_INVOKABLE bool isAtLeastVersion(const QString& version);
+    Q_INVOKABLE static void deselect();
 
 public slots:
     void preset(const QString& name);

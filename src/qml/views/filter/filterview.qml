@@ -96,7 +96,7 @@ Rectangle {
 
     GridLayout {
         id: attachedContainer
-        columns: 6
+        columns: 8
         anchors {
             top: titleBackground.bottom
             left: parent.left
@@ -108,7 +108,7 @@ Rectangle {
 
         AttachedFilters {
             id: attachedFilters
-            Layout.columnSpan: 6
+            Layout.columnSpan: 8
             Layout.fillWidth: true
             Layout.fillHeight: true
             onFilterClicked: {
@@ -126,6 +126,7 @@ Rectangle {
             id: addButton
             Layout.minimumWidth: height
             iconName: 'list-add'
+            iconSource: 'qrc:///icons/oxygen/32x32/actions/list-add.png'
             enabled: attachedfiltersmodel.isProducerSelected
             opacity: enabled ? 1.0 : 0.5
             tooltip: qsTr('Add a filter')
@@ -139,6 +140,7 @@ Rectangle {
             id: removeButton
             Layout.minimumWidth: height
             iconName: 'list-remove'
+            iconSource: 'qrc:///icons/oxygen/32x32/actions/list-remove.png'
             enabled: selectedIndex > -1
             opacity: enabled ? 1.0 : 0.5
             tooltip: qsTr('Remove selected filter')
@@ -170,6 +172,26 @@ Rectangle {
             iconSource: 'qrc:///icons/oxygen/32x32/actions/edit-paste.png'
             tooltip: qsTr('Paste filters')
             onClicked: application.pasteFilters()
+        }
+        Button { // separator
+            enabled: false
+            implicitWidth: 1
+            implicitHeight: 20
+        }
+        Button {
+            id: deselectButton
+            Layout.minimumWidth: height
+            iconName: 'window-close'
+            iconSource: 'qrc:///icons/oxygen/32x32/actions/window-close.png'
+            enabled: selectedIndex > -1
+            opacity: enabled ? 1.0 : 0.5
+            tooltip: qsTr('Deselect the filter')
+            onClicked: {
+                clearCurrentFilter()
+                attachedFilters.setCurrentFilter(-2)
+                selectedIndex = -1
+                filter.deselect()
+            }
         }
         Item {
             Layout.fillWidth: true

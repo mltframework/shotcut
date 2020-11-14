@@ -649,6 +649,11 @@ bool QmlFilter::isAtLeastVersion(const QString& version)
     return v2 >= v1;
 }
 
+void QmlFilter::deselect()
+{
+    MAIN.filterController()->setCurrentFilter(-2);
+}
+
 AnalyzeDelegate::AnalyzeDelegate(Mlt::Filter& filter)
     : QObject(0)
     , m_uuid(QUuid::createUuid())
