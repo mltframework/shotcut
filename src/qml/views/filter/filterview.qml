@@ -52,7 +52,7 @@ Rectangle {
     onHeightChanged: _setLayout()
     
     function _setLayout() {
-        if (height > width - 200) {
+        if (height > width - attachedFilters.minimumWidth) {
             root.state = "portrait"
         } else {
             root.state = "landscape"
@@ -108,6 +108,7 @@ Rectangle {
 
         AttachedFilters {
             id: attachedFilters
+            property int minimumWidth: 250
             Layout.columnSpan: parent.columns
             Layout.fillWidth: true
             Layout.fillHeight: true
@@ -272,7 +273,7 @@ Rectangle {
             }
             PropertyChanges {
                 target: attachedContainer
-                width: 200
+                width: attachedFilters.minimumWidth
                 height: root.height -
                     titleBackground.height - titleBackground.anchors.topMargin - titleBackground.anchors.bottomMargin -
                     attachedContainer.anchors.topMargin - attachedContainer.anchors.bottomMargin
