@@ -96,7 +96,7 @@ Rectangle {
 
     GridLayout {
         id: attachedContainer
-        columns: 8
+        columns: children.length - 1
         anchors {
             top: titleBackground.bottom
             left: parent.left
@@ -108,7 +108,7 @@ Rectangle {
 
         AttachedFilters {
             id: attachedFilters
-            Layout.columnSpan: 8
+            Layout.columnSpan: parent.columns
             Layout.fillWidth: true
             Layout.fillHeight: true
             onFilterClicked: {
@@ -172,6 +172,31 @@ Rectangle {
             iconSource: 'qrc:///icons/oxygen/32x32/actions/edit-paste.png'
             tooltip: qsTr('Paste filters')
             onClicked: application.pasteFilters()
+        }
+        Button { // separator
+            enabled: false
+            implicitWidth: 1
+            implicitHeight: 20
+        }
+        Button {
+            id: moveUpButton
+            Layout.minimumWidth: height
+            enabled: selectedIndex > 0
+            opacity: enabled ? 1.0 : 0.5
+            iconName: 'lift'
+            iconSource: 'qrc:///icons/oxygen/32x32/actions/lift.png'
+            tooltip: qsTr('Move filter up')
+            onClicked: attachedfiltersmodel.move(selectedIndex, --selectedIndex)
+        }
+        Button {
+            id: moveDownButton
+            Layout.minimumWidth: height
+            enabled: selectedIndex > -1 && selectedIndex + 1 < attachedfiltersmodel.rowCount()
+            opacity: enabled ? 1.0 : 0.5
+            iconName: 'overwrite'
+            iconSource: 'qrc:///icons/oxygen/32x32/actions/overwrite.png'
+            tooltip: qsTr('Move filter down')
+            onClicked: attachedfiltersmodel.move(selectedIndex, ++selectedIndex)
         }
         Button { // separator
             enabled: false
