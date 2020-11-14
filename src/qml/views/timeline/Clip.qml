@@ -631,7 +631,7 @@ Rectangle {
             popup()
         }
         Controls2.MenuItem {
-            visible: !isBlank && !isTransition
+            enabled: !isBlank && !isTransition
             text: qsTr('Cut') + (application.OS === 'OS X'? '    ⌘X' : ' (Ctrl+X)')
             onTriggered: {
                 if (!trackRoot.isLocked) {
