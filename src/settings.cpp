@@ -653,6 +653,17 @@ void ShotcutSettings::setVideoOutDuration(double d)
     emit videoOutDurationChanged();
 }
 
+bool ShotcutSettings::askOutputFilter() const
+{
+    return settings.value("filter/askOutput", true).toBool();
+}
+
+void ShotcutSettings::setAskOutputFilter(bool b)
+{
+    settings.setValue("filter/askOutput", b);
+    emit askOutputFilterChanged();
+}
+
 bool ShotcutSettings::loudnessScopeShowMeter(const QString& meter) const
 {
     return settings.value("scope/loudness/" + meter, true).toBool();

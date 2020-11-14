@@ -45,6 +45,7 @@ class ShotcutSettings : public QObject
     Q_PROPERTY(double videoInDuration READ videoInDuration WRITE setVideoInDuration NOTIFY videoInDurationChanged)
     Q_PROPERTY(double videoOutDuration READ videoOutDuration WRITE setVideoOutDuration NOTIFY videoOutDurationChanged)
     Q_PROPERTY(bool smallIcons READ smallIcons WRITE setSmallIcons NOTIFY smallIconsChanged)
+    Q_PROPERTY(bool askOutputFilter READ askOutputFilter WRITE setAskOutputFilter NOTIFY askOutputFilterChanged)
 
 public:
     static ShotcutSettings& singleton();
@@ -52,6 +53,7 @@ public:
     explicit ShotcutSettings(const QString& appDataLocation);
     void log();
 
+    // general
     QString language() const;
     void setLanguage(const QString&);
     double imageDuration() const;
@@ -83,6 +85,7 @@ public:
     QString viewMode() const;
     void setViewMode(const QString& viewMode);
 
+    // encode
     QString encodePath() const;
     void setEncodePath(const QString&);
     bool encodeFreeSpaceCheck() const;
@@ -98,6 +101,7 @@ public:
     bool encodeParallelProcessing() const;
     void setEncodeParallelProcessing(bool);
 
+    // player
     int playerAudioChannels() const;
     void setPlayerAudioChannels(int);
     QString playerDeinterlacer() const;
@@ -134,18 +138,19 @@ public:
     int playerVideoDelayMs() const;
     void setPlayerVideoDelayMs(int);
 
+    // playlist
     QString playlistThumbnails() const;
     void setPlaylistThumbnails(const QString&);
     bool playlistAutoplay() const;
     void setPlaylistAutoplay(bool);
 
+    // timeline
     bool timelineDragScrub() const;
     void setTimelineDragScrub(bool);
     bool timelineShowWaveforms() const;
     void setTimelineShowWaveforms(bool);
     bool timelineShowThumbnails() const;
     void setTimelineShowThumbnails(bool);
-
     bool timelineRipple() const;
     void setTimelineRipple(bool);
     bool timelineRippleAllTracks() const;
@@ -159,27 +164,27 @@ public:
     bool timelineScrollZoom() const;
     void setTimelineScrollZoom(bool);
 
+    // filter
     QString filterFavorite(const QString& filterName);
     void setFilterFavorite(const QString& filterName, const QString& value);
-
     double audioInDuration() const;
     void setAudioInDuration(double);
-
     double audioOutDuration() const;
     void setAudioOutDuration(double);
-
     double videoInDuration() const;
     void setVideoInDuration(double);
-
     double videoOutDuration() const;
     void setVideoOutDuration(double);
+    bool askOutputFilter() const;
+    void setAskOutputFilter(bool);
 
+    // scope
     bool loudnessScopeShowMeter(const QString& meter) const;
     void setLoudnessScopeShowMeter(const QString& meter, bool b);
 
+    // general continued
     int drawMethod() const;
     void setDrawMethod(int);
-
     bool noUpgrade() const;
     void setNoUpgrade(bool value);
     bool checkUpgradeAutomatic();
@@ -192,6 +197,7 @@ public:
     static void setAppDataForSession(const QString& location);
     void setAppDataLocally(const QString& location);
 
+    // layout
     QStringList layouts() const;
     bool setLayout(const QString& name, const QByteArray& geometry, const QByteArray& state);
     QByteArray layoutGeometry(const QString& name);
@@ -200,12 +206,13 @@ public:
     int layoutMode() const;
     void setLayoutMode(int mode = 0);
 
+    // general continued
     bool clearRecent() const;
     void setClearRecent(bool);
-
     QString projectsFolder() const;
     void setProjectsFolder(const QString& path);
 
+    // proxy
     bool proxyEnabled() const;
     void setProxyEnabled(bool);
     QString proxyFolder() const;
@@ -237,6 +244,7 @@ signals:
     void playlistThumbnailsChanged();
     void viewModeChanged();
     void smallIconsChanged();
+    void askOutputFilterChanged();
 
 private:
     QSettings settings;

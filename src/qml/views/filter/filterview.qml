@@ -129,7 +129,11 @@ Rectangle {
             enabled: attachedfiltersmodel.isProducerSelected
             opacity: enabled ? 1.0 : 0.5
             tooltip: qsTr('Add a filter')
-            onClicked: filterMenu.open()
+            onClicked: {
+                if (application.confirmOutputFilter()) {
+                    filterMenu.open()
+                }
+            }
         }
         Button {
             id: removeButton

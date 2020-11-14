@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2019 Meltytech, LLC
+ * Copyright (c) 2013-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@
 #include "qmltypes/qmlmetadata.h"
 #include "shotcut_mlt_properties.h"
 #include "util.h"
+#include "qmltypes/qmlapplication.h"
 #include <QTimer>
 #include <Logger.h>
 
@@ -255,6 +256,9 @@ void AttachedFiltersModel::add(QmlMetadata* meta)
                 return;
             }
         }
+    }
+    if (m_producer->is_valid() && tractor_type != m_producer->type() && !QmlApplication::confirmOutputFilter()) {
+        return;
     }
 
     int insertIndex = -1;

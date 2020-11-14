@@ -59,6 +59,7 @@ public:
     static qreal devicePixelRatio();
     Q_INVOKABLE void showStatusMessage(const QString& message, int timeoutSeconds = 5);
     static int maxTextureSize();
+    Q_INVOKABLE static bool confirmOutputFilter();
 
 signals:
     void paletteChanged();
