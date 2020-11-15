@@ -127,6 +127,7 @@ signals:
     void animateInChanged();
     void animateOutChanged();
     void durationChanged();
+    void propertyChanged(QString name); // Use to let QML know when a specific property has changed
 
 private:
     const QmlMetadata* m_metadata;

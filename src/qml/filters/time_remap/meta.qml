@@ -14,7 +14,7 @@ Metadata {
         allowAnimateOut: false
         parameters: [
             Parameter {
-                name: qsTr('Map')
+                name: qsTr('Time')
                 property: 'map'
                 isSimple: false
                 isCurve: true

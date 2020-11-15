@@ -38,17 +38,37 @@ Item {
 
     Connections {
         target: filter
-        onInChanged: updateFilter(null)
-        onOutChanged: updateFilter(null)
+        function onInChanged() {
+            updateFilter(null)
+        }
+        function onOutChanged() {
+            updateFilter(null)
+        }
+        function onPropertyChanged(name) {
+            if (blockUpdate) return
+            setControls()
+        }
+        function onChanged() {
+            if (blockUpdate) return
+            setControls()
+        }
+    }
+
+    Timer {
+        id: timer
+        interval: 200
+        repeat: false
+        onTriggered: {
+            setControls()
+        }
     }
 
     Connections {
         target: producer
-        onPositionChanged: {
-            blockUpdate = true
-            mapSlider.value = filter.getDouble('map', getPosition())
-            blockUpdate = false
-            mapSlider.enabled = true
+        function onPositionChanged() {
+            if (blockUpdate) return
+            setControls()
+            timer.start()
         }
     }
 
@@ -59,7 +79,7 @@ Item {
     function setControls() {
         var position = getPosition()
         blockUpdate = true
-        mapSlider.value = filter.getDouble('map', position)
+        mapSpinner.value = filter.getDouble('map', position) * profile.fps
         var current = filter.get('image_mode')
         for (var i = 0; i < imageModeModel.count; ++i) {
             if (imageModeModel.get(i).value === current) {
@@ -67,14 +87,22 @@ Item {
                 break
             }
         }
+        var speed = filter.getDouble('speed')
+        speedLabel.text = Math.abs(speed).toFixed(5) + "x"
+        if (speed < 0 ) {
+            directionLabel.text = qsTr('Reverse')
+        } else if (speed > 0 ) {
+            directionLabel.text = qsTr('Forward')
+        } else {
+            directionLabel.text = qsTr('Freeze')
+        }
         blockUpdate = false
-        mapSlider.enabled = position <= 0 || position >= (filter.duration - 1)
     }
 
     function updateFilter(position) {
         if (blockUpdate) return
         if (position !== null) {
-            filter.set('map', mapSlider.value, position)
+            filter.set('map', mapSpinner.value / profile.fps, position)
         }
     }
 
@@ -101,17 +129,19 @@ Item {
         }
 
         Label {
-            text: qsTr('Map')
+            text: qsTr('Time')
             Layout.alignment: Qt.AlignRight
             ToolTip { text: qsTr('Map the specified input time to the current time. Use keyframes to vary the time mappings over time.') }
         }
-        SliderSpinner {
-            id: mapSlider
+        TimeSpinner {
+            id: mapSpinner
             minimumValue: 0
-            maximumValue: filter.duration / profile.fps
-            suffix: ' s'
-            decimals: 2
-            onValueChanged: updateFilter(getPosition())
+            maximumValue: 1000000
+            saveButtonVisible: false
+            undoButtonVisible: false
+            onValueChanged: {
+                updateFilter(getPosition())
+            }
         }
         UndoButton {
             onClicked: {
@@ -141,6 +171,40 @@ Item {
         }
         UndoButton {
             onClicked: modeCombo.currentIndex = 0
+        }
+
+        Rectangle {
+            Layout.columnSpan: 3
+            Layout.fillWidth: true
+            Layout.minimumHeight: 12
+            color: 'transparent'
+            Rectangle {
+                anchors.verticalCenter: parent.verticalCenter
+                width: parent.width
+                height: 2
+                radius: 2
+                color: activePalette.text
+            }
+        }
+
+        Label {
+            text: qsTr('Speed')
+            Layout.alignment: Qt.AlignRight
+            ToolTip { text: qsTr('The instantaneous speed of the last frame that was processed.') }
+        }
+        Label {
+            id: speedLabel
+            Layout.columnSpan: 2
+        }
+
+        Label {
+            text: qsTr('Direction')
+            Layout.alignment: Qt.AlignRight
+            ToolTip { text: qsTr('The instantaneous direction of the last frame that was processed.') }
+        }
+        Label {
+            id: directionLabel
+            Layout.columnSpan: 2
         }
 
         Item {
