@@ -335,6 +335,12 @@ int main(int argc, char **argv)
     }
 #endif
 #ifdef Q_OS_MAC
+#if (QT_VERSION < QT_VERSION_CHECK(5, 13, 0))
+    // Fix launch on Big Sur macOS 11.0
+    // We can probably remove this when upgrade to Qt 5.15 and update build environment.
+    // see https://bugreports.qt.io/browse/QTBUG-87014
+    ::qputenv("QT_MAC_WANTS_LAYER", "1");
+#endif
     // Launcher and Spotlight on macOS are not setting this environment
     // variable needed by setlocale() as used by MLT.
     if (QProcessEnvironment::systemEnvironment().value(MLT_LC_NAME).isEmpty()) {
