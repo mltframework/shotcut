@@ -418,25 +418,29 @@ VuiBase {
 
     Menu {
         id: menu
-        width: 220
-        MenuItem { action: fileOpenAction }
-        MenuItem { action: fileSaveAsAction }
-        MenuSeparator {}
-        MenuItem { action: undoAction }
-        MenuItem { action: redoAction }
-        MenuSeparator {}
-        MenuItem { action: cutAction }
-        MenuItem { action: copyAction }
-        MenuItem { action: pasteAction }
-        MenuItem { action: pastePlainAction }
-        MenuSeparator {}
+        Menu {
+            title: qsTr('File')
+            MenuItem { action: fileOpenAction }
+            MenuItem { action: fileSaveAsAction }
+        }
+        Menu {
+            width: 220
+            title: qsTr('Edit')
+            MenuItem { action: undoAction }
+            MenuItem { action: redoAction }
+            MenuSeparator {}
+            MenuItem { action: cutAction }
+            MenuItem { action: copyAction }
+            MenuItem { action: pasteAction }
+            MenuItem { action: pastePlainAction }
+        }
         MenuItem { action: selectAllAction }
         MenuItem { action: insertTableAction }
     }
 
     Action {
         id: fileOpenAction
-        text: qsTr('Open')
+        text: qsTr('Open...')
         onTriggered: {
             fileDialog.selectExisting = true
             fileDialog.open()
