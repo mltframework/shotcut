@@ -141,6 +141,10 @@ Rectangle {
                 root.selection = []
             }
         }
+        Controls2.MenuItem {
+            text: qsTr('Cancel')
+            onTriggered: parent.dismiss()
+        }
         onAboutToShow: tooltip.isVisible = false
         onAboutToHide: tooltip.isVisible = true
     }

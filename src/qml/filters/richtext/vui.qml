@@ -414,6 +414,10 @@ VuiBase {
         MenuItem { action: clearAction }
         MenuSeparator {}
         MenuItem { action: selectAllAction }
+        MenuItem {
+            text: qsTr('Cancel')
+            onTriggered: parent.dismiss()
+        }
     }
 
     Menu {
@@ -436,6 +440,10 @@ VuiBase {
         }
         MenuItem { action: selectAllAction }
         MenuItem { action: insertTableAction }
+        MenuItem {
+            text: qsTr('Cancel')
+            onTriggered: parent.dismiss()
+        }
     }
 
     Action {
