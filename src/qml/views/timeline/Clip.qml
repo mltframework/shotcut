@@ -647,62 +647,58 @@ Rectangle {
             text: qsTr('Copy') + (application.OS === 'OS X'? '    ⌘C' : ' (Ctrl+C)')
             onTriggered: timeline.copyClip(trackIndex, index)
         }
-        Controls2.MenuSeparator {
-            enabled: !isBlank && !isTransition
-        }
         Controls2.MenuItem {
             text: qsTr('Remove') + (application.OS === 'OS X'? '    X' : ' (X)')
             onTriggered: timeline.remove(trackIndex, index)
-        }
-        Controls2.MenuItem {
-            enabled: !isBlank
-            text: qsTr('Lift') + (application.OS === 'OS X'? '    Z' : ' (Z)')
-            onTriggered: timeline.lift(trackIndex, index)
-        }
-        Controls2.MenuItem {
-            enabled: !isTransition
-            text: qsTr('Replace') + (application.OS === 'OS X'? '    R' : ' (R)')
-            onTriggered: timeline.replace(trackIndex, index)
-        }
-
-        Controls2.MenuSeparator {
-            enabled: !isBlank && !isTransition
         }
         Controls2.MenuItem {
             enabled: !isBlank && !isTransition
             text: qsTr('Split At Playhead') + (application.OS === 'OS X'? '    S' : ' (S)')
             onTriggered: timeline.splitClip(trackIndex, index)
         }
-        Controls2.MenuItem {
-            id: mergeItem
-            text: qsTr('Merge with next clip')
-            onTriggered: timeline.mergeClipWithNext(trackIndex, index, false)
-        }
-        Controls2.MenuItem {
-            enabled: !isBlank && !isTransition && !isAudio && (parseInt(audioIndex) > -1 || audioIndex === 'all')
-            text: qsTr('Detach Audio')
-            onTriggered: timeline.detachAudio(trackIndex, index)
-        }
-        Controls2.MenuItem {
-            enabled: !isBlank && !isTransition && settings.timelineShowThumbnails && !isAudio
-            text: qsTr('Update Thumbnails')
-            onTriggered: {
-                var s = inThumbnail.source.toString()
-                if (s.substring(s.length - 1) !== '!') {
-                    inThumbnail.source = s + '!'
-                    resetThumbnailsSourceTimer.restart()
-                }
-                s = outThumbnail.source.toString()
-                if (s.substring(s.length - 1) !== '!') {
-                    outThumbnail.source = s + '!'
-                    resetThumbnailsSourceTimer.restart()
+        Controls2.Menu {
+            title: qsTr('More')
+            Controls2.MenuItem {
+                enabled: !isBlank
+                text: qsTr('Lift') + (application.OS === 'OS X'? '    Z' : ' (Z)')
+                onTriggered: timeline.lift(trackIndex, index)
+            }
+            Controls2.MenuItem {
+                enabled: !isTransition
+                text: qsTr('Replace') + (application.OS === 'OS X'? '    R' : ' (R)')
+                onTriggered: timeline.replace(trackIndex, index)
+            }
+            Controls2.MenuItem {
+                id: mergeItem
+                text: qsTr('Merge with next clip')
+                onTriggered: timeline.mergeClipWithNext(trackIndex, index, false)
+            }
+            Controls2.MenuItem {
+                enabled: !isBlank && !isTransition && !isAudio && (parseInt(audioIndex) > -1 || audioIndex === 'all')
+                text: qsTr('Detach Audio')
+                onTriggered: timeline.detachAudio(trackIndex, index)
+            }
+            Controls2.MenuItem {
+                enabled: !isBlank && !isTransition && settings.timelineShowThumbnails && !isAudio
+                text: qsTr('Update Thumbnails')
+                onTriggered: {
+                    var s = inThumbnail.source.toString()
+                    if (s.substring(s.length - 1) !== '!') {
+                        inThumbnail.source = s + '!'
+                        resetThumbnailsSourceTimer.restart()
+                    }
+                    s = outThumbnail.source.toString()
+                    if (s.substring(s.length - 1) !== '!') {
+                        outThumbnail.source = s + '!'
+                        resetThumbnailsSourceTimer.restart()
+                    }
                 }
             }
-        }
-        Controls2.MenuItem {
-            enabled: !isBlank && !isTransition && settings.timelineShowWaveforms
-            text: qsTr('Rebuild Audio Waveform')
-            onTriggered: timeline.remakeAudioLevels(trackIndex, index)
+            Controls2.MenuItem {
+                enabled: !isBlank && !isTransition && settings.timelineShowWaveforms
+                text: qsTr('Rebuild Audio Waveform')
+                onTriggered: timeline.remakeAudioLevels(trackIndex, index)
+            }
         }
         Controls2.MenuItem {
             enabled: !isBlank
@@ -712,6 +708,10 @@ Rectangle {
                 clipRoot.clicked(clipRoot, null)
                 timeline.openProperties()
             }
+        }
+        Controls2.MenuItem {
+            text: qsTr('Cancel')
+            onTriggered: parent.dismiss()
         }
     }
 

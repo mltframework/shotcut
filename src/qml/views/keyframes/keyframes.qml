@@ -446,47 +446,53 @@ Rectangle {
 
     Controls2.Menu {
         id: menu
-        width: 310
-        Controls2.MenuItem {
-            text: qsTr('Show Audio Waveforms')
-            checkable: true
-            checked: settings.timelineShowWaveforms
-            onTriggered: {
-                if (checked) {
-                    if (settings.timelineShowWaveforms) {
-                        settings.timelineShowWaveforms = checked
-                        redrawWaveforms()
+        Controls2.Menu {
+            title: qsTr('Options')
+            width: 310
+            Controls2.MenuItem {
+                text: qsTr('Show Audio Waveforms')
+                checkable: true
+                checked: settings.timelineShowWaveforms
+                onTriggered: {
+                    if (checked) {
+                        if (settings.timelineShowWaveforms) {
+                            settings.timelineShowWaveforms = checked
+                            redrawWaveforms()
+                        } else {
+                            settings.timelineShowWaveforms = checked
+                            producer.remakeAudioLevels()
+                        }
                     } else {
                         settings.timelineShowWaveforms = checked
-                        producer.remakeAudioLevels()
                     }
-                } else {
-                    settings.timelineShowWaveforms = checked
                 }
+            }
+            Controls2.MenuItem {
+                text: qsTr('Show Video Thumbnails')
+                checkable: true
+                checked: settings.timelineShowThumbnails
+                onTriggered: settings.timelineShowThumbnails = checked
+            }
+            Controls2.MenuItem {
+                text: qsTr('Center the Playhead') + (application.OS === 'OS X'? '    ⇧⌘P' : ' (Ctrl+Shift+P)')
+                checkable: true
+                checked: settings.timelineCenterPlayhead
+                onTriggered: settings.timelineCenterPlayhead = checked
+            }
+            Controls2.MenuItem {
+                text: qsTr('Scroll to Playhead on Zoom') + (application.OS === 'OS X'? '    ⌥⌘P' : ' (Ctrl+Alt+P)')
+                checkable: true
+                checked: settings.timelineScrollZoom
+                onTriggered: settings.timelineScrollZoom = checked
             }
         }
         Controls2.MenuItem {
-            text: qsTr('Show Video Thumbnails')
-            checkable: true
-            checked: settings.timelineShowThumbnails
-            onTriggered: settings.timelineShowThumbnails = checked
-        }
-        Controls2.MenuItem {
-            text: qsTr('Center the Playhead') + (application.OS === 'OS X'? '    ⇧⌘P' : ' (Ctrl+Shift+P)')
-            checkable: true
-            checked: settings.timelineCenterPlayhead
-            onTriggered: settings.timelineCenterPlayhead = checked
-        }
-        Controls2.MenuItem {
-            text: qsTr('Scroll to Playhead on Zoom') + (application.OS === 'OS X'? '    ⌥⌘P' : ' (Ctrl+Alt+P)')
-            checkable: true
-            checked: settings.timelineScrollZoom
-            onTriggered: settings.timelineScrollZoom = checked
-        }
-        Controls2.MenuSeparator {}
-        Controls2.MenuItem {
             text: qsTr('Reload') + (application.OS === 'OS X'? '    F5' : ' (F5)')
             onTriggered: parameters.reload()
+        }
+        Controls2.MenuItem {
+            text: qsTr('Cancel')
+            onTriggered: parent.dismiss()
         }
     }
 

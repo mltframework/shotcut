@@ -460,33 +460,23 @@ Rectangle {
 
     Controls2.Menu {
         id: menu
-        width: 270
-        Controls2.MenuItem {
-            text: qsTr('Add Audio Track') + (application.OS === 'OS X'? '    ⌘U' : ' (Ctrl+U)')
-            onTriggered: timeline.addAudioTrack();
-        }
-        Controls2.MenuItem {
-            text: qsTr('Add Video Track') + (application.OS === 'OS X'? '    ⌘I' : ' (Ctrl+I)')
-            onTriggered: timeline.addVideoTrack();
-        }
-        Controls2.MenuItem {
-            text: qsTr('Insert Track') + (application.OS === 'OS X'? '    ⌥⌘I' : ' (Ctrl+Alt+I)')
-            onTriggered: timeline.insertTrack()
-        }
-        Controls2.MenuItem {
-            text: qsTr('Remove Track') + (application.OS === 'OS X'? '    ⌥⌘U' : ' (Ctrl+Alt+U)')
-            onTriggered: timeline.removeTrack()
-        }
-        Controls2.MenuSeparator {}
-        Controls2.MenuItem {
-            text: qsTr('Select All') + (application.OS === 'OS X'? '    ⌘A' : ' (Ctrl+A)')
-            onTriggered: timeline.selectAll()
-        }
-        Controls2.MenuItem {
-            text: qsTr('Select None') + (application.OS === 'OS X'? '    ⌘D' : ' (Ctrl+D)')
-            onTriggered: {
-                timeline.selection = []
-                multitrack.reload()
+        Controls2.Menu {
+            title: qsTr('Track Operations')
+            Controls2.MenuItem {
+                text: qsTr('Add Audio Track') + (application.OS === 'OS X'? '    ⌘U' : ' (Ctrl+U)')
+                onTriggered: timeline.addAudioTrack();
+            }
+            Controls2.MenuItem {
+                text: qsTr('Add Video Track') + (application.OS === 'OS X'? '    ⌘I' : ' (Ctrl+I)')
+                onTriggered: timeline.addVideoTrack();
+            }
+            Controls2.MenuItem {
+                text: qsTr('Insert Track') + (application.OS === 'OS X'? '    ⌥⌘I' : ' (Ctrl+Alt+I)')
+                onTriggered: timeline.insertTrack()
+            }
+            Controls2.MenuItem {
+                text: qsTr('Remove Track') + (application.OS === 'OS X'? '    ⌥⌘U' : ' (Ctrl+Alt+U)')
+                onTriggered: timeline.removeTrack()
             }
         }
         Controls2.Menu {
@@ -504,6 +494,20 @@ Rectangle {
             Controls2.MenuItem {
                 text: qsTr('Reset Track Height') + (application.OS === 'OS X'? '    ⌘=' : ' (Ctrl+=)')
                 onTriggered: multitrack.trackHeight = 50
+            }
+        }
+        Controls2.Menu {
+            title: qsTr('Selection')
+            Controls2.MenuItem {
+                text: qsTr('Select All') + (application.OS === 'OS X'? '    ⌘A' : ' (Ctrl+A)')
+                onTriggered: timeline.selectAll()
+            }
+            Controls2.MenuItem {
+                text: qsTr('Select None') + (application.OS === 'OS X'? '    ⌘D' : ' (Ctrl+D)')
+                onTriggered: {
+                    timeline.selection = []
+                    multitrack.reload()
+                }
             }
         }
         Controls2.Menu {
@@ -554,19 +558,27 @@ Rectangle {
                 onTriggered: settings.timelineScrollZoom = checked
             }
         }
-        Controls2.MenuItem {
-            text: qsTr('Copy Timeline to Source') + (application.OS === 'OS X'? '    ⌥⌘C' : ' (Ctrl+Alt+C)')
-            onTriggered: timeline.copyToSource()
+        Controls2.Menu {
+            title: qsTr('Other')
+            width: 270
+            Controls2.MenuItem {
+                text: qsTr('Copy Timeline to Source') + (application.OS === 'OS X'? '    ⌥⌘C' : ' (Ctrl+Alt+C)')
+                onTriggered: timeline.copyToSource()
+            }
+            Controls2.MenuItem {
+                text: qsTr('Reload') + (application.OS === 'OS X'? '    F5' : ' (F5)')
+                onTriggered: multitrack.reload()
+            }
+            Controls2.MenuItem {
+                id: propertiesMenuItem
+                enabled: false
+                text: qsTr('Properties')
+                onTriggered: timeline.openProperties()
+            }
         }
         Controls2.MenuItem {
-            text: qsTr('Reload') + (application.OS === 'OS X'? '    F5' : ' (F5)')
-            onTriggered: multitrack.reload()
-        }
-        Controls2.MenuItem {
-            id: propertiesMenuItem
-            enabled: false
-            text: qsTr('Properties')
-            onTriggered: timeline.openProperties()
+            text: qsTr('Cancel')
+            onTriggered: parent.dismiss()
         }
     }
 
