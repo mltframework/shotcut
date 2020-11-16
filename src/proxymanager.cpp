@@ -99,9 +99,9 @@ void ProxyManager::generateVideoProxy(Mlt::Producer& producer, bool fullRange, S
     args << "-max_muxing_queue_size" << "9999";
     // transcode all streams except data, subtitles, and attachments
     if (producer.get_int("video_index") < producer.get_int("audio_index"))
-        args << "-map" << "0:v?" << "-map" << "0:a?";
+        args << "-map" << "0:V?" << "-map" << "0:a?";
     else
-        args << "-map" << "0:a?" << "-map" << "0:v?";
+        args << "-map" << "0:a?" << "-map" << "0:V?";
     args << "-map_metadata" << "0" << "-ignore_unknown";
     args << "-vf";
 
