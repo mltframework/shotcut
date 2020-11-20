@@ -562,8 +562,8 @@ int MultitrackModel::trackHeight() const
 void MultitrackModel::setTrackHeight(int height)
 {
     if (m_tractor) {
-        m_tractor->set(kTrackHeightProperty, height);
         Settings.setTimelineTrackHeight(height);
+        m_tractor->set(kTrackHeightProperty, Settings.timelineTrackHeight());
         emit trackHeightChanged();
     }
 }

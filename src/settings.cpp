@@ -26,6 +26,7 @@ static const QString APP_DATA_DIR_KEY("appdatadir");
 static const QString SHOTCUT_INI_FILENAME("/shotcut.ini");
 static QScopedPointer<ShotcutSettings> instance;
 static QString appDataForSession;
+static const int kMaximumTrackHeight = 125;
 
 ShotcutSettings &ShotcutSettings::singleton()
 {
@@ -580,12 +581,12 @@ void ShotcutSettings::setTimelineCenterPlayhead(bool b)
 
 int ShotcutSettings::timelineTrackHeight() const
 {
-    return settings.value("timeline/trackHeight", 50).toInt();
+    return qMin(settings.value("timeline/trackHeight", 50).toInt(), kMaximumTrackHeight);
 }
 
 void ShotcutSettings::setTimelineTrackHeight(int n)
 {
-    settings.setValue("timeline/trackHeight", n);
+    settings.setValue("timeline/trackHeight", qMin(n, kMaximumTrackHeight));
 }
 
 bool ShotcutSettings::timelineScrollZoom() const
