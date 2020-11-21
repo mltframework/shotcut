@@ -28,19 +28,19 @@ Item {
     property string endValue:  '_shotcut:endValue'
     property string sizeProperty: '_shotcut:size'
     property string specialPresetProperty: 'shotcut:preset'
+    property rect defaultRect: Qt.rect(Math.round(profile.width * 0.1),
+                                       Math.round(profile.height * 0.1),
+                                       Math.round(profile.width * 0.8),
+                                       Math.round(profile.height * 0.8))
 
     width: 350
     height: 150
 
     Component.onCompleted: {
         filter.blockSignals = true
-        var r = Qt.rect(Math.round(profile.width * 0.1),
-                        Math.round(profile.height * 0.1),
-                        Math.round(profile.width * 0.8),
-                        Math.round(profile.height * 0.8))
-        filter.set(middleValue, r)
-        filter.set(startValue, r)
-        filter.set(endValue, r)
+        filter.set(middleValue, defaultRect)
+        filter.set(startValue, defaultRect)
+        filter.set(endValue, defaultRect)
         if (filter.isNew) {
             var presetParams = [rectProperty]
             filter.set('html', '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
@@ -52,7 +52,7 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
             filter.set('argument', '')
             filter.set('bgcolour', '#00000000')
 
-            filter.set(rectProperty,   '0%/66.66%:100%x33.34%')
+            filter.set(rectProperty,   '5%/66.66%:90%x28.34%')
             filter.savePreset(presetParams, qsTr('Lower Third'))
             filter.set(rectProperty,   '0%/0%:100%x100%')
             filter.savePreset(presetParams, qsTr('Full Screen'))
@@ -299,8 +299,8 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
         }
         UndoButton {
             onClicked: {
-                filterRect.x = rectX.value = 0
-                filterRect.y = rectY.value = 0.1 * profile.height
+                filterRect.x = rectX.value = defaultRect.x
+                filterRect.y = rectY.value = defaultRect.y
                 updateFilter(getPosition())
             }
         }
@@ -360,8 +360,8 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
         }
         UndoButton {
             onClicked: {
-                filterRect.width = rectW.value = profile.width
-                filterRect.height = rectH.value = Math.round(0.9 * profile.height)
+                filterRect.width = rectW.value = defaultRect.width
+                filterRect.height = rectH.value = defaultRect.height
                 updateFilter(getPosition())
             }
         }
