@@ -342,6 +342,9 @@ void AttachedFiltersModel::add(QmlMetadata* meta)
 
             if (!meta->objectName().isEmpty())
                 link->set(kShotcutFilterProperty, meta->objectName().toUtf8().constData());
+            link->set_in_and_out(
+                 m_producer->get(kFilterInProperty)? m_producer->get_int(kFilterInProperty) : m_producer->get_in(),
+                 m_producer->get(kFilterOutProperty)? m_producer->get_int(kFilterOutProperty) : m_producer->get_out());
 
             beginInsertRows(QModelIndex(), insertRow, insertRow);
             if (MLT.isSeekable())

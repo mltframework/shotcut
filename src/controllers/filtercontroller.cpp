@@ -195,16 +195,16 @@ void FilterController::onFadeOutChanged()
     }
 }
 
-void FilterController::onFilterInChanged(int delta, Mlt::Filter* filter)
+void FilterController::onServiceInChanged(int delta, Mlt::Service* service)
 {
-    if (delta && m_currentFilter && (!filter || m_currentFilter->service().get_service() == filter->get_service())) {
+    if (delta && m_currentFilter && (!service || m_currentFilter->service().get_service() == service->get_service())) {
         emit m_currentFilter->inChanged(delta);
     }
 }
 
-void FilterController::onFilterOutChanged(int delta, Mlt::Filter* filter)
+void FilterController::onServiceOutChanged(int delta, Mlt::Service* service)
 {
-    if (delta && m_currentFilter && (!filter || m_currentFilter->service().get_service() == filter->get_service())) {
+    if (delta && m_currentFilter && (!service || m_currentFilter->service().get_service() == service->get_service())) {
         emit m_currentFilter->outChanged(delta);
     }
 }

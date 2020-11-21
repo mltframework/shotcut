@@ -391,8 +391,8 @@ MainWindow::MainWindow()
     connect(m_player, SIGNAL(outChanged(int)), m_filtersDock, SIGNAL(producerOutChanged(int)));
     connect(m_player, SIGNAL(inChanged(int)), m_filterController, SLOT(onFilterInChanged(int)));
     connect(m_player, SIGNAL(outChanged(int)), m_filterController, SLOT(onFilterOutChanged(int)));
-    connect(m_timelineDock->model(), SIGNAL(filterInChanged(int, Mlt::Filter*)), m_filterController, SLOT(onFilterInChanged(int, Mlt::Filter*)));
-    connect(m_timelineDock->model(), SIGNAL(filterOutChanged(int, Mlt::Filter*)), m_filterController, SLOT(onFilterOutChanged(int, Mlt::Filter*)));
+    connect(m_timelineDock->model(), SIGNAL(serviceInChanged(int, Mlt::Service*)), m_filterController, SLOT(onServiceInChanged(int, Mlt::Service*)));
+    connect(m_timelineDock->model(), SIGNAL(serviceOutChanged(int, Mlt::Service*)), m_filterController, SLOT(onServiceOutChanged(int, Mlt::Service*)));
 
     m_keyframesDock = new KeyframesDock(m_filtersDock->qmlProducer(), this);
     m_keyframesDock->hide();

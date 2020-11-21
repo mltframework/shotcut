@@ -1348,7 +1348,7 @@ void MultitrackModel::fadeIn(int trackIndex, int clipIndex, int duration)
                             filter.reset(new Mlt::Filter(f));
                         }
                         filter->set_in_and_out(info->frame_in, info->frame_out);
-                        emit filterOutChanged(info->frame_out, filter.data());
+                        emit serviceOutChanged(info->frame_out, filter.data());
                     }
 
                     // Adjust video filter.
@@ -1388,7 +1388,7 @@ void MultitrackModel::fadeIn(int trackIndex, int clipIndex, int duration)
                         info->producer->attach(f);
                         filter.reset(new Mlt::Filter(f));
                         filter->set_in_and_out(info->frame_in, info->frame_out);
-                        emit filterOutChanged(info->frame_out, filter.data());
+                        emit serviceOutChanged(info->frame_out, filter.data());
                     }
 
                     // Adjust audio filter.
@@ -1457,7 +1457,7 @@ void MultitrackModel::fadeOut(int trackIndex, int clipIndex, int duration)
                             filter.reset(new Mlt::Filter(f));
                         }
                         filter->set_in_and_out(info->frame_in, info->frame_out);
-                        emit filterOutChanged(info->frame_out, filter.data());
+                        emit serviceOutChanged(info->frame_out, filter.data());
                     }
 
                     // Adjust video filter.
@@ -1497,7 +1497,7 @@ void MultitrackModel::fadeOut(int trackIndex, int clipIndex, int duration)
                         info->producer->attach(f);
                         filter.reset(new Mlt::Filter(f));
                         filter->set_in_and_out(info->frame_in, info->frame_out);
-                        emit filterOutChanged(info->frame_out, filter.data());
+                        emit serviceOutChanged(info->frame_out, filter.data());
                     }
 
                     // Adjust audio filter.
@@ -2446,10 +2446,10 @@ void MultitrackModel::adjustClipFilters(Mlt::Producer& producer, int in, int out
                         filter->set(kShotcutAnimInProperty, filter->get_length());
                     }
                     filter->set_in_and_out(in + inDelta, filter->get_out());
-                    emit filterInChanged(inDelta, filter.data());
+                    emit serviceInChanged(inDelta, filter.data());
                 } else if (!filter->get_int("_loader") && filter->get_in() <= in) {
                     filter->set_in_and_out(in + inDelta, filter->get_out());
-                    emit filterInChanged(inDelta, filter.data());
+                    emit serviceInChanged(inDelta, filter.data());
                 }
             }
 
@@ -2473,10 +2473,10 @@ void MultitrackModel::adjustClipFilters(Mlt::Producer& producer, int in, int out
                     filter->anim_set("level", 0, filter->get_length() - filter->get_int(kShotcutAnimOutProperty));
                     filter->anim_set("level", -60, filter->get_length() - 1);
                 }
-                emit filterOutChanged(outDelta, filter.data());
+                emit serviceOutChanged(outDelta, filter.data());
             } else if (!filter->get_int("_loader") && filter->get_out() >= out) {
                 filter->set_in_and_out(filter->get_in(), out - outDelta);
-                emit filterOutChanged(outDelta, filter.data());
+                emit serviceOutChanged(outDelta, filter.data());
 
                 // Update simple keyframes of non-current filters.
                 if (filter->get_int(kShotcutAnimOutProperty) > 0
@@ -2499,6 +2499,25 @@ void MultitrackModel::adjustClipFilters(Mlt::Producer& producer, int in, int out
                             }
                         }
                     }
+                }
+            }
+        }
+    }
+
+    // Adjust link in/out
+    if (producer.type() == chain_type) {
+        Mlt::Chain chain(producer);
+        int link_count = chain.link_count();
+        for (int j = 0; j < chain.link_count(); j++) {
+            QScopedPointer<Mlt::Link> link(chain.link(j));
+            if (link && link->is_valid()) {
+                if (link->get_out() >= out) {
+                    link->set_in_and_out(link->get_in(), out - outDelta);
+                    emit serviceOutChanged(outDelta, link.data());
+                }
+                if (link->get_in() <= in) {
+                    link->set_in_and_out(in + inDelta, link->get_out());
+                    emit serviceInChanged(inDelta, link.data());
                 }
             }
         }

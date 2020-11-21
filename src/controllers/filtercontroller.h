@@ -54,8 +54,8 @@ public slots:
     void setCurrentFilter(int attachedIndex, bool isNew = false);
     void onFadeInChanged();
     void onFadeOutChanged();
-    void onFilterInChanged(int delta, Mlt::Filter* filter = 0);
-    void onFilterOutChanged(int delta, Mlt::Filter* filter = 0);
+    void onServiceInChanged(int delta, Mlt::Service* service = 0);
+    void onServiceOutChanged(int delta, Mlt::Service* service = 0);
     void removeCurrent();
     void onProducerChanged();
 

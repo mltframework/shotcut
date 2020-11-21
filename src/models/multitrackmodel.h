@@ -122,8 +122,8 @@ signals:
     void showStatusMessage(QString);
     void durationChanged();
     void filteredChanged();
-    void filterInChanged(int delta, Mlt::Filter*);
-    void filterOutChanged(int delta, Mlt::Filter*);
+    void serviceInChanged(int delta, Mlt::Service*);
+    void serviceOutChanged(int delta, Mlt::Service*);
     void reloadRequested();
     void inserted(int trackIndex, int clipIndex);
     void overWritten(int trackIndex, int clipIndex);
