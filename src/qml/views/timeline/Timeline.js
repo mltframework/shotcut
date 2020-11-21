@@ -87,6 +87,8 @@ function dragging(pos, duration) {
             for (i = 0; i < tracksRepeater.count; i++)
                 tracksRepeater.itemAt(i).snapDrop(pos)
         }
+    } else {
+        currentTrack = 0
     }
 }
 
