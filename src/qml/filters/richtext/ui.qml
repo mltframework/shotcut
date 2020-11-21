@@ -34,9 +34,13 @@ Item {
 
     Component.onCompleted: {
         filter.blockSignals = true
-        filter.set(middleValue, Qt.rect(0, 0, profile.width, profile.height))
-        filter.set(startValue, Qt.rect(0, 0, profile.width, profile.height))
-        filter.set(endValue, Qt.rect(0, 0, profile.width, profile.height))
+        var r = Qt.rect(Math.round(profile.width * 0.1),
+                        Math.round(profile.height * 0.1),
+                        Math.round(profile.width * 0.8),
+                        Math.round(profile.height * 0.8))
+        filter.set(middleValue, r)
+        filter.set(startValue, r)
+        filter.set(endValue, r)
         if (filter.isNew) {
             var presetParams = [rectProperty]
             filter.set('html', '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
@@ -94,7 +98,7 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
             // Add default preset.
             filter.animateIn = 0
             filter.resetProperty(rectProperty)
-            filter.set(rectProperty, '0%/10%:100%x90%')
+            filter.set(rectProperty, '10%/10%:80%x80%')
             filter.savePreset(preset.parameters)
         } else {
             filter.set(middleValue, filter.getRect(rectProperty, filter.animateIn + 1))
