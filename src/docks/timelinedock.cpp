@@ -486,7 +486,6 @@ void TimelineDock::onProducerChanged(Mlt::Producer* after)
             int length = qRound(info->length * speedRatio);
             int in = qMin(qRound(info->frame_in * speedRatio), length - 1);
             int out = qMin(qRound(info->frame_out * speedRatio), length - 1);
-            after->set("length", after->frames_to_time(length, mlt_time_clock));
             after->set_in_and_out(in, out);
 
             // Adjust filters.
