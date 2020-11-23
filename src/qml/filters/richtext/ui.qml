@@ -274,7 +274,13 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
                 minimumValue: -999999999
                 maximumValue: 999999999
                 onValueChanged: {
-                    if ((hovered || activeFocus) && Math.abs(filterRect.x - value) > 1) {
+                    if (hovered && Math.abs(filterRect.x - value) > 1) {
+                        filterRect.x = value
+                        updateFilter(getPosition())
+                    }
+                }
+                onEditingFinished: {
+                    if (Math.abs(filterRect.x - value) > 1) {
                         filterRect.x = value
                         updateFilter(getPosition())
                     }
@@ -290,7 +296,13 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
                 minimumValue: -999999999
                 maximumValue: 999999999
                 onValueChanged: {
-                    if ((hovered || activeFocus) && Math.abs(filterRect.y - value) > 1) {
+                    if (hovered && Math.abs(filterRect.y - value) > 1) {
+                        filterRect.y = value
+                        updateFilter(getPosition())
+                    }
+                }
+                onEditingFinished: {
+                    if (Math.abs(filterRect.y - value) > 1) {
                         filterRect.y = value
                         updateFilter(getPosition())
                     }
@@ -335,7 +347,13 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
                 minimumValue: -999999999
                 maximumValue: 999999999
                 onValueChanged: {
-                    if ((hovered || activeFocus) && Math.abs(filterRect.width - value) > 1) {
+                    if (hovered && Math.abs(filterRect.width - value) > 1) {
+                        filterRect.width = value
+                        updateFilter(getPosition())
+                    }
+                }
+                onEditingFinished: {
+                    if (Math.abs(filterRect.width - value) > 1) {
                         filterRect.width = value
                         updateFilter(getPosition())
                     }
@@ -351,7 +369,13 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
                 minimumValue: -999999999
                 maximumValue: 999999999
                 onValueChanged: {
-                    if ((hovered || activeFocus) && Math.abs(filterRect.height - value) > 1) {
+                    if (hovered && Math.abs(filterRect.height - value) > 1) {
+                        filterRect.height = value
+                        updateFilter(getPosition())
+                    }
+                }
+                onEditingFinished: {
+                    if (Math.abs(filterRect.height - value) > 1) {
                         filterRect.height = value
                         updateFilter(getPosition())
                     }

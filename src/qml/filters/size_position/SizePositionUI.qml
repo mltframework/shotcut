@@ -607,7 +607,7 @@ Item {
                 minimumValue: 0
                 maximumValue: 999999999
                 onValueChanged: {
-                    if (hovered && !activeFocus && Math.abs(filterRect.width - value) >= 1) {
+                    if (hovered && Math.abs(filterRect.width - value) >= 1) {
                         if (isFillMode()) {
                             scaleByWidth(value)
                         } else {
@@ -637,7 +637,7 @@ Item {
                 minimumValue: 0
                 maximumValue: 999999999
                 onValueChanged: {
-                    if (hovered && !activeFocus && Math.abs(filterRect.height - value) >= 1) {
+                    if (hovered && Math.abs(filterRect.height - value) >= 1) {
                         if (isFillMode()) {
                             scaleByHeight(value)
                         } else {
