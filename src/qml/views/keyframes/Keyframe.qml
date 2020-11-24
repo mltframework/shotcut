@@ -143,7 +143,7 @@ Rectangle {
         }
         Controls2.MenuItem {
             text: qsTr('Cancel')
-            onTriggered: parent.dismiss()
+            onTriggered: menu.dismiss()
         }
         onAboutToShow: tooltip.isVisible = false
         onAboutToHide: tooltip.isVisible = true

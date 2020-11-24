@@ -416,7 +416,7 @@ VuiBase {
         MenuItem { action: selectAllAction }
         MenuItem {
             text: qsTr('Cancel')
-            onTriggered: parent.dismiss()
+            onTriggered: contextMenu.dismiss()
         }
     }
 
@@ -442,7 +442,7 @@ VuiBase {
         MenuItem { action: insertTableAction }
         MenuItem {
             text: qsTr('Cancel')
-            onTriggered: parent.dismiss()
+            onTriggered: menu.dismiss()
         }
     }
 

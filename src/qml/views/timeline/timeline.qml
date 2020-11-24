@@ -578,7 +578,7 @@ Rectangle {
         }
         Controls2.MenuItem {
             text: qsTr('Cancel')
-            onTriggered: parent.dismiss()
+            onTriggered: menu.dismiss()
         }
     }
 
