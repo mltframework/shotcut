@@ -51,7 +51,6 @@ Item {
             fileLabel.text = lutFile.fileName
             fileLabelTip.text = lutFile.filePath
         } else {
-            console.log('lutFile.url = ' + lutFile.url)
             fileLabel.text = qsTr("No File Loaded")
             fileLabel.color = 'red'
             fileLabelTip.text = qsTr('No 3D LUT file loaded.\nClick "Open" to load a file.')
@@ -65,7 +64,6 @@ Item {
         selectFolder: false
         folder: settingsOpenPath
         nameFilters: ['3D-LUT Files (*.3dl *.cube *.dat *.m3d)', 'AfterEffects (*.3dl)', 'Iridas (*.cube)', 'DaVinci (*.dat)', 'Pandora (*.m3d)', 'All Files (*)']
-        selectedNameFilter: nameFilters[0]
         onAccepted: {
             lutFile.url = fileDialog.fileUrl
             lut3dRoot.fileOpened(lutFile.path)
