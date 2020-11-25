@@ -20,6 +20,7 @@
 import QtQuick 2.2
 import QtQuick.Controls 1.1
 import QtQuick.Controls.Styles 1.1
+import QtQuick.Controls 2.12 as Controls2
 import QtQuick.Layouts 1.1
 import QtQuick.Window 2.1
 import Shotcut.Controls 1.0
@@ -43,12 +44,12 @@ Item {
 
 
     width: 350
-    height: 350
+    height: 200
 
 
     function getComboIndex (value, values) {
         for ( var i = 0 ; i < values.length ; ++i ) {
-            if ( values[i] == value ) {
+            if ( values[i] === value ) {
                 return i
             }
         }
@@ -137,7 +138,7 @@ Item {
             text: qsTr('Method')
             Layout.alignment: Qt.AlignRight
         }
-        ComboBox {
+        Controls2.ComboBox {
             id: idMethod
             implicitWidth: 180
             model: [qsTr('Soft'), qsTr('Garrote'), qsTr('Hard', 'Remove Noise Wavelet filter')]

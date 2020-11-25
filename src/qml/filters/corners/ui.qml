@@ -17,6 +17,7 @@
 
 import QtQuick 2.0
 import QtQuick.Controls 1.1
+import QtQuick.Controls 2.12 as Controls2
 import QtQuick.Layouts 1.1
 import Shotcut.Controls 1.0
 
@@ -583,7 +584,7 @@ KeyframableFilter {
             text: qsTr('Interpolator')
             Layout.alignment: Qt.AlignRight
         }
-        ComboBox {
+        Controls2.ComboBox {
             id: interpolatorCombo
             implicitWidth: 180
             model: [qsTr('Nearest Neighbor'), qsTr('Bilinear'), qsTr('Bicubic Smooth'), qsTr('Bicubic Sharp'), qsTr('Spline 4x4'), qsTr('Spline 6x6'), 'Lanczos']
@@ -602,7 +603,7 @@ KeyframableFilter {
             text: qsTr('Alpha Operation')
             Layout.alignment: Qt.AlignRight
         }
-        ComboBox {
+        Controls2.ComboBox {
             id: alphaoperationCombo
             implicitWidth: 180
             model: [qsTr('Opaque'), qsTr('Overwrite'), qsTr('Maximum'), qsTr('Minimum'), qsTr('Add'), qsTr('Subtract')]

@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2014-2015 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2014-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,6 +17,7 @@
 
 import QtQuick 2.1
 import QtQuick.Controls 1.1
+import QtQuick.Controls 2.12 as Controls2
 import QtQuick.Layouts 1.0
 import Shotcut.Controls 1.0
 
@@ -58,7 +58,7 @@ Item {
 
         RowLayout {
             Label { text: qsTr('Mode') }
-            ComboBox {
+            Controls2.ComboBox {
                 id: modeCombo
                 Layout.minimumWidth: 200
                 model: [qsTr('Shadows (Lift)'), qsTr('Midtones (Gamma)'), qsTr('Highlights (Gain)')]

@@ -17,6 +17,7 @@
 
 import QtQuick 2.1
 import QtQuick.Controls 1.0
+import QtQuick.Controls 2.12 as Controls2
 import QtQuick.Layouts 1.0
 import Shotcut.Controls 1.0
 
@@ -39,7 +40,7 @@ Item {
     Component.onCompleted: {
         if (filter.isNew) {
             // Set default parameter values
-            channelCombo.currentIndex = 3
+            filter.set(channelParam, 3/10)
             filter.set(inputBlackParam, 0)
             filter.set(inputWhiteParam, 1)
             filter.set(gammaParam, 0.25)
@@ -87,8 +88,8 @@ Item {
 
     function setControls() {
         setKeyframedControls()
-        channelCombo.currentIndex = filter.getDouble(channelParam) * 10
-        histogramCombo.currentIndex = (filter.getDouble(showHistogramParam) === 1) ? (filter.getDouble(histogramPositionParam) * 10) : 4
+        channelCombo.currentIndex = Math.round(filter.getDouble(channelParam) * 10)
+        histogramCombo.currentIndex = (filter.getDouble(showHistogramParam) === 1) ? Math.round(filter.getDouble(histogramPositionParam) * 10) : 4
         outputBlackSlider.value = filter.getDouble(outputBlackParam) * outputBlackSlider.maximumValue
         outputWhiteSlider.value = filter.getDouble(outputWhiteParam) * outputWhiteSlider.maximumValue
     }
@@ -173,7 +174,7 @@ Item {
             text: qsTr('Channel')
             Layout.alignment: Qt.AlignRight
         }
-        ComboBox {
+        Controls2.ComboBox {
             id: channelCombo
             model: [qsTr('Red'), qsTr('Green'), qsTr('Blue'), qsTr('Value')]
             onCurrentIndexChanged: filter.set(channelParam, currentIndex / 10)
@@ -187,7 +188,7 @@ Item {
             text: qsTr('Histogram')
             Layout.alignment: Qt.AlignRight
         }
-        ComboBox {
+        Controls2.ComboBox {
             id: histogramCombo
             model: [qsTr('Top Left'), qsTr('Top Right'), qsTr('Bottom Left'), qsTr('Bottom Right'), qsTr('None')]
             onCurrentIndexChanged: {

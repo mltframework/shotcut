@@ -17,6 +17,7 @@
 
 import QtQuick 2.0
 import QtQuick.Controls 1.1
+import QtQuick.Controls 2.12 as Controls2
 import QtQuick.Layouts 1.1
 import Shotcut.Controls 1.0
 
@@ -217,7 +218,7 @@ Item {
             text: qsTr('Shape')
             Layout.alignment: Qt.AlignRight
         }
-        ComboBox {
+        Controls2.ComboBox {
             id: shapeCombo
             implicitWidth: 180
             model: ListModel {
@@ -226,6 +227,8 @@ Item {
                 ListElement { text: qsTr('Ellipsoid'); value: 0.5 }
                 ListElement { text: qsTr('Diamond');   value: 1.0 }
             }
+            textRole: 'text'
+            valueRole: 'value'
             onCurrentIndexChanged: filter.set(shapeParam, shapeModel.get(currentIndex).value)
         }
         UndoButton {
@@ -236,7 +239,7 @@ Item {
             text: qsTr('Edge')
             Layout.alignment: Qt.AlignRight
         }
-        ComboBox {
+        Controls2.ComboBox {
             id: edgeCombo
             implicitWidth: 180
             model: ListModel {
@@ -247,6 +250,8 @@ Item {
                 ListElement { text: qsTr('Thin');   value: 0.7 }
                 ListElement { text: qsTr('Slope');  value: 0.9 }
             }
+            textRole: 'text'
+            valueRole: 'value'
             onCurrentIndexChanged: filter.set(edgeParam, edgeModel.get(currentIndex).value)
         }
         UndoButton {
@@ -274,7 +279,7 @@ Item {
             text: qsTr('Operation')
             Layout.alignment: Qt.AlignRight
         }
-        ComboBox {
+        Controls2.ComboBox {
             id: operationCombo
             implicitWidth: 180
             model: ListModel {
@@ -285,6 +290,8 @@ Item {
                 ListElement { text: qsTr('Add');       value: 0.7 }
                 ListElement { text: qsTr('Subtract');  value: 1.0 }
             }
+            textRole: 'text'
+            valueRole: 'value'
             onCurrentIndexChanged: filter.set(operationParam, operationModel.get(currentIndex).value )
         }
         UndoButton {

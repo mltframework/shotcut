@@ -17,6 +17,7 @@
 
 import QtQuick 2.1
 import QtQuick.Controls 1.1
+import QtQuick.Controls 2.12 as Controls2
 import QtQuick.Layouts 1.0
 import Shotcut.Controls 1.0
 
@@ -177,7 +178,7 @@ Item {
             text: qsTr('Operation')
             Layout.alignment: Qt.AlignRight
         }
-        ComboBox {
+        Controls2.ComboBox {
             id: operationCombo
             implicitWidth: 180
             model: [qsTr('Overwrite'), qsTr('Maximum'), qsTr('Minimum'), qsTr('Add'), qsTr('Subtract')]
@@ -192,7 +193,7 @@ Item {
             text: qsTr('Shape')
             Layout.alignment: Qt.AlignRight
         }
-        ComboBox {
+        Controls2.ComboBox {
             id: shapeCombo
             implicitWidth: 180
             model: [qsTr('Rectangle'), qsTr('Ellipse'), qsTr('Triangle'), qsTr('Diamond')]

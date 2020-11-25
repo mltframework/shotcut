@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Meltytech, LLC
+ * Copyright (c) 2019-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,6 +17,7 @@
 
 import QtQuick 2.1
 import QtQuick.Controls 1.0
+import QtQuick.Controls 2.12 as Controls2
 import QtQuick.Layouts 1.0
 import Shotcut.Controls 1.0
 
@@ -46,7 +47,7 @@ Item {
         columns: 4
 
         Label { text: qsTr('Blend mode') }
-        ComboBox {
+        Controls2.ComboBox {
             id: combo
             model: ListModel {
                 id: comboItems
@@ -69,6 +70,8 @@ Item {
                 ListElement { text: qsTr('HSL Color'); value: 'hslcolor' }
                 ListElement { text: qsTr('HSL Luminosity'); value: 'hslluminocity' }
             }
+            textRole: 'text'
+            valueRole: 'value'
             onCurrentIndexChanged: {
                 filter.set(propertyName, comboItems.get(currentIndex).value)
             }

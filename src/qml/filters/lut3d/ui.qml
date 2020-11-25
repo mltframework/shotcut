@@ -18,6 +18,7 @@
 import QtQuick 2.1
 import QtQuick.Dialogs 1.1
 import QtQuick.Controls 1.1
+import QtQuick.Controls 2.12 as Controls2
 import QtQuick.Layouts 1.0
 import QtQuick.Window 2.1
 import Shotcut.Controls 1.0 as Shotcut
@@ -100,7 +101,7 @@ Item {
             text: qsTr('Interpolation')
             Layout.alignment: Qt.AlignRight
         }
-        ComboBox {
+        Controls2.ComboBox {
             id: interpolationCombo
             implicitWidth: 180
             model: [qsTr('Nearest'), qsTr('Trilinear'), qsTr('Tetrahedral')]

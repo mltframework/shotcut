@@ -17,6 +17,7 @@
 
 import QtQuick 2.0
 import QtQuick.Controls 1.1
+import QtQuick.Controls 2.12 as Controls2
 import QtQuick.Layouts 1.1
 import Shotcut.Controls 1.0
 
@@ -111,7 +112,7 @@ KeyframableFilter {
             text: qsTr('Matrix')
             Layout.alignment: Qt.AlignRight
         }
-        ComboBox {
+        Controls2.ComboBox {
             id: matrixCombo
             implicitWidth: 180
             model: [qsTr('2x2 Magic Square'), qsTr('4x4 Magic Square'), qsTr('4x4 Ordered'), qsTr('4x4 Lines'),

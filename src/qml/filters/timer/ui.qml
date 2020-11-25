@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2019 Meltytech, LLC
+ * Copyright (c) 2018-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,6 +16,7 @@
  */
 
 import QtQuick 2.0
+import QtQuick.Controls 2.12 as Controls2
 import QtQuick.Controls 1.1
 import QtQuick.Layouts 1.1
 import Shotcut.Controls 1.0
@@ -135,7 +136,7 @@ Item {
             text: qsTr('Format')
             Layout.alignment: Qt.AlignRight
         }
-        ComboBox {
+        Controls2.ComboBox {
             id: formatCombo
             model: ListModel {
                 ListElement { text: QT_TR_NOOP('HH:MM:SS'); format: "HH:MM:SS" }
@@ -148,6 +149,8 @@ Item {
                 ListElement { text: QT_TR_NOOP('SS.SS'); format: "SS.SS" }
                 ListElement { text: QT_TR_NOOP('SS.SSS'); format: "SS.SSS" }
             }
+            textRole: 'text'
+            valueRole: 'format'
             onCurrentIndexChanged: {
                 filter.set('format', model.get(currentIndex).format)
             }
@@ -157,12 +160,14 @@ Item {
             text: qsTr('Direction')
             Layout.alignment: Qt.AlignRight
         }
-        ComboBox {
+        Controls2.ComboBox {
             id: directionCombo
             model: ListModel {
                 ListElement { text: QT_TR_NOOP('Up'); direction: "up" }
                 ListElement { text: QT_TR_NOOP('Down'); direction: "down" }
             }
+            textRole: 'text'
+            valueRole: 'direction'
             onCurrentIndexChanged: {
                 filter.set('direction', model.get(currentIndex).direction)
             }

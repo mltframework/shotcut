@@ -2,6 +2,7 @@
 
 import QtQuick 2.1
 import QtQuick.Controls 1.4
+import QtQuick.Controls 2.12 as Controls2
 import QtQuick.Layouts 1.0
 import Shotcut.Controls 1.0
 
@@ -88,7 +89,7 @@ Item {
             text: qsTr('Interpolation')
             Layout.alignment: Qt.AlignRight
         }
-        ComboBox {
+        Controls2.ComboBox {
             currentIndex: 0
             model: ["Nearest-neighbor", "Bilinear"]
             id: interpolationComboBox

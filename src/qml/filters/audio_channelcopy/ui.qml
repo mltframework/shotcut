@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2018 Meltytech, LLC
+ * Copyright (c) 2013-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,6 +17,7 @@
 
 import QtQuick 2.1
 import QtQuick.Controls 1.0
+import QtQuick.Controls 2.12 as Controls2
 import QtQuick.Layouts 1.0
 
 Item {
@@ -53,13 +54,13 @@ Item {
 
         RowLayout {
             Label { text: qsTr('Copy from') }
-            ComboBox {
+            Controls2.ComboBox {
                 id: fromCombo
                 model: [qsTr('Left'), qsTr('Right')]
                 onCurrentIndexChanged: filter.set(fromParameter, currentIndex)
             }
             Label { text: qsTr('to') }
-            ComboBox {
+            Controls2.ComboBox {
                 id: toCombo
                 model: fromCombo.model
                 onCurrentIndexChanged: filter.set(toParameter, currentIndex)

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2019 Meltytech, LLC
+ * Copyright (c) 2015-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,6 +17,7 @@
 
 import QtQuick 2.0
 import QtQuick.Controls 1.1
+import QtQuick.Controls 2.12 as Controls2
 import QtQuick.Layouts 1.1
 import Shotcut.Controls 1.0
 
@@ -155,7 +156,7 @@ Item {
             text: qsTr('Mask type')
             Layout.alignment: Qt.AlignRight
         }
-        ComboBox {
+        Controls2.ComboBox {
             id: maskTypeCombo
             implicitWidth: 180
             model: [qsTr('Color Distance'), qsTr('Transparency'), qsTr('Edge Inwards'), qsTr('Edge Outwards')]
@@ -237,7 +238,7 @@ Item {
             text: qsTr('Operation 1')
             Layout.alignment: Qt.AlignRight
         }
-        ComboBox {
+        Controls2.ComboBox {
             id: operation1Combo
             implicitWidth: 180
             model: [qsTr('None'), qsTr('De-Key'), qsTr('Desaturate'), qsTr('Adjust Luma')]
@@ -268,7 +269,7 @@ Item {
             text: qsTr('Operation 2')
             Layout.alignment: Qt.AlignRight
         }
-        ComboBox {
+        Controls2.ComboBox {
             id: operation2Combo
             implicitWidth: 180
             model: [qsTr('None'), qsTr('De-Key'), qsTr('Desaturate'), qsTr('Adjust Luma')]

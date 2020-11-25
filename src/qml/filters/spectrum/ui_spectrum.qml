@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2019 Meltytech, LLC
+ * Copyright (c) 2017-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,6 +16,7 @@
  */
 
 import QtQuick 2.0
+import QtQuick.Controls 2.12 as Controls2
 import QtQuick.Controls 1.1
 import QtQuick.Layouts 1.1
 import Shotcut.Controls 1.0
@@ -108,7 +109,7 @@ Item {
             text: qsTr('Type')
             Layout.alignment: Qt.AlignRight
         }
-        ComboBox {
+        Controls2.ComboBox {
             Layout.columnSpan: 4
             id: typeCombo
             model: [qsTr('Line'), qsTr('Bar')]
