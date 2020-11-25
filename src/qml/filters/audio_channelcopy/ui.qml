@@ -40,7 +40,9 @@ Item {
         if (filter.isNew) {
             // Set default parameter values
             fromCombo.currentIndex = 0
+            filter.set(fromParameter, fromCombo.currentIndex)
             toCombo.currentIndex = (application.audioChannels() === 1) ? 0 : 1
+            filter.set(toParameter, toCombo.currentIndex)
         } else {
             // Initialize parameter values
             fromCombo.currentIndex = filter.get(fromParameter)
@@ -57,13 +59,13 @@ Item {
             Controls2.ComboBox {
                 id: fromCombo
                 model: [qsTr('Left'), qsTr('Right')]
-                onCurrentIndexChanged: filter.set(fromParameter, currentIndex)
+                onActivated: filter.set(fromParameter, currentIndex)
             }
             Label { text: qsTr('to') }
             Controls2.ComboBox {
                 id: toCombo
                 model: fromCombo.model
-                onCurrentIndexChanged: filter.set(toParameter, currentIndex)
+                onActivated: filter.set(toParameter, currentIndex)
             }
         }
         Item {

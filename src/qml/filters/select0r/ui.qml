@@ -229,10 +229,13 @@ Item {
             }
             textRole: 'text'
             valueRole: 'value'
-            onCurrentIndexChanged: filter.set(shapeParam, shapeModel.get(currentIndex).value)
+            onActivated: filter.set(shapeParam, shapeModel.get(currentIndex).value)
         }
         UndoButton {
-            onClicked: shapeCombo.currentIndex = 1
+            onClicked: {
+                filter.set(shapeParam, shapeModel.get(1).value)
+                shapeCombo.currentIndex = 1
+            }
         }
 
         Label {
@@ -252,10 +255,13 @@ Item {
             }
             textRole: 'text'
             valueRole: 'value'
-            onCurrentIndexChanged: filter.set(edgeParam, edgeModel.get(currentIndex).value)
+            onActivated: filter.set(edgeParam, edgeModel.get(currentIndex).value)
         }
         UndoButton {
-            onClicked: edgeCombo.currentIndex = 4
+            onClicked: {
+                filter.set(edgeParam, edgeModel.get(4).value)
+                edgeCombo.currentIndex = 4
+            }
         }
 
         Label {
@@ -292,10 +298,13 @@ Item {
             }
             textRole: 'text'
             valueRole: 'value'
-            onCurrentIndexChanged: filter.set(operationParam, operationModel.get(currentIndex).value )
+            onActivated: filter.set(operationParam, operationModel.get(currentIndex).value )
         }
         UndoButton {
-            onClicked: operationCombo.currentIndex = 0
+            onClicked: {
+                filter.set(operationParam, operationModel.get(0).value )
+                operationCombo.currentIndex = 0
+            }
         }
 
         Rectangle {

@@ -177,10 +177,13 @@ Item {
         Controls2.ComboBox {
             id: channelCombo
             model: [qsTr('Red'), qsTr('Green'), qsTr('Blue'), qsTr('Value')]
-            onCurrentIndexChanged: filter.set(channelParam, currentIndex / 10)
+            onActivated: filter.set(channelParam, currentIndex / 10)
         }
         UndoButton {
-            onClicked: channelCombo.currentIndex = 3
+            onClicked: {
+                filter.set(channelParam, 3 / 10)
+                channelCombo.currentIndex = 3
+            }
         }
         Item { width: 1 }
 
@@ -191,14 +194,17 @@ Item {
         Controls2.ComboBox {
             id: histogramCombo
             model: [qsTr('Top Left'), qsTr('Top Right'), qsTr('Bottom Left'), qsTr('Bottom Right'), qsTr('None')]
-            onCurrentIndexChanged: {
+            onActivated: {
                 filter.set(showHistogramParam, currentIndex < 4)
                 if (currentIndex < 4)
                     filter.set(histogramPositionParam, currentIndex / 10)
             }
         }
         UndoButton {
-            onClicked: histogramCombo.currentIndex = 4
+            onClicked: {
+                filter.set(showHistogramParam, 0)
+                histogramCombo.currentIndex = 4
+            }
         }
         Item { width: 1 }
 

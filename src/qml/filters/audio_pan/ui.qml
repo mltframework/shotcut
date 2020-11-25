@@ -33,6 +33,7 @@ Item {
         if (filter.isNew) {
             // Set default parameter values
             combo.currentIndex = 0
+            filter.set('channel', 0)
             filter.set('start', 0)
             filter.set('split', 0)
             filter.savePreset(preset.parameters)
@@ -131,7 +132,7 @@ Item {
             id: combo
             Layout.columnSpan: 3
             model: [qsTr('Left'), qsTr('Right')]
-            onCurrentIndexChanged: filter.set('channel', currentIndex)
+            onActivated: filter.set('channel', currentIndex)
         }
 
         Label {

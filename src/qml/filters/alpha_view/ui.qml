@@ -58,7 +58,7 @@ Item {
                 }
                 textRole: 'text'
                 valueRole: 'value'
-                onCurrentIndexChanged: {
+                onActivated: {
                     filter.set(paramDisplay, displayModel.get(currentIndex).value)
                 }
             }

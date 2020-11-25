@@ -182,11 +182,14 @@ Item {
             id: operationCombo
             implicitWidth: 180
             model: [qsTr('Overwrite'), qsTr('Maximum'), qsTr('Minimum'), qsTr('Add'), qsTr('Subtract')]
-            onCurrentIndexChanged: filter.set(paramOperation, currentIndex / 4)
+            onActivated: filter.set(paramOperation, currentIndex / 4)
         }
         UndoButton {
             Layout.columnSpan: 2
-            onClicked: operationCombo.currentIndex = 0
+            onClicked: {
+                filter.set(paramOperation, 0)
+                operationCombo.currentIndex = 0
+            }
         }
 
         Label {
@@ -197,11 +200,14 @@ Item {
             id: shapeCombo
             implicitWidth: 180
             model: [qsTr('Rectangle'), qsTr('Ellipse'), qsTr('Triangle'), qsTr('Diamond')]
-            onCurrentIndexChanged: filter.set(paramShape, currentIndex / 3)
+            onActivated: filter.set(paramShape, currentIndex / 3)
         }
         UndoButton {
             Layout.columnSpan: 2
-            onClicked: shapeCombo.currentIndex = 0
+            onClicked:  {
+                filter.set(paramShape, 0)
+                shapeCombo.currentIndex = 0
+            }
         }
 
         Label {

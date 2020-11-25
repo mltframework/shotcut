@@ -394,12 +394,15 @@ Item {
             }
             textRole: 'text'
             valueRole: 'value'
-            onCurrentIndexChanged: {
+            onActivated: {
                 filter.set(blendProperty, comboItems.get(currentIndex).value)
             }
         }
         UndoButton {
-            onClicked: blendCombo.currentIndex = 0
+            onClicked: {
+                filter.set(blendProperty, comboItems.get(0).value)
+                blendCombo.currentIndex = 0
+            }
         }
 
         Item { Layout.fillHeight: true }

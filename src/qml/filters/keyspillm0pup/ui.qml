@@ -160,10 +160,13 @@ Item {
             id: maskTypeCombo
             implicitWidth: 180
             model: [qsTr('Color Distance'), qsTr('Transparency'), qsTr('Edge Inwards'), qsTr('Edge Outwards')]
-            onCurrentIndexChanged: filter.set(maskTypeParam, currentIndex)
+            onActivated: filter.set(maskTypeParam, currentIndex)
         }
         UndoButton {
-            onClicked: maskTypeCombo.currentIndex = maskTypeDefault
+            onClicked: {
+                filter.set(maskTypeParam, maskTypeDefault)
+                maskTypeCombo.currentIndex = maskTypeDefault
+            }
         }
 
         Label {
@@ -242,10 +245,13 @@ Item {
             id: operation1Combo
             implicitWidth: 180
             model: [qsTr('None'), qsTr('De-Key'), qsTr('Desaturate'), qsTr('Adjust Luma')]
-            onCurrentIndexChanged: filter.set(operation1Param, currentIndex)
+            onActivated: filter.set(operation1Param, currentIndex)
         }
         UndoButton {
-            onClicked: operation1Combo.currentIndex = operation1Default
+            onClicked: {
+                filter.set(operation1Param, operation1Default)
+                operation1Combo.currentIndex = operation1Default
+            }
         }
 
         Label {
@@ -273,10 +279,13 @@ Item {
             id: operation2Combo
             implicitWidth: 180
             model: [qsTr('None'), qsTr('De-Key'), qsTr('Desaturate'), qsTr('Adjust Luma')]
-            onCurrentIndexChanged: filter.set(operation2Param, currentIndex)
+            onActivated: filter.set(operation2Param, currentIndex)
         }
         UndoButton {
-            onClicked: operation2Combo.currentIndex = operation2Default
+            onClicked: {
+                filter.set(operation2Param, operation2Default)
+                operation2Combo.currentIndex = operation2Default
+            }
         }
 
         Label {

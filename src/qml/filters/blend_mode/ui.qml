@@ -29,6 +29,7 @@ Item {
         if (filter.isNew) {
             // Set default parameter values
             combo.currentIndex = 0
+            filter.set(propertyName, comboItems.get(0).value)
         } else {
             // Initialize parameter values
             var value = filter.get(propertyName)
@@ -72,12 +73,15 @@ Item {
             }
             textRole: 'text'
             valueRole: 'value'
-            onCurrentIndexChanged: {
+            onActivated: {
                 filter.set(propertyName, comboItems.get(currentIndex).value)
             }
         }
         UndoButton {
-            onClicked: combo.currentIndex = 0
+            onClicked: {
+                filter.set(propertyName, comboItems.get(0).value)
+                combo.currentIndex = 0
+            }
         }
         Item {
             Layout.fillWidth: true

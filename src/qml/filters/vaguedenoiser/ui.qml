@@ -142,10 +142,13 @@ Item {
             id: idMethod
             implicitWidth: 180
             model: [qsTr('Soft'), qsTr('Garrote'), qsTr('Hard', 'Remove Noise Wavelet filter')]
-            onCurrentIndexChanged: filter.set(methodParam, methodValues[currentIndex])
+            onActivated: filter.set(methodParam, methodValues[currentIndex])
         }
         UndoButton {
-            onClicked: idMethod.currentIndex = getComboIndex(methodDefault, methodValues)
+            onClicked: {
+                idMethod.currentIndex = getComboIndex(methodDefault, methodValues)
+                filter.set(methodParam, methodValues[idMethod.currentIndex])
+            }
         }
 
         // Row split

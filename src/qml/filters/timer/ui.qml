@@ -80,7 +80,7 @@ Item {
         var formatIndex = 0;
         var format = filter.get('format')
         for (var i = 0; i < formatCombo.model.count; i++) {
-            if (formatCombo.model.get(i).format == format) {
+            if (formatCombo.model.get(i).format === format) {
                 formatIndex = i
                 break
             }
@@ -89,8 +89,8 @@ Item {
 
         var directionIndex = 0;
         var direction = filter.get('direction')
-        for (var i = 0; i < directionCombo.model.count; i++) {
-            if (directionCombo.model.get(i).direction == direction) {
+        for (i = 0; i < directionCombo.model.count; i++) {
+            if (directionCombo.model.get(i).direction === direction) {
                 directionIndex = i
                 break
             }
@@ -151,7 +151,7 @@ Item {
             }
             textRole: 'text'
             valueRole: 'format'
-            onCurrentIndexChanged: {
+            onActivated: {
                 filter.set('format', model.get(currentIndex).format)
             }
         }
@@ -168,7 +168,7 @@ Item {
             }
             textRole: 'text'
             valueRole: 'direction'
-            onCurrentIndexChanged: {
+            onActivated: {
                 filter.set('direction', model.get(currentIndex).direction)
             }
         }

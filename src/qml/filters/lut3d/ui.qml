@@ -44,6 +44,7 @@ Item {
 
         if (filter.isNew) {
             interpolationCombo.currentIndex = 1
+            filter.set('av.interp', interpolationCombo.values[1])
         } else {
             interpolationCombo.currentIndex = interpolationCombo.valueToIndex()
         }
@@ -106,7 +107,7 @@ Item {
             implicitWidth: 180
             model: [qsTr('Nearest'), qsTr('Trilinear'), qsTr('Tetrahedral')]
             property var values: ['nearest', 'trilinear', 'tetrahedral']
-            onCurrentIndexChanged: filter.set('av.interp', values[currentIndex])
+            onActivated: filter.set('av.interp', values[currentIndex])
 
             function valueToIndex() {
                 var w = filter.get('av.interp')
@@ -117,7 +118,10 @@ Item {
             }
         }
         Shotcut.UndoButton {
-            onClicked: interpolationCombo.currentIndex = 1
+            onClicked: {
+                interpolationCombo.currentIndex = 1
+                filter.set('av.interp', interpolationCombo.values[1])
+            }
         }
 
         Item {

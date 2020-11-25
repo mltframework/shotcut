@@ -40,7 +40,7 @@ Item {
     Component.onCompleted: {
         if (filter.isNew)
             filter.savePreset(defaultParameters)
-        modeCombo.currentIndex = filter.getDouble(paramAction) * 2
+        modeCombo.currentIndex = Math.round(filter.getDouble(paramAction) * 2)
         loadWheels()
     }
 
@@ -51,7 +51,7 @@ Item {
         Preset {
             parameters: defaultParameters
             onPresetSelected: {
-                modeCombo.currentIndex = filter.getDouble(paramAction) * 2
+                modeCombo.currentIndex = Math.round(filter.getDouble(paramAction) * 2)
                 loadWheels()
             }
         }
@@ -62,7 +62,7 @@ Item {
                 id: modeCombo
                 Layout.minimumWidth: 200
                 model: [qsTr('Shadows (Lift)'), qsTr('Midtones (Gamma)'), qsTr('Highlights (Gain)')]
-                onCurrentIndexChanged: filter.set(paramAction, currentIndex / 2)
+                onActivated: filter.set(paramAction, currentIndex / 2)
             }
         }
 

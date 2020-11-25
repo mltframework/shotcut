@@ -71,12 +71,15 @@ Item {
             }
             textRole: 'text'
             valueRole: 'value'
-            onCurrentIndexChanged: {
+            onActivated: {
                 filter.set(paramOperation, operationModel.get(currentIndex).value)
             }
         }
         UndoButton {
-            onClicked: modeCombo.currentIndex = 0
+            onClicked: {
+                filter.set(paramOperation, operationModel.get(0).value)
+                modeCombo.currentIndex = 0
+            }
         }
 
         Label {
