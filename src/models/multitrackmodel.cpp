@@ -2801,7 +2801,7 @@ void MultitrackModel::insertTrack(int trackIndex, TrackType type)
         if (!transition) {
             transition = getTransition("qtblend", track.mlt_index);
         }
-        lower.reset();
+        lower.reset(transition);
     }
 
     if (trackIndex >= m_trackList.count()) {
