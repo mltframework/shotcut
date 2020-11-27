@@ -809,9 +809,6 @@ void GLWidget::setCurrentFilter(QmlFilter* filter, QmlMetadata* meta)
         setSource(meta->vuiFilePath());
         refreshConsumer();
     } else {
-        if (filter && filter->producer().is_valid()) {
-            filter->producer().Mlt::Properties::clear(kShotcutVuiMetaProperty);
-        }
         setBlankScene();
     }
 }
