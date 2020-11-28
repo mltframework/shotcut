@@ -150,7 +150,6 @@ Item {
                 ListElement { text: QT_TR_NOOP('SS.SSS'); format: "SS.SSS" }
             }
             textRole: 'text'
-            valueRole: 'format'
             onActivated: {
                 filter.set('format', model.get(currentIndex).format)
             }
@@ -167,7 +166,6 @@ Item {
                 ListElement { text: QT_TR_NOOP('Down'); direction: "down" }
             }
             textRole: 'text'
-            valueRole: 'direction'
             onActivated: {
                 filter.set('direction', model.get(currentIndex).direction)
             }

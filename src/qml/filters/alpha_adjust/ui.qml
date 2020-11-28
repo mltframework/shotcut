@@ -70,7 +70,6 @@ Item {
                 ListElement { text: qsTr('Blur'); value: 1.0 }
             }
             textRole: 'text'
-            valueRole: 'value'
             onActivated: {
                 filter.set(paramOperation, operationModel.get(currentIndex).value)
             }

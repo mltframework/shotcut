@@ -57,7 +57,6 @@ Item {
                     ListElement { text: qsTr('White Background'); value: 0.79 }
                 }
                 textRole: 'text'
-                valueRole: 'value'
                 onActivated: {
                     filter.set(paramDisplay, displayModel.get(currentIndex).value)
                 }

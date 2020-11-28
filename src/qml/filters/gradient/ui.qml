@@ -393,7 +393,6 @@ Item {
                 ListElement { text: qsTr('HSL Luminosity'); value: 'hslluminocity' }
             }
             textRole: 'text'
-            valueRole: 'value'
             onActivated: {
                 filter.set(blendProperty, comboItems.get(currentIndex).value)
             }

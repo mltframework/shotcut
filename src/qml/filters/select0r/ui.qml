@@ -228,7 +228,6 @@ Item {
                 ListElement { text: qsTr('Diamond');   value: 1.0 }
             }
             textRole: 'text'
-            valueRole: 'value'
             onActivated: filter.set(shapeParam, shapeModel.get(currentIndex).value)
         }
         UndoButton {
@@ -254,7 +253,6 @@ Item {
                 ListElement { text: qsTr('Slope');  value: 0.9 }
             }
             textRole: 'text'
-            valueRole: 'value'
             onActivated: filter.set(edgeParam, edgeModel.get(currentIndex).value)
         }
         UndoButton {
@@ -297,7 +295,6 @@ Item {
                 ListElement { text: qsTr('Subtract');  value: 1.0 }
             }
             textRole: 'text'
-            valueRole: 'value'
             onActivated: filter.set(operationParam, operationModel.get(currentIndex).value )
         }
         UndoButton {

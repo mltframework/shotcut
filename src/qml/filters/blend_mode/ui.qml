@@ -72,7 +72,6 @@ Item {
                 ListElement { text: qsTr('HSL Luminosity'); value: 'hslluminocity' }
             }
             textRole: 'text'
-            valueRole: 'value'
             onActivated: {
                 filter.set(propertyName, comboItems.get(currentIndex).value)
             }
