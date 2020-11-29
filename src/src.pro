@@ -331,7 +331,7 @@ OTHER_FILES += \
     ../packaging/linux/Makefile \
     ../packaging/linux/appimage/appimage.yml \
     ../packaging/linux/snapcraft.yaml.in \
-    ../packaging/linux/org.shotcut.Shotcut.appdata.xml \
+    ../packaging/linux/org.shotcut.Shotcut.metainfo.xml \
     ../packaging/linux/org.shotcut.Shotcut.desktop \
     ../packaging/linux/org.shotcut.Shotcut.xml \
     ../packaging/linux/shotcut.1 \
@@ -429,12 +429,12 @@ unix:!mac {
     isEmpty(SHOTCUT_DATE) {
         SHOTCUT_DATE = 20$$replace(SHOTCUT_VERSION, \., -)
     }
-    appdata = $$cat($$PWD/../packaging/linux/org.shotcut.Shotcut.appdata.xml.in, blob)
-    appdata = $$replace(appdata, @SHOTCUT_VERSION@, $$SHOTCUT_VERSION)
-    appdata = $$replace(appdata, @SHOTCUT_DATE@, $$SHOTCUT_DATE)
-    write_file($$OUT_PWD/../packaging/linux/org.shotcut.Shotcut.appdata.xml, appdata)
+    appdata = $$cat($$PWD/../packaging/linux/org.shotcut.Shotcut.metainfo.xml.in, blob)
+    appdata = $$replace(appdata, @METAINFO_RELEASE_VERSION@, $$SHOTCUT_VERSION)
+    appdata = $$replace(appdata, @METAINFO_RELEASE_DATE@, $$SHOTCUT_DATE)
+    write_file($$OUT_PWD/../packaging/linux/org.shotcut.Shotcut.metainfo.xml, appdata)
 
-    metainfo.files = $$OUT_PWD/../packaging/linux/org.shotcut.Shotcut.appdata.xml
+    metainfo.files = $$OUT_PWD/../packaging/linux/org.shotcut.Shotcut.metainfo.xml
     metainfo.path = $$PREFIX/share/metainfo
     desktop.files = $$PWD/../packaging/linux/org.shotcut.Shotcut.desktop
     desktop.path = $$PREFIX/share/applications
