@@ -64,15 +64,19 @@ qmake PREFIX=/usr/local/
 Compile `shotcut`:
 
 ```
-make
+make -j8
+make install
 ```
 
-`make install` is partially working.
-
-Best way to test `shotcut` is to execute it from source folder:
-
+If you do not `make install` Shotcut will fail when you run it because it cannot locate its QML
+files. If you are running trying to run `shotcut` from a build folder without installing you can
+make a symbolic link to the `qml` folder. It depends on where you build folder is, but assuming it
+is a sibling of the source tree folder:
 ```
-./src/shotcut
+cd build
+mkdir -p share/shotcut 
+cd share/shotcut
+ln -s ../../../shotcut/src/qml
 ```
 
 ## Translation
