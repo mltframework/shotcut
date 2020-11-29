@@ -23,4 +23,4 @@ src/qml/export-edl/node_modules
 .project
 /.qmake.stash
 packaging/linux/org.shotcut.Shotcut.appdata.xml
-
+build/
