@@ -310,8 +310,7 @@ FORMS    += mainwindow.ui \
     widgets/newprojectfolder.ui
 
 RESOURCES += \
-    ../icons/resources.qrc \
-    ../other-resources.qrc
+    ../icons/resources.qrc
 
 OTHER_FILES += \
     ../.github/workflows/build-linux.yml \
