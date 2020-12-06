@@ -117,7 +117,7 @@ AudioLoudnessScopeWidget::AudioLoudnessScopeWidget()
     // Add time label
     m_timeLabel->setToolTip(tr("Time Since Reset"));
     m_timeLabel->setText("00:00:00:00");
-    m_timeLabel->setFixedSize(this->fontMetrics().width("HH:MM:SS:MM"), this->fontMetrics().height());
+    m_timeLabel->setFixedSize(this->fontMetrics().horizontalAdvance("HH:MM:SS:MM"), this->fontMetrics().height());
     hlayout->addWidget(m_timeLabel);
 
     hlayout->addStretch();

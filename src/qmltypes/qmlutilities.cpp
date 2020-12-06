@@ -46,7 +46,7 @@ void QmlUtilities::registerCommonTypes()
     qmlRegisterType<QmlFile>("org.shotcut.qml", 1, 0, "File");
     qmlRegisterType<QmlFilter>("org.shotcut.qml", 1, 0, "Filter");
     qmlRegisterType<QmlMetadata>("org.shotcut.qml", 1, 0, "Metadata");
-    qmlRegisterType<QmlKeyframesMetadata>();
+    qmlRegisterAnonymousType<QmlKeyframesMetadata>("org.shotcut.qml", 1);
     qmlRegisterType<QmlKeyframesParameter>("org.shotcut.qml", 1,0, "Parameter");
     qmlRegisterType<QmlRichText>("org.shotcut.qml", 1, 0, "RichText");
     qmlRegisterType<KeyframesModel>("org.shotcut.qml", 1,0, "KeyframesModel");

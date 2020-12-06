@@ -107,7 +107,7 @@ void FileDateDialog::populateDateOptions(Mlt::Producer* producer)
     QFileInfo fileInfo(resource);
     if (fileInfo.exists()) {
         addDateToCombo(m_dtCombo, tr("System - Modified"), fileInfo.lastModified());
-        addDateToCombo(m_dtCombo, tr("System - Created"), fileInfo.created());
+        addDateToCombo(m_dtCombo, tr("System - Created"), fileInfo.birthTime());
     }
 
     // Add metadata dates

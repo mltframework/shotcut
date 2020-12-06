@@ -2725,9 +2725,9 @@ void MultitrackModel::loadPlaylist()
         if (playlist.is_valid() && playlist.type() == playlist_type) {
             MAIN.playlistDock()->model()->setPlaylist(playlist);
         } else {
-            playlist = (mlt_playlist) retainList.get_data(kLegacyPlaylistTrackId);
-            if (playlist.is_valid() && playlist.type() == playlist_type)
-                MAIN.playlistDock()->model()->setPlaylist(playlist);
+            Mlt::Playlist legacyPlaylist((mlt_playlist) retainList.get_data(kLegacyPlaylistTrackId));
+            if (legacyPlaylist.is_valid() && legacyPlaylist.type() == playlist_type)
+                MAIN.playlistDock()->model()->setPlaylist(legacyPlaylist);
         }
     }
     retainPlaylist();
