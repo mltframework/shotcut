@@ -26,6 +26,7 @@ Item {
     property string paramDisplay: '0'
     property string paramUseInput: '1'
     Component.onCompleted: {
+        filter.set('threads', 0)
         if (filter.isNew) {
             filter.set(paramUseInput, 1)
             filter.set(paramDisplay, 0.21)

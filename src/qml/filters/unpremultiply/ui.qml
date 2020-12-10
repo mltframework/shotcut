@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Meltytech, LLC
+ * Copyright (c) 2018-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,9 +21,9 @@ Item {
     width: 350
     height: 10
     Component.onCompleted: {
+        filter.set('threads', 0)
         if (filter.isNew) {
             filter.set('0', 1) // Unpremultiply
-            filter.set('threads', 0)
         }
     }
 }

@@ -55,6 +55,7 @@ Item {
     width: 200
     height: 380
     Component.onCompleted: {
+        filter.set('threads', 0)
         if (filter.isNew) {
             filter.set(keyColorParam, keyColorDefault)
             filter.set(targetColorParam, targetColorDefault)

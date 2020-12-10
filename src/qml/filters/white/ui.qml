@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2019 Meltytech, LLC
+ * Copyright (c) 2014-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -41,6 +41,7 @@ Item {
             neutralParam = "0"
             tempParam = "1"
             tempScale = 15000.0
+            filter.set('threads', 0)
         }
         defaultParameters = [neutralParam, tempParam]
         presetItem.parameters = defaultParameters

@@ -2603,6 +2603,8 @@ int MultitrackModel::addVideoTrack()
     Mlt::Transition composite(MLT.profile(), Settings.playerGPU()? "movit.overlay" : "frei0r.cairoblend");
     if (!composite.is_valid() && !Settings.playerGPU()) {
         composite = Mlt::Transition(MLT.profile(), "qtblend");
+    } else if (composite.is_valid() && !Settings.playerGPU()) {
+        composite.set("threads", 0);
     }
     if (warnIfInvalid(composite)) {
         return -1;
@@ -2873,6 +2875,8 @@ void MultitrackModel::insertTrack(int trackIndex, TrackType type)
         Mlt::Transition composite(MLT.profile(), videoTransitionName);
         if (!composite.is_valid() && !Settings.playerGPU()) {
             composite = Mlt::Transition(MLT.profile(), "qtblend");
+        } else if (composite.is_valid() && !Settings.playerGPU()) {
+            composite.set("threads", 0);
         }
         if (warnIfInvalid(composite)) {
             return;

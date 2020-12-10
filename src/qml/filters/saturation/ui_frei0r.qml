@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2018 Meltytech, LLC
+ * Copyright (c) 2013-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,6 +31,7 @@ Item {
     property double endValue: 0.125
 
     Component.onCompleted: {
+        filter.set('threads', 0)
         if (filter.isNew) {
             // Set default parameter values
             filter.set(saturationParameter, 0)

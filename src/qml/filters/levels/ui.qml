@@ -38,6 +38,7 @@ Item {
     property var endValues:    [0, 1, 0.25]
 
     Component.onCompleted: {
+        filter.set('threads', filter.getDouble(showHistogramParam) === 1)
         if (filter.isNew) {
             // Set default parameter values
             filter.set(channelParam, 3/10)
@@ -196,6 +197,7 @@ Item {
             model: [qsTr('Top Left'), qsTr('Top Right'), qsTr('Bottom Left'), qsTr('Bottom Right'), qsTr('None')]
             onActivated: {
                 filter.set(showHistogramParam, currentIndex < 4)
+                filter.set('threads', filter.getDouble(showHistogramParam) === 1)
                 if (currentIndex < 4)
                     filter.set(histogramPositionParam, currentIndex / 10)
             }
@@ -203,6 +205,7 @@ Item {
         UndoButton {
             onClicked: {
                 filter.set(showHistogramParam, 0)
+                filter.set('threads', 0)
                 histogramCombo.currentIndex = 4
             }
         }
