@@ -9,22 +9,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>467</width>
-    <height>224</height>
+    <width>367</width>
+    <height>311</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="sizeConstraint">
+    <enum>QLayout::SetFixedSize</enum>
+   </property>
    <item>
     <widget class="QLabel" name="messageLabel">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="MinimumExpanding">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
      <property name="text">
       <string notr="true">messageLabel</string>
      </property>
@@ -141,6 +138,61 @@
     </widget>
    </item>
    <item>
+    <widget class="QWidget" name="advancedWidget" native="true">
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <layout class="QGridLayout" name="gridLayout" columnstretch="0,1">
+        <item row="1" column="1">
+         <widget class="QCheckBox" name="fpsCheckBox">
+          <property name="toolTip">
+           <string>Enable frame rate override.</string>
+          </property>
+          <property name="text">
+           <string>Override frame rate</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0" colspan="2">
+         <widget class="Line" name="line">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="FrameRateWidget" name="fpsWidget" native="true">
+          <property name="toolTip">
+           <string>Override the frame rate to a specific value.</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="fpsLabel">
+          <property name="text">
+           <string>Frames/sec</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <widget class="QLabel" name="frcLabel">
+          <property name="text">
+           <string>Frame rate conversion</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="1">
+         <widget class="QComboBox" name="frcComboBox">
+          <property name="toolTip">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Frame Rate Conversion Method&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Duplicate: &lt;/span&gt;Duplicate frames&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Blend: &lt;/span&gt;Blend frames&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Motion Compensation: &lt;/span&gt;Interpolate new frames using motion compensation. This method is very slow and may result in artifacts.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -152,6 +204,14 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>FrameRateWidget</class>
+   <extends>QWidget</extends>
+   <header>widgets/frameratewidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections>
   <connection>

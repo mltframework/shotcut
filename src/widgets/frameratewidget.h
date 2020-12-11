@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2019 Meltytech, LLC
+ * Copyright (c) 2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,31 +15,36 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef FFMPEGJOB_H
-#define FFMPEGJOB_H
+#ifndef FRAMERATEWIDGET_H
+#define FRAMERATEWIDGET_H
 
-#include "abstractjob.h"
-#include <QStringList>
+#include <QWidget>
 
-class FfmpegJob : public AbstractJob
+class QDoubleSpinBox;
+class QComboBox;
+
+class FrameRateWidget : public QWidget
 {
     Q_OBJECT
+    
 public:
-    FfmpegJob(const QString& name, const QStringList& args, bool isOpenLog = true);
-    virtual ~FfmpegJob();
-    void start();
+    explicit FrameRateWidget(QWidget* parent = nullptr);
+    double fps();
+
+public slots:
+    void setFps(double);
+
+signals:
+    void fpsChanged(double);
 
 private slots:
-    void onOpenTriggered();
-    void onReadyRead();
+    void on_fpsSpinner_editingFinished();
+    void on_fpsComboBox_activated(const QString &arg1);
 
 private:
-    QStringList m_args;
-    QString m_duration;
-    bool m_outputMsgRead;
-    int m_totalFrames;
-    int m_previousPercent;
-    bool m_isOpenLog;
+    QDoubleSpinBox* m_fpsSpinner;
+    QComboBox* m_fpsComboBox;
+    double m_fps;
 };
 
-#endif // FFMPEGJOB_H
+#endif // FRAMERATEWIDGET_H

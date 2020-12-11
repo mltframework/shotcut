@@ -117,6 +117,7 @@ SOURCES += main.cpp\
     models/audiolevelstask.cpp \
     mltxmlchecker.cpp \
     widgets/avfoundationproducerwidget.cpp \
+    widgets/frameratewidget.cpp \
     widgets/gdigrabwidget.cpp \
     widgets/trackpropertieswidget.cpp \
     widgets/timelinepropertieswidget.cpp \
@@ -249,6 +250,7 @@ HEADERS  += mainwindow.h \
     shotcut_mlt_properties.h \
     mltxmlchecker.h \
     widgets/avfoundationproducerwidget.h \
+    widgets/frameratewidget.h \
     widgets/gdigrabwidget.h \
     widgets/trackpropertieswidget.h \
     widgets/timelinepropertieswidget.h \

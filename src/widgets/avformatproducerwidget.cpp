@@ -782,10 +782,28 @@ void AvformatProducerWidget::convert(TranscodeDialog& dialog)
         else
             args << "-map" << "0:a?" << "-map" << "0:V?";
         args << "-map_metadata" << "0" << "-ignore_unknown";
+
+        // Set video filters
+        args << "-vf";
+        QString filterString;
+        QString range;
         if (ui->rangeComboBox->currentIndex())
-            args << "-vf" << "scale=flags=accurate_rnd+full_chroma_inp+full_chroma_int:in_range=full:out_range=full" << "-color_range" << "jpeg";
+            range = "full";
         else
-            args << "-vf" << "scale=flags=accurate_rnd+full_chroma_inp+full_chroma_int:in_range=mpeg:out_range=mpeg" << "-color_range" << "mpeg";
+            range = "mpeg";
+        filterString = QString("scale=flags=accurate_rnd+full_chroma_inp+full_chroma_int:in_range=%1:out_range=%2").arg(range).arg(range);
+        if (dialog.fpsOverride()) {
+            QString minterpFilter = QString(",minterpolate='mi_mode=%1:mc_mode=aobmc:me_mode=bidir:vsbmc=1:fps=%2'").arg(dialog.frc()).arg(dialog.fps());
+            filterString = filterString + minterpFilter;
+        }
+        args << filterString;
+
+        // Specify color range
+        if (ui->rangeComboBox->currentIndex())
+            args << "-color_range" << "jpeg";
+        else
+            args << "-color_range" << "mpeg";
+
         if (!ui->scanComboBox->currentIndex())
             args << "-flags" << "+ildct+ilme" << "-top" << QString::number(ui->fieldOrderComboBox->currentIndex());
 
