@@ -673,7 +673,7 @@ void PlaylistDock::onDropped(const QMimeData *data, int row)
                 if (first) {
                     first = false;
                     if (!MLT.producer() || !MLT.producer()->is_valid()) {
-                        MAIN.open(path);
+                        MAIN.open(path, nullptr, false);
                         if (MLT.producer() && MLT.producer()->is_valid()) {
                             producer = MLT.producer();
                             first = true;
@@ -708,7 +708,6 @@ void PlaylistDock::onDropped(const QMimeData *data, int row)
                 if (first) {
                     first = false;
                     setIndex(0);
-                    on_actionOpen_triggered();
                     resetIndex = false;
                 }
             }
