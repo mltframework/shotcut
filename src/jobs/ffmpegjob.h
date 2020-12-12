@@ -36,6 +36,7 @@ private slots:
 private:
     QStringList m_args;
     QString m_duration;
+    bool m_outputMsgRead;
     int m_totalFrames;
     int m_previousPercent;
     bool m_isOpenLog;

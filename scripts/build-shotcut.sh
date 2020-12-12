@@ -53,6 +53,7 @@ FFMPEG_SUPPORT_THEORA=1
 FFMPEG_SUPPORT_MP3=1
 FFMPEG_SUPPORT_FAAC=0
 FFMPEG_SUPPORT_OPUS=1
+FFMPEG_SUPPORT_ZIMG=1
 FFMPEG_SUPPORT_NVENC=1
 FFMPEG_SUPPORT_AMF=1
 FFMPEG_SUPPORT_QSV=1
@@ -72,6 +73,9 @@ RUBBERBAND_REVISION=
 ENABLE_BIGSH0T=1
 BIGSH0T_HEAD=1
 BIGSH0T_REVISION=
+ENABLE_ZIMG=1
+ZIMG_HEAD=1
+ZIMG_REVISION=
 
 # QT_INCLUDE_DIR="$(pkg-config --variable=prefix QtCore)/include"
 QT_INCLUDE_DIR=${QTDIR:+${QTDIR}/include}
@@ -209,6 +213,9 @@ function to_key {
     ;;
     bigsh0t)
       echo 19
+    ;;
+    zimg)
+      echo 20
     ;;
     *)
       echo UNKNOWN
@@ -410,6 +417,9 @@ function set_globals {
     if test "$ENABLE_BIGSH0T" = 1 ; then
         SUBDIRS="$SUBDIRS bigsh0t"
     fi
+    if test "$ENABLE_ZIMG" = 1 ; then
+        SUBDIRS="$SUBDIRS zimg"
+    fi
   fi
 
   if [ "$DEBUG_BUILD" = "1" ]; then
@@ -453,6 +463,7 @@ function set_globals {
   REPOLOCS[18]="git://github.com/breakfastquay/rubberband.git"
 #  REPOLOCS[19]="https://bitbucket.org/dandennedy/bigsh0t.git"
   REPOLOCS[19]="https://bitbucket.org/leo_sutic/bigsh0t.git"
+  REPOLOCS[20]="https://github.com/sekrit-twc/zimg.git"
 
   # REPOTYPE Array holds the repo types. (Yes, this might be redundant, but easy for me)
   REPOTYPES[0]="git"
@@ -472,6 +483,7 @@ function set_globals {
   REPOTYPES[17]="git"
   REPOTYPES[18]="git"
   REPOTYPES[19]="git"
+  REPOTYPES[20]="git"
 
   # And, set up the revisions
   REVISIONS[0]=""
@@ -525,6 +537,9 @@ function set_globals {
   fi
   if test 0 = "$BIGSH0T_HEAD" -a "$BIGSH0T_REVISION" ; then
     REVISIONS[19]="$BIGSH0T_REVISION"
+  fi
+  if test 0 = "$ZIMG_HEAD" -a "$ZIMG_REVISION" ; then
+    REVISIONS[19]="$ZIMG_REVISION"
   fi
 
   # Figure out the number of cores in the system. Used both by make and startup script
@@ -626,6 +641,9 @@ function set_globals {
   fi
   if test 1 = "$FFMPEG_SUPPORT_OPUS" ; then
     CONFIG[0]="${CONFIG[0]} --enable-libopus"
+  fi
+  if test 1 = "$FFMPEG_SUPPORT_ZIMG" ; then
+    CONFIG[0]="${CONFIG[0]} --enable-libzimg"
   fi
   if test 1 = "$FFMPEG_SUPPORT_QSV" && test "$TARGET_OS" != "Darwin" && test "$TARGET_OS" != "Linux" ; then
     CONFIG[0]="${CONFIG[0]} --enable-libmfx"
@@ -825,6 +843,22 @@ function set_globals {
   fi
   CFLAGS_[19]=$CFLAGS
   LDFLAGS_[19]=$LDFLAGS
+
+  #####
+  # zimg
+  CONFIG[20]="./configure --prefix=$FINAL_INSTALL_DIR"
+  if test "$TARGET_OS" = "Win32" ; then
+    CONFIG[20]="${CONFIG[20]} --host=x86-w64-mingw32"
+    CFLAGS_[20]="$CFLAGS"
+  elif test "$TARGET_OS" = "Win64" ; then
+    CONFIG[20]="${CONFIG[20]} --host=x86_64-w64-mingw32"
+    CFLAGS_[20]="$CFLAGS"
+  elif test "$TARGET_OS" = "Darwin"; then
+    CFLAGS_[20]="$CFLAGS -I/opt/local/include"
+  else
+    CFLAGS_[20]="$CFLAGS"
+  fi
+  LDFLAGS_[20]=$LDFLAGS
 }
 
 ######################################################################
@@ -1454,6 +1488,15 @@ function configure_compile_install_subproject {
     debug "Need to create configure for $1"
     cmd autoreconf -fiv || die "Unable to create configure file for $1"
     cmd automake --add-missing || die "Unable to create makefile for $1"
+    if test ! -e configure ; then
+      die "Unable to confirm presence of configure file for $1"
+    fi
+  fi
+
+  # Special hack for zimg
+  if test "zimg" = "$1" -a ! -e configure ; then
+    debug "Need to create configure for $1"
+    cmd ./autogen.sh || die "Unable to create configure file for $1"
     if test ! -e configure ; then
       die "Unable to confirm presence of configure file for $1"
     fi

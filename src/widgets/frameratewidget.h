@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2015 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,27 +15,36 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef TIMELINEPROPERTIESWIDGET_H
-#define TIMELINEPROPERTIESWIDGET_H
+#ifndef FRAMERATEWIDGET_H
+#define FRAMERATEWIDGET_H
 
 #include <QWidget>
-#include <MltService.h>
 
-namespace Ui {
-class TimelinePropertiesWidget;
-}
+class QDoubleSpinBox;
+class QComboBox;
 
-class TimelinePropertiesWidget : public QWidget
+class FrameRateWidget : public QWidget
 {
     Q_OBJECT
-
+    
 public:
-    explicit TimelinePropertiesWidget(Mlt::Service& service, QWidget *parent = 0);
-    ~TimelinePropertiesWidget();
+    explicit FrameRateWidget(QWidget* parent = nullptr);
+    double fps();
+
+public slots:
+    void setFps(double);
+
+signals:
+    void fpsChanged(double);
+
+private slots:
+    void on_fpsSpinner_editingFinished();
+    void on_fpsComboBox_activated(const QString &arg1);
 
 private:
-    Ui::TimelinePropertiesWidget *ui;
-    Mlt::Service m_service;
+    QDoubleSpinBox* m_fpsSpinner;
+    QComboBox* m_fpsComboBox;
+    double m_fps;
 };
 
-#endif //TIMELINEPROPERTIESWIDGET_H
+#endif // FRAMERATEWIDGET_H

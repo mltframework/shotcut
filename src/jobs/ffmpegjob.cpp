@@ -30,6 +30,7 @@
 
 FfmpegJob::FfmpegJob(const QString& name, const QStringList& args, bool isOpenLog)
     : AbstractJob(name)
+    , m_outputMsgRead(false)
     , m_totalFrames(0)
     , m_previousPercent(0)
     , m_isOpenLog(isOpenLog)
@@ -86,6 +87,13 @@ void FfmpegJob::onReadyRead()
             m_duration = msg.mid(msg.indexOf("Duration:") + 9);
             m_duration = m_duration.left(m_duration.indexOf(','));
             emit progressUpdated(m_item, 0);
+            appendToLog(msg);
+        }
+        else if (!m_outputMsgRead) {
+            // Wait for the "Output" then read the output fps to calculate number of frames.
+            if (msg.contains("Output ")) {
+                m_outputMsgRead = true;
+            }
             appendToLog(msg);
         }
         else if (!m_totalFrames && msg.contains(" fps")) {
