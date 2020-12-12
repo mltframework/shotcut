@@ -647,7 +647,7 @@
                    <item>
                     <widget class="QComboBox" name="interpolationCombo">
                      <property name="currentIndex">
-                      <number>1</number>
+                      <number>2</number>
                      </property>
                      <item>
                       <property name="text">
