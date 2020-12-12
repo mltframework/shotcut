@@ -44,6 +44,9 @@ SHOTCUT_VERSION=$(date '+%y.%m.%d')
 ENABLE_BIGSH0T=1
 BIGSH0T_HEAD=1
 BIGSH0T_REVISION=
+ENABLE_ZIMG=1
+ZIMG_HEAD=1
+ZIMG_REVISION=
 
 # QT_INCLUDE_DIR="$(pkg-config --variable=prefix QtCore)/include"
 QT_INCLUDE_DIR=${QTDIR:+${QTDIR}/include}
@@ -155,6 +158,9 @@ function to_key {
     ;;
     bigsh0t)
       echo 8
+    ;;
+    zimg)
+      echo 9
     ;;
     *)
       echo UNKNOWN
@@ -324,6 +330,9 @@ function set_globals {
     if test "$ENABLE_BIGSH0T" = 1 ; then
         SUBDIRS="$SUBDIRS bigsh0t"
     fi
+    if test "$ENABLE_ZIMG" = 1 ; then
+        SUBDIRS="zimg $SUBDIRS"
+    fi
     SUBDIRS="$SUBDIRS mlt shotcut"
   fi
 
@@ -359,6 +368,7 @@ function set_globals {
   REPOLOCS[7]="git://github.com/GPUOpen-LibrariesAndSDKs/AMF.git"
 #  REPOLOCS[8]="https://bitbucket.org/dandennedy/bigsh0t.git"
   REPOLOCS[8]="https://bitbucket.org/leo_sutic/bigsh0t.git"
+  REPOLOCS[9]="git://github.com/sekrit-twc/zimg.git"
 
   # REPOTYPE Array holds the repo types. (Yes, this might be redundant, but easy for me)
   REPOTYPES[0]="git"
@@ -370,6 +380,7 @@ function set_globals {
   REPOTYPES[6]="git"
   REPOTYPES[7]="git"
   REPOTYPES[8]="git"
+  REPOTYPES[9]="git"
 
   # And, set up the revisions
   REVISIONS[0]=""
@@ -398,6 +409,10 @@ function set_globals {
   REVISIONS[8]=""
   if test 0 = "$BIGSH0T_HEAD" -a "$BIGSH0T_REVISION" ; then
     REVISIONS[8]="$BIGSH0T_REVISION"
+  fi
+  REVISIONS[9]=""
+  if test 0 = "$ZIMG_HEAD" -a "$ZIMG_REVISION" ; then
+    REVISIONS[9]="$ZIMG_REVISION"
   fi
 
   # Figure out the number of cores in the system. Used both by make and startup script
@@ -435,6 +450,9 @@ function set_globals {
   CONFIG[0]="./configure --prefix=$FINAL_INSTALL_DIR --disable-static --disable-doc --enable-gpl --enable-version3 --enable-shared --enable-runtime-cpudetect $CONFIGURE_DEBUG_FLAG"
   CONFIG[0]="${CONFIG[0]} --enable-libtheora --enable-libvorbis --enable-libmp3lame --enable-libx264 --enable-libx265 --enable-libvpx --enable-libopus --enable-libmfx"
   # Add optional parameters
+  if [ "$ENABLE_ZIMG" = "1" ]; then
+    CONFIG[0]="${CONFIG[0]} --enable-libzimg"
+  fi
   CONFIG[0]="${CONFIG[0]} $FFMPEG_ADDITIONAL_OPTIONS"
   CFLAGS_[0]="-I$FINAL_INSTALL_DIR/include $CFLAGS"
 
@@ -486,6 +504,12 @@ function set_globals {
   CONFIG[8]="cmake -DCMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -GNinja $CMAKE_DEBUG_FLAG"
   CFLAGS_[8]=$CFLAGS
   LDFLAGS_[8]=$LDFLAGS
+
+  #####
+  # zimg
+  CONFIG[9]="./configure --prefix=$FINAL_INSTALL_DIR"
+  CFLAGS_[9]=$CFLAGS
+  LDFLAGS_[9]=$LDFLAGS
 }
 
 ######################################################################
@@ -774,6 +798,15 @@ function configure_compile_install_subproject {
     cmd rm -rf Thirdparty
     cmd mkdir -p "$FINAL_INSTALL_DIR/include/AMF"
     cmd cp -av "amf/public/include/." "$FINAL_INSTALL_DIR/include/AMF"
+  fi
+
+  # Special hack for zimg
+  if test "zimg" = "$1" -a ! -e configure ; then
+    debug "Need to create configure for $1"
+    cmd ./autogen.sh || die "Unable to create configure file for $1"
+    if test ! -e configure ; then
+      die "Unable to confirm presence of configure file for $1"
+    fi
   fi
 
   MYCONFIG=`lookup CONFIG $1`

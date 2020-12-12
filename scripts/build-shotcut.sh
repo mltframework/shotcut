@@ -418,7 +418,7 @@ function set_globals {
         SUBDIRS="$SUBDIRS bigsh0t"
     fi
     if test "$ENABLE_ZIMG" = 1 ; then
-        SUBDIRS="$SUBDIRS zimg"
+        SUBDIRS="zimg $SUBDIRS"
     fi
   fi
 
