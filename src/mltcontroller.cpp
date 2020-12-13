@@ -683,6 +683,8 @@ void Controller::rewind(bool forceChangeDirection)
             m_producer->set_speed(speed * 2.0);
         else
             m_producer->set_speed(::floor(speed * 0.5));
+        if (m_consumer && m_consumer->is_valid())
+            m_consumer->purge();
     }
 }
 
@@ -701,6 +703,8 @@ void Controller::fastForward(bool forceChangeDirection)
             m_producer->set_speed(speed * 2.0);
         else
             m_producer->set_speed(::ceil(speed * 0.5));
+        if (m_consumer && m_consumer->is_valid())
+            m_consumer->purge();
     }
 }
 
