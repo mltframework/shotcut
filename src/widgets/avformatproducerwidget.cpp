@@ -402,7 +402,9 @@ void AvformatProducerWidget::onFrameDecoded()
                     case 17: trcString = "SMPTE ST428"; break;
                     case 18: trcString = "ARIB B67 (HLG)"; break;
                 }
-                ui->videoTableWidget->setItem(5, 1, new QTableWidgetItem(trcString));
+                QTableWidgetItem* trcItem = new QTableWidgetItem(trcString);
+                trcItem->setData(Qt::UserRole, QVariant(trc));
+                ui->videoTableWidget->setItem(5, 1, trcItem);
                 ui->videoTrackComboBox->setCurrentIndex(videoIndex);
             }
             ui->tabWidget->setTabEnabled(0, true);
@@ -562,7 +564,24 @@ void AvformatProducerWidget::onFrameDecoded()
     ui->syncSlider->setValue(qRound(m_producer->get_double("video_delay") * 1000.0));
 
     if (Settings.showConvertClipDialog() && !m_producer->get_int(kShotcutSkipConvertProperty)) {
-        if (isAV1) {
+        if (ui->videoTableWidget->item(5, 1)->data(Qt::UserRole).toInt() > 7) {
+            // Transfer characteristics > SMPTE240M Probably need conversion
+            QString trcString = ui->videoTableWidget->item(5, 1)->text();
+            m_producer->set(kShotcutSkipConvertProperty, true);
+            LongUiTask::cancel();
+            MLT.pause();
+            LOG_INFO() << resource << "Probable HDR" << ui->videoTableWidget->item(5, 1)->text();
+            TranscodeDialog dialog(tr("This file uses color transfer characteristics %1, which may result in incorrect colors or brightness in Shotcut. "
+                                      "Do you want to convert it to an edit-friendly format?\n\n"
+                                      "If yes, choose a format below and then click OK to choose a file name. "
+                                      "After choosing a file name, a job is created. "
+                                      "When it is done, double-click the job to open it.\n").arg(trcString),
+                                      ui->scanComboBox->currentIndex(), this);
+            dialog.set709Convert(true);
+            dialog.setWindowModality(QmlApplication::dialogModality());
+            dialog.showCheckBox();
+            convert(dialog);
+        } else if (isAV1) {
             m_producer->set(kShotcutSkipConvertProperty, true);
             LongUiTask::cancel();
             MLT.pause();
@@ -827,7 +846,11 @@ void AvformatProducerWidget::convert(TranscodeDialog& dialog)
             range = "full";
         else
             range = "mpeg";
-        filterString = QString("scale=flags=accurate_rnd+full_chroma_inp+full_chroma_int:in_range=%1:out_range=%2").arg(range).arg(range);
+        if (dialog.get709Convert()) {
+            QString convertFilter = QString("zscale=t=linear:npl=100,format=gbrpf32le,zscale=p=bt709,tonemap=tonemap=hable:desat=0,zscale=t=bt709:m=bt709:r=tv,");
+            filterString = filterString + convertFilter;
+        }
+        filterString = filterString + QString("scale=flags=accurate_rnd+full_chroma_inp+full_chroma_int:in_range=%1:out_range=%2").arg(range).arg(range);
         if (dialog.fpsOverride()) {
             QString minterpFilter = QString(",minterpolate='mi_mode=%1:mc_mode=aobmc:me_mode=bidir:vsbmc=1:fps=%2'").arg(dialog.frc()).arg(dialog.fps());
             filterString = filterString + minterpFilter;

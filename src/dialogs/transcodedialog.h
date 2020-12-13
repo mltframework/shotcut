@@ -38,6 +38,8 @@ public:
     bool fpsOverride() const;
     double fps() const;
     QString frc() const;
+    bool get709Convert();
+    void set709Convert(bool enable);
 
 private slots:
     void on_horizontalSlider_valueChanged(int position);

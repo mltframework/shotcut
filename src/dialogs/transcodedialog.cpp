@@ -81,6 +81,16 @@ QString TranscodeDialog::frc() const
     return ui->frcComboBox->currentData().toString();
 }
 
+bool TranscodeDialog::get709Convert()
+{
+    return ui->convert709CheckBox->isChecked();
+}
+
+void TranscodeDialog::set709Convert(bool enable)
+{
+    ui->convert709CheckBox->setChecked(enable);
+}
+
 void TranscodeDialog::on_horizontalSlider_valueChanged(int position)
 {
     switch (position) {
