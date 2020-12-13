@@ -369,6 +369,40 @@ void AvformatProducerWidget::onFrameDecoded()
                     ui->rangeComboBox->setEnabled(false);
                 }
                 ui->videoTableWidget->setItem(3, 1, new QTableWidgetItem(pix_fmt));
+                key = QString("meta.media.%1.codec.colorspace").arg(i);
+                int colorspace = m_producer->get_int(key.toLatin1().constData());
+                QString csString = tr("unknown (%1)").arg(colorspace);
+                switch (colorspace) {
+                    case 240:
+                        csString = "SMPTE ST240";
+                        break;
+                    case 601:
+                        csString = "ITU-R BT.601";
+                        break;
+                    case 709:
+                        csString = "ITU-R BT.709";
+                        break;
+                    case 9:
+                    case 10:
+                        csString = "ITU-R BT.2020";
+                        break;
+                }
+                ui->videoTableWidget->setItem(4, 1, new QTableWidgetItem(csString));
+                key = QString("meta.media.%1.codec.color_trc").arg(i);
+                int trc = m_producer->get_int(key.toLatin1().constData());
+                QString trcString = tr("unknown (%1)").arg(trc);
+                switch (trc) {
+                    case 0: trcString = tr("NA"); break;
+                    case 1: trcString = "ITU-R BT.709"; break;
+                    case 6: trcString = "ITU-R BT.601"; break;
+                    case 7: trcString = "SMPTE ST240"; break;
+                    case 14: trcString = "ITU-R BT.2020"; break;
+                    case 15: trcString = "ITU-R BT.2020"; break;
+                    case 16: trcString = "SMPTE ST2084 (PQ)"; break;
+                    case 17: trcString = "SMPTE ST428"; break;
+                    case 18: trcString = "ARIB B67 (HLG)"; break;
+                }
+                ui->videoTableWidget->setItem(5, 1, new QTableWidgetItem(trcString));
                 ui->videoTrackComboBox->setCurrentIndex(videoIndex);
             }
             ui->tabWidget->setTabEnabled(0, true);
@@ -432,6 +466,8 @@ void AvformatProducerWidget::onFrameDecoded()
         ui->videoTableWidget->setItem(1, 1, new QTableWidgetItem(""));
         ui->videoTableWidget->setItem(2, 1, new QTableWidgetItem(""));
         ui->videoTableWidget->setItem(3, 1, new QTableWidgetItem(""));
+        ui->videoTableWidget->setItem(4, 1, new QTableWidgetItem(""));
+        ui->videoTableWidget->setItem(5, 1, new QTableWidgetItem(""));
         ui->proxyButton->hide();
     }
 
