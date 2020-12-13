@@ -87,13 +87,13 @@ Item {
             for (var i = 1; i < resourceCombo.model.length; ++i) {
                 var s = (i < 10) ? '%luma0%1.pgm' : '%luma%1.pgm'
                 if (s.arg(i) === resource) {
-                    resourceCombo.currentIndex = i
+                    resourceCombo.currentIndex = (i === 1)? 0 : i
                     break
                 }
             }
             alphaRadioButton.enabled = false
         } else {
-            resourceCombo.currentIndex = 0
+            resourceCombo.currentIndex = 1
             shapeFile.url = resource
             fileLabel.text = shapeFile.fileName
             fileLabelTip.text = shapeFile.filePath
@@ -215,8 +215,8 @@ Item {
         Controls2.ComboBox {
             id: resourceCombo
             implicitWidth: 250
-            model: [qsTr('Custom...'), qsTr('Bar Horizontal'), qsTr('Bar Vertical'), qsTr('Barn Door Horizontal'), qsTr('Barn Door Vertical'), qsTr('Barn Door Diagonal SW-NE'), qsTr('Barn Door Diagonal NW-SE'), qsTr('Diagonal Top Left'), qsTr('Diagonal Top Right'), qsTr('Matrix Waterfall Horizontal'), qsTr('Matrix Waterfall Vertical'), qsTr('Matrix Snake Horizontal'), qsTr('Matrix Snake Parallel Horizontal'), qsTr('Matrix Snake Vertical'), qsTr('Matrix Snake Parallel Vertical'), qsTr('Barn V Up'), qsTr('Iris Circle'), qsTr('Double Iris'), qsTr('Iris Box'), qsTr('Box Bottom Right'), qsTr('Box Bottom Left'), qsTr('Box Right Center'), qsTr('Clock Top')]
-            currentIndex: 1
+            model: [qsTr('Bar Horizontal'), qsTr('Custom...'), qsTr('Bar Vertical'), qsTr('Barn Door Horizontal'), qsTr('Barn Door Vertical'), qsTr('Barn Door Diagonal SW-NE'), qsTr('Barn Door Diagonal NW-SE'), qsTr('Diagonal Top Left'), qsTr('Diagonal Top Right'), qsTr('Matrix Waterfall Horizontal'), qsTr('Matrix Waterfall Vertical'), qsTr('Matrix Snake Horizontal'), qsTr('Matrix Snake Parallel Horizontal'), qsTr('Matrix Snake Vertical'), qsTr('Matrix Snake Parallel Vertical'), qsTr('Barn V Up'), qsTr('Iris Circle'), qsTr('Double Iris'), qsTr('Iris Box'), qsTr('Box Bottom Right'), qsTr('Box Bottom Left'), qsTr('Box Right Center'), qsTr('Clock Top')]
+            currentIndex: 0
             ToolTip {
                 text: qsTr('Set a mask from another file\'s brightness or alpha.')
                 isVisible: !resourceCombo.pressed
@@ -231,13 +231,13 @@ Item {
             function updateResource(index) {
                 fileLabel.text = ''
                 fileLabelTip.text = ''
-                if (index === 0) {
+                if (index === 1) {
                     fileDialog.selectExisting = true
                     fileDialog.title = qsTr('Open Mask File')
                     fileDialog.open()
                 } else {
                     var s = (index < 10) ? '%luma0%1.pgm' : '%luma%1.pgm'
-                    filter.set('filter.resource', s.arg(index))
+                    filter.set('filter.resource', s.arg(index === 0? 1 : index))
                     previousResourceComboIndex = index
                     brightnessRadioButton.checked = true
                     filter.set('filter.use_luminance', 1)
@@ -247,7 +247,7 @@ Item {
         }
         UndoButton {
             onClicked: {
-                resourceCombo.currentIndex = 1
+                resourceCombo.currentIndex = 0
                 resourceCombo.updateResource(resourceCombo.currentIndex)
             }
         }
