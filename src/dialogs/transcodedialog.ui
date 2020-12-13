@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>367</width>
-    <height>311</height>
+    <width>418</width>
+    <height>340</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -142,20 +142,10 @@
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>
        <layout class="QGridLayout" name="gridLayout" columnstretch="0,1">
-        <item row="1" column="1">
-         <widget class="QCheckBox" name="fpsCheckBox">
-          <property name="toolTip">
-           <string>Enable frame rate override.</string>
-          </property>
+        <item row="3" column="0">
+         <widget class="QLabel" name="frcLabel">
           <property name="text">
-           <string>Override frame rate</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="0" colspan="2">
-         <widget class="Line" name="line">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
+           <string>Frame rate conversion</string>
           </property>
          </widget>
         </item>
@@ -166,6 +156,34 @@
           </property>
          </widget>
         </item>
+        <item row="0" column="0" colspan="2">
+         <widget class="Line" name="line">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="1">
+         <widget class="QComboBox" name="frcComboBox">
+          <property name="toolTip">
+           <string>Frame rate conversion method
+
+Duplicate: Duplicate frames.
+Blend: Blend frames.
+Motion Compensation: Interpolate new frames using motion compensation. This method is very slow and may result in artifacts.</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QCheckBox" name="fpsCheckBox">
+          <property name="toolTip">
+           <string>Enable frame rate override.</string>
+          </property>
+          <property name="text">
+           <string>Override frame rate</string>
+          </property>
+         </widget>
+        </item>
         <item row="2" column="0">
          <widget class="QLabel" name="fpsLabel">
           <property name="text">
@@ -173,17 +191,10 @@
           </property>
          </widget>
         </item>
-        <item row="3" column="0">
-         <widget class="QLabel" name="frcLabel">
+        <item row="4" column="1">
+         <widget class="QCheckBox" name="convert709CheckBox">
           <property name="text">
-           <string>Frame rate conversion</string>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="1">
-         <widget class="QComboBox" name="frcComboBox">
-          <property name="toolTip">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Frame Rate Conversion Method&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Duplicate: &lt;/span&gt;Duplicate frames&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Blend: &lt;/span&gt;Blend frames&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Motion Compensation: &lt;/span&gt;Interpolate new frames using motion compensation. This method is very slow and may result in artifacts.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           <string>Convert to BT.709 colorspace</string>
           </property>
          </widget>
         </item>

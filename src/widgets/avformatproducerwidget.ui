@@ -867,7 +867,7 @@
        </property>
        <property name="icon">
         <iconset theme="show-menu" resource="../../icons/resources.qrc">
-         <normaloff>:/icons/oxygen/32x32/actions/show-menu.png</normaloff>:/icons/oxygen/32x32/actions/show-menufull.png</iconset>
+         <normaloff>:/icons/oxygen/32x32/actions/show-menu.png</normaloff>:/icons/oxygen/32x32/actions/show-menu.png</iconset>
        </property>
       </widget>
      </item>
