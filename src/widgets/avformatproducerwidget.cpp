@@ -813,6 +813,7 @@ void AvformatProducerWidget::on_actionFFmpegConvert_triggered()
                               "When it is done, double-click the job to open it.\n"),
                            ui->scanComboBox->currentIndex(), this);
     dialog.setWindowModality(QmlApplication::dialogModality());
+    dialog.set709Convert(ui->videoTableWidget->item(5, 1)->data(Qt::UserRole).toInt() > 7);
     convert(dialog);
 }
 
@@ -847,7 +848,7 @@ void AvformatProducerWidget::convert(TranscodeDialog& dialog)
         else
             range = "mpeg";
         if (dialog.get709Convert()) {
-            QString convertFilter = QString("zscale=t=linear:npl=100,format=gbrpf32le,zscale=p=bt709,tonemap=tonemap=hable:desat=0,zscale=t=bt709:m=bt709:r=tv,");
+            QString convertFilter = QString("zscale=t=linear:npl=100,format=gbrpf32le,zscale=p=bt709,tonemap=tonemap=hable:desat=0,zscale=t=bt709:m=bt709:r=tv,format=yuv422p,");
             filterString = filterString + convertFilter;
         }
         filterString = filterString + QString("scale=flags=accurate_rnd+full_chroma_inp+full_chroma_int:in_range=%1:out_range=%2").arg(range).arg(range);
@@ -889,6 +890,9 @@ void AvformatProducerWidget::convert(TranscodeDialog& dialog)
             path.append("/%1 - %2.mkv");
             nameFilter = tr("MKV (*.mkv);;All Files (*)");
             break;
+        }
+        if (dialog.get709Convert()) {
+            args << "-colorspace" << "bt709" << "-color_primaries" << "bt709" << "-color_trc" << "bt709";
         }
         QFileInfo fi(resource);
         path = path.arg(fi.completeBaseName()).arg(tr("Converted"));
