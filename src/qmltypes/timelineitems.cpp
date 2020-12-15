@@ -17,6 +17,7 @@
 
 #include "timelineitems.h"
 #include "mltcontroller.h"
+#include "settings.h"
 #include <Logger.h>
 
 #include <QQuickPaintedItem>
@@ -104,7 +105,8 @@ public:
     {
         setAntialiasing(false);
         setOpaquePainting(true);
-        setRenderTarget(QQuickPaintedItem::FramebufferObject);
+        if (Settings.timelineFramebufferWaveform())
+            setRenderTarget(QQuickPaintedItem::FramebufferObject);
         connect(this, SIGNAL(propertyChanged()), this, SLOT(update()));
     }
 

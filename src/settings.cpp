@@ -600,6 +600,17 @@ void ShotcutSettings::setTimelineScrollZoom(bool b)
     emit timelineScrollZoomChanged();
 }
 
+bool ShotcutSettings::timelineFramebufferWaveform() const
+{
+    return settings.value("timeline/framebufferWaveform", true).toBool();
+}
+
+void ShotcutSettings::setTimelineFramebufferWaveform(bool b)
+{
+    settings.setValue("timeline/framebufferWaveform", b);
+    emit timelineFramebufferWaveformChanged();
+}
+
 QString ShotcutSettings::filterFavorite(const QString& filterName)
 {
     return settings.value("filter/favorite/" + filterName, "").toString();
