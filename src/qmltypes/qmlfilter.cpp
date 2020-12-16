@@ -53,10 +53,10 @@ QmlFilter::QmlFilter(Mlt::Service& mltService, const QmlMetadata* metadata, QObj
     , m_path(m_metadata->path().absolutePath().append('/'))
     , m_isNew(false)
 {
-    if (m_service.type() == filter_type) {
+    if (m_service.type() == mlt_service_filter_type) {
         // Every attached filter has a service property that points to the service to which it is attached.
         m_producer = Mlt::Producer(mlt_producer(m_service.is_valid() ? m_service.get_data("service") : 0));
-    } else if (m_service.type() == link_type) {
+    } else if (m_service.type() == mlt_service_link_type) {
         // Every attached link has a chain property that points to the chain to which it is attached.
         m_producer = Mlt::Producer(mlt_producer(m_service.is_valid() ? m_service.get_data("chain") : 0));
     }
@@ -325,7 +325,7 @@ void QmlFilter::deletePreset(const QString &name)
 void QmlFilter::analyze(bool isAudio)
 {
     // Analyze is only supported for filters, not links.
-    if (m_service.type() != filter_type) return;
+    if (m_service.type() != mlt_service_filter_type) return;
 
     Mlt::Filter mltFilter(m_service);
     Mlt::Service service(mlt_service(mltFilter.get_data("service")));
@@ -452,7 +452,7 @@ int QmlFilter::in()
 {
     int result = 0;
     if (m_service.is_valid()) {
-        if (m_service.type() == link_type ||
+        if (m_service.type() == mlt_service_link_type ||
             (m_service.get_int("in") == 0 && m_service.get_int("out") == 0)) { // undefined/always-on
             if (!m_producer.is_valid()) {
                 result = 0;
@@ -480,7 +480,7 @@ int QmlFilter::out()
 {
     int result = 0;
     if (m_service.is_valid()) {
-        if (m_service.type() == link_type ||
+        if (m_service.type() == mlt_service_link_type ||
             (m_service.get_int("in") == 0 && m_service.get_int("out") == 0)) { // undefined/always-on
             if (!m_producer.is_valid()) {
                 result = 0;

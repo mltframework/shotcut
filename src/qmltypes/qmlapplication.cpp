@@ -181,7 +181,7 @@ bool QmlApplication::confirmOutputFilter()
     bool result = true;
     QScopedPointer<Mlt::Producer> producer(new Mlt::Producer(MAIN.filterController()->attachedModel()->producer()));
     if (producer->is_valid()
-            && tractor_type == producer->type()
+            && mlt_service_tractor_type == producer->type()
             && !producer->get(kShotcutTransitionProperty)
             && MAIN.filterController()->attachedModel()->rowCount() == 0
             && Settings.askOutputFilter()) {

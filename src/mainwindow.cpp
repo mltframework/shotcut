@@ -3147,7 +3147,7 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer* producer)
         if (-1 != w->metaObject()->indexOfSignal("modified()"))
             connect(w, SIGNAL(modified()), SLOT(onProducerModified()));
         return w;
-    } else if (playlist_type == producer->type()) {
+    } else if (mlt_service_playlist_type == producer->type()) {
         int trackIndex = m_timelineDock->currentTrack();
         bool isBottomVideo = m_timelineDock->model()->data(m_timelineDock->model()->index(trackIndex), MultitrackModel::IsBottomVideoRole).toBool();
         if (!isBottomVideo) {
@@ -3155,7 +3155,7 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer* producer)
             scrollArea->setWidget(w);
             return w;
         }
-    } else if (tractor_type == producer->type()) {
+    } else if (mlt_service_tractor_type == producer->type()) {
         w = new TimelinePropertiesWidget(*producer, this);
         scrollArea->setWidget(w);
         return w;

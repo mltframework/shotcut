@@ -15,9 +15,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
  
-import QtQuick 2.2
+import QtQuick 2.12
 import QtQuick.Controls 2.12
-import QtQuick.Layouts 1.1
+import QtQuick.Layouts 1.12
 import org.shotcut.qml 1.0 as Shotcut
 import Shotcut.Controls 1.0 as Shotcut
 
@@ -161,16 +161,22 @@ Rectangle {
                     }
                 }
             }
-            ShotcutControls.ToggleButton {
+            Shotcut.ToggleButton {
                 id: lnkButton
+                implicitWidth: 82
                 visible: attachedfiltersmodel.supportsLinks
-                implicitWidth: 80
-                iconName: 'chronometer'
-                iconSource: 'qrc:///icons/oxygen/32x32/actions/chronometer.png'
+                icon.name: 'chronometer'
+                icon.source: 'qrc:///icons/oxygen/32x32/actions/chronometer.png'
                 text: qsTr('Time')
-                tooltip: qsTr('Show time filters')
-                exclusiveGroup: typeGroup
-                onClicked: if (checked) metadatamodel.filter = Shotcut.MetadataModel.LinkFilter
+                Shotcut.HoverTip { text: qsTr('Show time filters') }
+                ButtonGroup.group: typeGroup
+                onClicked: {
+                    if (checked) {
+                        metadatamodel.filter = Shotcut.MetadataModel.LinkFilter
+                        searchField.text = ''
+                        checked = true
+                    }
+                }
             }
             Button { // separator
                 enabled: false

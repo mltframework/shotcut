@@ -141,7 +141,7 @@ Mlt::Transition *LumaMixTransition::getTransition(const QString &name)
 {
     QScopedPointer<Mlt::Service> service(m_producer.producer());
     while (service && service->is_valid()) {
-        if (service->type() == transition_type) {
+        if (service->type() == mlt_service_transition_type) {
             Mlt::Transition transition(*service);
             if (name == transition.get("mlt_service"))
                 return new Mlt::Transition(transition);

@@ -101,7 +101,7 @@ bool AttachedFiltersModel::isProducerSelected() const
 
 bool AttachedFiltersModel::supportsLinks() const
 {
-    if ( !m_producer.isNull() && m_producer->is_valid() && m_producer->type() == chain_type )
+    if ( !m_producer.isNull() && m_producer->is_valid() && m_producer->type() == mlt_service_chain_type )
     {
         return true;
     }
@@ -285,7 +285,7 @@ void AttachedFiltersModel::add(QmlMetadata* meta)
             }
         }
     }
-    if (m_producer->is_valid() && tractor_type != m_producer->type() && !QmlApplication::confirmOutputFilter()) {
+    if (m_producer->is_valid() && mlt_service_tractor_type != m_producer->type() && !QmlApplication::confirmOutputFilter()) {
         return;
     }
 
@@ -333,7 +333,7 @@ void AttachedFiltersModel::add(QmlMetadata* meta)
         delete filter;
     }
     else if (meta->type() == QmlMetadata::Link) {
-        if (m_producer->type() != chain_type) {
+        if (m_producer->type() != mlt_service_chain_type) {
             LOG_WARNING() << "Not a chain";
         }
         Mlt::Link* link = new Mlt::Link(meta->mlt_service().toUtf8().constData());
@@ -429,7 +429,7 @@ void AttachedFiltersModel::reset(Mlt::Producer* producer)
         Mlt::Event* event = m_producer->listen("service-changed", this, (mlt_listener)AttachedFiltersModel::producerChanged);
         m_event.reset(event);
         int count = 0;
-        if (m_producer->type() == chain_type) {
+        if (m_producer->type() == mlt_service_chain_type) {
             Mlt::Chain chain(*m_producer.data());
             count = chain.link_count();
             for (int i = 0; i < count; i++) {
@@ -466,7 +466,7 @@ int AttachedFiltersModel::mltFilterIndex(int row) const
 {
     if (row >= 0 && m_producer && m_producer->is_valid()) {
         int linkCount = 0;
-        if (m_producer->type() == chain_type) {
+        if (m_producer->type() == mlt_service_chain_type) {
             Mlt::Chain chain(*m_producer);
             linkCount = chain.link_count();
             if (row < linkCount) {
@@ -484,7 +484,7 @@ int AttachedFiltersModel::mltFilterIndex(int row) const
 
 int AttachedFiltersModel::mltLinkIndex(int row) const
 {
-    if (row >= 0 && m_producer && m_producer->is_valid() && m_producer->type() == chain_type) {
+    if (row >= 0 && m_producer && m_producer->is_valid() && m_producer->type() == mlt_service_chain_type) {
         Mlt::Chain chain(*m_producer);
         if (row < chain.link_count())
         {

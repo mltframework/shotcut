@@ -427,7 +427,7 @@ void PlaylistDock::on_actionUpdate_triggered()
     if (!index.isValid() || !m_model.playlist()) return;
     Mlt::ClipInfo* info = m_model.playlist()->clip_info(index.row());
     if (!info || MAIN.isSourceClipMyProject()) return;
-    if (MLT.producer()->type() != playlist_type) {
+    if (MLT.producer()->type() != mlt_service_playlist_type) {
         if (MLT.isSeekable()) {
             ProxyManager::generateIfNotExists(*MLT.producer());
             MAIN.undoStack()->push(new Playlist::UpdateCommand(m_model, MLT.XML(), index.row()));
@@ -727,7 +727,7 @@ void PlaylistDock::onDropped(const QMimeData *data, int row)
     }
     else if (data && data->hasFormat(Mlt::XmlMimeType)) {
         if (MLT.producer() && MLT.producer()->is_valid()) {
-            if (MLT.producer()->type() == playlist_type) {
+            if (MLT.producer()->type() == mlt_service_playlist_type) {
                 emit showStatusMessage(tr("You cannot insert a playlist into a playlist!"));
             } else if (MAIN.isSourceClipMyProject()) {
                 return;

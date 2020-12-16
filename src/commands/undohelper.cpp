@@ -202,7 +202,7 @@ void UndoHelper::undoChanges()
                 Q_ASSERT(!(m_hints & SkipXML) && "Cannot restore clip without stored XML");
                 Q_ASSERT(!info.xml.isEmpty());
                 Mlt::Producer restoredClip(MLT.profile(), "xml-string", info.xml.toUtf8().constData());
-                if (restoredClip.type() == tractor_type) { // transition
+                if (restoredClip.type() == mlt_service_tractor_type) { // transition
                     restoredClip.set("mlt_type", "mlt_producer");
                 } else {
                     fixTransitions(playlist, currentIndex, restoredClip);
@@ -341,7 +341,7 @@ void UndoHelper::restoreAffectedTracks()
                 Q_ASSERT(!(m_hints & SkipXML) && "Cannot restore clip without stored XML");
                 Q_ASSERT(!info.xml.isEmpty());
                 Mlt::Producer restoredClip(MLT.profile(), "xml-string", info.xml.toUtf8().constData());
-                if (restoredClip.type() == tractor_type) { // transition
+                if (restoredClip.type() == mlt_service_tractor_type) { // transition
                     restoredClip.set("mlt_type", "mlt_producer");
                 }
                 playlist.append(restoredClip, info.frame_in, info.frame_out);

@@ -1754,7 +1754,7 @@ void MultitrackModel::trimTransitionIn(int trackIndex, int clipIndex, int delta)
         // Adjust the transitions.
         QScopedPointer<Mlt::Service> service(tractor.producer());
         while (service && service->is_valid()) {
-            if (service->type() == transition_type) {
+            if (service->type() == mlt_service_transition_type) {
                 Mlt::Transition transition(*service);
                 transition.set_in_and_out(0, out);
             }
@@ -1835,7 +1835,7 @@ void MultitrackModel::trimTransitionOut(int trackIndex, int clipIndex, int delta
         // Adjust the transitions.
         QScopedPointer<Mlt::Service> service(tractor.producer());
         while (service && service->is_valid()) {
-            if (service->type() == transition_type) {
+            if (service->type() == mlt_service_transition_type) {
                 Mlt::Transition transition(*service);
                 transition.set_in_and_out(0, out);
             }
@@ -2505,7 +2505,7 @@ void MultitrackModel::adjustClipFilters(Mlt::Producer& producer, int in, int out
     }
 
     // Adjust link in/out
-    if (producer.type() == chain_type) {
+    if (producer.type() == mlt_service_chain_type) {
         Mlt::Chain chain(producer);
         int link_count = chain.link_count();
         for (int j = 0; j < chain.link_count(); j++) {
@@ -2743,11 +2743,11 @@ void MultitrackModel::loadPlaylist()
     Mlt::Properties retainList((mlt_properties) m_tractor->get_data("xml_retain"));
     if (retainList.is_valid()) {
         Mlt::Playlist playlist((mlt_playlist) retainList.get_data(kPlaylistTrackId));
-        if (playlist.is_valid() && playlist.type() == playlist_type) {
+        if (playlist.is_valid() && playlist.type() == mlt_service_playlist_type) {
             MAIN.playlistDock()->model()->setPlaylist(playlist);
         } else {
             playlist = (mlt_playlist) retainList.get_data(kLegacyPlaylistTrackId);
-            if (playlist.is_valid() && playlist.type() == playlist_type)
+            if (playlist.is_valid() && playlist.type() == mlt_service_playlist_type)
                 MAIN.playlistDock()->model()->setPlaylist(playlist);
         }
     }
@@ -3326,7 +3326,7 @@ void MultitrackModel::convertOldDoc()
     // Remove movit.rect filters.
     QScopedPointer<Mlt::Service> service(m_tractor->producer());
     while (service && service->is_valid()) {
-        if (service->type() == filter_type) {
+        if (service->type() == mlt_service_filter_type) {
             Mlt::Filter f((mlt_filter) service->get_service());
             if (QString::fromLatin1(f.get("mlt_service")) == "movit.rect") {
                 m_tractor->field()->disconnect_service(f);
@@ -3364,7 +3364,7 @@ Mlt::Transition *MultitrackModel::getTransition(const QString &name, int trackIn
 {
     QScopedPointer<Mlt::Service> service(m_tractor->producer());
     while (service && service->is_valid()) {
-        if (service->type() == transition_type) {
+        if (service->type() == mlt_service_transition_type) {
             Mlt::Transition t((mlt_transition) service->get_service());
             if (name == t.get("mlt_service") && t.get_b_track() == trackIndex)
                 return new Mlt::Transition(t);
@@ -3378,7 +3378,7 @@ Mlt::Filter *MultitrackModel::getFilter(const QString &name, int trackIndex) con
 {
     QScopedPointer<Mlt::Service> service(m_tractor->producer());
     while (service && service->is_valid()) {
-        if (service->type() == filter_type) {
+        if (service->type() == mlt_service_filter_type) {
             Mlt::Filter f((mlt_filter) service->get_service());
             if (name == f.get("mlt_service") && f.get_track() == trackIndex)
                 return new Mlt::Filter(f);

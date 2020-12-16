@@ -59,7 +59,7 @@ void FilterController::loadFilterMetadata() {
             QQmlComponent component(QmlUtilities::sharedEngine(), subdir.absoluteFilePath(fileName));
             QmlMetadata *meta = qobject_cast<QmlMetadata*>(component.create());
             if (meta) {
-                QScopedPointer<Mlt::Properties> mltMetadata(MLT.repository()->metadata(filter_type, meta->mlt_service().toLatin1().constData()));
+                QScopedPointer<Mlt::Properties> mltMetadata(MLT.repository()->metadata(mlt_service_filter_type, meta->mlt_service().toLatin1().constData()));
                 QString version;
                 if (mltMetadata && mltMetadata->is_valid() && mltMetadata->get("version")) {
                     version = QString::fromLatin1(mltMetadata->get("version"));
@@ -142,8 +142,8 @@ void FilterController::setProducer(Mlt::Producer *producer)
     m_attachedModel.setProducer(producer);
     if (producer && producer->is_valid()) {
         mlt_service_type service_type = producer->type();
-        m_metadataModel.setIsClipProducer(service_type != playlist_type &&
-            (service_type != tractor_type || !producer->get_int(kShotcutXmlProperty)));
+        m_metadataModel.setIsClipProducer(service_type != mlt_service_playlist_type &&
+            (service_type != mlt_service_tractor_type || !producer->get_int(kShotcutXmlProperty)));
     }
 }
 

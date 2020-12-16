@@ -139,7 +139,7 @@ QString Util::producerTitle(const Mlt::Producer& producer)
 {
     QString result;
     Mlt::Producer& p = const_cast<Mlt::Producer&>(producer);
-    if (p.type() == chain_type) {
+    if (p.type() == mlt_service_chain_type) {
         Mlt::Chain chain(p);
         return producerTitle(chain.get_source());
     }
@@ -148,7 +148,7 @@ QString Util::producerTitle(const Mlt::Producer& producer)
         return QObject::tr("Transition");
     if (p.get(kTrackNameProperty))
         return QObject::tr("Track: %1").arg(QString::fromUtf8(p.get(kTrackNameProperty)));
-    if (tractor_type == p.type())
+    if (mlt_service_tractor_type == p.type())
         return QObject::tr("Output");
     if (p.get(kShotcutCaptionProperty))
         return QString::fromUtf8(p.get(kShotcutCaptionProperty));

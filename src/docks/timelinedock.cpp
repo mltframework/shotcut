@@ -873,7 +873,7 @@ void TimelineDock::replace(int trackIndex, int clipIndex, const QString& xml)
     if (clipIndex < 0)
         clipIndex = clipIndexAtPlayhead(trackIndex);
     Mlt::Producer producer(producerForClip(trackIndex, clipIndex));
-    if (producer.is_valid() && producer.type() == tractor_type) {
+    if (producer.is_valid() && producer.type() == mlt_service_tractor_type) {
         emit showStatusMessage(tr("You cannot replace a transition."));
         return;
     }
@@ -1506,7 +1506,7 @@ void TimelineDock::replaceClipsWithHash(const QString& hash, Mlt::Producer& prod
         // lookup the current track and clip index by UUID
         QScopedPointer<Mlt::ClipInfo> info(MAIN.timelineClipInfoByUuid(clip.get(kUuidProperty), trackIndex, clipIndex));
 
-        if (info && info->producer->is_valid() && trackIndex >= 0 && clipIndex >= 0 && info->producer->type() != tractor_type) {
+        if (info && info->producer->is_valid() && trackIndex >= 0 && clipIndex >= 0 && info->producer->type() != mlt_service_tractor_type) {
             if (producer.get_int(kIsProxyProperty) && info->producer->get_int(kIsProxyProperty)) {
                 // Not much to do on a proxy clip but change its resource
                 info->producer->set(kOriginalResourceProperty, producer.get("resource"));

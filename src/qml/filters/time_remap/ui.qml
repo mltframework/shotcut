@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Meltytech, LLC
+ * Copyright (c) 2020-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,10 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.1
-import QtQuick.Controls 1.1
-import QtQuick.Layouts 1.0
-import Shotcut.Controls 1.0
+import QtQuick 2.12
+import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.12
+import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     width: 200
@@ -115,7 +115,7 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: preset
             Layout.columnSpan: parent.columns - 1
             parameters: ['map']
@@ -131,9 +131,9 @@ Item {
         Label {
             text: qsTr('Time')
             Layout.alignment: Qt.AlignRight
-            ToolTip { text: qsTr('Map the specified input time to the current time. Use keyframes to vary the time mappings over time.') }
+            Shotcut.HoverTip { text: qsTr('Map the specified input time to the current time. Use keyframes to vary the time mappings over time.') }
         }
-        TimeSpinner {
+        Shotcut.TimeSpinner {
             id: mapSpinner
             minimumValue: 0
             maximumValue: 1000000
@@ -143,7 +143,7 @@ Item {
                 updateFilter(getPosition())
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: {
                 filter.resetProperty('map')
                 filter.set('map', 0.0, 0)
@@ -155,7 +155,7 @@ Item {
         Label {
             text: qsTr('Image Mode')
             Layout.alignment: Qt.AlignRight
-            ToolTip { text: qsTr('Use the specified image selection mode. Nearest will output the image that is nearest to the mapped time. Blend will blend all images that occur during the mapped time.') }
+            Shotcut.HoverTip { text: qsTr('Use the specified image selection mode. Nearest will output the image that is nearest to the mapped time. Blend will blend all images that occur during the mapped time.') }
         }
         ComboBox {
             id: modeCombo
@@ -169,7 +169,7 @@ Item {
                 filter.set('image_mode', imageModeModel.get(currentIndex).value)
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: modeCombo.currentIndex = 0
         }
 
@@ -190,7 +190,7 @@ Item {
         Label {
             text: qsTr('Speed')
             Layout.alignment: Qt.AlignRight
-            ToolTip { text: qsTr('The instantaneous speed of the last frame that was processed.') }
+            Shotcut.HoverTip { text: qsTr('The instantaneous speed of the last frame that was processed.') }
         }
         Label {
             id: speedLabel
@@ -200,7 +200,7 @@ Item {
         Label {
             text: qsTr('Direction')
             Layout.alignment: Qt.AlignRight
-            ToolTip { text: qsTr('The instantaneous direction of the last frame that was processed.') }
+            Shotcut.HoverTip { text: qsTr('The instantaneous direction of the last frame that was processed.') }
         }
         Label {
             id: directionLabel

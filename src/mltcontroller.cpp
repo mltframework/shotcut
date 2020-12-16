@@ -150,8 +150,8 @@ int Controller::open(const QString &url, const QString& urlToSave)
             newProducer->set("mute_on_pause", 0);
         }
         if (m_url.isEmpty() && QString(newProducer->get("xml")) == "was here") {
-            if (newProducer->get_int("_original_type") != tractor_type ||
-               (newProducer->get_int("_original_type") == tractor_type && newProducer->get(kShotcutXmlProperty)))
+            if (newProducer->get_int("_original_type") != mlt_service_tractor_type ||
+               (newProducer->get_int("_original_type") == mlt_service_tractor_type && newProducer->get(kShotcutXmlProperty)))
                 m_url = urlToSave;
         }
         setImageDurationFromDefault(newProducer);
@@ -643,14 +643,14 @@ bool Controller::isPlaylist() const
 {
     return m_producer && m_producer->is_valid() &&
           !m_producer->get_int(kShotcutVirtualClip) &&
-            (m_producer->get_int("_original_type") == playlist_type || resource() == "<playlist>");
+            (m_producer->get_int("_original_type") == mlt_service_playlist_type || resource() == "<playlist>");
 }
 
 bool Controller::isMultitrack() const
 {
     return m_producer && m_producer->is_valid()
         && !m_producer->get_int(kShotcutVirtualClip)
-        && (m_producer->get_int("_original_type") == tractor_type || resource() == "<tractor>")
+        && (m_producer->get_int("_original_type") == mlt_service_tractor_type || resource() == "<tractor>")
             && (m_producer->get(kShotcutXmlProperty));
 }
 
@@ -907,7 +907,7 @@ void Controller::updateAvformatCaching(int trackCount)
 
 bool Controller::isAudioFilter(const QString &name)
 {
-    QScopedPointer<Properties> metadata(m_repo->metadata(filter_type, name.toLatin1().constData()));
+    QScopedPointer<Properties> metadata(m_repo->metadata(mlt_service_filter_type, name.toLatin1().constData()));
     if (metadata->is_valid()) {
         Properties tags(metadata->get_data("tags"));
         if (tags.is_valid()) {
@@ -1018,7 +1018,7 @@ void Controller::copyFilters(Producer& fromProducer, Producer& toProducer, bool 
         }
     }
 
-    if (fromProducer.type() == chain_type && toProducer.type() == chain_type) {
+    if (fromProducer.type() == mlt_service_chain_type && toProducer.type() == mlt_service_chain_type) {
         Mlt::Chain fromChain(fromProducer);
         Mlt::Chain toChain(toProducer);
         count = fromChain.link_count();
