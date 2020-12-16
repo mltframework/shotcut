@@ -177,7 +177,7 @@ bool Controller::openXML(const QString &filename)
 {
     bool error = true;
     close();
-    Producer* producer = new Mlt::Producer(profile(), "xml", filename.toUtf8().constData());
+    Producer* producer = new Mlt::Chain(profile(), "xml", filename.toUtf8().constData());
     if (producer->is_valid()) {
         double fps = profile().fps();
         if (!profile().is_explicit()) {
@@ -190,7 +190,7 @@ bool Controller::openXML(const QString &filename)
         if (isFpsDifferent(profile().fps(), fps)) {
             // reopen with the correct fps
             delete producer;
-            producer = new Mlt::Producer(profile(), "xml", filename.toUtf8().constData());
+            producer = new Mlt::Chain(profile(), "xml", filename.toUtf8().constData());
         }
         producer->set(kShotcutVirtualClip, 1);
         producer->set("resource", filename.toUtf8().constData());
