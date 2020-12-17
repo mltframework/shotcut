@@ -1353,7 +1353,6 @@ function mlt_check_configure {
       disable-sox)
         if test "0" = "$MLT_DISABLE_SOX" ; then
           mlt_format_optional sox "sound effects/operations" "sox-dev"
-          DODIE=1
         fi
       ;;
       disable-jackrack)
