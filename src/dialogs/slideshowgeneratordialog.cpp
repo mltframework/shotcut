@@ -30,7 +30,7 @@
 SlideshowGeneratorDialog::SlideshowGeneratorDialog(QWidget* parent, Mlt::Playlist& clips)
     : QDialog(parent)
 {
-    setWindowTitle(tr("Slideshow Generator - %1 Clips").arg(QString::number(clips.count())));
+    setWindowTitle(tr("Slideshow Generator - %n Clips", nullptr, clips.count()));
 
     QVBoxLayout* VLayout = new QVBoxLayout(this);
 

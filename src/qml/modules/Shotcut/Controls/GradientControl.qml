@@ -189,7 +189,7 @@ RowLayout {
         maximumValue: 10
         decimals: 0
         stepSize: 1
-        suffix: qsTr(' colors')
+        suffix: qsTr(' colors', 'gradient control', value)
         onValueChanged: {
             _setStopCount(value)
         }
