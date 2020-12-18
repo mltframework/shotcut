@@ -1189,7 +1189,7 @@ void EncodeDock::resetOptions()
     ui->scanModeCombo->setCurrentIndex(1);
     on_scanModeCombo_currentIndexChanged(ui->scanModeCombo->currentIndex());
     ui->deinterlacerCombo->setCurrentIndex(3);
-    ui->interpolationCombo->setCurrentIndex(1);
+    ui->interpolationCombo->setCurrentIndex(2);
 
     ui->videoRateControlCombo->setCurrentIndex(RateControlQuality);
     ui->videoBitrateCombo->lineEdit()->setText("12M");
