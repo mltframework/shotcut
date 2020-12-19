@@ -377,7 +377,7 @@ void MoveClipCommand::redo()
 
     if (!m_redo) {
         if (m_selection.size() > 1)
-            setText(QObject::tr("Move %1 timelime clips").arg(m_selection.size()));
+            setText(QObject::tr("Move %n timelime clips", nullptr, m_selection.size()));
         else
             setText(QObject::tr("Move timelime clip"));
     }

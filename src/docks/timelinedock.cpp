@@ -1496,7 +1496,7 @@ void TimelineDock::replaceClipsWithHash(const QString& hash, Mlt::Producer& prod
     parser.start(*model()->tractor());
     auto n = parser.producers().size();
     if (n > 1)
-        MAIN.undoStack()->beginMacro(tr("Replace %1 timeline clips").arg(n));
+        MAIN.undoStack()->beginMacro(tr("Replace %n timeline clips", nullptr, n));
     for (auto& clip : parser.producers()) {
         int trackIndex = -1;
         int clipIndex = -1;

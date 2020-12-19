@@ -252,7 +252,7 @@ void PlaylistDock::replaceClipsWithHash(const QString& hash, Mlt::Producer& prod
     }
     auto n = producers.size();
     if (n > 1) {
-        MAIN.undoStack()->beginMacro(tr("Replace %1 playlist items").arg(n));
+        MAIN.undoStack()->beginMacro(tr("Replace %n playlist items", nullptr, n));
     }
     for (auto& clip : producers) {
         Util::applyCustomProperties(producer, clip.parent(), clip.get_in(), clip.get_out());
@@ -461,7 +461,7 @@ void PlaylistDock::on_removeButton_clicked()
     QList<int> rowsRemoved;
     int n = m_view->selectionModel()->selectedIndexes().size();
     if (n > 1)
-        MAIN.undoStack()->beginMacro(tr("Remove %1 playlist items").arg(n));
+        MAIN.undoStack()->beginMacro(tr("Remove %n playlist items", nullptr, n));
     foreach (auto index, m_view->selectionModel()->selectedIndexes()) {
         int row = index.row();
         if (!rowsRemoved.contains(row)) {
