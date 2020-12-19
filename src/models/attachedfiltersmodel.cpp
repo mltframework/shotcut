@@ -23,6 +23,8 @@
 #include "shotcut_mlt_properties.h"
 #include "util.h"
 #include "qmltypes/qmlapplication.h"
+#include <QApplication>
+#include <QMessageBox>
 #include <QTimer>
 #include <Logger.h>
 
@@ -335,6 +337,15 @@ void AttachedFiltersModel::add(QmlMetadata* meta)
     else if (meta->type() == QmlMetadata::Link) {
         if (m_producer->type() != mlt_service_chain_type) {
             LOG_WARNING() << "Not a chain";
+        }
+        if (meta->mlt_service() == "timeremap" && m_producer->get_int("meta.media.has_b_frames") != 0) {
+            QMessageBox dialog(QMessageBox::Warning,
+               qApp->applicationName(),
+               tr("Time remapping requires edit friendly source files.\nPlease open the properties panel and convert this file to edit friendly"),
+               QMessageBox::Ok, &MAIN);
+            dialog.setWindowModality(QmlApplication::dialogModality());
+            dialog.exec();
+            return;
         }
         Mlt::Link* link = new Mlt::Link(meta->mlt_service().toUtf8().constData());
         if (link && link->is_valid()) {
