@@ -435,7 +435,7 @@ function set_globals {
 
   # set global environment for all jobs
   alias make=mingw32-make
-  export QTDIR="$HOME/Qt/5.15.1/mingw81_64"
+  export QTDIR="$HOME/Qt/5.15.2/mingw81_64"
   export PKG_CONFIG_PATH="$HOME/lib/pkgconfig:$PKG_CONFIG_PATH"
   export PATH="$FINAL_INSTALL_DIR/bin:$PATH"
   export LD_RUN_PATH="$FINAL_INSTALL_DIR/lib"
@@ -1019,7 +1019,7 @@ function deploy
   cmd cp -pr "$QTDIR"/qml lib
   sed -i "s/onClicked()/onClicked(mouse)/" lib/qml/QtQuick/Controls/Private/EditMenu_base.qml
   cmd rm lib/qml/QtQuick/Controls/Private/EditMenu_base.qmlc
-  cmd curl -o lib/qml/QtQuick/Controls.2/Fusion/ComboBox.qml "https://s3.amazonaws.com/misc.meltymedia/shotcut-build/ComboBox.qml"
+#  cmd curl -o lib/qml/QtQuick/Controls.2/Fusion/ComboBox.qml "https://s3.amazonaws.com/misc.meltymedia/shotcut-build/ComboBox.qml"
   cmd cp -pr "$QTDIR"/translations/qt_*.qm share/translations
   cmd cp -pr "$QTDIR"/translations/qtbase_*.qm share/translations
 

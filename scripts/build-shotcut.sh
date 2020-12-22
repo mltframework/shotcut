@@ -574,16 +574,16 @@ function set_globals {
     if test "$TARGET_OS" = "Win32" ; then
       export HOST=i686-w64-mingw32
       export CROSS=${HOST}.shared-
-      export QTDIR="$HOME/qt-5.15.1-x86-mingw540-sjlj"
-      export QMAKE="$HOME/Qt/5.15.1/gcc_64/bin/qmake"
-      export LRELEASE="$HOME/Qt/5.15.1/gcc_64/bin/lrelease"
+      export QTDIR="$HOME/qt-5.15.2-x86-mingw540-sjlj"
+      export QMAKE="$HOME/Qt/5.15.2/gcc_64/bin/qmake"
+      export LRELEASE="$HOME/Qt/5.15.2/gcc_64/bin/lrelease"
       export LDFLAGS="-L/opt/mxe/usr/${HOST}.shared/lib -Wl,--large-address-aware $LDFLAGS"
     else
       export HOST=x86_64-w64-mingw32
       export CROSS=${HOST}.shared-
-      export QTDIR="$HOME/qt-5.15.1-x64-mingw540-seh"
-      export QMAKE="$HOME/Qt/5.15.1/gcc_64/bin/qmake"
-      export LRELEASE="$HOME/Qt/5.15.1/gcc_64/bin/lrelease"
+      export QTDIR="$HOME/qt-5.15.2-x64-mingw540-seh"
+      export QMAKE="$HOME/Qt/5.15.2/gcc_64/bin/qmake"
+      export LRELEASE="$HOME/Qt/5.15.2/gcc_64/bin/lrelease"
       export LDFLAGS="-L/opt/mxe/usr/${HOST}.shared/lib $LDFLAGS"
     fi
     export CFLAGS="-I/opt/mxe/usr/${HOST}.shared/include $CFLAGS"
@@ -598,14 +598,14 @@ function set_globals {
     export CMAKE_ROOT="${SOURCE_DIR}/vid.stab/cmake"
     export PKG_CONFIG=pkg-config
   elif test "$TARGET_OS" = "Darwin"; then
-    export QTDIR="$HOME/Qt/5.12.9/clang_64"
+    export QTDIR="$HOME/Qt/5.12.10/clang_64"
     export RANLIB=ranlib
   else
     if test -z "$QTDIR" ; then
       if [ "$(uname -m)" = "x86_64" ]; then
-        export QTDIR="$HOME/Qt/5.15.1/gcc_64"
+        export QTDIR="$HOME/Qt/5.15.2/gcc_64"
       else
-        export QTDIR="$HOME/Qt/5.15.1/gcc"
+        export QTDIR="$HOME/Qt/5.15.2/gcc"
       fi
     fi
     export RANLIB=ranlib
@@ -1448,7 +1448,7 @@ function configure_compile_install_subproject {
 
   # Special hack for shotcut
   if test "shotcut" = "$1" -a \( "$TARGET_OS" = "Win32" -o "$TARGET_OS" = "Win64" \) ; then
-    sed 's/QMAKE_LIBS_OPENGL = -lGL//' -i /root/Qt/5.15.1/gcc_64/mkspecs/modules/qt_lib_gui_private.pri
+    sed 's/QMAKE_LIBS_OPENGL = -lGL//' -i /root/Qt/5.15.2/gcc_64/mkspecs/modules/qt_lib_gui_private.pri
   fi
 
   # Special hack for movit
@@ -1583,7 +1583,7 @@ function configure_compile_install_subproject {
         cmd cp -a "$QTDIR"/plugins/{audio,egldeviceintegrations,generic,iconengines,imageformats,mediaservice,platforminputcontexts,platforms,platformthemes,wayland-decoration-client,wayland-graphics-integration-client,wayland-graphics-integration-server,wayland-shell-integration,xcbglintegrations} "$FINAL_INSTALL_DIR"/lib/qt5
         cmd cp -p "$QTDIR"/plugins/sqldrivers/libqsqlite.so "$FINAL_INSTALL_DIR"/lib/qt5/sqldrivers
         cmd cp -a "$QTDIR"/qml "$FINAL_INSTALL_DIR"/lib
-        cmd curl -o "$FINAL_INSTALL_DIR"/lib/qml/QtQuick/Controls.2/Fusion/ComboBox.qml "https://s3.amazonaws.com/misc.meltymedia/shotcut-build/ComboBox.qml"
+#        cmd curl -o "$FINAL_INSTALL_DIR"/lib/qml/QtQuick/Controls.2/Fusion/ComboBox.qml "https://s3.amazonaws.com/misc.meltymedia/shotcut-build/ComboBox.qml"
         cmd install -d "$FINAL_INSTALL_DIR"/lib/va
         cmd install -p -c /usr/lib/x86_64-linux-gnu/dri/*_drv_video.so "$FINAL_INSTALL_DIR"/lib/va
       fi
@@ -1905,7 +1905,7 @@ function deploy_osx
   elif [ -d "/Applications/Qt Creator.app/Contents/Imports/qtquick2" ]; then
     cmd cp -a "/Applications/Qt Creator.app/Contents/Imports/qtquick2" Resources/qml
   fi
-  cmd curl -o Resources/qml/QtQuick/Controls.2/Fusion/ComboBox.qml "https://s3.amazonaws.com/misc.meltymedia/shotcut-build/ComboBox-qt5.12.9.qml"
+#  cmd curl -o Resources/qml/QtQuick/Controls.2/Fusion/ComboBox.qml "https://s3.amazonaws.com/misc.meltymedia/shotcut-build/ComboBox-qt5.12.10.qml"
   for lib in $(find Resources -name '*.dylib'); do
     fixlibs "$lib"
   done
