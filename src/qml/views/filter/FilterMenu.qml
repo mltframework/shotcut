@@ -16,7 +16,7 @@
  */
  
 import QtQuick 2.2
-import QtQuick.Controls 1.0
+import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.1
 import org.shotcut.qml 1.0 as Shotcut
 import Shotcut.Controls 1.0 as ShotcutControls
@@ -64,7 +64,7 @@ Rectangle {
                         metadatamodel.search = text
                     }
                     if (length > 0) {
-                        parent.savedFilter = typeGroup.current
+                        parent.savedFilter = typeGroup.checkedButton
                         favButton.checked = vidButton.checked = audButton.checked = false
                     } else {
                         parent.savedFilter.checked = true
@@ -86,11 +86,16 @@ Rectangle {
             }
             ToolButton {
                 id: clearButton
+                padding: 2
                 implicitWidth: 20
                 implicitHeight: 20
-                iconName: 'edit-clear'
-                iconSource: 'qrc:///icons/oxygen/32x32/actions/edit-clear.png'
-                tooltip: qsTr('Clear search')
+                icon.name: 'edit-clear'
+                icon.source: 'qrc:///icons/oxygen/32x32/actions/edit-clear.png'
+                hoverEnabled: true
+                ToolTip.delay: 700
+                ToolTip.timeout: 5000
+                ToolTip.visible: hovered
+                ToolTip.text: qsTr('Clear search')
                 onClicked: searchField.text = ''
             }
         }
@@ -99,38 +104,56 @@ Rectangle {
             id: toolBar
             Layout.fillWidth: true
 
-            ExclusiveGroup { id: typeGroup }
+            ButtonGroup { id: typeGroup }
 
             ShotcutControls.ToggleButton {
                 id: favButton
                 checked: true
-                implicitWidth: 80
-                iconName: 'bookmarks'
-                iconSource: 'qrc:///icons/oxygen/32x32/places/bookmarks.png'
+                implicitWidth: 82
+                icon.name: 'bookmarks'
+                icon.source: 'qrc:///icons/oxygen/32x32/places/bookmarks.png'
                 text: qsTr('Favorite')
-                tooltip: qsTr('Show favorite filters')
-                exclusiveGroup: typeGroup
-                onClicked: if (checked) metadatamodel.filter = Shotcut.MetadataModel.FavoritesFilter
+                ToolTip.text: qsTr('Show favorite filters')
+                ButtonGroup.group: typeGroup
+                onClicked: {
+                    if (checked) {
+                        metadatamodel.filter = Shotcut.MetadataModel.FavoritesFilter
+                        searchField.text = ''
+                        checked = true
+                    }
+                }
             }
             ShotcutControls.ToggleButton {
                 id: vidButton
-                implicitWidth: 80
-                iconName: 'video-television'
-                iconSource: 'qrc:///icons/oxygen/32x32/devices/video-television.png'
+                implicitWidth: 82
+                icon.name: 'video-television'
+                icon.source: 'qrc:///icons/oxygen/32x32/devices/video-television.png'
                 text: qsTr('Video')
-                tooltip: qsTr('Show video filters')
-                exclusiveGroup: typeGroup
-                onClicked: if (checked) metadatamodel.filter = Shotcut.MetadataModel.VideoFilter
+                ToolTip.text: qsTr('Show video filters')
+                ButtonGroup.group: typeGroup
+                onClicked: {
+                    if (checked) {
+                        metadatamodel.filter = Shotcut.MetadataModel.VideoFilter
+                        searchField.text = ''
+                        checked = true
+                    }
+                }
             }
             ShotcutControls.ToggleButton {
                 id: audButton
-                implicitWidth: 80
-                iconName: 'speaker'
-                iconSource: 'qrc:///icons/oxygen/32x32/actions/speaker.png'
+                implicitWidth: 82
+                icon.name: 'speaker'
+                icon.source: 'qrc:///icons/oxygen/32x32/actions/speaker.png'
                 text: qsTr('Audio')
-                tooltip: qsTr('Show audio filters')
-                exclusiveGroup: typeGroup
-                onClicked: if (checked) metadatamodel.filter = Shotcut.MetadataModel.AudioFilter
+                ToolTip.text: qsTr('Show audio filters')
+                ButtonGroup.group: typeGroup
+                onClicked: {
+                    if (checked) {
+                        metadatamodel.filter = Shotcut.MetadataModel.AudioFilter
+                        searchField.text = ''
+                        checked = true
+                    }
+                }
             }
             Button { // separator
                 enabled: false
@@ -139,9 +162,16 @@ Rectangle {
             }
             Button {
                 id: closeButton
-                iconName: 'window-close'
-                iconSource: 'qrc:///icons/oxygen/32x32/actions/window-close.png'
-                tooltip: qsTr('Close menu')
+                icon.name: 'window-close'
+                icon.source: 'qrc:///icons/oxygen/32x32/actions/window-close.png'
+                padding: 2
+                implicitWidth: 20
+                implicitHeight: 20
+                hoverEnabled: true
+                ToolTip.delay: 700
+                ToolTip.timeout: 5000
+                ToolTip.visible: hovered
+                ToolTip.text: qsTr('Close menu')
                 onClicked: filterWindow.close()
             }
             Item {

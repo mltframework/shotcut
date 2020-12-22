@@ -16,9 +16,8 @@
  */
 
 import QtQuick 2.1
-import QtQuick.Controls 1.3
+import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.0
-import Shotcut.Controls 1.0
 
 Rectangle {
     id: root
@@ -125,12 +124,17 @@ Rectangle {
 
         Button {
             id: addButton
-            Layout.minimumWidth: height
-            iconName: 'list-add'
-            iconSource: 'qrc:///icons/oxygen/32x32/actions/list-add.png'
+            implicitWidth: height
+            padding: 1
+            icon.name: 'list-add'
+            icon.source: 'qrc:///icons/oxygen/32x32/actions/list-add.png'
             enabled: attachedfiltersmodel.isProducerSelected
             opacity: enabled ? 1.0 : 0.5
-            tooltip: qsTr('Add a filter')
+            hoverEnabled: true
+            ToolTip.delay: 700
+            ToolTip.timeout: 5000
+            ToolTip.visible: hovered
+            ToolTip.text: qsTr('Add a filter')
             onClicked: {
                 if (application.confirmOutputFilter()) {
                     filterMenu.open()
@@ -139,12 +143,17 @@ Rectangle {
         }
         Button {
             id: removeButton
-            Layout.minimumWidth: height
-            iconName: 'list-remove'
-            iconSource: 'qrc:///icons/oxygen/32x32/actions/list-remove.png'
+            implicitWidth: height
+            padding: 1
+            icon.name: 'list-remove'
+            icon.source: 'qrc:///icons/oxygen/32x32/actions/list-remove.png'
             enabled: selectedIndex > -1
             opacity: enabled ? 1.0 : 0.5
-            tooltip: qsTr('Remove selected filter')
+            hoverEnabled: true
+            ToolTip.delay: 700
+            ToolTip.timeout: 5000
+            ToolTip.visible: hovered
+            ToolTip.text: qsTr('Remove selected filter')
             onClicked: {
                 attachedfiltersmodel.remove(selectedIndex)
             }
@@ -156,22 +165,32 @@ Rectangle {
         }
         Button {
             id: copyButton
-            Layout.minimumWidth: height
-            iconName: 'edit-copy'
+            implicitWidth: height
+            padding: 1
+            icon.name: 'edit-copy'
             enabled: selectedIndex > -1
             opacity: enabled ? 1.0 : 0.5
-            iconSource: 'qrc:///icons/oxygen/32x32/actions/edit-copy.png'
-            tooltip: qsTr('Copy the filters')
+            icon.source: 'qrc:///icons/oxygen/32x32/actions/edit-copy.png'
+            hoverEnabled: true
+            ToolTip.delay: 700
+            ToolTip.timeout: 5000
+            ToolTip.visible: hovered
+            ToolTip.text: qsTr('Copy the filters')
             onClicked: application.copyFilters()
         }
         Button {
             id: pasteButton
-            Layout.minimumWidth: height
+            implicitWidth: height
+            padding: 1
             enabled: application.hasFiltersOnClipboard && attachedfiltersmodel.isProducerSelected
             opacity: enabled ? 1.0 : 0.5
-            iconName: 'edit-paste'
-            iconSource: 'qrc:///icons/oxygen/32x32/actions/edit-paste.png'
-            tooltip: qsTr('Paste filters')
+            icon.name: 'edit-paste'
+            icon.source: 'qrc:///icons/oxygen/32x32/actions/edit-paste.png'
+            hoverEnabled: true
+            ToolTip.delay: 700
+            ToolTip.timeout: 5000
+            ToolTip.visible: hovered
+            ToolTip.text: qsTr('Paste filters')
             onClicked: application.pasteFilters()
         }
         Button { // separator
@@ -181,22 +200,32 @@ Rectangle {
         }
         Button {
             id: moveUpButton
-            Layout.minimumWidth: height
+            implicitWidth: height
+            padding: 1
             enabled: selectedIndex > 0
             opacity: enabled ? 1.0 : 0.5
-            iconName: 'lift'
-            iconSource: 'qrc:///icons/oxygen/32x32/actions/lift.png'
-            tooltip: qsTr('Move filter up')
+            icon.name: 'lift'
+            icon.source: 'qrc:///icons/oxygen/32x32/actions/lift.png'
+            hoverEnabled: true
+            ToolTip.delay: 700
+            ToolTip.timeout: 5000
+            ToolTip.visible: hovered
+            ToolTip.text: qsTr('Move filter up')
             onClicked: attachedfiltersmodel.move(selectedIndex, --selectedIndex)
         }
         Button {
             id: moveDownButton
-            Layout.minimumWidth: height
+            implicitWidth: height
+            padding: 1
             enabled: selectedIndex > -1 && selectedIndex + 1 < attachedfiltersmodel.rowCount()
             opacity: enabled ? 1.0 : 0.5
-            iconName: 'overwrite'
-            iconSource: 'qrc:///icons/oxygen/32x32/actions/overwrite.png'
-            tooltip: qsTr('Move filter down')
+            icon.name: 'overwrite'
+            icon.source: 'qrc:///icons/oxygen/32x32/actions/overwrite.png'
+            hoverEnabled: true
+            ToolTip.delay: 700
+            ToolTip.timeout: 5000
+            ToolTip.visible: hovered
+            ToolTip.text: qsTr('Move filter down')
             onClicked: attachedfiltersmodel.move(selectedIndex, ++selectedIndex)
         }
         Button { // separator
@@ -206,12 +235,17 @@ Rectangle {
         }
         Button {
             id: deselectButton
-            Layout.minimumWidth: height
-            iconName: 'window-close'
-            iconSource: 'qrc:///icons/oxygen/32x32/actions/window-close.png'
+            implicitWidth: height
+            padding: 1
+            icon.name: 'window-close'
+            icon.source: 'qrc:///icons/oxygen/32x32/actions/window-close.png'
             enabled: selectedIndex > -1
             opacity: enabled ? 1.0 : 0.5
-            tooltip: qsTr('Deselect the filter')
+            hoverEnabled: true
+            ToolTip.delay: 700
+            ToolTip.timeout: 5000
+            ToolTip.visible: hovered
+            ToolTip.text: qsTr('Deselect the filter')
             onClicked: {
                 clearCurrentFilter()
                 attachedFilters.setCurrentFilter(-2)
@@ -300,6 +334,8 @@ Rectangle {
 
     Connections {
         target: attachedfiltersmodel
-        onIsProducerSelectedChanged: filterMenu.close()
+        function onIsProducerSelectedChanged() {
+            filterMenu.close()
+        }
     }
 }

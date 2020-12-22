@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2019 Meltytech, LLC
+ * Copyright (c) 2014-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +16,7 @@
  */
 
 import QtQuick 2.0
-import QtQuick.Controls 1.1
+import QtQuick.Controls 2.12
 import QtQml.Models 2.1
 
 Rectangle {
@@ -72,7 +72,7 @@ Rectangle {
                 CheckBox {
                     id: filterDelegateCheck
                     anchors.verticalCenter: parent.verticalCenter
-                    checkedState: model.checkState
+                    checkState: model.checkState
                     onClicked: {
                         model.checkState = !model.checkState
                     }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2019 Meltytech, LLC
+ * Copyright (c) 2014-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +16,7 @@
  */
 
 import QtQuick 2.2
-import QtQuick.Controls 1.1
+import QtQuick.Controls 2.12
 import 'FilterMenu.js' as Logic
 
 Rectangle {
@@ -41,11 +41,12 @@ Rectangle {
                 id: favButton
                 implicitWidth: 20
                 implicitHeight: 18
+                padding: 1
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
                 opacity: favorite ? 1.0 : 0.3
-                iconName: 'bookmarks'
-                iconSource: 'qrc:///icons/oxygen/32x32/places/bookmarks.png'
+                icon.name: 'bookmarks'
+                icon.source: 'qrc:///icons/oxygen/32x32/places/bookmarks.png'
                 onClicked: favorite = !favorite
             }
         }
@@ -61,11 +62,12 @@ Rectangle {
                 id: itemIcon
                 implicitWidth: 20
                 implicitHeight: 18
+                padding: 1
                 anchors.left: parent.left
                 anchors.verticalCenter: parent.verticalCenter
                 enabled: false
-                iconName: needsGpu ? 'cpu' : isAudio ? 'speaker' : 'video-television'
-                iconSource: needsGpu ? 'qrc:///icons/oxygen/32x32/devices/cpu.png' : isAudio ? 'qrc:///icons/oxygen/32x32/actions/speaker.png' : 'qrc:///icons/oxygen/32x32/devices/video-television.png'
+                icon.name: needsGpu ? 'cpu' : isAudio ? 'speaker' : 'video-television'
+                icon.source: needsGpu ? 'qrc:///icons/oxygen/32x32/devices/cpu.png' : isAudio ? 'qrc:///icons/oxygen/32x32/actions/speaker.png' : 'qrc:///icons/oxygen/32x32/devices/video-television.png'
             }
             
             Label {
