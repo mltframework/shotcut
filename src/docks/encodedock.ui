@@ -60,7 +60,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QTreeView" name="presetsTree">
+       <widget class="ExportPresetsTreeView" name="presetsTree">
         <property name="editTriggers">
          <set>QAbstractItemView::NoEditTriggers</set>
         </property>
@@ -1880,6 +1880,11 @@ in temporal compression</string>
    <class>LineEditClear</class>
    <extends>QLineEdit</extends>
    <header>widgets/lineeditclear.h</header>
+  </customwidget>
+  <customwidget>
+   <class>ExportPresetsTreeView</class>
+   <extends>QTreeView</extends>
+   <header>widgets/exportpresetstreeview.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>

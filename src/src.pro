@@ -24,6 +24,7 @@ SOURCES += main.cpp\
     spatialmedia/mpeg4_container.cpp \
     spatialmedia/sa3d.cpp \
     spatialmedia/spatialmedia.cpp \
+    widgets/exportpresetstreeview.cpp \
     widgets/plasmawidget.cpp \
     widgets/lissajouswidget.cpp \
     widgets/isingwidget.cpp \
@@ -153,6 +154,7 @@ HEADERS  += mainwindow.h \
     spatialmedia/mpeg4_container.h \
     spatialmedia/sa3d.h \
     spatialmedia/spatialmedia.h \
+    widgets/exportpresetstreeview.h \
     widgets/plasmawidget.h \
     abstractproducerwidget.h \
     widgets/lissajouswidget.h \
