@@ -403,10 +403,8 @@ win32 {
     windowstools.cpp
 }
 unix:!mac {
-    QT += x11extras
     CONFIG += link_pkgconfig
     PKGCONFIG += mlt++
-    LIBS += -lX11
 }
 
 unix:!mac:isEmpty(PREFIX) {
