@@ -17,6 +17,7 @@ jobs:
             base-devel bzip2 coreutils git gzip tar xz zip
             mingw-w64-x86_64-toolchain
             mingw-w64-x86_64-cmake
+            mingw-w64-x86_64-meson
             mingw-w64-x86_64-nasm
             mingw-w64-x86_64-ninja
             mingw-w64-x86_64-python-pip

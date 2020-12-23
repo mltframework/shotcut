@@ -47,6 +47,9 @@ BIGSH0T_REVISION=
 ENABLE_ZIMG=1
 ZIMG_HEAD=1
 ZIMG_REVISION=
+DAV1D_HEAD=1
+DAV1D_REVISION=
+
 
 # QT_INCLUDE_DIR="$(pkg-config --variable=prefix QtCore)/include"
 QT_INCLUDE_DIR=${QTDIR:+${QTDIR}/include}
@@ -161,6 +164,9 @@ function to_key {
     ;;
     zimg)
       echo 9
+    ;;
+    dav1d)
+      echo 10
     ;;
     *)
       echo UNKNOWN
@@ -317,7 +323,7 @@ function set_globals {
   # Subdirs list, for number of common operations
   # Note, the function to_key depends on this
   if [ -z "$SUBDIRS" ]; then
-    SUBDIRS="AMF nv-codec-headers FFmpeg"
+    SUBDIRS="dav1d AMF nv-codec-headers FFmpeg"
     if test "$ENABLE_SWH_PLUGINS" = "1"; then
         SUBDIRS="$SUBDIRS swh-plugins"
     fi
@@ -369,6 +375,7 @@ function set_globals {
 #  REPOLOCS[8]="https://bitbucket.org/dandennedy/bigsh0t.git"
   REPOLOCS[8]="https://bitbucket.org/leo_sutic/bigsh0t.git"
   REPOLOCS[9]="git://github.com/sekrit-twc/zimg.git"
+  REPOLOCS[10]="https://code.videolan.org/videolan/dav1d.git"
 
   # REPOTYPE Array holds the repo types. (Yes, this might be redundant, but easy for me)
   REPOTYPES[0]="git"
@@ -381,6 +388,7 @@ function set_globals {
   REPOTYPES[7]="git"
   REPOTYPES[8]="git"
   REPOTYPES[9]="git"
+  REPOTYPES[10]="git"
 
   # And, set up the revisions
   REVISIONS[0]=""
@@ -413,6 +421,10 @@ function set_globals {
   REVISIONS[9]=""
   if test 0 = "$ZIMG_HEAD" -a "$ZIMG_REVISION" ; then
     REVISIONS[9]="$ZIMG_REVISION"
+  fi
+  REVISIONS[10]=""
+  if test 0 = "$DAV1D_HEAD" -a "$DAV1D_REVISION" ; then
+    REVISIONS[10]="$DAV1D_REVISION"
   fi
 
   # Figure out the number of cores in the system. Used both by make and startup script
@@ -448,7 +460,7 @@ function set_globals {
   #####
   # ffmpeg
   CONFIG[0]="./configure --prefix=$FINAL_INSTALL_DIR --disable-static --disable-doc --enable-gpl --enable-version3 --enable-shared --enable-runtime-cpudetect $CONFIGURE_DEBUG_FLAG"
-  CONFIG[0]="${CONFIG[0]} --enable-libtheora --enable-libvorbis --enable-libmp3lame --enable-libx264 --enable-libx265 --enable-libvpx --enable-libopus --enable-libmfx"
+  CONFIG[0]="${CONFIG[0]} --enable-libtheora --enable-libvorbis --enable-libmp3lame --enable-libx264 --enable-libx265 --enable-libvpx --enable-libopus --enable-libmfx --enable-libdav1d"
   # Add optional parameters
   if [ "$ENABLE_ZIMG" = "1" ]; then
     CONFIG[0]="${CONFIG[0]} --enable-libzimg"
@@ -510,6 +522,17 @@ function set_globals {
   CONFIG[9]="./configure --prefix=$FINAL_INSTALL_DIR"
   CFLAGS_[9]=$CFLAGS
   LDFLAGS_[9]=$LDFLAGS
+
+  #####
+  # dav1d
+  CONFIG[10]="meson setup builddir --prefix=$FINAL_INSTALL_DIR --libdir=$FINAL_INSTALL_DIR/lib"
+  if [ "$DEBUG_BUILD" = "1" ]; then
+    CONFIG[10]="${CONFIG[10]} --buildtype=debug"
+  else
+    CONFIG[10]="${CONFIG[10]} --buildtype=release"
+  fi
+  CFLAGS_[10]=$CFLAGS
+  LDFLAGS_[10]=$LDFLAGS
 }
 
 ######################################################################
@@ -820,7 +843,9 @@ function configure_compile_install_subproject {
   if test "movit" = "$1" ; then
     cmd make -j$MAKEJ libmovit.la || die "Unable to build $1"
   elif test "frei0r" = "$1" -o "bigsh0t" = "$1"; then
-    cmd ninja || die "Unable to build $1"
+    cmd ninja -j $MAKEJ || die "Unable to build $1"
+  elif test "dav1d" = "$1"; then
+    cmd ninja -C builddir -j $MAKEJ || die "Unable to build $1"
   elif test "$MYCONFIG" != ""; then
     cmd make -j$MAKEJ || die "Unable to build $1"
   fi
@@ -844,6 +869,8 @@ function configure_compile_install_subproject {
     cmd ninja install || die "Unable to install $1"
   elif test "bigsh0t" = "$1" ; then
     cmd install -p -c *.dll "$FINAL_INSTALL_DIR"/lib/frei0r-1  || die "Unable to install $1"
+  elif test "dav1d" = "$1"; then
+    cmd meson install -C builddir || die "Unable to install $1"
   elif test "$MYCONFIG" != "" ; then
     cmd make install || die "Unable to install $1"
   fi

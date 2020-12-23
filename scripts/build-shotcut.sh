@@ -57,6 +57,7 @@ FFMPEG_SUPPORT_ZIMG=1
 FFMPEG_SUPPORT_NVENC=1
 FFMPEG_SUPPORT_AMF=1
 FFMPEG_SUPPORT_QSV=1
+FFMPEG_SUPPORT_DAV1D=1
 FFMPEG_ADDITIONAL_OPTIONS=
 ENABLE_VIDSTAB=1
 VIDSTAB_HEAD=1
@@ -76,6 +77,8 @@ BIGSH0T_REVISION=
 ENABLE_ZIMG=1
 ZIMG_HEAD=1
 ZIMG_REVISION=
+DAV1D_HEAD=1
+DAV1D_REVISION=
 
 # QT_INCLUDE_DIR="$(pkg-config --variable=prefix QtCore)/include"
 QT_INCLUDE_DIR=${QTDIR:+${QTDIR}/include}
@@ -216,6 +219,9 @@ function to_key {
     ;;
     zimg)
       echo 20
+    ;;
+    dav1d)
+      echo 21
     ;;
     *)
       echo UNKNOWN
@@ -420,6 +426,9 @@ function set_globals {
     if test "$ENABLE_ZIMG" = 1 ; then
         SUBDIRS="zimg $SUBDIRS"
     fi
+    if test "$FFMPEG_SUPPORT_DAV1D" = 1 && test "$DAV1D_HEAD" = 1 -o "$DAV1D_REVISION" != ""; then
+        SUBDIRS="dav1d $SUBDIRS"
+    fi
   fi
 
   if [ "$DEBUG_BUILD" = "1" ]; then
@@ -464,6 +473,7 @@ function set_globals {
 #  REPOLOCS[19]="https://bitbucket.org/dandennedy/bigsh0t.git"
   REPOLOCS[19]="https://bitbucket.org/leo_sutic/bigsh0t.git"
   REPOLOCS[20]="https://github.com/sekrit-twc/zimg.git"
+  REPOLOCS[21]="https://code.videolan.org/videolan/dav1d.git"
 
   # REPOTYPE Array holds the repo types. (Yes, this might be redundant, but easy for me)
   REPOTYPES[0]="git"
@@ -484,6 +494,7 @@ function set_globals {
   REPOTYPES[18]="git"
   REPOTYPES[19]="git"
   REPOTYPES[20]="git"
+  REPOTYPES[21]="git"
 
   # And, set up the revisions
   REVISIONS[0]=""
@@ -535,11 +546,17 @@ function set_globals {
   if test 0 = "$RUBBERBAND_HEAD" -a "$RUBBERBAND_REVISION" ; then
     REVISIONS[18]="$RUBBERBAND_REVISION"
   fi
+  REVISIONS[19]=""
   if test 0 = "$BIGSH0T_HEAD" -a "$BIGSH0T_REVISION" ; then
     REVISIONS[19]="$BIGSH0T_REVISION"
   fi
+  REVISIONS[20]=""
   if test 0 = "$ZIMG_HEAD" -a "$ZIMG_REVISION" ; then
-    REVISIONS[19]="$ZIMG_REVISION"
+    REVISIONS[20]="$ZIMG_REVISION"
+  fi
+  REVISIONS[21]=""
+  if test 0 = "$DAV1D_HEAD" -a "$DAV1D_REVISION" ; then
+    REVISIONS[21]="$DAV1D_REVISION"
   fi
 
   # Figure out the number of cores in the system. Used both by make and startup script
@@ -647,6 +664,9 @@ function set_globals {
   fi
   if test 1 = "$FFMPEG_SUPPORT_QSV" && test "$TARGET_OS" != "Darwin" && test "$TARGET_OS" != "Linux" ; then
     CONFIG[0]="${CONFIG[0]} --enable-libmfx"
+  fi
+  if test 1 = "$FFMPEG_SUPPORT_DAV1D" ; then
+    CONFIG[0]="${CONFIG[0]} --enable-libdav1d"
   fi
   # Add optional parameters
   CONFIG[0]="${CONFIG[0]} $FFMPEG_ADDITIONAL_OPTIONS"
@@ -859,6 +879,17 @@ function set_globals {
     CFLAGS_[20]="$CFLAGS"
   fi
   LDFLAGS_[20]=$LDFLAGS
+
+  #####
+  # dav1d
+  CONFIG[21]="meson setup builddir --prefix=$FINAL_INSTALL_DIR --libdir=$FINAL_INSTALL_DIR/lib"
+  if [ "$DEBUG_BUILD" = "1" ]; then
+    CONFIG[21]="${CONFIG[21]} --buildtype=debug"
+  else
+    CONFIG[21]="${CONFIG[21]} --buildtype=release"
+  fi
+  CFLAGS_[21]=$CFLAGS
+  LDFLAGS_[21]=$LDFLAGS
 }
 
 ######################################################################
@@ -1528,6 +1559,8 @@ function configure_compile_install_subproject {
   feedback_status Building $1 - this could take some time
   if test "movit" = "$1" ; then
     cmd make -j$MAKEJ RANLIB="$RANLIB" libmovit.la || die "Unable to build $1"
+  elif test "dav1d" = "$1" ; then
+    cmd ninja -C builddir -j $MAKEJ || die "Unable to build $1"
   elif test "$MYCONFIG" != ""; then
     cmd make -j$MAKEJ || die "Unable to build $1"
   fi
@@ -1593,6 +1626,8 @@ function configure_compile_install_subproject {
       else
         cmd install -p -c *.so "$FINAL_INSTALL_DIR"/lib/frei0r-1  || die "Unable to install $1"
       fi
+    elif test "dav1d" = "$1" ; then
+      cmd meson install -C builddir || die "Unable to install $1"
     elif test "$MYCONFIG" != "" ; then
       cmd make install || die "Unable to install $1"
     fi
