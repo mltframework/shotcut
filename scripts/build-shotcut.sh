@@ -17,14 +17,12 @@
 INSTALL_DIR="$HOME/shotcut"
 AUTO_APPEND_DATE=0
 SOURCE_DIR="$INSTALL_DIR/src"
-ACTION_GET_COMPILE_INSTALL=1
-ACTION_GET_ONLY=0
+ACTION_CLEAN_SOURCE=0
+ACTION_GET=1
+ACTION_CONFIGURE=1
 ACTION_COMPILE_INSTALL=1
-CLEANUP=1
-ARCHIVE=1
-SOURCES_CLEAN=0
-SOURCES_CONFIGURE=1
-INSTALL_AS_ROOT=0
+ACTION_ARCHIVE=1
+ACTION_CLEANUP=1
 DEBUG_BUILD=0
 ASAN_BUILD=0
 CREATE_STARTUP_SCRIPT=1
@@ -358,21 +356,17 @@ function set_globals {
   trace "Entering set_globals @ = $@"
   # Set convenience variables.
   test "$TARGET_OS" = "" && TARGET_OS="$(uname -s)"
-  if test 1 = "$ACTION_GET_ONLY" -o 1 = "$ACTION_GET_COMPILE_INSTALL" ; then
+  if test 1 = "$ACTION_GET" ; then
     GET=1
   else
     GET=0
   fi
-  NEED_SUDO=0
-  if test 1 = "$ACTION_GET_COMPILE_INSTALL" -o 1 = "$ACTION_COMPILE_INSTALL" ; then
+  if test 1 = "$ACTION_COMPILE_INSTALL" ; then
     COMPILE_INSTALL=1
-    if test 1 = $INSTALL_AS_ROOT ; then
-      NEED_SUDO=1
-    fi
   else
     COMPILE_INSTALL=0
   fi
-  debug "GET=$GET, COMPILE_INSTALL=$COMPILE_INSTALL, NEED_SUDO=$NEED_SUDO"
+  debug "GET=$GET, COMPILE_INSTALL=$COMPILE_INSTALL"
 
   # The script sets CREATE_STARTUP_SCRIPT to true always, disable if not COMPILE_INSTALL
   if test 0 = "$COMPILE_INSTALL" ; then
@@ -1169,7 +1163,7 @@ function get_subproject {
               debug "Found git repo, will update"
 
               if ! git diff-index --quiet ${REVISION:-master}; then
-                  die "git repository has local changes, aborting checkout. Consider disabling ACTION_GET_COMPILE_INSTALL or ACTION_GET_ONLY in your build config if you want to compile with these changes"
+                  die "git repository has local changes, aborting checkout. Consider disabling ACTION_GET in your build config if you want to compile with these changes"
               fi
 
               feedback_status "Pulling git sources for $1"
@@ -1279,7 +1273,7 @@ function get_all_sources {
     get_subproject $DIR
   done
   feedback_status Done getting all sources
-  if test "$TARGET_OS" = "Linux" -a "$ARCHIVE" = "1" ; then
+  if test "$TARGET_OS" = "Linux" -a "$ACTION_ARCHIVE" = "1" ; then
     feedback_status Making source archive
     cmd cd "$SOURCE_DIR"/..
     cat >src/README <<END_OF_SRC_README
@@ -1454,7 +1448,7 @@ function configure_compile_install_subproject {
   MYCONFIG=`lookup CONFIG $1`
 
   # Configure
-  if [ "$SOURCES_CONFIGURE" = "1" ]; then
+  if [ "$ACTION_CONFIGURE" = "1" ]; then
 
   feedback_status Configuring $1
 
@@ -1553,7 +1547,7 @@ function configure_compile_install_subproject {
     fi
   fi
 
-  fi # if [ "$SOURCES_CONFIGURE" = "1" ]
+  fi # if [ "$ACTION_CONFIGURE" = "1" ]
 
   # Compile
   feedback_status Building $1 - this could take some time
@@ -1570,26 +1564,6 @@ function configure_compile_install_subproject {
   feedback_status Installing $1
   export LD_LIBRARY_PATH=`lookup LD_LIBRARY_PATH_ $1`
   log "LD_LIBRARY_PATH=$LD_LIBRARY_PATH"
-  if test "1" = "$NEED_SUDO" ; then
-    debug "Needs to be root to install - trying"
-    log About to run $SUDO make install
-    TMPNAME=`mktemp -t build-shotcut.installoutput.XXXXXXXXX`
-    # At least kdesudo does not return an error code if the program fails
-    # Filter output for error, and dup it to the log
-    # Special hack for libvpx
-    if test "shotcut" = "$1" ; then
-      $SUDO install -c -m 755 shotcut "$FINAL_INSTALL_DIR"
-    else
-      $SUDO make install > $TMPNAME 2>&1
-    fi
-    cat $TMPNAME 2>&1
-    # If it contains error it returns 0. 1 matches, 255 errors
-    # Filter X errors out too
-    grep -v "X Error" $TMPNAME | grep -i error 2>&1
-    if test 0 = $? ; then
-      die "Unable to install $1"
-    fi
-  else
     if test "shotcut" = "$1" ; then
       if test "$TARGET_OS" = "Win32" -o "$TARGET_OS" = "Win64" ; then
         cmd make install
@@ -1646,7 +1620,6 @@ function configure_compile_install_subproject {
     if test "vid.stab" = "$1" -a "Darwin" = "$TARGET_OS" ; then
       cmd sed -e 's/-fopenmp//' -i .bak "$FINAL_INSTALL_DIR/lib/pkgconfig/vidstab.pc"
     fi
-  fi
   feedback_status Done installing $1
 
   # Reestablish
@@ -1674,7 +1647,7 @@ function configure_compile_install_all {
     configure_compile_install_subproject $DIR
   done
 
-  if [ "$ARCHIVE" = "1" ] && [ "$TARGET_OS" = "Linux" ]; then
+  if [ "$ACTION_ARCHIVE" = "1" ] && [ "$TARGET_OS" = "Linux" ]; then
     log Copying some libs from system
     for lib in "$FINAL_INSTALL_DIR"/lib/qt5/{audio,generic,iconengines,imageformats,mediaservice,platforms,platforminputcontexts,platformthemes,xcbglintegrations}/*.so; do
       bundle_libs "$lib"
@@ -2002,11 +1975,11 @@ function deploy_osx
     popd
   fi
 
-  if [ "$ARCHIVE" = "1" ]; then
+  if [ "$ACTION_ARCHIVE" = "1" ]; then
     if [ "$SDK" = "1" ]; then
       log Making archive
       cmd tar -cJvf shotcut.txz Shotcut
-      [ "$CLEANUP" = "1" ] && cmd rm -rf Shotcut
+      [ "$ACTION_CLEANUP" = "1" ] && cmd rm -rf Shotcut
       popd
     else
       # build DMG
@@ -2038,7 +2011,7 @@ function deploy_osx
       sync
       cmd hdiutil create -fs HFS+ -srcfolder staging -volname Shotcut -format UDBZ -size 800m "$dmg_name"
 
-      if [ "$CLEANUP" = "1" ]; then
+      if [ "$ACTION_CLEANUP" = "1" ]; then
         cmd rm -rf staging
       fi
     fi
@@ -2171,7 +2144,7 @@ function deploy_win32
   fi
   printf "[Paths]\nPlugins=lib/qt5\nQml2Imports=lib/qml\n" > qt.conf
 
-  if [ "$ARCHIVE" = "1" ]; then
+  if [ "$ACTION_ARCHIVE" = "1" ]; then
     if [ "$SDK" = "1" ]; then
       # Prepare src for archiving
       pushd .
@@ -2237,7 +2210,7 @@ End-of-environment-setup-template
     die "Unable to create environment script"
   fi
   chmod 755 $TMPFILE || die "Unable to make environment script executable"
-  $SUDO cp $TMPFILE "$FINAL_INSTALL_DIR/source-me" || die "Unable to create environment script - cp failed"
+  cp $TMPFILE "$FINAL_INSTALL_DIR/source-me" || die "Unable to create environment script - cp failed"
 
   log Creating wrapper scripts in $TMPFILE
   for exe in melt ffmpeg ffplay ffprobe; do
@@ -2263,7 +2236,7 @@ End-of-exe-wrapper
       die "Unable to create wrapper script"
     fi
     chmod 755 $TMPFILE || die "Unable to make wrapper script executable"
-    $SUDO cp $TMPFILE "$FINAL_INSTALL_DIR/$exe" || die "Unable to create wrapper script - cp failed"
+    cp $TMPFILE "$FINAL_INSTALL_DIR/$exe" || die "Unable to create wrapper script - cp failed"
   done
 
   log Creating wrapper script in $TMPFILE
@@ -2293,7 +2266,7 @@ End-of-shotcut-wrapper
     die "Unable to create wrapper script"
   fi
   chmod 755 $TMPFILE || die "Unable to make wrapper script executable"
-  $SUDO cp $TMPFILE "$FINAL_INSTALL_DIR/shotcut" || die "Unable to create wrapper script - cp failed"
+  cp $TMPFILE "$FINAL_INSTALL_DIR/shotcut" || die "Unable to create wrapper script - cp failed"
 
   popd
 
@@ -2305,7 +2278,7 @@ End-of-shotcut-wrapper
   if test 0 != $? ; then
     die "Unable to create desktop file"
   fi
-  $SUDO cp $TMPFILE "$FINAL_INSTALL_DIR/../Shotcut.desktop" || die "Unable to create desktop file - cp failed"
+  cp $TMPFILE "$FINAL_INSTALL_DIR/../Shotcut.desktop" || die "Unable to create desktop file - cp failed"
 
   feedback_status Done creating startup and environment script
 
@@ -2321,7 +2294,7 @@ End-of-shotcut-wrapper
     fi
   done
 
-  if [ "$ARCHIVE" = "1" ]; then
+  if [ "$ACTION_ARCHIVE" = "1" ]; then
     log Creating archive
     tarball="$INSTALL_DIR/shotcut.txz"
     cmd rm "$tarball" 2>/dev/null
@@ -2344,7 +2317,7 @@ End-of-shotcut-wrapper
     cmd tar -cJvf "$tarball" Shotcut
   fi
 
-  if [ "$CLEANUP" = "1" ]; then
+  if [ "$ACTION_CLEANUP" = "1" ]; then
     log Cleaning Up
     cmd rm -rf Shotcut
   fi
@@ -2358,7 +2331,7 @@ End-of-shotcut-wrapper
 function perform_action {
   trace "Entering perform_action @ = $@"
   # Test that may fail goes here, before we do anything
-  if test 1 = "$SOURCES_CLEAN"; then
+  if test 1 = "$ACTION_CLEAN_SOURCE"; then
     clean_dirs
   fi
   if test 1 = "$GET"; then
@@ -2432,24 +2405,6 @@ function main {
   CHECKERPID=$!
   # debug "Checker process is running with pid=$CHECKERPID"
 
-  # Special case for sudo getting
-  SUDO=""
-  log "Checking for sudo requirement" 2>&1
-  if test "1" = "$NEED_SUDO" ; then
-    log "sudo is needed"
-        echo You have chosen to install as root.
-        echo
-        echo 'Please provide your sudo password below.  (If you have recently provided your sudo password to this script, you may not have to do that, because the password is cached).'
-        echo
-        echo The password will be handled securely by the sudo program.
-        echo
-        echo If you fail to provide the password, you will have to provide it later when installing the different projects.
-        sudo -v
-        if test 0 != $? ; then
-          die "Unable to proceed"
-        fi
-        SUDO=sudo
-  fi
   log "Done checking for sudo requirement" 2>&1
 
   {

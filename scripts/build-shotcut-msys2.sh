@@ -17,10 +17,10 @@
 INSTALL_DIR="$HOME/build"
 AUTO_APPEND_DATE=0
 SOURCE_DIR="$INSTALL_DIR/src"
-ACTION_GET_COMPILE_INSTALL=1
-ACTION_GET_ONLY=0
+ACTION_GET=1
+ACTION_CONFIGURE=1
 ACTION_COMPILE_INSTALL=1
-SOURCES_CLEAN=0
+ACTION_CLEAN_SOURCE=0
 DEBUG_BUILD=0
 ASAN_BUILD=0
 DEPLOY=1
@@ -302,12 +302,12 @@ function read_configuration {
 function set_globals {
   trace "Entering set_globals @ = $@"
   # Set convenience variables.
-  if test 1 = "$ACTION_GET_ONLY" -o 1 = "$ACTION_GET_COMPILE_INSTALL" ; then
+  if test 1 = "$ACTION_GET" ; then
     GET=1
   else
     GET=0
   fi
-  if test 1 = "$ACTION_GET_COMPILE_INSTALL" -o 1 = "$ACTION_COMPILE_INSTALL" ; then
+  if test 1 = "$ACTION_COMPILE_INSTALL" ; then
     COMPILE_INSTALL=1
   else
     COMPILE_INSTALL=0
@@ -665,7 +665,7 @@ function get_subproject {
               debug "Found git repo, will update"
 
               if ! git diff-index --quiet ${REVISION:-master}; then
-                  die "git repository has local changes, aborting checkout. Consider disabling ACTION_GET_COMPILE_INSTALL or ACTION_GET_ONLY in your build config if you want to compile with these changes"
+                  die "git repository has local changes, aborting checkout. Consider disabling ACTION_GET in your build config if you want to compile with these changes"
               fi
 
               feedback_status "Pulling git sources for $1"
@@ -803,6 +803,9 @@ function configure_compile_install_subproject {
   log LDFLAGS=$LDFLAGS
 
   # Configure
+  if [ "$ACTION_CONFIGURE" = "1" ]; then
+
+  # Configure
   feedback_status Configuring $1
 
   # Special hack for mlt
@@ -837,6 +840,8 @@ function configure_compile_install_subproject {
     cmd $MYCONFIG || die "Unable to configure $1"
     feedback_status Done configuring $1
   fi
+
+  fi # if [ "$ACTION_CONFIGURE" = "1" ]
 
   # Compile
   feedback_status Building $1 - this could take some time
@@ -1152,7 +1157,7 @@ function deploy
 function perform_action {
   trace "Entering perform_action @ = $@"
   # Test that may fail goes here, before we do anything
-  if test 1 = "$SOURCES_CLEAN"; then
+  if test 1 = "$ACTION_CLEAN_SOURCE"; then
     clean_dirs
   fi
   if test 1 = "$GET"; then
