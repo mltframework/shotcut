@@ -369,7 +369,7 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties& preset)
                 || vcodec.endsWith("_qsv") || vcodec.endsWith("_videotoolbox") || vcodec.endsWith("_vaapi"))
             // 0 (best, 100%) - 51 (worst)
             ui->videoQualitySpinner->setValue(TO_RELATIVE(51, 0, videoQuality));
-        else if (vcodec.startsWith("libvpx")) // 0 (best, 100%) - 63 (worst)
+        else if (vcodec.startsWith("libvpx") || vcodec.startsWith("libaom-")) // 0 (best, 100%) - 63 (worst)
             ui->videoQualitySpinner->setValue(TO_RELATIVE(63, 0, videoQuality));
         else // 1 (best, NOT 100%) - 31 (worst)
             ui->videoQualitySpinner->setValue(TO_RELATIVE(31, 1, videoQuality));
@@ -730,7 +730,7 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
                 case RateControlQuality: {
                     if (vcodec == "libx264") {
                         setIfNotSet(p, "crf", TO_ABSOLUTE(51, 0, vq));
-                    } else if (vcodec.startsWith("libvpx")) {
+                    } else if (vcodec.startsWith("libvpx") || vcodec.startsWith("libaom-")) {
                         setIfNotSet(p, "crf", TO_ABSOLUTE(63, 0, vq));
                         setIfNotSet(p, "vb", 0); // VP9 needs this to prevent constrained quality mode.
                     } else if (vcodec.endsWith("_vaapi")) {
@@ -746,7 +746,7 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
                 case RateControlConstrained: {
                     if (vcodec == "libx264") {
                         setIfNotSet(p, "crf", TO_ABSOLUTE(51, 0, vq));
-                    } else if (vcodec.startsWith("libvpx")) {
+                    } else if (vcodec.startsWith("libvpx") || vcodec.startsWith("libaom-")) {
                         setIfNotSet(p, "crf", TO_ABSOLUTE(63, 0, vq));
                     } else if (vcodec.endsWith("_qsv") || vcodec.endsWith("_videotoolbox")) {
                         setIfNotSet(p, "vb", qRound(cvbr));
@@ -765,7 +765,7 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
                 setIfNotSet(p, "g", ui->gopSpinner->value());
                 setIfNotSet(p, "bf", ui->bFramesSpinner->value());
                 if (ui->strictGopCheckBox->isChecked()) {
-                    if (vcodec.startsWith("libvpx"))
+                    if (vcodec.startsWith("libvpx") || vcodec.startsWith("libaom-"))
                         setIfNotSet(p, "keyint_min", ui->gopSpinner->value());
                     else
                         setIfNotSet(p, "sc_threshold", 0);
@@ -1963,7 +1963,7 @@ void EncodeDock::on_videoQualitySpinner_valueChanged(int vq)
     QString s;
     if (vcodec == "libx264" || vcodec == "libx265") {
         s = QString("crf=%1").arg(TO_ABSOLUTE(51, 0, vq));
-    } else if (vcodec.startsWith("libvpx")) {
+    } else if (vcodec.startsWith("libvpx") || vcodec.startsWith("libaom-")) {
         s = QString("crf=%1").arg(TO_ABSOLUTE(63, 0, vq));
     } else if (vcodec.contains("nvenc")) {
         if (ui->videoRateControlCombo->currentIndex() == RateControlQuality)
