@@ -49,6 +49,8 @@ ZIMG_HEAD=1
 ZIMG_REVISION=
 DAV1D_HEAD=1
 DAV1D_REVISION=
+AOM_HEAD=1
+AOM_REVISION=1
 
 
 # QT_INCLUDE_DIR="$(pkg-config --variable=prefix QtCore)/include"
@@ -167,6 +169,9 @@ function to_key {
     ;;
     dav1d)
       echo 10
+    ;;
+    aom)
+      echo 11
     ;;
     *)
       echo UNKNOWN
@@ -323,7 +328,7 @@ function set_globals {
   # Subdirs list, for number of common operations
   # Note, the function to_key depends on this
   if [ -z "$SUBDIRS" ]; then
-    SUBDIRS="dav1d AMF nv-codec-headers FFmpeg"
+    SUBDIRS="aom dav1d AMF nv-codec-headers FFmpeg"
     if test "$ENABLE_SWH_PLUGINS" = "1"; then
         SUBDIRS="$SUBDIRS swh-plugins"
     fi
@@ -376,6 +381,7 @@ function set_globals {
   REPOLOCS[8]="https://bitbucket.org/leo_sutic/bigsh0t.git"
   REPOLOCS[9]="git://github.com/sekrit-twc/zimg.git"
   REPOLOCS[10]="https://code.videolan.org/videolan/dav1d.git"
+  REPOLOCS[11]="https://aomedia.googlesource.com/aom"
 
   # REPOTYPE Array holds the repo types. (Yes, this might be redundant, but easy for me)
   REPOTYPES[0]="git"
@@ -389,6 +395,7 @@ function set_globals {
   REPOTYPES[8]="git"
   REPOTYPES[9]="git"
   REPOTYPES[10]="git"
+  REPOTYPES[11]="git"
 
   # And, set up the revisions
   REVISIONS[0]=""
@@ -426,6 +433,10 @@ function set_globals {
   if test 0 = "$DAV1D_HEAD" -a "$DAV1D_REVISION" ; then
     REVISIONS[10]="$DAV1D_REVISION"
   fi
+  REVISIONS[11]=""
+  if test 0 = "$AOM_HEAD" -a "$AOM_REVISION" ; then
+    REVISIONS[11]="$AOM_REVISION"
+  fi
 
   # Figure out the number of cores in the system. Used both by make and startup script
   CPUS=$(nproc)
@@ -460,7 +471,7 @@ function set_globals {
   #####
   # ffmpeg
   CONFIG[0]="./configure --prefix=$FINAL_INSTALL_DIR --disable-static --disable-doc --enable-gpl --enable-version3 --enable-shared --enable-runtime-cpudetect $CONFIGURE_DEBUG_FLAG"
-  CONFIG[0]="${CONFIG[0]} --enable-libtheora --enable-libvorbis --enable-libmp3lame --enable-libx264 --enable-libx265 --enable-libvpx --enable-libopus --enable-libmfx --enable-libdav1d"
+  CONFIG[0]="${CONFIG[0]} --enable-libtheora --enable-libvorbis --enable-libmp3lame --enable-libx264 --enable-libx265 --enable-libvpx --enable-libopus --enable-libmfx --enable-libdav1d --enable-libaom"
   # Add optional parameters
   if [ "$ENABLE_ZIMG" = "1" ]; then
     CONFIG[0]="${CONFIG[0]} --enable-libzimg"
@@ -533,6 +544,13 @@ function set_globals {
   fi
   CFLAGS_[10]=$CFLAGS
   LDFLAGS_[10]=$LDFLAGS
+
+  #####
+  # aom
+  # Use -DCMAKE_POSITION_INDEPENDENT_CODE=ON if -DBUILD_SHARED_LIBS=1 does not work.
+  CONFIG[11]="cmake -GNinja -DCMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR $CMAKE_DEBUG_FLAG -DBUILD_SHARED_LIBS=1 -DCONFIG_AV1_DECODER=0 -DENABLE_EXAMPLES=0 -DENABLE_TESTS=0 ../aom"
+  CFLAGS_[11]=$CFLAGS
+  LDFLAGS_[11]=$LDFLAGS
 }
 
 ######################################################################
@@ -835,6 +853,12 @@ function configure_compile_install_subproject {
     fi
   fi
 
+  # Special hack for aom
+  if test "aom" = "$1"; then
+    cmd mkdir -p ../build-aom
+    cmd cd ../build-aom || die "Unable to change to directory aom/builddir"
+  fi
+
   MYCONFIG=`lookup CONFIG $1`
   if test "$MYCONFIG" != ""; then
     cmd $MYCONFIG || die "Unable to configure $1"
@@ -847,7 +871,7 @@ function configure_compile_install_subproject {
   feedback_status Building $1 - this could take some time
   if test "movit" = "$1" ; then
     cmd make -j$MAKEJ libmovit.la || die "Unable to build $1"
-  elif test "frei0r" = "$1" -o "bigsh0t" = "$1"; then
+  elif test "frei0r" = "$1" -o "bigsh0t" = "$1" -o "aom" = "$1"; then
     cmd ninja -j $MAKEJ || die "Unable to build $1"
   elif test "dav1d" = "$1"; then
     cmd ninja -C builddir -j $MAKEJ || die "Unable to build $1"
@@ -870,7 +894,7 @@ function configure_compile_install_subproject {
     cmd install -p -c translations/*.qm "$FINAL_INSTALL_DIR"/share/translations
     cmd install -d "$FINAL_INSTALL_DIR"/share/shotcut
     cmd cp -a src/qml "$FINAL_INSTALL_DIR"/share/shotcut
-  elif test "frei0r" = "$1"; then
+  elif test "frei0r" = "$1" -o "aom" = "$1"; then
     cmd ninja install || die "Unable to install $1"
   elif test "bigsh0t" = "$1" ; then
     cmd install -p -c *.dll "$FINAL_INSTALL_DIR"/lib/frei0r-1  || die "Unable to install $1"

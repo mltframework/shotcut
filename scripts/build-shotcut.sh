@@ -56,6 +56,7 @@ FFMPEG_SUPPORT_NVENC=1
 FFMPEG_SUPPORT_AMF=1
 FFMPEG_SUPPORT_QSV=1
 FFMPEG_SUPPORT_DAV1D=1
+FFMPEG_SUPPORT_AOM=1
 FFMPEG_ADDITIONAL_OPTIONS=
 ENABLE_VIDSTAB=1
 VIDSTAB_HEAD=1
@@ -77,6 +78,8 @@ ZIMG_HEAD=1
 ZIMG_REVISION=
 DAV1D_HEAD=1
 DAV1D_REVISION=
+AOM_HEAD=1
+AOM_REVISION=
 
 # QT_INCLUDE_DIR="$(pkg-config --variable=prefix QtCore)/include"
 QT_INCLUDE_DIR=${QTDIR:+${QTDIR}/include}
@@ -220,6 +223,9 @@ function to_key {
     ;;
     dav1d)
       echo 21
+    ;;
+    aom)
+      echo 22
     ;;
     *)
       echo UNKNOWN
@@ -423,6 +429,9 @@ function set_globals {
     if test "$FFMPEG_SUPPORT_DAV1D" = 1 && test "$DAV1D_HEAD" = 1 -o "$DAV1D_REVISION" != ""; then
         SUBDIRS="dav1d $SUBDIRS"
     fi
+    if test "$FFMPEG_SUPPORT_AOM" = 1 && test "$AOM_HEAD" = 1 -o "$AOM_REVISION" != ""; then
+        SUBDIRS="aom $SUBDIRS"
+    fi
   fi
 
   if [ "$DEBUG_BUILD" = "1" ]; then
@@ -468,6 +477,7 @@ function set_globals {
   REPOLOCS[19]="https://bitbucket.org/leo_sutic/bigsh0t.git"
   REPOLOCS[20]="https://github.com/sekrit-twc/zimg.git"
   REPOLOCS[21]="https://code.videolan.org/videolan/dav1d.git"
+  REPOLOCS[22]="https://aomedia.googlesource.com/aom"
 
   # REPOTYPE Array holds the repo types. (Yes, this might be redundant, but easy for me)
   REPOTYPES[0]="git"
@@ -489,6 +499,7 @@ function set_globals {
   REPOTYPES[19]="git"
   REPOTYPES[20]="git"
   REPOTYPES[21]="git"
+  REPOTYPES[22]="git"
 
   # And, set up the revisions
   REVISIONS[0]=""
@@ -551,6 +562,10 @@ function set_globals {
   REVISIONS[21]=""
   if test 0 = "$DAV1D_HEAD" -a "$DAV1D_REVISION" ; then
     REVISIONS[21]="$DAV1D_REVISION"
+  fi
+  REVISIONS[22]=""
+  if test 0 = "$AOM_HEAD" -a "$AOM_REVISION" ; then
+    REVISIONS[22]="$AOM_REVISION"
   fi
 
   # Figure out the number of cores in the system. Used both by make and startup script
@@ -661,6 +676,9 @@ function set_globals {
   fi
   if test 1 = "$FFMPEG_SUPPORT_DAV1D" ; then
     CONFIG[0]="${CONFIG[0]} --enable-libdav1d"
+  fi
+  if test 1 = "$FFMPEG_SUPPORT_AOM" ; then
+    CONFIG[0]="${CONFIG[0]} --enable-libaom"
   fi
   # Add optional parameters
   CONFIG[0]="${CONFIG[0]} $FFMPEG_ADDITIONAL_OPTIONS"
@@ -884,6 +902,12 @@ function set_globals {
   fi
   CFLAGS_[21]=$CFLAGS
   LDFLAGS_[21]=$LDFLAGS
+
+  #####
+  # aom
+  CONFIG[22]="cmake -GNinja -DCMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR $CMAKE_DEBUG_FLAG -DBUILD_SHARED_LIBS=1 -DCONFIG_AV1_DECODER=0 -DENABLE_EXAMPLES=0 -DENABLE_TESTS=0 ../aom"
+  CFLAGS_[22]=$CFLAGS
+  LDFLAGS_[22]=$LDFLAGS
 }
 
 ######################################################################
@@ -1526,6 +1550,12 @@ function configure_compile_install_subproject {
     fi
   fi
 
+  # Special hack for aom
+  if test "aom" = "$1"; then
+    cmd mkdir -p ../build-aom
+    cmd cd ../build-aom || die "Unable to change to directory aom/builddir"
+  fi
+
   if test "$MYCONFIG" != ""; then
     cmd $MYCONFIG || die "Unable to configure $1"
     feedback_status Done configuring $1
@@ -1555,6 +1585,8 @@ function configure_compile_install_subproject {
     cmd make -j$MAKEJ RANLIB="$RANLIB" libmovit.la || die "Unable to build $1"
   elif test "dav1d" = "$1" ; then
     cmd ninja -C builddir -j $MAKEJ || die "Unable to build $1"
+  elif test "aom" = "$1" ; then
+    cmd ninja -j $MAKEJ || die "Unable to build $1"
   elif test "$MYCONFIG" != ""; then
     cmd make -j$MAKEJ || die "Unable to build $1"
   fi
@@ -1602,6 +1634,8 @@ function configure_compile_install_subproject {
       fi
     elif test "dav1d" = "$1" ; then
       cmd meson install -C builddir || die "Unable to install $1"
+    elif test "aom" = "$1" ; then
+      cmd ninja install || die "Unable to install $1"
     elif test "$MYCONFIG" != "" ; then
       cmd make install || die "Unable to install $1"
     fi
