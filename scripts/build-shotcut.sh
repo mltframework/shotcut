@@ -678,7 +678,7 @@ function set_globals {
     CONFIG[0]="${CONFIG[0]} --enable-libdav1d"
   fi
   if test 1 = "$FFMPEG_SUPPORT_AOM" ; then
-    CONFIG[0]="${CONFIG[0]} --enable-libaom"
+    CONFIG[0]="${CONFIG[0]} --enable-libaom --disable-decoder=libaom_av1"
   fi
   # Add optional parameters
   CONFIG[0]="${CONFIG[0]} $FFMPEG_ADDITIONAL_OPTIONS"
@@ -1908,6 +1908,7 @@ function deploy_osx
     cmd install_name_tool -delete_rpath "$QTDIR/lib" "$exe" 2> /dev/null
     cmd install_name_tool -add_rpath "@executable_path/../Frameworks" "$exe"
   done
+  cmd cp -p "$FINAL_INSTALL_DIR"/lib/libaom.2.dylib Frameworks
 
   # MLT plugins
   log Copying MLT plugins
