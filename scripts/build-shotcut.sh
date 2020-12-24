@@ -900,7 +900,11 @@ function set_globals {
   else
     CONFIG[21]="${CONFIG[21]} --buildtype=release"
   fi
-  CFLAGS_[21]=$CFLAGS
+  if [ "$TARGET_OS" = "Linux" ]; then
+    CFLAGS_[21]="$CFLAGS -Denable_avx512=false"
+  else
+    CFLAGS_[21]=$CFLAGS
+  fi
   LDFLAGS_[21]=$LDFLAGS
 
   #####
