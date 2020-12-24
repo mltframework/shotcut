@@ -16,11 +16,10 @@
  */
 
 import QtQuick 2.2
-import QtQuick.Controls 1.1
-import QtQuick.Controls.Styles 1.1
+import QtQuick.Controls 2.12
 import QtQuick.Dialogs 1.2
 import QtQuick.Layouts 1.1
-import Shotcut.Controls 1.0
+import Shotcut.Controls 1.0 as Shotcut
 
 RowLayout {
     property string value: "white"
@@ -32,7 +31,7 @@ RowLayout {
     
     SystemPalette { id: activePalette; colorGroup: SystemPalette.Active }
     
-    ColorPickerItem {
+    Shotcut.ColorPickerItem {
         id: pickerItem
         onColorPicked: {
             value = color
@@ -45,16 +44,19 @@ RowLayout {
         id: colorButton
         implicitWidth: 20
         implicitHeight: 20
-        style: ButtonStyle {
-            background: Rectangle {
-                border.width: 1
-                border.color: 'gray'
-                radius: 3
-                color: value
-            }
+        background: Rectangle {
+            border.width: 1
+            border.color: 'gray'
+            radius: 3
+            color: value
         }
+        padding: 2
+        hoverEnabled: true
+        ToolTip.delay: 700
+        ToolTip.timeout: 5000
+        ToolTip.visible: hovered
+        ToolTip.text: qsTr('Click to open color dialog')
         onClicked: colorDialog.visible = true
-        tooltip: qsTr('Click to open color dialog')
     }
     
     ColorDialog {
@@ -81,9 +83,14 @@ RowLayout {
     
     Button {
         id: pickerButton
-        iconName: 'color-picker'
-        iconSource: 'qrc:///icons/oxygen/32x32/actions/color-picker.png'
-        tooltip: '<p>' + qsTr("Pick a color on the screen. By pressing the mouse button and then moving your mouse you can select a section of the screen from which to get an average color.") + '</p>'
+        icon.name: 'color-picker'
+        icon.source: 'qrc:///icons/oxygen/32x32/actions/color-picker.png'
+        padding: 2
+        hoverEnabled: true
+        ToolTip.delay: 700
+        ToolTip.timeout: 5000
+        ToolTip.visible: hovered
+        ToolTip.text: '<p>' + qsTr("Pick a color on the screen. By pressing the mouse button and then moving your mouse you can select a section of the screen from which to get an average color.") + '</p>'
         implicitWidth: 20
         implicitHeight: 20
         checkable: true
