@@ -40,21 +40,16 @@ RowLayout {
         onCancelled: pickCancelled()
     }
     
-    Button {
+    Shotcut.Button {
         id: colorButton
         implicitWidth: 20
         implicitHeight: 20
         background: Rectangle {
             border.width: 1
             border.color: 'gray'
-            radius: 3
+            radius: parent.radius
             color: value
         }
-        padding: 2
-        hoverEnabled: true
-        ToolTip.delay: 700
-        ToolTip.timeout: 5000
-        ToolTip.visible: hovered
         ToolTip.text: qsTr('Click to open color dialog')
         onClicked: colorDialog.visible = true
     }
@@ -81,15 +76,10 @@ RowLayout {
         modality: application.dialogModality
     }
     
-    Button {
+    Shotcut.Button {
         id: pickerButton
         icon.name: 'color-picker'
         icon.source: 'qrc:///icons/oxygen/32x32/actions/color-picker.png'
-        padding: 2
-        hoverEnabled: true
-        ToolTip.delay: 700
-        ToolTip.timeout: 5000
-        ToolTip.visible: hovered
         ToolTip.text: '<p>' + qsTr("Pick a color on the screen. By pressing the mouse button and then moving your mouse you can select a section of the screen from which to get an average color.") + '</p>'
         implicitWidth: 20
         implicitHeight: 20

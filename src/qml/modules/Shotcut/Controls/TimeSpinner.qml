@@ -42,11 +42,11 @@ RowLayout {
         Keys.onUpPressed: incrementAction.trigger()
         onFocusChanged: if (focus) selectAll()
     }
-    Button {
+    Shotcut.Button {
         id: decrementButton
-        iconName: 'list-remove'
-        iconSource: 'qrc:///icons/oxygen/32x32/actions/list-remove.png'
-        tooltip: qsTr('Decrement')
+        icon.name: 'list-remove'
+        icon.source: 'qrc:///icons/oxygen/32x32/actions/list-remove.png'
+        ToolTip.text: qsTr('Decrement')
         implicitWidth: 20
         implicitHeight: 20
         MouseArea {
@@ -63,11 +63,11 @@ RowLayout {
             onTriggered: decrementAction.trigger()
         }
     }
-    Button {
+    Shotcut.Button {
         id: incrementButton
-        iconName: 'list-add'
-        iconSource: 'qrc:///icons/oxygen/32x32/actions/list-add.png'
-        tooltip: qsTr('Increment')
+        icon.name: 'list-add'
+        icon.source: 'qrc:///icons/oxygen/32x32/actions/list-add.png'
+        ToolTip.text: qsTr('Increment')
         implicitWidth: 20
         implicitHeight: 20
         MouseArea {

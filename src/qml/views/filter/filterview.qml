@@ -18,6 +18,7 @@
 import QtQuick 2.1
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.0
+import Shotcut.Controls 1.0 as Shotcut
 
 Rectangle {
     id: root
@@ -122,18 +123,13 @@ Rectangle {
             }
         }
 
-        Button {
+        Shotcut.Button {
             id: addButton
             implicitWidth: height
-            padding: 1
             icon.name: 'list-add'
             icon.source: 'qrc:///icons/oxygen/32x32/actions/list-add.png'
             enabled: attachedfiltersmodel.isProducerSelected
             opacity: enabled ? 1.0 : 0.5
-            hoverEnabled: true
-            ToolTip.delay: 700
-            ToolTip.timeout: 5000
-            ToolTip.visible: hovered
             ToolTip.text: qsTr('Add a filter')
             onClicked: {
                 if (application.confirmOutputFilter()) {
@@ -141,110 +137,80 @@ Rectangle {
                 }
             }
         }
-        Button {
+        Shotcut.Button {
             id: removeButton
             implicitWidth: height
-            padding: 1
             icon.name: 'list-remove'
             icon.source: 'qrc:///icons/oxygen/32x32/actions/list-remove.png'
             enabled: selectedIndex > -1
             opacity: enabled ? 1.0 : 0.5
-            hoverEnabled: true
-            ToolTip.delay: 700
-            ToolTip.timeout: 5000
-            ToolTip.visible: hovered
             ToolTip.text: qsTr('Remove selected filter')
             onClicked: {
                 attachedfiltersmodel.remove(selectedIndex)
             }
         }
-        Button { // separator
+        Shotcut.Button { // separator
             enabled: false
             implicitWidth: 1
             implicitHeight: 20
         }
-        Button {
+        Shotcut.Button {
             id: copyButton
             implicitWidth: height
-            padding: 1
             icon.name: 'edit-copy'
+            icon.source: 'qrc:///icons/oxygen/32x32/actions/edit-copy.png'
             enabled: selectedIndex > -1
             opacity: enabled ? 1.0 : 0.5
-            icon.source: 'qrc:///icons/oxygen/32x32/actions/edit-copy.png'
-            hoverEnabled: true
-            ToolTip.delay: 700
-            ToolTip.timeout: 5000
-            ToolTip.visible: hovered
             ToolTip.text: qsTr('Copy the filters')
             onClicked: application.copyFilters()
         }
-        Button {
+        Shotcut.Button {
             id: pasteButton
             implicitWidth: height
-            padding: 1
             enabled: application.hasFiltersOnClipboard && attachedfiltersmodel.isProducerSelected
             opacity: enabled ? 1.0 : 0.5
             icon.name: 'edit-paste'
             icon.source: 'qrc:///icons/oxygen/32x32/actions/edit-paste.png'
-            hoverEnabled: true
-            ToolTip.delay: 700
-            ToolTip.timeout: 5000
-            ToolTip.visible: hovered
             ToolTip.text: qsTr('Paste filters')
             onClicked: application.pasteFilters()
         }
-        Button { // separator
+        Shotcut.Button { // separator
             enabled: false
             implicitWidth: 1
             implicitHeight: 20
         }
-        Button {
+        Shotcut.Button {
             id: moveUpButton
             implicitWidth: height
-            padding: 1
             enabled: selectedIndex > 0
             opacity: enabled ? 1.0 : 0.5
             icon.name: 'lift'
             icon.source: 'qrc:///icons/oxygen/32x32/actions/lift.png'
-            hoverEnabled: true
-            ToolTip.delay: 700
-            ToolTip.timeout: 5000
-            ToolTip.visible: hovered
             ToolTip.text: qsTr('Move filter up')
             onClicked: attachedfiltersmodel.move(selectedIndex, --selectedIndex)
         }
-        Button {
+        Shotcut.Button {
             id: moveDownButton
             implicitWidth: height
-            padding: 1
             enabled: selectedIndex > -1 && selectedIndex + 1 < attachedfiltersmodel.rowCount()
             opacity: enabled ? 1.0 : 0.5
             icon.name: 'overwrite'
             icon.source: 'qrc:///icons/oxygen/32x32/actions/overwrite.png'
-            hoverEnabled: true
-            ToolTip.delay: 700
-            ToolTip.timeout: 5000
-            ToolTip.visible: hovered
             ToolTip.text: qsTr('Move filter down')
             onClicked: attachedfiltersmodel.move(selectedIndex, ++selectedIndex)
         }
-        Button { // separator
+        Shotcut.Button { // separator
             enabled: false
             implicitWidth: 1
             implicitHeight: 20
         }
-        Button {
+        Shotcut.Button {
             id: deselectButton
             implicitWidth: height
-            padding: 1
             icon.name: 'window-close'
             icon.source: 'qrc:///icons/oxygen/32x32/actions/window-close.png'
             enabled: selectedIndex > -1
             opacity: enabled ? 1.0 : 0.5
-            hoverEnabled: true
-            ToolTip.delay: 700
-            ToolTip.timeout: 5000
-            ToolTip.visible: hovered
             ToolTip.text: qsTr('Deselect the filter')
             onClicked: {
                 clearCurrentFilter()

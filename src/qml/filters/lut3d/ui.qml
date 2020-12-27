@@ -81,7 +81,7 @@ Item {
         anchors.fill: parent
         anchors.margins: 8
 
-        Button {
+        Shotcut.Button {
             id: openButton
             text: qsTr('Open...')
             Layout.alignment: Qt.AlignRight

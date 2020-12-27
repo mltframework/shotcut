@@ -155,22 +155,18 @@ Rectangle {
                     }
                 }
             }
-            Button { // separator
+            Shotcut.Button { // separator
                 enabled: false
                 implicitWidth: 1
                 implicitHeight: 20
             }
-            Button {
+            Shotcut.Button {
                 id: closeButton
                 icon.name: 'window-close'
                 icon.source: 'qrc:///icons/oxygen/32x32/actions/window-close.png'
                 padding: 2
                 implicitWidth: 20
                 implicitHeight: 20
-                hoverEnabled: true
-                ToolTip.delay: 700
-                ToolTip.timeout: 5000
-                ToolTip.visible: hovered
                 ToolTip.text: qsTr('Close menu')
                 onClicked: filterWindow.close()
             }

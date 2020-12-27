@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2013-2015 Meltytech, LLC
- * Author: Brian Matherly <pez4brian@yahoo.com>
+ * Copyright (c) 2013-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -69,7 +68,7 @@ Item {
         }
 
         RowLayout {
-            Button {
+            Shotcut.Button {
                 id: button
                 text: qsTr('Analyze')
                 onClicked: {

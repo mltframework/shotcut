@@ -325,23 +325,23 @@ Item {
         }
         RowLayout {
             Layout.columnSpan: 5
-            Button {
+            Shotcut.Button {
                 text: qsTr('# (Hash sign)')
                 onClicked: textArea.insert(textArea.cursorPosition, '\\#')
             }
-            Button {
+            Shotcut.Button {
                 text: qsTr('Timecode')
                 onClicked: textArea.insert(textArea.cursorPosition, '#timecode#')
             }
-            Button {
+            Shotcut.Button {
                 text: qsTr('Frame #', 'Frame number')
                 onClicked: textArea.insert(textArea.cursorPosition, '#frame#')
             }
-            Button {
+            Shotcut.Button {
                 text: qsTr('File date')
                 onClicked: textArea.insert(textArea.cursorPosition, '#localfiledate#')
             }
-            Button {
+            Shotcut.Button {
                 text: qsTr('File name')
                 onClicked: textArea.insert(textArea.cursorPosition, '#resource#')
             }
@@ -359,7 +359,7 @@ Item {
         }
         RowLayout {
             Layout.columnSpan: 4
-            Button {
+            Shotcut.Button {
                 id: fontButton
                 onClicked: {
                     if (fontSizeCheckBox.checked) {

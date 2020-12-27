@@ -57,27 +57,19 @@ RowLayout {
             }
         }
     }
-    Button {
+    Shotcut.Button {
         id: saveButton
         icon.name: 'list-add'
         icon.source: 'qrc:///icons/oxygen/32x32/actions/list-add.png'
-        hoverEnabled: true
-        ToolTip.delay: 700
-        ToolTip.timeout: 5000
-        ToolTip.visible: hovered
         ToolTip.text: qsTr('Save')
         implicitWidth: 20
         implicitHeight: 20
         onClicked: nameDialog.show()
     }
-    Button {
+    Shotcut.Button {
         id: deleteButton
         icon.name: 'list-remove'
         icon.source: 'qrc:///icons/oxygen/32x32/actions/list-remove.png'
-        hoverEnabled: true
-        ToolTip.delay: 700
-        ToolTip.timeout: 5000
-        ToolTip.visible: hovered
         ToolTip.text: qsTr('Delete')
         implicitWidth: 20
         implicitHeight: 20

@@ -150,7 +150,7 @@ Item {
                 }
                 onPickCancelled: filter.set('disable', 0)
             }
-            Button {
+            Shotcut.Button {
                 text: qsTr('Transparent')
                 onClicked: colorSwatch.value = '#00000000'
             }

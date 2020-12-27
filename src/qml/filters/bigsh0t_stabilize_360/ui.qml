@@ -1,12 +1,9 @@
 
-
 import QtQuick 2.1
-import QtQuick.Controls 1.4
-import QtQuick.Controls 2.12 as Controls2
+import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.0
 import QtQuick.Dialogs 1.1
 import Shotcut.Controls 1.0 as Shotcut
-
 
 Item {
     width: 350
@@ -223,7 +220,6 @@ Item {
         CheckBox {
             text: qsTr('Analyze')
             checked: false
-            partiallyCheckedEnabled: false
             id: analyzeCheckBox
             Layout.columnSpan: 3
             onCheckedChanged: toggleMode()
@@ -241,10 +237,10 @@ Item {
             Layout.alignment: Qt.AlignLeft
             onEditingFinished: updateProperty_analysisFile()
         }
-        Button {
-            iconName: 'document-open'
-            iconSource: 'qrc:///icons/oxygen/32x32/actions/document-open.png'
-            tooltip: qsTr('Browse...')
+        Shotcut.Button {
+            icon.name: 'document-open'
+            icon.source: 'qrc:///icons/oxygen/32x32/actions/document-open.png'
+            ToolTip.text: qsTr('Browse...')
             implicitWidth: 20
             implicitHeight: 20
             onClicked: selectAnalysisFile.open()
@@ -271,7 +267,7 @@ Item {
             text: qsTr('Interpolation')
             Layout.alignment: Qt.AlignRight
         }
-        Controls2.ComboBox {
+        ComboBox {
             currentIndex: 0
             model: ["Nearest-neighbor", "Bilinear"]
             id: interpolationComboBox
@@ -362,7 +358,6 @@ Item {
         CheckBox {
             text: qsTr('Use backwards-facing track points')
             checked: false
-            partiallyCheckedEnabled: false
             id: useBackTrackpointsCheckBox
             Layout.columnSpan: 3
             onCheckedChanged: updateProperty_useBackTrackpoints()

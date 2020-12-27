@@ -19,7 +19,8 @@ import QtQuick 2.2
 import QtQuick.Controls 2.12
 
 Button {
-    padding: 2
+    padding: text ? 4 : 2
+    horizontalPadding: text ? 10 : undefined
     hoverEnabled: true
 
     SystemPalette { id: activePalette }

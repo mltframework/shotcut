@@ -16,8 +16,7 @@
  */
 
 import QtQuick 2.0
-import QtQuick.Controls 2.12 as Controls2
-import QtQuick.Controls 1.1
+import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.1
 import Shotcut.Controls 1.0 as Shotcut
 import QtQml.Models 2.2
@@ -136,7 +135,7 @@ Item {
             text: qsTr('Format')
             Layout.alignment: Qt.AlignRight
         }
-        Controls2.ComboBox {
+        ComboBox {
             id: formatCombo
             model: ListModel {
                 ListElement { text: QT_TR_NOOP('HH:MM:SS'); format: "HH:MM:SS" }
@@ -159,7 +158,7 @@ Item {
             text: qsTr('Direction')
             Layout.alignment: Qt.AlignRight
         }
-        Controls2.ComboBox {
+        ComboBox {
             id: directionCombo
             model: ListModel {
                 ListElement { text: QT_TR_NOOP('Up'); direction: "up" }
@@ -188,10 +187,10 @@ Item {
                 }
                 Shotcut.ToolTip { text: "The timer will be frozen from the beginning of the filter until the Start Delay time has elapsed." }
             }
-            Button {
-                iconName: 'insert'
-                iconSource: 'qrc:///icons/oxygen/32x32/actions/insert.png'
-                tooltip: qsTr('Set start to begin at the current position')
+            Shotcut.Button {
+                icon.name: 'insert'
+                icon.source: 'qrc:///icons/oxygen/32x32/actions/insert.png'
+                ToolTip.text: qsTr('Set start to begin at the current position')
                 implicitWidth: 20
                 implicitHeight: 20
                 onClicked: startSpinner.setValueSeconds(producer.position / profile.fps)
@@ -215,10 +214,10 @@ Item {
                 }
                 Shotcut.ToolTip { text: "The timer will be frozen after the Duration has elapsed." }
             }
-            Button {
-                iconName: 'insert'
-                iconSource: 'qrc:///icons/oxygen/32x32/actions/insert.png'
-                tooltip: qsTr('Set duration to end at the current position')
+            Shotcut.Button {
+                icon.name: 'insert'
+                icon.source: 'qrc:///icons/oxygen/32x32/actions/insert.png'
+                ToolTip.text: qsTr('Set duration to end at the current position')
                 implicitWidth: 20
                 implicitHeight: 20
                 onClicked: {

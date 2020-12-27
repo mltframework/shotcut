@@ -165,7 +165,7 @@ Item {
             onClicked: accuracySlider.value = 4
         }
 
-        Button {
+        Shotcut.Button {
             id: button
             text: qsTr('Analyze')
             Layout.alignment: Qt.AlignRight

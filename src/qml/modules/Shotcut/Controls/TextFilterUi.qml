@@ -157,7 +157,7 @@ GridLayout {
     }
     RowLayout {
         Layout.columnSpan: 4
-        Button {
+        Shotcut.Button {
             id: fontButton
             onClicked: {
                 if (fontSizeCheckBox.checked) {
