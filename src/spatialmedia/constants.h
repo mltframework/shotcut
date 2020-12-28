@@ -36,6 +36,8 @@
 #  define le64toh(x) qFromLittleEndian(x)
 #elif !defined(__FreeBSD__)
 #  include <endian.h>
+#elif defined(__FreeBSD__)
+#  include <sys/endian.h>
 #endif
 
 struct AudioMetadata {
