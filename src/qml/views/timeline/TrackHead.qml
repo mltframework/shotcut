@@ -15,11 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.0
-import QtQuick.Controls 1.4
-import QtQuick.Controls.Styles 1.0
-import QtQuick.Layouts 1.0
-import Shotcut.Controls 1.0
+import QtQuick 2.2
+import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.2
+import Shotcut.Controls 1.0 as Shotcut
 
 Rectangle {
     id: trackHeadRoot
@@ -95,12 +94,15 @@ Rectangle {
         anchors {
             top: parent.top
             left: parent.left
-            margins: (trackHeadRoot.height < 50)? 0 : 4
+            leftMargin: (trackHeadRoot.height < 50)? 0 : 4
+            rightMargin: 4
+            topMargin: 4
+            bottomMargin: 4
         }
 
         Rectangle {
             color: 'transparent'
-            width: trackHeadRoot.width - trackHeadColumn.anchors.margins * 2 - (trackHeadRoot.height < 50? 100 : 0)
+            width: trackHeadRoot.width - trackHeadColumn.anchors.margins * 2 - (trackHeadRoot.height < 50? 110 : 0)
             radius: 2
             border.color: (!timeline.isFloating() && trackNameMouseArea.containsMouse)? activePalette.shadow : 'transparent'
             height: nameEdit.height
@@ -114,14 +116,16 @@ Rectangle {
                     nameEdit.selectAll()
                 }
             }
-            Label {
-                text: trackName
-                color: activePalette.windowText
-                elide: Qt.ElideRight
-                x: 4
-                y: 3
-                width: parent.width - 8
-                ToolTip{ text: parent.text }
+            Control {
+                contentItem: Label {
+                    text: trackName
+                    color: activePalette.windowText
+                    elide: Qt.ElideRight
+                    x: 4
+                    y: 3
+                    width: nameEdit.width
+                }
+                Shotcut.HoverTip{ text: trackName }
             }
             TextField {
                 id: nameEdit
@@ -135,30 +139,29 @@ Rectangle {
             }
         }
         RowLayout {
-            spacing: 8
+            spacing: trackHeadColumn.flow === Flow.LeftToRight ? 0 : 5
             ToolButton {
                 id: lockButton
-                implicitWidth: 18
-                implicitHeight: 18
                 height: width
-                iconName: isLocked ? 'object-locked' : 'object-unlocked'
-                iconSource: isLocked ? 'qrc:///icons/oxygen/32x32/status/object-locked.png' : 'qrc:///icons/oxygen/32x32/status/object-unlocked.png'
+                icon.name: isLocked ? 'object-locked' : 'object-unlocked'
+                icon.source: isLocked ? 'qrc:///icons/oxygen/32x32/status/object-locked.png' : 'qrc:///icons/oxygen/32x32/status/object-unlocked.png'
                 onClicked: timeline.setTrackLock(index, !isLocked)
-                tooltip: isLocked? qsTr('Unlock track') : qsTr('Lock track')
+                Shotcut.HoverTip { text: isLocked? qsTr('Unlock track') : qsTr('Lock track') }
+                transformOrigin: Item.Center
 
                 SequentialAnimation {
                     id: lockButtonAnim
                     loops: 2
                     NumberAnimation {
                         target: lockButton
-                        property: 'width'
-                        to: 32
+                        property: 'scale'
+                        to: 2
                         duration: 200
                     }
                     NumberAnimation {
                         target: lockButton
-                        property: 'width'
-                        to: 18
+                        property: 'scale'
+                        to: 1
                         duration: 200
                     }
                 }
@@ -166,33 +169,26 @@ Rectangle {
 
             ToolButton {
                 id: muteButton
-                implicitWidth: 18
-                implicitHeight: 18
-                iconName: isMute ? 'audio-volume-muted' : 'audio-volume-high'
-                iconSource: isMute ? 'qrc:///icons/oxygen/32x32/status/audio-volume-muted.png' : 'qrc:///icons/oxygen/32x32/status/audio-volume-high.png'
+                icon.name: isMute ? 'audio-volume-muted' : 'audio-volume-high'
+                icon.source: isMute ? 'qrc:///icons/oxygen/32x32/status/audio-volume-muted.png' : 'qrc:///icons/oxygen/32x32/status/audio-volume-high.png'
                 onClicked: timeline.toggleTrackMute(index)
-                tooltip: isMute? qsTr('Unmute') : qsTr('Mute')
+                Shotcut.HoverTip { text: isMute? qsTr('Unmute') : qsTr('Mute') }
             }
 
             ToolButton {
                 id: hideButton
                 visible: isVideo
-                implicitWidth: 18
-                implicitHeight: 18
-                iconName: isHidden ? 'layer-visible-off' : 'layer-visible-on'
-                iconSource: isHidden? 'qrc:///icons/oxygen/32x32/actions/layer-visible-off.png' : 'qrc:///icons/oxygen/32x32/actions/layer-visible-on.png'
+                icon.name: isHidden ? 'layer-visible-off' : 'layer-visible-on'
+                icon.source: isHidden? 'qrc:///icons/oxygen/32x32/actions/layer-visible-off.png' : 'qrc:///icons/oxygen/32x32/actions/layer-visible-on.png'
                 onClicked: timeline.toggleTrackHidden(index)
-                tooltip: isHidden? qsTr('Show') : qsTr('Hide')
+                Shotcut.HoverTip { text: isHidden? qsTr('Show') : qsTr('Hide') }
             }
 
             ToolButton {
                 visible: isFiltered
-                anchors.right: parent.right
-                implicitWidth: 18
-                implicitHeight: 18
-                iconName: 'view-filter'
-                iconSource: 'qrc:///icons/oxygen/32x32/status/view-filter.png'
-                tooltip: qsTr('Filters')
+                icon.name: 'view-filter'
+                icon.source: 'qrc:///icons/oxygen/32x32/status/view-filter.png'
+                Shotcut.HoverTip { text: qsTr('Filters') }
                 onClicked: {
                     trackHeadRoot.clicked()
                     nameEdit.focus = false
