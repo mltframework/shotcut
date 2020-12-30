@@ -340,6 +340,16 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
                     }
                     painter.drawImage(rect, *thumb);
                 }
+                if (parent.is_valid() && parent.get_int(kPlaylistIndexProperty) == index.row() + 1) {
+                    QPen pen(Qt::red);
+                    pen.setWidthF(MAIN.devicePixelRatioF());
+                    painter.setPen(pen);
+                    rect.setX(0);
+                    rect.setY(0);
+                    rect.setWidth(rect.width() - 1);
+                    rect.setHeight(rect.height() - 1);
+                    painter.drawRect(rect);
+                }
                 painter.end();
             }
             else {

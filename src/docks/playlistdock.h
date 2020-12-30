@@ -151,6 +151,7 @@ private:
     void setViewMode(PlaylistModel::ViewMode mode);
     void resetPlaylistIndex();
     void emitDataChanged(const QVector<int> &roles);
+    void setPlaylistIndex(Mlt::Producer* producer, int row);
 
     Ui::PlaylistDock *ui;
     QAbstractItemView *m_view;

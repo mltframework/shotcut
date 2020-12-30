@@ -383,7 +383,7 @@ void PlaylistDock::on_actionAppendCut_triggered()
             ProxyManager::generateIfNotExists(producer);
             MAIN.undoStack()->push(
                 new Playlist::AppendCommand(m_model, MLT.XML(&producer)));
-            MLT.producer()->set(kPlaylistIndexProperty, m_model.playlist()->count());
+            setPlaylistIndex(MLT.producer(), m_model.playlist()->count() - 1);
             setUpdateButtonEnabled(true);
         } else {
             DurationDialog dialog(this);
@@ -393,7 +393,7 @@ void PlaylistDock::on_actionAppendCut_triggered()
                 if (MLT.producer()->get("mlt_service") && !strcmp(MLT.producer()->get("mlt_service"), "avformat"))
                     MLT.producer()->set("mlt_service", "avformat-novalidate");
                 MAIN.undoStack()->push(new Playlist::AppendCommand(m_model, MLT.XML()));
-                MLT.producer()->set(kPlaylistIndexProperty, m_model.playlist()->count());
+                setPlaylistIndex(MLT.producer(), m_model.playlist()->count() - 1);
                 setUpdateButtonEnabled(true);
             }
         }
@@ -431,7 +431,7 @@ void PlaylistDock::on_actionUpdate_triggered()
         if (MLT.isSeekable()) {
             ProxyManager::generateIfNotExists(*MLT.producer());
             MAIN.undoStack()->push(new Playlist::UpdateCommand(m_model, MLT.XML(), index.row()));
-            MLT.producer()->set(kPlaylistIndexProperty, index.row() + 1);
+            setPlaylistIndex(MLT.producer(), index.row());
             setUpdateButtonEnabled(true);
         }
         else {
@@ -443,7 +443,7 @@ void PlaylistDock::on_actionUpdate_triggered()
                 if (MLT.producer()->get("mlt_service") && !strcmp(MLT.producer()->get("mlt_service"), "avformat"))
                     MLT.producer()->set("mlt_service", "avformat-novalidate");
                 MAIN.undoStack()->push(new Playlist::UpdateCommand(m_model, MLT.XML(), index.row()));
-                MLT.producer()->set(kPlaylistIndexProperty, index.row() + 1);
+                setPlaylistIndex(MLT.producer(), index.row());
                 setUpdateButtonEnabled(true);
             }
         }
@@ -480,7 +480,7 @@ void PlaylistDock::on_removeButton_clicked()
         MAIN.undoStack()->endMacro();
     if (rowsRemoved.contains(MLT.producer()->get_int(kPlaylistIndexProperty))) {
         // Remove the playlist index property on the producer.
-
+        resetPlaylistIndex();
         setUpdateButtonEnabled(false);
     }
 }
@@ -545,7 +545,7 @@ void PlaylistDock::on_actionOpen_triggered()
     if (i) {
         Mlt::Producer* p = new Mlt::Producer(i->producer);
         p->set_in_and_out(i->frame_in, i->frame_out);
-        p->set(kPlaylistIndexProperty, index.row() + 1);
+        setPlaylistIndex(p, index.row());
         emit clipOpened(p, Settings.playlistAutoplay());
         delete i;
     }
@@ -581,7 +581,7 @@ void PlaylistDock::viewDoubleClicked(const QModelIndex &index)
         } else {
             Mlt::Producer* p = new Mlt::Producer(i->producer);
             p->set_in_and_out(i->frame_in, i->frame_out);
-            p->set(kPlaylistIndexProperty, index.row() + 1);
+            setPlaylistIndex(p, index.row());
             emit clipOpened(p, Settings.playlistAutoplay());
         }
         delete i;
@@ -724,10 +724,10 @@ void PlaylistDock::onDropped(const QMimeData *data, int row)
                 ProxyManager::generateIfNotExists(p);
                 if (row == -1) {
                     MAIN.undoStack()->push(new Playlist::AppendCommand(m_model, MLT.XML(&p)));
-                    MLT.producer()->set(kPlaylistIndexProperty, m_model.playlist()->count());
+                    setPlaylistIndex(MLT.producer(), m_model.playlist()->count() - 1);
                 } else {
                     MAIN.undoStack()->push(new Playlist::InsertCommand(m_model, MLT.XML(&p), row));
-                    MLT.producer()->set(kPlaylistIndexProperty, row + 1);
+                    setPlaylistIndex(MLT.producer(), row);
                 }
                 setUpdateButtonEnabled(true);
             } else {
@@ -955,6 +955,11 @@ void PlaylistDock::resetPlaylistIndex()
 {
     if (MLT.producer())
         MLT.producer()->set(kPlaylistIndexProperty, nullptr, 0);
+    // Clear the old values
+    for (int j = 0; j < m_model.playlist()->count(); ++j) {
+        Mlt::Producer clip(m_model.playlist()->get_clip(j));
+        clip.parent().Mlt::Properties::clear(kPlaylistIndexProperty);
+    }
 }
 
 void PlaylistDock::emitDataChanged(const QVector<int> &roles)
@@ -963,6 +968,16 @@ void PlaylistDock::emitDataChanged(const QVector<int> &roles)
     if (row < 0 || row >= m_model.rowCount()) return;
     auto index = m_model.createIndex(row, PlaylistModel::COLUMN_RESOURCE);
     emit m_model.dataChanged(index, index, roles);
+}
+
+void PlaylistDock::setPlaylistIndex(Mlt::Producer* producer, int row)
+{
+    // Clear the old values
+    for (int j = 0; j < m_model.playlist()->count(); ++j) {
+        Mlt::Producer clip(m_model.playlist()->get_clip(j));
+        clip.parent().Mlt::Properties::clear(kPlaylistIndexProperty);
+    }
+    producer->set(kPlaylistIndexProperty, row + 1);
 }
 
 #include "playlistdock.moc"
@@ -1051,6 +1066,7 @@ void PlaylistDock::on_actionCopy_triggered()
         p->set_in_and_out(i->frame_in, i->frame_out);
         emit clipOpened(p);
         delete i;
+        resetPlaylistIndex();
     }
 }
 
