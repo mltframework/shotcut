@@ -239,7 +239,7 @@ p, li { white-space: pre-wrap; }
         </property>
         <property name="icon">
          <iconset theme="show-menu" resource="../../icons/resources.qrc">
-          <normaloff>:/icons/oxygen/32x32/actions/format-justify-fill.png</normaloff>:/icons/oxygen/32x32/actions/show-menu.png</iconset>
+          <normaloff>:/icons/oxygen/32x32/actions/format-justify-fill.png</normaloff>:/icons/oxygen/32x32/actions/format-justify-fill.png</iconset>
         </property>
        </widget>
       </item>
@@ -312,7 +312,7 @@ p, li { white-space: pre-wrap; }
     <string>Open the clip in the Source player</string>
    </property>
    <property name="shortcut">
-    <string>Return</string>
+    <string>Ctrl+Return</string>
    </property>
   </action>
   <action name="actionRemove">
