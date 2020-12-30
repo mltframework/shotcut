@@ -74,22 +74,22 @@ void VideoVectorScopeWidget::refreshScope(const QSize& size, bool full)
 
         m_mutex.lock();
 
-        drawGraticuleLines(p, devicePixelRatio());
+        drawGraticuleLines(p, devicePixelRatioF());
 
-        drawGraticuleMark(p, m_points[BLUE_100], Qt::blue, devicePixelRatio() * 2, 8);
-        drawGraticuleMark(p, m_points[CYAN_100], Qt::cyan, devicePixelRatio() * 2, 8);
-        drawGraticuleMark(p, m_points[GREEN_100], Qt::green, devicePixelRatio() * 2, 8);
-        drawGraticuleMark(p, m_points[YELLOW_100], Qt::yellow, devicePixelRatio() * 2, 8);
-        drawGraticuleMark(p, m_points[RED_100], Qt::red, devicePixelRatio() * 2, 8);
-        drawGraticuleMark(p, m_points[MAGENTA_100], Qt::magenta, devicePixelRatio() * 2, 8);
-        drawGraticuleMark(p, m_points[BLUE_75], Qt::blue, devicePixelRatio(), 5);
-        drawGraticuleMark(p, m_points[CYAN_75], Qt::cyan, devicePixelRatio(), 5);
-        drawGraticuleMark(p, m_points[GREEN_75], Qt::green, devicePixelRatio(), 5);
-        drawGraticuleMark(p, m_points[YELLOW_75], Qt::yellow, devicePixelRatio(), 5);
-        drawGraticuleMark(p, m_points[RED_75], Qt::red, devicePixelRatio(), 5);
-        drawGraticuleMark(p, m_points[MAGENTA_75], Qt::magenta, devicePixelRatio(), 5);
+        drawGraticuleMark(p, m_points[BLUE_100], Qt::blue, devicePixelRatioF() * 2, 8);
+        drawGraticuleMark(p, m_points[CYAN_100], Qt::cyan, devicePixelRatioF() * 2, 8);
+        drawGraticuleMark(p, m_points[GREEN_100], Qt::green, devicePixelRatioF() * 2, 8);
+        drawGraticuleMark(p, m_points[YELLOW_100], Qt::yellow, devicePixelRatioF() * 2, 8);
+        drawGraticuleMark(p, m_points[RED_100], Qt::red, devicePixelRatioF() * 2, 8);
+        drawGraticuleMark(p, m_points[MAGENTA_100], Qt::magenta, devicePixelRatioF() * 2, 8);
+        drawGraticuleMark(p, m_points[BLUE_75], Qt::blue, devicePixelRatioF(), 5);
+        drawGraticuleMark(p, m_points[CYAN_75], Qt::cyan, devicePixelRatioF(), 5);
+        drawGraticuleMark(p, m_points[GREEN_75], Qt::green, devicePixelRatioF(), 5);
+        drawGraticuleMark(p, m_points[YELLOW_75], Qt::yellow, devicePixelRatioF(), 5);
+        drawGraticuleMark(p, m_points[RED_75], Qt::red, devicePixelRatioF(), 5);
+        drawGraticuleMark(p, m_points[MAGENTA_75], Qt::magenta, devicePixelRatioF(), 5);
 
-        drawSkinToneLine(p, devicePixelRatio());
+        drawSkinToneLine(p, devicePixelRatioF());
 
         m_profileChanged = false;
         p.end();

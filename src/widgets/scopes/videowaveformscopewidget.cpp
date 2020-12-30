@@ -97,7 +97,7 @@ void VideoWaveformScopeWidget::paintEvent(QPaintEvent*)
     QFontMetrics fm(font);
     QPen pen;
     pen.setColor(TEXT_COLOR);
-    pen.setWidth(devicePixelRatio());
+    pen.setWidth(qRound(devicePixelRatioF()));
     p.setPen(pen);
     p.setFont(font);
 

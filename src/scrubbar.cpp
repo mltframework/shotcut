@@ -46,8 +46,8 @@ void ScrubBar::setScale(int maximum)
 {
     if (!m_timecodeWidth) {
         const int fontSize = font().pointSize() - (font().pointSize() > 10? 2 : (font().pointSize() > 8? 1 : 0));
-        setFont(QFont(font().family(), fontSize * devicePixelRatio()));
-        m_timecodeWidth = fontMetrics().width("00:00:00:00") / devicePixelRatio();
+        setFont(QFont(font().family(), fontSize * devicePixelRatioF()));
+        m_timecodeWidth = fontMetrics().width("00:00:00:00") / devicePixelRatioF();
     }
     m_max = maximum;
     /// m_scale is the pixels per frame ratio
@@ -243,7 +243,7 @@ bool ScrubBar::event(QEvent *event)
 
 void ScrubBar::updatePixmap()
 {
-    const int ratio = devicePixelRatio();
+    const auto ratio = devicePixelRatioF();
     const int l_width = width() * ratio;
     const int l_height = height() * ratio;
     const int l_margin = m_margin * ratio;
@@ -280,7 +280,7 @@ void ScrubBar::updatePixmap()
 
     // draw time ticks
     pen.setColor(palette().text().color());
-    pen.setWidth(ratio);
+    pen.setWidth(qRound(ratio));
     p.setPen(pen);
     if (l_interval > 2) {
         for (int x = l_margin; x < l_width - l_margin; x += l_interval) {

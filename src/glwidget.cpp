@@ -355,8 +355,8 @@ void GLWidget::paintGL()
 #ifndef QT_NO_DEBUG
     QOpenGLFunctions* f = quickWindow()->openglContext()->functions();
 #endif
-    float width = this->width() * devicePixelRatio();
-    float height = this->height() * devicePixelRatio();
+    float width = this->width() * devicePixelRatioF();
+    float height = this->height() * devicePixelRatioF();
 
     glDisable(GL_BLEND);
     glDisable(GL_DEPTH_TEST);
@@ -420,8 +420,8 @@ void GLWidget::paintGL()
     QMatrix4x4 modelView;
     if (m_zoom > 0.0) {
         if (offset().x() || offset().y())
-            modelView.translate(-offset().x() * devicePixelRatio(),
-                                 offset().y() * devicePixelRatio());
+            modelView.translate(-offset().x() * devicePixelRatioF(),
+                                 offset().y() * devicePixelRatioF());
         modelView.scale(zoom(), zoom());
     }
     m_shader->setUniformValue(m_modelViewLocation, modelView);
@@ -429,8 +429,8 @@ void GLWidget::paintGL()
 
     // Provide vertices of triangle strip.
     QVector<QVector2D> vertices;
-    width = m_rect.width() * devicePixelRatio();
-    height = m_rect.height() * devicePixelRatio();
+    width = m_rect.width() * devicePixelRatioF();
+    height = m_rect.height() * devicePixelRatioF();
     vertices << QVector2D(-width/2.0f, -height/2.0f);
     vertices << QVector2D(-width/2.0f, height/2.0f);
     vertices << QVector2D(width/2.0f, -height/2.0f);

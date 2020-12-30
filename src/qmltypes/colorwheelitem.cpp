@@ -332,11 +332,11 @@ void ColorWheelItem::drawWheelDot(QPainter& painter)
 void ColorWheelItem::drawSliderBar(QPainter &painter)
 {
     qreal value = 1.0 - m_color.valueF();
-    int ws = wheelSize() * MAIN.devicePixelRatio();
+    int ws = wheelSize() * MAIN.devicePixelRatioF();
     int w = (qreal)ws / WHEEL_SLIDER_RATIO;
     int h = ws - m_margin * 2;
     QPen pen(Qt::white);
-    pen.setWidth(2);
+    pen.setWidth(qRound(2 * MAIN.devicePixelRatioF()));
     painter.setPen(pen);
     painter.setBrush(Qt::black);
     painter.translate(ws, m_margin + value * h);
