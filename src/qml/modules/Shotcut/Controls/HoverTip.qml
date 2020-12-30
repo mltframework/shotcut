@@ -17,26 +17,10 @@
 
 import QtQuick 2.2
 import QtQuick.Controls 2.12
-import QtQuick.Controls.Styles 1.1
-import Shotcut.Controls 1.0 as Shotcut
 
-ToolButton {
-    id: control
-    property string iconName
-    property url iconSource
-    property alias tooltip: tooltip.text
-
-    background: Rectangle {
-        id: rect
-        radius: 3
-        width: control.width
-        height: control.height
-        SystemPalette { id: activePalette }
-        color: control.checked? activePalette.highlight : activePalette.button
-    }
-    action: Action {
-        icon.name: iconName
-        icon.source: iconSource
-    }
-    Shotcut.HoverTip { id: tooltip }
+ToolTip {
+    visible: parent.hovered
+    delay: 1000
+    timeout: 5000
+    Component.onCompleted: parent.hoverEnabled = true
 }

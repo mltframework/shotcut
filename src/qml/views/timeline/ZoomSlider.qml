@@ -16,7 +16,7 @@
  */
 
 import QtQuick 2.2
-import QtQuick.Controls 1.0
+import QtQuick.Controls 2.12
 
 Rectangle {
     property alias value: slider.value
@@ -25,7 +25,7 @@ Rectangle {
 
     color: activePalette.window
     width: 200
-    height: 24
+    height: 14
 
     Slider {
         id: slider
@@ -37,8 +37,8 @@ Rectangle {
             leftMargin: 4
             rightMargin: 4
         }
-        minimumValue: 0
-        maximumValue: 3.0
+        from: 0
+        to: 3.0
         value: 1
         function setScaleFactor() {
             multitrack.scaleFactor = Math.pow(value, 3) + 0.01

@@ -16,9 +16,8 @@
  */
 
 import QtQuick 2.2
-import QtQuick.Controls 1.0
-import QtQuick.Layouts 1.0
-import QtGraphicalEffects 1.0
+import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.2
 import Shotcut.Controls 1.0 as Shotcut
 
 ToolBar {
@@ -28,74 +27,58 @@ ToolBar {
 
     SystemPalette { id: activePalette }
 
+    id: toolbar
     width: 200
-    height: settings.smallIcons? 28 : snapButton.height + 4
-    anchors.margins: 0
+    height: 32
 
     RowLayout {
+        y: 2
         ToolButton {
             id: hiddenButton
             visible: false
         }
         ToolButton {
             action: menuAction
-            implicitWidth: settings.smallIcons? 18 : hiddenButton.implicitWidth
-            implicitHeight: implicitWidth
+            Shotcut.HoverTip{ text: qsTr('Display a menu of additional actions') }
         }
         Button { // separator
             enabled: false
             implicitWidth: 2
-            implicitHeight: settings.smallIcons? 14 : (hiddenButton.implicitHeight - 8)
+            implicitHeight: toolbar.height / 2
         }
         ToolButton {
             action: cutAction
-            implicitWidth: settings.smallIcons? 18 : hiddenButton.implicitWidth
-            implicitHeight: implicitWidth
         }
         ToolButton {
             action: copyAction
-            implicitWidth: settings.smallIcons? 18 : hiddenButton.implicitWidth
-            implicitHeight: implicitWidth
         }
         ToolButton {
             action: insertAction
-            implicitWidth: settings.smallIcons? 18 : hiddenButton.implicitWidth
-            implicitHeight: implicitWidth
         }
         Button { // separator
             enabled: false
             implicitWidth: 2
-            implicitHeight: settings.smallIcons? 14 : (hiddenButton.implicitHeight - 8)
+            implicitHeight: toolbar.height / 2
         }
         ToolButton {
             action: appendAction
-            implicitWidth: settings.smallIcons? 18 : hiddenButton.implicitWidth
-            implicitHeight: implicitWidth
         }
         ToolButton {
             action: deleteAction
-            implicitWidth: settings.smallIcons? 18 : hiddenButton.implicitWidth
-            implicitHeight: implicitWidth
         }
         ToolButton {
             action: liftAction
-            implicitWidth: settings.smallIcons? 18 : hiddenButton.implicitWidth
-            implicitHeight: implicitWidth
         }
         ToolButton {
             action: overwriteAction
-            implicitWidth: settings.smallIcons? 18 : hiddenButton.implicitWidth
-            implicitHeight: implicitWidth
         }
         ToolButton {
             action: splitAction
-            implicitWidth: settings.smallIcons? 18 : hiddenButton.implicitWidth
-            implicitHeight: implicitWidth
         }
         Button { // separator
             enabled: false
             implicitWidth: 2
-            implicitHeight: settings.smallIcons? 14 : (hiddenButton.implicitHeight - 8)
+            implicitHeight: toolbar.height / 2
         }
         Shotcut.ToolBarToggle {
             id: snapButton
@@ -103,8 +86,6 @@ ToolBar {
             iconName: 'snap'
             iconSource: 'qrc:///icons/oxygen/32x32/actions/snap.png'
             tooltip: qsTr('Toggle snapping')
-            implicitWidth: settings.smallIcons? 18 : hiddenButton.implicitWidth
-            implicitHeight: implicitWidth
             onClicked: settings.timelineSnap = !settings.timelineSnap
         }
         Shotcut.ToolBarToggle {
@@ -113,8 +94,6 @@ ToolBar {
             iconName: 'scrub_drag'
             iconSource: 'qrc:///icons/oxygen/32x32/actions/scrub_drag.png'
             tooltip: qsTr('Scrub while dragging')
-            implicitWidth: settings.smallIcons? 18 : hiddenButton.implicitWidth
-            implicitHeight: implicitWidth
             onClicked: settings.timelineDragScrub = !settings.timelineDragScrub
         }
         Shotcut.ToolBarToggle {
@@ -123,8 +102,6 @@ ToolBar {
             iconName: 'target'
             iconSource: 'qrc:///icons/oxygen/32x32/actions/target.png'
             tooltip: qsTr('Ripple trim and drop')
-            implicitWidth: settings.smallIcons? 18 : hiddenButton.implicitWidth
-            implicitHeight: implicitWidth
             onClicked: settings.timelineRipple = !settings.timelineRipple
         }
         Shotcut.ToolBarToggle {
@@ -133,130 +110,121 @@ ToolBar {
             iconName: 'ripple-all'
             iconSource: 'qrc:///icons/oxygen/32x32/actions/ripple-all.png'
             tooltip: qsTr('Ripple edits across all tracks')
-            implicitWidth: settings.smallIcons? 18 : hiddenButton.implicitWidth
-            implicitHeight: implicitWidth
             onClicked: settings.timelineRippleAllTracks = !settings.timelineRippleAllTracks
         }
         Button { // separator
             enabled: false
             implicitWidth: 2
-            implicitHeight: settings.smallIcons? 14 : (hiddenButton.implicitHeight - 8)
+            implicitHeight: toolbar.height / 2
         }
         ToolButton {
             action: zoomOutAction
-            implicitWidth: settings.smallIcons? 18 : hiddenButton.implicitWidth
-            implicitHeight: implicitWidth
         }
         ZoomSlider {
             id: scaleSlider
         }
         ToolButton {
             action: zoomInAction
-            implicitWidth: settings.smallIcons? 18 : hiddenButton.implicitWidth
-            implicitHeight: implicitWidth
         }
         ToolButton {
             action: zoomFitAction
-            implicitWidth: settings.smallIcons? 18 : hiddenButton.implicitWidth
-            implicitHeight: implicitWidth
         }
     }
 
     Action {
         id: menuAction
-        tooltip: qsTr('Display a menu of additional actions')
-        iconName: 'show-menu'
-        iconSource: 'qrc:///icons/oxygen/32x32/actions/show-menu.png'
+        icon.name: 'show-menu'
+        icon.source: 'qrc:///icons/oxygen/32x32/actions/show-menu.png'
         onTriggered: menu.popup()
     }
 
     Action {
         id: cutAction
-        tooltip: qsTr('Cut - Copy the current clip to the Source\nplayer and ripple delete it')
-        iconName: 'edit-cut'
-        iconSource: 'qrc:///icons/oxygen/32x32/actions/edit-cut.png'
+//        tooltip: qsTr('Cut - Copy the current clip to the Source\nplayer and ripple delete it')
+        icon.name: 'edit-cut'
+        icon.source: 'qrc:///icons/oxygen/32x32/actions/edit-cut.png'
         enabled: timeline.selection.length
         onTriggered: timeline.removeSelection(true)
     }
 
     Action {
         id: copyAction
-        tooltip: qsTr('Copy - Copy the current clip to the Source player (C)')
-        iconName: 'edit-copy'
-        iconSource: 'qrc:///icons/oxygen/32x32/actions/edit-copy.png'
+//        tooltip: qsTr('Copy - Copy the current clip to the Source player (C)')
+        icon.name: 'edit-copy'
+        icon.source: 'qrc:///icons/oxygen/32x32/actions/edit-copy.png'
         enabled: timeline.selection.length
         onTriggered: timeline.copyClip(timeline.selection[0].y, timeline.selection[0].x)
     }
 
     Action {
         id: insertAction
-        tooltip: qsTr('Paste - Insert clip into the current track\nshifting following clips to the right (V)')
-        iconName: 'edit-paste'
-        iconSource: 'qrc:///icons/oxygen/32x32/actions/edit-paste.png'
+//        tooltip: qsTr('Paste - Insert clip into the current track\nshifting following clips to the right (V)')
+        icon.name: 'edit-paste'
+        icon.source: 'qrc:///icons/oxygen/32x32/actions/edit-paste.png'
         onTriggered: timeline.insert(currentTrack)
     }
 
     Action {
         id: appendAction
-        tooltip: qsTr('Append to the current track (A)')
-        iconName: 'list-add'
-        iconSource: 'qrc:///icons/oxygen/32x32/actions/list-add.png'
+//        tooltip: qsTr('Append to the current track (A)')
+        icon.name: 'list-add'
+        icon.source: 'qrc:///icons/oxygen/32x32/actions/list-add.png'
         onTriggered: timeline.append(currentTrack)
     }
 
     Action {
         id: deleteAction
-        tooltip: qsTr('Ripple Delete - Remove current clip\nshifting following clips to the left (X)')
-        iconName: 'list-remove'
-        iconSource: 'qrc:///icons/oxygen/32x32/actions/list-remove.png'
+//        tooltip: qsTr('Ripple Delete - Remove current clip\nshifting following clips to the left (X)')
+        icon.name: 'list-remove'
+        icon.source: 'qrc:///icons/oxygen/32x32/actions/list-remove.png'
         onTriggered: timeline.removeSelection()
    }
 
     Action {
         id: liftAction
-        tooltip: qsTr('Lift - Remove current clip without\naffecting position of other clips (Z)')
-        iconName: 'lift'
-        iconSource: 'qrc:///icons/oxygen/32x32/actions/lift.png'
+//        tooltip: qsTr('Lift - Remove current clip without\naffecting position of other clips (Z)')
+        icon.name: 'lift'
+        icon.source: 'qrc:///icons/oxygen/32x32/actions/lift.png'
         onTriggered: timeline.liftSelection()
     }
 
     Action {
         id: overwriteAction
-        tooltip: qsTr('Overwrite clip onto the current track (B)')
-        iconName: 'overwrite'
-        iconSource: 'qrc:///icons/oxygen/32x32/actions/overwrite.png'
+//        tooltip: qsTr('Overwrite clip onto the current track (B)')
+        icon.name: 'overwrite'
+        icon.source: 'qrc:///icons/oxygen/32x32/actions/overwrite.png'
         onTriggered: timeline.overwrite(currentTrack)
     }
 
     Action {
         id: splitAction
-        tooltip: qsTr('Split At Playhead (S)')
-        iconName: 'slice'
-        iconSource: 'qrc:///icons/oxygen/32x32/actions/slice.png'
+//        tooltip: qsTr('Split At Playhead (S)')
+        icon.name: 'slice'
+        icon.source: 'qrc:///icons/oxygen/32x32/actions/slice.png'
         onTriggered: timeline.splitClip(currentTrack)
     }
 
     Action {
         id: zoomOutAction
-        tooltip: qsTr("Zoom timeline out (-)")
-        iconName: 'zoom-out'
-        iconSource: 'qrc:///icons/oxygen/32x32/actions/zoom-out.png'
+//        tooltip: qsTr("Zoom timeline out (-)")
+        icon.name: 'zoom-out'
+        icon.source: 'qrc:///icons/oxygen/32x32/actions/zoom-out.png'
         onTriggered: root.zoomOut()
     }
 
     Action {
         id: zoomInAction
-        tooltip: qsTr("Zoom timeline in (+)")
-        iconName: 'zoom-in'
-        iconSource: 'qrc:///icons/oxygen/32x32/actions/zoom-in.png'
+//        tooltip: qsTr("Zoom timeline in (+)")
+        icon.name: 'zoom-in'
+        icon.source: 'qrc:///icons/oxygen/32x32/actions/zoom-in.png'
         onTriggered: root.zoomIn()
     }
 
     Action {
         id: zoomFitAction
-        tooltip: qsTr('Zoom timeline to fit (0)')
-        iconName: 'zoom-fit-best'
-        iconSource: 'qrc:///icons/oxygen/32x32/actions/zoom-fit-best.png'
+//        tooltip: qsTr('Zoom timeline to fit (0)')
+        icon.name: 'zoom-fit-best'
+        icon.source: 'qrc:///icons/oxygen/32x32/actions/zoom-fit-best.png'
         onTriggered: root.zoomToFit()
     }
 }

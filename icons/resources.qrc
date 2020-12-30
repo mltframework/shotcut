@@ -255,5 +255,17 @@
         <file>dark/32x32/show-menu.png</file>
         <file>light/32x32/show-menu.png</file>
         <file>oxygen/32x32/actions/show-menu.png</file>
+        <file>dark/32x32/keyframes-filter-in.png</file>
+        <file>dark/32x32/keyframes-filter-out.png</file>
+        <file>dark/32x32/keyframes-simple-in.png</file>
+        <file>dark/32x32/keyframes-simple-out.png</file>
+        <file>light/32x32/keyframes-filter-in.png</file>
+        <file>light/32x32/keyframes-filter-out.png</file>
+        <file>light/32x32/keyframes-simple-in.png</file>
+        <file>light/32x32/keyframes-simple-out.png</file>
+        <file>oxygen/32x32/actions/keyframes-filter-in.png</file>
+        <file>oxygen/32x32/actions/keyframes-filter-out.png</file>
+        <file>oxygen/32x32/actions/keyframes-simple-in.png</file>
+        <file>oxygen/32x32/actions/keyframes-simple-out.png</file>
     </qresource>
 </RCC>
