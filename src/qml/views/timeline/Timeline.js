@@ -106,7 +106,7 @@ function acceptDrop(xml) {
 }
 
 function trackHeight(isAudio) {
-    return isAudio? Math.max(20, multitrack.trackHeight) : multitrack.trackHeight * 2
+    return Math.max(isAudio? multitrack.trackHeight : (multitrack.trackHeight * 2), 32)
 }
 
 function clamp(x, minimum, maximum) {

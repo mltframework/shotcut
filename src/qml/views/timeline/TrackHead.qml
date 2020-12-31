@@ -93,7 +93,7 @@ Rectangle {
     Flow {
         id: trackHeadColumn
         flow: (trackHeadRoot.height < 50)? Flow.LeftToRight : Flow.TopToBottom
-        spacing: (trackHeadRoot.height < 50)? 0 : 6
+        spacing: (trackHeadRoot.height < 50)? 0 : (isVideo || trackHeadRoot.height > 50)? 0 : -6
         anchors {
             top: parent.top
             left: parent.left

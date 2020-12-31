@@ -89,7 +89,10 @@ Rectangle {
         anchors {
             top: parent.top
             left: parent.left
-            margins: (paramHeadRoot.height < 50)? 0 : 4
+            leftMargin: (trackHeadRoot.height < 50)? 0 : 4
+            rightMargin: 4
+            topMargin: 4
+            bottomMargin: 4
         }
 
         Control {
