@@ -69,7 +69,7 @@ QVariant KeyframesModel::data(const QModelIndex& index, int role) const
                     switch (role) {
                     case Qt::DisplayRole:
                     case NameRole: {
-                        QString type = tr("Discrete");
+                        QString type = tr("Hold");
                         switch (const_cast<Mlt::Animation&>(animation).key_get_type(index.row())) {
                         case mlt_keyframe_linear:
                             type = tr("Linear");

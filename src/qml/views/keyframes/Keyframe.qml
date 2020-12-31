@@ -115,7 +115,7 @@ Rectangle {
             id: keyframeTypeSubmenu
             title: qsTr('Keyframe Type')
             MenuItem {
-                text: qsTr('Discrete')
+                text: qsTr('Hold')
                 checkable: true
                 checked: interpolation === KeyframesModel.DiscreteInterpolation
                 onTriggered: parameters.setInterpolation(parameterIndex, index, KeyframesModel.DiscreteInterpolation)
