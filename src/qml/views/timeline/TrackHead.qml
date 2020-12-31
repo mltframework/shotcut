@@ -15,9 +15,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.2
+import QtQuick 2.12
 import QtQuick.Controls 2.12
-import QtQuick.Layouts 1.2
+import QtQuick.Layouts 1.12
 import Shotcut.Controls 1.0 as Shotcut
 
 Rectangle {
@@ -58,7 +58,10 @@ Rectangle {
             when: trackHeadRoot.current
             PropertyChanges {
                 target: trackHeadRoot
-                color: selectedTrackColor
+                color: Qt.rgba(selectedTrackColor.r * selectedTrackColor.a + activePalette.window.r * (1.0 - selectedTrackColor.a),
+                               selectedTrackColor.g * selectedTrackColor.a + activePalette.window.g * (1.0 - selectedTrackColor.a),
+                               selectedTrackColor.b * selectedTrackColor.a + activePalette.window.b * (1.0 - selectedTrackColor.a),
+                               1.0)
             }
         },
         State {

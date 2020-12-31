@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2019 Meltytech, LLC
+ * Copyright (c) 2013-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -54,7 +54,7 @@ function snapClip(clip, repeater) {
         }
     }
     if (!toolbar.scrub) {
-        var cursorX = scrollView.flickableItem.contentX + cursor.x
+        var cursorX = tracksFlickable.contentX + cursor.x
         if (left > cursorX - SNAP && left < cursorX + SNAP)
             // Snap around cursor/playhead.
             clip.x = cursorX
@@ -65,7 +65,7 @@ function snapClip(clip, repeater) {
 
 function snapTrimIn(clip, delta, timeline, trackIndex) {
     var x = clip.x + delta * timeScale
-    var cursorX = scrollView.flickableItem.contentX + cursor.x
+    var cursorX = tracksFlickable.contentX + cursor.x
     if (delta < 0) {
         // Snap to other clips on the same track.
         for (var i = 0; i < repeater.count; i++) {
@@ -109,7 +109,7 @@ function snapTrimIn(clip, delta, timeline, trackIndex) {
 function snapTrimOut(clip, delta, timeline, trackIndex) {
     var rightEdge = clip.x + clip.width
     var x = rightEdge - delta * timeScale
-    var cursorX = scrollView.flickableItem.contentX + cursor.x
+    var cursorX = tracksFlickable.contentX + cursor.x
     if (delta < 0) {
         // Snap to other clips.
         for (var i = 0; i < repeater.count; i++) {
@@ -148,7 +148,7 @@ function snapTrimOut(clip, delta, timeline, trackIndex) {
 }
 
 function snapDrop(pos, repeater) {
-    var left = scrollView.flickableItem.contentX + pos.x - headerWidth
+    var left = tracksFlickable.contentX + pos.x - headerWidth
     var right = left + dropTarget.width
     if (left > -SNAP && left < SNAP) {
         // Snap around origin.
@@ -160,21 +160,21 @@ function snapDrop(pos, repeater) {
             var itemLeft = repeater.itemAt(i).x
             var itemRight = itemLeft + repeater.itemAt(i).width
             if (right > itemLeft - SNAP && right < itemLeft + SNAP) {
-                dropTarget.x = itemLeft - dropTarget.width + headerWidth - scrollView.flickableItem.contentX
+                dropTarget.x = itemLeft - dropTarget.width + headerWidth - tracksFlickable.contentX
                 return
             } else if (left > itemRight - SNAP && left < itemRight + SNAP) {
-                dropTarget.x = itemRight + headerWidth - scrollView.flickableItem.contentX
+                dropTarget.x = itemRight + headerWidth - tracksFlickable.contentX
                 return
             }
         }
     }
     if (!toolbar.scrub) {
-        var cursorX = scrollView.flickableItem.contentX + cursor.x
+        var cursorX = tracksFlickable.contentX + cursor.x
         if (left > cursorX - SNAP && left < cursorX + SNAP)
             // Snap around cursor/playhead.
-            dropTarget.x = cursorX + headerWidth - scrollView.flickableItem.contentX
+            dropTarget.x = cursorX + headerWidth - tracksFlickable.contentX
         if (right > cursorX - SNAP && right < cursorX + SNAP)
-            dropTarget.x = cursorX - dropTarget.width + headerWidth - scrollView.flickableItem.contentX
+            dropTarget.x = cursorX - dropTarget.width + headerWidth - tracksFlickable.contentX
     }
 }
 

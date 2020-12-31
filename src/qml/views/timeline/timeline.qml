@@ -15,13 +15,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.2
-import QtQml.Models 2.1
-import QtQuick.Controls 1.0
-import QtQuick.Controls 2.12 as Controls2
-import Shotcut.Controls 1.0
-import QtGraphicalEffects 1.0
-import QtQuick.Window 2.2
+import QtQuick 2.12
+import QtQml.Models 2.12
+import QtQuick.Controls 2.12
+import QtGraphicalEffects 1.12
+import Shotcut.Controls 1.0 as Shotcut
 import 'Timeline.js' as Logic
 
 Rectangle {
@@ -33,14 +31,14 @@ Rectangle {
 
     function setZoom(value, targetX) {
         if (!targetX)
-            targetX = scrollView.flickableItem.contentX + scrollView.width / 2
-        var offset = targetX - scrollView.flickableItem.contentX
+            targetX = tracksFlickable.contentX + tracksFlickable.width / 2
+        var offset = targetX - tracksFlickable.contentX
         var before = multitrack.scaleFactor
 
         toolbar.scaleSlider.value = value
 
         if (!settings.timelineCenterPlayhead && !settings.timelineScrollZoom)
-            scrollView.flickableItem.contentX = (targetX * multitrack.scaleFactor / before) - offset
+            tracksFlickable.contentX = (targetX * multitrack.scaleFactor / before) - offset
 
         for (var i = 0; i < tracksRepeater.count; i++)
             tracksRepeater.itemAt(i).redrawWaveforms(false)
@@ -69,7 +67,7 @@ Rectangle {
     }
 
     function zoomToFit() {
-        setZoom(Math.pow((scrollView.width - 50) * multitrack.scaleFactor / tracksContainer.width - 0.01, 1/3))
+        setZoom(Math.pow((tracksFlickable.width - 50) * multitrack.scaleFactor / tracksContainer.width - 0.01, 1/3))
     }
 
     function resetZoom() {
@@ -187,11 +185,11 @@ Rectangle {
                     anchors.right: parent.right
                     anchors.rightMargin: 4
                     anchors.verticalCenter: parent.verticalCenter
-                    implicitWidth: 20
-                    implicitHeight: 20
-                    iconName: 'view-filter'
-                    iconSource: 'qrc:///icons/oxygen/32x32/status/view-filter.png'
-                    tooltip: qsTr('Filters')
+                    action: Action {
+                        icon.name: 'view-filter'
+                        icon.source: 'qrc:///icons/oxygen/32x32/status/view-filter.png'
+                    }
+                    Shotcut.HoverTip { text: qsTr('Filters') }
                     onClicked: {
                         timeline.selectMultitrack()
                         timeline.filteredClicked()
@@ -200,7 +198,7 @@ Rectangle {
             }
             Flickable {
                 // Non-slider scroll area for the track headers.
-                contentY: scrollView.flickableItem.contentY
+                contentY: tracksFlickable.contentY
                 width: headerWidth
                 height: trackHeaders.height
                 interactive: false
@@ -221,7 +219,6 @@ Rectangle {
                             isBottomVideo: model.isBottomVideo
                             width: headerWidth
                             height: Logic.trackHeight(model.audio)
-                            selected: false
                             current: index === currentTrack
                             onIsLockedChanged: tracksRepeater.itemAt(index).isLocked = isLocked
                             onClicked: {
@@ -250,7 +247,7 @@ Rectangle {
             focus: true
             hoverEnabled: true
             onClicked: {
-                timeline.position = (scrollView.flickableItem.contentX + mouse.x) / multitrack.scaleFactor
+                timeline.position = (tracksFlickable.contentX + mouse.x) / multitrack.scaleFactor
                 bubbleHelp.hide()
             }
             property bool scim: false
@@ -258,7 +255,7 @@ Rectangle {
             onExited: scim = false
             onPositionChanged: {
                 if (mouse.modifiers === (Qt.ShiftModifier | Qt.AltModifier) || mouse.buttons === Qt.LeftButton) {
-                    timeline.position = (scrollView.flickableItem.contentX + mouse.x) / multitrack.scaleFactor
+                    timeline.position = (tracksFlickable.contentX + mouse.x) / multitrack.scaleFactor
                     bubbleHelp.hide()
                     scim = true
                 } else {
@@ -286,12 +283,12 @@ Rectangle {
                 Flickable {
                     // Non-slider scroll area for the Ruler.
                     id: rulerFlickable
-                    contentX: scrollView.flickableItem.contentX
+                    contentX: tracksFlickable.contentX
                     width: root.width - headerWidth
                     height: ruler.height
                     interactive: false
                     // workaround to fix https://github.com/mltframework/shotcut/issues/777
-                    onContentXChanged: if (contentX === 0) contentX = scrollView.flickableItem.contentX
+                    onContentXChanged: if (contentX === 0) contentX = tracksFlickable.contentX
 
                     Ruler {
                         id: ruler
@@ -299,16 +296,20 @@ Rectangle {
                         timeScale: multitrack.scaleFactor
                     }
                 }
-                ScrollView {
-                    id: scrollView
+                Flickable {
+                    id: tracksFlickable
                     width: root.width - headerWidth
                     height: root.height - ruler.height - toolbar.height
                     // workaround to fix https://github.com/mltframework/shotcut/issues/777
-                    flickableItem.onContentXChanged: rulerFlickable.contentX = flickableItem.contentX
+                    onContentXChanged: rulerFlickable.contentX = contentX
+                    interactive: false
+                    contentWidth: tracksContainer.width + headerWidth
+                    contentHeight: trackHeaders.height + 30 // 30 is padding
+                    ScrollBar.horizontal: ScrollBar{ policy: ScrollBar.AlwaysOn; visible: parent.contentWidth > parent.width }
+                    ScrollBar.vertical: ScrollBar{ policy: ScrollBar.AlwaysOn; visible: parent.contentHeight > parent.height }
         
                     MouseArea {
-                        width: tracksContainer.width + headerWidth
-                        height: Math.max(trackHeaders.height + 30, root.height - ruler.height - toolbar.height)
+                        anchors.fill: parent
                         acceptedButtons: Qt.NoButton
                         onWheel: Logic.onMouseWheel(wheel)
 
@@ -354,17 +355,17 @@ Rectangle {
             }
 
             CornerSelectionShadow {
-                y: tracksRepeater.count ? tracksRepeater.itemAt(currentTrack).y + ruler.height - scrollView.flickableItem.contentY : 0
+                y: tracksRepeater.count ? tracksRepeater.itemAt(currentTrack).y + ruler.height - tracksFlickable.contentY : 0
                 clip: timeline.selection.length ?
                         tracksRepeater.itemAt(timeline.selection[0].y).clipAt(timeline.selection[0].x) : null
-                opacity: clip && clip.x + clip.width < scrollView.flickableItem.contentX ? 1 : 0
+                opacity: clip && clip.x + clip.width < tracksFlickable.contentX ? 1 : 0
             }
 
             CornerSelectionShadow {
-                y: tracksRepeater.count ? tracksRepeater.itemAt(currentTrack).y + ruler.height - scrollView.flickableItem.contentY : 0
+                y: tracksRepeater.count ? tracksRepeater.itemAt(currentTrack).y + ruler.height - tracksFlickable.contentY : 0
                 clip: timeline.selection.length ?
                         tracksRepeater.itemAt(timeline.selection[timeline.selection.length - 1].y).clipAt(timeline.selection[timeline.selection.length - 1].x) : null
-                opacity: clip && clip.x > scrollView.flickableItem.contentX + scrollView.width ? 1 : 0
+                opacity: clip && clip.x > tracksFlickable.contentX + tracksFlickable.width ? 1 : 0
                 anchors.right: parent.right
                 mirrorGradient: true
             }
@@ -374,14 +375,14 @@ Rectangle {
                 visible: timeline.position > -1
                 color: activePalette.text
                 width: 1
-                height: root.height - scrollView.__horizontalScrollBar.height - toolbar.height
-                x: timeline.position * multitrack.scaleFactor - scrollView.flickableItem.contentX
+                height: root.height - toolbar.height
+                x: timeline.position * multitrack.scaleFactor - tracksFlickable.contentX
                 y: 0
             }
-            TimelinePlayhead {
+            Shotcut.TimelinePlayhead {
                 id: playhead
                 visible: timeline.position > -1
-                x: timeline.position * multitrack.scaleFactor - scrollView.flickableItem.contentX - 5
+                x: timeline.position * multitrack.scaleFactor - tracksFlickable.contentX - 5
                 y: 0
                 width: 11
                 height: 5
@@ -435,8 +436,8 @@ Rectangle {
             anchors.centerIn: parent
         }
         function show(x, y, text) {
-            bubbleHelp.x = x + tracksArea.x - scrollView.flickableItem.contentX - bubbleHelpLabel.width
-            bubbleHelp.y = Math.max(toolbar.height, y + tracksArea.y - scrollView.flickableItem.contentY - bubbleHelpLabel.height)
+            bubbleHelp.x = x + tracksArea.x - tracksFlickable.contentX - bubbleHelpLabel.width
+            bubbleHelp.y = Math.max(toolbar.height, y + tracksArea.y - tracksFlickable.contentY - bubbleHelpLabel.height)
             bubbleHelp.text = text
             if (bubbleHelp.state !== 'visible')
                 bubbleHelp.state = 'visible'
@@ -458,51 +459,51 @@ Rectangle {
         fast: true
     }
 
-    Controls2.Menu {
+    Menu {
         id: menu
-        Controls2.Menu {
+        Menu {
             title: qsTr('Track Operations')
-            Controls2.MenuItem {
+            MenuItem {
                 text: qsTr('Add Audio Track') + (application.OS === 'OS X'? '    ⌘U' : ' (Ctrl+U)')
                 onTriggered: timeline.addAudioTrack();
             }
-            Controls2.MenuItem {
+            MenuItem {
                 text: qsTr('Add Video Track') + (application.OS === 'OS X'? '    ⌘I' : ' (Ctrl+I)')
                 onTriggered: timeline.addVideoTrack();
             }
-            Controls2.MenuItem {
+            MenuItem {
                 text: qsTr('Insert Track') + (application.OS === 'OS X'? '    ⌥⌘I' : ' (Ctrl+Alt+I)')
                 onTriggered: timeline.insertTrack()
             }
-            Controls2.MenuItem {
+            MenuItem {
                 text: qsTr('Remove Track') + (application.OS === 'OS X'? '    ⌥⌘U' : ' (Ctrl+Alt+U)')
                 onTriggered: timeline.removeTrack()
             }
         }
-        Controls2.Menu {
+        Menu {
             title: qsTr('Track Height')
             width: 210
-            Controls2.MenuItem {
+            MenuItem {
                 enabled: multitrack.trackHeight > 10
                 text: qsTr('Make Tracks Shorter') + (application.OS === 'OS X'? '    ⌘-' : ' (Ctrl+-)')
                 onTriggered: makeTracksShorter()
             }
-            Controls2.MenuItem {
+            MenuItem {
                 text: qsTr('Make Tracks Taller') + (application.OS === 'OS X'? '    ⌘+' : ' (Ctrl++)')
                 onTriggered: makeTracksTaller()
             }
-            Controls2.MenuItem {
+            MenuItem {
                 text: qsTr('Reset Track Height') + (application.OS === 'OS X'? '    ⌘=' : ' (Ctrl+=)')
                 onTriggered: multitrack.trackHeight = 50
             }
         }
-        Controls2.Menu {
+        Menu {
             title: qsTr('Selection')
-            Controls2.MenuItem {
+            MenuItem {
                 text: qsTr('Select All') + (application.OS === 'OS X'? '    ⌘A' : ' (Ctrl+A)')
                 onTriggered: timeline.selectAll()
             }
-            Controls2.MenuItem {
+            MenuItem {
                 text: qsTr('Select None') + (application.OS === 'OS X'? '    ⌘D' : ' (Ctrl+D)')
                 onTriggered: {
                     timeline.selection = []
@@ -510,16 +511,16 @@ Rectangle {
                 }
             }
         }
-        Controls2.Menu {
+        Menu {
             title: qsTr('Options')
             width: 310
-            Controls2.MenuItem {
+            MenuItem {
                 text: qsTr("Ripple All Tracks") + (application.OS === 'OS X'? '    ⌥⌘R' : ' (Ctrl+Alt+R)')
                 checkable: true
                 checked: settings.timelineRippleAllTracks
                 onTriggered: settings.timelineRippleAllTracks = checked
             }
-            Controls2.MenuItem {
+            MenuItem {
                 text: qsTr('Show Audio Waveforms')
                 checkable: true
                 checked: settings.timelineShowWaveforms
@@ -539,7 +540,7 @@ Rectangle {
                     }
                 }
             }
-            Controls2.MenuItem {
+            MenuItem {
                 text: qsTr('Use Higher Performance Waveforms')
                 checkable: true
                 checked: settings.timelineFramebufferWaveform
@@ -549,44 +550,44 @@ Rectangle {
                         multitrack.reload()
                 }
             }
-            Controls2.MenuItem {
+            MenuItem {
                 text: qsTr('Show Video Thumbnails')
                 checkable: true
                 checked: settings.timelineShowThumbnails
                 onTriggered: settings.timelineShowThumbnails = checked
             }
-            Controls2.MenuItem {
+            MenuItem {
                 text: qsTr('Center the Playhead') + (application.OS === 'OS X'? '    ⇧⌘P' : ' (Ctrl+Shift+P)')
                 checkable: true
                 checked: settings.timelineCenterPlayhead
                 onTriggered: settings.timelineCenterPlayhead = checked
             }
-            Controls2.MenuItem {
+            MenuItem {
                 text: qsTr('Scroll to Playhead on Zoom') + (application.OS === 'OS X'? '    ⌥⌘P' : ' (Ctrl+Alt+P)')
                 checkable: true
                 checked: settings.timelineScrollZoom
                 onTriggered: settings.timelineScrollZoom = checked
             }
         }
-        Controls2.Menu {
+        Menu {
             title: qsTr('Other')
             width: 270
-            Controls2.MenuItem {
+            MenuItem {
                 text: qsTr('Copy Timeline to Source') + (application.OS === 'OS X'? '    ⌥⌘C' : ' (Ctrl+Alt+C)')
                 onTriggered: timeline.copyToSource()
             }
-            Controls2.MenuItem {
+            MenuItem {
                 text: qsTr('Reload') + (application.OS === 'OS X'? '    F5' : ' (F5)')
                 onTriggered: multitrack.reload()
             }
-            Controls2.MenuItem {
+            MenuItem {
                 id: propertiesMenuItem
                 enabled: false
                 text: qsTr('Properties')
                 onTriggered: timeline.openProperties()
             }
         }
-        Controls2.MenuItem {
+        MenuItem {
             text: qsTr('Cancel')
             onTriggered: menu.dismiss()
         }
@@ -618,14 +619,14 @@ Rectangle {
             }
             onClipDragged: {
                 // This provides continuous scrolling at the left/right edges.
-                if (x > scrollView.flickableItem.contentX + scrollView.width - 50) {
+                if (x > tracksFlickable.contentX + tracksFlickable.width - 50) {
                     scrollTimer.item = clip
                     scrollTimer.backwards = false
                     scrollTimer.start()
                 } else if (x < 50) {
-                    scrollView.flickableItem.contentX = 0;
+                    tracksFlickable.contentX = 0;
                     scrollTimer.stop()
-                } else if (x < scrollView.flickableItem.contentX + 50) {
+                } else if (x < tracksFlickable.contentX + 50) {
                     scrollTimer.item = clip
                     scrollTimer.backwards = true
                     scrollTimer.start()
@@ -706,8 +707,8 @@ Rectangle {
         onTriggered: {
             var delta = backwards? -10 : 10
             if (item) item.x += delta
-            scrollView.flickableItem.contentX += delta
-            if (scrollView.flickableItem.contentX <= 0)
+            tracksFlickable.contentX += delta
+            if (tracksFlickable.contentX <= 0)
                 stop()
         }
     }

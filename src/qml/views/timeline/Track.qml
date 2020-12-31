@@ -15,8 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.0
-import QtQml.Models 2.1
+import QtQuick 2.12
+import QtQml.Models 2.12
 import 'Track.js' as Logic
 
 Rectangle {

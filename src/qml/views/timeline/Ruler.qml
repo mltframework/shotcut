@@ -15,8 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.0
-import QtQuick.Controls 1.0
+import QtQuick 2.12
+import QtQuick.Controls 2.12
 
 Rectangle {
     property real timeScale: 1.0
@@ -37,8 +37,8 @@ Rectangle {
             width: 1
             color: activePalette.windowText
             x: index * intervalSeconds * profile.fps * timeScale
-            visible: ((x + width)   > scrollView.flickableItem.contentX) && // right edge
-                      (x            < scrollView.flickableItem.contentX + scrollView.width) // left edge
+            visible: ((x + width)   > tracksFlickable.contentX) && // right edge
+                      (x            < tracksFlickable.contentX + tracksFlickable.width) // left edge
 
             Label {
                 anchors.left: parent.right

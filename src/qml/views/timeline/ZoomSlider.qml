@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.2
+import QtQuick 2.12
 import QtQuick.Controls 2.12
 
 Rectangle {
@@ -49,14 +49,14 @@ Rectangle {
         }
         onPressedChanged: {
             if (!pressed) {
-                var targetX = scrollView.flickableItem.contentX + scrollView.width / 2
-                var offset = targetX - scrollView.flickableItem.contentX
+                var targetX = tracksFlickable.contentX + tracksFlickable.width / 2
+                var offset = targetX - tracksFlickable.contentX
                 var before = multitrack.scaleFactor
 
                 setScaleFactor()
 
                 if (!settings.timelineCenterPlayhead)
-                    scrollView.flickableItem.contentX = (targetX * multitrack.scaleFactor / before) - offset
+                    tracksFlickable.contentX = (targetX * multitrack.scaleFactor / before) - offset
 
                 for (var i = 0; i < tracksRepeater.count; i++)
                     tracksRepeater.itemAt(i).redrawWaveforms(false)

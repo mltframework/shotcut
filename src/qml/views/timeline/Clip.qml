@@ -15,13 +15,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.2
-import QtQuick.Controls 1.0
-import Shotcut.Controls 1.0
-import QtQuick.Controls 2.12 as Controls2
-import QtGraphicalEffects 1.0
-import QtQml.Models 2.2
-import QtQuick.Window 2.2
+import QtQuick 2.12
+import QtQuick.Controls 2.12
+import Shotcut.Controls 1.0 as Shotcut
 
 Rectangle {
     id: clipRoot
@@ -135,7 +131,7 @@ Rectangle {
         source: imagePath(inPoint)
     }
 
-    TimelineTransition {
+    Shotcut.TimelineTransition {
         visible: isTransition
         anchors.fill: parent
         property var color: isAudio? 'darkseagreen' : root.shotcutBlue
@@ -157,7 +153,7 @@ Rectangle {
         Repeater {
             id: waveformRepeater
             model: Math.ceil(waveform.innerWidth / waveform.maxWidth)
-            TimelineWaveform {
+            Shotcut.TimelineWaveform {
                 width: Math.min(waveform.innerWidth, waveform.maxWidth)
                 height: waveform.height
                 fillColor: getColor()
@@ -165,10 +161,10 @@ Rectangle {
                 inPoint: Math.round((clipRoot.inPoint + index * waveform.maxWidth / timeScale) * speed) * channels
                 outPoint: inPoint + Math.round(width / timeScale * speed) * channels
                 levels: audioLevels
-                active: ((clipRoot.x + x + width)   > scrollView.flickableItem.contentX) && // right edge
-                        ((clipRoot.x + x)           < scrollView.flickableItem.contentX + scrollView.width) && // left edge
-                        ((trackRoot.y + y + height) > scrollView.flickableItem.contentY) && // bottom edge
-                        ((trackRoot.y + y)          < scrollView.flickableItem.contentY + scrollView.height) // top edge
+                active: ((clipRoot.x + x + width)   > tracksFlickable.contentX) && // right edge
+                        ((clipRoot.x + x)           < tracksFlickable.contentX + tracksFlickable.width) && // left edge
+                        ((trackRoot.y + y + height) > tracksFlickable.contentY) && // bottom edge
+                        ((trackRoot.y + y)          < tracksFlickable.contentY + tracksFlickable.height) // top edge
             }
         }
     }
@@ -361,7 +357,7 @@ Rectangle {
         }
     }
 
-    TimelineTriangle {
+    Shotcut.TimelineTriangle {
         id: fadeInTriangle
         visible: !isBlank && !isTransition
         width: parent.fadeIn * timeScale
@@ -444,7 +440,7 @@ Rectangle {
         }
     }
 
-    TimelineTriangle {
+    Shotcut.TimelineTriangle {
         id: fadeOutTriangle
         visible: !isBlank && !isTransition
         width: parent.fadeOut * timeScale
@@ -624,13 +620,13 @@ Rectangle {
             onExited: parent.opacity = 0
         }
     }
-    Controls2.Menu {
+    Menu {
         id: menu
         function show() {
             mergeItem.enabled = timeline.mergeClipWithNext(trackIndex, index, true)
             popup()
         }
-        Controls2.MenuItem {
+        MenuItem {
             enabled: !isBlank && !isTransition
             text: qsTr('Cut') + (application.OS === 'OS X'? '    ⌘X' : ' (Ctrl+X)')
             onTriggered: {
@@ -642,43 +638,43 @@ Rectangle {
                 }
             }
         }
-        Controls2.MenuItem {
+        MenuItem {
             enabled: !isBlank && !isTransition
             text: qsTr('Copy') + (application.OS === 'OS X'? '    ⌘C' : ' (Ctrl+C)')
             onTriggered: timeline.copyClip(trackIndex, index)
         }
-        Controls2.MenuItem {
+        MenuItem {
             text: qsTr('Remove') + (application.OS === 'OS X'? '    X' : ' (X)')
             onTriggered: timeline.remove(trackIndex, index)
         }
-        Controls2.MenuItem {
+        MenuItem {
             enabled: !isBlank && !isTransition
             text: qsTr('Split At Playhead') + (application.OS === 'OS X'? '    S' : ' (S)')
             onTriggered: timeline.splitClip(trackIndex, index)
         }
-        Controls2.Menu {
+        Menu {
             title: qsTr('More')
-            Controls2.MenuItem {
+            MenuItem {
                 enabled: !isBlank
                 text: qsTr('Lift') + (application.OS === 'OS X'? '    Z' : ' (Z)')
                 onTriggered: timeline.lift(trackIndex, index)
             }
-            Controls2.MenuItem {
+            MenuItem {
                 enabled: !isTransition
                 text: qsTr('Replace') + (application.OS === 'OS X'? '    R' : ' (R)')
                 onTriggered: timeline.replace(trackIndex, index)
             }
-            Controls2.MenuItem {
+            MenuItem {
                 id: mergeItem
                 text: qsTr('Merge with next clip')
                 onTriggered: timeline.mergeClipWithNext(trackIndex, index, false)
             }
-            Controls2.MenuItem {
+            MenuItem {
                 enabled: !isBlank && !isTransition && !isAudio && (parseInt(audioIndex) > -1 || audioIndex === 'all')
                 text: qsTr('Detach Audio')
                 onTriggered: timeline.detachAudio(trackIndex, index)
             }
-            Controls2.MenuItem {
+            MenuItem {
                 enabled: !isBlank && !isTransition && settings.timelineShowThumbnails && !isAudio
                 text: qsTr('Update Thumbnails')
                 onTriggered: {
@@ -694,13 +690,13 @@ Rectangle {
                     }
                 }
             }
-            Controls2.MenuItem {
+            MenuItem {
                 enabled: !isBlank && !isTransition && settings.timelineShowWaveforms
                 text: qsTr('Rebuild Audio Waveform')
                 onTriggered: timeline.remakeAudioLevels(trackIndex, index)
             }
         }
-        Controls2.MenuItem {
+        MenuItem {
             enabled: !isBlank
             text: qsTr('Properties')
             onTriggered: {
@@ -709,7 +705,7 @@ Rectangle {
                 timeline.openProperties()
             }
         }
-        Controls2.MenuItem {
+        MenuItem {
             text: qsTr('Cancel')
             onTriggered: menu.dismiss()
         }
