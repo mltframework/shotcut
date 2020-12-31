@@ -15,12 +15,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.0
+import QtQuick 2.12
 import org.shotcut.qml 1.0
-import QtQuick.Controls 1.0
-import QtQuick.Controls 2.12 as Controls2
-import Shotcut.Controls 1.0
-import QtQuick.Window 2.2
+import QtQuick.Controls 2.12
 import 'Keyframes.js' as Logic
 
 Rectangle {
@@ -63,6 +60,13 @@ Rectangle {
             parent.clicked(keyframeRoot)
             menu.popup()
         }
+        hoverEnabled: true
+        ToolTip {
+            text: name
+            visible: parent.containsMouse
+            delay: 1000
+            timeout: 5000
+        }
     }
     MouseArea {
         anchors.fill: parent
@@ -87,53 +91,49 @@ Rectangle {
                    drag.axis = Drag.XAxis
                else
                    drag.axis = Drag.XAndYAxis
-           }
+            }
         }
         onEntered: if (isCurve) parent.anchors.verticalCenter = undefined
         onReleased: if (isCurve) parent.anchors.verticalCenter = parameterRoot.verticalCenter
         onPositionChanged: {
-            var newPosition = Math.round(parent.x / timeScale + (parent.width/2))
-            if (newPosition !== keyframeRoot.position)
+            var newPosition = Math.round((parent.x + parent.width/2) / timeScale)
+            if (drag.axis !== Drag.Yxis && newPosition !== keyframeRoot.position) {
                 parameters.setPosition(parameterIndex, index, newPosition - (filter.in - producer.in))
-            if (isCurve) {
+            }
+            if (drag.axis !== Drag.XAxis && isCurve) {
                 var trackValue = Math.min(Math.max(0, 1.0 - parent.y / (parameterRoot.height - parent.height)), 1.0)
                 trackValue = minimum + trackValue * (maximum - minimum)
                 parameters.setKeyframe(parameterIndex, trackValue, newPosition - (filter.in - producer.in), interpolation)
             }
         }
-    }
-
-    ToolTip {
-        id: tooltip
-        text: name
         cursorShape: Qt.PointingHandCursor
     }
 
-    Controls2.Menu {
+    Menu {
         id: menu
-        Controls2.Menu {
+        Menu {
             id: keyframeTypeSubmenu
             title: qsTr('Keyframe Type')
-            Controls2.MenuItem {
+            MenuItem {
                 text: qsTr('Discrete')
                 checkable: true
                 checked: interpolation === KeyframesModel.DiscreteInterpolation
                 onTriggered: parameters.setInterpolation(parameterIndex, index, KeyframesModel.DiscreteInterpolation)
             }
-            Controls2.MenuItem {
+            MenuItem {
                 text: qsTr('Linear')
                 checkable: true
                 checked: interpolation === KeyframesModel.LinearInterpolation
                 onTriggered: parameters.setInterpolation(parameterIndex, index, KeyframesModel.LinearInterpolation)
             }
-            Controls2.MenuItem {
+            MenuItem {
                 text: qsTr('Smooth')
                 checkable: true
                 checked: interpolation === KeyframesModel.SmoothInterpolation
                 onTriggered: parameters.setInterpolation(parameterIndex, index, KeyframesModel.SmoothInterpolation)
             }
         }
-        Controls2.MenuItem {
+        MenuItem {
             id: removeMenuItem
             text: qsTr('Remove')
             onTriggered: {
@@ -141,11 +141,9 @@ Rectangle {
                 root.selection = []
             }
         }
-        Controls2.MenuItem {
+        MenuItem {
             text: qsTr('Cancel')
             onTriggered: menu.dismiss()
         }
-        onAboutToShow: tooltip.isVisible = false
-        onAboutToHide: tooltip.isVisible = true
     }
 }

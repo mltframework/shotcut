@@ -15,13 +15,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.5
-import QtQml.Models 2.1
-import QtQuick.Controls 1.3
-import QtQuick.Controls 2.12 as Controls2
-import Shotcut.Controls 1.0
-import QtGraphicalEffects 1.0
-import QtQuick.Window 2.2
+import QtQuick 2.12
+import QtQml.Models 2.12
+import QtQuick.Controls 2.12
+import Shotcut.Controls 1.0 as Shotcut
+import QtGraphicalEffects 1.12
 import 'Keyframes.js' as Logic
 
 Rectangle {
@@ -33,7 +31,7 @@ Rectangle {
     property int selectedIndex: -1
     property int headerWidth: 140
     property int currentTrack: 0
-    property color selectedTrackColor: Qt.rgba(0.8, 0.8, 0, 0.3);
+    property color selectedTrackColor: Qt.rgba(0.8, 0.8, 0, 0.3)
     property bool stopScrolling: false
     property color shotcutBlue: Qt.rgba(23/255, 92/255, 118/255, 1.0)
     property double timeScale: 1.0
@@ -52,13 +50,13 @@ Rectangle {
 
     function setZoom(value, targetX) {
         if (!targetX)
-            targetX = scrollView.flickableItem.contentX + scrollView.width / 2
-        var offset = targetX - scrollView.flickableItem.contentX
+            targetX = tracksFlickable.contentX + tracksFlickable.width / 2
+        var offset = targetX - tracksFlickable.contentX
         var before = timeScale
 
         keyframesToolbar.scaleSlider.value = value
 
-        scrollView.flickableItem.contentX = Logic.clamp((targetX * timeScale / before) - offset, 0, Logic.scrollMax().x)
+        tracksFlickable.contentX = Logic.clamp((targetX * timeScale / before) - offset, 0, Logic.scrollMax().x)
     }
 
     Timer {
@@ -84,7 +82,7 @@ Rectangle {
     }
 
     function zoomToFit() {
-        setZoom(Math.pow((scrollView.width - 50) * timeScale / tracksContainer.width - 0.01, 1/3))
+        setZoom(Math.pow((tracksFlickable.width - 50) * timeScale / tracksContainer.width - 0.01, 1/3))
     }
 
     function resetZoom() {
@@ -118,7 +116,7 @@ Rectangle {
             }
             Flickable {
                 // Non-slider scroll area for the track headers.
-                contentY: scrollView.flickableItem.contentY
+                contentY: tracksFlickable.contentY
                 width: headerWidth
                 height: trackHeaders.height
                 interactive: false
@@ -132,7 +130,6 @@ Rectangle {
                         trackName: metadata !== null? metadata.name : ''
                         width: headerWidth
                         height: Logic.trackHeight(true)
-                        selected: false
 //                        onIsLockedChanged: parametersRepeater.itemAt(index).isLocked = isLocked
                     }
                     Repeater {
@@ -147,9 +144,7 @@ Rectangle {
                             height: Logic.trackHeight(isCurve)
                             current: index === currentTrack
 //                            onIsLockedChanged: parametersRepeater.itemAt(index).isLocked = isLocked
-                            onClicked: {
-                                currentTrack = index
-                            }
+                            onClicked: currentTrack = index
                         }
                     }
                 }
@@ -173,7 +168,7 @@ Rectangle {
             focus: true
             hoverEnabled: true
             onClicked: {
-                producer.position = (scrollView.flickableItem.contentX + mouse.x) / timeScale
+                producer.position = (tracksFlickable.contentX + mouse.x) / timeScale
                 bubbleHelp.hide()
             }
             onWheel: Logic.onMouseWheel(wheel)
@@ -215,7 +210,7 @@ Rectangle {
             onExited: scim = false
             onPositionChanged: {
                 if (mouse.modifiers === (Qt.ShiftModifier | Qt.AltModifier) || mouse.buttons === Qt.LeftButton) {
-                    producer.position = (scrollView.flickableItem.contentX + mouse.x) / timeScale
+                    producer.position = (tracksFlickable.contentX + mouse.x) / timeScale
                     bubbleHelp.hide()
                     scim = true
                 }
@@ -241,28 +236,32 @@ Rectangle {
                 Flickable {
                     // Non-slider scroll area for the Ruler.
                     id: rulerFlickable
-                    contentX: scrollView.flickableItem.contentX
+                    contentX: tracksFlickable.contentX
                     width: root.width - headerWidth
                     height: ruler.height
                     interactive: false
                     // workaround to fix https://github.com/mltframework/shotcut/issues/777
-                    onContentXChanged: if (contentX === 0) contentX = scrollView.flickableItem.contentX
+                    onContentXChanged: if (contentX === 0) contentX = tracksFlickable.contentX
 
                     Ruler {
                         id: ruler
                         width: producer.duration * timeScale
                     }
                 }
-                ScrollView {
-                    id: scrollView
+                Flickable {
+                    id: tracksFlickable
                     width: root.width - headerWidth
                     height: root.height - ruler.height - keyframesToolbar.height
                     // workaround to fix https://github.com/mltframework/shotcut/issues/777
-                    flickableItem.onContentXChanged: rulerFlickable.contentX = flickableItem.contentX
+                    onContentXChanged: rulerFlickable.contentX = contentX
+                    interactive: false
+                    contentWidth: tracksContainer.width + headerWidth
+                    contentHeight: trackHeaders.height + 30 // 30 is padding
+                    ScrollBar.horizontal: ScrollBar{ policy: ScrollBar.AlwaysOn; visible: parent.contentWidth > parent.width }
+                    ScrollBar.vertical: ScrollBar{ policy: ScrollBar.AlwaysOn; visible: parent.contentHeight > parent.height }
 
                     MouseArea {
-                        width: tracksContainer.width + headerWidth
-                        height: trackHeaders.height + 30 // 30 is padding
+                        anchors.fill: parent
                         acceptedButtons: Qt.NoButton
                         onWheel: Logic.onMouseWheel(wheel)
 
@@ -376,14 +375,14 @@ Rectangle {
                 visible: producer.position > -1 && metadata !== null
                 color: activePalette.text
                 width: 1
-                height: root.height - scrollView.__horizontalScrollBar.height - keyframesToolbar.height
-                x: producer.position * timeScale - scrollView.flickableItem.contentX
+                height: root.height - keyframesToolbar.height
+                x: producer.position * timeScale - tracksFlickable.contentX
                 y: 0
             }
-            TimelinePlayhead {
+            Shotcut.TimelinePlayhead {
                 id: playhead
                 visible: producer.position > -1 && metadata !== null
-                x: producer.position * timeScale - scrollView.flickableItem.contentX - 5
+                x: producer.position * timeScale - tracksFlickable.contentX - 5
                 y: 0
                 width: 11
                 height: 5
@@ -421,8 +420,8 @@ Rectangle {
             anchors.centerIn: parent
         }
         function show(x, y, text) {
-            bubbleHelp.x = x + tracksArea.x - scrollView.flickableItem.contentX - bubbleHelpLabel.width
-            bubbleHelp.y = Math.max(keyframesToolbar.height, y + tracksArea.y - scrollView.flickableItem.contentY - bubbleHelpLabel.height)
+            bubbleHelp.x = x + tracksArea.x - tracksFlickable.contentX - bubbleHelpLabel.width
+            bubbleHelp.y = Math.max(keyframesToolbar.height, y + tracksArea.y - tracksFlickable.contentY - bubbleHelpLabel.height)
             bubbleHelp.text = text
             if (bubbleHelp.state !== 'visible')
                 bubbleHelp.state = 'visible'
@@ -444,12 +443,12 @@ Rectangle {
         fast: true
     }
 
-    Controls2.Menu {
+    Menu {
         id: menu
-        Controls2.Menu {
+        Menu {
             title: qsTr('Options')
             width: 310
-            Controls2.MenuItem {
+            MenuItem {
                 text: qsTr('Show Audio Waveforms')
                 checkable: true
                 checked: settings.timelineShowWaveforms
@@ -467,7 +466,7 @@ Rectangle {
                     }
                 }
             }
-            Controls2.MenuItem {
+            MenuItem {
                 text: qsTr('Use Higher Performance Waveforms')
                 checkable: true
                 checked: settings.timelineFramebufferWaveform
@@ -477,30 +476,30 @@ Rectangle {
                         multitrack.reload()
                 }
             }
-            Controls2.MenuItem {
+            MenuItem {
                 text: qsTr('Show Video Thumbnails')
                 checkable: true
                 checked: settings.timelineShowThumbnails
                 onTriggered: settings.timelineShowThumbnails = checked
             }
-            Controls2.MenuItem {
+            MenuItem {
                 text: qsTr('Center the Playhead') + (application.OS === 'OS X'? '    ⇧⌘P' : ' (Ctrl+Shift+P)')
                 checkable: true
                 checked: settings.timelineCenterPlayhead
                 onTriggered: settings.timelineCenterPlayhead = checked
             }
-            Controls2.MenuItem {
+            MenuItem {
                 text: qsTr('Scroll to Playhead on Zoom') + (application.OS === 'OS X'? '    ⌥⌘P' : ' (Ctrl+Alt+P)')
                 checkable: true
                 checked: settings.timelineScrollZoom
                 onTriggered: settings.timelineScrollZoom = checked
             }
         }
-        Controls2.MenuItem {
+        MenuItem {
             text: qsTr('Reload') + (application.OS === 'OS X'? '    F5' : ' (F5)')
             onTriggered: parameters.reload()
         }
-        Controls2.MenuItem {
+        MenuItem {
             text: qsTr('Cancel')
             onTriggered: menu.dismiss()
         }
@@ -563,8 +562,8 @@ Rectangle {
         onTriggered: {
             var delta = backwards? -10 : 10
             if (item) item.x += delta
-            scrollView.flickableItem.contentX += delta
-            if (scrollView.flickableItem.contentX <= 0)
+            tracksFlickable.contentX += delta
+            if (tracksFlickable.contentX <= 0)
                 stop()
         }
     }

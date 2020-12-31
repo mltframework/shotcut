@@ -15,13 +15,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.2
-import QtQuick.Controls 1.0
-import QtQuick.Controls 2.12 as Controls2
-import Shotcut.Controls 1.0
-import QtGraphicalEffects 1.0
-import QtQml.Models 2.2
-import QtQuick.Window 2.2
+import QtQuick 2.12
+import QtQuick.Controls 2.12
+import Shotcut.Controls 1.0 as Shotcut
 
 Rectangle {
     id: clipRoot
@@ -132,7 +128,7 @@ Rectangle {
         Repeater {
             id: waveformRepeater
             model: Math.ceil(waveform.innerWidth / waveform.maxWidth)
-            TimelineWaveform {
+            Shotcut.TimelineWaveform {
                 width: Math.min(waveform.innerWidth, waveform.maxWidth)
                 height: waveform.height
                 fillColor: getColor()
@@ -140,10 +136,10 @@ Rectangle {
                 inPoint: Math.round((clipRoot.inPoint + index * waveform.maxWidth / timeScale) * speed) * channels
                 outPoint: inPoint + Math.round(width / timeScale * speed) * channels
                 levels: audioLevels
-                active: ((clipRoot.x + x + width)   > scrollView.flickableItem.contentX) && // right edge
-                        ((clipRoot.x + x)           < scrollView.flickableItem.contentX + scrollView.width) && // left edge
-                        ((trackRoot.y + y + height) > scrollView.flickableItem.contentY) && // bottom edge
-                        ((trackRoot.y + y)          < scrollView.flickableItem.contentY + scrollView.height) // top edge
+                active: ((clipRoot.x + x + width)   > tracksFlickable.contentX) && // right edge
+                        ((clipRoot.x + x)           < tracksFlickable.contentX + tracksFlickable.width) && // left edge
+                        ((trackRoot.y + y + height) > tracksFlickable.contentY) && // bottom edge
+                        ((trackRoot.y + y)          < tracksFlickable.contentY + tracksFlickable.height) // top edge
             }
         }
     }
@@ -235,7 +231,7 @@ Rectangle {
         onClicked: menu.popup()
     }
 
-    TimelineTriangle {
+    Shotcut.TimelineTriangle {
         id: animateInTriangle
         visible: !isBlank
         width: parent.animateIn * timeScale
@@ -315,7 +311,7 @@ Rectangle {
         }
     }
 
-    TimelineTriangle {
+    Shotcut.TimelineTriangle {
         id: animateOutTriangle
         visible: !isBlank
         width: parent.animateOut * timeScale
@@ -489,9 +485,9 @@ Rectangle {
             }
         }
     }
-    Controls2.Menu {
+    Menu {
         id: menu
-        Controls2.MenuItem {
+        MenuItem {
             visible: !isBlank && settings.timelineShowWaveforms
             text: qsTr('Rebuild Audio Waveform')
             onTriggered: producer.remakeAudioLevels()
