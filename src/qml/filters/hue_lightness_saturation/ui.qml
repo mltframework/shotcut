@@ -18,7 +18,7 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.1
 import QtQuick.Layouts 1.1
-import Shotcut.Controls 1.0
+import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     property double hueDegreeDefault: 100
@@ -54,7 +54,7 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: presetItem
             Layout.columnSpan: 2
             parameters: defaultParameters
@@ -65,14 +65,14 @@ Item {
             text: qsTr('Hue')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: hueDegreeSlider
             minimumValue: 0
             maximumValue: 200
             suffix: ' %'
             onValueChanged: filter.set("av.h", (value - 100) * 360 / 100)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: hueDegreeSlider.value = hueDegreeDefault
         }
 
@@ -80,14 +80,14 @@ Item {
             text: qsTr('Lightness')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: lightnessSlider
             minimumValue: 0
             maximumValue: 200
             suffix: ' %'
             onValueChanged: filter.set("av.b", (value - 100) * 10 / 100)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: lightnessSlider.value = lightnessDefault
         }
         
@@ -95,14 +95,14 @@ Item {
             text: qsTr('Saturation')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: saturationSlider
             minimumValue: 0
             maximumValue: 500
             suffix: ' %'
             onValueChanged: filter.set("av.s", value / 100.0)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: saturationSlider.value = saturationDefault
         }
 

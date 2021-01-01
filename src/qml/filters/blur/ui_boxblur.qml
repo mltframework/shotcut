@@ -18,7 +18,7 @@
 import QtQuick 2.1
 import QtQuick.Controls 1.1
 import QtQuick.Layouts 1.0
-import Shotcut.Controls 1.0
+import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     width: 200
@@ -139,7 +139,7 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: preset
             Layout.columnSpan: parent.columns - 1
             parameters: ['hori', 'vert']
@@ -167,17 +167,17 @@ Item {
             text: qsTr('Width')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: wslider
             minimumValue: 0
             maximumValue: 99
             suffix: ' px'
             onValueChanged: updateFilterWidth(getPosition())
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: wslider.value = 2
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: widthKeyframesButton
             checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('hori') > 0
             onToggled: {
@@ -202,17 +202,17 @@ Item {
             text: qsTr('Height')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: hslider
             minimumValue: 0
             maximumValue: 99
             suffix: ' px'
             onValueChanged: updateFilterHeight(getPosition())
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: hslider.value = 2
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: heightKeyframesButton
             checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('vert') > 0
             onToggled: {

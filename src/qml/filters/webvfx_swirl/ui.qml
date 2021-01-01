@@ -18,7 +18,7 @@
 import QtQuick 2.1
 import QtQuick.Controls 1.0
 import QtQuick.Layouts 1.0
-import Shotcut.Controls 1.0
+import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     width: 100
@@ -40,7 +40,7 @@ Item {
 
         RowLayout {
             Label { text: qsTr('Swirl amount') }
-            SliderSpinner {
+            Shotcut.SliderSpinner {
                 id: amountSlider
                 minimumValue: 0
                 maximumValue: 100
@@ -50,7 +50,7 @@ Item {
                     filter.set('_refresh', 1)
                 }
             }
-            UndoButton {
+            Shotcut.UndoButton {
                 onClicked: amountSlider.value = 50
             }
         }

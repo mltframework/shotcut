@@ -18,9 +18,9 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.1
 import QtQuick.Layouts 1.1
-import Shotcut.Controls 1.0
+import Shotcut.Controls 1.0 as Shotcut
 
-KeyframableFilter {
+Shotcut.KeyframableFilter {
     
     property string amplitude: '0'
     property string frequency: '1'
@@ -78,7 +78,7 @@ KeyframableFilter {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: preset
             parameters: [amplitude, frequency, useVelocity, velocity]
             Layout.columnSpan: 3
@@ -95,7 +95,7 @@ KeyframableFilter {
             text: qsTr('Amplitude')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: amplitudeSlider
             minimumValue: 0
             maximumValue: 100
@@ -104,10 +104,10 @@ KeyframableFilter {
             suffix: ' %'
             onValueChanged: updateFilter(amplitude, value / maximumValue, amplitudeKeyframesButton, getPosition())
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: amplitudeSlider.value = amplitudeDefault * amplitudeSlider.maximumValue
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: amplitudeKeyframesButton
             checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(amplitude) > 0
             onToggled: {
@@ -120,7 +120,7 @@ KeyframableFilter {
             text: qsTr('Frequency')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: frequencySlider
             minimumValue: 0
             maximumValue: 100
@@ -129,10 +129,10 @@ KeyframableFilter {
             suffix: ' %'
             onValueChanged: updateFilter(frequency, value / maximumValue, frequencyKeyframesButton, getPosition())
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: frequencySlider.value = frequencyDefault * frequencySlider.maximumValue
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: frequencyKeyframesButton
             checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(frequency) > 0
             onToggled: {
@@ -145,7 +145,7 @@ KeyframableFilter {
             text: qsTr('Velocity')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: velocitySlider
             minimumValue: 0
             maximumValue: 100
@@ -154,10 +154,10 @@ KeyframableFilter {
             suffix: ' %'
             onValueChanged: updateFilter(velocity, value / maximumValue, velocityKeyframesButton, getPosition())
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: velocitySlider.value = velocityDefault * velocitySlider.maximumValue
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: velocityKeyframesButton
             checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(velocity) > 0
             onToggled: {

@@ -18,7 +18,7 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.1
 import QtQuick.Layouts 1.1
-import Shotcut.Controls 1.0
+import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     property string fillProperty
@@ -474,7 +474,7 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: preset
             parameters: [fillProperty, distortProperty, rectProperty, halignProperty, valignProperty]
             Layout.columnSpan: 5
@@ -551,7 +551,7 @@ Item {
                 }
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: {
                 filterRect.x = rectX.value = defaultRect.x
                 filterRect.y = rectY.value = defaultRect.y
@@ -568,7 +568,7 @@ Item {
                 height: positionKeyframesButton.height
                 anchors.horizontalCenter: positionKeyframesButton.horizontalCenter
             }
-            KeyframesButton {
+            Shotcut.KeyframesButton {
                 id: positionKeyframesButton
                 checked: filter.keyframeCount(rectProperty) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
                 onToggled: {
@@ -658,7 +658,7 @@ Item {
                 }
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             id: sizeUndoButton
             onClicked: {
                 filterRect.width = rectW.value = defaultRect.width
@@ -672,7 +672,7 @@ Item {
             text: qsTr('Zoom')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: scaleSlider
             Layout.columnSpan: 3
             minimumValue: 0.1
@@ -701,7 +701,7 @@ Item {
                 }
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             enabled: scaleSlider.enabled
             onClicked: {
                 if (isFitMode()) {
@@ -754,7 +754,7 @@ Item {
                 updateAspectRatio()
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: {
                 fitRadioButton.checked = true
                 filter.set(fillProperty, 0)
@@ -786,7 +786,7 @@ Item {
             exclusiveGroup: halignGroup
             onClicked: filter.set(halignProperty, 'right')
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: {
                 leftRadioButton.checked = true
                 filter.set(halignProperty, 'left')
@@ -816,7 +816,7 @@ Item {
             exclusiveGroup: valignGroup
             onClicked: filter.set(valignProperty, 'bottom')
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: {
                 topRadioButton.checked = true
                 filter.set(valignProperty, 'top')
@@ -829,7 +829,7 @@ Item {
             Layout.alignment: Qt.AlignRight
             visible: !!rotationProperty
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: rotationSlider
             Layout.columnSpan: 3
             visible: !!rotationProperty
@@ -839,11 +839,11 @@ Item {
             suffix: qsTr(' °', 'degrees')
             onValueChanged: updateRotation(getPosition())
         }
-        UndoButton {
+        Shotcut.UndoButton {
             visible: !!rotationProperty
             onClicked: rotationSlider.value = 0
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: rotationKeyframesButton
             visible: !!rotationProperty
             checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(rotationProperty) > 0
@@ -858,7 +858,7 @@ Item {
             Layout.alignment: Qt.AlignRight
             visible: bgColor.visible
         }
-        ColorPicker {
+        Shotcut.ColorPicker {
             id: bgColor
             visible: !!backgroundProperty
             Layout.columnSpan: 3
@@ -866,7 +866,7 @@ Item {
             alpha: true
             onValueChanged: filter.set(backgroundProperty, 'color:' + value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             visible: bgColor.visible
             onClicked: bgColor.value = '#00000000'
         }

@@ -16,9 +16,9 @@
  */
 
 import QtQuick 2.1
-import Shotcut.Controls 1.0
+import Shotcut.Controls 1.0 as Shotcut
 
-VuiBase {
+Shotcut.VuiBase {
     property var keyframableParameters: ['yaw', 'pitch', 'roll']
     property var startValues: []
     property var middleValues: []

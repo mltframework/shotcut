@@ -20,7 +20,7 @@ import QtQuick.Layouts 1.0
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 import QtQuick.Extras 1.4
-import Shotcut.Controls 1.0
+import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     width: 350
@@ -70,7 +70,7 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: preset
             parameters: ['0', '1', '2', '3', '4', '5', '6']
             Layout.columnSpan: 2
@@ -80,9 +80,9 @@ Item {
         Label {
             text: qsTr('RMS')
             Layout.alignment: Qt.AlignRight
-            ToolTip {text: qsTr('The balance between the RMS and peak envelope followers. RMS is generally better for subtle, musical compression and peak is better for heavier, fast compression and percussion.')}
+            Shotcut.ToolTip {text: qsTr('The balance between the RMS and peak envelope followers. RMS is generally better for subtle, musical compression and peak is better for heavier, fast compression and percussion.')}
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: sliderPeak
             minimumValue: 0
             maximumValue: 100
@@ -94,7 +94,7 @@ Item {
                 filter.set('0', value / maximumValue)
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: sliderPeak.value = sliderPeak.minimumValue
         }
 
@@ -102,7 +102,7 @@ Item {
             text: qsTr('Attack')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: sliderAttack
             minimumValue: 2
             maximumValue: 400
@@ -112,7 +112,7 @@ Item {
                 filter.set('1', value)
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: sliderAttack.value = 100
         }
 
@@ -120,7 +120,7 @@ Item {
             text: qsTr('Release')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: sliderRelease
             minimumValue: 2
             maximumValue: 800
@@ -130,16 +130,16 @@ Item {
                 filter.set('2', value)
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: sliderRelease.value = 400
         }
 
         Label {
             text: qsTr('Threshold')
             Layout.alignment: Qt.AlignRight
-            ToolTip {text: qsTr('The point at which the compressor will start to kick in.')}
+            Shotcut.ToolTip {text: qsTr('The point at which the compressor will start to kick in.')}
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: sliderThreshold
             minimumValue: -30
             maximumValue: 0
@@ -150,16 +150,16 @@ Item {
                 filter.set('3', value)
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: sliderThreshold.value = 0
         }
 
         Label {
             text: qsTr('Ratio')
             Layout.alignment: Qt.AlignRight
-            ToolTip {text: qsTr('The gain reduction ratio used when the signal level exceeds the threshold.')}
+            Shotcut.ToolTip {text: qsTr('The gain reduction ratio used when the signal level exceeds the threshold.')}
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: sliderRatio
             minimumValue: 1
             maximumValue: 20
@@ -169,16 +169,16 @@ Item {
                 filter.set('4', value)
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: sliderRatio.value = 1
         }
 
         Label {
             text: qsTr('Knee radius')
             Layout.alignment: Qt.AlignRight
-            ToolTip {text: qsTr('The distance from the threshold where the knee curve starts.')}
+            Shotcut.ToolTip {text: qsTr('The distance from the threshold where the knee curve starts.')}
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: sliderRadius
             minimumValue: 1
             maximumValue: 10
@@ -189,16 +189,16 @@ Item {
                 filter.set('5', value)
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: sliderRadius.value = 3.25
         }
 
         Label {
             text: qsTr('Makeup gain')
             Layout.alignment: Qt.AlignRight
-            ToolTip {text: qsTr('The gain of the makeup input signal.')}
+            Shotcut.ToolTip {text: qsTr('The gain of the makeup input signal.')}
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: sliderGain
             minimumValue: 0
             maximumValue: 24
@@ -209,7 +209,7 @@ Item {
                 filter.set('6', value)
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: sliderGain.value = 0
         }
         
@@ -273,7 +273,7 @@ Item {
         Label {
             text: qsTr('Gain Reduction')
             Layout.alignment: Qt.AlignRight | Qt.AlignTop
-            ToolTip {text: qsTr('Status indicator showing the gain reduction applied by the compressor.')}
+            Shotcut.ToolTip {text: qsTr('Status indicator showing the gain reduction applied by the compressor.')}
         }
         Gauge {
             Layout.columnSpan: 2

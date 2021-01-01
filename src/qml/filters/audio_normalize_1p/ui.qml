@@ -22,7 +22,7 @@ import QtQuick.Controls.Styles 1.4
 import QtQuick.Layouts 1.0
 import QtQuick.Extras 1.4
 import QtQml 2.2
-import Shotcut.Controls 1.0
+import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     width: 480
@@ -86,7 +86,7 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: preset
             parameters: ['target_loudness', 'window', 'max_gain', 'min_gain', 'max_rate']
             Layout.columnSpan: 2
@@ -96,9 +96,9 @@ Item {
         Label {
             text: qsTr('Target Loudness')
             Layout.alignment: Qt.AlignRight
-            ToolTip {text: qsTr('The target loudness of the output in LUFS.')}
+            Shotcut.ToolTip {text: qsTr('The target loudness of the output in LUFS.')}
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: programSlider
             minimumValue: -50.0
             maximumValue: -10.0
@@ -108,16 +108,16 @@ Item {
             value: filter.getDouble('target_loudness')
             onValueChanged: filter.set('target_loudness', value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: programSlider.value = -23.0
         }
 
         Label {
             text: qsTr('Analysis Window')
             Layout.alignment: Qt.AlignRight
-            ToolTip {text: qsTr('The amount of history to use to calculate the input loudness.')}
+            Shotcut.ToolTip {text: qsTr('The amount of history to use to calculate the input loudness.')}
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: windowSlider
             minimumValue: 2
             maximumValue: 600
@@ -127,16 +127,16 @@ Item {
             value: filter.getDouble('window')
             onValueChanged: filter.set('window', value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: windowSlider.value = 20.0
         }
 
         Label {
             text: qsTr('Maximum Gain')
             Layout.alignment: Qt.AlignRight
-            ToolTip {text: qsTr('The maximum that the gain can be increased.')}
+            Shotcut.ToolTip {text: qsTr('The maximum that the gain can be increased.')}
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: maxgainSlider
             minimumValue: 0.0
             maximumValue: 30.0
@@ -146,16 +146,16 @@ Item {
             value: filter.getDouble('max_gain')
             onValueChanged: filter.set('max_gain', value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: maxgainSlider.value = 15
         }
 
         Label {
             text: qsTr('Minimum Gain')
             Layout.alignment: Qt.AlignRight
-            ToolTip {text: qsTr('The maximum that the gain can be decreased.')}
+            Shotcut.ToolTip {text: qsTr('The maximum that the gain can be decreased.')}
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: mingainSlider
             minimumValue: -30.0
             maximumValue: 0.0
@@ -165,16 +165,16 @@ Item {
             value: filter.getDouble('min_gain')
             onValueChanged: filter.set('min_gain', value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: mingainSlider.value = -15.0
         }
 
         Label {
             text: qsTr('Maximum Rate')
             Layout.alignment: Qt.AlignRight
-            ToolTip {text: qsTr('The maximum rate that the gain can be changed.')}
+            Shotcut.ToolTip {text: qsTr('The maximum rate that the gain can be changed.')}
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: maxrateSlider
             minimumValue: 0.5
             maximumValue: 9.0
@@ -185,7 +185,7 @@ Item {
             value: filter.getDouble('max_rate')
             onValueChanged: filter.set('max_rate', value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: maxrateSlider.value = 3.0
         }
         
@@ -249,7 +249,7 @@ Item {
         Label {
             text: qsTr('Input Loudness')
             Layout.alignment: Qt.AlignRight | Qt.AlignTop
-            ToolTip {text: qsTr('Status indicator showing the loudness measured on the input.')}
+            Shotcut.ToolTip {text: qsTr('Status indicator showing the loudness measured on the input.')}
         }
         Gauge {
             Layout.columnSpan: 2
@@ -267,7 +267,7 @@ Item {
         Label {
             text: qsTr('Output Gain')
             Layout.alignment: Qt.AlignRight | Qt.AlignTop
-            ToolTip {text: qsTr('Status indicator showing the gain being applied.')}
+            Shotcut.ToolTip {text: qsTr('Status indicator showing the gain being applied.')}
         }
         Gauge {
             Layout.columnSpan: 2
@@ -284,7 +284,7 @@ Item {
         Label {
             text: qsTr('Reset')
             Layout.alignment: Qt.AlignRight
-            ToolTip {text: qsTr('Status indicator showing when the loudness measurement is reset.')}
+            Shotcut.ToolTip {text: qsTr('Status indicator showing when the loudness measurement is reset.')}
         }
         StatusIndicator {
             Layout.columnSpan: 2

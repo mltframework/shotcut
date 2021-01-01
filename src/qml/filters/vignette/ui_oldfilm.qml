@@ -18,7 +18,7 @@
 import QtQuick 2.1
 import QtQuick.Controls 1.0
 import QtQuick.Layouts 1.0
-import Shotcut.Controls 1.0
+import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     property var defaultParameters: ['radius', 'smooth', 'opacity', 'mode']
@@ -139,7 +139,7 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: preset
             Layout.columnSpan: 3
             parameters: defaultParameters
@@ -158,17 +158,17 @@ Item {
             text: qsTr('Radius')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: radiusSlider
             minimumValue: 0
             maximumValue: 100
             suffix: ' %'
             onValueChanged: updateFilter('radius', value / 100.0, getPosition(), radiusKeyframesButton)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: radiusSlider.value = 50
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: radiusKeyframesButton
             checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('radius') > 0
             onToggled: onKeyframesButtonClicked(checked, 'radius', radiusSlider.value / 100.0)
@@ -178,17 +178,17 @@ Item {
             text: qsTr('Feathering')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: smoothSlider
             minimumValue: 0
             maximumValue: 500
             suffix: ' %'
             onValueChanged: updateFilter('smooth', value / 100.0, getPosition(), smoothKeyframesButton)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: smoothSlider.value = 200
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: smoothKeyframesButton
             checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('smooth') > 0
             onToggled: onKeyframesButtonClicked(checked, 'smooth', smoothSlider.value / 100.0)
@@ -211,17 +211,17 @@ Item {
             text: qsTr('Opacity')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: opacitySlider
             minimumValue: 0
             maximumValue: 100
             suffix: ' %'
             onValueChanged: updateFilter('opacity', 1.0 - value / 100.0, getPosition(), opacityKeyframesButton)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: opacitySlider.value = 100
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: opacityKeyframesButton
             checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('opacity') > 0
             onToggled: onKeyframesButtonClicked(checked, 'opacity', 1.0 - opacitySlider.value / 100.0)

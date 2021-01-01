@@ -18,9 +18,9 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.1
 import QtQuick.Layouts 1.1
-import Shotcut.Controls 1.0
+import Shotcut.Controls 1.0 as Shotcut
 
-KeyframableFilter {
+Shotcut.KeyframableFilter {
     property string spatial: '0'
     property string temporal: '1'
     property double spatialDefault: 0.04
@@ -70,7 +70,7 @@ KeyframableFilter {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: preset
             parameters: [spatial, temporal]
             Layout.columnSpan: 3
@@ -88,7 +88,7 @@ KeyframableFilter {
             text: qsTr('Spatial')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: spatialSlider
             minimumValue: 0.0
             maximumValue: 100
@@ -97,10 +97,10 @@ KeyframableFilter {
             suffix: ' %'
             onValueChanged: updateFilter(spatial, spatialSlider.value / spatialSlider.maximumValue, spatialKeyframesButton, getPosition())
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: spatialSlider.value = spatialDefault * spatialSlider.maximumValue
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: spatialKeyframesButton
             checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(spatial) > 0
             onToggled: {
@@ -113,7 +113,7 @@ KeyframableFilter {
             text: qsTr('Temporal')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: temporalSlider
             minimumValue: 0.0
             maximumValue: 100
@@ -122,10 +122,10 @@ KeyframableFilter {
             suffix: ' %'
             onValueChanged: updateFilter(temporal, temporalSlider.value / temporalSlider.maximumValue, temporalKeyframesButton, getPosition())
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: temporalSlider.value = temporalDefault * temporalSlider.maximumValue
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: temporalKeyframesButton
             checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(temporal) > 0
             onToggled: {

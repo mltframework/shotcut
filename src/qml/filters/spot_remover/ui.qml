@@ -18,7 +18,7 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.1
 import QtQuick.Layouts 1.1
-import Shotcut.Controls 1.0
+import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     property string rectProperty: 'rect'
@@ -117,7 +117,7 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: preset
             parameters: [rectProperty]
             Layout.columnSpan: 5
@@ -162,14 +162,14 @@ Item {
                 }
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: {
                 rectX.text = rectY.text = 0
                 filterRect.x = filterRect.y = 0
                 setFilter(getPosition())
             }
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: positionKeyframesButton
             Layout.rowSpan: 2
             checked: filter.keyframeCount(rectProperty) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
@@ -209,7 +209,7 @@ Item {
                 }
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: {
                 rectW.text = profile.width / 10
                 rectH.text = profile.height / 10

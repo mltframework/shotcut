@@ -18,7 +18,7 @@
 import QtQuick 2.1
 import QtQuick.Controls 1.1
 import QtQuick.Layouts 1.0
-import Shotcut.Controls 1.0
+import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     property var defaultParameters: ['gamma_r', 'gamma_g', 'gamma_b', 'gain_r', 'gain_g', 'gain_b']
@@ -144,7 +144,7 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             Layout.columnSpan: 3
             parameters: defaultParameters
             onPresetSelected: {
@@ -162,7 +162,7 @@ Item {
             text: qsTr('Level')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: contrastSlider
             minimumValue: 0
             maximumValue: 100
@@ -170,10 +170,10 @@ Item {
             suffix: ' %'
             onValueChanged: updateFilter(getPosition())
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: contrastSlider.value = 50
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id:keyframesButton
             checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('gain_r') > 0
             onToggled: {

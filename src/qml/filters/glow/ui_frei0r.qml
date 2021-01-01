@@ -18,7 +18,7 @@
 import QtQuick 2.1
 import QtQuick.Controls 1.1
 import QtQuick.Layouts 1.0
-import Shotcut.Controls 1.0
+import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     property string paramBlur: '0'
@@ -97,7 +97,7 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             Layout.columnSpan: 3
             parameters: defaultParameters
             onBeforePresetLoaded: filter.resetProperty(paramBlur)
@@ -116,17 +116,17 @@ Item {
             text: qsTr('Blur')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: bslider
             minimumValue: 0
             maximumValue: 100
             suffix: ' %'
             onValueChanged: updateFilter(getPosition())
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: bslider.value = 50
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: blurKeyframesButton
             checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(paramBlur) > 0
             onToggled: {

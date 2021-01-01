@@ -16,10 +16,10 @@
  */
 
 import QtQuick 2.1
-import Shotcut.Controls 1.0
+import Shotcut.Controls 1.0 as Shotcut
 
 
-VuiBase {
+Shotcut.VuiBase {
     property string corner1xProperty: '0'
     property string corner1yProperty: '1'
     property string corner2xProperty: '2'

@@ -20,7 +20,7 @@ import QtQuick.Controls 1.1
 import QtQuick.Controls.Styles 1.1
 import QtQuick.Layouts 1.0
 import QtQuick.Dialogs 1.0
-import Shotcut.Controls 1.0
+import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     width: 400
@@ -177,7 +177,7 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: preset
             parameters: [rectProperty, 'radius', 'color']
             Layout.columnSpan: 3
@@ -229,14 +229,14 @@ Item {
                 }
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: {
                 rectX.text = rectY.text = 0
                 filterRect.x = filterRect.y = 0
                 updateFilterRect(getPosition(), true)
             }
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: positionKeyframesButton
             Layout.rowSpan: 2
             checked: filter.keyframeCount(rectProperty) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
@@ -277,7 +277,7 @@ Item {
                 }
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: {
                 rectW.text = profile.width
                 rectH.text = profile.height
@@ -291,7 +291,7 @@ Item {
             text: qsTr('Corner radius')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: slider
             minimumValue: 0
             maximumValue: 100
@@ -299,10 +299,10 @@ Item {
             suffix: ' %'
             onValueChanged: updateFilterRatio(getPosition())
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: slider.value = 0
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: radiusKeyframesButton
             checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('radius') > 0
             onToggled: {
@@ -324,7 +324,7 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
         RowLayout {
-            ColorPicker {
+            Shotcut.ColorPicker {
                 id: colorSwatch
                 alpha: true
                 property bool isReady: false
@@ -345,7 +345,7 @@ Item {
                 onClicked: colorSwatch.value = '#00000000'
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: colorSwatch.value = '#FF000000'
         }
         Item { width: 1 }

@@ -16,40 +16,41 @@
  */
 
 import QtQuick 2.2
-import QtQuick.Controls 1.1
-import QtQuick.Controls.Styles 1.1
-import Shotcut.Controls 1.0 as Shotcut
+import QtQuick.Controls 2.12
 import QtQuick.Dialogs 1.2
 
-CheckBox {
+ToolButton {
     id: checkbox
     enabled: metadata !== null && metadata.keyframes.enabled
     opacity: enabled? 1.0 : 0.0
 
     signal toggled()
 
-    style: CheckBoxStyle {
-        background: Rectangle {
-            implicitWidth: 20
-            implicitHeight: 20
-            radius: 3
-            SystemPalette { id: activePalette }
-            color: control.checked? activePalette.highlight : activePalette.button
-            border.color: activePalette.shadow
-            border.width: 1
-        }
-        indicator: ToolButton {
-            x: 3
-            implicitWidth: 16
-            implicitHeight: 16
-            iconName: 'chronometer'
-            iconSource: 'qrc:///icons/oxygen/32x32/actions/chronometer.png'
-        }
+    padding: 2
+    checkable: true
+    hoverEnabled: true
+
+    SystemPalette { id: activePalette }
+    palette.buttonText: activePalette.buttonText
+
+    ToolTip.delay: 700
+    ToolTip.timeout: 5000
+    ToolTip.visible: hovered
+    ToolTip.text: qsTr('Use Keyframes for this parameter')
+
+    background: Rectangle {
+        implicitWidth: 20
+        implicitHeight: 20
+        radius: 3
+        color: checked? activePalette.highlight : activePalette.button
+        border.color: activePalette.shadow
+        border.width: 1
     }
-    Shotcut.ToolTip { id: tooltip; text: qsTr('Use Keyframes for this parameter') }
+
+    icon.name: 'chronometer'
+    icon.source: 'qrc:///icons/oxygen/32x32/actions/chronometer.png'
 
     onClicked: {
-        tooltip.isVisible = false
         if (!checked) {
            checked = true
            confirmDialog.visible = true
@@ -58,7 +59,6 @@ CheckBox {
             keyframes.raise()
             toggled()
         }
-        tooltip.isVisible = true
     }
 
     MessageDialog {
@@ -70,12 +70,10 @@ CheckBox {
         text: qsTr('This will remove all keyframes for this parameter.<p>Do you still want to do this?')
         standardButtons: StandardButton.Yes | StandardButton.No
         onYes: {
-            tooltip.isVisible = false
             checkbox.checked = false
             checkbox.toggled()
         }
         onNo: {
-            tooltip.isVisible = false
             checkbox.checked = true
         }
     }

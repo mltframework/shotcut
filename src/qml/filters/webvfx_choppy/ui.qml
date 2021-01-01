@@ -18,9 +18,9 @@
 import QtQuick 2.1
 import QtQuick.Controls 1.1
 import QtQuick.Layouts 1.1
-import Shotcut.Controls 1.0
+import Shotcut.Controls 1.0 as Shotcut
 
-KeyframableFilter {
+Shotcut.KeyframableFilter {
     property string amount: 'amount'
     property int amountDefault: 5
 
@@ -66,7 +66,7 @@ KeyframableFilter {
             Layout.alignment: Qt.AlignRight
         }
 
-        Preset {
+        Shotcut.Preset {
             id: preset
             Layout.columnSpan: parent.columns - 1
             parameters: [amount]
@@ -83,7 +83,7 @@ KeyframableFilter {
             text: qsTr('Repeat')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: amountSlider
             minimumValue: 0
             maximumValue: Math.round(profile.fps)
@@ -92,10 +92,10 @@ KeyframableFilter {
             spinnerWidth: 110
             onValueChanged: updateFilter(amount, amountSlider.value, amountKeyframesButton, getPosition())
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: amountSlider.value = amountDefault
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: amountKeyframesButton
             checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(amount) > 0
             onToggled: {

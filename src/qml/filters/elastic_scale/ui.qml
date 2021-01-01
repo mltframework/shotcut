@@ -18,9 +18,9 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.1
 import QtQuick.Layouts 1.1
-import Shotcut.Controls 1.0
+import Shotcut.Controls 1.0 as Shotcut
 
-KeyframableFilter {
+Shotcut.KeyframableFilter {
     property string center: '0'
     property string linearwidth: '1'
     property string linearscalefactor: '2'
@@ -82,7 +82,7 @@ KeyframableFilter {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: preset
             parameters: [center, linearwidth, linearscalefactor, nonlinearscalefactor]
             Layout.columnSpan: 3
@@ -101,9 +101,9 @@ KeyframableFilter {
         Label {
             text: qsTr('Center')
             Layout.alignment: Qt.AlignRight
-            ToolTip { text: qsTr('Horizontal center position of the linear area.') }
+            Shotcut.ToolTip { text: qsTr('Horizontal center position of the linear area.') }
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: centerSlider
             minimumValue: 0
             maximumValue: 100.0
@@ -112,10 +112,10 @@ KeyframableFilter {
             suffix: ' '
             onValueChanged: updateFilter(center, centerSlider.value / centerSlider.maximumValue, centerKeyframesButton, getPosition())
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: centerSlider.value = centerDefault * centerSlider.maximumValue
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: centerKeyframesButton
             checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(center) > 0
             onToggled: {
@@ -127,9 +127,9 @@ KeyframableFilter {
         Label {
             text: qsTr('Linear width')
             Layout.alignment: Qt.AlignRight
-            ToolTip { text: qsTr('Width of the linear area.') }
+            Shotcut.ToolTip { text: qsTr('Width of the linear area.') }
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: linearwidthSlider
             minimumValue: 0
             maximumValue: 100.0
@@ -138,10 +138,10 @@ KeyframableFilter {
             suffix: ' '
             onValueChanged: updateFilter(linearwidth, linearwidthSlider.value / linearwidthSlider.maximumValue, linwKeyframesButton, getPosition())
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: linearwidthSlider.value = linearwidthDefault * linearwidthSlider.maximumValue
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: linwKeyframesButton
             checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(linearwidth) > 0
             onToggled: {
@@ -153,9 +153,9 @@ KeyframableFilter {
 Label {
             text: qsTr('Linear scale factor')
             Layout.alignment: Qt.AlignRight
-            ToolTip { text: qsTr('Amount the linear area is scaled.') }
+            Shotcut.ToolTip { text: qsTr('Amount the linear area is scaled.') }
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: linearscalefactorSlider
             minimumValue: 0
             maximumValue: 100.0
@@ -164,10 +164,10 @@ Label {
             suffix: ' '
             onValueChanged: updateFilter(linearscalefactor, linearscalefactorSlider.value / linearscalefactorSlider.maximumValue, lsfKeyframesButton, getPosition())
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: linearscalefactorSlider.value = linearscalefactorDefault * linearscalefactorSlider.maximumValue
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: lsfKeyframesButton
             checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(linearscalefactor) > 0
             onToggled: {
@@ -179,9 +179,9 @@ Label {
         Label {
             text: qsTr('Non-Linear scale factor')
             Layout.alignment: Qt.AlignRight
-            ToolTip { text: qsTr('Amount the outer left and outer right areas are scaled non linearly.') }
+            Shotcut.ToolTip { text: qsTr('Amount the outer left and outer right areas are scaled non linearly.') }
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: nonlinearscalefactorSlider
             minimumValue: 0
             maximumValue: 100.0
@@ -190,10 +190,10 @@ Label {
             suffix: ' '
             onValueChanged: updateFilter(nonlinearscalefactor, nonlinearscalefactorSlider.value / nonlinearscalefactorSlider.maximumValue, nlsfKeyframesButton, getPosition())
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: nonlinearscalefactorSlider.value = nonlinearscalefactorDefault * nonlinearscalefactorSlider.maximumValue
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: nlsfKeyframesButton
             checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(nonlinearscalefactor) > 0
             onToggled: {

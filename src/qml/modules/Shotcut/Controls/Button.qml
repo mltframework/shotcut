@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Meltytech, LLC
+ * Copyright (c) 2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,8 +15,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import Shotcut.Controls 1.0 as Shotcut
+import QtQuick 2.2
+import QtQuick.Controls 2.12
 
-Shotcut.TextFilterVui {
-    rectProperty: 'rect'
+Button {
+    padding: 2
+    hoverEnabled: true
+
+    SystemPalette { id: activePalette }
+    palette.buttonText: activePalette.buttonText
+
+    ToolTip.delay: 700
+    ToolTip.timeout: 5000
+    ToolTip.visible: ToolTip.text ? hovered : false
+    
+    Keys.onReturnPressed: clicked()
+    Keys.onEnterPressed: clicked()
 }

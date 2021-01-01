@@ -19,7 +19,7 @@ import QtQuick 2.0
 import QtQuick.Controls 1.1
 import QtQuick.Controls 2.12 as Controls2
 import QtQuick.Layouts 1.1
-import Shotcut.Controls 1.0
+import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     property string rectProperty: 'shotcut:rect'
@@ -201,7 +201,7 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: preset
             parameters: [patternProperty, rectProperty, startColorProperty, startOpacityProperty, endColorProperty, endOpacityProperty, blendProperty]
             Layout.columnSpan: 2
@@ -245,7 +245,7 @@ Item {
                 }
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: {
                 linearRadioButton.checked = true
                 filter.set(patternProperty, 'gradient_linear')
@@ -256,7 +256,7 @@ Item {
             text: qsTr('Offset')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: offsetSlider
             minimumValue: 0
             maximumValue: 99.9
@@ -264,7 +264,7 @@ Item {
             suffix: ' %'
             onValueChanged: filter.set(offsetProperty, value / 100)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: offsetSlider.value = 0
         }
 
@@ -272,7 +272,7 @@ Item {
             text: qsTr('Colors')
             Layout.alignment: Qt.AlignRight
         }
-        GradientControl {
+        Shotcut.GradientControl {
             id: gradient
             spinnerVisible: false
             function cssColor(color) {
@@ -293,7 +293,7 @@ Item {
                  }
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: {
                 gradient.colors = ['#ff000000', '#ffffffff']
                 gradient.gradientChanged()
@@ -325,7 +325,7 @@ Item {
                 }
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: {
                 rectX.text = rectY.text = 0
                 filterRect.x = filterRect.y = 0
@@ -358,7 +358,7 @@ Item {
                 }
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: {
                 rectW.text = profile.width
                 rectH.text = profile.height
@@ -397,7 +397,7 @@ Item {
                 filter.set(blendProperty, comboItems.get(currentIndex).value)
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: {
                 filter.set(blendProperty, comboItems.get(0).value)
                 blendCombo.currentIndex = 0

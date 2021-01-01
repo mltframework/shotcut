@@ -19,7 +19,7 @@ import QtQuick 2.1
 import QtQuick.Controls 1.1
 import QtQuick.Controls 2.12 as Controls2
 import QtQuick.Layouts 1.0
-import Shotcut.Controls 1.0
+import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     property string paramShape: 'filter.0'
@@ -159,7 +159,7 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             Layout.columnSpan: 3
             parameters: defaultParameters
             onBeforePresetLoaded: {
@@ -184,7 +184,7 @@ Item {
             model: [qsTr('Overwrite'), qsTr('Maximum'), qsTr('Minimum'), qsTr('Add'), qsTr('Subtract')]
             onActivated: filter.set(paramOperation, currentIndex / 4)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             Layout.columnSpan: 2
             onClicked: {
                 filter.set(paramOperation, 0)
@@ -202,7 +202,7 @@ Item {
             model: [qsTr('Rectangle'), qsTr('Ellipse'), qsTr('Triangle'), qsTr('Diamond')]
             onActivated: filter.set(paramShape, currentIndex / 3)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             Layout.columnSpan: 2
             onClicked:  {
                 filter.set(paramShape, 0)
@@ -214,7 +214,7 @@ Item {
             text: qsTr('Horizontal')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: horizontalSlider
             minimumValue: -100
             maximumValue: 100
@@ -222,10 +222,10 @@ Item {
             suffix: ' %'
             onValueChanged: updateFilter(paramHorizontal, value/100, getPosition(), horizontalKeyframesButton)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: horizontalSlider.value = 50
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: horizontalKeyframesButton
             checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(paramHorizontal) > 0
             onToggled: onKeyframesButtonClicked(checked, paramHorizontal, horizontalSlider.value / 100)
@@ -235,7 +235,7 @@ Item {
             text: qsTr('Vertical')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: verticalSlider
             minimumValue: -100
             maximumValue: 100
@@ -243,10 +243,10 @@ Item {
             suffix: ' %'
             onValueChanged: updateFilter(paramVertical, value/100, getPosition(), verticalKeyframesButton)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: verticalSlider.value = 50
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: verticalKeyframesButton
             checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(paramVertical) > 0
             onToggled: onKeyframesButtonClicked(checked, paramVertical, verticalSlider.value / 100)
@@ -256,7 +256,7 @@ Item {
             text: qsTr('Width')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: widthSlider
             minimumValue: 0.0001
             maximumValue: 100
@@ -264,10 +264,10 @@ Item {
             suffix: ' %'
             onValueChanged: updateFilter(paramWidth, value/100, getPosition(), widthKeyframesButton)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: widthSlider.value = 10
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: widthKeyframesButton
             checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(paramWidth) > 0
             onToggled: onKeyframesButtonClicked(checked, paramWidth, widthSlider.value / 100)
@@ -277,7 +277,7 @@ Item {
             text: qsTr('Height')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: heightSlider
             minimumValue: 0.0001
             maximumValue: 100
@@ -285,10 +285,10 @@ Item {
             suffix: ' %'
             onValueChanged: updateFilter(paramHeight, value/100, getPosition(), heightKeyframesButton)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: heightSlider.value = 10
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: heightKeyframesButton
             checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(paramHeight) > 0
             onToggled: onKeyframesButtonClicked(checked, paramHeight, heightSlider.value / 100)
@@ -298,7 +298,7 @@ Item {
             text: qsTr('Rotation')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: rotationSlider
             minimumValue: -179.9
             maximumValue: 179.9
@@ -307,7 +307,7 @@ Item {
             suffix: qsTr(' deg', 'degrees')
             onValueChanged: filter.set(paramRotation, 0.5 + value / 360)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             Layout.columnSpan: 2
             onClicked: rotationSlider.value = 0
         }
@@ -316,7 +316,7 @@ Item {
             text: qsTr('Softness')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: softnessSlider
             minimumValue: 0
             maximumValue: 100
@@ -324,7 +324,7 @@ Item {
             suffix: ' %'
             onValueChanged: filter.set(paramSoftness, value / 100)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             Layout.columnSpan: 2
             onClicked: softnessSlider.value = 20
         }

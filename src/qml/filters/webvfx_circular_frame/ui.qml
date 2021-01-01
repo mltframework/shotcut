@@ -20,7 +20,7 @@ import QtQuick.Controls 1.1
 import QtQuick.Controls.Styles 1.1
 import QtQuick.Layouts 1.0
 import QtQuick.Dialogs 1.0
-import Shotcut.Controls 1.0
+import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     width: 400
@@ -102,7 +102,7 @@ Item {
             text: qsTr('Radius')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: slider
             minimumValue: 0
             maximumValue: 100
@@ -110,10 +110,10 @@ Item {
             suffix: ' %'
             onValueChanged: updateFilter(getPosition())
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: slider.value = 50
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: keyframesButton
             checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('radius') > 0
             onToggled: {
@@ -135,7 +135,7 @@ Item {
             text: qsTr('Color')
             Layout.alignment: Qt.AlignRight
         }
-        ColorPicker {
+        Shotcut.ColorPicker {
             id: colorSwatch
             alpha: true
             Layout.columnSpan: 2

@@ -18,7 +18,7 @@
 import QtQuick 2.5
 import QtQuick.Controls 1.4
 import QtQuick.Layouts 1.1
-import Shotcut.Controls 1.0
+import Shotcut.Controls 1.0 as Shotcut
 import QtQuick.Controls 2.12 as Controls2
 import QtQml.Models 2.2
 
@@ -74,7 +74,7 @@ Item {
                 filter.set(paramOperation, operationModel.get(currentIndex).value)
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: {
                 filter.set(paramOperation, operationModel.get(0).value)
                 modeCombo.currentIndex = 0
@@ -85,7 +85,7 @@ Item {
             text: qsTr('Amount')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: sliderAmount
             minimumValue: 0
             maximumValue: 100
@@ -97,7 +97,7 @@ Item {
                 filter.set(paramThreshold, value / 100)
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: sliderAmount.value = 50
         }
 
@@ -107,7 +107,7 @@ Item {
             text: qsTr('Invert')
             onCheckedChanged: filter.set(paramInvert, checked)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: invertCheckbox.checked = false
         }
 

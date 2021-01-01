@@ -18,7 +18,7 @@
 import QtQuick 2.1
 import QtQuick.Controls 1.0
 import QtQuick.Layouts 1.0
-import Shotcut.Controls 1.0
+import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     property var defaultParameters: ['radius', 'inner_radius']
@@ -128,7 +128,7 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: preset
             Layout.columnSpan: 3
             parameters: defaultParameters
@@ -146,17 +146,17 @@ Item {
             text: qsTr('Outer radius')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: radiusSlider
             minimumValue: 0
             maximumValue: 100
             suffix: ' %'
             onValueChanged: updateFilter('radius', value / 100.0, getPosition(), radiusKeyframesButton)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: radiusSlider.value = 50
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: radiusKeyframesButton
             checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('radius') > 0
             onToggled: onKeyframesButtonClicked(checked, 'radius', radiusSlider.value / 100.0)
@@ -166,17 +166,17 @@ Item {
             text: qsTr('Inner radius')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: innerSlider
             minimumValue: 0
             maximumValue: 100
             suffix: ' %'
             onValueChanged: updateFilter('inner_radius', value / 100.0, getPosition(), innerKeyframesButton)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: innerSlider.value = 50
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: innerKeyframesButton
             checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('inner_radius') > 0
             onToggled: onKeyframesButtonClicked(checked, 'inner_radius', innerSlider.value / 100.0)

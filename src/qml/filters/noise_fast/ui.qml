@@ -18,7 +18,7 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.1
 import QtQuick.Layouts 1.1
-import Shotcut.Controls 1.0
+import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     property string noise: 'av.all_strength'
@@ -49,7 +49,7 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: preset
             parameters: [noise]
             Layout.columnSpan: 3
@@ -60,7 +60,7 @@ Item {
             text: qsTr('Amount')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: noiseSlider
             minimumValue: 0.0
             maximumValue: 100.0
@@ -69,7 +69,7 @@ Item {
             suffix: ' %'
             onValueChanged: filter.set(noise, noiseSlider.value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: noiseSlider.value = noiseDefault
         }
 

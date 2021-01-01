@@ -19,7 +19,7 @@ import QtQuick 2.1
 import QtQuick.Controls 1.1
 import QtQuick.Layouts 1.1
 import QtQuick.Controls.Styles 1.1
-import Shotcut.Controls 1.0
+import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     id: background
@@ -169,7 +169,7 @@ Item {
                 text: qsTr('Preset')
                 Layout.alignment: Qt.AlignRight
             }
-            Preset {
+            Shotcut.Preset {
                 id: preset
                 parameters: ['0', '1', '2']
                 onPresetSelected: setControls()
@@ -194,13 +194,13 @@ Item {
                 maximumValue: 12
                 value: filter.getDouble('0')
                 onValueChanged: filter.set('0', value)
-                ToolTip { text: '%1 dB'.arg(Math.round(parent.value * 10) / 10) }
+                Shotcut.ToolTip { text: '%1 dB'.arg(Math.round(parent.value * 10) / 10) }
             }
             Label {
                 id: bassLabel
                 text: qsTr('Bass')
                 anchors.horizontalCenter: parent.horizontalCenter
-                ToolTip { text: '100 Hz' }
+                Shotcut.ToolTip { text: '100 Hz' }
             }
         }
 
@@ -217,12 +217,12 @@ Item {
                 maximumValue: 12
                 value: filter.getDouble('1')
                 onValueChanged: filter.set('1', value)
-                ToolTip { text: '%1 dB'.arg(Math.round(parent.value * 10) / 10) }
+                Shotcut.ToolTip { text: '%1 dB'.arg(Math.round(parent.value * 10) / 10) }
             }
             Label {
                 text: qsTr('Middle', 'Bass & Treble audio filter')
                 anchors.horizontalCenter: parent.horizontalCenter
-                ToolTip { text: '1000 Hz' }
+                Shotcut.ToolTip { text: '1000 Hz' }
             }
         }
 
@@ -239,12 +239,12 @@ Item {
                 maximumValue: 12
                 value: filter.getDouble('2')
                 onValueChanged: filter.set('2', value)
-                ToolTip { text: '%1 dB'.arg(Math.round(parent.value * 10) / 10) }
+                Shotcut.ToolTip { text: '%1 dB'.arg(Math.round(parent.value * 10) / 10) }
             }
             Label {
                 text: qsTr('Treble')
                 anchors.horizontalCenter: parent.horizontalCenter
-                ToolTip { text: '10000 Hz' }
+                Shotcut.ToolTip { text: '10000 Hz' }
             }
         }
 

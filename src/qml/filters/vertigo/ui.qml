@@ -18,9 +18,9 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.1
 import QtQuick.Layouts 1.1
-import Shotcut.Controls 1.0
+import Shotcut.Controls 1.0 as Shotcut
 
-KeyframableFilter {
+Shotcut.KeyframableFilter {
     property string phaseincrement: '0'
     property string zoomrate: '1'
     property double phaseincrementDefault: 0.02
@@ -70,7 +70,7 @@ KeyframableFilter {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: preset
             parameters: [phaseincrement, zoomrate]
             Layout.columnSpan: 3
@@ -88,7 +88,7 @@ KeyframableFilter {
             text: qsTr('Speed')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: phaseincrementSlider
             minimumValue: 0.0
             maximumValue: 100
@@ -97,10 +97,10 @@ KeyframableFilter {
             suffix: ' %'
             onValueChanged: updateFilter(phaseincrement, phaseincrementSlider.value / phaseincrementSlider.maximumValue, phaseKeyframesButton, getPosition())
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: phaseincrementSlider.value = phaseincrementDefault * phaseincrementSlider.maximumValue
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: phaseKeyframesButton
             checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(phaseincrement) > 0
             onToggled: {
@@ -113,7 +113,7 @@ KeyframableFilter {
             text: qsTr('Zoom')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: zoomrateSlider
             minimumValue: 0.0
             maximumValue: 100
@@ -122,10 +122,10 @@ KeyframableFilter {
             suffix: ' %'
             onValueChanged: updateFilter(zoomrate, zoomrateSlider.value / zoomrateSlider.maximumValue, zoomKeyframesButton, getPosition())
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: zoomrateSlider.value = zoomrateDefault * zoomrateSlider.maximumValue
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: zoomKeyframesButton
             checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(zoomrate) > 0
             onToggled: {

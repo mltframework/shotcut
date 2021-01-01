@@ -19,7 +19,7 @@
 import QtQuick 2.1
 import QtQuick.Controls 1.1
 import QtQuick.Layouts 1.0
-import Shotcut.Controls 1.0
+import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     width: 350
@@ -49,7 +49,7 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: preset
             parameters: ['noise', 'brightness']
             Layout.columnSpan: 2
@@ -60,7 +60,7 @@ Item {
             text: qsTr('Noise')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: noiseSlider
             minimumValue: 1
             maximumValue: 200
@@ -68,7 +68,7 @@ Item {
             value: filter.get('noise')
             onValueChanged: filter.set('noise', value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: noiseSlider.value = 40
         }
 
@@ -76,14 +76,14 @@ Item {
             text: qsTr('Brightness')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: brightnessSlider
             minimumValue: 0
             maximumValue: 400
             value: filter.get('brightness')
             onValueChanged: filter.set('brightness', value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: brightnessSlider.value = 83
 
         }

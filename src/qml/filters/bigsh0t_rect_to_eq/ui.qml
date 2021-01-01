@@ -4,7 +4,7 @@ import QtQuick 2.1
 import QtQuick.Controls 1.4
 import QtQuick.Controls 2.12 as Controls2
 import QtQuick.Layouts 1.0
-import Shotcut.Controls 1.0
+import Shotcut.Controls 1.0 as Shotcut
 
 
 Item {
@@ -57,7 +57,7 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: preset
             parameters: ["hfov", "vfov", "interpolation"]
             Layout.columnSpan: 3
@@ -85,7 +85,7 @@ Item {
             Layout.columnSpan: 2
             onCurrentIndexChanged: updateProperty_interpolation()
         }
-        UndoButton {
+        Shotcut.UndoButton {
             id: interpolationUndo
             onClicked: interpolationComboBox.currentIndex = 0
         }
@@ -94,15 +94,15 @@ Item {
             text: qsTr('Horizontal')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: hfovSlider
             minimumValue: 0
             maximumValue: 180
             spinnerWidth: 120; suffix: ' deg'; decimals: 3; stepSize: 1;
             onValueChanged: updateProperty_hfov(getPosition())
         }
-        KeyframesButton { id: hfovKeyframesButton; checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount("hfov") > 0; onToggled: { var value = hfovSlider.value; if (checked) { blockUpdate = true; if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("hfov"); hfovSlider.enabled = true; } filter.clearSimpleAnimation("hfov"); blockUpdate = false; filter.set("hfov", value, getPosition()); } else { filter.resetProperty("hfov"); filter.set("hfov", value); } } }
-        UndoButton {
+        Shotcut.KeyframesButton { id: hfovKeyframesButton; checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount("hfov") > 0; onToggled: { var value = hfovSlider.value; if (checked) { blockUpdate = true; if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("hfov"); hfovSlider.enabled = true; } filter.clearSimpleAnimation("hfov"); blockUpdate = false; filter.set("hfov", value, getPosition()); } else { filter.resetProperty("hfov"); filter.set("hfov", value); } } }
+        Shotcut.UndoButton {
             id: hfovUndo
             onClicked: hfovSlider.value = 90
         }
@@ -111,15 +111,15 @@ Item {
             text: qsTr('Vertical')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: vfovSlider
             minimumValue: 0
             maximumValue: 180
             spinnerWidth: 120; suffix: ' deg'; decimals: 3; stepSize: 1;
             onValueChanged: updateProperty_vfov(getPosition())
         }
-        KeyframesButton { id: vfovKeyframesButton; checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount("vfov") > 0; onToggled: { var value = vfovSlider.value; if (checked) { blockUpdate = true; if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("vfov"); vfovSlider.enabled = true; } filter.clearSimpleAnimation("vfov"); blockUpdate = false; filter.set("vfov", value, getPosition()); } else { filter.resetProperty("vfov"); filter.set("vfov", value); } } }
-        UndoButton {
+        Shotcut.KeyframesButton { id: vfovKeyframesButton; checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount("vfov") > 0; onToggled: { var value = vfovSlider.value; if (checked) { blockUpdate = true; if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("vfov"); vfovSlider.enabled = true; } filter.clearSimpleAnimation("vfov"); blockUpdate = false; filter.set("vfov", value, getPosition()); } else { filter.resetProperty("vfov"); filter.set("vfov", value); } } }
+        Shotcut.UndoButton {
             id: vfovUndo
             onClicked: vfovSlider.value = 60
         }

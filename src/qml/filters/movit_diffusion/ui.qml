@@ -19,7 +19,7 @@
 import QtQuick 2.1
 import QtQuick.Controls 1.0
 import QtQuick.Layouts 1.0
-import Shotcut.Controls 1.0
+import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     width: 350
@@ -34,7 +34,7 @@ Item {
             text: qsTr('Radius')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: radiusSlider
             minimumValue: 0
             maximumValue: 2000
@@ -44,7 +44,7 @@ Item {
             value: filter.getDouble('radius') * 100
             onValueChanged: filter.set('radius', value / 100)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: radiusSlider.value = 300
         }
 
@@ -52,7 +52,7 @@ Item {
             text: qsTr('Blurriness')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: mixSlider
             minimumValue: 0
             maximumValue: 100
@@ -60,7 +60,7 @@ Item {
             value: filter.getDouble('mix') * 100
             onValueChanged: filter.set('mix', value / 100)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: mixSlider.value = 30
         }
 

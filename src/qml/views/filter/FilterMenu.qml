@@ -19,7 +19,7 @@ import QtQuick 2.2
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.1
 import org.shotcut.qml 1.0 as Shotcut
-import Shotcut.Controls 1.0 as ShotcutControls
+import Shotcut.Controls 1.0 as Shotcut
 
 Rectangle {
     id: filterWindow
@@ -106,7 +106,7 @@ Rectangle {
 
             ButtonGroup { id: typeGroup }
 
-            ShotcutControls.ToggleButton {
+            Shotcut.ToggleButton {
                 id: favButton
                 checked: true
                 implicitWidth: 82
@@ -123,7 +123,7 @@ Rectangle {
                     }
                 }
             }
-            ShotcutControls.ToggleButton {
+            Shotcut.ToggleButton {
                 id: vidButton
                 implicitWidth: 82
                 icon.name: 'video-television'
@@ -139,7 +139,7 @@ Rectangle {
                     }
                 }
             }
-            ShotcutControls.ToggleButton {
+            Shotcut.ToggleButton {
                 id: audButton
                 implicitWidth: 82
                 icon.name: 'speaker'

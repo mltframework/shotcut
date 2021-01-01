@@ -19,7 +19,7 @@ import QtQuick 2.1
 import QtQuick.Dialogs 1.1
 import QtQuick.Controls 1.0
 import QtQuick.Layouts 1.0
-import Shotcut.Controls 1.0
+import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     id: stabilizeRoot
@@ -131,7 +131,7 @@ Item {
             text: qsTr('Shakiness')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: shakinessSlider
             minimumValue: 1
             maximumValue: 10
@@ -142,7 +142,7 @@ Item {
                 analyzeValueChanged()
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: shakinessSlider.value = 4
         }
 
@@ -150,7 +150,7 @@ Item {
             text: qsTr('Accuracy')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: accuracySlider
             minimumValue: 1
             maximumValue: 15
@@ -161,7 +161,7 @@ Item {
                 analyzeValueChanged()
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: accuracySlider.value = 4
         }
 
@@ -194,7 +194,7 @@ Item {
             text: qsTr('Zoom')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: zoomSlider
             minimumValue: -50
             maximumValue: 50
@@ -206,7 +206,7 @@ Item {
                 filter.set("refresh", 1);
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: zoomSlider.value = 0
         }
 
@@ -214,7 +214,7 @@ Item {
             text: qsTr('Smoothing')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: smoothingSlider
             minimumValue: 0
             maximumValue: 100
@@ -225,7 +225,7 @@ Item {
                 filter.set('smoothing', value)
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: smoothingSlider.value = 15
         }
 

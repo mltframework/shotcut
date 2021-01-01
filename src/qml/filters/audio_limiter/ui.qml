@@ -20,7 +20,7 @@ import QtQuick.Layouts 1.0
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 import QtQuick.Extras 1.4
-import Shotcut.Controls 1.0
+import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     width: 350
@@ -62,7 +62,7 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: preset
             parameters: ['0', '1', '2']
             Layout.columnSpan: 2
@@ -72,9 +72,9 @@ Item {
         Label {
             text: qsTr('Input gain')
             Layout.alignment: Qt.AlignRight
-            ToolTip {text: qsTr('Gain that is applied to the input stage. Can be used to trim gain to bring it roughly under the limit or to push the signal against the limit.')}
+            Shotcut.ToolTip {text: qsTr('Gain that is applied to the input stage. Can be used to trim gain to bring it roughly under the limit or to push the signal against the limit.')}
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: sliderInput
             minimumValue: -20
             maximumValue: 20
@@ -85,16 +85,16 @@ Item {
                 filter.set('0', value)
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: sliderInput.value = 0
         }
 
         Label {
             text: qsTr('Limit')
             Layout.alignment: Qt.AlignRight
-            ToolTip {text: qsTr('The maximum output amplitude. Peaks over this level will be attenuated as smoothly as possible to bring them as close as possible to this level.')}
+            Shotcut.ToolTip {text: qsTr('The maximum output amplitude. Peaks over this level will be attenuated as smoothly as possible to bring them as close as possible to this level.')}
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: sliderLimit
             minimumValue: -20
             maximumValue: 0
@@ -105,16 +105,16 @@ Item {
                 filter.set('1', value)
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: sliderLimit.value = 0
         }
 
         Label {
             text: qsTr('Release')
             Layout.alignment: Qt.AlignRight
-            ToolTip {text: qsTr('The time taken for the limiter\'s attenuation to return to 0 dB\'s.')}
+            Shotcut.ToolTip {text: qsTr('The time taken for the limiter\'s attenuation to return to 0 dB\'s.')}
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: sliderRelease
             minimumValue: .01
             maximumValue: 2
@@ -125,7 +125,7 @@ Item {
                 filter.set('2', value)
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: sliderRelease.value = .51
         }
 
@@ -189,7 +189,7 @@ Item {
         Label {
             text: qsTr('Gain Reduction')
             Layout.alignment: Qt.AlignRight | Qt.AlignTop
-            ToolTip {text: qsTr('Status indicator showing the gain reduction applied by the compressor.')}
+            Shotcut.ToolTip {text: qsTr('Status indicator showing the gain reduction applied by the compressor.')}
         }
         Gauge {
             Layout.columnSpan: 2

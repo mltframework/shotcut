@@ -19,7 +19,7 @@ import QtQuick 2.0
 import QtQuick.Controls 1.1
 import QtQuick.Controls 2.12 as Controls2
 import QtQuick.Layouts 1.1
-import Shotcut.Controls 1.0
+import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     property string keyColorParam: '0'
@@ -111,7 +111,7 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: presetItem
             Layout.columnSpan: 2
             parameters: defaultParameters
@@ -122,7 +122,7 @@ Item {
             text: qsTr('Key color')
             Layout.alignment: Qt.AlignRight
         }
-        ColorPicker {
+        Shotcut.ColorPicker {
             id: keyColorPicker
             property bool isReady: false
             Component.onCompleted: isReady = true
@@ -137,7 +137,7 @@ Item {
             }
             onPickCancelled: filter.set('disable', 0)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: keyColorPicker.value = keyColorDefault
         }
 
@@ -160,7 +160,7 @@ Item {
                 onCheckedChanged: if (checked) filter.set(colorspaceParam, 1.0)
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: rgbRadioButton.checked = true
         }
 
@@ -168,7 +168,7 @@ Item {
             text: rgbRadioButton.checked? qsTr('Red delta') : qsTr('Hue delta')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: deltaRSlider
             minimumValue: 0
             maximumValue: 100
@@ -177,7 +177,7 @@ Item {
             value: filter.getDouble(deltaRDefault) * 100
             onValueChanged: filter.set(deltaRParam, value / 100)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: deltaRSlider.value = deltaRDefault * 100
         }
 
@@ -185,7 +185,7 @@ Item {
             text: rgbRadioButton.checked? qsTr('Green delta') : qsTr('Chroma delta')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: deltaGSlider
             minimumValue: 0
             maximumValue: 100
@@ -194,7 +194,7 @@ Item {
             value: filter.getDouble(deltaGDefault) * 100
             onValueChanged: filter.set(deltaGParam, value / 100)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: deltaGSlider.value = deltaGDefault * 100
         }
 
@@ -202,7 +202,7 @@ Item {
             text: rgbRadioButton.checked? qsTr('Blue delta') : qsTr('Intensity delta')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: deltaBSlider
             minimumValue: 0
             maximumValue: 100
@@ -211,7 +211,7 @@ Item {
             value: filter.getDouble(deltaBDefault) * 100
             onValueChanged: filter.set(deltaBParam, value / 100)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: deltaBSlider.value = deltaBDefault * 100
         }
 
@@ -231,7 +231,7 @@ Item {
             textRole: 'text'
             onActivated: filter.set(shapeParam, shapeModel.get(currentIndex).value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: {
                 filter.set(shapeParam, shapeModel.get(1).value)
                 shapeCombo.currentIndex = 1
@@ -256,7 +256,7 @@ Item {
             textRole: 'text'
             onActivated: filter.set(edgeParam, edgeModel.get(currentIndex).value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: {
                 filter.set(edgeParam, edgeModel.get(4).value)
                 edgeCombo.currentIndex = 4
@@ -267,7 +267,7 @@ Item {
             text: qsTr('Slope')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: slopeSlider
             minimumValue: 0
             maximumValue: 100
@@ -276,7 +276,7 @@ Item {
             value: filter.getDouble(slopeParam) * 100
             onValueChanged: filter.set(slopeParam, value / 100)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: slopeSlider.value = slopeDefault * 100
         }
 
@@ -298,7 +298,7 @@ Item {
             textRole: 'text'
             onActivated: filter.set(operationParam, operationModel.get(currentIndex).value )
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: {
                 filter.set(operationParam, operationModel.get(0).value )
                 operationCombo.currentIndex = 0
@@ -315,7 +315,7 @@ Item {
             text: qsTr('Invert')
             onCheckedChanged: filter.set(invertParam, !checked)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: invertCheckbox.checked = !invertDefault
         }
 

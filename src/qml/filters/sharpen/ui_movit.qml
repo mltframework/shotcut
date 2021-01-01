@@ -18,7 +18,7 @@
 import QtQuick 2.1
 import QtQuick.Controls 1.1
 import QtQuick.Layouts 1.0
-import Shotcut.Controls 1.0
+import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     property var defaultParameters: ['circle_radius','gaussian_radius', 'correlation', 'noise']
@@ -137,7 +137,7 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             Layout.columnSpan: 3
             parameters: defaultParameters
             onBeforePresetLoaded: {
@@ -155,7 +155,7 @@ Item {
             text: qsTr('Circle radius')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: circleSlider
             minimumValue: 0
             maximumValue: 99.99
@@ -163,10 +163,10 @@ Item {
             stepSize: 0.1
             onValueChanged: updateFilter('circle_radius', value, getPosition(), circleKeyframesButton)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: circleSlider.value = 2
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: circleKeyframesButton
             checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('circle_radius') > 0
             onToggled: onKeyframesButtonClicked(checked, 'circle_radius', circleSlider.value)
@@ -177,7 +177,7 @@ Item {
             text: qsTr('Gaussian radius')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: gaussianSlider
             minimumValue: 0
             maximumValue: 99.99
@@ -185,10 +185,10 @@ Item {
             stepSize: 0.1
             onValueChanged: updateFilter('gaussian_radius', value, getPosition(), gaussianKeyframesButton)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: gaussianSlider.value = 0
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: gaussianKeyframesButton
             checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('gaussian_radius') > 0
             onToggled: onKeyframesButtonClicked(checked, 'gaussian_radius', gaussianSlider.value)
@@ -199,17 +199,17 @@ Item {
             text: qsTr('Correlation')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: correlationSlider
             minimumValue: 0.0
             maximumValue: 1.0
             decimals: 2
             onValueChanged: updateFilter('correlation', value, getPosition(), correlationKeyframesButton)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: correlationSlider.value = 0.95
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: correlationKeyframesButton
             checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('correlation') > 0
             onToggled: onKeyframesButtonClicked(checked, 'correlation', correlationSlider.value)
@@ -220,17 +220,17 @@ Item {
             text: qsTr('Noise')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: noiseSlider
             minimumValue: 0.0
             maximumValue: 1.0
             decimals: 2
             onValueChanged: updateFilter('noise', value, getPosition(), noiseKeyframesButton)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: noiseSlider.value = 0.01
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: noiseKeyframesButton
             checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('noise') > 0
             onToggled: onKeyframesButtonClicked(checked, 'noise', noiseSlider.value)

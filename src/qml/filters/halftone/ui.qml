@@ -18,9 +18,9 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.1
 import QtQuick.Layouts 1.1
-import Shotcut.Controls 1.0
+import Shotcut.Controls 1.0 as Shotcut
 
-KeyframableFilter {
+Shotcut.KeyframableFilter {
     property string dotradius: '0'
     property string cyanangle: '1'
     property string magentaangle: '2'
@@ -81,7 +81,7 @@ KeyframableFilter {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: preset
             parameters: [dotradius, cyanangle, magentaangle, yellowangle]
             Layout.columnSpan: 3
@@ -101,7 +101,7 @@ KeyframableFilter {
             text: qsTr('Radius')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: dotradiusSlider
             minimumValue: 0
             maximumValue: 100.0
@@ -110,10 +110,10 @@ KeyframableFilter {
             suffix: ' %'
             onValueChanged: updateFilter(dotradius, dotradiusSlider.value / dotradiusSlider.maximumValue, dotKeyframesButton, getPosition())
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: dotradiusSlider.value = dotradiusDefault * dotradiusSlider.maximumValue
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: dotKeyframesButton
             checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(dotradius) > 0
             onToggled: {
@@ -126,7 +126,7 @@ KeyframableFilter {
             text: qsTr('Cyan')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: cyanangleSlider
             minimumValue: 0
             maximumValue: 100.0
@@ -135,10 +135,10 @@ KeyframableFilter {
             suffix: ' %'
             onValueChanged: updateFilter(cyanangle, cyanangleSlider.value / cyanangleSlider.maximumValue, cyanKeyframesButton, getPosition())
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: cyanangleSlider.value = cyanangleDefault * cyanangleSlider.maximumValue
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: cyanKeyframesButton
             checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(cyanangle) > 0
             onToggled: {
@@ -151,7 +151,7 @@ Label {
             text: qsTr('Magenta')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: magentaangleSlider
             minimumValue: 0
             maximumValue: 100.0
@@ -160,10 +160,10 @@ Label {
             suffix: ' %'
             onValueChanged: updateFilter(magentaangle, magentaangleSlider.value / magentaangleSlider.maximumValue, magentaKeyframesButton, getPosition())
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: magentaangleSlider.value = magentaangleDefault * magentaangleSlider.maximumValue
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: magentaKeyframesButton
             checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(magentaangle) > 0
             onToggled: {
@@ -176,7 +176,7 @@ Label {
             text: qsTr('Yellow')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: yellowangleSlider
             minimumValue: 0
             maximumValue: 100.0
@@ -185,10 +185,10 @@ Label {
             suffix: ' %'
             onValueChanged: updateFilter(yellowangle, yellowangleSlider.value / yellowangleSlider.maximumValue, yellowKeyframesButton, getPosition())
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: yellowangleSlider.value = yellowangleDefault * yellowangleSlider.maximumValue
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: yellowKeyframesButton
             checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(yellowangle) > 0
             onToggled: {

@@ -21,7 +21,7 @@ import QtQuick.Controls.Styles 1.1
 import QtQuick.Controls 2.12 as Controls2
 import QtQuick.Layouts 1.0
 import QtQuick.Dialogs 1.0
-import Shotcut.Controls 1.0
+import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     width: 400
@@ -69,7 +69,7 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: preset
             parameters: ['color', 'x_rotation', 'font', 'weight', 'bevel',
                 'depth', 'size', 'horizontal', 'vertical']
@@ -131,7 +131,7 @@ Item {
             text: qsTr('Color')
             Layout.alignment: Qt.AlignRight
         }
-        ColorPicker {
+        Shotcut.ColorPicker {
             id: colorSwatch
             Layout.columnSpan: 4
             value: filter.get('color')
@@ -153,7 +153,7 @@ Item {
             text: qsTr('Size')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: sizeSlider
             Layout.columnSpan: 3
             minimumValue: 0
@@ -161,7 +161,7 @@ Item {
             value: filter.getDouble('size')
             onValueChanged: filter.set('size', value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: sizeSlider.value = 70
         }
 
@@ -169,7 +169,7 @@ Item {
             text: qsTr('Depth')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: depthSlider
             Layout.columnSpan: 3
             minimumValue: 0
@@ -178,7 +178,7 @@ Item {
             value: filter.getDouble('depth') * 2
             onValueChanged: filter.set('depth', value * 0.5)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: depthSlider.value = 40
         }
 
@@ -186,7 +186,7 @@ Item {
             text: qsTr('Tilt')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: tiltSlider
             Layout.columnSpan: 3
             minimumValue: 0
@@ -195,7 +195,7 @@ Item {
             value: filter.getDouble('x_rotation') * maximumValue
             onValueChanged: filter.set('x_rotation', value / maximumValue)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: tiltSlider.value = 50
         }
 
@@ -203,7 +203,7 @@ Item {
             text: qsTr('Horizontal')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: horizontalSlider
             Layout.columnSpan: 3
             minimumValue: 0
@@ -212,7 +212,7 @@ Item {
             value: filter.getDouble('horizontal') * maximumValue
             onValueChanged: filter.set('horizontal', value / maximumValue)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: horizontalSlider.value = 50
         }
 
@@ -220,7 +220,7 @@ Item {
             text: qsTr('Vertical')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: verticalSlider
             Layout.columnSpan: 3
             minimumValue: 0
@@ -229,7 +229,7 @@ Item {
             value: filter.getDouble('vertical') * maximumValue
             onValueChanged: filter.set('vertical', value / maximumValue)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: verticalSlider.value = 50
         }
 

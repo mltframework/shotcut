@@ -18,7 +18,7 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.1
 import QtQuick.Layouts 1.1
-import Shotcut.Controls 1.0
+import Shotcut.Controls 1.0 as Shotcut
 import QtQuick.Dialogs 1.1
 
 Item {
@@ -270,7 +270,7 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: preset
             parameters: [rectProperty, halignProperty, valignProperty, 'argument', 'size', 'style',
             'fgcolour', 'family', 'weight', 'olcolour', 'outline', 'bgcolour', 'pad', useFontSizeProperty]
@@ -351,7 +351,7 @@ Item {
             text: qsTr('Font')
             Layout.alignment: Qt.AlignRight
         }
-        ColorPicker {
+        Shotcut.ColorPicker {
             id: fgColor
             eyedropper: false
             alpha: true
@@ -410,7 +410,7 @@ Item {
             text: qsTr('Outline')
             Layout.alignment: Qt.AlignRight
         }
-        ColorPicker {
+        Shotcut.ColorPicker {
             id: outlineColor
             eyedropper: false
             alpha: true
@@ -434,7 +434,7 @@ Item {
             text: qsTr('Background')
             Layout.alignment: Qt.AlignRight
         }
-        ColorPicker {
+        Shotcut.ColorPicker {
             id: bgColor
             eyedropper: false
             alpha: true
@@ -478,14 +478,14 @@ Item {
                 }
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: {
                 rectX.text = rectY.text = 0
                 filterRect.x = filterRect.y = 0
                 updateFilter(getPosition())
             }
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: positionKeyframesButton
             Layout.rowSpan: 2
             checked: filter.keyframeCount(rectProperty) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
@@ -525,7 +525,7 @@ Item {
                 }
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: {
                 rectW.text = profile.width
                 rectH.text = profile.height
@@ -557,7 +557,7 @@ Item {
             exclusiveGroup: halignGroup
             onClicked: filter.set(halignProperty, 'right')
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: {
                 centerRadioButton.checked = true
                 filter.set(halignProperty, 'center')
@@ -587,7 +587,7 @@ Item {
             exclusiveGroup: valignGroup
             onClicked: filter.set(valignProperty, 'bottom')
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: {
                 bottomRadioButton.checked = true
                 filter.set(valignProperty, 'bottom')

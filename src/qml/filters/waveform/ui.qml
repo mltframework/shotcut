@@ -18,7 +18,7 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.1
 import QtQuick.Layouts 1.1
-import Shotcut.Controls 1.0
+import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     property string rectProperty: "rect"
@@ -80,7 +80,7 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: preset
             parameters: defaultParameters
             Layout.columnSpan: 4
@@ -95,7 +95,7 @@ Item {
             text: qsTr('Waveform Color')
             Layout.alignment: Qt.AlignRight
         }
-        GradientControl {
+        Shotcut.GradientControl {
             Layout.columnSpan: 4
             id: fgGradient
             onGradientChanged: {
@@ -108,7 +108,7 @@ Item {
             text: qsTr('Background Color')
             Layout.alignment: Qt.AlignRight
         }
-        ColorPicker {
+        Shotcut.ColorPicker {
             Layout.columnSpan: 4
             id: bgColor
             eyedropper: true
@@ -120,7 +120,7 @@ Item {
             text: qsTr('Thickness')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             Layout.columnSpan: 3
             id: thicknessSlider
             minimumValue: 0
@@ -129,7 +129,7 @@ Item {
             suffix: ' px'
             onValueChanged: filter.set("thickness", value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: thicknessSlider.value = 1
         }
 
@@ -201,7 +201,7 @@ Item {
             text: qsTr('Window')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             Layout.columnSpan: 3
             id: windowSlider
             minimumValue: 0
@@ -210,7 +210,7 @@ Item {
             decimals: 0
             onValueChanged: filter.set("window", value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: windowSlider.value = 0.4
         }
 

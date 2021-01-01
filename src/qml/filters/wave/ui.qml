@@ -19,7 +19,7 @@
 import QtQuick 2.1
 import QtQuick.Controls 1.0
 import QtQuick.Layouts 1.0
-import Shotcut.Controls 1.0
+import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     width: 350
@@ -44,7 +44,7 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: preset
             Layout.columnSpan: 2
             parameters: ['wave', 'speed', 'deformX', 'deformX']
@@ -60,14 +60,14 @@ Item {
             text: qsTr('Amplitude')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: waveSlider
             minimumValue: 1
             maximumValue: 500
             value: filter.getDouble('wave')
             onValueChanged: filter.set('wave', value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: waveSlider.value = 10
         }
 
@@ -75,14 +75,14 @@ Item {
             text: qsTr('Speed')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: speedSlider
             minimumValue: 0
             maximumValue: 1000
             value: filter.getDouble('speed')
             onValueChanged: filter.set('speed', value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: speedSlider.value = 5
         }
 

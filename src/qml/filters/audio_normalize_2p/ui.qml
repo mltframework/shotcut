@@ -20,7 +20,7 @@ import QtQuick 2.1
 import QtQuick.Dialogs 1.1
 import QtQuick.Controls 1.0
 import QtQuick.Layouts 1.0
-import Shotcut.Controls 1.0
+import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     width: 350
@@ -53,7 +53,7 @@ Item {
 
         RowLayout {
             Label { text: qsTr('Target Loudness') }
-            SliderSpinner {
+            Shotcut.SliderSpinner {
                 id: programSlider
                 minimumValue: -50.0
                 maximumValue: -10.0
@@ -63,7 +63,7 @@ Item {
                 value: filter.getDouble('program')
                 onValueChanged: filter.set('program', value)
             }
-            UndoButton {
+            Shotcut.UndoButton {
                 onClicked: programSlider.value = -23.0
             }
         }

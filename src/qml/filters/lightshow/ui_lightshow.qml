@@ -18,7 +18,7 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.1
 import QtQuick.Layouts 1.1
-import Shotcut.Controls 1.0
+import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     property string rectProperty: "rect"
@@ -80,7 +80,7 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: preset
             parameters: defaultParameters
             Layout.columnSpan: 4
@@ -95,7 +95,7 @@ Item {
             text: qsTr('Waveform Color')
             Layout.alignment: Qt.AlignRight
         }
-        GradientControl {
+        Shotcut.GradientControl {
             Layout.columnSpan: 4
             id: fgGradient
             onGradientChanged: {
@@ -149,9 +149,9 @@ Item {
         Label {
             text: qsTr('Oscillation')
             Layout.alignment: Qt.AlignRight
-            ToolTip { text: qsTr('Oscillation can be useful to make the light blink during long periods of sound.') }
+            Shotcut.ToolTip { text: qsTr('Oscillation can be useful to make the light blink during long periods of sound.') }
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             Layout.columnSpan: 3
             id: oscSlider
             minimumValue: 0
@@ -160,16 +160,16 @@ Item {
             suffix: ' Hz'
             onValueChanged: filter.set("osc", value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: oscSlider.value = 5
         }
 
         Label {
             text: qsTr('Low Frequency')
             Layout.alignment: Qt.AlignRight
-            ToolTip { text: qsTr('The low end of the frequency range to be used to influence the light.') }
+            Shotcut.ToolTip { text: qsTr('The low end of the frequency range to be used to influence the light.') }
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             Layout.columnSpan: 3
             id: freqLowSlider
             minimumValue: 20
@@ -183,16 +183,16 @@ Item {
                 }
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: freqLowSlider.value = 20
         }
 
         Label {
             text: qsTr('High Frequency')
             Layout.alignment: Qt.AlignRight
-            ToolTip { text: qsTr('The high end of the frequency range to be used to influence the light.') }
+            Shotcut.ToolTip { text: qsTr('The high end of the frequency range to be used to influence the light.') }
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             Layout.columnSpan: 3
             id: freqHighSlider
             minimumValue: 20 + _minFreqDelta
@@ -206,16 +206,16 @@ Item {
                 }
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: freqHighSlider.value = 20000
         }
 
         Label {
             text: qsTr('Threshold')
             Layout.alignment: Qt.AlignRight
-            ToolTip { text: qsTr('The minimum amplitude of sound that must occur within the frequency range to cause the light to change.') }
+            Shotcut.ToolTip { text: qsTr('The minimum amplitude of sound that must occur within the frequency range to cause the light to change.') }
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             Layout.columnSpan: 3
             id: thresholdSlider
             minimumValue: -60
@@ -224,7 +224,7 @@ Item {
             suffix: ' dB'
             onValueChanged: filter.set("threshold", value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: thresholdSlider.value = -60
         }
         

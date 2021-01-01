@@ -18,7 +18,7 @@
 import QtQuick 2.2
 import QtQuick.Layouts 1.1
 import QtQuick.Controls 1.1
-import Shotcut.Controls 1.0
+import Shotcut.Controls 1.0 as Shotcut
 import org.shotcut.qml 1.0
 
 RowLayout {
@@ -138,7 +138,7 @@ RowLayout {
             onTriggered: incrementAction.trigger()
         }
     }
-    UndoButton {
+    Shotcut.UndoButton {
         onClicked: root.setDefaultClicked()
     }
     Action {

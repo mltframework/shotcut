@@ -18,7 +18,7 @@
 import QtQuick 2.7
 import QtQuick.Controls 1.4
 import QtQuick.Layouts 1.2
-import Shotcut.Controls 1.0
+import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     property string rectProperty: 'geometry'
@@ -236,7 +236,7 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: preset
             parameters: [rectProperty, 'bgcolour', 'overflow-y']
             Layout.columnSpan: 5
@@ -309,14 +309,14 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
                 }
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: {
                 filterRect.x = rectX.value = defaultRect.x
                 filterRect.y = rectY.value = defaultRect.y
                 updateFilter(getPosition())
             }
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: positionKeyframesButton
             Layout.rowSpan: 2
             checked: filter.keyframeCount(rectProperty) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
@@ -382,7 +382,7 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
                 }
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: {
                 filterRect.width = rectW.value = defaultRect.width
                 filterRect.height = rectH.value = defaultRect.height
@@ -416,14 +416,14 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
             text: qsTr('Background color')
             Layout.alignment: Qt.AlignRight
         }
-        ColorPicker {
+        Shotcut.ColorPicker {
             id: bgColor
             Layout.columnSpan: 3
             eyedropper: false
             alpha: true
             onValueChanged: filter.set('bgcolour', value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: bgColor.value = '#00000000'
         }
         Item { Layout.fillWidth: true }
@@ -457,7 +457,7 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
                 onClicked: filter.set('overflow-y', 0)
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: {
                 filter.resetProperty('overflow-y')
                 automaticOverflowRadioButton.checked = true

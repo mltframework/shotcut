@@ -18,7 +18,7 @@
 import QtQuick 2.1
 import QtQuick.Controls 1.1
 import QtQuick.Layouts 1.0
-import Shotcut.Controls 1.0
+import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     property int producerWidth: (producer.get('meta.media.width') === null)? profile.width :producer.get('meta.media.width')
@@ -101,7 +101,7 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             Layout.columnSpan: 2
             parameters: defaultParameters
             onPresetSelected: {
@@ -125,7 +125,7 @@ Item {
         Item {
             width: 1
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: {
                 centerCheckBox.checked = false
                 filter.set('center', false)
@@ -137,14 +137,14 @@ Item {
             text: qsTr('Center bias')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: biasslider
             minimumValue: Math.round(-Math.max(profile.width, profile.height) / 2)
             maximumValue: Math.round(Math.max(profile.width, profile.height) / 2)
             suffix: ' px'
             onValueChanged: filter.set('center_bias', value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             id: biasundo
             onClicked: biasslider.value = 0
         }
@@ -153,14 +153,14 @@ Item {
             text: qsTr('Top')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: topslider
             minimumValue: 0
             maximumValue: profile.height
             suffix: ' px'
             onValueChanged: filter.set('top', value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             id: topundo
             onClicked: topslider.value = 0
         }
@@ -169,14 +169,14 @@ Item {
             text: qsTr('Bottom')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: bottomslider
             minimumValue: 0
             maximumValue: profile.height
             suffix: ' px'
             onValueChanged: filter.set('bottom', value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             id: bottomundo
             onClicked: bottomslider.value = 0
         }
@@ -185,14 +185,14 @@ Item {
             text: qsTr('Left')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: leftslider
             minimumValue: 0
             maximumValue: profile.width
             suffix: ' px'
             onValueChanged: filter.set('left', value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             id: leftundo
             onClicked: leftslider.value = 0
         }
@@ -201,14 +201,14 @@ Item {
             text: qsTr('Right')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: rightslider
             minimumValue: 0
             maximumValue: profile.width
             suffix: ' px'
             onValueChanged: filter.set('right', value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             id: rightundo
             onClicked: rightslider.value = 0
         }

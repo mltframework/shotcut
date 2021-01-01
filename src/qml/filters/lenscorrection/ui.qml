@@ -18,9 +18,9 @@
 import QtQuick 2.2
 import QtQuick.Controls 1.1
 import QtQuick.Layouts 1.1
-import Shotcut.Controls 1.0
+import Shotcut.Controls 1.0 as Shotcut
 
-KeyframableFilter {
+Shotcut.KeyframableFilter {
     property string xcenter: '0'
     property string ycenter: '1'
     property string correctionnearcenter: '2'
@@ -82,7 +82,7 @@ KeyframableFilter {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: preset
             parameters: [xcenter, ycenter, correctionnearcenter, correctionnearedges]
             Layout.columnSpan: 3
@@ -102,7 +102,7 @@ KeyframableFilter {
             text: qsTr('X Center')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: xcenterSlider
             minimumValue: 0
             maximumValue: 100
@@ -111,10 +111,10 @@ KeyframableFilter {
             suffix: ' %'
             onValueChanged: updateFilter(xcenter, xcenterSlider.value / xcenterSlider.maximumValue, xcenterKeyframesButton, getPosition())
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: xcenterSlider.value = xcenterDefault * xcenterSlider.maximumValue
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: xcenterKeyframesButton
             checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(xcenter) > 0
             onToggled: {
@@ -127,7 +127,7 @@ KeyframableFilter {
             text: qsTr('Y Center')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: ycenterSlider
             minimumValue: 0
             maximumValue: 100
@@ -136,10 +136,10 @@ KeyframableFilter {
             suffix: ' %'
             onValueChanged: updateFilter(ycenter, ycenterSlider.value / ycenterSlider.maximumValue, ycenterKeyframesButton, getPosition())
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: ycenterSlider.value = ycenterDefault * ycenterSlider.maximumValue
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: ycenterKeyframesButton
             checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(ycenter) > 0
             onToggled: {
@@ -152,7 +152,7 @@ Label {
             text: qsTr('Correction at Center')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: correctionnearcenterSlider
             minimumValue: 0
             maximumValue: 100
@@ -161,10 +161,10 @@ Label {
             suffix: ' %'
             onValueChanged: updateFilter(correctionnearcenter, correctionnearcenterSlider.value / correctionnearcenterSlider.maximumValue, cncenKeyframesButton, getPosition())
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: correctionnearcenterSlider.value = correctionnearcenterDefault * correctionnearcenterSlider.maximumValue
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: cncenKeyframesButton
             checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(correctionnearcenter) > 0
             onToggled: {
@@ -177,7 +177,7 @@ Label {
             text: qsTr('Correction at Edges')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: correctionnearedgesSlider
             minimumValue: 0
             maximumValue: 100
@@ -186,10 +186,10 @@ Label {
             suffix: ' %'
             onValueChanged: updateFilter(correctionnearedges, correctionnearedgesSlider.value / correctionnearedgesSlider.maximumValue, cnedgeKeyframesButton, getPosition())
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: correctionnearedgesSlider.value = correctionnearedgesDefault * correctionnearedgesSlider.maximumValue
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: cnedgeKeyframesButton
             checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(correctionnearedges) > 0
             onToggled: {

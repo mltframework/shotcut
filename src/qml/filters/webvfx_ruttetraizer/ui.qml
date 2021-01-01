@@ -18,7 +18,7 @@
 import QtQuick 2.1
 import QtQuick.Controls 1.1
 import QtQuick.Layouts 1.0
-import Shotcut.Controls 1.0
+import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     width: 400
@@ -59,7 +59,7 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: preset
             parameters: ['opacity', 'thickness', 'density', 'depth', 'scale',
                 'rotation_x', 'rotation_y']
@@ -71,7 +71,7 @@ Item {
             text: qsTr('Brightness')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: opacitySlider
             minimumValue: 1
             maximumValue: 100
@@ -80,7 +80,7 @@ Item {
             value: filter.getDouble('opacity') * maximumValue
             onValueChanged: filter.set('opacity', value / maximumValue)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: opacitySlider.value = 100
         }
 
@@ -88,7 +88,7 @@ Item {
             text: qsTr('Thickness')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: thicknessSlider
             minimumValue: 1
             maximumValue: 10
@@ -96,7 +96,7 @@ Item {
             value: filter.getDouble('thickness')
             onValueChanged: filter.set('thickness', value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: thicknessSlider.value = 3.0
         }
 
@@ -104,7 +104,7 @@ Item {
             text: qsTr('Density')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: densitySlider
             minimumValue: 1
             maximumValue: 100
@@ -112,7 +112,7 @@ Item {
             value: filter.getDouble('density')
             onValueChanged: filter.set('density', value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: densitySlider.value = 10
         }
 
@@ -120,7 +120,7 @@ Item {
             text: qsTr('Depth')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: depthSlider
             minimumValue: 1
             maximumValue: 500
@@ -128,7 +128,7 @@ Item {
             value: filter.getDouble('depth')
             onValueChanged: filter.set('depth', value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: depthSlider.value = 100
         }
 
@@ -136,7 +136,7 @@ Item {
             text: qsTr('Scale')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: scaleSlider
             minimumValue: 0.01
             maximumValue: 3.0
@@ -144,7 +144,7 @@ Item {
             value: filter.getDouble('scale') / 3.0
             onValueChanged: filter.set('scale', value * 3.0)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: scaleSlider.value = 1.0
         }
 
@@ -152,7 +152,7 @@ Item {
             text: qsTr('X Axis Rotation')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: xRotationSlider
             minimumValue: 0
             maximumValue: 360
@@ -160,7 +160,7 @@ Item {
             value: filter.getDouble('rotation_x') * maximumValue
             onValueChanged: filter.set('rotation_x', value / maximumValue)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: xRotationSlider.value = 0
         }
 
@@ -168,7 +168,7 @@ Item {
             text: qsTr('Y Axis Rotation')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: yRotationSlider
             minimumValue: 0
             maximumValue: 360
@@ -176,7 +176,7 @@ Item {
             value: filter.getDouble('rotation_y') * maximumValue
             onValueChanged: filter.set('rotation_y', value / maximumValue)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: yRotationSlider.value = 0
         }
 

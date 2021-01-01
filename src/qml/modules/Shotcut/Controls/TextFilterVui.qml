@@ -16,9 +16,9 @@
  */
 
 import QtQuick 2.1
-import Shotcut.Controls 1.0
+import Shotcut.Controls 1.0 as Shotcut
 
-VuiBase {
+Shotcut.VuiBase {
     property string rectProperty: 'geometry'
     property string halignProperty: 'valign'
     property string valignProperty: 'halign'
@@ -105,7 +105,7 @@ VuiBase {
             height: video.rect.height
             scale: zoom
 
-            RectangleControl {
+            Shotcut.RectangleControl {
                 id: rectangle
                 widthScale: video.rect.width / profile.width
                 heightScale: video.rect.height / profile.height

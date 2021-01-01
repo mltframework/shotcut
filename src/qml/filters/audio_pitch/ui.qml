@@ -18,7 +18,7 @@
 import QtQuick 2.1
 import QtQuick.Controls 1.1
 import QtQuick.Layouts 1.0
-import Shotcut.Controls 1.0
+import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     width: 200
@@ -118,7 +118,7 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: preset
             Layout.columnSpan: parent.columns - 1
             parameters: ['octaveshift']
@@ -139,9 +139,9 @@ Item {
         Label {
             text: qsTr('Octave Shift')
             Layout.alignment: Qt.AlignRight
-            ToolTip { text: qsTr('Specify the pitch shift in octaves. -1 shifts down an octave. +1 shifts up an octave. 0 is unchanged.') }
+            Shotcut.ToolTip { text: qsTr('Specify the pitch shift in octaves. -1 shifts down an octave. +1 shifts up an octave. 0 is unchanged.') }
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: octaveSlider
             minimumValue: -2.0
             maximumValue: 2.0
@@ -155,10 +155,10 @@ Item {
                 }
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: octaveSlider.value = 0.0
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: octaveKeyframesButton
             checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('octaveshift') > 0
             onToggled: {
@@ -177,9 +177,9 @@ Item {
         Label {
             text: qsTr('Speed Compensation')
             Layout.alignment: Qt.AlignRight
-            ToolTip { text: qsTr('Specify the speed change that should be compensated for. 2x will halve the pitch to compensate for the speed being doubled.') }
+            Shotcut.ToolTip { text: qsTr('Specify the speed change that should be compensated for. 2x will halve the pitch to compensate for the speed being doubled.') }
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             property bool noUpdate: false
             id: frequencySlider
             minimumValue: 0.25

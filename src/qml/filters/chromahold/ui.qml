@@ -18,7 +18,7 @@
 import QtQuick 2.2
 import QtQuick.Controls 1.1
 import QtQuick.Layouts 1.1
-import Shotcut.Controls 1.0
+import Shotcut.Controls 1.0 as Shotcut
 import QtQuick.Controls.Styles 1.1
 
 Item {
@@ -50,7 +50,7 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: presetItem
             Layout.columnSpan: 2
             onPresetSelected: {
@@ -64,7 +64,7 @@ Item {
             text: qsTr('Color')
             Layout.alignment: Qt.AlignRight
         }
-        ColorPicker {
+        Shotcut.ColorPicker {
             id: colorPicker
             onValueChanged: {
                 filter.set(colorParam, value)
@@ -73,7 +73,7 @@ Item {
             onPickStarted: filter.set('disable', 1)
             onPickCancelled: filter.set('disable', 0)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: colorPicker.value = colorDefault
         }
 
@@ -82,7 +82,7 @@ Item {
             text: qsTr('Distance')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: distanceSlider
             minimumValue: 0
             maximumValue: 100
@@ -91,7 +91,7 @@ Item {
             value: filter.getDouble(distanceParam) * 100
             onValueChanged: filter.set(distanceParam, value / 100)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: distanceSlider.value = distanceDefault
         }
 

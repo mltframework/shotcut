@@ -18,9 +18,9 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.1
 import QtQuick.Layouts 1.1
-import Shotcut.Controls 1.0
+import Shotcut.Controls 1.0 as Shotcut
 
-KeyframableFilter {
+Shotcut.KeyframableFilter {
     property string noise: '0'
     property double noiseDefault: 0.20
     
@@ -67,7 +67,7 @@ KeyframableFilter {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: preset
             parameters: [noise]
             Layout.columnSpan: 3
@@ -85,7 +85,7 @@ KeyframableFilter {
             text: qsTr('Amount')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: noiseSlider
             minimumValue: 0.0
             maximumValue: 100.0
@@ -94,10 +94,10 @@ KeyframableFilter {
             suffix: ' %'
             onValueChanged: updateFilter(noise, noiseSlider.value / noiseSlider.maximumValue, noiseKeyframesButton, getPosition())
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: noiseSlider.value = noiseDefault * noiseSlider.maximumValue
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: noiseKeyframesButton
             checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(noise) > 0
             onToggled: {

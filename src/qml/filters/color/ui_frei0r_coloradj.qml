@@ -19,7 +19,7 @@ import QtQuick 2.1
 import QtQuick.Controls 1.1
 import QtQuick.Controls 2.12 as Controls2
 import QtQuick.Layouts 1.0
-import Shotcut.Controls 1.0
+import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     property string paramRed: '0'
@@ -48,7 +48,7 @@ Item {
         anchors.fill: parent
         anchors.margins: 8
 
-        Preset {
+        Shotcut.Preset {
             parameters: defaultParameters
             onPresetSelected: {
                 modeCombo.currentIndex = Math.round(filter.getDouble(paramAction) * 2)
@@ -66,7 +66,7 @@ Item {
             }
         }
 
-        ColorWheelItem {
+        Shotcut.ColorWheelItem {
             id: wheel
             Layout.columnSpan: 2
             implicitWidth: (Math.min(parent.width, parent.height) - 60) * 1.1

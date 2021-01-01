@@ -18,9 +18,9 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.1
 import QtQuick.Layouts 1.1
-import Shotcut.Controls 1.0
+import Shotcut.Controls 1.0 as Shotcut
 
-KeyframableFilter {
+Shotcut.KeyframableFilter {
     property string threshold: 'midpoint'
     property double thresholdDefault: 128
 
@@ -71,7 +71,7 @@ KeyframableFilter {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: preset
             parameters: [threshold, 'invert', 'use_alpha']
             Layout.columnSpan: 3
@@ -88,7 +88,7 @@ KeyframableFilter {
             text: qsTr('Level')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: thresholdSlider
             minimumValue: 0
             maximumValue: 100
@@ -97,10 +97,10 @@ KeyframableFilter {
             suffix: ' %'
             onValueChanged: updateFilter(threshold, thresholdSlider.value / thresholdSlider.maximumValue * 255, thresholdKeyframesButton, getPosition())
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: thresholdSlider.value = thresholdDefault / 255  * thresholdSlider.maximumValue
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: thresholdKeyframesButton
             checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(threshold) > 0
             onToggled: {
@@ -115,7 +115,7 @@ KeyframableFilter {
             text: qsTr('Invert')
             onCheckedChanged: filter.set('invert', checked)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: invertCheckbox.checked = false
         }
         Item { width: 1 }
@@ -126,7 +126,7 @@ KeyframableFilter {
             text: qsTr('Compare with alpha channel')
             onCheckedChanged: filter.set('use_alpha', checked)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: useAlphaCheckbox.checked = false
         }
         Item { width: 1 }

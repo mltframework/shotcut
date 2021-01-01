@@ -16,9 +16,9 @@
  */
 
 import QtQuick 2.7
-import Shotcut.Controls 1.0
+import Shotcut.Controls 1.0 as Shotcut
 
-VuiBase {
+Shotcut.VuiBase {
     property string rectProperty
     property string fillProperty
     property string distortProperty
@@ -242,7 +242,7 @@ VuiBase {
             height: video.rect.height
             scale: zoom
 
-            RectangleControl {
+            Shotcut.RectangleControl {
                 id: rectangle
                 withRotation: !!rotationProperty
                 widthScale: video.rect.width / profile.width

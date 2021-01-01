@@ -18,7 +18,7 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.1
 import QtQuick.Layouts 1.1
-import Shotcut.Controls 1.0
+import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     property string rectProperty: 'rect'
@@ -132,7 +132,7 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: preset
             parameters: [rectProperty]
             Layout.columnSpan: 3
@@ -176,7 +176,7 @@ Item {
                 }
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: {
                 var rect = defaultRect()
                 filterRect.x = rectX.text = rect.x
@@ -184,7 +184,7 @@ Item {
                 setFilter(getPosition())
             }
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: positionKeyframesButton
             Layout.rowSpan: 2
             checked: filter.keyframeCount(rectProperty) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
@@ -223,7 +223,7 @@ Item {
                 }
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: {
                 var rect = defaultRect()
                 filterRect.width = rectW.text = rect.width
@@ -236,7 +236,7 @@ Item {
             text: qsTr('Blur')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: amountSlider
             minimumValue: 0
             maximumValue: 10.0
@@ -245,7 +245,7 @@ Item {
             suffix: ' %'
             onValueChanged: filter.set("blur", value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: amountSlider.value = 4
         }
         Item { width: 1 }

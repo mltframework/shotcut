@@ -18,9 +18,9 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.1
 import QtQuick.Layouts 1.1
-import Shotcut.Controls 1.0
+import Shotcut.Controls 1.0 as Shotcut
 
-KeyframableFilter {
+Shotcut.KeyframableFilter {
     property string levels: '0'
     property double levelsDefault: 0.10
    
@@ -66,7 +66,7 @@ KeyframableFilter {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: preset
             parameters: [levels]
             Layout.columnSpan: 3
@@ -83,7 +83,7 @@ KeyframableFilter {
             text: qsTr('Levels', 'Posterize filter')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: levelsSlider
             minimumValue: 0
             maximumValue: 100.0
@@ -92,10 +92,10 @@ KeyframableFilter {
             suffix: ' %'
             onValueChanged: updateFilter(levels, levelsSlider.value / levelsSlider.maximumValue, levelKeyframesButton, getPosition())
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: levelsSlider.value = levelsDefault * levelsSlider.maximumValue
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: levelKeyframesButton
             checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(levels) > 0
             onToggled: {

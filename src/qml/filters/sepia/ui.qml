@@ -19,7 +19,7 @@
 import QtQuick 2.1
 import QtQuick.Controls 1.0
 import QtQuick.Layouts 1.0
-import Shotcut.Controls 1.0
+import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     width: 350
@@ -38,7 +38,7 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: preset
             Layout.columnSpan: 2
             parameters: ['u', 'v']
@@ -52,14 +52,14 @@ Item {
             text: qsTr('Yellow-Blue')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: sliderBlue
             minimumValue: 0
             maximumValue: 255
             value: filter.getDouble('u')
             onValueChanged:filter.set('u', value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: sliderBlue.value = 75
         }
 
@@ -67,14 +67,14 @@ Item {
             text: qsTr('Cyan-Red')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: sliderRed
             minimumValue: 0
             maximumValue: 255
             value: filter.getDouble('v')
             onValueChanged: filter.set('v', value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: sliderRed.value = 150
         }
 

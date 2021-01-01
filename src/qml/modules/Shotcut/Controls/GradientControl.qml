@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Meltytech, LLC
+ * Copyright (c) 2019-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,10 +16,10 @@
  */
 import QtGraphicalEffects 1.0
 import QtQuick 2.1
-import QtQuick.Controls 1.4
+import QtQuick.Controls 2.12
 import QtQuick.Dialogs 1.2
 import QtQuick.Layouts 1.1
-import Shotcut.Controls 1.0
+import Shotcut.Controls 1.0 as Shotcut
 
 RowLayout {
     property var colors: []
@@ -81,7 +81,7 @@ RowLayout {
                 modality: application.dialogModality
             }
 
-            ToolTip { text: qsTr('Color: %1\nClick to change').arg(color) }
+            Shotcut.ToolTip { text: qsTr('Color: %1\nClick to change').arg(color) }
         }
     }
 
@@ -185,11 +185,12 @@ RowLayout {
         Layout.alignment: Qt.AlignVCenter
         id: gradientSpinner
         value: colors.length
-        minimumValue: 1
-        maximumValue: 10
-        decimals: 0
+        from: 1
+        to: 10
         stepSize: 1
-        suffix: qsTr(' colors', 'gradient control', value)
+        textFromValue: function(value, locale) {
+            return qsTr('%Ln colors', 'gradient control', value)
+        }
         onValueChanged: {
             _setStopCount(value)
         }

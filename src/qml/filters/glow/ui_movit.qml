@@ -18,7 +18,7 @@
 import QtQuick 2.1
 import QtQuick.Controls 1.1
 import QtQuick.Layouts 1.0
-import Shotcut.Controls 1.0
+import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     property var defaultParameters: ['radius','blur_mix','highlight_cutoff']
@@ -133,7 +133,7 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             Layout.columnSpan: 3
             parameters: defaultParameters
             onBeforePresetLoaded: {
@@ -152,17 +152,17 @@ Item {
             text: qsTr('Radius')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: radiusslider
             minimumValue: 0
             maximumValue: 100
             decimals: 1
             onValueChanged: updateFilter('radius', value, getPosition(), radiusKeyframesButton)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: radiusslider.value = 20
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: radiusKeyframesButton
             checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('radius') > 0
             onToggled: onKeyframesButtonClicked(checked, 'radius', radiusslider.value)
@@ -173,17 +173,17 @@ Item {
             text: qsTr('Highlight blurriness')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: blurslider
             minimumValue: 0.0
             maximumValue: 1.0
             decimals: 2
             onValueChanged: updateFilter('blur_mix', value, getPosition(), blurKeyframesButton)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: blurslider.value = 1.0
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: blurKeyframesButton
             checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('blur_mix') > 0
             onToggled: onKeyframesButtonClicked(checked, 'blur_mix', blurslider.value)
@@ -194,17 +194,17 @@ Item {
             text: qsTr('Highlight cutoff')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: cutoffslider
             minimumValue: 0.1
             maximumValue: 1.0
             decimals: 2
             onValueChanged: updateFilter('highlight_cutoff', value, getPosition(), cutoffKeyframesButton)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: cutoffslider.value = 0.2
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: cutoffKeyframesButton
             checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('highlight_cutoff') > 0
             onToggled: onKeyframesButtonClicked(checked, 'highlight_cutoff', cutoffslider.value)

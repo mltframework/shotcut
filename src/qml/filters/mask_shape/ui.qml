@@ -20,7 +20,7 @@ import QtQuick.Controls 1.1
 import QtQuick.Controls 2.12 as Controls2
 import QtQuick.Layouts 1.0
 import QtQuick.Dialogs 1.1
-import Shotcut.Controls 1.0
+import Shotcut.Controls 1.0 as Shotcut
 import org.shotcut.qml 1.0 as Shotcut
 
 Item {
@@ -195,7 +195,7 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: preset
             Layout.columnSpan: 3
             parameters: ['filter.mix', 'filter.softness', 'filter.use_luminance', 'filter.invert', 'filter.resource', 'filter.use_mix']
@@ -217,7 +217,7 @@ Item {
             implicitWidth: 250
             model: [qsTr('Bar Horizontal'), qsTr('Custom...'), qsTr('Bar Vertical'), qsTr('Barn Door Horizontal'), qsTr('Barn Door Vertical'), qsTr('Barn Door Diagonal SW-NE'), qsTr('Barn Door Diagonal NW-SE'), qsTr('Diagonal Top Left'), qsTr('Diagonal Top Right'), qsTr('Matrix Waterfall Horizontal'), qsTr('Matrix Waterfall Vertical'), qsTr('Matrix Snake Horizontal'), qsTr('Matrix Snake Parallel Horizontal'), qsTr('Matrix Snake Vertical'), qsTr('Matrix Snake Parallel Vertical'), qsTr('Barn V Up'), qsTr('Iris Circle'), qsTr('Double Iris'), qsTr('Iris Box'), qsTr('Box Bottom Right'), qsTr('Box Bottom Left'), qsTr('Box Right Center'), qsTr('Clock Top')]
             currentIndex: 0
-            ToolTip {
+            Shotcut.ToolTip {
                 text: qsTr('Set a mask from another file\'s brightness or alpha.')
                 isVisible: !resourceCombo.pressed
             }
@@ -245,7 +245,7 @@ Item {
                 }
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: {
                 resourceCombo.currentIndex = 0
                 resourceCombo.updateResource(resourceCombo.currentIndex)
@@ -257,7 +257,7 @@ Item {
         Label {
             id: fileLabel
             Layout.columnSpan: 3
-            ToolTip { id: fileLabelTip }
+            Shotcut.ToolTip { id: fileLabelTip }
         }
 
         Item { width: 1 }
@@ -268,7 +268,7 @@ Item {
                 text: qsTr('Invert')
                 onClicked: filter.set('filter.invert', checked)
             }
-            UndoButton {
+            Shotcut.UndoButton {
                 onClicked: invertCheckBox.checked = false
             }
             Item { width: 1 }
@@ -278,7 +278,7 @@ Item {
                 visible: filter.isAtLeastVersion('2')
                 onClicked: filter.set('filter.reverse', checked)
             }
-            UndoButton {
+            Shotcut.UndoButton {
                 visible: reverseCheckBox.visible
                 onClicked: reverseCheckBox.checked = false
             }
@@ -304,7 +304,7 @@ Item {
                 onClicked: filter.set('filter.use_luminance', 0)
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: brightnessRadioButton.checked = true
         }
         Item { width: 1 }
@@ -315,7 +315,7 @@ Item {
             Layout.alignment: Qt.AlignRight
             onClicked: filter.set('filter.use_mix', checked)
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: thresholdSlider
             minimumValue: 0
             maximumValue: 100
@@ -323,10 +323,10 @@ Item {
             suffix: ' %'
             onValueChanged: updateFilter('filter.mix', value, getPosition(), thresholdKeyframesButton)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: thresholdSlider.value = 50
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: thresholdKeyframesButton
             checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('filter.mix') > 0
             onToggled: onKeyframesButtonClicked(checked, 'filter.mix', thresholdSlider.value)
@@ -336,7 +336,7 @@ Item {
             text: qsTr('Softness')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: softnessSlider
             minimumValue: 0
             maximumValue: 100
@@ -344,7 +344,7 @@ Item {
             suffix: ' %'
             onValueChanged: filter.set('filter.softness', value/100)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: softnessSlider.value = 0
         }
         Item { width: 1 }

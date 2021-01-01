@@ -18,9 +18,9 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.1
 import QtQuick.Layouts 1.1
-import Shotcut.Controls 1.0
+import Shotcut.Controls 1.0 as Shotcut
 
-KeyframableFilter {
+Shotcut.KeyframableFilter {
     property string glitchFreq: '0'
     property string blockH: '1'
     property string shiftInt: '2'
@@ -81,7 +81,7 @@ KeyframableFilter {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: preset
             parameters: [glitchFreq, blockH, shiftInt, colorInt]
             Layout.columnSpan: 3
@@ -98,7 +98,7 @@ KeyframableFilter {
             text: qsTr('Frequency')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: glitchFreqSlider
             minimumValue: 0
             maximumValue: 100
@@ -107,10 +107,10 @@ KeyframableFilter {
             suffix: ' %'
             onValueChanged: updateFilter(glitchFreq, glitchFreqSlider.value / glitchFreqSlider.maximumValue, glitchKeyframesButton, getPosition())
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: glitchFreqSlider.value = glitchFreqDefault * glitchFreqSlider.maximumValue
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: glitchKeyframesButton
             checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(glitchFreq) > 0
             onToggled: {
@@ -123,7 +123,7 @@ KeyframableFilter {
             text: qsTr('Block height')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: blockHSlider
             minimumValue: 0
             maximumValue: 100
@@ -132,10 +132,10 @@ KeyframableFilter {
             suffix: ' %'
             onValueChanged: updateFilter(blockH, blockHSlider.value / blockHSlider.maximumValue, blockKeyframesButton, getPosition())
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: blockHSlider.value = blockHDefault * blockHSlider.maximumValue
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: blockKeyframesButton
             checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(blockH) > 0
             onToggled: {
@@ -148,7 +148,7 @@ Label {
             text: qsTr('Shift intensity')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: shiftIntSlider
             minimumValue: 0
             maximumValue: 100
@@ -157,10 +157,10 @@ Label {
             suffix: ' %'
             onValueChanged: updateFilter(shiftInt, shiftIntSlider.value / shiftIntSlider.maximumValue, shiftKeyframesButton, getPosition())
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: shiftIntSlider.value = shiftIntDefault * shiftIntSlider.maximumValue
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: shiftKeyframesButton
             checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(shiftInt) > 0
             onToggled: {
@@ -173,7 +173,7 @@ Label {
             text: qsTr('Color intensity')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: colorIntSlider
             minimumValue: 0
             maximumValue: 100
@@ -182,10 +182,10 @@ Label {
             suffix: ' %'
             onValueChanged: updateFilter(colorInt, colorIntSlider.value / colorIntSlider.maximumValue, colorKeyframesButton, getPosition())
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: colorIntSlider.value = colorIntDefault * colorIntSlider.maximumValue
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: colorKeyframesButton
             checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(colorInt) > 0
             onToggled: {

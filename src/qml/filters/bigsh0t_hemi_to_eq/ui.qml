@@ -4,7 +4,7 @@ import QtQuick 2.1
 import QtQuick.Controls 1.4
 import QtQuick.Controls 2.12 as Controls2
 import QtQuick.Layouts 1.0
-import Shotcut.Controls 1.0
+import Shotcut.Controls 1.0 as Shotcut
 
 
 Item {
@@ -135,7 +135,7 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: preset
             parameters: ["yaw", "pitch", "roll", "frontX", "frontY", "frontUp", "backX", "backY", "backUp", "fov", "radius", "nadirRadius", "nadirCorrectionStart", "interpolation", "projection"]
             Layout.columnSpan: 3
@@ -187,7 +187,7 @@ Item {
             Layout.columnSpan: 2
             onCurrentIndexChanged: updateProperty_interpolation()
         }
-        UndoButton {
+        Shotcut.UndoButton {
             id: interpolationUndo
             onClicked: interpolationComboBox.currentIndex = 0
         }
@@ -203,15 +203,15 @@ Item {
             text: qsTr('Yaw')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: yawSlider
             minimumValue: -360
             maximumValue: 360
             spinnerWidth: 120; suffix: ' deg'; decimals: 3; stepSize: 1;
             onValueChanged: updateProperty_yaw(getPosition())
         }
-        KeyframesButton { id: yawKeyframesButton; checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount("yaw") > 0; onToggled: { var value = yawSlider.value; if (checked) { blockUpdate = true; if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("yaw"); yawSlider.enabled = true; } filter.clearSimpleAnimation("yaw"); blockUpdate = false; filter.set("yaw", value, getPosition()); } else { filter.resetProperty("yaw"); filter.set("yaw", value); } } }
-        UndoButton {
+        Shotcut.KeyframesButton { id: yawKeyframesButton; checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount("yaw") > 0; onToggled: { var value = yawSlider.value; if (checked) { blockUpdate = true; if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("yaw"); yawSlider.enabled = true; } filter.clearSimpleAnimation("yaw"); blockUpdate = false; filter.set("yaw", value, getPosition()); } else { filter.resetProperty("yaw"); filter.set("yaw", value); } } }
+        Shotcut.UndoButton {
             id: yawUndo
             onClicked: yawSlider.value = 0
         }
@@ -220,15 +220,15 @@ Item {
             text: qsTr('Pitch')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: pitchSlider
             minimumValue: -180
             maximumValue: 180
             spinnerWidth: 120; suffix: ' deg'; decimals: 3; stepSize: 1;
             onValueChanged: updateProperty_pitch(getPosition())
         }
-        KeyframesButton { id: pitchKeyframesButton; checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount("pitch") > 0; onToggled: { var value = pitchSlider.value; if (checked) { blockUpdate = true; if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("pitch"); pitchSlider.enabled = true; } filter.clearSimpleAnimation("pitch"); blockUpdate = false; filter.set("pitch", value, getPosition()); } else { filter.resetProperty("pitch"); filter.set("pitch", value); } } }
-        UndoButton {
+        Shotcut.KeyframesButton { id: pitchKeyframesButton; checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount("pitch") > 0; onToggled: { var value = pitchSlider.value; if (checked) { blockUpdate = true; if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("pitch"); pitchSlider.enabled = true; } filter.clearSimpleAnimation("pitch"); blockUpdate = false; filter.set("pitch", value, getPosition()); } else { filter.resetProperty("pitch"); filter.set("pitch", value); } } }
+        Shotcut.UndoButton {
             id: pitchUndo
             onClicked: pitchSlider.value = 0
         }
@@ -237,15 +237,15 @@ Item {
             text: qsTr('Roll')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: rollSlider
             minimumValue: -180
             maximumValue: 180
             spinnerWidth: 120; suffix: ' deg'; decimals: 3; stepSize: 1;
             onValueChanged: updateProperty_roll(getPosition())
         }
-        KeyframesButton { id: rollKeyframesButton; checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount("roll") > 0; onToggled: { var value = rollSlider.value; if (checked) { blockUpdate = true; if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("roll"); rollSlider.enabled = true; } filter.clearSimpleAnimation("roll"); blockUpdate = false; filter.set("roll", value, getPosition()); } else { filter.resetProperty("roll"); filter.set("roll", value); } } }
-        UndoButton {
+        Shotcut.KeyframesButton { id: rollKeyframesButton; checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount("roll") > 0; onToggled: { var value = rollSlider.value; if (checked) { blockUpdate = true; if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("roll"); rollSlider.enabled = true; } filter.clearSimpleAnimation("roll"); blockUpdate = false; filter.set("roll", value, getPosition()); } else { filter.resetProperty("roll"); filter.set("roll", value); } } }
+        Shotcut.UndoButton {
             id: rollUndo
             onClicked: rollSlider.value = 0
         }
@@ -267,7 +267,7 @@ Item {
             Layout.columnSpan: 2
             onCurrentIndexChanged: updateProperty_projection()
         }
-        UndoButton {
+        Shotcut.UndoButton {
             id: projectionUndo
             onClicked: projectionComboBox.currentIndex = 0
         }
@@ -276,7 +276,7 @@ Item {
             text: qsTr('FOV')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: fovSlider
             minimumValue: 0
             maximumValue: 360
@@ -286,8 +286,8 @@ Item {
             stepSize: 0.0001
             onValueChanged: updateProperty_fov(getPosition())
         }
-        KeyframesButton { id: fovKeyframesButton; checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount("fov") > 0; onToggled: { var value = fovSlider.value; if (checked) { blockUpdate = true; if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("fov"); fovSlider.enabled = true; } filter.clearSimpleAnimation("fov"); blockUpdate = false; filter.set("fov", value, getPosition()); } else { filter.resetProperty("fov"); filter.set("fov", value); } } }
-        UndoButton {
+        Shotcut.KeyframesButton { id: fovKeyframesButton; checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount("fov") > 0; onToggled: { var value = fovSlider.value; if (checked) { blockUpdate = true; if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("fov"); fovSlider.enabled = true; } filter.clearSimpleAnimation("fov"); blockUpdate = false; filter.set("fov", value, getPosition()); } else { filter.resetProperty("fov"); filter.set("fov", value); } } }
+        Shotcut.UndoButton {
             id: fovUndo
             onClicked: fovSlider.value = 180
         }
@@ -296,7 +296,7 @@ Item {
             text: qsTr('Radius')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: radiusSlider
             minimumValue: 0
             maximumValue: 1
@@ -305,8 +305,8 @@ Item {
             stepSize: 0.0001
             onValueChanged: updateProperty_radius(getPosition())
         }
-        KeyframesButton { id: radiusKeyframesButton; checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount("radius") > 0; onToggled: { var value = radiusSlider.value; if (checked) { blockUpdate = true; if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("radius"); radiusSlider.enabled = true; } filter.clearSimpleAnimation("radius"); blockUpdate = false; filter.set("radius", value, getPosition()); } else { filter.resetProperty("radius"); filter.set("radius", value); } } }
-        UndoButton {
+        Shotcut.KeyframesButton { id: radiusKeyframesButton; checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount("radius") > 0; onToggled: { var value = radiusSlider.value; if (checked) { blockUpdate = true; if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("radius"); radiusSlider.enabled = true; } filter.clearSimpleAnimation("radius"); blockUpdate = false; filter.set("radius", value, getPosition()); } else { filter.resetProperty("radius"); filter.set("radius", value); } } }
+        Shotcut.UndoButton {
             id: radiusUndo
             onClicked: radiusSlider.value = 0.25
         }
@@ -322,7 +322,7 @@ Item {
             text: qsTr('X')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: frontXSlider
             minimumValue: 0
             maximumValue: 1
@@ -331,8 +331,8 @@ Item {
             suffix: ' '
             onValueChanged: updateProperty_frontX(getPosition())
         }
-        KeyframesButton { id: frontXKeyframesButton; checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount("frontX") > 0; onToggled: { var value = frontXSlider.value; if (checked) { blockUpdate = true; if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("frontX"); frontXSlider.enabled = true; } filter.clearSimpleAnimation("frontX"); blockUpdate = false; filter.set("frontX", value, getPosition()); } else { filter.resetProperty("frontX"); filter.set("frontX", value); } } }
-        UndoButton {
+        Shotcut.KeyframesButton { id: frontXKeyframesButton; checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount("frontX") > 0; onToggled: { var value = frontXSlider.value; if (checked) { blockUpdate = true; if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("frontX"); frontXSlider.enabled = true; } filter.clearSimpleAnimation("frontX"); blockUpdate = false; filter.set("frontX", value, getPosition()); } else { filter.resetProperty("frontX"); filter.set("frontX", value); } } }
+        Shotcut.UndoButton {
             id: frontXUndo
             onClicked: frontXSlider.value = 0.25
         }
@@ -341,7 +341,7 @@ Item {
             text: qsTr('Y')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: frontYSlider
             minimumValue: 0
             maximumValue: 1
@@ -350,8 +350,8 @@ Item {
             suffix: ' '
             onValueChanged: updateProperty_frontY(getPosition())
         }
-        KeyframesButton { id: frontYKeyframesButton; checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount("frontY") > 0; onToggled: { var value = frontYSlider.value; if (checked) { blockUpdate = true; if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("frontY"); frontYSlider.enabled = true; } filter.clearSimpleAnimation("frontY"); blockUpdate = false; filter.set("frontY", value, getPosition()); } else { filter.resetProperty("frontY"); filter.set("frontY", value); } } }
-        UndoButton {
+        Shotcut.KeyframesButton { id: frontYKeyframesButton; checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount("frontY") > 0; onToggled: { var value = frontYSlider.value; if (checked) { blockUpdate = true; if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("frontY"); frontYSlider.enabled = true; } filter.clearSimpleAnimation("frontY"); blockUpdate = false; filter.set("frontY", value, getPosition()); } else { filter.resetProperty("frontY"); filter.set("frontY", value); } } }
+        Shotcut.UndoButton {
             id: frontYUndo
             onClicked: frontYSlider.value = 0.25
         }
@@ -360,15 +360,15 @@ Item {
             text: qsTr('Up')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: frontUpSlider
             minimumValue: 0
             maximumValue: 360
             spinnerWidth: 120; suffix: ' deg'; decimals: 3; stepSize: 1;
             onValueChanged: updateProperty_frontUp(getPosition())
         }
-        KeyframesButton { id: frontUpKeyframesButton; checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount("frontUp") > 0; onToggled: { var value = frontUpSlider.value; if (checked) { blockUpdate = true; if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("frontUp"); frontUpSlider.enabled = true; } filter.clearSimpleAnimation("frontUp"); blockUpdate = false; filter.set("frontUp", value, getPosition()); } else { filter.resetProperty("frontUp"); filter.set("frontUp", value); } } }
-        UndoButton {
+        Shotcut.KeyframesButton { id: frontUpKeyframesButton; checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount("frontUp") > 0; onToggled: { var value = frontUpSlider.value; if (checked) { blockUpdate = true; if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("frontUp"); frontUpSlider.enabled = true; } filter.clearSimpleAnimation("frontUp"); blockUpdate = false; filter.set("frontUp", value, getPosition()); } else { filter.resetProperty("frontUp"); filter.set("frontUp", value); } } }
+        Shotcut.UndoButton {
             id: frontUpUndo
             onClicked: frontUpSlider.value = 90
         }
@@ -384,7 +384,7 @@ Item {
             text: qsTr('X')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: backXSlider
             minimumValue: 0
             maximumValue: 1
@@ -393,8 +393,8 @@ Item {
             suffix: ' '
             onValueChanged: updateProperty_backX(getPosition())
         }
-        KeyframesButton { id: backXKeyframesButton; checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount("backX") > 0; onToggled: { var value = backXSlider.value; if (checked) { blockUpdate = true; if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("backX"); backXSlider.enabled = true; } filter.clearSimpleAnimation("backX"); blockUpdate = false; filter.set("backX", value, getPosition()); } else { filter.resetProperty("backX"); filter.set("backX", value); } } }
-        UndoButton {
+        Shotcut.KeyframesButton { id: backXKeyframesButton; checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount("backX") > 0; onToggled: { var value = backXSlider.value; if (checked) { blockUpdate = true; if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("backX"); backXSlider.enabled = true; } filter.clearSimpleAnimation("backX"); blockUpdate = false; filter.set("backX", value, getPosition()); } else { filter.resetProperty("backX"); filter.set("backX", value); } } }
+        Shotcut.UndoButton {
             id: backXUndo
             onClicked: backXSlider.value = 0.25
         }
@@ -403,7 +403,7 @@ Item {
             text: qsTr('Y')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: backYSlider
             minimumValue: 0
             maximumValue: 1
@@ -412,8 +412,8 @@ Item {
             suffix: ' '
             onValueChanged: updateProperty_backY(getPosition())
         }
-        KeyframesButton { id: backYKeyframesButton; checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount("backY") > 0; onToggled: { var value = backYSlider.value; if (checked) { blockUpdate = true; if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("backY"); backYSlider.enabled = true; } filter.clearSimpleAnimation("backY"); blockUpdate = false; filter.set("backY", value, getPosition()); } else { filter.resetProperty("backY"); filter.set("backY", value); } } }
-        UndoButton {
+        Shotcut.KeyframesButton { id: backYKeyframesButton; checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount("backY") > 0; onToggled: { var value = backYSlider.value; if (checked) { blockUpdate = true; if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("backY"); backYSlider.enabled = true; } filter.clearSimpleAnimation("backY"); blockUpdate = false; filter.set("backY", value, getPosition()); } else { filter.resetProperty("backY"); filter.set("backY", value); } } }
+        Shotcut.UndoButton {
             id: backYUndo
             onClicked: backYSlider.value = 0.25
         }
@@ -422,15 +422,15 @@ Item {
             text: qsTr('Up')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: backUpSlider
             minimumValue: 0
             maximumValue: 360
             spinnerWidth: 120; suffix: ' deg'; decimals: 3; stepSize: 1;
             onValueChanged: updateProperty_backUp(getPosition())
         }
-        KeyframesButton { id: backUpKeyframesButton; checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount("backUp") > 0; onToggled: { var value = backUpSlider.value; if (checked) { blockUpdate = true; if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("backUp"); backUpSlider.enabled = true; } filter.clearSimpleAnimation("backUp"); blockUpdate = false; filter.set("backUp", value, getPosition()); } else { filter.resetProperty("backUp"); filter.set("backUp", value); } } }
-        UndoButton {
+        Shotcut.KeyframesButton { id: backUpKeyframesButton; checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount("backUp") > 0; onToggled: { var value = backUpSlider.value; if (checked) { blockUpdate = true; if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("backUp"); backUpSlider.enabled = true; } filter.clearSimpleAnimation("backUp"); blockUpdate = false; filter.set("backUp", value, getPosition()); } else { filter.resetProperty("backUp"); filter.set("backUp", value); } } }
+        Shotcut.UndoButton {
             id: backUpUndo
             onClicked: backUpSlider.value = 90
         }
@@ -447,7 +447,7 @@ Item {
             text: qsTr('Radius')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: nadirRadiusSlider
             minimumValue: 0
             maximumValue: 1
@@ -456,8 +456,8 @@ Item {
             stepSize: 0.0001
             onValueChanged: updateProperty_nadirRadius(getPosition())
         }
-        KeyframesButton { id: nadirRadiusKeyframesButton; checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount("nadirRadius") > 0; onToggled: { var value = nadirRadiusSlider.value; if (checked) { blockUpdate = true; if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("nadirRadius"); nadirRadiusSlider.enabled = true; } filter.clearSimpleAnimation("nadirRadius"); blockUpdate = false; filter.set("nadirRadius", value, getPosition()); } else { filter.resetProperty("nadirRadius"); filter.set("nadirRadius", value); } } }
-        UndoButton {
+        Shotcut.KeyframesButton { id: nadirRadiusKeyframesButton; checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount("nadirRadius") > 0; onToggled: { var value = nadirRadiusSlider.value; if (checked) { blockUpdate = true; if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("nadirRadius"); nadirRadiusSlider.enabled = true; } filter.clearSimpleAnimation("nadirRadius"); blockUpdate = false; filter.set("nadirRadius", value, getPosition()); } else { filter.resetProperty("nadirRadius"); filter.set("nadirRadius", value); } } }
+        Shotcut.UndoButton {
             id: nadirRadiusUndo
             onClicked: nadirRadiusSlider.value = 0.2229
         }
@@ -466,7 +466,7 @@ Item {
             text: qsTr('Start')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: nadirCorrectionStartSlider
             minimumValue: 0
             maximumValue: 1
@@ -475,8 +475,8 @@ Item {
             stepSize: 0.0001
             onValueChanged: updateProperty_nadirCorrectionStart(getPosition())
         }
-        KeyframesButton { id: nadirCorrectionStartKeyframesButton; checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount("nadirCorrectionStart") > 0; onToggled: { var value = nadirCorrectionStartSlider.value; if (checked) { blockUpdate = true; if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("nadirCorrectionStart"); nadirCorrectionStartSlider.enabled = true; } filter.clearSimpleAnimation("nadirCorrectionStart"); blockUpdate = false; filter.set("nadirCorrectionStart", value, getPosition()); } else { filter.resetProperty("nadirCorrectionStart"); filter.set("nadirCorrectionStart", value); } } }
-        UndoButton {
+        Shotcut.KeyframesButton { id: nadirCorrectionStartKeyframesButton; checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount("nadirCorrectionStart") > 0; onToggled: { var value = nadirCorrectionStartSlider.value; if (checked) { blockUpdate = true; if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("nadirCorrectionStart"); nadirCorrectionStartSlider.enabled = true; } filter.clearSimpleAnimation("nadirCorrectionStart"); blockUpdate = false; filter.set("nadirCorrectionStart", value, getPosition()); } else { filter.resetProperty("nadirCorrectionStart"); filter.set("nadirCorrectionStart", value); } } }
+        Shotcut.UndoButton {
             id: nadirCorrectionStartUndo
             onClicked: radiusSlider.value = 0.8
         }

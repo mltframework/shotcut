@@ -19,9 +19,9 @@ import QtQuick 2.0
 import QtQuick.Controls 1.1
 import QtQuick.Controls 2.12 as Controls2
 import QtQuick.Layouts 1.1
-import Shotcut.Controls 1.0
+import Shotcut.Controls 1.0 as Shotcut
 
-KeyframableFilter {
+Shotcut.KeyframableFilter {
     property string levels: '0'
     property string matrixid: '1'
     property double levelsDefault: 0.1
@@ -70,7 +70,7 @@ KeyframableFilter {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: preset
             parameters: [levels, matrixid]
             Layout.columnSpan: 3
@@ -87,7 +87,7 @@ KeyframableFilter {
             text: qsTr('Levels', 'Dither video filter')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: levelsSlider
             minimumValue: 0.0
             maximumValue: 100
@@ -96,10 +96,10 @@ KeyframableFilter {
             suffix: ' %'
             onValueChanged: updateFilter(levels, levelsSlider.value / levelsSlider.maximumValue, levelKeyframesButton, getPosition())
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: levelsSlider.value = levelsDefault * levelsSlider.maximumValue
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: levelKeyframesButton
             checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(levels) > 0
             onToggled: {
@@ -124,7 +124,7 @@ KeyframableFilter {
                 enabled = true
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: matrixCombo.currentIndex = matrixidDefault * 9
             Layout.columnSpan: 2
         }

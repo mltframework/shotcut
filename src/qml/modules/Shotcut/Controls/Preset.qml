@@ -16,10 +16,10 @@
  */
 
 import QtQuick 2.1
-import QtQuick.Controls 1.0
-import QtQuick.Controls 2.12 as Controls2
+import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.0
 import QtQuick.Window 2.1
+import Shotcut.Controls 1.0 as Shotcut
 
 RowLayout {
     property var parameters: []
@@ -32,7 +32,7 @@ RowLayout {
         filter.loadPresets()
     }
 
-    Controls2.ComboBox {
+    ComboBox {
         id: presetCombo
         Layout.fillWidth: true
         Layout.minimumWidth: 100
@@ -59,18 +59,26 @@ RowLayout {
     }
     Button {
         id: saveButton
-        iconName: 'list-add'
-        iconSource: 'qrc:///icons/oxygen/32x32/actions/list-add.png'
-        tooltip: qsTr('Save')
+        icon.name: 'list-add'
+        icon.source: 'qrc:///icons/oxygen/32x32/actions/list-add.png'
+        hoverEnabled: true
+        ToolTip.delay: 700
+        ToolTip.timeout: 5000
+        ToolTip.visible: hovered
+        ToolTip.text: qsTr('Save')
         implicitWidth: 20
         implicitHeight: 20
         onClicked: nameDialog.show()
     }
     Button {
         id: deleteButton
-        iconName: 'list-remove'
-        iconSource: 'qrc:///icons/oxygen/32x32/actions/list-remove.png'
-        tooltip: qsTr('Delete')
+        icon.name: 'list-remove'
+        icon.source: 'qrc:///icons/oxygen/32x32/actions/list-remove.png'
+        hoverEnabled: true
+        ToolTip.delay: 700
+        ToolTip.timeout: 5000
+        ToolTip.visible: hovered
+        ToolTip.text: qsTr('Delete')
         implicitWidth: 20
         implicitHeight: 20
         onClicked: confirmDialog.show()
@@ -84,7 +92,7 @@ RowLayout {
         modality: application.dialogModality
         title: qsTr('Save Preset')
         width: 200
-        height: 90
+        height: 100
 
         function acceptName() {
             var params = parameters
@@ -103,7 +111,6 @@ RowLayout {
             }
             TextField {
                 id: nameField
-                focus: true
                 Layout.fillWidth: true
                 onAccepted: nameDialog.acceptName()
                 Keys.onPressed: {
@@ -117,20 +124,20 @@ RowLayout {
             Item { Layout.fillHeight: true }
 
             RowLayout {
-                anchors.right: parent.right
-                anchors.bottom: parent.bottom
                 Layout.alignment: Qt.AlignRight
-                Button {
+                focus: true
+                Shotcut.Button {
                     text: qsTr('OK')
-                    isDefault: true
                     onClicked: nameDialog.acceptName()
                 }
-                Button {
+                Shotcut.Button {
                     text: qsTr('Cancel')
                     onClicked: nameDialog.close()
                 }
             }
         }
+
+        Component.onCompleted: nameField.forceActiveFocus(Qt.TabFocusReason)
     }
 
     Window {
@@ -152,12 +159,11 @@ RowLayout {
             }
             
             RowLayout {
-                anchors.right: parent.right
-                anchors.bottom: parent.bottom
                 Layout.alignment: Qt.AlignRight
-                Button {
+                Shotcut.Button {
+                    id: confirmDialogOk
                     text: qsTr('OK')
-                    isDefault: true
+                    focus: true
                     onClicked: {
                         if (presetCombo.currentText !== ' ') {
                             filter.deletePreset(presetCombo.currentText)
@@ -166,11 +172,13 @@ RowLayout {
                         confirmDialog.close()
                     }
                 }
-                Button {
+                Shotcut.Button {
                     text: qsTr('Cancel')
                     onClicked: confirmDialog.close()
                 }
             }
         }
+
+        Component.onCompleted: confirmDialogOk.forceActiveFocus(Qt.TabFocusReason)
     }
 }

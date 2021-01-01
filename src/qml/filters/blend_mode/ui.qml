@@ -19,7 +19,7 @@ import QtQuick 2.1
 import QtQuick.Controls 1.0
 import QtQuick.Controls 2.12 as Controls2
 import QtQuick.Layouts 1.0
-import Shotcut.Controls 1.0
+import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     property string propertyName: 'mode'
@@ -76,7 +76,7 @@ Item {
                 filter.set(propertyName, comboItems.get(currentIndex).value)
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: {
                 filter.set(propertyName, comboItems.get(0).value)
                 combo.currentIndex = 0

@@ -84,11 +84,11 @@ RowLayout {
             onTriggered: incrementAction.trigger()
         }
     }
-    UndoButton {
+    Shotcut.UndoButton {
         id: undoButton
         onClicked: root.setDefaultClicked()
     }
-    SaveDefaultButton {
+    Shotcut.SaveDefaultButton {
         id: saveButton
         onClicked: root.saveDefaultClicked()
     }

@@ -18,7 +18,7 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.1
 import QtQuick.Layouts 1.1
-import Shotcut.Controls 1.0
+import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     width: 350
@@ -43,7 +43,7 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: preset
             parameters: [amount]
             Layout.columnSpan: parent.columns - 1
@@ -54,7 +54,7 @@ Item {
             text: qsTr('Amount')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: amountSlider
             minimumValue: 2
             maximumValue: Math.round(profile.fps)
@@ -63,7 +63,7 @@ Item {
             spinnerWidth: 110
             onValueChanged: filter.set(amount, value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: amountSlider.value = amountDefault
         }
 

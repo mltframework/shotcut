@@ -20,7 +20,7 @@ import QtQuick.Controls 1.1
 import QtQuick.Controls.Styles 1.1
 import QtQuick.Layouts 1.0
 import QtQuick.Dialogs 1.0
-import Shotcut.Controls 1.0
+import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     width: 400
@@ -184,7 +184,7 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: preset
             parameters: [rectProperty, 'radius', 'color.1', 'color.2', 'color.3', 'color.4', 'color.5', 'color.6', 'color.7', 'color.8', 'color.9', 'color.10', 'border.color', 'border.width']
             Layout.columnSpan: 3
@@ -239,14 +239,14 @@ Item {
                 }
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: {
                 rectX.text = rectY.text = 0
                 filterRect.x = filterRect.y = 0
                 updateFilterRect(getPosition(), true)
             }
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: positionKeyframesButton
             Layout.rowSpan: 2
             checked: filter.keyframeCount(rectProperty) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
@@ -287,7 +287,7 @@ Item {
                 }
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: {
                 rectW.text = profile.width
                 rectH.text = profile.height
@@ -301,7 +301,7 @@ Item {
             text: qsTr('Corner radius')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: slider
             minimumValue: 0
             maximumValue: 100
@@ -309,10 +309,10 @@ Item {
             suffix: ' %'
             onValueChanged: updateFilterRadius(getPosition())
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: slider.value = 0
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: radiusKeyframesButton
             checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('radius') > 0
             onToggled: {
@@ -333,7 +333,7 @@ Item {
             text: qsTr('Fill color')
             Layout.alignment: Qt.AlignRight
         }
-        GradientControl {
+        Shotcut.GradientControl {
             id: fillColorPicker
             Layout.columnSpan: 2
             onGradientChanged: {
@@ -350,7 +350,7 @@ Item {
         RowLayout {
             spacing: 8
             Layout.columnSpan: 3
-            ColorPicker {
+            Shotcut.ColorPicker {
                 id: borderColorPicker
                 eyedropper: false
                 alpha: true

@@ -20,10 +20,10 @@ import QtQuick.Controls 1.4 as Controls1
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.0
 import QtQuick.Dialogs 1.2
-import Shotcut.Controls 1.0
+import Shotcut.Controls 1.0 as Shotcut
 import org.shotcut.qml 1.0
 
-VuiBase {
+Shotcut.VuiBase {
     id: vui
     property string rectProperty: 'geometry'
     property string halignProperty: 'valign'
@@ -295,7 +295,7 @@ VuiBase {
                     }
                     Controls1.SpinBox {
                         id: fontSizeSpinBox
-                        ToolTip { text: qsTr('Text size') }
+                        Shotcut.ToolTip { text: qsTr('Text size') }
                         implicitWidth: 50
                         visible: toolbar.expanded
                         value: 72
@@ -387,7 +387,7 @@ VuiBase {
                 }
             }
 
-            RectangleControl {
+            Shotcut.RectangleControl {
                 id: rectangle
                 widthScale: video.rect.width / profile.width
                 heightScale: video.rect.height / profile.height

@@ -18,9 +18,9 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.1
 import QtQuick.Layouts 1.1
-import Shotcut.Controls 1.0
+import Shotcut.Controls 1.0 as Shotcut
 
-KeyframableFilter {
+Shotcut.KeyframableFilter {
     property string horizontal: '0'
     property double horizontalDefault: 0.2
 
@@ -65,7 +65,7 @@ KeyframableFilter {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: preset
             parameters: [horizontal]
             Layout.columnSpan: 3
@@ -82,7 +82,7 @@ KeyframableFilter {
             text: qsTr('Offset')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: horizontalSlider
             minimumValue: 0.0
             maximumValue: 100
@@ -91,10 +91,10 @@ KeyframableFilter {
             suffix: ' %'
             onValueChanged: updateFilter(horizontal, horizontalSlider.value / horizontalSlider.maximumValue, horizontalKeyframesButton, getPosition())
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: horizontalSlider.value = horizontalDefault * horizontalSlider.maximumValue
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: horizontalKeyframesButton
             checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(horizontal) > 0
             onToggled: {

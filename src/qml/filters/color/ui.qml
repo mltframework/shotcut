@@ -18,7 +18,7 @@
 import QtQuick 2.1
 import QtQuick.Controls 1.4
 import QtQuick.Layouts 1.0
-import Shotcut.Controls 1.0
+import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     property var defaultParameters: ['lift_r', 'lift_g', 'lift_b', 'gamma_r', 'gamma_g', 'gamma_b', 'gain_r', 'gain_g', 'gain_b']
@@ -121,7 +121,7 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             Layout.columnSpan: 8
             parameters: defaultParameters
             onBeforePresetLoaded: {
@@ -142,7 +142,7 @@ Item {
 
         // Row 2
         Label { text: qsTr('Shadows (Lift)') }
-        UndoButton {
+        Shotcut.UndoButton {
             Layout.alignment: Qt.AlignRight
             onClicked: {
                 // Force a color change to make sure the color wheel is updated.
@@ -152,7 +152,7 @@ Item {
                 liftBlueSpinner.value = 0.0
             }
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: liftKeyframesButton
             checked: filter.keyframeCount('lift_r') > 0
             Layout.alignment: Qt.AlignLeft
@@ -172,7 +172,7 @@ Item {
             }
         }
         Label { text: qsTr('Midtones (Gamma)') }
-        UndoButton {
+        Shotcut.UndoButton {
             Layout.alignment: Qt.AlignRight
             onClicked: {
                 // Force a color change to make sure the color wheel is updated.
@@ -182,7 +182,7 @@ Item {
                 gammaBlueSpinner.value = 0.0
             }
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: gammaKeyframesButton
             checked: filter.keyframeCount('gamma_r') > 0
             Layout.alignment: Qt.AlignLeft
@@ -202,7 +202,7 @@ Item {
             }
         }
         Label { text: qsTr('Highlights (Gain)') }
-        UndoButton {
+        Shotcut.UndoButton {
             Layout.alignment: Qt.AlignRight
             onClicked: {
                 // Force a color change to make sure the color wheel is updated.
@@ -212,7 +212,7 @@ Item {
                 gainBlueSpinner.value = 0.0
             }
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: gainKeyframesButton
             checked: filter.keyframeCount('gain_r') > 0
             Layout.alignment: Qt.AlignLeft
@@ -233,7 +233,7 @@ Item {
         }
 
         // Row 3
-        ColorWheelItem {
+        Shotcut.ColorWheelItem {
             id: liftwheel
             Layout.columnSpan: 3
             implicitWidth: parent.width / 3 - parent.columnSpacing
@@ -269,7 +269,7 @@ Item {
                 }
             }
         }
-        ColorWheelItem {
+        Shotcut.ColorWheelItem {
             id: gammawheel
             Layout.columnSpan: 3
             implicitWidth: parent.width / 3 - parent.columnSpacing
@@ -305,7 +305,7 @@ Item {
                 }
             }
         }
-        ColorWheelItem {
+        Shotcut.ColorWheelItem {
             id: gainwheel
             Layout.columnSpan: 3
             implicitWidth: parent.width / 3 - parent.columnSpacing

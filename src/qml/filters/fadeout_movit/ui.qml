@@ -19,7 +19,7 @@
 import QtQuick 2.2
 import QtQuick.Controls 1.1
 import QtQuick.Layouts 1.1
-import Shotcut.Controls 1.0
+import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     width: 100
@@ -58,7 +58,7 @@ Item {
 
         RowLayout {
             Label { text: qsTr('Duration') }
-            TimeSpinner {
+            Shotcut.TimeSpinner {
                 id: timeSpinner
                 minimumValue: 2
                 maximumValue: 5000

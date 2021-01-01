@@ -22,7 +22,7 @@ import QtQuick.Controls.Styles 1.4
 import QtQuick.Layouts 1.0
 import QtQuick.Extras 1.4
 import QtQml 2.2
-import Shotcut.Controls 1.0
+import Shotcut.Controls 1.0 as Shotcut
 
 Rectangle {
     id: root
@@ -115,7 +115,7 @@ Rectangle {
             id: momentaryTitle
             text: 'M'
             color: activePalette.text
-            ToolTip {text: qsTr('Momentary Loudness.')}
+            Shotcut.ToolTip {text: qsTr('Momentary Loudness.')}
             visible: enableMomentary
         }
         Label {
@@ -149,7 +149,7 @@ Rectangle {
             Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
             text: 'S'
             color: activePalette.text
-            ToolTip {text: qsTr('Short-term Loudness.')}
+            Shotcut.ToolTip {text: qsTr('Short-term Loudness.')}
             visible: enableShortterm
         }
         Label {
@@ -183,7 +183,7 @@ Rectangle {
             Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
             text: 'I'
             color: activePalette.text
-            ToolTip {text: qsTr('Integrated Loudness.')}
+            Shotcut.ToolTip {text: qsTr('Integrated Loudness.')}
             visible: enableIntegrated
         }
         Label {
@@ -217,7 +217,7 @@ Rectangle {
             Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
             text: 'LRA'
             color: activePalette.text
-            ToolTip {text: qsTr('Loudness Range.')}
+            Shotcut.ToolTip {text: qsTr('Loudness Range.')}
             visible: enableRange
         }
         Label {
@@ -251,7 +251,7 @@ Rectangle {
             Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
             text: 'P'
             color: activePalette.text
-            ToolTip {text: qsTr('Peak.')}
+            Shotcut.ToolTip {text: qsTr('Peak.')}
             visible: enablePeak
         }
         Label {
@@ -285,7 +285,7 @@ Rectangle {
             Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
             text: 'TP'
             color: activePalette.text
-            ToolTip {text: qsTr('True Peak.')}
+            Shotcut.ToolTip {text: qsTr('True Peak.')}
             visible: enableTruePeak
         }
         Label {

@@ -16,9 +16,9 @@
  */
 
 import QtQuick 2.2
-import QtQuick.Controls 1.1
+import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.1
-import Shotcut.Controls 1.0
+import Shotcut.Controls 1.0 as Shotcut
 import QtQuick.Controls.Styles 1.1
 
 Item {
@@ -66,7 +66,7 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: presetItem
             Layout.columnSpan: 2
             onPresetSelected: {
@@ -80,7 +80,7 @@ Item {
             text: qsTr('Neutral color')
             Layout.alignment: Qt.AlignRight
         }
-        ColorPicker {
+        Shotcut.ColorPicker {
             id: colorPicker
             property bool isReady: false
             Component.onCompleted: isReady = true
@@ -95,7 +95,7 @@ Item {
             }
             onPickCancelled: filter.set('disable', 0)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: colorPicker.value = defaultNeutral
         }
 
@@ -109,8 +109,7 @@ Item {
                 id: tempslider
                 Layout.fillWidth: true
                 Layout.maximumHeight: tempspinner.height
-                style: SliderStyle {
-                    groove: Rectangle {
+                background: Rectangle {
                         rotation: -90
                         height: parent.width
                         x: (parent.width - width) / 2
@@ -124,18 +123,17 @@ Item {
                             // Force width (which is really height due to rotation).
                             width = tempslider.height / 2
                         }
-                    }
-                    handle: Rectangle {
+                }
+                handle: Rectangle {
                         color: "lightgray"
                         border.color: "gray"
                         border.width: 2
                         width: height / 2
                         height: tempslider.height
                         radius: 4
-                    }
                 }
-                minimumValue: 1000.0
-                maximumValue: 15000.0
+                from: 1000.0
+                to: 15000.0
                 property bool isReady: false
                 Component.onCompleted: isReady = true
                 onValueChanged: {
@@ -148,15 +146,16 @@ Item {
             SpinBox {
                 id: tempspinner
                 Layout.minimumWidth: 100
-                minimumValue: 1000.0
-                maximumValue: 15000.0
-                decimals: 0
+                from: 1000.0
+                to: 15000.0
                 stepSize: 10
-                suffix: qsTr(' deg', 'degrees')
+                textFromValue: function(value, locale) {
+                    return qsTr("%1 degrees").arg(Number(value).toLocaleString(locale, 'f', 0))
+                }
                 onValueChanged: tempslider.value = value
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: tempslider.value = defaultTemp
         }
 

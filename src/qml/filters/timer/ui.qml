@@ -19,7 +19,7 @@ import QtQuick 2.0
 import QtQuick.Controls 2.12 as Controls2
 import QtQuick.Controls 1.1
 import QtQuick.Layouts 1.1
-import Shotcut.Controls 1.0
+import Shotcut.Controls 1.0 as Shotcut
 import QtQml.Models 2.2
 
 Item {
@@ -114,7 +114,7 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: preset
             parameters: textFilterUi.parameters.concat(['format', 'direction','start','duration'])
             onBeforePresetLoaded: {
@@ -186,7 +186,7 @@ Item {
                 onSetDefaultClicked: {
                     startSpinner.timeStr = _defaultStart
                 }
-                ToolTip { text: "The timer will be frozen from the beginning of the filter until the Start Delay time has elapsed." }
+                Shotcut.ToolTip { text: "The timer will be frozen from the beginning of the filter until the Start Delay time has elapsed." }
             }
             Button {
                 iconName: 'insert'
@@ -213,7 +213,7 @@ Item {
                 onSetDefaultClicked: {
                     durationSpinner.timeStr = _defaultDuration
                 }
-                ToolTip { text: "The timer will be frozen after the Duration has elapsed." }
+                Shotcut.ToolTip { text: "The timer will be frozen after the Duration has elapsed." }
             }
             Button {
                 iconName: 'insert'
@@ -247,11 +247,11 @@ Item {
                 onSetDefaultClicked: {
                     offsetSpinner.timeStr = _defaultOffset
                 }
-                ToolTip { text: "When the direction is Down, the timer will count down to Offset. When the Direction is up, the timer will count up starting from Offset." }
+                Shotcut.ToolTip { text: "When the direction is Down, the timer will count down to Offset. When the Direction is up, the timer will count up starting from Offset." }
             }
         }
 
-        TextFilterUi {
+        Shotcut.TextFilterUi {
             id: textFilterUi
             Layout.columnSpan: 2
         }

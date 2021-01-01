@@ -19,7 +19,7 @@ import QtQuick 2.0
 import QtQuick.Controls 1.1
 import QtQuick.Controls 2.12 as Controls2
 import QtQuick.Layouts 1.1
-import Shotcut.Controls 1.0
+import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     property string keyColorParam: '0'
@@ -100,7 +100,7 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: presetItem
             Layout.columnSpan: 2
             parameters: defaultParameters
@@ -111,7 +111,7 @@ Item {
             text: qsTr('Key color')
             Layout.alignment: Qt.AlignRight
         }
-        ColorPicker {
+        Shotcut.ColorPicker {
             id: keyColorPicker
             property bool isReady: false
             Component.onCompleted: isReady = true
@@ -126,7 +126,7 @@ Item {
             }
             onPickCancelled: filter.set('disable', 0)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: keyColorPicker.value = keyColorDefault
         }
 
@@ -134,7 +134,7 @@ Item {
             text: qsTr('Target color')
             Layout.alignment: Qt.AlignRight
         }
-        ColorPicker {
+        Shotcut.ColorPicker {
             id: targetColorPicker
             property bool isReady: false
             Component.onCompleted: isReady = true
@@ -149,7 +149,7 @@ Item {
             }
             onPickCancelled: filter.set('disable', 0)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: targetColorPicker.value = targetColorDefault
         }
 
@@ -163,7 +163,7 @@ Item {
             model: [qsTr('Color Distance'), qsTr('Transparency'), qsTr('Edge Inwards'), qsTr('Edge Outwards')]
             onActivated: filter.set(maskTypeParam, currentIndex)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: {
                 filter.set(maskTypeParam, maskTypeDefault)
                 maskTypeCombo.currentIndex = maskTypeDefault
@@ -174,7 +174,7 @@ Item {
             text: qsTr('Tolerance')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: toleranceSlider
             minimumValue: 0
             maximumValue: 100
@@ -183,7 +183,7 @@ Item {
             value: filter.getDouble(toleranceParam) * 100
             onValueChanged: filter.set(toleranceParam, value / 100)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: toleranceSlider.value = toleranceDefault * 100
         }
 
@@ -191,7 +191,7 @@ Item {
             text: qsTr('Slope')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: slopeSlider
             minimumValue: 0
             maximumValue: 100
@@ -200,7 +200,7 @@ Item {
             value: filter.getDouble(slopeParam) * 100
             onValueChanged: filter.set(slopeParam, value / 100)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: slopeSlider.value = slopeDefault * 100
         }
 
@@ -208,7 +208,7 @@ Item {
             text: qsTr('Hue gate')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: hueGateSlider
             minimumValue: 0
             maximumValue: 100
@@ -217,7 +217,7 @@ Item {
             value: filter.getDouble(hueGateParam) * 100
             onValueChanged: filter.set(hueGateParam, value / 100)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: hueGateSlider.value = hueGateDefault * 100
         }
 
@@ -225,7 +225,7 @@ Item {
             text: qsTr('Saturation threshold')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: saturationSlider
             minimumValue: 0
             maximumValue: 100
@@ -234,7 +234,7 @@ Item {
             value: filter.getDouble(saturationParam) * 100
             onValueChanged: filter.set(saturationParam, value / 100)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: saturationSlider.value = saturationDefault * 100
         }
 
@@ -248,7 +248,7 @@ Item {
             model: [qsTr('None'), qsTr('De-Key'), qsTr('Desaturate'), qsTr('Adjust Luma')]
             onActivated: filter.set(operation1Param, currentIndex)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: {
                 filter.set(operation1Param, operation1Default)
                 operation1Combo.currentIndex = operation1Default
@@ -259,7 +259,7 @@ Item {
             text: qsTr('Amount 1')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: amount1Slider
             minimumValue: 0
             maximumValue: 100
@@ -268,7 +268,7 @@ Item {
             value: filter.getDouble(amount1Param) * 100
             onValueChanged: filter.set(amount1Param, value / 100)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: amount1Slider.value = amount1Default * 100
         }
 
@@ -282,7 +282,7 @@ Item {
             model: [qsTr('None'), qsTr('De-Key'), qsTr('Desaturate'), qsTr('Adjust Luma')]
             onActivated: filter.set(operation2Param, currentIndex)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: {
                 filter.set(operation2Param, operation2Default)
                 operation2Combo.currentIndex = operation2Default
@@ -293,7 +293,7 @@ Item {
             text: qsTr('Amount 2')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: amount2Slider
             minimumValue: 0
             maximumValue: 100
@@ -302,7 +302,7 @@ Item {
             value: filter.getDouble(amount2Param) * 100
             onValueChanged: filter.set(amount2Param, value / 100)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: amount2Slider.value = amount2Default * 100
         }
 
@@ -312,7 +312,7 @@ Item {
             text: qsTr('Show mask')
             onCheckedChanged: filter.set(showMaskParam, checked)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: showMaskCheckbox.checked = showMaskDefault
         }
 
@@ -322,7 +322,7 @@ Item {
             text: qsTr('Send mask to alpha channel')
             onCheckedChanged: filter.set(maskAlphaParam, checked)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: maskAlphaCheckbox.checked = maskAlphaDefault
         }
 
