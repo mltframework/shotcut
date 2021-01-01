@@ -39,7 +39,7 @@ ToolBar {
         }
         ToolButton {
             action: menuAction
-            Shotcut.HoverTip{ text: qsTr('Display a menu of additional actions') }
+            Shotcut.HoverTip { text: qsTr('Display a menu of additional actions') }
         }
         Button { // separator
             enabled: false
@@ -48,12 +48,15 @@ ToolBar {
         }
         ToolButton {
             action: cutAction
+            Shotcut.HoverTip { text: qsTr('Cut - Copy the current clip to the Source\nplayer and ripple delete it') }
         }
         ToolButton {
             action: copyAction
+            Shotcut.HoverTip { text: qsTr('Copy - Copy the current clip to the Source player (C)') }
         }
         ToolButton {
             action: insertAction
+            Shotcut.HoverTip { text: qsTr('Paste - Insert clip into the current track\nshifting following clips to the right (V)') }
         }
         Button { // separator
             enabled: false
@@ -62,18 +65,23 @@ ToolBar {
         }
         ToolButton {
             action: appendAction
+            Shotcut.HoverTip { text: qsTr('Append to the current track (A)') }
         }
         ToolButton {
             action: deleteAction
+            Shotcut.HoverTip { text: qsTr('Ripple Delete - Remove current clip\nshifting following clips to the left (X)') }
         }
         ToolButton {
             action: liftAction
+            Shotcut.HoverTip { text: qsTr('Lift - Remove current clip without\naffecting position of other clips (Z)') }
         }
         ToolButton {
             action: overwriteAction
+            Shotcut.HoverTip { text: qsTr('Overwrite clip onto the current track (B)') }
         }
         ToolButton {
             action: splitAction
+            Shotcut.HoverTip { text: qsTr('Split At Playhead (S)') }
         }
         Button { // separator
             enabled: false
@@ -119,15 +127,18 @@ ToolBar {
         }
         ToolButton {
             action: zoomOutAction
+            Shotcut.HoverTip { text: qsTr("Zoom timeline out (-)") }
         }
         ZoomSlider {
             id: scaleSlider
         }
         ToolButton {
             action: zoomInAction
+            Shotcut.HoverTip { text: qsTr("Zoom timeline in (+)") }
         }
         ToolButton {
             action: zoomFitAction
+            Shotcut.HoverTip { text: qsTr('Zoom timeline to fit (0)') }
         }
     }
 
@@ -140,7 +151,6 @@ ToolBar {
 
     Action {
         id: cutAction
-//        tooltip: qsTr('Cut - Copy the current clip to the Source\nplayer and ripple delete it')
         icon.name: 'edit-cut'
         icon.source: 'qrc:///icons/oxygen/32x32/actions/edit-cut.png'
         enabled: timeline.selection.length
@@ -149,7 +159,6 @@ ToolBar {
 
     Action {
         id: copyAction
-//        tooltip: qsTr('Copy - Copy the current clip to the Source player (C)')
         icon.name: 'edit-copy'
         icon.source: 'qrc:///icons/oxygen/32x32/actions/edit-copy.png'
         enabled: timeline.selection.length
@@ -158,7 +167,6 @@ ToolBar {
 
     Action {
         id: insertAction
-//        tooltip: qsTr('Paste - Insert clip into the current track\nshifting following clips to the right (V)')
         icon.name: 'edit-paste'
         icon.source: 'qrc:///icons/oxygen/32x32/actions/edit-paste.png'
         onTriggered: timeline.insert(currentTrack)
@@ -166,7 +174,6 @@ ToolBar {
 
     Action {
         id: appendAction
-//        tooltip: qsTr('Append to the current track (A)')
         icon.name: 'list-add'
         icon.source: 'qrc:///icons/oxygen/32x32/actions/list-add.png'
         onTriggered: timeline.append(currentTrack)
@@ -174,7 +181,6 @@ ToolBar {
 
     Action {
         id: deleteAction
-//        tooltip: qsTr('Ripple Delete - Remove current clip\nshifting following clips to the left (X)')
         icon.name: 'list-remove'
         icon.source: 'qrc:///icons/oxygen/32x32/actions/list-remove.png'
         onTriggered: timeline.removeSelection()
@@ -182,7 +188,6 @@ ToolBar {
 
     Action {
         id: liftAction
-//        tooltip: qsTr('Lift - Remove current clip without\naffecting position of other clips (Z)')
         icon.name: 'lift'
         icon.source: 'qrc:///icons/oxygen/32x32/actions/lift.png'
         onTriggered: timeline.liftSelection()
@@ -190,7 +195,6 @@ ToolBar {
 
     Action {
         id: overwriteAction
-//        tooltip: qsTr('Overwrite clip onto the current track (B)')
         icon.name: 'overwrite'
         icon.source: 'qrc:///icons/oxygen/32x32/actions/overwrite.png'
         onTriggered: timeline.overwrite(currentTrack)
@@ -198,7 +202,6 @@ ToolBar {
 
     Action {
         id: splitAction
-//        tooltip: qsTr('Split At Playhead (S)')
         icon.name: 'slice'
         icon.source: 'qrc:///icons/oxygen/32x32/actions/slice.png'
         onTriggered: timeline.splitClip(currentTrack)
@@ -206,7 +209,6 @@ ToolBar {
 
     Action {
         id: zoomOutAction
-//        tooltip: qsTr("Zoom timeline out (-)")
         icon.name: 'zoom-out'
         icon.source: 'qrc:///icons/oxygen/32x32/actions/zoom-out.png'
         onTriggered: root.zoomOut()
@@ -214,7 +216,6 @@ ToolBar {
 
     Action {
         id: zoomInAction
-//        tooltip: qsTr("Zoom timeline in (+)")
         icon.name: 'zoom-in'
         icon.source: 'qrc:///icons/oxygen/32x32/actions/zoom-in.png'
         onTriggered: root.zoomIn()
@@ -222,7 +223,6 @@ ToolBar {
 
     Action {
         id: zoomFitAction
-//        tooltip: qsTr('Zoom timeline to fit (0)')
         icon.name: 'zoom-fit-best'
         icon.source: 'qrc:///icons/oxygen/32x32/actions/zoom-fit-best.png'
         onTriggered: root.zoomToFit()
