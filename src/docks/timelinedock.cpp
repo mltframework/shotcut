@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 Meltytech, LLC
+ * Copyright (c) 2013-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,9 +35,8 @@
 #include <QtQuick>
 #include <Logger.h>
 
-static QString kNonSeekableWarning = QObject::tr("You cannot add a non-seekable source.");
-static auto kFileUrlProtocol = QStringLiteral("file://");
-static auto kFilesUrlDelimiter = QStringLiteral(",file://");
+static const char* kFileUrlProtocol = "file://";
+static const char* kFilesUrlDelimiter = ",file://";
 
 TimelineDock::TimelineDock(QWidget *parent) :
     QDockWidget(parent),
@@ -167,6 +166,11 @@ void TimelineDock::pulseLockButtonOnTrack(int trackIndex)
     emit showStatusMessage(tr("This track is locked"));
 }
 
+void TimelineDock::emitNonSeekableWarning()
+{
+    emit showStatusMessage(tr("You cannot add a non-seekable source."));
+}
+
 void TimelineDock::chooseClipAtPosition(int position, int& trackIndex, int& clipIndex)
 {
     QScopedPointer<Mlt::Producer> clip;
@@ -276,14 +280,14 @@ QVariantList TimelineDock::selectionForJS() const
     return result;
 }
 
-QList<QPoint> TimelineDock::selection() const
+const QList<QPoint> TimelineDock::selection() const
 {
     if (!m_quickView.rootObject())
         return QList<QPoint>();
     return m_selection.selectedClips;
 }
 
-QVector<QUuid> TimelineDock::selectionUuids()
+const QVector<QUuid> TimelineDock::selectionUuids()
 {
     QVector<QUuid> result;
     for (const auto& clip : selection()) {
@@ -554,7 +558,7 @@ void TimelineDock::append(int trackIndex)
             new Timeline::AppendCommand(m_model, trackIndex, MLT.XML(&producer)));
         selectClipUnderPlayhead();
     } else if (!MLT.isSeekableClip()) {
-        emit showStatusMessage(kNonSeekableWarning);
+        emitNonSeekableWarning();
     }
 }
 
@@ -636,7 +640,6 @@ void TimelineDock::liftSelection()
     if (selection().isEmpty())
         return;
     int n = selection().size();
-    QVector<QUuid> uuids;
     if (n > 1)
         MAIN.undoStack()->beginMacro(tr("Lift %1 from timeline").arg(n));
     int trackIndex, clipIndex;
@@ -857,7 +860,7 @@ void TimelineDock::onProducerModified()
 void TimelineDock::replace(int trackIndex, int clipIndex, const QString& xml)
 {
     if (xml.isEmpty() && !MLT.isClip() && !MLT.savedProducer()) {
-        showStatusMessage(tr("There is nothing in the Source player."));
+        emit showStatusMessage(tr("There is nothing in the Source player."));
         return;
     }
     if (!m_model.trackList().count() || MAIN.isSourceClipMyProject())
@@ -872,7 +875,7 @@ void TimelineDock::replace(int trackIndex, int clipIndex, const QString& xml)
         clipIndex = clipIndexAtPlayhead(trackIndex);
     Mlt::Producer producer(producerForClip(trackIndex, clipIndex));
     if (producer.is_valid() && producer.type() == tractor_type) {
-        showStatusMessage(tr("You cannot replace a transition."));
+        emit showStatusMessage(tr("You cannot replace a transition."));
         return;
     }
     if (MLT.isSeekableClip() || MLT.savedProducer() || !xml.isEmpty()) {
@@ -882,7 +885,7 @@ void TimelineDock::replace(int trackIndex, int clipIndex, const QString& xml)
         MAIN.undoStack()->push(
             new Timeline::ReplaceCommand(m_model, trackIndex, clipIndex, xmlToUse));
     } else if (!MLT.isSeekableClip()) {
-        emit showStatusMessage(kNonSeekableWarning);
+        emitNonSeekableWarning();
     }
 }
 
@@ -1097,7 +1100,8 @@ static QString convertUrlsToXML(const QString& xml)
         LongUiTask longTask(QObject::tr("Drop Files"));
         Mlt::Playlist playlist(MLT.profile());
         QList<QUrl> urls;
-        for (auto s : xml.split(kFilesUrlDelimiter)) {
+        const auto& strings = xml.split(kFilesUrlDelimiter);
+        for (const auto& s : strings) {
 #ifdef Q_OS_WIN
             if (!s.startsWith(kFileUrlProtocol)) {
                 s.prepend(kFileUrlProtocol);
@@ -1181,7 +1185,7 @@ void TimelineDock::insert(int trackIndex, int position, const QString &xml, bool
         MAIN.undoStack()->push(
             new Timeline::InsertCommand(m_model, trackIndex, position, xmlToUse, seek));
     } else if (!MLT.isSeekableClip()) {
-        emit showStatusMessage(kNonSeekableWarning);
+        emitNonSeekableWarning();
     }
 }
 
@@ -1230,7 +1234,7 @@ void TimelineDock::overwrite(int trackIndex, int position, const QString &xml, b
         MAIN.undoStack()->push(
             new Timeline::OverwriteCommand(m_model, trackIndex, position, xmlToUse, seek));
     } else if (!MLT.isSeekableClip()) {
-        emit showStatusMessage(kNonSeekableWarning);
+        emitNonSeekableWarning();
     }
 }
 
@@ -1509,7 +1513,7 @@ void TimelineDock::replaceClipsWithHash(const QString& hash, Mlt::Producer& prod
                 info->producer->set(kOriginalResourceProperty, producer.get("resource"));
                 auto caption = Util::baseName(ProxyManager::resource(*info->producer));
                 if (!::qstrcmp(info->producer->get("mlt_service"), "timewarp")) {
-                    caption = QString("%1 (%2x)").arg(caption).arg(info->producer->get("warp_speed"));
+                    caption = QString("%1 (%2x)").arg(caption, info->producer->get("warp_speed"));
                 }
                 info->producer->set(kShotcutCaptionProperty, caption.toUtf8().constData());
             } else {

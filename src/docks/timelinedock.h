@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 Meltytech, LLC
+ * Copyright (c) 2013-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -63,8 +63,8 @@ public:
     void setSelectionFromJS(const QVariantList& list);
     void setSelection(QList<QPoint> selection = QList<QPoint>(), int trackIndex = -1, bool isMultitrack = false);
     QVariantList selectionForJS() const;
-    QList<QPoint> selection() const;
-    QVector<QUuid> selectionUuids();
+    const QList<QPoint> selection() const;
+    const QVector<QUuid> selectionUuids();
     void saveAndClearSelection();
     void restoreSelection();
     void selectClipUnderPlayhead();
@@ -166,6 +166,7 @@ protected:
 private:
     bool isBlank(int trackIndex, int clipIndex);
     void pulseLockButtonOnTrack(int trackIndex);
+    void emitNonSeekableWarning();
 
     Ui::TimelineDock *ui;
     QQuickWidget m_quickView;

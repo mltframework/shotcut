@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2020 Meltytech, LLC
+ * Copyright (c) 2014-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -176,7 +176,7 @@ static inline bool isValidGoProSuffix(const QFileInfo& info)
     return list.contains(info.suffix().toUpper());
 }
 
-QStringList Util::sortedFileList(const QList<QUrl>& urls)
+const QStringList Util::sortedFileList(const QList<QUrl>& urls)
 {
     QStringList result;
     QMap<QString, QStringList> goproFiles;
@@ -375,7 +375,7 @@ void Util::applyCustomProperties(Mlt::Producer& destination, Mlt::Producer& sour
 
         resource = destination.get("_shotcut:resource");
         destination.set("warp_resource", resource.toUtf8().constData());
-        resource = QString("%1:%2:%3").arg("timewarp").arg(source.get("warp_speed")).arg(resource);
+        resource = QString("%1:%2:%3").arg("timewarp", source.get("warp_speed"), resource);
         destination.set("resource", resource.toUtf8().constData());
         double speedRatio = 1.0 / speed;
         int length = qRound(destination.get_length() * speedRatio);
@@ -486,7 +486,7 @@ bool Util::isMemoryLow()
     if (meminfo.open(QIODevice::ReadOnly)) {
         for (auto line = meminfo.readLine(1024); availableKB == UINT_MAX && !line.isEmpty(); line = meminfo.readLine(1024)) {
             if (line.startsWith("MemAvailable")) {
-                auto fields = line.split(' ');
+                const auto& fields = line.split(' ');
                 for (const auto& s : fields) {
                     bool ok = false;
                     auto kB = s.toUInt(&ok);

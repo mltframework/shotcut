@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2014-2016 Meltytech, LLC
- * Author: Brian Matherly <code@brianmatherly.com>
+ * Copyright (c) 2014-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,11 +26,10 @@ class QWidget;
 class QmlView : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QPoint pos READ pos);
 
 public:
     explicit QmlView(QWidget* qview);
-    QPoint pos();
+    Q_INVOKABLE QPoint pos();
 
 private:
     QWidget* m_qview;
