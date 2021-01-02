@@ -24,7 +24,6 @@ import Shotcut.Controls 1.0 as Shotcut
 Rectangle {
     id: filterWindow
     visible: false
-    property color checkedColor: Qt.rgba(activePalette.highlight.r, activePalette.highlight.g, activePalette.highlight.b, 0.4)
 
     signal filterSelected(int index)
 
