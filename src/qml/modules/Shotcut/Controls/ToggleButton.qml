@@ -37,4 +37,7 @@ ToolButton {
         border.color: activePalette.shadow
         border.width: parent.checked ? 0 : 1
     }
+
+    Keys.onReturnPressed: clicked()
+    Keys.onEnterPressed: clicked()
 }

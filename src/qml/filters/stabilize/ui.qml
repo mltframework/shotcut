@@ -135,7 +135,6 @@ Item {
             id: shakinessSlider
             minimumValue: 1
             maximumValue: 10
-            tickmarksEnabled: true
             stepSize: 1
             onValueChanged: {
                 filter.set('shakiness', value)
@@ -154,7 +153,6 @@ Item {
             id: accuracySlider
             minimumValue: 1
             maximumValue: 15
-            tickmarksEnabled: true
             stepSize: 1
             onValueChanged: {
                 filter.set('accuracy', value)
@@ -218,7 +216,6 @@ Item {
             id: smoothingSlider
             minimumValue: 0
             maximumValue: 100
-            tickmarksEnabled: true
             stepSize: 1
             value: filter.get('smoothing')
             onValueChanged: {

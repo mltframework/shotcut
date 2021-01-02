@@ -16,10 +16,10 @@
  */
 
 import QtQuick 2.0
-import QtQuick.Controls 1.1
+import QtQuick.Controls 2.12
+import QtQuick.Dialogs 1.1
 import QtQuick.Layouts 1.1
 import Shotcut.Controls 1.0 as Shotcut
-import QtQuick.Dialogs 1.1
 
 GridLayout {
     columns: 6
@@ -141,9 +141,8 @@ GridLayout {
         positionKeyframesButton.checked = filter.keyframeCount(rectProperty) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
     }
 
-    ExclusiveGroup { id: sizeGroup }
-    ExclusiveGroup { id: halignGroup }
-    ExclusiveGroup { id: valignGroup }
+    ButtonGroup { id: halignGroup }
+    ButtonGroup { id: valignGroup }
 
     Label {
         text: qsTr('Font')
@@ -223,9 +222,8 @@ GridLayout {
         id: outlineSpinner
         Layout.minimumWidth: 50
         Layout.columnSpan: 3
-        minimumValue: 0
-        maximumValue: 30
-        decimals: 0
+        from: 0
+        to: 30
         onValueChanged: filter.set('outline', value)
     }
 
@@ -247,9 +245,8 @@ GridLayout {
         id: padSpinner
         Layout.minimumWidth: 50
         Layout.columnSpan: 3
-        minimumValue: 0
-        maximumValue: 100
-        decimals: 0
+        from: 0
+        to: 100
         onValueChanged: filter.set('pad', value)
     }
 
@@ -341,19 +338,19 @@ GridLayout {
     RadioButton {
         id: leftRadioButton
         text: qsTr('Left')
-        exclusiveGroup: halignGroup
+        ButtonGroup.group: halignGroup
         onClicked: filter.set(halignProperty, 'left')
     }
     RadioButton {
         id: centerRadioButton
         text: qsTr('Center')
-        exclusiveGroup: halignGroup
+        ButtonGroup.group: halignGroup
         onClicked: filter.set(halignProperty, 'center')
     }
     RadioButton {
         id: rightRadioButton
         text: qsTr('Right')
-        exclusiveGroup: halignGroup
+        ButtonGroup.group: halignGroup
         onClicked: filter.set(halignProperty, 'right')
     }
     Shotcut.UndoButton {
@@ -371,19 +368,19 @@ GridLayout {
     RadioButton {
         id: topRadioButton
         text: qsTr('Top')
-        exclusiveGroup: valignGroup
+        ButtonGroup.group: valignGroup
         onClicked: filter.set(valignProperty, 'top')
     }
     RadioButton {
         id: middleRadioButton
         text: qsTr('Middle', 'Text video filter')
-        exclusiveGroup: valignGroup
+        ButtonGroup.group: valignGroup
         onClicked: filter.set(valignProperty, 'middle')
     }
     RadioButton {
         id: bottomRadioButton
         text: qsTr('Bottom')
-        exclusiveGroup: valignGroup
+        ButtonGroup.group: valignGroup
         onClicked: filter.set(valignProperty, 'bottom')
     }
     Shotcut.UndoButton {

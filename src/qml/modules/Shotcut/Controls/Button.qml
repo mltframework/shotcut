@@ -19,17 +19,18 @@ import QtQuick 2.2
 import QtQuick.Controls 2.12
 
 Button {
-    padding: text ? 4 : 2
-    horizontalPadding: text ? 10 : undefined
+    verticalPadding: text ? 4 : 2
+    horizontalPadding: text ? 10 : 2
     hoverEnabled: true
 
     SystemPalette { id: activePalette }
     palette.buttonText: activePalette.buttonText
+    palette.button: checked ? activePalette.highlight : activePalette.button
 
     ToolTip.delay: 700
     ToolTip.timeout: 5000
     ToolTip.visible: ToolTip.text ? hovered : false
-    
+
     Keys.onReturnPressed: clicked()
     Keys.onEnterPressed: clicked()
 }
