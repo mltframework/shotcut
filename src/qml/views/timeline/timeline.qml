@@ -305,8 +305,16 @@ Rectangle {
                     interactive: false
                     contentWidth: tracksContainer.width + headerWidth
                     contentHeight: trackHeaders.height + 30 // 30 is padding
-                    ScrollBar.horizontal: ScrollBar{ policy: ScrollBar.AlwaysOn; visible: parent.contentWidth > parent.width }
-                    ScrollBar.vertical: ScrollBar{ policy: ScrollBar.AlwaysOn; visible: parent.contentHeight > parent.height }
+                    ScrollBar.horizontal: ScrollBar {
+                        height: 16
+                        policy: ScrollBar.AlwaysOn
+                        visible: parent.contentWidth > parent.width
+                    }
+                    ScrollBar.vertical: ScrollBar {
+                        width: 16
+                        policy: ScrollBar.AlwaysOn
+                        visible: parent.contentHeight > parent.height
+                    }
         
                     MouseArea {
                         anchors.fill: parent

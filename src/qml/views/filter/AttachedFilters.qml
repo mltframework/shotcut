@@ -126,6 +126,11 @@ Rectangle {
     ScrollView {
         anchors.fill: parent
         clip: true
+        ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
+        ScrollBar.vertical.policy: ScrollBar.AlwaysOn
+        ScrollBar.vertical.visible: contentHeight > height
+        ScrollBar.vertical.width: 16
+
         ListView {
             id: attachedFiltersView
             

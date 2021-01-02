@@ -224,9 +224,33 @@ Rectangle {
         }
     }
 
-    ScrollView {
+    Flickable {
         id: filterConfigScrollView
         clip: true
+        interactive: false
+        anchors.bottomMargin: 16
+        anchors.rightMargin: 16
+        contentWidth: filterConfig.item.width + 16
+        contentHeight: filterConfig.item.height + 16
+        ScrollBar.horizontal: ScrollBar {
+            height: 16
+            policy: ScrollBar.AlwaysOn
+            visible: filterConfigScrollView.contentWidth > filterConfigScrollView.width
+            parent: filterConfigScrollView.parent
+            anchors.top: filterConfigScrollView.bottom
+            anchors.left: filterConfigScrollView.left
+            anchors.right: filterConfigScrollView.right
+        }
+        ScrollBar.vertical: ScrollBar {
+            width: 16
+            policy: ScrollBar.AlwaysOn
+            visible: filterConfigScrollView.contentHeight > filterConfigScrollView.height
+            parent: filterConfigScrollView.parent
+            anchors.top: filterConfigScrollView.top
+            anchors.left: filterConfigScrollView.right
+            anchors.bottom: filterConfigScrollView.bottom
+        }
+
         function expandWidth() {
             if (filterConfig.item) {
                 filterConfig.item.width =

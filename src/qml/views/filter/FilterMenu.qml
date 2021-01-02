@@ -177,6 +177,10 @@ Rectangle {
             Layout.fillWidth: true
             Layout.preferredHeight: filterWindow.height - toolBar.height - searchBar.height - parent.anchors.margins * 2
             clip: true
+            ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
+            ScrollBar.vertical.policy: ScrollBar.AlwaysOn
+            ScrollBar.vertical.visible: contentHeight > height
+            ScrollBar.vertical.width: 16
 
             ListView {
                 id: menuListView
