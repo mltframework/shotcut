@@ -17,7 +17,6 @@
 
 import QtQuick 2.2
 import QtQuick.Controls 2.12
-import QtQuick.Controls.Styles 1.1
 import Shotcut.Controls 1.0 as Shotcut
 
 ToolButton {
