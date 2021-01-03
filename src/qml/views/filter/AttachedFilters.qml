@@ -73,8 +73,12 @@ Rectangle {
                     id: filterDelegateCheck
                     anchors.verticalCenter: parent.verticalCenter
                     checkState: model.checkState
-                    onClicked: {
-                        model.checkState = !model.checkState
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            console.log('checkState = ' + model.checkState)
+                            model.checkState = !model.checkState
+                        }
                     }
                 }
                 
