@@ -347,11 +347,12 @@ Item {
             Layout.columnSpan: 3
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             Label { text: 'R' }
-            SpinBox {
+            Shotcut.DoubleSpinBox {
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                 id: liftRedSpinner
-                minimumValue: -100
-                maximumValue: 100
+                width: 115
+                from: -100
+                to: 100
                 decimals: 1
                 stepSize: 0.1
                 suffix: ' %'
@@ -366,11 +367,12 @@ Item {
             Layout.columnSpan: 3
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             Label { text: 'R' }
-            SpinBox {
+            Shotcut.DoubleSpinBox {
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                 id: gammaRedSpinner
-                minimumValue: -100
-                maximumValue: 100
+                width: 115
+                from: -100
+                to: 100
                 decimals: 1
                 stepSize: 0.1
                 suffix: ' %'
@@ -385,11 +387,12 @@ Item {
             Layout.columnSpan: 3
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             Label { text: 'R' }
-            SpinBox {
+            Shotcut.DoubleSpinBox {
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                 id: gainRedSpinner
-                minimumValue: -100
-                maximumValue: 100
+                width: 115
+                from: -100
+                to: 100
                 decimals: 1
                 stepSize: 0.1
                 suffix: ' %'
@@ -406,11 +409,12 @@ Item {
             Layout.columnSpan: 3
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             Label { text: 'G' }
-            SpinBox {
+            Shotcut.DoubleSpinBox {
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                 id: liftGreenSpinner
-                minimumValue: -100
-                maximumValue: 100
+                width: 115
+                from: -100
+                to: 100
                 decimals: 1
                 stepSize: 0.1
                 suffix: ' %'
@@ -425,11 +429,12 @@ Item {
             Layout.columnSpan: 3
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             Label { text: 'G' }
-            SpinBox {
+            Shotcut.DoubleSpinBox {
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                 id: gammaGreenSpinner
-                minimumValue: -100
-                maximumValue: 100
+                width: 115
+                from: -100
+                to: 100
                 decimals: 1
                 stepSize: 0.1
                 suffix: ' %'
@@ -444,11 +449,12 @@ Item {
             Layout.columnSpan: 3
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             Label { text: 'G' }
-            SpinBox {
+            Shotcut.DoubleSpinBox {
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                 id: gainGreenSpinner
-                minimumValue: -100
-                maximumValue: 100
+                width: 115
+                from: -100
+                to: 100
                 decimals: 1
                 stepSize: 0.1
                 suffix: ' %'
@@ -465,11 +471,12 @@ Item {
             Layout.columnSpan: 3
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             Label { text: 'B' }
-            SpinBox {
+            Shotcut.DoubleSpinBox {
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                 id: liftBlueSpinner
-                minimumValue: -100
-                maximumValue: 100
+                width: 115
+                from: -100
+                to: 100
                 decimals: 1
                 stepSize: 0.1
                 suffix: ' %'
@@ -484,11 +491,12 @@ Item {
             Layout.columnSpan: 3
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             Label { text: 'B' }
-            SpinBox {
+            Shotcut.DoubleSpinBox {
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                 id: gammaBlueSpinner
-                minimumValue: -100
-                maximumValue: 100
+                width: 115
+                from: -100
+                to: 100
                 decimals: 1
                 stepSize: 0.1
                 suffix: ' %'
@@ -503,11 +511,12 @@ Item {
             Layout.columnSpan: 3
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             Label { text: 'B' }
-            SpinBox {
+            Shotcut.DoubleSpinBox {
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                 id: gainBlueSpinner
-                minimumValue: -100
-                maximumValue: 100
+                width: 115
+                from: -100
+                to: 100
                 decimals: 1
                 stepSize: 0.1
                 suffix: ' %'

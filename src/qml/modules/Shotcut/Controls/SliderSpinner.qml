@@ -18,6 +18,7 @@
 import QtQuick 2.1
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.1
+import Shotcut.Controls 1.0 as Shotcut
 
 RowLayout {
     spacing: -3
@@ -29,8 +30,8 @@ RowLayout {
     property int decimals: 0
     property alias stepSize: spinner.stepSize
     property alias spinnerWidth: spinner.width
-    property var suffix: ""
-    property var prefix: ""
+    property alias suffix: spinner.suffix
+    property alias prefix: spinner.prefix
 
     SystemPalette { id: activePalette }
 
@@ -110,24 +111,21 @@ RowLayout {
         visible: label.visible
     }
 
-    SpinBox {
+    Shotcut.DoubleSpinBox {
         id: spinner
         verticalPadding: 2
-        Layout.minimumWidth: 90
+        Layout.minimumWidth: background.implicitWidth
         from: slider.from / ratio
         to: slider.to / ratio
         stepSize: 1 / Math.pow(10, decimals)
         onValueChanged: slider.value = value * ratio
-
-        textFromValue: function(value, locale) {
-            return "%1 %2 %3".arg(prefix).arg(Number(value).toLocaleString(locale, 'f', decimals)).arg(suffix)
-        }
 
         background: Rectangle {
             color: activePalette.base
             border.color: 'gray'
             border.width: 1
             implicitHeight: 18
+            implicitWidth: 115
             radius: 3
 
             // Hide the left border.
