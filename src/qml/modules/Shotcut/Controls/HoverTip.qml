@@ -18,9 +18,17 @@
 import QtQuick 2.2
 import QtQuick.Controls 2.12
 
-ToolTip {
-    visible: parent.hovered
-    delay: 1000
-    timeout: 5000
-    Component.onCompleted: parent.hoverEnabled = true
+MouseArea {
+    anchors.fill: parent
+    property alias text: tip.text
+    propagateComposedEvents: true
+    acceptedButtons: Qt.NoButton
+
+    ToolTip {
+        id: tip
+        visible: text ? parent.containsMouse : false
+        delay: 1000
+        timeout: 5000
+        Component.onCompleted: parent.hoverEnabled = true
+    }
 }
