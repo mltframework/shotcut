@@ -1,8 +1,8 @@
 
-import QtQuick 2.1
+import QtQuick 2.12
 import QtQuick.Controls 2.12
-import QtQuick.Layouts 1.0
-import QtQuick.Dialogs 1.1
+import QtQuick.Layouts 1.12
+import QtQuick.Dialogs 1.3
 import Shotcut.Controls 1.0 as Shotcut
 
 Item {
@@ -240,7 +240,7 @@ Item {
         Shotcut.Button {
             icon.name: 'document-open'
             icon.source: 'qrc:///icons/oxygen/32x32/actions/document-open.png'
-            ToolTip.text: qsTr('Browse...')
+            Shotcut.ToolTip { text: qsTr('Browse...') }
             implicitWidth: 20
             implicitHeight: 20
             onClicked: selectAnalysisFile.open()
