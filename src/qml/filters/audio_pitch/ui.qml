@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Meltytech, LLC
+ * Copyright (c) 2020-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,9 +15,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.1
-import QtQuick.Controls 1.1
-import QtQuick.Layouts 1.0
+import QtQuick 2.12
+import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.12
 import Shotcut.Controls 1.0 as Shotcut
 
 Item {
@@ -139,7 +139,7 @@ Item {
         Label {
             text: qsTr('Octave Shift')
             Layout.alignment: Qt.AlignRight
-            Shotcut.ToolTip { text: qsTr('Specify the pitch shift in octaves. -1 shifts down an octave. +1 shifts up an octave. 0 is unchanged.') }
+            Shotcut.HoverTip { text: qsTr('Specify the pitch shift in octaves.\n-1 shifts down an octave.\n+1 shifts up an octave.\n0 is unchanged.') }
         }
         Shotcut.SliderSpinner {
             id: octaveSlider
@@ -177,7 +177,7 @@ Item {
         Label {
             text: qsTr('Speed Compensation')
             Layout.alignment: Qt.AlignRight
-            Shotcut.ToolTip { text: qsTr('Specify the speed change that should be compensated for. 2x will halve the pitch to compensate for the speed being doubled.') }
+            Shotcut.HoverTip { text: qsTr('Specify the speed change that should be compensated for.\n2x will halve the pitch to compensate for the speed being doubled.') }
         }
         Shotcut.SliderSpinner {
             property bool noUpdate: false
