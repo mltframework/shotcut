@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2018 Meltytech, LLC
+ * Copyright (c) 2013-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -43,6 +43,13 @@ public:
     QString producerTitle() const;
     bool isProducerSelected() const;
     Mlt::Producer* producer() const { return m_producer.data(); }
+    QString name(int row) const;
+    int addFilter(QmlMetadata* meta, Mlt::Producer& producer, int mltIndex);
+    void addFilter(Mlt::Producer& producer, Mlt::Filter& filter, int mltIndex);
+    Mlt::Filter removeFilter(Mlt::Producer& producer, int mltIndex);
+    bool moveFilter(Mlt::Producer& producer, int mltSrcIndex, int mltDstIndex);
+    bool isDisabled(Mlt::Producer& producer, int mltIndex);
+    void toggleDisable(Mlt::Producer& producer, int mltIndex);
 
     // QAbstractListModel Implementation
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
