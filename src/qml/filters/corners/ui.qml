@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2020 Meltytech, LLC
+ * Copyright (c) 2019-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,10 +15,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.0
-import QtQuick.Controls 1.1
-import QtQuick.Controls 2.12 as Controls2
-import QtQuick.Layouts 1.1
+import QtQuick 2.12
+import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.12
 import Shotcut.Controls 1.0 as Shotcut
 
 Shotcut.KeyframableFilter {
@@ -584,7 +583,7 @@ Shotcut.KeyframableFilter {
             text: qsTr('Interpolator')
             Layout.alignment: Qt.AlignRight
         }
-        Controls2.ComboBox {
+        ComboBox {
             id: interpolatorCombo
             implicitWidth: 180
             model: [qsTr('Nearest Neighbor'), qsTr('Bilinear'), qsTr('Bicubic Smooth'), qsTr('Bicubic Sharp'), qsTr('Spline 4x4'), qsTr('Spline 6x6'), 'Lanczos']
@@ -603,7 +602,7 @@ Shotcut.KeyframableFilter {
             text: qsTr('Alpha Operation')
             Layout.alignment: Qt.AlignRight
         }
-        Controls2.ComboBox {
+        ComboBox {
             id: alphaoperationCombo
             implicitWidth: 180
             model: [qsTr('Opaque'), qsTr('Overwrite'), qsTr('Maximum'), qsTr('Minimum'), qsTr('Add'), qsTr('Subtract')]

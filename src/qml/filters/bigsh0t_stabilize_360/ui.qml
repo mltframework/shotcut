@@ -240,7 +240,7 @@ Item {
         Shotcut.Button {
             icon.name: 'document-open'
             icon.source: 'qrc:///icons/oxygen/32x32/actions/document-open.png'
-            Shotcut.ToolTip { text: qsTr('Browse...') }
+            Shotcut.HoverTip { text: qsTr('Browse...') }
             implicitWidth: 20
             implicitHeight: 20
             onClicked: selectAnalysisFile.open()
