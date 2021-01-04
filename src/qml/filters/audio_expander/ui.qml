@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2019 Meltytech, LLC
+ * Copyright (c) 2015-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,9 +15,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.1
-import QtQuick.Controls 1.0
-import QtQuick.Layouts 1.0
+import QtQuick 2.12
+import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.12
 import Shotcut.Controls 1.0 as Shotcut
 
 Item {
@@ -67,7 +67,7 @@ Item {
         Label {
             text: qsTr('RMS')
             Layout.alignment: Qt.AlignRight
-            Shotcut.ToolTip {text: qsTr('The balance between the RMS and peak envelope followers. RMS is generally better for subtle, musical compression and peak is better for heavier, fast compression and percussion.')}
+            Shotcut.HoverTip {text: qsTr('The balance between the RMS and peak envelope followers.\nRMS is generally better for subtle, musical compression.\nPeak is better for heavier, fast compression and percussion.')}
         }
         Shotcut.SliderSpinner {
             id: sliderPeak
@@ -124,7 +124,7 @@ Item {
         Label {
             text: qsTr('Threshold')
             Layout.alignment: Qt.AlignRight
-            Shotcut.ToolTip {text: qsTr('The point at which the compressor will start to kick in.')}
+            Shotcut.HoverTip {text: qsTr('The point at which the compressor will start to kick in.')}
         }
         Shotcut.SliderSpinner {
             id: sliderThreshold
@@ -144,7 +144,7 @@ Item {
         Label {
             text: qsTr('Ratio')
             Layout.alignment: Qt.AlignRight
-            Shotcut.ToolTip {text: qsTr('The gain reduction ratio used when the signal level exceeds the threshold.')}
+            Shotcut.HoverTip {text: qsTr('The gain reduction ratio used when the signal level exceeds the threshold.')}
         }
         Shotcut.SliderSpinner {
             id: sliderRatio
@@ -163,7 +163,7 @@ Item {
         Label {
             text: qsTr('Knee radius')
             Layout.alignment: Qt.AlignRight
-            Shotcut.ToolTip {text: qsTr('The distance from the threshold where the knee curve starts.')}
+            Shotcut.HoverTip {text: qsTr('The distance from the threshold where the knee curve starts.')}
         }
         Shotcut.SliderSpinner {
             id: sliderRadius
@@ -183,7 +183,7 @@ Item {
         Label {
             text: qsTr('Attenuation')
             Layout.alignment: Qt.AlignRight
-            Shotcut.ToolTip {text: qsTr('The gain of the output signal. Used to correct for excessive amplitude caused by the extra dynamic range.')}
+            Shotcut.HoverTip {text: qsTr('The gain of the output signal.\nUsed to correct for excessive amplitude caused by the extra dynamic range.')}
         }
         Shotcut.SliderSpinner {
             id: sliderGain
