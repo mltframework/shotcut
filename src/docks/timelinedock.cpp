@@ -1155,7 +1155,7 @@ void TimelineDock::insert(int trackIndex, int position, const QString &xml, bool
         pulseLockButtonOnTrack(trackIndex);
         return;
     }
-    if (MAIN.isSourceClipMyProject()) return;
+    if (xml.contains(MAIN.fileName()) && MAIN.isSourceClipMyProject()) return;
 
     // Handle drop from file manager to empty project.
     if ((!MLT.producer() || !MLT.producer()->is_valid()) && xml.startsWith(kFileUrlProtocol)) {
@@ -1204,7 +1204,7 @@ void TimelineDock::overwrite(int trackIndex, int position, const QString &xml, b
         pulseLockButtonOnTrack(trackIndex);
         return;
     }
-    if (MAIN.isSourceClipMyProject()) return;
+    if (xml.contains(MAIN.fileName()) && MAIN.isSourceClipMyProject()) return;
 
     // Handle drop from file manager to empty project.
     if ((!MLT.producer() || !MLT.producer()->is_valid()) && xml.startsWith(kFileUrlProtocol)) {
