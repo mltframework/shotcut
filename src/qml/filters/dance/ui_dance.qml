@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Meltytech, LLC
+ * Copyright (c) 2019-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,9 +15,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.0
-import QtQuick.Controls 1.1
-import QtQuick.Layouts 1.1
+import QtQuick 2.12
+import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.12
 import Shotcut.Controls 1.0 as Shotcut
 
 Item {
@@ -83,7 +83,7 @@ Item {
         Label {
             text: qsTr('Initial Zoom')
             Layout.alignment: Qt.AlignRight
-            Shotcut.ToolTip { text: qsTr('The amount to zoom the image before any motion occurs.') }
+            Shotcut.HoverTip { text: qsTr('The amount to zoom the image before any motion occurs.') }
         }
         Shotcut.SliderSpinner {
             Layout.columnSpan: 3
@@ -101,7 +101,7 @@ Item {
         Label {
             text: qsTr('Oscillation')
             Layout.alignment: Qt.AlignRight
-            Shotcut.ToolTip { text: qsTr('Oscillation can be useful to make the image move back and forth during long periods of sound.') }
+            Shotcut.HoverTip { text: qsTr('Oscillation can be useful to make the image move back and forth during long periods of sound.') }
         }
         Shotcut.SliderSpinner {
             Layout.columnSpan: 3
@@ -119,7 +119,7 @@ Item {
         Label {
             text: qsTr('Zoom')
             Layout.alignment: Qt.AlignRight
-            Shotcut.ToolTip { text: qsTr('The amount that the audio affects the zoom of the image.') }
+            Shotcut.HoverTip { text: qsTr('The amount that the audio affects the zoom of the image.') }
         }
         Shotcut.SliderSpinner {
             Layout.columnSpan: 3
@@ -137,7 +137,7 @@ Item {
         Label {
             text: qsTr('Up')
             Layout.alignment: Qt.AlignRight
-            Shotcut.ToolTip { text: qsTr('The amount that the audio affects the upward offset of the image.') }
+            Shotcut.HoverTip { text: qsTr('The amount that the audio affects the upward offset of the image.') }
         }
         Shotcut.SliderSpinner {
             Layout.columnSpan: 3
@@ -155,7 +155,7 @@ Item {
         Label {
             text: qsTr('Down')
             Layout.alignment: Qt.AlignRight
-            Shotcut.ToolTip { text: qsTr('The amount that the audio affects the downward offset of the image.') }
+            Shotcut.HoverTip { text: qsTr('The amount that the audio affects the downward offset of the image.') }
         }
         Shotcut.SliderSpinner {
             Layout.columnSpan: 3
@@ -173,7 +173,7 @@ Item {
         Label {
             text: qsTr('Left')
             Layout.alignment: Qt.AlignRight
-            Shotcut.ToolTip { text: qsTr('The amount that the audio affects the left offset of the image.') }
+            Shotcut.HoverTip { text: qsTr('The amount that the audio affects the left offset of the image.') }
         }
         Shotcut.SliderSpinner {
             Layout.columnSpan: 3
@@ -191,7 +191,7 @@ Item {
         Label {
             text: qsTr('Right')
             Layout.alignment: Qt.AlignRight
-            Shotcut.ToolTip { text: qsTr('The amount that the audio affects the right offset of the image.') }
+            Shotcut.HoverTip { text: qsTr('The amount that the audio affects the right offset of the image.') }
         }
         Shotcut.SliderSpinner {
             Layout.columnSpan: 3
@@ -209,7 +209,7 @@ Item {
         Label {
             text: qsTr('Clockwise')
             Layout.alignment: Qt.AlignRight
-            Shotcut.ToolTip { text: qsTr('The amount that the audio affects the clockwise rotation of the image.') }
+            Shotcut.HoverTip { text: qsTr('The amount that the audio affects the clockwise rotation of the image.') }
         }
         Shotcut.SliderSpinner {
             Layout.columnSpan: 3
@@ -227,7 +227,7 @@ Item {
         Label {
             text: qsTr('Counterclockwise')
             Layout.alignment: Qt.AlignRight
-            Shotcut.ToolTip { text: qsTr('The amount that the audio affects the counterclockwise rotation of the image.') }
+            Shotcut.HoverTip { text: qsTr('The amount that the audio affects the counterclockwise rotation of the image.') }
         }
         Shotcut.SliderSpinner {
             Layout.columnSpan: 3
@@ -245,7 +245,7 @@ Item {
         Label {
             text: qsTr('Low Frequency')
             Layout.alignment: Qt.AlignRight
-            Shotcut.ToolTip { text: qsTr('The low end of the frequency range to be used to influence the image motion.') }
+            Shotcut.HoverTip { text: qsTr('The low end of the frequency range to be used to influence the image motion.') }
         }
         Shotcut.SliderSpinner {
             Layout.columnSpan: 3
@@ -268,7 +268,7 @@ Item {
         Label {
             text: qsTr('High Frequency')
             Layout.alignment: Qt.AlignRight
-            Shotcut.ToolTip { text: qsTr('The high end of the frequency range to be used to influence the image motion.') }
+            Shotcut.HoverTip { text: qsTr('The high end of the frequency range to be used to influence the image motion.') }
         }
         Shotcut.SliderSpinner {
             Layout.columnSpan: 3
@@ -291,7 +291,7 @@ Item {
         Label {
             text: qsTr('Threshold')
             Layout.alignment: Qt.AlignRight
-            Shotcut.ToolTip { text: qsTr('The minimum amplitude of sound that must occur within the frequency range to cause the image to move.') }
+            Shotcut.HoverTip { text: qsTr('The minimum amplitude of sound that must occur within the frequency range to cause the image to move.') }
         }
         Shotcut.SliderSpinner {
             Layout.columnSpan: 3

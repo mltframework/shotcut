@@ -230,7 +230,6 @@ Item {
             }
         }
 
-
         Label {
             text: qsTr('Offset')
             Layout.alignment: Qt.AlignRight
