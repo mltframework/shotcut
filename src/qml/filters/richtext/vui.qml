@@ -156,7 +156,8 @@ Shotcut.VuiBase {
                 y: filterRect.y * scale
                 width: filterRect.width * rectangle.widthScale / scale
                 padding: 0
-                ScrollBar.vertical.width: 24
+                ScrollBar.vertical.width: 16 / scale
+                ScrollBar.vertical.x: width - ScrollBar.vertical.width - rectangle.handleSize
 
                 TextArea {
                     id: textArea
@@ -221,11 +222,9 @@ Shotcut.VuiBase {
                 property real maxWidth: 500
                 x: Math.min((parent.width + parent.x - width), Math.max((-parent.x * scale), scrollView.x + rectangle.handleSize))
                 y: Math.min((parent.height + parent.y - height), Math.max((-parent.y * scale), (scrollView.mapToItem(vui, 0, 0).y > height)? (scrollView.y - height*scale) : (scrollView.y + rectangle.handleSize)))
-                width: expanded? (smallIcons? 420 : maxWidth) : (hiddenButton.width + (smallIcons? 0 : 8))
                 Behavior on width {
                     NumberAnimation{ duration: 100 }
                 }
-                height: expanded? (smallIcons? (hiddenButton.height - 4) : hiddenButton.height) : (smallIcons? hiddenButton.height - 8 : hiddenButton.height)
                 anchors.margins: 0
                 opacity: 0.7
                 transformOrigin: Item.TopLeft
@@ -251,40 +250,25 @@ Shotcut.VuiBase {
                         }
                     }
                     ToolButton {
-                        Shotcut.HoverTip { text: qsTr('Bold') }
+                        action: boldAction
                         implicitWidth: smallIcons? smallIconSize : hiddenButton.implicitWidth
                         implicitHeight: implicitWidth
                         visible: toolbar.expanded
-                        action: Action {
-                            checkable: true
-                            icon.name: 'format-text-bold'
-                            icon.source: 'qrc:///icons/oxygen/32x32/actions/format-text-bold.png'
-                            onTriggered: document.bold = !document.bold
-                        }
+                        Shotcut.HoverTip { text: parent.action.text }
                     }
                     ToolButton {
-                        Shotcut.HoverTip { text: qsTr('Italic') }
+                        action: italicAction
                         implicitWidth: smallIcons? smallIconSize : hiddenButton.implicitWidth
                         implicitHeight: implicitWidth
                         visible: toolbar.expanded
-                        action: Action {
-                            checkable: true
-                            icon.name: 'format-text-italic'
-                            icon.source: 'qrc:///icons/oxygen/32x32/actions/format-text-italic.png'
-                            onTriggered: document.italic = !document.italic
-                        }
+                        Shotcut.HoverTip { text: parent.action.text }
                     }
                     ToolButton {
-                        Shotcut.HoverTip { text: qsTr('Underline') }
+                        action: underlineAction
                         implicitWidth: smallIcons? smallIconSize : hiddenButton.implicitWidth
                         implicitHeight: implicitWidth
                         visible: toolbar.expanded
-                        action: Action {
-                            checkable: true
-                            icon.name: 'format-text-underline'
-                            icon.source: 'qrc:///icons/oxygen/32x32/actions/format-text-underline.png'
-                            onTriggered: document.underline = !document.underline
-                        }
+                        Shotcut.HoverTip { text: parent.action.text }
                     }
                     Button { // separator
                         enabled: false
