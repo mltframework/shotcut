@@ -1,7 +1,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2016 The Qt Company Ltd.
-** Copyright (c) 2020 Meltytech, LLC
+** Copyright (c) 2020-2021 Meltytech, LLC
 **
 ** Redistribution and use in source and binary forms, with or without
 ** modification, are permitted provided that the following conditions are
@@ -40,6 +40,7 @@
 #include <QtCore/QFileInfo>
 #include <QGuiApplication>
 #include <QClipboard>
+#include <QStringBuilder>
 
 QmlRichText::QmlRichText()
     : m_target(0)
@@ -77,8 +78,23 @@ void QmlRichText::setFileUrl(const QUrl &arg)
             QFile file(fileName);
             if (file.open(QFile::ReadOnly)) {
                 QByteArray data = file.readAll();
-                QTextCodec *codec = QTextCodec::codecForHtml(data);
-                setText(codec->toUnicode(data));
+                if (Qt::mightBeRichText(data)) {
+                    QTextCodec *codec = QTextCodec::codecForHtml(data);
+                    setText(codec->toUnicode(data));
+                } else {
+                    QTextCodec *codec = QTextCodec::codecForUtfText(data);
+                    setText(QStringLiteral("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">"
+                            "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">"
+                            "p, li { white-space: pre-wrap; }"
+                       #ifdef Q_OS_WIN
+                            "body { font-family:Verdana; font-size:72pt; font-weight:600; font-style:normal; color:#ffffff; }"
+                       #else
+                            "body { font-family:sans-serif; font-size:72pt; font-weight:600; font-style:normal; color:#ffffff; }"
+                       #endif
+                            "</style></head><body>")
+                            % codec->toUnicode(data)
+                            % QStringLiteral("</body></html>"));
+                }
                 if (m_doc)
                     m_doc->setModified(false);
                 if (fileName.isEmpty())
