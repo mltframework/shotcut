@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2020 Meltytech, LLC
+ * Copyright (c) 2018-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,11 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.1
-import QtQuick.Controls 1.1
-import QtQuick.Controls 2.12 as Controls2
-import QtQuick.Layouts 1.0
-import QtQuick.Dialogs 1.1
+import QtQuick 2.12
+import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.12
+import QtQuick.Dialogs 1.2
 import Shotcut.Controls 1.0 as Shotcut
 import org.shotcut.qml 1.0 as Shotcut
 
@@ -212,14 +211,14 @@ Item {
             text: qsTr('File')
             Layout.alignment: Qt.AlignRight
         }
-        Controls2.ComboBox {
+        ComboBox {
             id: resourceCombo
             implicitWidth: 250
             model: [qsTr('Bar Horizontal'), qsTr('Custom...'), qsTr('Bar Vertical'), qsTr('Barn Door Horizontal'), qsTr('Barn Door Vertical'), qsTr('Barn Door Diagonal SW-NE'), qsTr('Barn Door Diagonal NW-SE'), qsTr('Diagonal Top Left'), qsTr('Diagonal Top Right'), qsTr('Matrix Waterfall Horizontal'), qsTr('Matrix Waterfall Vertical'), qsTr('Matrix Snake Horizontal'), qsTr('Matrix Snake Parallel Horizontal'), qsTr('Matrix Snake Vertical'), qsTr('Matrix Snake Parallel Vertical'), qsTr('Barn V Up'), qsTr('Iris Circle'), qsTr('Double Iris'), qsTr('Iris Box'), qsTr('Box Bottom Right'), qsTr('Box Bottom Left'), qsTr('Box Right Center'), qsTr('Clock Top')]
             currentIndex: 0
-            Shotcut.ToolTip {
+            Shotcut.HoverTip {
                 text: qsTr('Set a mask from another file\'s brightness or alpha.')
-                isVisible: !resourceCombo.pressed
+                visible: !resourceCombo.pressed
             }
             onActivated: {
                 // toggling focus works around a weird bug involving sticky
@@ -257,7 +256,7 @@ Item {
         Label {
             id: fileLabel
             Layout.columnSpan: 3
-            Shotcut.ToolTip { id: fileLabelTip }
+            Shotcut.HoverTip { id: fileLabelTip }
         }
 
         Item { width: 1 }
@@ -290,17 +289,17 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
         RowLayout {
-            ExclusiveGroup { id: channelGroup }
+            ButtonGroup { id: channelGroup }
             RadioButton {
                 id: brightnessRadioButton
                 text: qsTr('Brightness')
-                exclusiveGroup: channelGroup
+                ButtonGroup.group: channelGroup
                 onClicked: filter.set('filter.use_luminance', 1)
             }
             RadioButton {
                 id: alphaRadioButton
                 text: qsTr('Alpha')
-                exclusiveGroup: channelGroup
+                ButtonGroup.group: channelGroup
                 onClicked: filter.set('filter.use_luminance', 0)
             }
         }

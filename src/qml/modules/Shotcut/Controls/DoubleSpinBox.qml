@@ -32,11 +32,13 @@ Item {
     property alias down: spinbox.down
     property alias verticalPadding: spinbox.verticalPadding
     property alias horizontalPadding: spinbox.horizontalPadding
+    property alias horizontalAlignment: textInput.horizontalAlignment
     property real _factor: Math.pow(10, decimals)
     property bool _blockSpinUpdate: false
     property bool _blockTextUpdate: false
 
     implicitHeight: spinbox.implicitHeight
+    implicitWidth: spinbox.implicitWidth // prefixText.implicitWidth + textInput.implicitWidth + suffixText.implicitWidth + 2
 
     Component.onCompleted: {
         updateValues()

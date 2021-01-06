@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Meltytech, LLC
+ * Copyright (c) 2020-21 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,9 +15,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.7
-import QtQuick.Controls 1.4
-import QtQuick.Layouts 1.2
+import QtQuick 2.12
+import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.12
 import Shotcut.Controls 1.0 as Shotcut
 
 Item {
@@ -223,10 +223,6 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
         }
     }
 
-    ExclusiveGroup { id: sizeGroup }
-    ExclusiveGroup { id: halignGroup }
-    ExclusiveGroup { id: valignGroup }
-
     GridLayout {
         columns: 6
         anchors.fill: parent
@@ -265,21 +261,15 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
         }
         RowLayout {
             Layout.columnSpan: 3
-            SpinBox {
+            Shotcut.DoubleSpinBox {
                 id: rectX
                 horizontalAlignment: Qt.AlignRight
                 Layout.minimumWidth: 100
                 decimals: 0
                 stepSize: 1
-                minimumValue: -999999999
-                maximumValue: 999999999
+                from: -999999999
+                to: 999999999
                 onValueChanged: {
-                    if (hovered && Math.abs(filterRect.x - value) > 1) {
-                        filterRect.x = value
-                        updateFilter(getPosition())
-                    }
-                }
-                onEditingFinished: {
                     if (Math.abs(filterRect.x - value) > 1) {
                         filterRect.x = value
                         updateFilter(getPosition())
@@ -287,21 +277,15 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
                 }
             }
             Label { text: ',' }
-            SpinBox {
+            Shotcut.DoubleSpinBox {
                 id: rectY
                 horizontalAlignment: Qt.AlignRight
                 Layout.minimumWidth: 100
                 decimals: 0
                 stepSize: 1
-                minimumValue: -999999999
-                maximumValue: 999999999
+                from: -999999999
+                to: 999999999
                 onValueChanged: {
-                    if (hovered && Math.abs(filterRect.y - value) > 1) {
-                        filterRect.y = value
-                        updateFilter(getPosition())
-                    }
-                }
-                onEditingFinished: {
                     if (Math.abs(filterRect.y - value) > 1) {
                         filterRect.y = value
                         updateFilter(getPosition())
@@ -338,21 +322,15 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
         }
         RowLayout {
             Layout.columnSpan: 3
-            SpinBox {
+            Shotcut.DoubleSpinBox {
                 id: rectW
                 horizontalAlignment: Qt.AlignRight
                 Layout.minimumWidth: 100
                 decimals: 0
                 stepSize: 1
-                minimumValue: -999999999
-                maximumValue: 999999999
+                from: -999999999
+                to: 999999999
                 onValueChanged: {
-                    if (hovered && Math.abs(filterRect.width - value) > 1) {
-                        filterRect.width = value
-                        updateFilter(getPosition())
-                    }
-                }
-                onEditingFinished: {
                     if (Math.abs(filterRect.width - value) > 1) {
                         filterRect.width = value
                         updateFilter(getPosition())
@@ -360,21 +338,15 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
                 }
             }
             Label { text: 'x' }
-            SpinBox {
+            Shotcut.DoubleSpinBox {
                 id: rectH
                 horizontalAlignment: Qt.AlignRight
                 Layout.minimumWidth: 100
                 decimals: 0
                 stepSize: 1
-                minimumValue: -999999999
-                maximumValue: 999999999
+                from: -999999999
+                to: 999999999
                 onValueChanged: {
-                    if (hovered && Math.abs(filterRect.height - value) > 1) {
-                        filterRect.height = value
-                        updateFilter(getPosition())
-                    }
-                }
-                onEditingFinished: {
                     if (Math.abs(filterRect.height - value) > 1) {
                         filterRect.height = value
                         updateFilter(getPosition())
@@ -434,11 +406,11 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
         }
         RowLayout {
             Layout.columnSpan: 3
-            ExclusiveGroup { id: overflowGroup }
+            ButtonGroup { id: overflowGroup }
             RadioButton {
                 id: automaticOverflowRadioButton
                 text: qsTr('Automatic')
-                exclusiveGroup: overflowGroup
+                ButtonGroup.group: overflowGroup
                 onClicked: {
                     filter.set('overflow-y', '')
                     filter.resetProperty('overflow-y')
@@ -447,13 +419,13 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
             RadioButton {
                 id: visibleOverflowRadioButton
                 text: qsTr('Visible')
-                exclusiveGroup: overflowGroup
+                ButtonGroup.group: overflowGroup
                 onClicked: filter.set('overflow-y', 1)
             }
             RadioButton {
                 id: hiddenOverflowRadioButton
                 text: qsTr('Hidden')
-                exclusiveGroup: overflowGroup
+                ButtonGroup.group: overflowGroup
                 onClicked: filter.set('overflow-y', 0)
             }
         }
