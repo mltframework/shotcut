@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2020 Meltytech, LLC
+ * Copyright (c) 2019-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,9 +15,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.0
-import QtQuick.Controls 1.1
-import QtQuick.Layouts 1.1
+import QtQuick 2.12
+import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.12
 import Shotcut.Controls 1.0 as Shotcut
 
 Shotcut.KeyframableFilter {
@@ -101,7 +101,7 @@ Shotcut.KeyframableFilter {
         Label {
             text: qsTr('Center')
             Layout.alignment: Qt.AlignRight
-            Shotcut.ToolTip { text: qsTr('Horizontal center position of the linear area.') }
+            Shotcut.HoverTip { text: qsTr('Horizontal center position of the linear area.') }
         }
         Shotcut.SliderSpinner {
             id: centerSlider
@@ -127,7 +127,7 @@ Shotcut.KeyframableFilter {
         Label {
             text: qsTr('Linear width')
             Layout.alignment: Qt.AlignRight
-            Shotcut.ToolTip { text: qsTr('Width of the linear area.') }
+            Shotcut.HoverTip { text: qsTr('Width of the linear area.') }
         }
         Shotcut.SliderSpinner {
             id: linearwidthSlider
@@ -150,10 +150,10 @@ Shotcut.KeyframableFilter {
             }
         }
 
-Label {
+        Label {
             text: qsTr('Linear scale factor')
             Layout.alignment: Qt.AlignRight
-            Shotcut.ToolTip { text: qsTr('Amount the linear area is scaled.') }
+            Shotcut.HoverTip { text: qsTr('Amount the linear area is scaled.') }
         }
         Shotcut.SliderSpinner {
             id: linearscalefactorSlider
@@ -179,7 +179,7 @@ Label {
         Label {
             text: qsTr('Non-Linear scale factor')
             Layout.alignment: Qt.AlignRight
-            Shotcut.ToolTip { text: qsTr('Amount the outer left and outer right areas are scaled non linearly.') }
+            Shotcut.HoverTip { text: qsTr('Amount the outer left and outer right areas are scaled non linearly.') }
         }
         Shotcut.SliderSpinner {
             id: nonlinearscalefactorSlider

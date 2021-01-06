@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2020 Meltytech, LLC
+ * Copyright (c) 2019-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,10 +15,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.0
-import QtQuick.Controls 1.1
-import QtQuick.Controls 2.12 as Controls2
-import QtQuick.Layouts 1.1
+import QtQuick 2.12
+import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.12
 import Shotcut.Controls 1.0 as Shotcut
 
 Item {
@@ -190,7 +189,7 @@ Item {
         rectH.enabled = enabled
     }
 
-    ExclusiveGroup { id: patternGroup }
+    ButtonGroup { id: patternGroup }
 
     GridLayout {
         columns: 3
@@ -229,7 +228,7 @@ Item {
             RadioButton {
                 id: linearRadioButton
                 text: qsTr('Linear')
-                exclusiveGroup: patternGroup
+                ButtonGroup.group: patternGroup
                 onClicked: {
                     filter.set(patternProperty, 'gradient_linear')
                     setFilter(null)
@@ -238,7 +237,7 @@ Item {
             RadioButton {
                 id: radialRadioButton
                 text: qsTr('Radial')
-                exclusiveGroup: patternGroup
+                ButtonGroup.group: patternGroup
                 onClicked: {
                     filter.set(patternProperty, 'gradient_radial')
                     setFilter(null)
@@ -369,7 +368,7 @@ Item {
         }
 
         Label { text: qsTr('Blend mode') }
-        Controls2.ComboBox {
+        ComboBox {
             id: blendCombo
             model: ListModel {
                 id: comboItems

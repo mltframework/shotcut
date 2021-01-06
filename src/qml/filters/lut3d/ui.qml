@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2020 Meltytech, LLC
+ * Copyright (c) 2016-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,11 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.1
-import QtQuick.Dialogs 1.1
-import QtQuick.Controls 1.1
-import QtQuick.Controls 2.12 as Controls2
-import QtQuick.Layouts 1.0
+import QtQuick 2.12
+import QtQuick.Dialogs 1.2
+import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.12
 import QtQuick.Window 2.1
 import Shotcut.Controls 1.0 as Shotcut
 import org.shotcut.qml 1.0 as Shotcut
@@ -95,14 +94,14 @@ Item {
             id: fileLabel
             Layout.columnSpan: 2
             Layout.fillWidth: true
-            Shotcut.ToolTip { id: fileLabelTip }
+            Shotcut.HoverTip { id: fileLabelTip }
         }
 
         Label {
             text: qsTr('Interpolation')
             Layout.alignment: Qt.AlignRight
         }
-        Controls2.ComboBox {
+        ComboBox {
             id: interpolationCombo
             implicitWidth: 180
             model: [qsTr('Nearest'), qsTr('Trilinear'), qsTr('Tetrahedral')]
