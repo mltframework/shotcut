@@ -1948,7 +1948,6 @@ function deploy_osx
   elif [ -d "/Applications/Qt Creator.app/Contents/Imports/qtquick2" ]; then
     cmd cp -a "/Applications/Qt Creator.app/Contents/Imports/qtquick2" Resources/qml
   fi
-#  cmd curl -o Resources/qml/QtQuick/Controls.2/Fusion/ComboBox.qml "https://s3.amazonaws.com/misc.meltymedia/shotcut-build/ComboBox-qt5.12.10.qml"
   for lib in $(find Resources -name '*.dylib'); do
     fixlibs "$lib"
   done
