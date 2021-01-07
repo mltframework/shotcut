@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 Meltytech, LLC
+ * Copyright (c) 2013-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@ RowLayout {
         filter.loadPresets()
     }
 
-    ComboBox {
+    Shotcut.ComboBox {
         id: presetCombo
         Layout.fillWidth: true
         Layout.minimumWidth: 100

@@ -20,3 +20,4 @@ VuiBase 1.0 VuiBase.qml
 KeyframableFilter 1.0 KeyframableFilter.qml
 ToolBarToggle 1.0 ToolBarToggle.qml
 HoverTip 1.0 HoverTip.qml
+ComboBox 1.0 ComboBox.qml
