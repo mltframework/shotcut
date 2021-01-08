@@ -81,7 +81,7 @@ RowLayout {
                 modality: application.dialogModality
             }
 
-            Shotcut.ToolTip { text: qsTr('Color: %1\nClick to change').arg(color) }
+            Shotcut.HoverTip { text: qsTr('Color: %1\nClick to change').arg(color) }
         }
     }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Meltytech, LLC
+ * Copyright (c) 2020-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,10 +26,6 @@ Button {
     SystemPalette { id: activePalette }
     palette.buttonText: activePalette.buttonText
     palette.button: checked ? activePalette.highlight : activePalette.button
-
-    ToolTip.delay: 700
-    ToolTip.timeout: 5000
-    ToolTip.visible: ToolTip.text ? hovered : false
 
     Keys.onReturnPressed: clicked()
     Keys.onEnterPressed: clicked()

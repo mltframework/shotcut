@@ -61,7 +61,7 @@ RowLayout {
         id: saveButton
         icon.name: 'list-add'
         icon.source: 'qrc:///icons/oxygen/32x32/actions/list-add.png'
-        ToolTip.text: qsTr('Save')
+        Shotcut.HoverTip { text: qsTr('Save') }
         implicitWidth: 20
         implicitHeight: 20
         onClicked: nameDialog.show()
@@ -70,7 +70,7 @@ RowLayout {
         id: deleteButton
         icon.name: 'list-remove'
         icon.source: 'qrc:///icons/oxygen/32x32/actions/list-remove.png'
-        ToolTip.text: qsTr('Delete')
+        Shotcut.HoverTip { text: qsTr('Delete') }
         implicitWidth: 20
         implicitHeight: 20
         onClicked: confirmDialog.show()

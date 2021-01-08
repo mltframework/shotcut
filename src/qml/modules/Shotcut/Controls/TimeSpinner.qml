@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2019 Meltytech, LLC
+ * Copyright (c) 2014-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,10 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.2
-import QtQuick.Layouts 1.1
-import Shotcut.Controls 1.0 as Shotcut
+import QtQuick 2.12
 import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.12
+import Shotcut.Controls 1.0 as Shotcut
 
 RowLayout {
     id: root
@@ -47,7 +47,7 @@ RowLayout {
         id: decrementButton
         icon.name: 'list-remove'
         icon.source: 'qrc:///icons/oxygen/32x32/actions/list-remove.png'
-        ToolTip.text: qsTr('Decrement')
+        Shotcut.HoverTip { text: qsTr('Decrement') }
         implicitWidth: 20
         implicitHeight: 20
         MouseArea {
@@ -68,7 +68,7 @@ RowLayout {
         id: incrementButton
         icon.name: 'list-add'
         icon.source: 'qrc:///icons/oxygen/32x32/actions/list-add.png'
-        ToolTip.text: qsTr('Increment')
+        Shotcut.HoverTip { text: qsTr('Increment') }
         implicitWidth: 20
         implicitHeight: 20
         MouseArea {

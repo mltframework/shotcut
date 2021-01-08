@@ -91,10 +91,7 @@ Rectangle {
                 icon.name: 'edit-clear'
                 icon.source: 'qrc:///icons/oxygen/32x32/actions/edit-clear.png'
                 hoverEnabled: true
-                ToolTip.delay: 700
-                ToolTip.timeout: 5000
-                ToolTip.visible: hovered
-                ToolTip.text: qsTr('Clear search')
+                Shotcut.HoverTip { text: qsTr('Clear search') }
                 onClicked: searchField.text = ''
             }
         }
@@ -112,7 +109,7 @@ Rectangle {
                 icon.name: 'bookmarks'
                 icon.source: 'qrc:///icons/oxygen/32x32/places/bookmarks.png'
                 text: qsTr('Favorite')
-                ToolTip.text: qsTr('Show favorite filters')
+                Shotcut.HoverTip { text: qsTr('Show favorite filters') }
                 ButtonGroup.group: typeGroup
                 onClicked: {
                     if (checked) {
@@ -128,7 +125,7 @@ Rectangle {
                 icon.name: 'video-television'
                 icon.source: 'qrc:///icons/oxygen/32x32/devices/video-television.png'
                 text: qsTr('Video')
-                ToolTip.text: qsTr('Show video filters')
+                Shotcut.HoverTip { text: qsTr('Show video filters') }
                 ButtonGroup.group: typeGroup
                 onClicked: {
                     if (checked) {
@@ -144,7 +141,7 @@ Rectangle {
                 icon.name: 'speaker'
                 icon.source: 'qrc:///icons/oxygen/32x32/actions/speaker.png'
                 text: qsTr('Audio')
-                ToolTip.text: qsTr('Show audio filters')
+                Shotcut.HoverTip { text: qsTr('Show audio filters') }
                 ButtonGroup.group: typeGroup
                 onClicked: {
                     if (checked) {
@@ -166,7 +163,7 @@ Rectangle {
                 padding: 2
                 implicitWidth: 20
                 implicitHeight: 20
-                ToolTip.text: qsTr('Close menu')
+                Shotcut.HoverTip { text: qsTr('Close menu') }
                 onClicked: filterWindow.close()
             }
             Item {

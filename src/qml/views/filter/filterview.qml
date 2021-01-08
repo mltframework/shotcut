@@ -130,7 +130,7 @@ Rectangle {
             icon.source: 'qrc:///icons/oxygen/32x32/actions/list-add.png'
             enabled: attachedfiltersmodel.isProducerSelected
             opacity: enabled ? 1.0 : 0.5
-            ToolTip.text: qsTr('Add a filter')
+            Shotcut.HoverTip { text: qsTr('Add a filter') }
             onClicked: {
                 if (application.confirmOutputFilter()) {
                     filterMenu.open()
@@ -144,7 +144,7 @@ Rectangle {
             icon.source: 'qrc:///icons/oxygen/32x32/actions/list-remove.png'
             enabled: selectedIndex > -1
             opacity: enabled ? 1.0 : 0.5
-            ToolTip.text: qsTr('Remove selected filter')
+            Shotcut.HoverTip { text: qsTr('Remove selected filter') }
             onClicked: {
                 attachedfiltersmodel.remove(selectedIndex)
             }
@@ -161,7 +161,7 @@ Rectangle {
             icon.source: 'qrc:///icons/oxygen/32x32/actions/edit-copy.png'
             enabled: selectedIndex > -1
             opacity: enabled ? 1.0 : 0.5
-            ToolTip.text: qsTr('Copy the filters')
+            Shotcut.HoverTip { text: qsTr('Copy the filters') }
             onClicked: application.copyFilters()
         }
         Shotcut.Button {
@@ -171,7 +171,7 @@ Rectangle {
             opacity: enabled ? 1.0 : 0.5
             icon.name: 'edit-paste'
             icon.source: 'qrc:///icons/oxygen/32x32/actions/edit-paste.png'
-            ToolTip.text: qsTr('Paste filters')
+            Shotcut.HoverTip { text: qsTr('Paste filters') }
             onClicked: application.pasteFilters()
         }
         Shotcut.Button { // separator
@@ -186,7 +186,7 @@ Rectangle {
             opacity: enabled ? 1.0 : 0.5
             icon.name: 'lift'
             icon.source: 'qrc:///icons/oxygen/32x32/actions/lift.png'
-            ToolTip.text: qsTr('Move filter up')
+            Shotcut.HoverTip { text: qsTr('Move filter up') }
             onClicked: attachedfiltersmodel.move(selectedIndex, --selectedIndex)
         }
         Shotcut.Button {
@@ -196,7 +196,7 @@ Rectangle {
             opacity: enabled ? 1.0 : 0.5
             icon.name: 'overwrite'
             icon.source: 'qrc:///icons/oxygen/32x32/actions/overwrite.png'
-            ToolTip.text: qsTr('Move filter down')
+            Shotcut.HoverTip { text: qsTr('Move filter down') }
             onClicked: attachedfiltersmodel.move(selectedIndex, ++selectedIndex)
         }
         Shotcut.Button { // separator
@@ -211,7 +211,7 @@ Rectangle {
             icon.source: 'qrc:///icons/oxygen/32x32/actions/window-close.png'
             enabled: selectedIndex > -1
             opacity: enabled ? 1.0 : 0.5
-            ToolTip.text: qsTr('Deselect the filter')
+            Shotcut.HoverTip { text: qsTr('Deselect the filter') }
             onClicked: {
                 clearCurrentFilter()
                 attachedFilters.setCurrentFilter(-2)

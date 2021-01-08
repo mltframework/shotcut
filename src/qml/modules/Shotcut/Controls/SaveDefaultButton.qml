@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2015 Meltytech, LLC
- * Author: Brian Matherly <code@brianmatherly.com>
+ * Copyright (c) 2015-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,13 +15,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import Shotcut.Controls 1.0 as Shotcut
 import QtQuick.Controls 2.12
+import Shotcut.Controls 1.0 as Shotcut
 
 Shotcut.Button {
     icon.name: 'document-save'
     icon.source: 'qrc:///icons/oxygen/32x32/actions/document-save.png'
-    ToolTip.text: qsTr('Set as default')
+    Shotcut.HoverTip { text: qsTr('Set as default') }
     implicitWidth: 20
     implicitHeight: 20
 }

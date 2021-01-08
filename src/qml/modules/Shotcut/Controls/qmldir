@@ -5,7 +5,6 @@ DoubleSpinBox 1.0 DoubleSpinBox.qml
 Gauge 1.0 Gauge.qml
 GradientControl 1.0 GradientControl.qml
 Preset 1.0 Preset.qml
-ToolTip 1.0 ToolTip.qml
 UndoButton 1.0 UndoButton.qml
 KeyframesButton 1.0 KeyframesButton.qml
 TimeSpinner 1.0 TimeSpinner.qml

@@ -115,7 +115,7 @@ Rectangle {
             id: momentaryTitle
             text: 'M'
             color: activePalette.text
-            Shotcut.ToolTip {text: qsTr('Momentary Loudness.')}
+            Shotcut.HoverTip {text: qsTr('Momentary Loudness.')}
             visible: enableMomentary
         }
         Label {
@@ -149,7 +149,7 @@ Rectangle {
             Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
             text: 'S'
             color: activePalette.text
-            Shotcut.ToolTip {text: qsTr('Short-term Loudness.')}
+            Shotcut.HoverTip {text: qsTr('Short-term Loudness.')}
             visible: enableShortterm
         }
         Label {
@@ -183,7 +183,7 @@ Rectangle {
             Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
             text: 'I'
             color: activePalette.text
-            Shotcut.ToolTip {text: qsTr('Integrated Loudness.')}
+            Shotcut.HoverTip {text: qsTr('Integrated Loudness.')}
             visible: enableIntegrated
         }
         Label {
@@ -217,7 +217,7 @@ Rectangle {
             Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
             text: 'LRA'
             color: activePalette.text
-            Shotcut.ToolTip {text: qsTr('Loudness Range.')}
+            Shotcut.HoverTip {text: qsTr('Loudness Range.')}
             visible: enableRange
         }
         Label {
@@ -251,7 +251,7 @@ Rectangle {
             Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
             text: 'P'
             color: activePalette.text
-            Shotcut.ToolTip {text: qsTr('Peak.')}
+            Shotcut.HoverTip {text: qsTr('Peak.')}
             visible: enablePeak
         }
         Label {
@@ -285,7 +285,7 @@ Rectangle {
             Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
             text: 'TP'
             color: activePalette.text
-            Shotcut.ToolTip {text: qsTr('True Peak.')}
+            Shotcut.HoverTip {text: qsTr('True Peak.')}
             visible: enableTruePeak
         }
         Label {

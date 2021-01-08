@@ -50,7 +50,7 @@ RowLayout {
             radius: parent.radius
             color: value
         }
-        ToolTip.text: qsTr('Click to open color dialog')
+        Shotcut.HoverTip { text: qsTr('Click to open color dialog') }
         onClicked: colorDialog.visible = true
     }
     
@@ -80,7 +80,7 @@ RowLayout {
         id: pickerButton
         icon.name: 'color-picker'
         icon.source: 'qrc:///icons/oxygen/32x32/actions/color-picker.png'
-        ToolTip.text: '<p>' + qsTr("Pick a color on the screen. By pressing the mouse button and then moving your mouse you can select a section of the screen from which to get an average color.") + '</p>'
+        Shotcut.HoverTip { text: '<p>' + qsTr("Pick a color on the screen. By pressing the mouse button and then moving your mouse you can select a section of the screen from which to get an average color.") + '</p>' }
         implicitWidth: 20
         implicitHeight: 20
         checkable: true

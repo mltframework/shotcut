@@ -18,6 +18,7 @@
 import QtQuick 2.2
 import QtQuick.Controls 2.12
 import QtQuick.Dialogs 1.2
+import Shotcut.Controls 1.0 as Shotcut
 
 ToolButton {
     id: checkbox
@@ -33,10 +34,7 @@ ToolButton {
     SystemPalette { id: activePalette }
     palette.buttonText: activePalette.buttonText
 
-    ToolTip.delay: 700
-    ToolTip.timeout: 5000
-    ToolTip.visible: hovered
-    ToolTip.text: qsTr('Use Keyframes for this parameter')
+    Shotcut.HoverTip { text: qsTr('Use Keyframes for this parameter') }
 
     background: Rectangle {
         implicitWidth: 20

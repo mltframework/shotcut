@@ -17,6 +17,7 @@
 
 import QtQuick 2.2
 import QtQuick.Controls 2.12
+import Shotcut.Controls 1.0 as Shotcut
 
 ToolButton {
     padding: 2
@@ -26,10 +27,6 @@ ToolButton {
 
     SystemPalette { id: activePalette }
     palette.buttonText: activePalette.buttonText
-
-    ToolTip.delay: 700
-    ToolTip.timeout: 5000
-    ToolTip.visible: hovered
 
     background: Rectangle {
         radius: 3
