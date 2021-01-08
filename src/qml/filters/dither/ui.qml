@@ -111,7 +111,7 @@ Shotcut.KeyframableFilter {
             text: qsTr('Matrix')
             Layout.alignment: Qt.AlignRight
         }
-        ComboBox {
+        Shotcut.ComboBox {
             id: matrixCombo
             implicitWidth: 180
             model: [qsTr('2x2 Magic Square'), qsTr('4x4 Magic Square'), qsTr('4x4 Ordered'), qsTr('4x4 Lines'),

@@ -19,6 +19,7 @@ import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 import QtQml.Models 2.12
+import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     width: 200
@@ -45,7 +46,7 @@ Item {
 
         RowLayout {
             Label { text: qsTr('Display') }
-            ComboBox {
+            Shotcut.ComboBox {
                 id: displayCombo
                 implicitWidth: 200
                 model: ListModel {

@@ -47,7 +47,7 @@ Item {
         columns: 4
 
         Label { text: qsTr('Blend mode') }
-        ComboBox {
+        Shotcut.ComboBox {
             id: combo
             model: ListModel {
                 id: comboItems

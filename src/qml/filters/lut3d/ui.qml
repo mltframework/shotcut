@@ -101,7 +101,7 @@ Item {
             text: qsTr('Interpolation')
             Layout.alignment: Qt.AlignRight
         }
-        ComboBox {
+        Shotcut.ComboBox {
             id: interpolationCombo
             implicitWidth: 180
             model: [qsTr('Nearest'), qsTr('Trilinear'), qsTr('Tetrahedral')]

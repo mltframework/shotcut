@@ -18,6 +18,7 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
+import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     width: 100
@@ -56,13 +57,13 @@ Item {
 
         RowLayout {
             Label { text: qsTr('Swap') }
-            ComboBox {
+            Shotcut.ComboBox {
                 id: fromCombo
                 model: [qsTr('Left'), qsTr('Right')]
                 onActivated: filter.set(fromParameter, currentIndex)
             }
             Label { text: qsTr('with') }
-            ComboBox {
+            Shotcut.ComboBox {
                 id: toCombo
                 model: fromCombo.model
                 onActivated: filter.set(toParameter, currentIndex)

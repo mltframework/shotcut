@@ -583,7 +583,7 @@ Shotcut.KeyframableFilter {
             text: qsTr('Interpolator')
             Layout.alignment: Qt.AlignRight
         }
-        ComboBox {
+        Shotcut.ComboBox {
             id: interpolatorCombo
             implicitWidth: 180
             model: [qsTr('Nearest Neighbor'), qsTr('Bilinear'), qsTr('Bicubic Smooth'), qsTr('Bicubic Sharp'), qsTr('Spline 4x4'), qsTr('Spline 6x6'), 'Lanczos']
@@ -602,7 +602,7 @@ Shotcut.KeyframableFilter {
             text: qsTr('Alpha Operation')
             Layout.alignment: Qt.AlignRight
         }
-        ComboBox {
+        Shotcut.ComboBox {
             id: alphaoperationCombo
             implicitWidth: 180
             model: [qsTr('Opaque'), qsTr('Overwrite'), qsTr('Maximum'), qsTr('Minimum'), qsTr('Add'), qsTr('Subtract')]

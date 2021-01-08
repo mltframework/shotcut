@@ -54,7 +54,7 @@ Item {
             text: qsTr('Mode')
             Layout.alignment: Qt.AlignRight
         }
-        ComboBox {
+        Shotcut.ComboBox {
             id: modeCombo
             implicitWidth: 180
             model: ListModel {

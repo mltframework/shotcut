@@ -174,7 +174,7 @@ Item {
             text: qsTr('Channel')
             Layout.alignment: Qt.AlignRight
         }
-        ComboBox {
+        Shotcut.ComboBox {
             id: channelCombo
             model: [qsTr('Red'), qsTr('Green'), qsTr('Blue'), qsTr('Value')]
             onActivated: filter.set(channelParam, currentIndex / 10)
@@ -191,7 +191,7 @@ Item {
             text: qsTr('Histogram')
             Layout.alignment: Qt.AlignRight
         }
-        ComboBox {
+        Shotcut.ComboBox {
             id: histogramCombo
             model: [qsTr('Top Left'), qsTr('Top Right'), qsTr('Bottom Left'), qsTr('Bottom Right'), qsTr('None')]
             onActivated: {

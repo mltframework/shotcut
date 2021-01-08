@@ -176,7 +176,7 @@ Item {
             text: qsTr('Operation')
             Layout.alignment: Qt.AlignRight
         }
-        ComboBox {
+        Shotcut.ComboBox {
             id: operationCombo
             implicitWidth: 180
             model: [qsTr('Overwrite'), qsTr('Maximum'), qsTr('Minimum'), qsTr('Add'), qsTr('Subtract')]
@@ -194,7 +194,7 @@ Item {
             text: qsTr('Shape')
             Layout.alignment: Qt.AlignRight
         }
-        ComboBox {
+        Shotcut.ComboBox {
             id: shapeCombo
             implicitWidth: 180
             model: [qsTr('Rectangle'), qsTr('Ellipse'), qsTr('Triangle'), qsTr('Diamond')]

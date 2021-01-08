@@ -127,7 +127,7 @@ Item {
             text: qsTr('Channel')
             Layout.alignment: Qt.AlignRight
         }
-        ComboBox {
+        Shotcut.ComboBox {
             id: combo
             Layout.columnSpan: 3
             model: [qsTr('Left'), qsTr('Right')]

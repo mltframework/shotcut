@@ -57,7 +57,7 @@ Item {
 
         RowLayout {
             Label { text: qsTr('Mode') }
-            ComboBox {
+            Shotcut.ComboBox {
                 id: modeCombo
                 Layout.minimumWidth: 200
                 model: [qsTr('Shadows (Lift)'), qsTr('Midtones (Gamma)'), qsTr('Highlights (Gain)')]

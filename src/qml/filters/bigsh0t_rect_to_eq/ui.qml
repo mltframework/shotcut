@@ -77,7 +77,7 @@ Item {
             text: qsTr('Interpolation')
             Layout.alignment: Qt.AlignRight
         }
-        ComboBox {
+        Shotcut.ComboBox {
             currentIndex: 0
             model: ["Nearest-neighbor", "Bilinear"]
             id: interpolationComboBox

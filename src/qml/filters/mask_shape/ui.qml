@@ -211,7 +211,7 @@ Item {
             text: qsTr('File')
             Layout.alignment: Qt.AlignRight
         }
-        ComboBox {
+        Shotcut.ComboBox {
             id: resourceCombo
             implicitWidth: 250
             model: [qsTr('Bar Horizontal'), qsTr('Custom...'), qsTr('Bar Vertical'), qsTr('Barn Door Horizontal'), qsTr('Barn Door Vertical'), qsTr('Barn Door Diagonal SW-NE'), qsTr('Barn Door Diagonal NW-SE'), qsTr('Diagonal Top Left'), qsTr('Diagonal Top Right'), qsTr('Matrix Waterfall Horizontal'), qsTr('Matrix Waterfall Vertical'), qsTr('Matrix Snake Horizontal'), qsTr('Matrix Snake Parallel Horizontal'), qsTr('Matrix Snake Vertical'), qsTr('Matrix Snake Parallel Vertical'), qsTr('Barn V Up'), qsTr('Iris Circle'), qsTr('Double Iris'), qsTr('Iris Box'), qsTr('Box Bottom Right'), qsTr('Box Bottom Left'), qsTr('Box Right Center'), qsTr('Clock Top')]

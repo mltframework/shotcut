@@ -156,7 +156,7 @@ Item {
             text: qsTr('Mask type')
             Layout.alignment: Qt.AlignRight
         }
-        ComboBox {
+        Shotcut.ComboBox {
             id: maskTypeCombo
             implicitWidth: 180
             model: [qsTr('Color Distance'), qsTr('Transparency'), qsTr('Edge Inwards'), qsTr('Edge Outwards')]
@@ -241,7 +241,7 @@ Item {
             text: qsTr('Operation 1')
             Layout.alignment: Qt.AlignRight
         }
-        ComboBox {
+        Shotcut.ComboBox {
             id: operation1Combo
             implicitWidth: 180
             model: [qsTr('None'), qsTr('De-Key'), qsTr('Desaturate'), qsTr('Adjust Luma')]
@@ -275,7 +275,7 @@ Item {
             text: qsTr('Operation 2')
             Layout.alignment: Qt.AlignRight
         }
-        ComboBox {
+        Shotcut.ComboBox {
             id: operation2Combo
             implicitWidth: 180
             model: [qsTr('None'), qsTr('De-Key'), qsTr('Desaturate'), qsTr('Adjust Luma')]
