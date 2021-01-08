@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Meltytech, LLC
+ * Copyright (c) 2020-2021 Meltytech, LLC
  * Written by Austin Brooks <ab.shotcut@outlook.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,12 +17,10 @@
  */
 
 
-import QtQuick 2.2
-import QtQuick.Controls 1.1
-import QtQuick.Controls.Styles 1.1
-import QtQuick.Controls 2.12 as Controls2
-import QtQuick.Layouts 1.1
-import QtQuick.Window 2.1
+import QtQuick 2.12
+import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.12
+import QtQuick.Window 2.12
 import Shotcut.Controls 1.0 as Shotcut
 
 
@@ -138,7 +136,7 @@ Item {
             text: qsTr('Method')
             Layout.alignment: Qt.AlignRight
         }
-        Controls2.ComboBox {
+        Shotcut.ComboBox {
             id: idMethod
             implicitWidth: 180
             model: [qsTr('Soft'), qsTr('Garrote'), qsTr('Hard', 'Remove Noise Wavelet filter')]

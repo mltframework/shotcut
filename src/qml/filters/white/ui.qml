@@ -143,15 +143,13 @@ Item {
                     }
                 }
             }
-            SpinBox {
+            Shotcut.DoubleSpinBox {
                 id: tempspinner
                 Layout.minimumWidth: 100
                 from: 1000.0
                 to: 15000.0
                 stepSize: 10
-                textFromValue: function(value, locale) {
-                    return qsTr("%1 degrees").arg(Number(value).toLocaleString(locale, 'f', 0))
-                }
+                suffix: qsTr('degrees')
                 onValueChanged: tempslider.value = value
             }
         }

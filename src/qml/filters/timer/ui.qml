@@ -15,11 +15,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.0
+import QtQuick 2.12
 import QtQuick.Controls 2.12
-import QtQuick.Layouts 1.1
+import QtQuick.Layouts 1.12
 import Shotcut.Controls 1.0 as Shotcut
-import QtQml.Models 2.2
+import QtQml.Models 2.12
 
 Item {
     width: 500
@@ -135,7 +135,7 @@ Item {
             text: qsTr('Format')
             Layout.alignment: Qt.AlignRight
         }
-        ComboBox {
+        Shotcut.ComboBox {
             id: formatCombo
             model: ListModel {
                 ListElement { text: QT_TR_NOOP('HH:MM:SS'); format: "HH:MM:SS" }
@@ -158,7 +158,7 @@ Item {
             text: qsTr('Direction')
             Layout.alignment: Qt.AlignRight
         }
-        ComboBox {
+        Shotcut.ComboBox {
             id: directionCombo
             model: ListModel {
                 ListElement { text: QT_TR_NOOP('Up'); direction: "up" }
@@ -185,12 +185,12 @@ Item {
                 onSetDefaultClicked: {
                     startSpinner.timeStr = _defaultStart
                 }
-                Shotcut.ToolTip { text: "The timer will be frozen from the beginning of the filter until the Start Delay time has elapsed." }
+                Shotcut.HoverTip { text: qsTr('The timer will be frozen from the beginning of the filter until the Start Delay time has elapsed.') }
             }
             Shotcut.Button {
                 icon.name: 'insert'
                 icon.source: 'qrc:///icons/oxygen/32x32/actions/insert.png'
-                ToolTip.text: qsTr('Set start to begin at the current position')
+                Shotcut.HoverTip { text: qsTr('Set start to begin at the current position') }
                 implicitWidth: 20
                 implicitHeight: 20
                 onClicked: startSpinner.setValueSeconds(producer.position / profile.fps)
@@ -212,12 +212,12 @@ Item {
                 onSetDefaultClicked: {
                     durationSpinner.timeStr = _defaultDuration
                 }
-                Shotcut.ToolTip { text: "The timer will be frozen after the Duration has elapsed." }
+                Shotcut.HoverTip { text: qsTr('The timer will be frozen after the Duration has elapsed.') }
             }
             Shotcut.Button {
                 icon.name: 'insert'
                 icon.source: 'qrc:///icons/oxygen/32x32/actions/insert.png'
-                ToolTip.text: qsTr('Set duration to end at the current position')
+                Shotcut.HoverTip { text: qsTr('Set duration to end at the current position') }
                 implicitWidth: 20
                 implicitHeight: 20
                 onClicked: {
@@ -245,7 +245,7 @@ Item {
                 onSetDefaultClicked: {
                     offsetSpinner.timeStr = _defaultOffset
                 }
-                Shotcut.ToolTip { text: "When the direction is Down, the timer will count down to Offset. When the Direction is up, the timer will count up starting from Offset." }
+                Shotcut.HoverTip { text: qsTr('When the direction is Down, the timer will count down to Offset.\nWhen the Direction is up, the timer will count up starting from Offset.') }
             }
         }
 

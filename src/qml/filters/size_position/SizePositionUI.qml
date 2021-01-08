@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2020 Meltytech, LLC
+ * Copyright (c) 2014-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,9 +15,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.0
-import QtQuick.Controls 1.1
-import QtQuick.Layouts 1.1
+import QtQuick 2.12
+import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.12
 import Shotcut.Controls 1.0 as Shotcut
 
 Item {
@@ -461,9 +461,9 @@ Item {
         setFilter(getPosition())
     }
 
-    ExclusiveGroup { id: sizeGroup }
-    ExclusiveGroup { id: halignGroup }
-    ExclusiveGroup { id: valignGroup }
+    ButtonGroup { id: sizeGroup }
+    ButtonGroup { id: halignGroup }
+    ButtonGroup { id: valignGroup }
 
     GridLayout {
         columns: 6
@@ -507,21 +507,15 @@ Item {
         }
         RowLayout {
             Layout.columnSpan: 3
-            SpinBox {
+            Shotcut.DoubleSpinBox {
                 id: rectX
                 horizontalAlignment: Qt.AlignRight
                 Layout.minimumWidth: 100
                 decimals: 0
                 stepSize: 1
-                minimumValue: -999999999
-                maximumValue: 999999999
+                from: -999999999
+                to: 999999999
                 onValueChanged: {
-                    if (hovered && Math.abs(filterRect.x - value) >= 1) {
-                        filterRect.x = value
-                        setFilter(getPosition())
-                    }
-                }
-                onEditingFinished: {
                     if (Math.abs(filterRect.x - value) >= 1) {
                         filterRect.x = value
                         setFilter(getPosition())
@@ -529,21 +523,15 @@ Item {
                 }
             }
             Label { text: ',' }
-            SpinBox {
+            Shotcut.DoubleSpinBox {
                 id: rectY
                 horizontalAlignment: Qt.AlignRight
                 Layout.minimumWidth: 100
                 decimals: 0
                 stepSize: 1
-                minimumValue: -999999999
-                maximumValue: 999999999
+                from: -999999999
+                to: 999999999
                 onValueChanged: {
-                    if (hovered && Math.abs(filterRect.y - value) >= 1) {
-                        filterRect.y = value
-                        setFilter(getPosition())
-                    }
-                }
-                onEditingFinished: {
                     if (Math.abs(filterRect.y - value) >= 1) {
                         filterRect.y = value
                         setFilter(getPosition())
@@ -598,25 +586,15 @@ Item {
         }
         RowLayout {
             Layout.columnSpan: 3
-            SpinBox {
+            Shotcut.DoubleSpinBox {
                 id: rectW
                 horizontalAlignment: Qt.AlignRight
                 Layout.minimumWidth: 100
                 decimals: 0
                 stepSize: 1
-                minimumValue: 0
-                maximumValue: 999999999
+                from: 0
+                to: 999999999
                 onValueChanged: {
-                    if (hovered && Math.abs(filterRect.width - value) >= 1) {
-                        if (isFillMode()) {
-                            scaleByWidth(value)
-                        } else {
-                            filterRect.width = value
-                            setFilter(getPosition())
-                        }
-                    }
-                }
-                onEditingFinished: {
                     if (Math.abs(filterRect.width - value) >= 1) {
                         if (isFillMode()) {
                             scaleByWidth(value)
@@ -628,25 +606,15 @@ Item {
                 }
             }
             Label { text: 'x' }
-            SpinBox {
+            Shotcut.DoubleSpinBox {
                 id: rectH
                 horizontalAlignment: Qt.AlignRight
                 Layout.minimumWidth: 100
                 decimals: 0
                 stepSize: 1
-                minimumValue: 0
-                maximumValue: 999999999
+                from: 0
+                to: 999999999
                 onValueChanged: {
-                    if (hovered && Math.abs(filterRect.height - value) >= 1) {
-                        if (isFillMode()) {
-                            scaleByHeight(value)
-                        } else {
-                            filterRect.height = value
-                            setFilter(getPosition())
-                        }
-                    }
-                }
-                onEditingFinished: {
                     if (Math.abs(filterRect.height - value) >= 1) {
                         if (isFillMode()) {
                             scaleByHeight(value)
@@ -720,7 +688,7 @@ Item {
         RadioButton {
             id: fitRadioButton
             text: qsTr('Fit')
-            exclusiveGroup: sizeGroup
+            ButtonGroup.group: sizeGroup
             onClicked: {
                 filter.set(fillProperty, 0)
                 filter.set(distortProperty, 0)
@@ -730,7 +698,7 @@ Item {
         RadioButton {
             id: fillRadioButton
             text: qsTr('Fill')
-            exclusiveGroup: sizeGroup
+            ButtonGroup.group: sizeGroup
             onClicked: {
                 filter.set(fillProperty, 1)
                 filter.set(distortProperty, 0)
@@ -747,7 +715,7 @@ Item {
         RadioButton {
             id: distortRadioButton
             text: qsTr('Distort')
-            exclusiveGroup: sizeGroup
+            ButtonGroup.group: sizeGroup
             onClicked: {
                 filter.set(fillProperty, 1)
                 filter.set(distortProperty, 1)
@@ -771,19 +739,19 @@ Item {
         RadioButton {
             id: leftRadioButton
             text: qsTr('Left')
-            exclusiveGroup: halignGroup
+            ButtonGroup.group: halignGroup
             onClicked: filter.set(halignProperty, 'left')
         }
         RadioButton {
             id: centerRadioButton
             text: qsTr('Center')
-            exclusiveGroup: halignGroup
+            ButtonGroup.group: halignGroup
             onClicked: filter.set(halignProperty, 'center')
         }
         RadioButton {
             id: rightRadioButton
             text: qsTr('Right')
-            exclusiveGroup: halignGroup
+            ButtonGroup.group: halignGroup
             onClicked: filter.set(halignProperty, 'right')
         }
         Shotcut.UndoButton {
@@ -801,19 +769,19 @@ Item {
         RadioButton {
             id: topRadioButton
             text: qsTr('Top')
-            exclusiveGroup: valignGroup
+            ButtonGroup.group: valignGroup
             onClicked: filter.set(valignProperty, 'top')
         }
         RadioButton {
             id: middleRadioButton
             text: qsTr('Middle', 'Size and Position video filter')
-            exclusiveGroup: valignGroup
+            ButtonGroup.group: valignGroup
             onClicked: filter.set(valignProperty, 'middle')
         }
         RadioButton {
             id: bottomRadioButton
             text: qsTr('Bottom')
-            exclusiveGroup: valignGroup
+            ButtonGroup.group: valignGroup
             onClicked: filter.set(valignProperty, 'bottom')
         }
         Shotcut.UndoButton {

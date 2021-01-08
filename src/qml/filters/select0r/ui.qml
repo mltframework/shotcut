@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2020 Meltytech, LLC
+ * Copyright (c) 2015-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,10 +15,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.0
-import QtQuick.Controls 1.1
-import QtQuick.Controls 2.12 as Controls2
-import QtQuick.Layouts 1.1
+import QtQuick 2.12
+import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.12
 import Shotcut.Controls 1.0 as Shotcut
 
 Item {
@@ -146,17 +145,17 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
         RowLayout {
-            ExclusiveGroup { id: colorspaceGroup }
+            ButtonGroup { id: colorspaceGroup }
             RadioButton {
                 id: rgbRadioButton
                 text: qsTr('Red-Green-Blue')
-                exclusiveGroup: colorspaceGroup
+                ButtonGroup.group: colorspaceGroup
                 onCheckedChanged: if (checked) filter.set(colorspaceParam, 0.0)
             }
             RadioButton {
                 id: hciRadioButton
                 text: qsTr('Hue-Chroma-Intensity')
-                exclusiveGroup: colorspaceGroup
+                ButtonGroup.group: colorspaceGroup
                 onCheckedChanged: if (checked) filter.set(colorspaceParam, 1.0)
             }
         }
@@ -219,7 +218,7 @@ Item {
             text: qsTr('Shape')
             Layout.alignment: Qt.AlignRight
         }
-        Controls2.ComboBox {
+        Shotcut.ComboBox {
             id: shapeCombo
             implicitWidth: 180
             model: ListModel {
@@ -242,7 +241,7 @@ Item {
             text: qsTr('Edge')
             Layout.alignment: Qt.AlignRight
         }
-        Controls2.ComboBox {
+        Shotcut.ComboBox {
             id: edgeCombo
             implicitWidth: 180
             model: ListModel {
@@ -284,7 +283,7 @@ Item {
             text: qsTr('Operation')
             Layout.alignment: Qt.AlignRight
         }
-        Controls2.ComboBox {
+        Shotcut.ComboBox {
             id: operationCombo
             implicitWidth: 180
             model: ListModel {

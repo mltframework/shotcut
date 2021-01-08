@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2018 Meltytech, LLC
+ * Copyright (c) 2016-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,9 +15,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.0
-import QtQuick.Controls 1.1
-import QtQuick.Layouts 1.1
+import QtQuick 2.12
+import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.12
 import Shotcut.Controls 1.0 as Shotcut
 
 Item {
@@ -67,7 +67,7 @@ Item {
         Label {
             text: qsTr('Blur Radius')
             Layout.alignment: Qt.AlignRight
-            Shotcut.ToolTip {text: qsTr('The radius of the gaussian blur.')}
+            Shotcut.HoverTip {text: qsTr('The radius of the gaussian blur.')}
         }
         Shotcut.SliderSpinner {
             id: radiusSlider
@@ -86,7 +86,7 @@ Item {
         Label {
             text: qsTr('Blur Strength')
             Layout.alignment: Qt.AlignRight
-            Shotcut.ToolTip {text: qsTr('The strength of the gaussian blur.')}
+            Shotcut.HoverTip {text: qsTr('The strength of the gaussian blur.')}
         }
         Shotcut.SliderSpinner {
             id: strengthSlider
@@ -105,7 +105,7 @@ Item {
         Label {
             text: qsTr('Threshold')
             Layout.alignment: Qt.AlignRight
-            Shotcut.ToolTip {text: qsTr('If the difference between the original pixel and the blurred pixel is less than threshold, the pixel will be replaced with the blurred pixel.')}
+            Shotcut.HoverTip {text: qsTr('If the difference between the original pixel and the blurred pixel is less than threshold, the pixel will be replaced with the blurred pixel.')}
         }
         Shotcut.SliderSpinner {
             id: thresholdSlider
