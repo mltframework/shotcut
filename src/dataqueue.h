@@ -19,10 +19,11 @@
 #ifndef DATAQUEUE_H
 #define DATAQUEUE_H
 
-#include <QList>
 #include <QMutex>
 #include <QWaitCondition>
 #include <QMutexLocker>
+
+#include <deque>
 
 /*!
   \class DataQueue
@@ -85,7 +86,7 @@ public:
     int count() const;
 
 private:
-    QList<T> m_queue;
+    std::deque<T> m_queue;
     int m_maxSize;
     OverflowMode m_mode;
     mutable QMutex m_mutex;
@@ -116,19 +117,19 @@ void DataQueue<T>::push(const T& item)
     if (m_queue.size() == m_maxSize) {
         switch(m_mode) {
             case OverflowModeDiscardOldest:
-                m_queue.removeFirst();
-                m_queue.append(item);
+                m_queue.pop_front();
+                m_queue.push_back(item);
                 break;
             case OverflowModeDiscardNewest:
                 // This item is the newest so discard it and exit
                 break;
             case OverflowModeWait:
                 m_notFullCondition.wait(&m_mutex);
-                m_queue.append(item);
+                m_queue.push_back(item);
                 break;
         }
     } else {
-        m_queue.append(item);
+        m_queue.push_back(item);
         if (m_queue.size() == 1) {
             m_notEmptyCondition.wakeOne();
         }
@@ -144,7 +145,8 @@ T DataQueue<T>::pop()
     if (m_queue.size() == 0) {
         m_notEmptyCondition.wait(&m_mutex);
     }
-    retVal = m_queue.takeFirst();
+    retVal = m_queue.front();
+    m_queue.pop_front();
     if (m_mode == OverflowModeWait && m_queue.size() == m_maxSize - 1) {
         m_notFullCondition.wakeOne();
     }
