@@ -100,8 +100,8 @@ AudioLoudnessScopeWidget::AudioLoudnessScopeWidget()
 
     // Add config button
     QToolButton* configButton = new QToolButton(this);
-    configButton->setToolTip(tr("Configure Graphs"));
-    configButton->setIcon(QIcon(":/icons/oxygen/32x32/actions/show-menu.png"));
+    configButton->setToolTip(tr("onfigure Graphs"));
+    configButton->setIcon(QIcon::fromTheme("show-menu", QIcon(":/icons/oxygen/32x32/actions/show-menu.png")));
     configButton->setPopupMode(QToolButton::InstantPopup);
     configButton->setMenu(configMenu);
     hlayout->addWidget(configButton);
@@ -176,21 +176,37 @@ void AudioLoudnessScopeWidget::setOrientation(Qt::Orientation orientation, bool 
 {
     if (force || orientation != m_orientation) {
         if (orientation == Qt::Vertical) {
-            setMinimumSize(300, 250);
-            setMaximumSize(300, 500);
+            // Calculate the minimum width
+            int x = 0;
+            const int meterWidth = 54;
+            if (Settings.loudnessScopeShowMeter("momentary")) x += meterWidth;
+            if (Settings.loudnessScopeShowMeter("shortterm")) x += meterWidth;
+            if (Settings.loudnessScopeShowMeter("integrated")) x += meterWidth;
+            if (Settings.loudnessScopeShowMeter("range")) x += meterWidth;
+            if (Settings.loudnessScopeShowMeter("peak")) x += meterWidth;
+            if (Settings.loudnessScopeShowMeter("truepeak")) x += meterWidth;
+            x = std::max(x, 200);
+            setMinimumSize(x, 250);
+            setMaximumSize(x, 500);
         } else {
-            int y = 20;
-            if (Settings.loudnessScopeShowMeter("momentary")) y += 50;
-            if (Settings.loudnessScopeShowMeter("shortterm")) y += 50;
-            if (Settings.loudnessScopeShowMeter("integrated")) y += 50;
-            if (Settings.loudnessScopeShowMeter("range")) y += 50;
-            if (Settings.loudnessScopeShowMeter("peak")) y += 50;
-            if (Settings.loudnessScopeShowMeter("truepeak")) y += 50;
+            // Calculate the minimum height
+            int y = 32;
+            const int meterHeight = 47;
+            if (Settings.loudnessScopeShowMeter("momentary")) y += meterHeight;
+            if (Settings.loudnessScopeShowMeter("shortterm")) y += meterHeight;
+            if (Settings.loudnessScopeShowMeter("integrated")) y += meterHeight;
+            if (Settings.loudnessScopeShowMeter("range")) y += meterHeight;
+            if (Settings.loudnessScopeShowMeter("peak")) y += meterHeight;
+            if (Settings.loudnessScopeShowMeter("truepeak")) y += meterHeight;
+            y = std::max(y, 80);
             setMinimumSize(250, y);
-            setMaximumSize(500, 320);
+            setMaximumSize(500, y);
         }
         updateGeometry();
         m_orientation = orientation;
+        if (m_qview->status() != QQuickWidget::Null) {
+            m_qview->rootObject()->setProperty("orientation", m_orientation);
+        }
     }
 }
 
@@ -306,4 +322,5 @@ void AudioLoudnessScopeWidget::resetQview()
     m_qview->rootObject()->setProperty("enableRange", Settings.loudnessScopeShowMeter("range"));
     m_qview->rootObject()->setProperty("enablePeak", Settings.loudnessScopeShowMeter("peak"));
     m_qview->rootObject()->setProperty("enableTruePeak", Settings.loudnessScopeShowMeter("truepeak"));
+    m_qview->rootObject()->setProperty("orientation", m_orientation);
 }
