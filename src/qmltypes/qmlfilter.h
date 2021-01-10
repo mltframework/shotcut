@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2019 Meltytech, LLC
+ * Copyright (c) 2013-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,12 +32,17 @@
 
 class AbstractJob;
 class EncodeJob;
+class QUndoCommand;
+class FilterController;
+namespace Filter {
+    class ChangeParameterCommand;
+}
 
 class QmlFilter : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(bool isNew READ isNew)
-    Q_PROPERTY(QString path READ path)
+    Q_PROPERTY(bool isNew READ isNew CONSTANT)
+    Q_PROPERTY(QString path READ path CONSTANT)
     Q_PROPERTY(QStringList presets READ presets NOTIFY presetsChanged)
     Q_PROPERTY(int in READ in WRITE setIn NOTIFY inChanged)
     Q_PROPERTY(int out READ out WRITE setOut NOTIFY outChanged)
@@ -54,7 +59,7 @@ public:
         TIME_TIMECODE_DF,
         TIME_TIMECODE_NDF,
     };
-    Q_ENUMS(TimeFormat)
+    Q_ENUM(TimeFormat)
 
     explicit QmlFilter();
     explicit QmlFilter(Mlt::Filter& mltFilter, const QmlMetadata* metadata, QObject *parent = nullptr);
@@ -87,7 +92,7 @@ public:
     Q_INVOKABLE void deletePreset(const QString& name);
     Q_INVOKABLE void analyze(bool isAudio = false);
     Q_INVOKABLE static int framesFromTime(const QString& time);
-    Q_INVOKABLE static QString timeFromFrames(int frames, TimeFormat format = TIME_TIMECODE_DF);
+    Q_INVOKABLE static QString timeFromFrames(int frames, QmlFilter::TimeFormat format = TIME_TIMECODE_DF);
     Q_INVOKABLE void getHash();
     Mlt::Producer& producer() { return m_producer; }
     int in();
@@ -107,6 +112,7 @@ public:
     mlt_keyframe_type getKeyframeType(Mlt::Animation& animation, int position, mlt_keyframe_type defaultType);
     Q_INVOKABLE bool isAtLeastVersion(const QString& version);
     Q_INVOKABLE static void deselect();
+    void startUndoTracking(FilterController* dock);
 
 public slots:
     void preset(const QString& name);
@@ -129,9 +135,14 @@ private:
     QString m_path;
     bool m_isNew;
     QStringList m_presets;
+    Filter::ChangeParameterCommand* m_changeCommand;
+    bool m_changeCommandPushed;
     
     QString objectNameOrService();
     int keyframeIndex(Mlt::Animation& animation, int position);
+
+private slots:
+    void updateChangeCommand(const QString& name);
 };
 
 class AnalyzeDelegate : public QObject

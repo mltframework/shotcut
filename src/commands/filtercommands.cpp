@@ -17,6 +17,7 @@
 
 #include "filtercommands.h"
 #include "qmltypes/qmlmetadata.h"
+#include "controllers/filtercontroller.h"
 #include <Logger.h>
 
 namespace Filter {
@@ -118,6 +119,43 @@ void DisableCommand::undo()
     Q_ASSERT(m_producer.is_valid());
     LOG_DEBUG() << text() << m_index;
     m_model.toggleDisable(m_producer, m_index);
+}
+
+ChangeParameterCommand::ChangeParameterCommand(const QString& filterName, Mlt::Filter& filter, FilterController* controller, QUndoCommand* parent)
+    : QUndoCommand(parent)
+    , m_filterName(filterName)
+    , m_filter(filter)
+    , m_filterController(controller)
+    , m_firstRedo(true)
+{
+    setText(QObject::tr("Change %1 filter").arg(m_filterName));
+    m_before.inherit(m_filter);
+    m_after.inherit(m_filter);
+}
+
+void ChangeParameterCommand::update(const QString& parameter)
+{
+    m_after.pass_property(m_filter, parameter.toUtf8().constData());
+}
+
+void ChangeParameterCommand::redo()
+{
+    LOG_DEBUG() << m_filterName;
+    if (m_firstRedo) {
+        m_firstRedo = false;
+    } else {
+        m_filter.inherit(m_after);
+        if (m_filterController) {
+            m_filterController->onUndoOrRedo(m_filter);
+        }
+    }
+}
+
+void ChangeParameterCommand::undo()
+{
+    LOG_DEBUG() << m_filterName;
+    m_filter.inherit(m_before);
+    m_filterController->onUndoOrRedo(m_filter);
 }
 
 } // namespace Filter

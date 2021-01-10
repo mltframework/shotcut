@@ -19,10 +19,13 @@
 #define FILTERCOMMANDS_H
 
 #include "models/attachedfiltersmodel.h"
+#include "qmltypes/qmlfilter.h"
+#include <MltFilter.h>
 #include <QUndoCommand>
 #include <QString>
 
 class QmlMetadata;
+class FilterController;
 
 namespace Filter
 {
@@ -77,6 +80,23 @@ private:
     AttachedFiltersModel& m_model;
     int m_index;
     Mlt::Producer m_producer;
+};
+
+class ChangeParameterCommand : public QUndoCommand
+{
+public:
+    ChangeParameterCommand(const QString& filterName, Mlt::Filter& filter, FilterController* controller, QUndoCommand * parent = 0);
+    void update(const QString& parameter);
+    void redo();
+    void undo();
+
+private:
+    QString m_filterName;
+    Mlt::Filter m_filter;
+    Mlt::Properties m_before;
+    Mlt::Properties m_after;
+    FilterController* m_filterController;
+    bool m_firstRedo;
 };
 
 } // namespace Filter
