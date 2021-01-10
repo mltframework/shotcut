@@ -2119,13 +2119,14 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
     case Qt::Key_7:
     case Qt::Key_8:
     case Qt::Key_9:
-        if (!event->modifiers() && m_playlistDock->isVisible() && m_playlistDock->model()->rowCount() > 0) {
+        if ((event->modifiers() == Qt::NoModifier || event->modifiers() == Qt::KeypadModifier) &&
+            m_playlistDock->isVisible() && m_playlistDock->model()->rowCount() > 0) {
             m_playlistDock->raise();
             m_playlistDock->setIndex(event->key() - Qt::Key_1);
         }
         break;
     case Qt::Key_0:
-        if (!event->modifiers() ) {
+        if ((event->modifiers() == Qt::NoModifier || event->modifiers() == Qt::KeypadModifier)) {
             if (m_timelineDock->isVisible()) {
                 emit m_timelineDock->zoomToFit();
             } else if (m_playlistDock->isVisible() && m_playlistDock->model()->rowCount() > 0) {
