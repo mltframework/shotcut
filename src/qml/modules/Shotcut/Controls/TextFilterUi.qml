@@ -218,7 +218,7 @@ GridLayout {
         text: qsTr('Thickness')
         Layout.alignment: Qt.AlignRight
     }
-    SpinBox {
+    Shotcut.DoubleSpinBox {
         id: outlineSpinner
         Layout.minimumWidth: 50
         Layout.columnSpan: 3
@@ -241,7 +241,7 @@ GridLayout {
         text: qsTr('Padding')
         Layout.alignment: Qt.AlignRight
     }
-    SpinBox {
+    Shotcut.DoubleSpinBox {
         id: padSpinner
         Layout.minimumWidth: 50
         Layout.columnSpan: 3

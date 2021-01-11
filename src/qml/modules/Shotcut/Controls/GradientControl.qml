@@ -181,16 +181,15 @@ RowLayout {
         }
     }
 
-    SpinBox {
+    Shotcut.DoubleSpinBox {
         Layout.alignment: Qt.AlignVCenter
         id: gradientSpinner
+        width: 100
         value: colors.length
         from: 1
         to: 10
         stepSize: 1
-        textFromValue: function(value, locale) {
-            return qsTr('%Ln colors', 'gradient control', value)
-        }
+        suffix: qsTr('colors', 'gradient control')
         onValueChanged: {
             _setStopCount(value)
         }

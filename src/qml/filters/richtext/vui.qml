@@ -291,15 +291,15 @@ Shotcut.VuiBase {
                             }
                         }
                     }
-                    SpinBox {
+                    Shotcut.DoubleSpinBox {
                         id: fontSizeSpinBox
                         Shotcut.HoverTip { text: qsTr('Text size') }
-                        implicitWidth: 50
+                        implicitWidth: 60
                         visible: toolbar.expanded
                         value: 72
                         from: 1
                         to: 1000
-                        wheelEnabled: true
+                        decimals: 0
                         property bool blockValue: false
                         onValueChanged: {
                             if (!blockValue) {
@@ -664,35 +664,41 @@ Shotcut.VuiBase {
                 text: qsTr('Rows')
                 Layout.alignment: Qt.AlignRight
             }
-            SpinBox {
+            Shotcut.DoubleSpinBox {
                 id: rowsSpinner
+                implicitWidth: 75
                 value: 1
                 from: 1
                 to: 100
                 stepSize: 1
+                decimals: 0
                 focus: true
             }
             Label {
                 text: qsTr('Columns')
                 Layout.alignment: Qt.AlignRight
             }
-            SpinBox {
+            Shotcut.DoubleSpinBox {
                 id: columnsSpinner
+                implicitWidth: 75
                 value: 2
                 from: 1
                 to: 100
                 stepSize: 1
+                decimals: 0
             }
             Label {
                 text: qsTr('Border')
                 Layout.alignment: Qt.AlignRight
             }
-            SpinBox {
+            Shotcut.DoubleSpinBox {
                 id: borderSpinner
+                implicitWidth: 75
                 value: 0
                 from: 0
                 to: 100
                 stepSize: 1
+                decimals: 0
             }
             Item { Layout.fillHeight: true; height: columnsSpinner.height }
         }

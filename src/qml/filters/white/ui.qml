@@ -145,10 +145,11 @@ Item {
             }
             Shotcut.DoubleSpinBox {
                 id: tempspinner
-                Layout.minimumWidth: 100
+                Layout.minimumWidth: 150
                 from: 1000.0
                 to: 15000.0
                 stepSize: 10
+                decimals: 0
                 suffix: qsTr('degrees')
                 onValueChanged: tempslider.value = value
             }

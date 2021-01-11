@@ -21,7 +21,7 @@ import QtQuick.Layouts 1.12
 Item {
     id: root
     property real value: 0.0
-    property int decimals: 2
+    property int decimals: 0
     property real from: 0.0
     property real to: 100.0
     property real stepSize: 1.0
@@ -38,7 +38,6 @@ Item {
     property bool _blockTextUpdate: false
 
     implicitHeight: spinbox.implicitHeight
-    implicitWidth: spinbox.implicitWidth // prefixText.implicitWidth + textInput.implicitWidth + suffixText.implicitWidth + 2
 
     Component.onCompleted: {
         updateValues()
@@ -67,17 +66,16 @@ Item {
         editable: true
         inputMethodHints: Qt.ImhFormattedNumbersOnly
         wheelEnabled: true
+        anchors.fill: parent
 
         contentItem: RowLayout{
             Text{
                 id: prefixText
-                Layout.preferredWidth: contentWidth
-                Layout.fillHeight: true
-                z: -1
                 font: textInput.font
                 color: textInput.color
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignHCenter
+                visible: text != ""
             }
             TextInput {
                 id: textInput
@@ -89,7 +87,6 @@ Item {
                 selectionColor : spinbox.palette.highlight
                 horizontalAlignment: Qt.AlignHCenter
                 verticalAlignment: Qt.AlignVCenter
-                readOnly: !spinbox.editable
                 property var _lastValidText: ""
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
 
@@ -171,13 +168,11 @@ Item {
             }
             Text{
                 id: suffixText
-                Layout.preferredWidth: contentWidth
-                Layout.fillHeight: true
-                z: -1
                 font: textInput.font
                 color: textInput.color
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignHCenter
+                visible: text != ""
             }
         }
 
