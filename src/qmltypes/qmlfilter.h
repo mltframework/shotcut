@@ -116,6 +116,7 @@ public:
 
 public slots:
     void preset(const QString& name);
+    void updateChangeCommand(const QString& name);
 
 signals:
     void presetsChanged();
@@ -140,9 +141,6 @@ private:
     
     QString objectNameOrService();
     int keyframeIndex(Mlt::Animation& animation, int position);
-
-private slots:
-    void updateChangeCommand(const QString& name);
 };
 
 class AnalyzeDelegate : public QObject

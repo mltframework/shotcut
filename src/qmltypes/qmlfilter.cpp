@@ -517,6 +517,7 @@ int QmlFilter::animateIn()
 void QmlFilter::setAnimateIn(int value)
 {
     m_filter.set(kShotcutAnimInProperty, m_filter.frames_to_time(qBound(0, value, duration()), mlt_time_clock));
+    updateChangeCommand(kShotcutAnimInProperty);
     emit animateInChanged();
 }
 
@@ -528,6 +529,7 @@ int QmlFilter::animateOut()
 void QmlFilter::setAnimateOut(int value)
 {
     m_filter.set(kShotcutAnimOutProperty, m_filter.frames_to_time(qBound(0, value, duration()), mlt_time_clock));
+    updateChangeCommand(kShotcutAnimOutProperty);
     emit animateOutChanged();
 }
 

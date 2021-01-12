@@ -130,6 +130,12 @@ ChangeParameterCommand::ChangeParameterCommand(const QString& filterName, Mlt::F
 {
     setText(QObject::tr("Change %1 filter").arg(m_filterName));
     m_before.inherit(m_filter);
+    if (!m_before.property_exists(kShotcutAnimInProperty)) {
+        m_before.set(kShotcutAnimInProperty, 0);
+    }
+    if (!m_before.property_exists(kShotcutAnimOutProperty)) {
+        m_before.set(kShotcutAnimOutProperty, 0);
+    }
     m_after.inherit(m_filter);
 }
 
