@@ -163,6 +163,7 @@ void QmlFilter::set(QString name, double value, int position, mlt_keyframe_type 
             || m_filter.get_double(qUtf8Printable(name)) != value) {
             double delta = value - m_filter.get_double(qUtf8Printable(name));
             m_filter.set(qUtf8Printable(name), value);
+            emit changed(name);
             updateChangeCommand(name);
             if (name == "in") {
                 emit inChanged(delta);
@@ -684,12 +685,12 @@ void QmlFilter::deselect()
     MAIN.filterController()->setCurrentFilter(-2);
 }
 
-void QmlFilter::startUndoTracking(FilterController* dock)
+void QmlFilter::startUndoTracking(FilterController* controller)
 {
     if (m_changeCommand) {
         delete m_changeCommand;
     }
-    m_changeCommand = new Filter::ChangeParameterCommand(m_metadata->name(), m_filter, dock);
+    m_changeCommand = new Filter::ChangeParameterCommand(m_metadata->name(), m_filter, controller);
 }
 
 AnalyzeDelegate::AnalyzeDelegate(Mlt::Filter& filter)

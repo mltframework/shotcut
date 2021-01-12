@@ -112,7 +112,7 @@ public:
     mlt_keyframe_type getKeyframeType(Mlt::Animation& animation, int position, mlt_keyframe_type defaultType);
     Q_INVOKABLE bool isAtLeastVersion(const QString& version);
     Q_INVOKABLE static void deselect();
-    void startUndoTracking(FilterController* dock);
+    void startUndoTracking(FilterController* controller);
 
 public slots:
     void preset(const QString& name);
