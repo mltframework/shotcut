@@ -30,6 +30,10 @@ class FilterController;
 namespace Filter
 {
 
+enum {
+    UndoIdChange
+};
+
 class AddCommand : public QUndoCommand
 {
 public:
@@ -86,10 +90,12 @@ class ChangeParameterCommand : public QUndoCommand
 {
 public:
     ChangeParameterCommand(const QString& filterName, Mlt::Filter& filter, FilterController* controller, QUndoCommand * parent = 0);
-    void update(const QString& parameter);
+    void update(const QString& propertyName);
     void redo();
     void undo();
-
+protected:
+    int id() const { return UndoIdChange; }
+    bool mergeWith(const QUndoCommand *other);
 private:
     QString m_filterName;
     Mlt::Filter m_filter;

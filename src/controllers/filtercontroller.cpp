@@ -114,8 +114,10 @@ QmlMetadata *FilterController::metadataForService(Mlt::Service *service)
 void FilterController::onUndoOrRedo(Mlt::Filter& filter)
 {
     if (m_mltFilter && filter.get_service() == m_mltFilter->get_service()) {
+        auto index = m_currentFilterIndex;
         MLT.refreshConsumer();
         emit undoOrRedo();
+        QMetaObject::invokeMethod(this, "setCurrentFilter", Qt::QueuedConnection, Q_ARG(int, index), Q_ARG(bool, false));
     }
 }
 

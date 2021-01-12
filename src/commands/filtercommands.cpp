@@ -139,9 +139,9 @@ ChangeParameterCommand::ChangeParameterCommand(const QString& filterName, Mlt::F
     m_after.inherit(m_filter);
 }
 
-void ChangeParameterCommand::update(const QString& parameter)
+void ChangeParameterCommand::update(const QString& propertyName)
 {
-    m_after.pass_property(m_filter, parameter.toUtf8().constData());
+    m_after.pass_property(m_filter, propertyName.toUtf8().constData());
 }
 
 void ChangeParameterCommand::redo()
@@ -162,6 +162,16 @@ void ChangeParameterCommand::undo()
     LOG_DEBUG() << m_filterName;
     m_filter.inherit(m_before);
     m_filterController->onUndoOrRedo(m_filter);
+}
+
+bool ChangeParameterCommand::mergeWith(const QUndoCommand* other)
+{
+    ChangeParameterCommand* that = const_cast<ChangeParameterCommand*>(static_cast<const ChangeParameterCommand*>(other));
+    LOG_DEBUG() << "this filter" << m_filterName << "that filter" << that->m_filterName;
+    if (that->id() != id() || that->m_filter.get_service() != m_filter.get_service())
+        return false;
+    m_after = that->m_after;
+    return true;
 }
 
 } // namespace Filter

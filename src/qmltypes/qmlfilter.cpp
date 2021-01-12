@@ -647,11 +647,12 @@ int QmlFilter::keyframeIndex(Mlt::Animation& animation, int position)
 void QmlFilter::updateChangeCommand(const QString& name)
 {
     if (m_changeCommand) {
+        m_changeCommand->update(name);
         if (!m_changeCommandPushed) {
             MAIN.undoStack()->push(m_changeCommand);
+            m_changeCommand = (Filter::ChangeParameterCommand*) MAIN.undoStack()->command(MAIN.undoStack()->index());
             m_changeCommandPushed = true;
         }
-        m_changeCommand->update(name);
     }
 }
 
