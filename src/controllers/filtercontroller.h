@@ -40,7 +40,6 @@ public:
 
     QmlMetadata* metadataForService(Mlt::Service *service);
     QmlFilter* currentFilter() const { return m_currentFilter.data(); }
-    void onUndoOrRedo(Mlt::Filter& filter);
 
 protected:
     void timerEvent(QTimerEvent*);
@@ -49,7 +48,6 @@ signals:
     void currentFilterChanged(QmlFilter* filter, QmlMetadata* meta, int index);
     void statusChanged(QString);
     void filterChanged(Mlt::Filter*);
-    void undoOrRedo();
 
 public slots:
     void setProducer(Mlt::Producer *producer = 0);

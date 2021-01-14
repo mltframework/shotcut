@@ -111,16 +111,6 @@ QmlMetadata *FilterController::metadataForService(Mlt::Service *service)
     return meta;
 }
 
-void FilterController::onUndoOrRedo(Mlt::Filter& filter)
-{
-    if (m_mltFilter && filter.get_service() == m_mltFilter->get_service()) {
-        auto index = m_currentFilterIndex;
-        MLT.refreshConsumer();
-        emit undoOrRedo();
-        QMetaObject::invokeMethod(this, "setCurrentFilter", Qt::QueuedConnection, Q_ARG(int, index), Q_ARG(bool, false));
-    }
-}
-
 void FilterController::timerEvent(QTimerEvent* event)
 {
     loadFilterMetadata();
@@ -176,9 +166,6 @@ void FilterController::setCurrentFilter(int attachedIndex, bool isNew)
 
     emit currentFilterChanged(filter, meta, m_currentFilterIndex);
     m_currentFilter.reset(filter);
-    if (filter) {
-        filter->startUndoTracking(this);
-    }
 }
 
 void FilterController::onFadeInChanged()

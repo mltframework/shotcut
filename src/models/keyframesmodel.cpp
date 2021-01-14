@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2021 Meltytech, LLC
+ * Copyright (c) 2018-2019 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -218,7 +218,6 @@ bool KeyframesModel::remove(int parameterIndex, int keyframeIndex)
                     modelIndex = index(keyframeIndex, 0, index(parameterIndex));
                     emit dataChanged(modelIndex, modelIndex, QVector<int>() << MinimumFrameRole);
                 }
-                m_filter->updateChangeCommand(name);
                 emit m_filter->changed();
             }
         }
@@ -296,7 +295,6 @@ bool KeyframesModel::setInterpolation(int parameterIndex, int keyframeIndex, Int
                 QModelIndex modelIndex = index(keyframeIndex, 0, index(parameterIndex));
                 emit dataChanged(modelIndex, modelIndex, QVector<int>() << KeyframeTypeRole << NameRole);
                 error = false;
-                m_filter->updateChangeCommand(name);
                 emit m_filter->changed();
             }
         }
@@ -324,7 +322,6 @@ bool KeyframesModel::setPosition(int parameterIndex, int keyframeIndex, int posi
                 emit dataChanged(modelIndex, modelIndex, QVector<int>() << FrameNumberRole << NameRole);
                 updateNeighborsMinMax(parameterIndex, keyframeIndex);
                 error = false;
-                m_filter->updateChangeCommand(name);
                 emit m_filter->changed();
             }
         }
@@ -341,7 +338,6 @@ void KeyframesModel::addKeyframe(int parameterIndex, double value, int position,
         m_filter->set(name, value, position,  mlt_keyframe_type(type));
         foreach (name, m_metadata->keyframes()->parameter(m_metadataIndex[parameterIndex])->gangedProperties())
             m_filter->set(name, value, position,  mlt_keyframe_type(type));
-        m_filter->updateChangeCommand(name);
     }
 }
 
@@ -358,7 +354,6 @@ void KeyframesModel::addKeyframe(int parameterIndex, int position)
                 m_filter->blockSignals(true);
                 m_filter->set(name, value, 1.0, position, keyframeType);
                 m_filter->blockSignals(false);
-                m_filter->updateChangeCommand(name);
             }
         } else if (parameter->isCurve()) {
             // Get the value from the existing position.
@@ -380,7 +375,6 @@ void KeyframesModel::addKeyframe(int parameterIndex, int position)
                 for (auto& key : parameter->gangedProperties())
                     m_filter->set(key, value, position, keyframeType);
                 m_filter->blockSignals(false);
-                m_filter->updateChangeCommand(name);
             }
         } else {
             emit keyframeAdded(name, position);
@@ -396,7 +390,6 @@ void KeyframesModel::setKeyframe(int parameterIndex, double value, int position,
         m_filter->filter().anim_set(name.toUtf8().constData(), value, position, m_filter->duration(), mlt_keyframe_type(type));
         foreach (name, m_metadata->keyframes()->parameter(m_metadataIndex[parameterIndex])->gangedProperties())
             m_filter->filter().anim_set(name.toUtf8().constData(), value, position, m_filter->duration(), mlt_keyframe_type(type));
-        m_filter->updateChangeCommand(name);
         emit m_filter->changed();
         QModelIndex modelIndex = index(keyframeIndex(parameterIndex, position), 0, index(parameterIndex));
         emit dataChanged(modelIndex, modelIndex, QVector<int>() << NumericValueRole << NameRole);
