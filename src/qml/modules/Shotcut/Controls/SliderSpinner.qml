@@ -117,6 +117,7 @@ RowLayout {
         Layout.minimumWidth: background.implicitWidth
         from: slider.from / ratio
         to: slider.to / ratio
+        decimals: parent.decimals
         stepSize: 1 / Math.pow(10, decimals)
         onValueChanged: slider.value = value * ratio
 
