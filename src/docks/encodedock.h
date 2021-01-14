@@ -159,6 +159,7 @@ private:
     Mlt::Producer* fromProducer() const;
     static void filterX265Params(QStringList& other);
     void onVideoCodecComboChanged(int index, bool ignorePreset = false);
+    bool checkForMissingFiles();
 };
 
 #endif // ENCODEDOCK_H
