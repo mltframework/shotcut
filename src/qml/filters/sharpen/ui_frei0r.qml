@@ -63,7 +63,9 @@ Item {
         var position = getPosition()
         blockUpdate = true
         amountSlider.value = filter.getDouble(paramAmount, position) * 100.0
+        amountKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(paramAmount) > 0
         sizeSlider.value = filter.getDouble(paramSize, position) * 100.0
+        sizeKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(paramSize) > 0
         blockUpdate = false
         amountSlider.enabled = sizeSlider.enabled
             = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1)
@@ -159,7 +161,6 @@ Item {
         }
         Shotcut.KeyframesButton {
             id: amountKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(paramAmount) > 0
             onToggled: onKeyframesButtonClicked(checked, paramAmount, amountSlider.value / 100.0)
         }
 
@@ -180,7 +181,6 @@ Item {
         }
         Shotcut.KeyframesButton {
             id: sizeKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(paramSize) > 0
             onToggled: onKeyframesButtonClicked(checked, paramSize, sizeSlider.value / 100.0)
         }
 

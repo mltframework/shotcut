@@ -284,7 +284,6 @@ GridLayout {
     Shotcut.KeyframesButton {
         id: positionKeyframesButton
         Layout.rowSpan: 2
-        checked: filter.keyframeCount(rectProperty) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
         onToggled: {
             if (checked) {
                 filter.clearSimpleAnimation(rectProperty)

@@ -61,6 +61,8 @@ Item {
         blockUpdate = true
         wslider.value = filter.getDouble('0', position) * 100
         hslider.value = filter.getDouble('1', position) * 100
+        widthKeyframesButton.checked = filter.keyframeCount('0') > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
+        heightKeyframesButton.checked = filter.keyframeCount('1') > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
         blockUpdate = false
         wslider.enabled = hslider.enabled = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1)
     }
@@ -148,8 +150,6 @@ Item {
             }
             onPresetSelected: {
                 setControls()
-                widthKeyframesButton.checked = filter.keyframeCount('0') > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
-                heightKeyframesButton.checked = filter.keyframeCount('1') > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
                 middleWidthValue = filter.getDouble('0', filter.animateIn)
                 middleHeightValue = filter.getDouble('1', filter.animateIn)
                 if (filter.animateIn > 0) {
@@ -179,7 +179,6 @@ Item {
         }
         Shotcut.KeyframesButton {
             id: widthKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('0') > 0
             onToggled: {
                 if (checked) {
                     blockUpdate = true
@@ -215,7 +214,6 @@ Item {
         }
         Shotcut.KeyframesButton {
             id: heightKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('1') > 0
             onToggled: {
                 if (checked) {
                     blockUpdate = true

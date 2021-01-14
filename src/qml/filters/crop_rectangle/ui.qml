@@ -92,6 +92,7 @@ Item {
         rectY.enabled = enabled
         rectW.enabled = enabled
         rectH.enabled = enabled
+        positionKeyframesButton.checked = filter.keyframeCount(rectProperty) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
     }
     
     function updateFilterRatio(position) {
@@ -188,7 +189,6 @@ Item {
                 setRatioControls()
                 setRectControls()
                 colorSwatch.value = filter.get('color')
-                positionKeyframesButton.checked = filter.keyframeCount(rectProperty) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
                 filter.blockSignals = true
                 middleValueRadius = filter.getDouble('radius', filter.animateIn)
                 filter.set(middleValueRect, filter.getRect(rectProperty, filter.animateIn + 1))
@@ -237,7 +237,6 @@ Item {
         Shotcut.KeyframesButton {
             id: positionKeyframesButton
             Layout.rowSpan: 2
-            checked: filter.keyframeCount(rectProperty) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
             onToggled: {
                 if (checked) {
                     filter.blockSignals = true
@@ -302,7 +301,6 @@ Item {
         }
         Shotcut.KeyframesButton {
             id: radiusKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('radius') > 0
             onToggled: {
                 var value = slider.value / 100.0
                 if (checked) {

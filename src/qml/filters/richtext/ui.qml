@@ -186,6 +186,7 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
         rectY.enabled = enabled
         rectW.enabled = enabled
         rectH.enabled = enabled
+        positionKeyframesButton.checked = filter.keyframeCount(rectProperty) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
 
         var document = getTextDimensions()
         if (parseInt(sizeW.text) !== Math.round(document.width) || parseInt(sizeH.text) !== Math.round(document.height)) {
@@ -303,7 +304,6 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
         Shotcut.KeyframesButton {
             id: positionKeyframesButton
             Layout.rowSpan: 2
-            checked: filter.keyframeCount(rectProperty) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
             onToggled: {
                 if (checked) {
                     filter.clearSimpleAnimation(rectProperty)

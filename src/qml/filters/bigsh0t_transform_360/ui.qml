@@ -39,8 +39,11 @@ Item {
         var position = getPosition()
         blockUpdate = true
         yawSlider.value = filter.getDouble("yaw", position)
+        yawKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount("yaw") > 0
         pitchSlider.value = filter.getDouble("pitch", position)
+        pitchKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount("pitch") > 0
         rollSlider.value = filter.getDouble("roll", position)
+        rollKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount("roll") > 0
         interpolationComboBox.currentIndex = filter.get("interpolation")
         gridCheckBox.checked = filter.get("grid") == '1';
         blockUpdate = false
@@ -111,7 +114,7 @@ Item {
             spinnerWidth: 120; suffix: ' deg'; decimals: 3; stepSize: 1;
             onValueChanged: updateProperty_yaw(getPosition())
         }
-        Shotcut.KeyframesButton { id: yawKeyframesButton; checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount("yaw") > 0; onToggled: { var value = yawSlider.value; if (checked) { blockUpdate = true; if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("yaw"); yawSlider.enabled = true; } filter.clearSimpleAnimation("yaw"); blockUpdate = false; filter.set("yaw", value, getPosition()); } else { filter.resetProperty("yaw"); filter.set("yaw", value); } } }
+        Shotcut.KeyframesButton { id: yawKeyframesButton; onToggled: { var value = yawSlider.value; if (checked) { blockUpdate = true; if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("yaw"); yawSlider.enabled = true; } filter.clearSimpleAnimation("yaw"); blockUpdate = false; filter.set("yaw", value, getPosition()); } else { filter.resetProperty("yaw"); filter.set("yaw", value); } } }
         Shotcut.UndoButton {
             id: yawUndo
             onClicked: yawSlider.value = 0
@@ -128,7 +131,7 @@ Item {
             spinnerWidth: 120; suffix: ' deg'; decimals: 3; stepSize: 1;
             onValueChanged: updateProperty_pitch(getPosition())
         }
-        Shotcut.KeyframesButton { id: pitchKeyframesButton; checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount("pitch") > 0; onToggled: { var value = pitchSlider.value; if (checked) { blockUpdate = true; if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("pitch"); pitchSlider.enabled = true; } filter.clearSimpleAnimation("pitch"); blockUpdate = false; filter.set("pitch", value, getPosition()); } else { filter.resetProperty("pitch"); filter.set("pitch", value); } } }
+        Shotcut.KeyframesButton { id: pitchKeyframesButton; onToggled: { var value = pitchSlider.value; if (checked) { blockUpdate = true; if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("pitch"); pitchSlider.enabled = true; } filter.clearSimpleAnimation("pitch"); blockUpdate = false; filter.set("pitch", value, getPosition()); } else { filter.resetProperty("pitch"); filter.set("pitch", value); } } }
         Shotcut.UndoButton {
             id: pitchUndo
             onClicked: pitchSlider.value = 0
@@ -145,7 +148,7 @@ Item {
             spinnerWidth: 120; suffix: ' deg'; decimals: 3; stepSize: 1;
             onValueChanged: updateProperty_roll(getPosition())
         }
-        Shotcut.KeyframesButton { id: rollKeyframesButton; checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount("roll") > 0; onToggled: { var value = rollSlider.value; if (checked) { blockUpdate = true; if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("roll"); rollSlider.enabled = true; } filter.clearSimpleAnimation("roll"); blockUpdate = false; filter.set("roll", value, getPosition()); } else { filter.resetProperty("roll"); filter.set("roll", value); } } }
+        Shotcut.KeyframesButton { id: rollKeyframesButton; onToggled: { var value = rollSlider.value; if (checked) { blockUpdate = true; if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("roll"); rollSlider.enabled = true; } filter.clearSimpleAnimation("roll"); blockUpdate = false; filter.set("roll", value, getPosition()); } else { filter.resetProperty("roll"); filter.set("roll", value); } } }
         Shotcut.UndoButton {
             id: rollUndo
             onClicked: rollSlider.value = 0

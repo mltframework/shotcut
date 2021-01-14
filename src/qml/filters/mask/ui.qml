@@ -83,9 +83,13 @@ Item {
         var position = getPosition()
         blockUpdate = true
         horizontalSlider.value = filter.getDouble(paramHorizontal, position) * 100
+        horizontalKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(paramHorizontal) > 0
         verticalSlider.value   = filter.getDouble(paramVertical, position) * 100
+        verticalKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(paramVertical) > 0
         widthSlider.value      = filter.getDouble(paramWidth, position) * 100
+        widthKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(paramWidth) > 0
         heightSlider.value     = filter.getDouble(paramHeight, position) * 100
+        heightKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(paramHeight) > 0
         blockUpdate = false
         horizontalSlider.enabled = verticalSlider.enabled = widthSlider.enabled = heightSlider.enabled
             = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1)
@@ -225,7 +229,6 @@ Item {
         }
         Shotcut.KeyframesButton {
             id: horizontalKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(paramHorizontal) > 0
             onToggled: onKeyframesButtonClicked(checked, paramHorizontal, horizontalSlider.value / 100)
         }
 
@@ -246,7 +249,6 @@ Item {
         }
         Shotcut.KeyframesButton {
             id: verticalKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(paramVertical) > 0
             onToggled: onKeyframesButtonClicked(checked, paramVertical, verticalSlider.value / 100)
         }
 
@@ -267,7 +269,6 @@ Item {
         }
         Shotcut.KeyframesButton {
             id: widthKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(paramWidth) > 0
             onToggled: onKeyframesButtonClicked(checked, paramWidth, widthSlider.value / 100)
         }
 
@@ -288,7 +289,6 @@ Item {
         }
         Shotcut.KeyframesButton {
             id: heightKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(paramHeight) > 0
             onToggled: onKeyframesButtonClicked(checked, paramHeight, heightSlider.value / 100)
         }
 

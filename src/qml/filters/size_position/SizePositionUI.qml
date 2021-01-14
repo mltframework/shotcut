@@ -379,10 +379,12 @@ Item {
             blockUpdate = true
             scaleSlider.value = Math.min(filterRect.width / profile.width * 100, scaleSlider.maximumValue)
         }
+        positionKeyframesButton.checked = filter.keyframeCount(rectProperty) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
         if (rotationProperty) {
             blockUpdate = true
             rotationSlider.value = filter.getDouble(rotationProperty, position)
             rotationSlider.enabled = enabled
+            rotationKeyframesButton.checked = filter.keyframeCount(rotationProperty) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
         }
         blockUpdate = false
         rectX.enabled = enabled
@@ -558,7 +560,6 @@ Item {
             }
             Shotcut.KeyframesButton {
                 id: positionKeyframesButton
-                checked: filter.keyframeCount(rectProperty) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
                 onToggled: {
                     if (checked) {
                         blockUpdate = true
@@ -814,7 +815,6 @@ Item {
         Shotcut.KeyframesButton {
             id: rotationKeyframesButton
             visible: !!rotationProperty
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(rotationProperty) > 0
             onToggled: {
                 toggleKeyframes(checked, rotationProperty, rotationSlider.value)
                 setControls()

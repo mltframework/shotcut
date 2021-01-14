@@ -52,6 +52,7 @@ Item {
         var position = getPosition()
         blockUpdate = true
         bslider.value = filter.getDouble(paramBlur, position) * 100.0
+        blurKeyframesButton.checked = filter.keyframeCount(paramBlur) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
         blockUpdate = false
         bslider.enabled = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1)
     }
@@ -103,7 +104,6 @@ Item {
             onBeforePresetLoaded: filter.resetProperty(paramBlur)
             onPresetSelected: {
                 setControls()
-                blurKeyframesButton.checked = filter.keyframeCount(paramBlur) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
                 middleValue = filter.getDouble(paramBlur, filter.animateIn)
                 if (filter.animateIn > 0)
                     startValue = filter.getDouble(paramBlur, 0)
@@ -128,7 +128,6 @@ Item {
         }
         Shotcut.KeyframesButton {
             id: blurKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(paramBlur) > 0
             onToggled: {
                 var value = bslider.value / 100.0
                 if (checked) {

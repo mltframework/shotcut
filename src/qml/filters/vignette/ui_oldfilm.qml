@@ -68,8 +68,11 @@ Item {
         var position = getPosition()
         blockUpdate = true
         radiusSlider.value = filter.getDouble('radius', position) * 100.0
+        radiusKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('radius') > 0
         smoothSlider.value = filter.getDouble('smooth', position) * 100.0
+        smoothKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('smooth') > 0
         opacitySlider.value = (1.0 - filter.getDouble('opacity', position)) * 100.0
+        opacityKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('opacity') > 0
         blockUpdate = false
         radiusSlider.enabled = smoothSlider.enabled = opacitySlider.enabled
             = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1)
@@ -170,7 +173,6 @@ Item {
         }
         Shotcut.KeyframesButton {
             id: radiusKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('radius') > 0
             onToggled: onKeyframesButtonClicked(checked, 'radius', radiusSlider.value / 100.0)
         }
 
@@ -190,7 +192,6 @@ Item {
         }
         Shotcut.KeyframesButton {
             id: smoothKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('smooth') > 0
             onToggled: onKeyframesButtonClicked(checked, 'smooth', smoothSlider.value / 100.0)
         }
 
@@ -223,7 +224,6 @@ Item {
         }
         Shotcut.KeyframesButton {
             id: opacityKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('opacity') > 0
             onToggled: onKeyframesButtonClicked(checked, 'opacity', 1.0 - opacitySlider.value / 100.0)
         }
 

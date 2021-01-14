@@ -58,6 +58,7 @@ Item {
         slider.value = filter.getDouble('split', position) * slider.maximumValue
         blockUpdate = false
         slider.enabled = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1)
+        keyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('split') > 0
     }
 
     function updateFilter(position) {
@@ -110,7 +111,6 @@ Item {
             }
             onPresetSelected: {
                 setControls()
-                keyframesButton.checked = filter.keyframeCount(parameters[0]) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
                 middleValue = filter.getDouble(parameters[0], filter.animateIn)
                 if (filter.animateIn > 0)
                     startValue = filter.getDouble(parameters[0], 0)
@@ -134,7 +134,6 @@ Item {
         }
         Shotcut.KeyframesButton {
             id: keyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('split') > 0
             onToggled: {
                 var value = slider.value / slider.maximumValue
                 if (checked) {

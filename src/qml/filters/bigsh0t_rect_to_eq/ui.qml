@@ -34,7 +34,9 @@ Item {
         var position = getPosition()
         blockUpdate = true
         hfovSlider.value = filter.getDouble("hfov", position)
+        hfovKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount("hfov") > 0
         vfovSlider.value = filter.getDouble("vfov", position)
+        VfovKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount("vfov") > 0
         interpolationComboBox.currentIndex = filter.get("interpolation")
         blockUpdate = false
     }
@@ -100,7 +102,7 @@ Item {
             spinnerWidth: 120; suffix: ' deg'; decimals: 3; stepSize: 1;
             onValueChanged: updateProperty_hfov(getPosition())
         }
-        Shotcut.KeyframesButton { id: hfovKeyframesButton; checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount("hfov") > 0; onToggled: { var value = hfovSlider.value; if (checked) { blockUpdate = true; if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("hfov"); hfovSlider.enabled = true; } filter.clearSimpleAnimation("hfov"); blockUpdate = false; filter.set("hfov", value, getPosition()); } else { filter.resetProperty("hfov"); filter.set("hfov", value); } } }
+        Shotcut.KeyframesButton { id: hfovKeyframesButton; onToggled: { var value = hfovSlider.value; if (checked) { blockUpdate = true; if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("hfov"); hfovSlider.enabled = true; } filter.clearSimpleAnimation("hfov"); blockUpdate = false; filter.set("hfov", value, getPosition()); } else { filter.resetProperty("hfov"); filter.set("hfov", value); } } }
         Shotcut.UndoButton {
             id: hfovUndo
             onClicked: hfovSlider.value = 90
@@ -117,7 +119,7 @@ Item {
             spinnerWidth: 120; suffix: ' deg'; decimals: 3; stepSize: 1;
             onValueChanged: updateProperty_vfov(getPosition())
         }
-        Shotcut.KeyframesButton { id: vfovKeyframesButton; checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount("vfov") > 0; onToggled: { var value = vfovSlider.value; if (checked) { blockUpdate = true; if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("vfov"); vfovSlider.enabled = true; } filter.clearSimpleAnimation("vfov"); blockUpdate = false; filter.set("vfov", value, getPosition()); } else { filter.resetProperty("vfov"); filter.set("vfov", value); } } }
+        Shotcut.KeyframesButton { id: vfovKeyframesButton; onToggled: { var value = vfovSlider.value; if (checked) { blockUpdate = true; if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("vfov"); vfovSlider.enabled = true; } filter.clearSimpleAnimation("vfov"); blockUpdate = false; filter.set("vfov", value, getPosition()); } else { filter.resetProperty("vfov"); filter.set("vfov", value); } } }
         Shotcut.UndoButton {
             id: vfovUndo
             onClicked: vfovSlider.value = 60

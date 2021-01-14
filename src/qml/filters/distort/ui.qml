@@ -53,8 +53,11 @@ Shotcut.KeyframableFilter {
         var position = getPosition()
         blockUpdate = true
         amplitudeSlider.value = filter.getDouble(amplitude, position) * amplitudeSlider.maximumValue
+        amplitudeKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(amplitude) > 0
         frequencySlider.value = filter.getDouble(frequency, position) * frequencySlider.maximumValue
+        frequencyKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(frequency) > 0
         velocitySlider.value = filter.getDouble(velocity, position) * velocitySlider.maximumValue
+        velocityKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(velocity) > 0
         blockUpdate = false
         enableControls(isSimpleKeyframesActive())
     }
@@ -109,7 +112,6 @@ Shotcut.KeyframableFilter {
         }
         Shotcut.KeyframesButton {
             id: amplitudeKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(amplitude) > 0
             onToggled: {
                 enableControls(true)
                 toggleKeyframes(checked, amplitude, amplitudeSlider.value / amplitudeSlider.maximumValue)
@@ -134,7 +136,6 @@ Shotcut.KeyframableFilter {
         }
         Shotcut.KeyframesButton {
             id: frequencyKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(frequency) > 0
             onToggled: {
                 enableControls(true)
                 toggleKeyframes(checked, frequency, frequencySlider.value / frequencySlider.maximumValue)
@@ -159,7 +160,6 @@ Shotcut.KeyframableFilter {
         }
         Shotcut.KeyframesButton {
             id: velocityKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(velocity) > 0
             onToggled: {
                 enableControls(true)
                 toggleKeyframes(checked, velocity, velocitySlider.value / velocitySlider.maximumValue)

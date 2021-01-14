@@ -48,7 +48,9 @@ Shotcut.KeyframableFilter {
         var position = getPosition()
         blockUpdate = true
         xsizeSlider.value = filter.getDouble(xsize, position) * maxFilterPercent
+        xsizeKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(xsize) > 0
         ysizeSlider.value = filter.getDouble(ysize, position) * maxFilterPercent
+        ysizeKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(ysize) > 0
         blockUpdate = false
         enableControls(isSimpleKeyframesActive())
     }
@@ -103,7 +105,6 @@ Shotcut.KeyframableFilter {
         }
         Shotcut.KeyframesButton {
             id: xsizeKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(xsize) > 0
             onToggled: {
                 enableControls(true)
                 toggleKeyframes(checked, xsize, xsizeSlider.value / maxFilterPercent)
@@ -128,7 +129,6 @@ Shotcut.KeyframableFilter {
         }
         Shotcut.KeyframesButton {
             id: ysizeKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(ysize) > 0
             onToggled: {
                 enableControls(true)
                 toggleKeyframes(checked, ysize, ysizeSlider.value / maxFilterPercent)

@@ -164,6 +164,11 @@ Shotcut.KeyframableFilter {
         setSliderValue(corner4xSlider, corners[3].x)
         setSliderValue(corner4ySlider, corners[3].y)
 
+        corner1KeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(corner1xProperty) > 0
+        stretchxKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(stretchxProperty) > 0
+        stretchyKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(stretchyProperty) > 0
+        featheralphaKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(featherProperty) > 0
+
         blockUpdate = false
         enableControls(isSimpleKeyframesActive())
     }
@@ -319,7 +324,6 @@ Shotcut.KeyframableFilter {
             }
             Shotcut.KeyframesButton {
                 id: corner1KeyframesButton
-                checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(corner1xProperty) > 0
                 onToggled: {
                     toggleKeyframes(checked, corner1xProperty, corners[0].x)
                     toggleKeyframes(checked, corner1yProperty, corners[0].y)
@@ -547,7 +551,6 @@ Shotcut.KeyframableFilter {
         }
         Shotcut.KeyframesButton {
             id: stretchxKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(stretchxProperty) > 0
             onToggled: {
                 toggleKeyframes(checked, stretchxProperty, 1.0 - stretchxSlider.value / stretchxSlider.maximumValue)
                 setControls()
@@ -572,7 +575,6 @@ Shotcut.KeyframableFilter {
         }
         Shotcut.KeyframesButton {
             id: stretchyKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(stretchyProperty) > 0
             onToggled: {
                 toggleKeyframes(checked, stretchyProperty, 1.0 - stretchySlider.value / stretchySlider.maximumValue)
                 setControls()
@@ -643,7 +645,6 @@ Shotcut.KeyframableFilter {
         }
         Shotcut.KeyframesButton {
             id: featheralphaKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(featherProperty) > 0
             onToggled: {
                 enableControls(true)
                 toggleKeyframes(checked, featherProperty, featheralphaSlider.value / featheralphaSlider.maximumValue)

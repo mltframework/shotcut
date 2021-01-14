@@ -53,9 +53,13 @@ Shotcut.KeyframableFilter {
         var position = getPosition()
         blockUpdate = true
         glitchFreqSlider.value = filter.getDouble(glitchFreq, position) * glitchFreqSlider.maximumValue
+        glitchKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(glitchFreq) > 0
         blockHSlider.value = filter.getDouble(blockH, position) * blockHSlider.maximumValue
+        blockKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(blockH) > 0
         shiftIntSlider.value = filter.getDouble(shiftInt, position) * shiftIntSlider.maximumValue
+        shiftKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(shiftInt) > 0
         colorIntSlider.value = filter.getDouble(colorInt, position) * colorIntSlider.maximumValue
+        colorKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(colorInt) > 0
         blockUpdate = false
         enableControls(isSimpleKeyframesActive())
     }
@@ -112,7 +116,6 @@ Shotcut.KeyframableFilter {
         }
         Shotcut.KeyframesButton {
             id: glitchKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(glitchFreq) > 0
             onToggled: {
                 enableControls(true)
                 toggleKeyframes(checked, glitchFreq, glitchFreqSlider.value / glitchFreqSlider.maximumValue)
@@ -137,7 +140,6 @@ Shotcut.KeyframableFilter {
         }
         Shotcut.KeyframesButton {
             id: blockKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(blockH) > 0
             onToggled: {
                 enableControls(true)
                 toggleKeyframes(checked, blockH, blockHSlider.value / blockHSlider.maximumValue)
@@ -162,7 +164,6 @@ Shotcut.KeyframableFilter {
         }
         Shotcut.KeyframesButton {
             id: shiftKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(shiftInt) > 0
             onToggled: {
                 enableControls(true)
                 toggleKeyframes(checked, shiftInt, shiftIntSlider.value / shiftIntSlider.maximumValue)
@@ -187,7 +188,6 @@ Shotcut.KeyframableFilter {
         }
         Shotcut.KeyframesButton {
             id: colorKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(colorInt) > 0
             onToggled: {
                 enableControls(true)
                 toggleKeyframes(checked, colorInt, colorIntSlider.value / colorIntSlider.maximumValue)

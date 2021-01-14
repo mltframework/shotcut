@@ -71,6 +71,13 @@ Shotcut.KeyframableFilter {
         holdSlider.value = filter.getDouble(hold, position)
         decaySlider.value = filter.getDouble(decay, position)
         rangeSlider.value = filter.getDouble(range, position)
+        lfkeyKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(lfkey) > 0
+        hfkeyKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(hfkey) > 0
+        thresholdKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(threshold) > 0
+        attackKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(attack) > 0
+        holdKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(hold) > 0
+        decayKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(decay) > 0
+        rangeKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(range) > 0
         blockUpdate = false
         enableControls(isSimpleKeyframesActive())
     }
@@ -130,7 +137,6 @@ Shotcut.KeyframableFilter {
         }
         Shotcut.KeyframesButton {
             id: lfkeyKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(lfkey) > 0
             onToggled: {
                 enableControls(true)
                 toggleKeyframes(checked, lfkey, lfkeySlider.value)
@@ -155,7 +161,6 @@ Shotcut.KeyframableFilter {
         }
         Shotcut.KeyframesButton {
             id: hfkeyKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(hfkey) > 0
             onToggled: {
                 enableControls(true)
                 toggleKeyframes(checked, hfkey, hfkeySlider.value)
@@ -188,7 +193,6 @@ Shotcut.KeyframableFilter {
         }
         Shotcut.KeyframesButton {
             id: thresholdKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(threshold) > 0
             onToggled: {
                 enableControls(true)
                 toggleKeyframes(checked, threshold, thresholdSlider.value)
@@ -212,7 +216,6 @@ Shotcut.KeyframableFilter {
         }
         Shotcut.KeyframesButton {
             id: attackKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(attack) > 0
             onToggled: {
                 enableControls(true)
                 toggleKeyframes(checked, attack, attackSlider.value)
@@ -236,7 +239,6 @@ Shotcut.KeyframableFilter {
         }
         Shotcut.KeyframesButton {
             id: holdKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(hold) > 0
             onToggled: {
                 enableControls(true)
                 toggleKeyframes(checked, hold, holdSlider.value)
@@ -260,7 +262,6 @@ Shotcut.KeyframableFilter {
         }
         Shotcut.KeyframesButton {
             id: decayKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(decay) > 0
             onToggled: {
                 enableControls(true)
                 toggleKeyframes(checked, decay, decaySlider.value)
@@ -285,7 +286,6 @@ Shotcut.KeyframableFilter {
         }
         Shotcut.KeyframesButton {
             id: rangeKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(range) > 0
             onToggled: {
                 enableControls(true)
                 toggleKeyframes(checked, range, rangeSlider.value)

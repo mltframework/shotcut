@@ -47,7 +47,9 @@ Shotcut.KeyframableFilter {
         var position = getPosition()
         blockUpdate = true
         verSplitSlider.value = filter.getDouble(verSplit, position) * verSplitSlider.maximumValue
+        verKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(verSplit) > 0
         horSplitSlider.value = filter.getDouble(horSplit, position) * horSplitSlider.maximumValue
+        horKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(horSplit) > 0
         blockUpdate = false
         enableControls(isSimpleKeyframesActive())
     }
@@ -99,7 +101,6 @@ Shotcut.KeyframableFilter {
         }
         Shotcut.KeyframesButton {
             id: verKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(verSplit) > 0
             onToggled: {
                 enableControls(true)
                 toggleKeyframes(checked, verSplit, verSplitSlider.value / verSplitSlider.maximumValue)
@@ -124,7 +125,6 @@ Shotcut.KeyframableFilter {
         }
         Shotcut.KeyframesButton {
             id: horKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(horSplit) > 0
             onToggled: {
                 enableControls(true)
                 toggleKeyframes(checked, horSplit, horSplitSlider.value / horSplitSlider.maximumValue)

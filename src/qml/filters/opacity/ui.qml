@@ -54,6 +54,7 @@ Item {
         var position = getPosition()
         blockUpdate = true
         slider.value = filter.getDouble('opacity', position) * 100.0
+        keyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('opacity') > 0
         blockUpdate = false
         slider.enabled = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1)
     }
@@ -142,7 +143,6 @@ Item {
         }
         Shotcut.KeyframesButton {
             id: keyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('opacity') > 0
             onToggled: {
                 var value = slider.value / 100.0
                 if (checked) {

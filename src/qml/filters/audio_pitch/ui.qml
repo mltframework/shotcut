@@ -74,6 +74,7 @@ Item {
         blockUpdate = true
         octaveSlider.value = filter.getDouble('octaveshift', position)
         frequencySlider.value = 1.0 / Math.pow(2, filter.getDouble('octaveshift', position))
+        octaveKeyframesButton.checked = filter.keyframeCount(parameters[0]) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
         blockUpdate = false
         octaveSlider.enabled = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1)
     }
@@ -127,7 +128,6 @@ Item {
             }
             onPresetSelected: {
                 setControls()
-                octaveKeyframesButton.checked = filter.keyframeCount(parameters[0]) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
                 middleValue = filter.getDouble(parameters[0], filter.animateIn)
                 if (filter.animateIn > 0)
                     startValue = filter.getDouble(parameters[0], 0)
@@ -160,7 +160,6 @@ Item {
         }
         Shotcut.KeyframesButton {
             id: octaveKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('octaveshift') > 0
             onToggled: {
                 if (checked) {
                     blockUpdate = true

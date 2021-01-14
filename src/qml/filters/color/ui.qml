@@ -61,6 +61,9 @@ Item {
         gainRedSpinner.value = wheelToSpinner(scaleValueToWheel(filter.getDouble("gain_r", position), gainFactor))
         gainGreenSpinner.value = wheelToSpinner(scaleValueToWheel(filter.getDouble("gain_g", position), gainFactor))
         gainBlueSpinner.value = wheelToSpinner(scaleValueToWheel(filter.getDouble("gain_b", position), gainFactor))
+        liftKeyframesButton.checked = filter.keyframeCount('lift_r') > 0
+        gammaKeyframesButton.checked = filter.keyframeCount('gamma_r') > 0
+        gainKeyframesButton.checked = filter.keyframeCount('gain_r') > 0
         blockUpdate = false
     }
 
@@ -154,7 +157,6 @@ Item {
         }
         Shotcut.KeyframesButton {
             id: liftKeyframesButton
-            checked: filter.keyframeCount('lift_r') > 0
             Layout.alignment: Qt.AlignLeft
             onToggled: {
                 if (checked) {
@@ -184,7 +186,6 @@ Item {
         }
         Shotcut.KeyframesButton {
             id: gammaKeyframesButton
-            checked: filter.keyframeCount('gamma_r') > 0
             Layout.alignment: Qt.AlignLeft
             onToggled: {
                 if (checked) {
@@ -214,7 +215,6 @@ Item {
         }
         Shotcut.KeyframesButton {
             id: gainKeyframesButton
-            checked: filter.keyframeCount('gain_r') > 0
             Layout.alignment: Qt.AlignLeft
             onToggled: {
                 if (checked) {

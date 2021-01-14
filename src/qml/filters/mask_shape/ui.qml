@@ -74,9 +74,9 @@ Item {
         var position = getPosition()
         blockUpdate = true
         thresholdSlider.value = filter.getDouble('filter.mix', position)
+        thresholdKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('filter.mix') > 0
         blockUpdate = false
-        thresholdSlider.enabled
-            = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1)
+        thresholdSlider.enabled = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1)
     }
     
     function setControls() {
@@ -327,7 +327,6 @@ Item {
         }
         Shotcut.KeyframesButton {
             id: thresholdKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('filter.mix') > 0
             onToggled: onKeyframesButtonClicked(checked, 'filter.mix', thresholdSlider.value)
         }
 

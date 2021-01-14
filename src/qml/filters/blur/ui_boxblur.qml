@@ -61,7 +61,9 @@ Item {
         var position = getPosition()
         blockUpdate = true
         wslider.value = filter.getDouble('hori', position)
+        widthKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('hori') > 0
         hslider.value = filter.getDouble('vert', position)
+        heightKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('vert') > 0
         blockUpdate = false
         wslider.enabled = hslider.enabled = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1)
     }
@@ -179,7 +181,6 @@ Item {
         }
         Shotcut.KeyframesButton {
             id: widthKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('hori') > 0
             onToggled: {
                 if (checked) {
                     blockUpdate = true
@@ -214,7 +215,6 @@ Item {
         }
         Shotcut.KeyframesButton {
             id: heightKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('vert') > 0
             onToggled: {
                 if (checked) {
                     blockUpdate = true

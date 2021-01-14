@@ -55,9 +55,13 @@ Shotcut.KeyframableFilter {
         var position = getPosition()
         blockUpdate = true
         xcenterSlider.value = filter.getDouble(xcenter, position) * xcenterSlider.maximumValue
+        xcenterKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(xcenter) > 0
         ycenterSlider.value = filter.getDouble(ycenter, position) * ycenterSlider.maximumValue
+        ycenterKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(ycenter) > 0
         correctionnearcenterSlider.value = filter.getDouble(correctionnearcenter, position) * correctionnearcenterSlider.maximumValue
+        cncenKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(correctionnearcenter) > 0
         correctionnearedgesSlider.value = filter.getDouble(correctionnearedges, position) * correctionnearedgesSlider.maximumValue
+        cnedgeKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(correctionnearedges) > 0
         blockUpdate = false
         enableControls(isSimpleKeyframesActive())
     }
@@ -116,7 +120,6 @@ Shotcut.KeyframableFilter {
         }
         Shotcut.KeyframesButton {
             id: xcenterKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(xcenter) > 0
             onToggled: {
                 enableControls(true)
                 toggleKeyframes(checked, xcenter, xcenterSlider.value / xcenterSlider.maximumValue)
@@ -141,7 +144,6 @@ Shotcut.KeyframableFilter {
         }
         Shotcut.KeyframesButton {
             id: ycenterKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(ycenter) > 0
             onToggled: {
                 enableControls(true)
                 toggleKeyframes(checked, ycenter, ycenterSlider.value / ycenterSlider.maximumValue)
@@ -166,7 +168,6 @@ Shotcut.KeyframableFilter {
         }
         Shotcut.KeyframesButton {
             id: cncenKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(correctionnearcenter) > 0
             onToggled: {
                 enableControls(true)
                 toggleKeyframes(checked, correctionnearcenter, correctionnearcenterSlider.value / correctionnearcenterSlider.maximumValue)
@@ -191,7 +192,6 @@ Shotcut.KeyframableFilter {
         }
         Shotcut.KeyframesButton {
             id: cnedgeKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(correctionnearedges) > 0
             onToggled: {
                 enableControls(true)
                 toggleKeyframes(checked, correctionnearedges, correctionnearedgesSlider.value / correctionnearedgesSlider.maximumValue)

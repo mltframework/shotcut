@@ -45,6 +45,7 @@ Shotcut.KeyframableFilter {
         var position = getPosition()
         blockUpdate = true
         noiseSlider.value = filter.getDouble(noise, position) * noiseSlider.maximumValue
+        noiseKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(noise) > 0
         blockUpdate = false
         enableControls(isSimpleKeyframesActive())
     }
@@ -99,7 +100,6 @@ Shotcut.KeyframableFilter {
         }
         Shotcut.KeyframesButton {
             id: noiseKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(noise) > 0
             onToggled: {
                 enableControls(true)
                 toggleKeyframes(checked, noise, noiseSlider.value / noiseSlider.maximumValue)

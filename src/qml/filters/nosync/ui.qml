@@ -44,6 +44,7 @@ Shotcut.KeyframableFilter {
         var position = getPosition()
         blockUpdate = true
         horizontalSlider.value = filter.getDouble(horizontal, position) * horizontalSlider.maximumValue
+        horizontalKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(horizontal) > 0
         blockUpdate = false
         enableControls(isSimpleKeyframesActive())
     }
@@ -96,7 +97,6 @@ Shotcut.KeyframableFilter {
         }
         Shotcut.KeyframesButton {
             id: horizontalKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(horizontal) > 0
             onToggled: {
                 enableControls(true)
                 toggleKeyframes(checked, horizontal, horizontalSlider.value / horizontalSlider.maximumValue)

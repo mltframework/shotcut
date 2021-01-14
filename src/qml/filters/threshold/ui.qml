@@ -50,6 +50,7 @@ Shotcut.KeyframableFilter {
         var position = getPosition()
         blockUpdate = true
         thresholdSlider.value = filter.getDouble(threshold, position) / 255  * thresholdSlider.maximumValue
+        thresholdKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(threshold) > 0
         blockUpdate = false
         enableControls(isSimpleKeyframesActive())
     }
@@ -102,7 +103,6 @@ Shotcut.KeyframableFilter {
         }
         Shotcut.KeyframesButton {
             id: thresholdKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(threshold) > 0
             onToggled: {
                 enableControls(true)
                 toggleKeyframes(checked, threshold, thresholdSlider.value / thresholdSlider.maximumValue * 255)

@@ -61,10 +61,14 @@ Shotcut.KeyframableFilter {
         blockUpdate = true
         rotationSlider.value = filter.getDouble('transition.fix_rotate_x', position)
         rotationSlider.enabled = scaleSlider.enabled = isSimpleKeyframesActive()
+        rotationKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('transition.fix_rotate_x') > 0
         var scale = filter.getDouble('transition.scale_x', position)
         scaleSlider.value = isAtLeastVersion4? scale * 100 : 100 / scale
+        scaleKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('transition.scale_x') > 0
         xOffsetSlider.value = filter.getDouble('transition.ox', position) * -1
+        xOffsetKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('transition.ox') > 0
         yOffsetSlider.value = filter.getDouble('transition.oy', position) * -1
+        yOffsetKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('transition.oy') > 0
         blockUpdate = false
 
         var s = filter.get('background')
@@ -171,7 +175,6 @@ Shotcut.KeyframableFilter {
         }
         Shotcut.KeyframesButton {
             id: rotationKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('transition.fix_rotate_x') > 0
             onToggled: {
                 toggleKeyframes(checked, 'transition.fix_rotate_x', rotationSlider.value)
                 setControls()
@@ -196,7 +199,6 @@ Shotcut.KeyframableFilter {
         }
         Shotcut.KeyframesButton {
             id: scaleKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('transition.scale_x') > 0
             onToggled: {
                 var value = getScaleValue()
                 if (checked) {
@@ -242,7 +244,6 @@ Shotcut.KeyframableFilter {
         }
         Shotcut.KeyframesButton {
             id: xOffsetKeyframesButton
-            checked: filter.keyframeCount('transition.ox') > 0
             onToggled: {
                 if (checked) {
                     filter.set('transition.ox', -xOffsetSlider.value, getPosition())
@@ -274,7 +275,6 @@ Shotcut.KeyframableFilter {
         }
         Shotcut.KeyframesButton {
             id: yOffsetKeyframesButton
-            checked: filter.keyframeCount('transition.oy') > 0
             onToggled: {
                 if (checked) {
                     filter.set('transition.oy', -yOffsetSlider.value, getPosition())

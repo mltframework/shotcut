@@ -70,6 +70,7 @@ ToolButton {
         onYes: {
             checkbox.checked = false
             checkbox.toggled()
+            parameters.reload()
         }
         onNo: {
             checkbox.checked = true

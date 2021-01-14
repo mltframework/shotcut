@@ -85,6 +85,7 @@ Item {
         gainSlider.value = filter.getDouble('level', position)
         blockUpdate = false
         gainSlider.enabled = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1)
+        gainKeyframesButton.checked = filter.keyframeCount(parameters[0]) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
     }
 
     function updateFilter(position) {
@@ -136,7 +137,6 @@ Item {
             }
             onPresetSelected: {
                 setControls()
-                gainKeyframesButton.checked = filter.keyframeCount(parameters[0]) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
                 middleValue = filter.getDouble(parameters[0], filter.animateIn)
                 if (filter.animateIn > 0)
                     startValue = filter.getDouble(parameters[0], 0)
@@ -162,7 +162,6 @@ Item {
         }
         Shotcut.KeyframesButton {
             id: gainKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('level') > 0
             onToggled: {
                 if (checked) {
                     blockUpdate = true

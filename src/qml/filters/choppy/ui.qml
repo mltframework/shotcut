@@ -43,6 +43,7 @@ Shotcut.KeyframableFilter {
     function setControls() {
         blockUpdate = true
         amountSlider.value = filter.getDouble(amount, getPosition())
+        amountKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(amount) > 0
         blockUpdate = false
         enableControls(isSimpleKeyframesActive())
     }
@@ -96,7 +97,6 @@ Shotcut.KeyframableFilter {
         }
         Shotcut.KeyframesButton {
             id: amountKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(amount) > 0
             onToggled: {
                 enableControls(true)
                 toggleKeyframes(checked, amount, amountSlider.value)

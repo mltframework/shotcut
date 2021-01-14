@@ -54,6 +54,7 @@ Item {
         var position = getPosition()
         blockUpdate = true
         slider.value = filter.getDouble(saturationParameter, position) * 100
+        keyframesButton.checked = filter.keyframeCount(parameters[0]) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
         blockUpdate = false
         slider.enabled = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1)
     }
@@ -108,7 +109,6 @@ Item {
             }
             onPresetSelected: {
                 setControls()
-                keyframesButton.checked = filter.keyframeCount(parameters[0]) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
                 middleValue = filter.getDouble(saturationParameter, filter.animateIn)
                 if (filter.animateIn > 0)
                     startValue = filter.getDouble(saturationParameter, 0)
@@ -130,7 +130,6 @@ Item {
         }
         Shotcut.KeyframesButton {
             id: keyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(saturationParameter) > 0
             onToggled: {
                 var value = slider.value / 100
                 if (checked) {

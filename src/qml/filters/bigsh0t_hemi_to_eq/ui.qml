@@ -83,18 +83,31 @@ Item {
         var position = getPosition()
         blockUpdate = true
         yawSlider.value = filter.getDouble("yaw", position)
+        yawKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount("yaw") > 0
         pitchSlider.value = filter.getDouble("pitch", position)
+        pitchKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount("pitch") > 0
         rollSlider.value = filter.getDouble("roll", position)
+        rollKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount("roll") > 0
         frontXSlider.value = filter.getDouble("frontX", position)
+        frontXKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount("frontX") > 0
         frontYSlider.value = filter.getDouble("frontY", position)
+        frontYKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount("frontY") > 0
         frontUpSlider.value = filter.getDouble("frontUp", position)
+        frontUpKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount("frontUp") > 0
         backXSlider.value = filter.getDouble("backX", position)
+        backXKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount("backX") > 0
         backYSlider.value = filter.getDouble("backY", position)
+        backYKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount("backY") > 0
         backUpSlider.value = filter.getDouble("backUp", position)
+        backUpKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount("backUp") > 0
         fovSlider.value = filter.getDouble("fov", position)
+        fovKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount("fov") > 0
         radiusSlider.value = filter.getDouble("radius", position)
+        radiusKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount("radius") > 0
         nadirRadiusSlider.value = filter.getDouble("nadirRadius", position)
+        nadirRadiusKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount("nadirRadius") > 0
         nadirCorrectionStartSlider.value = filter.getDouble("nadirCorrectionStart", position)
+        nadirCorrectionStartKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount("nadirCorrectionStart") > 0
         interpolationComboBox.currentIndex = filter.get("interpolation")
         projectionComboBox.currentIndex = filter.get("projection")
 
@@ -209,7 +222,7 @@ Item {
             spinnerWidth: 120; suffix: ' deg'; decimals: 3; stepSize: 1;
             onValueChanged: updateProperty_yaw(getPosition())
         }
-        Shotcut.KeyframesButton { id: yawKeyframesButton; checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount("yaw") > 0; onToggled: { var value = yawSlider.value; if (checked) { blockUpdate = true; if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("yaw"); yawSlider.enabled = true; } filter.clearSimpleAnimation("yaw"); blockUpdate = false; filter.set("yaw", value, getPosition()); } else { filter.resetProperty("yaw"); filter.set("yaw", value); } } }
+        Shotcut.KeyframesButton { id: yawKeyframesButton; onToggled: { var value = yawSlider.value; if (checked) { blockUpdate = true; if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("yaw"); yawSlider.enabled = true; } filter.clearSimpleAnimation("yaw"); blockUpdate = false; filter.set("yaw", value, getPosition()); } else { filter.resetProperty("yaw"); filter.set("yaw", value); } } }
         Shotcut.UndoButton {
             id: yawUndo
             onClicked: yawSlider.value = 0
@@ -243,7 +256,7 @@ Item {
             spinnerWidth: 120; suffix: ' deg'; decimals: 3; stepSize: 1;
             onValueChanged: updateProperty_roll(getPosition())
         }
-        Shotcut.KeyframesButton { id: rollKeyframesButton; checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount("roll") > 0; onToggled: { var value = rollSlider.value; if (checked) { blockUpdate = true; if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("roll"); rollSlider.enabled = true; } filter.clearSimpleAnimation("roll"); blockUpdate = false; filter.set("roll", value, getPosition()); } else { filter.resetProperty("roll"); filter.set("roll", value); } } }
+        Shotcut.KeyframesButton { id: rollKeyframesButton; onToggled: { var value = rollSlider.value; if (checked) { blockUpdate = true; if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("roll"); rollSlider.enabled = true; } filter.clearSimpleAnimation("roll"); blockUpdate = false; filter.set("roll", value, getPosition()); } else { filter.resetProperty("roll"); filter.set("roll", value); } } }
         Shotcut.UndoButton {
             id: rollUndo
             onClicked: rollSlider.value = 0
@@ -285,7 +298,7 @@ Item {
             stepSize: 0.0001
             onValueChanged: updateProperty_fov(getPosition())
         }
-        Shotcut.KeyframesButton { id: fovKeyframesButton; checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount("fov") > 0; onToggled: { var value = fovSlider.value; if (checked) { blockUpdate = true; if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("fov"); fovSlider.enabled = true; } filter.clearSimpleAnimation("fov"); blockUpdate = false; filter.set("fov", value, getPosition()); } else { filter.resetProperty("fov"); filter.set("fov", value); } } }
+        Shotcut.KeyframesButton { id: fovKeyframesButton; onToggled: { var value = fovSlider.value; if (checked) { blockUpdate = true; if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("fov"); fovSlider.enabled = true; } filter.clearSimpleAnimation("fov"); blockUpdate = false; filter.set("fov", value, getPosition()); } else { filter.resetProperty("fov"); filter.set("fov", value); } } }
         Shotcut.UndoButton {
             id: fovUndo
             onClicked: fovSlider.value = 180
@@ -304,7 +317,7 @@ Item {
             stepSize: 0.0001
             onValueChanged: updateProperty_radius(getPosition())
         }
-        Shotcut.KeyframesButton { id: radiusKeyframesButton; checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount("radius") > 0; onToggled: { var value = radiusSlider.value; if (checked) { blockUpdate = true; if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("radius"); radiusSlider.enabled = true; } filter.clearSimpleAnimation("radius"); blockUpdate = false; filter.set("radius", value, getPosition()); } else { filter.resetProperty("radius"); filter.set("radius", value); } } }
+        Shotcut.KeyframesButton { id: radiusKeyframesButton; onToggled: { var value = radiusSlider.value; if (checked) { blockUpdate = true; if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("radius"); radiusSlider.enabled = true; } filter.clearSimpleAnimation("radius"); blockUpdate = false; filter.set("radius", value, getPosition()); } else { filter.resetProperty("radius"); filter.set("radius", value); } } }
         Shotcut.UndoButton {
             id: radiusUndo
             onClicked: radiusSlider.value = 0.25
@@ -330,7 +343,7 @@ Item {
             suffix: ' '
             onValueChanged: updateProperty_frontX(getPosition())
         }
-        Shotcut.KeyframesButton { id: frontXKeyframesButton; checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount("frontX") > 0; onToggled: { var value = frontXSlider.value; if (checked) { blockUpdate = true; if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("frontX"); frontXSlider.enabled = true; } filter.clearSimpleAnimation("frontX"); blockUpdate = false; filter.set("frontX", value, getPosition()); } else { filter.resetProperty("frontX"); filter.set("frontX", value); } } }
+        Shotcut.KeyframesButton { id: frontXKeyframesButton; onToggled: { var value = frontXSlider.value; if (checked) { blockUpdate = true; if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("frontX"); frontXSlider.enabled = true; } filter.clearSimpleAnimation("frontX"); blockUpdate = false; filter.set("frontX", value, getPosition()); } else { filter.resetProperty("frontX"); filter.set("frontX", value); } } }
         Shotcut.UndoButton {
             id: frontXUndo
             onClicked: frontXSlider.value = 0.25
@@ -349,7 +362,7 @@ Item {
             suffix: ' '
             onValueChanged: updateProperty_frontY(getPosition())
         }
-        Shotcut.KeyframesButton { id: frontYKeyframesButton; checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount("frontY") > 0; onToggled: { var value = frontYSlider.value; if (checked) { blockUpdate = true; if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("frontY"); frontYSlider.enabled = true; } filter.clearSimpleAnimation("frontY"); blockUpdate = false; filter.set("frontY", value, getPosition()); } else { filter.resetProperty("frontY"); filter.set("frontY", value); } } }
+        Shotcut.KeyframesButton { id: frontYKeyframesButton; onToggled: { var value = frontYSlider.value; if (checked) { blockUpdate = true; if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("frontY"); frontYSlider.enabled = true; } filter.clearSimpleAnimation("frontY"); blockUpdate = false; filter.set("frontY", value, getPosition()); } else { filter.resetProperty("frontY"); filter.set("frontY", value); } } }
         Shotcut.UndoButton {
             id: frontYUndo
             onClicked: frontYSlider.value = 0.25
@@ -392,7 +405,7 @@ Item {
             suffix: ' '
             onValueChanged: updateProperty_backX(getPosition())
         }
-        Shotcut.KeyframesButton { id: backXKeyframesButton; checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount("backX") > 0; onToggled: { var value = backXSlider.value; if (checked) { blockUpdate = true; if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("backX"); backXSlider.enabled = true; } filter.clearSimpleAnimation("backX"); blockUpdate = false; filter.set("backX", value, getPosition()); } else { filter.resetProperty("backX"); filter.set("backX", value); } } }
+        Shotcut.KeyframesButton { id: backXKeyframesButton; onToggled: { var value = backXSlider.value; if (checked) { blockUpdate = true; if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("backX"); backXSlider.enabled = true; } filter.clearSimpleAnimation("backX"); blockUpdate = false; filter.set("backX", value, getPosition()); } else { filter.resetProperty("backX"); filter.set("backX", value); } } }
         Shotcut.UndoButton {
             id: backXUndo
             onClicked: backXSlider.value = 0.25
@@ -411,7 +424,7 @@ Item {
             suffix: ' '
             onValueChanged: updateProperty_backY(getPosition())
         }
-        Shotcut.KeyframesButton { id: backYKeyframesButton; checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount("backY") > 0; onToggled: { var value = backYSlider.value; if (checked) { blockUpdate = true; if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("backY"); backYSlider.enabled = true; } filter.clearSimpleAnimation("backY"); blockUpdate = false; filter.set("backY", value, getPosition()); } else { filter.resetProperty("backY"); filter.set("backY", value); } } }
+        Shotcut.KeyframesButton { id: backYKeyframesButton; onToggled: { var value = backYSlider.value; if (checked) { blockUpdate = true; if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("backY"); backYSlider.enabled = true; } filter.clearSimpleAnimation("backY"); blockUpdate = false; filter.set("backY", value, getPosition()); } else { filter.resetProperty("backY"); filter.set("backY", value); } } }
         Shotcut.UndoButton {
             id: backYUndo
             onClicked: backYSlider.value = 0.25
@@ -455,7 +468,7 @@ Item {
             stepSize: 0.0001
             onValueChanged: updateProperty_nadirRadius(getPosition())
         }
-        Shotcut.KeyframesButton { id: nadirRadiusKeyframesButton; checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount("nadirRadius") > 0; onToggled: { var value = nadirRadiusSlider.value; if (checked) { blockUpdate = true; if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("nadirRadius"); nadirRadiusSlider.enabled = true; } filter.clearSimpleAnimation("nadirRadius"); blockUpdate = false; filter.set("nadirRadius", value, getPosition()); } else { filter.resetProperty("nadirRadius"); filter.set("nadirRadius", value); } } }
+        Shotcut.KeyframesButton { id: nadirRadiusKeyframesButton; onToggled: { var value = nadirRadiusSlider.value; if (checked) { blockUpdate = true; if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("nadirRadius"); nadirRadiusSlider.enabled = true; } filter.clearSimpleAnimation("nadirRadius"); blockUpdate = false; filter.set("nadirRadius", value, getPosition()); } else { filter.resetProperty("nadirRadius"); filter.set("nadirRadius", value); } } }
         Shotcut.UndoButton {
             id: nadirRadiusUndo
             onClicked: nadirRadiusSlider.value = 0.2229
@@ -474,7 +487,7 @@ Item {
             stepSize: 0.0001
             onValueChanged: updateProperty_nadirCorrectionStart(getPosition())
         }
-        Shotcut.KeyframesButton { id: nadirCorrectionStartKeyframesButton; checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount("nadirCorrectionStart") > 0; onToggled: { var value = nadirCorrectionStartSlider.value; if (checked) { blockUpdate = true; if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("nadirCorrectionStart"); nadirCorrectionStartSlider.enabled = true; } filter.clearSimpleAnimation("nadirCorrectionStart"); blockUpdate = false; filter.set("nadirCorrectionStart", value, getPosition()); } else { filter.resetProperty("nadirCorrectionStart"); filter.set("nadirCorrectionStart", value); } } }
+        Shotcut.KeyframesButton { id: nadirCorrectionStartKeyframesButton; onToggled: { var value = nadirCorrectionStartSlider.value; if (checked) { blockUpdate = true; if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("nadirCorrectionStart"); nadirCorrectionStartSlider.enabled = true; } filter.clearSimpleAnimation("nadirCorrectionStart"); blockUpdate = false; filter.set("nadirCorrectionStart", value, getPosition()); } else { filter.resetProperty("nadirCorrectionStart"); filter.set("nadirCorrectionStart", value); } } }
         Shotcut.UndoButton {
             id: nadirCorrectionStartUndo
             onClicked: radiusSlider.value = 0.8

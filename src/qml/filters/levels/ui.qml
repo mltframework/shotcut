@@ -79,8 +79,11 @@ Item {
         var position = getPosition()
         blockUpdate = true
         inputBlackSlider.value = filter.getDouble(inputBlackParam, position) * inputBlackSlider.maximumValue
+        inputBlackKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(inputBlackParam) > 0
         inputWhiteSlider.value = filter.getDouble(inputWhiteParam, position) * inputWhiteSlider.maximumValue
+        inputWhiteKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(inputWhiteParam) > 0
         gammaSlider.value = filter.getDouble(gammaParam, position) * gammaSlider.maximumValue
+        gammaKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(gammaParam) > 0
         blockUpdate = false
         inputBlackSlider.enabled = inputWhiteSlider.enabled = gammaSlider.enabled
             = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1)
@@ -226,7 +229,6 @@ Item {
         }
         Shotcut.KeyframesButton {
             id: inputBlackKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(inputBlackParam) > 0
             onToggled: onKeyframesButtonClicked(checked, inputBlackParam, inputBlackSlider.value / inputBlackSlider.maximumValue)
         }
 
@@ -246,7 +248,6 @@ Item {
         }
         Shotcut.KeyframesButton {
             id: inputWhiteKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(inputWhiteParam) > 0
             onToggled: onKeyframesButtonClicked(checked, inputWhiteParam, inputWhiteSlider.value / inputWhiteSlider.maximumValue)
         }
 
@@ -266,7 +267,6 @@ Item {
         }
         Shotcut.KeyframesButton {
             id: gammaKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(gammaParam) > 0
             onToggled: onKeyframesButtonClicked(checked, gammaParam, gammaSlider.value / gammaSlider.maximumValue)
         }
 

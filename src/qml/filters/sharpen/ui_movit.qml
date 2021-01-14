@@ -69,9 +69,13 @@ Item {
         var position = getPosition()
         blockUpdate = true
         circleSlider.value = filter.getDouble("circle_radius", position)
+        circleKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('circle_radius') > 0
         gaussianSlider.value = filter.getDouble("gaussian_radius", position)
+        gaussianKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('gaussian_radius') > 0
         correlationSlider.value = filter.getDouble("correlation", position)
+        correlationKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('correlation') > 0
         noiseSlider.value = filter.getDouble("noise", position)
+        noiseKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('noise') > 0
         blockUpdate = false
         circleSlider.enabled = gaussianSlider.enabled = correlationSlider.enabled = noiseSlider.enabled
             = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1)
@@ -168,7 +172,6 @@ Item {
         }
         Shotcut.KeyframesButton {
             id: circleKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('circle_radius') > 0
             onToggled: onKeyframesButtonClicked(checked, 'circle_radius', circleSlider.value)
         }
 
@@ -190,7 +193,6 @@ Item {
         }
         Shotcut.KeyframesButton {
             id: gaussianKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('gaussian_radius') > 0
             onToggled: onKeyframesButtonClicked(checked, 'gaussian_radius', gaussianSlider.value)
         }
 
@@ -211,7 +213,6 @@ Item {
         }
         Shotcut.KeyframesButton {
             id: correlationKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('correlation') > 0
             onToggled: onKeyframesButtonClicked(checked, 'correlation', correlationSlider.value)
         }
 
@@ -232,7 +233,6 @@ Item {
         }
         Shotcut.KeyframesButton {
             id: noiseKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('noise') > 0
             onToggled: onKeyframesButtonClicked(checked, 'noise', noiseSlider.value)
         }
 

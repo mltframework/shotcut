@@ -62,7 +62,9 @@ Item {
         var position = getPosition()
         blockUpdate = true
         radiusSlider.value = filter.getDouble('radius', position) * 100.0
+        radiusKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('radius') > 0
         innerSlider.value = filter.getDouble('inner_radius', position) * 100.0
+        innerKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('inner_radius') > 0
         blockUpdate = false
         radiusSlider.enabled = innerSlider.enabled
             = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1)
@@ -158,7 +160,6 @@ Item {
         }
         Shotcut.KeyframesButton {
             id: radiusKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('radius') > 0
             onToggled: onKeyframesButtonClicked(checked, 'radius', radiusSlider.value / 100.0)
         }
 
@@ -178,7 +179,6 @@ Item {
         }
         Shotcut.KeyframesButton {
             id: innerKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('inner_radius') > 0
             onToggled: onKeyframesButtonClicked(checked, 'inner_radius', innerSlider.value / 100.0)
         }
 

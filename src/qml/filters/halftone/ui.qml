@@ -54,9 +54,13 @@ Shotcut.KeyframableFilter {
         var position = getPosition()
         blockUpdate = true
         dotradiusSlider.value = filter.getDouble(dotradius, position) * dotradiusSlider.maximumValue
+        dotKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(dotradius) > 0
         cyanangleSlider.value = filter.getDouble(cyanangle, position) * cyanangleSlider.maximumValue
+        cyanKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(cyanangle) > 0
         magentaangleSlider.value = filter.getDouble(magentaangle, position) * magentaangleSlider.maximumValue
+        magentaKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(magentaangle) > 0
         yellowangleSlider.value = filter.getDouble(yellowangle, position) * yellowangleSlider.maximumValue
+        yellowKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(yellowangle) > 0
         blockUpdate = false
         enableControls(isSimpleKeyframesActive())
     }
@@ -115,7 +119,6 @@ Shotcut.KeyframableFilter {
         }
         Shotcut.KeyframesButton {
             id: dotKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(dotradius) > 0
             onToggled: {
                 enableControls(true)
                 toggleKeyframes(checked, dotradius, dotradiusSlider.value / dotradiusSlider.maximumValue)
@@ -140,7 +143,6 @@ Shotcut.KeyframableFilter {
         }
         Shotcut.KeyframesButton {
             id: cyanKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(cyanangle) > 0
             onToggled: {
                 enableControls(true)
                 toggleKeyframes(checked, cyanangle, cyanangleSlider.value / cyanangleSlider.maximumValue)
@@ -165,7 +167,6 @@ Shotcut.KeyframableFilter {
         }
         Shotcut.KeyframesButton {
             id: magentaKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(magentaangle) > 0
             onToggled: {
                 enableControls(true)
                 toggleKeyframes(checked, magentaangle, magentaangleSlider.value / magentaangleSlider.maximumValue)
@@ -190,7 +191,6 @@ Shotcut.KeyframableFilter {
         }
         Shotcut.KeyframesButton {
             id: yellowKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(yellowangle) > 0
             onToggled: {
                 enableControls(true)
                 toggleKeyframes(checked, yellowangle, yellowangleSlider.value / yellowangleSlider.maximumValue)

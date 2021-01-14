@@ -59,6 +59,7 @@ Item {
         var position = getPosition()
         blockUpdate = true
         contrastSlider.value = filter.getDouble("gain_r", position) / gainFactor * 100.0
+        keyframesButton.checked = filter.keyframeCount('gain_r') > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
         blockUpdate = false
         contrastSlider.enabled = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1)
     }
@@ -149,7 +150,6 @@ Item {
             parameters: defaultParameters
             onPresetSelected: {
                 setControls()
-                keyframesButton.checked = filter.keyframeCount('gain_r') > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
                 middleValue = filter.getDouble('gain_r', filter.animateIn)
                 if (filter.animateIn > 0)
                     startValue = filter.getDouble('gain_r', 0)
@@ -175,7 +175,6 @@ Item {
         }
         Shotcut.KeyframesButton {
             id:keyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('gain_r') > 0
             onToggled: {
                 var value = contrastSlider.value / 100.0
                 blockUpdate = true

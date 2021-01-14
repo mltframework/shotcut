@@ -47,7 +47,9 @@ Shotcut.KeyframableFilter {
         var position = getPosition()
         blockUpdate = true
         phaseincrementSlider.value = filter.getDouble(phaseincrement, position) * phaseincrementSlider.maximumValue
+        phaseKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(phaseincrement) > 0
         zoomrateSlider.value = filter.getDouble(zoomrate, position) * zoomrateSlider.maximumValue
+        zoomKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(zoomrate) > 0
         blockUpdate = false
         enableControls(isSimpleKeyframesActive())
     }
@@ -102,7 +104,6 @@ Shotcut.KeyframableFilter {
         }
         Shotcut.KeyframesButton {
             id: phaseKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(phaseincrement) > 0
             onToggled: {
                 enableControls(true)
                 toggleKeyframes(checked, phaseincrement, phaseincrementSlider.value / phaseincrementSlider.maximumValue)
@@ -127,7 +128,6 @@ Shotcut.KeyframableFilter {
         }
         Shotcut.KeyframesButton {
             id: zoomKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(zoomrate) > 0
             onToggled: {
                 enableControls(true)
                 toggleKeyframes(checked, zoomrate, zoomrateSlider.value / zoomrateSlider.maximumValue)

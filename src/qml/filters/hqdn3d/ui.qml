@@ -47,7 +47,9 @@ Shotcut.KeyframableFilter {
         var position = getPosition()
         blockUpdate = true
         spatialSlider.value = filter.getDouble(spatial, position) * spatialSlider.maximumValue
+        spatialKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(spatial) > 0
         temporalSlider.value = filter.getDouble(temporal, position) * temporalSlider.maximumValue
+        temporalKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(temporal) > 0
         blockUpdate = false
         enableControls(isSimpleKeyframesActive())
     }
@@ -102,7 +104,6 @@ Shotcut.KeyframableFilter {
         }
         Shotcut.KeyframesButton {
             id: spatialKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(spatial) > 0
             onToggled: {
                 enableControls(true)
                 toggleKeyframes(checked, spatial, spatialSlider.value / spatialSlider.maximumValue)
@@ -127,7 +128,6 @@ Shotcut.KeyframableFilter {
         }
         Shotcut.KeyframesButton {
             id: temporalKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(temporal) > 0
             onToggled: {
                 enableControls(true)
                 toggleKeyframes(checked, temporal, temporalSlider.value / temporalSlider.maximumValue)

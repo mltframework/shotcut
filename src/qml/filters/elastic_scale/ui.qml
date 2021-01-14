@@ -55,9 +55,13 @@ Shotcut.KeyframableFilter {
         var position = getPosition()
         blockUpdate = true
         centerSlider.value = filter.getDouble(center, position) * centerSlider.maximumValue
+        centerKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(center) > 0
         linearwidthSlider.value = filter.getDouble(linearwidth, position) * linearwidthSlider.maximumValue
+        linwKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(linearwidth) > 0
         linearscalefactorSlider.value = filter.getDouble(linearscalefactor, position) * linearscalefactorSlider.maximumValue
+        lsfKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(linearscalefactor) > 0
         nonlinearscalefactorSlider.value = filter.getDouble(nonlinearscalefactor, position) * nonlinearscalefactorSlider.maximumValue
+        nlsfKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(nonlinearscalefactor) > 0
         blockUpdate = false
         enableControls(isSimpleKeyframesActive())
     }
@@ -117,7 +121,6 @@ Shotcut.KeyframableFilter {
         }
         Shotcut.KeyframesButton {
             id: centerKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(center) > 0
             onToggled: {
                 enableControls(true)
                 toggleKeyframes(checked, center, centerSlider.value / centerSlider.maximumValue)
@@ -143,7 +146,6 @@ Shotcut.KeyframableFilter {
         }
         Shotcut.KeyframesButton {
             id: linwKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(linearwidth) > 0
             onToggled: {
                 enableControls(true)
                 toggleKeyframes(checked, linearwidth, linearwidthSlider.value / linearwidthSlider.maximumValue)
@@ -169,7 +171,6 @@ Shotcut.KeyframableFilter {
         }
         Shotcut.KeyframesButton {
             id: lsfKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(linearscalefactor) > 0
             onToggled: {
                 enableControls(true)
                 toggleKeyframes(checked, linearscalefactor, linearscalefactorSlider.value / linearscalefactorSlider.maximumValue)
@@ -195,7 +196,6 @@ Shotcut.KeyframableFilter {
         }
         Shotcut.KeyframesButton {
             id: nlsfKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(nonlinearscalefactor) > 0
             onToggled: {
                 enableControls(true)
                 toggleKeyframes(checked, nonlinearscalefactor, nonlinearscalefactorSlider.value / nonlinearscalefactorSlider.maximumValue)
