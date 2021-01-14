@@ -1389,6 +1389,11 @@ void EncodeDock::on_encodeButton_clicked()
         return;
     }
     bool seekable = MLT.isSeekable(fromProducer());
+
+    if (seekable && checkForMissingFiles()) {
+        return;
+    }
+
     QString directory = Settings.encodePath();
     if (!m_extension.isEmpty()) {
         if (!MAIN.fileName().isEmpty()) {
@@ -2041,4 +2046,40 @@ bool EncodeDock::detectHardwareEncoders()
         Settings.setEncodeHardware(hwlist);
     }
     return !hwlist.isEmpty();
+}
+
+bool EncodeDock::checkForMissingFiles()
+{
+    Mlt::Producer* service = fromProducer();
+    if (!service) {
+        service = MAIN.playlist();
+    }
+    if (!service) {
+        LOG_ERROR() << "Encode: No service to encode";
+        return true;
+    }
+    QScopedPointer<QTemporaryFile> tmp{Util::writableTemporaryFile(MAIN.fileName())};
+    tmp->open();
+    tmp->close();
+    QString fileName = tmp->fileName();
+    tmp->remove();
+    auto isProxy = ui->previewScaleCheckBox->isChecked() && Settings.proxyEnabled();
+    MLT.saveXML(fileName, service, false /* without relative paths */, nullptr, isProxy);
+    MltXmlChecker checker;
+    if (!checker.check(fileName)) {
+        LOG_ERROR() << "Encode: Unable to check XML - skipping check";
+    } else if (checker.unlinkedFilesModel().rowCount() > 0) {
+        QMessageBox dialog(QMessageBox::Critical,
+           qApp->applicationName(),
+           tr("Your project is missing some files.\n\n"
+              "Save your project, close it, and reopen it.\n"
+              "Shotcut will attempt to repair your project."),
+           QMessageBox::Ok,
+           this);
+        dialog.setWindowModality(QmlApplication::dialogModality());
+        dialog.setDefaultButton(QMessageBox::Ok);
+        dialog.exec();
+        return true;
+    }
+    return false;
 }
