@@ -76,7 +76,6 @@ Rectangle {
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {
-                            console.log('checkState = ' + model.checkState)
                             model.checkState = !model.checkState
                         }
                     }
