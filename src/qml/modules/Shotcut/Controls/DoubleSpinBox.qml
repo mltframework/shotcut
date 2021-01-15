@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Meltytech, LLC
+ * Copyright (c) 2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,6 +27,7 @@ Item {
     property real stepSize: 1.0
     property alias prefix: prefixText.text
     property alias suffix: suffixText.text
+    property alias focusPolicy: spinbox.focusPolicy
     property alias background: spinbox.background
     property alias up: spinbox.up
     property alias down: spinbox.down

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 Meltytech, LLC
+ * Copyright (c) 2013-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,6 +40,7 @@ ToolBar {
         ToolButton {
             action: menuAction
             Shotcut.HoverTip { text: qsTr('Display a menu of additional actions') }
+            focusPolicy: Qt.NoFocus
         }
         Button { // separator
             enabled: false
@@ -49,14 +50,17 @@ ToolBar {
         ToolButton {
             action: cutAction
             Shotcut.HoverTip { text: qsTr('Cut - Copy the current clip to the Source\nplayer and ripple delete it') }
+            focusPolicy: Qt.NoFocus
         }
         ToolButton {
             action: copyAction
             Shotcut.HoverTip { text: qsTr('Copy - Copy the current clip to the Source player (C)') }
+            focusPolicy: Qt.NoFocus
         }
         ToolButton {
             action: insertAction
             Shotcut.HoverTip { text: qsTr('Paste - Insert clip into the current track\nshifting following clips to the right (V)') }
+            focusPolicy: Qt.NoFocus
         }
         Button { // separator
             enabled: false
@@ -66,22 +70,27 @@ ToolBar {
         ToolButton {
             action: appendAction
             Shotcut.HoverTip { text: qsTr('Append to the current track (A)') }
+            focusPolicy: Qt.NoFocus
         }
         ToolButton {
             action: deleteAction
             Shotcut.HoverTip { text: qsTr('Ripple Delete - Remove current clip\nshifting following clips to the left (X)') }
+            focusPolicy: Qt.NoFocus
         }
         ToolButton {
             action: liftAction
             Shotcut.HoverTip { text: qsTr('Lift - Remove current clip without\naffecting position of other clips (Z)') }
+            focusPolicy: Qt.NoFocus
         }
         ToolButton {
             action: overwriteAction
             Shotcut.HoverTip { text: qsTr('Overwrite clip onto the current track (B)') }
+            focusPolicy: Qt.NoFocus
         }
         ToolButton {
             action: splitAction
             Shotcut.HoverTip { text: qsTr('Split At Playhead (S)') }
+            focusPolicy: Qt.NoFocus
         }
         Button { // separator
             enabled: false
@@ -93,6 +102,7 @@ ToolBar {
             checked: settings.timelineSnap
             iconName: 'snap'
             iconSource: 'qrc:///icons/oxygen/32x32/actions/snap.png'
+            focusPolicy: Qt.NoFocus
             tooltip: qsTr('Toggle snapping')
             onClicked: settings.timelineSnap = !settings.timelineSnap
         }
@@ -101,6 +111,7 @@ ToolBar {
             checked: settings.timelineDragScrub
             iconName: 'scrub_drag'
             iconSource: 'qrc:///icons/oxygen/32x32/actions/scrub_drag.png'
+            focusPolicy: Qt.NoFocus
             tooltip: qsTr('Scrub while dragging')
             onClicked: settings.timelineDragScrub = !settings.timelineDragScrub
         }
@@ -109,6 +120,7 @@ ToolBar {
             checked: settings.timelineRipple
             iconName: 'target'
             iconSource: 'qrc:///icons/oxygen/32x32/actions/target.png'
+            focusPolicy: Qt.NoFocus
             tooltip: qsTr('Ripple trim and drop')
             onClicked: settings.timelineRipple = !settings.timelineRipple
         }
@@ -117,6 +129,7 @@ ToolBar {
             checked: settings.timelineRippleAllTracks
             iconName: 'ripple-all'
             iconSource: 'qrc:///icons/oxygen/32x32/actions/ripple-all.png'
+            focusPolicy: Qt.NoFocus
             tooltip: qsTr('Ripple edits across all tracks')
             onClicked: settings.timelineRippleAllTracks = !settings.timelineRippleAllTracks
         }
@@ -128,6 +141,7 @@ ToolBar {
         ToolButton {
             action: zoomOutAction
             Shotcut.HoverTip { text: qsTr("Zoom timeline out (-)") }
+            focusPolicy: Qt.NoFocus
         }
         ZoomSlider {
             id: scaleSlider
@@ -135,10 +149,12 @@ ToolBar {
         ToolButton {
             action: zoomInAction
             Shotcut.HoverTip { text: qsTr("Zoom timeline in (+)") }
+            focusPolicy: Qt.NoFocus
         }
         ToolButton {
             action: zoomFitAction
             Shotcut.HoverTip { text: qsTr('Zoom timeline to fit (0)') }
+            focusPolicy: Qt.NoFocus
         }
     }
 

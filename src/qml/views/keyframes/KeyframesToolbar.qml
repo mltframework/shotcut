@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2020 Meltytech, LLC
+ * Copyright (c) 2016-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,6 +34,7 @@ ToolBar {
         ToolButton {
             id: menuButton
             Shotcut.HoverTip { text: qsTr('Display a menu of additional actions') }
+            focusPolicy: Qt.NoFocus
             action: Action {
                 id: menuAction
                 icon.name: 'show-menu'
@@ -48,6 +49,7 @@ ToolBar {
         }
         ToolButton {
             Shotcut.HoverTip { text: qsTr('Set the filter start') }
+            focusPolicy: Qt.NoFocus
             action: Action {
                 icon.name: 'keyframes-filter-in'
                 icon.source: 'qrc:///icons/oxygen/32x32/actions/keyframes-filter-in.png'
@@ -56,6 +58,7 @@ ToolBar {
         }
         ToolButton {
             Shotcut.HoverTip { text: qsTr('Set the filter end') }
+            focusPolicy: Qt.NoFocus
             action: Action {
                 icon.name: 'keyframes-filter-out'
                 icon.source: 'qrc:///icons/oxygen/32x32/actions/keyframes-filter-out.png'
@@ -64,6 +67,7 @@ ToolBar {
         }
         ToolButton {
             Shotcut.HoverTip { text: qsTr('Set the first simple keyframe') }
+            focusPolicy: Qt.NoFocus
             action: Action {
                 icon.name: 'keyframes-simple-in'
                 icon.source: 'qrc:///icons/oxygen/32x32/actions/keyframes-simple-in.png'
@@ -72,6 +76,7 @@ ToolBar {
         }
         ToolButton {
             Shotcut.HoverTip { text: qsTr('Set the second simple keyframe') }
+            focusPolicy: Qt.NoFocus
             action: Action {
                 icon.name: 'keyframes-simple-out'
                 icon.source: 'qrc:///icons/oxygen/32x32/actions/keyframes-simple-out.png'
@@ -85,6 +90,7 @@ ToolBar {
         }
         ToolButton {
             Shotcut.HoverTip { text: qsTr('Zoom keyframes out (Alt+-)') }
+            focusPolicy: Qt.NoFocus
             action: Action {
                 id: zoomOutAction
                 icon.name: 'zoom-out'
@@ -97,6 +103,7 @@ ToolBar {
         }
         ToolButton {
             Shotcut.HoverTip { text: qsTr('Zoom keyframes in (Alt++)') }
+            focusPolicy: Qt.NoFocus
             action: Action {
                 id: zoomInAction
                 icon.name: 'zoom-in'
@@ -106,6 +113,7 @@ ToolBar {
         }
         ToolButton {
             Shotcut.HoverTip { text: qsTr('Zoom keyframes to fit (Alt+0)') }
+            focusPolicy: Qt.NoFocus
             action: Action {
                 id: zoomFitAction
                 icon.name: 'zoom-fit-best'

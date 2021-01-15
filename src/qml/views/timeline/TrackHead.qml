@@ -139,6 +139,7 @@ Rectangle {
                     timeline.setTrackName(index, text)
                     focus = false
                 }
+                Keys.onTabPressed: editingFinished()
             }
         }
         RowLayout {
@@ -148,6 +149,7 @@ Rectangle {
                 height: width
                 icon.name: isLocked ? 'object-locked' : 'object-unlocked'
                 icon.source: isLocked ? 'qrc:///icons/oxygen/32x32/status/object-locked.png' : 'qrc:///icons/oxygen/32x32/status/object-unlocked.png'
+                focusPolicy: Qt.NoFocus
                 onClicked: timeline.setTrackLock(index, !isLocked)
                 Shotcut.HoverTip { text: isLocked? qsTr('Unlock track') : qsTr('Lock track') }
                 transformOrigin: Item.Center
@@ -174,6 +176,7 @@ Rectangle {
                 id: muteButton
                 icon.name: isMute ? 'audio-volume-muted' : 'audio-volume-high'
                 icon.source: isMute ? 'qrc:///icons/oxygen/32x32/status/audio-volume-muted.png' : 'qrc:///icons/oxygen/32x32/status/audio-volume-high.png'
+                focusPolicy: Qt.NoFocus
                 onClicked: timeline.toggleTrackMute(index)
                 Shotcut.HoverTip { text: isMute? qsTr('Unmute') : qsTr('Mute') }
             }
@@ -183,6 +186,7 @@ Rectangle {
                 visible: isVideo
                 icon.name: isHidden ? 'layer-visible-off' : 'layer-visible-on'
                 icon.source: isHidden? 'qrc:///icons/oxygen/32x32/actions/layer-visible-off.png' : 'qrc:///icons/oxygen/32x32/actions/layer-visible-on.png'
+                focusPolicy: Qt.NoFocus
                 onClicked: timeline.toggleTrackHidden(index)
                 Shotcut.HoverTip { text: isHidden? qsTr('Show') : qsTr('Hide') }
             }
@@ -191,6 +195,7 @@ Rectangle {
                 visible: isFiltered
                 icon.name: 'view-filter'
                 icon.source: 'qrc:///icons/oxygen/32x32/status/view-filter.png'
+                focusPolicy: Qt.NoFocus
                 Shotcut.HoverTip { text: qsTr('Filters') }
                 onClicked: {
                     trackHeadRoot.clicked()

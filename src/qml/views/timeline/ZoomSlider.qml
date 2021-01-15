@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 Meltytech, LLC
+ * Copyright (c) 2013-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,6 +40,7 @@ Rectangle {
         from: 0
         to: 3.0
         value: 1
+        focusPolicy: Qt.NoFocus
         function setScaleFactor() {
             multitrack.scaleFactor = Math.pow(value, 3) + 0.01
         }

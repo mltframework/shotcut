@@ -243,6 +243,7 @@ Shotcut.VuiBase {
                         implicitWidth: smallIcons? smallIconSize : hiddenButton.implicitWidth
                         implicitHeight: implicitWidth
                         visible: toolbar.expanded
+                        focusPolicy: Qt.NoFocus
                         action: Action {
                             icon.name: 'show-menu'
                             icon.source: 'qrc:///icons/oxygen/32x32/actions/show-menu.png'
@@ -254,6 +255,7 @@ Shotcut.VuiBase {
                         implicitWidth: smallIcons? smallIconSize : hiddenButton.implicitWidth
                         implicitHeight: implicitWidth
                         visible: toolbar.expanded
+                        focusPolicy: Qt.NoFocus
                         Shotcut.HoverTip { text: parent.action.text }
                     }
                     ToolButton {
@@ -261,6 +263,7 @@ Shotcut.VuiBase {
                         implicitWidth: smallIcons? smallIconSize : hiddenButton.implicitWidth
                         implicitHeight: implicitWidth
                         visible: toolbar.expanded
+                        focusPolicy: Qt.NoFocus
                         Shotcut.HoverTip { text: parent.action.text }
                     }
                     ToolButton {
@@ -268,6 +271,7 @@ Shotcut.VuiBase {
                         implicitWidth: smallIcons? smallIconSize : hiddenButton.implicitWidth
                         implicitHeight: implicitWidth
                         visible: toolbar.expanded
+                        focusPolicy: Qt.NoFocus
                         Shotcut.HoverTip { text: parent.action.text }
                     }
                     Button { // separator
@@ -281,6 +285,7 @@ Shotcut.VuiBase {
                         implicitWidth: smallIcons? smallIconSize : hiddenButton.implicitWidth
                         implicitHeight: implicitWidth
                         visible: toolbar.expanded
+                        focusPolicy: Qt.NoFocus
                         action: Action {
                             icon.name: 'font'
                             icon.source: 'qrc:///icons/oxygen/32x32/actions/font.png'
@@ -300,6 +305,7 @@ Shotcut.VuiBase {
                         from: 1
                         to: 1000
                         decimals: 0
+                        focusPolicy: Qt.NoFocus
                         property bool blockValue: false
                         onValueChanged: {
                             if (!blockValue) {
@@ -315,6 +321,7 @@ Shotcut.VuiBase {
                         implicitWidth: toolbar.height - 4
                         implicitHeight: implicitWidth
                         visible: toolbar.expanded
+                        focusPolicy: Qt.NoFocus
                         property var color : document.textColor
                         Rectangle {
                             id: colorRect
@@ -340,6 +347,7 @@ Shotcut.VuiBase {
                         implicitWidth: smallIcons? smallIconSize : hiddenButton.implicitWidth
                         implicitHeight: implicitWidth
                         visible: toolbar.expanded
+                        focusPolicy: Qt.NoFocus
                         Shotcut.HoverTip { text: parent.action.text }
                     }
                     ToolButton {
@@ -347,6 +355,7 @@ Shotcut.VuiBase {
                         implicitWidth: smallIcons? smallIconSize : hiddenButton.implicitWidth
                         implicitHeight: implicitWidth
                         visible: toolbar.expanded
+                        focusPolicy: Qt.NoFocus
                         Shotcut.HoverTip { text: parent.action.text }
                     }
                     ToolButton {
@@ -354,6 +363,7 @@ Shotcut.VuiBase {
                         implicitWidth: smallIcons? smallIconSize : hiddenButton.implicitWidth
                         implicitHeight: implicitWidth
                         visible: toolbar.expanded
+                        focusPolicy: Qt.NoFocus
                         Shotcut.HoverTip { text: parent.action.text }
                     }
                     ToolButton {
@@ -361,6 +371,7 @@ Shotcut.VuiBase {
                         implicitWidth: smallIcons? smallIconSize : hiddenButton.implicitWidth
                         implicitHeight: implicitWidth
                         visible: toolbar.expanded
+                        focusPolicy: Qt.NoFocus
                         Shotcut.HoverTip { text: parent.action.text }
                     }
                     ToolButton {
@@ -368,6 +379,7 @@ Shotcut.VuiBase {
                         implicitWidth: smallIcons? smallIconSize : hiddenButton.implicitWidth
                         implicitHeight: implicitWidth
                         visible: toolbar.expanded
+                        focusPolicy: Qt.NoFocus
                         Shotcut.HoverTip { text: parent.action.text }
                     }
                     ToolButton {
@@ -375,12 +387,14 @@ Shotcut.VuiBase {
                         implicitWidth: smallIcons? smallIconSize : hiddenButton.implicitWidth
                         implicitHeight: implicitWidth
                         visible: toolbar.expanded
+                        focusPolicy: Qt.NoFocus
                         Shotcut.HoverTip { text: parent.action.text }
                     }
                     ToolButton {
                         id: expandCollapseButton
                         implicitWidth: smallIcons? smallIconSize : hiddenButton.implicitWidth
                         implicitHeight: implicitWidth
+                        focusPolicy: Qt.NoFocus
                         Shotcut.HoverTip { text: toolbar.expanded? qsTr('Collapse Toolbar') : qsTr('Expand Toolbar') }
                         action: Action {
                             icon.name: toolbar.expanded? 'media-seek-backward' : 'media-seek-forward'

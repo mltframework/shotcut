@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2020 Meltytech, LLC
+ * Copyright (c) 2017-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -112,6 +112,7 @@ Rectangle {
                 id: previousButton
                 icon.name: 'media-skip-backward'
                 icon.source: 'qrc:///icons/oxygen/32x32/actions/media-skip-backward.png'
+                focusPolicy: Qt.NoFocus
                 onClicked: {
                     if (delegateIndex >= 0) {
                         root.currentTrack = delegateIndex
@@ -128,6 +129,7 @@ Rectangle {
                 visible: delegateIndex >= 0
                 icon.name: 'chronometer';
                 icon.source: 'qrc:///icons/oxygen/32x32/actions/chronometer.png'
+                focusPolicy: Qt.NoFocus
                 onClicked: {
                     parameters.addKeyframe(delegateIndex, producer.position - (filter.in - producer.in))
                     root.selection = [parameters.keyframeIndex(delegateIndex, producer.position)]
@@ -147,6 +149,7 @@ Rectangle {
                 icon.name: 'edit-delete'
                 icon.source: 'qrc:///icons/oxygen/32x32/actions/edit-delete.png'
                 opacity: enabled? 1.0 : 0.5
+                focusPolicy: Qt.NoFocus
                 onClicked: {
                     parameters.remove(delegateIndex, root.selection[0])
                     root.selection = []
@@ -163,6 +166,7 @@ Rectangle {
                 id: nextButton
                 icon.name: 'media-skip-forward'
                 icon.source: 'qrc:///icons/oxygen/32x32/actions/media-skip-forward.png'
+                focusPolicy: Qt.NoFocus
                 onClicked: {
                     if (delegateIndex >= 0) {
                         root.currentTrack = delegateIndex
@@ -179,6 +183,7 @@ Rectangle {
                 visible: false && delegateIndex >= 0
                 icon.name: isLocked ? 'object-locked' : 'object-unlocked'
                 icon.source: isLocked ? 'qrc:///icons/oxygen/32x32/status/object-locked.png' : 'qrc:///icons/oxygen/32x32/status/object-unlocked.png'
+                focusPolicy: Qt.NoFocus
 //                onClicked: timeline.setTrackLock(index, !isLocked)
                 Shotcut.HoverTip { text: isLocked? qsTr('Unlock track') : qsTr('Lock track') }
             }
