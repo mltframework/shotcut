@@ -35,6 +35,7 @@ public:
     int format() const { return m_format; }
     void showCheckBox();
     bool isCheckBoxChecked() const { return m_isChecked; }
+    bool deinterlace() const;
     bool fpsOverride() const;
     double fps() const;
     QString frc() const;

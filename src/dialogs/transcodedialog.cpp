@@ -32,6 +32,7 @@ TranscodeDialog::TranscodeDialog(const QString& message, bool isProgressive, QWi
     setWindowTitle(tr("Convert to Edit-friendly..."));
     ui->messageLabel->setText(message);
     ui->checkBox->hide();
+    ui->deinterlaceCheckBox->setChecked(false);
     connect(ui->fpsCheckBox, SIGNAL(toggled(bool)), ui->fpsWidget, SLOT(setEnabled(bool)));
     connect(ui->fpsCheckBox, SIGNAL(toggled(bool)), ui->fpsLabel, SLOT(setEnabled(bool)));
     ui->fpsCheckBox->setChecked(false);
@@ -63,6 +64,11 @@ TranscodeDialog::~TranscodeDialog()
 void TranscodeDialog::showCheckBox()
 {
     ui->checkBox->show();
+}
+
+bool TranscodeDialog::deinterlace() const
+{
+    return ui->deinterlaceCheckBox->isChecked();
 }
 
 bool TranscodeDialog::fpsOverride() const
