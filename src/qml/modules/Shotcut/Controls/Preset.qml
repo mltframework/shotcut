@@ -38,7 +38,7 @@ RowLayout {
         Layout.minimumWidth: 100
         Layout.maximumWidth: 300
         model: filter.presets
-        onCurrentTextChanged: {
+        onActivated: {
             if (currentText.length > 0) {
                 // toggling focus works around a weird bug involving sticky
                 // input event focus on the ComboBox
