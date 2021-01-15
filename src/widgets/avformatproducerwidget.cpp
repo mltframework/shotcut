@@ -842,6 +842,10 @@ void AvformatProducerWidget::convert(TranscodeDialog& dialog)
         // Set video filters
         args << "-vf";
         QString filterString;
+        if (dialog.deinterlace()) {
+            QString deinterlaceFilter = QString("bwdif,");
+            filterString = filterString + deinterlaceFilter;
+        }
         QString range;
         if (ui->rangeComboBox->currentIndex())
             range = "full";
@@ -864,7 +868,7 @@ void AvformatProducerWidget::convert(TranscodeDialog& dialog)
         else
             args << "-color_range" << "mpeg";
 
-        if (!ui->scanComboBox->currentIndex())
+        if (!dialog.deinterlace() && !ui->scanComboBox->currentIndex())
             args << "-flags" << "+ildct+ilme" << "-top" << QString::number(ui->fieldOrderComboBox->currentIndex());
 
         switch (dialog.format()) {
@@ -876,7 +880,7 @@ void AvformatProducerWidget::convert(TranscodeDialog& dialog)
             break;
         case 1:
             args << "-f" << "mov" << "-codec:a" << "alac";
-            if (ui->scanComboBox->currentIndex()) { // progressive
+            if (dialog.deinterlace() || ui->scanComboBox->currentIndex()) { // progressive
                 args << "-codec:v" << "dnxhd" << "-profile:v" << "dnxhr_hq" << "-pix_fmt" << "yuv422p";
             } else { // interlaced
                 args << "-codec:v" << "prores_ks" << "-profile:v" << "standard";
