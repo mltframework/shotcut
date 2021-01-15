@@ -2058,7 +2058,12 @@ bool EncodeDock::checkForMissingFiles()
         LOG_ERROR() << "Encode: No service to encode";
         return true;
     }
-    QScopedPointer<QTemporaryFile> tmp{Util::writableTemporaryFile(MAIN.fileName())};
+    QScopedPointer<QTemporaryFile> tmp;
+    if (MAIN.fileName().isEmpty()) {
+        tmp.reset(Util::writableTemporaryFile(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + "/"));
+    } else {
+        tmp.reset(Util::writableTemporaryFile(MAIN.fileName()));
+    }
     tmp->open();
     tmp->close();
     QString fileName = tmp->fileName();
@@ -2079,7 +2084,9 @@ bool EncodeDock::checkForMissingFiles()
         dialog.setWindowModality(QmlApplication::dialogModality());
         dialog.setDefaultButton(QMessageBox::Ok);
         dialog.exec();
+        QFile::remove(fileName);
         return true;
     }
+    QFile::remove(fileName);
     return false;
 }
