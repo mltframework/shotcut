@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2020 Meltytech, LLC
+ * Copyright (c) 2014-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -68,10 +68,10 @@ Shotcut.VuiBase {
     function setFilter(position) {
         blockUpdate = true
         var rect = rectangle.rectangle
-        filterRect.x = Math.round(rect.x / rectangle.widthScale)
-        filterRect.y = Math.round(rect.y / rectangle.heightScale)
-        filterRect.width = Math.round(rect.width / rectangle.widthScale)
-        filterRect.height = Math.round(rect.height / rectangle.heightScale)
+        filterRect.x = rect.x / rectangle.widthScale
+        filterRect.y = rect.y / rectangle.heightScale
+        filterRect.width = rect.width / rectangle.widthScale
+        filterRect.height = rect.height / rectangle.heightScale
 
         if (position !== null) {
             filter.blockSignals = true

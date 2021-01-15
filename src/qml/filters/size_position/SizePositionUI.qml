@@ -377,7 +377,7 @@ Item {
             rectW.value = filterRect.width.toFixed()
             rectH.value = filterRect.height.toFixed()
             blockUpdate = true
-            scaleSlider.value = Math.min(filterRect.width / profile.width * 100, scaleSlider.maximumValue)
+            scaleSlider.update()
         }
         positionKeyframesButton.checked = filter.keyframeCount(rectProperty) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
         if (rotationProperty) {
@@ -426,16 +426,14 @@ Item {
         }
         var middleY = filterRect.y + filterRect.height / 2
         var bottomY = filterRect.y + filterRect.height
-        filterRect.height = rectH.value = Math.round(value / Math.max(aspectRatio, 1.0e-6))
+        filterRect.height = rectH.value = value / Math.max(aspectRatio, 1.0e-6)
         if (middleRadioButton.checked) {
             filterRect.y = rectY.value = middleY - filterRect.height / 2
         }
         else if (bottomRadioButton.checked) {
             filterRect.y = rectY.value = bottomY - filterRect.height
         }
-        blockUpdate = true
-        scaleSlider.value = Math.min(rectW.value / profile.width * 100, scaleSlider.maximumValue)
-        blockUpdate = false
+        scaleSlider.update()
         setFilter(getPosition())
     }
 
@@ -450,16 +448,14 @@ Item {
         }
         var centerX = filterRect.x + filterRect.width / 2
         var rightX = filterRect.x + filterRect.width
-        filterRect.width = rectW.value = Math.round(value * aspectRatio)
+        filterRect.width = rectW.value = value * aspectRatio
         if (centerRadioButton.checked) {
             filterRect.x = rectX.value = centerX - filterRect.width / 2
         }
         else if (rightRadioButton.checked) {
             filterRect.x = rectX.value = rightX - filterRect.width
         }
-        blockUpdate = true
-        scaleSlider.value = Math.min(filterRect.width / profile.width * 100, scaleSlider.maximumValue)
-        blockUpdate = false
+        scaleSlider.update()
         setFilter(getPosition())
     }
 
@@ -632,7 +628,7 @@ Item {
             onClicked: {
                 filterRect.width = rectW.value = defaultRect.width
                 filterRect.height = rectH.value = defaultRect.height
-                scaleSlider.value = Math.min(filterRect.width / profile.width * 100, scaleSlider.maximumValue)
+                scaleSlider.update()
                 setFilter(getPosition())
             }
         }
@@ -648,11 +644,16 @@ Item {
             maximumValue: 1000
             decimals: 1
             suffix: ' %'
+            function update() {
+                blockUpdate = true
+                scaleSlider.value = Math.min(filterRect.width / defaultRect.width * 100, scaleSlider.maximumValue)
+                blockUpdate = false
+            }
             onValueChanged: {
-                if (!blockUpdate && Math.abs(value - filterRect.width * 100 / profile.width) > 0.1) {
+                if (!blockUpdate && Math.abs(value - filterRect.width / defaultRect.width * 100) > 0.1) {
                     var centerX = filterRect.x + filterRect.width / 2
                     var rightX = filterRect.x + filterRect.width
-                    filterRect.width = rectW.value = (profile.width * value / 100)
+                    filterRect.width = rectW.value = defaultRect.width * value / 100
                     if (centerRadioButton.checked) {
                         filterRect.x = rectX.value = centerX - filterRect.width / 2
                     } else if (rightRadioButton.checked) {
@@ -672,14 +673,7 @@ Item {
         }
         Shotcut.UndoButton {
             enabled: scaleSlider.enabled
-            onClicked: {
-                if (isFitMode()) {
-                    scaleSlider.value = 100
-                } else {
-                    var width = (producer.displayAspectRatio > 1.0)? profile.width : profile.height * producer.displayAspectRatio
-                    scaleSlider.value = Math.min(width / profile.width * 100, scaleSlider.maximumValue)
-                }
-            }
+            onClicked: sizeUndoButton.clicked()
         }
 
         Label {
