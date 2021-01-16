@@ -19,6 +19,7 @@
 
 #include <stdint.h>
 #include <string>
+#include <limits>
 
 #include <QtEndian>
 #if defined(Q_OS_WIN) || defined(Q_OS_MAC)
