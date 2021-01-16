@@ -329,7 +329,6 @@ void AvformatProducerWidget::onFrameDecoded()
     bool populateTrackCombos = (ui->videoTrackComboBox->count() == 0 &&
                                 ui->audioTrackComboBox->count() == 0);
     int color_range = !qstrcmp(m_producer->get("meta.media.color_range"), "full");
-    bool isAV1 = false;
 
     for (int i = 0; i < n; i++) {
         QString key = QString("meta.media.%1.stream.type").arg(i);
@@ -352,13 +351,8 @@ void AvformatProducerWidget::onFrameDecoded()
                 ui->videoTrackComboBox->addItem(name, i);
             }
             if (i == m_producer->get_int("video_index")) {
-                key = QString("meta.media.%1.codec.name").arg(i);
-                QString codec(m_producer->get(key.toLatin1().constData()));
-                if (codec == "libdav1d") {
-                    isAV1 = true;
-                }
                 key = QString("meta.media.%1.codec.long_name").arg(i);
-                codec = QString::fromUtf8(m_producer->get(key.toLatin1().constData()));
+                QString codec(m_producer->get(key.toLatin1().constData()));
                 ui->videoTableWidget->setItem(0, 1, new QTableWidgetItem(codec));
                 key = QString("meta.media.%1.codec.pix_fmt").arg(i);
                 QString pix_fmt = QString::fromLatin1(m_producer->get(key.toLatin1().constData()));
@@ -581,20 +575,6 @@ void AvformatProducerWidget::onFrameDecoded()
             dialog.setWindowModality(QmlApplication::dialogModality());
             dialog.showCheckBox();
             convert(dialog);
-        } else if (isAV1) {
-            m_producer->set(kShotcutSkipConvertProperty, true);
-            LongUiTask::cancel();
-            MLT.pause();
-            LOG_INFO() << resource << "uses AV1 video codec";
-            TranscodeDialog dialog(tr("This file uses the AV1 video codec, which is not reliable for editing. "
-                                      "Do you want to convert it to an edit-friendly format?\n\n"
-                                      "If yes, choose a format below and then click OK to choose a file name. "
-                                      "After choosing a file name, a job is created. "
-                                      "When it is done, double-click the job to open it.\n"),
-                                   ui->scanComboBox->currentIndex(), this);
-            dialog.setWindowModality(QmlApplication::dialogModality());
-            dialog.showCheckBox();
-            convert(dialog);
         } else if (isVariableFrameRate) {
             m_producer->set(kShotcutSkipConvertProperty, true);
             LongUiTask::cancel();
@@ -609,7 +589,7 @@ void AvformatProducerWidget::onFrameDecoded()
             dialog.setWindowModality(QmlApplication::dialogModality());
             dialog.showCheckBox();
             convert(dialog);
-        } else if (!MLT.isSeekable(m_producer.data())) {
+        } else if (QFile::exists(resource) && !MLT.isSeekable(m_producer.data())) {
             m_producer->set(kShotcutSkipConvertProperty, true);
             LongUiTask::cancel();
             MLT.pause();
