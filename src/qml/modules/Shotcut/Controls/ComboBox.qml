@@ -22,4 +22,6 @@ ComboBox {
     // workaround incorrect color of chosen combo item on Fusion theme
     SystemPalette { id: activePalette }
     palette.buttonText: activePalette.buttonText
+    focusPolicy: Qt.NoFocus
+    hoverEnabled: focusReason !== Qt.TabFocusReason && focusReason !== Qt.BacktabFocusReason
 }
