@@ -50,7 +50,7 @@ ZIMG_REVISION=
 DAV1D_HEAD=1
 DAV1D_REVISION=
 AOM_HEAD=1
-AOM_REVISION=1
+AOM_REVISION=
 
 
 # QT_INCLUDE_DIR="$(pkg-config --variable=prefix QtCore)/include"
@@ -1020,6 +1020,7 @@ function deploy
 
   log Reorganizing installed files
   cmd mv bin/*.dll .
+  cmd mv lib/*.dll .
   if [ "$SDK" = "1" ]; then
     cmd mv bin/*.exe .
   else

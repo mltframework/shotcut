@@ -50,6 +50,7 @@ jobs:
       - name: Build
         shell: msys2 {0}
         run: |
+          pacman --noconfirm -Rdd mingw-w64-x86_64-aom
           echo Preparing version
           echo $(date +"%y.%m.%d") > VERSION
           VERSION=$(cat VERSION)
