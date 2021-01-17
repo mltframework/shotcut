@@ -64,11 +64,12 @@ Rectangle {
         ToolTip {
             text: name
             visible: parent.containsMouse
-            delay: 1000
-            timeout: 5000
+            delay: mouseAreaLeft.pressed? 0 : 1000
+            timeout: mouseAreaLeft.pressed? -1 : 5000
         }
     }
     MouseArea {
+        id: mouseAreaLeft
         anchors.fill: parent
         acceptedButtons: Qt.LeftButton
         onClicked: producer.position = position
