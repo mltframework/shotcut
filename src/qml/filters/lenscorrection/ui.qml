@@ -40,7 +40,6 @@ Shotcut.KeyframableFilter {
     height: 150
 
     Component.onCompleted: {
-        filter.set('threads', 0)
         if (filter.isNew) {
             filter.set(xcenter, xcenterDefault)
             filter.set(ycenter, ycenterDefault)
