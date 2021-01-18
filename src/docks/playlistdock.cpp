@@ -517,7 +517,7 @@ void PlaylistDock::onProducerOpened()
         ui->addButton->setEnabled(true);
     if (MLT.producer() && MLT.producer()->is_valid()) {
         auto row = MLT.producer()->get_int(kPlaylistIndexProperty) - 1;
-        if (row < 0) {
+        if (row < 0 && m_model.rowCount() > 0) {
             resetPlaylistIndex();
             emit m_model.dataChanged(m_model.createIndex(0, PlaylistModel::COLUMN_THUMBNAIL),
                 m_model.createIndex(m_model.playlist()->count() - 1, PlaylistModel::COLUMN_THUMBNAIL),
