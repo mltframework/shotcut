@@ -183,22 +183,26 @@ Item {
                 id: fontMetrics
                 font: textArea.font
             }
-            Layout.minimumHeight: fontMetrics.height * 4
+            Layout.minimumHeight: fontMetrics.height * 6
             Layout.maximumHeight: Layout.minimumHeight
             Layout.minimumWidth: preset.width
             Layout.maximumWidth: preset.width
 
-            Flickable {
-                id: flickable
+            ScrollView {
+                id: scrollview
                 width: preset.width - (ScrollBar.vertical.visible ? 16 : 0)
                 height: parent.height - (ScrollBar.horizontal.visible ? 16 : 0)
                 clip: true
-                TextArea.flickable: TextArea {
+                TextArea {
                     id: textArea
                     textFormat: TextEdit.PlainText
                     wrapMode: TextEdit.NoWrap
+                    selectByMouse: true
                     padding: 0
-                    background: Rectangle { color: textArea.palette.base }
+                    background: Rectangle {
+                        anchors.fill: parent
+                        color: textArea.palette.base
+                    }
                     text: '__empty__' // workaround initialization problem
                     property int maxLength: 256
                     onTextChanged: {
@@ -215,20 +219,20 @@ Item {
                 ScrollBar.horizontal: ScrollBar {
                     height: 16
                     policy: ScrollBar.AlwaysOn
-                    visible: flickable.contentWidth > flickable.width
-                    parent: flickable.parent
-                    anchors.top: flickable.bottom
-                    anchors.left: flickable.left
-                    anchors.right: flickable.right
+                    visible: scrollview.contentWidth > scrollview.width
+                    parent: scrollview.parent
+                    anchors.top: scrollview.bottom
+                    anchors.left: scrollview.left
+                    anchors.right: scrollview.right
                 }
                 ScrollBar.vertical: ScrollBar {
                     width: 16
                     policy: ScrollBar.AlwaysOn
-                    visible: flickable.contentHeight > flickable.height
-                    parent: flickable.parent
-                    anchors.top: flickable.top
-                    anchors.left: flickable.right
-                    anchors.bottom: flickable.bottom
+                    visible: scrollview.contentHeight > scrollview.height
+                    parent: scrollview.parent
+                    anchors.top: scrollview.top
+                    anchors.left: scrollview.right
+                    anchors.bottom: scrollview.bottom
                 }
             }
         }
