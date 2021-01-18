@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2020 Meltytech, LLC
+ * Copyright (c) 2012-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -515,6 +515,15 @@ void PlaylistDock::onProducerOpened()
 {
     if (!MLT.isMultitrack())
         ui->addButton->setEnabled(true);
+    if (MLT.producer() && MLT.producer()->is_valid()) {
+        auto row = MLT.producer()->get_int(kPlaylistIndexProperty) - 1;
+        if (row < 0) {
+            resetPlaylistIndex();
+            emit m_model.dataChanged(m_model.createIndex(0, PlaylistModel::COLUMN_THUMBNAIL),
+                m_model.createIndex(m_model.playlist()->count() - 1, PlaylistModel::COLUMN_THUMBNAIL),
+                QVector<int>() << PlaylistModel::COLUMN_THUMBNAIL);
+        }
+    }
 }
 
 void PlaylistDock::onInChanged()
@@ -960,6 +969,7 @@ void PlaylistDock::resetPlaylistIndex()
         Mlt::Producer clip(m_model.playlist()->get_clip(j));
         clip.parent().Mlt::Properties::clear(kPlaylistIndexProperty);
     }
+    setUpdateButtonEnabled(false);
 }
 
 void PlaylistDock::emitDataChanged(const QVector<int> &roles)
@@ -1061,12 +1071,12 @@ void PlaylistDock::on_actionCopy_triggered()
     if (!index.isValid() || !m_model.playlist()) return;
     Mlt::ClipInfo* i = m_model.playlist()->clip_info(index.row());
     if (i) {
+        resetPlaylistIndex();
         QString xml = MLT.XML(i->producer);
         Mlt::Producer* p = new Mlt::Producer(MLT.profile(), "xml-string", xml.toUtf8().constData());
         p->set_in_and_out(i->frame_in, i->frame_out);
         emit clipOpened(p);
         delete i;
-        resetPlaylistIndex();
     }
 }
 

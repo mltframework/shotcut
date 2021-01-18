@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2020 Meltytech, LLC
+ * Copyright (c) 2012-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -342,7 +342,7 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
                 }
                 if (parent.is_valid() && parent.get_int(kPlaylistIndexProperty) == index.row() + 1) {
                     QPen pen(Qt::red);
-                    pen.setWidthF(MAIN.devicePixelRatioF());
+                    pen.setWidthF(1.5 * MAIN.devicePixelRatioF());
                     painter.setPen(pen);
                     rect.setX(0);
                     rect.setY(0);
