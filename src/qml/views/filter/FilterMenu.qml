@@ -38,6 +38,16 @@ Rectangle {
         searchField.focus = false
     }
 
+    onVisibleChanged: {
+        if (metadatamodel.filter == Shotcut.MetadataModel.FavoritesFilter) {
+            favButton.checked = true
+        } else if (metadatamodel.filter == Shotcut.MetadataModel.VideoFilter) {
+            vidButton.checked = true
+        } else if (metadatamodel.filter == Shotcut.MetadataModel.AudioFilter) {
+            audButton.checked = true
+        }
+    }
+
     color: activePalette.window
 
     SystemPalette { id: activePalette }
@@ -210,7 +220,6 @@ Rectangle {
 
                 onCountChanged: {
                     currentIndex = -1
-                    selectNext()
                 }
             }
         }
