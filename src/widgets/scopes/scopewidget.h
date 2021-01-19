@@ -47,7 +47,7 @@
   refreshScope() function returns, the ScopeWidget will automatically request
   the GUI thread to update(). A well implemented ScopeWidget will be designed
   such that most of the CPU intensive work will be done in refreshScope() and
-  the paintEvent() implementation will complete quicly to avoid hanging up the
+  the paintEvent() implementation will complete quickly to avoid hanging up the
   GUI thread.
 
   Subclasses shall also implement getTitle() so that the application can display

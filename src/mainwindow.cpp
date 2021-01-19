@@ -872,7 +872,7 @@ void MainWindow::setupSettingsMenu()
     }
 
 
-    // Initialze the proxy submenu
+    // Initialize the proxy submenu
     ui->actionUseProxy->setChecked(Settings.proxyEnabled());
     ui->actionProxyUseProjectFolder->setChecked(Settings.proxyUseProjectFolder());
     ui->actionProxyUseHardware->setChecked(Settings.proxyUseHardware());
