@@ -1164,7 +1164,8 @@ void AvformatProducerWidget::on_actionExtractSubclip_triggered()
         else
             ffmpegArgs << "-to" << QString::fromLatin1(m_producer->get_time("out", mlt_time_clock)).replace(',', '.');
         ffmpegArgs << "-avoid_negative_ts" << "make_zero"
-                   << "-map" << "0" << "-map_metadata" << "0"
+                   << "-map" << "0:V?" << "-map" << "0:a?" << "-map" << "0:s?" << "-map" << "0:d?"
+                   << "-map_metadata" << "0"
                    << "-codec" << "copy" << "-y" << filename;
 
         // Run the ffmpeg job.
