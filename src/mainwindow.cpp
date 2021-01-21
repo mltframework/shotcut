@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2020 Meltytech, LLC
+ * Copyright (c) 2011-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1731,7 +1731,7 @@ void MainWindow::on_actionAbout_Shotcut_triggered()
     QMessageBox::about(this, tr("About Shotcut"),
              tr("<h1>Shotcut version %1</h1>"
                 "<p><a href=\"https://www.shotcut.org/\">Shotcut</a> is a free, open source, cross platform video editor.</p>"
-                "<small><p>Copyright &copy; 2011-2020 <a href=\"https://www.meltytech.com/\">Meltytech</a>, LLC</p>"
+                "<small><p>Copyright &copy; 2011-2021 <a href=\"https://www.meltytech.com/\">Meltytech</a>, LLC</p>"
                 "<p>Licensed under the <a href=\"https://www.gnu.org/licenses/gpl.html\">GNU General Public License v3.0</a></p>"
                 "<p>This program proudly uses the following projects:<ul>"
                 "<li><a href=\"https://www.qt.io/\">Qt</a> application and UI framework</li>"
@@ -2202,7 +2202,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
     case Qt::Key_Return:
         if (m_playlistDock->isVisible() && m_playlistDock->position() >= 0) {
             if (event->modifiers() == Qt::ShiftModifier)
-                seekPlaylist(m_playlistDock->position());
+                m_playlistDock->on_actionGoto_triggered();
             else if (event->modifiers() == Qt::ControlModifier)
                 m_playlistDock->on_actionOpen_triggered();
         }

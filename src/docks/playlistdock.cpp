@@ -557,6 +557,7 @@ void PlaylistDock::on_actionOpen_triggered()
         setPlaylistIndex(p, index.row());
         emit clipOpened(p, Settings.playlistAutoplay());
         delete i;
+        m_iconsView->resetMultiSelect();
     }
 }
 
@@ -594,6 +595,7 @@ void PlaylistDock::viewDoubleClicked(const QModelIndex &index)
             emit clipOpened(p, Settings.playlistAutoplay());
         }
         delete i;
+        m_iconsView->resetMultiSelect();
     }
 }
 
@@ -604,6 +606,7 @@ void PlaylistDock::on_actionGoto_triggered()
     if (i) {
         emit itemActivated(i->start);
         delete i;
+        m_iconsView->resetMultiSelect();
     }
 }
 
@@ -1077,6 +1080,7 @@ void PlaylistDock::on_actionCopy_triggered()
         p->set_in_and_out(i->frame_in, i->frame_out);
         emit clipOpened(p);
         delete i;
+        m_iconsView->resetMultiSelect();
     }
 }
 

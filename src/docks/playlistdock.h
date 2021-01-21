@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2020 Meltytech, LLC
+ * Copyright (c) 2012-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,6 +28,7 @@ namespace Ui {
 }
 
 class QAbstractItemView;
+class PlaylistIconView;
 
 class PlaylistDock : public QDockWidget
 {
@@ -67,6 +68,7 @@ public slots:
     void on_actionSelectAll_triggered();
     void on_actionSelectNone_triggered();
     void onProducerChanged(Mlt::Producer* producer);
+    void on_actionGoto_triggered();
 
 private slots:
     void on_menuButton_clicked();
@@ -78,8 +80,6 @@ private slots:
     void viewCustomContextMenuRequested(const QPoint &pos);
 
     void viewDoubleClicked(const QModelIndex &index);
-
-    void on_actionGoto_triggered();
 
     void on_actionRemoveAll_triggered();
 
@@ -155,7 +155,7 @@ private:
 
     Ui::PlaylistDock *ui;
     QAbstractItemView *m_view;
-    QAbstractItemView *m_iconsView;
+    PlaylistIconView *m_iconsView;
     PlaylistModel m_model;
     int m_defaultRowHeight;
     QTimer m_inChangedTimer;
