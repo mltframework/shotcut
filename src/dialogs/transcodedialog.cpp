@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2019 Meltytech, LLC
+ * Copyright (c) 2017-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@
 TranscodeDialog::TranscodeDialog(const QString& message, bool isProgressive, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::TranscodeDialog),
-    m_format(1),
+    m_format(0),
     m_isChecked(false),
     m_isProgressive(isProgressive)
 {

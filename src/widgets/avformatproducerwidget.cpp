@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2020 Meltytech, LLC
+ * Copyright (c) 2012-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -856,7 +856,7 @@ void AvformatProducerWidget::convert(TranscodeDialog& dialog)
             path.append("/%1 - %2.mp4");
             nameFilter = tr("MP4 (*.mp4);;All Files (*)");
             args << "-f" << "mp4" << "-codec:a" << "ac3" << "-b:a" << "512k" << "-codec:v" << "libx264";
-            args << "-preset" << "medium" << "-g" << "1" << "-crf" << "11";
+            args << "-preset" << "medium" << "-g" << "1" << "-crf" << "15";
             break;
         case 1:
             args << "-f" << "mov" << "-codec:a" << "alac";
