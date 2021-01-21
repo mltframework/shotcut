@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2020 Meltytech, LLC
+ * Copyright (c) 2016-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -100,7 +100,7 @@ AudioLoudnessScopeWidget::AudioLoudnessScopeWidget()
 
     // Add config button
     QToolButton* configButton = new QToolButton(this);
-    configButton->setToolTip(tr("onfigure Graphs"));
+    configButton->setToolTip(tr("Configure Graphs"));
     configButton->setIcon(QIcon::fromTheme("show-menu", QIcon(":/icons/oxygen/32x32/actions/show-menu.png")));
     configButton->setPopupMode(QToolButton::InstantPopup);
     configButton->setMenu(configMenu);

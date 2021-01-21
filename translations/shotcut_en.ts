@@ -104,7 +104,7 @@
     </message>
     <message>
         <location filename="../src/widgets/scopes/audioloudnessscopewidget.cpp" line="103"/>
-        <source>onfigure Graphs</source>
+        <source>Configure Graphs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
