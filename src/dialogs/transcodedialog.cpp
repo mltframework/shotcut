@@ -35,9 +35,13 @@ TranscodeDialog::TranscodeDialog(const QString& message, bool isProgressive, QWi
     ui->deinterlaceCheckBox->setChecked(false);
     connect(ui->fpsCheckBox, SIGNAL(toggled(bool)), ui->fpsWidget, SLOT(setEnabled(bool)));
     connect(ui->fpsCheckBox, SIGNAL(toggled(bool)), ui->fpsLabel, SLOT(setEnabled(bool)));
+    connect(ui->fpsCheckBox, SIGNAL(toggled(bool)), ui->frcComboBox, SLOT(setEnabled(bool)));
+    connect(ui->fpsCheckBox, SIGNAL(toggled(bool)), ui->frcLabel, SLOT(setEnabled(bool)));
     ui->fpsCheckBox->setChecked(false);
     ui->fpsWidget->setEnabled(false);
     ui->fpsLabel->setEnabled(false);
+    ui->frcComboBox->setEnabled(false);
+    ui->frcLabel->setEnabled(false);
 
     ui->fpsWidget->setFps(MLT.profile().fps());
 
