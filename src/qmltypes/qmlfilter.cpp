@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 Meltytech, LLC
+ * Copyright (c) 2013-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -651,7 +651,7 @@ bool QmlFilter::isAtLeastVersion(const QString& version)
 
 void QmlFilter::deselect()
 {
-    MAIN.filterController()->setCurrentFilter(-2);
+    MAIN.filterController()->setCurrentFilter(DeselectCurrentFilter);
 }
 
 AnalyzeDelegate::AnalyzeDelegate(Mlt::Filter& filter)

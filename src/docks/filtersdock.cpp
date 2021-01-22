@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 Meltytech, LLC
+ * Copyright (c) 2013-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -59,7 +59,7 @@ FiltersDock::FiltersDock(MetadataModel* metadataModel, AttachedFiltersModel* att
     connect(&m_producer, SIGNAL(seeked(int)), SIGNAL(seeked(int)));
     connect(this, SIGNAL(producerInChanged(int)), &m_producer, SIGNAL(inChanged(int)));
     connect(this, SIGNAL(producerOutChanged(int)), &m_producer, SIGNAL(outChanged(int)));
-    setCurrentFilter(0, 0, -1);
+    setCurrentFilter(0, 0, QmlFilter::NoCurrentFilter);
     connect(m_qview.quickWindow(), SIGNAL(sceneGraphInitialized()), SLOT(resetQview()));
 
     LOG_DEBUG() << "end";
@@ -163,5 +163,5 @@ void FiltersDock::resetQview()
 
     QObject::connect(m_qview.rootObject(), SIGNAL(currentFilterRequested(int)),
         SIGNAL(currentFilterRequested(int)));
-    emit currentFilterRequested(-1);
+    emit currentFilterRequested(QmlFilter::NoCurrentFilter);
 }

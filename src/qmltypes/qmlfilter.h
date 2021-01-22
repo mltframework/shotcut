@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2019 Meltytech, LLC
+ * Copyright (c) 2013-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -54,7 +54,13 @@ public:
         TIME_TIMECODE_DF,
         TIME_TIMECODE_NDF,
     };
-    Q_ENUMS(TimeFormat)
+    Q_ENUM(TimeFormat)
+
+    enum CurrentFilterIndex {
+        NoCurrentFilter = -1,
+        DeselectCurrentFilter = -2
+    };
+    Q_ENUM(CurrentFilterIndex)
 
     explicit QmlFilter();
     explicit QmlFilter(Mlt::Filter& mltFilter, const QmlMetadata* metadata, QObject *parent = nullptr);
