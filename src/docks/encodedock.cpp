@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2020 Meltytech, LLC
+ * Copyright (c) 2012-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -2062,14 +2062,15 @@ bool EncodeDock::checkForMissingFiles()
     if (MAIN.fileName().isEmpty()) {
         tmp.reset(Util::writableTemporaryFile(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + "/"));
     } else {
-        tmp.reset(Util::writableTemporaryFile(MAIN.fileName()));
+        QFileInfo info(MAIN.fileName());
+        QString templateFileName = QString("%1.XXXXXX").arg(QCoreApplication::applicationName());
+        tmp.reset(new QTemporaryFile(info.dir().filePath(templateFileName)));
     }
     tmp->open();
-    tmp->close();
     QString fileName = tmp->fileName();
-    tmp->remove();
     auto isProxy = ui->previewScaleCheckBox->isChecked() && Settings.proxyEnabled();
-    MLT.saveXML(fileName, service, false /* without relative paths */, nullptr, isProxy);
+    MLT.saveXML(fileName, service, false /* without relative paths */, tmp.get(), isProxy);
+    tmp->close();
     MltXmlChecker checker;
     if (!checker.check(fileName)) {
         LOG_ERROR() << "Encode: Unable to check XML - skipping check";
@@ -2084,9 +2085,7 @@ bool EncodeDock::checkForMissingFiles()
         dialog.setWindowModality(QmlApplication::dialogModality());
         dialog.setDefaultButton(QMessageBox::Ok);
         dialog.exec();
-        QFile::remove(fileName);
         return true;
     }
-    QFile::remove(fileName);
     return false;
 }
