@@ -27,12 +27,19 @@ ToolBar {
 
     id: toolbar
     width: 200
-    height: 36
+    height: settings.smallIcons ? 28 : hiddenButton.implicitHeight + 3
 
     RowLayout {
         y: 2
         ToolButton {
-            id: menuButton
+            id: hiddenButton
+            visible: false
+            icon.name: 'show-menu'
+            icon.source: 'qrc:///icons/oxygen/32x32/actions/show-menu.png'
+        }
+        Shotcut.ToolButton {
+            implicitHeight: toolbar.height - 3
+            implicitWidth: implicitHeight
             Shotcut.HoverTip { text: qsTr('Display a menu of additional actions') }
             focusPolicy: Qt.NoFocus
             action: Action {
@@ -47,7 +54,9 @@ ToolBar {
             implicitWidth: 2
             implicitHeight: toolbar.height / 2
         }
-        ToolButton {
+        Shotcut.ToolButton {
+            implicitHeight: toolbar.height - 3
+            implicitWidth: implicitHeight
             Shotcut.HoverTip { text: qsTr('Set the filter start') }
             focusPolicy: Qt.NoFocus
             action: Action {
@@ -56,7 +65,9 @@ ToolBar {
                 onTriggered: filter.in = producer.position + producer.in
             }
         }
-        ToolButton {
+        Shotcut.ToolButton {
+            implicitHeight: toolbar.height - 3
+            implicitWidth: implicitHeight
             Shotcut.HoverTip { text: qsTr('Set the filter end') }
             focusPolicy: Qt.NoFocus
             action: Action {
@@ -65,7 +76,9 @@ ToolBar {
                 onTriggered: filter.out = producer.position + producer.in
             }
         }
-        ToolButton {
+        Shotcut.ToolButton {
+            implicitHeight: toolbar.height - 3
+            implicitWidth: implicitHeight
             Shotcut.HoverTip { text: qsTr('Set the first simple keyframe') }
             focusPolicy: Qt.NoFocus
             action: Action {
@@ -74,7 +87,9 @@ ToolBar {
                 onTriggered: filter.animateIn = producer.position + producer.in - filter.in
             }
         }
-        ToolButton {
+        Shotcut.ToolButton {
+            implicitHeight: toolbar.height - 3
+            implicitWidth: implicitHeight
             Shotcut.HoverTip { text: qsTr('Set the second simple keyframe') }
             focusPolicy: Qt.NoFocus
             action: Action {
@@ -88,7 +103,9 @@ ToolBar {
             implicitWidth: 2
             implicitHeight: toolbar.height / 2
         }
-        ToolButton {
+        Shotcut.ToolButton {
+            implicitHeight: toolbar.height - 3
+            implicitWidth: implicitHeight
             Shotcut.HoverTip { text: qsTr('Zoom keyframes out (Alt+-)') }
             focusPolicy: Qt.NoFocus
             action: Action {
@@ -101,7 +118,9 @@ ToolBar {
         ZoomSlider {
             id: scaleSlider
         }
-        ToolButton {
+        Shotcut.ToolButton {
+            implicitHeight: toolbar.height - 3
+            implicitWidth: implicitHeight
             Shotcut.HoverTip { text: qsTr('Zoom keyframes in (Alt++)') }
             focusPolicy: Qt.NoFocus
             action: Action {
@@ -111,7 +130,9 @@ ToolBar {
                 onTriggered: root.zoomIn()
             }
         }
-        ToolButton {
+        Shotcut.ToolButton {
+            implicitHeight: toolbar.height - 3
+            implicitWidth: implicitHeight
             Shotcut.HoverTip { text: qsTr('Zoom keyframes to fit (Alt+0)') }
             focusPolicy: Qt.NoFocus
             action: Action {

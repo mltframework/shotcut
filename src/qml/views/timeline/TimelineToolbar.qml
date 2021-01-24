@@ -29,15 +29,19 @@ ToolBar {
 
     id: toolbar
     width: 200
-    height: 32
+    height: settings.smallIcons ? 28 : hiddenButton.implicitHeight + 3
 
     RowLayout {
         y: 2
         ToolButton {
             id: hiddenButton
             visible: false
+            icon.name: 'show-menu'
+            icon.source: 'qrc:///icons/oxygen/32x32/actions/show-menu.png'
         }
-        ToolButton {
+        Shotcut.ToolButton {
+            implicitHeight: toolbar.height - 3
+            implicitWidth: implicitHeight
             action: menuAction
             Shotcut.HoverTip { text: qsTr('Display a menu of additional actions') }
             focusPolicy: Qt.NoFocus
@@ -47,17 +51,23 @@ ToolBar {
             implicitWidth: 2
             implicitHeight: toolbar.height / 2
         }
-        ToolButton {
+        Shotcut.ToolButton {
+            implicitHeight: toolbar.height - 3
+            implicitWidth: implicitHeight
             action: cutAction
             Shotcut.HoverTip { text: qsTr('Cut - Copy the current clip to the Source\nplayer and ripple delete it') }
             focusPolicy: Qt.NoFocus
         }
-        ToolButton {
+        Shotcut.ToolButton {
+            implicitHeight: toolbar.height - 3
+            implicitWidth: implicitHeight
             action: copyAction
             Shotcut.HoverTip { text: qsTr('Copy - Copy the current clip to the Source player (C)') }
             focusPolicy: Qt.NoFocus
         }
-        ToolButton {
+        Shotcut.ToolButton {
+            implicitHeight: toolbar.height - 3
+            implicitWidth: implicitHeight
             action: insertAction
             Shotcut.HoverTip { text: qsTr('Paste - Insert clip into the current track\nshifting following clips to the right (V)') }
             focusPolicy: Qt.NoFocus
@@ -67,27 +77,37 @@ ToolBar {
             implicitWidth: 2
             implicitHeight: toolbar.height / 2
         }
-        ToolButton {
+        Shotcut.ToolButton {
+            implicitHeight: toolbar.height - 3
+            implicitWidth: implicitHeight
             action: appendAction
             Shotcut.HoverTip { text: qsTr('Append to the current track (A)') }
             focusPolicy: Qt.NoFocus
         }
-        ToolButton {
+        Shotcut.ToolButton {
+            implicitHeight: toolbar.height - 3
+            implicitWidth: implicitHeight
             action: deleteAction
             Shotcut.HoverTip { text: qsTr('Ripple Delete - Remove current clip\nshifting following clips to the left (X)') }
             focusPolicy: Qt.NoFocus
         }
-        ToolButton {
+        Shotcut.ToolButton {
+            implicitHeight: toolbar.height - 3
+            implicitWidth: implicitHeight
             action: liftAction
             Shotcut.HoverTip { text: qsTr('Lift - Remove current clip without\naffecting position of other clips (Z)') }
             focusPolicy: Qt.NoFocus
         }
-        ToolButton {
+        Shotcut.ToolButton {
+            implicitHeight: toolbar.height - 3
+            implicitWidth: implicitHeight
             action: overwriteAction
             Shotcut.HoverTip { text: qsTr('Overwrite clip onto the current track (B)') }
             focusPolicy: Qt.NoFocus
         }
-        ToolButton {
+        Shotcut.ToolButton {
+            implicitHeight: toolbar.height - 3
+            implicitWidth: implicitHeight
             action: splitAction
             Shotcut.HoverTip { text: qsTr('Split At Playhead (S)') }
             focusPolicy: Qt.NoFocus
@@ -97,40 +117,48 @@ ToolBar {
             implicitWidth: 2
             implicitHeight: toolbar.height / 2
         }
-        Shotcut.ToolBarToggle {
+        Shotcut.ToolButton {
             id: snapButton
+            implicitHeight: toolbar.height - 3
+            implicitWidth: implicitHeight
             checked: settings.timelineSnap
-            iconName: 'snap'
-            iconSource: 'qrc:///icons/oxygen/32x32/actions/snap.png'
+            icon.name: 'snap'
+            icon.source: 'qrc:///icons/oxygen/32x32/actions/snap.png'
             focusPolicy: Qt.NoFocus
-            tooltip: qsTr('Toggle snapping')
+            Shotcut.HoverTip { text: qsTr('Toggle snapping') }
             onClicked: settings.timelineSnap = !settings.timelineSnap
         }
-        Shotcut.ToolBarToggle {
+        Shotcut.ToolButton {
             id: scrubButton
+            implicitHeight: toolbar.height - 3
+            implicitWidth: implicitHeight
             checked: settings.timelineDragScrub
-            iconName: 'scrub_drag'
-            iconSource: 'qrc:///icons/oxygen/32x32/actions/scrub_drag.png'
+            icon.name: 'scrub_drag'
+            icon.source: 'qrc:///icons/oxygen/32x32/actions/scrub_drag.png'
             focusPolicy: Qt.NoFocus
-            tooltip: qsTr('Scrub while dragging')
+            Shotcut.HoverTip { text: qsTr('Scrub while dragging') }
             onClicked: settings.timelineDragScrub = !settings.timelineDragScrub
         }
-        Shotcut.ToolBarToggle {
+        Shotcut.ToolButton {
             id: rippleButton
+            implicitHeight: toolbar.height - 3
+            implicitWidth: implicitHeight
             checked: settings.timelineRipple
-            iconName: 'target'
-            iconSource: 'qrc:///icons/oxygen/32x32/actions/target.png'
+            icon.name: 'target'
+            icon.source: 'qrc:///icons/oxygen/32x32/actions/target.png'
             focusPolicy: Qt.NoFocus
-            tooltip: qsTr('Ripple trim and drop')
+            Shotcut.HoverTip { text: qsTr('Ripple trim and drop') }
             onClicked: settings.timelineRipple = !settings.timelineRipple
         }
-        Shotcut.ToolBarToggle {
+        Shotcut.ToolButton {
             id: rippleAllButton
+            implicitHeight: toolbar.height - 3
+            implicitWidth: implicitHeight
             checked: settings.timelineRippleAllTracks
-            iconName: 'ripple-all'
-            iconSource: 'qrc:///icons/oxygen/32x32/actions/ripple-all.png'
+            icon.name: 'ripple-all'
+            icon.source: 'qrc:///icons/oxygen/32x32/actions/ripple-all.png'
             focusPolicy: Qt.NoFocus
-            tooltip: qsTr('Ripple edits across all tracks')
+            Shotcut.HoverTip { text: qsTr('Ripple edits across all tracks') }
             onClicked: settings.timelineRippleAllTracks = !settings.timelineRippleAllTracks
         }
         Button { // separator
@@ -138,7 +166,9 @@ ToolBar {
             implicitWidth: 2
             implicitHeight: toolbar.height / 2
         }
-        ToolButton {
+        Shotcut.ToolButton {
+            implicitHeight: toolbar.height - 3
+            implicitWidth: implicitHeight
             action: zoomOutAction
             Shotcut.HoverTip { text: qsTr("Zoom timeline out (-)") }
             focusPolicy: Qt.NoFocus
@@ -146,12 +176,16 @@ ToolBar {
         ZoomSlider {
             id: scaleSlider
         }
-        ToolButton {
+        Shotcut.ToolButton {
+            implicitHeight: toolbar.height - 3
+            implicitWidth: implicitHeight
             action: zoomInAction
             Shotcut.HoverTip { text: qsTr("Zoom timeline in (+)") }
             focusPolicy: Qt.NoFocus
         }
-        ToolButton {
+        Shotcut.ToolButton {
+            implicitHeight: toolbar.height - 3
+            implicitWidth: implicitHeight
             action: zoomFitAction
             Shotcut.HoverTip { text: qsTr('Zoom timeline to fit (0)') }
             focusPolicy: Qt.NoFocus
