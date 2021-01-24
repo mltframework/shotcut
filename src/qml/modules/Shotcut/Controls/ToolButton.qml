@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Meltytech, LLC
+ * Copyright (c) 2020-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,21 +21,11 @@ import Shotcut.Controls 1.0 as Shotcut
 
 ToolButton {
     id: control
-    property string iconName
-    property url iconSource
-    property alias tooltip: tooltip.text
 
-    background: Rectangle {
-        id: rect
-        radius: 3
-        width: control.width
-        height: control.height
-        SystemPalette { id: activePalette }
-        color: control.checked? activePalette.highlight : activePalette.button
-    }
-    action: Action {
-        icon.name: iconName
-        icon.source: iconSource
-    }
-    Shotcut.HoverTip { id: tooltip }
+    icon.height: control.height - (verticalPadding * 2)
+    icon.width: control.height -  (horizontalPadding * 2)
+    padding: 3
+
+    SystemPalette { id: activePalette }
+    palette.button: checked ? activePalette.highlight : activePalette.button
 }
