@@ -29,17 +29,13 @@ ToolBar {
 
     id: toolbar
     width: 200
-    height: settings.smallIcons ? 28 : hiddenButton.implicitHeight + 3
+    height: settings.smallIcons ? 25 : 33
 
     RowLayout {
         y: 2
-        ToolButton {
-            id: hiddenButton
-            visible: false
-            icon.name: 'show-menu'
-            icon.source: 'qrc:///icons/oxygen/32x32/actions/show-menu.png'
-        }
+
         Shotcut.ToolButton {
+            id: menuButton
             implicitHeight: toolbar.height - 3
             implicitWidth: implicitHeight
             action: menuAction
