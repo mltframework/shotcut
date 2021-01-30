@@ -80,6 +80,8 @@ DAV1D_HEAD=1
 DAV1D_REVISION=
 AOM_HEAD=1
 AOM_REVISION=
+QT_VERSION_DEFAULT=5.15.2
+QT_VERSION_DARWIN=5.12.10
 
 # QT_INCLUDE_DIR="$(pkg-config --variable=prefix QtCore)/include"
 QT_INCLUDE_DIR=${QTDIR:+${QTDIR}/include}
@@ -600,16 +602,16 @@ function set_globals {
     if test "$TARGET_OS" = "Win32" ; then
       export HOST=i686-w64-mingw32
       export CROSS=${HOST}.shared-
-      export QTDIR="$HOME/qt-5.15.2-x86-mingw540-sjlj"
-      export QMAKE="$HOME/Qt/5.15.2/gcc_64/bin/qmake"
-      export LRELEASE="$HOME/Qt/5.15.2/gcc_64/bin/lrelease"
+      export QTDIR="$HOME/qt-$QT_VERSION_DEFAULT-x86-mingw540-sjlj"
+      export QMAKE="$HOME/Qt/$QT_VERSION_DEFAULT/gcc_64/bin/qmake"
+      export LRELEASE="$HOME/Qt/$QT_VERSION_DEFAULT/gcc_64/bin/lrelease"
       export LDFLAGS="-L/opt/mxe/usr/${HOST}.shared/lib -Wl,--large-address-aware $LDFLAGS"
     else
       export HOST=x86_64-w64-mingw32
       export CROSS=${HOST}.shared-
-      export QTDIR="$HOME/qt-5.15.2-x64-mingw540-seh"
-      export QMAKE="$HOME/Qt/5.15.2/gcc_64/bin/qmake"
-      export LRELEASE="$HOME/Qt/5.15.2/gcc_64/bin/lrelease"
+      export QTDIR="$HOME/qt-$QT_VERSION_DEFAULT-x64-mingw540-seh"
+      export QMAKE="$HOME/Qt/$QT_VERSION_DEFAULT/gcc_64/bin/qmake"
+      export LRELEASE="$HOME/Qt/$QT_VERSION_DEFAULT/gcc_64/bin/lrelease"
       export LDFLAGS="-L/opt/mxe/usr/${HOST}.shared/lib $LDFLAGS"
     fi
     export CFLAGS="-I/opt/mxe/usr/${HOST}.shared/include $CFLAGS"
@@ -624,14 +626,14 @@ function set_globals {
     export CMAKE_ROOT="${SOURCE_DIR}/vid.stab/cmake"
     export PKG_CONFIG=pkg-config
   elif test "$TARGET_OS" = "Darwin"; then
-    export QTDIR="$HOME/Qt/5.12.10/clang_64"
+    export QTDIR="$HOME/Qt/$QT_VERSION_DARWIN/clang_64"
     export RANLIB=ranlib
   else
     if test -z "$QTDIR" ; then
       if [ "$(uname -m)" = "x86_64" ]; then
-        export QTDIR="$HOME/Qt/5.15.2/gcc_64"
+        export QTDIR="$HOME/Qt/$QT_VERSION_DEFAULT/gcc_64"
       else
-        export QTDIR="$HOME/Qt/5.15.2/gcc"
+        export QTDIR="$HOME/Qt/$QT_VERSION_DEFAULT/gcc"
       fi
     fi
     export RANLIB=ranlib
@@ -1497,7 +1499,7 @@ function configure_compile_install_subproject {
 
   # Special hack for shotcut
   if test "shotcut" = "$1" -a \( "$TARGET_OS" = "Win32" -o "$TARGET_OS" = "Win64" \) ; then
-    sed 's/QMAKE_LIBS_OPENGL = -lGL//' -i /root/Qt/5.15.2/gcc_64/mkspecs/modules/qt_lib_gui_private.pri
+    sed 's/QMAKE_LIBS_OPENGL = -lGL//' -i /root/Qt/$QT_VERSION_DEFAULT/gcc_64/mkspecs/modules/qt_lib_gui_private.pri
   fi
 
   # Special hack for movit
