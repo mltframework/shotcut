@@ -56,6 +56,7 @@ SOURCES += main.cpp\
     dialogs/filedatedialog.cpp \
     jobqueue.cpp \
     docks/jobsdock.cpp \
+    dialogs/multifileexportdialog.cpp \
     dialogs/slideshowgeneratordialog.cpp \
     dialogs/textviewerdialog.cpp \
     models/playlistmodel.cpp \
@@ -187,6 +188,7 @@ HEADERS  += mainwindow.h \
     dialogs/filedatedialog.h \
     jobqueue.h \
     docks/jobsdock.h \
+    dialogs/mutifileexportdialog.h \
     dialogs/slideshowgeneratordialog.h \
     dialogs/textviewerdialog.h \
     models/playlistmodel.h \

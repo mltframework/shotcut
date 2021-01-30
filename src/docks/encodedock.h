@@ -143,7 +143,7 @@ private:
     QString m_extension;
     Mlt::Properties *m_profiles;
     PresetsProxyModel m_presetsModel;
-    QString m_outputFilename;
+    QStringList m_outputFilenames;
     bool m_isDefaultSettings;
     double m_fps;
 
@@ -153,7 +153,7 @@ private:
     MeltJob* createMeltJob(Mlt::Producer* service, const QString& target, int realtime, int pass = 0);
     void runMelt(const QString& target, int realtime = -1);
     void enqueueAnalysis();
-    void enqueueMelt(const QString& target, int realtime);
+    void enqueueMelt(const QStringList& targets, int realtime);
     void encode(const QString& target);
     void resetOptions();
     Mlt::Producer* fromProducer() const;
