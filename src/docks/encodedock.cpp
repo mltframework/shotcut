@@ -18,6 +18,7 @@
 #include "encodedock.h"
 #include "ui_encodedock.h"
 #include "dialogs/addencodepresetdialog.h"
+#include "dialogs/multifileexportdialog.h"
 #include "jobqueue.h"
 #include "mltcontroller.h"
 #include "mainwindow.h"
@@ -1106,7 +1107,7 @@ void EncodeDock::enqueueAnalysis()
     }
 }
 
-void EncodeDock::enqueueMelt(const QString& target, int realtime)
+void EncodeDock::enqueueMelt(const QStringList& targets, int realtime)
 {
     Mlt::Producer* service = fromProducer();
     int pass = (ui->videoRateControlCombo->currentIndex() != RateControlQuality
@@ -1119,9 +1120,7 @@ void EncodeDock::enqueueMelt(const QString& target, int realtime)
     if (!service) {
         // For each playlist item.
         if (MAIN.playlist() && MAIN.playlist()->count() > 1) {
-            QFileInfo fi(target);
             int n = MAIN.playlist()->count();
-            int digits = QString::number(n).size();
             for (int i = 0; i < n; i++) {
                 QScopedPointer<Mlt::ClipInfo> info(MAIN.playlist()->clip_info(i));
                 if (!info) continue;
@@ -1129,13 +1128,11 @@ void EncodeDock::enqueueMelt(const QString& target, int realtime)
                 QScopedPointer<Mlt::Producer> producer(
                     new Mlt::Producer(MLT.profile(), "xml-string", xml.toUtf8().constData()));
                 producer->set_in_and_out(info->frame_in, info->frame_out);
-                QString filename = QString("%1/%2-%3.%4").arg(fi.path()).arg(fi.baseName())
-                                                         .arg(i + 1, digits, 10, QChar('0')).arg(fi.completeSuffix());
-                MeltJob* job = createMeltJob(producer.data(), filename, realtime, pass);
+                MeltJob* job = createMeltJob(producer.data(), targets[i], realtime, pass);
                 if (job) {
                     JOBS.add(job);
                     if (pass) {
-                        job = createMeltJob(producer.data(), filename, realtime, 2);
+                        job = createMeltJob(producer.data(), targets[i], realtime, 2);
                         if (job)
                             JOBS.add(job);
                     }
@@ -1143,11 +1140,11 @@ void EncodeDock::enqueueMelt(const QString& target, int realtime)
             }
         }
     } else {
-        MeltJob* job = createMeltJob(service, target, realtime, pass);
+        MeltJob* job = createMeltJob(service, targets[0], realtime, pass);
         if (job) {
             JOBS.add(job);
             if (pass) {
-                job = createMeltJob(service, target, realtime, 2);
+                job = createMeltJob(service, targets[0], realtime, 2);
                 if (job)
                     JOBS.add(job);
             }
@@ -1405,93 +1402,107 @@ void EncodeDock::on_encodeButton_clicked()
         }
     }
 
-    QString caption = seekable? tr("Export File") : tr("Capture File");
-    QString nameFilter;
-    if (!m_extension.isEmpty())
-        nameFilter = tr("%1 (*.%2);;All Files (*)").arg(ui->formatCombo->currentText()).arg(m_extension);
-    else
-        tr("Determined by Export (*)");
-    m_outputFilename = QFileDialog::getSaveFileName(this, caption, directory, nameFilter,
-        nullptr, Util::getFileDialogOptions());
-    if (!m_outputFilename.isEmpty()) {
-        QFileInfo fi(m_outputFilename);
-        MLT.pause();
-        Settings.setEncodePath(fi.path());
-        if (!m_extension.isEmpty()) {
+    QString caption = seekable ? tr("Export File") : tr("Capture File");
+    if (ui->fromCombo->currentData().toString() == "batch") {
+        caption = tr("Export Files");
+        MultiFileExportDialog dialog(tr("Export Each Playlist Item"), MAIN.playlist(), QFileInfo(directory).absolutePath(), m_extension, this);
+        if (dialog.exec() != QDialog::Accepted) {
+            return;
+        }
+        m_outputFilenames = dialog.getExportFiles();
+    } else {
+        QString nameFilter;
+        if (!m_extension.isEmpty())
+            nameFilter = tr("%1 (*.%2);;All Files (*)").arg(ui->formatCombo->currentText()).arg(m_extension);
+        else
+            nameFilter = tr("Determined by Export (*)");
+        QString newName = QFileDialog::getSaveFileName(this, caption, directory, nameFilter,
+            nullptr, Util::getFileDialogOptions());
+        if (!newName.isEmpty() && !m_extension.isEmpty()) {
+            QFileInfo fi(newName);
             if (fi.suffix().isEmpty()) {
-                m_outputFilename += '.';
-                m_outputFilename += m_extension;
+                newName += '.';
+                newName += m_extension;
             }
         }
+        m_outputFilenames = QStringList(newName);
+    }
 
-        // Check if the drive this file will be on is getting low on space.
-        if (Settings.encodeFreeSpaceCheck()) {
-            QStorageInfo si(fi.path());
-            LOG_DEBUG() << si.bytesAvailable() << "bytes available on" << si.displayName();
-            if (si.isValid() && si.bytesAvailable() < kFreeSpaceThesholdGB) {
-                QMessageBox dialog(QMessageBox::Question, caption,
-                   tr("The drive you chose only has %1 MiB of free space.\n"
-                      "Do you still want to continue?")
-                   .arg(si.bytesAvailable() / 1024 / 1024),
-                   QMessageBox::No | QMessageBox::Yes, this);
-                dialog.setWindowModality(QmlApplication::dialogModality());
-                dialog.setDefaultButton(QMessageBox::Yes);
-                dialog.setEscapeButton(QMessageBox::No);
-                dialog.setCheckBox(new QCheckBox(tr("Do not show this anymore.", "Export free disk space warning dialog")));
-                int result = dialog.exec();
-                if (dialog.checkBox()->isChecked())
-                    Settings.setEncodeFreeSpaceCheck(false);
-                if (result == QMessageBox::No) {
-                    MAIN.showStatusMessage(tr("Export canceled."));
-                    return;
-                }
+    if (m_outputFilenames.isEmpty() || m_outputFilenames[0].isEmpty()) {
+        return;
+    }
+
+    QFileInfo fi(m_outputFilenames[0]);
+    MLT.pause();
+    Settings.setEncodePath(fi.path());
+
+    // Check if the drive this file will be on is getting low on space.
+    if (Settings.encodeFreeSpaceCheck()) {
+        QStorageInfo si(fi.path());
+        LOG_DEBUG() << si.bytesAvailable() << "bytes available on" << si.displayName();
+        if (si.isValid() && si.bytesAvailable() < kFreeSpaceThesholdGB) {
+            QMessageBox dialog(QMessageBox::Question, caption,
+               tr("The drive you chose only has %1 MiB of free space.\n"
+                  "Do you still want to continue?")
+               .arg(si.bytesAvailable() / 1024 / 1024),
+               QMessageBox::No | QMessageBox::Yes, this);
+            dialog.setWindowModality(QmlApplication::dialogModality());
+            dialog.setDefaultButton(QMessageBox::Yes);
+            dialog.setEscapeButton(QMessageBox::No);
+            dialog.setCheckBox(new QCheckBox(tr("Do not show this anymore.", "Export free disk space warning dialog")));
+            int result = dialog.exec();
+            if (dialog.checkBox()->isChecked())
+                Settings.setEncodeFreeSpaceCheck(false);
+            if (result == QMessageBox::No) {
+                MAIN.showStatusMessage(tr("Export canceled."));
+                return;
             }
         }
+    }
 
-        if (seekable) {
-            MLT.purgeMemoryPool();
-            // Batch encode
-            int threadCount = QThread::idealThreadCount();
-            if (threadCount > 2 && ui->parallelCheckbox->isChecked())
-                threadCount = qMin(threadCount - 1, 4);
-            else
-                threadCount = 1;
-            enqueueAnalysis();
-            enqueueMelt(m_outputFilename, Settings.playerGPU()? -1 : -threadCount);
-        }
-        else if (MLT.producer()->get_int(kBackgroundCaptureProperty)) {
-            // Capture in background
-            ui->dualPassCheckbox->setChecked(false);
-            m_immediateJob.reset(createMeltJob(fromProducer(), m_outputFilename, -1));
-            if (m_immediateJob) {
-                // Close the player's producer to prevent resource contention.
-                MAIN.hideProducer();
+    if (seekable) {
+        MLT.purgeMemoryPool();
+        // Batch encode
+        int threadCount = QThread::idealThreadCount();
+        if (threadCount > 2 && ui->parallelCheckbox->isChecked())
+            threadCount = qMin(threadCount - 1, 4);
+        else
+            threadCount = 1;
+        enqueueAnalysis();
+        enqueueMelt(m_outputFilenames, Settings.playerGPU()? -1 : -threadCount);
+    }
+    else if (MLT.producer()->get_int(kBackgroundCaptureProperty)) {
+        // Capture in background
+        ui->dualPassCheckbox->setChecked(false);
+        m_immediateJob.reset(createMeltJob(fromProducer(), m_outputFilenames[0], -1));
+        if (m_immediateJob) {
+            // Close the player's producer to prevent resource contention.
+            MAIN.hideProducer();
 
-                m_immediateJob->setIsStreaming(true);
-                connect(m_immediateJob.data(), SIGNAL(finished(AbstractJob*,bool,QString)), this, SLOT(onFinished(AbstractJob*,bool)));
+            m_immediateJob->setIsStreaming(true);
+            connect(m_immediateJob.data(), SIGNAL(finished(AbstractJob*,bool,QString)), this, SLOT(onFinished(AbstractJob*,bool)));
 
-                if (MLT.resource().startsWith("gdigrab:") || MLT.resource().startsWith("x11grab:")) {
-                    ui->stopCaptureButton->show();
-                } else {
-                    ui->encodeButton->setText(tr("Stop Capture"));
-                    ui->fromCombo->setDisabled(true);
-                }
-                if (MLT.resource().startsWith("gdigrab:"))
-                    MAIN.showMinimized();
-
-                int msec = MLT.producer()->get_int(kBackgroundCaptureProperty) * 1000;
-                QTimer::singleShot(msec, m_immediateJob.data(), SLOT(start()));
+            if (MLT.resource().startsWith("gdigrab:") || MLT.resource().startsWith("x11grab:")) {
+                ui->stopCaptureButton->show();
+            } else {
+                ui->encodeButton->setText(tr("Stop Capture"));
+                ui->fromCombo->setDisabled(true);
             }
-        }
-        else {
-            // Capture to file
-            // use multi consumer to encode and preview simultaneously
-            ui->dualPassCheckbox->setChecked(false);
-            ui->encodeButton->setText(tr("Stop Capture"));
-            encode(m_outputFilename);
-            emit captureStateChanged(true);
-            ui->streamButton->setDisabled(true);
-        }
+            if (MLT.resource().startsWith("gdigrab:"))
+                MAIN.showMinimized();
+
+            int msec = MLT.producer()->get_int(kBackgroundCaptureProperty) * 1000;
+            QTimer::singleShot(msec, m_immediateJob.data(), SLOT(start()));
+       }
+    }
+    else {
+        // Capture to file
+        // use multi consumer to encode and preview simultaneously
+        ui->dualPassCheckbox->setChecked(false);
+        ui->encodeButton->setText(tr("Stop Capture"));
+        encode(m_outputFilenames[0]);
+        emit captureStateChanged(true);
+        ui->streamButton->setDisabled(true);
     }
 }
 
@@ -1582,7 +1593,7 @@ void EncodeDock::on_streamButton_clicked()
             emit captureStateChanged(true);
             emit ui->encodeButton->setDisabled(true);
         }
-        m_outputFilename.clear();
+        m_outputFilenames.clear();
     }
 }
 
@@ -1679,7 +1690,7 @@ void EncodeDock::on_stopCaptureButton_clicked()
     ui->stopCaptureButton->hide();
     if (m_immediateJob)
         m_immediateJob->stop();
-    if (!m_outputFilename.isEmpty())
+    if (!m_outputFilenames.isEmpty())
         QTimer::singleShot(kOpenCaptureFileDelayMs, this, SLOT(openCaptureFile()));
 }
 
@@ -1807,7 +1818,7 @@ void EncodeDock::on_resetButton_clicked()
 
 void EncodeDock::openCaptureFile()
 {
-    MAIN.open(m_outputFilename);
+    MAIN.open(m_outputFilenames[0]);
 }
 
 void EncodeDock::on_formatCombo_currentIndexChanged(int index)
