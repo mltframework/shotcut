@@ -4031,15 +4031,12 @@ void MainWindow::on_actionExportEDL_triggered()
 
 void MainWindow::on_actionExportFrame_triggered()
 {
-    if (Settings.playerGPU() || Settings.playerPreviewScale()) {
-        Mlt::GLWidget* glw = qobject_cast<Mlt::GLWidget*>(MLT.videoWidget());
-        connect(glw, SIGNAL(imageReady()), SLOT(onGLWidgetImageReady()));
-        MLT.setPreviewScale(0);
-        glw->requestImage();
-        MLT.refreshConsumer();
-    } else {
-        onGLWidgetImageReady();
-    }
+    filterController()->setCurrentFilter(QmlFilter::DeselectCurrentFilter);
+    Mlt::GLWidget* glw = qobject_cast<Mlt::GLWidget*>(MLT.videoWidget());
+    connect(glw, SIGNAL(imageReady()), SLOT(onGLWidgetImageReady()));
+    MLT.setPreviewScale(0);
+    glw->requestImage();
+    MLT.refreshConsumer();
 }
 
 void MainWindow::onGLWidgetImageReady()

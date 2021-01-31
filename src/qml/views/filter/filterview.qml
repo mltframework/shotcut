@@ -22,7 +22,7 @@ import Shotcut.Controls 1.0 as Shotcut
 
 Rectangle {
     id: root
-    property int selectedIndex: -1
+    property int selectedIndex: filter.NoCurrentFilter
     signal currentFilterRequested(int attachedIndex)
     
     function clearCurrentFilter() {
@@ -142,7 +142,7 @@ Rectangle {
             implicitWidth: height
             icon.name: 'list-remove'
             icon.source: 'qrc:///icons/oxygen/32x32/actions/list-remove.png'
-            enabled: selectedIndex > -1
+            enabled: selectedIndex > filter.NoCurrentFilter
             opacity: enabled ? 1.0 : 0.5
             Shotcut.HoverTip { text: qsTr('Remove selected filter') }
             onClicked: {
@@ -159,7 +159,7 @@ Rectangle {
             implicitWidth: height
             icon.name: 'edit-copy'
             icon.source: 'qrc:///icons/oxygen/32x32/actions/edit-copy.png'
-            enabled: selectedIndex > -1
+            enabled: selectedIndex > filter.NoCurrentFilter
             opacity: enabled ? 1.0 : 0.5
             Shotcut.HoverTip { text: qsTr('Copy the filters') }
             onClicked: application.copyFilters()
@@ -192,7 +192,7 @@ Rectangle {
         Shotcut.Button {
             id: moveDownButton
             implicitWidth: height
-            enabled: selectedIndex > -1 && selectedIndex + 1 < attachedfiltersmodel.rowCount()
+            enabled: selectedIndex > filter.NoCurrentFilter && selectedIndex + 1 < attachedfiltersmodel.rowCount()
             opacity: enabled ? 1.0 : 0.5
             icon.name: 'overwrite'
             icon.source: 'qrc:///icons/oxygen/32x32/actions/overwrite.png'
@@ -209,13 +209,13 @@ Rectangle {
             implicitWidth: height
             icon.name: 'window-close'
             icon.source: 'qrc:///icons/oxygen/32x32/actions/window-close.png'
-            enabled: selectedIndex > -1
+            enabled: selectedIndex > filter.NoCurrentFilter
             opacity: enabled ? 1.0 : 0.5
             Shotcut.HoverTip { text: qsTr('Deselect the filter') }
             onClicked: {
                 clearCurrentFilter()
-                attachedFilters.setCurrentFilter(-2)
-                selectedIndex = -1
+                attachedFilters.setCurrentFilter(filter.DeselectCurrentFilter)
+                selectedIndex = filter.NoCurrentFilter
                 filter.deselect()
             }
         }

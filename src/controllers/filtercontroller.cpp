@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2020 Meltytech, LLC
+ * Copyright (c) 2014-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@ FilterController::FilterController(QObject* parent) : QObject(parent),
  m_mltFilter(0),
  m_metadataModel(this),
  m_attachedModel(this),
- m_currentFilterIndex(-1)
+ m_currentFilterIndex(QmlFilter::NoCurrentFilter)
 {
     startTimer(0);
     connect(&m_attachedModel, SIGNAL(changed()), this, SLOT(handleAttachedModelChange()));
@@ -156,7 +156,7 @@ void FilterController::setCurrentFilter(int attachedIndex, bool isNew)
     QmlMetadata* meta = m_attachedModel.getMetadata(m_currentFilterIndex);
     QmlFilter* filter = 0;
     if (meta) {
-        emit currentFilterChanged(nullptr, nullptr, -1);
+        emit currentFilterChanged(nullptr, nullptr, QmlFilter::NoCurrentFilter);
         m_mltFilter = m_attachedModel.getFilter(m_currentFilterIndex);
         filter = new QmlFilter(*m_mltFilter, meta);
         filter->setIsNew(isNew);
@@ -207,18 +207,18 @@ void FilterController::handleAttachedModelChange()
 
 void FilterController::handleAttachedModelAboutToReset()
 {
-    setCurrentFilter(-1);
+    setCurrentFilter(QmlFilter::NoCurrentFilter);
 }
 
 void FilterController::handleAttachedRowsRemoved(const QModelIndex&, int first, int)
 {
-    m_currentFilterIndex = -2; // Force update
+    m_currentFilterIndex = QmlFilter::DeselectCurrentFilter; // Force update
     setCurrentFilter(qBound(0, first, m_attachedModel.rowCount() - 1));
 }
 
 void FilterController::handleAttachedRowsInserted(const QModelIndex&, int first, int)
 {
-    m_currentFilterIndex = -2; // Force update
+    m_currentFilterIndex = QmlFilter::DeselectCurrentFilter; // Force update
     setCurrentFilter(qBound(0, first, m_attachedModel.rowCount() - 1), true);
 }
 
@@ -244,7 +244,7 @@ void FilterController::onQmlFilterChanged(const QString &name)
 
 void FilterController::removeCurrent()
 {
-    if (m_currentFilterIndex > -1)
+    if (m_currentFilterIndex > QmlFilter::NoCurrentFilter)
         m_attachedModel.remove(m_currentFilterIndex);
 }
 
