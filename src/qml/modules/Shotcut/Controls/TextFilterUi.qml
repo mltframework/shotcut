@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2020 Meltytech, LLC
+ * Copyright (c) 2014-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -259,6 +259,7 @@ GridLayout {
         TextField {
             id: rectX
             horizontalAlignment: Qt.AlignRight
+            selectByMouse: true
             onEditingFinished: if (filterRect.x !== parseFloat(text)) {
                 filterRect.x = parseFloat(text)
                 updateFilter(getPosition())
@@ -268,6 +269,7 @@ GridLayout {
         TextField {
             id: rectY
             horizontalAlignment: Qt.AlignRight
+            selectByMouse: true
             onEditingFinished: if (filterRect.y !== parseFloat(text)) {
                 filterRect.y = parseFloat(text)
                 updateFilter(getPosition())
@@ -305,6 +307,7 @@ GridLayout {
         TextField {
             id: rectW
             horizontalAlignment: Qt.AlignRight
+            selectByMouse: true
             onEditingFinished: if (filterRect.width !== parseFloat(text)) {
                 filterRect.width = parseFloat(text)
                 updateFilter(getPosition())
@@ -314,6 +317,7 @@ GridLayout {
         TextField {
             id: rectH
             horizontalAlignment: Qt.AlignRight
+            selectByMouse: true
             onEditingFinished: if (filterRect.height !== parseFloat(text)) {
                 filterRect.height = parseFloat(text)
                 updateFilter(getPosition())

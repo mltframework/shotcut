@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020-21 Meltytech, LLC
+ * Copyright (c) 2020-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -373,6 +373,7 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
                 horizontalAlignment: Qt.AlignRight
                 readOnly: true
                 opacity: 0.7
+                selectByMouse: true
             }
             Label { text: 'x' }
             TextField {
@@ -380,6 +381,7 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
                 horizontalAlignment: Qt.AlignRight
                 readOnly: true
                 opacity: 0.7
+                selectByMouse: true
             }
         }
         Item { Layout.columnSpan: 2; Layout.fillWidth: true }

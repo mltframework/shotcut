@@ -175,6 +175,7 @@ Item {
                 id: rectX
                 text: filterRect.x
                 horizontalAlignment: Qt.AlignRight
+                selectByMouse: true
                 onEditingFinished: if (filterRect.x !== parseFloat(text)) setFilter()
             }
             Label { text: ',' }
@@ -182,6 +183,7 @@ Item {
                 id: rectY
                 text: filterRect.y
                 horizontalAlignment: Qt.AlignRight
+                selectByMouse: true
                 onEditingFinished: if (filterRect.y !== parseFloat(text)) setFilter()
             }
         }
@@ -196,6 +198,7 @@ Item {
                 id: rectW
                 text: filterRect.width
                 horizontalAlignment: Qt.AlignRight
+                selectByMouse: true
                 onEditingFinished: if (filterRect.width !== parseFloat(text)) setFilter()
             }
             Label { text: 'x' }
@@ -203,6 +206,7 @@ Item {
                 id: rectH
                 text: filterRect.height
                 horizontalAlignment: Qt.AlignRight
+                selectByMouse: true
                 onEditingFinished: if (filterRect.height !== parseFloat(text)) setFilter()
             }
         }

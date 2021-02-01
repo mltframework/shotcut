@@ -67,6 +67,7 @@ Rectangle {
                 Layout.fillWidth: true
                 focus: true
                 placeholderText: qsTr("search")
+                selectByMouse: true
                 text: metadatamodel.search
                 onTextChanged: {
                     if (length !== 1 && text !== metadatamodel.search) {

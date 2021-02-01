@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Meltytech, LLC
+ * Copyright (c) 2018-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -90,6 +90,7 @@ Item {
             id: timeField
             text: "00:00:00.000"
             horizontalAlignment: TextInput.AlignRight
+            selectByMouse: true
             validator: RegExpValidator {regExp: /^\s*(\d*:){0,2}(\d*[.])?\d*\s*$/}
             onEditingFinished: {
                 console.log(text, timeToSeconds(text))
