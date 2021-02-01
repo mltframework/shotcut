@@ -33,6 +33,7 @@
 #include <QCryptographicHash>
 #include <QtGlobal>
 
+#include <MltChain.h>
 #include <MltProducer.h>
 #include <Logger.h>
 #include "shotcut_mlt_properties.h"
@@ -138,12 +139,16 @@ QString Util::producerTitle(const Mlt::Producer& producer)
 {
     QString result;
     Mlt::Producer& p = const_cast<Mlt::Producer&>(producer);
+    if (p.type() == mlt_service_chain_type) {
+        Mlt::Chain chain(p);
+        return producerTitle(chain.get_source());
+    }
     if (!p.is_valid() || p.is_blank()) return result;
     if (p.get(kShotcutTransitionProperty))
         return QObject::tr("Transition");
     if (p.get(kTrackNameProperty))
         return QObject::tr("Track: %1").arg(QString::fromUtf8(p.get(kTrackNameProperty)));
-    if (tractor_type == p.type())
+    if (mlt_service_tractor_type == p.type())
         return QObject::tr("Output");
     if (p.get(kShotcutCaptionProperty))
         return QString::fromUtf8(p.get(kShotcutCaptionProperty));

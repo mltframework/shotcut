@@ -99,7 +99,7 @@ AvformatProducerWidget::AvformatProducerWidget(QWidget *parent)
     if (Settings.playerGPU())
         connect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame&)), this, SLOT(onFrameDisplayed(const SharedFrame&)));
     else
-        connect(this, SIGNAL(producerChanged(Mlt::Producer*)), SLOT(onProducerChanged()));
+        connect(this, SIGNAL(producerChanged(Mlt::Producer*)), SLOT(onProducerChanged(Mlt::Producer*)));
 }
 
 AvformatProducerWidget::~AvformatProducerWidget()
@@ -112,7 +112,7 @@ Mlt::Producer* AvformatProducerWidget::newProducer(Mlt::Profile& profile)
     Mlt::Producer* p = 0;
     if ( ui->speedSpinBox->value() == 1.0 )
     {
-        p = new Mlt::Producer(profile, GetFilenameFromProducer(producer(), false).toUtf8().constData());
+        p = new Mlt::Chain(profile, GetFilenameFromProducer(producer(), false).toUtf8().constData());
     }
     else
     {
@@ -186,9 +186,11 @@ void AvformatProducerWidget::onFrameDisplayed(const SharedFrame&)
         disconnect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame&)), this, 0);
 }
 
-void AvformatProducerWidget::onProducerChanged()
+void AvformatProducerWidget::onProducerChanged(Mlt::Producer* producer)
 {
-    QThreadPool::globalInstance()->start(new DecodeTask(this), 10);
+    if( producer->get_producer() == m_producer->get_producer() ) {
+        QThreadPool::globalInstance()->start(new DecodeTask(this), 10);
+    }
 }
 
 void AvformatProducerWidget::reopen(Mlt::Producer* p)
@@ -267,6 +269,17 @@ void AvformatProducerWidget::recreateProducer()
                  kIsProxyProperty);
     Mlt::Controller::copyFilters(*m_producer, *p);
     if (m_producer->get(kMultitrackItemProperty)) {
+        int length = ui->durationSpinBox->value();
+        int in = m_producer->get_in();
+        int out = m_producer->get_out();
+        double oldSpeed = GetSpeedFromProducer(producer());
+        double newSpeed = ui->speedSpinBox->value();
+        double speedRatio = oldSpeed / newSpeed;
+        length = qRound(length * speedRatio);
+        in = qMin(qRound(in * speedRatio), length - 1);
+        out = qMin(qRound(out * speedRatio), length - 1);
+        p->set("length", p->frames_to_time(length, mlt_time_clock));
+        p->set_in_and_out(in, out);
         emit producerChanged(p);
         delete p;
     } else {

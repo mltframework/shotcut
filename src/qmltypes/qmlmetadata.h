@@ -35,6 +35,7 @@ class QmlKeyframesParameter : public QObject
     Q_PROPERTY(bool isCurve MEMBER m_isCurve NOTIFY changed)
     Q_PROPERTY(double minimum MEMBER m_minimum NOTIFY changed)
     Q_PROPERTY(double maximum MEMBER m_maximum NOTIFY changed)
+    Q_PROPERTY(QString units MEMBER m_units NOTIFY changed)
     Q_PROPERTY(bool isRectangle MEMBER m_isRectangle NOTIFY changed)
 
 public:
@@ -47,6 +48,7 @@ public:
     bool isCurve() const { return m_isCurve; }
     double minimum() const { return m_minimum; }
     double maximum() const { return m_maximum; }
+    QString units() const { return m_units; }
     bool isRectangle() const { return m_isRectangle; }
 
 signals:
@@ -60,6 +62,7 @@ private:
     bool m_isCurve;
     double m_minimum;
     double m_maximum;
+    QString m_units;
     bool m_isRectangle;
 };
 
@@ -130,7 +133,8 @@ public:
     enum PluginType {
         Filter,
         Producer,
-        Transition
+        Transition,
+        Link,
     };
     unsigned filterMask;
 

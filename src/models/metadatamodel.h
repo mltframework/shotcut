@@ -39,14 +39,16 @@ public:
         ServiceRole,
         IsAudioRole,
         NeedsGpuRole,
-        VisibleRole
+        VisibleRole,
+        PluginTypeRole,
     };
 
     enum MetadataFilter {
         NoFilter,
         FavoritesFilter,
         VideoFilter,
-        AudioFilter
+        AudioFilter,
+        LinkFilter,
     };
 
     enum FilterMaskBits {

@@ -122,8 +122,8 @@ signals:
     void showStatusMessage(QString);
     void durationChanged();
     void filteredChanged();
-    void filterInChanged(int delta, Mlt::Filter*);
-    void filterOutChanged(int delta, Mlt::Filter*);
+    void serviceInChanged(int delta, Mlt::Service*);
+    void serviceOutChanged(int delta, Mlt::Service*);
     void reloadRequested();
     void inserted(int trackIndex, int clipIndex);
     void overWritten(int trackIndex, int clipIndex);
@@ -166,7 +166,7 @@ public slots:
     bool removeTransitionByTrimInValid(int trackIndex, int clipIndex, int delta);
     bool removeTransitionByTrimOutValid(int trackIndex, int clipIndex, int delta);
     void filterAddedOrRemoved(Mlt::Producer *producer);
-    void onFilterChanged(Mlt::Filter* filter);
+    void onFilterChanged(Mlt::Service* service);
     void reload(bool asynchronous = false);
     void replace(int trackIndex, int clipIndex, Mlt::Producer& clip, bool copyFilters = true);
 

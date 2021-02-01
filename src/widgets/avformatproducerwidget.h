@@ -55,7 +55,7 @@ protected:
 private slots:
     void onFrameDisplayed(const SharedFrame&);
 
-    void onProducerChanged();
+    void onProducerChanged(Mlt::Producer*);
 
     void onFrameDecoded();
 

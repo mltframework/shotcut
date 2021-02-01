@@ -124,7 +124,14 @@ Item {
             onClicked: parameterRoot.clicked(keyframe, parameterRoot)
             onInterpolationChanged: canvas.requestPaint()
             onPositionChanged: canvas.requestPaint()
-            onValueChanged: canvas.requestPaint()
+            onValueChanged: {
+                if (isCurve && (value > maximum || value < minimum)) {
+                    // This value is out of bounds. Reload the entire parameter to recalc max and min.
+                    parameters.reload()
+                } else {
+                    canvas.requestPaint()
+                }
+            }
         }
     }
 }
