@@ -65,7 +65,7 @@ Item {
 
     Connections {
         target: producer
-        function onPositionChanged() {
+        onPositionChanged: {
             if (blockUpdate) return
             setControls()
             timer.start()
@@ -157,7 +157,7 @@ Item {
             Layout.alignment: Qt.AlignRight
             Shotcut.HoverTip { text: qsTr('Use the specified image selection mode. Nearest will output the image that is nearest to the mapped time. Blend will blend all images that occur during the mapped time.') }
         }
-        ComboBox {
+        Shotcut.ComboBox {
             id: modeCombo
             implicitWidth: 180
             model: ListModel {
@@ -165,6 +165,7 @@ Item {
                 ListElement { text: qsTr('Nearest'); value: 'nearest' }
                 ListElement { text: qsTr('Blend'); value: 'blend' }
             }
+            textRole: "text"
             onCurrentIndexChanged: {
                 filter.set('image_mode', imageModeModel.get(currentIndex).value)
             }
