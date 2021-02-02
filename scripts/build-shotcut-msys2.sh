@@ -1020,7 +1020,7 @@ function deploy
 
   log Reorganizing installed files
   cmd mv bin/*.dll .
-  cmd mv lib/*.dll .
+  cmd mv lib/libaom.dll .
   if [ "$SDK" = "1" ]; then
     cmd mv bin/*.exe .
   else
