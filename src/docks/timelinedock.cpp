@@ -73,8 +73,9 @@ TimelineDock::TimelineDock(QWidget *parent) :
 #endif
 
     connect(&m_model, SIGNAL(modified()), this, SLOT(clearSelectionIfInvalid()));
-    connect(&m_model, &MultitrackModel::inserted, this, &TimelineDock::onInserted, Qt::QueuedConnection);
-    connect(&m_model, &MultitrackModel::overWritten, this, &TimelineDock::onOverWritten, Qt::QueuedConnection);
+    connect(&m_model, &MultitrackModel::appended, this, &TimelineDock::selectClip, Qt::QueuedConnection);
+    connect(&m_model, &MultitrackModel::inserted, this, &TimelineDock::selectClip, Qt::QueuedConnection);
+    connect(&m_model, &MultitrackModel::overWritten, this, &TimelineDock::selectClip, Qt::QueuedConnection);
     connect(&m_model, SIGNAL(rowsInserted(QModelIndex,int,int)), SLOT(onRowsInserted(QModelIndex,int,int)));
     connect(&m_model, SIGNAL(rowsRemoved(QModelIndex,int,int)), SLOT(onRowsRemoved(QModelIndex,int,int)));
 
@@ -556,7 +557,6 @@ void TimelineDock::append(int trackIndex)
         ProxyManager::generateIfNotExists(producer);
         MAIN.undoStack()->push(
             new Timeline::AppendCommand(m_model, trackIndex, MLT.XML(&producer)));
-        selectClipUnderPlayhead();
     } else if (!MLT.isSeekableClip()) {
         emitNonSeekableWarning();
     }
@@ -1189,9 +1189,8 @@ void TimelineDock::insert(int trackIndex, int position, const QString &xml, bool
     }
 }
 
-void TimelineDock::onInserted(int trackIndex, int clipIndex)
+void TimelineDock::selectClip(int trackIndex, int clipIndex)
 {
-    Q_UNUSED(trackIndex)
     setSelection(QList<QPoint>() << QPoint(clipIndex, trackIndex));
 }
 
@@ -1238,12 +1237,6 @@ void TimelineDock::overwrite(int trackIndex, int position, const QString &xml, b
     }
 }
 
-void TimelineDock::onOverWritten(int trackIndex, int clipIndex)
-{
-    Q_UNUSED(trackIndex)
-    setSelection(QList<QPoint>() << QPoint(clipIndex, trackIndex));
-}
-
 void TimelineDock::appendFromPlaylist(Mlt::Playlist *playlist, bool skipProxy)
 {
     int trackIndex = currentTrack();
@@ -1261,7 +1254,6 @@ void TimelineDock::appendFromPlaylist(Mlt::Playlist *playlist, bool skipProxy)
     }
     MAIN.undoStack()->push(
         new Timeline::AppendCommand(m_model, trackIndex, MLT.XML(playlist), skipProxy));
-    selectClipUnderPlayhead();
 }
 
 void TimelineDock::splitClip(int trackIndex, int clipIndex)
