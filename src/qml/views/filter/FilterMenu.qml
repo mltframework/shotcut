@@ -45,6 +45,8 @@ Rectangle {
             vidButton.checked = true
         } else if (metadatamodel.filter == Shotcut.MetadataModel.AudioFilter) {
             audButton.checked = true
+        } else if (metadatamodel.filter == Shotcut.MetadataModel.LinkFilter) {
+            lnkButton.checked = true
         }
     }
 

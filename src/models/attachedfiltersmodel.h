@@ -33,7 +33,8 @@ class AttachedFiltersModel : public QAbstractListModel
     Q_PROPERTY(bool supportsLinks READ supportsLinks NOTIFY supportsLinksChanged)
 public:
     enum ModelRoles {
-        TypeDisplayRole = Qt::UserRole + 1
+        TypeDisplayRole = Qt::UserRole + 1,
+        PluginTypeRole,
     };
 
     explicit AttachedFiltersModel(QObject *parent = 0);
