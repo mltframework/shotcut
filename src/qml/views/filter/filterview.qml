@@ -19,10 +19,11 @@ import QtQuick 2.1
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.0
 import Shotcut.Controls 1.0 as Shotcut
+import org.shotcut.qml 1.0 as Shotcut
 
 Rectangle {
     id: root
-    property int selectedIndex: filter.NoCurrentFilter
+    property int selectedIndex: Shotcut.Filter.NoCurrentFilter
     signal currentFilterRequested(int attachedIndex)
     
     function clearCurrentFilter() {
@@ -142,7 +143,7 @@ Rectangle {
             implicitWidth: height
             icon.name: 'list-remove'
             icon.source: 'qrc:///icons/oxygen/32x32/actions/list-remove.png'
-            enabled: selectedIndex > filter.NoCurrentFilter
+            enabled: selectedIndex > Shotcut.Filter.NoCurrentFilter
             opacity: enabled ? 1.0 : 0.5
             Shotcut.HoverTip { text: qsTr('Remove selected filter') }
             onClicked: {
@@ -159,7 +160,7 @@ Rectangle {
             implicitWidth: height
             icon.name: 'edit-copy'
             icon.source: 'qrc:///icons/oxygen/32x32/actions/edit-copy.png'
-            enabled: selectedIndex > filter.NoCurrentFilter
+            enabled: selectedIndex > Shotcut.Filter.NoCurrentFilter
             opacity: enabled ? 1.0 : 0.5
             Shotcut.HoverTip { text: qsTr('Copy the filters') }
             onClicked: application.copyFilters()
@@ -192,7 +193,7 @@ Rectangle {
         Shotcut.Button {
             id: moveDownButton
             implicitWidth: height
-            enabled: selectedIndex > filter.NoCurrentFilter && selectedIndex + 1 < attachedfiltersmodel.rowCount()
+            enabled: selectedIndex > Shotcut.Filter.NoCurrentFilter && selectedIndex + 1 < attachedfiltersmodel.rowCount()
             opacity: enabled ? 1.0 : 0.5
             icon.name: 'overwrite'
             icon.source: 'qrc:///icons/oxygen/32x32/actions/overwrite.png'
@@ -209,13 +210,13 @@ Rectangle {
             implicitWidth: height
             icon.name: 'window-close'
             icon.source: 'qrc:///icons/oxygen/32x32/actions/window-close.png'
-            enabled: selectedIndex > filter.NoCurrentFilter
+            enabled: selectedIndex > Shotcut.Filter.NoCurrentFilter
             opacity: enabled ? 1.0 : 0.5
             Shotcut.HoverTip { text: qsTr('Deselect the filter') }
             onClicked: {
                 clearCurrentFilter()
-                attachedFilters.setCurrentFilter(filter.DeselectCurrentFilter)
-                selectedIndex = filter.NoCurrentFilter
+                attachedFilters.setCurrentFilter(Shotcut.Filter.DeselectCurrentFilter)
+                selectedIndex = Shotcut.Filter.NoCurrentFilter
                 filter.deselect()
             }
         }
