@@ -32,6 +32,7 @@ Column {
             TextField {
                 id: propField
                 Layout.fillWidth: true
+                selectByMouse: true
                 text: filter.get(modelData)
                 onTextChanged: filter.set(modelData, text)
             }

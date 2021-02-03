@@ -114,6 +114,7 @@ Item {
                 id: rectX
                 text: filterRect.x
                 horizontalAlignment: Qt.AlignRight
+                selectByMouse: true
                 onEditingFinished: setFilter()
             }
             Label { text: ',' }
@@ -121,6 +122,7 @@ Item {
                 id: rectY
                 text: filterRect.y
                 horizontalAlignment: Qt.AlignRight
+                selectByMouse: true
                 onEditingFinished: setFilter()
             }
         }
@@ -135,6 +137,7 @@ Item {
                 id: rectW
                 text: filterRect.width
                 horizontalAlignment: Qt.AlignRight
+                selectByMouse: true
                 onEditingFinished: setFilter()
             }
             Label { text: 'x' }
@@ -142,6 +145,7 @@ Item {
                 id: rectH
                 text: filterRect.height
                 horizontalAlignment: Qt.AlignRight
+                selectByMouse: true
                 onEditingFinished: setFilter()
             }
         }

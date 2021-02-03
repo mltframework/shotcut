@@ -235,6 +235,7 @@ Item {
             Layout.columnSpan: 2
             Layout.fillWidth: true
             Layout.alignment: Qt.AlignLeft
+            selectByMouse: true
             onEditingFinished: updateProperty_analysisFile()
         }
         Shotcut.Button {
@@ -252,6 +253,7 @@ Item {
         }
         TextField {
             id: clipOffsetTextField
+            selectByMouse: true
             onEditingFinished: updateProperty_clipOffset()
         }
         Label {

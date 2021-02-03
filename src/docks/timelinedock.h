@@ -191,8 +191,7 @@ private slots:
     void load(bool force = false);
     void onTopLevelChanged(bool floating);
     void onTransitionAdded(int trackIndex, int clipIndex, int position, bool ripple);
-    void onInserted(int trackIndex, int clipIndex);
-    void onOverWritten(int trackIndex, int clipIndex);
+    void selectClip(int trackIndex, int clipIndex);
 };
 
 class TimelineSelectionBlocker

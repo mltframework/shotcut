@@ -104,6 +104,7 @@ RowLayout {
             TextField {
                 id: nameField
                 Layout.fillWidth: true
+                selectByMouse: true
                 onAccepted: nameDialog.acceptName()
                 Keys.onPressed: {
                     if (event.key === Qt.Key_Escape) {

@@ -1,4 +1,4 @@
-name: build-shotcut-linux
+name: build-shotcut-linux-unstable
 
 on:
   workflow_dispatch:
@@ -19,7 +19,7 @@ jobs:
       - name: Build
         run: |
           echo Preparing version
-          echo $(date +"%y.%m.%d") > VERSION
+          echo $(date +"UNSTABLE-%y.%m.%d") > VERSION
           VERSION=$(cat VERSION)
           echo VERSION=$VERSION
           FILENAME_VERSION=$(echo $VERSION | tr -d .)
@@ -27,6 +27,10 @@ jobs:
           echo Making build script config file
           echo CLEANUP=0 > build-shotcut.conf
           echo SHOTCUT_VERSION=\"$VERSION\" >> build-shotcut.conf
+          echo MLT_HEAD=0 >> build-shotcut.conf
+          echo MLT_REVISION=v7 >> build-shotcut.conf
+          echo SHOTCUT_HEAD=0 >> build-shotcut.conf
+          echo SHOTCUT_REVISION=MLTv7 >> build-shotcut.conf
           docker run -v $PWD:/root/shotcut $IMAGE_NAME
           echo Renaming build artifacts
           mv shotcut.txz shotcut-linux-x86_64-$FILENAME_VERSION.txz
@@ -87,4 +91,4 @@ jobs:
           FILENAME=$(ls *.txz)
           sed "s/\$VERSION/${VERSION}/ ; s/\$FILENAME/${FILENAME}/" snapcraft.yaml.in > snap/snapcraft.yaml
           sg lxd -c 'snapcraft --use-lxd'
-          snapcraft upload --release=beta shotcut_*.snap
+          snapcraft upload --release=edge shotcut_*.snap

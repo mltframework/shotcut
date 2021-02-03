@@ -37,6 +37,7 @@ RowLayout {
         id: timeField
         text: filter.timeFromFrames(clamp(value, minimumValue, maximumValue))
         horizontalAlignment: TextInput.AlignRight
+        selectByMouse: true
         validator: RegExpValidator {regExp: /^\s*(\d*:){0,2}(\d*[.;:])?\d*\s*$/}
         onEditingFinished: value = filter.framesFromTime(text)
         Keys.onDownPressed: decrementAction.trigger()

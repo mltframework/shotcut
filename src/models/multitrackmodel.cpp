@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 Meltytech, LLC
+ * Copyright (c) 2013-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1105,6 +1105,7 @@ int MultitrackModel::appendClip(int trackIndex, Mlt::Producer &clip)
         endInsertRows();
         QModelIndex index = createIndex(i, 0, trackIndex);
         AudioLevelsTask::start(clip.parent(), this, index);
+        emit appended(trackIndex, i);
         emit modified();
         emit seeked(playlist.clip_start(i) + playlist.clip_length(i));
         return i;
