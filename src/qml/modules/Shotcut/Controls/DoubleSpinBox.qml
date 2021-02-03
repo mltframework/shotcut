@@ -125,7 +125,7 @@ Item {
                 }
 
                 function textInProgress(text, locale) {
-                    if (text == locale.negativeSign || text == locale.decimalPoint) {
+                    if (!text || text == locale.negativeSign || text == locale.decimalPoint) {
                         return true
                     }
                     return false
@@ -139,6 +139,9 @@ Item {
                     else if (textInProgress(text, spinbox.locale)) {
                         // Do not parse - allow editing to continue
                     }
+                    else if (isNaN(text)) {
+                        text = _lastValidText
+                    }
                     else {
                         var newValue = spinbox.valueFromText(text, spinbox.locale)
                         if (isNaN(newValue)) {
@@ -149,9 +152,9 @@ Item {
                             _lastValidText = text
                             spinbox.value = newValue
                         }
-                        else
+                        else if (text.length > 2)
                         {
-                            // Forbid out of bounds text
+                            // Forbid out of bounds text except short text that might be in progress
                             text = _lastValidText
                         }
                     } 
