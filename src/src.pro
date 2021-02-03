@@ -317,9 +317,12 @@ RESOURCES += \
 
 OTHER_FILES += \
     ../.github/workflows/build-linux.yml \
+    ../.github/workflows/build-linux-unstable.yml \
     ../.github/workflows/build-macos.yml \
     ../.github/workflows/build-sdk-windows.yml \
+    ../.github/workflows/build-sdk-windows-unstable.yml \
     ../.github/workflows/build-windows.yml \
+    ../.github/workflows/build-windows-unstable.yml \
     ../COPYING \
     ../README.md \
     ../packaging/windows/shotcut.rc \
