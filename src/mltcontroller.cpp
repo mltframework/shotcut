@@ -700,7 +700,7 @@ void Controller::fastForward(bool forceChangeDirection)
         if (forceChangeDirection && speed < 0.0)
             speed = 0.5;
         if (speed > 0.0)
-            m_producer->set_speed(speed * 2.0);
+            m_producer->set_speed(speed * 1.25);
         else
             m_producer->set_speed(::ceil(speed * 0.5));
         if (m_consumer && m_consumer->is_valid())
