@@ -93,14 +93,11 @@ Rectangle {
     Flow {
         id: trackHeadColumn
         flow: (trackHeadRoot.height < 50)? Flow.LeftToRight : Flow.TopToBottom
-        spacing: (trackHeadRoot.height < 50)? 0 : (isVideo || trackHeadRoot.height > 50)? 0 : -6
+        spacing: (trackHeadRoot.height < 50)? 0 : 6
         anchors {
             top: parent.top
             left: parent.left
-            leftMargin: (trackHeadRoot.height < 50)? 0 : 4
-            rightMargin: 4
-            topMargin: 4
-            bottomMargin: 4
+            margins: (trackHeadRoot.height < 50)? 0 : 4
         }
 
         Rectangle {
@@ -124,8 +121,8 @@ Rectangle {
                     text: trackName
                     color: activePalette.windowText
                     elide: Qt.ElideRight
-                    x: 4
-                    y: 3
+                    leftPadding: 4
+                    topPadding: 3
                     width: nameEdit.width
                 }
                 Shotcut.HoverTip{ text: trackName }
@@ -144,12 +141,14 @@ Rectangle {
             }
         }
         RowLayout {
-            spacing: trackHeadColumn.flow === Flow.LeftToRight ? 0 : 5
+            spacing: 8
             ToolButton {
                 id: lockButton
-                height: width
                 icon.name: isLocked ? 'object-locked' : 'object-unlocked'
                 icon.source: isLocked ? 'qrc:///icons/oxygen/32x32/status/object-locked.png' : 'qrc:///icons/oxygen/32x32/status/object-unlocked.png'
+                icon.width: 16
+                icon.height: 16
+                padding: 1
                 focusPolicy: Qt.NoFocus
                 onClicked: timeline.setTrackLock(index, !isLocked)
                 Shotcut.HoverTip { text: isLocked? qsTr('Unlock track') : qsTr('Lock track') }
@@ -177,6 +176,9 @@ Rectangle {
                 id: muteButton
                 icon.name: isMute ? 'audio-volume-muted' : 'audio-volume-high'
                 icon.source: isMute ? 'qrc:///icons/oxygen/32x32/status/audio-volume-muted.png' : 'qrc:///icons/oxygen/32x32/status/audio-volume-high.png'
+                icon.width: 16
+                icon.height: 16
+                padding: 1
                 focusPolicy: Qt.NoFocus
                 onClicked: timeline.toggleTrackMute(index)
                 Shotcut.HoverTip { text: isMute? qsTr('Unmute') : qsTr('Mute') }
@@ -187,6 +189,9 @@ Rectangle {
                 visible: isVideo
                 icon.name: isHidden ? 'layer-visible-off' : 'layer-visible-on'
                 icon.source: isHidden? 'qrc:///icons/oxygen/32x32/actions/layer-visible-off.png' : 'qrc:///icons/oxygen/32x32/actions/layer-visible-on.png'
+                icon.width: 16
+                icon.height: 16
+                padding: 1
                 focusPolicy: Qt.NoFocus
                 onClicked: timeline.toggleTrackHidden(index)
                 Shotcut.HoverTip { text: isHidden? qsTr('Show') : qsTr('Hide') }
@@ -196,6 +201,9 @@ Rectangle {
                 visible: isFiltered
                 icon.name: 'view-filter'
                 icon.source: 'qrc:///icons/oxygen/32x32/status/view-filter.png'
+                icon.width: 16
+                icon.height: 16
+                padding: 1
                 focusPolicy: Qt.NoFocus
                 Shotcut.HoverTip { text: qsTr('Filters') }
                 onClicked: {
