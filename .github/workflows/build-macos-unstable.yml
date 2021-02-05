@@ -26,4 +26,4 @@ jobs:
             *.dmg
 
       - name: Dump log
-        run: cat shotcut-build-macos.txt
+        run: cat shotcut-build-macos-unstable.txt
