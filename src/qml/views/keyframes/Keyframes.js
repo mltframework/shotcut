@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2020 Meltytech, LLC
+ * Copyright (c) 2017-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +16,7 @@
  */
 
 function trackHeight(isCurves) {
-    return isCurves? Math.max(multitrack.trackHeight * 2, 48) : (multitrack.trackHeight < 30)? 48 : 60
+    return isCurves? (multitrack.trackHeight * 2) : (multitrack.trackHeight < 30)? 20 : 36
 }
 
 function scrollIfNeeded(center) {

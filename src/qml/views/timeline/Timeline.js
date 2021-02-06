@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 Meltytech, LLC
+ * Copyright (c) 2013-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -106,7 +106,7 @@ function acceptDrop(xml) {
 }
 
 function trackHeight(isAudio) {
-    return Math.max(isAudio? multitrack.trackHeight : (multitrack.trackHeight * 2), 32)
+    return isAudio? Math.max(20, multitrack.trackHeight) : multitrack.trackHeight * 2
 }
 
 function clamp(x, minimum, maximum) {

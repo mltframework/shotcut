@@ -89,29 +89,32 @@ Rectangle {
         anchors {
             top: parent.top
             left: parent.left
-            leftMargin: (paramHeadRoot.height < 50)? 0 : 4
-            rightMargin: 4
-            topMargin: 4
-            bottomMargin: 4
+            margins: (paramHeadRoot.height < 50)? 0 : 4
         }
 
         Control {
             id: control
+            width: paramHeadRoot.width - trackHeadColumn.anchors.margins * 2 - 8 - (paramHeadRoot.height < 30? toolButtonsLayout.width : 0)
             contentItem: Label {
                 text: trackName
                 color: activePalette.windowText
                 elide: Qt.ElideRight
-                x: 4
-                y: 3
-                width: paramHeadRoot.width - trackHeadColumn.anchors.margins * 2 - 8 - (paramHeadRoot.height < 30? 90 : 0)
+                leftPadding: 4
+                topPadding: 3
+                width: control.width
             }
             Shotcut.HoverTip { text: trackName }
         }
         RowLayout {
+            id: toolButtonsLayout
+            spacing: (paramHeadRoot.height < 30)? 0 : 6
             ToolButton {
                 id: previousButton
                 icon.name: 'media-skip-backward'
                 icon.source: 'qrc:///icons/oxygen/32x32/actions/media-skip-backward.png'
+                icon.width: 16
+                icon.height: 16
+                padding: 1
                 focusPolicy: Qt.NoFocus
                 onClicked: {
                     if (delegateIndex >= 0) {
@@ -129,6 +132,9 @@ Rectangle {
                 visible: delegateIndex >= 0
                 icon.name: 'chronometer';
                 icon.source: 'qrc:///icons/oxygen/32x32/actions/chronometer.png'
+                icon.width: 16
+                icon.height: 16
+                padding: 1
                 focusPolicy: Qt.NoFocus
                 onClicked: {
                     parameters.addKeyframe(delegateIndex, producer.position - (filter.in - producer.in))
@@ -138,14 +144,17 @@ Rectangle {
             }
             Item {
                 visible: delegateIndex < 0 && paramHeadRoot.height >= 30
-                width: 24
-                height: 24
+                width: 18
+                height: 18
             }
 
             ToolButton {
                 id: deleteButton
                 visible: delegateIndex >= 0
                 enabled: delegateIndex === root.currentTrack && root.selection.length > 0
+                icon.width: 16
+                icon.height: 16
+                padding: 1
                 icon.name: 'edit-delete'
                 icon.source: 'qrc:///icons/oxygen/32x32/actions/edit-delete.png'
                 opacity: enabled? 1.0 : 0.5
@@ -158,14 +167,17 @@ Rectangle {
             }
             Item {
                 visible: delegateIndex < 0 && paramHeadRoot.height >= 30
-                width: 24
-                height: 24
+                width: 18
+                height: 18
             }
 
             ToolButton {
                 id: nextButton
                 icon.name: 'media-skip-forward'
                 icon.source: 'qrc:///icons/oxygen/32x32/actions/media-skip-forward.png'
+                icon.width: 16
+                icon.height: 16
+                padding: 1
                 focusPolicy: Qt.NoFocus
                 onClicked: {
                     if (delegateIndex >= 0) {
@@ -183,6 +195,9 @@ Rectangle {
                 visible: false && delegateIndex >= 0
                 icon.name: isLocked ? 'object-locked' : 'object-unlocked'
                 icon.source: isLocked ? 'qrc:///icons/oxygen/32x32/status/object-locked.png' : 'qrc:///icons/oxygen/32x32/status/object-unlocked.png'
+                icon.width: 16
+                icon.height: 16
+                padding: 1
                 focusPolicy: Qt.NoFocus
 //                onClicked: timeline.setTrackLock(index, !isLocked)
                 Shotcut.HoverTip { text: isLocked? qsTr('Unlock track') : qsTr('Lock track') }
