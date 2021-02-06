@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2020 Meltytech, LLC
+ * Copyright (c) 2017-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -239,6 +239,7 @@ Rectangle {
                     contentX: tracksFlickable.contentX
                     width: root.width - headerWidth
                     height: ruler.height
+                    z: 1
                     interactive: false
                     // workaround to fix https://github.com/mltframework/shotcut/issues/777
                     onContentXChanged: if (contentX === 0) contentX = tracksFlickable.contentX
