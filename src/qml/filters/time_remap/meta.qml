@@ -8,6 +8,7 @@ Metadata {
     mlt_service: "timeremap"
     qml: "ui.qml"
     isFavorite: false
+    allowMultiple: false
     keyframes {
         allowTrim: false
         allowAnimateIn: false
