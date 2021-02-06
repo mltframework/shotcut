@@ -153,7 +153,7 @@ Item {
         }
 
         Label {
-            text: qsTr('Image Mode')
+            text: qsTr('Image mode')
             Layout.alignment: Qt.AlignRight
             Shotcut.HoverTip { text: qsTr('Use the specified image selection mode. Nearest will output the image that is nearest to the mapped time. Blend will blend all images that occur during the mapped time.') }
         }
