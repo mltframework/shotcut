@@ -74,7 +74,7 @@ Item {
         var position = getPosition()
         blockUpdate = true
         brightnessSlider.value = filter.getDouble('opacity', position) * 100.0
-        brightnessKeyframesButton.checked = filter.keyframeCount(parameters[0]) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
+        brightnessKeyframesButton.checked = filter.keyframeCount('opacity') > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
         blockUpdate = false
         brightnessSlider.enabled = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1)
     }

@@ -54,7 +54,7 @@ Item {
         var position = getPosition()
         blockUpdate = true
         slider.value = filter.getDouble(saturationParameter, position) * 100
-        keyframesButton.checked = filter.keyframeCount(parameters[0]) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
+        keyframesButton.checked = filter.keyframeCount(saturationParameter) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
         blockUpdate = false
         slider.enabled = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1)
     }
