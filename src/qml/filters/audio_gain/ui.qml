@@ -85,7 +85,7 @@ Item {
         gainSlider.value = filter.getDouble('level', position)
         blockUpdate = false
         gainSlider.enabled = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1)
-        gainKeyframesButton.checked = filter.keyframeCount(parameters[0]) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
+        gainKeyframesButton.checked = filter.keyframeCount('level') > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
     }
 
     function updateFilter(position) {
