@@ -347,7 +347,7 @@ void AttachedFiltersModel::add(QmlMetadata* meta)
         if (meta->mlt_service() == "timeremap" && m_producer->get_int("meta.media.has_b_frames") != 0) {
             QMessageBox dialog(QMessageBox::Warning,
                qApp->applicationName(),
-               tr("Time remapping requires edit friendly source files.\nPlease open the properties panel and convert this file to edit friendly"),
+               tr("Time remapping requires edit-friendly video files.\nPlease open Properties and click Convert."),
                QMessageBox::Ok, &MAIN);
             dialog.setWindowModality(QmlApplication::dialogModality());
             dialog.exec();
