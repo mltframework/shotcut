@@ -3409,7 +3409,9 @@ void MainWindow::processMultipleFiles()
                 p.get_length_time(mlt_time_clock);
                 Util::getHash(p);
                 ProxyManager::generateIfNotExists(p);
-                undoStack()->push(new Playlist::AppendCommand(*m_playlistDock->model(), MLT.XML(&p), false));
+                Mlt::Chain chain(MLT.profile());
+                chain.set_source(p);
+                undoStack()->push(new Playlist::AppendCommand(*m_playlistDock->model(), MLT.XML(&chain), false));
                 m_recentDock->add(filename.toUtf8().constData());
             }
         }

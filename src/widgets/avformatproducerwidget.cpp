@@ -939,8 +939,10 @@ bool AvformatProducerWidget::revertToOriginalResource()
                             producer.set("mute_on_pause", 0);
                         }
                         MLT.lockCreationTime(&producer);
-                        producer.set_in_and_out(m_producer->get_int(kOriginalInProperty), m_producer->get_int(kOriginalOutProperty));
-                        MAIN.replaceInTimeline(uuid, producer);
+                        Mlt::Chain chain(MLT.profile());
+                        chain.set_source(producer);
+                        chain.set_in_and_out(m_producer->get_int(kOriginalInProperty), m_producer->get_int(kOriginalOutProperty));
+                        MAIN.replaceInTimeline(uuid, chain);
                         return true;
                     }
                 }
@@ -1243,7 +1245,9 @@ void AvformatProducerWidget::on_actionDisableProxy_triggered(bool checked)
                     original.set("mute_on_pause", 0);
                 }
                 original.set(kDisableProxyProperty, 1);
-                MAIN.replaceAllByHash(Util::getHash(original), original, true);
+                Mlt::Chain chain(MLT.profile());
+                chain.set_source(original);
+                MAIN.replaceAllByHash(Util::getHash(original), chain, true);
             }
         }
     } else {
@@ -1285,7 +1289,9 @@ void AvformatProducerWidget::on_actionDeleteProxy_triggered()
                 original.set("mlt_service", "avformat-novalidate");
                 original.set("mute_on_pause", 0);
             }
-            MAIN.replaceAllByHash(hash, original, true);
+            Mlt::Chain chain(MLT.profile());
+            chain.set_source(original);
+            MAIN.replaceAllByHash(hash, chain, true);
         }
     }
 }

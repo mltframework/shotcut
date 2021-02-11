@@ -700,6 +700,11 @@ void PlaylistDock::onDropped(const QMimeData *data, int row)
                 MLT.setImageDurationFromDefault(producer);
                 MLT.lockCreationTime(producer);
                 producer->get_length_time(mlt_time_clock);
+                Mlt::Chain chain(MLT.profile());
+                if (producer->type() != mlt_service_chain_type) {
+                    chain.set_source(*producer);
+                    producer = &chain;
+                }
                 if (MLT.isSeekable(producer)) {
                     ProxyManager::generateIfNotExists(*producer);
                     if (row == -1)

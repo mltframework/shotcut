@@ -1137,7 +1137,9 @@ static QString convertUrlsToXML(const QString& xml)
                 MLT.setImageDurationFromDefault(&p);
                 MLT.lockCreationTime(&p);
                 p.get_length_time(mlt_time_clock);
-                playlist.append(p);
+                Mlt::Chain chain(MLT.profile());
+                chain.set_source(p);
+                playlist.append(chain);
             }
         }
         return MLT.XML(&playlist);

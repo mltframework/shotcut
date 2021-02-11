@@ -67,7 +67,9 @@ void ReverseReplacePostJobAction::doAction()
         }
         MLT.lockCreationTime(&producer);
         producer.set_in_and_out(m_in, -1);
-        MAIN.replaceInTimeline(m_uuid, producer);
+        Mlt::Chain chain(MLT.profile());
+        chain.set_source(producer);
+        MAIN.replaceInTimeline(m_uuid, chain);
     }
 }
 
@@ -100,7 +102,9 @@ void ProxyReplacePostJobAction::doAction()
                 producer.set("mlt_service", "avformat-novalidate");
                 producer.set("mute_on_pause", 0);
             }
-            MAIN.replaceAllByHash(m_hash, producer, true);
+            Mlt::Chain chain(MLT.profile());
+            chain.set_source(producer);
+            MAIN.replaceAllByHash(m_hash, chain, true);
         } else {
             LOG_WARNING() << "proxy file is invalid" << newFileName;
             QFile::remove(m_dstFile);
