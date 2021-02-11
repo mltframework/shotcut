@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2020 Meltytech, LLC
+ * Copyright (c) 2012-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -138,11 +138,11 @@ void ImageProducerWidget::reopen(Mlt::Producer* p)
     if (position > p->get_out())
         position = p->get_out();
     p->set("in", m_producer->get_in());
+    MLT.stop();
     if (MLT.setProducer(p)) {
         AbstractProducerWidget::setProducer(nullptr);
         return;
     }
-    MLT.stop();
     setProducer(p);
     emit producerReopened();
     emit producerChanged(p);
