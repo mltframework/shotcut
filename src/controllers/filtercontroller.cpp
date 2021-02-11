@@ -144,6 +144,7 @@ void FilterController::setProducer(Mlt::Producer *producer)
         mlt_service_type service_type = producer->type();
         m_metadataModel.setIsClipProducer(service_type != mlt_service_playlist_type &&
             (service_type != mlt_service_tractor_type || !producer->get_int(kShotcutXmlProperty)));
+        m_metadataModel.setIsChainProducer(service_type == mlt_service_chain_type);
     }
 }
 

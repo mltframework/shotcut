@@ -165,7 +165,7 @@ bool MetadataModel::isVisible(int row) const
             if (!meta->isFavorite()) return false;
             break;
         case VideoFilter:
-            if (meta->isAudio()) return false;
+            if (meta->isAudio() || meta->type() == QmlMetadata::Link) return false;
             break;
         case AudioFilter:
             if (!meta->isAudio()) return false;
@@ -194,6 +194,20 @@ void MetadataModel::setIsClipProducer(bool isClipProducer)
     endResetModel();
 }
 
+void MetadataModel::setIsChainProducer(bool isChainProducer)
+{
+    beginResetModel();
+    m_isChainProducer = isChainProducer;
+    if (m_isChainProducer) {
+        qDebug() << "Clear Bit";
+        m_filterMask &= ~linkMaskBit;
+    } else {
+        qDebug() << "Set Bit";
+        m_filterMask |= linkMaskBit;
+    }
+    endResetModel();
+}
+
 unsigned MetadataModel::computeFilterMask(const QmlMetadata* meta)
 {
     unsigned mask = 0;
@@ -202,5 +216,6 @@ unsigned MetadataModel::computeFilterMask(const QmlMetadata* meta)
     if (!meta->isGpuCompatible()) mask |= gpuIncompatibleMaskBit;
     if (!meta->needsGPU() && !meta->gpuAlt().isEmpty()) mask |= gpuAlternativeMaskBit;
     if (meta->needsGPU()) mask |= needsGPUMaskBit;
+    if (meta->type() == QmlMetadata::Link) mask |= linkMaskBit;
     return mask;
 }
