@@ -81,7 +81,9 @@ void ConvertReplacePostJobAction::doAction()
             producer.set("mute_on_pause", 0);
         }
         MLT.lockCreationTime(&producer);
-        MAIN.replaceAllByHash(m_hash, producer);
+        Mlt::Chain chain(MLT.profile());
+        chain.set_source(producer);
+        MAIN.replaceAllByHash(m_hash, chain);
     }
 }
 
