@@ -103,7 +103,8 @@ Rectangle {
     }
 
     Row {
-        anchors.top: keyframesToolbar.bottom
+        anchors.fill: parent
+        anchors.topMargin: keyframesToolbar.height
         Column {
             z: 1
 
@@ -232,14 +233,13 @@ Rectangle {
                 }
             }
 
-            Column {
+            Item {
                 Flickable {
                     // Non-slider scroll area for the Ruler.
                     id: rulerFlickable
                     contentX: tracksFlickable.contentX
                     width: root.width - headerWidth
                     height: ruler.height
-                    z: 1
                     interactive: false
                     // workaround to fix https://github.com/mltframework/shotcut/issues/777
                     onContentXChanged: if (contentX === 0) contentX = tracksFlickable.contentX
@@ -251,8 +251,10 @@ Rectangle {
                 }
                 Flickable {
                     id: tracksFlickable
-                    width: root.width - headerWidth
-                    height: root.height - ruler.height - keyframesToolbar.height
+                    y: ruler.height
+                    width: root.width - headerWidth - 16
+                    height: root.height - keyframesToolbar.height - ruler.height - 16
+                    clip: true
                     // workaround to fix https://github.com/mltframework/shotcut/issues/777
                     onContentXChanged: rulerFlickable.contentX = contentX
                     interactive: false
@@ -261,12 +263,23 @@ Rectangle {
                     ScrollBar.horizontal: ScrollBar {
                         height: 16
                         policy: ScrollBar.AlwaysOn
-                        visible: parent.contentWidth > parent.width
+                        visible: tracksFlickable.contentWidth > tracksFlickable.width
+                        parent: tracksFlickable.parent
+                        anchors.top: tracksFlickable.bottom
+                        anchors.left: tracksFlickable.left
+                        anchors.right: tracksFlickable.right
+                        background: Rectangle { color: parent.palette.alternateBase }
                     }
                     ScrollBar.vertical: ScrollBar {
                         width: 16
                         policy: ScrollBar.AlwaysOn
-                        visible: parent.contentHeight > parent.height
+                        visible: tracksFlickable.contentHeight > tracksFlickable.height
+                        parent: tracksFlickable.parent
+                        anchors.top: tracksFlickable.top
+                        anchors.left: tracksFlickable.right
+                        anchors.bottom: tracksFlickable.bottom
+                        anchors.bottomMargin: -16
+                        background: Rectangle { color: parent.palette.alternateBase }
                     }
 
                     MouseArea {

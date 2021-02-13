@@ -241,6 +241,7 @@ Rectangle {
             anchors.top: filterConfigScrollView.bottom
             anchors.left: filterConfigScrollView.left
             anchors.right: filterConfigScrollView.right
+            background: Rectangle { color: parent.palette.alternateBase }
         }
         ScrollBar.vertical: ScrollBar {
             width: 16
@@ -250,6 +251,7 @@ Rectangle {
             anchors.top: filterConfigScrollView.top
             anchors.left: filterConfigScrollView.right
             anchors.bottom: filterConfigScrollView.bottom
+            background: Rectangle { color: parent.palette.alternateBase }
         }
 
         function expandWidth() {
