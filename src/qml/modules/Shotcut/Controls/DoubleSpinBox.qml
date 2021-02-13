@@ -139,7 +139,8 @@ Item {
                     else if (textInProgress(text, spinbox.locale)) {
                         // Do not parse - allow editing to continue
                     }
-                    else if (isNaN(text)) {
+                    else if (isNaN(text.replace(',', '').replace('.', ''))) {
+                        // Reject non-numbers
                         text = _lastValidText
                     }
                     else {
