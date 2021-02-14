@@ -242,11 +242,13 @@ void PlaylistIconView::paintEvent(QPaintEvent*)
 
 void PlaylistIconView::mouseReleaseEvent(QMouseEvent *event)
 {
-    if (m_draggingOverPos.isNull() && m_pendingSelect.isValid()) {
-        selectionModel()->select(m_pendingSelect, QItemSelectionModel::ClearAndSelect);
-        viewport()->update();
+    if (event->button() == Qt::LeftButton) {
+        if (m_draggingOverPos.isNull() && m_pendingSelect.isValid()) {
+            selectionModel()->select(m_pendingSelect, QItemSelectionModel::ClearAndSelect);
+            viewport()->update();
+        }
+        m_pendingSelect = QModelIndex();
     }
-    m_pendingSelect = QModelIndex();
     QAbstractItemView::mouseReleaseEvent(event);
 }
 
