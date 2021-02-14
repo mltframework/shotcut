@@ -133,7 +133,6 @@ void ImageProducerWidget::rename()
 
 void ImageProducerWidget::reopen(Mlt::Producer* p)
 {
-    double speed = m_producer->get_speed();
     int position = m_producer->position();
     if (position > p->get_out())
         position = p->get_out();
@@ -144,10 +143,13 @@ void ImageProducerWidget::reopen(Mlt::Producer* p)
         return;
     }
     setProducer(p);
-    emit producerReopened();
+    emit producerReopened(false);
     emit producerChanged(p);
-    MLT.seek(position);
-    MLT.play(speed);
+    if (p->get_int(kShotcutSequenceProperty)) {
+        MLT.play();
+    } else {
+        MLT.seek(position);
+    }
 }
 
 void ImageProducerWidget::recreateProducer()

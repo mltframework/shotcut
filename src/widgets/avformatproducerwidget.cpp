@@ -242,7 +242,7 @@ void AvformatProducerWidget::reopen(Mlt::Producer* p)
         return;
     }
     MLT.stop();
-    emit producerReopened();
+    emit producerReopened(false);
     emit producerChanged(p);
     MLT.seek(position);
     MLT.play(speed);

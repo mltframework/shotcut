@@ -2585,8 +2585,8 @@ void MainWindow::onProducerOpened(bool withReopen)
 {
     QWidget* w = loadProducerWidget(MLT.producer());
     if (withReopen && w && !MLT.producer()->get(kMultitrackItemProperty)) {
-        if (-1 != w->metaObject()->indexOfSignal("producerReopened()"))
-            connect(w, SIGNAL(producerReopened()), m_player, SLOT(onProducerOpened()));
+        if (-1 != w->metaObject()->indexOfSignal("producerReopened(bool)"))
+            connect(w, SIGNAL(producerReopened(bool)), m_player, SLOT(onProducerOpened(bool)));
     }
     else if (MLT.isPlaylist()) {
         m_playlistDock->model()->load();
