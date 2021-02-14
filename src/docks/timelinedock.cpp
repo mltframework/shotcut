@@ -826,6 +826,9 @@ void TimelineDock::detachAudio(int trackIndex, int clipIndex)
     QScopedPointer<Mlt::ClipInfo> info(getClipInfo(trackIndex, clipIndex));
     if (info && info->producer && info->producer->is_valid() && !info->producer->is_blank()
              && info->producer->get("audio_index") && info->producer->get_int("audio_index") >= 0) {
+        if (!info->producer->property_exists(kDefaultAudioIndexProperty)) {
+            info->producer->set(kDefaultAudioIndexProperty, info->producer->get_int("audio_index"));
+        }
         Mlt::Producer clip(MLT.profile(), "xml-string", MLT.XML(info->producer).toUtf8().constData());
         clip.set_in_and_out(info->frame_in, info->frame_out);
         MAIN.undoStack()->push(
