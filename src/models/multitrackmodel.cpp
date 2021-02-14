@@ -2994,7 +2994,7 @@ bool MultitrackModel::mergeClipWithNext(int trackIndex, int clipIndex, bool dryr
     roles << FadeOutRole;
     emit dataChanged(modelIndex, modelIndex, roles);
 
-    removeClip(trackIndex, clipIndex + 1, false);
+    liftClip(trackIndex, clipIndex + 1);
     trimClipOut(trackIndex, clipIndex, -clip2.frame_count, false, false);
 
     emit modified();
