@@ -1026,7 +1026,11 @@ bool TimelineDock::trimClipIn(int trackIndex, int clipIndex, int oldClipIndex, i
     else if (m_model.trimClipInValid(trackIndex, clipIndex, delta, ripple)) {
         if (!m_undoHelper) {
             m_undoHelper.reset(new UndoHelper(m_model));
-            if (ripple) m_undoHelper->setHints(UndoHelper::SkipXML);
+            if (ripple) {
+                m_undoHelper->setHints(UndoHelper::SkipXML);
+            } else {
+                m_undoHelper->setHints(UndoHelper::RestoreTracks);
+            }
             m_undoHelper->recordBeforeState();
         }
         clipIndex = m_model.trimClipIn(trackIndex, clipIndex, delta, ripple, Settings.timelineRippleAllTracks());
