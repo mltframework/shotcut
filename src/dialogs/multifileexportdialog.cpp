@@ -51,7 +51,6 @@ MultiFileExportDialog::MultiFileExportDialog(QString title, Mlt::Playlist* playl
     setWindowTitle(title);
 
     QGridLayout* glayout = new QGridLayout();
-    glayout->setContentsMargins(5, 5, 2, 0);
     glayout->setHorizontalSpacing(4);
     glayout->setVerticalSpacing(2);
     // Directory
@@ -125,7 +124,7 @@ MultiFileExportDialog::MultiFileExportDialog(QString title, Mlt::Playlist* playl
 
     rebuildList();
 
-    QWidget::adjustSize();
+    resize(400, 300);
 }
 
 QStringList MultiFileExportDialog::getExportFiles()
