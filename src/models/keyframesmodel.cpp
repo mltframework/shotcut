@@ -607,20 +607,8 @@ void KeyframesModel::onFilterInChanged(int delta)
         if (count > 0) {
             Mlt::Animation animation = m_filter->getAnimation(m_propertyNames[parameterIndex]);
             if (animation.is_valid()) {
-                for (int keyframeIndex = 0; keyframeIndex < count;) {
-                    int newFrame = animation.key_get_frame(keyframeIndex) - delta;
-                    if (animation.is_key(newFrame)) {
-                        beginRemoveRows(index(parameterIndex), keyframeIndex, keyframeIndex);
-                        animation.remove(animation.key_get_frame(keyframeIndex));
-                        animation.interpolate();
-                        m_keyframeCounts[parameterIndex] -= 1;
-                        endRemoveRows();
-                        --count;
-                    } else {
-                        animation.key_set_frame(keyframeIndex, newFrame);
-                        ++keyframeIndex;
-                    }
-                }
+                // Shift all the keyframes proportional to the delta
+                animation.shift_frames(-delta);
                 QModelIndex parentIndex = index(parameterIndex);
                 emit dataChanged(index(0, 0, parentIndex), index(count - 1, 0, parentIndex), QVector<int>() << FrameNumberRole);
             }
