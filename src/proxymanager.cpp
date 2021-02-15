@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Meltytech, LLC
+ * Copyright (c) 2020-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -98,10 +98,12 @@ void ProxyManager::generateVideoProxy(Mlt::Producer& producer, bool fullRange, S
     args << "-i" << resource;
     args << "-max_muxing_queue_size" << "9999";
     // transcode all streams except data, subtitles, and attachments
-    if (producer.get_int("video_index") < producer.get_int("audio_index"))
+    auto audioIndex = producer.property_exists(kDefaultAudioIndexProperty)? producer.get_int(kDefaultAudioIndexProperty) : producer.get_int("audio_index");
+    if (producer.get_int("video_index") < audioIndex) {
         args << "-map" << "0:V?" << "-map" << "0:a?";
-    else
+    } else {
         args << "-map" << "0:a?" << "-map" << "0:V?";
+    }
     args << "-map_metadata" << "0" << "-ignore_unknown";
     args << "-vf";
 

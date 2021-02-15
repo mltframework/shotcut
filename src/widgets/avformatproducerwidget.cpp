@@ -244,7 +244,7 @@ void AvformatProducerWidget::reopen(Mlt::Producer* p)
         return;
     }
     MLT.stop();
-    emit producerReopened();
+    emit producerReopened(false);
     emit producerChanged(p);
     MLT.seek(position);
     MLT.play(speed);
@@ -826,10 +826,12 @@ void AvformatProducerWidget::convert(TranscodeDialog& dialog)
         args << "-i" << resource;
         args << "-max_muxing_queue_size" << "9999";
         // transcode all streams except data, subtitles, and attachments
-        if (m_producer->get_int("video_index") < m_producer->get_int("audio_index"))
+        auto audioIndex = m_producer->property_exists(kDefaultAudioIndexProperty)? m_producer->get_int(kDefaultAudioIndexProperty) : m_producer->get_int("audio_index");
+        if (m_producer->get_int("video_index") < audioIndex) {
             args << "-map" << "0:V?" << "-map" << "0:a?";
-        else
+        } else {
             args << "-map" << "0:a?" << "-map" << "0:V?";
+        }
         args << "-map_metadata" << "0" << "-ignore_unknown";
 
         // Set video filters

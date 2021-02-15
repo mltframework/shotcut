@@ -1901,7 +1901,7 @@ bool MultitrackModel::addTransitionByTrimInValid(int trackIndex, int clipIndex, 
     return result;
 }
 
-void MultitrackModel::addTransitionByTrimIn(int trackIndex, int clipIndex, int delta)
+int MultitrackModel::addTransitionByTrimIn(int trackIndex, int clipIndex, int delta)
 {
     int i = m_trackList.at(trackIndex).mlt_index;
     QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
@@ -1937,12 +1937,14 @@ void MultitrackModel::addTransitionByTrimIn(int trackIndex, int clipIndex, int d
             emit dataChanged(modelIndex, modelIndex, roles);
             emit modified();
             m_isMakingTransition = true;
+            clipIndex += 1;
         } else if (m_isMakingTransition) {
             // Adjust a transition addition already in progress.
             // m_isMakingTransition will be set false when mouse button released via notifyClipOut().
             trimTransitionIn(trackIndex, clipIndex - 2, -delta);
         }
     }
+    return clipIndex;
 }
 
 bool MultitrackModel::addTransitionByTrimOutValid(int trackIndex, int clipIndex, int delta)
@@ -3013,7 +3015,7 @@ bool MultitrackModel::mergeClipWithNext(int trackIndex, int clipIndex, bool dryr
     roles << FadeOutRole;
     emit dataChanged(modelIndex, modelIndex, roles);
 
-    removeClip(trackIndex, clipIndex + 1, false);
+    liftClip(trackIndex, clipIndex + 1);
     trimClipOut(trackIndex, clipIndex, -clip2.frame_count, false, false);
 
     emit modified();

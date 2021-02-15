@@ -825,6 +825,9 @@ void TimelineDock::detachAudio(int trackIndex, int clipIndex)
     QScopedPointer<Mlt::ClipInfo> info(getClipInfo(trackIndex, clipIndex));
     if (info && info->producer && info->producer->is_valid() && !info->producer->is_blank()
              && info->producer->get("audio_index") && info->producer->get_int("audio_index") >= 0) {
+        if (!info->producer->property_exists(kDefaultAudioIndexProperty)) {
+            info->producer->set(kDefaultAudioIndexProperty, info->producer->get_int("audio_index"));
+        }
         Mlt::Producer clip(MLT.profile(), "xml-string", MLT.XML(info->producer).toUtf8().constData());
         clip.set_in_and_out(info->frame_in, info->frame_out);
         MAIN.undoStack()->push(
@@ -1000,7 +1003,7 @@ void TimelineDock::onClipMoved(int fromTrack, int toTrack, int clipIndex, int po
 bool TimelineDock::trimClipIn(int trackIndex, int clipIndex, int oldClipIndex, int delta, bool ripple)
 {
     if (!ripple && m_model.addTransitionByTrimInValid(trackIndex, clipIndex, delta)) {
-        m_model.addTransitionByTrimIn(trackIndex, clipIndex, delta);
+        clipIndex = m_model.addTransitionByTrimIn(trackIndex, clipIndex, delta);
         m_transitionDelta += delta;
         m_trimCommand.reset(new Timeline::AddTransitionByTrimInCommand(m_model, trackIndex, clipIndex - 1, m_transitionDelta, m_trimDelta, false));
         if (m_updateCommand && m_updateCommand->trackIndex() == trackIndex && m_updateCommand->clipIndex() == clipIndex)
@@ -1025,7 +1028,11 @@ bool TimelineDock::trimClipIn(int trackIndex, int clipIndex, int oldClipIndex, i
     else if (m_model.trimClipInValid(trackIndex, clipIndex, delta, ripple)) {
         if (!m_undoHelper) {
             m_undoHelper.reset(new UndoHelper(m_model));
-            if (ripple) m_undoHelper->setHints(UndoHelper::SkipXML);
+            if (ripple) {
+                m_undoHelper->setHints(UndoHelper::SkipXML);
+            } else {
+                m_undoHelper->setHints(UndoHelper::RestoreTracks);
+            }
             m_undoHelper->recordBeforeState();
         }
         clipIndex = m_model.trimClipIn(trackIndex, clipIndex, delta, ripple, Settings.timelineRippleAllTracks());

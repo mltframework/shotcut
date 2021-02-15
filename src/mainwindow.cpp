@@ -1728,11 +1728,14 @@ void MainWindow::setCurrentFile(const QString &filename)
 
 void MainWindow::on_actionAbout_Shotcut_triggered()
 {
-    QMessageBox::about(this, tr("About Shotcut"),
-             tr("<h1>Shotcut version %1</h1>"
-                "<p><a href=\"https://www.shotcut.org/\">Shotcut</a> is a free, open source, cross platform video editor.</p>"
-                "<small><p>Copyright &copy; 2011-2021 <a href=\"https://www.meltytech.com/\">Meltytech</a>, LLC</p>"
-                "<p>Licensed under the <a href=\"https://www.gnu.org/licenses/gpl.html\">GNU General Public License v3.0</a></p>"
+    const auto copyright = QStringLiteral("Copyright &copy; 2011-2021 <a href=\"https://www.meltytech.com/\">Meltytech</a>, LLC");
+    const auto license = QStringLiteral("<a href=\"https://www.gnu.org/licenses/gpl.html\">GNU General Public License v3.0</a>");
+    const auto url = QStringLiteral("https://www.shotcut.org/");
+    QMessageBox::about(this, tr("About %1"),
+             tr("<h1>Shotcut version %2</h1>"
+                "<p><a href=\"%3\">%1</a> is a free, open source, cross platform video editor.</p>"
+                "<small><p>%4</p>"
+                "<p>Licensed under the %5</p>"
                 "<p>This program proudly uses the following projects:<ul>"
                 "<li><a href=\"https://www.qt.io/\">Qt</a> application and UI framework</li>"
                 "<li><a href=\"https://www.mltframework.org/\">MLT</a> multimedia authoring framework</li>"
@@ -1746,11 +1749,11 @@ void MainWindow::on_actionAbout_Shotcut_triggered()
                 "<li><a href=\"http://www.oxygen-icons.org/\">Oxygen</a> icon collection</li>"
                 "</ul></p>"
                 "<p>The source code used to build this program can be downloaded from "
-                "<a href=\"https://www.shotcut.org/\">shotcut.org</a>.</p>"
+                "<a href=\"%3\">%3</a>.</p>"
                 "This program is distributed in the hope that it will be useful, "
                 "but WITHOUT ANY WARRANTY; without even the implied warranty of "
                 "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.</small>"
-                ).arg(qApp->applicationVersion()));
+                ).arg(qApp->applicationName(), qApp->applicationVersion(), url, copyright, license));
 }
 
 
@@ -2585,8 +2588,8 @@ void MainWindow::onProducerOpened(bool withReopen)
 {
     QWidget* w = loadProducerWidget(MLT.producer());
     if (withReopen && w && !MLT.producer()->get(kMultitrackItemProperty)) {
-        if (-1 != w->metaObject()->indexOfSignal("producerReopened()"))
-            connect(w, SIGNAL(producerReopened()), m_player, SLOT(onProducerOpened()));
+        if (-1 != w->metaObject()->indexOfSignal("producerReopened(bool)"))
+            connect(w, SIGNAL(producerReopened(bool)), m_player, SLOT(onProducerOpened(bool)));
     }
     else if (MLT.isPlaylist()) {
         m_playlistDock->model()->load();
