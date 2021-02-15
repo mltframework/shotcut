@@ -43,7 +43,7 @@ enum {
     NAME_FIELD_HASH,
 };
 
-MultiFileExportDialog::MultiFileExportDialog(QString title, Mlt::Playlist* playlist, const QString& directory, const QString& extension, QWidget* parent)
+MultiFileExportDialog::MultiFileExportDialog(QString title, Mlt::Playlist* playlist, const QString& directory, const QString& prefix, const QString& extension, QWidget* parent)
     : QDialog(parent)
     , m_playlist(playlist)
 {
@@ -67,7 +67,7 @@ MultiFileExportDialog::MultiFileExportDialog(QString title, Mlt::Playlist* playl
     glayout->addLayout(dirHbox, col++, 1, Qt::AlignLeft);
     // Prefix
     glayout->addWidget(new QLabel(tr("Prefix")), col, 0, Qt::AlignRight);
-    m_prefix = new QLineEdit(tr("export"));
+    m_prefix = new QLineEdit(prefix.isEmpty()? tr("export") : prefix);
     if (!connect(m_prefix, &QLineEdit::textChanged, this, &MultiFileExportDialog::rebuildList))
          connect(m_prefix, SIGNAL(textChanged(const QString&)), SLOT(rebuildList()));
     glayout->addWidget(m_prefix, col++, 1, Qt::AlignLeft);

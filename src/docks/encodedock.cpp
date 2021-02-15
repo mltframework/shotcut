@@ -1405,7 +1405,8 @@ void EncodeDock::on_encodeButton_clicked()
     QString caption = seekable ? tr("Export File") : tr("Capture File");
     if (ui->fromCombo->currentData().toString() == "batch") {
         caption = tr("Export Files");
-        MultiFileExportDialog dialog(tr("Export Each Playlist Item"), MAIN.playlist(), QFileInfo(directory).absolutePath(), m_extension, this);
+        MultiFileExportDialog dialog(tr("Export Each Playlist Item"), MAIN.playlist(),
+            QFileInfo(directory).absolutePath(), QFileInfo(MAIN.fileName()).completeBaseName(), m_extension, this);
         if (dialog.exec() != QDialog::Accepted) {
             return;
         }
