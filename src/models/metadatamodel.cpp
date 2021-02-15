@@ -199,10 +199,8 @@ void MetadataModel::setIsChainProducer(bool isChainProducer)
     beginResetModel();
     m_isChainProducer = isChainProducer;
     if (m_isChainProducer) {
-        qDebug() << "Clear Bit";
         m_filterMask &= ~linkMaskBit;
     } else {
-        qDebug() << "Set Bit";
         m_filterMask |= linkMaskBit;
     }
     endResetModel();
