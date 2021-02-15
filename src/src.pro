@@ -188,7 +188,7 @@ HEADERS  += mainwindow.h \
     dialogs/filedatedialog.h \
     jobqueue.h \
     docks/jobsdock.h \
-    dialogs/mutifileexportdialog.h \
+    dialogs/multifileexportdialog.h \
     dialogs/slideshowgeneratordialog.h \
     dialogs/textviewerdialog.h \
     models/playlistmodel.h \

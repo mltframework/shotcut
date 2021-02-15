@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2020 Meltytech, LLC
+ * Copyright (c) 2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -61,38 +61,44 @@ MultiFileExportDialog::MultiFileExportDialog(QString title, Mlt::Playlist* playl
     m_dir->setReadOnly(true);
     QPushButton* browseButton = new QPushButton(this);
     browseButton->setIcon(QIcon::fromTheme("document-open", QIcon(":/icons/oxygen/32x32/actions/document-open.png")));
-    connect(browseButton, &QAbstractButton::clicked, this, &MultiFileExportDialog::browse);
+    if (!connect(browseButton, &QAbstractButton::clicked, this, &MultiFileExportDialog::browse))
+         connect(browseButton, SIGNAL(clicked()), SLOT(browse()));
     dirHbox->addWidget(m_dir);
     dirHbox->addWidget(browseButton);
     glayout->addLayout(dirHbox, col++, 1, Qt::AlignLeft);
     // Prefix
     glayout->addWidget(new QLabel(tr("Prefix")), col, 0, Qt::AlignRight);
     m_prefix = new QLineEdit(tr("export"));
-    connect(m_prefix, &QLineEdit::textChanged, this, &MultiFileExportDialog::rebuildList);
+    if (!connect(m_prefix, &QLineEdit::textChanged, this, &MultiFileExportDialog::rebuildList))
+         connect(m_prefix, SIGNAL(textChanged(const QString&)), SLOT(rebuildList()));
     glayout->addWidget(m_prefix, col++, 1, Qt::AlignLeft);
     // Field 1
     glayout->addWidget(new QLabel(tr("Field 1")), col, 0, Qt::AlignRight);
     m_field1 = new QComboBox();
     fillCombo(m_field1);
-    connect(m_field1, QOverload<int>::of(&QComboBox::activated), this, &MultiFileExportDialog::rebuildList);
+    if (!connect(m_field1, QOverload<int>::of(&QComboBox::activated), this, &MultiFileExportDialog::rebuildList))
+         connect(m_field1, SIGNAL(activated(const QString&)), SLOT(rebuildList()));
     glayout->addWidget(m_field1, col++, 1, Qt::AlignLeft);
     // Field 2
     glayout->addWidget(new QLabel(tr("Field 2")), col, 0, Qt::AlignRight);
     m_field2 = new QComboBox();
     fillCombo(m_field2);
-    connect(m_field2, QOverload<int>::of(&QComboBox::activated), this, &MultiFileExportDialog::rebuildList);
+    if (!connect(m_field2, QOverload<int>::of(&QComboBox::activated), this, &MultiFileExportDialog::rebuildList))
+         connect(m_field2, SIGNAL(activated(const QString&)), SLOT(rebuildList()));
     glayout->addWidget(m_field2, col++, 1, Qt::AlignLeft);
     // Field 3
     glayout->addWidget(new QLabel(tr("Field 3")), col, 0, Qt::AlignRight);
     m_field3 = new QComboBox();
     fillCombo(m_field3);
     m_field3->setCurrentIndex(NAME_FIELD_INDEX);
-    connect(m_field3, QOverload<int>::of(&QComboBox::activated), this, &MultiFileExportDialog::rebuildList);
+   if (!connect(m_field3, QOverload<int>::of(&QComboBox::activated), this, &MultiFileExportDialog::rebuildList))
+        connect(m_field3, SIGNAL(activated(const QString&)), SLOT(rebuildList()));
     glayout->addWidget(m_field3, col++, 1, Qt::AlignLeft);
     // Extension
     glayout->addWidget(new QLabel(tr("Extension")), col, 0, Qt::AlignRight);
     m_ext = new QLineEdit(extension);
-    connect(m_ext, &QLineEdit::textChanged, this, &MultiFileExportDialog::rebuildList);
+    if (!connect(m_ext, &QLineEdit::textChanged, this, &MultiFileExportDialog::rebuildList))
+         connect(m_ext, SIGNAL(textChanged(const QString &)), SLOT(rebuildList()));
     glayout->addWidget(m_ext, col++, 1, Qt::AlignLeft);
     // Error
     m_errorIcon = new QLabel();
