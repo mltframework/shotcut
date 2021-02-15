@@ -161,7 +161,7 @@ public slots:
     bool trimTransitionOutValid(int trackIndex, int clipIndex, int delta);
     void trimTransitionOut(int trackIndex, int clipIndex, int delta);
     bool addTransitionByTrimInValid(int trackIndex, int clipIndex, int delta);
-    void addTransitionByTrimIn(int trackIndex, int clipIndex, int delta);
+    int addTransitionByTrimIn(int trackIndex, int clipIndex, int delta);
     bool addTransitionByTrimOutValid(int trackIndex, int clipIndex, int delta);
     void addTransitionByTrimOut(int trackIndex, int clipIndex, int delta);
     bool removeTransitionByTrimInValid(int trackIndex, int clipIndex, int delta);
