@@ -21,6 +21,7 @@
 #include "proxymanager.h"
 #include "shotcut_mlt_properties.h"
 #include "util.h"
+#include "qmltypes/qmlapplication.h"
 
 #include <MltPlaylist.h>
 
@@ -49,6 +50,7 @@ MultiFileExportDialog::MultiFileExportDialog(QString title, Mlt::Playlist* playl
 {
     int col = 0;
     setWindowTitle(title);
+    setWindowModality(QmlApplication::dialogModality());
 
     QGridLayout* glayout = new QGridLayout();
     glayout->setHorizontalSpacing(4);
