@@ -263,7 +263,7 @@ void MultiFileExportDialog::rebuildList()
 
 void MultiFileExportDialog::browse()
 {
-    QString directory = QDir::toNativeSeparators(QFileDialog::getExistingDirectory(this, tr("Export Directory"), m_dir->text()));
+    QString directory = QDir::toNativeSeparators(QFileDialog::getExistingDirectory(this, tr("Export Directory"), m_dir->text(), Util::getFileDialogOptions()));
     if (!directory.isEmpty()) {
         m_dir->setText(directory);
         rebuildList();
