@@ -78,8 +78,7 @@ Item {
                 var widthOffset = keyframesRepeater.itemAt(0).width / 2
                 var heightOffset = keyframesRepeater.itemAt(0).height / 2
                 // Draw extent before first keyframe.
-                var startX = (filter.in - producer.in) * timeScale
-                ctx.moveTo(startX, keyframesRepeater.itemAt(0).y + heightOffset)
+                ctx.moveTo(0, keyframesRepeater.itemAt(0).y + heightOffset)
                 ctx.lineTo(keyframesRepeater.itemAt(0).x + widthOffset, keyframesRepeater.itemAt(0).y + heightOffset)
                 // Draw lines between keyframes.
                 for (var i = 1; i < keyframesRepeater.count; i++) {
@@ -98,9 +97,7 @@ Item {
                     }
                 }
                 // Draw extent after last keyframe.
-                var x = (filter.out - producer.in + 1) * timeScale
-                if (x > keyframesRepeater.itemAt(i - 1).x)
-                    ctx.lineTo(x, keyframesRepeater.itemAt(i - 1).y + heightOffset)
+                ctx.lineTo(width, keyframesRepeater.itemAt(i - 1).y + heightOffset)
             }
             ctx.stroke()
         }
@@ -110,7 +107,7 @@ Item {
         id: keyframeDelegateModel
         model: parameters
         Keyframe {
-            position: (filter.in - producer.in) + model.frame
+            property int frame: model.frame
             interpolation: model.interpolation
             name: model.name
             value: model.value
@@ -123,6 +120,12 @@ Item {
             parameterIndex: parameterRoot.DelegateModel.itemsIndex
             onClicked: parameterRoot.clicked(keyframe, parameterRoot)
             onInterpolationChanged: canvas.requestPaint()
+            Component.onCompleted: {
+                position = (filter.in - producer.in) + model.frame
+            }
+            onFrameChanged: {
+                position = (filter.in - producer.in) + model.frame
+            }
             onPositionChanged: canvas.requestPaint()
             onValueChanged: {
                 if (isCurve && (value > maximum || value < minimum)) {

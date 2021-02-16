@@ -103,7 +103,6 @@ void KeyframesDock::setCurrentFilter(QmlFilter* filter, QmlMetadata* meta)
     connect(filter, SIGNAL(animateInChanged()), &m_model, SLOT(reload()));
     connect(filter, SIGNAL(animateOutChanged()), &m_model, SLOT(reload()));
     connect(filter, SIGNAL(inChanged(int)), &m_model, SLOT(onFilterInChanged(int)));
-    connect(filter, SIGNAL(outChanged(int)), &m_model, SLOT(onFilterOutChanged(int)));
 }
 
 bool KeyframesDock::event(QEvent *event)

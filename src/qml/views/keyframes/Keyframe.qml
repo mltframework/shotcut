@@ -22,7 +22,7 @@ import 'Keyframes.js' as Logic
 
 Rectangle {
     id: keyframeRoot
-    property int position: 0
+    property int position
     property int interpolation: KeyframesModel.DiscreteInterpolation // rectangle for discrete
     property bool isSelected: false
     property string name: ''
@@ -37,6 +37,7 @@ Rectangle {
     property double maxDragX: activeClip.x + activeClip.width - width/2
     property double minDragY: activeClip.y - width/2
     property double maxDragY: activeClip.y + activeClip.height - width/2
+    property bool inRange: position >= (filter.in - producer.in) && position <= (filter.out - producer.in)
 
     signal clicked(var keyframe)
 
@@ -47,8 +48,9 @@ Rectangle {
     anchors.verticalCenterOffset: isCurve ? trackValue : 0
     height: 10
     width: height
-    color: isSelected? 'red' : activePalette.buttonText
+    color: isSelected ? 'red' : activePalette.buttonText
     border.color: activePalette.button
+    opacity: inRange ? 1.0 : 0.3
     border.width: 1
     radius: (interpolation === KeyframesModel.SmoothInterpolation)? height/2 : 0 // circle for smooth
     rotation: (interpolation === KeyframesModel.LinearInterpolation)? 45 : 0    // diamond for linear
