@@ -98,7 +98,7 @@ QVariant KeyframesModel::data(const QModelIndex& index, int role) const
                     case MaximumFrameRole: {
                         int minimum = animation.previous_key(qMax(0, position - 1)) + 1;
                         int result = animation.next_key(position + 1) - 1;
-                        result = (result < minimum) ? m_filter->duration() : result;
+                        result = (result < minimum) ? std::numeric_limits<int>::max() : result;
 //                        LOG_DEBUG() << "keyframeIndex" << index.row() << "maximumFrame" << result;
                         return result - 1;
                     }
@@ -577,6 +577,11 @@ void KeyframesModel::reload()
 void KeyframesModel::onFilterChanged(const QString& property)
 {
 //    LOG_DEBUG() << property;
+    if (property == "in") {
+        // Handled by onFilterInChanged()
+        return;
+    }
+
     int i = m_propertyNames.indexOf(property);
     if (i > -1) {
         int count = m_keyframeCounts[i];
@@ -605,41 +610,73 @@ void KeyframesModel::onFilterInChanged(int delta)
     for (int parameterIndex = 0; parameterIndex < m_propertyNames.count(); parameterIndex++) {
         int count = m_keyframeCounts[parameterIndex];
         if (count > 0) {
-            Mlt::Animation animation = m_filter->getAnimation(m_propertyNames[parameterIndex]);
+            QString name = m_propertyNames[parameterIndex];
+            Mlt::Animation animation = m_filter->getAnimation(name);
             if (animation.is_valid()) {
                 // Shift all the keyframes proportional to the delta
                 animation.shift_frames(-delta);
-                QModelIndex parentIndex = index(parameterIndex);
-                emit dataChanged(index(0, 0, parentIndex), index(count - 1, 0, parentIndex), QVector<int>() << FrameNumberRole);
-            }
-        }
-    }
-}
-
-void KeyframesModel::onFilterOutChanged(int delta)
-{
-    Q_UNUSED(delta)
-    for (int parameterIndex = 0; parameterIndex < m_propertyNames.count(); parameterIndex++) {
-        int count = m_keyframeCounts[parameterIndex];
-        if (count > 0) {
-            Mlt::Animation animation = m_filter->getAnimation(m_propertyNames[parameterIndex]);
-            if (animation.is_valid()) {
-                for (int keyframeIndex = 0; keyframeIndex < count;) {
-                    int frame = animation.key_get_frame(keyframeIndex);
-                    if (frame < 0) {
-                        beginRemoveRows(index(parameterIndex), keyframeIndex, keyframeIndex);
-                        animation.remove(animation.key_get_frame(keyframeIndex));
-                        animation.interpolate();
-                        m_keyframeCounts[parameterIndex] -= 1;
-                        endRemoveRows();
-                        --count;
+                foreach (QString gangName, m_metadata->keyframes()->parameter(m_metadataIndex[parameterIndex])->gangedProperties()) {
+                    Mlt::Animation gangAnim = m_filter->getAnimation(gangName);
+                    if (gangAnim.is_valid())
+                        gangAnim.shift_frames(-delta);
+                }
+                // Keyframes are not allowed to have negative positions because
+                // there is no way for the user to interact with them.
+                if (animation.key_get_frame(0) < 0)
+                {
+                    // Create a new keyframe at position 0 based on interpolated value
+                    auto parameter = m_metadata->keyframes()->parameter(m_metadataIndex[parameterIndex]);
+                    m_filter->blockSignals(true);
+                    if (parameter->isRectangle()) {
+                        auto value = m_filter->getRect(name, 0);
+                        mlt_keyframe_type keyframeType = m_filter->getKeyframeType(animation, 0, mlt_keyframe_type(-1));
+                        m_filter->set(name, value, 1.0, 0, keyframeType);
                     } else {
-                        ++keyframeIndex;
+                        double value = m_filter->getDouble(name, 0);
+                        mlt_keyframe_type keyframeType = m_filter->getKeyframeType(animation, 0, mlt_keyframe_type(-1));
+                        m_filter->set(name, value, 0, keyframeType);
+                        foreach (QString gangName, m_metadata->keyframes()->parameter(m_metadataIndex[parameterIndex])->gangedProperties()) {
+                            Mlt::Animation gangAnim = m_filter->getAnimation(gangName);
+                            double gangValue = m_filter->getDouble(gangName, 0);
+                            if (gangAnim.is_valid()) {
+                                keyframeType = m_filter->getKeyframeType(gangAnim, 0, mlt_keyframe_type(-1));
+                                m_filter->set(gangName, gangValue, 0, keyframeType);
+                            }
+                        }
+                    }
+                    m_filter->blockSignals(false);
+
+                    // Remove all negative position keyframes
+                    for (int keyframeIndex = 0; keyframeIndex < count;) {
+                        int frame = animation.key_get_frame(keyframeIndex);
+                        if (frame < 0) {
+                            animation.remove(frame);
+                            animation.interpolate();
+                            m_keyframeCounts[parameterIndex] -= 1;
+                            --count;
+                        } else {
+                            break;
+                        }
+                    }
+                    foreach (QString gangName, m_metadata->keyframes()->parameter(m_metadataIndex[parameterIndex])->gangedProperties()) {
+                        Mlt::Animation gangAnim = m_filter->getAnimation(gangName);
+                        int gangKeyCount = gangAnim.key_count();
+                        for (int keyframeIndex = 0; keyframeIndex < gangKeyCount;) {
+                            int frame = gangAnim.key_get_frame(keyframeIndex);
+                            if (frame < 0) {
+                                gangAnim.remove(frame);
+                                gangAnim.interpolate();
+                                gangKeyCount -= 1;
+                            } else {
+                                break;
+                            }
+                        }
                     }
                 }
             }
         }
     }
+    reload();
 }
 
 int KeyframesModel::keyframeCount(int index) const
