@@ -706,24 +706,7 @@ function set_globals {
 
   #####
   # mlt
-  CONFIG[1]="./configure --prefix=$FINAL_INSTALL_DIR --enable-gpl --enable-gpl3 --without-kde --disable-sdl --disable-gdk --disable-gtk2 $CONFIGURE_DEBUG_FLAG"
-  # Remember, if adding more of these, to update the post-configure check.
-  [ "$QT_INCLUDE_DIR" ] && CONFIG[1]="${CONFIG[1]} --qt-includedir=$QT_INCLUDE_DIR"
-  [ "$QT_LIB_DIR" ] && CONFIG[1]="${CONFIG[1]} --qt-libdir=$QT_LIB_DIR"
-  if test "1" = "$MLT_DISABLE_SOX" ; then
-    CONFIG[1]="${CONFIG[1]} --disable-sox"
-  fi
-  if test "$TARGET_OS" = "Win32" ; then
-    CONFIG[1]="${CONFIG[1]} --disable-dv --disable-kino --disable-vorbis --gdk-prefix=\"$FINAL_INSTALL_DIR\" --target-os=MinGW --target-arch=i686 --rename-melt=melt.exe"
-  elif test "$TARGET_OS" = "Win64" ; then
-    CONFIG[1]="${CONFIG[1]} --disable-dv --disable-kino --disable-vorbis --gdk-prefix=\"$FINAL_INSTALL_DIR\" --target-os=MinGW --target-arch=x86_64 --rename-melt=melt.exe"
-  fi
-  CFLAGS_[1]="-I$FINAL_INSTALL_DIR/include $ASAN_CFLAGS $CFLAGS"
-  if [ "$TARGET_OS" = "Darwin" ]; then
-    CFLAGS_[1]="${CFLAGS_[1]} -I/opt/local/include -DRELOCATABLE"
-    LDFLAGS_[1]="${LDFLAGS_[1]} -L/opt/local/lib/libomp"
-  fi
-  [ "$TARGET_OS" = "Win32" -o "$TARGET_OS" = "Win64" ]  && CFLAGS_[1]="${CFLAGS_[1]} -I$FINAL_INSTALL_DIR/include/SDL2"
+  CONFIG[1]="cmake -D BUILD_TESTING=ON -DCMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -S . -B build -G Ninja"
   LDFLAGS_[1]="${LDFLAGS_[1]} -L$FINAL_INSTALL_DIR/lib $ASAN_LDFLAGS $LDFLAGS"
 
   ####
@@ -991,6 +974,8 @@ function make_clean_dir {
   # Special hack for ffmpeg, it sometimes requires distclean to work.
   if test "FFmpeg" = "$1" ; then
       cmd cd $1 && cmd make distclean
+  elif test "mlt" = "$1" ; then
+      cmd cd $1 && cmd rm -Rf build
   else
       cmd cd $1 && cmd make clean
   fi
@@ -1589,6 +1574,8 @@ function configure_compile_install_subproject {
     cmd ninja -C builddir -j $MAKEJ || die "Unable to build $1"
   elif test "aom" = "$1" ; then
     cmd ninja -j $MAKEJ || die "Unable to build $1"
+  elif test "mlt" = "$1" ; then
+    cmd ninja -C build -j $MAKEJ || die "Unable to build $1"
   elif test "$MYCONFIG" != ""; then
     cmd make -j$MAKEJ || die "Unable to build $1"
   fi
@@ -1638,6 +1625,8 @@ function configure_compile_install_subproject {
       cmd meson install -C builddir || die "Unable to install $1"
     elif test "aom" = "$1" ; then
       cmd ninja install || die "Unable to install $1"
+    elif test "mlt" = "$1" ; then
+      cmd ninja install -C build || die "Unable to install $1"
     elif test "$MYCONFIG" != "" ; then
       cmd make install || die "Unable to install $1"
     fi
