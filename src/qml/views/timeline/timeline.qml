@@ -68,6 +68,7 @@ Rectangle {
 
     function zoomToFit() {
         setZoom(Math.pow((tracksFlickable.width - 50) * multitrack.scaleFactor / tracksContainer.width - 0.01, 1/3))
+        tracksFlickable.contentX = 0
     }
 
     function resetZoom() {
