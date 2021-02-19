@@ -157,7 +157,8 @@ int Controller::open(const QString &url, const QString& urlToSave)
         setImageDurationFromDefault(newProducer);
         lockCreationTime(newProducer);
         // Encapsulate avformat producers in a chain to enable timing effects
-        if (!qstrcmp(newProducer->get("mlt_service"), "avformat-novalidate")) {
+        if (!qstrcmp(newProducer->get("mlt_service"), "avformat-novalidate") &&
+            newProducer->type() != mlt_service_chain_type) {
             Mlt::Chain* chain = new Mlt::Chain(MLT.profile());
             chain->set_source(*newProducer);
             delete newProducer;
@@ -177,7 +178,7 @@ bool Controller::openXML(const QString &filename)
 {
     bool error = true;
     close();
-    Producer* producer = new Mlt::Chain(profile(), "xml", filename.toUtf8().constData());
+    Producer* producer = new Mlt::Producer(profile(), "xml", filename.toUtf8().constData());
     if (producer->is_valid()) {
         double fps = profile().fps();
         if (!profile().is_explicit()) {
@@ -190,10 +191,18 @@ bool Controller::openXML(const QString &filename)
         if (isFpsDifferent(profile().fps(), fps)) {
             // reopen with the correct fps
             delete producer;
-            producer = new Mlt::Chain(profile(), "xml", filename.toUtf8().constData());
+            producer = new Mlt::Producer(profile(), "xml", filename.toUtf8().constData());
         }
         producer->set(kShotcutVirtualClip, 1);
         producer->set("resource", filename.toUtf8().constData());
+
+        if (producer->type() != mlt_service_chain_type) {
+            Mlt::Chain* chain = new Mlt::Chain(MLT.profile());
+            chain->set_source(*producer);
+            delete producer;
+            producer = chain;
+        }
+
         setProducer(new Producer(producer));
         error = false;
     }
