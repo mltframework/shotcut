@@ -79,7 +79,7 @@ void QmlRichText::setFileUrl(const QUrl &arg)
             if (file.open(QFile::ReadOnly)) {
                 QByteArray data = file.readAll();
                 if (Qt::mightBeRichText(data)) {
-                    QTextCodec *codec = QTextCodec::codecForHtml(data);
+                    QTextCodec *codec = QTextCodec::codecForHtml(data,  QTextCodec::codecForName("UTF-8"));
                     setText(codec->toUnicode(data));
                 } else {
                     QTextCodec *codec = QTextCodec::codecForUtfText(data);
@@ -130,7 +130,8 @@ void QmlRichText::saveAs(const QUrl &arg, const QString &fileType)
         emit error(tr("Cannot save: ") + f.errorString());
         return;
     }
-    f.write((isHtml ? m_doc->toHtml() : m_doc->toPlainText()).toLocal8Bit());
+    QString s = isHtml ? m_doc->toHtml() : m_doc->toPlainText();
+    f.write(s.toUtf8());
     f.close();
     setFileUrl(QUrl::fromLocalFile(localPath));
 }
