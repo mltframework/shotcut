@@ -253,6 +253,13 @@ bool Controller::isPaused() const
     return m_producer && qAbs(m_producer->get_speed()) < 0.1;
 }
 
+static void fire_jack_seek_event(mlt_properties jack, int position)
+{
+    mlt_event_data event_data;
+    mlt_event_data_from_int(&event_data, position);
+    mlt_events_fire(jack, "jack-seek", &event_data);
+}
+
 void Controller::pause()
 {
     if (m_producer && !isPaused()) {
@@ -275,7 +282,7 @@ void Controller::pause()
         stopJack();
         int position = (m_producer && m_producer->is_valid())? m_producer->position() : 0;
         ++m_skipJackEvents;
-        mlt_events_fire(m_jackFilter->get_properties(), "jack-seek", &position, NULL);
+        fire_jack_seek_event(m_jackFilter->get_properties(), position);
     }
     setVolume(m_volume);
 }
@@ -454,7 +461,7 @@ void Controller::seek(int position)
     if (m_jackFilter) {
         stopJack();
         ++m_skipJackEvents;
-        mlt_events_fire(m_jackFilter->get_properties(), "jack-seek", &position, NULL);
+        fire_jack_seek_event(m_jackFilter->get_properties(), position);
     }
 }
 
