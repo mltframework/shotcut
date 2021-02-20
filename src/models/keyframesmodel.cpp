@@ -336,6 +336,7 @@ bool KeyframesModel::setInterpolation(int parameterIndex, int keyframeIndex, Int
                 emit dataChanged(modelIndex, modelIndex, QVector<int>() << KeyframeTypeRole << NameRole);
                 error = false;
                 emit m_filter->changed();
+                emit m_filter->propertyChanged(name.toUtf8().constData());
             }
         }
     }
@@ -363,6 +364,7 @@ bool KeyframesModel::setPosition(int parameterIndex, int keyframeIndex, int posi
                 updateNeighborsMinMax(parameterIndex, keyframeIndex);
                 error = false;
                 emit m_filter->changed();
+                emit m_filter->propertyChanged(name.toUtf8().constData());
             }
         }
     }

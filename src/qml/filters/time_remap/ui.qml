@@ -23,7 +23,7 @@ import Shotcut.Controls 1.0 as Shotcut
 Item {
     width: 200
     height: 50
-    property bool blockUpdate: true
+    property bool blockUpdate: false
 
     Component.onCompleted: {
         if (filter.isNew) {
@@ -38,18 +38,13 @@ Item {
 
     Connections {
         target: filter
-        function onInChanged() {
-            updateFilter(null)
-        }
-        function onOutChanged() {
-            updateFilter(null)
-        }
-        function onPropertyChanged(name) {
-            if (blockUpdate) return
+        onInChanged: {
             setControls()
         }
-        function onChanged() {
-            if (blockUpdate) return
+        onOutChanged: {
+            setControls()
+        }
+        onPropertyChanged: {
             setControls()
         }
     }
@@ -66,8 +61,6 @@ Item {
     Connections {
         target: producer
         onPositionChanged: {
-            if (blockUpdate) return
-            setControls()
             timer.start()
         }
     }
@@ -77,6 +70,7 @@ Item {
     }
 
     function setControls() {
+        if (blockUpdate) return
         var position = getPosition()
         blockUpdate = true
         mapSpinner.value = filter.getDouble('map', position) * profile.fps
@@ -97,13 +91,6 @@ Item {
             directionLabel.text = qsTr('Freeze')
         }
         blockUpdate = false
-    }
-
-    function updateFilter(position) {
-        if (blockUpdate) return
-        if (position !== null) {
-            filter.set('map', mapSpinner.value / profile.fps, position)
-        }
     }
 
     GridLayout {
@@ -140,7 +127,9 @@ Item {
             saveButtonVisible: false
             undoButtonVisible: false
             onValueChanged: {
-                updateFilter(getPosition())
+                if (blockUpdate) return
+                filter.set('map', mapSpinner.value / profile.fps, getPosition())
+                timer.start()
             }
         }
         Shotcut.UndoButton {
@@ -167,6 +156,7 @@ Item {
             }
             textRole: "text"
             onCurrentIndexChanged: {
+                if (blockUpdate) return
                 filter.set('image_mode', imageModeModel.get(currentIndex).value)
             }
         }
