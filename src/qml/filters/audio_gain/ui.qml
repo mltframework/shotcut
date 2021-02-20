@@ -55,19 +55,15 @@ Item {
         onOutChanged: updateFilter(null)
         onAnimateInChanged: updateFilter(null)
         onAnimateOutChanged: updateFilter(null)
+        onPropertyChanged: {
+            setControls()
+        }
     }
 
     Connections {
         target: producer
         onPositionChanged: {
-            if (filter.animateIn > 0 || filter.animateOut > 0) {
-                setControls()
-            } else {
-                blockUpdate = true
-                gainSlider.value = filter.getDouble('level', getPosition())
-                blockUpdate = false
-                gainSlider.enabled = true
-            }
+            setControls()
         }
     }
 
@@ -83,9 +79,13 @@ Item {
         var position = getPosition()
         blockUpdate = true
         gainSlider.value = filter.getDouble('level', position)
-        blockUpdate = false
-        gainSlider.enabled = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1)
+        if (filter.animateIn > 0 || filter.animateOut > 0) {
+            gainSlider.enabled = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1)
+        } else {
+            gainSlider.enabled = true
+        }
         gainKeyframesButton.checked = filter.keyframeCount('level') > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
+        blockUpdate = false
     }
 
     function updateFilter(position) {
