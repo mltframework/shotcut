@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2020 Meltytech, LLC
+ * Copyright (c) 2014-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -88,16 +88,28 @@ bool MltXmlChecker::check(const QString& fileName)
                 m_newXml.writeCharacters("\n");
                 m_newXml.writeStartElement("mlt");
                 foreach (QXmlStreamAttribute a, m_xml.attributes()) {
-                    if (a.name().toString().toUpper() != "LC_NUMERIC") {
-                        m_newXml.writeAttribute(a);
-                    } else {
+                    if (a.name().toString().toUpper() == "LC_NUMERIC") {
                         QString value = a.value().toString().toUpper();
                         // Determine whether this document uses a non-POSIX/-generic numeric locale.
                         m_usesLocale = (value != "" && value != "C" && value != "POSIX" && QLocale().decimalPoint() != '.');
                         // Upon correcting the document to conform to current system,
                         // update the declared LC_NUMERIC.
                         m_newXml.writeAttribute("LC_NUMERIC", m_usesLocale? QLocale().name() : "C");
+                    } else if (a.name().toString().toLower() == "version") {
+                        m_mltVersion = QVersionNumber::fromString(a.value());
+                    } else if (a.name().toString().toLower() == "title") {
+                        m_newXml.writeAttribute(a.name().toString(), "Shotcut version " SHOTCUT_VERSION);
+                        auto parts = a.value().split(' ');
+                        LOG_DEBUG() << parts;
+                        if (parts.size() > 2 && parts[1] == "version") {
+                            m_shotcutVersion = parts[2].toString();
+                        }
+                    } else {
+                        m_newXml.writeAttribute(a);
                     }
+                }
+                if (!checkMltVersion()) {
+                    return false;
                 }
                 // We cannot apply the locale change to the session at this point
                 // because we are merely checking at this point and not loading.
@@ -187,12 +199,23 @@ void MltXmlChecker::readMlt()
             break;
         case QXmlStreamReader::StartElement: {
             const QString element = m_xml.name().toString();
+            isPropertyElement = false;
             if (element == "property") {
-                const QString name = m_xml.attributes().value("name").toString();
-                m_properties << MltProperty(name, m_xml.readElementText());
                 isPropertyElement = true;
+                if (isMltClass(&mlt_class)) {
+                    const QString name = m_xml.attributes().value("name").toString();
+                    m_properties << MltProperty(name, m_xml.readElementText());
+                }
+            } else if (element == "chain") {
+                processProperties();
+                mlt_class = "producer";
+                m_newXml.writeStartElement(m_xml.namespaceUri().toString(), mlt_class);
+                m_isCorrected = true;
+                checkInAndOutPoints(); // This also copies the attributes.
+            } else if (element == "link") {
+                processProperties();
+                mlt_class.clear();
             } else {
-                isPropertyElement = false;
                 processProperties();
                 m_newXml.writeStartElement(m_xml.namespaceUri().toString(), element);
                 if (isMltClass(m_xml.name()))
@@ -202,7 +225,7 @@ void MltXmlChecker::readMlt()
             break;
         }
         case QXmlStreamReader::EndElement:
-            if (m_xml.name() != "property") {
+            if (m_xml.name() != "property" && m_xml.name() != "link") {
                 processProperties();
                 m_newXml.writeEndElement();
                 if (isMltClass(m_xml.name())) {
@@ -702,4 +725,12 @@ void MltXmlChecker::checkForProxy(const QString& mlt_service, QVector<MltXmlChec
             m_isUpdated = true;
         }
     }
+}
+
+bool MltXmlChecker::checkMltVersion()
+{
+    if (m_mltVersion.majorVersion() > 7) {
+        return false;
+    }
+    return true;
 }

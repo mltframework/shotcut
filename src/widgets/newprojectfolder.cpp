@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2020 Meltytech, LLC
+ * Copyright (c) 2018-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,7 +33,8 @@
 
 NewProjectFolder::NewProjectFolder(QWidget* parent) :
     QWidget(parent),
-    ui(new Ui::NewProjectFolder)
+    ui(new Ui::NewProjectFolder),
+    m_isOpening(false)
 {
     ui->setupUi(this);
     setColors();
@@ -90,13 +91,11 @@ void NewProjectFolder::showEvent(QShowEvent*)
 
     updateRecentProjects();
     setProjectFolderButtonText(Settings.projectsFolder());
-    m_isOpening = false;
 }
 
 void NewProjectFolder::hideEvent(QHideEvent*)
 {
     ui->projectNameLineEdit->setText(QString());
-    m_isOpening = false;
 }
 
 bool NewProjectFolder::event(QEvent* event)
@@ -243,7 +242,9 @@ void NewProjectFolder::on_recentListView_clicked(const QModelIndex& index)
 {
     if (!m_isOpening) {
         m_isOpening = true;
-        MAIN.open(m_model.itemData(index)[Qt::ToolTipRole].toString());
+        auto tooltip = m_model.itemData(index)[Qt::ToolTipRole];
+        MAIN.open(tooltip.toString());
+        m_isOpening = false;
     }
 }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2020 Meltytech, LLC
+ * Copyright (c) 2014-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,6 +26,7 @@
 #include <QStandardItemModel>
 #include <QVector>
 #include <QPair>
+#include <QVersionNumber>
 
 class QUIDevice;
 
@@ -55,6 +56,7 @@ public:
     QStandardItemModel& unlinkedFilesModel() { return m_unlinkedFilesModel; }
     void setLocale();
     bool usesLocale() const { return m_usesLocale; }
+    QString shotcutVersion() const { return m_shotcutVersion; }
 
 private:
     typedef QPair<QString, QString> MltProperty;
@@ -76,6 +78,7 @@ private:
     void replaceWebVfxCropFilters(QString& mlt_service, QVector<MltProperty>& properties);
     void replaceWebVfxChoppyFilter(QString& mlt_service, QVector<MltProperty>& properties);
     void checkForProxy(const QString& mlt_service, QVector<MltProperty>& properties);
+    bool checkMltVersion();
 
     QXmlStreamReader m_xml;
     QXmlStreamWriter m_newXml;
@@ -109,6 +112,8 @@ private:
             audio_index = video_index = -1;
         }
     } m_resource;
+    QVersionNumber m_mltVersion;
+    QString m_shotcutVersion;
 };
 
 #endif // MLTXMLCHECKER_H

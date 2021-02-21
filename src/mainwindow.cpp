@@ -1271,6 +1271,21 @@ void MainWindow::resetDockCorners()
     setCorner(Qt::BottomRightCorner, Qt::BottomDockWidgetArea);
 }
 
+void MainWindow::showIncompatibleProjectMessage(const QString& shotcutVersion)
+{
+    LOG_INFO() << shotcutVersion;
+    QMessageBox dialog(QMessageBox::Information,
+                       qApp->applicationName(),
+                       tr("This project file requires a newer version!\n\n"
+                           "It was made with version ") + shotcutVersion,
+                       QMessageBox::Ok,
+                       this);
+    dialog.setDefaultButton(QMessageBox::Ok);
+    dialog.setEscapeButton(QMessageBox::Ok);
+    dialog.setWindowModality(QmlApplication::dialogModality());
+    dialog.exec();
+}
+
 static void autosaveTask(MainWindow* p)
 {
     LOG_DEBUG_TIME();
@@ -1329,6 +1344,10 @@ void MainWindow::open(QString url, const Mlt::Properties* properties, bool play)
     if (checker.check(url)) {
         if (!isCompatibleWithGpuMode(checker))
             return;
+    } else {
+        showStatusMessage(tr("Failed to open ").append(url));
+        showIncompatibleProjectMessage(checker.shotcutVersion());
+        return;
     }
     if (url.endsWith(".mlt") || url.endsWith(".xml")) {
         // only check for a modified project when loading a project, not a simple producer
