@@ -98,13 +98,18 @@ Rectangle {
         onReleased: if (isCurve) parent.anchors.verticalCenter = parameterRoot.verticalCenter
         onPositionChanged: {
             var newPosition = Math.round((parent.x + parent.width/2) / timeScale)
-            if (drag.axis !== Drag.Yxis && newPosition !== keyframeRoot.position) {
-                parameters.setPosition(parameterIndex, index, newPosition - (filter.in - producer.in))
+            var keyPosition = newPosition - (filter.in - producer.in)
+            var trackValue = Math.min(Math.max(0, 1.0 - parent.y / (parameterRoot.height - parent.height)), 1.0)
+            trackValue = minimum + trackValue * (maximum - minimum)
+            if (drag.axis === Drag.XAxis && newPosition !== keyframeRoot.position) {
+                parameters.setKeyframePosition(parameterIndex, index, keyPosition)
             }
-            if (drag.axis !== Drag.XAxis && isCurve) {
-                var trackValue = Math.min(Math.max(0, 1.0 - parent.y / (parameterRoot.height - parent.height)), 1.0)
-                trackValue = minimum + trackValue * (maximum - minimum)
-                parameters.setKeyframe(parameterIndex, trackValue, newPosition - (filter.in - producer.in), interpolation)
+            else if (drag.axis === Drag.YAxis ||
+                     (drag.axis === Drag.XAndYAxis && newPosition === keyframeRoot.position)) {
+                parameters.setKeyframeValue(parameterIndex, index, trackValue)
+            }
+            else if (drag.axis === Drag.XAndYAxis) {
+                parameters.setKeyframeValuePosition(parameterIndex, index, trackValue, keyPosition)
             }
         }
         cursorShape: Qt.PointingHandCursor
