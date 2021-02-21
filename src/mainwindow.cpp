@@ -3817,6 +3817,10 @@ void MainWindow::on_actionOpenXML_triggered()
                 if (dialog.exec() != QMessageBox::Yes)
                     return;
             }
+        } else {
+            showStatusMessage(tr("Failed to open ").append(url));
+            showIncompatibleProjectMessage(checker.shotcutVersion());
+            return;
         }
         Settings.setOpenPath(QFileInfo(url).path());
         activateWindow();
