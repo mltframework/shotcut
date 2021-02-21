@@ -242,8 +242,8 @@ void NewProjectFolder::on_recentListView_clicked(const QModelIndex& index)
 {
     if (!m_isOpening) {
         m_isOpening = true;
-        auto tooltip = m_model.itemData(index)[Qt::ToolTipRole];
-        MAIN.open(tooltip.toString());
+        auto data = m_model.itemData(index);
+        MAIN.open(data[Qt::ToolTipRole].toString());
         m_isOpening = false;
     }
 }
