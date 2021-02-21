@@ -1340,16 +1340,14 @@ void MainWindow::open(QString url, const Mlt::Properties* properties, bool play)
             showStatusMessage(tr("Opening %1").arg(url));
             QCoreApplication::processEvents();
         }
-    }
-    if (checker.check(url)) {
-        if (!isCompatibleWithGpuMode(checker))
+        if (checker.check(url)) {
+            if (!isCompatibleWithGpuMode(checker))
+                return;
+        } else {
+            showStatusMessage(tr("Failed to open ").append(url));
+            showIncompatibleProjectMessage(checker.shotcutVersion());
             return;
-    } else {
-        showStatusMessage(tr("Failed to open ").append(url));
-        showIncompatibleProjectMessage(checker.shotcutVersion());
-        return;
-    }
-    if (url.endsWith(".mlt") || url.endsWith(".xml")) {
+        }
         // only check for a modified project when loading a project, not a simple producer
         if (!continueModified())
             return;
@@ -1367,6 +1365,10 @@ void MainWindow::open(QString url, const Mlt::Properties* properties, bool play)
             if (checker.check(url)) {
                 if (!isCompatibleWithGpuMode(checker))
                     return;
+            } else {
+                showStatusMessage(tr("Failed to open ").append(url));
+                showIncompatibleProjectMessage(checker.shotcutVersion());
+                return;
             }
             if (!isXmlRepaired(checker, url))
                 return;
