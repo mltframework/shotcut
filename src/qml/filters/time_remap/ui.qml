@@ -134,10 +134,13 @@ Item {
         }
         Shotcut.UndoButton {
             onClicked: {
+                filter.blockSignals = true
                 filter.resetProperty('map')
                 filter.set('map', 0.0, 0)
                 filter.set('map', filter.duration / profile.fps, filter.duration)
-                setControls()
+                filter.blockSignals = false
+                filter.changed('map')
+                timer.start()
             }
         }
 

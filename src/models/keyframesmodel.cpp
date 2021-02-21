@@ -476,18 +476,21 @@ void KeyframesModel::onFilterChanged(const QString& property)
     if (i > -1) {
         int count = m_keyframeCounts[i];
         m_keyframeCounts[i] = keyframeCount(i);
-        if (count > 0) {
-            beginRemoveRows(index(i), 0, count - 1);
-            endRemoveRows();
-        }
         if (m_keyframeCounts[i] > 0) {
 //            LOG_DEBUG() << property << m_filter->get(property) << m_keyframeCounts[i];
+            if (count > 0) {
+                beginRemoveRows(index(i), 0, count - 1);
+                endRemoveRows();
+            }
             beginInsertRows(index(i), 0, m_keyframeCounts[i] - 1);
             endInsertRows();
+            emit dataChanged(index(i), index(i), QVector<int>() << MinimumValueRole << MaximumValueRole);
         } else {
+            // All keyframes removed. Reset model to remove this parameter.
             reload();
         }
     } else {
+        // First keyframe added. Reset model to add this parameter.
         reload();
     }
 }
