@@ -17,6 +17,7 @@
 
 import QtQuick 2.12
 import QtQuick.Controls 2.12
+import QtQuick.Dialogs 1.3
 import QtQuick.Layouts 1.12
 import Shotcut.Controls 1.0 as Shotcut
 
@@ -93,6 +94,58 @@ Item {
         blockUpdate = false
     }
 
+    Dialog {
+        id: speedDialog
+        property var direction: 'after'
+        title: direction == 'after' ? qsTr('Set Speed After') : qsTr('Set Speed Before')
+        standardButtons: StandardButton.Ok | StandardButton.Cancel
+        modality: application.dialogModality
+        width: 300
+        height: 75
+        GridLayout {
+            anchors.fill: parent
+            anchors.margins: 8
+            Shotcut.SliderSpinner {
+                Layout.bottomMargin: 12
+                id: speedSlider
+                value: 1.0
+                minimumValue: -3.0
+                maximumValue: 3.0
+                decimals: 6
+                stepSize: 0.1
+                suffix: "x"
+            }
+        }
+        onAccepted: {
+            var position = getPosition()
+            if (direction == 'after') {
+                var nextPosition = filter.getNextKeyframePosition("map", position)
+                if (nextPosition > position) {
+                    var deltaTime = ((nextPosition - position) / profile.fps) * speedSlider.value
+                    var nextValue = filter.getDouble("map", nextPosition)
+                    var newValue = nextValue - deltaTime;
+                    if (newValue < 0) {
+                        newValue = 0
+                    }
+                    filter.set('map', newValue, position)
+                    timer.start()
+                }
+            } else { // before
+                var prevPosition = filter.getPrevKeyframePosition("map", position)
+                if (prevPosition < position && prevPosition >= 0) {
+                    var deltaTime = ((position - prevPosition) / profile.fps) * speedSlider.value
+                    var prevValue = filter.getDouble("map", prevPosition)
+                    var newValue = prevValue + deltaTime;
+                    if (newValue < 0) {
+                        newValue = 0
+                    }
+                    filter.set('map', newValue, position)
+                    timer.start()
+                }
+            }
+        }
+    }
+
     GridLayout {
         columns: 3
         anchors.fill: parent
@@ -120,16 +173,42 @@ Item {
             Layout.alignment: Qt.AlignRight
             Shotcut.HoverTip { text: qsTr('Map the specified input time to the current time. Use keyframes to vary the time mappings over time.') }
         }
-        Shotcut.TimeSpinner {
-            id: mapSpinner
-            minimumValue: 0
-            maximumValue: 1000000
-            saveButtonVisible: false
-            undoButtonVisible: false
-            onValueChanged: {
-                if (blockUpdate) return
-                filter.set('map', mapSpinner.value / profile.fps, getPosition())
-                timer.start()
+        Row {
+            Shotcut.TimeSpinner {
+                id: mapSpinner
+                minimumValue: 0
+                maximumValue: 1000000
+                saveButtonVisible: false
+                undoButtonVisible: false
+                onValueChanged: {
+                    if (blockUpdate) return
+                    filter.set('map', mapSpinner.value / profile.fps, getPosition())
+                    timer.start()
+                }
+            }
+            Shotcut.Button {
+                anchors.verticalCenter: parent.verticalCenter
+                icon.name: 'format-indent-less'
+                icon.source: 'qrc:///icons/oxygen/32x32/actions/format-indent-less.png'
+                Shotcut.HoverTip { text: qsTr('Set the input time to achieve a desired speed before the current frame.') }
+                implicitWidth: 20
+                implicitHeight: 20
+                onClicked: {
+                    speedDialog.direction = 'before'
+                    speedDialog.open()
+                }
+            }
+            Shotcut.Button {
+                anchors.verticalCenter: parent.verticalCenter
+                icon.name: 'format-indent-more'
+                icon.source: 'qrc:///icons/oxygen/32x32/actions/format-indent-more.png'
+                Shotcut.HoverTip { text: qsTr('Set the input time to achieve a desired speed after the current frame.') }
+                implicitWidth: 20
+                implicitHeight: 20
+                onClicked: {
+                    speedDialog.direction = 'after'
+                    speedDialog.open()
+                }
             }
         }
         Shotcut.UndoButton {
@@ -151,6 +230,7 @@ Item {
         }
         Shotcut.ComboBox {
             id: modeCombo
+            Layout.columnSpan: parent.columns - 2
             implicitWidth: 180
             model: ListModel {
                 id: imageModeModel
@@ -168,7 +248,7 @@ Item {
         }
 
         Rectangle {
-            Layout.columnSpan: 3
+            Layout.columnSpan: parent.columns
             Layout.fillWidth: true
             Layout.minimumHeight: 12
             color: 'transparent'
@@ -188,7 +268,7 @@ Item {
         }
         Label {
             id: speedLabel
-            Layout.columnSpan: 2
+            Layout.columnSpan: parent.columns - 1
         }
 
         Label {
@@ -198,7 +278,7 @@ Item {
         }
         Label {
             id: directionLabel
-            Layout.columnSpan: 2
+            Layout.columnSpan: parent.columns - 1
         }
 
         Item {
