@@ -1032,9 +1032,6 @@ function deploy
     cmd rm -rf lib/cmake lib/pkgconfig lib/gdk-pixbuf-2.0 lib/glib-2.0 lib/gtk-2.0
     cmd rm -rf share/doc share/man share/ffmpeg/examples share/aclocal share/glib-2.0 share/gtk-2.0 share/gtk-doc share/themes share/locale
   fi
-  for exe in *.exe; do
-    cmd touch "${exe}.local"
-  done
   cmd mv COPYING COPYING.txt
 
   log Copying some libs from Qt
