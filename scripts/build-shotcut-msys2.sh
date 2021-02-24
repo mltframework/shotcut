@@ -50,7 +50,7 @@ ZIMG_REVISION=
 DAV1D_HEAD=1
 DAV1D_REVISION=
 AOM_HEAD=0
-AOM_REVISION="origin/v2.0.2"
+AOM_REVISION="v2.0.2"
 
 
 # QT_INCLUDE_DIR="$(pkg-config --variable=prefix QtCore)/include"
