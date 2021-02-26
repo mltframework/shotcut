@@ -4059,6 +4059,7 @@ void MainWindow::on_actionExportEDL_triggered()
 
 void MainWindow::on_actionExportFrame_triggered()
 {
+    if (!MLT.producer() || !MLT.producer()->is_valid()) return;
     filterController()->setCurrentFilter(QmlFilter::DeselectCurrentFilter);
     Mlt::GLWidget* glw = qobject_cast<Mlt::GLWidget*>(MLT.videoWidget());
     connect(glw, SIGNAL(imageReady()), SLOT(onGLWidgetImageReady()));
