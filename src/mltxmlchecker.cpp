@@ -620,11 +620,16 @@ void MltXmlChecker::replaceWebVfxChoppyFilter(QString& mlt_service, QVector<MltX
             m_isUpdated = true;
             for (auto& p : properties) {
                 if (p.first == "resource") {
-                    if (QFileInfo(p.second).isRelative()) {
-                        QDir projectDir(QFileInfo(m_tempFile->fileName()).dir());
-                        p.second = projectDir.filePath(p.second);
+                    auto pathName = p.second;
+                    auto plain = QLatin1String("plain:");
+                    if (pathName.startsWith(plain)) {
+                        pathName = pathName.mid(plain.size());
                     }
-                    QFile file(p.second);
+                    if (QFileInfo(pathName).isRelative()) {
+                        QDir projectDir(QFileInfo(m_tempFile->fileName()).dir());
+                        pathName = projectDir.filePath(pathName);
+                    }
+                    QFile file(pathName);
                     if (file.open(QIODevice::ReadOnly)) {
                         p.first = "html";
                         p.second = QString::fromUtf8(file.readAll());
