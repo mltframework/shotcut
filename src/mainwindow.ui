@@ -311,7 +311,7 @@
     <string>Open a video, audio or image file</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+O</string>
+    <string notr="true">Ctrl+O</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
@@ -325,7 +325,7 @@
     <string>Quit the application</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+Q</string>
+    <string notr="true">Ctrl+Q</string>
    </property>
   </action>
   <action name="actionAbout_Shotcut">
@@ -352,7 +352,7 @@
     <string>Open a device, stream or generator</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+Shift+O</string>
+    <string notr="true">Ctrl+Shift+O</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
@@ -370,7 +370,7 @@
     <string>Save project as a MLT XML file</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+S</string>
+    <string notr="true">Ctrl+S</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
@@ -384,7 +384,7 @@
     <string>Save project to a different MLT XML file</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+Shift+S</string>
+    <string notr="true">Ctrl+Shift+S</string>
    </property>
   </action>
   <action name="actionEncode">
@@ -842,7 +842,7 @@
     <string>Close</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+W</string>
+    <string notr="true">Ctrl+W</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
@@ -860,7 +860,7 @@
     <string>Cu&amp;t</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+X</string>
+    <string notr="true">Ctrl+X</string>
    </property>
   </action>
   <action name="actionCopy">
@@ -875,7 +875,7 @@
     <string>&amp;Copy</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+C</string>
+    <string notr="true">Ctrl+C</string>
    </property>
   </action>
   <action name="actionPaste">
@@ -890,7 +890,7 @@
     <string>&amp;Paste</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+V</string>
+    <string notr="true">Ctrl+V</string>
    </property>
   </action>
   <action name="actionExportEDL">
@@ -903,7 +903,7 @@
     <string>Export Frame...</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+Shift+E</string>
+    <string notr="true">Ctrl+Shift+E</string>
    </property>
   </action>
   <action name="actionExportVideo">
@@ -911,7 +911,7 @@
     <string>Export Video...</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+E</string>
+    <string notr="true">Ctrl+E</string>
    </property>
   </action>
   <action name="actionAppDataSet">
@@ -944,7 +944,7 @@
     <string>New</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+N</string>
+    <string notr="true">Ctrl+N</string>
    </property>
   </action>
   <action name="actionKeyboardShortcuts">
@@ -952,7 +952,7 @@
     <string>Keyboard Shortcuts...</string>
    </property>
    <property name="shortcut">
-    <string>?</string>
+    <string notr="true">?</string>
    </property>
   </action>
   <action name="actionLayoutAudio">
@@ -1070,7 +1070,7 @@
     <string>540p</string>
    </property>
    <property name="shortcut">
-    <string>F8</string>
+    <string notr="true">F8</string>
    </property>
   </action>
   <action name="actionPreview720">
@@ -1081,7 +1081,7 @@
     <string>720p</string>
    </property>
    <property name="shortcut">
-    <string>F9</string>
+    <string notr="true">F9</string>
    </property>
   </action>
   <action name="actionPreviewNone">
@@ -1092,7 +1092,7 @@
     <string>None</string>
    </property>
    <property name="shortcut">
-    <string>F6</string>
+    <string notr="true">F6</string>
    </property>
   </action>
   <action name="actionPreview360">
@@ -1103,7 +1103,7 @@
     <string>360p</string>
    </property>
    <property name="shortcut">
-    <string>F7</string>
+    <string notr="true">F7</string>
    </property>
   </action>
   <action name="actionTopics">
@@ -1111,7 +1111,7 @@
     <string>Topics</string>
    </property>
    <property name="shortcut">
-    <string>F1</string>
+    <string notr="true">F1</string>
    </property>
   </action>
   <action name="actionSync">
@@ -1130,7 +1130,7 @@
     <string>Use Proxy</string>
    </property>
    <property name="shortcut">
-    <string>F4</string>
+    <string notr="true">F4</string>
    </property>
   </action>
   <action name="actionProxyStorageSet">

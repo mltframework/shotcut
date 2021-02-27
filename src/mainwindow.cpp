@@ -196,11 +196,11 @@ MainWindow::MainWindow()
     QAction *redoAction = m_undoStack->createRedoAction(this);
     undoAction->setIcon(QIcon::fromTheme("edit-undo", QIcon(":/icons/oxygen/32x32/actions/edit-undo.png")));
     redoAction->setIcon(QIcon::fromTheme("edit-redo", QIcon(":/icons/oxygen/32x32/actions/edit-redo.png")));
-    undoAction->setShortcut(QApplication::translate("MainWindow", "Ctrl+Z", 0));
+    undoAction->setShortcut(QString::fromLatin1("Ctrl+Z"));
 #ifdef Q_OS_WIN
-    redoAction->setShortcut(QApplication::translate("MainWindow", "Ctrl+Y", 0));
+    redoAction->setShortcut(QString::fromLatin1("Ctrl+Y"));
 #else
-    redoAction->setShortcut(QApplication::translate("MainWindow", "Ctrl+Shift+Z", 0));
+    redoAction->setShortcut(QString::fromLatin1("Ctrl+Shift+Z"));
 #endif
     ui->menuEdit->insertAction(ui->actionCut, undoAction);
     ui->menuEdit->insertAction(ui->actionCut, redoAction);
