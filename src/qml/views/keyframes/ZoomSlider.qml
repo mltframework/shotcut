@@ -41,6 +41,7 @@ Rectangle {
         to: 3.0
         value: 1
         focusPolicy: Qt.NoFocus
+        wheelEnabled: true
         function setScaleFactor() {
             timeScale = Math.pow(value, 3) + 0.01
         }
