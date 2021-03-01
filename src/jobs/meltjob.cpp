@@ -108,7 +108,7 @@ void MeltJob::start()
     } else {
         args << QUrl::toPercentEncoding(xmlPath());
     }
-    LOG_DEBUG() << meltPath.absoluteFilePath() << args;
+    LOG_DEBUG() << meltPath.absoluteFilePath()  + " " + args.join(' ');
 #ifndef Q_OS_MAC
     QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
     // These environment variables fix rich text rendering for high DPI
