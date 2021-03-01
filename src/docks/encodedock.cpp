@@ -2091,11 +2091,13 @@ bool EncodeDock::checkForMissingFiles()
            tr("Your project is missing some files.\n\n"
               "Save your project, close it, and reopen it.\n"
               "Shotcut will attempt to repair your project."),
-           QMessageBox::Ok,
+           QMessageBox::Ok | QMessageBox::Ignore,
            this);
         dialog.setWindowModality(QmlApplication::dialogModality());
         dialog.setDefaultButton(QMessageBox::Ok);
-        dialog.exec();
+        if (QMessageBox::Ignore == dialog.exec()) {
+            return false;
+        }
         return true;
     }
     return false;
