@@ -164,6 +164,22 @@ void AvformatProducerWidget::rename()
     ui->filenameLabel->selectAll();
 }
 
+void AvformatProducerWidget::offerConvert(QString message, bool set709Convert)
+{
+    m_producer->set(kShotcutSkipConvertProperty, true);
+    LongUiTask::cancel();
+    MLT.pause();
+    TranscodeDialog dialog(message.append(tr(" Do you want to convert it to an edit-friendly format?\n\n"
+                              "If yes, choose a format below and then click OK to choose a file name. "
+                              "After choosing a file name, a job is created. "
+                              "When it is done, it automatically replaces clips, or you can double-click the job to open it.\n")),
+                           ui->scanComboBox->currentIndex(), this);
+    dialog.setWindowModality(QmlApplication::dialogModality());
+    dialog.showCheckBox();
+    dialog.set709Convert(set709Convert);
+    convert(dialog);
+}
+
 void AvformatProducerWidget::keyPressEvent(QKeyEvent* event)
 {
     if (ui->speedSpinBox->hasFocus() &&
@@ -575,48 +591,14 @@ void AvformatProducerWidget::onFrameDecoded()
         if (transferItem && transferItem->data(Qt::UserRole).toInt() > 7) {
             // Transfer characteristics > SMPTE240M Probably need conversion
             QString trcString = ui->videoTableWidget->item(5, 1)->text();
-            m_producer->set(kShotcutSkipConvertProperty, true);
-            LongUiTask::cancel();
-            MLT.pause();
-            LOG_INFO() << resource << "Probable HDR" << ui->videoTableWidget->item(5, 1)->text();
-            TranscodeDialog dialog(tr("This file uses color transfer characteristics %1, which may result in incorrect colors or brightness in Shotcut. "
-                                      "Do you want to convert it to an edit-friendly format?\n\n"
-                                      "If yes, choose a format below and then click OK to choose a file name. "
-                                      "After choosing a file name, a job is created. "
-                                      "When it is done, double-click the job to open it.\n").arg(trcString),
-                                      ui->scanComboBox->currentIndex(), this);
-            dialog.set709Convert(true);
-            dialog.setWindowModality(QmlApplication::dialogModality());
-            dialog.showCheckBox();
-            convert(dialog);
+            LOG_INFO() << resource << "Probable HDR" << trcString;
+            offerConvert(tr("This file uses color transfer characteristics %1, which may result in incorrect colors or brightness in Shotcut.").arg(trcString), true);
         } else if (isVariableFrameRate) {
-            m_producer->set(kShotcutSkipConvertProperty, true);
-            LongUiTask::cancel();
-            MLT.pause();
             LOG_INFO() << resource << "is variable frame rate";
-            TranscodeDialog dialog(tr("This file is variable frame rate, which is not reliable for editing. "
-                                      "Do you want to convert it to an edit-friendly format?\n\n"
-                                      "If yes, choose a format below and then click OK to choose a file name. "
-                                      "After choosing a file name, a job is created. "
-                                      "When it is done, double-click the job to open it.\n"),
-                                   ui->scanComboBox->currentIndex(), this);
-            dialog.setWindowModality(QmlApplication::dialogModality());
-            dialog.showCheckBox();
-            convert(dialog);
+            offerConvert(tr("This file is variable frame rate, which is not reliable for editing."));
         } else if (QFile::exists(resource) && !MLT.isSeekable(m_producer.data())) {
-            m_producer->set(kShotcutSkipConvertProperty, true);
-            LongUiTask::cancel();
-            MLT.pause();
             LOG_INFO() << resource << "is not seekable";
-            TranscodeDialog dialog(tr("This file does not support seeking and cannot be used for editing. "
-                                      "Do you want to convert it to an edit-friendly format?\n\n"
-                                      "If yes, choose a format below and then click OK to choose a file name. "
-                                      "After choosing a file name, a job is created. "
-                                      "When it is done, double-click the job to open it.\n"),
-                                   ui->scanComboBox->currentIndex(), this);
-            dialog.setWindowModality(QmlApplication::dialogModality());
-            dialog.showCheckBox();
-            convert(dialog);
+            offerConvert(tr("This file does not support seeking and cannot be used for editing."));
         }
     }
 }
