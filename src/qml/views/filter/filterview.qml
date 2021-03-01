@@ -282,6 +282,7 @@ Rectangle {
             bottom: parent.bottom
             topMargin: attachedContainer.anchors.topMargin
         }
+        z: 1
         onFilterSelected: {
             attachedfiltersmodel.add(metadatamodel.get(index))
         }

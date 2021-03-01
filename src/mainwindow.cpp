@@ -196,11 +196,11 @@ MainWindow::MainWindow()
     QAction *redoAction = m_undoStack->createRedoAction(this);
     undoAction->setIcon(QIcon::fromTheme("edit-undo", QIcon(":/icons/oxygen/32x32/actions/edit-undo.png")));
     redoAction->setIcon(QIcon::fromTheme("edit-redo", QIcon(":/icons/oxygen/32x32/actions/edit-redo.png")));
-    undoAction->setShortcut(QApplication::translate("MainWindow", "Ctrl+Z", 0));
+    undoAction->setShortcut(QString::fromLatin1("Ctrl+Z"));
 #ifdef Q_OS_WIN
-    redoAction->setShortcut(QApplication::translate("MainWindow", "Ctrl+Y", 0));
+    redoAction->setShortcut(QString::fromLatin1("Ctrl+Y"));
 #else
-    redoAction->setShortcut(QApplication::translate("MainWindow", "Ctrl+Shift+Z", 0));
+    redoAction->setShortcut(QString::fromLatin1("Ctrl+Shift+Z"));
 #endif
     ui->menuEdit->insertAction(ui->actionCut, undoAction);
     ui->menuEdit->insertAction(ui->actionCut, redoAction);
@@ -1271,6 +1271,21 @@ void MainWindow::resetDockCorners()
     setCorner(Qt::BottomRightCorner, Qt::BottomDockWidgetArea);
 }
 
+void MainWindow::showIncompatibleProjectMessage(const QString& shotcutVersion)
+{
+    LOG_INFO() << shotcutVersion;
+    QMessageBox dialog(QMessageBox::Information,
+                       qApp->applicationName(),
+                       tr("This project file requires a newer version!\n\n"
+                           "It was made with version ") + shotcutVersion,
+                       QMessageBox::Ok,
+                       this);
+    dialog.setDefaultButton(QMessageBox::Ok);
+    dialog.setEscapeButton(QMessageBox::Ok);
+    dialog.setWindowModality(QmlApplication::dialogModality());
+    dialog.exec();
+}
+
 static void autosaveTask(MainWindow* p)
 {
     LOG_DEBUG_TIME();
@@ -1325,12 +1340,14 @@ void MainWindow::open(QString url, const Mlt::Properties* properties, bool play)
             showStatusMessage(tr("Opening %1").arg(url));
             QCoreApplication::processEvents();
         }
-    }
-    if (checker.check(url)) {
-        if (!isCompatibleWithGpuMode(checker))
+        if (checker.check(url)) {
+            if (!isCompatibleWithGpuMode(checker))
+                return;
+        } else {
+            showStatusMessage(tr("Failed to open ").append(url));
+            showIncompatibleProjectMessage(checker.shotcutVersion());
             return;
-    }
-    if (url.endsWith(".mlt") || url.endsWith(".xml")) {
+        }
         // only check for a modified project when loading a project, not a simple producer
         if (!continueModified())
             return;
@@ -1348,6 +1365,10 @@ void MainWindow::open(QString url, const Mlt::Properties* properties, bool play)
             if (checker.check(url)) {
                 if (!isCompatibleWithGpuMode(checker))
                     return;
+            } else {
+                showStatusMessage(tr("Failed to open ").append(url));
+                showIncompatibleProjectMessage(checker.shotcutVersion());
+                return;
             }
             if (!isXmlRepaired(checker, url))
                 return;
@@ -3802,6 +3823,10 @@ void MainWindow::on_actionOpenXML_triggered()
                 if (dialog.exec() != QMessageBox::Yes)
                     return;
             }
+        } else {
+            showStatusMessage(tr("Failed to open ").append(url));
+            showIncompatibleProjectMessage(checker.shotcutVersion());
+            return;
         }
         Settings.setOpenPath(QFileInfo(url).path());
         activateWindow();
@@ -4040,6 +4065,7 @@ void MainWindow::on_actionExportEDL_triggered()
 
 void MainWindow::on_actionExportFrame_triggered()
 {
+    if (!MLT.producer() || !MLT.producer()->is_valid()) return;
     filterController()->setCurrentFilter(QmlFilter::DeselectCurrentFilter);
     Mlt::GLWidget* glw = qobject_cast<Mlt::GLWidget*>(MLT.videoWidget());
     connect(glw, SIGNAL(imageReady()), SLOT(onGLWidgetImageReady()));

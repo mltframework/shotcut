@@ -68,6 +68,7 @@ Rectangle {
 
     function zoomToFit() {
         setZoom(Math.pow((tracksFlickable.width - 50) * multitrack.scaleFactor / tracksContainer.width - 0.01, 1/3))
+        tracksFlickable.contentX = 0
     }
 
     function resetZoom() {
@@ -309,6 +310,7 @@ Rectangle {
                     contentWidth: tracksContainer.width + headerWidth
                     contentHeight: trackHeaders.height + 30 // 30 is padding
                     ScrollBar.horizontal: ScrollBar {
+                        id: horizontalScrollBar
                         height: 16
                         policy: ScrollBar.AlwaysOn
                         visible: tracksFlickable.contentWidth > tracksFlickable.width
@@ -397,17 +399,17 @@ Rectangle {
                 visible: timeline.position > -1
                 color: activePalette.text
                 width: 1
-                height: root.height - toolbar.height
+                height: root.height - toolbar.height - horizontalScrollBar.height
                 x: timeline.position * multitrack.scaleFactor - tracksFlickable.contentX
                 y: 0
             }
             Shotcut.TimelinePlayhead {
                 id: playhead
                 visible: timeline.position > -1
-                x: timeline.position * multitrack.scaleFactor - tracksFlickable.contentX - 5
+                x: timeline.position * multitrack.scaleFactor - tracksFlickable.contentX - width/2
                 y: 0
-                width: 11
-                height: 5
+                width: 16
+                height: 8
             }
         }
     }

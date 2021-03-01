@@ -571,7 +571,8 @@ void AvformatProducerWidget::onFrameDecoded()
     ui->syncSlider->setValue(qRound(m_producer->get_double("video_delay") * 1000.0));
 
     if (Settings.showConvertClipDialog() && !m_producer->get_int(kShotcutSkipConvertProperty)) {
-        if (ui->videoTableWidget->item(5, 1)->data(Qt::UserRole).toInt() > 7) {
+        auto transferItem = ui->videoTableWidget->item(5, 1);
+        if (transferItem && transferItem->data(Qt::UserRole).toInt() > 7) {
             // Transfer characteristics > SMPTE240M Probably need conversion
             QString trcString = ui->videoTableWidget->item(5, 1)->text();
             m_producer->set(kShotcutSkipConvertProperty, true);

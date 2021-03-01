@@ -268,7 +268,7 @@ p, li { white-space: pre-wrap; }
     <string>Insert</string>
    </property>
    <property name="shortcut">
-    <string>Shift+V</string>
+    <string notr="true">Shift+V</string>
    </property>
   </action>
   <action name="actionAppendCut">
@@ -283,7 +283,7 @@ p, li { white-space: pre-wrap; }
     <string>Append</string>
    </property>
    <property name="shortcut">
-    <string>Shift+A</string>
+    <string notr="true">Shift+A</string>
    </property>
   </action>
   <action name="actionInsertBlank">
@@ -301,7 +301,7 @@ p, li { white-space: pre-wrap; }
     <string>Replace</string>
    </property>
    <property name="shortcut">
-    <string>Shift+B</string>
+    <string notr="true">Shift+B</string>
    </property>
   </action>
   <action name="actionOpen">
@@ -312,7 +312,7 @@ p, li { white-space: pre-wrap; }
     <string>Open the clip in the Source player</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+Return</string>
+    <string notr="true">Ctrl+Return</string>
    </property>
   </action>
   <action name="actionRemove">
@@ -320,7 +320,7 @@ p, li { white-space: pre-wrap; }
     <string>Remove</string>
    </property>
    <property name="shortcut">
-    <string>Shift+X</string>
+    <string notr="true">Shift+X</string>
    </property>
   </action>
   <action name="actionSetFileDate">
@@ -336,7 +336,7 @@ p, li { white-space: pre-wrap; }
     <string>Go to the start of this clip in the Project player</string>
    </property>
    <property name="shortcut">
-    <string>Shift+Return</string>
+    <string notr="true">Shift+Return</string>
    </property>
   </action>
   <action name="actionRemoveAll">
@@ -454,7 +454,7 @@ p, li { white-space: pre-wrap; }
     <string>Open a copy of the clip in the Source player</string>
    </property>
    <property name="shortcut">
-    <string>Shift+C</string>
+    <string notr="true">Shift+C</string>
    </property>
   </action>
   <action name="actionPlayAfterOpen">
@@ -470,7 +470,7 @@ p, li { white-space: pre-wrap; }
     <string>Select All</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+Shift+A</string>
+    <string notr="true">Ctrl+Shift+A</string>
    </property>
   </action>
   <action name="actionSelectNone">
@@ -478,7 +478,7 @@ p, li { white-space: pre-wrap; }
     <string>Select None</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+Shift+D</string>
+    <string notr="true">Ctrl+Shift+D</string>
    </property>
   </action>
   <action name="actionUpdateThumbnails">

@@ -22,7 +22,7 @@ import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     width: 400
-    height: 100
+    height: 150
     property bool blockUpdate: true
     property double startValueRadius: 0
     property double middleValueRadius: 0

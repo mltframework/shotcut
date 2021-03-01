@@ -476,13 +476,13 @@
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="839"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="952"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="955"/>
         <source>Reverse...</source>
         <translation>반전...</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="917"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1132"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1135"/>
         <source>Extract Sub-clip...</source>
         <translation>서브 클립 추출...</translation>
     </message>
@@ -519,7 +519,7 @@
         <translation>(변수)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="568"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="569"/>
         <source>This file uses color transfer characteristics %1, which may result in incorrect colors or brightness in Shotcut. Do you want to convert it to an edit-friendly format?
 
 If yes, choose a format below and then click OK to choose a file name. After choosing a file name, a job is created. When it is done, double-click the job to open it.
@@ -530,7 +530,7 @@ If yes, choose a format below and then click OK to choose a file name. After cho
 </translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="583"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="584"/>
         <source>This file is variable frame rate, which is not reliable for editing. Do you want to convert it to an edit-friendly format?
 
 If yes, choose a format below and then click OK to choose a file name. After choosing a file name, a job is created. When it is done, double-click the job to open it.
@@ -541,7 +541,7 @@ If yes, choose a format below and then click OK to choose a file name. After cho
 </translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="597"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="598"/>
         <source>This file does not support seeking and cannot be used for editing. Do you want to convert it to an edit-friendly format?
 
 If yes, choose a format below and then click OK to choose a file name. After choosing a file name, a job is created. When it is done, double-click the job to open it.
@@ -557,69 +557,69 @@ If yes, choose a format below and then click OK to choose a file name. After cho
         <translation>프록시</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="791"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="948"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="792"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="951"/>
         <source>Choose an edit-friendly format below and then click OK to choose a file name. After choosing a file name, a job is created. When it is done, double-click the job to open it.
 </source>
         <translation>편집 친화적인 형식을 선택한 다음 파일 이름을 정하세요. 파일 이름을 정했다면, 작업이 실행됩니다. 작업이 완료되면, 더블 클릭하여 해당 작업을 여세요.
 </translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="857"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1023"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="860"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1026"/>
         <source>MP4 (*.mp4);;All Files (*)</source>
         <translation>MP4 (*.mp4);;모든 파일 (*)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="869"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1046"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="872"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1049"/>
         <source>MOV (*.mov);;All Files (*)</source>
         <translation>MOV (*.mov);;모든 파일 (*)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="875"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1057"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="878"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1060"/>
         <source>MKV (*.mkv);;All Files (*)</source>
         <translation>MKV (*.mkv);;모든 파일 (*)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="882"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="885"/>
         <source>Converted</source>
         <translation>변환됨</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="902"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1093"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="905"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1096"/>
         <source>Convert %1</source>
         <translation>%1 변환</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1061"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1064"/>
         <source>Reversed</source>
         <translation>반전됨</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1101"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1104"/>
         <source>Reverse %1</source>
         <translation>%1 반전</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1131"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1134"/>
         <source>Sub-clip</source>
         <translation>보조 클립</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1133"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1136"/>
         <source>%1 (*.%2);;All Files (*)</source>
         <translation>%1 (*.%2);;모든 파일 (*)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1172"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1176"/>
         <source>Extract sub-clip %1</source>
         <translation>보조 클립 %1 내보내기</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1283"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1287"/>
         <source>The hash code below is already copied to your clipboard:
 
 </source>
@@ -628,17 +628,17 @@ If yes, choose a format below and then click OK to choose a file name. After cho
 </translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1327"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1331"/>
         <source>Set Equirectangular Projection</source>
         <translation>등장방형 도법 설정</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1337"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1341"/>
         <source>Successfully wrote %1</source>
         <translation>%1이(가) 성공적으로 쓰여졌습니다</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1339"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1343"/>
         <source>An error occurred saving the projection.</source>
         <translation>도법을 저장하는 도중에 오류가 발생했습니다.</translation>
     </message>
@@ -777,12 +777,12 @@ If yes, choose a format below and then click OK to choose a file name. After cho
 <context>
     <name>ClockSpinner</name>
     <message>
-        <location filename="../src/qml/filters/timer/ClockSpinner.qml" line="107"/>
+        <location filename="../src/qml/filters/timer/ClockSpinner.qml" line="108"/>
         <source>Decrement</source>
         <translation>감소</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/timer/ClockSpinner.qml" line="128"/>
+        <location filename="../src/qml/filters/timer/ClockSpinner.qml" line="129"/>
         <source>Increment</source>
         <translation>증가</translation>
     </message>
@@ -1536,9 +1536,9 @@ in temporal compression</source>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1787"/>
-        <location filename="../src/docks/encodedock.cpp" line="887"/>
-        <location filename="../src/docks/encodedock.cpp" line="1408"/>
-        <location filename="../src/docks/encodedock.cpp" line="1838"/>
+        <location filename="../src/docks/encodedock.cpp" line="888"/>
+        <location filename="../src/docks/encodedock.cpp" line="1405"/>
+        <location filename="../src/docks/encodedock.cpp" line="1850"/>
         <source>Export File</source>
         <translation>파일 내보내기</translation>
     </message>
@@ -1564,180 +1564,190 @@ in temporal compression</source>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1827"/>
-        <location filename="../src/docks/encodedock.cpp" line="1553"/>
-        <location filename="../src/docks/encodedock.cpp" line="1560"/>
-        <location filename="../src/docks/encodedock.cpp" line="1671"/>
+        <location filename="../src/docks/encodedock.cpp" line="1565"/>
+        <location filename="../src/docks/encodedock.cpp" line="1572"/>
+        <location filename="../src/docks/encodedock.cpp" line="1683"/>
         <source>Stream</source>
         <translation>스트림</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1854"/>
-        <location filename="../src/docks/encodedock.cpp" line="1383"/>
-        <location filename="../src/docks/encodedock.cpp" line="1476"/>
-        <location filename="../src/docks/encodedock.cpp" line="1490"/>
+        <location filename="../src/docks/encodedock.cpp" line="1380"/>
+        <location filename="../src/docks/encodedock.cpp" line="1489"/>
+        <location filename="../src/docks/encodedock.cpp" line="1503"/>
         <source>Stop Capture</source>
         <translation>캡처 중지</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="107"/>
+        <location filename="../src/docks/encodedock.cpp" line="108"/>
         <source>Automatic from extension</source>
         <translation>확장자 자동 선택</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="115"/>
-        <location filename="../src/docks/encodedock.cpp" line="125"/>
+        <location filename="../src/docks/encodedock.cpp" line="116"/>
+        <location filename="../src/docks/encodedock.cpp" line="126"/>
         <source>Default for format</source>
         <translation>형식 기본 값</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="393"/>
+        <location filename="../src/docks/encodedock.cpp" line="394"/>
         <source>Timeline</source>
         <translation>타임 라인</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="395"/>
+        <location filename="../src/docks/encodedock.cpp" line="396"/>
         <source>Playlist</source>
         <translation>재생 목록</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="397"/>
+        <location filename="../src/docks/encodedock.cpp" line="398"/>
         <source>Each Playlist Item</source>
         <translation>재생 목록의 각 항목</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="400"/>
-        <location filename="../src/docks/encodedock.cpp" line="405"/>
+        <location filename="../src/docks/encodedock.cpp" line="401"/>
+        <location filename="../src/docks/encodedock.cpp" line="406"/>
         <source>Source</source>
         <translation>소스</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="412"/>
+        <location filename="../src/docks/encodedock.cpp" line="413"/>
         <source>You must enter numeric values using &apos;%1&apos; as the decimal point.</source>
         <translation>&apos;%1&apos;을 소수점으로 사용하여 숫자 값을 입력해야 합니다.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="420"/>
-        <location filename="../src/docks/encodedock.cpp" line="1330"/>
-        <location filename="../src/docks/encodedock.cpp" line="1331"/>
+        <location filename="../src/docks/encodedock.cpp" line="421"/>
+        <location filename="../src/docks/encodedock.cpp" line="1327"/>
+        <location filename="../src/docks/encodedock.cpp" line="1328"/>
         <source>Custom</source>
         <translation>커스텀</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="456"/>
+        <location filename="../src/docks/encodedock.cpp" line="457"/>
         <source>Stock</source>
         <translation>스톡</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="459"/>
+        <location filename="../src/docks/encodedock.cpp" line="460"/>
         <source>Default</source>
         <translation>기본 값</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="941"/>
+        <location filename="../src/docks/encodedock.cpp" line="942"/>
         <source>You cannot write to a file that is in your project.
 Try again with a different folder or file name.</source>
         <translation>프로젝트에서 파일을 쓸 수 없습니다.
 다른 폴더 혹은 다른 이름으로 다시 시도하세요.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1089"/>
+        <location filename="../src/docks/encodedock.cpp" line="1090"/>
         <source>Shotcut found filters that require analysis jobs that have not run.
 Do you want to run the analysis jobs now?</source>
         <translation>Shotcut이 실행되지 않은 분석 작업이 필요한 필터를 찾았습니다.
 지금 분석 작업을 시작하겠습니까?</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1408"/>
-        <location filename="../src/docks/encodedock.cpp" line="1840"/>
+        <location filename="../src/docks/encodedock.cpp" line="1405"/>
+        <location filename="../src/docks/encodedock.cpp" line="1852"/>
         <source>Capture File</source>
         <translation>파일 캡처</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1411"/>
+        <location filename="../src/docks/encodedock.cpp" line="1407"/>
+        <source>Export Files</source>
+        <translation>파일 내보내기</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/encodedock.cpp" line="1408"/>
+        <source>Export Each Playlist Item</source>
+        <translation>재생 목록의 각 항목 내보내기</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/encodedock.cpp" line="1417"/>
         <source>%1 (*.%2);;All Files (*)</source>
         <translation>%1 (*.%2);;모든 파일 (*)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1413"/>
+        <location filename="../src/docks/encodedock.cpp" line="1419"/>
         <source>Determined by Export (*)</source>
         <translation>내보내기 결정됨 (*)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1433"/>
+        <location filename="../src/docks/encodedock.cpp" line="1446"/>
         <source>The drive you chose only has %1 MiB of free space.
 Do you still want to continue?</source>
         <translation>선택한 이 드라이브는 %1 MiB의 여유 공간만 있습니다.
 계속 진행하겠습니까?</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1440"/>
+        <location filename="../src/docks/encodedock.cpp" line="1453"/>
         <source>Do not show this anymore.</source>
         <comment>Export free disk space warning dialog</comment>
         <translation>더 이상 보여주지 마세요.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1445"/>
+        <location filename="../src/docks/encodedock.cpp" line="1458"/>
         <source>Export canceled.</source>
         <translation>내보내기가 취소되었습니다.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1548"/>
-        <location filename="../src/docks/encodedock.cpp" line="1569"/>
+        <location filename="../src/docks/encodedock.cpp" line="1560"/>
+        <location filename="../src/docks/encodedock.cpp" line="1581"/>
         <source>Stop Stream</source>
         <translation>스트림 중지</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1561"/>
+        <location filename="../src/docks/encodedock.cpp" line="1573"/>
         <source>Enter the network protocol scheme, address, port, and parameters as an URL:</source>
         <translation>네트워크 프로토콜 스킴, 주소, 포트, 그리고 URL 매개변수 입력:</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1606"/>
+        <location filename="../src/docks/encodedock.cpp" line="1618"/>
         <source>Add Export Preset</source>
         <translation>내보내기 사전 설정 추가</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1648"/>
+        <location filename="../src/docks/encodedock.cpp" line="1660"/>
         <source>Delete Preset</source>
         <translation>사전 설정 제거</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1649"/>
+        <location filename="../src/docks/encodedock.cpp" line="1661"/>
         <source>Are you sure you want to delete %1?</source>
         <translation>정말로 %1을/를 삭제하겠습니까?</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1776"/>
+        <location filename="../src/docks/encodedock.cpp" line="1788"/>
         <source>None</source>
         <translation>비고</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1824"/>
+        <location filename="../src/docks/encodedock.cpp" line="1836"/>
         <source>KiB (%1s)</source>
         <translation>KiB (%1s)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1922"/>
+        <location filename="../src/docks/encodedock.cpp" line="1934"/>
         <source>Detect</source>
         <translation>감지</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2009"/>
+        <location filename="../src/docks/encodedock.cpp" line="2021"/>
         <source>Detecting hardware encoders...</source>
         <translation>하드웨어 인코더 감지...</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2042"/>
+        <location filename="../src/docks/encodedock.cpp" line="2054"/>
         <source>Nothing found</source>
         <translation>아무 것도 감지하지 못함</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2044"/>
+        <location filename="../src/docks/encodedock.cpp" line="2056"/>
         <source>Found %1</source>
         <translation>감지되었습니다: %1</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2079"/>
+        <location filename="../src/docks/encodedock.cpp" line="2091"/>
         <source>Your project is missing some files.
 
 Save your project, close it, and reopen it.
@@ -1748,12 +1758,12 @@ Shotcut will attempt to repair your project.</source>
 Shotcut이 프로젝트 복구를 시도할 것입니다.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1920"/>
+        <location filename="../src/docks/encodedock.cpp" line="1932"/>
         <source>Configure Hardware Encoding</source>
         <translation>하드웨어 인코딩 설정</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1944"/>
+        <location filename="../src/docks/encodedock.cpp" line="1956"/>
         <source>Export Frames/sec</source>
         <translation>프레임/초 내보내기</translation>
     </message>
@@ -1902,42 +1912,42 @@ Shotcut이 프로젝트 복구를 시도할 것입니다.</translation>
         <translation>찾기</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/filter/FilterMenu.qml" line="104"/>
+        <location filename="../src/qml/views/filter/FilterMenu.qml" line="105"/>
         <source>Clear search</source>
         <translation>검색 지우기</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/filter/FilterMenu.qml" line="122"/>
+        <location filename="../src/qml/views/filter/FilterMenu.qml" line="123"/>
         <source>Show favorite filters</source>
         <translation>즐겨찾기 필터 보이기</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/filter/FilterMenu.qml" line="138"/>
+        <location filename="../src/qml/views/filter/FilterMenu.qml" line="139"/>
         <source>Show video filters</source>
         <translation>비디오 필터 보이기</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/filter/FilterMenu.qml" line="154"/>
+        <location filename="../src/qml/views/filter/FilterMenu.qml" line="155"/>
         <source>Show audio filters</source>
         <translation>오디오 필터 보이기</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/filter/FilterMenu.qml" line="176"/>
+        <location filename="../src/qml/views/filter/FilterMenu.qml" line="177"/>
         <source>Close menu</source>
         <translation>메뉴 닫기</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/filter/FilterMenu.qml" line="121"/>
+        <location filename="../src/qml/views/filter/FilterMenu.qml" line="122"/>
         <source>Favorite</source>
         <translation>즐겨찾기</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/filter/FilterMenu.qml" line="137"/>
+        <location filename="../src/qml/views/filter/FilterMenu.qml" line="138"/>
         <source>Video</source>
         <translation>비디오</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/filter/FilterMenu.qml" line="153"/>
+        <location filename="../src/qml/views/filter/FilterMenu.qml" line="154"/>
         <source>Audio</source>
         <translation>오디오</translation>
     </message>
@@ -2198,18 +2208,18 @@ Click to change</source>
         <translation>(프록시)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.cpp" line="258"/>
+        <location filename="../src/widgets/imageproducerwidget.cpp" line="260"/>
         <source>Getting length of image sequence...</source>
         <translation>이미지 시퀀스의 길이 조정하는 중...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.cpp" line="270"/>
-        <location filename="../src/widgets/imageproducerwidget.cpp" line="287"/>
+        <location filename="../src/widgets/imageproducerwidget.cpp" line="272"/>
+        <location filename="../src/widgets/imageproducerwidget.cpp" line="289"/>
         <source>Reloading image sequence...</source>
         <translation>이미지 시퀀스 다시 불러오는 중...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.cpp" line="417"/>
+        <location filename="../src/widgets/imageproducerwidget.cpp" line="419"/>
         <source>The hash code below is already copied to your clipboard:
 
 </source>
@@ -2882,11 +2892,6 @@ audio (0%) or clip B&apos;s audio (100%).</source>
         <translation>비디오, 오디오, 이미지 파일을 엽니다</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="314"/>
-        <source>Ctrl+O</source>
-        <translation>Ctrl+O</translation>
-    </message>
-    <message>
         <location filename="../src/mainwindow.ui" line="322"/>
         <source>E&amp;xit</source>
         <translation>종료(&amp;X)</translation>
@@ -2895,11 +2900,6 @@ audio (0%) or clip B&apos;s audio (100%).</source>
         <location filename="../src/mainwindow.ui" line="325"/>
         <source>Quit the application</source>
         <translation>애플리케이션을 종료합니다</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.ui" line="328"/>
-        <source>Ctrl+Q</source>
-        <translation>Ctrl+Q</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="333"/>
@@ -2923,11 +2923,6 @@ audio (0%) or clip B&apos;s audio (100%).</source>
         <translation>장치, 스트림 또는 생성기 열기</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="355"/>
-        <source>Ctrl+Shift+O</source>
-        <translation>Ctrl+Shift+O</translation>
-    </message>
-    <message>
         <location filename="../src/mainwindow.ui" line="367"/>
         <source>&amp;Save</source>
         <translation>저장(&amp;S)</translation>
@@ -2938,11 +2933,6 @@ audio (0%) or clip B&apos;s audio (100%).</source>
         <translation>MLT 또는 XML 파일로 저장</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="373"/>
-        <source>Ctrl+S</source>
-        <translation>Ctrl+S</translation>
-    </message>
-    <message>
         <location filename="../src/mainwindow.ui" line="381"/>
         <source>Save &amp;As...</source>
         <translation>다른 이름으로 저장(&amp;A)...</translation>
@@ -2951,11 +2941,6 @@ audio (0%) or clip B&apos;s audio (100%).</source>
         <location filename="../src/mainwindow.ui" line="384"/>
         <source>Save project to a different MLT XML file</source>
         <translation>MLT 또는 XML 파일을 다른 이름으로 저장</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.ui" line="387"/>
-        <source>Ctrl+Shift+S</source>
-        <translation>Ctrl+Shift+S</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="396"/>
@@ -2989,7 +2974,7 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="436"/>
-        <location filename="../src/mainwindow.cpp" line="3202"/>
+        <location filename="../src/mainwindow.cpp" line="3226"/>
         <source>Enter Full Screen</source>
         <translation>전체 화면 보기</translation>
     </message>
@@ -3242,19 +3227,9 @@ audio (0%) or clip B&apos;s audio (100%).</source>
         <translation>닫기</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="845"/>
-        <source>Ctrl+W</source>
-        <translation>Ctrl+W</translation>
-    </message>
-    <message>
         <location filename="../src/mainwindow.ui" line="860"/>
         <source>Cu&amp;t</source>
         <translation>잘라내기(&amp;T)</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.ui" line="863"/>
-        <source>Ctrl+X</source>
-        <translation>Ctrl+X</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="875"/>
@@ -3262,19 +3237,9 @@ audio (0%) or clip B&apos;s audio (100%).</source>
         <translation>복사(&amp;C)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="878"/>
-        <source>Ctrl+C</source>
-        <translation>Ctrl+C</translation>
-    </message>
-    <message>
         <location filename="../src/mainwindow.ui" line="890"/>
         <source>&amp;Paste</source>
         <translation>붙여넣기(&amp;P)</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.ui" line="893"/>
-        <source>Ctrl+V</source>
-        <translation>Ctrl+V</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="898"/>
@@ -3287,19 +3252,9 @@ audio (0%) or clip B&apos;s audio (100%).</source>
         <translation>프레임 내보내기...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="906"/>
-        <source>Ctrl+Shift+E</source>
-        <translation>Ctrl+Shift+E</translation>
-    </message>
-    <message>
         <location filename="../src/mainwindow.ui" line="911"/>
         <source>Export Video...</source>
         <translation>비디오 내보내기...</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.ui" line="914"/>
-        <source>Ctrl+E</source>
-        <translation>Ctrl+E</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="919"/>
@@ -3330,19 +3285,9 @@ audio (0%) or clip B&apos;s audio (100%).</source>
         <translation>새 작업</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="947"/>
-        <source>Ctrl+N</source>
-        <translation>Ctrl+N</translation>
-    </message>
-    <message>
         <location filename="../src/mainwindow.ui" line="952"/>
         <source>Keyboard Shortcuts...</source>
         <translation>키보드 단축키...</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.ui" line="955"/>
-        <source>?</source>
-        <translation>?</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="963"/>
@@ -3390,11 +3335,6 @@ audio (0%) or clip B&apos;s audio (100%).</source>
         <translation>토픽</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1114"/>
-        <source>F1</source>
-        <translation>F1</translation>
-    </message>
-    <message>
         <location filename="../src/mainwindow.ui" line="1119"/>
         <source>Synchronization...</source>
         <translation>동기화...</translation>
@@ -3408,11 +3348,6 @@ audio (0%) or clip B&apos;s audio (100%).</source>
         <location filename="../src/mainwindow.ui" line="1130"/>
         <source>Use Proxy</source>
         <translation>프록시 사용</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.ui" line="1133"/>
-        <source>F4</source>
-        <translation>F4</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1141"/>
@@ -3506,34 +3441,14 @@ audio (0%) or clip B&apos;s audio (100%).</source>
         <translation>540p</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1073"/>
-        <source>F8</source>
-        <translation>F8</translation>
-    </message>
-    <message>
         <location filename="../src/mainwindow.ui" line="1081"/>
         <source>720p</source>
         <translation>720p</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1084"/>
-        <source>F9</source>
-        <translation>F9</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.ui" line="1095"/>
-        <source>F6</source>
-        <translation>F6</translation>
-    </message>
-    <message>
         <location filename="../src/mainwindow.ui" line="1103"/>
         <source>360p</source>
         <translation>360p</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.ui" line="1106"/>
-        <source>F7</source>
-        <translation>F7</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="134"/>
@@ -3552,21 +3467,6 @@ Please install it using your package manager. It may be named libsdl2-2.0-0, SDL
         <translation>오류: 이 프로그램은 SDL 2 라이브러리를 필요로 합니다.
 
 패키지 관리자를 이용하여 설치하세요. libsdl2-2.0-0, SDL2와 같은 이름으로 되어 있을 것입니다.</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="199"/>
-        <source>Ctrl+Z</source>
-        <translation>Ctrl+Z</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="201"/>
-        <source>Ctrl+Y</source>
-        <translation>Ctrl+Y</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="203"/>
-        <source>Ctrl+Shift+Z</source>
-        <translation>Ctrl+Shift+Z</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="617"/>
@@ -3677,9 +3577,12 @@ Please install it using your package manager. It may be named libsdl2-2.0-0, SDL
     <message>
         <location filename="../src/mainwindow.cpp" line="945"/>
         <location filename="../src/mainwindow.cpp" line="947"/>
-        <location filename="../src/mainwindow.cpp" line="1401"/>
-        <location filename="../src/mainwindow.cpp" line="3807"/>
-        <location filename="../src/mainwindow.cpp" line="4662"/>
+        <location filename="../src/mainwindow.cpp" line="1347"/>
+        <location filename="../src/mainwindow.cpp" line="1369"/>
+        <location filename="../src/mainwindow.cpp" line="1422"/>
+        <location filename="../src/mainwindow.cpp" line="3821"/>
+        <location filename="../src/mainwindow.cpp" line="3835"/>
+        <location filename="../src/mainwindow.cpp" line="4687"/>
         <source>Failed to open </source>
         <translation>열기 실패</translation>
     </message>
@@ -3742,7 +3645,16 @@ Shotcut이 복구를 시도하도록 하겠습니까?
         <translation>저장하는 데 오류가 있습니다. 다시 시도하세요.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1289"/>
+        <location filename="../src/mainwindow.cpp" line="1279"/>
+        <source>This project file requires a newer version!
+
+It was made with version </source>
+        <translation>이 프로젝트 파일은 새로운 버전을 필요로 합니다!
+
+이 파일은 다음 버전으로 제작되었습니다: </translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="1304"/>
         <source>You are running low on available memory!
 
 Please close other applications or web browser tabs and retry.
@@ -3753,131 +3665,136 @@ Or save and restart Shotcut.</source>
 또는 저장한 다음 Shotcut을 다시 시작하세요.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1325"/>
+        <location filename="../src/mainwindow.cpp" line="1340"/>
         <source>Opening %1</source>
         <translation>%1 열기</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1436"/>
-        <location filename="../src/mainwindow.cpp" line="3767"/>
+        <location filename="../src/mainwindow.cpp" line="1457"/>
+        <location filename="../src/mainwindow.cpp" line="3791"/>
         <source>Open File</source>
         <translation>파일 열기</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1437"/>
+        <location filename="../src/mainwindow.cpp" line="1458"/>
         <source>All Files (*);;MLT XML (*.mlt)</source>
         <translation>모든 파일 (*);;MLT XML (*.mlt)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1715"/>
+        <location filename="../src/mainwindow.cpp" line="1736"/>
         <source>Untitled</source>
         <translation>무제</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1731"/>
-        <source>About Shotcut</source>
-        <translation>Shotcut에 대해서</translation>
+        <location filename="../src/mainwindow.cpp" line="1755"/>
+        <source>About %1</source>
+        <translation>%1에 대해서</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2336"/>
+        <location filename="../src/mainwindow.cpp" line="1756"/>
+        <source>&lt;h1&gt;Shotcut version %2&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;%3&quot;&gt;%1&lt;/a&gt; is a free, open source, cross platform video editor.&lt;/p&gt;&lt;small&gt;&lt;p&gt;%4&lt;/p&gt;&lt;p&gt;Licensed under the %5&lt;/p&gt;&lt;p&gt;This program proudly uses the following projects:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://www.qt.io/&quot;&gt;Qt&lt;/a&gt; application and UI framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; multimedia authoring framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; multimedia format and codec libraries&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; H.264 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; VP8 and VP9 encoders&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; MP3 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt; video plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; audio plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;DefaultIcon&lt;/a&gt; icon collection by &lt;a href=&quot;http://www.interactivemania.com/&quot;&gt;interactivemania&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt;Oxygen&lt;/a&gt; icon collection&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;The source code used to build this program can be downloaded from &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt;.&lt;/p&gt;This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.&lt;/small&gt;</source>
+        <translation>&lt;h1&gt;Shotcut 버전 %2&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;%3&quot;&gt;%1&lt;/a&gt;은 무료이고, 오픈 소스이며, 크로스 플랫폼 영성 편집기입니다.&lt;/p&gt;&lt;small&gt;&lt;p&gt;%4&lt;/p&gt;&lt;p&gt;%5으로 허가됨&lt;/p&gt;&lt;p&gt;이 프로그램은 다음 프로젝트를 이용하고 있음을 알립니다:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://www.qt.io/&quot;&gt;QT&lt;/a&gt; 응용 프로그램 및 UI 프레임워크&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; 멀티미디어 저작 프레임워크&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; 멀티미디어 형식 및 코덱 라이브러리&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; H.264 인코더&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; VP8 및 VP9 인코더&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; MP3 인코더&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt; 비디오 플러그인&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; 오디오 플러그인&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;DefaultIcon&lt;/a&gt; 아이콘 컬렉션&lt;li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;이 프로그램을 빌드하는 데에 사용된 소스 코드는 &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt;에서 다운로드할 수 있습니다.&lt;/p&gt;이 프로그램은 유용히 사용할 수 있기를 바라며 배포되지만, 상품성이나 특정 목적의 묵시적 담보처럼, 아무런 보증이 없습니다.&lt;/small&gt;</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="2360"/>
         <source>Non-Broadcast</source>
         <translation>비방송용</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2341"/>
+        <location filename="../src/mainwindow.cpp" line="2365"/>
         <source>DVD Widescreen NTSC</source>
         <translation>DVD 와이드스크린 NTSC</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2342"/>
+        <location filename="../src/mainwindow.cpp" line="2366"/>
         <source>DVD Widescreen PAL</source>
         <translation>DVD 와이드스크린 PAL</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2353"/>
+        <location filename="../src/mainwindow.cpp" line="2377"/>
         <source>Square 1080p 30 fps</source>
         <translation>평면 1080p 30 fps</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2354"/>
+        <location filename="../src/mainwindow.cpp" line="2378"/>
         <source>Square 1080p 60 fps</source>
         <translation>평면 1080p 60 fps</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2355"/>
+        <location filename="../src/mainwindow.cpp" line="2379"/>
         <source>Vertical HD 30 fps</source>
         <translation>수직 HD 30 fps</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2356"/>
+        <location filename="../src/mainwindow.cpp" line="2380"/>
         <source>Vertical HD 60 fps</source>
         <translation>수직 HD 60 fps</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2357"/>
+        <location filename="../src/mainwindow.cpp" line="2381"/>
         <source>Custom</source>
         <translation>커스텀</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2387"/>
-        <location filename="../src/mainwindow.cpp" line="2655"/>
+        <location filename="../src/mainwindow.cpp" line="2411"/>
+        <location filename="../src/mainwindow.cpp" line="2679"/>
         <source>Saved %1</source>
         <translation>%1 저장됨</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2647"/>
-        <location filename="../src/mainwindow.cpp" line="2669"/>
+        <location filename="../src/mainwindow.cpp" line="2671"/>
+        <location filename="../src/mainwindow.cpp" line="2693"/>
         <source>Save XML</source>
         <translation>XML 저장</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2671"/>
+        <location filename="../src/mainwindow.cpp" line="2695"/>
         <source>MLT XML (*.mlt)</source>
         <translation>MLT XML (*.mlt)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2690"/>
+        <location filename="../src/mainwindow.cpp" line="2714"/>
         <source>The project has been modified.
 Do you want to save your changes?</source>
         <translation>프로젝트가 변경되었습니다.
 변경 사항을 저장하겠습니까?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2719"/>
+        <location filename="../src/mainwindow.cpp" line="2743"/>
         <source>There are incomplete jobs.
 Do you want to still want to exit?</source>
         <translation>아직 완료되지 않은 작업들이 있습니다.
 종료해도 괜찮습니까?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2732"/>
+        <location filename="../src/mainwindow.cpp" line="2756"/>
         <source>An export is in progress.
 Do you want to still want to exit?</source>
         <translation>내보내기가 작동 중입니다.
 종료해도 괜찮습니까?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3209"/>
+        <location filename="../src/mainwindow.cpp" line="3233"/>
         <source>Exit Full Screen</source>
         <translation>전체 화면 종료</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4626"/>
+        <location filename="../src/mainwindow.cpp" line="4651"/>
         <source>Turn Proxy On</source>
         <translation>프록시 켜기</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4626"/>
+        <location filename="../src/mainwindow.cpp" line="4651"/>
         <source>Turn Proxy Off</source>
         <translation>프록시 끄기</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4630"/>
+        <location filename="../src/mainwindow.cpp" line="4655"/>
         <source>Converting</source>
         <translation>변환 중</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4644"/>
+        <location filename="../src/mainwindow.cpp" line="4669"/>
         <source>Do you want to create missing proxies for every file in this project?
 
 You must reopen your project after all proxy jobs are finished.</source>
@@ -3886,56 +3803,51 @@ You must reopen your project after all proxy jobs are finished.</source>
 모든 프록시 작업이 완료된 후에는 프로젝트를 다시 열어야 합니다.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4679"/>
+        <location filename="../src/mainwindow.cpp" line="4704"/>
         <source>Proxy Folder</source>
         <translation>프록시 폴더</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4694"/>
+        <location filename="../src/mainwindow.cpp" line="4719"/>
         <source>Do you want to move all files from the old folder to the new folder?</source>
         <translation>모든 파일을 이전 폴더에서 새 폴더로 옮기겠습니까?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4701"/>
+        <location filename="../src/mainwindow.cpp" line="4726"/>
         <source>Moving Files</source>
         <translation>파일 옮기는 중</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3222"/>
+        <location filename="../src/mainwindow.cpp" line="3246"/>
         <source>GPU effects are not supported</source>
         <translation>GPU 효과는 지원되지 않습니다.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1732"/>
-        <source>&lt;h1&gt;Shotcut version %1&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;https://www.shotcut.org/&quot;&gt;Shotcut&lt;/a&gt; is a free, open source, cross platform video editor.&lt;/p&gt;&lt;small&gt;&lt;p&gt;Copyright &amp;copy; 2011-2021 &lt;a href=&quot;https://www.meltytech.com/&quot;&gt;Meltytech&lt;/a&gt;, LLC&lt;/p&gt;&lt;p&gt;Licensed under the &lt;a href=&quot;https://www.gnu.org/licenses/gpl.html&quot;&gt;GNU General Public License v3.0&lt;/a&gt;&lt;/p&gt;&lt;p&gt;This program proudly uses the following projects:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://www.qt.io/&quot;&gt;Qt&lt;/a&gt; application and UI framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; multimedia authoring framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; multimedia format and codec libraries&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; H.264 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; VP8 and VP9 encoders&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; MP3 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt; video plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; audio plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;DefaultIcon&lt;/a&gt; icon collection by &lt;a href=&quot;http://www.interactivemania.com/&quot;&gt;interactivemania&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt;Oxygen&lt;/a&gt; icon collection&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;The source code used to build this program can be downloaded from &lt;a href=&quot;https://www.shotcut.org/&quot;&gt;shotcut.org&lt;/a&gt;.&lt;/p&gt;This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.&lt;/small&gt;</source>
-        <translation>&lt;h1&gt;Shotcut 버전 %1&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;https://www.shotcut.org/&quot;&gt;Shotcut&lt;/a&gt;은 무료이고, 오픈 소스이며, 크로스 플랫폼 영상 편집기입니다.&lt;/p&gt;&lt;small&gt;&lt;p&gt;Copyright &amp;copy; 2011-2021 &lt;a href=&quot;https://www.meltytech.com/&quot;&gt;Meltytech&lt;/a&gt;, LLC&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;https://www.gnu.org/licenses/gpl.html&quot;&gt;GNU 일반 공중 허가서 v3.0&lt;/a&gt;으로 허가됨&lt;/p&gt;&lt;p&gt;이 프로그램은 다음 프로젝트를 이용하고 있음을 알립니다:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://www.qt.io/&quot;&gt;Qt&lt;/a&gt; 애플리케이션 및 UI 프레임워크&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; 멀티미디어 저작 프레임워크&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; 멀티미디어 형식 및 코덱 라이브러리&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; H.264 인코더&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; VP8과 VP9 인코더&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; MP3 인코더&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt; 비디오 플러그인&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; 오디오 플러그인&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.interactivemania.com/&quot;&gt;interactivemania&lt;/a&gt;의 &lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;DefaultIcon&lt;/a&gt; 아이콘 컬렉션&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt;Oxygen&lt;/a&gt; 아이콘 컬렉션&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;이 프로그램을 빌드하는 데에 사용된 소스 코드는 &lt;a href=&quot;https://www.shotcut.org/&quot;&gt;shotcut.org&lt;/a&gt;에서 다운로드할 수 있습니다.&lt;/p&gt;이 프로그램은 유용히 사용할 수 있기를 바라며 배포되지만, 상품성이나 특정 목적의 묵시적 담보처럼, 아무런 보증이 없습니다.&lt;/small&gt;</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="3284"/>
+        <location filename="../src/mainwindow.cpp" line="3308"/>
         <source>Click here to check for a new version of Shotcut.</source>
         <translation>클릭해서 Shotcut의 최신 버전을 확인하세요.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3389"/>
+        <location filename="../src/mainwindow.cpp" line="3413"/>
         <source>Open Files</source>
         <translation>파일 열기</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3429"/>
+        <location filename="../src/mainwindow.cpp" line="3453"/>
         <source>You must restart Shotcut to switch to the new language.
 Do you want to restart now?</source>
         <translation>새 언어로 전환하려면 Shotcut을 다시 시작해야 합니다.
 다시 시작하겠습니까?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3470"/>
+        <location filename="../src/mainwindow.cpp" line="3494"/>
         <source>Failed to connect to JACK.
 Please verify that JACK is installed and running.</source>
         <translation>JACK과 연결하는데 실패했습니다.
 JACK이 설치되었고 작동되는지 확인하세요.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3479"/>
+        <location filename="../src/mainwindow.cpp" line="3503"/>
         <source>GPU effects are experimental and may cause instability on some systems. Some CPU effects are incompatible with GPU effects and will be disabled. A project created with GPU effects can not be converted to a CPU only project later.
 
 Do you want to enable GPU effects and restart Shotcut?</source>
@@ -3944,7 +3856,7 @@ Do you want to enable GPU effects and restart Shotcut?</source>
 GPU 효과를 활성화하고 Shotcut을 다시 시작하겠습니까?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3501"/>
+        <location filename="../src/mainwindow.cpp" line="3525"/>
         <source>Shotcut must restart to disable GPU effects.
 
 Disable GPU effects and restart?</source>
@@ -3952,23 +3864,23 @@ Disable GPU effects and restart?</source>
 GPU 효과를 비활성화하고 다시 시작하겠습니까?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3745"/>
+        <location filename="../src/mainwindow.cpp" line="3769"/>
         <source>Do you want to automatically check for updates in the future?</source>
         <translation>추후의 업데이트를 자동으로 확인하겠습니까?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3752"/>
+        <location filename="../src/mainwindow.cpp" line="3776"/>
         <source>Do not show this anymore.</source>
         <comment>Automatic upgrade check dialog</comment>
         <translation>더 이상 보여주지 마세요.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3768"/>
+        <location filename="../src/mainwindow.cpp" line="3792"/>
         <source>MLT XML (*.mlt);;All Files (*)</source>
         <translation>MLT XML (*.mlt);;모든 파일 (*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3785"/>
+        <location filename="../src/mainwindow.cpp" line="3809"/>
         <source>The decimal point of the MLT XML file
 you want to open is incompatible.
 
@@ -3977,101 +3889,101 @@ Do you want to continue to open this MLT XML file?</source>
 MLT XML 파일을 열겠습니까?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3848"/>
+        <location filename="../src/mainwindow.cpp" line="3876"/>
         <source>You must restart Shotcut to change the display method.
 Do you want to restart now?</source>
         <translation>표시 방법을 변경하려면 Shotcut을 다시 시작해야 합니다.
 다시 시작하겠습니까?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3870"/>
+        <location filename="../src/mainwindow.cpp" line="3898"/>
         <source>Application Log</source>
         <translation>애플리케이션 기록</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3911"/>
+        <location filename="../src/mainwindow.cpp" line="3939"/>
         <source>Shotcut version %1 is available! Click here to get it.</source>
         <translation>Shotcut 버전 %1가 사용 가능합니다! 클릭하여 받으세요.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3917"/>
+        <location filename="../src/mainwindow.cpp" line="3945"/>
         <source>You are running the latest version of Shotcut.</source>
         <translation>Shotcut 최신 버전을 실행하고 있습니다.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3927"/>
+        <location filename="../src/mainwindow.cpp" line="3955"/>
         <source>Failed to read version.json when checking. Click here to go to the Web site.</source>
         <translation>검사하는 도중에 version.json 읽기에 실패했습니다. 클릭하여 웹 사이트를 참조하세요.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3976"/>
+        <location filename="../src/mainwindow.cpp" line="4004"/>
         <source>Export EDL</source>
         <translation>EDL 내보내기</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3978"/>
+        <location filename="../src/mainwindow.cpp" line="4006"/>
         <source>EDL (*.edl);;All Files (*)</source>
         <translation>EDL (*.edl);;모든 파일 (*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4024"/>
+        <location filename="../src/mainwindow.cpp" line="4052"/>
         <source>A JavaScript error occurred during export.</source>
         <translation>내보내는 도중에 자바스크립트 오류가 발생했습니다.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4027"/>
+        <location filename="../src/mainwindow.cpp" line="4055"/>
         <source>Failed to open export-edl.js</source>
         <translation>export-edl.js를 여는 데 실패했습니다.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4055"/>
+        <location filename="../src/mainwindow.cpp" line="4080"/>
         <source>Export Frame</source>
         <translation>프레임 내보내기</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4056"/>
+        <location filename="../src/mainwindow.cpp" line="4081"/>
         <source>PNG (*.png);;BMP (*.bmp);;JPEG (*.jpg *.jpeg);;PPM (*.ppm);;TIFF (*.tif *.tiff);;WebP (*.webp);;All Files (*)</source>
         <translation>PNG (*.png);;BMP (*.bmp);;JPEG (*.jpg *.jpeg);;PPM (*.ppm);;TIFF (*.tif *.tiff);;WebP (*.webp);;모든 파일 (*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4077"/>
+        <location filename="../src/mainwindow.cpp" line="4102"/>
         <source>Unable to export frame.</source>
         <translation>프레임 내보내기를 할 수 없습니다.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4085"/>
+        <location filename="../src/mainwindow.cpp" line="4110"/>
         <source>You must restart Shotcut to change the data directory.
 Do you want to continue?</source>
         <translation>데이터 디렉터리를 변경하려면 Shotcut을 다시 시작해야 합니다.
 계속 진행하겠습니까?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4094"/>
+        <location filename="../src/mainwindow.cpp" line="4119"/>
         <source>Data Directory</source>
         <translation>데이터 디렉터리</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4271"/>
+        <location filename="../src/mainwindow.cpp" line="4296"/>
         <source>Add Custom Layout</source>
         <translation>커스텀 레이아웃 추가</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4272"/>
+        <location filename="../src/mainwindow.cpp" line="4297"/>
         <source>Name</source>
         <translation>이름</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4309"/>
+        <location filename="../src/mainwindow.cpp" line="4334"/>
         <source>Remove Video Mode</source>
         <translation>비디오 모드 제거</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4323"/>
+        <location filename="../src/mainwindow.cpp" line="4348"/>
         <source>Remove Layout</source>
         <translation>레이아웃 제거</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4443"/>
+        <location filename="../src/mainwindow.cpp" line="4468"/>
         <source>GPU effects are EXPERIMENTAL, UNSTABLE and UNSUPPORTED! Unsupported means do not report bugs about it.
 
 Do you want to disable GPU effects and restart Shotcut?</source>
@@ -4458,6 +4370,99 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>MultiFileExportDialog</name>
+    <message>
+        <location filename="../src/dialogs/multifileexportdialog.cpp" line="59"/>
+        <source>Directory</source>
+        <translation>디렉터리</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/multifileexportdialog.cpp" line="71"/>
+        <source>Prefix</source>
+        <translation>접두사</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/multifileexportdialog.cpp" line="72"/>
+        <source>export</source>
+        <translation>내보내기</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/multifileexportdialog.cpp" line="77"/>
+        <source>Field 1</source>
+        <translation>필드 1</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/multifileexportdialog.cpp" line="84"/>
+        <source>Field 2</source>
+        <translation>필드 2</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/multifileexportdialog.cpp" line="91"/>
+        <source>Field 3</source>
+        <translation>필드 3</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/multifileexportdialog.cpp" line="99"/>
+        <source>Extension</source>
+        <translation>확장</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/multifileexportdialog.cpp" line="195"/>
+        <source>None</source>
+        <translation>없음</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/multifileexportdialog.cpp" line="196"/>
+        <source>Name</source>
+        <translation>이름</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/multifileexportdialog.cpp" line="197"/>
+        <source>Index</source>
+        <translation>색인</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/multifileexportdialog.cpp" line="198"/>
+        <source>Date</source>
+        <translation>날짜</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/multifileexportdialog.cpp" line="199"/>
+        <source>Hash</source>
+        <translation>해시</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/multifileexportdialog.cpp" line="222"/>
+        <source>Empty File Name</source>
+        <translation>빈 파일 이름</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/multifileexportdialog.cpp" line="224"/>
+        <source>Directory does not exist: %1</source>
+        <translation>디렉터리가 존재하지 않습니다: %1</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/multifileexportdialog.cpp" line="231"/>
+        <source>File Exists: %1</source>
+        <translation>파일이 존재합니다: %1</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/multifileexportdialog.cpp" line="236"/>
+        <source>Duplicate File Name: %1</source>
+        <translation>같은 이름의 파일이 있습니다: %1</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/multifileexportdialog.cpp" line="262"/>
+        <source>Fix file name errors before export.</source>
+        <translation>내보내기 전에 파일 이름 오류를 해결하세요.</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/multifileexportdialog.cpp" line="267"/>
+        <source>Export Directory</source>
+        <translation>디렉터리 내보내기</translation>
+    </message>
+</context>
+<context>
     <name>MultitrackModel</name>
     <message>
         <location filename="../src/models/multitrackmodel.cpp" line="114"/>
@@ -4465,7 +4470,7 @@ p, li { white-space: pre-wrap; }
         <translation>(프록시)</translation>
     </message>
     <message>
-        <location filename="../src/models/multitrackmodel.cpp" line="2412"/>
+        <location filename="../src/models/multitrackmodel.cpp" line="2415"/>
         <source>Error: Shotcut could not find the %1 plugin on your system.
 
 Please install the %2 plugins.</source>
@@ -4618,29 +4623,29 @@ A folder will be created in this folder for each project.</source>
         <translation>제거...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.cpp" line="124"/>
+        <location filename="../src/widgets/newprojectfolder.cpp" line="123"/>
         <source>Projects Folder</source>
         <translation>프로젝트 폴더</translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.cpp" line="154"/>
+        <location filename="../src/widgets/newprojectfolder.cpp" line="153"/>
         <source>Custom</source>
         <translation>커스텀</translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.cpp" line="171"/>
+        <location filename="../src/widgets/newprojectfolder.cpp" line="170"/>
         <source>Remove Video Mode</source>
         <translation>비디오 모드 제거</translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.cpp" line="200"/>
+        <location filename="../src/widgets/newprojectfolder.cpp" line="199"/>
         <source>There is already a project with that name.
 Try again with a different name.</source>
         <translation>해당 이름으로는 이미 프로젝트가 있습니다.
 다른 이름으로 시도하세요.</translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.cpp" line="208"/>
+        <location filename="../src/widgets/newprojectfolder.cpp" line="207"/>
         <source>Unable to create folder %1
 Perhaps you do not have permission.
 Try again with a different folder.</source>
@@ -4796,42 +4801,42 @@ Try again with a different folder.</source>
 <context>
     <name>ParameterHead</name>
     <message>
-        <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="124"/>
+        <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="127"/>
         <source>Seek to previous keyframe</source>
         <translation>이전 키 프레임 탐색</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="124"/>
+        <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="127"/>
         <source>Seek backwards</source>
         <translation>뒤로 탐색</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="137"/>
+        <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="143"/>
         <source>Add a keyframe at play head</source>
         <translation>재생 헤드에 키 프레임 추가</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="157"/>
+        <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="166"/>
         <source>Delete the selected keyframe</source>
         <translation>선택한 키 프레임 제거</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="178"/>
+        <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="190"/>
         <source>Seek to next keyframe</source>
         <translation>다음 키 프레임 탐색</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="178"/>
+        <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="190"/>
         <source>Seek forwards</source>
         <translation>앞으로 탐색</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="188"/>
+        <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="203"/>
         <source>Unlock track</source>
         <translation>트랙 잠금 해제</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="188"/>
+        <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="203"/>
         <source>Lock track</source>
         <translation>트랙 잠금</translation>
     </message>
@@ -5243,11 +5248,6 @@ p, li { white-space: pre-wrap; }
         <translation>교체</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="315"/>
-        <source>Ctrl+Return</source>
-        <translation>Ctrl+Enter</translation>
-    </message>
-    <message>
         <location filename="../src/docks/playlistdock.ui" line="320"/>
         <source>Remove</source>
         <translation>제거</translation>
@@ -5269,25 +5269,10 @@ p, li { white-space: pre-wrap; }
         <translation>삽입</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="271"/>
-        <source>Shift+V</source>
-        <translation>Shift+V</translation>
-    </message>
-    <message>
         <location filename="../src/docks/playlistdock.ui" line="280"/>
         <location filename="../src/docks/playlistdock.ui" line="283"/>
         <source>Append</source>
         <translation>추가</translation>
-    </message>
-    <message>
-        <location filename="../src/docks/playlistdock.ui" line="286"/>
-        <source>Shift+A</source>
-        <translation>Shift+A</translation>
-    </message>
-    <message>
-        <location filename="../src/docks/playlistdock.ui" line="304"/>
-        <source>Shift+B</source>
-        <translation>Shift+B</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="309"/>
@@ -5300,19 +5285,9 @@ p, li { white-space: pre-wrap; }
         <translation>소스 플레이어에서 클립 열기</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="323"/>
-        <source>Shift+X</source>
-        <translation>Shift+X</translation>
-    </message>
-    <message>
         <location filename="../src/docks/playlistdock.ui" line="336"/>
         <source>Go to the start of this clip in the Project player</source>
         <translation>프로젝트 플레이어에서 클립 시작점으로 이동</translation>
-    </message>
-    <message>
-        <location filename="../src/docks/playlistdock.ui" line="339"/>
-        <source>Shift+Return</source>
-        <translation>Shift+Return</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="344"/>
@@ -5372,19 +5347,9 @@ p, li { white-space: pre-wrap; }
         <translation>전체 선택</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="473"/>
-        <source>Ctrl+Shift+A</source>
-        <translation>Ctrl+Shift+A</translation>
-    </message>
-    <message>
         <location filename="../src/docks/playlistdock.ui" line="478"/>
         <source>Select None</source>
         <translation>선택 없음</translation>
-    </message>
-    <message>
-        <location filename="../src/docks/playlistdock.ui" line="481"/>
-        <source>Ctrl+Shift+D</source>
-        <translation>Ctrl+Shift+D</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="486"/>
@@ -5425,11 +5390,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/docks/playlistdock.ui" line="454"/>
         <source>Open a copy of the clip in the Source player</source>
         <translation>소스 플레이어에서 복사한 클립 열기</translation>
-    </message>
-    <message>
-        <location filename="../src/docks/playlistdock.ui" line="457"/>
-        <source>Shift+C</source>
-        <translation>Shift+C</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/docks/playlistdock.cpp" line="255"/>
@@ -5552,24 +5512,24 @@ p, li { white-space: pre-wrap; }
         <translation>이름:</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="122"/>
-        <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="157"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="123"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="158"/>
         <source>OK</source>
         <translation>확인</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="126"/>
-        <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="168"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="127"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="169"/>
         <source>Cancel</source>
         <translation>취소</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="140"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="141"/>
         <source>Delete Preset</source>
         <translation>사전 설정 제거</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="149"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="150"/>
         <source>Are you sure you want to delete %1?</source>
         <translation>정말로 %1을/를 삭제하겠습니까?</translation>
     </message>
@@ -5829,113 +5789,113 @@ p, li { white-space: pre-wrap; }
         <translation>이 지점에서 클립 자르기</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="524"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="528"/>
         <source>Trim clip out point</source>
         <translation>끝 지점에서 클립 자르기</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="570"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="574"/>
         <source>Split clip</source>
         <translation>클립 분할</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="596"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="600"/>
         <source>Adjust fade in</source>
         <translation>페이드 인 조절</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="629"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="633"/>
         <source>Adjust fade out</source>
         <translation>페이드 아웃 조절</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="664"/>
-        <location filename="../src/commands/timelinecommands.cpp" line="784"/>
-        <location filename="../src/commands/timelinecommands.cpp" line="900"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="668"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="788"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="904"/>
         <source>Add transition</source>
         <translation>전환 추가</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="696"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="700"/>
         <source>Trim transition in point</source>
         <translation>이 지점에서 전환 자르기</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="739"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="743"/>
         <source>Trim transition out point</source>
         <translation>끝 지점에서 전환 자르기</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="828"/>
-        <location filename="../src/commands/timelinecommands.cpp" line="863"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="832"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="867"/>
         <source>Remove transition</source>
         <translation>전환 제거</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="941"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="945"/>
         <source>Add video track</source>
         <translation>비디오 트랙 추가</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="943"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="947"/>
         <source>Add audio track</source>
         <translation>오디오 트랙 추가</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="968"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="972"/>
         <source>Insert audio track</source>
         <translation>오디오 트랙 삽입</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="970"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="974"/>
         <source>Insert video track</source>
         <translation>비디오 트랙 삽입</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="993"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="997"/>
         <source>Remove audio track</source>
         <translation>오디오 트랙 제거</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="995"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="999"/>
         <source>Remove video track</source>
         <translation>비디오 트랙 제거</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="1050"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="1054"/>
         <source>Change track blend mode</source>
         <translation>트랙 합성 모드 변경</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="1090"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="1094"/>
         <source>Change clip properties</source>
         <translation>클립 속성 변경</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="1135"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="1139"/>
         <source>Detach Audio</source>
         <translation>오디오 분리</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="1230"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="1234"/>
         <source>Replace timeline clip</source>
         <translation>타임 라인 클립 교체</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3404"/>
+        <location filename="../src/mainwindow.cpp" line="3428"/>
         <source>You cannot add a project to itself!</source>
         <translation>프로젝트 자체를 추가할 수 없습니다!</translation>
     </message>
     <message>
-        <location filename="../src/mltxmlchecker.cpp" line="126"/>
+        <location filename="../src/mltxmlchecker.cpp" line="138"/>
         <source>The file is not a MLT XML file.</source>
         <translation>이 파일은 MLT XML 파일이 아닙니다.</translation>
     </message>
     <message>
         <location filename="../src/util.cpp" line="127"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="888"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1070"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1140"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="891"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1073"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1143"/>
         <source>Unable to write file %1
 Perhaps you do not have permission.
 Try again with a different folder.</source>
@@ -5976,12 +5936,12 @@ Do you want to use %1 = %2/1001 instead?</source>
         <translation>투명</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1100"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1107"/>
         <source>Drop Files</source>
         <translation>파일 날리기</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1131"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1138"/>
         <source>Not adding non-seekable file: </source>
         <translation>탐색 불가능한 파일을 추가할 수 없습니다:</translation>
     </message>
@@ -6011,7 +5971,7 @@ Do you want to use %1 = %2/1001 instead?</source>
         <translation>슬라이드 쇼 생성</translation>
     </message>
     <message>
-        <location filename="../src/proxymanager.cpp" line="211"/>
+        <location filename="../src/proxymanager.cpp" line="213"/>
         <source>Make proxy for %1</source>
         <translation>%1을(를) 위한 프록시 생성</translation>
     </message>
@@ -6051,12 +6011,12 @@ Do you want to use %1 = %2/1001 instead?</source>
         <translation>저장할 수 없습니다: </translation>
     </message>
     <message>
-        <location filename="../src/qmltypes/qmlrichtext.cpp" line="158"/>
+        <location filename="../src/qmltypes/qmlrichtext.cpp" line="159"/>
         <source>Row</source>
         <translation>행</translation>
     </message>
     <message>
-        <location filename="../src/qmltypes/qmlrichtext.cpp" line="160"/>
+        <location filename="../src/qmltypes/qmlrichtext.cpp" line="161"/>
         <source>Column</source>
         <translation>열</translation>
     </message>
@@ -6772,48 +6732,48 @@ If the duration is 0, no transition will be created.</source>
         <translation>위치</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="300"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="302"/>
         <source>Size</source>
         <translation>크기</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="334"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="338"/>
         <source>Horizontal fit</source>
         <translation>수평 맞춤</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="339"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="343"/>
         <source>Left</source>
         <translation>왼쪽</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="345"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="349"/>
         <source>Center</source>
         <translation>가운데</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="351"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="355"/>
         <source>Right</source>
         <translation>오른쪽</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="364"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="368"/>
         <source>Vertical fit</source>
         <translation>수직 맞춤</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="369"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="373"/>
         <source>Top</source>
         <translation>위</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="375"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="379"/>
         <source>Middle</source>
         <comment>Text video filter</comment>
         <translation>중앙</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="381"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="385"/>
         <source>Bottom</source>
         <translation>아래</translation>
     </message>
@@ -6913,12 +6873,12 @@ If the duration is 0, no transition will be created.</source>
 <context>
     <name>TimeSpinner</name>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TimeSpinner.qml" line="50"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TimeSpinner.qml" line="51"/>
         <source>Decrement</source>
         <translation>감소</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TimeSpinner.qml" line="71"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TimeSpinner.qml" line="72"/>
         <source>Increment</source>
         <translation>증가</translation>
     </message>
@@ -6931,22 +6891,22 @@ If the duration is 0, no transition will be created.</source>
         <translation>타임 라인</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="166"/>
+        <location filename="../src/docks/timelinedock.cpp" line="167"/>
         <source>This track is locked</source>
         <translation>이 트랙은 잠겼습니다.</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="171"/>
+        <location filename="../src/docks/timelinedock.cpp" line="172"/>
         <source>You cannot add a non-seekable source.</source>
         <translation>탐색 불가능한 소스를 추가할 수 없습니다.</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="400"/>
+        <location filename="../src/docks/timelinedock.cpp" line="401"/>
         <source>Failed to open </source>
         <translation>열기 실패</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="403"/>
+        <location filename="../src/docks/timelinedock.cpp" line="404"/>
         <source>You must save to Copy Timeline to Source.</source>
         <translation>소스에 타임 라인을 복사하려면 저장해야 합니다.</translation>
     </message>
@@ -6961,22 +6921,22 @@ If the duration is 0, no transition will be created.</source>
         <translation>타임 라인에서 %1 빼기</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="863"/>
+        <location filename="../src/docks/timelinedock.cpp" line="866"/>
         <source>There is nothing in the Source player.</source>
         <translation>소스 플레이어에 아무 것도 없습니다.</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="878"/>
+        <location filename="../src/docks/timelinedock.cpp" line="881"/>
         <source>You cannot replace a transition.</source>
         <translation>전환을 교체할 수 없습니다.</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1286"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1285"/>
         <source>You cannot split a transition.</source>
         <translation>전환을 자를 수 없습니다.</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/docks/timelinedock.cpp" line="1503"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1502"/>
         <source>Replace %n timeline clips</source>
         <translation>
             <numerusform>%n 타임 라인 클립 교체</numerusform>
@@ -7177,22 +7137,22 @@ affecting position of other clips (Z)</source>
 <context>
     <name>TrackHead</name>
     <message>
-        <location filename="../src/qml/views/timeline/TrackHead.qml" line="181"/>
+        <location filename="../src/qml/views/timeline/TrackHead.qml" line="184"/>
         <source>Unmute</source>
         <translation>음소거 해제</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/TrackHead.qml" line="181"/>
+        <location filename="../src/qml/views/timeline/TrackHead.qml" line="184"/>
         <source>Mute</source>
         <translation>음소거</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/TrackHead.qml" line="191"/>
+        <location filename="../src/qml/views/timeline/TrackHead.qml" line="197"/>
         <source>Show</source>
         <translation>보이기</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/TrackHead.qml" line="191"/>
+        <location filename="../src/qml/views/timeline/TrackHead.qml" line="197"/>
         <source>Hide</source>
         <translation>숨기기</translation>
     </message>
@@ -7207,7 +7167,7 @@ affecting position of other clips (Z)</source>
         <translation>트랙 잠그기</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/TrackHead.qml" line="199"/>
+        <location filename="../src/qml/views/timeline/TrackHead.qml" line="208"/>
         <source>Filters</source>
         <translation>필터</translation>
     </message>
@@ -8106,42 +8066,42 @@ Most users do not need to change this.</source>
 <context>
     <name>filterview</name>
     <message>
-        <location filename="../src/qml/views/filter/filterview.qml" line="120"/>
+        <location filename="../src/qml/views/filter/filterview.qml" line="121"/>
         <source>Nothing selected</source>
         <translation>아무 것도 선택되지 않음</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/filter/filterview.qml" line="133"/>
+        <location filename="../src/qml/views/filter/filterview.qml" line="134"/>
         <source>Add a filter</source>
         <translation>필터 추가</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/filter/filterview.qml" line="147"/>
+        <location filename="../src/qml/views/filter/filterview.qml" line="148"/>
         <source>Remove selected filter</source>
         <translation>선택한 필터 제거</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/filter/filterview.qml" line="164"/>
+        <location filename="../src/qml/views/filter/filterview.qml" line="165"/>
         <source>Copy the filters</source>
         <translation>필터 복사</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/filter/filterview.qml" line="174"/>
+        <location filename="../src/qml/views/filter/filterview.qml" line="175"/>
         <source>Paste filters</source>
         <translation>필터 붙여넣기</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/filter/filterview.qml" line="189"/>
+        <location filename="../src/qml/views/filter/filterview.qml" line="190"/>
         <source>Move filter up</source>
         <translation>필터 위로 옮기기</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/filter/filterview.qml" line="199"/>
+        <location filename="../src/qml/views/filter/filterview.qml" line="200"/>
         <source>Move filter down</source>
         <translation>필터 아래로 옮기기</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/filter/filterview.qml" line="214"/>
+        <location filename="../src/qml/views/filter/filterview.qml" line="215"/>
         <source>Deselect the filter</source>
         <translation>필터 선택 해제</translation>
     </message>
@@ -8149,42 +8109,42 @@ Most users do not need to change this.</source>
 <context>
     <name>keyframes</name>
     <message>
-        <location filename="../src/qml/views/keyframes/keyframes.qml" line="457"/>
+        <location filename="../src/qml/views/keyframes/keyframes.qml" line="473"/>
         <source>Options</source>
         <translation>설정</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/keyframes/keyframes.qml" line="460"/>
+        <location filename="../src/qml/views/keyframes/keyframes.qml" line="476"/>
         <source>Show Audio Waveforms</source>
         <translation>오디오 파형 보이기</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/keyframes/keyframes.qml" line="478"/>
+        <location filename="../src/qml/views/keyframes/keyframes.qml" line="494"/>
         <source>Use Higher Performance Waveforms</source>
         <translation>고성능 파형 사용</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/keyframes/keyframes.qml" line="488"/>
+        <location filename="../src/qml/views/keyframes/keyframes.qml" line="504"/>
         <source>Show Video Thumbnails</source>
         <translation>비디오 섬네일 보이기</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/keyframes/keyframes.qml" line="494"/>
+        <location filename="../src/qml/views/keyframes/keyframes.qml" line="510"/>
         <source>Center the Playhead</source>
         <translation>재생 헤드 가운데로</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/keyframes/keyframes.qml" line="500"/>
+        <location filename="../src/qml/views/keyframes/keyframes.qml" line="516"/>
         <source>Scroll to Playhead on Zoom</source>
         <translation>확대/축소 시 재생 헤드로 스크롤</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/keyframes/keyframes.qml" line="507"/>
+        <location filename="../src/qml/views/keyframes/keyframes.qml" line="523"/>
         <source>Reload</source>
         <translation>다시 불러오기</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/keyframes/keyframes.qml" line="511"/>
+        <location filename="../src/qml/views/keyframes/keyframes.qml" line="527"/>
         <source>Cancel</source>
         <translation>취소</translation>
     </message>
@@ -8192,72 +8152,72 @@ Most users do not need to change this.</source>
 <context>
     <name>main</name>
     <message>
-        <location filename="../src/main.cpp" line="148"/>
+        <location filename="../src/main.cpp" line="153"/>
         <source>Fill the screen with the Shotcut window.</source>
         <translation>화면 전체를 Shotcut 창으로 덮습니다.</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="152"/>
+        <location filename="../src/main.cpp" line="157"/>
         <source>Hide upgrade prompt and menu item.</source>
         <translation>업그레이드 신호와 메뉴 항목을 숨깁니다.</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="155"/>
+        <location filename="../src/main.cpp" line="160"/>
         <source>Use GPU processing.</source>
         <translation>GPU 처리를 사용합니다.</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="158"/>
+        <location filename="../src/main.cpp" line="163"/>
         <source>Clear Recent on Exit</source>
         <translation>종료 시 최근 항목 지우기</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="161"/>
+        <location filename="../src/main.cpp" line="166"/>
         <source>The directory for app configuration and data.</source>
         <translation>앱 환경 설정 및 데이터의 디렉터리입니다.</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="162"/>
+        <location filename="../src/main.cpp" line="167"/>
         <source>directory</source>
         <translation>디렉터리</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="165"/>
+        <location filename="../src/main.cpp" line="170"/>
         <source>The scale factor for a high-DPI screen</source>
         <translation>고 DPI 화면의 배율</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="166"/>
+        <location filename="../src/main.cpp" line="171"/>
         <source>number</source>
         <translation>숫자</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="169"/>
+        <location filename="../src/main.cpp" line="174"/>
         <source>A semicolon-separated list of scale factors for each screen</source>
         <translation>각 화면의 배율에 대한 세미콜론 구분 목록</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="170"/>
+        <location filename="../src/main.cpp" line="175"/>
         <source>list</source>
         <translation>목록</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="174"/>
+        <location filename="../src/main.cpp" line="179"/>
         <source>How to handle a fractional display scale: %1</source>
         <translation>임의 배율 스케일링 처리: %1</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="176"/>
+        <location filename="../src/main.cpp" line="181"/>
         <source>string</source>
         <translation>문자열</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="180"/>
+        <location filename="../src/main.cpp" line="185"/>
         <source>Zero or more files or folders to open</source>
         <translation>열 파일 또는 폴더 0개 이상</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="364"/>
+        <location filename="../src/main.cpp" line="369"/>
         <source>Loading plugins...</source>
         <translation>플러그인 불러오는 중...</translation>
     </message>
@@ -9466,142 +9426,142 @@ Most users do not need to change this.</source>
 <context>
     <name>timeline</name>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="166"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="168"/>
         <source>Output</source>
         <translation>출력</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="192"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="194"/>
         <source>Filters</source>
         <translation>필터</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="409"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="425"/>
         <source>Insert</source>
         <translation>삽입</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="409"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="425"/>
         <source>Overwrite</source>
         <translation>덮어쓰기</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="473"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="489"/>
         <source>Track Operations</source>
         <translation>트랙 작업</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="475"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="491"/>
         <source>Add Audio Track</source>
         <translation>오디오 트랙 추가</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="479"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="495"/>
         <source>Add Video Track</source>
         <translation>비디오 트랙 추가</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="483"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="499"/>
         <source>Insert Track</source>
         <translation>트랙 삽입</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="487"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="503"/>
         <source>Remove Track</source>
         <translation>트랙 제거</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="509"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="525"/>
         <source>Selection</source>
         <translation>선택</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="511"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="527"/>
         <source>Select All</source>
         <translation>전체 선택</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="515"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="531"/>
         <source>Select None</source>
         <translation>선택 없음</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="552"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="568"/>
         <source>Use Higher Performance Waveforms</source>
         <translation>고성능 파형 사용</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="599"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="615"/>
         <source>Cancel</source>
         <translation>취소</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="492"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="508"/>
         <source>Track Height</source>
         <translation>트랙 높이</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="523"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="539"/>
         <source>Options</source>
         <translation>설정</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="526"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="542"/>
         <source>Ripple All Tracks</source>
         <translation>모든 트랙 잔물결 처리</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="584"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="600"/>
         <source>Copy Timeline to Source</source>
         <translation>소스에 타임 라인 복사</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="496"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="512"/>
         <source>Make Tracks Shorter</source>
         <translation>트랙 짧게 하기</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="500"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="516"/>
         <source>Make Tracks Taller</source>
         <translation>트랙 길게 하기</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="532"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="548"/>
         <source>Show Audio Waveforms</source>
         <translation>오디오 파형 보이기</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="562"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="578"/>
         <source>Show Video Thumbnails</source>
         <translation>비디오 섬네일 보이기</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="568"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="584"/>
         <source>Center the Playhead</source>
         <translation>재생 헤드 가운데로</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="574"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="590"/>
         <source>Scroll to Playhead on Zoom</source>
         <translation>확대/축소 시 재생 헤드로 스크롤</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="581"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="597"/>
         <source>Other</source>
         <translation>기타</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="594"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="610"/>
         <source>Properties</source>
         <translation>속성</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="588"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="604"/>
         <source>Reload</source>
         <translation>다시 불러오기</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="504"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="520"/>
         <source>Reset Track Height</source>
         <translation>트랙 높이 초기화</translation>
     </message>
@@ -9657,15 +9617,15 @@ Most users do not need to change this.</source>
     </message>
     <message>
         <location filename="../src/qml/filters/alpha_adjust/ui.qml" line="69"/>
-        <location filename="../src/qml/filters/pillar_echo/ui.qml" line="235"/>
+        <location filename="../src/qml/filters/pillar_echo/ui.qml" line="239"/>
         <source>Blur</source>
         <translation>흐리게</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/alpha_adjust/ui.qml" line="84"/>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="374"/>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="434"/>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="494"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="376"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="436"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="496"/>
         <location filename="../src/qml/filters/blur_exponential/ui.qml" line="87"/>
         <location filename="../src/qml/filters/blur_gaussian/ui.qml" line="87"/>
         <location filename="../src/qml/filters/blur_lowpass/ui.qml" line="87"/>
@@ -10363,12 +10323,12 @@ Used to correct for excessive amplitude caused by the extra dynamic range.</sour
         <translation>아래</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/crop_rectangle/ui.qml" line="255"/>
+        <location filename="../src/qml/filters/crop_rectangle/ui.qml" line="257"/>
         <location filename="../src/qml/filters/dust/ui.qml" line="59"/>
-        <location filename="../src/qml/filters/gradient/ui.qml" line="336"/>
-        <location filename="../src/qml/filters/pillar_echo/ui.qml" line="203"/>
-        <location filename="../src/qml/filters/spot_remover/ui.qml" line="189"/>
-        <location filename="../src/qml/filters/waveform/ui.qml" line="158"/>
+        <location filename="../src/qml/filters/gradient/ui.qml" line="338"/>
+        <location filename="../src/qml/filters/pillar_echo/ui.qml" line="205"/>
+        <location filename="../src/qml/filters/spot_remover/ui.qml" line="191"/>
+        <location filename="../src/qml/filters/waveform/ui.qml" line="160"/>
         <source>Size</source>
         <translation>크기</translation>
     </message>
@@ -10689,19 +10649,19 @@ Used to correct for excessive amplitude caused by the extra dynamic range.</sour
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="49"/>
-        <location filename="../src/qml/filters/gradient/ui.qml" line="370"/>
+        <location filename="../src/qml/filters/gradient/ui.qml" line="374"/>
         <source>Blend mode</source>
         <translation>합성 모드</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="54"/>
-        <location filename="../src/qml/filters/gradient/ui.qml" line="375"/>
+        <location filename="../src/qml/filters/gradient/ui.qml" line="379"/>
         <source>Over</source>
         <translation>오버</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="55"/>
-        <location filename="../src/qml/filters/gradient/ui.qml" line="376"/>
+        <location filename="../src/qml/filters/gradient/ui.qml" line="380"/>
         <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="247"/>
         <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="281"/>
         <location filename="../src/qml/filters/levels/ui.qml" line="199"/>
@@ -10710,91 +10670,91 @@ Used to correct for excessive amplitude caused by the extra dynamic range.</sour
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="57"/>
-        <location filename="../src/qml/filters/gradient/ui.qml" line="378"/>
+        <location filename="../src/qml/filters/gradient/ui.qml" line="382"/>
         <source>Saturate</source>
         <translation>채도</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="58"/>
-        <location filename="../src/qml/filters/gradient/ui.qml" line="379"/>
+        <location filename="../src/qml/filters/gradient/ui.qml" line="383"/>
         <source>Multiply</source>
         <translation>곱하기</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="59"/>
-        <location filename="../src/qml/filters/gradient/ui.qml" line="380"/>
+        <location filename="../src/qml/filters/gradient/ui.qml" line="384"/>
         <source>Screen</source>
         <translation>화면</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="60"/>
-        <location filename="../src/qml/filters/gradient/ui.qml" line="381"/>
+        <location filename="../src/qml/filters/gradient/ui.qml" line="385"/>
         <source>Overlay</source>
         <translation>오버레이</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="61"/>
-        <location filename="../src/qml/filters/gradient/ui.qml" line="382"/>
+        <location filename="../src/qml/filters/gradient/ui.qml" line="386"/>
         <source>Darken</source>
         <translation>어둡게</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="62"/>
-        <location filename="../src/qml/filters/gradient/ui.qml" line="383"/>
+        <location filename="../src/qml/filters/gradient/ui.qml" line="387"/>
         <source>Dodge</source>
         <translation>닷지</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="63"/>
-        <location filename="../src/qml/filters/gradient/ui.qml" line="384"/>
+        <location filename="../src/qml/filters/gradient/ui.qml" line="388"/>
         <source>Burn</source>
         <translation>번</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="64"/>
-        <location filename="../src/qml/filters/gradient/ui.qml" line="385"/>
+        <location filename="../src/qml/filters/gradient/ui.qml" line="389"/>
         <source>Hard Light</source>
         <translation>하드 라이트</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="65"/>
-        <location filename="../src/qml/filters/gradient/ui.qml" line="386"/>
+        <location filename="../src/qml/filters/gradient/ui.qml" line="390"/>
         <source>Soft Light</source>
         <translation>소프트 라이트</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="66"/>
-        <location filename="../src/qml/filters/gradient/ui.qml" line="387"/>
+        <location filename="../src/qml/filters/gradient/ui.qml" line="391"/>
         <source>Difference</source>
         <translation>차이</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="67"/>
-        <location filename="../src/qml/filters/gradient/ui.qml" line="388"/>
+        <location filename="../src/qml/filters/gradient/ui.qml" line="392"/>
         <source>Exclusion</source>
         <translation>제외</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="68"/>
-        <location filename="../src/qml/filters/gradient/ui.qml" line="389"/>
+        <location filename="../src/qml/filters/gradient/ui.qml" line="393"/>
         <source>HSL Hue</source>
         <translation>HSL 색조</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="69"/>
-        <location filename="../src/qml/filters/gradient/ui.qml" line="390"/>
+        <location filename="../src/qml/filters/gradient/ui.qml" line="394"/>
         <source>HSL Saturation</source>
         <translation>HSL 채도</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="70"/>
-        <location filename="../src/qml/filters/gradient/ui.qml" line="391"/>
+        <location filename="../src/qml/filters/gradient/ui.qml" line="395"/>
         <source>HSL Color</source>
         <translation>HSL 색상</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="71"/>
-        <location filename="../src/qml/filters/gradient/ui.qml" line="392"/>
+        <location filename="../src/qml/filters/gradient/ui.qml" line="396"/>
         <source>HSL Luminosity</source>
         <translation>HSL 광도</translation>
     </message>
@@ -10900,7 +10860,7 @@ Click &quot;Open&quot; to load a file.</source>
         <location filename="../src/qml/filters/bigsh0t_eq_to_rect/ui.qml" line="102"/>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="192"/>
         <location filename="../src/qml/filters/bigsh0t_rect_to_eq/ui.qml" line="79"/>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="267"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="269"/>
         <location filename="../src/qml/filters/bigsh0t_transform_360/ui.qml" line="91"/>
         <location filename="../src/qml/filters/lut3d/ui.qml" line="101"/>
         <source>Interpolation</source>
@@ -10909,7 +10869,7 @@ Click &quot;Open&quot; to load a file.</source>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_to_rect/ui.qml" line="118"/>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="215"/>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="368"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="370"/>
         <location filename="../src/qml/filters/bigsh0t_transform_360/ui.qml" line="107"/>
         <source>Yaw</source>
         <translation>돌리기</translation>
@@ -10917,7 +10877,7 @@ Click &quot;Open&quot; to load a file.</source>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_to_rect/ui.qml" line="135"/>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="232"/>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="429"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="431"/>
         <location filename="../src/qml/filters/bigsh0t_transform_360/ui.qml" line="124"/>
         <source>Pitch</source>
         <translation>음높이</translation>
@@ -10925,7 +10885,7 @@ Click &quot;Open&quot; to load a file.</source>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_to_rect/ui.qml" line="152"/>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="249"/>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="489"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="491"/>
         <location filename="../src/qml/filters/bigsh0t_transform_360/ui.qml" line="141"/>
         <source>Roll</source>
         <translation>굴리기</translation>
@@ -11065,7 +11025,7 @@ Click &quot;Open&quot; to load a file.</source>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="56"/>
         <location filename="../src/qml/filters/corners/ui.qml" line="610"/>
-        <location filename="../src/qml/filters/gradient/ui.qml" line="377"/>
+        <location filename="../src/qml/filters/gradient/ui.qml" line="381"/>
         <location filename="../src/qml/filters/mask/ui.qml" line="186"/>
         <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="187"/>
         <location filename="../src/qml/filters/select0r/ui.qml" line="294"/>
@@ -11355,28 +11315,28 @@ Click &quot;Open&quot; to load a file.</source>
         <translation>글자 크기</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="388"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="390"/>
         <location filename="../src/qml/filters/rotate/ui.qml" line="289"/>
         <source>Background color</source>
         <translation>배경 색상</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="404"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="406"/>
         <source>Overflow</source>
         <translation>오버플로우</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="412"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="414"/>
         <source>Automatic</source>
         <translation>자동</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="421"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="423"/>
         <source>Visible</source>
         <translation>보이기</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="427"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="429"/>
         <source>Hidden</source>
         <translation>숨기기</translation>
     </message>
@@ -11614,62 +11574,62 @@ Click &quot;Open&quot; to load a file.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="243"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="244"/>
         <source>Browse...</source>
         <translation>탐색...</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="250"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="251"/>
         <source>Start Offset</source>
         <translation>시작 오프셋</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="258"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="260"/>
         <source>seconds</source>
         <translation>초</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="284"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="286"/>
         <source>Analysis</source>
         <translation>분석</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="291"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="293"/>
         <source>Apply transform</source>
         <translation>변형 적용</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="298"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="300"/>
         <source>Sample Radius</source>
         <translation>샘플 반지름</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="317"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="319"/>
         <source>Search Radius</source>
         <translation>반지름 검색</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="355"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="357"/>
         <source>Track Points</source>
         <translation>트랙 지점</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="359"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="361"/>
         <source>Use backwards-facing track points</source>
         <translation>역방향 트랙 지점 사용</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="392"/>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="452"/>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="512"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="394"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="454"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="514"/>
         <location filename="../src/qml/filters/stabilize/ui.qml" line="212"/>
         <source>Smoothing</source>
         <translation>부드럽게</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="410"/>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="470"/>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="531"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="412"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="472"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="533"/>
         <source>Time Bias</source>
         <translation>시간 편향</translation>
     </message>
@@ -11832,7 +11792,7 @@ When the Direction is up, the timer will count up starting from Offset.</source>
         <translation>현재 위치에서 종료 길이 설정</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="336"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="338"/>
         <location filename="../src/qml/filters/gradient/ui.qml" line="255"/>
         <location filename="../src/qml/filters/nosync/ui.qml" line="83"/>
         <location filename="../src/qml/filters/timer/ui.qml" line="234"/>
@@ -11991,27 +11951,27 @@ When the Direction is up, the timer will count up starting from Offset.</source>
         <translation>배경 색상</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/waveform/ui.qml" line="179"/>
+        <location filename="../src/qml/filters/waveform/ui.qml" line="183"/>
         <source>Fill</source>
         <translation>채우기</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/waveform/ui.qml" line="185"/>
+        <location filename="../src/qml/filters/waveform/ui.qml" line="189"/>
         <source>Fill the area under the waveform.</source>
         <translation>스펙트럼으로 영역을 채웁니다.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/waveform/ui.qml" line="190"/>
+        <location filename="../src/qml/filters/waveform/ui.qml" line="194"/>
         <source>Combine</source>
         <translation>결합</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/waveform/ui.qml" line="196"/>
+        <location filename="../src/qml/filters/waveform/ui.qml" line="200"/>
         <source>Combine all channels into one waveform.</source>
         <translation>모든 채널을 한 파형으로 결합합니다.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/waveform/ui.qml" line="201"/>
+        <location filename="../src/qml/filters/waveform/ui.qml" line="205"/>
         <source>Window</source>
         <translation>창</translation>
     </message>
@@ -12051,12 +12011,12 @@ When the Direction is up, the timer will count up starting from Offset.</source>
         <translation>시간적</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/crop_rectangle/ui.qml" line="288"/>
+        <location filename="../src/qml/filters/crop_rectangle/ui.qml" line="292"/>
         <source>Corner radius</source>
         <translation>모서리 반경</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/crop_rectangle/ui.qml" line="319"/>
+        <location filename="../src/qml/filters/crop_rectangle/ui.qml" line="323"/>
         <source>Padding color</source>
         <translation>색상 패딩</translation>
     </message>
@@ -12295,7 +12255,7 @@ When the Direction is up, the timer will count up starting from Offset.</source>
     </message>
     <message>
         <location filename="../src/qml/filters/crop_circle/ui.qml" line="152"/>
-        <location filename="../src/qml/filters/crop_rectangle/ui.qml" line="340"/>
+        <location filename="../src/qml/filters/crop_rectangle/ui.qml" line="344"/>
         <source>Transparent</source>
         <translation>투명</translation>
     </message>
@@ -12543,47 +12503,47 @@ When the Direction is up, the timer will count up starting from Offset.</source>
         <translation>위치</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="129"/>
+        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="131"/>
         <source>Size</source>
         <translation>크기</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="150"/>
+        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="154"/>
         <source>Oscillation</source>
         <translation>진동</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="152"/>
+        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="156"/>
         <source>Oscillation can be useful to make the light blink during long periods of sound.</source>
         <translation>진동은 장시간 소리를 내는 동안 빛을 깜빡이게 하는 데 유용할 수 있습니다.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="168"/>
+        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="172"/>
         <source>Low Frequency</source>
         <translation>저주파</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="170"/>
+        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="174"/>
         <source>The low end of the frequency range to be used to influence the light.</source>
         <translation>빛에 영향을 미치는 데 사용할 주파수 범위의 낮은 끝입니다.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="191"/>
+        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="195"/>
         <source>High Frequency</source>
         <translation>고주파</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="193"/>
+        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="197"/>
         <source>The high end of the frequency range to be used to influence the light.</source>
         <translation>빛에 영향을 미치는 데 사용할 주파수 범위의 높은 끝입니다.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="214"/>
+        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="218"/>
         <source>Threshold</source>
         <translation>문턱 값</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="216"/>
+        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="220"/>
         <source>The minimum amplitude of sound that must occur within the frequency range to cause the light to change.</source>
         <translation>빛을 변화시키기 위해 주파수 범위 안에서 발생해야 하는 소리의 최소 진폭입니다.</translation>
     </message>
@@ -12729,72 +12689,72 @@ When the Direction is up, the timer will count up starting from Offset.</source>
         <translation>위치</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="190"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="192"/>
         <source>Size</source>
         <translation>크기</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="211"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="215"/>
         <source>Fill</source>
         <translation>채우기</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="217"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="221"/>
         <source>Fill the area under the spectrum.</source>
         <translation>스펙트럼으로 영역을 채웁니다.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="222"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="226"/>
         <source>Mirror</source>
         <translation>미러</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="228"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="232"/>
         <source>Mirror the spectrum.</source>
         <translation>스펙트럼을 반사시킵니다.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="233"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="237"/>
         <source>Reverse</source>
         <translation>반전</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="239"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="243"/>
         <source>Reverse the spectrum.</source>
         <translation>스펙트럼을 반전시킵니다.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="244"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="248"/>
         <source>Tension</source>
         <translation>장력</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="260"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="264"/>
         <source>Bands</source>
         <translation>밴드</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="276"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="280"/>
         <source>Low Frequency</source>
         <translation>저주파</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="278"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="282"/>
         <source>The low end of the frequency range of the spectrum.</source>
         <translation>스펙트럼 주파수의 가장 낮은 범위입니다.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="299"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="303"/>
         <source>High Frequency</source>
         <translation>고주파</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="301"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="305"/>
         <source>The high end of the frequency range of the spectrum.</source>
         <translation>스펙트럼 주파수의 가장 높은 범위입니다.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="322"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="326"/>
         <source>Threshold</source>
         <translation>문턱 값</translation>
     </message>

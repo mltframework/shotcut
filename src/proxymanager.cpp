@@ -274,10 +274,7 @@ static void processProperties(QXmlStreamWriter& newXml, QVector<MltProperty>& pr
             if (p.first == "resource") {
                 // Convert to relative
                 if (!root.isEmpty() && newResource.startsWith(root)) {
-                    if (root.endsWith('/'))
-                        newResource = newResource.mid(root.size());
-                    else
-                        newResource = newResource.mid(root.size() + 1);
+                    newResource = newResource.mid(root.size());
                 }
                 if (service == "timewarp") {
                     newProperties << MltProperty(p.first, QString("%1:%2").arg(speed).arg(newResource));
@@ -304,13 +301,19 @@ static void processProperties(QXmlStreamWriter& newXml, QVector<MltProperty>& pr
     properties.clear();
 }
 
-bool ProxyManager::filterXML(QString& xmlString, const QString& root)
+bool ProxyManager::filterXML(QString& xmlString, QString root)
 {
     QString output;
     QXmlStreamReader xml(xmlString);
     QXmlStreamWriter newXml(&output);
     bool isPropertyElement = false;
     QVector<MltProperty> properties;
+
+    // This prevents processProperties() from mis-matching a resource path that begins with root
+    // when it is converting to relative paths.
+    if (!root.isEmpty() && root.endsWith('/')) {
+        root.append('/');
+    }
 
     newXml.setAutoFormatting(true);
     newXml.setAutoFormattingIndent(2);

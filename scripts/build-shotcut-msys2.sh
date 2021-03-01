@@ -30,7 +30,7 @@ FREI0R_REVISION=
 ENABLE_MOVIT=1
 SUBDIRS=
 MOVIT_HEAD=0
-MOVIT_REVISION=origin/shotcut
+MOVIT_REVISION="origin/shotcut"
 ENABLE_SWH_PLUGINS=0
 FFMPEG_HEAD=0
 FFMPEG_REVISION="origin/release/4.2"
@@ -42,15 +42,15 @@ SHOTCUT_HEAD=1
 SHOTCUT_REVISION=
 SHOTCUT_VERSION=$(date '+%y.%m.%d')
 ENABLE_BIGSH0T=1
-BIGSH0T_HEAD=1
-BIGSH0T_REVISION=
+BIGSH0T_HEAD=0
+BIGSH0T_REVISION="5fad6d3b5963ce69141e9debcc3b733b84a0842d"
 ENABLE_ZIMG=1
 ZIMG_HEAD=1
 ZIMG_REVISION=
 DAV1D_HEAD=1
 DAV1D_REVISION=
-AOM_HEAD=1
-AOM_REVISION=
+AOM_HEAD=0
+AOM_REVISION="v2.0.2"
 
 
 # QT_INCLUDE_DIR="$(pkg-config --variable=prefix QtCore)/include"
@@ -1032,9 +1032,6 @@ function deploy
     cmd rm -rf lib/cmake lib/pkgconfig lib/gdk-pixbuf-2.0 lib/glib-2.0 lib/gtk-2.0
     cmd rm -rf share/doc share/man share/ffmpeg/examples share/aclocal share/glib-2.0 share/gtk-2.0 share/gtk-doc share/themes share/locale
   fi
-  for exe in *.exe; do
-    cmd touch "${exe}.local"
-  done
   cmd mv COPYING COPYING.txt
 
   log Copying some libs from Qt

@@ -1,4 +1,4 @@
-name: build-shotcut-sdk-windows
+name: build-shotcut-sdk-windows-unstable
 
 on:
   workflow_dispatch:

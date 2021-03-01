@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2019 Meltytech, LLC
+ * Copyright (c) 2011-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -114,7 +114,12 @@ public:
     Application(int &argc, char **argv)
         : QApplication(argc, argv)
     {
-        QDir dir(applicationDirPath());
+        auto appPath = applicationDirPath();
+#ifdef Q_OS_WIN
+#include <winbase.h>
+        SetDllDirectoryA(appPath.toLocal8Bit());
+#endif
+        QDir dir(appPath);
 #ifdef Q_OS_MAC
         dir.cdUp();
         dir.cd("PlugIns");
@@ -227,11 +232,11 @@ public:
 #endif
         LOG_INFO() << "number of logical cores =" << QThread::idealThreadCount();
         LOG_INFO() << "locale =" << QLocale();
-        LOG_INFO() << "install dir =" <<  applicationDirPath();
+        LOG_INFO() << "install dir =" << appPath;
         Settings.log();
 
 #if defined(Q_OS_WIN)
-        dir = applicationDirPath();
+        dir.setPath(appPath);
         if (!Settings.playerGPU() && Settings.drawMethod() == Qt::AA_UseSoftwareOpenGL) {
             if (QFile::exists(dir.filePath("opengl32sw.dll"))) {
                 if (!QFile::copy(dir.filePath("opengl32sw.dll"), dir.filePath("opengl32.dll"))) {
@@ -256,7 +261,7 @@ public:
 #endif
         // Load translations
         QString locale = Settings.language();
-        dir.setPath(applicationDirPath());
+        dir.setPath(appPath);
     #if defined(Q_OS_MAC)
         dir.cdUp();
         dir.cd("Resources");
