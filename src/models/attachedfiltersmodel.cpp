@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 Meltytech, LLC
+ * Copyright (c) 2013-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -345,12 +345,7 @@ void AttachedFiltersModel::add(QmlMetadata* meta)
             LOG_WARNING() << "Not a chain";
         }
         if (meta->mlt_service() == "timeremap" && m_producer->get_int("meta.media.has_b_frames") != 0) {
-            QMessageBox dialog(QMessageBox::Warning,
-               qApp->applicationName(),
-               tr("Time remapping requires edit-friendly video files.\nPlease open Properties and click Convert."),
-               QMessageBox::Ok, &MAIN);
-            dialog.setWindowModality(QmlApplication::dialogModality());
-            dialog.exec();
+            emit requestConvert(tr("This file has B-frames, which is not supported by %1.").arg(meta->name()));
             return;
         }
         Mlt::Link* link = new Mlt::Link(meta->mlt_service().toUtf8().constData());
