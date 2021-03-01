@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2018 Meltytech, LLC
+ * Copyright (c) 2013-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -65,6 +65,7 @@ signals:
     void isProducerSelectedChanged();
     void supportsLinksChanged();
     void addedOrRemoved(Mlt::Producer*);
+    void requestConvert(QString);
 
 public slots:
     void add(QmlMetadata* meta);
