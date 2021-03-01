@@ -206,15 +206,6 @@ void MltXmlChecker::readMlt()
                     const QString name = m_xml.attributes().value("name").toString();
                     m_properties << MltProperty(name, m_xml.readElementText());
                 }
-            } else if (element == "chain") {
-                processProperties();
-                mlt_class = "producer";
-                m_newXml.writeStartElement(m_xml.namespaceUri().toString(), mlt_class);
-                m_isCorrected = true;
-                checkInAndOutPoints(); // This also copies the attributes.
-            } else if (element == "link") {
-                processProperties();
-                mlt_class.clear();
             } else {
                 processProperties();
                 m_newXml.writeStartElement(m_xml.namespaceUri().toString(), element);
@@ -225,7 +216,7 @@ void MltXmlChecker::readMlt()
             break;
         }
         case QXmlStreamReader::EndElement:
-            if (m_xml.name() != "property" && m_xml.name() != "link") {
+            if (m_xml.name() != "property") {
                 processProperties();
                 m_newXml.writeEndElement();
                 if (isMltClass(m_xml.name())) {
