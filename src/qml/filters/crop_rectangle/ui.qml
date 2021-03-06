@@ -367,6 +367,7 @@ Item {
         onOutChanged: updateFilter()
         onAnimateInChanged: updateFilter()
         onAnimateOutChanged: updateFilter()
+        onPropertyChanged: setRatioControls()
     }
 
     Connections {

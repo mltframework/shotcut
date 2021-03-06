@@ -168,6 +168,11 @@ Item {
     }
 
     Connections {
+        target: filter
+        onPropertyChanged: setControls()
+    }
+
+    Connections {
         target: producer
         onPositionChanged: setControls()
     }

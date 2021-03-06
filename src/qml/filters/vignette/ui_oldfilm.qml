@@ -244,6 +244,7 @@ Item {
         onOutChanged: updateSimpleAnimation()
         onAnimateInChanged: updateSimpleAnimation()
         onAnimateOutChanged: updateSimpleAnimation()
+        onPropertyChanged: setKeyframedControls()
     }
 
     Connections {
