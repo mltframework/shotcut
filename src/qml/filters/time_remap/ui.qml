@@ -30,7 +30,7 @@ Item {
         if (filter.isNew) {
             // Set default parameter values
             filter.set('map', 0.0, 0)
-            filter.set('map', filter.duration / profile.fps, filter.duration - 1)
+            filter.set('map', (filter.duration - 1) / profile.fps, filter.duration - 1)
             filter.set('image_mode', 'nearest')
             filter.savePreset(preset.parameters)
         }
