@@ -53,6 +53,7 @@ ToolBar {
             implicitHeight: toolbar.height - 3
             implicitWidth: implicitHeight
             Shotcut.HoverTip { text: qsTr('Set the filter start') }
+            enabled: metadata !== null && metadata.keyframes.allowTrim
             focusPolicy: Qt.NoFocus
             action: Action {
                 icon.name: 'keyframes-filter-in'
@@ -64,6 +65,7 @@ ToolBar {
             implicitHeight: toolbar.height - 3
             implicitWidth: implicitHeight
             Shotcut.HoverTip { text: qsTr('Set the filter end') }
+            enabled: metadata !== null && metadata.keyframes.allowTrim
             focusPolicy: Qt.NoFocus
             action: Action {
                 icon.name: 'keyframes-filter-out'
@@ -75,6 +77,7 @@ ToolBar {
             implicitHeight: toolbar.height - 3
             implicitWidth: implicitHeight
             Shotcut.HoverTip { text: qsTr('Set the first simple keyframe') }
+            enabled: metadata !== null && metadata.keyframes.allowAnimateIn
             focusPolicy: Qt.NoFocus
             action: Action {
                 icon.name: 'keyframes-simple-in'
@@ -86,6 +89,7 @@ ToolBar {
             implicitHeight: toolbar.height - 3
             implicitWidth: implicitHeight
             Shotcut.HoverTip { text: qsTr('Set the second simple keyframe') }
+            enabled: metadata !== null && metadata.keyframes.allowAnimateOut
             focusPolicy: Qt.NoFocus
             action: Action {
                 icon.name: 'keyframes-simple-out'
