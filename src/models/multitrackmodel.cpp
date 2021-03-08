@@ -1612,6 +1612,7 @@ int MultitrackModel::addTransition(int trackIndex, int clipIndex, int position, 
             roles << StartRole;
             roles << InPointRole;
             roles << DurationRole;
+            roles << AudioLevelsRole;
             emit dataChanged(modelIndex, modelIndex, roles);
             emit modified();
             return targetIndex + 1;
