@@ -441,6 +441,10 @@ void MltXmlChecker::checkUnlinkedFile(const QString& mlt_service)
     if (fileName != "vidstab.trf")
     // not the generic <producer> resource
     if (fileName != "<producer>")
+    // not an invalid <tractor>
+    if (fileName != "<tractor>")
+    // not an invalid blank
+    if (mlt_service != "blank" || fileName != "blank")
     // not a URL
     if (!m_resource.info.filePath().isEmpty() && !isNetworkResource(m_resource.info.filePath()))
     // not an image sequence

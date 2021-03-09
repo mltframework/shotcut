@@ -1260,8 +1260,10 @@ void TimelineDock::appendFromPlaylist(Mlt::Playlist *playlist, bool skipProxy)
         if (clipIndex >= 0)
             m_model.removeClip(trackIndex, clipIndex, Settings.timelineRippleAllTracks());
     }
+    disconnect(&m_model, &MultitrackModel::appended, this, &TimelineDock::selectClip);
     MAIN.undoStack()->push(
         new Timeline::AppendCommand(m_model, trackIndex, MLT.XML(playlist), skipProxy));
+    connect(&m_model, &MultitrackModel::appended, this, &TimelineDock::selectClip, Qt::QueuedConnection);
 }
 
 void TimelineDock::splitClip(int trackIndex, int clipIndex)
