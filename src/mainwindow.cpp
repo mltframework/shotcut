@@ -4081,8 +4081,8 @@ void MainWindow::onGLWidgetImageReady()
 {
     Mlt::GLWidget* glw = qobject_cast<Mlt::GLWidget*>(MLT.videoWidget());
     QImage image = glw->image();
+    disconnect(glw, SIGNAL(imageReady()), this, nullptr);
     if (Settings.playerGPU() || Settings.playerPreviewScale()) {
-        disconnect(glw, SIGNAL(imageReady()), this, 0);
         MLT.setPreviewScale(Settings.playerPreviewScale());
     }
     if (!image.isNull()) {
