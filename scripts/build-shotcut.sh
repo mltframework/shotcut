@@ -69,7 +69,7 @@ SHOTCUT_REVISION=
 SHOTCUT_VERSION=$(date '+%y.%m.%d')
 ENABLE_RUBBERBAND=1
 RUBBERBAND_HEAD=0
-RUBBERBAND_REVISION="v1.9"
+RUBBERBAND_REVISION="v1.9.1"
 ENABLE_BIGSH0T=1
 BIGSH0T_HEAD=0
 BIGSH0T_REVISION="5fad6d3b5963ce69141e9debcc3b733b84a0842d"
@@ -860,7 +860,7 @@ function set_globals {
 
   #####
   # rubberband
-  CONFIG[18]="./configure --prefix=$FINAL_INSTALL_DIR --disable-programs --disable-vamp --disable-ladspa"
+  CONFIG[18]="meson setup builddir --prefix=$FINAL_INSTALL_DIR --libdir=$FINAL_INSTALL_DIR/lib"
   if test "$TARGET_OS" = "Win32" -o "$TARGET_OS" = "Win64" ; then
     CONFIG[18]="${CONFIG[18]} --host=$HOST"
   fi
@@ -1570,11 +1570,7 @@ function configure_compile_install_subproject {
 
   # Special hack for rubberband post-configure
   if [ "rubberband" = "$1" ]; then
-    if [ "$TARGET_OS" = "Darwin" ]; then
-      cmd sed -e 's/-Wl,-Bsymbolic//' -i .bak Makefile
-      cmd sed -e 's/-Wl,-soname=$(LIBNAME)$(DYNAMIC_EXTENSION).$(DYNAMIC_ABI_VERSION)//' -i .bak Makefile
-      cmd sed -e 's/\.so/\.dylib/' -i .bak Makefile
-    elif [ "$TARGET_OS" = "Win32" -o "$TARGET_OS" = "Win64" ]; then
+    if [ "$TARGET_OS" = "Win32" -o "$TARGET_OS" = "Win64" ]; then
       cmd grep -q fftw3 rubberband.pc.in || sed 's/-lrubberband/-lrubberband -lfftw3-3 -lsamplerate/' -i rubberband.pc.in
     fi
   fi
@@ -1585,7 +1581,7 @@ function configure_compile_install_subproject {
   feedback_status Building $1 - this could take some time
   if test "movit" = "$1" ; then
     cmd make -j$MAKEJ RANLIB="$RANLIB" libmovit.la || die "Unable to build $1"
-  elif test "dav1d" = "$1" ; then
+  elif test "dav1d" = "$1" -o "rubberband" = "$1" ; then
     cmd ninja -C builddir -j $MAKEJ || die "Unable to build $1"
   elif test "aom" = "$1" ; then
     cmd ninja -j $MAKEJ || die "Unable to build $1"
@@ -1634,7 +1630,7 @@ function configure_compile_install_subproject {
       else
         cmd install -p -c *.so "$FINAL_INSTALL_DIR"/lib/frei0r-1  || die "Unable to install $1"
       fi
-    elif test "dav1d" = "$1" ; then
+    elif test "dav1d" = "$1" -o "rubberband" = "$1" ; then
       cmd meson install -C builddir || die "Unable to install $1"
     elif test "aom" = "$1" ; then
       cmd ninja install || die "Unable to install $1"
@@ -1646,12 +1642,6 @@ function configure_compile_install_subproject {
       X265LIB=$(otool -D "$FINAL_INSTALL_DIR"/lib/libx265.dylib | tail -n 1)
       log X265LIB=$X265LIB
       cmd install_name_tool -id "$FINAL_INSTALL_DIR"/lib/$(basename "$X265LIB") "$FINAL_INSTALL_DIR"/lib/libx265.dylib
-    fi
-    if test "rubberband" = "$1" -a "Darwin" = "$TARGET_OS" ; then
-      # replace @rpath with full path to lib
-      RUBBERBANDLIB=$(otool -D "$FINAL_INSTALL_DIR"/lib/librubberband.dylib | tail -n 1)
-      log RUBBERBANDLIB=$RUBBERBANDLIB
-      cmd install_name_tool -id "$FINAL_INSTALL_DIR"/lib/$(basename "$RUBBERBANDLIB") "$FINAL_INSTALL_DIR"/lib/librubberband.dylib
     fi
     if test "vid.stab" = "$1" -a "Darwin" = "$TARGET_OS" ; then
       cmd sed -e 's/-fopenmp//' -i .bak "$FINAL_INSTALL_DIR/lib/pkgconfig/vidstab.pc"
