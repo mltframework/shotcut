@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 Meltytech, LLC
+ * Copyright (c) 2013-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -171,6 +171,7 @@ QmlKeyframesMetadata::QmlKeyframesMetadata(QObject* parent)
     , m_allowAnimateIn(false)
     , m_allowAnimateOut(false)
     , m_enabled(true)
+    , m_allowSmooth(true)
 {
 }
 

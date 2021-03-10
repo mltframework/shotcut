@@ -138,6 +138,7 @@ Rectangle {
                 text: qsTr('Smooth')
                 checkable: true
                 checked: interpolation === KeyframesModel.SmoothInterpolation
+                enabled: metadata.keyframes.allowSmooth
                 onTriggered: parameters.setInterpolation(parameterIndex, index, KeyframesModel.SmoothInterpolation)
             }
         }
