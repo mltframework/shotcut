@@ -11,7 +11,7 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
 
     steps:
       - uses: actions/checkout@v2
@@ -72,7 +72,7 @@ jobs:
             put packaging/linux/out/*.AppImage s3://builds.us.meltytech/shotcut/
 
       - name: Install Snapcraft
-        uses: samuelmeuli/action-snapcraft@v1
+        uses: samuelmeuli/action-snapcraft@v1.2.0
         with:
           snapcraft_token: ${{ secrets.SNAPCRAFT_TOKEN }}
           use_lxd: true
