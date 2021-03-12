@@ -378,15 +378,13 @@ mac {
     # pkg-config such that the PKG_CONFIG_PATH env var is not set.
     isEmpty(MLT_PREFIX) {
         MLT_PREFIX = /opt/local
-    }
-    isEmpty(PREFIX) {
-        INCLUDEPATH += $$MLT_PREFIX/include/mlt++
-        INCLUDEPATH += $$MLT_PREFIX/include/mlt
-        LIBS += -L$$MLT_PREFIX/lib -lmlt++ -lmlt
-    } else {
         INCLUDEPATH += $$PREFIX/Contents/Frameworks/include/mlt++
         INCLUDEPATH += $$PREFIX/Contents/Frameworks/include/mlt
         LIBS += -L$$PREFIX/Contents/Frameworks -lmlt++ -lmlt
+    } else {
+        INCLUDEPATH += $$MLT_PREFIX/include/mlt++
+        INCLUDEPATH += $$MLT_PREFIX/include/mlt
+        LIBS += -L$$MLT_PREFIX/lib -lmlt++ -lmlt
     }
 }
 win32 {
