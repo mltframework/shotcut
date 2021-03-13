@@ -58,7 +58,7 @@ MultiFileExportDialog::MultiFileExportDialog(QString title, Mlt::Playlist* playl
     // Directory
     glayout->addWidget(new QLabel(tr("Directory")), col, 0, Qt::AlignRight);
     QHBoxLayout* dirHbox = new QHBoxLayout();
-    m_dir = new QLineEdit(directory);
+    m_dir = new QLineEdit(QDir::toNativeSeparators(directory));
     m_dir->setReadOnly(true);
     QPushButton* browseButton = new QPushButton(this);
     browseButton->setIcon(QIcon::fromTheme("document-open", QIcon(":/icons/oxygen/32x32/actions/document-open.png")));
@@ -209,7 +209,7 @@ void MultiFileExportDialog::rebuildList()
         filename = appendField(filename, m_field2, i);
         filename = appendField(filename, m_field3, i);
         if (!filename.isEmpty()) {
-            filename = m_dir->text() + "/" + filename + "." + m_ext->text();
+            filename = m_dir->text() + QDir::separator() + filename + "." + m_ext->text();
             m_stringList << filename;
         }
     }
