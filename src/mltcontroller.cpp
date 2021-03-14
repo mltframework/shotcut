@@ -880,7 +880,7 @@ QImage Controller::image(Mlt::Frame* frame, int width, int height)
             frame->set("deinterlace_method", "onefield");
             frame->set("top_field_first", -1);
         }
-        mlt_image_format format = mlt_image_rgb24a;
+        mlt_image_format format = mlt_image_rgba;
         const uchar *image = frame->get_image(format, width, height);
         if (image) {
             QImage temp(width, height, QImage::Format_ARGB32);

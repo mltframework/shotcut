@@ -99,7 +99,7 @@ Mlt::Producer* ColorProducerWidget::newProducer(Mlt::Profile& profile)
 {
     Mlt::Producer* p = new Mlt::Producer(profile, "color:");
     p->set("resource", colorStringToResource(ui->colorLabel->text()).toLatin1().constData());
-    p->set("mlt_image_format", "rgb24a");
+    p->set("mlt_image_format", "rgba");
     MLT.setDurationFromDefault(p);
     if (ui->lineEdit->text().isEmpty() || ui->lineEdit->text() == m_title) {
         p->set(kShotcutCaptionProperty, ui->colorLabel->text().toLatin1().constData());

@@ -55,7 +55,7 @@ void VideoHistogramScopeWidget::refreshScope(const QSize& size, bool full)
 
     if (m_frame.is_valid() && m_frame.get_image_width() && m_frame.get_image_height()) {
         const uint8_t* pYUV = m_frame.get_image(mlt_image_yuv420p);
-        const uint8_t* pRGB = m_frame.get_image(mlt_image_rgb24);
+        const uint8_t* pRGB = m_frame.get_image(mlt_image_rgb);
         size_t count = m_frame.get_image_width() * m_frame.get_image_height();
         unsigned int* pYbin = yBins.data();
         unsigned int* pRbin = rBins.data();
