@@ -561,22 +561,28 @@ void GLWidget::createThread(RenderThread **thread, thread_function_t function, v
     (*thread)->start();
 }
 
-static void onThreadCreate(mlt_properties owner, GLWidget* self,
-    RenderThread** thread, int* priority, thread_function_t function, void* data )
+static void onThreadCreate(mlt_properties owner, GLWidget* self, mlt_event_data data)
 {
     Q_UNUSED(owner)
-    Q_UNUSED(priority)
-    self->createThread(thread, function, data);
+    auto threadData = (mlt_event_data_thread*) Mlt::EventData(data).to_object();
+    if (threadData) {
+        auto renderThread = (RenderThread*) threadData->thread;
+        self->createThread(&renderThread, threadData->function, threadData->data);
+    }
 }
 
-static void onThreadJoin(mlt_properties owner, GLWidget* self, RenderThread* thread)
+static void onThreadJoin(mlt_properties owner, GLWidget* self, mlt_event_data data)
 {
     Q_UNUSED(owner)
     Q_UNUSED(self)
-    if (thread) {
-        thread->quit();
-        thread->wait();
-        delete thread;
+    auto threadData = (mlt_event_data_thread*) Mlt::EventData(data).to_object();
+    if (threadData) {
+        auto renderThread = (RenderThread*) threadData->thread;
+        if (renderThread) {
+            renderThread->quit();
+            renderThread->wait();
+            delete renderThread;
+        }
     }
 }
 
@@ -659,8 +665,8 @@ int GLWidget::reconfigure(bool isMulti)
         m_threadStopEvent = 0;
 
         delete m_threadCreateEvent;
-        m_threadCreateEvent = m_consumer->listen("consumer-thread-create", this, (mlt_listener) onThreadCreate);
         delete m_threadJoinEvent;
+        m_threadCreateEvent = m_consumer->listen("consumer-thread-create", this, (mlt_listener) onThreadCreate);
         m_threadJoinEvent = m_consumer->listen("consumer-thread-join", this, (mlt_listener) onThreadJoin);
     }
     if (m_consumer->is_valid()) {
@@ -827,11 +833,10 @@ void GLWidget::updateTexture(GLuint yName, GLuint uName, GLuint vName)
 }
 
 // MLT consumer-frame-show event handler
-void GLWidget::on_frame_show(mlt_consumer, void* self, mlt_frame frame_ptr)
+void GLWidget::on_frame_show(mlt_consumer, GLWidget* widget, mlt_event_data data)
 {
-    Mlt::Frame frame(frame_ptr);
-    if (frame.get_int("rendered")) {
-        GLWidget* widget = static_cast<GLWidget*>(self);
+    auto frame = Mlt::EventData(data).to_frame();
+    if (frame.is_valid() && frame.get_int("rendered")) {
         int timeout = (widget->consumer()->get_int("real_time") > 0)? 0: 1000;
         if (widget->m_frameRenderer && widget->m_frameRenderer->semaphore()->tryAcquire(1, timeout)) {
             QMetaObject::invokeMethod(widget->m_frameRenderer, "showFrame", Qt::QueuedConnection, Q_ARG(Mlt::Frame, frame));
