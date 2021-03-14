@@ -379,7 +379,7 @@ void GLWidget::paintGL()
     } else if (m_glslManager) {
         m_mutex.lock();
         if (m_sharedFrame.is_valid()) {
-            m_texture[0] = *((GLuint*) m_sharedFrame.get_image(mlt_image_glsl_texture));
+            m_texture[0] = *((GLuint*) m_sharedFrame.get_image(mlt_image_opengl_texture));
         }
     }
 
@@ -917,7 +917,7 @@ void FrameRenderer::showFrame(Mlt::Frame frame)
             int width = 0;
             int height = 0;
             frame.set("movit.convert.use_texture", 1);
-            mlt_image_format format = mlt_image_glsl_texture;
+            mlt_image_format format = mlt_image_opengl_texture;
             const GLuint* textureId = (GLuint*) frame.get_image(format, width, height);
 
             m_context->makeCurrent(m_surface);
