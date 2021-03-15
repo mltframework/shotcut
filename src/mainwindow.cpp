@@ -1017,11 +1017,10 @@ bool MainWindow::saveRepairedXmlFile(MltXmlChecker& checker, QString& fileName)
         .arg(fi.completeBaseName()).arg(tr("Repaired")).arg(fi.suffix()));
     repaired.open(QIODevice::WriteOnly);
     LOG_INFO() << "repaired MLT XML file name" << repaired.fileName();
-    QFile temp(checker.tempFileName());
-    if (temp.exists() && repaired.exists()) {
-        temp.open(QIODevice::ReadOnly);
-        QByteArray xml = temp.readAll();
-        temp.close();
+    if (checker.tempFile().exists()) {
+        checker.tempFile().open();
+        QByteArray xml = checker.tempFile().readAll();
+        checker.tempFile().close();
 
         qint64 n = repaired.write(xml);
         while (n > 0 && n < xml.size()) {
@@ -1393,7 +1392,7 @@ void MainWindow::open(QString url, const Mlt::Properties* properties, bool play)
         checker.setLocale();
         LOG_INFO() << "decimal point" << MLT.decimalPoint();
     }
-    QString urlToOpen = checker.isUpdated()? checker.tempFileName() : url;
+    QString urlToOpen = checker.isUpdated()? checker.tempFile().fileName() : url;
     if (!MLT.open(QDir::fromNativeSeparators(urlToOpen), QDir::fromNativeSeparators(url))
             && MLT.producer() && MLT.producer()->is_valid()) {
         Mlt::Properties* props = const_cast<Mlt::Properties*>(properties);
@@ -4643,7 +4642,7 @@ void MainWindow::on_actionUseProxy_triggered(bool checked)
             }
             if (checker.isUpdated()) {
                 QFile::remove(fileName);
-                fileName = checker.tempFileName();
+                fileName = checker.tempFile().fileName();
             }
 
             // Open the temporary file

@@ -52,7 +52,7 @@ public:
     bool hasEffects() const { return m_hasEffects; }
     bool isCorrected() const { return m_isCorrected; }
     bool isUpdated() const { return m_isUpdated; }
-    QString tempFileName() const { return m_tempFile->fileName(); }
+    QTemporaryFile& tempFile() const { return *m_tempFile; }
     QStandardItemModel& unlinkedFilesModel() { return m_unlinkedFilesModel; }
     void setLocale();
     bool usesLocale() const { return m_usesLocale; }
