@@ -193,7 +193,7 @@ function to_key {
     shotcut)
       echo 7
     ;;
-    swh-plugins)
+    ladspa)
       echo 8
     ;;
     vid.stab)
@@ -414,7 +414,7 @@ function set_globals {
         SUBDIRS="mfx_dispatch $SUBDIRS"
     fi
     if test "$ENABLE_SWH_PLUGINS" = "1" && test "$TARGET_OS" = "Darwin" -o "$TARGET_OS" = "Linux"; then
-        SUBDIRS="swh-plugins $SUBDIRS"
+        SUBDIRS="ladspa $SUBDIRS"
     fi
     if test "$ENABLE_VIDSTAB" = 1 ; then
         SUBDIRS="vid.stab $SUBDIRS"
@@ -467,7 +467,7 @@ function set_globals {
   REPOLOCS[4]="https://chromium.googlesource.com/webm/libvpx.git"
   REPOLOCS[5]="git://github.com/ddennedy/movit.git"
   REPOLOCS[7]="git://github.com/mltframework/shotcut.git"
-  REPOLOCS[8]="http://ftp.us.debian.org/debian/pool/main/s/swh-plugins/swh-plugins_0.4.15+1.orig.tar.gz"
+  REPOLOCS[8]="git://github.com/swh/ladspa.git"
   REPOLOCS[10]="git://github.com/georgmartius/vid.stab.git"
   REPOLOCS[12]="https://github.com/xiph/opus.git"
   REPOLOCS[13]="https://github.com/videolan/x265"
@@ -489,7 +489,7 @@ function set_globals {
   REPOTYPES[4]="git"
   REPOTYPES[5]="git"
   REPOTYPES[7]="git"
-  REPOTYPES[8]="http-tgz"
+  REPOTYPES[8]="git"
   REPOTYPES[9]="git"
   REPOTYPES[10]="git"
   REPOTYPES[12]="git"
@@ -533,7 +533,7 @@ function set_globals {
   if test 0 = "$SHOTCUT_HEAD" -a "$SHOTCUT_REVISION" ; then
     REVISIONS[7]="$SHOTCUT_REVISION"
   fi
-  REVISIONS[8]="swh-plugins-0.4.15+1"
+  REVISIONS[8]=""
   REVISIONS[10]=""
   if test 0 = "$VIDSTAB_HEAD" -a "$VIDSTAB_REVISION" ; then
     REVISIONS[10]="$VIDSTAB_REVISION"
@@ -1556,6 +1556,11 @@ function configure_compile_install_subproject {
   if test "aom" = "$1"; then
     cmd mkdir -p ../build-aom
     cmd cd ../build-aom || die "Unable to change to directory aom/builddir"
+  fi
+
+  # Special hack for swh-plugins
+  if test "ladspa" = "$1"; then
+    cmd autoreconf -i
   fi
 
   if test "$MYCONFIG" != ""; then
