@@ -90,7 +90,6 @@ AvformatProducerWidget::AvformatProducerWidget(QWidget *parent)
     , ui(new Ui::AvformatProducerWidget)
     , m_defaultDuration(-1)
     , m_recalcDuration(true)
-    , m_userDefinedCaption(false)
 {
     ui->setupUi(this);
     ui->timelineDurationText->setFixedWidth(ui->durationSpinBox->width());
@@ -294,15 +293,8 @@ void AvformatProducerWidget::onFrameDecoded()
         else
             caption = name;
         m_producer->set(kShotcutCaptionProperty, caption.toUtf8().constData());
-        ui->filenameLabel->setText(ui->filenameLabel->fontMetrics().elidedText(caption, Qt::ElideLeft, width() - 30));
-        m_userDefinedCaption = false;
-    } else {
-        ui->filenameLabel->setText(ui->filenameLabel->fontMetrics().elidedText(caption, Qt::ElideLeft, width() - 30));
-        auto computedCaption = name;
-        if (warpSpeed != 1.0)
-            computedCaption = QString("%1 (%2x)").arg(name).arg(warpSpeed);
-        m_userDefinedCaption = caption != computedCaption;
     }
+    ui->filenameLabel->setText(ui->filenameLabel->fontMetrics().elidedText(caption, Qt::ElideLeft, width() - 30));
     ui->filenameLabel->setToolTip(resource);
     ui->notesTextEdit->setPlainText(QString::fromUtf8(m_producer->get(kCommentProperty)));
     ui->durationSpinBox->setValue(m_producer->get_length());

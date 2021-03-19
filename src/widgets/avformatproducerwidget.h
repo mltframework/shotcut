@@ -124,7 +124,6 @@ private:
     int m_defaultDuration;
     bool m_recalcDuration;
     bool m_askToConvert;
-    bool m_userDefinedCaption;
 
     void reopen(Mlt::Producer* p);
     void recreateProducer();
