@@ -294,7 +294,8 @@ void AvformatProducerWidget::onFrameDecoded()
             caption = name;
         m_producer->set(kShotcutCaptionProperty, caption.toUtf8().constData());
     }
-    ui->filenameLabel->setText(ui->filenameLabel->fontMetrics().elidedText(caption, Qt::ElideLeft, width() - 30));
+    ui->filenameLabel->setText(caption);
+    ui->filenameLabel->setCursorPosition(caption.length());
     ui->filenameLabel->setToolTip(resource);
     ui->notesTextEdit->setPlainText(QString::fromUtf8(m_producer->get(kCommentProperty)));
     ui->durationSpinBox->setValue(m_producer->get_length());
