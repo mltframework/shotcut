@@ -392,10 +392,10 @@ void EncodeDock::onProducerOpened()
     ui->fromCombo->clear();
     if (MAIN.isMultitrackValid())
         ui->fromCombo->addItem(tr("Timeline"), "timeline");
-    if (MAIN.playlist() && MAIN.playlist()->count() > 0)
+    if (MAIN.playlist() && MAIN.playlist()->count() > 0) {
         ui->fromCombo->addItem(tr("Playlist"), "playlist");
-    if (MAIN.playlist() && MAIN.playlist()->count() > 1)
         ui->fromCombo->addItem(tr("Each Playlist Item"), "batch");
+    }
     if (MLT.isClip() && MLT.producer() && MLT.producer()->is_valid()
             && qstrcmp("_hide", MLT.producer()->get("resource"))) {
         ui->fromCombo->addItem(tr("Source"), "clip");
@@ -1119,7 +1119,7 @@ void EncodeDock::enqueueMelt(const QStringList& targets, int realtime)
             &&  ui->dualPassCheckbox->isEnabled() && ui->dualPassCheckbox->isChecked())? 1 : 0;
     if (!service) {
         // For each playlist item.
-        if (MAIN.playlist() && MAIN.playlist()->count() > 1) {
+        if (MAIN.playlist() && MAIN.playlist()->count() > 0) {
             int n = MAIN.playlist()->count();
             for (int i = 0; i < n; i++) {
                 QScopedPointer<Mlt::ClipInfo> info(MAIN.playlist()->clip_info(i));
