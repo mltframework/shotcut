@@ -124,6 +124,7 @@ function usage {
   echo "Usage: $0 [-c config-file] [-o target-os] [-s] [-t] [-h]"
   echo "Where:"
   echo -e "\t-c config-file\tDefaults to $CONFIGFILE"
+  echo -e "\t-a target-arch\tDefaults to $(uname -m)"
   echo -e "\t-o target-os\tDefaults to $(uname -s); use Win32 or Win64 to cross-compile"
   echo -e "\t-s\t\tbuild SDK"
   echo -e "\t-t\t\tSpawn into sep. process"
@@ -136,7 +137,7 @@ function usage {
 function parse_args {
   CONFIGFILEOPT=""
   DETACH=0
-  while getopts ":tsc:o:v:" OPT; do
+  while getopts ":tsc:a:o:v:" OPT; do
     case $OPT in
       c ) CONFIGFILEOPT=$OPTARG
           echo Setting configfile to $CONFIGFILEOPT
@@ -145,6 +146,7 @@ function parse_args {
       t ) DETACH=1;;
       h ) usage
           exit 0;;
+      a ) TARGET_ARCH=$OPTARG;;
       o ) TARGET_OS=$OPTARG;;
       v ) SHOTCUT_VERSION=$OPTARG;;
       * ) echo "Unknown option $OPT"
@@ -364,6 +366,7 @@ function set_globals {
   trace "Entering set_globals @ = $@"
   # Set convenience variables.
   test "$TARGET_OS" = "" && TARGET_OS="$(uname -s)"
+  test "$TARGET_ARCH" = "" && TARGET_ARCH="$(uname -m)"
   if test 1 = "$ACTION_GET" ; then
     GET=1
   else
@@ -626,7 +629,7 @@ function set_globals {
     export CMAKE_ROOT="${SOURCE_DIR}/vid.stab/cmake"
     export PKG_CONFIG=pkg-config
   elif test "$TARGET_OS" = "Darwin"; then
-    export QTDIR="$HOME/Qt/$QT_VERSION_DARWIN/clang_64"
+    [ "$QTDIR" = "" ] && export QTDIR="$HOME/Qt/$QT_VERSION_DARWIN/clang_64"
     export RANLIB=ranlib
   else
     if test -z "$QTDIR" ; then
@@ -693,7 +696,7 @@ function set_globals {
     CONFIG[0]="${CONFIG[0]} --cross-prefix=$CROSS --arch=x86_64 --target-os=mingw32 --pkg-config=pkg-config"
     CFLAGS_[0]="${CFLAGS_[0]} -I$FINAL_INSTALL_DIR/include/SDL2"
     LDFLAGS_[0]="$LDFLAGS"
-  else
+  elif test "$TARGET_OS" != "Darwin" -o "$TARGET_ARCH" != "arm64"; then
     CONFIG[0]="${CONFIG[0]} --enable-libjack"
     LDFLAGS_[0]="-L$FINAL_INSTALL_DIR/lib $LDFLAGS"
   fi
@@ -720,6 +723,7 @@ function set_globals {
   fi
   CFLAGS_[1]="-I$FINAL_INSTALL_DIR/include $ASAN_CFLAGS $CFLAGS"
   if [ "$TARGET_OS" = "Darwin" ]; then
+    [ "$TARGET_ARCH" = "arm64" ] &&  CONFIG[1]="${CONFIG[1]} --without-jack --ladspa-prefix=/Users/ddennedy/opt"
     CFLAGS_[1]="${CFLAGS_[1]} -I/opt/local/include -DRELOCATABLE"
     LDFLAGS_[1]="${LDFLAGS_[1]} -L/opt/local/lib/libomp"
   fi
@@ -749,11 +753,12 @@ function set_globals {
 
   ####
   # libvpx
-  CONFIG[4]="./configure --prefix=$FINAL_INSTALL_DIR --enable-vp8 --enable-postproc --enable-multithread --enable-runtime-cpu-detect --disable-install-docs --disable-debug-libs --disable-examples --disable-unit-tests --extra-cflags=-std=c99 $CONFIGURE_DEBUG_FLAG"
+  CONFIG[4]="./configure --prefix=$FINAL_INSTALL_DIR --enable-vp8 --enable-postproc --enable-multithread --disable-install-docs --disable-debug-libs --disable-examples --disable-unit-tests --extra-cflags=-std=c99 $CONFIGURE_DEBUG_FLAG"
+  [ "$TARGET_ARCH" != "arm64" ] && CONFIG[4]="${CONFIG[4]} --enable-runtime-cpu-detect"
   if test "$TARGET_OS" = "Linux" ; then
     CONFIG[4]="${CONFIG[4]} --enable-shared"
   elif test "$TARGET_OS" = "Darwin" ; then
-    CONFIG[4]="${CONFIG[4]} --disable-avx512"
+    [ "$TARGET_ARCH" != "arm64" ] && CONFIG[4]="${CONFIG[4]} --disable-avx512"
   elif test "$TARGET_OS" = "Win32" ; then
     CONFIG[4]="${CONFIG[4]} --target=x86-win32-gcc"
   elif test "$TARGET_OS" = "Win64" ; then
@@ -795,10 +800,12 @@ function set_globals {
 
   #####
   # swh-plugins
-  CONFIG[8]="./configure --prefix=$FINAL_INSTALL_DIR --enable-sse"
+  CONFIG[8]="./configure --prefix=$FINAL_INSTALL_DIR"
   if [ "$TARGET_OS" = "Darwin" ]; then
     CONFIG[8]="${CONFIG[8]} --enable-darwin"
-    CFLAGS_[8]="-march=nocona $CFLAGS"
+    [ "$TARGET_ARCH" != "arm64" ] && CFLAGS_[8]="--enable-sse -march=nocona $CFLAGS"
+  elif [ "$TARGET_ARCH" != "arm64" ]; then
+    CONFIG[8]="${CONFIG[8]} --enable-sse"
   fi
   LDFLAGS_[8]=$LDFLAGS
 
@@ -808,7 +815,7 @@ function set_globals {
   if test "$TARGET_OS" = "Win32" -o "$TARGET_OS" = "Win64" ; then
       CONFIG[10]="${CONFIG[10]} -DCMAKE_TOOLCHAIN_FILE=my.cmake"
   elif test "$TARGET_OS" = "Darwin" ; then
-    CONFIG[10]="${CONFIG[10]} -DCMAKE_C_COMPILER=gcc-mp-5 -DCMAKE_CXX_COMPILER=g++-mp-5"
+    [ "$TARGET_ARCH" != "arm64" ] && CONFIG[10]="${CONFIG[10]} -DCMAKE_C_COMPILER=gcc-mp-5 -DCMAKE_CXX_COMPILER=g++-mp-5"
   fi
   CFLAGS_[10]=$CFLAGS
   LDFLAGS_[10]=$LDFLAGS
@@ -873,7 +880,7 @@ function set_globals {
   if test "$TARGET_OS" = "Win32" -o "$TARGET_OS" = "Win64" ; then
       CONFIG[19]="${CONFIG[19]} -DCMAKE_TOOLCHAIN_FILE=my.cmake"
   elif test "$TARGET_OS" = "Darwin" ; then
-    CONFIG[19]="${CONFIG[19]} -DCMAKE_C_COMPILER=gcc-mp-5 -DCMAKE_CXX_COMPILER=g++-mp-5"
+    [ "$TARGET_ARCH" != "arm64" ] && CONFIG[19]="${CONFIG[19]} -DCMAKE_C_COMPILER=gcc-mp-5 -DCMAKE_CXX_COMPILER=g++-mp-5"
   fi
   CFLAGS_[19]=$CFLAGS
   LDFLAGS_[19]=$LDFLAGS
@@ -907,7 +914,8 @@ function set_globals {
 
   #####
   # aom
-  CONFIG[22]="cmake -GNinja -DCMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR $CMAKE_DEBUG_FLAG -DBUILD_SHARED_LIBS=1 -DENABLE_EXAMPLES=0 -DENABLE_TESTS=0 ../aom"
+  CONFIG[22]="cmake -GNinja -DCMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR $CMAKE_DEBUG_FLAG -DBUILD_SHARED_LIBS=1 -DENABLE_DOCS=0 -DENABLE_EXAMPLES=0 -DENABLE_TESTDATA=0 -DENABLE_TESTS=0 -DENABLE_TOOLS=0 ../aom"
+  [ "$TARGET_OS" = "Darwin" -a "$TARGET_ARCH" = "arm64" ] && CONFIG[22]="${CONFIG[22]} -DCONFIG_RUNTIME_CPU_DETECT=0"
   CFLAGS_[22]=$CFLAGS
   LDFLAGS_[22]=$LDFLAGS
 }
@@ -1194,8 +1202,15 @@ function get_subproject {
 
               feedback_status "Pulling git sources for $1"
               cmd git reset --hard || die "Unable to reset git tree for $1"
-              cmd git checkout master || die "Unable to git checkout master"
-              cmd git --no-pager pull $REPOLOC master || die "Unable to git pull sources for $1"
+              if [ "$1" = "rubberband" ]; then
+                MAIN_GIT_BRANCH=default
+              elif [ "$1" = "bigsh0t" ]; then
+                MAIN_GIT_BRANCH=main
+              else
+                MAIN_GIT_BRANCH=master
+              fi
+              cmd git checkout $MAIN_GIT_BRANCH || die "Unable to git checkout $MAIN_GIT_BRANCH"
+              cmd git --no-pager pull $REPOLOC $MAIN_GIT_BRANCH || die "Unable to git pull sources for $1"
               cmd git checkout $REVISION || die "Unable to git checkout $REVISION"
           else
               # A dir with the expected name, but not a git repo, bailing out
@@ -2027,6 +2042,9 @@ function deploy_osx
       sync
       cmd hdiutil create -fs HFS+ -srcfolder staging -volname Shotcut -format UDBZ -size 800m "$dmg_name"
 
+      # signing not currently working on M1
+      if [ "$TARGET_ARCH" != "arm64" ]; then
+
       log Signing code and resources
       cmd find staging/Shotcut.app/Contents/Frameworks -type f -exec codesign -v -s Meltytech {} \;
       cmd find staging/Shotcut.app/Contents/PlugIns -type f -exec codesign -v -s Meltytech {} \;
@@ -2041,6 +2059,8 @@ function deploy_osx
       cmd rm "$dmg_name" 2>/dev/null
       sync
       cmd hdiutil create -fs HFS+ -srcfolder staging -volname Shotcut -format UDBZ -size 800m "$dmg_name"
+
+      fi # !arm64
 
       if [ "$ACTION_CLEANUP" = "1" ]; then
         cmd rm -rf staging
