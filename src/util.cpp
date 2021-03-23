@@ -139,10 +139,6 @@ QString Util::producerTitle(const Mlt::Producer& producer)
 {
     QString result;
     Mlt::Producer& p = const_cast<Mlt::Producer&>(producer);
-    if (p.type() == mlt_service_chain_type) {
-        Mlt::Chain chain(p);
-        return producerTitle(chain.get_source());
-    }
     if (!p.is_valid() || p.is_blank()) return result;
     if (p.get(kShotcutTransitionProperty))
         return QObject::tr("Transition");
