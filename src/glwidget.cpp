@@ -666,8 +666,10 @@ int GLWidget::reconfigure(bool isMulti)
 
         delete m_threadCreateEvent;
         delete m_threadJoinEvent;
-        m_threadCreateEvent = m_consumer->listen("consumer-thread-create", this, (mlt_listener) onThreadCreate);
-        m_threadJoinEvent = m_consumer->listen("consumer-thread-join", this, (mlt_listener) onThreadJoin);
+        if (m_glslManager) {
+            m_threadCreateEvent = m_consumer->listen("consumer-thread-create", this, (mlt_listener) onThreadCreate);
+            m_threadJoinEvent = m_consumer->listen("consumer-thread-join", this, (mlt_listener) onThreadJoin);
+        }
     }
     if (m_consumer->is_valid()) {
         // Connect the producer to the consumer - tell it to "run" later
