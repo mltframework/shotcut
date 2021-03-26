@@ -521,7 +521,7 @@ static void setIfNotSet(Mlt::Properties* properties, const char* name, T value)
          properties->set(name, value);
 }
 
-Mlt::Properties* EncodeDock::collectProperties(int realtime)
+Mlt::Properties* EncodeDock::collectProperties(int realtime, bool includeProfile)
 {
     Mlt::Properties* p = new Mlt::Properties;
     if (p && p->is_valid()) {
@@ -778,20 +778,21 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
                     setIfNotSet(p, "connection_type", "x11");
                 }
             }
-            if (ui->widthSpinner->value() != MLT.profile().width()) {
+            if (includeProfile || ui->widthSpinner->value() != MLT.profile().width()) {
                 setIfNotSet(p, "width", ui->widthSpinner->value());
             }
-            if (ui->heightSpinner->value() != MLT.profile().height()) {
+            if (includeProfile || ui->heightSpinner->value() != MLT.profile().height()) {
                 setIfNotSet(p, "height", ui->heightSpinner->value());
             }
             if (ui->previewScaleCheckBox->isChecked() && !p->get("scale") && Settings.playerPreviewScale() > 0) {
                 p->set("scale", double(Settings.playerPreviewScale()) / MLT.profile().height());
             }
-            if (ui->aspectNumSpinner->value() != MLT.profile().display_aspect_num() ||
+            if (includeProfile ||
+                ui->aspectNumSpinner->value() != MLT.profile().display_aspect_num() ||
                 ui->aspectDenSpinner->value() != MLT.profile().display_aspect_den()) {
                 setIfNotSet(p, "aspect", double(ui->aspectNumSpinner->value()) / double(ui->aspectDenSpinner->value()));
             }
-            if (ui->scanModeCombo->currentIndex() != MLT.profile().progressive()) {
+            if (includeProfile || ui->scanModeCombo->currentIndex() != MLT.profile().progressive()) {
                 setIfNotSet(p, "progressive", ui->scanModeCombo->currentIndex());
             }
             setIfNotSet(p, "top_field_first", ui->fieldOrderCombo->currentIndex());
@@ -826,7 +827,7 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
             // If the frame rate is not specified in Other.
             if (!p->get("r") && !(p->get("frame_rate_num") && p->get("frame_rate_den"))
                 // Only if the frame rate spinner does not match the profile.
-                && qRound(ui->fpsSpinner->value() * 1000000.0) != qRound(MLT.profile().fps() * 1000000.0))
+                && (includeProfile || qRound(ui->fpsSpinner->value() * 1000000.0) != qRound(MLT.profile().fps() * 1000000.0)))
             {
                 // Convert some common non-integer frame rates to fractions.
                 if (qRound(ui->fpsSpinner->value() * 1000000.0) == 23976024) {
@@ -1600,7 +1601,7 @@ void EncodeDock::on_streamButton_clicked()
 
 void EncodeDock::on_addPresetButton_clicked()
 {
-    QScopedPointer<Mlt::Properties> data(collectProperties(0));
+    QScopedPointer<Mlt::Properties> data(collectProperties(0, true));
     AddEncodePresetDialog dialog(this);
     QStringList ls;
 

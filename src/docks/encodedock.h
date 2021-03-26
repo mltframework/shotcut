@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2020 Meltytech, LLC
+ * Copyright (c) 2012-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -148,7 +148,7 @@ private:
     double m_fps;
 
     void loadPresets();
-    Mlt::Properties* collectProperties(int realtime);
+    Mlt::Properties* collectProperties(int realtime, bool includeProfile = false);
     void collectProperties(QDomElement& node, int realtime);
     MeltJob* createMeltJob(Mlt::Producer* service, const QString& target, int realtime, int pass = 0);
     void runMelt(const QString& target, int realtime = -1);
