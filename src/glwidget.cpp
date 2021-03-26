@@ -261,9 +261,9 @@ void GLWidget::createShader()
                                           "varying highp vec2 coordinates;"
                                           "void main(void) {"
                                           "  mediump vec3 texel;"
-                                          "  texel.r = texture2D(Ytex, coordinates).r - 0.0625;" // Y
-                                          "  texel.g = texture2D(Utex, coordinates).r - 0.5;"    // U
-                                          "  texel.b = texture2D(Vtex, coordinates).r - 0.5;"    // V
+                                          "  texel.r = texture2D(Ytex, coordinates).r -  16.0/255.0;" // Y
+                                          "  texel.g = texture2D(Utex, coordinates).r - 128.0/255.0;" // U
+                                          "  texel.b = texture2D(Vtex, coordinates).r - 128.0/255.0;" // V
                                           "  mediump mat3 coefficients;"
                                           "  if (colorspace == 601) {"
                                           "    coefficients = mat3("
