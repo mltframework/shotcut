@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2019 Meltytech, LLC
+ * Copyright (c) 2017-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -41,6 +41,8 @@ public:
     QString frc() const;
     bool get709Convert();
     void set709Convert(bool enable);
+    void showSubClipCheckBox();
+    bool isSubClip() const;
 
 private slots:
     void on_horizontalSlider_valueChanged(int position);

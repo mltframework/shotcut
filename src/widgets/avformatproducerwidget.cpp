@@ -36,6 +36,8 @@
 
 #include <QtWidgets>
 
+static const auto kHandleSeconds = 15.0;
+
 static bool ProducerIsTimewarp( Mlt::Producer* producer )
 {
     return QString::fromUtf8(producer->get("mlt_service")) == "timewarp";
@@ -177,6 +179,7 @@ void AvformatProducerWidget::offerConvert(QString message, bool set709Convert)
     dialog.setWindowModality(QmlApplication::dialogModality());
     dialog.showCheckBox();
     dialog.set709Convert(set709Convert);
+    dialog.showSubClipCheckBox();
     convert(dialog);
 }
 
@@ -790,6 +793,7 @@ void AvformatProducerWidget::on_actionFFmpegConvert_triggered()
                            ui->scanComboBox->currentIndex(), this);
     dialog.setWindowModality(QmlApplication::dialogModality());
     dialog.set709Convert(ui->videoTableWidget->item(5, 1)->data(Qt::UserRole).toInt() > 7);
+    dialog.showSubClipCheckBox();
     convert(dialog);
 }
 
@@ -804,10 +808,44 @@ void AvformatProducerWidget::convert(TranscodeDialog& dialog)
         QString path = Settings.savePath();
         QStringList args;
         QString nameFilter;
+        int in = -1;
 
         args << "-loglevel" << "verbose";
         args << "-i" << resource;
         args << "-max_muxing_queue_size" << "9999";
+
+        if (dialog.isSubClip()) {
+            if (Settings.proxyEnabled()) {
+                m_producer->Mlt::Properties::clear(kOriginalResourceProperty);
+            } else {
+                // Save these properties for revertToOriginalResource()
+                m_producer->set(kOriginalResourceProperty, resource.toUtf8().constData());
+                m_producer->set(kOriginalInProperty, m_producer->get(kFilterInProperty)?
+                    m_producer->get_time(kFilterInProperty, mlt_time_clock) : m_producer->get_time("in", mlt_time_clock));
+                m_producer->set(kOriginalOutProperty, m_producer->get(kFilterOutProperty)?
+                    m_producer->get_time(kFilterOutProperty, mlt_time_clock) : m_producer->get_time("out", mlt_time_clock));
+            }
+
+            // set trim options
+            if (m_producer->get(kFilterInProperty)) {
+                in = m_producer->get_int(kFilterInProperty);
+                int ss = qMax(0, in - qRound(m_producer->get_fps() * kHandleSeconds));
+                auto s = QString::fromLatin1(m_producer->frames_to_time(ss, mlt_time_clock));
+                args << "-ss" << s.replace(',', '.');
+                in -= ss;
+            } else {
+                args << "-ss" << QString::fromLatin1(m_producer->get_time("in", mlt_time_clock)).replace(',', '.').replace(',', '.');
+            }
+            if (m_producer->get(kFilterOutProperty)) {
+                int out = m_producer->get_int(kFilterOutProperty);
+                int to = qMin(m_producer->get_playtime() - 1, out + qRound(m_producer->get_fps() * kHandleSeconds));
+                auto s = QString::fromLatin1(m_producer->frames_to_time(to, mlt_time_clock));
+                args << "-to" << s.replace(',', '.');
+            } else {
+                args << "-to" << QString::fromLatin1(m_producer->get_time("out", mlt_time_clock)).replace(',', '.');
+            }
+        }
+
         // transcode all streams except data, subtitles, and attachments
         auto audioIndex = m_producer->property_exists(kDefaultAudioIndexProperty)? m_producer->get_int(kDefaultAudioIndexProperty) : m_producer->get_int("audio_index");
         if (m_producer->get_int("video_index") < audioIndex) {
@@ -898,6 +936,25 @@ void AvformatProducerWidget::convert(TranscodeDialog& dialog)
 
             FfmpegJob* job = new FfmpegJob(filename, args, false);
             job->setLabel(tr("Convert %1").arg(Util::baseName(filename)));
+            if (dialog.isSubClip()) {
+                if (m_producer->get(kMultitrackItemProperty)) {
+                    QString s = QString::fromLatin1(m_producer->get(kMultitrackItemProperty));
+                    QVector<QStringRef> parts = s.splitRef(':');
+                    if (parts.length() == 2) {
+                        int clipIndex = parts[0].toInt();
+                        int trackIndex = parts[1].toInt();
+                        QUuid uuid = MAIN.timelineClipUuid(trackIndex, clipIndex);
+                        if (!uuid.isNull()) {
+                            job->setPostJobAction(new ReverseReplacePostJobAction(resource, filename, QString(), uuid.toByteArray(), in));
+                            JOBS.add(job);
+                        }
+                    }
+                } else {
+                    job->setPostJobAction(new ReverseOpenPostJobAction(resource, filename, QString()));
+                    JOBS.add(job);
+                }
+                return;
+            }
             job->setPostJobAction(new ConvertReplacePostJobAction(resource, filename, Util::getHash(*m_producer)));
             JOBS.add(job);
         }
@@ -978,10 +1035,11 @@ void AvformatProducerWidget::on_reverseButton_clicked()
         ffmpegArgs << "-loglevel" << "verbose";
         ffmpegArgs << "-i" << resource;
         ffmpegArgs << "-max_muxing_queue_size" << "9999";
+
         // set trim options
         if (m_producer->get(kFilterInProperty)) {
             in = m_producer->get_int(kFilterInProperty);
-            int ss = qMax(0, in - qRound(m_producer->get_fps() * 15.0));
+            int ss = qMax(0, in - qRound(m_producer->get_fps() * kHandleSeconds));
             auto s = QString::fromLatin1(m_producer->frames_to_time(ss, mlt_time_clock));
             ffmpegArgs << "-ss" << s.replace(',', '.');
         } else {
@@ -989,13 +1047,14 @@ void AvformatProducerWidget::on_reverseButton_clicked()
         }
         if (m_producer->get(kFilterOutProperty)) {
             int out = m_producer->get_int(kFilterOutProperty);
-            int to = qMin(m_producer->get_playtime() - 1, out + qRound(m_producer->get_fps() * 15.0));
+            int to = qMin(m_producer->get_playtime() - 1, out + qRound(m_producer->get_fps() * kHandleSeconds));
             in = to - out - 1;
             auto s = QString::fromLatin1(m_producer->frames_to_time(to, mlt_time_clock));
             ffmpegArgs << "-to" << s.replace(',', '.');
         } else {
             ffmpegArgs << "-to" << QString::fromLatin1(m_producer->get_time("out", mlt_time_clock)).replace(',', '.');
         }
+
         // transcode all streams except data, subtitles, and attachments
         ffmpegArgs << "-map" << "0:V?" << "-map" << "0:a?" << "-map_metadata" << "0" << "-ignore_unknown";
         if (ui->rangeComboBox->currentIndex())

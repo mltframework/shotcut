@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2020 Meltytech, LLC
+ * Copyright (c) 2018-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -50,7 +50,9 @@ void FilePropertiesPostJobAction::doAction()
 void ReverseOpenPostJobAction::doAction()
 {
     FilePropertiesPostJobAction::doAction();
-    QFile::remove(m_fileNameToRemove);
+    if (!m_fileNameToRemove.isEmpty()) {
+        QFile::remove(m_fileNameToRemove);
+    }
     MAIN.open(m_dstFile);
     MAIN.playlistDock()->on_actionAppendCut_triggered();
 }
@@ -58,7 +60,9 @@ void ReverseOpenPostJobAction::doAction()
 void ReverseReplacePostJobAction::doAction()
 {
     FilePropertiesPostJobAction::doAction();
-    QFile::remove(m_fileNameToRemove);
+    if (!m_fileNameToRemove.isEmpty()) {
+        QFile::remove(m_fileNameToRemove);
+    }
     Mlt::Producer producer(MLT.profile(), m_dstFile.toUtf8().constData());
     if (producer.is_valid()) {
         if (!qstrcmp(producer.get("mlt_service"), "avformat")) {
