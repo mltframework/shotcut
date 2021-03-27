@@ -78,6 +78,7 @@ TimelineDock::TimelineDock(QWidget *parent) :
     connect(&m_model, &MultitrackModel::overWritten, this, &TimelineDock::selectClip, Qt::QueuedConnection);
     connect(&m_model, SIGNAL(rowsInserted(QModelIndex,int,int)), SLOT(onRowsInserted(QModelIndex,int,int)));
     connect(&m_model, SIGNAL(rowsRemoved(QModelIndex,int,int)), SLOT(onRowsRemoved(QModelIndex,int,int)));
+    connect(&m_model, SIGNAL(closed()), SLOT(onMultitrackClosed()));
 
     setWidget(&m_quickView);
 
@@ -1200,6 +1201,17 @@ void TimelineDock::insert(int trackIndex, int position, const QString &xml, bool
 void TimelineDock::selectClip(int trackIndex, int clipIndex)
 {
     setSelection(QList<QPoint>() << QPoint(clipIndex, trackIndex));
+}
+
+void TimelineDock::onMultitrackClosed()
+{
+    m_position = -1;
+    m_ignoreNextPositionChange = false;
+    m_trimDelta = 0;
+    m_transitionDelta = 0;
+    m_blockSetSelection = false;
+    setSelection();
+    emit resetZoom();
 }
 
 void TimelineDock::overwrite(int trackIndex, int position, const QString &xml, bool seek)

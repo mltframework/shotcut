@@ -47,6 +47,7 @@ MultitrackModel::MultitrackModel(QObject *parent)
     connect(this, SIGNAL(modified()), SLOT(adjustBackgroundDuration()));
     connect(this, SIGNAL(modified()), SLOT(adjustTrackFilters()));
     connect(this, SIGNAL(reloadRequested()), SLOT(reload()), Qt::QueuedConnection);
+    connect(this, &MultitrackModel::created, this, &MultitrackModel::scaleFactorChanged);
 }
 
 MultitrackModel::~MultitrackModel()
