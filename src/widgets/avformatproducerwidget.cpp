@@ -945,17 +945,17 @@ void AvformatProducerWidget::convert(TranscodeDialog& dialog)
                         int trackIndex = parts[1].toInt();
                         QUuid uuid = MAIN.timelineClipUuid(trackIndex, clipIndex);
                         if (!uuid.isNull()) {
-                            job->setPostJobAction(new ReverseReplacePostJobAction(resource, filename, QString(), uuid.toByteArray(), in));
+                            job->setPostJobAction(new ReplaceOnePostJobAction(resource, filename, QString(), uuid.toByteArray(), in));
                             JOBS.add(job);
                         }
                     }
                 } else {
-                    job->setPostJobAction(new ReverseOpenPostJobAction(resource, filename, QString()));
+                    job->setPostJobAction(new OpenPostJobAction(resource, filename, QString()));
                     JOBS.add(job);
                 }
                 return;
             }
-            job->setPostJobAction(new ConvertReplacePostJobAction(resource, filename, Util::getHash(*m_producer)));
+            job->setPostJobAction(new ReplaceAllPostJobAction(resource, filename, Util::getHash(*m_producer)));
             JOBS.add(job);
         }
     }
@@ -1167,13 +1167,13 @@ void AvformatProducerWidget::on_reverseButton_clicked()
                     int trackIndex = parts[1].toInt();
                     QUuid uuid = MAIN.timelineClipUuid(trackIndex, clipIndex);
                     if (!uuid.isNull()) {
-                        meltJob->setPostJobAction(new ReverseReplacePostJobAction(resource, filename, tmpFileName, uuid.toByteArray(), in));
+                        meltJob->setPostJobAction(new ReplaceOnePostJobAction(resource, filename, tmpFileName, uuid.toByteArray(), in));
                         JOBS.add(meltJob);
                         return;
                     }
                 }
             }
-            meltJob->setPostJobAction(new ReverseOpenPostJobAction(resource, filename, tmpFileName));
+            meltJob->setPostJobAction(new OpenPostJobAction(resource, filename, tmpFileName));
             JOBS.add(meltJob);
         }
     }

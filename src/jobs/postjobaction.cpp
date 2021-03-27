@@ -47,7 +47,7 @@ void FilePropertiesPostJobAction::doAction()
 #endif
 }
 
-void ReverseOpenPostJobAction::doAction()
+void OpenPostJobAction::doAction()
 {
     FilePropertiesPostJobAction::doAction();
     if (!m_fileNameToRemove.isEmpty()) {
@@ -57,7 +57,7 @@ void ReverseOpenPostJobAction::doAction()
     MAIN.playlistDock()->on_actionAppendCut_triggered();
 }
 
-void ReverseReplacePostJobAction::doAction()
+void ReplaceOnePostJobAction::doAction()
 {
     FilePropertiesPostJobAction::doAction();
     if (!m_fileNameToRemove.isEmpty()) {
@@ -77,7 +77,7 @@ void ReverseReplacePostJobAction::doAction()
     }
 }
 
-void ConvertReplacePostJobAction::doAction()
+void ReplaceAllPostJobAction::doAction()
 {
     FilePropertiesPostJobAction::doAction();
     Mlt::Producer producer(MLT.profile(), m_dstFile.toUtf8().constData());
