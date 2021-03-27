@@ -569,6 +569,7 @@ SplitCommand::SplitCommand(MultitrackModel &model, int trackIndex,
     , m_undoHelper(m_model)
 {
     setText(QObject::tr("Split clip"));
+    m_undoHelper.setHints(UndoHelper::RestoreTracks);
 }
 
 void SplitCommand::redo()
