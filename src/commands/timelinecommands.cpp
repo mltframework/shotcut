@@ -481,11 +481,8 @@ void TrimClipInCommand::redo()
     if (m_redo) {
         LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "delta" << m_delta;
         m_undoHelper.reset(new UndoHelper(m_model));
-        if (m_ripple) {
+        if (!m_ripple)
             m_undoHelper->setHints(UndoHelper::SkipXML);
-        } else {
-            m_undoHelper->setHints(UndoHelper::RestoreTracks);
-        }
         m_undoHelper->recordBeforeState();
         m_model.trimClipIn(m_trackIndex, m_clipIndex, m_delta, m_ripple, m_rippleAllTracks);
         m_undoHelper->recordAfterState();
