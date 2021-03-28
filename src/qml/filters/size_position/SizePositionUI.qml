@@ -520,7 +520,7 @@ Item {
                     }
                 }
             }
-            Label { text: ',' }
+            Label { text: ','; Layout.minimumWidth: 20; horizontalAlignment: Qt.AlignHCenter }
             Shotcut.DoubleSpinBox {
                 id: rectY
                 horizontalAlignment: Qt.AlignRight
@@ -602,7 +602,7 @@ Item {
                     }
                 }
             }
-            Label { text: 'x' }
+            Label { text: 'x'; Layout.minimumWidth: 20; horizontalAlignment: Qt.AlignHCenter }
             Shotcut.DoubleSpinBox {
                 id: rectH
                 horizontalAlignment: Qt.AlignRight

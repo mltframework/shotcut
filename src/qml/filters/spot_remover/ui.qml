@@ -96,10 +96,10 @@ Item {
         var newValue = filter.getRect(rectProperty, position)
         if (filterRect !== newValue) {
             filterRect = newValue
-            rectX.text = filterRect.x.toFixed()
-            rectY.text = filterRect.y.toFixed()
-            rectW.text = filterRect.width.toFixed()
-            rectH.text = filterRect.height.toFixed()
+            rectX.value = filterRect.x.toFixed()
+            rectY.value = filterRect.y.toFixed()
+            rectW.value = filterRect.width.toFixed()
+            rectH.value = filterRect.height.toFixed()
         }
         var enabled = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1)
         rectX.enabled = enabled
@@ -145,29 +145,37 @@ Item {
         }
         RowLayout {
             Layout.columnSpan: 3
-            TextField {
+            Shotcut.DoubleSpinBox {
                 id: rectX
+                Layout.minimumWidth: 100
                 horizontalAlignment: Qt.AlignRight
-                selectByMouse: true
-                onEditingFinished: if (filterRect.x !== parseFloat(text)) {
-                    filterRect.x = parseFloat(text)
+                decimals: 0
+                stepSize: 1
+                from: -999999999
+                to: 999999999
+                onValueChanged: if (filterRect.x !== value) {
+                    filterRect.x = value
                     setFilter(getPosition())
                 }
             }
-            Label { text: ',' }
-            TextField {
+            Label { text: ','; Layout.minimumWidth: 20; horizontalAlignment: Qt.AlignHCenter }
+            Shotcut.DoubleSpinBox {
                 id: rectY
+                Layout.minimumWidth: 100
                 horizontalAlignment: Qt.AlignRight
-                selectByMouse: true
-                onEditingFinished: if (filterRect.y !== parseFloat(text)) {
-                    filterRect.y = parseFloat(text)
+                decimals: 0
+                stepSize: 1
+                from: -999999999
+                to: 999999999
+                onValueChanged: if (filterRect.y !== value) {
+                    filterRect.y = value
                     setFilter(getPosition())
                 }
             }
         }
         Shotcut.UndoButton {
             onClicked: {
-                rectX.text = rectY.text = 0
+                rectX.value = rectY.value = 0
                 filterRect.x = filterRect.y = 0
                 setFilter(getPosition())
             }
@@ -193,30 +201,38 @@ Item {
         }
         RowLayout {
             Layout.columnSpan: 3
-            TextField {
+            Shotcut.DoubleSpinBox {
                 id: rectW
+                Layout.minimumWidth: 100
                 horizontalAlignment: Qt.AlignRight
-                selectByMouse: true
-                onEditingFinished: if (filterRect.width !== parseFloat(text)) {
-                    filterRect.width = parseFloat(text)
+                decimals: 0
+                stepSize: 1
+                from: -999999999
+                to: 999999999
+                onValueChanged: if (filterRect.width !== value) {
+                    filterRect.width = value
                     setFilter(getPosition())
                 }
             }
-            Label { text: 'x' }
-            TextField {
+            Label { text: 'x'; Layout.minimumWidth: 20; horizontalAlignment: Qt.AlignHCenter }
+            Shotcut.DoubleSpinBox {
                 id: rectH
+                Layout.minimumWidth: 100
                 horizontalAlignment: Qt.AlignRight
-                selectByMouse: true
-                onEditingFinished: if (filterRect.height !== parseFloat(text)) {
-                    filterRect.height = parseFloat(text)
+                decimals: 0
+                stepSize: 1
+                from: -999999999
+                to: 999999999
+                onValueChanged: if (filterRect.height !== value) {
+                    filterRect.height = value
                     setFilter(getPosition())
                 }
             }
         }
         Shotcut.UndoButton {
             onClicked: {
-                rectW.text = profile.width / 10
-                rectH.text = profile.height / 10
+                rectW.value = profile.width / 10
+                rectH.value = profile.height / 10
                 filterRect.width = profile.width / 10
                 filterRect.height = profile.height / 10
                 setFilter(getPosition())
