@@ -692,19 +692,7 @@ void PlaylistDock::onDropped(const QMimeData *data, int row)
                         }
                     }
                 }
-                // Convert avformat to avformat-novalidate so that XML loads faster.
-                if (!qstrcmp(producer->get("mlt_service"), "avformat")) {
-                    producer->set("mlt_service", "avformat-novalidate");
-                    producer->set("mute_on_pause", 0);
-                }
-                MLT.setImageDurationFromDefault(producer);
-                MLT.lockCreationTime(producer);
-                producer->get_length_time(mlt_time_clock);
-                Mlt::Chain chain(MLT.profile());
-                if (producer->type() != mlt_service_chain_type) {
-                    chain.set_source(*producer);
-                    producer = &chain;
-                }
+                producer = MLT.setupNewProducer(producer);
                 if (MLT.isSeekable(producer)) {
                     ProxyManager::generateIfNotExists(*producer);
                     if (row == -1)
@@ -727,6 +715,7 @@ void PlaylistDock::onDropped(const QMimeData *data, int row)
                     setIndex(0);
                     resetIndex = false;
                 }
+                delete producer;
             }
         }
     }

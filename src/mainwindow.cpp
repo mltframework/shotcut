@@ -3422,28 +3422,16 @@ void MainWindow::processMultipleFiles()
             longTask.reportProgress(QFileInfo(filename).fileName(), i, count);
             Mlt::Producer p(MLT.profile(), filename.toUtf8().constData());
             if (p.is_valid()) {
-                // Convert avformat to avformat-novalidate so that XML loads faster.
-                if (!qstrcmp(p.get("mlt_service"), "avformat")) {
-                    p.set("mlt_service", "avformat-novalidate");
-                    p.set("mute_on_pause", 0);
-                }
                 if (QDir::toNativeSeparators(filename) == QDir::toNativeSeparators(MAIN.fileName())) {
                     MAIN.showStatusMessage(QObject::tr("You cannot add a project to itself!"));
                     continue;
                 }
-                MLT.setImageDurationFromDefault(&p);
-                MLT.lockCreationTime(&p);
-                p.get_length_time(mlt_time_clock);
                 Util::getHash(p);
                 ProxyManager::generateIfNotExists(p);
-                if (p.type() != mlt_service_chain_type) {
-                    Mlt::Chain chain(MLT.profile());
-                    chain.set_source(p);
-                    undoStack()->push(new Playlist::AppendCommand(*m_playlistDock->model(), MLT.XML(&chain), false));
-                } else {
-                    undoStack()->push(new Playlist::AppendCommand(*m_playlistDock->model(), MLT.XML(&p), false));
-                }
+                Mlt::Producer* producer = MLT.setupNewProducer(&p);
+                undoStack()->push(new Playlist::AppendCommand(*m_playlistDock->model(), MLT.XML(producer), false));
                 m_recentDock->add(filename.toUtf8().constData());
+                delete producer;
             }
         }
         emit m_playlistDock->model()->modified();

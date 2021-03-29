@@ -1132,22 +1132,14 @@ static QString convertUrlsToXML(const QString& xml)
                 p = Mlt::Producer(MLT.profile(), path.toUtf8().constData());
             }
             if (p.is_valid()) {
-                // Convert avformat to avformat-novalidate so that XML loads faster.
-                if (!qstrcmp(p.get("mlt_service"), "avformat")) {
-                    if (!p.get_int("seekable")) {
-                        MAIN.showStatusMessage(QObject::tr("Not adding non-seekable file: ") + Util::baseName(path));
-                        continue;
-                    }
-                    p.set("mlt_service", "avformat-novalidate");
-                    p.set("mute_on_pause", 0);
+                if (!qstrcmp(p.get("mlt_service"), "avformat") && !p.get_int("seekable")) {
+                    MAIN.showStatusMessage(QObject::tr("Not adding non-seekable file: ") + Util::baseName(path));
+                    continue;
                 }
                 ProxyManager::generateIfNotExists(p);
-                MLT.setImageDurationFromDefault(&p);
-                MLT.lockCreationTime(&p);
-                p.get_length_time(mlt_time_clock);
-                Mlt::Chain chain(MLT.profile());
-                chain.set_source(p);
-                playlist.append(chain);
+                Mlt::Producer* producer = MLT.setupNewProducer(&p);
+                playlist.append(*producer);
+                delete producer;
             }
         }
         return MLT.XML(&playlist);
