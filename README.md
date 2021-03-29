@@ -2,6 +2,9 @@
 [![build-shotcut-macos](https://github.com/mltframework/shotcut/workflows/build-shotcut-macos/badge.svg)](https://github.com/mltframework/shotcut/actions?query=workflow%3Abuild-shotcut-macos+is%3Acompleted+branch%3Amaster)
 [![build-shotcut-windows](https://github.com/mltframework/shotcut/workflows/build-shotcut-windows/badge.svg)](https://github.com/mltframework/shotcut/actions?query=workflow%3Abuild-shotcut-windows+is%3Acompleted+branch%3Amaster)
 
+[![Chocolatey](https://img.shields.io/chocolatey/v/shotcut.svg)](https://chocolatey.org/packages/shotcut)
+[![Chocolatey](https://img.shields.io/chocolatey/dt/shotcut.svg)](https://chocolatey.org/packages/shotcut)
+
 
 # Shotcut - a free, open source, cross-platform **video editor**
 
