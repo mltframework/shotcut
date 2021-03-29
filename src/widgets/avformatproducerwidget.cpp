@@ -974,17 +974,14 @@ bool AvformatProducerWidget::revertToOriginalResource()
                 int trackIndex = parts[1].toInt();
                 QUuid uuid = MAIN.timelineClipUuid(trackIndex, clipIndex);
                 if (!uuid.isNull()) {
-                    Mlt::Producer producer(MLT.profile(), resource.toUtf8().constData());
-                    if (producer.is_valid()) {
-                        if (!qstrcmp(producer.get("mlt_service"), "avformat")) {
-                            producer.set("mlt_service", "avformat-novalidate");
-                            producer.set("mute_on_pause", 0);
-                        }
-                        MLT.lockCreationTime(&producer);
-                        Mlt::Chain chain(MLT.profile());
-                        chain.set_source(producer);
-                        chain.set_in_and_out(m_producer->get_int(kOriginalInProperty), m_producer->get_int(kOriginalOutProperty));
-                        MAIN.replaceInTimeline(uuid, chain);
+                    Mlt::Producer newProducer(MLT.profile(), resource.toUtf8().constData());
+                    if (newProducer.is_valid()) {
+                        Mlt::Producer* producer = MLT.setupNewProducer(&newProducer);
+                        producer->set(kIsProxyProperty, 1);
+                        producer->set(kOriginalResourceProperty, resource.toUtf8().constData());
+                        producer->set_in_and_out(m_producer->get_int(kOriginalInProperty), m_producer->get_int(kOriginalOutProperty));
+                        MAIN.replaceInTimeline(uuid, *producer);
+                        delete producer;
                         return true;
                     }
                 }
@@ -1284,14 +1281,10 @@ void AvformatProducerWidget::on_actionDisableProxy_triggered(bool checked)
         if (producer()->get_int(kIsProxyProperty) && producer()->get(kOriginalResourceProperty)) {
             Mlt::Producer original(MLT.profile(), producer()->get(kOriginalResourceProperty));
             if (original.is_valid()) {
-                if (!qstrcmp(original.get("mlt_service"), "avformat")) {
-                    original.set("mlt_service", "avformat-novalidate");
-                    original.set("mute_on_pause", 0);
-                }
-                original.set(kDisableProxyProperty, 1);
-                Mlt::Chain chain(MLT.profile());
-                chain.set_source(original);
-                MAIN.replaceAllByHash(Util::getHash(original), chain, true);
+                Mlt::Producer* producer = MLT.setupNewProducer(&original);
+                producer->set(kDisableProxyProperty, 1);
+                MAIN.replaceAllByHash(Util::getHash(original), *producer, true);
+                delete producer;
             }
         }
     } else {
@@ -1329,13 +1322,9 @@ void AvformatProducerWidget::on_actionDeleteProxy_triggered()
     if (producer()->get_int(kIsProxyProperty) && producer()->get(kOriginalResourceProperty)) {
         Mlt::Producer original(MLT.profile(), producer()->get(kOriginalResourceProperty));
         if (original.is_valid()) {
-            if (!qstrcmp(original.get("mlt_service"), "avformat")) {
-                original.set("mlt_service", "avformat-novalidate");
-                original.set("mute_on_pause", 0);
-            }
-            Mlt::Chain chain(MLT.profile());
-            chain.set_source(original);
-            MAIN.replaceAllByHash(hash, chain, true);
+            Mlt::Producer* producer = MLT.setupNewProducer(&original);
+            MAIN.replaceAllByHash(hash, *producer, true);
+            delete producer;
         }
     }
 }

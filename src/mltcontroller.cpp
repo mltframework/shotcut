@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2020 Meltytech, LLC
+ * Copyright (c) 2011-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -144,26 +144,14 @@ int Controller::open(const QString &url, const QString& urlToSave)
             delete newProducer;
             newProducer = new Mlt::Producer(profile(), url.toUtf8().constData());
         }
-        // Convert avformat to avformat-novalidate so that XML loads faster.
-        if (!qstrcmp(newProducer->get("mlt_service"), "avformat")) {
-            newProducer->set("mlt_service", "avformat-novalidate");
-            newProducer->set("mute_on_pause", 0);
-        }
         if (m_url.isEmpty() && QString(newProducer->get("xml")) == "was here") {
             if (newProducer->get_int("_original_type") != mlt_service_tractor_type ||
                (newProducer->get_int("_original_type") == mlt_service_tractor_type && newProducer->get(kShotcutXmlProperty)))
                 m_url = urlToSave;
         }
-        setImageDurationFromDefault(newProducer);
-        lockCreationTime(newProducer);
-        // Encapsulate avformat producers in a chain to enable timing effects
-        if (!qstrcmp(newProducer->get("mlt_service"), "avformat-novalidate") &&
-            newProducer->type() != mlt_service_chain_type) {
-            Mlt::Chain* chain = new Mlt::Chain(MLT.profile());
-            chain->set_source(*newProducer);
-            delete newProducer;
-            newProducer = chain;
-        }
+        Producer* producer = setupNewProducer(newProducer);
+        delete newProducer;
+        newProducer = producer;
     }
     else {
         delete newProducer;
@@ -985,6 +973,34 @@ void Controller::lockCreationTime(Producer* producer) const
             producer->set_creation_time(creation_time);
         }
     }
+}
+
+Producer* Controller::setupNewProducer(Producer* newProducer) const
+{
+    // Call this function before adding a new producer to Shotcut so that
+    // It will be configured correctly. The returned producer must be deleted.
+    QString serviceName = newProducer->get("mlt_service");
+    if (serviceName == "avformat")
+    {
+        // Convert avformat to avformat-novalidate so that XML loads faster.
+        newProducer->set("mlt_service", "avformat-novalidate");
+    }
+    setImageDurationFromDefault(newProducer);
+    lockCreationTime(newProducer);
+    newProducer->get_length_time(mlt_time_clock);
+
+    if (serviceName.startsWith("avformat"))
+    {
+        newProducer->set("mute_on_pause", 0);
+        // Encapsulate in a chain to enable timing effects
+        if (newProducer->type() != mlt_service_chain_type)
+        {
+            Mlt::Chain* chain = new Mlt::Chain(MLT.profile());
+            chain->set_source(*newProducer);
+            return chain;
+        }
+    }
+    return new Mlt::Producer(newProducer);
 }
 
 QUuid Controller::uuid(Mlt::Properties &properties) const

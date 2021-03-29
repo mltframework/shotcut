@@ -63,33 +63,22 @@ void ReplaceOnePostJobAction::doAction()
     if (!m_fileNameToRemove.isEmpty()) {
         QFile::remove(m_fileNameToRemove);
     }
-    Mlt::Producer producer(MLT.profile(), m_dstFile.toUtf8().constData());
-    if (producer.is_valid()) {
-        if (!qstrcmp(producer.get("mlt_service"), "avformat")) {
-            producer.set("mlt_service", "avformat-novalidate");
-            producer.set("mute_on_pause", 0);
-        }
-        MLT.lockCreationTime(&producer);
-        producer.set_in_and_out(m_in, -1);
-        Mlt::Chain chain(MLT.profile());
-        chain.set_source(producer);
-        MAIN.replaceInTimeline(m_uuid, chain);
+    Mlt::Producer newProducer(MLT.profile(), m_dstFile.toUtf8().constData());
+    if (newProducer.is_valid()) {
+        Mlt::Producer* producer = MLT.setupNewProducer(&newProducer);
+        MAIN.replaceInTimeline(m_uuid, *producer);
+        delete producer;
     }
 }
 
 void ReplaceAllPostJobAction::doAction()
 {
     FilePropertiesPostJobAction::doAction();
-    Mlt::Producer producer(MLT.profile(), m_dstFile.toUtf8().constData());
-    if (producer.is_valid()) {
-        if (!qstrcmp(producer.get("mlt_service"), "avformat")) {
-            producer.set("mlt_service", "avformat-novalidate");
-            producer.set("mute_on_pause", 0);
-        }
-        MLT.lockCreationTime(&producer);
-        Mlt::Chain chain(MLT.profile());
-        chain.set_source(producer);
-        MAIN.replaceAllByHash(m_hash, chain);
+    Mlt::Producer newProducer(MLT.profile(), m_dstFile.toUtf8().constData());
+    if (newProducer.is_valid()) {
+        Mlt::Producer* producer = MLT.setupNewProducer(&newProducer);
+        MAIN.replaceAllByHash(m_hash, *producer);
+        delete producer;
     }
 }
 
@@ -98,17 +87,13 @@ void ProxyReplacePostJobAction::doAction()
     QFileInfo info(m_dstFile);
     QString newFileName = info.path() + "/" + info.baseName() + "." + info.suffix();
     if (QFile::rename(m_dstFile, newFileName)) {
-        Mlt::Producer producer(MLT.profile(), newFileName.toUtf8().constData());
-        if (producer.is_valid()) {
-            producer.set(kIsProxyProperty, 1);
-            producer.set(kOriginalResourceProperty, m_srcFile.toUtf8().constData());
-            if (!qstrcmp(producer.get("mlt_service"), "avformat")) {
-                producer.set("mlt_service", "avformat-novalidate");
-                producer.set("mute_on_pause", 0);
-            }
-            Mlt::Chain chain(MLT.profile());
-            chain.set_source(producer);
-            MAIN.replaceAllByHash(m_hash, chain, true);
+        Mlt::Producer newProducer(MLT.profile(), newFileName.toUtf8().constData());
+        if (newProducer.is_valid()) {
+            Mlt::Producer* producer = MLT.setupNewProducer(&newProducer);
+            producer->set(kIsProxyProperty, 1);
+            producer->set(kOriginalResourceProperty, m_srcFile.toUtf8().constData());
+            MAIN.replaceAllByHash(m_hash, *producer, true);
+            delete producer;
         } else {
             LOG_WARNING() << "proxy file is invalid" << newFileName;
             QFile::remove(m_dstFile);
