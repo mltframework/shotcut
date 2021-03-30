@@ -37,6 +37,7 @@ Grid {
 
     Slider {
         id: slider
+        enabled: false
         orientation: root.orientation
         implicitHeight: orientation == Qt.Horizontal ? 18 : parent.height
         implicitWidth: orientation == Qt.Horizontal ? parent.width : 20
@@ -61,7 +62,7 @@ Grid {
                 height: orientation == Qt.Horizontal ? parent.height : 4
                 x: orientation == Qt.Horizontal ? (parent.width - 5) * slider.visualPosition : 0
                 y: orientation == Qt.Horizontal ? 0 : (parent.height - 5) * slider.visualPosition
-                color: enabled ? activePalette.highlight : activePalette.midlight
+                color: activePalette.highlight
             }
         }
 
