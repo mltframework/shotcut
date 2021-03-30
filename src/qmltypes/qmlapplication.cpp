@@ -50,8 +50,8 @@ QmlApplication::QmlApplication() :
 
 Qt::WindowModality QmlApplication::dialogModality()
 {
-#ifdef Q_OS_OSX
-    return (QSysInfo::macVersion() >= QSysInfo::MV_10_8)? Qt::WindowModal : Qt::ApplicationModal;
+#ifdef Q_OS_MAC
+    return Qt::WindowModal;
 #else
     return Qt::ApplicationModal;
 #endif
