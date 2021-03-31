@@ -25,6 +25,7 @@ ToolButton {
     icon.height: control.height - (verticalPadding * 2)
     icon.width: control.height -  (horizontalPadding * 2)
     padding: 3
+    opacity: enabled ? 1.0 : 0.5
 
     SystemPalette { id: activePalette }
     palette.button: checked ? activePalette.highlight : activePalette.button

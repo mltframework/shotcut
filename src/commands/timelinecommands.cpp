@@ -51,7 +51,7 @@ void AppendCommand::redo()
     LongUiTask longTask(QObject::tr("Append to Timeline"));
     m_undoHelper.recordBeforeState();
     Mlt::Producer* producer = longTask.runAsync<Mlt::Producer*>(QObject::tr("Preparing"), deserializeProducer, m_xml);
-    if (producer->type() == playlist_type) {
+    if (producer->type() == mlt_service_playlist_type) {
         Mlt::Playlist playlist(*producer);
         int count = playlist.count();
         for (int i = 0; i < count; i++) {
@@ -96,7 +96,7 @@ void InsertCommand::redo()
     LOG_DEBUG() << "trackIndex" << m_trackIndex << "position" << m_position;
     m_undoHelper.recordBeforeState();
     Mlt::Producer clip(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
-    if (clip.type() == playlist_type) {
+    if (clip.type() == mlt_service_playlist_type) {
         LongUiTask longTask(QObject::tr("Add Files"));
         Mlt::Playlist playlist(clip);
         int n = playlist.count();
@@ -140,7 +140,7 @@ void OverwriteCommand::redo()
     LOG_DEBUG() << "trackIndex" << m_trackIndex << "position" << m_position;
     m_undoHelper.recordBeforeState();
     Mlt::Producer clip(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
-    if (clip.type() == playlist_type) {
+    if (clip.type() == mlt_service_playlist_type) {
         LongUiTask longTask(QObject::tr("Add Files"));
         Mlt::Playlist playlist(clip);
         int position = m_position;
@@ -481,11 +481,8 @@ void TrimClipInCommand::redo()
     if (m_redo) {
         LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "delta" << m_delta;
         m_undoHelper.reset(new UndoHelper(m_model));
-        if (m_ripple) {
+        if (!m_ripple)
             m_undoHelper->setHints(UndoHelper::SkipXML);
-        } else {
-            m_undoHelper->setHints(UndoHelper::RestoreTracks);
-        }
         m_undoHelper->recordBeforeState();
         m_model.trimClipIn(m_trackIndex, m_clipIndex, m_delta, m_ripple, m_rippleAllTracks);
         m_undoHelper->recordAfterState();
@@ -572,6 +569,7 @@ SplitCommand::SplitCommand(MultitrackModel &model, int trackIndex,
     , m_undoHelper(m_model)
 {
     setText(QObject::tr("Split clip"));
+    m_undoHelper.setHints(UndoHelper::RestoreTracks);
 }
 
 void SplitCommand::redo()

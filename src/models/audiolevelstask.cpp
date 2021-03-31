@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 Meltytech, LLC
+ * Copyright (c) 2013-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -188,7 +188,7 @@ void AudioLevelsTask::run()
             if (frame && frame->is_valid() && !frame->get_int("test_audio")) {
                 mlt_audio_format format = mlt_audio_s16;
                 int frequency = 48000;
-                int samples = mlt_sample_calculator(m_producers.first().first->get_fps(), frequency, i);
+                int samples = mlt_audio_calculate_frame_samples(m_producers.first().first->get_fps(), frequency, i);
                 frame->get_audio(format, frequency, channels, samples);
                 // for each channel
                 for (int channel = 0; channel < channels; channel++)

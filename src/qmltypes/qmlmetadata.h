@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 Meltytech, LLC
+ * Copyright (c) 2013-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,6 +35,7 @@ class QmlKeyframesParameter : public QObject
     Q_PROPERTY(bool isCurve MEMBER m_isCurve NOTIFY changed)
     Q_PROPERTY(double minimum MEMBER m_minimum NOTIFY changed)
     Q_PROPERTY(double maximum MEMBER m_maximum NOTIFY changed)
+    Q_PROPERTY(QString units MEMBER m_units NOTIFY changed)
     Q_PROPERTY(bool isRectangle MEMBER m_isRectangle NOTIFY changed)
 
 public:
@@ -47,6 +48,7 @@ public:
     bool isCurve() const { return m_isCurve; }
     double minimum() const { return m_minimum; }
     double maximum() const { return m_maximum; }
+    QString units() const { return m_units; }
     bool isRectangle() const { return m_isRectangle; }
 
 signals:
@@ -60,6 +62,7 @@ private:
     bool m_isCurve;
     double m_minimum;
     double m_maximum;
+    QString m_units;
     bool m_isRectangle;
 };
 
@@ -74,6 +77,7 @@ class QmlKeyframesMetadata : public QObject
     Q_PROPERTY(QList<QString> simpleProperties MEMBER m_simpleProperties NOTIFY changed)
     Q_PROPERTY(QString minimumVersion MEMBER m_minimumVersion NOTIFY changed)
     Q_PROPERTY(bool enabled MEMBER m_enabled NOTIFY changed)
+    Q_PROPERTY(bool allowSmooth MEMBER m_allowSmooth NOTIFY changed)
 
 public:
     explicit QmlKeyframesMetadata(QObject *parent = 0);
@@ -100,6 +104,7 @@ private:
     QList<QString> m_simpleProperties;
     QString m_minimumVersion;
     bool m_enabled;
+    bool m_allowSmooth;
 };
 
 
@@ -130,7 +135,8 @@ public:
     enum PluginType {
         Filter,
         Producer,
-        Transition
+        Transition,
+        Link,
     };
     unsigned filterMask;
 

@@ -47,6 +47,7 @@ MultitrackModel::MultitrackModel(QObject *parent)
     connect(this, SIGNAL(modified()), SLOT(adjustBackgroundDuration()));
     connect(this, SIGNAL(modified()), SLOT(adjustTrackFilters()));
     connect(this, SIGNAL(reloadRequested()), SLOT(reload()), Qt::QueuedConnection);
+    connect(this, &MultitrackModel::created, this, &MultitrackModel::scaleFactorChanged);
 }
 
 MultitrackModel::~MultitrackModel()
@@ -1349,7 +1350,7 @@ void MultitrackModel::fadeIn(int trackIndex, int clipIndex, int duration)
                             filter.reset(new Mlt::Filter(f));
                         }
                         filter->set_in_and_out(info->frame_in, info->frame_out);
-                        emit filterOutChanged(info->frame_out, filter.data());
+                        emit serviceOutChanged(info->frame_out, filter.data());
                     }
 
                     // Adjust video filter.
@@ -1389,7 +1390,7 @@ void MultitrackModel::fadeIn(int trackIndex, int clipIndex, int duration)
                         info->producer->attach(f);
                         filter.reset(new Mlt::Filter(f));
                         filter->set_in_and_out(info->frame_in, info->frame_out);
-                        emit filterOutChanged(info->frame_out, filter.data());
+                        emit serviceOutChanged(info->frame_out, filter.data());
                     }
 
                     // Adjust audio filter.
@@ -1458,7 +1459,7 @@ void MultitrackModel::fadeOut(int trackIndex, int clipIndex, int duration)
                             filter.reset(new Mlt::Filter(f));
                         }
                         filter->set_in_and_out(info->frame_in, info->frame_out);
-                        emit filterOutChanged(info->frame_out, filter.data());
+                        emit serviceOutChanged(info->frame_out, filter.data());
                     }
 
                     // Adjust video filter.
@@ -1498,7 +1499,7 @@ void MultitrackModel::fadeOut(int trackIndex, int clipIndex, int duration)
                         info->producer->attach(f);
                         filter.reset(new Mlt::Filter(f));
                         filter->set_in_and_out(info->frame_in, info->frame_out);
-                        emit filterOutChanged(info->frame_out, filter.data());
+                        emit serviceOutChanged(info->frame_out, filter.data());
                     }
 
                     // Adjust audio filter.
@@ -1756,7 +1757,7 @@ void MultitrackModel::trimTransitionIn(int trackIndex, int clipIndex, int delta)
         // Adjust the transitions.
         QScopedPointer<Mlt::Service> service(tractor.producer());
         while (service && service->is_valid()) {
-            if (service->type() == transition_type) {
+            if (service->type() == mlt_service_transition_type) {
                 Mlt::Transition transition(*service);
                 transition.set_in_and_out(0, out);
             }
@@ -1837,7 +1838,7 @@ void MultitrackModel::trimTransitionOut(int trackIndex, int clipIndex, int delta
         // Adjust the transitions.
         QScopedPointer<Mlt::Service> service(tractor.producer());
         while (service && service->is_valid()) {
-            if (service->type() == transition_type) {
+            if (service->type() == mlt_service_transition_type) {
                 Mlt::Transition transition(*service);
                 transition.set_in_and_out(0, out);
             }
@@ -2100,7 +2101,7 @@ void MultitrackModel::filterAddedOrRemoved(Mlt::Producer* producer)
     }
 }
 
-void MultitrackModel::onFilterChanged(Mlt::Filter* filter)
+void MultitrackModel::onFilterChanged(Mlt::Service* filter)
 {
     if (filter && filter->is_valid()) {
         Mlt::Service service(mlt_service(filter->get_data("service")));
@@ -2352,7 +2353,7 @@ void MultitrackModel::addBackgroundTrack()
     Mlt::Playlist playlist(MLT.profile());
     playlist.set("id", kBackgroundTrackId);
     Mlt::Producer producer(MLT.profile(), "color:0");
-    producer.set("mlt_image_format", "rgb24a");
+    producer.set("mlt_image_format", "rgba");
     producer.set("length", 1);
     producer.set("id", "black");
     // Allow mixing against frames produced by this producer.
@@ -2450,10 +2451,10 @@ void MultitrackModel::adjustClipFilters(Mlt::Producer& producer, int in, int out
                         filter->set(kShotcutAnimInProperty, filter->get_length());
                     }
                     filter->set_in_and_out(in + inDelta, filter->get_out());
-                    emit filterInChanged(inDelta, filter.data());
+                    emit serviceInChanged(inDelta, filter.data());
                 } else if (!filter->get_int("_loader") && filter->get_in() <= in) {
                     filter->set_in_and_out(in + inDelta, filter->get_out());
-                    emit filterInChanged(inDelta, filter.data());
+                    emit serviceInChanged(inDelta, filter.data());
                 }
             }
 
@@ -2477,15 +2478,15 @@ void MultitrackModel::adjustClipFilters(Mlt::Producer& producer, int in, int out
                     filter->anim_set("level", 0, filter->get_length() - filter->get_int(kShotcutAnimOutProperty));
                     filter->anim_set("level", -60, filter->get_length() - 1);
                 }
-                emit filterOutChanged(outDelta, filter.data());
+                emit serviceOutChanged(outDelta, filter.data());
             } else if (!filter->get_int("_loader") && filter->get_out() >= out) {
                 filter->set_in_and_out(filter->get_in(), out - outDelta);
-                emit filterOutChanged(outDelta, filter.data());
+                emit serviceOutChanged(outDelta, filter.data());
 
                 // Update simple keyframes of non-current filters.
                 if (filter->get_int(kShotcutAnimOutProperty) > 0
                     && MAIN.filterController()->currentFilter()
-                    && MAIN.filterController()->currentFilter()->filter().get_filter() != filter.data()->get_filter()) {
+                    && MAIN.filterController()->currentFilter()->service().get_service() != filter.data()->get_service()) {
                     QmlMetadata* meta = MAIN.filterController()->metadataForService(filter.data());
                     if (meta && meta->keyframes()) {
                         foreach (QString name, meta->keyframes()->simpleProperties()) {
@@ -2503,6 +2504,25 @@ void MultitrackModel::adjustClipFilters(Mlt::Producer& producer, int in, int out
                             }
                         }
                     }
+                }
+            }
+        }
+    }
+
+    // Adjust link in/out
+    if (producer.type() == mlt_service_chain_type) {
+        Mlt::Chain chain(producer);
+        int link_count = chain.link_count();
+        for (int j = 0; j < chain.link_count(); j++) {
+            QScopedPointer<Mlt::Link> link(chain.link(j));
+            if (link && link->is_valid()) {
+                if (link->get_out() >= out) {
+                    link->set_in_and_out(link->get_in(), out - outDelta);
+                    emit serviceOutChanged(outDelta, link.data());
+                }
+                if (link->get_in() <= in) {
+                    link->set_in_and_out(in + inDelta, link->get_out());
+                    emit serviceInChanged(inDelta, link.data());
                 }
             }
         }
@@ -2728,11 +2748,11 @@ void MultitrackModel::loadPlaylist()
     Mlt::Properties retainList((mlt_properties) m_tractor->get_data("xml_retain"));
     if (retainList.is_valid()) {
         Mlt::Playlist playlist((mlt_playlist) retainList.get_data(kPlaylistTrackId));
-        if (playlist.is_valid() && playlist.type() == playlist_type) {
+        if (playlist.is_valid() && playlist.type() == mlt_service_playlist_type) {
             MAIN.playlistDock()->model()->setPlaylist(playlist);
         } else {
             playlist = (mlt_playlist) retainList.get_data(kLegacyPlaylistTrackId);
-            if (playlist.is_valid() && playlist.type() == playlist_type)
+            if (playlist.is_valid() && playlist.type() == mlt_service_playlist_type)
                 MAIN.playlistDock()->model()->setPlaylist(playlist);
         }
     }
@@ -3289,7 +3309,7 @@ void MultitrackModel::addBlackTrackIfNeeded()
             delete producer;
         }
         Mlt::Producer producer(MLT.profile(), "color:0");
-        producer.set("mlt_image_format", "rgb24a");
+        producer.set("mlt_image_format", "rgba");
         m_tractor->set_track(producer, 0);
     }
 }
@@ -3311,7 +3331,7 @@ void MultitrackModel::convertOldDoc()
     // Remove movit.rect filters.
     QScopedPointer<Mlt::Service> service(m_tractor->producer());
     while (service && service->is_valid()) {
-        if (service->type() == filter_type) {
+        if (service->type() == mlt_service_filter_type) {
             Mlt::Filter f((mlt_filter) service->get_service());
             if (QString::fromLatin1(f.get("mlt_service")) == "movit.rect") {
                 m_tractor->field()->disconnect_service(f);
@@ -3349,7 +3369,7 @@ Mlt::Transition *MultitrackModel::getTransition(const QString &name, int trackIn
 {
     QScopedPointer<Mlt::Service> service(m_tractor->producer());
     while (service && service->is_valid()) {
-        if (service->type() == transition_type) {
+        if (service->type() == mlt_service_transition_type) {
             Mlt::Transition t((mlt_transition) service->get_service());
             if (name == t.get("mlt_service") && t.get_b_track() == trackIndex)
                 return new Mlt::Transition(t);
@@ -3363,7 +3383,7 @@ Mlt::Filter *MultitrackModel::getFilter(const QString &name, int trackIndex) con
 {
     QScopedPointer<Mlt::Service> service(m_tractor->producer());
     while (service && service->is_valid()) {
-        if (service->type() == filter_type) {
+        if (service->type() == mlt_service_filter_type) {
             Mlt::Filter f((mlt_filter) service->get_service());
             if (name == f.get("mlt_service") && f.get_track() == trackIndex)
                 return new Mlt::Filter(f);

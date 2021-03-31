@@ -20,3 +20,4 @@ KeyframableFilter 1.0 KeyframableFilter.qml
 ToolButton 1.0 ToolButton.qml
 HoverTip 1.0 HoverTip.qml
 ComboBox 1.0 ComboBox.qml
+EditMenu 1.0 EditMenu.qml

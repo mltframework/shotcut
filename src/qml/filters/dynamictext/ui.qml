@@ -198,6 +198,7 @@ Item {
                     textFormat: TextEdit.PlainText
                     wrapMode: TextEdit.NoWrap
                     selectByMouse: true
+                    persistentSelection: true
                     padding: 0
                     background: Rectangle {
                         anchors.fill: parent
@@ -215,6 +216,12 @@ Item {
                             filter.set('size', profile.height / text.split('\n').length)
                         filter.set('argument', text)
                     }
+                    MouseArea {
+                        acceptedButtons: Qt.RightButton
+                        anchors.fill: parent
+                        onClicked: contextMenu.popup()
+                    }
+                    Shotcut.EditMenu { id: contextMenu }
                 }
                 ScrollBar.horizontal: ScrollBar {
                     height: 16

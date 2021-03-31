@@ -277,7 +277,7 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
                     }
                 }
             }
-            Label { text: ',' }
+            Label { text: ','; Layout.minimumWidth: 20; horizontalAlignment: Qt.AlignHCenter }
             Shotcut.DoubleSpinBox {
                 id: rectY
                 horizontalAlignment: Qt.AlignRight
@@ -337,7 +337,7 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
                     }
                 }
             }
-            Label { text: 'x' }
+            Label { text: 'x'; Layout.minimumWidth: 20; horizontalAlignment: Qt.AlignHCenter }
             Shotcut.DoubleSpinBox {
                 id: rectH
                 horizontalAlignment: Qt.AlignRight
@@ -375,7 +375,7 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
                 opacity: 0.7
                 selectByMouse: true
             }
-            Label { text: 'x' }
+            Label { text: 'x'; Layout.minimumWidth: 20; horizontalAlignment: Qt.AlignHCenter }
             TextField {
                 id: sizeH
                 horizontalAlignment: Qt.AlignRight

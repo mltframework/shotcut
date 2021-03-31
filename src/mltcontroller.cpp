@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2020 Meltytech, LLC
+ * Copyright (c) 2011-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -106,19 +106,20 @@ static bool isFpsDifferent(double a, double b)
 int Controller::open(const QString &url, const QString& urlToSave)
 {
     int error = 0;
+    Mlt::Producer* newProducer = nullptr;
 
     close();
 
     if (Settings.playerGPU() && !profile().is_explicit())
         // Prevent loading normalizing filters, which might be Movit ones that
         // may not have a proper OpenGL context when requesting a sample frame.
-        m_producer.reset(new Mlt::Producer(profile(), "abnormal", url.toUtf8().constData()));
+        newProducer = new Mlt::Producer(profile(), "abnormal", url.toUtf8().constData());
     else
-        m_producer.reset(new Mlt::Producer(profile(), url.toUtf8().constData()));
-    if (m_producer->is_valid()) {
+        newProducer = new Mlt::Producer(profile(), url.toUtf8().constData());
+    if (newProducer && newProducer->is_valid()) {
         double fps = profile().fps();
         if (!profile().is_explicit()) {
-            profile().from_producer(*m_producer);
+            profile().from_producer(*newProducer);
             profile().set_width(Util::coerceMultiple(profile().width()));
             profile().set_height(Util::coerceMultiple(profile().height()));
         }
@@ -126,11 +127,11 @@ int Controller::open(const QString &url, const QString& urlToSave)
         setPreviewScale(Settings.playerPreviewScale());
         if ( url.endsWith(".mlt") ) {
             // Load the number of audio channels being used when this project was created.
-            int channels = m_producer->get_int(kShotcutProjectAudioChannels);
+            int channels = newProducer->get_int(kShotcutProjectAudioChannels);
             if (!channels)
                 channels = 2;
             m_audioChannels = channels;
-            if (m_producer->get_int(kShotcutProjectFolder)) {
+            if (newProducer->get_int(kShotcutProjectFolder)) {
                 QFileInfo info(url);
                 setProjectFolder(info.absolutePath());
                 ProxyManager::removePending();
@@ -140,25 +141,24 @@ int Controller::open(const QString &url, const QString& urlToSave)
         }
         if (isFpsDifferent(profile().fps(), fps) || (Settings.playerGPU() && !profile().is_explicit())) {
             // Reload with correct FPS or with Movit normalizing filters attached.
-            m_producer.reset(new Mlt::Producer(profile(), url.toUtf8().constData()));
+            delete newProducer;
+            newProducer = new Mlt::Producer(profile(), url.toUtf8().constData());
         }
-        // Convert avformat to avformat-novalidate so that XML loads faster.
-        if (!qstrcmp(m_producer->get("mlt_service"), "avformat")) {
-            m_producer->set("mlt_service", "avformat-novalidate");
-            m_producer->set("mute_on_pause", 0);
-        }
-        if (m_url.isEmpty() && QString(m_producer->get("xml")) == "was here") {
-            if (m_producer->get_int("_original_type") != tractor_type ||
-               (m_producer->get_int("_original_type") == tractor_type && m_producer->get(kShotcutXmlProperty)))
+        if (m_url.isEmpty() && QString(newProducer->get("xml")) == "was here") {
+            if (newProducer->get_int("_original_type") != mlt_service_tractor_type ||
+               (newProducer->get_int("_original_type") == mlt_service_tractor_type && newProducer->get(kShotcutXmlProperty)))
                 m_url = urlToSave;
         }
-        setImageDurationFromDefault(m_producer.data());
-        lockCreationTime(m_producer.data());
+        Producer* producer = setupNewProducer(newProducer);
+        delete newProducer;
+        newProducer = producer;
     }
     else {
-        m_producer.reset();
+        delete newProducer;
+        newProducer = nullptr;
         error = 1;
     }
+    m_producer.reset(newProducer);
     return error;
 }
 
@@ -183,6 +183,14 @@ bool Controller::openXML(const QString &filename)
         }
         producer->set(kShotcutVirtualClip, 1);
         producer->set("resource", filename.toUtf8().constData());
+
+        if (producer->type() != mlt_service_chain_type) {
+            Mlt::Chain* chain = new Mlt::Chain(MLT.profile());
+            chain->set_source(*producer);
+            delete producer;
+            producer = chain;
+        }
+
         setProducer(new Producer(producer));
         error = false;
     }
@@ -233,6 +241,11 @@ bool Controller::isPaused() const
     return m_producer && qAbs(m_producer->get_speed()) < 0.1;
 }
 
+static void fire_jack_seek_event(mlt_properties jack, int position)
+{
+    mlt_events_fire(jack, "jack-seek", mlt_event_data_from_int(position));
+}
+
 void Controller::pause()
 {
     if (m_producer && !isPaused()) {
@@ -255,7 +268,7 @@ void Controller::pause()
         stopJack();
         int position = (m_producer && m_producer->is_valid())? m_producer->position() : 0;
         ++m_skipJackEvents;
-        mlt_events_fire(m_jackFilter->get_properties(), "jack-seek", &position, NULL);
+        fire_jack_seek_event(m_jackFilter->get_properties(), position);
     }
     setVolume(m_volume);
 }
@@ -434,7 +447,7 @@ void Controller::seek(int position)
     if (m_jackFilter) {
         stopJack();
         ++m_skipJackEvents;
-        mlt_events_fire(m_jackFilter->get_properties(), "jack-seek", &position, NULL);
+        fire_jack_seek_event(m_jackFilter->get_properties(), position);
     }
 }
 
@@ -632,14 +645,14 @@ bool Controller::isPlaylist() const
 {
     return m_producer && m_producer->is_valid() &&
           !m_producer->get_int(kShotcutVirtualClip) &&
-            (m_producer->get_int("_original_type") == playlist_type || resource() == "<playlist>");
+            (m_producer->get_int("_original_type") == mlt_service_playlist_type || resource() == "<playlist>");
 }
 
 bool Controller::isMultitrack() const
 {
     return m_producer && m_producer->is_valid()
         && !m_producer->get_int(kShotcutVirtualClip)
-        && (m_producer->get_int("_original_type") == tractor_type || resource() == "<tractor>")
+        && (m_producer->get_int("_original_type") == mlt_service_tractor_type || resource() == "<tractor>")
             && (m_producer->get(kShotcutXmlProperty));
 }
 
@@ -796,7 +809,7 @@ void Controller::setOut(int out)
                     // Update simple keyframes of non-current filters.
                     if (filter->get_int(kShotcutAnimOutProperty) > 0
                         && MAIN.filterController()->currentFilter()
-                        && MAIN.filterController()->currentFilter()->filter().get_filter() != filter.data()->get_filter()) {
+                        && MAIN.filterController()->currentFilter()->service().get_service() != filter.data()->get_service()) {
                         QmlMetadata* meta = MAIN.filterController()->metadataForService(filter.data());
                         if (meta && meta->keyframes()) {
                             foreach (QString name, meta->keyframes()->simpleProperties()) {
@@ -855,7 +868,7 @@ QImage Controller::image(Mlt::Frame* frame, int width, int height)
             frame->set("deinterlace_method", "onefield");
             frame->set("top_field_first", -1);
         }
-        mlt_image_format format = mlt_image_rgb24a;
+        mlt_image_format format = mlt_image_rgba;
         const uchar *image = frame->get_image(format, width, height);
         if (image) {
             QImage temp(width, height, QImage::Format_ARGB32);
@@ -896,7 +909,7 @@ void Controller::updateAvformatCaching(int trackCount)
 
 bool Controller::isAudioFilter(const QString &name)
 {
-    QScopedPointer<Properties> metadata(m_repo->metadata(filter_type, name.toLatin1().constData()));
+    QScopedPointer<Properties> metadata(m_repo->metadata(mlt_service_filter_type, name.toLatin1().constData()));
     if (metadata->is_valid()) {
         Properties tags(metadata->get_data("tags"));
         if (tags.is_valid()) {
@@ -962,6 +975,34 @@ void Controller::lockCreationTime(Producer* producer) const
     }
 }
 
+Producer* Controller::setupNewProducer(Producer* newProducer) const
+{
+    // Call this function before adding a new producer to Shotcut so that
+    // It will be configured correctly. The returned producer must be deleted.
+    QString serviceName = newProducer->get("mlt_service");
+    if (serviceName == "avformat")
+    {
+        // Convert avformat to avformat-novalidate so that XML loads faster.
+        newProducer->set("mlt_service", "avformat-novalidate");
+    }
+    setImageDurationFromDefault(newProducer);
+    lockCreationTime(newProducer);
+    newProducer->get_length_time(mlt_time_clock);
+
+    if (serviceName.startsWith("avformat"))
+    {
+        newProducer->set("mute_on_pause", 0);
+        // Encapsulate in a chain to enable timing effects
+        if (newProducer->type() != mlt_service_chain_type)
+        {
+            Mlt::Chain* chain = new Mlt::Chain(MLT.profile());
+            chain->set_source(*newProducer);
+            return chain;
+        }
+    }
+    return new Mlt::Producer(newProducer);
+}
+
 QUuid Controller::uuid(Mlt::Properties &properties) const
 {
     return {properties.get(kUuidProperty)};
@@ -1002,6 +1043,22 @@ void Controller::copyFilters(Producer& fromProducer, Producer& toProducer, bool 
                     if (fromFilter->get_out() != out) {
                         toFilter.set(kFilterOutProperty, fromFilter->get_out() - fromFilter->get_in());
                     }
+                }
+            }
+        }
+    }
+
+    if (fromProducer.type() == mlt_service_chain_type && toProducer.type() == mlt_service_chain_type) {
+        Mlt::Chain fromChain(fromProducer);
+        Mlt::Chain toChain(toProducer);
+        count = fromChain.link_count();
+        for (int i = 0; i < count; i++) {
+            QScopedPointer<Mlt::Link> fromLink(fromChain.link(i));
+            if (fromLink && fromLink->is_valid() && fromLink->get("mlt_service")) {
+                Mlt::Link toLink(fromLink->get("mlt_service"));
+                if (toLink.is_valid()) {
+                    toLink.inherit(*fromLink);
+                    toChain.attach(toLink);
                 }
             }
         }

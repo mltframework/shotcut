@@ -801,11 +801,11 @@ function set_globals {
   #####
   # swh-plugins
   CONFIG[8]="./configure --prefix=$FINAL_INSTALL_DIR"
+  [ "$TARGET_ARCH" != "arm64" ] && CONFIG[8]="${CONFIG[8]} --enable-sse"
   if [ "$TARGET_OS" = "Darwin" ]; then
     CONFIG[8]="${CONFIG[8]} --enable-darwin"
 	[ "$TARGET_ARCH" != "arm64" ] && CFLAGS_[8]="-march=nocona $CFLAGS"
   fi
-  [ "$TARGET_ARCH" != "arm64" ] && CONFIG[8]="${CONFIG[8]} --enable-sse"
   LDFLAGS_[8]=$LDFLAGS
 
   ####

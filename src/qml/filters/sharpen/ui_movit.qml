@@ -254,6 +254,7 @@ Item {
         onOutChanged: updateSimpleAnimation()
         onAnimateInChanged: updateSimpleAnimation()
         onAnimateOutChanged: updateSimpleAnimation()
+        onPropertyChanged: setControls()
     }
 
     Connections {

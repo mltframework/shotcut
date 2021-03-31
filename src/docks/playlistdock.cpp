@@ -427,7 +427,7 @@ void PlaylistDock::on_actionUpdate_triggered()
     if (!index.isValid() || !m_model.playlist()) return;
     Mlt::ClipInfo* info = m_model.playlist()->clip_info(index.row());
     if (!info || MAIN.isSourceClipMyProject()) return;
-    if (MLT.producer()->type() != playlist_type) {
+    if (MLT.producer()->type() != mlt_service_playlist_type) {
         if (MLT.isSeekable()) {
             ProxyManager::generateIfNotExists(*MLT.producer());
             MAIN.undoStack()->push(new Playlist::UpdateCommand(m_model, MLT.XML(), index.row()));
@@ -692,14 +692,7 @@ void PlaylistDock::onDropped(const QMimeData *data, int row)
                         }
                     }
                 }
-                // Convert avformat to avformat-novalidate so that XML loads faster.
-                if (!qstrcmp(producer->get("mlt_service"), "avformat")) {
-                    producer->set("mlt_service", "avformat-novalidate");
-                    producer->set("mute_on_pause", 0);
-                }
-                MLT.setImageDurationFromDefault(producer);
-                MLT.lockCreationTime(producer);
-                producer->get_length_time(mlt_time_clock);
+                producer = MLT.setupNewProducer(producer);
                 if (MLT.isSeekable(producer)) {
                     ProxyManager::generateIfNotExists(*producer);
                     if (row == -1)
@@ -722,12 +715,13 @@ void PlaylistDock::onDropped(const QMimeData *data, int row)
                     setIndex(0);
                     resetIndex = false;
                 }
+                delete producer;
             }
         }
     }
     else if (data && data->hasFormat(Mlt::XmlMimeType)) {
         if (MLT.producer() && MLT.producer()->is_valid()) {
-            if (MLT.producer()->type() == playlist_type) {
+            if (MLT.producer()->type() == mlt_service_playlist_type) {
                 emit showStatusMessage(tr("You cannot insert a playlist into a playlist!"));
             } else if (MAIN.isSourceClipMyProject()) {
                 return;

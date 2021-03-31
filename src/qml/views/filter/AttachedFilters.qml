@@ -15,9 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.0
+import QtQuick 2.12
 import QtQuick.Controls 2.12
-import QtQml.Models 2.1
+import QtQml.Models 2.12
+import org.shotcut.qml 1.0 as Shotcut
 
 Rectangle {
     id: attachedFilters
@@ -72,6 +73,8 @@ Rectangle {
                 CheckBox {
                     id: filterDelegateCheck
                     anchors.verticalCenter: parent.verticalCenter
+                    enabled: model.pluginType != Shotcut.Metadata.Link
+                    opacity: enabled ? 1.0 : 0.5
                     checkState: model.checkState
                     MouseArea {
                         anchors.fill: parent

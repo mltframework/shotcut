@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 Meltytech, LLC
+ * Copyright (c) 2013-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -50,8 +50,8 @@ QmlApplication::QmlApplication() :
 
 Qt::WindowModality QmlApplication::dialogModality()
 {
-#ifdef Q_OS_OSX
-    return (QSysInfo::macVersion() >= QSysInfo::MV_10_8)? Qt::WindowModal : Qt::ApplicationModal;
+#ifdef Q_OS_MAC
+    return Qt::WindowModal;
 #else
     return Qt::ApplicationModal;
 #endif
@@ -124,7 +124,7 @@ void QmlApplication::pasteFilters()
 QString QmlApplication::timecode(int frames)
 {
     if (MLT.producer() && MLT.producer()->is_valid())
-        return MLT.producer()->frames_to_time(frames, mlt_time_smpte);
+        return MLT.producer()->frames_to_time(frames, mlt_time_smpte_df);
     else
         return QString();
 }
@@ -181,7 +181,7 @@ bool QmlApplication::confirmOutputFilter()
     bool result = true;
     QScopedPointer<Mlt::Producer> producer(new Mlt::Producer(MAIN.filterController()->attachedModel()->producer()));
     if (producer->is_valid()
-            && tractor_type == producer->type()
+            && mlt_service_tractor_type == producer->type()
             && !producer->get(kShotcutTransitionProperty)
             && MAIN.filterController()->attachedModel()->rowCount() == 0
             && Settings.askOutputFilter()) {

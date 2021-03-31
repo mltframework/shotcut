@@ -78,6 +78,7 @@ TimelineDock::TimelineDock(QWidget *parent) :
     connect(&m_model, &MultitrackModel::overWritten, this, &TimelineDock::selectClip, Qt::QueuedConnection);
     connect(&m_model, SIGNAL(rowsInserted(QModelIndex,int,int)), SLOT(onRowsInserted(QModelIndex,int,int)));
     connect(&m_model, SIGNAL(rowsRemoved(QModelIndex,int,int)), SLOT(onRowsRemoved(QModelIndex,int,int)));
+    connect(&m_model, SIGNAL(closed()), SLOT(onMultitrackClosed()));
 
     setWidget(&m_quickView);
 
@@ -487,7 +488,6 @@ void TimelineDock::onProducerChanged(Mlt::Producer* after)
             int length = qRound(info->length * speedRatio);
             int in = qMin(qRound(info->frame_in * speedRatio), length - 1);
             int out = qMin(qRound(info->frame_out * speedRatio), length - 1);
-            after->set("length", after->frames_to_time(length, mlt_time_clock));
             after->set_in_and_out(in, out);
 
             // Adjust filters.
@@ -877,7 +877,7 @@ void TimelineDock::replace(int trackIndex, int clipIndex, const QString& xml)
     if (clipIndex < 0)
         clipIndex = clipIndexAtPlayhead(trackIndex);
     Mlt::Producer producer(producerForClip(trackIndex, clipIndex));
-    if (producer.is_valid() && producer.type() == tractor_type) {
+    if (producer.is_valid() && producer.type() == mlt_service_tractor_type) {
         emit showStatusMessage(tr("You cannot replace a transition."));
         return;
     }
@@ -1132,20 +1132,14 @@ static QString convertUrlsToXML(const QString& xml)
                 p = Mlt::Producer(MLT.profile(), path.toUtf8().constData());
             }
             if (p.is_valid()) {
-                // Convert avformat to avformat-novalidate so that XML loads faster.
-                if (!qstrcmp(p.get("mlt_service"), "avformat")) {
-                    if (!p.get_int("seekable")) {
-                        MAIN.showStatusMessage(QObject::tr("Not adding non-seekable file: ") + Util::baseName(path));
-                        continue;
-                    }
-                    p.set("mlt_service", "avformat-novalidate");
-                    p.set("mute_on_pause", 0);
+                if (!qstrcmp(p.get("mlt_service"), "avformat") && !p.get_int("seekable")) {
+                    MAIN.showStatusMessage(QObject::tr("Not adding non-seekable file: ") + Util::baseName(path));
+                    continue;
                 }
                 ProxyManager::generateIfNotExists(p);
-                MLT.setImageDurationFromDefault(&p);
-                MLT.lockCreationTime(&p);
-                p.get_length_time(mlt_time_clock);
-                playlist.append(p);
+                Mlt::Producer* producer = MLT.setupNewProducer(&p);
+                playlist.append(*producer);
+                delete producer;
             }
         }
         return MLT.XML(&playlist);
@@ -1199,6 +1193,17 @@ void TimelineDock::insert(int trackIndex, int position, const QString &xml, bool
 void TimelineDock::selectClip(int trackIndex, int clipIndex)
 {
     setSelection(QList<QPoint>() << QPoint(clipIndex, trackIndex));
+}
+
+void TimelineDock::onMultitrackClosed()
+{
+    m_position = -1;
+    m_ignoreNextPositionChange = false;
+    m_trimDelta = 0;
+    m_transitionDelta = 0;
+    m_blockSetSelection = false;
+    setSelection();
+    emit resetZoom();
 }
 
 void TimelineDock::overwrite(int trackIndex, int position, const QString &xml, bool seek)
@@ -1508,7 +1513,7 @@ void TimelineDock::replaceClipsWithHash(const QString& hash, Mlt::Producer& prod
         // lookup the current track and clip index by UUID
         QScopedPointer<Mlt::ClipInfo> info(MAIN.timelineClipInfoByUuid(clip.get(kUuidProperty), trackIndex, clipIndex));
 
-        if (info && info->producer->is_valid() && trackIndex >= 0 && clipIndex >= 0 && info->producer->type() != tractor_type) {
+        if (info && info->producer->is_valid() && trackIndex >= 0 && clipIndex >= 0 && info->producer->type() != mlt_service_tractor_type) {
             if (producer.get_int(kIsProxyProperty) && info->producer->get_int(kIsProxyProperty)) {
                 // Not much to do on a proxy clip but change its resource
                 info->producer->set(kOriginalResourceProperty, producer.get("resource"));

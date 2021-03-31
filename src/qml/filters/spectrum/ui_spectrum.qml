@@ -52,10 +52,10 @@ Item {
     }
 
     function setFilter() {
-        var x = parseFloat(rectX.text)
-        var y = parseFloat(rectY.text)
-        var w = parseFloat(rectW.text)
-        var h = parseFloat(rectH.text)
+        var x = rectX.value
+        var y = rectY.value
+        var w = rectW.value
+        var h = rectH.value
         if (x !== filterRect.x ||
             y !== filterRect.y ||
             w !== filterRect.width ||
@@ -171,20 +171,28 @@ Item {
         }
         RowLayout {
             Layout.columnSpan: 4
-            TextField {
+            Shotcut.DoubleSpinBox {
                 id: rectX
-                text: filterRect.x
+                value: filterRect.x
+                Layout.minimumWidth: 100
                 horizontalAlignment: Qt.AlignRight
-                selectByMouse: true
-                onEditingFinished: if (filterRect.x !== parseFloat(text)) setFilter()
+                decimals: 0
+                stepSize: 1
+                from: -999999999
+                to: 999999999
+                onValueChanged: if (filterRect.x !== value) setFilter()
             }
-            Label { text: ',' }
-            TextField {
+            Label { text: ','; Layout.minimumWidth: 20; horizontalAlignment: Qt.AlignHCenter }
+            Shotcut.DoubleSpinBox {
                 id: rectY
-                text: filterRect.y
+                value: filterRect.y
+                Layout.minimumWidth: 100
                 horizontalAlignment: Qt.AlignRight
-                selectByMouse: true
-                onEditingFinished: if (filterRect.y !== parseFloat(text)) setFilter()
+                decimals: 0
+                stepSize: 1
+                from: -999999999
+                to: 999999999
+                onValueChanged: if (filterRect.y !== value) setFilter()
             }
         }
 
@@ -194,20 +202,28 @@ Item {
         }
         RowLayout {
             Layout.columnSpan: 4
-            TextField {
+            Shotcut.DoubleSpinBox {
                 id: rectW
-                text: filterRect.width
+                value: filterRect.width
+                Layout.minimumWidth: 100
                 horizontalAlignment: Qt.AlignRight
-                selectByMouse: true
-                onEditingFinished: if (filterRect.width !== parseFloat(text)) setFilter()
+                decimals: 0
+                stepSize: 1
+                from: -999999999
+                to: 999999999
+                onValueChanged: if (filterRect.width !== value) setFilter()
             }
-            Label { text: 'x' }
-            TextField {
+            Label { text: 'x'; Layout.minimumWidth: 20; horizontalAlignment: Qt.AlignHCenter }
+            Shotcut.DoubleSpinBox {
                 id: rectH
-                text: filterRect.height
+                value: filterRect.height
+                Layout.minimumWidth: 100
                 horizontalAlignment: Qt.AlignRight
-                selectByMouse: true
-                onEditingFinished: if (filterRect.height !== parseFloat(text)) setFilter()
+                decimals: 0
+                stepSize: 1
+                from: -999999999
+                to: 999999999
+                onValueChanged: if (filterRect.height !== value) setFilter()
             }
         }
 

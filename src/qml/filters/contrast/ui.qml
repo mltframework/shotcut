@@ -148,13 +148,17 @@ Item {
         Shotcut.Preset {
             Layout.columnSpan: 3
             parameters: defaultParameters
+            onBeforePresetLoaded: {
+                filter.resetProperty('gamma_r')
+                filter.resetProperty('gamma_g')
+                filter.resetProperty('gamma_b')
+                filter.resetProperty('gain_r')
+                filter.resetProperty('gain_g')
+                filter.resetProperty('gain_b')
+            }
             onPresetSelected: {
                 setControls()
-                middleValue = filter.getDouble('gain_r', filter.animateIn)
-                if (filter.animateIn > 0)
-                    startValue = filter.getDouble('gain_r', 0)
-                if (filter.animateOut > 0)
-                    endValue = filter.getDouble('gain_r', filter.duration - 1)
+                updateFilter(getPosition())
             }
         }
 

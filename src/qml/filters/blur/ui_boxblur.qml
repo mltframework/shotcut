@@ -244,6 +244,7 @@ Item {
         onOutChanged: { updateFilterWidth(null); updateFilterHeight(null) }
         onAnimateInChanged: { updateFilterWidth(null); updateFilterHeight(null) }
         onAnimateOutChanged: { updateFilterWidth(null); updateFilterHeight(null) }
+        onPropertyChanged: setControls()
     }
 
     Connections {

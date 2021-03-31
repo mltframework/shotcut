@@ -43,6 +43,7 @@ public:
 public slots:
     void updateDuration();
     void rename();
+    void offerConvert(QString message, bool set709Convert = false);
 
 signals:
     void producerChanged(Mlt::Producer*);
@@ -55,7 +56,7 @@ protected:
 private slots:
     void onFrameDisplayed(const SharedFrame&);
 
-    void onProducerChanged();
+    void onProducerChanged(Mlt::Producer*);
 
     void onFrameDecoded();
 

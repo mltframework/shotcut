@@ -23,7 +23,7 @@
 #include <QVariant>
 #include <QRectF>
 #include <QUuid>
-#include <MltFilter.h>
+#include <MltService.h>
 #include <MltProducer.h>
 #include <MltAnimation.h>
 
@@ -63,7 +63,7 @@ public:
     Q_ENUM(CurrentFilterIndex)
 
     explicit QmlFilter();
-    explicit QmlFilter(Mlt::Filter& mltFilter, const QmlMetadata* metadata, QObject *parent = nullptr);
+    explicit QmlFilter(Mlt::Service& mltService, const QmlMetadata* metadata, QObject *parent = nullptr);
     ~QmlFilter();
 
     bool isNew() const { return m_isNew; }
@@ -100,7 +100,7 @@ public:
     void setIn(int value);
     int out();
     void setOut(int value);
-    Mlt::Filter& filter() { return m_filter; }
+    Mlt::Service& service() { return m_service; }
     int animateIn();
     void setAnimateIn(int value);
     int animateOut();
@@ -111,6 +111,8 @@ public:
     Mlt::Animation getAnimation(const QString& name);
     Q_INVOKABLE int keyframeCount(const QString& name);
     mlt_keyframe_type getKeyframeType(Mlt::Animation& animation, int position, mlt_keyframe_type defaultType);
+    Q_INVOKABLE int getNextKeyframePosition(const QString& name, int position);
+    Q_INVOKABLE int getPrevKeyframePosition(const QString& name, int position);
     Q_INVOKABLE bool isAtLeastVersion(const QString& version);
     Q_INVOKABLE static void deselect();
 
@@ -127,10 +129,11 @@ signals:
     void animateInChanged();
     void animateOutChanged();
     void durationChanged();
+    void propertyChanged(QString name); // Use to let QML know when a specific property has changed
 
 private:
     const QmlMetadata* m_metadata;
-    Mlt::Filter m_filter;
+    Mlt::Service m_service;
     Mlt::Producer m_producer;
     QString m_path;
     bool m_isNew;

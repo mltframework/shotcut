@@ -22,7 +22,7 @@ import 'Keyframes.js' as Logic
 
 Rectangle {
     id: keyframeRoot
-    property int position: 0
+    property int position
     property int interpolation: KeyframesModel.DiscreteInterpolation // rectangle for discrete
     property bool isSelected: false
     property string name: ''
@@ -37,6 +37,7 @@ Rectangle {
     property double maxDragX: activeClip.x + activeClip.width - width/2
     property double minDragY: activeClip.y - width/2
     property double maxDragY: activeClip.y + activeClip.height - width/2
+    property bool inRange: position >= (filter.in - producer.in) && position <= (filter.out - producer.in)
 
     signal clicked(var keyframe)
 
@@ -47,8 +48,9 @@ Rectangle {
     anchors.verticalCenterOffset: isCurve ? trackValue : 0
     height: 10
     width: height
-    color: isSelected? 'red' : activePalette.buttonText
+    color: isSelected ? 'red' : activePalette.buttonText
     border.color: activePalette.button
+    opacity: inRange ? 1.0 : 0.3
     border.width: 1
     radius: (interpolation === KeyframesModel.SmoothInterpolation)? height/2 : 0 // circle for smooth
     rotation: (interpolation === KeyframesModel.LinearInterpolation)? 45 : 0    // diamond for linear
@@ -98,13 +100,18 @@ Rectangle {
         onReleased: if (isCurve) parent.anchors.verticalCenter = parameterRoot.verticalCenter
         onPositionChanged: {
             var newPosition = Math.round((parent.x + parent.width/2) / timeScale)
-            if (drag.axis !== Drag.Yxis && newPosition !== keyframeRoot.position) {
-                parameters.setPosition(parameterIndex, index, newPosition - (filter.in - producer.in))
+            var keyPosition = newPosition - (filter.in - producer.in)
+            var trackValue = Math.min(Math.max(0, 1.0 - parent.y / (parameterRoot.height - parent.height)), 1.0)
+            trackValue = minimum + trackValue * (maximum - minimum)
+            if (drag.axis === Drag.XAxis && newPosition !== keyframeRoot.position) {
+                parameters.setKeyframePosition(parameterIndex, index, keyPosition)
             }
-            if (drag.axis !== Drag.XAxis && isCurve) {
-                var trackValue = Math.min(Math.max(0, 1.0 - parent.y / (parameterRoot.height - parent.height)), 1.0)
-                trackValue = minimum + trackValue * (maximum - minimum)
-                parameters.setKeyframe(parameterIndex, trackValue, newPosition - (filter.in - producer.in), interpolation)
+            else if (drag.axis === Drag.YAxis ||
+                     (drag.axis === Drag.XAndYAxis && newPosition === keyframeRoot.position)) {
+                parameters.setKeyframeValue(parameterIndex, index, trackValue)
+            }
+            else if (drag.axis === Drag.XAndYAxis) {
+                parameters.setKeyframeValuePosition(parameterIndex, index, trackValue, keyPosition)
             }
         }
         cursorShape: Qt.PointingHandCursor
@@ -131,6 +138,7 @@ Rectangle {
                 text: qsTr('Smooth')
                 checkable: true
                 checked: interpolation === KeyframesModel.SmoothInterpolation
+                enabled: metadata.keyframes.allowSmooth
                 onTriggered: parameters.setInterpolation(parameterIndex, index, KeyframesModel.SmoothInterpolation)
             }
         }

@@ -47,15 +47,15 @@ protected:
 signals:
     void currentFilterChanged(QmlFilter* filter, QmlMetadata* meta, int index);
     void statusChanged(QString);
-    void filterChanged(Mlt::Filter*);
+    void filterChanged(Mlt::Service*);
 
 public slots:
     void setProducer(Mlt::Producer *producer = 0);
     void setCurrentFilter(int attachedIndex, bool isNew = false);
     void onFadeInChanged();
     void onFadeOutChanged();
-    void onFilterInChanged(int delta, Mlt::Filter* filter = 0);
-    void onFilterOutChanged(int delta, Mlt::Filter* filter = 0);
+    void onServiceInChanged(int delta, Mlt::Service* service = 0);
+    void onServiceOutChanged(int delta, Mlt::Service* service = 0);
     void removeCurrent();
     void onProducerChanged();
 
@@ -74,7 +74,7 @@ private:
 
     QFuture<void> m_future;
     QScopedPointer<QmlFilter> m_currentFilter;
-    Mlt::Filter* m_mltFilter;
+    Mlt::Service* m_mltService;
     MetadataModel m_metadataModel;
     AttachedFiltersModel m_attachedModel;
     int m_currentFilterIndex;

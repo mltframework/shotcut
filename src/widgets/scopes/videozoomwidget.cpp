@@ -55,7 +55,7 @@ void VideoZoomWidget::putFrame(SharedFrame frame)
 
     // Make sure the images are pre-cached for the UI thread
     frame.get_image(mlt_image_yuv420p);
-    frame.get_image(mlt_image_rgb24);
+    frame.get_image(mlt_image_rgb);
 
     m_mutex.lock();
     m_frame = frame;
@@ -132,7 +132,7 @@ void VideoZoomWidget::paintEvent(QPaintEvent*)
     QPainter p(this);
     p.setRenderHint(QPainter::Antialiasing, true);
 
-    const uint8_t* pImg = m_frame.get_image(mlt_image_rgb24);
+    const uint8_t* pImg = m_frame.get_image(mlt_image_rgb);
     int iWidth = m_frame.get_image_width();
     int iHeight = m_frame.get_image_height();
     int wWidth = width() - (width() % m_zoom);
@@ -282,7 +282,7 @@ VideoZoomWidget::PixelValues VideoZoomWidget::pixelToValues(const QPoint& pixel)
     int iWidth = m_frame.get_image_width();
     int iHeight = m_frame.get_image_height();
     int imageOffset = iWidth * pixel.y() + pixel.x();
-    const uint8_t* pRgb = m_frame.get_image(mlt_image_rgb24) + imageOffset * 3;
+    const uint8_t* pRgb = m_frame.get_image(mlt_image_rgb) + imageOffset * 3;
     const uint8_t* pYuv = m_frame.get_image(mlt_image_yuv420p);
     const uint8_t* pY = pYuv + imageOffset;
     const uint8_t* pU = pYuv + (iWidth * iHeight) + (iWidth / 2 * (pixel.y() / 2)) + (pixel.x() / 2);

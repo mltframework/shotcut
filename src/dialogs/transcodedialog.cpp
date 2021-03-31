@@ -32,6 +32,7 @@ TranscodeDialog::TranscodeDialog(const QString& message, bool isProgressive, QWi
     setWindowTitle(tr("Convert to Edit-friendly..."));
     ui->messageLabel->setText(message);
     ui->checkBox->hide();
+    ui->subclipCheckBox->hide();
     ui->deinterlaceCheckBox->setChecked(false);
     connect(ui->fpsCheckBox, SIGNAL(toggled(bool)), ui->fpsWidget, SLOT(setEnabled(bool)));
     connect(ui->fpsCheckBox, SIGNAL(toggled(bool)), ui->fpsLabel, SLOT(setEnabled(bool)));
@@ -99,6 +100,16 @@ bool TranscodeDialog::get709Convert()
 void TranscodeDialog::set709Convert(bool enable)
 {
     ui->convert709CheckBox->setChecked(enable);
+}
+
+void TranscodeDialog::showSubClipCheckBox()
+{
+    ui->subclipCheckBox->show();
+}
+
+bool TranscodeDialog::isSubClip() const
+{
+    return ui->subclipCheckBox->isChecked();
 }
 
 void TranscodeDialog::on_horizontalSlider_valueChanged(int position)

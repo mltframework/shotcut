@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2020 Meltytech, LLC
+ * Copyright (c) 2018-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -43,10 +43,10 @@ protected:
     QString m_dstFile;
 };
 
-class ReverseOpenPostJobAction : public FilePropertiesPostJobAction
+class OpenPostJobAction : public FilePropertiesPostJobAction
 {
 public:
-    ReverseOpenPostJobAction(const QString& srcFile, const QString& dstFile, const QString& fileNameToRemove)
+    OpenPostJobAction(const QString& srcFile, const QString& dstFile, const QString& fileNameToRemove)
         : FilePropertiesPostJobAction(srcFile, dstFile)
         , m_fileNameToRemove(fileNameToRemove)
         {}
@@ -56,10 +56,10 @@ private:
     QString m_fileNameToRemove;
 };
 
-class ReverseReplacePostJobAction : public FilePropertiesPostJobAction
+class ReplaceOnePostJobAction : public FilePropertiesPostJobAction
 {
 public:
-    ReverseReplacePostJobAction(const QString& srcFile, const QString& dstFile, const QString& fileNameToRemove, const QUuid& srcUuid, int in)
+    ReplaceOnePostJobAction(const QString& srcFile, const QString& dstFile, const QString& fileNameToRemove, const QUuid& srcUuid, int in)
         : FilePropertiesPostJobAction(srcFile, dstFile)
         , m_fileNameToRemove(fileNameToRemove)
         , m_uuid(srcUuid)
@@ -73,10 +73,10 @@ private:
     int m_in;
 };
 
-class ConvertReplacePostJobAction : public FilePropertiesPostJobAction
+class ReplaceAllPostJobAction : public FilePropertiesPostJobAction
 {
 public:
-    ConvertReplacePostJobAction(const QString& srcFile, const QString& dstFile, const QString& srcHash)
+    ReplaceAllPostJobAction(const QString& srcFile, const QString& dstFile, const QString& srcHash)
         : FilePropertiesPostJobAction(srcFile, dstFile)
         , m_hash(srcHash)
         {}

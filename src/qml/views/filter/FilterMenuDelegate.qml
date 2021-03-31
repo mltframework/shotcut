@@ -17,6 +17,7 @@
 
 import QtQuick 2.2
 import QtQuick.Controls 2.12
+import org.shotcut.qml 1.0 as Shotcut
 import 'FilterMenu.js' as Logic
 
 Rectangle {
@@ -66,8 +67,8 @@ Rectangle {
                 anchors.left: parent.left
                 anchors.verticalCenter: parent.verticalCenter
                 enabled: false
-                icon.name: needsGpu ? 'cpu' : isAudio ? 'speaker' : 'video-television'
-                icon.source: needsGpu ? 'qrc:///icons/oxygen/32x32/devices/cpu.png' : isAudio ? 'qrc:///icons/oxygen/32x32/actions/speaker.png' : 'qrc:///icons/oxygen/32x32/devices/video-television.png'
+                icon.name: needsGpu ? 'cpu' : isAudio ? 'speaker' : pluginType == Shotcut.Metadata.Link ? 'chronometer' : 'video-television'
+                icon.source: needsGpu ? 'qrc:///icons/oxygen/32x32/devices/cpu.png' : isAudio ? 'qrc:///icons/oxygen/32x32/actions/speaker.png' : pluginType == Shotcut.Metadata.Link ? 'qrc:///icons/oxygen/32x32/actions/chronometer.png' : 'qrc:///icons/oxygen/32x32/devices/video-television.png'
             }
             
             Label {

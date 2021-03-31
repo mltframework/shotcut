@@ -159,7 +159,7 @@ void ProducerPreviewWidget::frameGeneratorThread()
         int length = m_producer->get_length();
         int width = m_previewSize.width();
         int height = m_previewSize.height();
-        mlt_image_format format = mlt_image_rgb24;
+        mlt_image_format format = mlt_image_rgb;
         Mlt::Frame* frame = m_producer->get_frame();
         frame->set( "rescale.interp", "bilinear" );
         uint8_t* mltImage = frame->get_image( format, width, height, 0 );

@@ -36,6 +36,8 @@
 
 #include <QtWidgets>
 
+static const auto kHandleSeconds = 15.0;
+
 static bool ProducerIsTimewarp( Mlt::Producer* producer )
 {
     return QString::fromUtf8(producer->get("mlt_service")) == "timewarp";
@@ -98,7 +100,7 @@ AvformatProducerWidget::AvformatProducerWidget(QWidget *parent)
     if (Settings.playerGPU())
         connect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame&)), this, SLOT(onFrameDisplayed(const SharedFrame&)));
     else
-        connect(this, SIGNAL(producerChanged(Mlt::Producer*)), SLOT(onProducerChanged()));
+        connect(this, SIGNAL(producerChanged(Mlt::Producer*)), SLOT(onProducerChanged(Mlt::Producer*)));
 }
 
 AvformatProducerWidget::~AvformatProducerWidget()
@@ -111,7 +113,7 @@ Mlt::Producer* AvformatProducerWidget::newProducer(Mlt::Profile& profile)
     Mlt::Producer* p = 0;
     if ( ui->speedSpinBox->value() == 1.0 )
     {
-        p = new Mlt::Producer(profile, GetFilenameFromProducer(producer(), false).toUtf8().constData());
+        p = new Mlt::Chain(profile, GetFilenameFromProducer(producer(), false).toUtf8().constData());
     }
     else
     {
@@ -163,6 +165,23 @@ void AvformatProducerWidget::rename()
     ui->filenameLabel->selectAll();
 }
 
+void AvformatProducerWidget::offerConvert(QString message, bool set709Convert)
+{
+    m_producer->set(kShotcutSkipConvertProperty, true);
+    LongUiTask::cancel();
+    MLT.pause();
+    TranscodeDialog dialog(message.append(tr(" Do you want to convert it to an edit-friendly format?\n\n"
+                              "If yes, choose a format below and then click OK to choose a file name. "
+                              "After choosing a file name, a job is created. "
+                              "When it is done, it automatically replaces clips, or you can double-click the job to open it.\n")),
+                           ui->scanComboBox->currentIndex(), this);
+    dialog.setWindowModality(QmlApplication::dialogModality());
+    dialog.showCheckBox();
+    dialog.set709Convert(set709Convert);
+    dialog.showSubClipCheckBox();
+    convert(dialog);
+}
+
 void AvformatProducerWidget::keyPressEvent(QKeyEvent* event)
 {
     if (ui->speedSpinBox->hasFocus() &&
@@ -185,9 +204,11 @@ void AvformatProducerWidget::onFrameDisplayed(const SharedFrame&)
         disconnect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame&)), this, 0);
 }
 
-void AvformatProducerWidget::onProducerChanged()
+void AvformatProducerWidget::onProducerChanged(Mlt::Producer* producer)
 {
-    QThreadPool::globalInstance()->start(new DecodeTask(this), 10);
+    if( producer->get_producer() == m_producer->get_producer() ) {
+        QThreadPool::globalInstance()->start(new DecodeTask(this), 10);
+    }
 }
 
 void AvformatProducerWidget::reopen(Mlt::Producer* p)
@@ -266,6 +287,17 @@ void AvformatProducerWidget::recreateProducer()
                  kIsProxyProperty);
     Mlt::Controller::copyFilters(*m_producer, *p);
     if (m_producer->get(kMultitrackItemProperty)) {
+        int length = ui->durationSpinBox->value();
+        int in = m_producer->get_in();
+        int out = m_producer->get_out();
+        double oldSpeed = GetSpeedFromProducer(producer());
+        double newSpeed = ui->speedSpinBox->value();
+        double speedRatio = oldSpeed / newSpeed;
+        length = qRound(length * speedRatio);
+        in = qMin(qRound(in * speedRatio), length - 1);
+        out = qMin(qRound(out * speedRatio), length - 1);
+        p->set("length", p->frames_to_time(length, mlt_time_clock));
+        p->set_in_and_out(in, out);
         emit producerChanged(p);
         delete p;
     } else {
@@ -419,7 +451,7 @@ void AvformatProducerWidget::onFrameDecoded()
                 key = QString("meta.media.%1.codec.long_name").arg(i);
                 QString codec(m_producer->get(key.toLatin1().constData()));
                 ui->audioTableWidget->setItem(0, 1, new QTableWidgetItem(codec));
-                const char* layout = mlt_channel_layout_name(mlt_channel_layout_default(channels));
+                const char* layout = mlt_audio_channel_layout_name(mlt_audio_channel_layout_default(channels));
                 QString channelsStr = QString("%1 (%2)").arg(channels).arg(layout);
                 ui->audioTableWidget->setItem(1, 1, new QTableWidgetItem(channelsStr));
                 ui->audioTableWidget->setItem(2, 1, new QTableWidgetItem(sampleRate));
@@ -555,48 +587,14 @@ void AvformatProducerWidget::onFrameDecoded()
         if (transferItem && transferItem->data(Qt::UserRole).toInt() > 7) {
             // Transfer characteristics > SMPTE240M Probably need conversion
             QString trcString = ui->videoTableWidget->item(5, 1)->text();
-            m_producer->set(kShotcutSkipConvertProperty, true);
-            LongUiTask::cancel();
-            MLT.pause();
-            LOG_INFO() << resource << "Probable HDR" << ui->videoTableWidget->item(5, 1)->text();
-            TranscodeDialog dialog(tr("This file uses color transfer characteristics %1, which may result in incorrect colors or brightness in Shotcut. "
-                                      "Do you want to convert it to an edit-friendly format?\n\n"
-                                      "If yes, choose a format below and then click OK to choose a file name. "
-                                      "After choosing a file name, a job is created. "
-                                      "When it is done, double-click the job to open it.\n").arg(trcString),
-                                      ui->scanComboBox->currentIndex(), this);
-            dialog.set709Convert(true);
-            dialog.setWindowModality(QmlApplication::dialogModality());
-            dialog.showCheckBox();
-            convert(dialog);
+            LOG_INFO() << resource << "Probable HDR" << trcString;
+            offerConvert(tr("This file uses color transfer characteristics %1, which may result in incorrect colors or brightness in Shotcut.").arg(trcString), true);
         } else if (isVariableFrameRate) {
-            m_producer->set(kShotcutSkipConvertProperty, true);
-            LongUiTask::cancel();
-            MLT.pause();
             LOG_INFO() << resource << "is variable frame rate";
-            TranscodeDialog dialog(tr("This file is variable frame rate, which is not reliable for editing. "
-                                      "Do you want to convert it to an edit-friendly format?\n\n"
-                                      "If yes, choose a format below and then click OK to choose a file name. "
-                                      "After choosing a file name, a job is created. "
-                                      "When it is done, double-click the job to open it.\n"),
-                                   ui->scanComboBox->currentIndex(), this);
-            dialog.setWindowModality(QmlApplication::dialogModality());
-            dialog.showCheckBox();
-            convert(dialog);
+            offerConvert(tr("This file is variable frame rate, which is not reliable for editing."));
         } else if (QFile::exists(resource) && !MLT.isSeekable(m_producer.data())) {
-            m_producer->set(kShotcutSkipConvertProperty, true);
-            LongUiTask::cancel();
-            MLT.pause();
             LOG_INFO() << resource << "is not seekable";
-            TranscodeDialog dialog(tr("This file does not support seeking and cannot be used for editing. "
-                                      "Do you want to convert it to an edit-friendly format?\n\n"
-                                      "If yes, choose a format below and then click OK to choose a file name. "
-                                      "After choosing a file name, a job is created. "
-                                      "When it is done, double-click the job to open it.\n"),
-                                   ui->scanComboBox->currentIndex(), this);
-            dialog.setWindowModality(QmlApplication::dialogModality());
-            dialog.showCheckBox();
-            convert(dialog);
+            offerConvert(tr("This file does not support seeking and cannot be used for editing."));
         }
     }
 }
@@ -788,6 +786,7 @@ void AvformatProducerWidget::on_actionFFmpegConvert_triggered()
                            ui->scanComboBox->currentIndex(), this);
     dialog.setWindowModality(QmlApplication::dialogModality());
     dialog.set709Convert(ui->videoTableWidget->item(5, 1)->data(Qt::UserRole).toInt() > 7);
+    dialog.showSubClipCheckBox();
     convert(dialog);
 }
 
@@ -802,10 +801,44 @@ void AvformatProducerWidget::convert(TranscodeDialog& dialog)
         QString path = Settings.savePath();
         QStringList args;
         QString nameFilter;
+        int in = -1;
 
         args << "-loglevel" << "verbose";
         args << "-i" << resource;
         args << "-max_muxing_queue_size" << "9999";
+
+        if (dialog.isSubClip()) {
+            if (Settings.proxyEnabled()) {
+                m_producer->Mlt::Properties::clear(kOriginalResourceProperty);
+            } else {
+                // Save these properties for revertToOriginalResource()
+                m_producer->set(kOriginalResourceProperty, resource.toUtf8().constData());
+                m_producer->set(kOriginalInProperty, m_producer->get(kFilterInProperty)?
+                    m_producer->get_time(kFilterInProperty, mlt_time_clock) : m_producer->get_time("in", mlt_time_clock));
+                m_producer->set(kOriginalOutProperty, m_producer->get(kFilterOutProperty)?
+                    m_producer->get_time(kFilterOutProperty, mlt_time_clock) : m_producer->get_time("out", mlt_time_clock));
+            }
+
+            // set trim options
+            if (m_producer->get(kFilterInProperty)) {
+                in = m_producer->get_int(kFilterInProperty);
+                int ss = qMax(0, in - qRound(m_producer->get_fps() * kHandleSeconds));
+                auto s = QString::fromLatin1(m_producer->frames_to_time(ss, mlt_time_clock));
+                args << "-ss" << s.replace(',', '.');
+                in -= ss;
+            } else {
+                args << "-ss" << QString::fromLatin1(m_producer->get_time("in", mlt_time_clock)).replace(',', '.').replace(',', '.');
+            }
+            if (m_producer->get(kFilterOutProperty)) {
+                int out = m_producer->get_int(kFilterOutProperty);
+                int to = qMin(m_producer->get_playtime() - 1, out + qRound(m_producer->get_fps() * kHandleSeconds));
+                auto s = QString::fromLatin1(m_producer->frames_to_time(to, mlt_time_clock));
+                args << "-to" << s.replace(',', '.');
+            } else {
+                args << "-to" << QString::fromLatin1(m_producer->get_time("out", mlt_time_clock)).replace(',', '.');
+            }
+        }
+
         // transcode all streams except data, subtitles, and attachments
         auto audioIndex = m_producer->property_exists(kDefaultAudioIndexProperty)? m_producer->get_int(kDefaultAudioIndexProperty) : m_producer->get_int("audio_index");
         if (m_producer->get_int("video_index") < audioIndex) {
@@ -896,7 +929,26 @@ void AvformatProducerWidget::convert(TranscodeDialog& dialog)
 
             FfmpegJob* job = new FfmpegJob(filename, args, false);
             job->setLabel(tr("Convert %1").arg(Util::baseName(filename)));
-            job->setPostJobAction(new ConvertReplacePostJobAction(resource, filename, Util::getHash(*m_producer)));
+            if (dialog.isSubClip()) {
+                if (m_producer->get(kMultitrackItemProperty)) {
+                    QString s = QString::fromLatin1(m_producer->get(kMultitrackItemProperty));
+                    QVector<QStringRef> parts = s.splitRef(':');
+                    if (parts.length() == 2) {
+                        int clipIndex = parts[0].toInt();
+                        int trackIndex = parts[1].toInt();
+                        QUuid uuid = MAIN.timelineClipUuid(trackIndex, clipIndex);
+                        if (!uuid.isNull()) {
+                            job->setPostJobAction(new ReplaceOnePostJobAction(resource, filename, QString(), uuid.toByteArray(), in));
+                            JOBS.add(job);
+                        }
+                    }
+                } else {
+                    job->setPostJobAction(new OpenPostJobAction(resource, filename, QString()));
+                    JOBS.add(job);
+                }
+                return;
+            }
+            job->setPostJobAction(new ReplaceAllPostJobAction(resource, filename, Util::getHash(*m_producer)));
             JOBS.add(job);
         }
     }
@@ -915,15 +967,14 @@ bool AvformatProducerWidget::revertToOriginalResource()
                 int trackIndex = parts[1].toInt();
                 QUuid uuid = MAIN.timelineClipUuid(trackIndex, clipIndex);
                 if (!uuid.isNull()) {
-                    Mlt::Producer producer(MLT.profile(), resource.toUtf8().constData());
-                    if (producer.is_valid()) {
-                        if (!qstrcmp(producer.get("mlt_service"), "avformat")) {
-                            producer.set("mlt_service", "avformat-novalidate");
-                            producer.set("mute_on_pause", 0);
-                        }
-                        MLT.lockCreationTime(&producer);
-                        producer.set_in_and_out(m_producer->get_int(kOriginalInProperty), m_producer->get_int(kOriginalOutProperty));
-                        MAIN.replaceInTimeline(uuid, producer);
+                    Mlt::Producer newProducer(MLT.profile(), resource.toUtf8().constData());
+                    if (newProducer.is_valid()) {
+                        Mlt::Producer* producer = MLT.setupNewProducer(&newProducer);
+                        producer->set(kIsProxyProperty, 1);
+                        producer->set(kOriginalResourceProperty, resource.toUtf8().constData());
+                        producer->set_in_and_out(m_producer->get_int(kOriginalInProperty), m_producer->get_int(kOriginalOutProperty));
+                        MAIN.replaceInTimeline(uuid, *producer);
+                        delete producer;
                         return true;
                     }
                 }
@@ -974,10 +1025,11 @@ void AvformatProducerWidget::on_reverseButton_clicked()
         ffmpegArgs << "-loglevel" << "verbose";
         ffmpegArgs << "-i" << resource;
         ffmpegArgs << "-max_muxing_queue_size" << "9999";
+
         // set trim options
         if (m_producer->get(kFilterInProperty)) {
             in = m_producer->get_int(kFilterInProperty);
-            int ss = qMax(0, in - qRound(m_producer->get_fps() * 15.0));
+            int ss = qMax(0, in - qRound(m_producer->get_fps() * kHandleSeconds));
             auto s = QString::fromLatin1(m_producer->frames_to_time(ss, mlt_time_clock));
             ffmpegArgs << "-ss" << s.replace(',', '.');
         } else {
@@ -985,13 +1037,14 @@ void AvformatProducerWidget::on_reverseButton_clicked()
         }
         if (m_producer->get(kFilterOutProperty)) {
             int out = m_producer->get_int(kFilterOutProperty);
-            int to = qMin(m_producer->get_playtime() - 1, out + qRound(m_producer->get_fps() * 15.0));
+            int to = qMin(m_producer->get_playtime() - 1, out + qRound(m_producer->get_fps() * kHandleSeconds));
             in = to - out - 1;
             auto s = QString::fromLatin1(m_producer->frames_to_time(to, mlt_time_clock));
             ffmpegArgs << "-to" << s.replace(',', '.');
         } else {
             ffmpegArgs << "-to" << QString::fromLatin1(m_producer->get_time("out", mlt_time_clock)).replace(',', '.');
         }
+
         // transcode all streams except data, subtitles, and attachments
         ffmpegArgs << "-map" << "0:V?" << "-map" << "0:a?" << "-map_metadata" << "0" << "-ignore_unknown";
         if (ui->rangeComboBox->currentIndex())
@@ -1104,13 +1157,13 @@ void AvformatProducerWidget::on_reverseButton_clicked()
                     int trackIndex = parts[1].toInt();
                     QUuid uuid = MAIN.timelineClipUuid(trackIndex, clipIndex);
                     if (!uuid.isNull()) {
-                        meltJob->setPostJobAction(new ReverseReplacePostJobAction(resource, filename, tmpFileName, uuid.toByteArray(), in));
+                        meltJob->setPostJobAction(new ReplaceOnePostJobAction(resource, filename, tmpFileName, uuid.toByteArray(), in));
                         JOBS.add(meltJob);
                         return;
                     }
                 }
             }
-            meltJob->setPostJobAction(new ReverseOpenPostJobAction(resource, filename, tmpFileName));
+            meltJob->setPostJobAction(new OpenPostJobAction(resource, filename, tmpFileName));
             JOBS.add(meltJob);
         }
     }
@@ -1221,12 +1274,10 @@ void AvformatProducerWidget::on_actionDisableProxy_triggered(bool checked)
         if (producer()->get_int(kIsProxyProperty) && producer()->get(kOriginalResourceProperty)) {
             Mlt::Producer original(MLT.profile(), producer()->get(kOriginalResourceProperty));
             if (original.is_valid()) {
-                if (!qstrcmp(original.get("mlt_service"), "avformat")) {
-                    original.set("mlt_service", "avformat-novalidate");
-                    original.set("mute_on_pause", 0);
-                }
-                original.set(kDisableProxyProperty, 1);
-                MAIN.replaceAllByHash(Util::getHash(original), original, true);
+                Mlt::Producer* producer = MLT.setupNewProducer(&original);
+                producer->set(kDisableProxyProperty, 1);
+                MAIN.replaceAllByHash(Util::getHash(original), *producer, true);
+                delete producer;
             }
         }
     } else {
@@ -1264,11 +1315,9 @@ void AvformatProducerWidget::on_actionDeleteProxy_triggered()
     if (producer()->get_int(kIsProxyProperty) && producer()->get(kOriginalResourceProperty)) {
         Mlt::Producer original(MLT.profile(), producer()->get(kOriginalResourceProperty));
         if (original.is_valid()) {
-            if (!qstrcmp(original.get("mlt_service"), "avformat")) {
-                original.set("mlt_service", "avformat-novalidate");
-                original.set("mute_on_pause", 0);
-            }
-            MAIN.replaceAllByHash(hash, original, true);
+            Mlt::Producer* producer = MLT.setupNewProducer(&original);
+            MAIN.replaceAllByHash(hash, *producer, true);
+            delete producer;
         }
     }
 }
