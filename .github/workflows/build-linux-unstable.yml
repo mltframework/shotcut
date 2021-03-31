@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   schedule:
     # nightly
-	#- cron: '0 8 * * *'
+    #- cron: '0 8 * * *'
 
 env:
   IMAGE_NAME: mltframework/shotcut-build:qt5.15.2-ubuntu18.04
