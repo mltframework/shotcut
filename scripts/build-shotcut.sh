@@ -803,10 +803,9 @@ function set_globals {
   CONFIG[8]="./configure --prefix=$FINAL_INSTALL_DIR"
   if [ "$TARGET_OS" = "Darwin" ]; then
     CONFIG[8]="${CONFIG[8]} --enable-darwin"
-    [ "$TARGET_ARCH" != "arm64" ] && CFLAGS_[8]="--enable-sse -march=nocona $CFLAGS"
-  elif [ "$TARGET_ARCH" != "arm64" ]; then
-    CONFIG[8]="${CONFIG[8]} --enable-sse"
+	[ "$TARGET_ARCH" != "arm64" ] && CFLAGS_[8]="-march=nocona $CFLAGS"
   fi
+  [ "$TARGET_ARCH" != "arm64" ] && CONFIG[8]="${CONFIG[8]} --enable-sse"
   LDFLAGS_[8]=$LDFLAGS
 
   ####
