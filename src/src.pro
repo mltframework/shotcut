@@ -321,6 +321,7 @@ OTHER_FILES += \
     ../.github/workflows/build-linux.yml \
     ../.github/workflows/build-linux-unstable.yml \
     ../.github/workflows/build-macos.yml \
+    ../.github/workflows/build-macos-unstable.yml \
     ../.github/workflows/build-sdk-windows.yml \
     ../.github/workflows/build-sdk-windows-unstable.yml \
     ../.github/workflows/build-windows.yml \
@@ -451,3 +452,4 @@ unix:!mac {
     man.path = $$PREFIX/share/man/man1
     INSTALLS += metainfo desktop mime icon64 icon128 man
 }
+
