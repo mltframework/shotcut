@@ -416,18 +416,18 @@ void MoveClipCommand::redo()
             // On the initial pass, remove clips while recording info about them.
             QScopedPointer<Mlt::ClipInfo> info(m_model.findClipByUuid(MLT.uuid(clip), trackIndex, clipIndex));
             if (info->producer && info->producer->is_valid()) {
-                info->producer->set(kPlaylistIndexProperty, qBound(0, trackIndex + m_trackDelta, m_model.trackList().size() - 1));
+                info->producer->set(kNewTrackIndexProperty, qBound(0, trackIndex + m_trackDelta, m_model.trackList().size() - 1));
                 info->producer->pass_property(*info->cut, kPlaylistStartProperty);
-                info->producer->set("_shotcut:trackIndex", trackIndex);
-                info->producer->set("_shotcut:clipIndex", clipIndex);
-                info->producer->set("_shotcut:in", info->frame_in);
-                info->producer->set("_shotcut:out", info->frame_out);
+                info->producer->set(kTrackIndexProperty, trackIndex);
+                info->producer->set(kClipIndexProperty, clipIndex);
+                info->producer->set(kShotcutInProperty, info->frame_in);
+                info->producer->set(kShotcutOutProperty, info->frame_out);
                 newSelection.insert(info->cut->get_int(kPlaylistStartProperty), info->producer);
             }
         } else {
             // On redo, use the recorded indices to remove them.
-            trackIndex = clip.get_int("_shotcut:trackIndex");
-            clipIndex = clip.get_int("_shotcut:clipIndex");
+            trackIndex = clip.get_int(kTrackIndexProperty);
+            clipIndex = clip.get_int(kClipIndexProperty);
         }
         if (m_ripple)
             m_model.removeClip(trackIndex, clipIndex, m_rippleAllTracks);
@@ -439,11 +439,11 @@ void MoveClipCommand::redo()
     }
     // Next, add the save clips to their new locations.
     for (auto& clip : m_selection) {
-        auto toTrack = clip.get_int(kPlaylistIndexProperty);
+        auto toTrack = clip.get_int(kNewTrackIndexProperty);
         auto start = clip.get_int(kPlaylistStartProperty);
-        clip.set_in_and_out(clip.get_int("_shotcut:in"), clip.get_int("_shotcut:out"));
+        clip.set_in_and_out(clip.get_int(kShotcutInProperty), clip.get_int(kShotcutOutProperty));
         if (start + clip.get_playtime() >= 0) {
-//            LOG_DEBUG() << "adding clip" << clip.get_int("_shotcut:clipIndex") << "to track" << toTrack << "start" << start;
+//            LOG_DEBUG() << "adding clip" << clip.get_int(kClipIndexProperty) << "to track" << toTrack << "start" << start;
             if (m_ripple)
                 m_model.insertClip(toTrack, clip, start, m_rippleAllTracks);
             else
