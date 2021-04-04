@@ -2047,14 +2047,10 @@ function deploy_osx
       sync
       cmd hdiutil create -fs HFS+ -srcfolder staging -volname Shotcut -format UDBZ -size 800m "$dmg_name"
 
-      # signing not currently working on M1
-      if [ "$TARGET_ARCH" != "arm64" ]; then
-
       log Signing code and resources
       cmd find staging/Shotcut.app/Contents/Frameworks -type f -exec codesign -v -s Meltytech {} \;
       cmd find staging/Shotcut.app/Contents/PlugIns -type f -exec codesign -v -s Meltytech {} \;
       cmd find staging/Shotcut.app/Contents/Resources -type f -exec codesign -v -s Meltytech {} \;
-      cmd find staging/Shotcut.app/Contents/MacOS -type f -exec codesign -v -s Meltytech {} \;
       cmd codesign -v -s Meltytech staging/Shotcut.app
       cmd codesign --verify --deep --strict --verbose=2 staging/Shotcut.app
       cmd spctl -a -t exec -vv staging/Shotcut.app
@@ -2063,9 +2059,7 @@ function deploy_osx
       dmg_name="$INSTALL_DIR/signed.dmg"
       cmd rm "$dmg_name" 2>/dev/null
       sync
-      cmd hdiutil create -fs HFS+ -srcfolder staging -volname Shotcut -format UDBZ -size 800m "$dmg_name"
-
-      fi # !arm64
+      cmd hdiutil create -srcfolder staging -volname Shotcut -format UDBZ -size 300m "$dmg_name"
 
       if [ "$ACTION_CLEANUP" = "1" ]; then
         cmd rm -rf staging
