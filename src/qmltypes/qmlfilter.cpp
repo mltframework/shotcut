@@ -116,6 +116,33 @@ QRectF QmlFilter::getRect(QString name, int position)
     }
 }
 
+void QmlFilter::removeRectPercents(QString name)
+{
+    // This method iterates over each keyframe and converts the percentage values to absolute.
+    if (!m_service.is_valid()) return;
+    const char* s = m_service.get(qUtf8Printable(name));
+    if (s && ::strchr(s, '%')) {
+        m_service.anim_get_rect(qUtf8Printable(name), 0, duration());
+        auto anim = m_service.get_anim(qUtf8Printable(name));
+        if (anim && anim->is_valid()) {
+            mlt_rect rect;
+            for (int i = 0; i < anim->key_count(); ++i) {
+                int position;
+                mlt_keyframe_type keyType;
+                anim->key_get(i, position, keyType);
+                rect = m_service.anim_get_rect(qUtf8Printable(name), position, duration());
+                auto r = QRectF(qRound(rect.x * MLT.profile().width()),
+                                qRound(rect.y * MLT.profile().height()),
+                                qRound(rect.w * MLT.profile().width()),
+                                qRound(rect.h * MLT.profile().height()));
+                LOG_DEBUG() << r << position;
+                set(name, r.x(), r.y(), r.width(), r.height(), 1.0, position, keyType);
+                LOG_DEBUG() << m_service.get(qUtf8Printable(name));
+            }
+        }
+    }
+}
+
 QStringList QmlFilter::getGradient(QString name)
 {
     QStringList list;

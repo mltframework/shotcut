@@ -72,6 +72,7 @@ public:
     Q_INVOKABLE QString get(QString name, int position = -1);
     Q_INVOKABLE double getDouble(QString name, int position = -1);
     Q_INVOKABLE QRectF getRect(QString name, int position = -1);
+    Q_INVOKABLE void removeRectPercents(QString name);
     Q_INVOKABLE QStringList getGradient(QString name);
     Q_INVOKABLE void set(QString name, QString value, int position = -1);
     Q_INVOKABLE void set(QString name, double value,
