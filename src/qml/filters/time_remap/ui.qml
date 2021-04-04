@@ -73,9 +73,11 @@ Item {
 
     function setControls() {
         if (blockUpdate) return
-        var position = getPosition()
+        var outPosition = getPosition()
+        var inSeconds = filter.getDouble('map', outPosition)
+        var inPosition = Math.round(inSeconds * profile.fps)
         blockUpdate = true
-        mapSpinner.value = filter.getDouble('map', position) * profile.fps
+        mapSpinner.value = inPosition
         var current = filter.get('image_mode')
         for (var i = 0; i < imageModeModel.count; ++i) {
             if (imageModeModel.get(i).value === current) {
@@ -93,6 +95,8 @@ Item {
         } else {
             directionLabel.text = qsTr('Freeze')
         }
+        inputTimeLabel.text = qsTr("%L1s").arg(inSeconds)
+        outputTimeLabel.text = qsTr("%L1s").arg(outPosition / profile.fps)
         blockUpdate = false
     }
 
@@ -294,6 +298,26 @@ Item {
         }
         Label {
             id: directionLabel
+            Layout.columnSpan: parent.columns - 1
+        }
+
+        Label {
+            text: qsTr('Input Time')
+            Layout.alignment: Qt.AlignRight
+            Shotcut.HoverTip { text: qsTr('The original clip time of the frame.') }
+        }
+        Label {
+            id: inputTimeLabel
+            Layout.columnSpan: parent.columns - 1
+        }
+
+        Label {
+            text: qsTr('Output Time')
+            Layout.alignment: Qt.AlignRight
+            Shotcut.HoverTip { text: qsTr('The mapped output time for the input frame.') }
+        }
+        Label {
+            id: outputTimeLabel
             Layout.columnSpan: parent.columns - 1
         }
 
