@@ -2051,6 +2051,7 @@ function deploy_osx
       cmd find staging/Shotcut.app/Contents/Frameworks -type f -exec codesign -v -s Meltytech {} \;
       cmd find staging/Shotcut.app/Contents/PlugIns -type f -exec codesign -v -s Meltytech {} \;
       cmd find staging/Shotcut.app/Contents/Resources -type f -exec codesign -v -s Meltytech {} \;
+      cmd xattr -cr staging/Shotcut.app
       cmd codesign -v -s Meltytech staging/Shotcut.app
       cmd codesign --verify --deep --strict --verbose=2 staging/Shotcut.app
       cmd spctl -a -t exec -vv staging/Shotcut.app
