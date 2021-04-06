@@ -244,6 +244,14 @@ function lookup {
   eval echo "\${${1}[`to_key $2`]}"
 }
 
+#################################################################
+# version - convert version string to a number to make comparisons
+
+function version {
+  echo "$@" | awk -F. '{ printf("%d%03d%03d%03d\n", $1,$2,$3,$4); }'
+}
+
+
 ######################################################################
 # LOG FUNCTIONS
 ######################################################################
@@ -2051,6 +2059,9 @@ function deploy_osx
       cmd find staging/Shotcut.app/Contents/Frameworks -type f -exec codesign -v -s Meltytech {} \;
       cmd find staging/Shotcut.app/Contents/PlugIns -type f -exec codesign -v -s Meltytech {} \;
       cmd find staging/Shotcut.app/Contents/Resources -type f -exec codesign -v -s Meltytech {} \;
+      if [ $(version $(sw_vers -productVersion)) -lt $(version "11.0.0") ]; then
+        cmd find staging/Shotcut.app/Contents/MacOS -type f -exec codesign -v -s Meltytech {} \;
+      fi
       cmd xattr -cr staging/Shotcut.app
       cmd codesign -v -s Meltytech staging/Shotcut.app
       cmd codesign --verify --deep --strict --verbose=2 staging/Shotcut.app
