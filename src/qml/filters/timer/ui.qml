@@ -245,7 +245,7 @@ Item {
                 onSetDefaultClicked: {
                     offsetSpinner.timeStr = _defaultOffset
                 }
-                Shotcut.HoverTip { text: qsTr('When the direction is Down, the timer will count down to Offset.\nWhen the Direction is up, the timer will count up starting from Offset.') }
+                Shotcut.HoverTip { text: qsTr('When the direction is Down, the timer will count down to Offset.\nWhen the direction is Up, the timer will count up starting from Offset.') }
             }
         }
 
