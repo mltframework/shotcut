@@ -379,13 +379,13 @@ mac {
     # pkg-config such that the PKG_CONFIG_PATH env var is not set.
     isEmpty(MLT_PREFIX) {
         MLT_PREFIX = /opt/local
-        INCLUDEPATH += $$PREFIX/Contents/Frameworks/include/mlt++
-        INCLUDEPATH += $$PREFIX/Contents/Frameworks/include/mlt
-        LIBS += -L$$PREFIX/Contents/Frameworks -lmlt++ -lmlt
+        INCLUDEPATH += $$PREFIX/Contents/Frameworks/include/mlt-7/mlt++
+        INCLUDEPATH += $$PREFIX/Contents/Frameworks/include/mlt-7
+        LIBS += -L$$PREFIX/Contents/Frameworks -lmlt++-7 -lmlt-7
     } else {
-        INCLUDEPATH += $$MLT_PREFIX/include/mlt++
-        INCLUDEPATH += $$MLT_PREFIX/include/mlt
-        LIBS += -L$$MLT_PREFIX/lib -lmlt++ -lmlt
+        INCLUDEPATH += $$MLT_PREFIX/include/mlt-7/mlt++
+        INCLUDEPATH += $$MLT_PREFIX/include/mlt-7
+        LIBS += -L$$MLT_PREFIX/lib -lmlt++-7 -lmlt-7
     }
 }
 win32 {
@@ -394,8 +394,8 @@ win32 {
         message("MLT_PATH not set; using ..\\..\\... You can change this with 'qmake MLT_PATH=...'")
         MLT_PATH = ..\\..\\..
     }
-    INCLUDEPATH += $$MLT_PATH\\include\\mlt++ $$MLT_PATH\\include\\mlt
-    LIBS += -L$$MLT_PATH\\lib -lmlt++ -lmlt -lopengl32
+    INCLUDEPATH += $$MLT_PATH\\include\\mlt-7\\mlt++ $$MLT_PATH\\include\\mlt-7
+    LIBS += -L$$MLT_PATH\\lib -lmlt++-7 -lmlt-7 -lopengl32
     CONFIG(debug, debug|release) {
         INCLUDEPATH += $$PWD/../drmingw/include
         LIBS += -L$$PWD/../drmingw/x64/lib -lexchndl
@@ -409,7 +409,7 @@ win32 {
 }
 unix:!mac {
     CONFIG += link_pkgconfig
-    PKGCONFIG += mlt++
+    PKGCONFIG += mlt++-7
 }
 
 unix:!mac:isEmpty(PREFIX) {

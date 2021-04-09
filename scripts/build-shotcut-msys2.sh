@@ -354,6 +354,7 @@ function set_globals {
   else
     CONFIGURE_DEBUG_FLAG=
     QMAKE_DEBUG_FLAG=
+    CMAKE_DEBUG_FLAG="-DCMAKE_BUILD_TYPE=Release"
   fi
 
   if [ "$ASAN_BUILD" = "1" ]; then
@@ -481,10 +482,7 @@ function set_globals {
 
   #####
   # mlt
-  CONFIG[1]="./configure --prefix=$FINAL_INSTALL_DIR --enable-gpl --enable-gpl3 --without-kde --disable-sdl --disable-gdk --disable-gtk2 --disable-kino --disable-vorbis $CONFIGURE_DEBUG_FLAG"
-  # Remember, if adding more of these, to update the post-configure check.
-  [ "$QT_INCLUDE_DIR" ] && CONFIG[1]="${CONFIG[1]} --qt-includedir=$QT_INCLUDE_DIR"
-  [ "$QT_LIB_DIR" ] && CONFIG[1]="${CONFIG[1]} --qt-libdir=$QT_LIB_DIR"
+  CONFIG[1]="cmake -GNinja -DCMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -DCMAKE_PREFIX_PATH=$QTDIR -DGPL=ON -DPLG3=ON -DMOD_GDK=OFF -DMOD_SDL1=OFF $CMAKE_DEBUG_FLAG"
   CFLAGS_[1]="-I$FINAL_INSTALL_DIR/include $ASAN_CFLAGS $CFLAGS"
   LDFLAGS_[1]="${LDFLAGS_[1]} -L$FINAL_INSTALL_DIR/lib $ASAN_LDFLAGS $LDFLAGS"
 
@@ -871,7 +869,7 @@ function configure_compile_install_subproject {
   feedback_status Building $1 - this could take some time
   if test "movit" = "$1" ; then
     cmd make -j$MAKEJ libmovit.la || die "Unable to build $1"
-  elif test "frei0r" = "$1" -o "bigsh0t" = "$1" -o "aom" = "$1"; then
+  elif test "frei0r" = "$1" -o "bigsh0t" = "$1" -o "aom" = "$1" -o "mlt" = "$1"; then
     cmd ninja -j $MAKEJ || die "Unable to build $1"
   elif test "dav1d" = "$1"; then
     cmd ninja -C builddir -j $MAKEJ || die "Unable to build $1"
@@ -894,7 +892,7 @@ function configure_compile_install_subproject {
     cmd install -p -c translations/*.qm "$FINAL_INSTALL_DIR"/share/translations
     cmd install -d "$FINAL_INSTALL_DIR"/share/shotcut
     cmd cp -a src/qml "$FINAL_INSTALL_DIR"/share/shotcut
-  elif test "frei0r" = "$1" -o "aom" = "$1"; then
+  elif test "frei0r" = "$1" -o "aom" = "$1" -o "mlt" = "$1"; then
     cmd ninja install || die "Unable to install $1"
   elif test "bigsh0t" = "$1" ; then
     cmd install -p -c *.dll "$FINAL_INSTALL_DIR"/lib/frei0r-1  || die "Unable to install $1"

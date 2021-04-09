@@ -4,7 +4,7 @@
 # It can accept a configuration file, default: build-shotcut.conf
 
 # List of programs used:
-# bash, test, tr, awk, ps, make, cmake, cat, sed, curl or wget, and possibly others
+# bash, test, tr, awk, ps, make, cmake, cat, sed, curl or wget, meson, ninja, and possibly others
 
 # Author: Dan Dennedy <dan@dennedy.org>
 # License: GPL2
@@ -454,6 +454,7 @@ function set_globals {
   else
     CONFIGURE_DEBUG_FLAG=
     QMAKE_DEBUG_FLAG=
+    CMAKE_DEBUG_FLAG="-DCMAKE_BUILD_TYPE=Release"
   fi
 
   if [ "$ASAN_BUILD" = "1" ]; then
@@ -717,35 +718,22 @@ function set_globals {
 
   #####
   # mlt
-  CONFIG[1]="./configure --prefix=$FINAL_INSTALL_DIR --enable-gpl --enable-gpl3 --without-kde --disable-sdl --disable-gdk --disable-gtk2 $CONFIGURE_DEBUG_FLAG"
+  CONFIG[1]="cmake -GNinja -DCMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -DCMAKE_PREFIX_PATH=$QTDIR -DGPL=ON -DGPL3=ON -DMOD_GDK=OFF -DMOD_SDL1=OFF $CMAKE_DEBUG_FLAG"
   # Remember, if adding more of these, to update the post-configure check.
-  [ "$QT_INCLUDE_DIR" ] && CONFIG[1]="${CONFIG[1]} --qt-includedir=$QT_INCLUDE_DIR"
-  [ "$QT_LIB_DIR" ] && CONFIG[1]="${CONFIG[1]} --qt-libdir=$QT_LIB_DIR"
   if test "1" = "$MLT_DISABLE_SOX" ; then
-    CONFIG[1]="${CONFIG[1]} --disable-sox"
-  fi
-  if test "$TARGET_OS" = "Win32" ; then
-    CONFIG[1]="${CONFIG[1]} --disable-dv --disable-kino --disable-vorbis --gdk-prefix=\"$FINAL_INSTALL_DIR\" --target-os=MinGW --target-arch=i686 --rename-melt=melt.exe"
-  elif test "$TARGET_OS" = "Win64" ; then
-    CONFIG[1]="${CONFIG[1]} --disable-dv --disable-kino --disable-vorbis --gdk-prefix=\"$FINAL_INSTALL_DIR\" --target-os=MinGW --target-arch=x86_64 --rename-melt=melt.exe"
+    CONFIG[1]="${CONFIG[1]} -DMOD_SOX=OFF"
   fi
   CFLAGS_[1]="-I$FINAL_INSTALL_DIR/include $ASAN_CFLAGS $CFLAGS"
   if [ "$TARGET_OS" = "Darwin" ]; then
-    [ "$TARGET_ARCH" = "arm64" ] &&  CONFIG[1]="${CONFIG[1]} --without-jack --ladspa-prefix=/Users/ddennedy/opt"
-    CFLAGS_[1]="${CFLAGS_[1]} -I/opt/local/include -DRELOCATABLE"
+    CFLAGS_[1]="${CFLAGS_[1]} -I/opt/local/include"
     LDFLAGS_[1]="${LDFLAGS_[1]} -L/opt/local/lib/libomp"
   fi
-  [ "$TARGET_OS" = "Win32" -o "$TARGET_OS" = "Win64" ]  && CFLAGS_[1]="${CFLAGS_[1]} -I$FINAL_INSTALL_DIR/include/SDL2"
   LDFLAGS_[1]="${LDFLAGS_[1]} -L$FINAL_INSTALL_DIR/lib $ASAN_LDFLAGS $LDFLAGS"
 
   ####
   # frei0r
-  if test "$TARGET_OS" = "Win32" -o "$TARGET_OS" = "Win64" ; then
-    CONFIG[2]="cmake -DCMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -DCMAKE_TOOLCHAIN_FILE=my.cmake -DWITHOUT_GAVL=1 -DWITHOUT_OPENCV=1 $CMAKE_DEBUG_FLAG"
-  else
-    CONFIG[2]="./configure --prefix=$FINAL_INSTALL_DIR"
-  fi
-  CFLAGS_[2]="$CFLAGS -O2"
+  CONFIG[2]="cmake -DCMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -DWITHOUT_GAVL=1 -DWITHOUT_OPENCV=1 $CMAKE_DEBUG_FLAG"
+  CFLAGS_[2]=$CFLAGS
   LDFLAGS_[2]=$LDFLAGS
 
   ####
@@ -1391,88 +1379,6 @@ function mlt_format_optional {
 }
 
 #################################################################
-# mlt_check_configure
-# This is a special hack for mlt. Mlt does not allow --enable, or abort
-# if something is missing, so we check all the disable files. Some are
-# optional, some are required. We stop compilation if a required file is
-# missing. For optionals, we report them to the log
-# Oh, and it is assumed we are in the toplevel mlt source directory, when
-# this is called.
-function mlt_check_configure {
-  trace "Entering check_mlt_configure @ = $@"
-  cmd pushd .
-  DODIE=0
-  cmd cd src/modules || die "Unable to check mlt modules list"
-  for FILE in `ls disable-* 2>/dev/null` ; do
-    debug "Checking $FILE"
-    case $FILE in
-      # REQUIRED
-      disable-core)
-        mlt_format_required core "I have no idea why this was disabled. "
-        DODIE=1
-      ;;
-      disable-avformat)
-        mlt_format_required avformat "Did ffmpeg installation fail? "
-        DODIE=1
-      ;;
-      disable-xml)
-        mlt_format_required xml "Please install libxml2-dev. "
-        DODIE=1
-      ;;
-      disable-sdl2)
-        mlt_format_required sdl2 "Please install libsdl2-dev. "
-        DODIE=1
-      ;;
-      disable-qt)
-        mlt_format_required qt "Please provide paths for Qt. "
-        DODIE=1
-      ;;
-
-      # AUDIO
-      disable-sox)
-        if test "0" = "$MLT_DISABLE_SOX" ; then
-          mlt_format_optional sox "sound effects/operations" "sox-dev"
-        fi
-      ;;
-      disable-jackrack)
-        mlt_format_optional jackrack "sound effects/operations" "libjack-dev"
-      ;;
-      disable-resample)
-        mlt_format_optional resample "audio resampling" "libsamplerate0-dev"
-      ;;
-
-      # IMAGE
-      disable-gtk2)
-        mlt_format_optional gtk2 "some additional image loading support" "libgtk2-dev?"
-      ;;
-      disable-kdenlive)
-        mlt_format_optional kdenlive "slow motion and freeze effects" "??"
-      ;;
-      disable-frei0r)
-        mlt_format_optional frei0r "plugin architecture. Several additional effects and transitions" "see http://frei0r.dyne.org/"
-      ;;
-
-      # OTHERS
-      disable-dv)
-        mlt_format_optional dv "loading and saving of DV files" "libdv/libdv-dev"
-      ;;
-      disable-vorbis)
-        mlt_format_optional vorbis "loading and saving ogg/theora/vorbis files" "libvorbis-dev"
-      ;;
-
-      # FALLBACK
-      disable-*)
-        mlt_format_optional ${FILE/disable-} "... dunno ... " "... dunno ..."
-      ;;
-    esac
-  done
-  if test 1 = "$DODIE" ; then
-    die "One or more required MLT modules could not be enabled"
-  fi
-  cmd popd
-}
-
-#################################################################
 # configure_compile_install_subproject
 # $1 The sourcedir to configure, compile, and install
 # Configures, compiles, and installs a single subproject.
@@ -1596,11 +1502,6 @@ function configure_compile_install_subproject {
     feedback_status Done configuring $1
   fi
 
-  # Special hack for mlt, post-configure
-  if test "mlt" = "$1" ; then
-    mlt_check_configure
-  fi
-
   # Special hack for rubberband post-configure
   if [ "rubberband" = "$1" ]; then
     if [ "$TARGET_OS" = "Win32" -o "$TARGET_OS" = "Win64" ]; then
@@ -1616,7 +1517,7 @@ function configure_compile_install_subproject {
     cmd make -j$MAKEJ RANLIB="$RANLIB" libmovit.la || die "Unable to build $1"
   elif test "dav1d" = "$1" -o "rubberband" = "$1" ; then
     cmd ninja -C builddir -j $MAKEJ || die "Unable to build $1"
-  elif test "aom" = "$1" ; then
+  elif test "aom" = "$1" -o "mlt" = "$1"; then
     cmd ninja -j $MAKEJ || die "Unable to build $1"
   elif test "$MYCONFIG" != ""; then
     cmd make -j$MAKEJ || die "Unable to build $1"
@@ -1665,19 +1566,22 @@ function configure_compile_install_subproject {
       fi
     elif test "dav1d" = "$1" -o "rubberband" = "$1" ; then
       cmd meson install -C builddir || die "Unable to install $1"
-    elif test "aom" = "$1" ; then
+    elif test "aom" = "$1" -o "mlt" = "$1" ; then
       cmd ninja install || die "Unable to install $1"
     elif test "$MYCONFIG" != "" ; then
       cmd make install || die "Unable to install $1"
     fi
-    if test "x265" = "$1" -a "Darwin" = "$TARGET_OS" ; then
-      # replace @rpath with full path to lib
-      X265LIB=$(otool -D "$FINAL_INSTALL_DIR"/lib/libx265.dylib | tail -n 1)
-      log X265LIB=$X265LIB
-      cmd install_name_tool -id "$FINAL_INSTALL_DIR"/lib/$(basename "$X265LIB") "$FINAL_INSTALL_DIR"/lib/libx265.dylib
-    fi
-    if test "vid.stab" = "$1" -a "Darwin" = "$TARGET_OS" ; then
-      cmd sed -e 's/-fopenmp//' -i .bak "$FINAL_INSTALL_DIR/lib/pkgconfig/vidstab.pc"
+    if [ "Darwin" = "$TARGET_OS" ]; then
+      if [ "mlt" = "$1" ]; then
+          for library in x265 rubberband mlt-7 mlt++-7; do
+            # replace @rpath with full path to lib
+            install_name=$(otool -D "$FINAL_INSTALL_DIR"/lib/lib${library}.dylib | tail -n 1)
+            cmd install_name_tool -id "$FINAL_INSTALL_DIR"/lib/$(basename "$install_name") "$FINAL_INSTALL_DIR"/lib/lib${library}.dylib
+          done
+        fi
+      elif [ "vid.stab" = "$1" ]; then
+        cmd sed -e 's/-fopenmp//' -i .bak "$FINAL_INSTALL_DIR/lib/pkgconfig/vidstab.pc"
+      fi
     fi
   feedback_status Done installing $1
 
@@ -1938,7 +1842,7 @@ function deploy_osx
   # MLT plugins
   log Copying MLT plugins
   cmd mkdir -p PlugIns/mlt 2>/dev/null
-  cmd cp "$FINAL_INSTALL_DIR"/lib/mlt/libmlt*.dylib PlugIns/mlt
+  cmd cp "$FINAL_INSTALL_DIR"/lib/mlt/libmlt*.so PlugIns/mlt
   cmd cp -a "$FINAL_INSTALL_DIR"/share/mlt Resources
   # Copy libvidstab here temporarily so it can be found by fixlibs.
   cmd cp -p "$FINAL_INSTALL_DIR"/lib/libvidstab*.dylib .
@@ -2001,7 +1905,7 @@ function deploy_osx
   log Fixing rpath in libraries
   cmd find . -name '*.dylib' -exec sh -c "install_name_tool -delete_rpath \"/opt/local/lib/libomp\" {} 2> /dev/null" \;
   cmd find . -name '*.dylib' -exec sh -c "install_name_tool -delete_rpath \"$FINAL_INSTALL_DIR/lib\" {} 2> /dev/null" \;
-  cmd find . -name '*.dylib' -exec sh -c "install_name_tool -delete_rpath \"$FINAL_INSTALL_DIR/lib/mlt\" {} 2>/dev/null" \;
+  cmd find . -name '*.so' -exec sh -c "install_name_tool -delete_rpath \"$FINAL_INSTALL_DIR/lib/mlt\" {} 2>/dev/null" \;
   cmd find . -name '*.dylib' -exec sh -c "install_name_tool -delete_rpath \"$QTDIR/lib\" {} 2>/dev/null" \;
   cmd find . -name '*.dylib' -exec sh -c "install_name_tool -delete_rpath \"@loader_path/../../../\" {} 2>/dev/null" \;
   cmd find . -name '*.dylib' -exec sh -c "install_name_tool -delete_rpath \"@loader_path/../../lib\" {} 2>/dev/null" \;
@@ -2027,7 +1931,7 @@ function deploy_osx
     cmd cp -a "$FINAL_INSTALL_DIR"/lib/pkgconfig Shotcut/Contents/Frameworks/lib
     log Symlinking libs
     pushd Shotcut/Contents/Frameworks
-    for lib in avcodec avdevice avfilter avformat avutil epoxy mlt++ mlt movit mp3lame opus postproc swresample swscale vidstab x264 x265; do
+    for lib in avcodec avdevice avfilter avformat avutil epoxy mlt++-7 mlt-7 movit mp3lame opus postproc swresample swscale vidstab x264 x265; do
       dylib=$(ls lib$lib.*.dylib | head -n 1)
       cmd ln -sf $dylib lib$lib.dylib
     done
@@ -2253,9 +2157,9 @@ function create_startup_script {
 INSTALL_DIR=\$(pwd)
 export PATH="\$INSTALL_DIR/bin":\$PATH
 export LD_LIBRARY_PATH="\$INSTALL_DIR/lib":\$LD_LIBRARY_PATH
-export MLT_REPOSITORY="\$INSTALL_DIR/lib/mlt"
-export MLT_DATA="\$INSTALL_DIR/share/mlt"
-export MLT_PROFILES_PATH="\$INSTALL_DIR/share/mlt/profiles"
+export MLT_REPOSITORY="\$INSTALL_DIR/lib/mlt-7"
+export MLT_DATA="\$INSTALL_DIR/share/mlt-7"
+export MLT_PROFILES_PATH="\$INSTALL_DIR/share/mlt-7/profiles"
 export MLT_MOVIT_PATH="\$INSTALL_DIR/share/movit"
 export FREI0R_PATH="\$INSTALL_DIR/lib/frei0r-1"
 # Temporarily ignore user and default path because csladspa bug is crashing with
@@ -2283,9 +2187,9 @@ End-of-environment-setup-template
 CURRENT_DIR=\$(readlink -f "\$0")
 INSTALL_DIR=\$(dirname "\$CURRENT_DIR")
 export LD_LIBRARY_PATH="\$INSTALL_DIR/lib":\$LD_LIBRARY_PATH
-export MLT_REPOSITORY="\$INSTALL_DIR/lib/mlt"
-export MLT_DATA="\$INSTALL_DIR/share/mlt"
-export MLT_PROFILES_PATH="\$INSTALL_DIR/share/mlt/profiles"
+export MLT_REPOSITORY="\$INSTALL_DIR/lib/mlt-7"
+export MLT_DATA="\$INSTALL_DIR/share/mlt-7"
+export MLT_PROFILES_PATH="\$INSTALL_DIR/share/mlt-7/profiles"
 export MLT_MOVIT_PATH="\$INSTALL_DIR/share/movit"
 export FREI0R_PATH="\$INSTALL_DIR/lib/frei0r-1"
 export LADSPA_PATH="\$LADSPA_PATH:/usr/local/lib/ladspa:/usr/lib/ladspa:/usr/lib64/ladspa:\$INSTALL_DIR/lib/ladspa"
@@ -2309,9 +2213,9 @@ End-of-exe-wrapper
 CURRENT_DIR=\$(readlink -f "\$0")
 INSTALL_DIR=\$(dirname "\$CURRENT_DIR")
 export LD_LIBRARY_PATH="\$INSTALL_DIR/lib":\$LD_LIBRARY_PATH
-export MLT_REPOSITORY="\$INSTALL_DIR/lib/mlt"
-export MLT_DATA="\$INSTALL_DIR/share/mlt"
-export MLT_PROFILES_PATH="\$INSTALL_DIR/share/mlt/profiles"
+export MLT_REPOSITORY="\$INSTALL_DIR/lib/mlt-7"
+export MLT_DATA="\$INSTALL_DIR/share/mlt-7"
+export MLT_PROFILES_PATH="\$INSTALL_DIR/share/mlt-7/profiles"
 export MLT_MOVIT_PATH="\$INSTALL_DIR/share/movit"
 export FREI0R_PATH="\$INSTALL_DIR/lib/frei0r-1"
 # Temporarily ignore user and default path because csladspa bug is crashing with
