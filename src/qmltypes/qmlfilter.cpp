@@ -717,6 +717,21 @@ void QmlFilter::deselect()
     MAIN.filterController()->setCurrentFilter(DeselectCurrentFilter);
 }
 
+bool QmlFilter::allowTrim() const
+{
+    return const_cast<QmlMetadata*>(m_metadata)->keyframes()->allowTrim();
+}
+
+bool QmlFilter::allowAnimateIn() const
+{
+    return const_cast<QmlMetadata*>(m_metadata)->keyframes()->allowAnimateIn();
+}
+
+bool QmlFilter::allowAnimateOut() const
+{
+    return const_cast<QmlMetadata*>(m_metadata)->keyframes()->allowAnimateOut();
+}
+
 AnalyzeDelegate::AnalyzeDelegate(Mlt::Filter& filter)
     : QObject(0)
     , m_uuid(QUuid::createUuid())

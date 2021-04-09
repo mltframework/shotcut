@@ -2257,7 +2257,9 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
                 emit m_keyframesDock->seekPreviousSimple();
             } else {
                 int i = m_filtersDock->qmlProducer()->position() + m_filtersDock->qmlProducer()->in();
-                filterController()->currentFilter()->setIn(i);
+                if (filterController()->currentFilter()->allowTrim()) {
+                    filterController()->currentFilter()->setIn(i);
+                }
             }
         }
         break;
@@ -2267,20 +2269,26 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
                 emit m_keyframesDock->seekNextSimple();
             } else {
                 int i = m_filtersDock->qmlProducer()->position() + m_filtersDock->qmlProducer()->in();
-                filterController()->currentFilter()->setOut(i);
+                if (filterController()->currentFilter()->allowTrim()) {
+                    filterController()->currentFilter()->setOut(i);
+                }
             }
         }
         break;
     case Qt::Key_BraceLeft:
         if (filterController()->currentFilter() && m_filtersDock->qmlProducer()) {
             int i = m_filtersDock->qmlProducer()->position() + m_filtersDock->qmlProducer()->in() - filterController()->currentFilter()->in();
-            filterController()->currentFilter()->setAnimateIn(i);
+            if (filterController()->currentFilter()->allowAnimateIn()) {
+                filterController()->currentFilter()->setAnimateIn(i);
+            }
         }
         break;
     case Qt::Key_BraceRight:
         if (filterController()->currentFilter() && m_filtersDock->qmlProducer()) {
             int i = filterController()->currentFilter()->out() - (m_filtersDock->qmlProducer()->position() + m_filtersDock->qmlProducer()->in());
-            filterController()->currentFilter()->setAnimateOut(i);
+            if (filterController()->currentFilter()->allowAnimateOut()) {
+                filterController()->currentFilter()->setAnimateOut(i);
+            }
         }
         break;
     case Qt::Key_Semicolon:

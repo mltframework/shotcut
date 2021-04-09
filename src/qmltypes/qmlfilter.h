@@ -116,6 +116,9 @@ public:
     Q_INVOKABLE int getPrevKeyframePosition(const QString& name, int position);
     Q_INVOKABLE bool isAtLeastVersion(const QString& version);
     Q_INVOKABLE static void deselect();
+    bool allowTrim() const;
+    bool allowAnimateIn() const;
+    bool allowAnimateOut() const;
 
 public slots:
     void preset(const QString& name);
