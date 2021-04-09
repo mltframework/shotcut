@@ -1365,17 +1365,13 @@ END_OF_SRC_README
 ######################################################################
 
 #################################################################
-# mlt_format_required
-# log a string that expresses a requirement
-function mlt_format_required {
-  log 'MLTDISABLED <b>'$1'</b> : this is a <b>required</b> module. '$2'Will abort compilation.'
-}
-
-#################################################################
-# mlt_format_optional
-# log a string that expresses missing an optional
-function mlt_format_optional {
-  log 'MLTDISABLED <b>'$1'</b> : this is an <b>optional</b> module that provides '$2'. To enable it, try installing a package called something like '$3'.'
+# replace_rpath
+# changes the embedded name of a dylib to its full install path so
+# it can be found later during bundling
+function replace_rpath {
+  library=$1
+  install_name=$(otool -D "$FINAL_INSTALL_DIR"/lib/lib${library}.dylib | tail -n 1)
+  cmd install_name_tool -id "$FINAL_INSTALL_DIR"/lib/$(basename "$install_name") "$FINAL_INSTALL_DIR"/lib/lib${library}.dylib
 }
 
 #################################################################
@@ -1572,12 +1568,14 @@ function configure_compile_install_subproject {
       cmd make install || die "Unable to install $1"
     fi
     if [ "Darwin" = "$TARGET_OS" ]; then
-      if [ "mlt" = "$1" ]; then
-          for library in x265 rubberband mlt-7 mlt++-7; do
-            # replace @rpath with full path to lib
-            install_name=$(otool -D "$FINAL_INSTALL_DIR"/lib/lib${library}.dylib | tail -n 1)
-            cmd install_name_tool -id "$FINAL_INSTALL_DIR"/lib/$(basename "$install_name") "$FINAL_INSTALL_DIR"/lib/lib${library}.dylib
-          done
+      # CMake identifies the dylibs with an @rpath that breaks our recursive bundling process.
+      # These names need to changed immediately after each lib is installed so that dependants
+      # link using the full name, and the bundling process can locate the dependency.
+      if [ "aom" = "$1" -o "x265" = "$1" ]; then
+        replace_rpath $1
+      elif [ "mlt" = "$1" ]; then
+        replace_rpath mlt-7
+        replace_rpath mlt++-7
       elif [ "vid.stab" = "$1" ]; then
         cmd sed -e 's/-fopenmp//' -i .bak "$FINAL_INSTALL_DIR/lib/pkgconfig/vidstab.pc"
       fi
