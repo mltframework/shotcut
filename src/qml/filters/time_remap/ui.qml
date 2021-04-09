@@ -32,6 +32,7 @@ Item {
             filter.set('map', 0.0, 0)
             filter.set('map', (filter.duration - 1) / profile.fps, filter.duration - 1)
             filter.set('image_mode', 'nearest')
+            filter.set('pitch', 0)
             filter.savePreset(preset.parameters)
         }
         setControls()
@@ -82,6 +83,7 @@ Item {
                 break
             }
         }
+        pitchCheckbox.checked = filter.get('pitch') === '1'
         var speed = filter.getDouble('speed')
         speedLabel.text = Math.abs(speed).toFixed(5) + "x"
         if (speed < 0 ) {
@@ -158,7 +160,7 @@ Item {
         Shotcut.Preset {
             id: preset
             Layout.columnSpan: parent.columns - 1
-            parameters: ['map']
+            parameters: ['map', 'image_mode', 'pitch']
             onBeforePresetLoaded: {
                 filter.resetProperty(parameters[0])
             }
@@ -245,6 +247,20 @@ Item {
         }
         Shotcut.UndoButton {
             onClicked: modeCombo.currentIndex = 0
+        }
+
+        Label {}
+        CheckBox {
+            id: pitchCheckbox
+            Layout.columnSpan: parent.columns - 2
+            text: qsTr('Enable pitch compensation')
+            onCheckedChanged: {
+                if (blockUpdate) return
+                filter.set('pitch', checked)
+            }
+        }
+        Shotcut.UndoButton {
+            onClicked: pitchCheckbox.checked = false
         }
 
         Rectangle {
