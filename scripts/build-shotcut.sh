@@ -1827,7 +1827,7 @@ function deploy_mac
   cmd mkdir -p MacOS 2>/dev/null
   cmd cp -a "$FINAL_INSTALL_DIR"/bin/{melt,ffmpeg,ffplay,ffprobe} MacOS
   cmd mkdir -p Frameworks 2>/dev/null
-  for exe in Shotcut melt ffmpeg ffplay ffprobe; do
+  for exe in MacOS/Shotcut MacOS/melt MacOS/ffmpeg MacOS/ffplay MacOS/ffprobe; do
     fixlibs "$exe"
     log fixing rpath of executable "$exe"
     cmd install_name_tool -delete_rpath "$FINAL_INSTALL_DIR/lib" "$exe" 2> /dev/null
