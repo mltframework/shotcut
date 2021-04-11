@@ -1789,9 +1789,9 @@ function fixlibs()
   done
 }
 
-function deploy_osx
+function deploy_mac
 {
-  trace "Entering deploy_osx @ = $@"
+  trace "Entering deploy_mac @ = $@"
   pushd .
 
   # Change to right directory
@@ -1827,7 +1827,7 @@ function deploy_osx
   cmd mkdir -p MacOS 2>/dev/null
   cmd cp -a "$FINAL_INSTALL_DIR"/bin/{melt,ffmpeg,ffplay,ffprobe} MacOS
   cmd mkdir -p Frameworks 2>/dev/null
-  for exe in $(find MacOS -type f -perm +u+x -maxdepth 1); do
+  for exe in Shotcut melt ffmpeg ffplay ffprobe; do
     fixlibs "$exe"
     log fixing rpath of executable "$exe"
     cmd install_name_tool -delete_rpath "$FINAL_INSTALL_DIR/lib" "$exe" 2> /dev/null
@@ -2131,7 +2131,7 @@ function deploy_win32
 # embedded by the Makefile
 function create_startup_script {
   if test "$TARGET_OS" = "Darwin" ; then
-    deploy_osx
+    deploy_mac
     return
   elif test "$TARGET_OS" = "Win32" -o "$TARGET_OS" = "Win64" ; then
     deploy_win32
