@@ -2,10 +2,16 @@
 VERSION="$1"
 sudo xcode-select -s /Applications/Xcode.app/
 
+find ~/Desktop/Shotcut.app/Contents/Frameworks -type f -exec codesign --options=runtime -v -s Meltytech {} \;
+find ~/Desktop/Shotcut.app/Contents/PlugIns -type f -exec codesign --options=runtime -v -s Meltytech {} \;
+find ~/Desktop/Shotcut.app/Contents/Resources -type f -exec codesign --options=runtime -v -s Meltytech {} \;
 xattr -cr ~/Desktop/Shotcut.app
-codesign --force --options=runtime -v -s Meltytech \
+codesign --options=runtime -v -s Meltytech \
   --entitlements ~/Projects/Shotcut/src/shotcut/scripts/notarization.entitlements \
-  ~/Desktop/Shotcut.app/Contents/MacOS/*
+  ~/Desktop/Shotcut.app/Contents/MacOS/{melt,ffmpeg,ffplay,ffprobe}
+codesign --options=runtime -v -s Meltytech \
+  --entitlements ~/Projects/Shotcut/src/shotcut/scripts/notarization.entitlements \
+  ~/Desktop/Shotcut.app
 codesign --verify --deep --strict --verbose=2 ~/Desktop/Shotcut.app
 spctl -a -t exec -vv ~/Desktop/Shotcut.app
 

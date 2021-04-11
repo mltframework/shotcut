@@ -1956,24 +1956,6 @@ function deploy_mac
       sync
       cmd hdiutil create -fs HFS+ -srcfolder staging -volname Shotcut -format UDBZ -size 800m "$dmg_name"
 
-      log Signing code and resources
-      cmd find staging/Shotcut.app/Contents/Frameworks -type f -exec codesign -v -s Meltytech {} \;
-      cmd find staging/Shotcut.app/Contents/PlugIns -type f -exec codesign -v -s Meltytech {} \;
-      cmd find staging/Shotcut.app/Contents/Resources -type f -exec codesign -v -s Meltytech {} \;
-      if [ $(version $(sw_vers -productVersion)) -lt $(version "11.0.0") ]; then
-        cmd find staging/Shotcut.app/Contents/MacOS -type f -exec codesign -v -s Meltytech {} \;
-      fi
-      cmd xattr -cr staging/Shotcut.app
-      cmd codesign -v -s Meltytech staging/Shotcut.app
-      cmd codesign --verify --deep --strict --verbose=2 staging/Shotcut.app
-      cmd spctl -a -t exec -vv staging/Shotcut.app
-
-      log Making disk image
-      dmg_name="$INSTALL_DIR/signed.dmg"
-      cmd rm "$dmg_name" 2>/dev/null
-      sync
-      cmd hdiutil create -srcfolder staging -volname Shotcut -format UDBZ -size 300m "$dmg_name"
-
       if [ "$ACTION_CLEANUP" = "1" ]; then
         cmd rm -rf staging
       fi
