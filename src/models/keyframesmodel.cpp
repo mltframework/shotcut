@@ -98,9 +98,9 @@ QVariant KeyframesModel::data(const QModelIndex& index, int role) const
                     case MaximumFrameRole: {
                         int minimum = animation.previous_key(qMax(0, position - 1)) + 1;
                         int result = animation.next_key(position + 1) - 1;
-                        result = (result < minimum) ? std::numeric_limits<int>::max() : result;
+                        result = (result < minimum) ? m_filter->producer().get_out() : result;
 //                        LOG_DEBUG() << "keyframeIndex" << index.row() << "maximumFrame" << result;
-                        return result - 1;
+                        return result;
                     }
                     default:
                         break;
@@ -127,6 +127,7 @@ QVariant KeyframesModel::data(const QModelIndex& index, int role) const
             } else if (param->rangeType() == QmlKeyframesParameter::ClipLength) {
                 return 0.0;
             }
+            return 0.0;
         }
         case MaximumValueRole:
         {
@@ -134,9 +135,10 @@ QVariant KeyframesModel::data(const QModelIndex& index, int role) const
             if (param->rangeType() == QmlKeyframesParameter::MinMax) {
                 return m_metadata->keyframes()->parameter(m_metadataIndex[index.row()])->maximum();
             } else if (param->rangeType() == QmlKeyframesParameter::ClipLength) {
-                int length = m_filter->producer().get_length();
+                int length = m_filter->producer().get_length() - 1;
                 return (double)length / MLT.profile().fps();
             }
+            return 0.0;
         }
         default:
             break;
