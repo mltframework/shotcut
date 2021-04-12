@@ -27,6 +27,8 @@
 class QmlKeyframesParameter : public QObject
 {
     Q_OBJECT
+    Q_ENUMS(RangeType)
+    Q_PROPERTY(RangeType rangeType MEMBER m_rangeType NOTIFY changed)
     Q_PROPERTY(QString name MEMBER m_name NOTIFY changed)
     Q_PROPERTY(QString property MEMBER m_property NOTIFY changed)
     Q_PROPERTY(QStringList gangedProperties MEMBER m_gangedProperties NOTIFY changed)
@@ -39,6 +41,10 @@ class QmlKeyframesParameter : public QObject
     Q_PROPERTY(bool isRectangle MEMBER m_isRectangle NOTIFY changed)
 
 public:
+    enum RangeType {
+        MinMax,
+        ClipLength,
+    };
     explicit QmlKeyframesParameter(QObject* parent = 0);
 
     QString name() const { return m_name; }
@@ -50,6 +56,7 @@ public:
     double maximum() const { return m_maximum; }
     QString units() const { return m_units; }
     bool isRectangle() const { return m_isRectangle; }
+    RangeType rangeType() const { return m_rangeType; }
 
 signals:
     void changed();
@@ -64,6 +71,7 @@ private:
     double m_maximum;
     QString m_units;
     bool m_isRectangle;
+    RangeType m_rangeType;
 };
 
 class QmlKeyframesMetadata : public QObject

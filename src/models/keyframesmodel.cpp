@@ -122,43 +122,20 @@ QVariant KeyframesModel::data(const QModelIndex& index, int role) const
         case MinimumValueRole:
         {
             QmlKeyframesParameter* param = m_metadata->keyframes()->parameter(m_metadataIndex[index.row()]);
-            if (param->minimum() != param->maximum()) {
+            if (param->rangeType() == QmlKeyframesParameter::MinMax) {
                 return m_metadata->keyframes()->parameter(m_metadataIndex[index.row()])->minimum();
-            } else {
-                Mlt::Animation animation = m_filter->getAnimation(param->property());
-                double min = std::numeric_limits<double>::max();
-                if (animation.is_valid()) {
-                    for (int i = 0; i < animation.key_count(); i++) {
-                        int frame = animation.key_get_frame(i);
-                        if (frame >= 0) {
-                            double value = m_filter->getDouble(param->property(), frame);
-                            if (value < min) min = value;
-                        }
-                    }
-                }
-                if (min == std::numeric_limits<double>::max()) min = 0;
-                return min;
+            } else if (param->rangeType() == QmlKeyframesParameter::ClipLength) {
+                return 0.0;
             }
         }
         case MaximumValueRole:
         {
             QmlKeyframesParameter* param = m_metadata->keyframes()->parameter(m_metadataIndex[index.row()]);
-            if (param->minimum() != param->maximum()) {
+            if (param->rangeType() == QmlKeyframesParameter::MinMax) {
                 return m_metadata->keyframes()->parameter(m_metadataIndex[index.row()])->maximum();
-            } else {
-                Mlt::Animation animation = m_filter->getAnimation(param->property());
-                double max = std::numeric_limits<double>::lowest();
-                if (animation.is_valid()) {
-                    for (int i = 0; i < animation.key_count(); i++) {
-                        int frame = animation.key_get_frame(i);
-                        if (frame >= 0) {
-                            double value = m_filter->getDouble(param->property(), frame);
-                            if (value > max) max = value;
-                        }
-                    }
-                }
-                if (max == std::numeric_limits<double>::lowest()) max = 0;
-                return max;
+            } else if (param->rangeType() == QmlKeyframesParameter::ClipLength) {
+                int length = m_filter->producer().get_length();
+                return (double)length / MLT.profile().fps();
             }
         }
         default:

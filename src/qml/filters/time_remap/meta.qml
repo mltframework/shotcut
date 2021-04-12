@@ -20,8 +20,7 @@ Metadata {
                 property: 'map'
                 isSimple: false
                 isCurve: true
-                minimum: 0
-                maximum: 0
+                rangeType: Parameter.ClipLength
                 units: 's'
             }
         ]

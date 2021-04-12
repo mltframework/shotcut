@@ -197,5 +197,6 @@ QmlKeyframesParameter::QmlKeyframesParameter(QObject* parent)
     , m_maximum(0.0)
     , m_units("")
     , m_isRectangle(false)
+    , m_rangeType(MinMax)
 {
 }
