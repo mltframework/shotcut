@@ -2,14 +2,15 @@
 VERSION="$1"
 sudo xcode-select -s /Applications/Xcode.app/
 
-find ~/Desktop/Shotcut.app/Contents/Frameworks -type f -exec codesign --options=runtime -v -s Meltytech {} \;
-find ~/Desktop/Shotcut.app/Contents/PlugIns -type f -exec codesign --options=runtime -v -s Meltytech {} \;
-find ~/Desktop/Shotcut.app/Contents/Resources -type f -exec codesign --options=runtime -v -s Meltytech {} \;
+SIGNER="Developer ID Application: Meltytech, LLC (Y6RX44QG2G)"
+find ~/Desktop/Shotcut.app/Contents/Frameworks -type f -exec codesign --options=runtime -v -s "$SIGNER" {} \;
+find ~/Desktop/Shotcut.app/Contents/PlugIns -type f -exec codesign --options=runtime -v -s "$SIGNER" {} \;
+find ~/Desktop/Shotcut.app/Contents/Resources -type f -exec codesign --options=runtime -v -s "$SIGNER" {} \;
 xattr -cr ~/Desktop/Shotcut.app
-codesign --options=runtime -v -s Meltytech \
+codesign --options=runtime -v -s "$SIGNER" \
   --entitlements ~/Projects/Shotcut/src/shotcut/scripts/notarization.entitlements \
   ~/Desktop/Shotcut.app/Contents/MacOS/{melt,ffmpeg,ffplay,ffprobe}
-codesign --options=runtime -v -s Meltytech \
+codesign --options=runtime -v -s "$SIGNER" \
   --entitlements ~/Projects/Shotcut/src/shotcut/scripts/notarization.entitlements \
   ~/Desktop/Shotcut.app
 codesign --verify --deep --strict --verbose=2 ~/Desktop/Shotcut.app
