@@ -995,6 +995,19 @@ Producer* Controller::setupNewProducer(Producer* newProducer) const
         {
             Mlt::Chain* chain = new Mlt::Chain(MLT.profile());
             chain->set_source(*newProducer);
+
+            // Move all non-loader filters to the chain in case this was a clip-only project.
+            int i = 0;
+            QScopedPointer<Mlt::Filter> filter(newProducer->filter(i));
+            while (filter && filter->is_valid()) {
+                if (!filter->get_int("_loader")) {
+                    newProducer->detach(*filter);
+                    chain->Service::attach(*filter);
+                } else {
+                    ++i;
+                }
+                filter.reset(newProducer->filter(i));
+            }
             return chain;
         }
     }
