@@ -74,8 +74,6 @@ jobs:
           echo Running the build script
           echo INSTALL_DIR=\"$CHECKOUT_DIR/build\"
           echo INSTALL_DIR=\"$CHECKOUT_DIR/build\" > build-shotcut.conf
-          echo MLT_HEAD=0 >> build-shotcut.conf
-          echo MLT_REVISION=v7 >> build-shotcut.conf
           echo SHOTCUT_VERSION=\"$VERSION\" >> build-shotcut.conf
           echo DEBUG_BUILD=1 >> build-shotcut.conf
           bash scripts/build-shotcut-msys2.sh -s
