@@ -38,7 +38,8 @@ static bool isMltClass(const QStringRef& name)
     return name == "profile" || name == "producer" ||
            name == "filter" || name == "playlist" ||
            name == "tractor" || name == "track" ||
-           name == "transition" || name == "consumer";
+           name == "transition" || name == "consumer" ||
+           name == "chain" || name == "link";
 }
 
 static bool isNetworkResource(const QString& string)
@@ -261,7 +262,8 @@ void MltXmlChecker::processProperties()
         newProperties << MltProperty(p.first, p.second);
     }
 
-    if (mlt_class == "filter" || mlt_class == "transition" || mlt_class == "producer") {
+    if (mlt_class == "filter" || mlt_class == "transition" || mlt_class == "producer"
+            || mlt_class == "chain" || mlt_class == "link") {
         checkGpuEffects(mlt_service);
         checkCpuEffects(mlt_service);
         checkUnlinkedFile(mlt_service);
@@ -397,7 +399,8 @@ static QString getPrefix(const QString& name, const QString& value)
 
 bool MltXmlChecker::readResourceProperty(const QString& name, QString& value)
 {
-    if (mlt_class == "filter" || mlt_class == "transition" || mlt_class == "producer")
+    if (mlt_class == "filter" || mlt_class == "transition" || mlt_class == "producer"
+            || mlt_class == "chain" || mlt_class == "link")
     if (name == "resource" || name == "src" || name == "filename"
             || name == "luma" || name == "luma.resource" || name == "composite.luma"
             || name == "producer.resource" || name == "av.file" || name == "warp_resource") {
