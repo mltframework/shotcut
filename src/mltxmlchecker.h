@@ -101,6 +101,7 @@ private:
         QString newHash;
         QString newDetail;
         QString prefix;
+        QString suffix;
         int audio_index, video_index;
 
         void clear() {
@@ -109,6 +110,7 @@ private:
             newHash.clear();
             newDetail.clear();
             prefix.clear();
+            suffix.clear();
             audio_index = video_index = -1;
         }
     } m_resource;

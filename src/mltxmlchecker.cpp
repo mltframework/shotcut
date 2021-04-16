@@ -140,6 +140,7 @@ bool MltXmlChecker::check(const QString& fileName)
             }
         }
     }
+    LOG_DEBUG() << m_tempFile->fileName();
     if (m_tempFile->isOpen()) {
         m_tempFile->close();
 
@@ -148,7 +149,7 @@ bool MltXmlChecker::check(const QString& fileName)
 //        LOG_DEBUG() << m_tempFile->readAll().constData();
 //        m_tempFile->close();
     }
-    LOG_DEBUG() << "end";
+    LOG_DEBUG() << "end" << m_xml.errorString();
     return m_xml.error() == QXmlStreamReader::NoError;
 }
 
@@ -397,6 +398,20 @@ static QString getPrefix(const QString& name, const QString& value)
     return QString();
 }
 
+static QString getSuffix(const QString& name, const QString& value)
+{
+    // avformat is only using "resource"
+    if (name == "resource") {
+        const QString queryDelimiter("\\?");
+        const auto i = value.lastIndexOf(queryDelimiter);
+        // webvfx "plain:"
+        if (i > 0) {
+            return value.mid(i);
+        }
+    }
+    return QString();
+}
+
 bool MltXmlChecker::readResourceProperty(const QString& name, QString& value)
 {
     if (mlt_class == "filter" || mlt_class == "transition" || mlt_class == "producer"
@@ -407,8 +422,11 @@ bool MltXmlChecker::readResourceProperty(const QString& name, QString& value)
 
         // Handle special prefix such as "plain:" or speed.
         m_resource.prefix = getPrefix(name, value);
+        m_resource.suffix = getSuffix(name, value);
+        auto filePath = value.mid(m_resource.prefix.size());
+        filePath = filePath.left(filePath.size() - m_resource.suffix.size());
         // Save the resource name (minus prefix) for later check for unlinked files.
-        m_resource.info.setFile(value.mid(m_resource.prefix.size()));
+        m_resource.info.setFile(filePath);
         if (!isNetworkResource(value) && m_resource.info.isRelative() && !Util::hasDriveLetter(value))
             m_resource.info.setFile(m_fileInfo.canonicalPath(), m_resource.info.filePath());
         return true;
@@ -482,6 +500,7 @@ bool MltXmlChecker::fixUnlinkedFile(QString& value)
                 value = value.mid(m_fileInfo.canonicalPath().size() + 1);
             // Restore special prefix such as "plain:" or speed value.
             value.prepend(m_resource.prefix);
+            value.append(m_resource.suffix);
             m_isCorrected = true;
 
             Mlt::Producer producer(MLT.profile(), m_resource.info.filePath().toUtf8().constData());

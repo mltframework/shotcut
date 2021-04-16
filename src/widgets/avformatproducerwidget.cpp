@@ -316,7 +316,7 @@ void AvformatProducerWidget::onFrameDecoded()
 
     double warpSpeed = GetSpeedFromProducer(producer());
     QString resource = GetFilenameFromProducer(producer());
-    QString name = Util::baseName(resource);
+    QString name = Util::baseName(resource, true);
     QString caption = m_producer->get(kShotcutCaptionProperty);
     if (caption.isEmpty() || caption.startsWith(name)) {
         // compute the caption
@@ -1248,7 +1248,7 @@ void AvformatProducerWidget::on_filenameLabel_editingFinished()
         if (caption.isEmpty()) {
             double warpSpeed = GetSpeedFromProducer(producer());
             QString resource = GetFilenameFromProducer(producer());
-            QString caption = Util::baseName(resource);
+            QString caption = Util::baseName(resource, true);
             if(warpSpeed != 1.0)
                 caption = QString("%1 (%2x)").arg(caption).arg(warpSpeed);
             m_producer->set(kShotcutCaptionProperty, caption.toUtf8().constData());

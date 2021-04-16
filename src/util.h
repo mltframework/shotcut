@@ -37,7 +37,7 @@ class Util
 private:
     Util() {}
 public:
-    static QString baseName(const QString &filePath);
+    static QString baseName(const QString &filePath, bool trimQuery = false);
     static void setColorsToHighlight(QWidget* widget, QPalette::ColorRole role = QPalette::Window);
     static void showInFolder(const QString &path);
     static bool warnIfNotWritable(const QString& filePath, QWidget* parent, const QString& caption);
@@ -58,6 +58,7 @@ public:
     static bool hasDriveLetter(const QString& path);
     static QFileDialog::Options getFileDialogOptions();
     static bool isMemoryLow();
+    static QString removeQueryString(const QString& s);
 };
 
 #endif // UTIL_H

@@ -1517,7 +1517,7 @@ void TimelineDock::replaceClipsWithHash(const QString& hash, Mlt::Producer& prod
             if (producer.get_int(kIsProxyProperty) && info->producer->get_int(kIsProxyProperty)) {
                 // Not much to do on a proxy clip but change its resource
                 info->producer->set(kOriginalResourceProperty, producer.get("resource"));
-                auto caption = Util::baseName(ProxyManager::resource(*info->producer));
+                auto caption = Util::baseName(ProxyManager::resource(*info->producer), true);
                 if (!::qstrcmp(info->producer->get("mlt_service"), "timewarp")) {
                     caption = QString("%1 (%2x)").arg(caption, info->producer->get("warp_speed"));
                 }

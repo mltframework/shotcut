@@ -50,12 +50,15 @@ static const unsigned int kLowMemoryThresholdPercent = 10U;
 static const unsigned int kLowMemoryThresholdKB = 256U * 1024U;
 #endif
 
-QString Util::baseName(const QString &filePath)
+QString Util::baseName(const QString &filePath, bool trimQuery)
 {
     QString s = filePath;
     // Only if absolute path and not a URI.
     if (s.startsWith('/') || s.midRef(1, 2) == ":/" || s.midRef(1, 2) == ":\\")
         s = QFileInfo(s).fileName();
+    if (trimQuery) {
+        return removeQueryString(s);
+    }
     return s;
 }
 
@@ -86,7 +89,7 @@ void Util::setColorsToHighlight(QWidget* widget, QPalette::ColorRole role)
 
 void Util::showInFolder(const QString& path)
 {
-    QFileInfo info(path);
+    QFileInfo info(removeQueryString(path));
 #if defined(Q_OS_WIN)
     QStringList args;
     if (!info.isDir())
@@ -371,7 +374,7 @@ void Util::applyCustomProperties(Mlt::Producer& destination, Mlt::Producer& sour
     QString resource = ProxyManager::resource(destination);
     if (!qstrcmp("timewarp", source.get("mlt_service"))) {
         auto speed = qAbs(source.get_double("warp_speed"));
-        auto caption = QString("%1 (%2x)").arg(Util::baseName(resource)).arg(speed);
+        auto caption = QString("%1 (%2x)").arg(Util::baseName(resource, true)).arg(speed);
         destination.set(kShotcutCaptionProperty, caption.toUtf8().constData());
 
         resource = destination.get("_shotcut:resource");
@@ -382,7 +385,7 @@ void Util::applyCustomProperties(Mlt::Producer& destination, Mlt::Producer& sour
         int length = qRound(destination.get_length() * speedRatio);
         destination.set("length", destination.frames_to_time(length, mlt_time_clock));
     } else {
-        auto caption = Util::baseName(resource);
+        auto caption = Util::baseName(resource, true);
         destination.set(kShotcutCaptionProperty, caption.toUtf8().constData());
 
         p.clear("warp_resource");
@@ -395,7 +398,7 @@ void Util::applyCustomProperties(Mlt::Producer& destination, Mlt::Producer& sour
 QString Util::getFileHash(const QString& path)
 {
     // This routine is intentionally copied from Kdenlive.
-    QFile file(path);
+    QFile file(removeQueryString(path));
     if (file.open(QIODevice::ReadOnly)) {
         QByteArray fileData;
          // 1 MB = 1 second per 450 files (or faster)
@@ -516,4 +519,16 @@ bool Util::isMemoryLow()
     LOG_INFO() << "available RAM = " << availableKB << "KB";
     return availableKB < kLowMemoryThresholdKB;
 #endif
+}
+
+QString Util::removeQueryString(const QString& s)
+{
+    auto i = s.lastIndexOf("\\?");
+    if (i < 0) {
+        i = s.lastIndexOf("%5C?");
+    }
+    if (i > 0 ) {
+        return s.left(i);
+    }
+    return s;
 }
