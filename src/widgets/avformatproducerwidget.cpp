@@ -48,7 +48,7 @@ static QString GetFilenameFromProducer(Mlt::Producer* producer, bool useOriginal
     QString resource;
     if (useOriginal && producer->get(kOriginalResourceProperty)) {
         resource = QString::fromUtf8(producer->get(kOriginalResourceProperty));
-    } else if (ProducerIsTimewarp(producer)) {
+    } else if (ProducerIsTimewarp(producer) && !producer->get_int(kIsProxyProperty)) {
         resource = QString::fromUtf8(producer->get("warp_resource"));
     } else {
         resource = QString::fromUtf8(producer->get("resource"));
