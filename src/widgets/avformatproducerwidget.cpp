@@ -70,6 +70,23 @@ static double GetSpeedFromProducer( Mlt::Producer* producer )
     return speed;
 }
 
+static QString updateCaption(Mlt::Producer* producer)
+{
+    double warpSpeed = GetSpeedFromProducer(producer);
+    QString resource = GetFilenameFromProducer(producer);
+    QString name = Util::baseName(resource, true);
+    QString caption = producer->get(kShotcutCaptionProperty);
+    if (caption.isEmpty() || caption.startsWith(name)) {
+        // compute the caption
+        if (warpSpeed != 1.0)
+            caption = QString("%1 (%2x)").arg(name).arg(warpSpeed);
+        else
+            caption = name;
+        producer->set(kShotcutCaptionProperty, caption.toUtf8().constData());
+    }
+    return caption;
+}
+
 DecodeTask::DecodeTask(AvformatProducerWidget* widget)
     : QObject(0)
     , QRunnable()
@@ -285,6 +302,7 @@ void AvformatProducerWidget::recreateProducer()
                  kOriginalResourceProperty ","
                  kDisableProxyProperty ","
                  kIsProxyProperty);
+    updateCaption(p);
     Mlt::Controller::copyFilters(*m_producer, *p);
     if (m_producer->get(kMultitrackItemProperty)) {
         int length = ui->durationSpinBox->value();
@@ -316,16 +334,7 @@ void AvformatProducerWidget::onFrameDecoded()
 
     double warpSpeed = GetSpeedFromProducer(producer());
     QString resource = GetFilenameFromProducer(producer());
-    QString name = Util::baseName(resource, true);
-    QString caption = m_producer->get(kShotcutCaptionProperty);
-    if (caption.isEmpty() || caption.startsWith(name)) {
-        // compute the caption
-        if (warpSpeed != 1.0)
-            caption = QString("%1 (%2x)").arg(name).arg(warpSpeed);
-        else
-            caption = name;
-        m_producer->set(kShotcutCaptionProperty, caption.toUtf8().constData());
-    }
+    QString caption = updateCaption(m_producer.data());
     ui->filenameLabel->setText(caption);
     ui->filenameLabel->setCursorPosition(caption.length());
     ui->filenameLabel->setToolTip(resource);
