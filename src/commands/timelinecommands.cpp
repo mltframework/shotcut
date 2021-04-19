@@ -1164,9 +1164,7 @@ void DetachAudioCommand::redo()
             Mlt::Producer track(m_model.tractor()->track(m_model.trackList()[i].mlt_index));
             if (!track.is_valid())
                 continue;
-            int hide = track.get_int("hide");
-            // hide: 1 = audio only track, 3 = muted audio-only track
-            if (track.get(kAudioTrackProperty) || hide == 1 || hide == 3) {
+            if (track.get(kAudioTrackProperty)) {
                 Mlt::Playlist playlist(track);
                 int out = clip.get_playtime() - 1;
                 // If the audio track is blank in the target region.
