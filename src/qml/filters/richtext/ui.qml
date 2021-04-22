@@ -374,6 +374,22 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
                 readOnly: true
                 opacity: 0.7
                 selectByMouse: true
+                persistentSelection: true
+                MouseArea {
+                    acceptedButtons: Qt.RightButton
+                    anchors.fill: parent
+                    onClicked: contextMenu.popup()
+                }
+                Menu {
+                    id: contextMenu
+                    width: 150
+                    MenuItem {
+                        action: Action {
+                            text: qsTr('Copy')
+                            onTriggered: { sizeW.selectAll(); sizeW.copy() }
+                        }
+                    }
+                }
             }
             Label { text: 'x'; Layout.minimumWidth: 20; horizontalAlignment: Qt.AlignHCenter }
             TextField {
@@ -382,6 +398,22 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
                 readOnly: true
                 opacity: 0.7
                 selectByMouse: true
+                persistentSelection: true
+                MouseArea {
+                    acceptedButtons: Qt.RightButton
+                    anchors.fill: parent
+                    onClicked: contextMenu2.popup()
+                }
+                Menu {
+                    id: contextMenu2
+                    width: 150
+                    MenuItem {
+                        action: Action {
+                            text: qsTr('Copy')
+                            onTriggered: { sizeH.selectAll(); sizeH.copy() }
+                        }
+                    }
+                }
             }
         }
         Item { Layout.columnSpan: 2; Layout.fillWidth: true }
