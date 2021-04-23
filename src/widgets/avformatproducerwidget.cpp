@@ -825,13 +825,6 @@ void AvformatProducerWidget::convert(TranscodeDialog& dialog)
         if (dialog.isSubClip()) {
             if (Settings.proxyEnabled()) {
                 m_producer->Mlt::Properties::clear(kOriginalResourceProperty);
-            } else {
-                // Save these properties for revertToOriginalResource()
-                m_producer->set(kOriginalResourceProperty, resource.toUtf8().constData());
-                m_producer->set(kOriginalInProperty, m_producer->get(kFilterInProperty)?
-                    m_producer->get_time(kFilterInProperty, mlt_time_clock) : m_producer->get_time("in", mlt_time_clock));
-                m_producer->set(kOriginalOutProperty, m_producer->get(kFilterOutProperty)?
-                    m_producer->get_time(kFilterOutProperty, mlt_time_clock) : m_producer->get_time("out", mlt_time_clock));
             }
 
             // set trim options
