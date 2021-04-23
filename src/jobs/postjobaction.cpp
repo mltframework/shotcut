@@ -66,6 +66,7 @@ void ReplaceOnePostJobAction::doAction()
     Mlt::Producer newProducer(MLT.profile(), m_dstFile.toUtf8().constData());
     if (newProducer.is_valid()) {
         Mlt::Producer* producer = MLT.setupNewProducer(&newProducer);
+        producer->set_in_and_out(m_in, -1);
         MAIN.replaceInTimeline(m_uuid, *producer);
         delete producer;
     }
