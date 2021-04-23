@@ -59,6 +59,7 @@ public:
     static QFileDialog::Options getFileDialogOptions();
     static bool isMemoryLow();
     static QString removeQueryString(const QString& s);
+    static int greatestCommonDivisor(int m, int n);
 };
 
 #endif // UTIL_H

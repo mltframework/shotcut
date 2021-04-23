@@ -532,3 +532,15 @@ QString Util::removeQueryString(const QString& s)
     }
     return s;
 }
+
+int Util::greatestCommonDivisor(int m, int n)
+{
+    int gcd, remainder;
+    while (n) {
+        remainder = m % n;
+        m = n;
+        n = remainder;
+    }
+    gcd = m;
+    return gcd;
+}

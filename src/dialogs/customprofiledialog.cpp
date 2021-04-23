@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 Meltytech, LLC
+ * Copyright (c) 2013-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -54,11 +54,9 @@ void CustomProfileDialog::on_buttonBox_accepted()
     MLT.profile().set_width(ui->widthSpinner->value());
     MLT.profile().set_height(ui->heightSpinner->value());
     MLT.profile().set_display_aspect(ui->aspectNumSpinner->value(), ui->aspectDenSpinner->value());
-    int sar_num = ui->heightSpinner->value() * ui->aspectNumSpinner->value() / ui->aspectDenSpinner->value();//1024
-    int sar_den = ui->widthSpinner->value(); //720
-    if (sar_num == sar_den)
-        sar_num = sar_den = 1;
-    MLT.profile().set_sample_aspect(sar_num, sar_den);
+    QSize sar(ui->aspectNumSpinner->value() * ui->heightSpinner->value(), ui->aspectDenSpinner->value() * ui->widthSpinner->value());
+    auto gcd = Util::greatestCommonDivisor(sar.width(), sar.height());
+    MLT.profile().set_sample_aspect(sar.width() / gcd, sar.height() / gcd);
     switch (int(ui->fpsSpinner->value() * 10)) {
     case 239:
         MLT.profile().set_frame_rate(24000, 1001);
