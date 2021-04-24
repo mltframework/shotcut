@@ -85,6 +85,8 @@ public:
     void setWindowStateDefault(const QByteArray&);
     QString viewMode() const;
     void setViewMode(const QString& viewMode);
+    QString exportFrameSuffix() const;
+    void setExportFrameSuffix(const QString& suffix);
 
     // encode
     QString encodePath() const;
