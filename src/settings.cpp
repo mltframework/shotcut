@@ -225,6 +225,16 @@ void ShotcutSettings::setViewMode(const QString& viewMode)
     emit viewModeChanged();
 }
 
+QString ShotcutSettings::exportFrameSuffix() const
+{
+    return settings.value("exportFrameSuffix", ".png").toString();
+}
+
+void ShotcutSettings::setExportFrameSuffix(const QString& exportFrameSuffix)
+{
+    settings.setValue("exportFrameSuffix", exportFrameSuffix);
+}
+
 QString ShotcutSettings::encodePath() const
 {
     return settings.value("encode/path", QStandardPaths::standardLocations(QStandardPaths::MoviesLocation)).toString();

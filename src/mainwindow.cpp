@@ -51,6 +51,7 @@
 #include "controllers/scopecontroller.h"
 #include "docks/filtersdock.h"
 #include "dialogs/customprofiledialog.h"
+#include "dialogs/saveimagedialog.h"
 #include "settings.h"
 #include "leapnetworklistener.h"
 #include "database.h"
@@ -4081,27 +4082,11 @@ void MainWindow::onGLWidgetImageReady()
         MLT.setPreviewScale(Settings.playerPreviewScale());
     }
     if (!image.isNull()) {
-        QString path = Settings.savePath();
-        QString caption = tr("Export Frame");
-        QString nameFilter = tr("PNG (*.png);;BMP (*.bmp);;JPEG (*.jpg *.jpeg);;PPM (*.ppm);;TIFF (*.tif *.tiff);;WebP (*.webp);;All Files (*)");
-        QString saveFileName = QFileDialog::getSaveFileName(this, caption, path, nameFilter,
-            nullptr, Util::getFileDialogOptions());
-        if (!saveFileName.isEmpty()) {
-            QFileInfo fi(saveFileName);
-            if (fi.suffix().isEmpty())
-                saveFileName += ".png";
-            if (Util::warnIfNotWritable(saveFileName, this, caption))
-                return;
-            // Convert to square pixels if needed.
-            qreal aspectRatio = (qreal) image.width() / image.height();
-            if (qFloor(aspectRatio * 1000) != qFloor(MLT.profile().dar() * 1000)) {
-                image = image.scaled(qRound(image.height() * MLT.profile().dar()), image.height(),
-                                     Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-            }
-            image.save(saveFileName, Q_NULLPTR,
-                (QFileInfo(saveFileName).suffix() == "webp")? 80 : -1);
-            Settings.setSavePath(fi.path());
-            m_recentDock->add(saveFileName);
+        SaveImageDialog dialog(this, tr("Export Frame"), image);
+        dialog.exec();
+        if ( !dialog.saveFile().isEmpty() )
+        {
+            m_recentDock->add(dialog.saveFile());
         }
     } else {
         showStatusMessage(tr("Unable to export frame."));
