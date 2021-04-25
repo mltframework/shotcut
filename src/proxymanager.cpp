@@ -561,6 +561,10 @@ public:
     int on_end_filter(Mlt::Filter*) { return 0; }
     int on_start_transition(Mlt::Transition*) { return 0; }
     int on_end_transition(Mlt::Transition*) { return 0; }
+    int on_start_chain(Mlt::Chain*) { return 0; }
+    int on_end_chain(Mlt::Chain*) { return 0; }
+    int on_start_link(Mlt::Link*) { return 0; }
+    int on_end_link(Mlt::Link*) { return 0; }
 };
 
 void ProxyManager::generateIfNotExistsAll(Mlt::Producer& producer)
