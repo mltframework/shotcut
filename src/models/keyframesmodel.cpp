@@ -140,6 +140,40 @@ QVariant KeyframesModel::data(const QModelIndex& index, int role) const
             }
             return 0.0;
         }
+        case LowestValueRole:
+        {
+            QmlKeyframesParameter* param = m_metadata->keyframes()->parameter(m_metadataIndex[index.row()]);
+            Mlt::Animation animation = m_filter->getAnimation(param->property());
+            double min = std::numeric_limits<double>::max();
+            if (animation.is_valid()) {
+                for (int i = 0; i < animation.key_count(); i++) {
+                    int frame = animation.key_get_frame(i);
+                    if (frame >= 0) {
+                        double value = m_filter->getDouble(param->property(), frame);
+                        if (value < min) min = value;
+                    }
+                }
+            }
+            if (min == std::numeric_limits<double>::max()) min = 0;
+            return min;
+        }
+        case HighestValueRole:
+        {
+            QmlKeyframesParameter* param = m_metadata->keyframes()->parameter(m_metadataIndex[index.row()]);
+            Mlt::Animation animation = m_filter->getAnimation(param->property());
+            double max = std::numeric_limits<double>::lowest();
+            if (animation.is_valid()) {
+                for (int i = 0; i < animation.key_count(); i++) {
+                    int frame = animation.key_get_frame(i);
+                    if (frame >= 0) {
+                        double value = m_filter->getDouble(param->property(), frame);
+                        if (value > max) max = value;
+                    }
+                }
+            }
+            if (max == std::numeric_limits<double>::lowest()) max = 0;
+            return max;
+        }
         default:
             break;
         }
@@ -177,6 +211,8 @@ QHash<int, QByteArray> KeyframesModel::roleNames() const
     roles[IsCurveRole]      = "isCurve";
     roles[MinimumValueRole] = "minimum";
     roles[MaximumValueRole] = "maximum";
+    roles[LowestValueRole] = "lowest";
+    roles[HighestValueRole] = "highest";
     roles[FrameNumberRole]  = "frame";
     roles[KeyframeTypeRole] = "interpolation";
     roles[NumericValueRole] = "value";

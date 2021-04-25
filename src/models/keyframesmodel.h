@@ -45,6 +45,8 @@ public:
         IsCurveRole,      /// parameter only
         MinimumValueRole, /// parameter only
         MaximumValueRole, /// parameter only
+        LowestValueRole,  /// parameter only
+        HighestValueRole, /// parameter only
         FrameNumberRole,  /// keyframe only
         KeyframeTypeRole, /// keyframe only
         NumericValueRole, /// keyframe only

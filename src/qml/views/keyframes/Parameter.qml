@@ -41,6 +41,9 @@ Item {
             return null
     }
 
+    onMinimumChanged: canvas.requestPaint()
+    onMaximumChanged: canvas.requestPaint()
+
     Repeater { id: keyframesRepeater; model: keyframeDelegateModel; onCountChanged: canvas.requestPaint() }
 
     Canvas {

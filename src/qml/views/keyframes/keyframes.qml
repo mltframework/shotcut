@@ -36,6 +36,7 @@ Rectangle {
     property color shotcutBlue: Qt.rgba(23/255, 92/255, 118/255, 1.0)
     property double timeScale: 1.0
     property var selection: []
+    property alias paramRepeater: parametersRepeater
 
     signal keyframeClicked()
 
@@ -536,8 +537,9 @@ Rectangle {
             rootIndex: parameterDelegateModel.modelIndex(index)
             width: producer.duration * timeScale
             isCurve: model.isCurve
-            minimum: model.minimum
-            maximum: model.maximum
+            property bool zoomHeight: false
+            minimum: zoomHeight ? model.lowest : model.minimum
+            maximum: zoomHeight ? model.highest : model.maximum
             height: Logic.trackHeight(model.isCurve)
             onClicked: {
                 currentTrack = parameter.DelegateModel.itemsIndex

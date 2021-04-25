@@ -202,6 +202,19 @@ Rectangle {
 //                onClicked: timeline.setTrackLock(index, !isLocked)
                 Shotcut.HoverTip { text: isLocked? qsTr('Unlock track') : qsTr('Lock track') }
             }
+
+            Shotcut.ToolButton {
+                Shotcut.HoverTip { text: qsTr('Zoom keyframe values') }
+                focusPolicy: Qt.NoFocus
+                visible: delegateIndex >= 0 && paramHeadRoot.isCurve
+                checkable: true
+                action: Action {
+                    id: zoomFitKeyframeAction
+                    icon.name: 'zoom-fit-best'
+                    icon.source: 'qrc:///icons/oxygen/32x32/actions/zoom-fit-best.png'
+                    onTriggered: root.paramRepeater.itemAt(delegateIndex).zoomHeight = checked
+                }
+            }
         }
     }
 }
