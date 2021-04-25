@@ -104,9 +104,9 @@ void MeltJob::start()
     if (m_args.size() > 0) {
         args.append(m_args);
     } else if (m_useMultiConsumer) {
-        args << QUrl::toPercentEncoding(xmlPath()) + "?multi:1";
+        args << "xml:" + QUrl::toPercentEncoding(xmlPath()) + "?multi:1";
     } else {
-        args << QUrl::toPercentEncoding(xmlPath());
+        args << "xml:" + QUrl::toPercentEncoding(xmlPath());
     }
     LOG_DEBUG() << meltPath.absoluteFilePath()  + " " + args.join(' ');
 #ifndef Q_OS_MAC
