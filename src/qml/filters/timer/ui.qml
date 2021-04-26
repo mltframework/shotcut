@@ -178,7 +178,7 @@ Item {
             spacing: 0
             ClockSpinner {
                 id: startSpinner
-                maximumValue: 24 * 60 * 60 // 24 hours
+                maximumValue: 365 * 24 * 60 * 60 // 365 days
                 onTimeStrChanged: {
                     filter.set('start', startSpinner.timeStr)
                 }
@@ -205,7 +205,7 @@ Item {
             spacing: 0
             ClockSpinner {
                 id: durationSpinner
-                maximumValue: 24 * 60 * 60 // 24 hours
+                maximumValue: 365 * 24 * 60 * 60 // 365 days
                 onTimeStrChanged: {
                     filter.set('duration', durationSpinner.timeStr)
                 }
@@ -238,7 +238,7 @@ Item {
             spacing: 0
             ClockSpinner {
                 id: offsetSpinner
-                maximumValue: 24 * 60 * 60 // 24 hours
+                maximumValue: 365 * 24 * 60 * 60 // 365 days
                 onTimeStrChanged: {
                     filter.set('offset', offsetSpinner.timeStr)
                 }
