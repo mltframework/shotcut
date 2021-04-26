@@ -28,6 +28,7 @@ Item {
     property string _defaultStart: '00:00:00.000'
     property string _defaultDuration: '00:00:10.000'
     property string _defaultOffset: '00:00:00.000'
+    property double _defaultSpeed: 1.0
 
     Component.onCompleted: {
         filter.blockSignals = true
@@ -38,6 +39,7 @@ Item {
             filter.set("start", _defaultStart)
             filter.set("duration", _defaultDuration)
             filter.set("offset", _defaultOffset)
+            filter.set("speed", _defaultSpeed)
 
             if (application.OS === 'Windows')
                 filter.set('family', 'Verdana')
@@ -99,6 +101,7 @@ Item {
         startSpinner.timeStr = filter.get("start")
         durationSpinner.timeStr = filter.get("duration")
         offsetSpinner.timeStr = filter.get("offset")
+        speedSpinner.value = filter.getDouble("speed")
 
         textFilterUi.setControls()
     }
@@ -246,6 +249,27 @@ Item {
                     offsetSpinner.timeStr = _defaultOffset
                 }
                 Shotcut.HoverTip { text: qsTr('When the direction is Down, the timer will count down to Offset.\nWhen the Direction is up, the timer will count up starting from Offset.') }
+            }
+        }
+
+        Label {
+            text: qsTr('Speed')
+            Layout.alignment: Qt.AlignRight
+        }
+        RowLayout {
+            spacing: 0
+
+            Shotcut.DoubleSpinBox {
+                id: speedSpinner
+                horizontalAlignment: Qt.AlignRight
+                Layout.minimumWidth: 100
+                decimals: 5
+                stepSize: 0.1
+                from: 0
+                to: 1000
+                onValueChanged: {
+                    filter.set("speed", speedSpinner.value)
+                }
             }
         }
 
