@@ -805,6 +805,23 @@ void AvformatProducerWidget::on_actionFFmpegConvert_triggered()
     convert(dialog);
 }
 
+static QString getNextFile(const QString& filePath)
+{
+    QFileInfo info(filePath);
+    QString basename = info.completeBaseName();
+    QString extension = info.suffix();
+    if (extension.isEmpty()) {
+        extension = basename;
+        basename = QString();
+    }
+    for (unsigned i = 1; i < std::numeric_limits<unsigned>::max(); i++) {
+        QString filename = QString::fromLatin1("%1%2.%3").arg(basename).arg(i).arg(extension);
+        if (!info.dir().exists(filename))
+            return info.dir().filePath(filename);
+    }
+    return filePath;
+}
+
 void AvformatProducerWidget::convert(TranscodeDialog& dialog)
 {
     int result = dialog.exec();
@@ -916,7 +933,11 @@ void AvformatProducerWidget::convert(TranscodeDialog& dialog)
             args << "-colorspace" << "bt709" << "-color_primaries" << "bt709" << "-color_trc" << "bt709";
         }
         QFileInfo fi(resource);
-        path = path.arg(fi.completeBaseName()).arg(tr("Converted"));
+        QString suffix = dialog.isSubClip()? tr("Sub-clip") + ' ' : tr("Converted");
+        path = path.arg(fi.completeBaseName(), suffix);
+        if (dialog.isSubClip()) {
+            path = getNextFile(path);
+        }
         QString filename = QFileDialog::getSaveFileName(this, dialog.windowTitle(), path, nameFilter,
             nullptr, Util::getFileDialogOptions());
         if (!filename.isEmpty()) {
