@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2020 Meltytech, LLC
+ * Copyright (c) 2018-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -53,6 +53,9 @@ ToolButton {
            checked = true
            confirmDialog.visible = true
         } else {
+            application.showStatusMessage(qsTr('Hold %1 to drag a keyframe vertical only or %2 to drag horizontal only')
+                .arg(application.OS === 'OS X'? '⌘' : 'Ctrl')
+                .arg(application.OS === 'OS X'? '⌥' : 'Alt'))
             keyframes.show()
             keyframes.raise()
             toggled()
