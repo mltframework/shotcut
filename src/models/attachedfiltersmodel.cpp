@@ -345,7 +345,7 @@ void AttachedFiltersModel::add(QmlMetadata* meta)
             LOG_WARNING() << "Not a chain";
         }
         if (meta->mlt_service() == "timeremap" && m_producer->get_int("meta.media.has_b_frames") != 0) {
-            emit requestConvert(tr("This file has B-frames, which is not supported by %1.").arg(meta->name()));
+            emit requestConvert(tr("This file has B-frames, which is not supported by %1.").arg(meta->name()), false, true);
             return;
         }
         Mlt::Link* link = new Mlt::Link(meta->mlt_service().toUtf8().constData());

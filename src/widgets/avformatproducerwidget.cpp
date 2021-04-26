@@ -188,7 +188,7 @@ void AvformatProducerWidget::rename()
     ui->filenameLabel->selectAll();
 }
 
-void AvformatProducerWidget::offerConvert(QString message, bool set709Convert)
+void AvformatProducerWidget::offerConvert(QString message, bool set709Convert, bool setSubClip)
 {
     m_producer->set(kShotcutSkipConvertProperty, true);
     LongUiTask::cancel();
@@ -202,6 +202,8 @@ void AvformatProducerWidget::offerConvert(QString message, bool set709Convert)
     dialog.showCheckBox();
     dialog.set709Convert(set709Convert);
     dialog.showSubClipCheckBox();
+    LOG_DEBUG() << "in" << m_producer->get_in() << "out" << m_producer->get_out() << "length" << m_producer->get_length() - 1;
+    dialog.setSubClipChecked(setSubClip && (m_producer->get_in() > 0 || m_producer->get_out() < m_producer->get_length() - 1));
     convert(dialog);
 }
 

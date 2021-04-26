@@ -43,7 +43,7 @@ public:
 public slots:
     void updateDuration();
     void rename();
-    void offerConvert(QString message, bool set709Convert = false);
+    void offerConvert(QString message, bool set709Convert = false, bool setSubClip = false);
 
 signals:
     void producerChanged(Mlt::Producer*);

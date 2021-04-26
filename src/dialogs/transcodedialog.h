@@ -43,6 +43,7 @@ public:
     void set709Convert(bool enable);
     void showSubClipCheckBox();
     bool isSubClip() const;
+    void setSubClipChecked(bool checked);
 
 private slots:
     void on_horizontalSlider_valueChanged(int position);

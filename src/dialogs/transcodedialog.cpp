@@ -116,6 +116,11 @@ bool TranscodeDialog::isSubClip() const
     return ui->subclipCheckBox->isChecked();
 }
 
+void TranscodeDialog::setSubClipChecked(bool checked)
+{
+    ui->subclipCheckBox->setChecked(checked);
+}
+
 void TranscodeDialog::on_horizontalSlider_valueChanged(int position)
 {
     switch (position) {

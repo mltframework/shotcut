@@ -65,7 +65,7 @@ signals:
     void isProducerSelectedChanged();
     void supportsLinksChanged();
     void addedOrRemoved(Mlt::Producer*);
-    void requestConvert(QString);
+    void requestConvert(QString, bool set709Convert, bool withSubClip);
 
 public slots:
     void add(QmlMetadata* meta);

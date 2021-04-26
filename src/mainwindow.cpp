@@ -3215,7 +3215,7 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer* producer)
             connect(this, SIGNAL(renameRequested()), w, SLOT(rename()));
         }
         if (-1 != w->metaObject()->indexOfSlot("offerConvert(QString)")) {
-            connect(m_filterController->attachedModel(), SIGNAL(requestConvert(QString)), w, SLOT(offerConvert(QString)));
+            connect(m_filterController->attachedModel(), SIGNAL(requestConvert(QString,bool,bool)), w, SLOT(offerConvert(QString,bool,bool)));
         }
         scrollArea->setWidget(w);
         onProducerChanged();
