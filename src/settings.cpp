@@ -288,6 +288,16 @@ void ShotcutSettings::setEncodeAdvanced(bool b)
     settings.setValue("encode/advanced", b);
 }
 
+bool ShotcutSettings::convertAdvanced() const
+{
+    return settings.value("convertAdvanced", false).toBool();
+}
+
+void ShotcutSettings::setConvertAdvanced(bool b)
+{
+    settings.setValue("convertAdvanced", b);
+}
+
 bool ShotcutSettings::showConvertClipDialog() const
 {
     return settings.value("showConvertClipDialog", true).toBool();

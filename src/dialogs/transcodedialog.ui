@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>418</width>
-    <height>398</height>
+    <height>427</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -152,14 +152,10 @@
           </property>
          </widget>
         </item>
-        <item row="5" column="1">
-         <widget class="QComboBox" name="frcComboBox">
-          <property name="toolTip">
-           <string>Frame rate conversion method
-
-Duplicate: Duplicate frames.
-Blend: Blend frames.
-Motion Compensation: Interpolate new frames using motion compensation. This method is very slow and may result in artifacts.</string>
+        <item row="0" column="0" colspan="2">
+         <widget class="Line" name="line">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
           </property>
          </widget>
         </item>
@@ -173,20 +169,6 @@ Motion Compensation: Interpolate new frames using motion compensation. This meth
           </property>
          </widget>
         </item>
-        <item row="4" column="0">
-         <widget class="QLabel" name="fpsLabel">
-          <property name="text">
-           <string>Frames/sec</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="0" colspan="2">
-         <widget class="Line" name="line">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-         </widget>
-        </item>
         <item row="6" column="1">
          <widget class="QCheckBox" name="convert709CheckBox">
           <property name="toolTip">
@@ -197,20 +179,21 @@ Motion Compensation: Interpolate new frames using motion compensation. This meth
           </property>
          </widget>
         </item>
-        <item row="2" column="1">
-         <widget class="QCheckBox" name="deinterlaceCheckBox">
-          <property name="toolTip">
-           <string>If the source is progressive, each interlaced field will be converted to a progressive frame resulting in double frame rate.</string>
-          </property>
-          <property name="text">
-           <string>Deinterlace</string>
-          </property>
-         </widget>
-        </item>
         <item row="5" column="0">
          <widget class="QLabel" name="frcLabel">
           <property name="text">
            <string>Frame rate conversion</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="1">
+         <widget class="QComboBox" name="frcComboBox">
+          <property name="toolTip">
+           <string>Frame rate conversion method
+
+Duplicate: Duplicate frames.
+Blend: Blend frames.
+Motion Compensation: Interpolate new frames using motion compensation. This method is very slow and may result in artifacts.</string>
           </property>
          </widget>
         </item>
@@ -224,6 +207,34 @@ only the currently selected one.</string>
           </property>
           <property name="text">
            <string>Use sub-clip</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="0">
+         <widget class="QLabel" name="fpsLabel">
+          <property name="text">
+           <string>Frames/sec</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QCheckBox" name="deinterlaceCheckBox">
+          <property name="toolTip">
+           <string>If the source is progressive, each interlaced field will be converted to a progressive frame resulting in double frame rate.</string>
+          </property>
+          <property name="text">
+           <string>Deinterlace</string>
+          </property>
+         </widget>
+        </item>
+        <item row="7" column="1">
+         <widget class="QCheckBox" name="advancedCheckBox">
+          <property name="toolTip">
+           <string>Enable this so the Advanced section remains open for the
+next time</string>
+          </property>
+          <property name="text">
+           <string>Keep Advanced open</string>
           </property>
          </widget>
         </item>

@@ -87,6 +87,8 @@ public:
     void setViewMode(const QString& viewMode);
     QString exportFrameSuffix() const;
     void setExportFrameSuffix(const QString& suffix);
+    bool convertAdvanced() const;
+    void setConvertAdvanced(bool);
 
     // encode
     QString encodePath() const;

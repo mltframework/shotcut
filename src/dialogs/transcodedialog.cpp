@@ -18,6 +18,7 @@
 #include "transcodedialog.h"
 #include "ui_transcodedialog.h"
 #include "mltcontroller.h"
+#include "settings.h"
 
 #include <QPushButton>
 
@@ -54,8 +55,11 @@ TranscodeDialog::TranscodeDialog(const QString& message, bool isProgressive, QWi
     QPushButton* advancedButton = new QPushButton(tr("Advanced"));
     advancedButton->setCheckable(true);
     connect(advancedButton, SIGNAL(toggled(bool)), ui->advancedWidget, SLOT(setVisible(bool)));
-    ui->advancedWidget->hide();
-    advancedButton->setChecked(false);
+    if (!Settings.convertAdvanced()) {
+        ui->advancedWidget->hide();
+    }
+    advancedButton->setChecked(Settings.convertAdvanced());
+    ui->advancedCheckBox->setChecked(Settings.convertAdvanced());
     ui->buttonBox->addButton(advancedButton, QDialogButtonBox::ActionRole);
 
     on_horizontalSlider_valueChanged(m_format);
@@ -131,4 +135,9 @@ void TranscodeDialog::on_horizontalSlider_valueChanged(int position)
 void TranscodeDialog::on_checkBox_clicked(bool checked)
 {
     m_isChecked = checked;
+}
+
+void TranscodeDialog::on_advancedCheckBox_clicked(bool checked)
+{
+    Settings.setConvertAdvanced(checked);
 }

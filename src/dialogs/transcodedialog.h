@@ -49,6 +49,8 @@ private slots:
 
     void on_checkBox_clicked(bool checked);
 
+    void on_advancedCheckBox_clicked(bool checked);
+
 private:
     Ui::TranscodeDialog *ui;
     int m_format;
