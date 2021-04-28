@@ -34,6 +34,9 @@ Item {
             filter.set('image_mode', 'nearest')
             filter.set('pitch', 0)
             filter.savePreset(preset.parameters)
+            application.showStatusMessage(qsTr('Hold %1 to drag a keyframe vertical only or %2 to drag horizontal only')
+                .arg(application.OS === 'OS X'? '⌘' : 'Ctrl')
+                .arg(application.OS === 'OS X'? '⌥' : 'Alt'))
         }
         setControls()
     }
