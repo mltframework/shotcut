@@ -20,6 +20,7 @@
 #include "mltcontroller.h"
 #include "settings.h"
 #include "util.h"
+#include <Logger.h>
 
 #include <QDebug>
 #include <QtMath>
@@ -42,8 +43,7 @@ SaveImageDialog::SaveImageDialog(QWidget *parent, const QString& caption, QImage
     setAcceptMode(QFileDialog::AcceptSave);
     setFileMode(QFileDialog::AnyFile);
     setOptions(Util::getFileDialogOptions());
-    QString path = Settings.savePath();
-    setDirectory(path);
+    setDirectory(Settings.savePath());
 
     QString nameFilter = tr("PNG (*.png);;BMP (*.bmp);;JPEG (*.jpg *.jpeg);;PPM (*.ppm);;TIFF (*.tif *.tiff);;WebP (*.webp);;All Files (*)");
     setNameFilter(nameFilter);
@@ -67,9 +67,9 @@ SaveImageDialog::SaveImageDialog(QWidget *parent, const QString& caption, QImage
     selectFile(nameSuggestion);
 
     if (!connect(this, &QFileDialog::filterSelected, this, &SaveImageDialog::onFilterSelected))
-         connect(this, SIGNAL(filterSelected(const QString &filter)), SLOT(onFilterSelected(const QString &filter)));
+         connect(this, SIGNAL(filterSelected(const QString&)), SLOT(const onFilterSelected(const QString&)));
     if (!connect(this, &QFileDialog::fileSelected, this, &SaveImageDialog::onFileSelected))
-         connect(this, SIGNAL(fileSelected(const QString &file)), SLOT(onFileSelected(const QString &file)));
+         connect(this, SIGNAL(fileSelected(const QString&)), SLOT(onFileSelected(const QString&)));
 }
 
 void SaveImageDialog::onFilterSelected(const QString &filter)
