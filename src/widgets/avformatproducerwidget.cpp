@@ -199,7 +199,9 @@ void AvformatProducerWidget::offerConvert(QString message, bool set709Convert, b
                               "When it is done, it automatically replaces clips, or you can double-click the job to open it.\n")),
                            ui->scanComboBox->currentIndex(), this);
     dialog.setWindowModality(QmlApplication::dialogModality());
-    dialog.showCheckBox();
+    if (!setSubClip) {
+        dialog.showCheckBox();
+    }
     dialog.set709Convert(set709Convert);
     dialog.showSubClipCheckBox();
     LOG_DEBUG() << "in" << m_producer->get_in() << "out" << m_producer->get_out() << "length" << m_producer->get_length() - 1;
