@@ -644,7 +644,7 @@ Rectangle {
             onTriggered: timeline.copyClip(trackIndex, index)
         }
         MenuItem {
-            text: qsTr('Remove') + (application.OS === 'OS X'? '    X' : ' (X)')
+            text: qsTr('Remove') + (isBlank? '' : (application.OS === 'OS X'? '    X' : ' (X)'))
             onTriggered: timeline.remove(trackIndex, index)
         }
         MenuItem {
