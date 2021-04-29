@@ -45,7 +45,7 @@ Rectangle {
 
     x: position * timeScale - width/2
     anchors.verticalCenter: parameterRoot.verticalCenter
-    anchors.verticalCenterOffset: isCurve ? trackValue : 0
+    anchors.verticalCenterOffset: isCurve ? minimum != maximum ? trackValue : 0 : 0
     height: 10
     width: height
     color: isSelected ? 'red' : activePalette.buttonText
@@ -88,6 +88,14 @@ Rectangle {
         onPressed: {
             parent.clicked(keyframeRoot)
             if (isCurve) {
+               if (minimum == maximum) {
+                   // Do not allow vertical dragging when there is no range to drag across
+                   drag.minimumY = parent.y
+                   drag.maximumY = parent.y
+               } else {
+                  drag.minimumY = minDragY
+                  drag.maximumY = maxDragY
+               }
                if (mouse.modifiers & Qt.ControlModifier)
                    drag.axis = Drag.YAxis
                else if (mouse.modifiers & Qt.AltModifier)

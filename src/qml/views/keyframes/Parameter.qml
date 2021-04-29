@@ -44,6 +44,36 @@ Item {
     onMinimumChanged: canvas.requestPaint()
     onMaximumChanged: canvas.requestPaint()
 
+    // When maximum == minimum only show the middle label
+    Text {
+        anchors.left: parent.left
+        anchors.top: parent.top
+        anchors.leftMargin: 3
+        visible: isCurve && (maximum != minimum)
+        opacity: 0.5
+        color: activePalette.buttonText
+        text: Number(maximum).toLocaleString(Qt.locale(), 'f', 1)
+    }
+    Text {
+        property var numVal: (maximum == minimum) ? maximum : ((maximum - minimum) / 2)
+        anchors.left: parent.left
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.leftMargin: 3
+        visible: isCurve
+        opacity: 0.6
+        color: activePalette.buttonText
+        text: Number(numVal).toLocaleString(Qt.locale(), 'f', 1)
+    }
+    Text {
+        anchors.left: parent.left
+        anchors.bottom: parent.bottom
+        anchors.leftMargin: 3
+        visible: isCurve && (maximum != minimum)
+        opacity: 0.6
+        color: activePalette.buttonText
+        text: Number(minimum).toLocaleString(Qt.locale(), 'f', 1)
+    }
+
     Repeater { id: keyframesRepeater; model: keyframeDelegateModel; onCountChanged: canvas.requestPaint() }
 
     Canvas {
