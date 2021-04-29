@@ -55,14 +55,13 @@ Item {
         text: Number(maximum).toLocaleString(Qt.locale(), 'f', 1)
     }
     Text {
-        property var numVal: (maximum == minimum) ? maximum : ((maximum - minimum) / 2)
         anchors.left: parent.left
         anchors.verticalCenter: parent.verticalCenter
         anchors.leftMargin: 3
         visible: isCurve
         opacity: 0.6
         color: activePalette.buttonText
-        text: Number(numVal).toLocaleString(Qt.locale(), 'f', 1)
+        text: Number(minimum + ((maximum - minimum) / 2)).toLocaleString(Qt.locale(), 'f', 1)
     }
     Text {
         anchors.left: parent.left
