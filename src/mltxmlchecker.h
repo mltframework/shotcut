@@ -45,7 +45,7 @@ public:
     };
 
     MltXmlChecker();
-    bool check(const QString& fileName);
+    QXmlStreamReader::Error check(const QString& fileName);
     QString errorString() const;
     bool needsGPU() const { return m_needsGPU; }
     bool needsCPU() const { return m_needsCPU; }

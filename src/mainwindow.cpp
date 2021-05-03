@@ -1068,7 +1068,7 @@ bool MainWindow::isXmlRepaired(MltXmlChecker& checker, QString& fileName)
         dialog.setModel(checker.unlinkedFilesModel());
         dialog.setWindowModality(QmlApplication::dialogModality());
         if (dialog.exec() == QDialog::Accepted) {
-            if (checker.check(fileName) && checker.isCorrected())
+            if (checker.check(fileName) == QXmlStreamReader::NoError && checker.isCorrected())
                 result = saveRepairedXmlFile(checker, fileName);
         } else {
             result = false;
@@ -1340,12 +1340,16 @@ void MainWindow::open(QString url, const Mlt::Properties* properties, bool play)
             showStatusMessage(tr("Opening %1").arg(url));
             QCoreApplication::processEvents();
         }
-        if (checker.check(url)) {
+        switch (checker.check(url)) {
+        case QXmlStreamReader::NoError:
             if (!isCompatibleWithGpuMode(checker))
                 return;
-        } else {
-            showStatusMessage(tr("Failed to open ").append(url));
+            break;
+        case QXmlStreamReader::CustomError:
             showIncompatibleProjectMessage(checker.shotcutVersion());
+            return;
+        default:
+            showStatusMessage(tr("Failed to open ").append(url));
             return;
         }
         // only check for a modified project when loading a project, not a simple producer
@@ -1362,7 +1366,7 @@ void MainWindow::open(QString url, const Mlt::Properties* properties, bool play)
             return;
         modified = checkAutoSave(url);
         if (modified) {
-            if (checker.check(url)) {
+            if (checker.check(url) == QXmlStreamReader::NoError) {
                 if (!isCompatibleWithGpuMode(checker))
                     return;
             } else {
@@ -3798,7 +3802,7 @@ void MainWindow::on_actionOpenXML_triggered()
     if (filenames.length() > 0) {
         QString url = filenames.first();
         MltXmlChecker checker;
-        if (checker.check(url)) {
+        if (checker.check(url) == QXmlStreamReader::NoError) {
             if (!isCompatibleWithGpuMode(checker))
                 return;
             isXmlRepaired(checker, url);

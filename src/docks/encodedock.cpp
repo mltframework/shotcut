@@ -2088,7 +2088,7 @@ bool EncodeDock::checkForMissingFiles()
     MLT.saveXML(fileName, service, false /* without relative paths */, tmp.get(), isProxy);
     tmp->close();
     MltXmlChecker checker;
-    if (!checker.check(fileName)) {
+    if (checker.check(fileName) != QXmlStreamReader::NoError) {
         LOG_ERROR() << "Encode: Unable to check XML - skipping check";
     } else if (checker.unlinkedFilesModel().rowCount() > 0) {
         QMessageBox dialog(QMessageBox::Critical,

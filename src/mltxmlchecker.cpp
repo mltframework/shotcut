@@ -69,7 +69,7 @@ MltXmlChecker::MltXmlChecker()
     m_unlinkedFilesModel.setColumnCount(ColumnCount);
 }
 
-bool MltXmlChecker::check(const QString& fileName)
+QXmlStreamReader::Error MltXmlChecker::check(const QString& fileName)
 {
     LOG_DEBUG() << "begin";
 
@@ -110,7 +110,7 @@ bool MltXmlChecker::check(const QString& fileName)
                     }
                 }
                 if (!checkMltVersion()) {
-                    return false;
+                    return QXmlStreamReader::CustomError;
                 }
                 // We cannot apply the locale change to the session at this point
                 // because we are merely checking at this point and not loading.
@@ -150,7 +150,7 @@ bool MltXmlChecker::check(const QString& fileName)
 //        m_tempFile->close();
     }
     LOG_DEBUG() << "end" << m_xml.errorString();
-    return m_xml.error() == QXmlStreamReader::NoError;
+    return m_xml.error();
 }
 
 QString MltXmlChecker::errorString() const
