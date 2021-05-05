@@ -21,6 +21,7 @@
 #include <QDockWidget>
 #include <QQuickWidget>
 #include <QApplication>
+#include "models/markersmodel.h"
 #include "models/multitrackmodel.h"
 #include "sharedframe.h"
 
@@ -155,6 +156,9 @@ public slots:
     bool blockSelection(bool block);
     void onProducerModified();
     void replace(int trackIndex, int clipIndex, const QString& xml = QString());
+    void createMarker();
+    void editMarker(int markerIndex);
+    void deleteMarker(int markerIndex);
 
 protected:
     void dragEnterEvent(QDragEnterEvent* event);
@@ -173,6 +177,7 @@ private:
     Ui::TimelineDock *ui;
     QQuickWidget m_quickView;
     MultitrackModel m_model;
+    MarkersModel m_markersModel;
     int m_position;
     QScopedPointer<Timeline::UpdateCommand> m_updateCommand;
     bool m_ignoreNextPositionChange;
@@ -195,6 +200,7 @@ private slots:
     void onTransitionAdded(int trackIndex, int clipIndex, int position, bool ripple);
     void selectClip(int trackIndex, int clipIndex);
     void onMultitrackClosed();
+    void reloadTimelineMarkers();
 };
 
 class TimelineSelectionBlocker

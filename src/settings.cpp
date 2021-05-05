@@ -16,6 +16,7 @@
  */
 
 #include "settings.h"
+#include <QColor>
 #include <QLocale>
 #include <QStandardPaths>
 #include <QFile>
@@ -296,6 +297,16 @@ bool ShotcutSettings::convertAdvanced() const
 void ShotcutSettings::setConvertAdvanced(bool b)
 {
     settings.setValue("convertAdvanced", b);
+}
+
+void ShotcutSettings::setMarkerColor(const QColor& color)
+{
+    settings.setValue("markerColor", color.name());
+}
+
+QColor ShotcutSettings::markerColor()
+{
+    return QColor(settings.value("markerColor", "green").toString());
 }
 
 bool ShotcutSettings::showConvertClipDialog() const

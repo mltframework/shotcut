@@ -17,11 +17,14 @@
 
 import QtQuick 2.12
 import QtQuick.Controls 2.12
+import Shotcut.Controls 1.0 as Shotcut
 
 Rectangle {
     property real timeScale: 1.0
     property int adjustment: 0
     property real intervalSeconds: ((timeScale > 5)? 1 : (5 * Math.max(1, Math.floor(1.5 / timeScale)))) + adjustment
+    signal editMarkerRequested(int index)
+    signal deleteMarkerRequested(int index)
 
     SystemPalette { id: activePalette }
 
@@ -48,6 +51,20 @@ Rectangle {
                 color: activePalette.windowText
                 text: application.timecode(index * intervalSeconds * profile.fps + 2).substr(0, 8)
             }
+        }
+    }
+
+    Shotcut.MarkerBar {
+        anchors.top: rulerTop.top
+        anchors.left: parent.left
+        anchors.right: parent.right
+        timeScale: root.timeScale
+        model: markers
+        onEditRequested: {
+            parent.editMarkerRequested(index)
+        }
+        onDeleteRequested: {
+            parent.deleteMarkerRequested(index)
         }
     }
 

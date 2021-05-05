@@ -58,6 +58,7 @@ SOURCES += main.cpp\
     docks/jobsdock.cpp \
     dialogs/multifileexportdialog.cpp \
     dialogs/saveimagedialog.cpp \
+    dialogs/editMarkerdialog.cpp \
     dialogs/slideshowgeneratordialog.cpp \
     dialogs/textviewerdialog.cpp \
     models/playlistmodel.cpp \
@@ -86,6 +87,7 @@ SOURCES += main.cpp\
     qmltypes/qmlutilities.cpp \
     qmltypes/qmlview.cpp \
     qmltypes/thumbnailprovider.cpp \
+    commands/markercommands.cpp \
     commands/timelinecommands.cpp \
     util.cpp \
     widgets/lumamixtransition.cpp \
@@ -130,6 +132,8 @@ SOURCES += main.cpp\
     docks/keyframesdock.cpp \
     qmltypes/qmlproducer.cpp \
     models/keyframesmodel.cpp \
+    models/markersmodel.cpp \
+    widgets/editmarkerwidget.cpp \
     widgets/slideshowgeneratorwidget.cpp \
     widgets/textproducerwidget.cpp \
     dialogs/listselectiondialog.cpp \
@@ -191,6 +195,7 @@ HEADERS  += mainwindow.h \
     docks/jobsdock.h \
     dialogs/multifileexportdialog.h \
     dialogs/saveimagedialog.h \
+    dialogs/editmarkerdialog.h \
     dialogs/slideshowgeneratordialog.h \
     dialogs/textviewerdialog.h \
     models/playlistmodel.h \
@@ -220,6 +225,7 @@ HEADERS  += mainwindow.h \
     qmltypes/qmlutilities.h \
     qmltypes/qmlview.h \
     qmltypes/thumbnailprovider.h \
+    commands/markercommands.h \
     commands/timelinecommands.h \
     util.h \
     widgets/lumamixtransition.h \
@@ -266,6 +272,8 @@ HEADERS  += mainwindow.h \
     docks/keyframesdock.h \
     qmltypes/qmlproducer.h \
     models/keyframesmodel.h \
+    models/markersmodel.h \
+    widgets/editmarkerwidget.h \
     widgets/slideshowgeneratorwidget.h \
     widgets/textproducerwidget.h \
     dialogs/listselectiondialog.h \

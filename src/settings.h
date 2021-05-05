@@ -89,6 +89,8 @@ public:
     void setExportFrameSuffix(const QString& suffix);
     bool convertAdvanced() const;
     void setConvertAdvanced(bool);
+    void setMarkerColor(const QColor& color);
+    QColor markerColor();
 
     // encode
     QString encodePath() const;

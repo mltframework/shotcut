@@ -47,6 +47,7 @@
 #define kShotcutSkipConvertProperty "shotcut:skipConvert"
 #define kShotcutAnimInProperty "shotcut:animIn"
 #define kShotcutAnimOutProperty "shotcut:animOut"
+#define kShotcutMarkersProperty "shotcut:markers"
 // Shotcut's VUI (video user interface) components set this so that glwidget can
 // hide the VUI when the play head is not over the clip with the current filter.
 #define kShotcutVuiMetaProperty "meta.shotcut.vui"
