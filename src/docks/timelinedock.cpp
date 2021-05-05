@@ -22,12 +22,14 @@
 #include "qmltypes/thumbnailprovider.h"
 #include "mainwindow.h"
 #include "commands/timelinecommands.h"
+#include "qmltypes/qmlapplication.h"
 #include "qmltypes/qmlutilities.h"
 #include "qmltypes/qmlview.h"
 #include "shotcut_mlt_properties.h"
 #include "settings.h"
 #include "util.h"
 #include "proxymanager.h"
+#include "dialogs/editmarkerdialog.h"
 #include "dialogs/longuitask.h"
 
 #include <QAction>
@@ -58,6 +60,7 @@ TimelineDock::TimelineDock(QWidget *parent) :
     toggleViewAction()->setIcon(windowIcon());
 
     qmlRegisterType<MultitrackModel>("Shotcut.Models", 1, 0, "MultitrackModel");
+    qmlRegisterType<MarkersModel>("Shotcut.Models", 1, 0, "MarkersModel");
 
     QDir importPath = QmlUtilities::qmlDir();
     importPath.cd("modules");
@@ -67,6 +70,7 @@ TimelineDock::TimelineDock(QWidget *parent) :
     m_quickView.rootContext()->setContextProperty("view", new QmlView(&m_quickView));
     m_quickView.rootContext()->setContextProperty("timeline", this);
     m_quickView.rootContext()->setContextProperty("multitrack", &m_model);
+    m_quickView.rootContext()->setContextProperty("markers", &m_markersModel);
     m_quickView.setResizeMode(QQuickWidget::SizeRootObjectToView);
     m_quickView.setClearColor(palette().window().color());
     m_quickView.quickWindow()->setPersistentSceneGraph(false);
@@ -81,6 +85,9 @@ TimelineDock::TimelineDock(QWidget *parent) :
     connect(&m_model, SIGNAL(rowsInserted(QModelIndex,int,int)), SLOT(onRowsInserted(QModelIndex,int,int)));
     connect(&m_model, SIGNAL(rowsRemoved(QModelIndex,int,int)), SLOT(onRowsRemoved(QModelIndex,int,int)));
     connect(&m_model, SIGNAL(closed()), SLOT(onMultitrackClosed()));
+    connect(&m_model, SIGNAL(created()), SLOT(reloadTimelineMarkers()));
+    connect(&m_model, SIGNAL(loaded()), SLOT(reloadTimelineMarkers()));
+    connect(&m_model, SIGNAL(closed()), SLOT(reloadTimelineMarkers()));
 
     setWidget(&m_quickView);
 
@@ -1061,6 +1068,43 @@ void TimelineDock::replace(int trackIndex, int clipIndex, const QString& xml)
     }
 }
 
+void TimelineDock::createMarker()
+{
+    Markers::Marker marker;
+    marker.text = QString("Marker %1").arg(m_markersModel.uniqueKey());
+    marker.color = Settings.markerColor();
+    marker.start = position();
+    marker.end = position();
+    EditMarkerDialog dialog(this, marker.text, marker.color, marker.start, marker.end);
+    dialog.setWindowModality(QmlApplication::dialogModality());
+    dialog.exec();
+    marker.text = dialog.getText();
+    marker.color = dialog.getColor();
+    marker.start = dialog.getStart();
+    marker.end = dialog.getEnd();
+    m_markersModel.append(marker);
+    Settings.setMarkerColor(marker.color);
+}
+
+void TimelineDock::editMarker(int markerIndex)
+{
+    Markers::Marker marker = m_markersModel.getMarker(markerIndex);
+    EditMarkerDialog dialog(this, marker.text, marker.color, marker.start, marker.end);
+    dialog.setWindowModality(QmlApplication::dialogModality());
+    dialog.exec();
+    marker.text = dialog.getText();
+    marker.color = dialog.getColor();
+    marker.start = dialog.getStart();
+    marker.end = dialog.getEnd();
+    m_markersModel.update(markerIndex, marker);
+    Settings.setMarkerColor(marker.color);
+}
+
+void TimelineDock::deleteMarker(int markerIndex)
+{
+    m_markersModel.remove(markerIndex);
+}
+
 void TimelineDock::setTrackName(int trackIndex, const QString &value)
 {
     MAIN.undoStack()->push(
@@ -1443,6 +1487,12 @@ void TimelineDock::onMultitrackClosed()
     m_blockSetSelection = false;
     setSelection();
     emit resetZoom();
+}
+
+void TimelineDock::reloadTimelineMarkers()
+{
+qDebug() << m_model.tractor();
+    m_markersModel.load(m_model.tractor());
 }
 
 void TimelineDock::overwrite(int trackIndex, int position, const QString &xml, bool seek)

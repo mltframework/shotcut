@@ -298,6 +298,12 @@ Rectangle {
                         id: ruler
                         width: tracksContainer.width
                         timeScale: multitrack.scaleFactor
+                        onEditMarkerRequested: {
+                            timeline.editMarker(index)
+                        }
+                        onDeleteMarkerRequested: {
+                            timeline.deleteMarker(index)
+                        }
                     }
                 }
                 Flickable {

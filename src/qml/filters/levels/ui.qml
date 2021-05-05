@@ -258,7 +258,7 @@ Item {
         Shotcut.SliderSpinner {
             id: gammaSlider
             minimumValue: 0.01
-            maximumValue: 4
+            maximumValue: 4.0
             decimals: 2
             onValueChanged: updateFilter(gammaParam, value / maximumValue, getPosition(), gammaKeyframesButton)
         }
