@@ -183,14 +183,6 @@ bool Controller::openXML(const QString &filename)
         }
         producer->set(kShotcutVirtualClip, 1);
         producer->set("resource", filename.toUtf8().constData());
-
-        if (producer->type() != mlt_service_chain_type) {
-            Mlt::Chain* chain = new Mlt::Chain(MLT.profile());
-            chain->set_source(*producer);
-            delete producer;
-            producer = chain;
-        }
-
         setProducer(new Producer(producer));
         error = false;
     }
