@@ -227,6 +227,13 @@ void ImageProducerWidget::on_durationSpinBox_editingFinished()
 void ImageProducerWidget::on_sequenceCheckBox_clicked(bool checked)
 {
     QString resource = m_producer->get("resource");
+    if (checked && m_producer->get_int(kIsProxyProperty) && m_producer->get(kOriginalResourceProperty)) {
+        // proxy is not currently supported for image sequence, disable it
+        resource = m_producer->get(kOriginalResourceProperty);
+        m_producer->set(kDisableProxyProperty, 1);
+        m_producer->Mlt::Properties::clear(kIsProxyProperty);
+        m_producer->Mlt::Properties::clear(kOriginalResourceProperty);
+    }
     ui->repeatSpinBox->setEnabled(checked);
     if (checked && !m_producer->get(kShotcutResourceProperty))
         m_producer->set(kShotcutResourceProperty, resource.toUtf8().constData());
@@ -274,6 +281,7 @@ void ImageProducerWidget::on_sequenceCheckBox_clicked(bool checked)
         }
     }
     else {
+        m_producer->Mlt::Properties::clear(kDisableProxyProperty);
         m_producer->Mlt::Properties::clear("begin");
         m_producer->set("resource", m_producer->get(kShotcutResourceProperty));
         m_producer->set("length", m_producer->frames_to_time(qRound(MLT.profile().fps() * Mlt::kMaxImageDurationSecs), mlt_time_clock));
@@ -381,7 +389,6 @@ void ImageProducerWidget::on_actionDisableProxy_triggered(bool checked)
         }
     } else {
         producer()->Mlt::Properties::clear(kDisableProxyProperty);
-        ui->actionMakeProxy->setEnabled(true);
     }
 }
 
@@ -432,9 +439,8 @@ void ImageProducerWidget::on_proxyButton_clicked()
 #endif
     menu.addAction(ui->actionDisableProxy);
     menu.addAction(ui->actionCopyHashCode);
-    if (m_producer->get_int(kDisableProxyProperty)) {
-        ui->actionMakeProxy->setDisabled(true);
-        ui->actionDisableProxy->setChecked(true);
-    }
+    bool proxyDisabled = m_producer->get_int(kDisableProxyProperty);
+    ui->actionMakeProxy->setDisabled(proxyDisabled);
+    ui->actionDisableProxy->setChecked(proxyDisabled);
     menu.exec(ui->proxyButton->mapToGlobal(QPoint(0, 0)));
 }
