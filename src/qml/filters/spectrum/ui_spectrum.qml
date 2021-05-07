@@ -81,6 +81,10 @@ Item {
         freqLowSlider.value = filter.getDouble('frequency_low')
         freqHighSlider.value = filter.getDouble('frequency_high')
         thresholdSlider.value = filter.getDouble('threshold')
+        rectX.value = filterRect.x
+        rectY.value = filterRect.y
+        rectW.value = filterRect.width
+        rectH.value = filterRect.height
         _disableUpdate = false
     }
 
@@ -180,7 +184,7 @@ Item {
                 stepSize: 1
                 from: -999999999
                 to: 999999999
-                onValueChanged: if (filterRect.x !== value) setFilter()
+                onValueModified: if (filterRect.x !== value) setFilter()
             }
             Label { text: ','; Layout.minimumWidth: 20; horizontalAlignment: Qt.AlignHCenter }
             Shotcut.DoubleSpinBox {
@@ -192,7 +196,7 @@ Item {
                 stepSize: 1
                 from: -999999999
                 to: 999999999
-                onValueChanged: if (filterRect.y !== value) setFilter()
+                onValueModified: if (filterRect.y !== value) setFilter()
             }
         }
 
@@ -211,7 +215,7 @@ Item {
                 stepSize: 1
                 from: -999999999
                 to: 999999999
-                onValueChanged: if (filterRect.width !== value) setFilter()
+                onValueModified: if (filterRect.width !== value) setFilter()
             }
             Label { text: 'x'; Layout.minimumWidth: 20; horizontalAlignment: Qt.AlignHCenter }
             Shotcut.DoubleSpinBox {
@@ -223,7 +227,7 @@ Item {
                 stepSize: 1
                 from: -999999999
                 to: 999999999
-                onValueChanged: if (filterRect.height !== value) setFilter()
+                onValueModified: if (filterRect.height !== value) setFilter()
             }
         }
 
@@ -362,8 +366,10 @@ Item {
         target: filter
         onChanged: {
             var newValue = filter.getRect(rectProperty)
-            if (filterRect !== newValue)
+            if (filterRect !== newValue) {
                 filterRect = newValue
+                setControls()
+            }
         }
     }
 }

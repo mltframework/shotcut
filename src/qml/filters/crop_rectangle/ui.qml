@@ -217,7 +217,7 @@ Item {
                 stepSize: 1
                 from: -999999999
                 to: 999999999
-                onValueChanged: if (filterRect.x !== value) {
+                onValueModified: if (filterRect.x !== value) {
                     filterRect.x = value
                     updateFilterRect(getPosition(), true)
                 }
@@ -231,7 +231,7 @@ Item {
                 stepSize: 1
                 from: -999999999
                 to: 999999999
-                onValueChanged: if (filterRect.y !== value) {
+                onValueModified: if (filterRect.y !== value) {
                     filterRect.y = value
                     updateFilterRect(getPosition(), true)
                 }
@@ -274,7 +274,7 @@ Item {
                 stepSize: 1
                 from: -999999999
                 to: 999999999
-                onValueChanged: if (filterRect.width !== value) {
+                onValueModified: if (filterRect.width !== value) {
                     filterRect.width = value
                     updateFilterRect(getPosition(), true)
                 }
@@ -288,7 +288,7 @@ Item {
                 stepSize: 1
                 from: -999999999
                 to: 999999999
-                onValueChanged: if (filterRect.height !== value) {
+                onValueModified: if (filterRect.height !== value) {
                     filterRect.height = value
                     updateFilterRect(getPosition(), true)
                 }

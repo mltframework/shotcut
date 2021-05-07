@@ -68,6 +68,10 @@ Item {
         fillCheckbox.checked = filter.get('fill') == 1
         combineCheckbox.checked = filter.get('show_channel') == -1
         windowSlider.value = filter.getDouble('window')
+        rectX.value = filterRect.x
+        rectY.value = filterRect.y
+        rectW.value = filterRect.width
+        rectH.value = filterRect.height
         _disableUpdate = false
     }
 
@@ -148,7 +152,7 @@ Item {
                 stepSize: 1
                 from: -999999999
                 to: 999999999
-                onValueChanged: setFilter()
+                onValueModified: setFilter()
             }
             Label { text: ','; Layout.minimumWidth: 20; horizontalAlignment: Qt.AlignHCenter }
             Shotcut.DoubleSpinBox {
@@ -160,7 +164,7 @@ Item {
                 stepSize: 1
                 from: -999999999
                 to: 999999999
-                onValueChanged: setFilter()
+                onValueModified: setFilter()
             }
         }
 
@@ -179,7 +183,7 @@ Item {
                 stepSize: 1
                 from: -999999999
                 to: 999999999
-                onValueChanged: setFilter()
+                onValueModified: setFilter()
             }
             Label { text: 'x'; Layout.minimumWidth: 20; horizontalAlignment: Qt.AlignHCenter }
             Shotcut.DoubleSpinBox {
@@ -191,7 +195,7 @@ Item {
                 stepSize: 1
                 from: -999999999
                 to: 999999999
-                onValueChanged: setFilter()
+                onValueModified: setFilter()
             }
         }
         
@@ -243,8 +247,10 @@ Item {
         target: filter
         onChanged: {
             var newValue = filter.getRect(rectProperty)
-            if (filterRect !== newValue)
+            if (filterRect !== newValue) {
                 filterRect = newValue
+                setControls()
+            }
         }
     }
 }

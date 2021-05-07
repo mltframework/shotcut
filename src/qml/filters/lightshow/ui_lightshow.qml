@@ -68,6 +68,10 @@ Item {
         freqLowSlider.value = filter.getDouble('frequency_low')
         freqHighSlider.value = filter.getDouble('frequency_high')
         thresholdSlider.value = filter.getDouble('threshold')
+        rectX.value = filterRect.x
+        rectY.value = filterRect.y
+        rectW.value = filterRect.width
+        rectH.value = filterRect.height
         _disableUpdate = false
     }
 
@@ -119,7 +123,7 @@ Item {
                 stepSize: 1
                 from: -999999999
                 to: 999999999
-                onValueChanged: setFilter()
+                onValueModified: setFilter()
             }
             Label { text: ','; Layout.minimumWidth: 20; horizontalAlignment: Qt.AlignHCente }
             Shotcut.DoubleSpinBox {
@@ -131,7 +135,7 @@ Item {
                 stepSize: 1
                 from: -999999999
                 to: 999999999
-                onValueChanged: setFilter()
+                onValueModified: setFilter()
             }
         }
 
@@ -150,7 +154,7 @@ Item {
                 stepSize: 1
                 from: -999999999
                 to: 999999999
-                onValueChanged: setFilter()
+                onValueModified: setFilter()
             }
             Label { text: 'x'; Layout.minimumWidth: 20; horizontalAlignment: Qt.AlignHCente }
             Shotcut.DoubleSpinBox {
@@ -162,7 +166,7 @@ Item {
                 stepSize: 1
                 from: -999999999
                 to: 999999999
-                onValueChanged: setFilter()
+                onValueModified: setFilter()
             }
         }
 
@@ -255,8 +259,10 @@ Item {
         target: filter
         onChanged: {
             var newValue = filter.getRect(rectProperty)
-            if (filterRect !== newValue)
+            if (filterRect !== newValue) {
                 filterRect = newValue
+                setControls()
+            }
         }
     }
 }

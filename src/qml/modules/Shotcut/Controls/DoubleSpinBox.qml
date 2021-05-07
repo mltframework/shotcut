@@ -39,6 +39,7 @@ Item {
     property real _factor: Math.pow(10, decimals)
     property bool _blockSpinUpdate: false
     property bool _blockTextUpdate: false
+    signal valueModified()
 
     implicitHeight: spinbox.implicitHeight
 
@@ -155,6 +156,7 @@ Item {
                         {
                             _lastValidText = text
                             spinbox.value = newValue
+                            root.valueModified()
                         }
                         else if (text.length > 2)
                         {
@@ -194,6 +196,10 @@ Item {
             _blockSpinUpdate = true
             root.value = value * 1.0 / _factor
             _blockSpinUpdate = false
+        }
+
+        onValueModified: {
+            root.valueModified()
         }
 
         textFromValue: function(value, locale) {

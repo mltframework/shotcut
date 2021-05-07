@@ -514,7 +514,7 @@ Item {
                 stepSize: 1
                 from: -999999999
                 to: 999999999
-                onValueChanged: {
+                onValueModified: {
                     if (Math.abs(filterRect.x - value) >= 1) {
                         filterRect.x = value
                         setFilter(getPosition())
@@ -530,7 +530,7 @@ Item {
                 stepSize: 1
                 from: -999999999
                 to: 999999999
-                onValueChanged: {
+                onValueModified: {
                     if (Math.abs(filterRect.y - value) >= 1) {
                         filterRect.y = value
                         setFilter(getPosition())
@@ -592,7 +592,7 @@ Item {
                 stepSize: 1
                 from: 0
                 to: 999999999
-                onValueChanged: {
+                onValueModified: {
                     if (Math.abs(filterRect.width - value) >= 1) {
                         if (isFillMode()) {
                             scaleByWidth(value)
@@ -612,7 +612,7 @@ Item {
                 stepSize: 1
                 from: 0
                 to: 999999999
-                onValueChanged: {
+                onValueModified: {
                     if (Math.abs(filterRect.height - value) >= 1) {
                         if (isFillMode()) {
                             scaleByHeight(value)

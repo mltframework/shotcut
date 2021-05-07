@@ -224,7 +224,7 @@ GridLayout {
         Layout.columnSpan: 3
         from: 0
         to: 30
-        onValueChanged: filter.set('outline', value)
+        onValueModified: filter.set('outline', value)
     }
 
     Label {
@@ -247,7 +247,7 @@ GridLayout {
         Layout.columnSpan: 3
         from: 0
         to: 100
-        onValueChanged: filter.set('pad', value)
+        onValueModified: filter.set('pad', value)
     }
 
     Label {
@@ -264,7 +264,7 @@ GridLayout {
             stepSize: 1
             from: -999999999
             to: 999999999
-            onValueChanged: if (filterRect.x !== value) {
+            onValueModified: if (filterRect.x !== value) {
                 filterRect.x = value
                 updateFilter(getPosition())
             }
@@ -278,7 +278,7 @@ GridLayout {
             stepSize: 1
             from: -999999999
             to: 999999999
-            onValueChanged: if (filterRect.y !== value) {
+            onValueModified: if (filterRect.y !== value) {
                 filterRect.y = value
                 updateFilter(getPosition())
             }
@@ -320,7 +320,7 @@ GridLayout {
             stepSize: 1
             from: -999999999
             to: 999999999
-            onValueChanged: if (filterRect.width !== value) {
+            onValueModified: if (filterRect.width !== value) {
                 filterRect.width = value
                 updateFilter(getPosition())
             }
@@ -334,7 +334,7 @@ GridLayout {
             stepSize: 1
             from: -999999999
             to: 999999999
-            onValueChanged: if (filterRect.height !== value) {
+            onValueModified: if (filterRect.height !== value) {
                 filterRect.height = value
                 updateFilter(getPosition())
             }

@@ -151,7 +151,7 @@ Item {
                 stepSize: 10
                 decimals: 0
                 suffix: qsTr('degrees')
-                onValueChanged: tempslider.value = value
+                onValueModified: tempslider.value = value
             }
         }
         Shotcut.UndoButton {
