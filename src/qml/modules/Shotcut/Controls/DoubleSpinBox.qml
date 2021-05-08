@@ -94,6 +94,10 @@ Item {
                 verticalAlignment: Qt.AlignVCenter
                 property var _lastValidText: ""
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
+                maximumLength: Math.max(
+                                         Number(root.from).toLocaleString(Qt.locale() , 'f', root.decimals).length,
+                                         Number(root.to).toLocaleString(Qt.locale() , 'f', root.decimals).length
+                                       )
 
                 function validNumberFormat(text, locale) {
                     var decimalSplit = text.split(locale.decimalPoint)
@@ -157,11 +161,6 @@ Item {
                             _lastValidText = text
                             spinbox.value = newValue
                             root.valueModified()
-                        }
-                        else if (text.length > 2)
-                        {
-                            // Forbid out of bounds text except short text that might be in progress
-                            text = _lastValidText
                         }
                     } 
                     _blockTextUpdate = false
