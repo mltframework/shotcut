@@ -190,9 +190,9 @@ private:
     QString m_projectFolder;
     QMutex m_saveXmlMutex;
 
-    static void on_jack_started(mlt_properties owner, void* object, const mlt_position *position);
+    static void on_jack_started(mlt_properties owner, void* object, mlt_event_data data);
     void onJackStarted(int position);
-    static void on_jack_stopped(mlt_properties owner, void* object, const mlt_position *position);
+    static void on_jack_stopped(mlt_properties owner, void* object, mlt_event_data data);
     void onJackStopped(int position);
     void stopJack();
 };

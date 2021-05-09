@@ -272,10 +272,10 @@ void Controller::stop()
     stopJack();
 }
 
-void Controller::on_jack_started(mlt_properties, void* object, const mlt_position *position)
+void Controller::on_jack_started(mlt_properties, void* object, mlt_event_data data)
 {
-    if (object && position)
-        (static_cast<Controller*>(object))->onJackStarted(*position);
+    if (object)
+        (static_cast<Controller*>(object))->onJackStarted(Mlt::EventData(data).to_int());
 }
 
 void Controller::onJackStarted(int position)
@@ -287,10 +287,10 @@ void Controller::onJackStarted(int position)
     }
 }
 
-void Controller::on_jack_stopped(mlt_properties, void* object, const mlt_position *position)
+void Controller::on_jack_stopped(mlt_properties, void* object, mlt_event_data data)
 {
-    if (object && position)
-        (static_cast<Controller*>(object))->onJackStopped(*position);
+    if (object)
+        (static_cast<Controller*>(object))->onJackStopped(EventData(data).to_int());
 }
 
 void Controller::onJackStopped(int position)
