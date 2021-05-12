@@ -1678,6 +1678,13 @@ void MainWindow::readWindowSettings()
     } else {
         restoreState(kLayoutEditingDefault);
     }
+#ifdef Q_OS_WIN
+    if (isMaximized()) {
+        ui->actionEnter_Full_Screen->setText(tr("Exit Full Screen"));
+    } else {
+        ui->actionEnter_Full_Screen->setText(tr("Enter Full Screen"));
+    }
+#endif
     LOG_DEBUG() << "end";
 }
 
