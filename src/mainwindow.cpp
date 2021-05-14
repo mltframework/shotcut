@@ -2023,6 +2023,9 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         if (isMultitrackValid())
             m_timelineDock->splitClip();
         break;
+    case Qt::Key_T:
+        m_player->focusPositionSpinner();
+        break;
     case Qt::Key_U:
         if (event->modifiers() == Qt::ControlModifier) {
             m_timelineDock->show();

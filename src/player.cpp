@@ -943,6 +943,11 @@ void Player::showIdleStatus()
     }
 }
 
+void Player::focusPositionSpinner() const
+{
+    m_positionSpinner->setFocus(Qt::ShortcutFocusReason);
+}
+
 void Player::moveVideoToScreen(int screen)
 {
     if (screen == m_monitorScreen) return;

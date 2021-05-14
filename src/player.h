@@ -109,6 +109,7 @@ public slots:
     void onTabBarClicked(int index);
     void setStatusLabel(const QString& text, int timeoutSeconds, QAction* action);
     void showIdleStatus();
+    void focusPositionSpinner() const;
 
 protected:
     void resizeEvent(QResizeEvent* event) override;
