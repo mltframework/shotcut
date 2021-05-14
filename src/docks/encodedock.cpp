@@ -1638,9 +1638,11 @@ void EncodeDock::on_addPresetButton_clicked()
                 if (dir.mkdir(subdir))
                     dir.cd(subdir);
             }
-            QFile f(dir.filePath(preset));
-            if (f.open(QIODevice::WriteOnly | QIODevice::Text))
-                f.write(dialog.properties().toUtf8());
+            {
+                QFile f(dir.filePath(preset));
+                if (f.open(QIODevice::WriteOnly | QIODevice::Text))
+                    f.write(dialog.properties().toUtf8());
+            }
 
             // add the preset and select it
             loadPresets();
