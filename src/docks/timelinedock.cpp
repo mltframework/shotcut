@@ -1288,6 +1288,7 @@ void TimelineDock::splitClip(int trackIndex, int clipIndex)
             if (!m_model.isTransition(playlist, clipIndex)) {
                 QScopedPointer<Mlt::ClipInfo> info(getClipInfo(trackIndex, clipIndex));
                 if (info && m_position > info->start && m_position < info->start + info->frame_count) {
+                    setSelection(); // Avoid filter views becoming out of sync
                     MAIN.undoStack()->push(
                         new Timeline::SplitCommand(m_model, trackIndex, clipIndex, m_position));
                 }

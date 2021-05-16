@@ -58,7 +58,7 @@ ToolBar {
             action: Action {
                 icon.name: 'keyframes-filter-in'
                 icon.source: 'qrc:///icons/oxygen/32x32/actions/keyframes-filter-in.png'
-                onTriggered: filter.in = producer.position + producer.in
+                onTriggered: parameters.trimFilterIn( producer.position + producer.in )
             }
         }
         Shotcut.ToolButton {
@@ -70,7 +70,7 @@ ToolBar {
             action: Action {
                 icon.name: 'keyframes-filter-out'
                 icon.source: 'qrc:///icons/oxygen/32x32/actions/keyframes-filter-out.png'
-                onTriggered: filter.out = producer.position + producer.in
+                onTriggered: parameters.trimFilterOut( producer.position + producer.in )
             }
         }
         Shotcut.ToolButton {

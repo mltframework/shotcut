@@ -108,7 +108,6 @@ public:
     void insertTrack(int trackIndex, TrackType type = VideoTrackType);
     void insertOrAdjustBlankAt(QList<int> tracks, int position, int length);
     bool mergeClipWithNext(int trackIndex, int clipIndex, bool dryrun);
-    void adjustClipFilters(Mlt::Producer& producer, int in, int out, int inDelta, int outDelta);
     Mlt::ClipInfo *findClipByUuid(const QUuid& uuid, int& trackIndex, int& clipIndex);
 
 signals:
@@ -122,8 +121,6 @@ signals:
     void showStatusMessage(QString);
     void durationChanged();
     void filteredChanged();
-    void serviceInChanged(int delta, Mlt::Service*);
-    void serviceOutChanged(int delta, Mlt::Service*);
     void reloadRequested();
     void appended(int trackIndex, int clipIndex);
     void inserted(int trackIndex, int clipIndex);

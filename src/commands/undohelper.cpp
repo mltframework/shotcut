@@ -234,7 +234,7 @@ void UndoHelper::undoChanges()
                 if (clip->get_data("mix_out"))
                     clip->set("mix_out", nullptr, 0);
                 playlist.resize_clip(currentIndex, info.frame_in, info.frame_out);
-                m_model.adjustClipFilters(clip->parent(), filterIn, filterOut, info.in_delta, info.out_delta);
+                MLT.adjustClipFilters(clip->parent(), filterIn, filterOut, info.in_delta, info.out_delta);
             }
 
             QModelIndex modelIndex = m_model.createIndex(currentIndex, 0, info.oldTrackIndex);

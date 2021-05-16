@@ -348,7 +348,7 @@ Rectangle {
                                         onTrimmingIn: {
                                             var n = filter.in + delta
                                             if (delta != 0 && n >= producer.in && n <= filter.out) {
-                                                filter.in = n
+                                                parameters.trimFilterIn(n)
                                                 // Show amount trimmed as a time in a "bubble" help.
                                                 var s = application.timecode(Math.abs(clip.originalX))
                                                 s = '%1%2 = %3'.arg((clip.originalX < 0)? '-' : (clip.originalX > 0)? '+' : '')
@@ -361,7 +361,7 @@ Rectangle {
                                         onTrimmingOut: {
                                             var n = filter.out - delta
                                             if (delta != 0 && n >= filter.in && n <= producer.out) {
-                                                filter.out = n
+                                                parameters.trimFilterOut(n)
                                                 // Show amount trimmed as a time in a "bubble" help.
                                                 var s = application.timecode(Math.abs(clip.originalX))
                                                 s = '%1%2 = %3'.arg((clip.originalX < 0)? '+' : (clip.originalX > 0)? '-' : '')

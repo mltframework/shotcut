@@ -475,7 +475,7 @@ int MultitrackModel::trimClipIn(int trackIndex, int clipIndex, int delta, bool r
         playlist.resize_clip(clipIndex, info->frame_in + delta, info->frame_out);
 
         // Adjust filters.
-        adjustClipFilters(*info->producer, filterIn, filterOut, delta, 0);
+        MLT.adjustClipFilters(*info->producer, filterIn, filterOut, delta, 0);
 
         QModelIndex modelIndex = createIndex(clipIndex, 0, i);
         QVector<int> roles;
@@ -654,7 +654,7 @@ int MultitrackModel::trimClipOut(int trackIndex, int clipIndex, int delta, bool 
         playlist.resize_clip(clipIndex, info->frame_in, info->frame_out - delta);
 
         // Adjust filters.
-        adjustClipFilters(*info->producer, filterIn, filterOut, 0, delta);
+        MLT.adjustClipFilters(*info->producer, filterIn, filterOut, 0, delta);
 
         QModelIndex index = createIndex(clipIndex, 0, i);
         QVector<int> roles;
@@ -1247,7 +1247,7 @@ void MultitrackModel::splitClip(int trackIndex, int clipIndex, int position)
         }
         endInsertRows();
 
-        adjustClipFilters(producer, filterIn, out, 0, delta);
+        MLT.adjustClipFilters(producer, filterIn, out, 0, delta);
 
         playlist.resize_clip(clipIndex + 1, in + duration, out);
         QModelIndex modelIndex = createIndex(clipIndex + 1, 0, trackIndex);
@@ -1259,7 +1259,7 @@ void MultitrackModel::splitClip(int trackIndex, int clipIndex, int position)
         AudioLevelsTask::start(*info->producer, this, modelIndex);
 
         delta = duration;
-        adjustClipFilters(*info->producer, in, filterOut, delta, 0);
+        MLT.adjustClipFilters(*info->producer, in, filterOut, delta, 0);
 
         emit modified();
     }
@@ -1305,7 +1305,7 @@ void MultitrackModel::joinClips(int trackIndex, int clipIndex)
         playlist.remove(clipIndex + 1);
         endRemoveRows();
 
-        adjustClipFilters(clip->parent(), in, out, 0, delta);
+        MLT.adjustClipFilters(clip->parent(), in, out, 0, delta);
 
         emit modified();
     }
@@ -1367,7 +1367,6 @@ void MultitrackModel::fadeIn(int trackIndex, int clipIndex, int duration)
                         }
                         moveBeforeFirstAudioFilter(info->producer);
                         filter->set_in_and_out(info->frame_in, info->frame_out);
-                        emit serviceOutChanged(info->frame_out, filter.data());
                     }
 
                     // Adjust video filter.
@@ -1407,7 +1406,6 @@ void MultitrackModel::fadeIn(int trackIndex, int clipIndex, int duration)
                         info->producer->attach(f);
                         filter.reset(new Mlt::Filter(f));
                         filter->set_in_and_out(info->frame_in, info->frame_out);
-                        emit serviceOutChanged(info->frame_out, filter.data());
                     }
 
                     // Adjust audio filter.
@@ -1477,7 +1475,6 @@ void MultitrackModel::fadeOut(int trackIndex, int clipIndex, int duration)
                         }
                         moveBeforeFirstAudioFilter(info->producer);
                         filter->set_in_and_out(info->frame_in, info->frame_out);
-                        emit serviceOutChanged(info->frame_out, filter.data());
                     }
 
                     // Adjust video filter.
@@ -1517,7 +1514,6 @@ void MultitrackModel::fadeOut(int trackIndex, int clipIndex, int duration)
                         info->producer->attach(f);
                         filter.reset(new Mlt::Filter(f));
                         filter->set_in_and_out(info->frame_in, info->frame_out);
-                        emit serviceOutChanged(info->frame_out, filter.data());
                     }
 
                     // Adjust audio filter.
@@ -1789,7 +1785,7 @@ void MultitrackModel::trimTransitionIn(int trackIndex, int clipIndex, int delta)
 
         // Adjust filters.
         playlist.clip_info(clipIndex + 2, &info);
-        adjustClipFilters(*info.producer, info.frame_in, info.frame_out, -(out + 1), 0);
+        MLT.adjustClipFilters(*info.producer, info.frame_in, info.frame_out, -(out + 1), 0);
 
         QVector<int> roles;
         roles << OutPointRole;
@@ -1870,7 +1866,7 @@ void MultitrackModel::trimTransitionOut(int trackIndex, int clipIndex, int delta
 
         // Adjust filters.
         playlist.clip_info(clipIndex - 2, &info);
-        adjustClipFilters(*info.producer, info.frame_in, info.frame_out, 0, -(out + 1));
+        MLT.adjustClipFilters(*info.producer, info.frame_in, info.frame_out, 0, -(out + 1));
 
         QVector<int> roles;
         roles << OutPointRole;
@@ -1933,7 +1929,7 @@ int MultitrackModel::addTransitionByTrimIn(int trackIndex, int clipIndex, int de
             // Adjust filters.
             Mlt::ClipInfo info;
             playlist.clip_info(clipIndex, &info);
-            adjustClipFilters(*info.producer, info.frame_in, info.frame_out, delta, 0);
+            MLT.adjustClipFilters(*info.producer, info.frame_in, info.frame_out, delta, 0);
 
             // Insert the mix clip.
             beginInsertRows(index(trackIndex), clipIndex, clipIndex);
@@ -2016,7 +2012,7 @@ void MultitrackModel::addTransitionByTrimOut(int trackIndex, int clipIndex, int 
             // Adjust filters.
             Mlt::ClipInfo info;
             playlist.clip_info(clipIndex, &info);
-            adjustClipFilters(*info.producer, info.frame_in, info.frame_out, 0, delta);
+            MLT.adjustClipFilters(*info.producer, info.frame_in, info.frame_out, 0, delta);
 
             // Insert the mix clip.
             beginInsertRows(index(trackIndex), clipIndex + 1, clipIndex + 1);
@@ -2455,97 +2451,6 @@ void MultitrackModel::adjustTrackFilters()
     }
 }
 
-void MultitrackModel::adjustClipFilters(Mlt::Producer& producer, int in, int out, int inDelta, int outDelta)
-{
-    for (int j = 0; j < producer.filter_count(); j++) {
-        QScopedPointer<Mlt::Filter> filter(producer.filter(j));
-        if (filter && filter->is_valid()) {
-            QString filterName = filter->get(kShotcutFilterProperty);
-
-            if (inDelta) {
-                if (filterName.startsWith("fadeIn")) {
-                    if (!filter->get(kShotcutAnimInProperty)) {
-                        // Convert legacy fadeIn filters.
-                        filter->set(kShotcutAnimInProperty, filter->get_length());
-                    }
-                    filter->set_in_and_out(in + inDelta, filter->get_out());
-                    emit serviceInChanged(inDelta, filter.data());
-                } else if (!filter->get_int("_loader") && filter->get_in() <= in) {
-                    filter->set_in_and_out(in + inDelta, filter->get_out());
-                    emit serviceInChanged(inDelta, filter.data());
-                }
-            }
-
-            if (filterName.startsWith("fadeOut")) {
-                if (!filter->get(kShotcutAnimOutProperty)) {
-                    // Convert legacy fadeOut filters.
-                    filter->set(kShotcutAnimOutProperty, filter->get_length());
-                }
-                filter->set_in_and_out(filter->get_in(), out - outDelta);
-                if (filterName == "fadeOutBrightness") {
-                    const char* key = filter->get_int("alpha") != 1? "alpha" : "level";
-                    filter->clear(key);
-                    filter->anim_set(key, 1, filter->get_length() - filter->get_int(kShotcutAnimOutProperty));
-                    filter->anim_set(key, 0, filter->get_length() - 1);
-                } else if (filterName == "fadeOutMovit") {
-                    filter->clear("opacity");
-                    filter->anim_set("opacity", 1, filter->get_length() - filter->get_int(kShotcutAnimOutProperty), 0, mlt_keyframe_smooth);
-                    filter->anim_set("opacity", 0, filter->get_length() - 1);
-                } else if (filterName == "fadeOutVolume") {
-                    filter->clear("level");
-                    filter->anim_set("level", 0, filter->get_length() - filter->get_int(kShotcutAnimOutProperty));
-                    filter->anim_set("level", -60, filter->get_length() - 1);
-                }
-                emit serviceOutChanged(outDelta, filter.data());
-            } else if (!filter->get_int("_loader") && filter->get_out() >= out) {
-                filter->set_in_and_out(filter->get_in(), out - outDelta);
-                emit serviceOutChanged(outDelta, filter.data());
-
-                // Update simple keyframes of non-current filters.
-                if (filter->get_int(kShotcutAnimOutProperty) > 0
-                    && MAIN.filterController()->currentFilter()
-                    && MAIN.filterController()->currentFilter()->service().get_service() != filter.data()->get_service()) {
-                    QmlMetadata* meta = MAIN.filterController()->metadataForService(filter.data());
-                    if (meta && meta->keyframes()) {
-                        foreach (QString name, meta->keyframes()->simpleProperties()) {
-                            if (!filter->get_animation(name.toUtf8().constData()))
-                                // Cause a string property to be interpreted as animated value.
-                                filter->anim_get_double(name.toUtf8().constData(), 0, filter->get_length());
-                            Mlt::Animation animation = filter->get_animation(name.toUtf8().constData());
-                            if (animation.is_valid()) {
-                                int n = animation.key_count();
-                                if (n > 1) {
-                                    animation.set_length(filter->get_length());
-                                    animation.key_set_frame(n - 2, filter->get_length() - filter->get_int(kShotcutAnimOutProperty));
-                                    animation.key_set_frame(n - 1, filter->get_length() - 1);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    // Adjust link in/out
-    if (producer.type() == mlt_service_chain_type) {
-        Mlt::Chain chain(producer);
-        int link_count = chain.link_count();
-        for (int j = 0; j < chain.link_count(); j++) {
-            QScopedPointer<Mlt::Link> link(chain.link(j));
-            if (link && link->is_valid()) {
-                if (link->get_out() >= out) {
-                    link->set_in_and_out(link->get_in(), out - outDelta);
-                    emit serviceOutChanged(outDelta, link.data());
-                }
-                if (link->get_in() <= in) {
-                    link->set_in_and_out(in + inDelta, link->get_out());
-                    emit serviceInChanged(inDelta, link.data());
-                }
-            }
-        }
-    }
-}
 
 Mlt::ClipInfo* MultitrackModel::findClipByUuid(const QUuid &uuid, int &trackIndex, int &clipIndex)
 {

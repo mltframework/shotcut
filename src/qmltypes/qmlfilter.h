@@ -39,8 +39,8 @@ class QmlFilter : public QObject
     Q_PROPERTY(bool isNew READ isNew)
     Q_PROPERTY(QString path READ path)
     Q_PROPERTY(QStringList presets READ presets NOTIFY presetsChanged)
-    Q_PROPERTY(int in READ in WRITE setIn NOTIFY inChanged)
-    Q_PROPERTY(int out READ out WRITE setOut NOTIFY outChanged)
+    Q_PROPERTY(int in READ in NOTIFY inChanged)
+    Q_PROPERTY(int out READ out NOTIFY outChanged)
     Q_PROPERTY(int animateIn READ animateIn WRITE setAnimateIn NOTIFY animateInChanged)
     Q_PROPERTY(int animateOut READ animateOut WRITE setAnimateOut NOTIFY animateOutChanged)
     Q_PROPERTY(int duration READ duration NOTIFY durationChanged)
@@ -98,9 +98,7 @@ public:
     Q_INVOKABLE void getHash();
     Mlt::Producer& producer() { return m_producer; }
     int in();
-    void setIn(int value);
     int out();
-    void setOut(int value);
     Mlt::Service& service() { return m_service; }
     int animateIn();
     void setAnimateIn(int value);

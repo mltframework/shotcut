@@ -22,6 +22,8 @@
 
 #include <Logger.h>
 
+#include <QTimer>
+
 static const quintptr NO_PARENT_ID = quintptr(-1);
 
 KeyframesModel::KeyframesModel(QObject* parent)
@@ -596,18 +598,6 @@ void KeyframesModel::reload()
 
 void KeyframesModel::onFilterChanged(const QString& property)
 {
-    bool keyframedProperty = false;
-    for (int p = 0; p < m_metadata->keyframes()->parameterCount(); p++) {
-        if (property == m_metadata->keyframes()->parameter(p)->property()) {
-            keyframedProperty = true;
-            break;
-        }
-    }
-    if (!keyframedProperty) {
-        // This property is not a keyframe property. Nothing to do.
-        return;
-    }
-
     int i = m_propertyNames.indexOf(property);
     if (i < 0) {
         // First keyframe added. Reset model to add this parameter.
@@ -640,76 +630,26 @@ void KeyframesModel::onFilterChanged(const QString& property)
 
 void KeyframesModel::onFilterInChanged(int delta)
 {
-    for (int parameterIndex = 0; parameterIndex < m_propertyNames.count(); parameterIndex++) {
-        int count = m_keyframeCounts[parameterIndex];
-        if (count > 0) {
-            QString name = m_propertyNames[parameterIndex];
-            Mlt::Animation animation = m_filter->getAnimation(name);
-            if (animation.is_valid()) {
-                // Shift all the keyframes proportional to the delta
-                animation.shift_frames(-delta);
-                foreach (QString gangName, m_metadata->keyframes()->parameter(m_metadataIndex[parameterIndex])->gangedProperties()) {
-                    Mlt::Animation gangAnim = m_filter->getAnimation(gangName);
-                    if (gangAnim.is_valid())
-                        gangAnim.shift_frames(-delta);
-                }
-                // Keyframes are not allowed to have negative positions because
-                // there is no way for the user to interact with them.
-                if (animation.key_get_frame(0) < 0)
-                {
-                    // Create a new keyframe at position 0 based on interpolated value
-                    auto parameter = m_metadata->keyframes()->parameter(m_metadataIndex[parameterIndex]);
-                    m_filter->blockSignals(true);
-                    if (parameter->isRectangle()) {
-                        auto value = m_filter->getRect(name, 0);
-                        mlt_keyframe_type keyframeType = m_filter->getKeyframeType(animation, 0, mlt_keyframe_type(-1));
-                        m_filter->set(name, value, 1.0, 0, keyframeType);
-                    } else {
-                        double value = m_filter->getDouble(name, 0);
-                        mlt_keyframe_type keyframeType = m_filter->getKeyframeType(animation, 0, mlt_keyframe_type(-1));
-                        m_filter->set(name, value, 0, keyframeType);
-                        foreach (QString gangName, m_metadata->keyframes()->parameter(m_metadataIndex[parameterIndex])->gangedProperties()) {
-                            Mlt::Animation gangAnim = m_filter->getAnimation(gangName);
-                            double gangValue = m_filter->getDouble(gangName, 0);
-                            if (gangAnim.is_valid()) {
-                                keyframeType = m_filter->getKeyframeType(gangAnim, 0, mlt_keyframe_type(-1));
-                                m_filter->set(gangName, gangValue, 0, keyframeType);
-                            }
-                        }
-                    }
-                    m_filter->blockSignals(false);
+    QTimer::singleShot(0, this, SLOT(reload()));
+}
 
-                    // Remove all negative position keyframes
-                    for (int keyframeIndex = 0; keyframeIndex < count;) {
-                        int frame = animation.key_get_frame(keyframeIndex);
-                        if (frame < 0) {
-                            animation.remove(frame);
-                            animation.interpolate();
-                            m_keyframeCounts[parameterIndex] -= 1;
-                            --count;
-                        } else {
-                            break;
-                        }
-                    }
-                    foreach (QString gangName, m_metadata->keyframes()->parameter(m_metadataIndex[parameterIndex])->gangedProperties()) {
-                        Mlt::Animation gangAnim = m_filter->getAnimation(gangName);
-                        int gangKeyCount = gangAnim.key_count();
-                        for (int keyframeIndex = 0; keyframeIndex < gangKeyCount;) {
-                            int frame = gangAnim.key_get_frame(keyframeIndex);
-                            if (frame < 0) {
-                                gangAnim.remove(frame);
-                                gangAnim.interpolate();
-                                gangKeyCount -= 1;
-                            } else {
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
-        }
+
+void KeyframesModel::trimFilterIn(int in)
+{
+    Mlt::Service& service = m_filter->service();
+    if (service.is_valid() && service.type() == mlt_service_filter_type) {
+        Mlt::Filter filter = service;
+        MLT.adjustFilter(&filter, filter.get_in(), filter.get_out(), in - filter.get_in(), 0);
     }
-    reload();
+}
+
+void KeyframesModel::trimFilterOut(int out)
+{
+    Mlt::Service& service = m_filter->service();
+    if (service.is_valid() && service.type() == mlt_service_filter_type) {
+        Mlt::Filter filter = service;
+        MLT.adjustFilter(&filter, filter.get_in(), filter.get_out(), 0, filter.get_out() - out);
+    }
 }
 
 int KeyframesModel::keyframeCount(int index) const
