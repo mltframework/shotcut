@@ -367,9 +367,12 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties& preset)
         const QString& vcodec = ui->videoCodecCombo->currentText();
         //val = min + (max - min) * paramval;
         if (vcodec == "libx264" || vcodec == "libx265" || vcodec.contains("nvenc") || vcodec.endsWith("_amf")
-                || vcodec.endsWith("_qsv") || vcodec.endsWith("_videotoolbox") || vcodec.endsWith("_vaapi"))
+                || vcodec.endsWith("_videotoolbox") || vcodec.endsWith("_vaapi"))
             // 0 (best, 100%) - 51 (worst)
             ui->videoQualitySpinner->setValue(TO_RELATIVE(51, 0, videoQuality));
+        else if (vcodec.endsWith("_qsv"))
+            // 1 (best, 100%) - 51 (worst)
+            ui->videoQualitySpinner->setValue(TO_RELATIVE(51, 1, videoQuality));
         else if (vcodec.startsWith("libvpx") || vcodec.startsWith("libaom-")) // 0 (best, 100%) - 63 (worst)
             ui->videoQualitySpinner->setValue(TO_RELATIVE(63, 0, videoQuality));
         else // 1 (best, NOT 100%) - 31 (worst)
