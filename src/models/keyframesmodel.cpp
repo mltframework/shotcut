@@ -609,7 +609,7 @@ void KeyframesModel::onFilterChanged(const QString& property)
             }
             beginInsertRows(index(i), 0, m_keyframeCounts[i] - 1);
             endInsertRows();
-            emit dataChanged(index(i), index(i), QVector<int>() << MinimumValueRole << MaximumValueRole);
+            emit dataChanged(index(i), index(i), QVector<int>() << MinimumValueRole << MaximumValueRole << LowestValueRole << HighestValueRole);
         } else {
             // All keyframes removed. Reset model to remove this parameter.
             reload();
