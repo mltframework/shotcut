@@ -498,11 +498,6 @@ int QmlFilter::in()
     return result;
 }
 
-void QmlFilter::setIn(int value)
-{
-    set("in", value);
-}
-
 int QmlFilter::out()
 {
     int result = 0;
@@ -524,11 +519,6 @@ int QmlFilter::out()
         }
     }
     return result;
-}
-
-void QmlFilter::setOut(int value)
-{
-    set("out", value);
 }
 
 int QmlFilter::animateIn()

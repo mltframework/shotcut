@@ -109,6 +109,8 @@ signals:
     void openFailed(QString);
     void aboutToShutDown();
     void renameRequested();
+    void serviceInChanged(int delta, Mlt::Service*);
+    void serviceOutChanged(int delta, Mlt::Service*);
 
 protected:
     MainWindow();

@@ -738,94 +738,26 @@ void Controller::next(int currentPosition)
 void Controller::setIn(int in)
 {
     if (m_producer && m_producer->is_valid()) {
-        // Adjust filters.
-        bool changed = false;
-        int n = m_producer->filter_count();
-        for (int i = 0; i < n; i++) {
-            QScopedPointer<Filter> filter(m_producer->filter(i));
-            if (filter && filter->is_valid()) {
-                if (QString(filter->get(kShotcutFilterProperty)).startsWith("fadeIn")) {
-                    if (!filter->get(kShotcutAnimInProperty)) {
-                        // Convert legacy fadeIn filters.
-                        filter->set(kShotcutAnimInProperty, filter->get_length());
-                    }
-                    filter->set_in_and_out(in, filter->get_out());
-                    changed = true;
-                } else if (!filter->get_int("_loader") && filter->get_in() == m_producer->get_in()) {
-                    filter->set_in_and_out(in, filter->get_out());
-                    changed = true;
-                }
-            }
+        int delta = in - m_producer->get_in();
+        if (!delta) {
+            return;
         }
-        if (changed)
-            Controller::refreshConsumer();
+        adjustClipFilters(*m_producer, m_producer->get_in(), m_producer->get_out(), delta, 0);
         m_producer->set("in", in);
+        Controller::refreshConsumer();
     }
 }
 
 void Controller::setOut(int out)
 {
     if (m_producer && m_producer->is_valid()) {
-        // Adjust all filters that have an explicit duration.
-        bool changed = false;
-        int n = m_producer->filter_count();
-        for (int i = 0; i < n; i++) {
-            QScopedPointer<Filter> filter(m_producer->filter(i));
-            if (filter && filter->is_valid()) {
-                QString filterName = filter->get(kShotcutFilterProperty);
-                if (filterName.startsWith("fadeOut")) {
-                    if (!filter->get(kShotcutAnimOutProperty)) {
-                        // Convert legacy fadeOut filters.
-                        filter->set(kShotcutAnimOutProperty, filter->get_length());
-                    }
-                    filter->set_in_and_out(filter->get_in(), out);
-                    changed = true;
-                    if (filterName == "fadeOutBrightness") {
-                        const char* key = filter->get_int("alpha") != 1? "alpha" : "level";
-                        filter->clear(key);
-                        filter->anim_set(key, 1, filter->get_length() - filter->get_int(kShotcutAnimOutProperty));
-                        filter->anim_set(key, 0, filter->get_length() - 1);
-                    } else if (filterName == "fadeOutMovit") {
-                        filter->clear("opacity");
-                        filter->anim_set("opacity", 1, filter->get_length() - filter->get_int(kShotcutAnimOutProperty), 0, mlt_keyframe_smooth);
-                        filter->anim_set("opacity", 0, filter->get_length() - 1);
-                    } else if (filterName == "fadeOutVolume") {
-                        filter->clear("level");
-                        filter->anim_set("level", 0, filter->get_length() - filter->get_int(kShotcutAnimOutProperty));
-                        filter->anim_set("level", -60, filter->get_length() - 1);
-                    }
-                } else if (!filter->get_int("_loader") && filter->get_out() == m_producer->get_out()) {
-                    filter->set_in_and_out(filter->get_in(), out);
-                    changed = true;
-
-                    // Update simple keyframes of non-current filters.
-                    if (filter->get_int(kShotcutAnimOutProperty) > 0
-                        && MAIN.filterController()->currentFilter()
-                        && MAIN.filterController()->currentFilter()->service().get_service() != filter.data()->get_service()) {
-                        QmlMetadata* meta = MAIN.filterController()->metadataForService(filter.data());
-                        if (meta && meta->keyframes()) {
-                            foreach (QString name, meta->keyframes()->simpleProperties()) {
-                                if (!filter->get_animation(name.toUtf8().constData()))
-                                    // Cause a string property to be interpreted as animated value.
-                                    filter->anim_get_double(name.toUtf8().constData(), 0, filter->get_length());
-                                Mlt::Animation animation = filter->get_animation(name.toUtf8().constData());
-                                if (animation.is_valid()) {
-                                    int n = animation.key_count();
-                                    if (n > 1) {
-                                        animation.set_length(filter->get_length());
-                                        animation.key_set_frame(n - 2, filter->get_length() - filter->get_int(kShotcutAnimOutProperty));
-                                        animation.key_set_frame(n - 1, filter->get_length() - 1);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            if (changed)
-                Controller::refreshConsumer();
+        int delta = out - m_producer->get_out();
+        if (!delta) {
+            return;
         }
+        adjustClipFilters(*m_producer, m_producer->get_in(), m_producer->get_out(), 0, -delta);
         m_producer->set("out", out);
+        Controller::refreshConsumer();
     }
 }
 
@@ -1161,6 +1093,181 @@ void Controller::adjustFilters(Producer& producer, int index)
     }
     if (changed)
         MLT.refreshConsumer();
+}
+
+static void shiftKeyframes(Mlt::Service* service, QmlMetadata* meta, int delta)
+{
+    if (!meta || !meta->keyframes() || meta->keyframes()->parameterCount() < 1) {
+        return;
+    }
+    QmlKeyframesMetadata* keyMeta = meta->keyframes();
+    for (int parameterIndex = 0; parameterIndex < keyMeta->parameterCount(); parameterIndex++) {
+        QmlKeyframesParameter* paramMeta = keyMeta->parameter(parameterIndex);
+        QString name = paramMeta->property();
+        Mlt::Animation animation = service->get_animation(qUtf8Printable(name));
+        if (animation.is_valid()) {
+            // Keyframes are not allowed to have negative positions because
+            // there is no way for the user to interact with them.
+            // Handle keyframes that will become negative by deleting them.
+            if (animation.key_get_frame(0) < delta)
+            {
+                // Create a new keyframe at position that will become 0 based on interpolated value
+                int previous = animation.previous_key(delta);
+                mlt_keyframe_type existingType = animation.keyframe_type(previous);
+                if (paramMeta->isRectangle()) {
+                    auto value = service->anim_get_rect(qUtf8Printable(name), delta);
+                    service->anim_set(qUtf8Printable(name), value, delta, 0, existingType);
+                } else {
+                    double value = service->anim_get_double(qUtf8Printable(name), delta);
+                    service->anim_set(qUtf8Printable(name), value, delta, 0, existingType);
+                    foreach (QString gangName, paramMeta->gangedProperties()) {
+                        Mlt::Animation gangAnim = service->get_animation(qUtf8Printable(gangName));
+                        double gangValue = service->anim_get_double(qUtf8Printable(gangName), delta);
+                        service->anim_set(qUtf8Printable(gangName), gangValue, delta, existingType);
+                    }
+                }
+                // Remove all keyframes that will be negative position
+                int count = animation.key_count();
+                for (int keyframeIndex = 0; keyframeIndex < count;) {
+                    int frame = animation.key_get_frame(keyframeIndex);
+                    if (frame < delta) {
+                        animation.remove(frame);
+                        animation.interpolate();
+                        --count;
+                    } else {
+                        break;
+                    }
+                }
+                foreach (QString gangName, paramMeta->gangedProperties()) {
+                    Mlt::Animation gangAnim = service->get_animation(qUtf8Printable(gangName));
+                    int gangKeyCount = gangAnim.key_count();
+                    for (int keyframeIndex = 0; keyframeIndex < gangKeyCount;) {
+                        int frame = gangAnim.key_get_frame(keyframeIndex);
+                        if (frame < delta) {
+                            gangAnim.remove(frame);
+                            gangAnim.interpolate();
+                            gangKeyCount -= 1;
+                        } else {
+                            break;
+                        }
+                    }
+                }
+            }
+            // Shift all the keyframes proportional to the delta
+            animation.shift_frames(-delta);
+            foreach (QString gangName, paramMeta->gangedProperties()) {
+                Mlt::Animation gangAnim = service->get_animation(qUtf8Printable(gangName));
+                gangAnim.shift_frames(-delta);
+            }
+        }
+    }
+}
+
+void Controller::adjustFilter(Mlt::Filter* filter, int in, int out, int inDelta, int outDelta)
+{
+    if (!filter || !filter->is_valid()) {
+        return;
+    }
+
+    QString filterName = filter->get(kShotcutFilterProperty);
+    QmlMetadata* meta = MAIN.filterController()->metadataForService(filter);
+    if (inDelta) {
+        if (in + inDelta < 0) {
+            inDelta = -in;
+        }
+        if (filter->get_int(kShotcutAnimInProperty) == filter->get_int(kShotcutAnimOutProperty)) {
+            // Shift all keyframes proportional to the in delta if they are not simple keyframes
+            shiftKeyframes(filter,  meta, inDelta);
+        }
+        if (filterName.startsWith("fadeIn")) {
+            if (!filter->get(kShotcutAnimInProperty)) {
+                // Convert legacy fadeIn filters.
+                filter->set(kShotcutAnimInProperty, filter->get_length());
+            }
+            filter->set_in_and_out(in + inDelta, filter->get_out());
+            emit MAIN.serviceInChanged(inDelta, filter);
+        } else if (!filter->get_int("_loader") && filter->get_in() <= in) {
+            filter->set_in_and_out(in + inDelta, filter->get_out());
+            emit MAIN.serviceInChanged(inDelta, filter);
+        }
+    }
+
+    if (outDelta) {
+        if (filterName.startsWith("fadeOut")) {
+            if (!filter->get(kShotcutAnimOutProperty)) {
+                // Convert legacy fadeOut filters.
+                filter->set(kShotcutAnimOutProperty, filter->get_length());
+            }
+            filter->set_in_and_out(filter->get_in(), out - outDelta);
+            if (filterName == "fadeOutBrightness") {
+                const char* key = filter->get_int("alpha") != 1? "alpha" : "level";
+                filter->clear(key);
+                filter->anim_set(key, 1, filter->get_length() - filter->get_int(kShotcutAnimOutProperty));
+                filter->anim_set(key, 0, filter->get_length() - 1);
+            } else if (filterName == "fadeOutMovit") {
+                filter->clear("opacity");
+                filter->anim_set("opacity", 1, filter->get_length() - filter->get_int(kShotcutAnimOutProperty), 0, mlt_keyframe_smooth);
+                filter->anim_set("opacity", 0, filter->get_length() - 1);
+            } else if (filterName == "fadeOutVolume") {
+                filter->clear("level");
+                filter->anim_set("level", 0, filter->get_length() - filter->get_int(kShotcutAnimOutProperty));
+                filter->anim_set("level", -60, filter->get_length() - 1);
+            }
+            emit MAIN.serviceOutChanged(outDelta, filter);
+        } else if (!filter->get_int("_loader")  && filter->get_out() >= out) {
+            filter->set_in_and_out(filter->get_in(), out - outDelta);
+            emit MAIN.serviceOutChanged(outDelta, filter);
+
+            // Update simple keyframes
+            if (filter->get_int(kShotcutAnimOutProperty) && meta && meta->keyframes()) {
+                foreach (QString name, meta->keyframes()->simpleProperties()) {
+                    if (!filter->get_animation(name.toUtf8().constData()))
+                        // Cause a string property to be interpreted as animated value.
+                        filter->anim_get_double(name.toUtf8().constData(), 0, filter->get_length());
+                    Mlt::Animation animation = filter->get_animation(name.toUtf8().constData());
+                    if (animation.is_valid()) {
+                        int n = animation.key_count();
+                        if (n > 1) {
+                            animation.set_length(filter->get_length());
+                            animation.key_set_frame(n - 2, filter->get_length() - filter->get_int(kShotcutAnimOutProperty));
+                            animation.key_set_frame(n - 1, filter->get_length() - 1);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+void Controller::adjustClipFilters(Mlt::Producer& producer, int in, int out, int inDelta, int outDelta)
+{
+    for (int j = 0; j < producer.filter_count(); j++) {
+        QScopedPointer<Mlt::Filter> filter(producer.filter(j));
+        adjustFilter(filter.data(), in, out, inDelta, outDelta);
+    }
+
+    // Adjust link in/out
+    if (producer.type() == mlt_service_chain_type) {
+        Mlt::Chain chain(producer);
+        int link_count = chain.link_count();
+        for (int j = 0; j < chain.link_count(); j++) {
+            QScopedPointer<Mlt::Link> link(chain.link(j));
+            QmlMetadata* meta = MAIN.filterController()->metadataForService(link.data());
+            if (link && link->is_valid()) {
+                if (inDelta) {
+                    shiftKeyframes(link.data(),  meta, inDelta);
+                }
+                if (link->get_out() >= out) {
+                    link->set_in_and_out(link->get_in(), out - outDelta);
+                    emit MAIN.serviceOutChanged(outDelta, link.data());
+                }
+                if (link->get_in() <= in) {
+                    link->set_in_and_out(in + inDelta, link->get_out());
+                    emit MAIN.serviceInChanged(inDelta, link.data());
+                }
+            }
+        }
+    }
 }
 
 void Controller::setSavedProducer(Mlt::Producer* producer)

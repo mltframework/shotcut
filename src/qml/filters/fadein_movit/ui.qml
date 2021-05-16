@@ -33,8 +33,8 @@ Item {
         } else if (filter.animateIn === 0) {
             // Convert legacy filter.
             duration = filter.duration
-            filter.in = producer.in
-            filter.out = producer.out
+            filter.set('in', producer.in )
+            filter.set('out', producer.out )
         } else {
             duration = filter.animateIn
         }

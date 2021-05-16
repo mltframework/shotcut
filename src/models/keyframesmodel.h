@@ -86,6 +86,8 @@ public slots:
     void reload();
     void onFilterChanged(const QString& property);
     void onFilterInChanged(int delta);
+    void trimFilterIn(int in);
+    void trimFilterOut(int out);
 
 private:
     QList<QString> m_propertyNames;

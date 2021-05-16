@@ -392,8 +392,8 @@ MainWindow::MainWindow()
     connect(m_player, SIGNAL(outChanged(int)), m_filtersDock, SIGNAL(producerOutChanged(int)));
     connect(m_player, SIGNAL(inChanged(int)), m_filterController, SLOT(onServiceInChanged(int)));
     connect(m_player, SIGNAL(outChanged(int)), m_filterController, SLOT(onServiceOutChanged(int)));
-    connect(m_timelineDock->model(), SIGNAL(serviceInChanged(int, Mlt::Service*)), m_filterController, SLOT(onServiceInChanged(int, Mlt::Service*)));
-    connect(m_timelineDock->model(), SIGNAL(serviceOutChanged(int, Mlt::Service*)), m_filterController, SLOT(onServiceOutChanged(int, Mlt::Service*)));
+    connect(this, SIGNAL(serviceInChanged(int, Mlt::Service*)), m_filterController, SLOT(onServiceInChanged(int, Mlt::Service*)));
+    connect(this, SIGNAL(serviceOutChanged(int, Mlt::Service*)), m_filterController, SLOT(onServiceOutChanged(int, Mlt::Service*)));
 
     m_keyframesDock = new KeyframesDock(m_filtersDock->qmlProducer(), this);
     m_keyframesDock->hide();
@@ -2276,7 +2276,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
             } else {
                 int i = m_filtersDock->qmlProducer()->position() + m_filtersDock->qmlProducer()->in();
                 if (filterController()->currentFilter()->allowTrim()) {
-                    filterController()->currentFilter()->setIn(i);
+                    m_keyframesDock->model().trimFilterIn(i);
                 }
             }
         }
@@ -2288,7 +2288,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
             } else {
                 int i = m_filtersDock->qmlProducer()->position() + m_filtersDock->qmlProducer()->in();
                 if (filterController()->currentFilter()->allowTrim()) {
-                    filterController()->currentFilter()->setOut(i);
+                    m_keyframesDock->model().trimFilterOut(i);
                 }
             }
         }
