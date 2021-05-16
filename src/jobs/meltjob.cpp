@@ -95,7 +95,11 @@ void MeltJob::start()
         return;
     }
     QString shotcutPath = qApp->applicationDirPath();
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
+    QFileInfo meltPath(shotcutPath, "melt-7");
+#else
     QFileInfo meltPath(shotcutPath, "melt");
+#endif
     setReadChannel(QProcess::StandardError);
     QStringList args;
     args << "-verbose";
