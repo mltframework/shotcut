@@ -24,7 +24,7 @@ import Shotcut.Controls 1.0 as Shotcut
 Item {
     width: 200
     height: 50
-    property bool blockUpdate: false
+    property bool blockUpdate: true
 
     Component.onCompleted: {
         if (filter.isNew) {
@@ -38,6 +38,7 @@ Item {
                 .arg(application.OS === 'OS X'? '⌘' : 'Ctrl')
                 .arg(application.OS === 'OS X'? '⌥' : 'Alt'))
         }
+        blockUpdate = false
         setControls()
     }
 
