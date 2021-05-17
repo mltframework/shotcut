@@ -37,6 +37,7 @@ LANGUAGES = \
     pl \
     pt_BR \
     pt_PT \
+    ro \
     ru \
     sk \
     sl \

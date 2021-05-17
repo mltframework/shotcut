@@ -751,6 +751,9 @@ void MainWindow::setupSettingsMenu()
     a = new QAction(QLocale::languageToString(QLocale::Portuguese).append(" (Portugal)"), m_languagesGroup);
     a->setCheckable(true);
     a->setData("pt_PT");
+    a = new QAction(QLocale::languageToString(QLocale::Romanian), m_languagesGroup);
+    a->setCheckable(true);
+    a->setData("ro");
     a = new QAction(QLocale::languageToString(QLocale::Russian), m_languagesGroup);
     a->setCheckable(true);
     a->setData("ru");
