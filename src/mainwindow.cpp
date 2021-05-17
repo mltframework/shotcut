@@ -1763,7 +1763,7 @@ void MainWindow::on_actionAbout_Shotcut_triggered()
     const auto copyright = QStringLiteral("Copyright &copy; 2011-2021 <a href=\"https://www.meltytech.com/\">Meltytech</a>, LLC");
     const auto license = QStringLiteral("<a href=\"https://www.gnu.org/licenses/gpl.html\">GNU General Public License v3.0</a>");
     const auto url = QStringLiteral("https://www.shotcut.org/");
-    QMessageBox::about(this, tr("About %1"),
+    QMessageBox::about(this, tr("About %1").arg(qApp->applicationName()),
              tr("<h1>Shotcut version %2</h1>"
                 "<p><a href=\"%3\">%1</a> is a free, open source, cross platform video editor.</p>"
                 "<small><p>%4</p>"
