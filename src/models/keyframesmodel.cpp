@@ -591,32 +591,45 @@ void KeyframesModel::reload()
 
 void KeyframesModel::onFilterChanged(const QString& property)
 {
-//    LOG_DEBUG() << property;
-    if (property == "in") {
-        // Handled by onFilterInChanged()
+    bool keyframedProperty = false;
+    for (int p = 0; p < m_metadata->keyframes()->parameterCount(); p++) {
+        if (property == m_metadata->keyframes()->parameter(p)->property()) {
+            keyframedProperty = true;
+            break;
+        }
+    }
+    if (!keyframedProperty) {
+        // This property is not a keyframe property. Nothing to do.
         return;
     }
 
     int i = m_propertyNames.indexOf(property);
-    if (i > -1) {
-        int count = m_keyframeCounts[i];
-        m_keyframeCounts[i] = keyframeCount(i);
-        if (m_keyframeCounts[i] > 0) {
-//            LOG_DEBUG() << property << m_filter->get(property) << m_keyframeCounts[i];
-            if (count > 0) {
-                beginRemoveRows(index(i), 0, count - 1);
-                endRemoveRows();
-            }
-            beginInsertRows(index(i), 0, m_keyframeCounts[i] - 1);
-            endInsertRows();
-            emit dataChanged(index(i), index(i), QVector<int>() << MinimumValueRole << MaximumValueRole << LowestValueRole << HighestValueRole);
-        } else {
-            // All keyframes removed. Reset model to remove this parameter.
-            reload();
-        }
-    } else {
+    if (i < 0) {
         // First keyframe added. Reset model to add this parameter.
         reload();
+        return;
+    }
+
+    int prevCount = m_keyframeCounts[i];
+    m_keyframeCounts[i] = keyframeCount(i);
+    if (m_keyframeCounts[i] == 0) {
+        // All keyframes removed. Reset model to remove this parameter.
+        reload();
+    }
+    else if (prevCount != m_keyframeCounts[i]) {
+        // Keyframe count changed. Remove all old and insert all new.
+        if (prevCount > 0) {
+            beginRemoveRows(index(i), 0, prevCount - 1);
+            endRemoveRows();
+        }
+        beginInsertRows(index(i), 0, m_keyframeCounts[i] - 1);
+        endInsertRows();
+        emit dataChanged(index(i), index(i), QVector<int>() << LowestValueRole << HighestValueRole);
+    }
+    else {
+        // Keyframe count is unchanged. A value must have changed.
+        emit dataChanged(index(i), index(i), QVector<int>() << LowestValueRole << HighestValueRole);
+        emit dataChanged(index(0, 0, index(i)), index(m_keyframeCounts[i] - 1, 0, index(i)), QVector<int>() << NumericValueRole);
     }
 }
 
