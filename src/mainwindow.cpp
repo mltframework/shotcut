@@ -3677,11 +3677,29 @@ void MainWindow::on_actionAddCustomProfile_triggered()
     }
 }
 
+void MainWindow::restartAfterChangeTheme()
+{
+    QMessageBox dialog(QMessageBox::Information,
+                       qApp->applicationName(),
+                       tr("You must restart %1 to switch to the new theme.\n"
+                          "Do you want to restart now?").arg(qApp->applicationName()),
+                       QMessageBox::No | QMessageBox::Yes,
+                       this);
+    dialog.setDefaultButton(QMessageBox::Yes);
+    dialog.setEscapeButton(QMessageBox::No);
+    dialog.setWindowModality(QmlApplication::dialogModality());
+    if (dialog.exec() == QMessageBox::Yes) {
+        m_exitCode = EXIT_RESTART;
+        QApplication::closeAllWindows();
+    }
+}
+
 void MainWindow::on_actionSystemTheme_triggered()
 {
     changeTheme("system");
     QApplication::setPalette(QApplication::style()->standardPalette());
     Settings.setTheme("system");
+    restartAfterChangeTheme();
 }
 
 void MainWindow::on_actionFusionDark_triggered()
@@ -3689,6 +3707,7 @@ void MainWindow::on_actionFusionDark_triggered()
     changeTheme("dark");
     Settings.setTheme("dark");
     ui->mainToolBar->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+    restartAfterChangeTheme();
 }
 
 void MainWindow::on_actionFusionLight_triggered()
@@ -3696,6 +3715,7 @@ void MainWindow::on_actionFusionLight_triggered()
     changeTheme("light");
     Settings.setTheme("light");
     ui->mainToolBar->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+    restartAfterChangeTheme();
 }
 
 void MainWindow::on_actionTutorials_triggered()

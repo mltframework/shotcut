@@ -141,6 +141,7 @@ private:
     void resetVideoModeMenu();
     void resetDockCorners();
     void showIncompatibleProjectMessage(const QString& shotcutVersion);
+    void restartAfterChangeTheme();
 
     Ui::MainWindow* ui;
     Player* m_player;
