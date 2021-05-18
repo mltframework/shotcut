@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 Meltytech, LLC
+ * Copyright (c) 2013-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -110,7 +110,7 @@ Rectangle {
         anchors.right: parent.right
         anchors.top: parent.top
         anchors.topMargin: parent.border.width
-        anchors.rightMargin: parent.border.width + 1
+        anchors.rightMargin: parent.border.width
         anchors.bottom: parent.bottom
         anchors.bottomMargin: parent.height / 2
         width: height * 16.0/9.0
@@ -124,6 +124,7 @@ Rectangle {
         anchors.left: parent.left
         anchors.top: parent.top
         anchors.topMargin: parent.border.width
+        anchors.leftMargin: parent.border.width
         anchors.bottom: parent.bottom
         anchors.bottomMargin: parent.height / 2
         width: height * 16.0/9.0
