@@ -1113,3 +1113,34 @@ void PlaylistDock::onProducerModified()
     // The clip name may have changed.
     emitDataChanged(QVector<int>() << PlaylistModel::FIELD_RESOURCE);
 }
+
+void PlaylistDock::on_addFilesToPlaylistButton2_clicked()
+{
+    on_addFilesToPlaylistButton_clicked();
+}
+
+void PlaylistDock::on_addFilesToPlaylistButton_clicked()
+{
+    QMimeData* mimeData = new QMimeData;
+    QList<QUrl> urls;
+
+    QString path = Settings.openPath();
+#ifdef Q_OS_MAC
+    path.append("/*");
+#endif
+    LOG_DEBUG() << Util::getFileDialogOptions();
+    QStringList filenames = QFileDialog::getOpenFileNames(this, tr("Open File"), path,
+                            tr("All Files (*);;MLT XML (*.mlt)"), nullptr, Util::getFileDialogOptions());
+
+    if (filenames.length() > 0) {
+
+        Settings.setOpenPath(QFileInfo(filenames.first()).path());
+
+        foreach(const QString& s, filenames)
+            urls << s;
+
+        mimeData->setUrls(urls);
+
+        onDropped(mimeData, m_view->currentIndex().row() + 1);
+    }
+}

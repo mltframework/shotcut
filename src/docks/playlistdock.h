@@ -143,6 +143,10 @@ private slots:
 
     void onProducerModified();
 
+    void on_addFilesToPlaylistButton2_clicked();
+
+    void on_addFilesToPlaylistButton_clicked();
+
 protected:
     void keyPressEvent(QKeyEvent* event);
     void keyReleaseEvent(QKeyEvent* event);
