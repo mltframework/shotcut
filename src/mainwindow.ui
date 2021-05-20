@@ -39,7 +39,7 @@
      <x>0</x>
      <y>0</y>
      <width>1270</width>
-     <height>22</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -965,6 +965,9 @@
    <property name="toolTip">
     <string>Switch to the audio layout</string>
    </property>
+   <property name="shortcut">
+    <string>Alt+5</string>
+   </property>
   </action>
   <action name="actionLayoutLogging">
    <property name="checkable">
@@ -975,6 +978,9 @@
    </property>
    <property name="toolTip">
     <string>Switch to the logging layout</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+1</string>
    </property>
   </action>
   <action name="actionLayoutEditing">
@@ -987,6 +993,9 @@
    <property name="toolTip">
     <string>Switch to the editing layout</string>
    </property>
+   <property name="shortcut">
+    <string>Alt+2</string>
+   </property>
   </action>
   <action name="actionLayoutEffects">
    <property name="checkable">
@@ -997,6 +1006,9 @@
    </property>
    <property name="toolTip">
     <string>Switch to the effects layout</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+3</string>
    </property>
   </action>
   <action name="actionLayoutAdd">
@@ -1186,6 +1198,9 @@
    <property name="toolTip">
     <string>Switch to the color layout</string>
    </property>
+   <property name="shortcut">
+    <string>Alt+4</string>
+   </property>
   </action>
   <action name="actionLayoutPlayer">
    <property name="checkable">
@@ -1196,6 +1211,9 @@
    </property>
    <property name="toolTip">
     <string>Switch to the player only layout</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+6</string>
    </property>
   </action>
   <action name="dummyAction">
