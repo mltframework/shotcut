@@ -28,6 +28,7 @@ Item {
     property string _defaultStart: '00:00:00.000'
     property string _defaultDuration: '00:00:10.000'
     property string _defaultOffset: '00:00:00.000'
+    property double _defaultSpeed: 1.0
 
     Component.onCompleted: {
         filter.blockSignals = true
@@ -38,6 +39,7 @@ Item {
             filter.set("start", _defaultStart)
             filter.set("duration", _defaultDuration)
             filter.set("offset", _defaultOffset)
+            filter.set("speed", _defaultSpeed)
 
             if (application.OS === 'Windows')
                 filter.set('family', 'Verdana')
@@ -99,6 +101,7 @@ Item {
         startSpinner.timeStr = filter.get("start")
         durationSpinner.timeStr = filter.get("duration")
         offsetSpinner.timeStr = filter.get("offset")
+        speedSpinner.value = filter.getDouble("speed")
 
         textFilterUi.setControls()
     }
@@ -178,7 +181,7 @@ Item {
             spacing: 0
             ClockSpinner {
                 id: startSpinner
-                maximumValue: 24 * 60 * 60 // 24 hours
+                maximumValue: 100 * 60 * 60 - 0.001 // 99:59:59.999
                 onTimeStrChanged: {
                     filter.set('start', startSpinner.timeStr)
                 }
@@ -205,7 +208,7 @@ Item {
             spacing: 0
             ClockSpinner {
                 id: durationSpinner
-                maximumValue: 24 * 60 * 60 // 24 hours
+                maximumValue: 100 * 60 * 60 - 0.001 // 99:59:59.999
                 onTimeStrChanged: {
                     filter.set('duration', durationSpinner.timeStr)
                 }
@@ -238,7 +241,7 @@ Item {
             spacing: 0
             ClockSpinner {
                 id: offsetSpinner
-                maximumValue: 24 * 60 * 60 // 24 hours
+                maximumValue: 100 * 60 * 60 - 0.001 // 99:59:59.999
                 onTimeStrChanged: {
                     filter.set('offset', offsetSpinner.timeStr)
                 }
@@ -246,6 +249,27 @@ Item {
                     offsetSpinner.timeStr = _defaultOffset
                 }
                 Shotcut.HoverTip { text: qsTr('When the direction is Down, the timer will count down to Offset.\nWhen the direction is Up, the timer will count up starting from Offset.') }
+            }
+        }
+
+        Label {
+            text: qsTr('Speed')
+            Layout.alignment: Qt.AlignRight
+        }
+        RowLayout {
+            spacing: 0
+
+            Shotcut.DoubleSpinBox {
+                id: speedSpinner
+                horizontalAlignment: Qt.AlignRight
+                Layout.minimumWidth: 100
+                decimals: 5
+                stepSize: 0.1
+                from: 0
+                to: 1000
+                onValueChanged: {
+                    filter.set("speed", speedSpinner.value)
+                }
             }
         }
 
