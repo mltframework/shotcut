@@ -171,6 +171,23 @@ p, li { white-space: pre-wrap; }
        </widget>
       </item>
       <item>
+       <widget class="QPushButton" name="addFilesButton">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Add files to playlist&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset theme="list-add-files" resource="../../icons/resources.qrc">
+          <normaloff>:/icons/oxygen/32x32/actions/list-add-files.png</normaloff>:/icons/oxygen/32x32/actions/list-add-files.png</iconset>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QPushButton" name="updateButton">
         <property name="enabled">
          <bool>false</bool>
