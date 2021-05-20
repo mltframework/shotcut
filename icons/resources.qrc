@@ -267,5 +267,8 @@
         <file>oxygen/32x32/actions/keyframes-filter-out.png</file>
         <file>oxygen/32x32/actions/keyframes-simple-in.png</file>
         <file>oxygen/32x32/actions/keyframes-simple-out.png</file>
+        <file>oxygen/32x32/actions/list-add-files.png</file>
+        <file>light/32x32/list-add-files.png</file>
+        <file>dark/32x32/list-add-files.png</file>
     </qresource>
 </RCC>
