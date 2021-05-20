@@ -143,6 +143,8 @@ private slots:
 
     void onProducerModified();
 
+    void on_addFilesButton_clicked();
+
 protected:
     void keyPressEvent(QKeyEvent* event);
     void keyReleaseEvent(QKeyEvent* event);

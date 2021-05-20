@@ -148,6 +148,8 @@ PlaylistDock::PlaylistDock(QWidget *parent) :
     toggleViewAction()->setIcon(windowIcon());
     ui->actionPlayAfterOpen->setChecked(Settings.playlistAutoplay());
 
+    ui->stackedWidget->setCurrentIndex(0);
+
     m_iconsView = new PlaylistIconView(this);
     ui->listView->parentWidget()->layout()->addWidget(m_iconsView);
     m_iconsView->setSelectionMode(QAbstractItemView::SingleSelection);
@@ -1112,4 +1114,27 @@ void PlaylistDock::onProducerModified()
 
     // The clip name may have changed.
     emitDataChanged(QVector<int>() << PlaylistModel::FIELD_RESOURCE);
+}
+
+void PlaylistDock::on_addFilesButton_clicked()
+{
+    QMimeData mimeData;
+    QList<QUrl> urls;
+
+    QString path = Settings.openPath();
+#ifdef Q_OS_MAC
+    path.append("/*");
+#endif
+    LOG_DEBUG() << Util::getFileDialogOptions();
+    QStringList filenames = QFileDialog::getOpenFileNames(this, tr("Open File"), path,
+                            tr("All Files (*);;MLT XML (*.mlt)"), nullptr, Util::getFileDialogOptions());
+
+    if (filenames.length() > 0) {
+        Settings.setOpenPath(QFileInfo(filenames.first()).path());
+        foreach(const QString& s, filenames) {
+            urls << s;
+        }
+        mimeData.setUrls(urls);
+        onDropped(&mimeData, m_view->currentIndex().row() + 1);
+    }
 }
