@@ -3452,8 +3452,8 @@ void MainWindow::processMultipleFiles()
                     continue;
                 }
                 Util::getHash(p);
-                ProxyManager::generateIfNotExists(p);
                 Mlt::Producer* producer = MLT.setupNewProducer(&p);
+                ProxyManager::generateIfNotExists(*producer);
                 undoStack()->push(new Playlist::AppendCommand(*m_playlistDock->model(), MLT.XML(producer), false));
                 m_recentDock->add(filename.toUtf8().constData());
                 delete producer;

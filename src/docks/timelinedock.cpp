@@ -1136,8 +1136,8 @@ static QString convertUrlsToXML(const QString& xml)
                     MAIN.showStatusMessage(QObject::tr("Not adding non-seekable file: ") + Util::baseName(path));
                     continue;
                 }
-                ProxyManager::generateIfNotExists(p);
                 Mlt::Producer* producer = MLT.setupNewProducer(&p);
+                ProxyManager::generateIfNotExists(*producer);
                 playlist.append(*producer);
                 delete producer;
             }
