@@ -1890,11 +1890,8 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         } else if (isMultitrackValid()) {
             m_timelineDock->show();
             m_timelineDock->raise();
-            if (m_timelineDock->selection().isEmpty()) {
-                m_timelineDock->copyClip(-1, -1);
-            } else {
-                auto& selected = m_timelineDock->selection().first();
-                m_timelineDock->copyClip(selected.y(), selected.x());
+            if (!m_timelineDock->selection().isEmpty()) {
+                m_timelineDock->copyClip();
             }
         }
         break;
@@ -3452,8 +3449,8 @@ void MainWindow::processMultipleFiles()
                     continue;
                 }
                 Util::getHash(p);
+                ProxyManager::generateIfNotExists(p);
                 Mlt::Producer* producer = MLT.setupNewProducer(&p);
-                ProxyManager::generateIfNotExists(*producer);
                 undoStack()->push(new Playlist::AppendCommand(*m_playlistDock->model(), MLT.XML(producer), false));
                 m_recentDock->add(filename.toUtf8().constData());
                 delete producer;
@@ -4024,7 +4021,7 @@ void MainWindow::on_actionCopy_triggered()
     m_timelineDock->show();
     m_timelineDock->raise();
     if (!m_timelineDock->selection().isEmpty())
-        m_timelineDock->copyClip(m_timelineDock->selection().first().y(), m_timelineDock->selection().first().x());
+        m_timelineDock->copyClip();
 }
 
 void MainWindow::on_actionPaste_triggered()

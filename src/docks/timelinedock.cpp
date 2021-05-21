@@ -33,6 +33,7 @@
 #include <QAction>
 #include <QtQml>
 #include <QtQuick>
+#include <QMessageBox>
 #include <Logger.h>
 
 static const char* kFileUrlProtocol = "file://";
@@ -610,10 +611,7 @@ void TimelineDock::removeSelection(bool withCopy)
 
     // Cut
     if (withCopy) {
-        auto clip = selection().first();
-        copyClip(clip.y(), clip.x());
-        remove(clip.y(), clip.x());
-        return;
+        copyClip();        
     }
 
     // Ripple delete
@@ -680,23 +678,31 @@ void TimelineDock::selectMultitrack()
     emit selected(m_model.tractor());
 }
 
-void TimelineDock::copyClip(int trackIndex, int clipIndex)
+void TimelineDock::copyClip()
 {
-    if (trackIndex < 0)
-        trackIndex = currentTrack();
-    if (clipIndex < 0)
-        clipIndex = clipIndexAtPlayhead(trackIndex);
-    Q_ASSERT(trackIndex >= 0 && clipIndex >= 0);
-    QScopedPointer<Mlt::ClipInfo> info(getClipInfo(trackIndex, clipIndex));
-    if (info) {
-        QString xml = MLT.XML(info->producer);
-        Mlt::Producer p(MLT.profile(), "xml-string", xml.toUtf8().constData());
-        p.set_speed(0);
-        p.seek(info->frame_in);
-        p.set_in_and_out(info->frame_in, info->frame_out);
-        MLT.setSavedProducer(&p);
-        emit clipCopied();
+    if (selection().isEmpty())
+            return;
+
+    m_producers.clear();
+
+    //preserve the order of the clips in the timeline
+    QList<QPoint> selected = selection();
+    std::sort(selected.begin(), selected.end(),
+              [] (const QPoint& clip1, const QPoint& clip2){return clip1.x() > clip2.x();});
+
+    for (const auto& clip : selected) {
+        QScopedPointer<Mlt::ClipInfo> info(getClipInfo(clip.y(), clip.x()));
+        if (info) {
+            QString xml = MLT.XML(info->producer);
+            Mlt::Producer p(MLT.profile(), "xml-string", xml.toUtf8().constData());
+            p.set_speed(0);
+            p.seek(info->frame_in);
+            p.set_in_and_out(info->frame_in, info->frame_out);
+            m_producers.push_back(p);
+        }
     }
+
+    emit clipCopied();
 }
 
 void TimelineDock::emitSelectedFromSelection()
@@ -1136,8 +1142,8 @@ static QString convertUrlsToXML(const QString& xml)
                     MAIN.showStatusMessage(QObject::tr("Not adding non-seekable file: ") + Util::baseName(path));
                     continue;
                 }
+                ProxyManager::generateIfNotExists(p);
                 Mlt::Producer* producer = MLT.setupNewProducer(&p);
-                ProxyManager::generateIfNotExists(*producer);
                 playlist.append(*producer);
                 delete producer;
             }
@@ -1166,28 +1172,13 @@ void TimelineDock::insert(int trackIndex, int position, const QString &xml, bool
         MAIN.open(Util::removeFileScheme(url), &properties, false /* play */ );
     }
 
-    if (MLT.isSeekableClip() || MLT.savedProducer() || !xml.isEmpty()) {
-        QString xmlToUse;
-        QScopedPointer<TimelineSelectionBlocker> selectBlocker;
-        if (xml.isEmpty()) {
-            Mlt::Producer producer(MLT.isClip()? MLT.producer() : MLT.savedProducer());
-            ProxyManager::generateIfNotExists(producer);
-            xmlToUse = MLT.XML(&producer);
-        } else {
-            xmlToUse = convertUrlsToXML(xml);
-            if (xml.startsWith(kFileUrlProtocol) && xml.split(kFilesUrlDelimiter).size() > 1) {
-                selectBlocker.reset(new TimelineSelectionBlocker(*this));
-            }
-        }
-        if (position < 0)
-            position = m_position;
-        if (m_model.trackList().size() == 0)
-            position = 0;
-        MAIN.undoStack()->push(
-            new Timeline::InsertCommand(m_model, trackIndex, position, xmlToUse, seek));
-    } else if (!MLT.isSeekableClip()) {
-        emitNonSeekableWarning();
-    }
+    if (position < 0)
+        position = m_position;
+    if (m_model.trackList().size() == 0)
+        position = 0;
+
+    MAIN.undoStack()->push(
+        new Timeline::InsertSelectionCommand(m_model, m_producers, trackIndex, position, seek));
 }
 
 void TimelineDock::selectClip(int trackIndex, int clipIndex)

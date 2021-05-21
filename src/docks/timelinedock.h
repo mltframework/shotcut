@@ -120,7 +120,7 @@ public slots:
     void incrementCurrentTrack(int by);
     void selectTrackHead(int trackIndex);
     void selectMultitrack();
-    void copyClip(int trackIndex, int clipIndex);
+    void copyClip();
     void setTrackName(int trackIndex, const QString& value);
     void toggleTrackMute(int trackIndex);
     void toggleTrackHidden(int trackIndex);
@@ -179,6 +179,7 @@ private:
         int selectedTrack;
         bool isMultitrackSelected;
     };
+    QVector<Mlt::Producer> m_producers;
     Selection m_selection;
     Selection m_savedSelection;
     QScopedPointer<Timeline::TrimCommand> m_trimCommand;
