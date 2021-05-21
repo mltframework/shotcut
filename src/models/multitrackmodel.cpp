@@ -1311,6 +1311,22 @@ void MultitrackModel::joinClips(int trackIndex, int clipIndex)
     }
 }
 
+static void moveBeforeFirstAudioFilter(Mlt::Producer* producer)
+{
+    int n = producer->filter_count();
+    int index = 0;
+    for (; index < n; index++) {
+        QScopedPointer<Mlt::Filter> filter(producer->filter(index));
+        if (filter && filter->is_valid() && !filter->get_int("_loader")) {
+            QmlMetadata* meta = MAIN.filterController()->metadataForService(filter.data());
+            if (meta && meta->isAudio()) {
+                break;
+            }
+        }
+    }
+    producer->move_filter(n - 1, index);
+}
+
 void MultitrackModel::fadeIn(int trackIndex, int clipIndex, int duration)
 {
     int i = m_trackList.at(trackIndex).mlt_index;
@@ -1349,6 +1365,7 @@ void MultitrackModel::fadeIn(int trackIndex, int clipIndex, int duration)
                             info->producer->attach(f);
                             filter.reset(new Mlt::Filter(f));
                         }
+                        moveBeforeFirstAudioFilter(info->producer);
                         filter->set_in_and_out(info->frame_in, info->frame_out);
                         emit serviceOutChanged(info->frame_out, filter.data());
                     }
@@ -1458,6 +1475,7 @@ void MultitrackModel::fadeOut(int trackIndex, int clipIndex, int duration)
                             info->producer->attach(f);
                             filter.reset(new Mlt::Filter(f));
                         }
+                        moveBeforeFirstAudioFilter(info->producer);
                         filter->set_in_and_out(info->frame_in, info->frame_out);
                         emit serviceOutChanged(info->frame_out, filter.data());
                     }
