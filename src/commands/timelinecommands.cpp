@@ -77,6 +77,52 @@ void AppendCommand::undo()
     m_undoHelper.undoChanges();
 }
 
+InsertSelectionCommand::InsertSelectionCommand(MultitrackModel &model, QVector<Mlt::Producer> producers, int trackIndex,
+    int position, bool seek, QUndoCommand *parent)
+    : QUndoCommand(parent)
+    , m_model(model)
+    , m_trackIndex(qBound(0, trackIndex, qMax(model.rowCount() - 1, 0)))
+    , m_position(position)
+    , m_undoHelper(m_model)
+    , m_seek(seek)
+    , m_rippleAllTracks(Settings.timelineRippleAllTracks())
+    , m_producers(producers)
+{
+    setText(QObject::tr("Insert into track"));
+}
+
+void InsertSelectionCommand::redo()
+{
+    LOG_DEBUG() << "trackIndex" << m_trackIndex << "position" << m_position;
+    m_undoHelper.recordBeforeState();
+    for (auto& clip : m_producers) {
+        if (clip.type() == mlt_service_playlist_type) {
+            LongUiTask longTask(QObject::tr("Add Files"));
+            Mlt::Playlist playlist(clip);
+            int n = playlist.count();
+            int i = n;
+            while (i--) {
+                QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(i));
+                clip = Mlt::Producer(info->producer);
+                longTask.reportProgress(QFileInfo(ProxyManager::resource(clip)).fileName(), n - i - 1, n);
+                ProxyManager::generateIfNotExists(clip);
+                clip.set_in_and_out(info->frame_in, info->frame_out);
+                m_model.insertClip(m_trackIndex, clip, m_position, m_rippleAllTracks, false);
+            }
+        } else {
+            ProxyManager::generateIfNotExists(clip);
+            m_model.insertClip(m_trackIndex, clip, m_position, m_rippleAllTracks, m_seek);
+        }
+    }
+    m_undoHelper.recordAfterState();
+}
+
+void InsertSelectionCommand::undo()
+{
+    LOG_DEBUG() << "trackIndex" << m_trackIndex << "position" << m_position;
+    m_undoHelper.undoChanges();
+}
+
 InsertCommand::InsertCommand(MultitrackModel &model, int trackIndex,
     int position, const QString &xml, bool seek, QUndoCommand *parent)
     : QUndoCommand(parent)

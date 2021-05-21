@@ -56,6 +56,23 @@ private:
     bool m_skipProxy;
 };
 
+class InsertSelectionCommand : public QUndoCommand
+{
+public:
+    InsertSelectionCommand(MultitrackModel& model, QVector<Mlt::Producer> producers, int trackIndex, int position, bool seek = true, QUndoCommand * parent = 0);
+    void redo();
+    void undo();
+private:
+    MultitrackModel& m_model;
+    int m_trackIndex;
+    int m_position;
+    QStringList m_oldTracks;
+    UndoHelper m_undoHelper;
+    bool m_seek;
+    bool m_rippleAllTracks;
+    QVector<Mlt::Producer> m_producers;
+};
+
 class InsertCommand : public QUndoCommand
 {
 public:
