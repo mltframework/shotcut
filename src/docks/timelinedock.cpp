@@ -698,6 +698,9 @@ void TimelineDock::copyClip()
             p.set_speed(0);
             p.seek(info->frame_in);
             p.set_in_and_out(info->frame_in, info->frame_out);
+            if (m_producers.isEmpty()) {
+                MLT.setSavedProducer(&p);
+            }
             m_producers.push_back(p);
         }
     }
