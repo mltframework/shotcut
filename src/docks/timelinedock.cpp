@@ -1179,6 +1179,9 @@ void TimelineDock::insert(int trackIndex, int position, const QString &xml, bool
                 selectBlocker.reset(new TimelineSelectionBlocker(*this));
             }
         }
+        if (xmlToUse.isEmpty()) {
+            return;
+        }
         if (position < 0)
             position = m_position;
         if (m_model.trackList().size() == 0)
