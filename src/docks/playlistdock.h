@@ -48,6 +48,7 @@ signals:
     void itemActivated(int start);
     void showStatusMessage(QString);
     void addAllTimeline(Mlt::Playlist*, bool skipProxy = false);
+    void playlistSelectionCopied(bool);
 
 public slots:
     void incrementIndex();
@@ -69,6 +70,7 @@ public slots:
     void on_actionSelectNone_triggered();
     void onProducerChanged(Mlt::Producer* producer);
     void on_actionGoto_triggered();
+    void onAddCopiedSelectionToTimeline();
 
 private slots:
     void on_menuButton_clicked();
@@ -155,6 +157,7 @@ private:
     void emitDataChanged(const QVector<int> &roles);
     void setPlaylistIndex(Mlt::Producer* producer, int row);
 
+    Mlt::Playlist m_playlist;
     Ui::PlaylistDock *ui;
     QAbstractItemView *m_view;
     PlaylistIconView *m_iconsView;

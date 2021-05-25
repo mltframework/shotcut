@@ -355,6 +355,8 @@ MainWindow::MainWindow()
     connect(m_timelineDock, SIGNAL(selectionChanged()), SLOT(onTimelineSelectionChanged()));
     connect(m_timelineDock, SIGNAL(clipCopied()), SLOT(onClipCopied()));
     connect(m_timelineDock, SIGNAL(filteredClicked()), SLOT(onFiltersDockTriggered()));
+    connect(m_timelineDock, &TimelineDock::addCopiedSelectionToTimeline, m_playlistDock, &PlaylistDock::onAddCopiedSelectionToTimeline);
+    connect(m_playlistDock, &PlaylistDock::playlistSelectionCopied, this, &MainWindow::onPlaylistSelectionCopied);
     connect(m_playlistDock, SIGNAL(addAllTimeline(Mlt::Playlist*)), SLOT(onTimelineDockTriggered()));
     connect(m_playlistDock, SIGNAL(addAllTimeline(Mlt::Playlist*, bool)), SLOT(onAddAllToTimeline(Mlt::Playlist*, bool)));
     connect(m_player, SIGNAL(previousSought()), m_timelineDock, SLOT(seekPreviousEdit()));
@@ -553,6 +555,11 @@ void MainWindow::onAddAllToTimeline(Mlt::Playlist* playlist, bool skipProxy)
     else
         m_player->stop();
     m_timelineDock->appendFromPlaylist(playlist, skipProxy);
+}
+
+void MainWindow::onPlaylistSelectionCopied(bool copied)
+{
+    m_timelineDock->setCopiedFromPlaylist(copied);
 }
 
 MainWindow& MainWindow::singleton()

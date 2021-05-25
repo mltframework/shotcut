@@ -79,6 +79,7 @@ public:
     Q_INVOKABLE static void openProperties();
     void emitSelectedChanged(const QVector<int> &roles);
     void replaceClipsWithHash(const QString& hash, Mlt::Producer& producer);
+    void setCopiedFromPlaylist(bool copied);
 
 signals:
     void currentTrackChanged();
@@ -105,6 +106,7 @@ signals:
     void resetZoom();
     void makeTracksShorter();
     void makeTracksTaller();
+    void addCopiedSelectionToTimeline();
 
 public slots:
     void addAudioTrack();
@@ -187,6 +189,7 @@ private:
     int m_trimDelta;
     int m_transitionDelta;
     bool m_blockSetSelection;
+    bool m_isCopiedFromPlaylist;
 
 private slots:
     void load(bool force = false);

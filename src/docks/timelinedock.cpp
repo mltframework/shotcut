@@ -47,7 +47,8 @@ TimelineDock::TimelineDock(QWidget *parent) :
     m_ignoreNextPositionChange(false),
     m_trimDelta(0),
     m_transitionDelta(0),
-    m_blockSetSelection(false)
+    m_blockSetSelection(false),
+    m_isCopiedFromPlaylist(false)
 {
     LOG_DEBUG() << "begin";
     m_selection.selectedTrack = -1;
@@ -683,6 +684,8 @@ void TimelineDock::copyClip()
     if (selection().isEmpty())
             return;
 
+    setCopiedFromPlaylist(false);
+
     m_producers.clear();
 
     //preserve the order of the clips in the timeline
@@ -899,6 +902,11 @@ void TimelineDock::replace(int trackIndex, int clipIndex, const QString& xml)
     } else if (!MLT.isSeekableClip()) {
         emitNonSeekableWarning();
     }
+}
+
+void TimelineDock::setCopiedFromPlaylist(bool copied)
+{
+    m_isCopiedFromPlaylist = copied;
 }
 
 void TimelineDock::setTrackName(int trackIndex, const QString &value)
@@ -1158,6 +1166,11 @@ static QString convertUrlsToXML(const QString& xml)
 
 void TimelineDock::insert(int trackIndex, int position, const QString &xml, bool seek)
 {
+    if(m_isCopiedFromPlaylist) {
+        emit addCopiedSelectionToTimeline();
+        return;
+    }
+
     if (m_producers.isEmpty()) {
         return;
     }
@@ -1195,6 +1208,7 @@ void TimelineDock::selectClip(int trackIndex, int clipIndex)
 
 void TimelineDock::onMultitrackClosed()
 {
+    setCopiedFromPlaylist(false);
     m_producers.clear();
     m_position = -1;
     m_ignoreNextPositionChange = false;

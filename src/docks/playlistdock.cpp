@@ -1078,6 +1078,23 @@ void PlaylistDock::on_actionCopy_triggered()
         delete i;
         m_iconsView->resetMultiSelect();
     }
+
+    const QModelIndexList& indexes = m_view->selectionModel()->selectedIndexes();
+    m_playlist.clear();
+    foreach (auto index, indexes) {
+        if (index.column()) continue;
+        QScopedPointer<Mlt::ClipInfo> info(m_model.playlist()->clip_info(index.row()));
+        if (info && info->producer) {
+            m_playlist.append(*info->producer, info->frame_in, info->frame_out);
+        }
+    }
+
+    emit playlistSelectionCopied(true);
+}
+
+void PlaylistDock::onAddCopiedSelectionToTimeline()
+{
+    emit addAllTimeline(&m_playlist);
 }
 
 void PlaylistDock::on_actionPlayAfterOpen_triggered(bool checked)

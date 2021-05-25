@@ -285,6 +285,7 @@ private slots:
     void onFocusWindowChanged(QWindow *window) const;
     void onTimelineClipSelected();
     void onAddAllToTimeline(Mlt::Playlist* playlist, bool skipProxy);
+    void onPlaylistSelectionCopied(bool);
     void on_actionScrubAudio_triggered(bool checked);
 #if !defined(Q_OS_MAC)
     void onDrawingMethodTriggered(QAction*);
