@@ -186,6 +186,13 @@ void NewProjectFolder::on_startButton_clicked()
     QDir dir(Settings.projectsFolder());
     QString projectName = m_projectName;
     QString fileName = projectName;
+
+    if (projectName.contains('/') || projectName.contains('\\')) {
+        QMessageBox::warning(this, ui->newProjectLabel->text(), tr("The project name cannot include a slash."));
+        ui->startButton->setDisabled(true);
+        return;
+    }
+
     if (projectName.endsWith(".mlt"))
         projectName = projectName.mid(0, projectName.length() - 4);
     else
