@@ -1158,6 +1158,10 @@ static QString convertUrlsToXML(const QString& xml)
 
 void TimelineDock::insert(int trackIndex, int position, const QString &xml, bool seek)
 {
+    if (m_producers.isEmpty()) {
+        return;
+    }
+
     // Validations
     if (trackIndex < 0)
         trackIndex = currentTrack();
@@ -1191,6 +1195,7 @@ void TimelineDock::selectClip(int trackIndex, int clipIndex)
 
 void TimelineDock::onMultitrackClosed()
 {
+    m_producers.clear();
     m_position = -1;
     m_ignoreNextPositionChange = false;
     m_trimDelta = 0;
