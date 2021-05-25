@@ -674,7 +674,7 @@ Item {
         }
         Shotcut.UndoButton {
             enabled: scaleSlider.enabled
-            onClicked: sizeUndoButton.clicked()
+            onClicked: scaleSlider.value = 100
         }
 
         Label {

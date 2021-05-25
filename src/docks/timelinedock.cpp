@@ -1178,7 +1178,7 @@ void TimelineDock::insert(int trackIndex, int position, const QString &xml, bool
         properties.set(kShotcutSkipConvertProperty, 1);
         MAIN.open(Util::removeFileScheme(url), &properties, false /* play */ );
     }
-
+  
     if (position < 0)
         position = m_position;
     if (m_model.trackList().size() == 0)

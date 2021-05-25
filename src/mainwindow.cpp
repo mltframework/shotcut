@@ -3693,25 +3693,19 @@ void MainWindow::restartAfterChangeTheme()
 
 void MainWindow::on_actionSystemTheme_triggered()
 {
-    changeTheme("system");
-    QApplication::setPalette(QApplication::style()->standardPalette());
     Settings.setTheme("system");
     restartAfterChangeTheme();
 }
 
 void MainWindow::on_actionFusionDark_triggered()
 {
-    changeTheme("dark");
     Settings.setTheme("dark");
-    ui->mainToolBar->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
     restartAfterChangeTheme();
 }
 
 void MainWindow::on_actionFusionLight_triggered()
 {
-    changeTheme("light");
     Settings.setTheme("light");
-    ui->mainToolBar->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
     restartAfterChangeTheme();
 }
 

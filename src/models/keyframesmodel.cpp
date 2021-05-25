@@ -250,7 +250,9 @@ bool KeyframesModel::remove(int parameterIndex, int keyframeIndex)
     if (m_filter && parameterIndex < m_propertyNames.count()) {
         QString name = m_propertyNames[parameterIndex];
         Mlt::Animation animation = m_filter->getAnimation(name);
-        if (animation.is_valid()) {
+        // Do not allow the user to delete the last keyframe.
+        // Keyframes should be disabled in the filter panel instead
+        if (animation.is_valid() && animation.key_count() > 1) {
             int frame_num = animation.key_get_frame(keyframeIndex);
             error = animation.remove(frame_num);
             if (!error) {
