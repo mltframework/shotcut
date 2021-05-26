@@ -150,7 +150,12 @@ public:
     {
         int height = PlaylistModel::THUMBNAIL_HEIGHT * 2;
         int width = PlaylistModel::THUMBNAIL_WIDTH * 2;
-        return MLT.image(*tempProducer(), frameNumber, width, height);
+        auto producer = tempProducer();
+        if (producer && producer->is_valid()) {
+            return MLT.image(*tempProducer(), frameNumber, width, height);
+        } else {
+            return QImage();
+        }
     }
 
 signals:
