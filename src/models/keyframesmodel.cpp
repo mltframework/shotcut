@@ -275,6 +275,7 @@ bool KeyframesModel::remove(int parameterIndex, int keyframeIndex)
                     modelIndex = index(keyframeIndex, 0, index(parameterIndex));
                     emit dataChanged(modelIndex, modelIndex, QVector<int>() << MinimumFrameRole);
                 }
+                emit dataChanged(index(parameterIndex), index(parameterIndex), QVector<int>() << LowestValueRole << HighestValueRole);
                 emit m_filter->changed();
             }
         }
@@ -504,6 +505,7 @@ void KeyframesModel::setKeyframeValue(int parameterIndex, int keyframeIndex, dou
     emit m_filter->propertyChanged(name.toUtf8().constData());
     QModelIndex modelIndex = index(keyframeIndex, 0, index(parameterIndex));
     emit dataChanged(modelIndex, modelIndex, QVector<int>() << NumericValueRole << NameRole);
+    emit dataChanged(index(parameterIndex), index(parameterIndex), QVector<int>() << LowestValueRole << HighestValueRole);
 }
 
 void KeyframesModel::setKeyframeValuePosition(int parameterIndex, int keyframeIndex, double value, int position)
@@ -560,6 +562,7 @@ void KeyframesModel::setKeyframeValuePosition(int parameterIndex, int keyframeIn
     roles << NumericValueRole << NameRole;
     QModelIndex modelIndex = index(keyframeIndex, 0, index(parameterIndex));
     emit dataChanged(modelIndex, modelIndex, roles);
+    emit dataChanged(index(parameterIndex), index(parameterIndex), QVector<int>() << LowestValueRole << HighestValueRole);
 }
 
 bool KeyframesModel::isKeyframe(int parameterIndex, int position)
