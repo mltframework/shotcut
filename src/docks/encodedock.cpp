@@ -344,6 +344,7 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties& preset)
                 ui->interpolationCombo->setCurrentIndex(3);
         }
         else if (name != "an" && name != "vn" && name != "threads"
+                 && !(name == "frame_rate_den" && preset.property_exists("frame_rate_num"))
                  && !name.startsWith('_') && !name.startsWith("meta.preset.")) {
             other.append(QString("%1=%2").arg(name).arg(preset.get(i)));
         }
