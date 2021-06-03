@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2020 Meltytech, LLC
+ * Copyright (c) 2012-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -618,7 +618,7 @@ void Player::onProducerOpened(bool play)
             QTimer::singleShot(500, this, SLOT(postProducerOpened()));
         } else {
             if (MLT.consumer()->is_stopped()) {
-                this->play();
+                QTimer::singleShot(500, this, SLOT(play()));
             } else {
                 // This seek purges the consumer to prevent latent end-of-stream detection.
                 seek(0);
