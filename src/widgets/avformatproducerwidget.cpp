@@ -120,6 +120,7 @@ AvformatProducerWidget::AvformatProducerWidget(QWidget *parent)
     ui->timelineDurationText->setFixedWidth(ui->durationSpinBox->width());
     ui->filenameLabel->setFrame(true);
     Util::setColorsToHighlight(ui->filenameLabel, QPalette::Base);
+    connect(ui->applySpeedButton, SIGNAL(clicked()), SLOT(on_speedSpinBox_editingFinished()));
     if (Settings.playerGPU())
         connect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame&)), this, SLOT(onFrameDisplayed(const SharedFrame&)));
     else
