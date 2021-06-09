@@ -614,7 +614,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Hyper/Lanczos (best)</string>
+    <string notr="true">Lanczos (best)</string>
    </property>
   </action>
   <action name="actionProfileAutomatic">

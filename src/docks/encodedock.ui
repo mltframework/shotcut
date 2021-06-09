@@ -666,7 +666,7 @@
                      </item>
                      <item>
                       <property name="text">
-                       <string>Hyper/Lanczos (best)</string>
+                       <string notr="true">Lanczos (best)</string>
                       </property>
                      </item>
                     </widget>
