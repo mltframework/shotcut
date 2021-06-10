@@ -378,24 +378,24 @@ void PlaylistDock::on_actionInsertCut_triggered()
 
 void PlaylistDock::on_actionAppendCut_triggered()
 {
-    if (MLT.producer() && MLT.producer()->is_valid() && !MAIN.isSourceClipMyProject()) {
+    Mlt::Producer producer(MLT.isClip()? MLT.producer() : MLT.savedProducer());
+    if (producer.is_valid() && !MAIN.isSourceClipMyProject()) {
         if (MLT.isSeekableClip()
             || (MLT.savedProducer() && MLT.isSeekable(MLT.savedProducer()))) {
-            Mlt::Producer producer(MLT.isClip()? MLT.producer() : MLT.savedProducer());
             ProxyManager::generateIfNotExists(producer);
             MAIN.undoStack()->push(
                 new Playlist::AppendCommand(m_model, MLT.XML(&producer)));
-            setPlaylistIndex(MLT.producer(), m_model.playlist()->count() - 1);
+            setPlaylistIndex(&producer, m_model.playlist()->count() - 1);
             setUpdateButtonEnabled(true);
         } else {
             DurationDialog dialog(this);
             dialog.setDuration(MLT.profile().fps() * 5);
             if (dialog.exec() == QDialog::Accepted) {
-                MLT.producer()->set_in_and_out(0, dialog.duration() - 1);
-                if (MLT.producer()->get("mlt_service") && !strcmp(MLT.producer()->get("mlt_service"), "avformat"))
-                    MLT.producer()->set("mlt_service", "avformat-novalidate");
+                producer.set_in_and_out(0, dialog.duration() - 1);
+                if (producer.get("mlt_service") && !strcmp(producer.get("mlt_service"), "avformat"))
+                    producer.set("mlt_service", "avformat-novalidate");
                 MAIN.undoStack()->push(new Playlist::AppendCommand(m_model, MLT.XML()));
-                setPlaylistIndex(MLT.producer(), m_model.playlist()->count() - 1);
+                setPlaylistIndex(&producer, m_model.playlist()->count() - 1);
                 setUpdateButtonEnabled(true);
             }
         }
@@ -426,14 +426,16 @@ void PlaylistDock::on_actionAppendBlank_triggered()
 void PlaylistDock::on_actionUpdate_triggered()
 {
     QModelIndex index = m_view->currentIndex();
-    if (!index.isValid() || !m_model.playlist()) return;
-    Mlt::ClipInfo* info = m_model.playlist()->clip_info(index.row());
-    if (!info || MAIN.isSourceClipMyProject()) return;
-    if (MLT.producer()->type() != mlt_service_playlist_type) {
-        if (MLT.isSeekable()) {
-            ProxyManager::generateIfNotExists(*MLT.producer());
-            MAIN.undoStack()->push(new Playlist::UpdateCommand(m_model, MLT.XML(), index.row()));
-            setPlaylistIndex(MLT.producer(), index.row());
+    if (!index.isValid() || !m_model.playlist() || MAIN.isSourceClipMyProject()) return;
+    QScopedPointer<Mlt::ClipInfo> info(m_model.playlist()->clip_info(index.row()));
+    Mlt::Producer producer(MLT.isClip()? MLT.producer() : MLT.savedProducer());
+    if (!info || !producer.is_valid()) return;
+    if (producer.type() != mlt_service_playlist_type) {
+        if (MLT.isSeekableClip()
+                || (MLT.savedProducer() && MLT.isSeekable(MLT.savedProducer()))) {
+            ProxyManager::generateIfNotExists(producer);
+            MAIN.undoStack()->push(new Playlist::UpdateCommand(m_model, MLT.XML(&producer), index.row()));
+            setPlaylistIndex(&producer, index.row());
             setUpdateButtonEnabled(true);
         }
         else {
@@ -441,11 +443,11 @@ void PlaylistDock::on_actionUpdate_triggered()
             DurationDialog dialog(this);
             dialog.setDuration(info->frame_count);
             if (dialog.exec() == QDialog::Accepted) {
-                MLT.producer()->set_in_and_out(0, dialog.duration() - 1);
-                if (MLT.producer()->get("mlt_service") && !strcmp(MLT.producer()->get("mlt_service"), "avformat"))
-                    MLT.producer()->set("mlt_service", "avformat-novalidate");
+                producer.set_in_and_out(0, dialog.duration() - 1);
+                if (producer.get("mlt_service") && !strcmp(producer.get("mlt_service"), "avformat"))
+                    producer.set("mlt_service", "avformat-novalidate");
                 MAIN.undoStack()->push(new Playlist::UpdateCommand(m_model, MLT.XML(), index.row()));
-                setPlaylistIndex(MLT.producer(), index.row());
+                setPlaylistIndex(&producer, index.row());
                 setUpdateButtonEnabled(true);
             }
         }
@@ -454,7 +456,6 @@ void PlaylistDock::on_actionUpdate_triggered()
         emit showStatusMessage(tr("You cannot insert a playlist into a playlist!"));
         setUpdateButtonEnabled(false);
     }
-    delete info;
 }
 
 void PlaylistDock::on_removeButton_clicked()
