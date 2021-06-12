@@ -850,24 +850,22 @@ void AnalyzeDelegate::onAnalyzeFinished(AbstractJob *job, bool isSuccess)
             }
     
             // Locate filters in memory by UUID.
-            FindFilterParser graphParser(m_uuid);
             if (MAIN.isMultitrackValid()) {
+                FindFilterParser graphParser(m_uuid);
                 graphParser.start(*MAIN.multitrack());
                 foreach (Mlt::Filter filter, graphParser.filters())
                     updateFilter(filter, results);
             }
             if (MAIN.playlist() && MAIN.playlist()->count() > 0) {
+                FindFilterParser graphParser(m_uuid);
                 graphParser.start(*MAIN.playlist());
                 foreach (Mlt::Filter filter, graphParser.filters())
                     updateFilter(filter, results);
             }
-            if (MLT.producer() && MLT.producer()->is_valid()) {
-                graphParser.start(*MLT.producer());
-                foreach (Mlt::Filter filter, graphParser.filters())
-                    updateFilter(filter, results);
-            }
-            if (MLT.savedProducer() && MLT.savedProducer()->is_valid()) {
-                graphParser.start(*MLT.savedProducer());
+            Mlt::Producer producer(MLT.isClip()? MLT.producer() : MLT.savedProducer());
+            if (producer.is_valid()) {
+                FindFilterParser graphParser(m_uuid);
+                graphParser.start(producer);
                 foreach (Mlt::Filter filter, graphParser.filters())
                     updateFilter(filter, results);
             }
