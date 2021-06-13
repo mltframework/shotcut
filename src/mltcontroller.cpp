@@ -192,7 +192,9 @@ bool Controller::openXML(const QString &filename)
 
 void Controller::close()
 {
-    if (m_consumer && !m_consumer->is_stopped()) {
+    if (m_profile.is_explicit()) {
+        pause();
+    } else if (m_consumer && !m_consumer->is_stopped()) {
         m_consumer->stop();
     }
     if (isSeekableClip()) {
