@@ -133,7 +133,7 @@ public:
         for (; i < width(); ++i)
         {
             int idx = inPoint + int(i * indicesPrPixel);
-            if (idx + 1 >= data.length())
+            if ((idx < 0) || (idx + 2 >= data.length()))
                 break;
             qreal level = qMax(data.at(idx).toReal(), data.at(idx + 1).toReal()) / 256;
             path.lineTo(i, height() - level * height());
