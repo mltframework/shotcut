@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2021 Meltytech, LLC
+ * Copyright (c) 2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,22 +27,17 @@ import QtQml.Models 2.12
 Item {
 	id: gpsTextRoot
 	width: 300
-    height: 800
+	height: 800
 	
 	property url settingsOpenPath: 'file:///' + settings.openPath
 	Shotcut.File { id: gpsFile }
-	
-	// This signal is used to workaround context properties not available in
-	// the FileDialog onAccepted signal handler on Qt 5.5.
-	signal fileOpened(string path)
-	onFileOpened: settings.openPath = path
 	
 	Component.onCompleted: {
 		var resource = filter.get('gps.file')
 		gpsFile.url = resource
 		
 		filter.blockSignals = true
-	        
+
 		filter.set(textFilterUi.middleValue, Qt.rect(0, 0, profile.width, profile.height))
 		filter.set(textFilterUi.startValue, Qt.rect(0, 0, profile.width, profile.height))
 		filter.set(textFilterUi.endValue, Qt.rect(0, 0, profile.width, profile.height))
@@ -68,6 +63,8 @@ Item {
 			filter.set(textFilterUi.halignProperty, 'left')
 			filter.set(textFilterUi.rectProperty, '10%/10%:80%x80%')
 			filter.savePreset(presetParams)
+			
+			filter.set(textFilterUi.rectProperty, filter.getRect(textFilterUi.rectProperty))
 		} else {
 			filter.set(textFilterUi.middleValue, filter.getRect(textFilterUi.rectProperty, filter.animateIn + 1))
 			if (filter.animateIn > 0)
@@ -75,20 +72,31 @@ Item {
 			if (filter.animateOut > 0)
 				filter.set(textFilterUi.endValue, filter.getRect(textFilterUi.rectProperty, filter.duration - 1))
 		}
-		filter.blockSignals = false
-		setControls()
-		
-		if (filter.isNew)
-			filter.set(textFilterUi.rectProperty, filter.getRect(textFilterUi.rectProperty))
-			
-		if (gpsFile.exists()) {
-			fileLabel.text = gpsFile.fileName
-			fileLabelTip.text = gpsFile.filePath
-		} else {
-			fileLabel.text = qsTr("No File Loaded")
-			fileLabel.color = 'red'
-			fileLabelTip.text = qsTr('No GPS file loaded.\nClick "Open" to load a file.')
+
+		//gps properties
+		if (filter.isNew) {
+			filter.set('major_offset', 0);
+			filter.set('minor_offset', 0);
+			filter.set('majoroffset_sign', 1);
+			filter.set('smoothing_value', 5);
+			filter.set('videofile_timezone_seconds', 0);
+			if (filter.get('gps_start_text') == '')
+				filter.set('gps_processing_start_time', 'yyyy-MM-dd hh:mm:ss');
+			else
+				filter.set('gps_processing_start_time', filter.get('gps_start_text'));
+			set_sec_offset_to_textfields(0);
+			filter.set('speed_multiplier', 1)
+			filter.set('updates_per_second', 1);
 		}
+		else {
+			if (filter.get('gps_processing_start_time') == 'yyyy-MM-dd hh:mm:ss' && filter.get('gps_start_text') != '')
+				filter.set('gps_processing_start_time', filter.get('gps_start_text'));
+		}
+		
+		filter.blockSignals = false
+
+		setControls();
+		gps_setControls();
 	}
 
 	FileDialog {
@@ -100,14 +108,14 @@ Item {
 		nameFilters: ['Supported files (*.gpx *.tcx)', 'GPS Exchange Format (*.gpx)', 'Training Center XML (*.tcx)']
 		onAccepted: {
 			gpsFile.url = fileDialog.fileUrl
-			gpsTextRoot.fileOpened(gpsFile.path)
 			fileLabel.text = gpsFile.fileName
 			fileLabel.color = activePalette.text
 			fileLabelTip.text = gpsFile.filePath
 			filter.set('gps.file', gpsFile.url)
-			gpsFinishParseTimer.restart()
 			filter.set('gps_start_text', '')
 			filter.set('gps_processing_start_time', 'yyyy-MM-dd hh:mm:ss');
+			gpsFinishParseTimer.restart()
+			settings.openPath = path
 		}
 	}
 	
@@ -123,10 +131,10 @@ Item {
 			case 31: return 7;
 			case 63: return 8;
 			case 127: return 9;
-            default: {
-                console.log("default switch, val= " + val);
-                return 0;
-            }
+			default: {
+				console.log("default switch, val= " + val);
+				return 0;
+			}
 		}
 	}
 	
@@ -142,52 +150,59 @@ Item {
 				calls += 1;
 				if (calls > 10) {
 					gpsFinishParseTimer.stop();
-					setControls();
 					calls = 0;
+					gps_setControls();
 				}
 			}
 			else {
 				gpsFinishParseTimer.stop();
 				calls = 0;
-				setControls();
+				filter.set('gps_processing_start_time', filter.get('gps_start_text'));
+				gps_setControls();
 			}
 		}
 	}
 
-    //set all textbox values at start or on refresh
 	function setControls() {
 		textArea.text = filter.get('argument');
 		textFilterUi.setControls();
-		
+
+		//gps properties
 		if (filter.isNew) {
-			filter.set('major_offset', 0);
-			filter.set('minor_offset', 0);
-			filter.set('majoroffset_sign', 1);
-			filter.set('smoothing_value', 5);
-            filter.set('videofile_timezone_seconds', 0);
-			if (filter.get('gps_start_text') == '')
-				filter.set('gps_processing_start_time', 'yyyy-MM-dd hh:mm:ss');
-			else 
-				filter.set('gps_processing_start_time', filter.get('gps_start_text'));
 			set_sec_offset_to_textfields(0);
-			filter.set('speed_multiplier', 1)
-            filter.set('updates_per_second', 1);
 		}
 		else {
 			set_sec_offset_to_textfields(filter.get('major_offset'));
 			combo_smoothing.currentIndex = smooth_value_to_index(filter.get('smoothing_value'));
-			gps_processing_start.text = filter.get('gps_processing_start_time');
-			if (filter.get('gps_processing_start_time') == 'yyyy-MM-dd hh:mm:ss' && filter.get('gps_start_text') != '')
-				filter.set('gps_processing_start_time', filter.get('gps_start_text'));
-				
 		}
-			
+
+		if (filter.get('gps_start_text') == '')
+			filter.set('gps_processing_start_time', 'yyyy-MM-dd hh:mm:ss');
+		else
+			filter.set('gps_processing_start_time', filter.get('gps_start_text'));
+
 		speed_multiplier.text = filter.get('speed_multiplier');
 		video_start.text = filter.get('video_start_text');
 		gps_start.text = filter.get('gps_start_text');
 		offset_slider.value = filter.get('minor_offset');
+	}
+
+	function gps_setControls() {
+		if (gpsFile.exists()) {
+			fileLabel.text = gpsFile.fileName
+			fileLabelTip.text = gpsFile.filePath
+		} else {
+			fileLabel.text = qsTr("No File Loaded")
+			fileLabel.color = 'red'
+			fileLabelTip.text = qsTr('No GPS file loaded.\nClick "Open" to load a file.')
+		}
+
+		video_start.text = filter.get('video_start_text');
+		gps_start.text = filter.get('gps_start_text');
+		if (filter.get('gps_processing_start_time') == 'yyyy-MM-dd hh:mm:ss' && filter.get('gps_start_text') != '')
+			filter.set('gps_processing_start_time', filter.get('gps_start_text'));
 		gps_processing_start.text = filter.get('gps_processing_start_time');
-	}	
+	}
 	
 	//this function combines the text values from sign combobox * days/hours/mins/sec TextFields into an int
 	function recompute_major_offset() {
@@ -196,7 +211,7 @@ Item {
 						 parseInt(Number(offset_mins.text), 10)*60 +
 						 parseInt(Number(offset_secs.text), 10);
 		offset_sec *= parseInt(filter.get('majoroffset_sign'), 10);
-		filter.set('major_offset', offset_sec)
+		filter.set('major_offset', Number(offset_sec).toFixed(0))
 	}
 	
 	//updates text values in each TextField.text to individual parts of the number 
@@ -218,13 +233,13 @@ Item {
 		offset_mins.text = parseInt( Math.abs(secs)/60%60 , 10 )
 		offset_secs.text = parseInt( Math.abs(secs)%60 , 10 )
 		
-		filter.set('major_offset', secs)
+		filter.set('major_offset', Number(secs).toFixed(0))
 	}
 	
 	
 	
 	GridLayout {
-		id: textGrid
+		id: mainGrid
 		columns: 2
 		anchors.fill: parent
 		anchors.margins: 8
@@ -258,33 +273,33 @@ Item {
 		RowLayout {
 			width: 300
 			Layout.columnSpan: 2
-	        
-			Label {
-	            text: qsTr('Video start time:')
-				leftPadding: 10
-	            Layout.alignment: Qt.AlignRight
-	            Shotcut.HoverTip { text: qsTr('DateTime for the video file') }
-	        } Label {
-	            id: video_start
-	            text: filter.get('video_start_text')
-	            Layout.alignment: Qt.AlignLeft
-	            Layout.columnSpan: 1
-	            Shotcut.HoverTip { text: "This time will be used for synchronization.\nLikely in UTC or local time." }
-	        }
 			
 			Label {
-	            id: start_location_datetime
-	            text: qsTr('GPS start time:')
+				text: qsTr('Video start time:')
+				leftPadding: 10
+				Layout.alignment: Qt.AlignRight
+				Shotcut.HoverTip { text: qsTr('DateTime for the video file') }
+			} Label {
+				id: video_start
+				text: filter.get('video_start_text')
+				Layout.alignment: Qt.AlignLeft
+				Layout.columnSpan: 1
+				Shotcut.HoverTip { text: "This time will be used for synchronization.\nLikely in UTC or local time." }
+			}
+			
+			Label {
+				id: start_location_datetime
+				text: qsTr('GPS start time:')
 				leftPadding: 20
-	            Layout.alignment: Qt.AlignRight
-	            Shotcut.HoverTip { text: qsTr('DateTime for the GPS file') }
-	        } Label {
-	            id: gps_start
-	            text: filter.get('gps_start_text')
-	            Layout.alignment: Qt.AlignLeft
-	            Layout.columnSpan: 1
-	            Shotcut.HoverTip { text: qsTr('This time will be used for synchronization.\nAlways in UTC timezone.') }
-	        }
+				Layout.alignment: Qt.AlignRight
+				Shotcut.HoverTip { text: qsTr('DateTime for the GPS file') }
+			} Label {
+				id: gps_start
+				text: filter.get('gps_start_text')
+				Layout.alignment: Qt.AlignLeft
+				Layout.columnSpan: 1
+				Shotcut.HoverTip { text: qsTr('This time will be used for synchronization.\nAlways in UTC timezone.') }
+			}
 		}
 		
 		Label {
@@ -406,7 +421,7 @@ Item {
 				Shotcut.UndoButton {
 					onClicked: {
 						set_sec_offset_to_textfields(0);
-						offset_secs.text = 0; 
+						//offset_secs.text = 0; 
 					}
 				}
 			}
@@ -417,7 +432,7 @@ Item {
 			text: qsTr('GPS minor offset')
 			Layout.alignment: Qt.AlignRight
 			leftPadding: 10
-			Shotcut.HoverTip { text: qsTr('This value is also added to gps time to sync with video time: ') }
+			Shotcut.HoverTip { text: qsTr('This value is also added to gps time to sync with video time') }
 		} 
 		RowLayout {
 			Shotcut.SliderSpinner {
@@ -427,9 +442,9 @@ Item {
 				Layout.maximumWidth: 300
 				implicitWidth: 300
 				suffix: ' seconds'
-		        onValueChanged: {
-		            filter.set('minor_offset', value)
-		        }
+				onValueChanged: {
+					filter.set('minor_offset', value)
+				}
 			}
 			Shotcut.Button {
 				icon.source: 'qrc:///icons/dark/32x32/lift'
@@ -470,35 +485,35 @@ Item {
 				implicitWidth: 300
 				id: combo_smoothing
 				model: 
-					[   qsTr('0 (raw data)'), 					//0
-				   		qsTr('1 (interpolate missing data)'),	//1
-		                qsTr('3 points'),						//2
-		                qsTr('5 points (recommended)'),			//3
-		                qsTr('7 points'),						//4
-		                qsTr('11 points'),						//5
-		                qsTr('15 points'),						//6
-		                qsTr('31 points'),						//7
-		                qsTr('63 points'),						//8
-		                qsTr('127 points')						//9
-	                ]
+					[	qsTr('0 (raw data)'),					//0
+						qsTr('1 (interpolate missing data)'),	//1
+						qsTr('3 points'),						//2
+						qsTr('5 points'),						//3
+						qsTr('7 points'),						//4
+						qsTr('11 points'),						//5
+						qsTr('15 points'),						//6
+						qsTr('31 points'),						//7
+						qsTr('63 points'),						//8
+						qsTr('127 points')						//9
+					]
 				Shotcut.HoverTip { text: qsTr('Smoothing is done by taking the average of X points.\nInterpolation is linearly done for missing values of altitude or heart rate.\nGPS data (speed, distance etc) computing is done only for smoothing > 0') }
 				currentIndex: 3
 				onActivated: {
 					switch (currentIndex) {
 						case 0:
-	                		onClicked: filter.set('smoothing_value', 0)
+							onClicked: filter.set('smoothing_value', 0)
 							break
 						case 1:
-	                		onClicked: filter.set('smoothing_value', 1)
+							onClicked: filter.set('smoothing_value', 1)
 							break
 						case 2:
-	                		onClicked: filter.set('smoothing_value', 3)
+							onClicked: filter.set('smoothing_value', 3)
 							break
 						case 3:
-	                		onClicked: filter.set('smoothing_value', 5)
+							onClicked: filter.set('smoothing_value', 5)
 							break
 						case 4:
-	                		onClicked: filter.set('smoothing_value', 7)
+							onClicked: filter.set('smoothing_value', 7)
 							break
 						case 5:
 							onClicked: filter.set('smoothing_value', 11)
@@ -535,23 +550,23 @@ Item {
 			Label {
 				text: qsTr('Start processing at')
 				leftPadding: 10
-	            Layout.alignment: Qt.AlignRight
+				Layout.alignment: Qt.AlignRight
 				Shotcut.HoverTip { text: qsTr('GPS distances are calculated since the start of gps file, if you want to ignore the begining (for example when tracking a single lap) you can set here the time to start processing (UTC).') }
-	        }
-	    	TextField {
-	    		id: gps_processing_start
-	    		text: 'yyyy-MM-dd hh:mm:ss'
-	            horizontalAlignment: TextInput.AlignRight
-	            //TODO: regex to validate date yyyy-MM-dd hh:mm:ss
-	    		implicitWidth: 128
+			}
+			TextField {
+				id: gps_processing_start
+				text: 'yyyy-MM-dd hh:mm:ss'
+				horizontalAlignment: TextInput.AlignRight
+				//TODO: regex to validate date yyyy-MM-dd hh:mm:ss
+				implicitWidth: 128
 				Shotcut.HoverTip { text: qsTr('Insert a date and time formatted as: YYYY-MM-DD HH:MM:SS (all fields mandatory), UTC timezone - same as GPS (use #gps_datetime_now# in filter to get current time).') }
-	        	onEditingFinished: filter.set('gps_processing_start_time', gps_processing_start.text);
-	    	}
+				onEditingFinished: filter.set('gps_processing_start_time', gps_processing_start.text);
+			}
 			Shotcut.UndoButton {
 				onClicked: {
 					gps_processing_start.text = filter.get('gps_start_text');
 					filter.set('gps_processing_start_time', filter.get('gps_start_text'));
-		    	}
+				}
 			}
 			/*
 			//TODO: button to set current time as processing start (need to somehow convert current gps time to proper datetime)
@@ -569,8 +584,8 @@ Item {
 					gps_processing_start.text = d.toUTCString();
 				}
 			}
-            */
-        }
+			*/
+		}
 				
 		Label {
 			topPadding: 10
@@ -640,7 +655,7 @@ Item {
 							text = text.substring(0, maxLength)
 							cursorPosition = maxLength
 						}
-                        if (!parseInt(filter.get(textFilterUi.useFontSizeProperty), 10))
+						if (!parseInt(filter.get(textFilterUi.useFontSizeProperty), 10))
 							filter.set('size', profile.height / text.split('\n').length)
 						filter.set('argument', text)
 					}
@@ -675,36 +690,36 @@ Item {
 				Shotcut.HoverTip { text: qsTr('Extra arguments can be added inside keywords:\nSupported distance units: m [km|ft|mi]\nSupported speed units: km/h [m/s|ft/s|mi/h]\nDefault time format is: %Y-%m-%d %H:%M:%S, time offset can be added with +/-seconds, ie: +3600\nUse RAW keyword to use the unprocessed values from file, #gps_lat RAW#') }
 				implicitWidth: 300
 				model: 
-					[   qsTr('GPS latitude'),					//0
-				   		qsTr('GPS longitude'),					//1
-		                qsTr('Elevation (m)'),					//2
-		                qsTr('Speed (km/h)'),					//3
-		                qsTr('Distance (m)'),					//4
-		                qsTr('GPS date-time'),					//5
-		                qsTr('Video file date-time'),			//6
-		                qsTr('Heart-rate (bpm)'),				//7
-		                qsTr('Bearing (degrees)'),				//8
-		                qsTr('Bearing (compass)'),				//9
-		                qsTr('Elevation gain (m)'),				//10
-		                qsTr('Elevation loss (m)'),				//11
-		                qsTr('Distance uphill (m)'),			//12
-		                qsTr('Distance downhill (m)'),			//13
-		                qsTr('Distance flat (m)')				//14
-	                ]	
-		                
+					[	qsTr('GPS latitude'),					//0
+						qsTr('GPS longitude'),					//1
+						qsTr('Elevation (m)'),					//2
+						qsTr('Speed (km/h)'),					//3
+						qsTr('Distance (m)'),					//4
+						qsTr('GPS date-time'),					//5
+						qsTr('Video file date-time'),			//6
+						qsTr('Heart-rate (bpm)'),				//7
+						qsTr('Bearing (degrees)'),				//8
+						qsTr('Bearing (compass)'),				//9
+						qsTr('Elevation gain (m)'),				//10
+						qsTr('Elevation loss (m)'),				//11
+						qsTr('Distance uphill (m)'),			//12
+						qsTr('Distance downhill (m)'),			//13
+						qsTr('Distance flat (m)')				//14
+					]	
+						
 				onActivated: {
 					switch (currentIndex) {
 						case 0:
-	                		onClicked: textArea.insert(textArea.cursorPosition, '#gps_lat#')
+							onClicked: textArea.insert(textArea.cursorPosition, '#gps_lat#')
 							break
 						case 1:
-	                		onClicked: textArea.insert(textArea.cursorPosition, '#gps_lon#')
+							onClicked: textArea.insert(textArea.cursorPosition, '#gps_lon#')
 							break
 						case 2:
-	                		onClicked: textArea.insert(textArea.cursorPosition, '#gps_elev m#')
+							onClicked: textArea.insert(textArea.cursorPosition, '#gps_elev m#')
 							break
 						case 3:
-	                		onClicked: textArea.insert(textArea.cursorPosition, '#gps_speed kmh#')
+							onClicked: textArea.insert(textArea.cursorPosition, '#gps_speed kmh#')
 							break
 						case 4:
 							onClicked: textArea.insert(textArea.cursorPosition, '#gps_dist m#')
@@ -746,70 +761,70 @@ Item {
 			}
 		}
 
-        Shotcut.TextFilterUi {
-            id: textFilterUi
-            Layout.leftMargin: 10
-            Layout.columnSpan: 2
-        }
+		Shotcut.TextFilterUi {
+			id: textFilterUi
+			Layout.leftMargin: 10
+			Layout.columnSpan: 2
+		}
 
-        Label {
-            topPadding: 10
-            bottomPadding: 5
-            text: qsTr('<b>Advanced Options</b>')
-            Layout.columnSpan: 2
-        }
+		Label {
+			topPadding: 10
+			bottomPadding: 5
+			text: qsTr('<b>Advanced Options</b>')
+			Layout.columnSpan: 2
+		}
 
-        Label {
-            text: qsTr('Video speed')
-            leftPadding: 10
-            Layout.alignment: Qt.AlignRight
-            Shotcut.HoverTip { text: qsTr('If the current video is sped up (timelapse) or slowed down use this field to set the speed.') }
-        }
-        RowLayout {
-            TextField {
-                id: speed_multiplier
-                text: '1'
-                //TODO: restrict to type double
-                horizontalAlignment: TextInput.AlignRight
-                implicitWidth: 25
-                onFocusChanged: if (focus) selectAll()
-                Shotcut.HoverTip { text: qsTr('Fractional times are also allowed (0.25 = 4x slow motion, 5 = 5x timelapse).') }
-                onEditingFinished: filter.set('speed_multiplier', speed_multiplier.text);
-            }
-            Label { text: 'x' }
-            Shotcut.UndoButton {
-                onClicked: {
-                    filter.set('speed_multiplier', 1)
-                    speed_multiplier.text = '1';
-                }
-            }
-        }
+		Label {
+			text: qsTr('Video speed')
+			leftPadding: 10
+			Layout.alignment: Qt.AlignRight
+			Shotcut.HoverTip { text: qsTr('If the current video is sped up (timelapse) or slowed down use this field to set the speed.') }
+		}
+		RowLayout {
+			TextField {
+				id: speed_multiplier
+				text: '1'
+				//TODO: restrict to type double
+				horizontalAlignment: TextInput.AlignRight
+				implicitWidth: 25
+				onFocusChanged: if (focus) selectAll()
+				Shotcut.HoverTip { text: qsTr('Fractional times are also allowed (0.25 = 4x slow motion, 5 = 5x timelapse).') }
+				onEditingFinished: filter.set('speed_multiplier', speed_multiplier.text);
+			}
+			Label { text: 'x' }
+			Shotcut.UndoButton {
+				onClicked: {
+					filter.set('speed_multiplier', 1)
+					speed_multiplier.text = '1';
+				}
+			}
+		}
 
-        Label {
-            text: qsTr('Update speed')
-            leftPadding: 10
-            Layout.alignment: Qt.AlignRight
-            Shotcut.HoverTip { text: qsTr('Set how many text updates to show per second.\nNote: this can\'t be faster than gps frequency') }
-        }
-        RowLayout {
-            TextField {
-                id: updates_per_second
-                text: '1'
-                //TODO: restrict to type double
-                horizontalAlignment: TextInput.AlignRight
-                implicitWidth: 25
-                onFocusChanged: if (focus) selectAll()
-                Shotcut.HoverTip { text: qsTr('Fractional times are also allowed (0.25 = 1 update every 4 seconds, 2 = 2 updates per second).') }
-                onEditingFinished: filter.set('updates_per_second', updates_per_second.text);
-            }
-            Label { text: qsTr(' per second') }
-            Shotcut.UndoButton {
-                onClicked: {
-                    filter.set('updates_per_second', 1)
-                    updates_per_second.text = '1';
-                }
-            }
-        }
+		Label {
+			text: qsTr('Update speed')
+			leftPadding: 10
+			Layout.alignment: Qt.AlignRight
+			Shotcut.HoverTip { text: qsTr('Set how many text updates to show per second.\nNote: this can\'t be faster than gps frequency') }
+		}
+		RowLayout {
+			TextField {
+				id: updates_per_second
+				text: '1'
+				//TODO: restrict to type double
+				horizontalAlignment: TextInput.AlignRight
+				implicitWidth: 25
+				onFocusChanged: if (focus) selectAll()
+				Shotcut.HoverTip { text: qsTr('Fractional times are also allowed (0.25 = 1 update every 4 seconds, 2 = 2 updates per second).') }
+				onEditingFinished: filter.set('updates_per_second', updates_per_second.text);
+			}
+			Label { text: qsTr(' per second') }
+			Shotcut.UndoButton {
+				onClicked: {
+					filter.set('updates_per_second', 1)
+					updates_per_second.text = '1';
+				}
+			}
+		}
 		
 	}
 }
