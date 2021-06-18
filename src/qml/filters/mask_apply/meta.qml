@@ -6,4 +6,5 @@ Metadata {
     name: qsTr("Mask: Apply")
     mlt_service: "mask_apply"
     allowMultiple: false
+    qml: 'ui.qml'
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2020 Meltytech, LLC
+ * Copyright (c) 2011-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@
 #include <QString>
 #include <QUuid>
 #include <QScopedPointer>
+#include <QTemporaryFile>
 #include <QMutex>
 #include <Mlt.h>
 #include "transportcontrol.h"
@@ -36,9 +37,6 @@ class QQuickView;
 #   define MLT_LC_CATEGORY LC_ALL
 #   define MLT_LC_NAME     "LC_ALL"
 #endif
-
-#define MLT_VERSION_PREVIEW_SCALE ((6<<16)+(19<<8))
-#define MLT_VERSION_SET_STRING ((6<<16)+(19<<8))
 
 namespace Mlt {
 
@@ -91,7 +89,8 @@ public:
     void onWindowResize();
     virtual void seek(int position);
     virtual void refreshConsumer(bool scrubAudio = false);
-    bool saveXML(const QString& filename, Service* service = nullptr, bool withRelativePaths = true, bool verify = true);
+    bool saveXML(const QString& filename, Service* service = nullptr, bool withRelativePaths = true,
+                 QTemporaryFile* tempFile = nullptr, bool proxy = false);
     QString XML(Service* service = nullptr, bool withProfile = false, bool withMetadata = false);
     int consumerChanged();
     void setProfile(const QString& profile_name);
@@ -120,13 +119,16 @@ public:
     void setImageDurationFromDefault(Service* service) const;
     void setDurationFromDefault(Producer* service) const;
     void lockCreationTime(Producer* producer) const;
+    Producer* setupNewProducer(Producer* newProducer) const;
     QUuid uuid(Mlt::Properties &properties) const;
     void setUuid(Mlt::Properties &properties, QUuid uid) const;
     QUuid ensureHasUuid(Mlt::Properties& properties) const;
     static void copyFilters(Mlt::Producer& fromProducer, Mlt::Producer& toProducer, bool fromClipboard = false);
     void copyFilters(Mlt::Producer* producer = nullptr);
     void pasteFilters(Mlt::Producer* producer = nullptr);
-    static void adjustFilters(Mlt::Producer& producer, int startIndex);
+    static void adjustFilters(Mlt::Producer& producer, int startIndex = 0);
+    static void adjustFilter(Mlt::Filter* filter, int in, int out, int inDelta, int outDelta);
+    static void adjustClipFilters(Mlt::Producer& producer, int in, int out, int inDelta, int outDelta);
     bool hasFiltersOnClipboard() const {
         return m_filtersClipboard->is_valid() && m_filtersClipboard->filter_count() > 0;
     }
@@ -168,6 +170,8 @@ public:
     static int filterOut(Mlt::Playlist&playlist, int clipIndex);
     void setPreviewScale(int scale);
     void updatePreviewProfile();
+    static void purgeMemoryPool();
+    static bool fullRange(Mlt::Producer& producer);
 
 protected:
     Mlt::Repository* m_repo;
@@ -188,9 +192,9 @@ private:
     QString m_projectFolder;
     QMutex m_saveXmlMutex;
 
-    static void on_jack_started(mlt_properties owner, void* object, const mlt_position *position);
+    static void on_jack_started(mlt_properties owner, void* object, mlt_event_data data);
     void onJackStarted(int position);
-    static void on_jack_stopped(mlt_properties owner, void* object, const mlt_position *position);
+    static void on_jack_stopped(mlt_properties owner, void* object, mlt_event_data data);
     void onJackStopped(int position);
     void stopJack();
 };

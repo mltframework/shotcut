@@ -16,14 +16,15 @@
  */
 
 import QtQuick 2.1
-import Shotcut.Controls 1.0
+import Shotcut.Controls 1.0 as Shotcut
 
-VuiBase {
+Shotcut.VuiBase {
     property string rectProperty: "rect"
     property real zoom: (video.zoom > 0)? video.zoom : 1.0
     property rect filterRect: filter.getRect(rectProperty)
 
     Component.onCompleted: {
+        application.showStatusMessage(qsTr('Click in rectangle + hold Shift to drag'))
         rectangle.setHandles(filter.getRect(rectProperty))
     }
 
@@ -44,7 +45,7 @@ VuiBase {
             height: video.rect.height
             scale: zoom
 
-            RectangleControl {
+            Shotcut.RectangleControl {
                 id: rectangle
                 widthScale: video.rect.width / profile.width
                 heightScale: video.rect.height / profile.height
@@ -71,6 +72,7 @@ VuiBase {
                 filterRect = newRect
                 rectangle.setHandles(filterRect)
             }
+            videoItem.enabled = filter.get('disable') !== '1'
         }
     }
 }

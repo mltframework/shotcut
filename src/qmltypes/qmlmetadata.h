@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 Meltytech, LLC
+ * Copyright (c) 2013-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,6 +27,8 @@
 class QmlKeyframesParameter : public QObject
 {
     Q_OBJECT
+    Q_ENUMS(RangeType)
+    Q_PROPERTY(RangeType rangeType MEMBER m_rangeType NOTIFY changed)
     Q_PROPERTY(QString name MEMBER m_name NOTIFY changed)
     Q_PROPERTY(QString property MEMBER m_property NOTIFY changed)
     Q_PROPERTY(QStringList gangedProperties MEMBER m_gangedProperties NOTIFY changed)
@@ -35,9 +37,14 @@ class QmlKeyframesParameter : public QObject
     Q_PROPERTY(bool isCurve MEMBER m_isCurve NOTIFY changed)
     Q_PROPERTY(double minimum MEMBER m_minimum NOTIFY changed)
     Q_PROPERTY(double maximum MEMBER m_maximum NOTIFY changed)
+    Q_PROPERTY(QString units MEMBER m_units NOTIFY changed)
     Q_PROPERTY(bool isRectangle MEMBER m_isRectangle NOTIFY changed)
 
 public:
+    enum RangeType {
+        MinMax,
+        ClipLength,
+    };
     explicit QmlKeyframesParameter(QObject* parent = 0);
 
     QString name() const { return m_name; }
@@ -47,7 +54,9 @@ public:
     bool isCurve() const { return m_isCurve; }
     double minimum() const { return m_minimum; }
     double maximum() const { return m_maximum; }
+    QString units() const { return m_units; }
     bool isRectangle() const { return m_isRectangle; }
+    RangeType rangeType() const { return m_rangeType; }
 
 signals:
     void changed();
@@ -60,7 +69,9 @@ private:
     bool m_isCurve;
     double m_minimum;
     double m_maximum;
+    QString m_units;
     bool m_isRectangle;
+    RangeType m_rangeType;
 };
 
 class QmlKeyframesMetadata : public QObject
@@ -74,6 +85,7 @@ class QmlKeyframesMetadata : public QObject
     Q_PROPERTY(QList<QString> simpleProperties MEMBER m_simpleProperties NOTIFY changed)
     Q_PROPERTY(QString minimumVersion MEMBER m_minimumVersion NOTIFY changed)
     Q_PROPERTY(bool enabled MEMBER m_enabled NOTIFY changed)
+    Q_PROPERTY(bool allowSmooth MEMBER m_allowSmooth NOTIFY changed)
 
 public:
     explicit QmlKeyframesMetadata(QObject *parent = 0);
@@ -100,6 +112,7 @@ private:
     QList<QString> m_simpleProperties;
     QString m_minimumVersion;
     bool m_enabled;
+    bool m_allowSmooth;
 };
 
 
@@ -123,13 +136,17 @@ class QmlMetadata : public QObject
     Q_PROPERTY(bool isClipOnly READ isClipOnly WRITE setIsClipOnly)
     Q_PROPERTY(bool isGpuCompatible READ isGpuCompatible() WRITE setIsGpuCompatible)
     Q_PROPERTY(QmlKeyframesMetadata* keyframes READ keyframes NOTIFY changed)
+    Q_PROPERTY(bool isDeprecated READ isDeprecated WRITE setIsDeprecated)
+    Q_PROPERTY(QString minimumVersion MEMBER m_minimumVersion NOTIFY changed)
 
 public:
     enum PluginType {
         Filter,
         Producer,
-        Transition
+        Transition,
+        Link,
     };
+    unsigned filterMask;
 
     explicit QmlMetadata(QObject *parent = 0);
     void loadSettings();
@@ -166,6 +183,9 @@ public:
     bool isGpuCompatible() const { return m_isGpuCompatible; }
     void setIsGpuCompatible(bool isCompatible) { m_isGpuCompatible = isCompatible; }
     QmlKeyframesMetadata* keyframes() { return &m_keyframes; }
+    bool isDeprecated() const { return m_isDeprecated; }
+    void setIsDeprecated(bool deprecated) { m_isDeprecated = deprecated; }
+    bool isMltVersion(const QString& version);
 
 signals:
     void changed();
@@ -186,6 +206,8 @@ private:
     bool m_isClipOnly;
     bool m_isGpuCompatible;
     QmlKeyframesMetadata m_keyframes;
+    bool m_isDeprecated;
+    QString m_minimumVersion;
 };
 
 #endif // QMLMETADATA_H

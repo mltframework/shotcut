@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 Meltytech, LLC
+ * Copyright (c) 2013-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,8 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.2
-import QtQuick.Controls 1.0
+import QtQuick 2.12
+import QtQuick.Controls 2.12
 
 Rectangle {
     property alias value: slider.value
@@ -25,7 +25,7 @@ Rectangle {
 
     color: activePalette.window
     width: 200
-    height: 24
+    height: 14
 
     Slider {
         id: slider
@@ -37,9 +37,11 @@ Rectangle {
             leftMargin: 4
             rightMargin: 4
         }
-        minimumValue: 0
-        maximumValue: 3.0
+        from: 0
+        to: 3.0
         value: 1
+        focusPolicy: Qt.NoFocus
+        wheelEnabled: true
         function setScaleFactor() {
             timeScale = Math.pow(value, 3) + 0.01
         }
@@ -49,13 +51,18 @@ Rectangle {
         }
         onPressedChanged: {
             if (!pressed) {
-                var targetX = scrollView.flickableItem.contentX + scrollView.width / 2
-                var offset = targetX - scrollView.flickableItem.contentX
+                var targetX = tracksFlickable.contentX + tracksFlickable.width / 2
+                var offset = targetX - tracksFlickable.contentX
                 var before = timeScale
 
                 setScaleFactor()
                 
-                scrollView.flickableItem.contentX = (targetX * timeScale / before) - offset
+                tracksFlickable.contentX = (targetX * timeScale / before) - offset
+
+                redrawWaveforms()
+
+                if (settings.timelineScrollZoom)
+                    scrollZoomTimer.restart()
             }
         }
     }

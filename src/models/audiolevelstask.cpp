@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 Meltytech, LLC
+ * Copyright (c) 2013-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,6 +28,7 @@
 #include <QThreadPool>
 #include <QMutex>
 #include <QTime>
+#include <QElapsedTimer>
 #include <Logger.h>
 
 static QList<AudioLevelsTask*> tasksList;
@@ -168,7 +169,8 @@ void AudioLevelsTask::run()
     QImage image = DB.getThumbnail(cacheKey());
     if ((image.isNull() || m_isForce) && !DB.isFailing()) {
         const char* key[2] = { "meta.media.audio_level.0", "meta.media.audio_level.1"};
-        QTime updateTime; updateTime.start();
+        QElapsedTimer updateTime;
+        updateTime.start();
         // TODO: use project channel count
         int channels = 2;
 
@@ -186,7 +188,7 @@ void AudioLevelsTask::run()
             if (frame && frame->is_valid() && !frame->get_int("test_audio")) {
                 mlt_audio_format format = mlt_audio_s16;
                 int frequency = 48000;
-                int samples = mlt_sample_calculator(m_producers.first().first->get_fps(), frequency, i);
+                int samples = mlt_audio_calculate_frame_samples(m_producers.first().first->get_fps(), frequency, i);
                 frame->get_audio(format, frequency, channels, samples);
                 // for each channel
                 for (int channel = 0; channel < channels; channel++)
@@ -199,12 +201,14 @@ void AudioLevelsTask::run()
             }
             delete frame;
 
-            // Incrementally update the audio levels every 5 seconds.
-            if (updateTime.elapsed() > 5*1000 && !m_isCanceled) {
+            // Incrementally update the audio levels every 3 seconds.
+            if (updateTime.elapsed() > 3*1000 && !m_isCanceled) {
                 updateTime.restart();
                 foreach (ProducerAndIndex p, m_producers) {
                     QVariantList* levelsCopy = new QVariantList(levels);
+                    p.first->lock();
                     p.first->set(kAudioLevelsProperty, levelsCopy, 0, (mlt_destructor) deleteQVariantList);
+                    p.first->unlock();
                     if (-1 != m_object->metaObject()->indexOfMethod("audioLevelsReady(QModelIndex)"))
                         QMetaObject::invokeMethod(m_object, "audioLevelsReady", Q_ARG(const QModelIndex&, p.second));
                 }
@@ -265,7 +269,9 @@ void AudioLevelsTask::run()
     if (levels.size() > 0 && !m_isCanceled) {
         foreach (ProducerAndIndex p, m_producers) {
             QVariantList* levelsCopy = new QVariantList(levels);
+            p.first->lock();
             p.first->set(kAudioLevelsProperty, levelsCopy, 0, (mlt_destructor) deleteQVariantList);
+            p.first->unlock();
             if (-1 != m_object->metaObject()->indexOfMethod("audioLevelsReady(QModelIndex)"))
                 QMetaObject::invokeMethod(m_object, "audioLevelsReady", Q_ARG(const QModelIndex&, p.second));
         }

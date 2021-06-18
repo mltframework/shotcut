@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2019 Meltytech, LLC
+ * Copyright (c) 2011-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,6 +27,7 @@
 #include <QCommandLineParser>
 #include <framework/mlt_log.h>
 #include <QFile>
+#include <QQuickStyle>
 
 #ifdef Q_OS_MAC
     #include "macos.h"
@@ -42,6 +43,12 @@ extern "C"
     __declspec(dllexport) DWORD NvOptimusEnablement = 0x00000001;
     __declspec(dllexport) int AmdPowerXpressRequestHighPerformance = 1;
 }
+#endif
+
+#ifdef Q_OS_WIN
+static const char* kDefaultScaleRoundPolicy = "RoundPreferFloor";
+#else
+static const char* kDefaultScaleRoundPolicy = "Round";
 #endif
 
 static void mlt_log_handler(void *service, int mlt_level, const char *format, va_list args)
@@ -80,13 +87,13 @@ static void mlt_log_handler(void *service, int mlt_level, const char *format, va
         if (service_name)
             message = QString("[%1 %2] ").arg(mlt_type).arg(service_name);
         else
-            message = QString().sprintf("[%s %p] ", mlt_type, service);
+            message = QString::asprintf("[%s %p] ", mlt_type, service);
         if (resource)
             message.append(QString("\"%1\" ").arg(resource));
-        message.append(QString().vsprintf(format, args));
+        message.append(QString::vasprintf(format, args));
         message.replace('\n', "");
     } else {
-        message = QString().vsprintf(format, args);
+        message = QString::vasprintf(format, args);
         message.replace('\n', "");
     }
     cuteLogger->write(cuteLoggerLevel, __FILE__, __LINE__, "MLT",
@@ -107,7 +114,12 @@ public:
     Application(int &argc, char **argv)
         : QApplication(argc, argv)
     {
-        QDir dir(applicationDirPath());
+        auto appPath = applicationDirPath();
+#ifdef Q_OS_WIN
+#include <winbase.h>
+        SetDllDirectoryA(appPath.toLocal8Bit());
+#endif
+        QDir dir(appPath);
 #ifdef Q_OS_MAC
         dir.cdUp();
         dir.cd("PlugIns");
@@ -162,6 +174,13 @@ public:
             QCoreApplication::translate("main", "A semicolon-separated list of scale factors for each screen"),
             QCoreApplication::translate("main", "list"));
         parser.addOption(scaleOption);
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 14, 0))
+        QCommandLineOption scalePolicyOption("QT_SCALE_FACTOR_ROUNDING_POLICY",
+            QCoreApplication::translate("main", "How to handle a fractional display scale: %1")
+                .arg("Round, Ceil, Floor, RoundPreferFloor, PassThrough"),
+            QCoreApplication::translate("main", "string"), kDefaultScaleRoundPolicy);
+        parser.addOption(scalePolicyOption);
+#endif
         parser.addPositionalArgument("[FILE]...",
             QCoreApplication::translate("main", "Zero or more files or folders to open"));
         parser.process(arguments());
@@ -182,7 +201,7 @@ public:
             resourceArg = parser.positionalArguments();
 
         // Startup logging.
-        dir = Settings.appDataLocation();
+        dir.setPath(Settings.appDataLocation());
         if (!dir.exists()) dir.mkpath(dir.path());
         const QString logFileName = dir.filePath("shotcut-log.txt");
         QFile::remove(logFileName);
@@ -213,24 +232,20 @@ public:
 #endif
         LOG_INFO() << "number of logical cores =" << QThread::idealThreadCount();
         LOG_INFO() << "locale =" << QLocale();
-        LOG_INFO() << "install dir =" <<  applicationDirPath();
-        LOG_INFO() << "device pixel ratio =" << devicePixelRatio();
+        LOG_INFO() << "install dir =" << appPath;
         Settings.log();
 
 #if defined(Q_OS_WIN)
-        dir = applicationDirPath();
+        dir.setPath(appPath);
         if (!Settings.playerGPU() && Settings.drawMethod() == Qt::AA_UseSoftwareOpenGL) {
             if (QFile::exists(dir.filePath("opengl32sw.dll"))) {
-                if (!QFile::rename(dir.filePath("opengl32sw.dll"), dir.filePath("opengl32.dll"))) {
-                    LOG_ERROR() << "Failed to rename opengl32sw.dll";
+                if (!QFile::copy(dir.filePath("opengl32sw.dll"), dir.filePath("opengl32.dll"))) {
+                    LOG_WARNING() << "Failed to copy opengl32sw.dll as opengl32.dll";
                 }
             }
         } else if (QFile::exists(dir.filePath("opengl32.dll"))) {
-            // If the user installed their own opengl32.dll they might still have opengl32sw.dll,
-            // which must be removed.
-            QFile::remove(dir.filePath("opengl32sw.dll"));
-            if (!QFile::rename(dir.filePath("opengl32.dll"), dir.filePath("opengl32sw.dll"))) {
-                LOG_ERROR() << "Failed to rename opengl32.dll";
+            if (!QFile::remove(dir.filePath("opengl32.dll"))) {
+                LOG_ERROR() << "Failed to remove opengl32.dll";
             }
         }
         if (Settings.playerGPU()) {
@@ -246,7 +261,7 @@ public:
 #endif
         // Load translations
         QString locale = Settings.language();
-        dir = applicationDirPath();
+        dir.setPath(appPath);
     #if defined(Q_OS_MAC)
         dir.cdUp();
         dir.cd("Resources");
@@ -298,7 +313,10 @@ int main(int argc, char **argv)
 #if defined(Q_OS_WIN) && defined(QT_DEBUG)
     ExcHndlInit();
 #endif
-#if QT_VERSION >= 0x050600
+#ifndef QT_DEBUG
+    ::qputenv("QT_LOGGING_RULES", "*.warning=false");
+#endif
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 6, 0))
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     for (int i = 1; i + 1 < argc; i++) {
         if (!::qstrcmp("--QT_SCALE_FACTOR", argv[i]) || !::qstrcmp("--QT_SCREEN_SCALE_FACTORS", argv[i])) {
@@ -309,7 +327,25 @@ int main(int argc, char **argv)
         }
     }
 #endif
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 14, 0))
+    QByteArray value(kDefaultScaleRoundPolicy);
+    for (int i = 1; i + 1 < argc; i++) {
+        if (!::qstrcmp("--QT_SCALE_FACTOR_ROUNDING_POLICY", argv[i])) {
+            value = argv[i + 1];
+            break;
+        }
+    }
+    if (!::qEnvironmentVariableIsSet("QT_SCALE_FACTOR_ROUNDING_POLICY")) {
+        ::qputenv("QT_SCALE_FACTOR_ROUNDING_POLICY", value);
+    }
+#endif
 #ifdef Q_OS_MAC
+#if (QT_VERSION < QT_VERSION_CHECK(5, 13, 0))
+    // Fix launch on Big Sur macOS 11.0
+    // We can probably remove this when upgrade to Qt 5.15 and update build environment.
+    // see https://bugreports.qt.io/browse/QTBUG-87014
+    ::qputenv("QT_MAC_WANTS_LAYER", "1");
+#endif
     // Launcher and Spotlight on macOS are not setting this environment
     // variable needed by setlocale() as used by MLT.
     if (QProcessEnvironment::systemEnvironment().value(MLT_LC_NAME).isEmpty()) {
@@ -332,7 +368,9 @@ int main(int argc, char **argv)
     QSplashScreen splash(QPixmap(":/icons/shotcut-logo-320x320.png"));
     splash.showMessage(QCoreApplication::translate("main", "Loading plugins..."), Qt::AlignRight | Qt::AlignVCenter);
     splash.show();
+    a.processEvents();
 
+    QQuickStyle::setStyle("Fusion");
     a.setProperty("system-style", a.style()->objectName());
     MainWindow::changeTheme(Settings.theme());
 

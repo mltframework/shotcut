@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Meltytech, LLC
+ * Copyright (c) 2018-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,10 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.0
-import QtQuick.Controls 1.1
-import QtQuick.Layouts 1.1
-import Shotcut.Controls 1.0
+import QtQuick 2.12
+import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.12
+import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     property double hueDegreeDefault: 100
@@ -54,7 +54,7 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: presetItem
             Layout.columnSpan: 2
             parameters: defaultParameters
@@ -65,14 +65,14 @@ Item {
             text: qsTr('Hue')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: hueDegreeSlider
             minimumValue: 0
             maximumValue: 200
             suffix: ' %'
             onValueChanged: filter.set("av.h", (value - 100) * 360 / 100)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: hueDegreeSlider.value = hueDegreeDefault
         }
 
@@ -80,14 +80,14 @@ Item {
             text: qsTr('Lightness')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: lightnessSlider
             minimumValue: 0
             maximumValue: 200
             suffix: ' %'
             onValueChanged: filter.set("av.b", (value - 100) * 10 / 100)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: lightnessSlider.value = lightnessDefault
         }
         
@@ -95,14 +95,14 @@ Item {
             text: qsTr('Saturation')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: saturationSlider
             minimumValue: 0
             maximumValue: 500
             suffix: ' %'
             onValueChanged: filter.set("av.s", value / 100.0)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: saturationSlider.value = saturationDefault
         }
 

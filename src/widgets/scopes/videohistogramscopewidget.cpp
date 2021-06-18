@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Meltytech, LLC
+ * Copyright (c) 2018-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@
 #include <Logger.h>
 #include <QMouseEvent>
 #include <QPainter>
+#include <QPainterPath>
 #include <QToolTip>
 
 const qreal IRE0 = 16;
@@ -54,7 +55,7 @@ void VideoHistogramScopeWidget::refreshScope(const QSize& size, bool full)
 
     if (m_frame.is_valid() && m_frame.get_image_width() && m_frame.get_image_height()) {
         const uint8_t* pYUV = m_frame.get_image(mlt_image_yuv420p);
-        const uint8_t* pRGB = m_frame.get_image(mlt_image_rgb24);
+        const uint8_t* pRGB = m_frame.get_image(mlt_image_rgb);
         size_t count = m_frame.get_image_width() * m_frame.get_image_height();
         unsigned int* pYbin = yBins.data();
         unsigned int* pRbin = rBins.data();

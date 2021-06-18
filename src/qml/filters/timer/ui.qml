@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2019 Meltytech, LLC
+ * Copyright (c) 2018-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,11 +15,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.0
-import QtQuick.Controls 1.1
-import QtQuick.Layouts 1.1
-import Shotcut.Controls 1.0
-import QtQml.Models 2.2
+import QtQuick 2.12
+import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.12
+import Shotcut.Controls 1.0 as Shotcut
+import QtQml.Models 2.12
 
 Item {
     width: 500
@@ -28,6 +28,7 @@ Item {
     property string _defaultStart: '00:00:00.000'
     property string _defaultDuration: '00:00:10.000'
     property string _defaultOffset: '00:00:00.000'
+    property double _defaultSpeed: 1.0
 
     Component.onCompleted: {
         filter.blockSignals = true
@@ -38,6 +39,7 @@ Item {
             filter.set("start", _defaultStart)
             filter.set("duration", _defaultDuration)
             filter.set("offset", _defaultOffset)
+            filter.set("speed", _defaultSpeed)
 
             if (application.OS === 'Windows')
                 filter.set('family', 'Verdana')
@@ -79,7 +81,7 @@ Item {
         var formatIndex = 0;
         var format = filter.get('format')
         for (var i = 0; i < formatCombo.model.count; i++) {
-            if (formatCombo.model.get(i).format == format) {
+            if (formatCombo.model.get(i).format === format) {
                 formatIndex = i
                 break
             }
@@ -88,8 +90,8 @@ Item {
 
         var directionIndex = 0;
         var direction = filter.get('direction')
-        for (var i = 0; i < directionCombo.model.count; i++) {
-            if (directionCombo.model.get(i).direction == direction) {
+        for (i = 0; i < directionCombo.model.count; i++) {
+            if (directionCombo.model.get(i).direction === direction) {
                 directionIndex = i
                 break
             }
@@ -99,6 +101,7 @@ Item {
         startSpinner.timeStr = filter.get("start")
         durationSpinner.timeStr = filter.get("duration")
         offsetSpinner.timeStr = filter.get("offset")
+        speedSpinner.value = filter.getDouble("speed")
 
         textFilterUi.setControls()
     }
@@ -113,7 +116,7 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: preset
             parameters: textFilterUi.parameters.concat(['format', 'direction','start','duration'])
             onBeforePresetLoaded: {
@@ -135,7 +138,7 @@ Item {
             text: qsTr('Format')
             Layout.alignment: Qt.AlignRight
         }
-        ComboBox {
+        Shotcut.ComboBox {
             id: formatCombo
             model: ListModel {
                 ListElement { text: QT_TR_NOOP('HH:MM:SS'); format: "HH:MM:SS" }
@@ -148,7 +151,8 @@ Item {
                 ListElement { text: QT_TR_NOOP('SS.SS'); format: "SS.SS" }
                 ListElement { text: QT_TR_NOOP('SS.SSS'); format: "SS.SSS" }
             }
-            onCurrentIndexChanged: {
+            textRole: 'text'
+            onActivated: {
                 filter.set('format', model.get(currentIndex).format)
             }
         }
@@ -157,13 +161,14 @@ Item {
             text: qsTr('Direction')
             Layout.alignment: Qt.AlignRight
         }
-        ComboBox {
+        Shotcut.ComboBox {
             id: directionCombo
             model: ListModel {
                 ListElement { text: QT_TR_NOOP('Up'); direction: "up" }
                 ListElement { text: QT_TR_NOOP('Down'); direction: "down" }
             }
-            onCurrentIndexChanged: {
+            textRole: 'text'
+            onActivated: {
                 filter.set('direction', model.get(currentIndex).direction)
             }
         }
@@ -176,19 +181,19 @@ Item {
             spacing: 0
             ClockSpinner {
                 id: startSpinner
-                maximumValue: 24 * 60 * 60 // 24 hours
+                maximumValue: 100 * 60 * 60 - 0.001 // 99:59:59.999
                 onTimeStrChanged: {
                     filter.set('start', startSpinner.timeStr)
                 }
                 onSetDefaultClicked: {
                     startSpinner.timeStr = _defaultStart
                 }
-                ToolTip { text: "The timer will be frozen from the beginning of the filter until the Start Delay time has elapsed." }
+                Shotcut.HoverTip { text: qsTr('The timer will be frozen from the beginning of the filter until the Start Delay time has elapsed.') }
             }
-            Button {
-                iconName: 'insert'
-                iconSource: 'qrc:///icons/oxygen/32x32/actions/insert.png'
-                tooltip: qsTr('Set start to begin at the current position')
+            Shotcut.Button {
+                icon.name: 'insert'
+                icon.source: 'qrc:///icons/oxygen/32x32/actions/insert.png'
+                Shotcut.HoverTip { text: qsTr('Set start to begin at the current position') }
                 implicitWidth: 20
                 implicitHeight: 20
                 onClicked: startSpinner.setValueSeconds(producer.position / profile.fps)
@@ -203,19 +208,19 @@ Item {
             spacing: 0
             ClockSpinner {
                 id: durationSpinner
-                maximumValue: 24 * 60 * 60 // 24 hours
+                maximumValue: 100 * 60 * 60 - 0.001 // 99:59:59.999
                 onTimeStrChanged: {
                     filter.set('duration', durationSpinner.timeStr)
                 }
                 onSetDefaultClicked: {
                     durationSpinner.timeStr = _defaultDuration
                 }
-                ToolTip { text: "The timer will be frozen after the Duration has elapsed." }
+                Shotcut.HoverTip { text: qsTr('The timer will be frozen after the Duration has elapsed.') }
             }
-            Button {
-                iconName: 'insert'
-                iconSource: 'qrc:///icons/oxygen/32x32/actions/insert.png'
-                tooltip: qsTr('Set duration to end at the current position')
+            Shotcut.Button {
+                icon.name: 'insert'
+                icon.source: 'qrc:///icons/oxygen/32x32/actions/insert.png'
+                Shotcut.HoverTip { text: qsTr('Set duration to end at the current position') }
                 implicitWidth: 20
                 implicitHeight: 20
                 onClicked: {
@@ -228,7 +233,6 @@ Item {
             }
         }
 
-
         Label {
             text: qsTr('Offset')
             Layout.alignment: Qt.AlignRight
@@ -237,18 +241,39 @@ Item {
             spacing: 0
             ClockSpinner {
                 id: offsetSpinner
-                maximumValue: 24 * 60 * 60 // 24 hours
+                maximumValue: 100 * 60 * 60 - 0.001 // 99:59:59.999
                 onTimeStrChanged: {
                     filter.set('offset', offsetSpinner.timeStr)
                 }
                 onSetDefaultClicked: {
                     offsetSpinner.timeStr = _defaultOffset
                 }
-                ToolTip { text: "When the direction is Down, the timer will count down to Offset. When the Direction is up, the timer will count up starting from Offset." }
+                Shotcut.HoverTip { text: qsTr('When the direction is Down, the timer will count down to Offset.\nWhen the direction is Up, the timer will count up starting from Offset.') }
             }
         }
 
-        TextFilterUi {
+        Label {
+            text: qsTr('Speed')
+            Layout.alignment: Qt.AlignRight
+        }
+        RowLayout {
+            spacing: 0
+
+            Shotcut.DoubleSpinBox {
+                id: speedSpinner
+                horizontalAlignment: Qt.AlignRight
+                Layout.minimumWidth: 100
+                decimals: 5
+                stepSize: 0.1
+                from: 0
+                to: 1000
+                onValueChanged: {
+                    filter.set("speed", speedSpinner.value)
+                }
+            }
+        }
+
+        Shotcut.TextFilterUi {
             id: textFilterUi
             Layout.columnSpan: 2
         }

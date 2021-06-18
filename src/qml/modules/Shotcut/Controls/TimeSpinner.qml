@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2019 Meltytech, LLC
+ * Copyright (c) 2014-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,9 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.2
-import QtQuick.Layouts 1.1
-import QtQuick.Controls 1.1
+import QtQuick 2.12
+import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.12
+import Shotcut.Controls 1.0 as Shotcut
 
 RowLayout {
     id: root
@@ -36,17 +37,18 @@ RowLayout {
         id: timeField
         text: filter.timeFromFrames(clamp(value, minimumValue, maximumValue))
         horizontalAlignment: TextInput.AlignRight
+        selectByMouse: true
         validator: RegExpValidator {regExp: /^\s*(\d*:){0,2}(\d*[.;:])?\d*\s*$/}
         onEditingFinished: value = filter.framesFromTime(text)
         Keys.onDownPressed: decrementAction.trigger()
         Keys.onUpPressed: incrementAction.trigger()
         onFocusChanged: if (focus) selectAll()
     }
-    Button {
+    Shotcut.Button {
         id: decrementButton
-        iconName: 'list-remove'
-        iconSource: 'qrc:///icons/oxygen/32x32/actions/list-remove.png'
-        tooltip: qsTr('Decrement')
+        icon.name: 'list-remove'
+        icon.source: 'qrc:///icons/oxygen/32x32/actions/list-remove.png'
+        Shotcut.HoverTip { text: qsTr('Decrement') }
         implicitWidth: 20
         implicitHeight: 20
         MouseArea {
@@ -63,11 +65,11 @@ RowLayout {
             onTriggered: decrementAction.trigger()
         }
     }
-    Button {
+    Shotcut.Button {
         id: incrementButton
-        iconName: 'list-add'
-        iconSource: 'qrc:///icons/oxygen/32x32/actions/list-add.png'
-        tooltip: qsTr('Increment')
+        icon.name: 'list-add'
+        icon.source: 'qrc:///icons/oxygen/32x32/actions/list-add.png'
+        Shotcut.HoverTip { text: qsTr('Increment') }
         implicitWidth: 20
         implicitHeight: 20
         MouseArea {
@@ -84,11 +86,11 @@ RowLayout {
             onTriggered: incrementAction.trigger()
         }
     }
-    UndoButton {
+    Shotcut.UndoButton {
         id: undoButton
         onClicked: root.setDefaultClicked()
     }
-    SaveDefaultButton {
+    Shotcut.SaveDefaultButton {
         id: saveButton
         onClicked: root.saveDefaultClicked()
     }

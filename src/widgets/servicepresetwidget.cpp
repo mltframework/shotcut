@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2018 Meltytech, LLC
+ * Copyright (c) 2012-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -77,19 +77,7 @@ static void saveProperties(const Mlt::Properties& properties, const QString& fil
 
 void ServicePresetWidget::saveDefaultPreset(const Mlt::Properties& properties)
 {
-    QDir dir(Settings.appDataLocation());
-
-    if (!dir.exists())
-        dir.mkpath(dir.path());
-    if (!dir.cd("presets")) {
-        if (dir.mkdir("presets"))
-            dir.cd("presets");
-    }
-    if (!dir.cd(m_widgetName)) {
-        if (dir.mkdir(m_widgetName))
-            dir.cd(m_widgetName);
-    }
-    saveProperties(properties, dir.filePath(tr("(defaults)")));
+    savePreset(properties, tr("(defaults)"));
 }
 
 void ServicePresetWidget::savePreset(const Mlt::Properties& properties)
@@ -125,6 +113,23 @@ void ServicePresetWidget::savePreset(const Mlt::Properties& properties)
             }
         }
     }
+}
+
+void ServicePresetWidget::savePreset(const Mlt::Properties& properties, QString name)
+{
+    QDir dir(Settings.appDataLocation());
+
+    if (!dir.exists())
+        dir.mkpath(dir.path());
+    if (!dir.cd("presets")) {
+        if (dir.mkdir("presets"))
+            dir.cd("presets");
+    }
+    if (!dir.cd(m_widgetName)) {
+        if (dir.mkdir(m_widgetName))
+            dir.cd(m_widgetName);
+    }
+    saveProperties(properties, dir.filePath(name));
 }
 
 void ServicePresetWidget::on_presetCombo_activated(int index)

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2018 Meltytech, LLC
+ * Copyright (c) 2014-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,10 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.1
-import QtQuick.Controls 1.1
-import QtQuick.Layouts 1.0
-import Shotcut.Controls 1.0
+import QtQuick 2.12
+import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.12
+import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     property string paramAmount: '0'
@@ -63,7 +63,9 @@ Item {
         var position = getPosition()
         blockUpdate = true
         amountSlider.value = filter.getDouble(paramAmount, position) * 100.0
+        amountKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(paramAmount) > 0
         sizeSlider.value = filter.getDouble(paramSize, position) * 100.0
+        sizeKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(paramSize) > 0
         blockUpdate = false
         amountSlider.enabled = sizeSlider.enabled
             = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1)
@@ -129,7 +131,7 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             Layout.columnSpan: 3
             parameters: defaultParameters
             onBeforePresetLoaded: {
@@ -146,7 +148,7 @@ Item {
             text: qsTr('Amount')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: amountSlider
             minimumValue: 0
             maximumValue: 100
@@ -154,12 +156,11 @@ Item {
             decimals: 1
             onValueChanged: updateFilter(paramAmount, value / 100.0, getPosition(), amountKeyframesButton)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: amountSlider.value = 50
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: amountKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(paramAmount) > 0
             onToggled: onKeyframesButtonClicked(checked, paramAmount, amountSlider.value / 100.0)
         }
 
@@ -167,7 +168,7 @@ Item {
             text: qsTr('Size')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: sizeSlider
             minimumValue: 0
             maximumValue: 100
@@ -175,12 +176,11 @@ Item {
             decimals: 1
             onValueChanged: updateFilter(paramSize, value / 100.0, getPosition(), sizeKeyframesButton)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: sizeSlider.value = 50
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: sizeKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(paramSize) > 0
             onToggled: onKeyframesButtonClicked(checked, paramSize, sizeSlider.value / 100.0)
         }
 
@@ -200,6 +200,7 @@ Item {
         onOutChanged: updateSimpleAnimation()
         onAnimateInChanged: updateSimpleAnimation()
         onAnimateOutChanged: updateSimpleAnimation()
+        onPropertyChanged: setControls()
     }
 
     Connections {

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Meltytech, LLC
+ * Copyright (c) 2019-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,10 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.0
-import QtQuick.Controls 1.1
-import QtQuick.Layouts 1.1
-import Shotcut.Controls 1.0
+import QtQuick 2.12
+import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.12
+import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     width: 350
@@ -51,7 +51,7 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: preset
             parameters: [amount]
             Layout.columnSpan: parent.columns - 1
@@ -62,7 +62,7 @@ Item {
             text: qsTr('Amount')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: amountSlider
             minimumValue: 2
             maximumValue: Math.round(profile.fps)
@@ -71,7 +71,7 @@ Item {
             spinnerWidth: 110
             onValueChanged: updateFilter(value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: amountSlider.value = amountDefault
         }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2019 Meltytech, LLC
+ * Copyright (c) 2014-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,6 +26,7 @@
 #include <QStandardItemModel>
 #include <QVector>
 #include <QPair>
+#include <QVersionNumber>
 
 class QUIDevice;
 
@@ -44,17 +45,18 @@ public:
     };
 
     MltXmlChecker();
-    bool check(const QString& fileName);
+    QXmlStreamReader::Error check(const QString& fileName);
     QString errorString() const;
     bool needsGPU() const { return m_needsGPU; }
     bool needsCPU() const { return m_needsCPU; }
     bool hasEffects() const { return m_hasEffects; }
     bool isCorrected() const { return m_isCorrected; }
     bool isUpdated() const { return m_isUpdated; }
-    QString tempFileName() const { return m_tempFile->fileName(); }
+    QTemporaryFile& tempFile() const { return *m_tempFile; }
     QStandardItemModel& unlinkedFilesModel() { return m_unlinkedFilesModel; }
     void setLocale();
     bool usesLocale() const { return m_usesLocale; }
+    QString shotcutVersion() const { return m_shotcutVersion; }
 
 private:
     typedef QPair<QString, QString> MltProperty;
@@ -69,10 +71,14 @@ private:
     void checkCpuEffects(const QString& mlt_service);
     void checkUnlinkedFile(const QString& mlt_service);
     bool fixUnlinkedFile(QString& value);
-    void fixStreamIndex(QString& value);
+    void fixStreamIndex(MltProperty& property);
     bool fixVersion1701WindowsPathBug(QString& value);
     void checkIncludesSelf(QVector<MltProperty>& properties);
     void checkLumaAlphaOver(const QString& mlt_service, QVector<MltProperty>& properties);
+    void replaceWebVfxCropFilters(QString& mlt_service, QVector<MltProperty>& properties);
+    void replaceWebVfxChoppyFilter(QString& mlt_service, QVector<MltProperty>& properties);
+    void checkForProxy(const QString& mlt_service, QVector<MltProperty>& properties);
+    bool checkMltVersion();
 
     QXmlStreamReader m_xml;
     QXmlStreamWriter m_newXml;
@@ -95,6 +101,8 @@ private:
         QString newHash;
         QString newDetail;
         QString prefix;
+        QString suffix;
+        int audio_index, video_index;
 
         void clear() {
             info.setFile(QString());
@@ -102,8 +110,12 @@ private:
             newHash.clear();
             newDetail.clear();
             prefix.clear();
+            suffix.clear();
+            audio_index = video_index = -1;
         }
     } m_resource;
+    QVersionNumber m_mltVersion;
+    QString m_shotcutVersion;
 };
 
 #endif // MLTXMLCHECKER_H

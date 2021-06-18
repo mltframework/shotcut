@@ -82,10 +82,55 @@
        </item>
        <item>
         <layout class="QGridLayout" name="gridLayout_1">
-         <item row="1" column="2">
-          <widget class="QLabel" name="timelineDurationLabel">
+         <item row="1" column="1">
+          <widget class="TimeSpinBox" name="durationSpinBox">
+           <property name="focusPolicy">
+            <enum>Qt::StrongFocus</enum>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+           <property name="accelerated">
+            <bool>true</bool>
+           </property>
+           <property name="keyboardTracking">
+            <bool>false</bool>
+           </property>
+           <property name="maximum">
+            <number>2147483647</number>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="4">
+          <spacer name="horizontalSpacer_2">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="durationLabel">
            <property name="text">
-            <string>Timeline</string>
+            <string>Duration</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="3">
+          <widget class="QLineEdit" name="timelineDurationText">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="readOnly">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
@@ -123,26 +168,6 @@
            </property>
           </widget>
          </item>
-         <item row="1" column="0">
-          <widget class="QLabel" name="durationLabel">
-           <property name="text">
-            <string>Duration</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="3">
-          <widget class="QLineEdit" name="timelineDurationText">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="readOnly">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
          <item row="0" column="0">
           <widget class="QLabel" name="speedLabel">
            <property name="text">
@@ -153,47 +178,46 @@
            </property>
           </widget>
          </item>
-         <item row="1" column="1">
-          <widget class="TimeSpinBox" name="durationSpinBox">
-           <property name="focusPolicy">
-            <enum>Qt::StrongFocus</enum>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-           <property name="accelerated">
-            <bool>true</bool>
-           </property>
-           <property name="keyboardTracking">
-            <bool>false</bool>
-           </property>
-           <property name="maximum">
-            <number>2147483647</number>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="2" colspan="2">
-          <widget class="QCheckBox" name="pitchCheckBox">
-           <property name="toolTip">
-            <string>Apply pitch compensation when the speed is changed.</string>
-           </property>
+         <item row="1" column="2">
+          <widget class="QLabel" name="timelineDurationLabel">
            <property name="text">
-            <string>Pitch Compensation</string>
+            <string>Timeline</string>
            </property>
           </widget>
          </item>
-         <item row="1" column="4">
-          <spacer name="horizontalSpacer_2">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
+         <item row="0" column="2" colspan="3">
+          <layout class="QHBoxLayout" name="horizontalLayout_9">
+           <item>
+            <widget class="QPushButton" name="applySpeedButton">
+             <property name="text">
+              <string>Apply</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="pitchCheckBox">
+             <property name="toolTip">
+              <string>Apply pitch compensation when the speed is changed.</string>
+             </property>
+             <property name="text">
+              <string>Pitch Compensation</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_10">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
          </item>
         </layout>
        </item>
@@ -251,7 +275,7 @@
              <property name="maximumSize">
               <size>
                <width>16777215</width>
-               <height>120</height>
+               <height>145</height>
               </size>
              </property>
              <property name="focusPolicy">
@@ -272,8 +296,14 @@
              <property name="gridStyle">
               <enum>Qt::NoPen</enum>
              </property>
+             <property name="rowCount">
+              <number>6</number>
+             </property>
              <attribute name="horizontalHeaderVisible">
               <bool>false</bool>
+             </attribute>
+             <attribute name="horizontalHeaderDefaultSectionSize">
+              <number>110</number>
              </attribute>
              <attribute name="horizontalHeaderStretchLastSection">
               <bool>true</bool>
@@ -304,6 +334,16 @@
                <string>Pixel format</string>
               </property>
              </row>
+             <row>
+              <property name="text">
+               <string>Color space</string>
+              </property>
+             </row>
+             <row>
+              <property name="text">
+               <string>Color transfer</string>
+              </property>
+             </row>
              <column>
               <property name="text">
                <string>Name</string>
@@ -332,6 +372,16 @@
              <item row="3" column="0">
               <property name="text">
                <string>Format</string>
+              </property>
+             </item>
+             <item row="4" column="0">
+              <property name="text">
+               <string>Color space</string>
+              </property>
+             </item>
+             <item row="5" column="0">
+              <property name="text">
+               <string>Color transfer</string>
               </property>
              </item>
             </widget>
@@ -808,13 +858,6 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_8">
      <item>
-      <widget class="QPushButton" name="resetButton">
-       <property name="text">
-        <string>Reset</string>
-       </property>
-      </widget>
-     </item>
-     <item>
       <widget class="QPushButton" name="reverseButton">
        <property name="text">
         <string>Reverse...</string>
@@ -832,6 +875,13 @@
       </widget>
      </item>
      <item>
+      <widget class="QPushButton" name="proxyButton">
+       <property name="text">
+        <string>Proxy</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QPushButton" name="menuButton">
        <property name="toolTip">
         <string>Display a menu of additional actions</string>
@@ -840,8 +890,8 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset theme="format-justify-fill" resource="../../icons/resources.qrc">
-         <normaloff>:/icons/oxygen/32x32/actions/format-justify-fill.png</normaloff>:/icons/oxygen/32x32/actions/format-justify-fill.png</iconset>
+        <iconset theme="show-menu" resource="../../icons/resources.qrc">
+         <normaloff>:/icons/oxygen/32x32/actions/show-menu.png</normaloff>:/icons/oxygen/32x32/actions/show-menu.png</iconset>
        </property>
       </widget>
      </item>
@@ -896,6 +946,39 @@
     <string>Set Creation Time...</string>
    </property>
   </action>
+  <action name="actionDisableProxy">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Disable Proxy</string>
+   </property>
+  </action>
+  <action name="actionMakeProxy">
+   <property name="text">
+    <string>Make Proxy</string>
+   </property>
+  </action>
+  <action name="actionDeleteProxy">
+   <property name="text">
+    <string>Delete Proxy</string>
+   </property>
+  </action>
+  <action name="actionCopyHashCode">
+   <property name="text">
+    <string>Copy Hash Code</string>
+   </property>
+  </action>
+  <action name="actionReset">
+   <property name="text">
+    <string>Reset</string>
+   </property>
+  </action>
+  <action name="actionSetEquirectangular">
+   <property name="text">
+    <string>Set Equirectangular...</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>
@@ -908,23 +991,26 @@
   <tabstop>filenameLabel</tabstop>
   <tabstop>notesTextEdit</tabstop>
   <tabstop>speedSpinBox</tabstop>
+  <tabstop>applySpeedButton</tabstop>
   <tabstop>pitchCheckBox</tabstop>
   <tabstop>durationSpinBox</tabstop>
-  <tabstop>tabWidget</tabstop>
-  <tabstop>videoTrackComboBox</tabstop>
+  <tabstop>timelineDurationText</tabstop>
   <tabstop>aspectNumSpinBox</tabstop>
   <tabstop>aspectDenSpinBox</tabstop>
   <tabstop>scanComboBox</tabstop>
   <tabstop>fieldOrderComboBox</tabstop>
   <tabstop>rangeComboBox</tabstop>
-  <tabstop>resetButton</tabstop>
-  <tabstop>reverseButton</tabstop>
   <tabstop>convertButton</tabstop>
   <tabstop>menuButton</tabstop>
   <tabstop>audioTrackComboBox</tabstop>
   <tabstop>syncSlider</tabstop>
   <tabstop>spinBox</tabstop>
   <tabstop>metadataTable</tabstop>
+  <tabstop>scrollArea</tabstop>
+  <tabstop>reverseButton</tabstop>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>proxyButton</tabstop>
+  <tabstop>videoTrackComboBox</tabstop>
  </tabstops>
  <resources>
   <include location="../../icons/resources.qrc"/>
@@ -937,12 +1023,12 @@
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>199</x>
-     <y>356</y>
+     <x>209</x>
+     <y>405</y>
     </hint>
     <hint type="destinationlabel">
-     <x>255</x>
-     <y>390</y>
+     <x>322</x>
+     <y>439</y>
     </hint>
    </hints>
   </connection>
@@ -953,12 +1039,12 @@
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>255</x>
-     <y>390</y>
+     <x>322</x>
+     <y>439</y>
     </hint>
     <hint type="destinationlabel">
-     <x>184</x>
-     <y>356</y>
+     <x>194</x>
+     <y>405</y>
     </hint>
    </hints>
   </connection>

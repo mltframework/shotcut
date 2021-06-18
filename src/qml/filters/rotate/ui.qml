@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 Meltytech, LLC
+ * Copyright (c) 2013-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,12 +15,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.1
-import QtQuick.Controls 1.0
-import QtQuick.Layouts 1.0
-import Shotcut.Controls 1.0
+import QtQuick 2.12
+import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.12
+import Shotcut.Controls 1.0 as Shotcut
 
-KeyframableFilter {
+Shotcut.KeyframableFilter {
     width: 350
     height: 180
     property bool isAtLeastVersion4: filter.isAtLeastVersion('4')
@@ -61,10 +61,14 @@ KeyframableFilter {
         blockUpdate = true
         rotationSlider.value = filter.getDouble('transition.fix_rotate_x', position)
         rotationSlider.enabled = scaleSlider.enabled = isSimpleKeyframesActive()
+        rotationKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('transition.fix_rotate_x') > 0
         var scale = filter.getDouble('transition.scale_x', position)
         scaleSlider.value = isAtLeastVersion4? scale * 100 : 100 / scale
+        scaleKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('transition.scale_x') > 0
         xOffsetSlider.value = filter.getDouble('transition.ox', position) * -1
+        xOffsetKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('transition.ox') > 0
         yOffsetSlider.value = filter.getDouble('transition.oy', position) * -1
+        yOffsetKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('transition.oy') > 0
         blockUpdate = false
 
         var s = filter.get('background')
@@ -137,7 +141,7 @@ KeyframableFilter {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: preset
             parameters: ['transition.fix_rotate_x', 'transition.scale_x', 'transition.ox', 'transition.oy', 'background']
             Layout.columnSpan: 3
@@ -157,7 +161,7 @@ KeyframableFilter {
             text: qsTr('Rotation')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: rotationSlider
             minimumValue: -360
             maximumValue: 360
@@ -166,12 +170,11 @@ KeyframableFilter {
             suffix: qsTr(' deg', 'degrees')
             onValueChanged: updateFilter('transition.fix_rotate_x', value, rotationKeyframesButton, getPosition())
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: rotationSlider.value = 0
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: rotationKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('transition.fix_rotate_x') > 0
             onToggled: {
                 toggleKeyframes(checked, 'transition.fix_rotate_x', rotationSlider.value)
                 setControls()
@@ -182,7 +185,7 @@ KeyframableFilter {
             text: qsTr('Scale')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: scaleSlider
             minimumValue: 0.1
             maximumValue: 1000
@@ -191,12 +194,11 @@ KeyframableFilter {
             suffix: ' %'
             onValueChanged: updateFilterScale(getPosition())
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: scaleSlider.value = 100
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: scaleKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('transition.scale_x') > 0
             onToggled: {
                 var value = getScaleValue()
                 if (checked) {
@@ -225,7 +227,7 @@ KeyframableFilter {
             text: qsTr('X offset')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: xOffsetSlider
             minimumValue: -5000
             maximumValue: 5000
@@ -237,12 +239,11 @@ KeyframableFilter {
                     filter.set('transition.ox', -value)
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: xOffsetSlider.value = 0
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: xOffsetKeyframesButton
-            checked: filter.keyframeCount('transition.ox') > 0
             onToggled: {
                 if (checked) {
                     filter.set('transition.ox', -xOffsetSlider.value, getPosition())
@@ -257,7 +258,7 @@ KeyframableFilter {
             text: qsTr('Y offset')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: yOffsetSlider
             minimumValue: -5000
             maximumValue: 5000
@@ -269,12 +270,11 @@ KeyframableFilter {
                     filter.set('transition.oy', -value)
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: yOffsetSlider.value = 0
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: yOffsetKeyframesButton
-            checked: filter.keyframeCount('transition.oy') > 0
             onToggled: {
                 if (checked) {
                     filter.set('transition.oy', -yOffsetSlider.value, getPosition())
@@ -289,13 +289,13 @@ KeyframableFilter {
             text: qsTr('Background color')
             Layout.alignment: Qt.AlignRight
         }
-        ColorPicker {
+        Shotcut.ColorPicker {
             id: bgColor
             eyedropper: true
             alpha: true
             onValueChanged: filter.set('background', 'color:' + value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             visible: bgColor.visible
             onClicked: bgColor.value = '#00000000'
         }
@@ -314,6 +314,7 @@ KeyframableFilter {
         onOutChanged: updateSimpleKeyframes()
         onAnimateInChanged: updateSimpleKeyframes()
         onAnimateOutChanged: updateSimpleKeyframes()
+        onPropertyChanged: setControls()
     }
 
     Connections {

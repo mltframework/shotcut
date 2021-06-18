@@ -31,36 +31,36 @@ struct DatabaseJob {
 
     QImage image;
     QString hash;
-    bool result;
-    bool completed;
-    DatabaseJob()
-        : result(false)
-        , completed(false)
-    {}
+    bool result {false};
+    bool completed {false};
 };
 
-static Database* instance = 0;
+static QMutex g_mutex;
+static Database* instance = nullptr;
 static bool g_isShutdown = false;
 
-Database::Database(QObject *parent) :
-    QThread(parent)
-    , m_commitTimer(0)
-    , m_isFailing(false)
+Database::Database(QObject *parent) : QObject(parent)
 {
+    m_worker.moveToThread(&m_thread);
+    connect(this, &Database::start, &m_worker, &Worker::run);
+    connect(&m_worker, &Worker::opened, this, &Database::onOpened);
+    connect(&m_worker, &Worker::failing, this, &Database::onFailing);
+    connect(&MAIN, &MainWindow::aboutToShutDown, this, &Database::shutdown, Qt::DirectConnection);
+    m_thread.start();
 }
 
-Database &Database::singleton(QWidget *parent)
+Database &Database::singleton(QObject *parent)
 {
+    QMutexLocker locker(&g_mutex);
     if (!instance) {
         instance = new Database(parent);
-        instance->start();
+        emit instance->start();
     }
     return *instance;
 }
 
-bool Database::upgradeVersion1()
+bool Worker::upgradeVersion1()
 {
-    if (!QSqlDatabase::database().isOpen()) return false;
     bool success = false;
     QSqlQuery query;
     if (query.exec("CREATE TABLE thumbnails (hash TEXT PRIMARY KEY NOT NULL, accessed DATETIME NOT NULL, image BLOB);")) {
@@ -73,7 +73,7 @@ bool Database::upgradeVersion1()
     return success;
 }
 
-void Database::doJob(DatabaseJob * job)
+void Worker::doJob(DatabaseJob * job)
 {
     if (!m_commitTimer->isActive())
         QSqlDatabase::database().transaction();
@@ -95,7 +95,7 @@ void Database::doJob(DatabaseJob * job)
         job->result = query.exec();
         if (!job->result)
             LOG_ERROR() << query.lastError();
-        m_isFailing = !job->result;
+        emit failing(!job->result);
     } else if (job->type == DatabaseJob::GetThumbnail) {
         QImage result;
         QSqlQuery query;
@@ -106,8 +106,9 @@ void Database::doJob(DatabaseJob * job)
             QSqlQuery update;
             update.prepare("UPDATE thumbnails SET accessed = datetime('now') WHERE hash = :hash ;");
             update.bindValue(":hash", job->hash);
-            m_isFailing = !update.exec();
-            if (m_isFailing)
+            auto isFailing = !update.exec();
+            emit failing(isFailing);
+            if (isFailing)
                 LOG_ERROR() << update.lastError();
         }
         job->image = result;
@@ -116,26 +117,26 @@ void Database::doJob(DatabaseJob * job)
     job->completed = true;
 }
 
-void Database::commitTransaction()
+void Worker::commitTransaction()
 {
     QSqlDatabase::database().commit();
 }
 
 bool Database::putThumbnail(const QString& hash, const QImage& image)
 {
-    if (!QSqlDatabase::database().isOpen()) return false;
+    if (!m_isOpened) return false;
     DatabaseJob job;
     job.type = DatabaseJob::PutThumbnail;
     job.hash = hash;
     job.image = image;
-    submitAndWaitForJob(&job);
+    m_worker.submitAndWaitForJob(&job);
     return job.result;
 }
 
-void Database::submitAndWaitForJob(DatabaseJob * job)
+void Worker::submitAndWaitForJob(DatabaseJob * job)
 {
     job->completed = false;
-    m_mutex.lock();
+    QMutexLocker locker(&m_mutex);
     m_jobs.append(job);
     if (m_jobs.size() == 1) {
         //worker was idle until now
@@ -144,16 +145,22 @@ void Database::submitAndWaitForJob(DatabaseJob * job)
     while (!job->completed) {
         m_waitForFinished.wait(&m_mutex);
     }
-    m_mutex.unlock();
+}
+
+void Worker::quit()
+{
+    QMutexLocker locker(&m_mutex);
+    m_quit = true;
+    m_waitForNewJob.wakeAll();
 }
 
 QImage Database::getThumbnail(const QString &hash)
 {
-    if (!QSqlDatabase::database().isOpen()) return QImage();
+    if (!m_isOpened) return QImage();
     DatabaseJob job;
     job.type = DatabaseJob::GetThumbnail;
     job.hash = hash;
-    submitAndWaitForJob(&job);
+    m_worker.submitAndWaitForJob(&job);
     return job.image;
 }
 
@@ -165,16 +172,17 @@ bool Database::isShutdown() const
 void Database::shutdown()
 {
     g_isShutdown = true;
-    requestInterruption();
-    wait();
-    QString connection = QSqlDatabase::database().connectionName();
-    QSqlDatabase::database().close();
-    QSqlDatabase::removeDatabase(connection);
-    LOG_DEBUG() << "database closed";
-    instance = 0;
+    LOG_DEBUG() << "tell worker to quit";
+    m_worker.quit();
+    LOG_DEBUG() << "quit thread";
+    m_thread.quit();
+    LOG_DEBUG() << "wait for thread";
+    m_thread.wait();
+    instance = nullptr;
+    LOG_DEBUG() << "end";
 }
 
-void Database::deleteOldThumbnails()
+void Worker::deleteOldThumbnails()
 {
     QSqlQuery query;
     // OFFSET is the number of thumbnails to cache.
@@ -182,18 +190,20 @@ void Database::deleteOldThumbnails()
         LOG_ERROR() << query.lastError();
 }
 
-void Database::run()
+void Worker::run()
 {
-    connect(&MAIN, SIGNAL(aboutToShutDown()),
-            this, SLOT(shutdown()), Qt::DirectConnection);
-
     QDir dir(Settings.appDataLocation());
     if (!dir.exists())
         dir.mkpath(dir.path());
 
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName(dir.filePath("db.sqlite3"));
-    db.open();
+    auto result = db.open();
+    emit opened(result);
+    if (!result) {
+        LOG_ERROR() << "database open failed";
+        return;
+    }
 
     m_commitTimer = new QTimer();
     m_commitTimer->setSingleShot(true);
@@ -217,24 +227,26 @@ void Database::run()
         version = 1;
     LOG_DEBUG() << "Database version is" << version;
 
-    while (true) {
-        DatabaseJob * newJob = 0;
+    while (!m_quit) {
+        DatabaseJob * newJob = nullptr;
         m_mutex.lock();
         if (m_jobs.isEmpty())
             m_waitForNewJob.wait(&m_mutex, 1000);
         else
             newJob = m_jobs.takeFirst();
         m_mutex.unlock();
-        QCoreApplication::processEvents();
         if (newJob) {
             doJob(newJob);
             m_waitForFinished.wakeAll();
         }
-        if (isInterruptionRequested())
-            break;
     }
     if (m_commitTimer->isActive())
         commitTransaction();
     delete m_commitTimer;
+
+    QString connection = QSqlDatabase::database().connectionName();
+    QSqlDatabase::database().close();
+//    QSqlDatabase::removeDatabase(connection);
+    LOG_DEBUG() << "database closed";
 }
 

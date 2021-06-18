@@ -62,7 +62,7 @@ protected:
     QStandardItem*  m_item;
 
 protected slots:
-    virtual void onFinished(int exitCode, QProcess::ExitStatus exitStatus);
+    virtual void onFinished(int exitCode, QProcess::ExitStatus exitStatus = QProcess::NormalExit);
     virtual void onReadyRead();
     virtual void onStarted();
 

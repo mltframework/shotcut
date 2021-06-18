@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 Meltytech, LLC
+ * Copyright (c) 2013-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,12 +15,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.2
-import QtQuick.Controls 1.0
-import Shotcut.Controls 1.0
-import QtGraphicalEffects 1.0
-import QtQml.Models 2.2
-import QtQuick.Window 2.2
+import QtQuick 2.12
+import QtQuick.Controls 2.12
+import Shotcut.Controls 1.0 as Shotcut
 
 Rectangle {
     id: clipRoot
@@ -109,11 +106,11 @@ Rectangle {
 
     Image {
         id: outThumbnail
-        visible: settings.timelineShowThumbnails && parent.height > 20
+        visible: !isBlank && settings.timelineShowThumbnails && parent.height > 20 && x > inThumbnail.width
         anchors.right: parent.right
         anchors.top: parent.top
         anchors.topMargin: parent.border.width
-        anchors.rightMargin: parent.border.width + 1
+        anchors.rightMargin: parent.border.width
         anchors.bottom: parent.bottom
         anchors.bottomMargin: parent.height / 2
         width: height * 16.0/9.0
@@ -123,10 +120,11 @@ Rectangle {
 
     Image {
         id: inThumbnail
-        visible: settings.timelineShowThumbnails && parent.height > 20
+        visible: !isBlank && settings.timelineShowThumbnails && parent.height > 20
         anchors.left: parent.left
         anchors.top: parent.top
         anchors.topMargin: parent.border.width
+        anchors.leftMargin: parent.border.width
         anchors.bottom: parent.bottom
         anchors.bottomMargin: parent.height / 2
         width: height * 16.0/9.0
@@ -134,7 +132,7 @@ Rectangle {
         source: imagePath(inPoint)
     }
 
-    TimelineTransition {
+    Shotcut.TimelineTransition {
         visible: isTransition
         anchors.fill: parent
         property var color: isAudio? 'darkseagreen' : root.shotcutBlue
@@ -150,12 +148,13 @@ Rectangle {
         anchors.bottom: parent.bottom
         anchors.margins: parent.border.width
         opacity: isTrackMute ? 0.2 : 0.7
-        property int maxWidth: 10000
+        property int maxWidth: Math.max(application.maxTextureSize / 2, 2048)
         property int innerWidth: clipRoot.width - clipRoot.border.width * 2
 
         Repeater {
             id: waveformRepeater
-            TimelineWaveform {
+            model: Math.ceil(waveform.innerWidth / waveform.maxWidth)
+            Shotcut.TimelineWaveform {
                 width: Math.min(waveform.innerWidth, waveform.maxWidth)
                 height: waveform.height
                 fillColor: getColor()
@@ -163,6 +162,10 @@ Rectangle {
                 inPoint: Math.round((clipRoot.inPoint + index * waveform.maxWidth / timeScale) * speed) * channels
                 outPoint: inPoint + Math.round(width / timeScale * speed) * channels
                 levels: audioLevels
+                active: ((clipRoot.x + x + width)   > tracksFlickable.contentX) && // right edge
+                        ((clipRoot.x + x)           < tracksFlickable.contentX + tracksFlickable.width) && // left edge
+                        ((trackRoot.y + y + height) > tracksFlickable.contentY) && // bottom edge
+                        ((trackRoot.y + y)          < tracksFlickable.contentY + tracksFlickable.height) // top edge
             }
         }
     }
@@ -355,7 +358,7 @@ Rectangle {
         }
     }
 
-    TimelineTriangle {
+    Shotcut.TimelineTriangle {
         id: fadeInTriangle
         visible: !isBlank && !isTransition
         width: parent.fadeIn * timeScale
@@ -438,7 +441,7 @@ Rectangle {
         }
     }
 
-    TimelineTriangle {
+    Shotcut.TimelineTriangle {
         id: fadeOutTriangle
         visible: !isBlank && !isTransition
         width: parent.fadeOut * timeScale
@@ -621,12 +624,12 @@ Rectangle {
     Menu {
         id: menu
         function show() {
-            mergeItem.visible = timeline.mergeClipWithNext(trackIndex, index, true)
+            mergeItem.enabled = timeline.mergeClipWithNext(trackIndex, index, true)
             popup()
         }
         MenuItem {
-            visible: !isBlank && !isTransition
-            text: qsTr('Cut')
+            enabled: !isBlank && !isTransition
+            text: qsTr('Cut') + (application.OS === 'OS X'? '    ⌘X' : ' (Ctrl+X)')
             onTriggered: {
                 if (!trackRoot.isLocked) {
                     timeline.copyClip(trackIndex, index)
@@ -637,69 +640,65 @@ Rectangle {
             }
         }
         MenuItem {
-            visible: !isBlank && !isTransition
-            text: qsTr('Copy')
+            enabled: !isBlank && !isTransition
+            text: qsTr('Copy') + (application.OS === 'OS X'? '    ⌘C' : ' (Ctrl+C)')
             onTriggered: timeline.copyClip(trackIndex, index)
         }
-        MenuSeparator {
-            visible: !isBlank && !isTransition
-        }
         MenuItem {
-            text: qsTr('Remove')
+            text: qsTr('Remove') + (isBlank? '' : (application.OS === 'OS X'? '    X' : ' (X)'))
             onTriggered: timeline.remove(trackIndex, index)
         }
         MenuItem {
-            visible: !isBlank
-            text: qsTr('Lift')
-            onTriggered: timeline.lift(trackIndex, index)
-        }
-        MenuItem {
-            visible: !isTransition
-            text: qsTr('Replace')
-            onTriggered: timeline.replace(trackIndex, index)
-        }
-
-        MenuSeparator {
-            visible: !isBlank && !isTransition
-        }
-        MenuItem {
-            visible: !isBlank && !isTransition
-            text: qsTr('Split At Playhead (S)')
+            enabled: !isBlank && !isTransition
+            text: qsTr('Split At Playhead') + (application.OS === 'OS X'? '    S' : ' (S)')
             onTriggered: timeline.splitClip(trackIndex, index)
         }
-        MenuItem {
-            id: mergeItem
-            text: qsTr('Merge with next clip')
-            onTriggered: timeline.mergeClipWithNext(trackIndex, index, false)
-        }
-        MenuItem {
-            visible: !isBlank && !isTransition && !isAudio && (parseInt(audioIndex) > -1 || audioIndex === 'all')
-            text: qsTr('Detach Audio')
-            onTriggered: timeline.detachAudio(trackIndex, index)
-        }
-        MenuItem {
-            visible: !isBlank && !isTransition && settings.timelineShowThumbnails && !isAudio
-            text: qsTr('Update Thumbnails')
-            onTriggered: {
-                var s = inThumbnail.source.toString()
-                if (s.substring(s.length - 1) !== '!') {
-                    inThumbnail.source = s + '!'
-                    resetThumbnailsSourceTimer.restart()
+        Menu {
+            title: qsTr('More')
+            MenuItem {
+                enabled: !isBlank
+                text: qsTr('Lift') + (application.OS === 'OS X'? '    Z' : ' (Z)')
+                onTriggered: timeline.lift(trackIndex, index)
+            }
+            MenuItem {
+                enabled: !isTransition
+                text: qsTr('Replace') + (application.OS === 'OS X'? '    R' : ' (R)')
+                onTriggered: timeline.replace(trackIndex, index)
+            }
+            MenuItem {
+                id: mergeItem
+                text: qsTr('Merge with next clip')
+                onTriggered: timeline.mergeClipWithNext(trackIndex, index, false)
+            }
+            MenuItem {
+                enabled: !isBlank && !isTransition && !isAudio && (parseInt(audioIndex) > -1 || audioIndex === 'all')
+                text: qsTr('Detach Audio')
+                onTriggered: timeline.detachAudio(trackIndex, index)
+            }
+            MenuItem {
+                enabled: !isBlank && !isTransition && settings.timelineShowThumbnails && !isAudio
+                text: qsTr('Update Thumbnails')
+                onTriggered: {
+                    var s = inThumbnail.source.toString()
+                    if (s.substring(s.length - 1) !== '!') {
+                        inThumbnail.source = s + '!'
+                        resetThumbnailsSourceTimer.restart()
+                    }
+                    s = outThumbnail.source.toString()
+                    if (s.substring(s.length - 1) !== '!') {
+                        outThumbnail.source = s + '!'
+                        resetThumbnailsSourceTimer.restart()
+                    }
                 }
-                s = outThumbnail.source.toString()
-                if (s.substring(s.length - 1) !== '!') {
-                    outThumbnail.source = s + '!'
-                    resetThumbnailsSourceTimer.restart()
-                }
+            }
+            MenuItem {
+                enabled: !isBlank && !isTransition && settings.timelineShowWaveforms
+                text: qsTr('Rebuild Audio Waveform')
+                onTriggered: timeline.remakeAudioLevels(trackIndex, index)
             }
         }
         MenuItem {
-            visible: !isBlank && !isTransition && settings.timelineShowWaveforms
-            text: qsTr('Rebuild Audio Waveform')
-            onTriggered: timeline.remakeAudioLevels(trackIndex, index)
-        }
-        MenuItem {
-            visible: !isBlank
+            enabled: !isBlank
             text: qsTr('Properties')
             onTriggered: {
                 clipRoot.forceActiveFocus()
@@ -707,12 +706,9 @@ Rectangle {
                 timeline.openProperties()
             }
         }
-        onPopupVisibleChanged: {
-            if (visible && application.OS !== 'OS X' && __popupGeometry.height > 0) {
-                // Try to fix menu running off screen. This only works intermittently.
-                menu.__yOffset = Math.min(0, Screen.height - (__popupGeometry.y + __popupGeometry.height + 40))
-                menu.__xOffset = Math.min(0, Screen.width - (__popupGeometry.x + __popupGeometry.width))
-            }
+        MenuItem {
+            text: qsTr('Cancel')
+            onTriggered: menu.dismiss()
         }
     }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Meltytech, LLC
+ * Copyright (c) 2015-2021 Meltytech, LLC
  * Author: Amy Dennedy
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,10 +16,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.1
-import QtQuick.Controls 1.0
-import QtQuick.Layouts 1.0
-import Shotcut.Controls 1.0
+import QtQuick 2.12
+import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.12
+import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     width: 350
@@ -52,7 +52,7 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: preset
             parameters: ['line_width', 'num', 'darker', 'lighter']
             Layout.columnSpan: 2
@@ -63,14 +63,14 @@ Item {
             text: qsTr('Width')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: widthSlider
             minimumValue: 1
             maximumValue: 100
             value: filter.get('line_width')
             onValueChanged: filter.set('line_width', value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: widthSlider.value = 2
         }
 
@@ -78,14 +78,14 @@ Item {
             text: qsTr('Amount')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: amountSlider
             minimumValue: 1
             maximumValue: 100
             value: filter.get('num')
             onValueChanged: filter.set('num', value)
             }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: amountSlider.value = 5
         }
 
@@ -93,14 +93,14 @@ Item {
             text: qsTr('Darkness')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: darkSlider
             minimumValue: 1
             maximumValue: 100
             value: filter.get('darker')
             onValueChanged: filter.set('darker', value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: darkSlider.value = 40
         }
 
@@ -108,14 +108,14 @@ Item {
             text: qsTr('Lightness')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: lightSlider
             minimumValue: 0
             maximumValue: 100
             value: filter.get('lighter')
             onValueChanged: filter.set('lighter', value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: lightSlider.value = 40
         }
 

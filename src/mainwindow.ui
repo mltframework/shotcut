@@ -39,7 +39,7 @@
      <x>0</x>
      <y>0</y>
      <width>1270</width>
-     <height>22</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -69,10 +69,15 @@
      <property name="title">
       <string>Layout</string>
      </property>
-     <addaction name="actionLayoutTimeline"/>
+     <addaction name="actionLayoutLogging"/>
+     <addaction name="actionLayoutEditing"/>
+     <addaction name="actionLayoutEffects"/>
+     <addaction name="actionLayoutColor"/>
+     <addaction name="actionLayoutAudio"/>
+     <addaction name="actionLayoutPlayer"/>
+     <addaction name="separator"/>
      <addaction name="actionLayoutClip"/>
      <addaction name="actionLayoutPlaylist"/>
-     <addaction name="actionLayoutPlayer"/>
      <addaction name="separator"/>
      <addaction name="actionRestoreLayout"/>
      <addaction name="actionLayoutAdd"/>
@@ -194,6 +199,24 @@
      <addaction name="actionPreview540"/>
      <addaction name="actionPreview720"/>
     </widget>
+    <widget class="QMenu" name="menuProxy">
+     <property name="title">
+      <string>Proxy</string>
+     </property>
+     <widget class="QMenu" name="menuStorage">
+      <property name="title">
+       <string>Storage</string>
+      </property>
+      <addaction name="actionProxyStorageSet"/>
+      <addaction name="actionProxyStorageShow"/>
+      <addaction name="actionProxyUseProjectFolder"/>
+     </widget>
+     <addaction name="actionUseProxy"/>
+     <addaction name="menuStorage"/>
+     <addaction name="separator"/>
+     <addaction name="actionProxyUseHardware"/>
+     <addaction name="actionProxyConfigureHardware"/>
+    </widget>
     <addaction name="actionProject"/>
     <addaction name="actionGPU"/>
     <addaction name="menuProfile"/>
@@ -205,6 +228,7 @@
     <addaction name="actionRealtime"/>
     <addaction name="actionProgressive"/>
     <addaction name="menuPreviewScaling"/>
+    <addaction name="menuProxy"/>
     <addaction name="menuDeinterlacer"/>
     <addaction name="menuInterpolation"/>
     <addaction name="menuExternal"/>
@@ -227,6 +251,9 @@
   <widget class="QToolBar" name="mainToolBar">
    <property name="windowTitle">
     <string>Toolbar</string>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QToolButton:checked { color: palette(highlighted-text); background-color: palette(highlight); border: none; padding: 2px }</string>
    </property>
    <property name="movable">
     <bool>false</bool>
@@ -263,7 +290,13 @@
    <addaction name="actionHistory"/>
    <addaction name="actionEncode"/>
    <addaction name="actionJobs"/>
-   <addaction name="actionFullscreen"/>
+   <addaction name="dummyAction"/>
+   <addaction name="actionLayoutLogging"/>
+   <addaction name="actionLayoutEditing"/>
+   <addaction name="actionLayoutEffects"/>
+   <addaction name="actionLayoutColor"/>
+   <addaction name="actionLayoutAudio"/>
+   <addaction name="actionLayoutPlayer"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionOpen">
@@ -278,7 +311,7 @@
     <string>Open a video, audio or image file</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+O</string>
+    <string notr="true">Ctrl+O</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
@@ -292,7 +325,7 @@
     <string>Quit the application</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+Q</string>
+    <string notr="true">Ctrl+Q</string>
    </property>
   </action>
   <action name="actionAbout_Shotcut">
@@ -319,7 +352,7 @@
     <string>Open a device, stream or generator</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+Shift+O</string>
+    <string notr="true">Ctrl+Shift+O</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
@@ -337,7 +370,7 @@
     <string>Save project as a MLT XML file</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+S</string>
+    <string notr="true">Ctrl+S</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
@@ -351,7 +384,7 @@
     <string>Save project to a different MLT XML file</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+Shift+S</string>
+    <string notr="true">Ctrl+Shift+S</string>
    </property>
   </action>
   <action name="actionEncode">
@@ -403,7 +436,7 @@
     <string>Enter Full Screen</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+Shift+F</string>
+    <string>F11</string>
    </property>
   </action>
   <action name="actionAudioMeter">
@@ -452,15 +485,6 @@
    </property>
    <property name="text">
     <string>History</string>
-   </property>
-  </action>
-  <action name="actionFullscreen">
-   <property name="icon">
-    <iconset theme="view-fullscreen" resource="../icons/resources.qrc">
-     <normaloff>:/icons/oxygen/32x32/actions/view-fullscreen.png</normaloff>:/icons/oxygen/32x32/actions/view-fullscreen.png</iconset>
-   </property>
-   <property name="text">
-    <string>Full Screen</string>
    </property>
   </action>
   <action name="actionRealtime">
@@ -590,7 +614,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Hyper/Lanczos (best)</string>
+    <string notr="true">Lanczos (best)</string>
    </property>
   </action>
   <action name="actionProfileAutomatic">
@@ -818,7 +842,7 @@
     <string>Close</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+W</string>
+    <string notr="true">Ctrl+W</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
@@ -836,7 +860,7 @@
     <string>Cu&amp;t</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+X</string>
+    <string notr="true">Ctrl+X</string>
    </property>
   </action>
   <action name="actionCopy">
@@ -851,7 +875,7 @@
     <string>&amp;Copy</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+C</string>
+    <string notr="true">Ctrl+C</string>
    </property>
   </action>
   <action name="actionPaste">
@@ -866,7 +890,7 @@
     <string>&amp;Paste</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+V</string>
+    <string notr="true">Ctrl+V</string>
    </property>
   </action>
   <action name="actionExportEDL">
@@ -879,7 +903,7 @@
     <string>Export Frame...</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+Shift+E</string>
+    <string notr="true">Ctrl+Shift+E</string>
    </property>
   </action>
   <action name="actionExportVideo">
@@ -887,7 +911,7 @@
     <string>Export Video...</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+E</string>
+    <string notr="true">Ctrl+E</string>
    </property>
   </action>
   <action name="actionAppDataSet">
@@ -920,32 +944,71 @@
     <string>New</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+N</string>
+    <string notr="true">Ctrl+N</string>
    </property>
   </action>
   <action name="actionKeyboardShortcuts">
    <property name="text">
     <string>Keyboard Shortcuts...</string>
    </property>
-  </action>
-  <action name="actionLayoutPlayer">
-   <property name="text">
-    <string>Player</string>
+   <property name="shortcut">
+    <string notr="true">?</string>
    </property>
   </action>
-  <action name="actionLayoutPlaylist">
+  <action name="actionLayoutAudio">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="text">
-    <string>Playlist Project</string>
+    <string>Audio</string>
+   </property>
+   <property name="toolTip">
+    <string>Switch to the audio layout</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+5</string>
    </property>
   </action>
-  <action name="actionLayoutTimeline">
+  <action name="actionLayoutLogging">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="text">
-    <string>Timeline Project</string>
+    <string>Logging</string>
+   </property>
+   <property name="toolTip">
+    <string>Switch to the logging layout</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+1</string>
    </property>
   </action>
-  <action name="actionLayoutClip">
+  <action name="actionLayoutEditing">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="text">
-    <string>Clip-only Project</string>
+    <string>Editing</string>
+   </property>
+   <property name="toolTip">
+    <string>Switch to the editing layout</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+2</string>
+   </property>
+  </action>
+  <action name="actionLayoutEffects">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>FX</string>
+   </property>
+   <property name="toolTip">
+    <string>Switch to the effects layout</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+3</string>
    </property>
   </action>
   <action name="actionLayoutAdd">
@@ -1019,7 +1082,7 @@
     <string>540p</string>
    </property>
    <property name="shortcut">
-    <string>F8</string>
+    <string notr="true">F8</string>
    </property>
   </action>
   <action name="actionPreview720">
@@ -1030,7 +1093,7 @@
     <string>720p</string>
    </property>
    <property name="shortcut">
-    <string>F9</string>
+    <string notr="true">F9</string>
    </property>
   </action>
   <action name="actionPreviewNone">
@@ -1041,7 +1104,7 @@
     <string>None</string>
    </property>
    <property name="shortcut">
-    <string>F6</string>
+    <string notr="true">F6</string>
    </property>
   </action>
   <action name="actionPreview360">
@@ -1052,7 +1115,7 @@
     <string>360p</string>
    </property>
    <property name="shortcut">
-    <string>F7</string>
+    <string notr="true">F7</string>
    </property>
   </action>
   <action name="actionTopics">
@@ -1060,7 +1123,7 @@
     <string>Topics</string>
    </property>
    <property name="shortcut">
-    <string>F1</string>
+    <string notr="true">F1</string>
    </property>
   </action>
   <action name="actionSync">
@@ -1069,6 +1132,106 @@
    </property>
    <property name="toolTip">
     <string>Synchronization</string>
+   </property>
+  </action>
+  <action name="actionUseProxy">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Use Proxy</string>
+   </property>
+   <property name="shortcut">
+    <string notr="true">F4</string>
+   </property>
+  </action>
+  <action name="actionProxyStorageSet">
+   <property name="text">
+    <string>Set...</string>
+   </property>
+   <property name="toolTip">
+    <string>Set the proxy storage folder</string>
+   </property>
+  </action>
+  <action name="actionProxyStorageShow">
+   <property name="text">
+    <string>Show...</string>
+   </property>
+   <property name="toolTip">
+    <string>Show the proxy storage folder</string>
+   </property>
+  </action>
+  <action name="actionProxyUseProjectFolder">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Use Project Folder</string>
+   </property>
+   <property name="toolTip">
+    <string>Store proxies in the project folder if defined</string>
+   </property>
+  </action>
+  <action name="actionProxyUseHardware">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Use Hardware Encoder</string>
+   </property>
+  </action>
+  <action name="actionProxyConfigureHardware">
+   <property name="text">
+    <string>Configure Hardware Encoder...</string>
+   </property>
+  </action>
+  <action name="actionLayoutColor">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Color</string>
+   </property>
+   <property name="toolTip">
+    <string>Switch to the color layout</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+4</string>
+   </property>
+  </action>
+  <action name="actionLayoutPlayer">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Player</string>
+   </property>
+   <property name="toolTip">
+    <string>Switch to the player only layout</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+6</string>
+   </property>
+  </action>
+  <action name="dummyAction">
+   <property name="text">
+    <string notr="true">X</string>
+   </property>
+   <property name="visible">
+    <bool>false</bool>
+   </property>
+  </action>
+  <action name="actionLayoutPlaylist">
+   <property name="text">
+    <string>Playlist Project</string>
+   </property>
+  </action>
+  <action name="actionLayoutClip">
+   <property name="text">
+    <string>Clip-only Project</string>
    </property>
   </action>
  </widget>

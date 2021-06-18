@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2019 Meltytech, LLC
+ * Copyright (c) 2014-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,9 +16,9 @@
  */
 
 import QtQuick 2.1
-import Shotcut.Controls 1.0
+import Shotcut.Controls 1.0 as Shotcut
 
-VuiBase {
+Shotcut.VuiBase {
     property string rectProperty: 'geometry'
     property string halignProperty: 'valign'
     property string valignProperty: 'halign'
@@ -31,6 +31,7 @@ VuiBase {
     property string endValue:  '_shotcut:endValue'
 
     Component.onCompleted: {
+        application.showStatusMessage(qsTr('Click in rectangle + hold Shift to drag'))
         setRectangleControl()
     }
 
@@ -104,7 +105,7 @@ VuiBase {
             height: video.rect.height
             scale: zoom
 
-            RectangleControl {
+            Shotcut.RectangleControl {
                 id: rectangle
                 widthScale: video.rect.width / profile.width
                 heightScale: video.rect.height / profile.height
@@ -119,7 +120,10 @@ VuiBase {
 
     Connections {
         target: filter
-        onChanged: setRectangleControl()
+        onChanged: {
+            setRectangleControl()
+            videoItem.enabled = filter.get('disable') !== '1'
+        }
     }
 
     Connections {

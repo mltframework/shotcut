@@ -47,9 +47,6 @@
      </item>
      <item row="0" column="1">
       <widget class="QSpinBox" name="periodSpinBox">
-       <property name="suffix">
-        <string> seconds</string>
-       </property>
        <property name="minimum">
         <number>1</number>
        </property>

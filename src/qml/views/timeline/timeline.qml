@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 Meltytech, LLC
+ * Copyright (c) 2013-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,12 +15,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.2
-import QtQml.Models 2.1
-import QtQuick.Controls 1.0
-import Shotcut.Controls 1.0
-import QtGraphicalEffects 1.0
-import QtQuick.Window 2.2
+import QtQuick 2.12
+import QtQml.Models 2.12
+import QtQuick.Controls 2.12
+import QtGraphicalEffects 1.12
+import Shotcut.Controls 1.0 as Shotcut
 import 'Timeline.js' as Logic
 
 Rectangle {
@@ -32,21 +31,31 @@ Rectangle {
 
     function setZoom(value, targetX) {
         if (!targetX)
-            targetX = scrollView.flickableItem.contentX + scrollView.width / 2
-        var offset = targetX - scrollView.flickableItem.contentX
+            targetX = tracksFlickable.contentX + tracksFlickable.width / 2
+        var offset = targetX - tracksFlickable.contentX
         var before = multitrack.scaleFactor
 
         toolbar.scaleSlider.value = value
 
-        if (!settings.timelineCenterPlayhead)
-            scrollView.flickableItem.contentX = Logic.clamp((targetX * multitrack.scaleFactor / before) - offset, 0, Logic.scrollMax().x)
+        if (!settings.timelineCenterPlayhead && !settings.timelineScrollZoom)
+            tracksFlickable.contentX = (targetX * multitrack.scaleFactor / before) - offset
 
         for (var i = 0; i < tracksRepeater.count; i++)
             tracksRepeater.itemAt(i).redrawWaveforms(false)
     }
 
+    Timer {
+        id: scrollZoomTimer
+        interval: 100
+        onTriggered: {
+            Logic.scrollIfNeeded(true)
+        }
+    }
+
     function adjustZoom(by, targetX) {
         setZoom(toolbar.scaleSlider.value + by, targetX)
+        if (settings.timelineScrollZoom && !settings.timelineCenterPlayhead)
+            scrollZoomTimer.restart()
     }
 
     function zoomIn() {
@@ -55,6 +64,11 @@ Rectangle {
 
     function zoomOut() {
         adjustZoom(-0.0625)
+    }
+
+    function zoomToFit() {
+        setZoom(Math.pow((tracksFlickable.width - 50) * multitrack.scaleFactor / tracksContainer.width - 0.01, 1/3))
+        tracksFlickable.contentX = 0
     }
 
     function resetZoom() {
@@ -110,7 +124,7 @@ Rectangle {
         onExited: Logic.dropped()
         onPositionChanged: {
             if (drag.formats.indexOf('application/vnd.mlt+xml') >= 0 || drag.hasUrls)
-                Logic.dragging(drag, parseInt(drag.text))
+                Logic.dragging(drag, drag.hasUrls? 0 : parseInt(drag.text))
         }
         onDropped: {
             if (drop.formats.indexOf('application/vnd.mlt+xml') >= 0) {
@@ -134,7 +148,8 @@ Rectangle {
     }
 
     Row {
-        anchors.top: toolbar.bottom
+        anchors.fill: parent
+        anchors.topMargin: toolbar.height
         Column {
             z: 1
 
@@ -150,37 +165,42 @@ Rectangle {
                 visible: trackHeaderRepeater.count
                 z: 1
                 Label {
-                    text: qsTr('Master')
+                    text: qsTr('Output')
                     color: activePalette.windowText
                     elide: Qt.ElideRight
                     x: 8
                     anchors.verticalCenter: parent.verticalCenter
                     width: parent.width - 8
                 }
+                MouseArea {
+                    anchors.fill: parent
+                    acceptedButtons: Qt.LeftButton | Qt.RightButton
+                    onClicked: {
+                        timeline.selectMultitrack()
+                        if (mouse.button == Qt.RightButton) {
+                            menu.popup()
+                        }
+                    }
+                }
                 ToolButton {
                     visible: multitrack.filtered
                     anchors.right: parent.right
                     anchors.rightMargin: 4
                     anchors.verticalCenter: parent.verticalCenter
-                    implicitWidth: 20
-                    implicitHeight: 20
-                    iconName: 'view-filter'
-                    iconSource: 'qrc:///icons/oxygen/32x32/status/view-filter.png'
-                    tooltip: qsTr('Filters')
+                    action: Action {
+                        icon.name: 'view-filter'
+                        icon.source: 'qrc:///icons/oxygen/32x32/status/view-filter.png'
+                    }
+                    Shotcut.HoverTip { text: qsTr('Filters') }
                     onClicked: {
                         timeline.selectMultitrack()
                         timeline.filteredClicked()
                     }
                 }
-                MouseArea {
-                    anchors.fill: parent
-                    acceptedButtons: Qt.LeftButton
-                    onClicked: timeline.selectMultitrack()
-                }
             }
             Flickable {
                 // Non-slider scroll area for the track headers.
-                contentY: scrollView.flickableItem.contentY
+                contentY: tracksFlickable.contentY
                 width: headerWidth
                 height: trackHeaders.height
                 interactive: false
@@ -201,7 +221,6 @@ Rectangle {
                             isBottomVideo: model.isBottomVideo
                             width: headerWidth
                             height: Logic.trackHeight(model.audio)
-                            selected: false
                             current: index === currentTrack
                             onIsLockedChanged: tracksRepeater.itemAt(index).isLocked = isLocked
                             onClicked: {
@@ -229,17 +248,21 @@ Rectangle {
             // This provides continuous scrubbing and scimming at the left/right edges.
             focus: true
             hoverEnabled: true
-            onClicked: timeline.position = (scrollView.flickableItem.contentX + mouse.x) / multitrack.scaleFactor
+            onClicked: {
+                timeline.position = (tracksFlickable.contentX + mouse.x) / multitrack.scaleFactor
+                bubbleHelp.hide()
+            }
             property bool scim: false
             onReleased: scim = false
             onExited: scim = false
             onPositionChanged: {
                 if (mouse.modifiers === (Qt.ShiftModifier | Qt.AltModifier) || mouse.buttons === Qt.LeftButton) {
-                    timeline.position = (scrollView.flickableItem.contentX + mouse.x) / multitrack.scaleFactor
+                    timeline.position = (tracksFlickable.contentX + mouse.x) / multitrack.scaleFactor
+                    bubbleHelp.hide()
                     scim = true
-                }
-                else
+                } else {
                     scim = false
+                }
             }
             onWheel: Logic.onMouseWheel(wheel)
 
@@ -258,16 +281,16 @@ Rectangle {
                 }
             }
 
-            Column {
+            Item {
                 Flickable {
                     // Non-slider scroll area for the Ruler.
                     id: rulerFlickable
-                    contentX: scrollView.flickableItem.contentX
+                    contentX: tracksFlickable.contentX
                     width: root.width - headerWidth
                     height: ruler.height
                     interactive: false
                     // workaround to fix https://github.com/mltframework/shotcut/issues/777
-                    onContentXChanged: if (contentX === 0) contentX = scrollView.flickableItem.contentX
+                    onContentXChanged: if (contentX === 0) contentX = tracksFlickable.contentX
 
                     Ruler {
                         id: ruler
@@ -275,16 +298,42 @@ Rectangle {
                         timeScale: multitrack.scaleFactor
                     }
                 }
-                ScrollView {
-                    id: scrollView
-                    width: root.width - headerWidth
-                    height: root.height - ruler.height - toolbar.height
+                Flickable {
+                    id: tracksFlickable
+                    y: ruler.height
+                    width: root.width - headerWidth - 16
+                    height: root.height - toolbar.height - ruler.height - 16
+                    clip: true
                     // workaround to fix https://github.com/mltframework/shotcut/issues/777
-                    flickableItem.onContentXChanged: rulerFlickable.contentX = flickableItem.contentX
+                    onContentXChanged: rulerFlickable.contentX = contentX
+                    interactive: false
+                    contentWidth: tracksContainer.width + headerWidth
+                    contentHeight: trackHeaders.height + 30 // 30 is padding
+                    ScrollBar.horizontal: ScrollBar {
+                        id: horizontalScrollBar
+                        height: 16
+                        policy: ScrollBar.AlwaysOn
+                        visible: tracksFlickable.contentWidth > tracksFlickable.width
+                        parent: tracksFlickable.parent
+                        anchors.top: tracksFlickable.bottom
+                        anchors.left: tracksFlickable.left
+                        anchors.right: tracksFlickable.right
+                        background: Rectangle { color: parent.palette.alternateBase }
+                    }
+                    ScrollBar.vertical: ScrollBar {
+                        width: 16
+                        policy: ScrollBar.AlwaysOn
+                        visible: tracksFlickable.contentHeight > tracksFlickable.height
+                        parent: tracksFlickable.parent
+                        anchors.top: tracksFlickable.top
+                        anchors.left: tracksFlickable.right
+                        anchors.bottom: tracksFlickable.bottom
+                        anchors.bottomMargin: -16
+                        background: Rectangle { color: parent.palette.alternateBase }
+                    }
         
                     MouseArea {
-                        width: tracksContainer.width + headerWidth
-                        height: Math.max(trackHeaders.height + 30, root.height - ruler.height - toolbar.height)
+                        anchors.fill: parent
                         acceptedButtons: Qt.NoButton
                         onWheel: Logic.onMouseWheel(wheel)
 
@@ -330,17 +379,17 @@ Rectangle {
             }
 
             CornerSelectionShadow {
-                y: tracksRepeater.count ? tracksRepeater.itemAt(currentTrack).y + ruler.height - scrollView.flickableItem.contentY : 0
+                y: tracksRepeater.count ? tracksRepeater.itemAt(currentTrack).y + ruler.height - tracksFlickable.contentY : 0
                 clip: timeline.selection.length ?
                         tracksRepeater.itemAt(timeline.selection[0].y).clipAt(timeline.selection[0].x) : null
-                opacity: clip && clip.x + clip.width < scrollView.flickableItem.contentX ? 1 : 0
+                opacity: clip && clip.x + clip.width < tracksFlickable.contentX ? 1 : 0
             }
 
             CornerSelectionShadow {
-                y: tracksRepeater.count ? tracksRepeater.itemAt(currentTrack).y + ruler.height - scrollView.flickableItem.contentY : 0
+                y: tracksRepeater.count ? tracksRepeater.itemAt(currentTrack).y + ruler.height - tracksFlickable.contentY : 0
                 clip: timeline.selection.length ?
                         tracksRepeater.itemAt(timeline.selection[timeline.selection.length - 1].y).clipAt(timeline.selection[timeline.selection.length - 1].x) : null
-                opacity: clip && clip.x > scrollView.flickableItem.contentX + scrollView.width ? 1 : 0
+                opacity: clip && clip.x > tracksFlickable.contentX + tracksFlickable.width ? 1 : 0
                 anchors.right: parent.right
                 mirrorGradient: true
             }
@@ -350,17 +399,17 @@ Rectangle {
                 visible: timeline.position > -1
                 color: activePalette.text
                 width: 1
-                height: root.height - scrollView.__horizontalScrollBar.height - toolbar.height
-                x: timeline.position * multitrack.scaleFactor - scrollView.flickableItem.contentX
+                height: root.height - toolbar.height - horizontalScrollBar.height
+                x: timeline.position * multitrack.scaleFactor - tracksFlickable.contentX
                 y: 0
             }
-            TimelinePlayhead {
+            Shotcut.TimelinePlayhead {
                 id: playhead
                 visible: timeline.position > -1
-                x: timeline.position * multitrack.scaleFactor - scrollView.flickableItem.contentX - 5
+                x: timeline.position * multitrack.scaleFactor - tracksFlickable.contentX - width/2
                 y: 0
-                width: 11
-                height: 5
+                width: 16
+                height: 8
             }
         }
     }
@@ -411,8 +460,8 @@ Rectangle {
             anchors.centerIn: parent
         }
         function show(x, y, text) {
-            bubbleHelp.x = x + tracksArea.x - scrollView.flickableItem.contentX - bubbleHelpLabel.width
-            bubbleHelp.y = Math.max(toolbar.height, y + tracksArea.y - scrollView.flickableItem.contentY - bubbleHelpLabel.height)
+            bubbleHelp.x = x + tracksArea.x - tracksFlickable.contentX - bubbleHelpLabel.width
+            bubbleHelp.y = Math.max(toolbar.height, y + tracksArea.y - tracksFlickable.contentY - bubbleHelpLabel.height)
             bubbleHelp.text = text
             if (bubbleHelp.state !== 'visible')
                 bubbleHelp.state = 'visible'
@@ -436,118 +485,135 @@ Rectangle {
 
     Menu {
         id: menu
-        MenuItem {
-            text: qsTr('Add Audio Track')
-            shortcut: 'Ctrl+U'
-            onTriggered: timeline.addAudioTrack();
-        }
-        MenuItem {
-            text: qsTr('Add Video Track')
-            shortcut: 'Ctrl+I'
-            onTriggered: timeline.addVideoTrack();
-        }
-        MenuItem {
-            text: qsTr('Insert Track')
-            shortcut: 'Ctrl+Alt+I'
-            onTriggered: timeline.insertTrack()
-        }
-        MenuItem {
-            text: qsTr('Remove Track')
-            shortcut: 'Ctrl+Alt+U'
-            onTriggered: timeline.removeTrack()
-        }
-        MenuSeparator {}
-        MenuItem {
-            text: qsTr('Select All')
-            shortcut: 'Ctrl+A'
-            onTriggered: timeline.selectAll()
-        }
-        MenuItem {
-            text: qsTr('Select None')
-            shortcut: 'Ctrl+D'
-            onTriggered: {
-                timeline.selection = []
-                multitrack.reload()
+        Menu {
+            title: qsTr('Track Operations')
+            MenuItem {
+                text: qsTr('Add Audio Track') + (application.OS === 'OS X'? '    ⌘U' : ' (Ctrl+U)')
+                onTriggered: timeline.addAudioTrack();
+            }
+            MenuItem {
+                text: qsTr('Add Video Track') + (application.OS === 'OS X'? '    ⌘I' : ' (Ctrl+I)')
+                onTriggered: timeline.addVideoTrack();
+            }
+            MenuItem {
+                text: qsTr('Insert Track') + (application.OS === 'OS X'? '    ⌥⌘I' : ' (Ctrl+Alt+I)')
+                onTriggered: timeline.insertTrack()
+            }
+            MenuItem {
+                text: qsTr('Remove Track') + (application.OS === 'OS X'? '    ⌥⌘U' : ' (Ctrl+Alt+U)')
+                onTriggered: timeline.removeTrack()
             }
         }
-        MenuSeparator {}
-        MenuItem {
-            text: qsTr("Ripple All Tracks")
-            shortcut: 'Ctrl+Alt+R'
-            checkable: true
-            checked: settings.timelineRippleAllTracks
-            onTriggered: settings.timelineRippleAllTracks = checked
+        Menu {
+            title: qsTr('Track Height')
+            width: 210
+            MenuItem {
+                enabled: multitrack.trackHeight > 10
+                text: qsTr('Make Tracks Shorter') + (application.OS === 'OS X'? '    ⌘-' : ' (Ctrl+-)')
+                onTriggered: makeTracksShorter()
+            }
+            MenuItem {
+                text: qsTr('Make Tracks Taller') + (application.OS === 'OS X'? '    ⌘+' : ' (Ctrl++)')
+                onTriggered: makeTracksTaller()
+            }
+            MenuItem {
+                text: qsTr('Reset Track Height') + (application.OS === 'OS X'? '    ⌘=' : ' (Ctrl+=)')
+                onTriggered: multitrack.trackHeight = 50
+            }
         }
-        MenuItem {
-            text: qsTr('Copy Timeline to Source')
-            shortcut: 'Ctrl+Alt+C'
-            onTriggered: timeline.copyToSource()
-        }
-        MenuSeparator {}
-        MenuItem {
-            enabled: multitrack.trackHeight > 10
-            text: qsTr('Make Tracks Shorter')
-            shortcut: 'Ctrl+-'
-            onTriggered: makeTracksShorter()
-        }
-        MenuItem {
-            text: qsTr('Make Tracks Taller')
-            shortcut: 'Ctrl+='
-            onTriggered: makeTracksTaller()
-        }
-        MenuItem {
-            text: qsTr('Reset Track Height')
-            onTriggered: multitrack.trackHeight = 50
-        }
-        MenuItem {
-            text: qsTr('Show Audio Waveforms')
-            checkable: true
-            checked: settings.timelineShowWaveforms
-            onTriggered: {
-                if (checked) {
-                    if (settings.timelineShowWaveforms) {
-                        settings.timelineShowWaveforms = checked
-                        for (var i = 0; i < tracksRepeater.count; i++)
-                            tracksRepeater.itemAt(i).redrawWaveforms()
-                    } else {
-                        settings.timelineShowWaveforms = checked
-                        for (i = 0; i < tracksRepeater.count; i++)
-                            tracksRepeater.itemAt(i).remakeWaveforms(false)
-                    }
-                } else {
-                    settings.timelineShowWaveforms = checked
+        Menu {
+            title: qsTr('Selection')
+            MenuItem {
+                text: qsTr('Select All') + (application.OS === 'OS X'? '    ⌘A' : ' (Ctrl+A)')
+                onTriggered: timeline.selectAll()
+            }
+            MenuItem {
+                text: qsTr('Select None') + (application.OS === 'OS X'? '    ⌘D' : ' (Ctrl+D)')
+                onTriggered: {
+                    timeline.selection = []
+                    multitrack.reload()
                 }
             }
         }
-        MenuItem {
-            text: qsTr('Show Video Thumbnails')
-            checkable: true
-            checked: settings.timelineShowThumbnails
-            onTriggered: settings.timelineShowThumbnails = checked
-        }
-        MenuItem {
-            text: qsTr('Center the Playhead')
-            checkable: true
-            checked: settings.timelineCenterPlayhead
-            onTriggered: settings.timelineCenterPlayhead = checked
-        }
-        MenuSeparator {}
-        MenuItem {
-            id: propertiesMenuItem
-            visible: false
-            text: qsTr('Properties')
-            onTriggered: timeline.openProperties()
-        }
-        MenuItem {
-            text: qsTr('Reload')
-            onTriggered: multitrack.reload()
-        }
-        onPopupVisibleChanged: {
-            if (visible && application.OS === 'Windows' && __popupGeometry.height > 0) {
-                // Try to fix menu running off screen. This only works intermittently.
-                menu.__yOffset = Math.min(0, Screen.height - (__popupGeometry.y + __popupGeometry.height + 40))
-                menu.__xOffset = Math.min(0, Screen.width - (__popupGeometry.x + __popupGeometry.width))
+        Menu {
+            title: qsTr('Options')
+            width: 310
+            MenuItem {
+                text: qsTr("Ripple All Tracks") + (application.OS === 'OS X'? '    ⌥⌘R' : ' (Ctrl+Alt+R)')
+                checkable: true
+                checked: settings.timelineRippleAllTracks
+                onTriggered: settings.timelineRippleAllTracks = checked
             }
+            MenuItem {
+                text: qsTr('Show Audio Waveforms')
+                checkable: true
+                checked: settings.timelineShowWaveforms
+                onTriggered: {
+                    if (checked) {
+                        if (settings.timelineShowWaveforms) {
+                            settings.timelineShowWaveforms = checked
+                            for (var i = 0; i < tracksRepeater.count; i++)
+                                tracksRepeater.itemAt(i).redrawWaveforms()
+                        } else {
+                            settings.timelineShowWaveforms = checked
+                            for (i = 0; i < tracksRepeater.count; i++)
+                                tracksRepeater.itemAt(i).remakeWaveforms(false)
+                        }
+                    } else {
+                        settings.timelineShowWaveforms = checked
+                    }
+                }
+            }
+            MenuItem {
+                text: qsTr('Use Higher Performance Waveforms')
+                checkable: true
+                checked: settings.timelineFramebufferWaveform
+                onTriggered: {
+                    settings.timelineFramebufferWaveform = checked
+                    if (settings.timelineShowWaveforms)
+                        multitrack.reload()
+                }
+            }
+            MenuItem {
+                text: qsTr('Show Video Thumbnails')
+                checkable: true
+                checked: settings.timelineShowThumbnails
+                onTriggered: settings.timelineShowThumbnails = checked
+            }
+            MenuItem {
+                text: qsTr('Center the Playhead') + (application.OS === 'OS X'? '    ⇧⌘P' : ' (Ctrl+Shift+P)')
+                checkable: true
+                checked: settings.timelineCenterPlayhead
+                onTriggered: settings.timelineCenterPlayhead = checked
+            }
+            MenuItem {
+                text: qsTr('Scroll to Playhead on Zoom') + (application.OS === 'OS X'? '    ⌥⌘P' : ' (Ctrl+Alt+P)')
+                checkable: true
+                checked: settings.timelineScrollZoom
+                onTriggered: settings.timelineScrollZoom = checked
+            }
+        }
+        Menu {
+            title: qsTr('Other')
+            width: 270
+            MenuItem {
+                text: qsTr('Copy Timeline to Source') + (application.OS === 'OS X'? '    ⌥⌘C' : ' (Ctrl+Alt+C)')
+                onTriggered: timeline.copyToSource()
+            }
+            MenuItem {
+                text: qsTr('Reload') + (application.OS === 'OS X'? '    F5' : ' (F5)')
+                onTriggered: multitrack.reload()
+            }
+            MenuItem {
+                id: propertiesMenuItem
+                enabled: false
+                text: qsTr('Properties')
+                onTriggered: timeline.openProperties()
+            }
+        }
+        MenuItem {
+            text: qsTr('Cancel')
+            onTriggered: menu.dismiss()
         }
     }
 
@@ -577,14 +643,14 @@ Rectangle {
             }
             onClipDragged: {
                 // This provides continuous scrolling at the left/right edges.
-                if (x > scrollView.flickableItem.contentX + scrollView.width - 50) {
+                if (x > tracksFlickable.contentX + tracksFlickable.width - 50) {
                     scrollTimer.item = clip
                     scrollTimer.backwards = false
                     scrollTimer.start()
                 } else if (x < 50) {
-                    scrollView.flickableItem.contentX = 0;
+                    tracksFlickable.contentX = 0;
                     scrollTimer.stop()
-                } else if (x < scrollView.flickableItem.contentX + 50) {
+                } else if (x < tracksFlickable.contentX + 50) {
                     scrollTimer.item = clip
                     scrollTimer.backwards = true
                     scrollTimer.start()
@@ -638,8 +704,14 @@ Rectangle {
             var selectedTrack = timeline.selectedTrack()
             for (var i = 0; i < trackHeaderRepeater.count; i++)
                 trackHeaderRepeater.itemAt(i).selected = (i === selectedTrack)
-            propertiesMenuItem.visible = (cornerstone.selected || (selectedTrack >= 0 && selectedTrack < trackHeaderRepeater.count))
+            propertiesMenuItem.enabled = (cornerstone.selected || (selectedTrack >= 0 && selectedTrack < trackHeaderRepeater.count))
         }
+        onZoomIn: zoomIn()
+        onZoomOut: zoomOut()
+        onZoomToFit: zoomToFit()
+        onResetZoom: resetZoom()
+        onMakeTracksShorter: makeTracksShorter()
+        onMakeTracksTaller: makeTracksTaller()
     }
 
     Connections {
@@ -659,8 +731,8 @@ Rectangle {
         onTriggered: {
             var delta = backwards? -10 : 10
             if (item) item.x += delta
-            scrollView.flickableItem.contentX += delta
-            if (scrollView.flickableItem.contentX <= 0)
+            tracksFlickable.contentX += delta
+            if (tracksFlickable.contentX <= 0)
                 stop()
         }
     }

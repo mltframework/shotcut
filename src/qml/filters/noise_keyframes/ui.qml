@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Meltytech, LLC
+ * Copyright (c) 2019-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,12 +15,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.0
-import QtQuick.Controls 1.1
-import QtQuick.Layouts 1.1
-import Shotcut.Controls 1.0
+import QtQuick 2.12
+import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.12
+import Shotcut.Controls 1.0 as Shotcut
 
-KeyframableFilter {
+Shotcut.KeyframableFilter {
     property string noise: '0'
     property double noiseDefault: 0.20
     
@@ -33,6 +33,7 @@ KeyframableFilter {
     height: 100
 
     Component.onCompleted: {
+        filter.set('threads', 0)
         if (filter.isNew) {
             filter.set(noise, noiseDefault)
             filter.savePreset(preset.parameters)
@@ -44,6 +45,7 @@ KeyframableFilter {
         var position = getPosition()
         blockUpdate = true
         noiseSlider.value = filter.getDouble(noise, position) * noiseSlider.maximumValue
+        noiseKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(noise) > 0
         blockUpdate = false
         enableControls(isSimpleKeyframesActive())
     }
@@ -66,7 +68,7 @@ KeyframableFilter {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: preset
             parameters: [noise]
             Layout.columnSpan: 3
@@ -84,7 +86,7 @@ KeyframableFilter {
             text: qsTr('Amount')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: noiseSlider
             minimumValue: 0.0
             maximumValue: 100.0
@@ -93,12 +95,11 @@ KeyframableFilter {
             suffix: ' %'
             onValueChanged: updateFilter(noise, noiseSlider.value / noiseSlider.maximumValue, noiseKeyframesButton, getPosition())
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: noiseSlider.value = noiseDefault * noiseSlider.maximumValue
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: noiseKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(noise) > 0
             onToggled: {
                 enableControls(true)
                 toggleKeyframes(checked, noise, noiseSlider.value / noiseSlider.maximumValue)
@@ -116,6 +117,7 @@ KeyframableFilter {
         onOutChanged: updateSimpleKeyframes()
         onAnimateInChanged: updateSimpleKeyframes()
         onAnimateOutChanged: updateSimpleKeyframes()
+        onPropertyChanged: setControls()
     }
 
     Connections {

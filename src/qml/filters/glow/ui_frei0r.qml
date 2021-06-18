@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2018 Meltytech, LLC
+ * Copyright (c) 2014-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,10 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.1
-import QtQuick.Controls 1.1
-import QtQuick.Layouts 1.0
-import Shotcut.Controls 1.0
+import QtQuick 2.12
+import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.12
+import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     property string paramBlur: '0'
@@ -52,6 +52,7 @@ Item {
         var position = getPosition()
         blockUpdate = true
         bslider.value = filter.getDouble(paramBlur, position) * 100.0
+        blurKeyframesButton.checked = filter.keyframeCount(paramBlur) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
         blockUpdate = false
         bslider.enabled = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1)
     }
@@ -97,13 +98,12 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             Layout.columnSpan: 3
             parameters: defaultParameters
             onBeforePresetLoaded: filter.resetProperty(paramBlur)
             onPresetSelected: {
                 setControls()
-                blurKeyframesButton.checked = filter.keyframeCount(paramBlur) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
                 middleValue = filter.getDouble(paramBlur, filter.animateIn)
                 if (filter.animateIn > 0)
                     startValue = filter.getDouble(paramBlur, 0)
@@ -116,19 +116,18 @@ Item {
             text: qsTr('Blur')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: bslider
             minimumValue: 0
             maximumValue: 100
             suffix: ' %'
             onValueChanged: updateFilter(getPosition())
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: bslider.value = 50
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: blurKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(paramBlur) > 0
             onToggled: {
                 var value = bslider.value / 100.0
                 if (checked) {
@@ -154,6 +153,7 @@ Item {
         onOutChanged: updateFilter(null)
         onAnimateInChanged: updateFilter(null)
         onAnimateOutChanged: updateFilter(null)
+        onPropertyChanged: setControls()
     }
 
     Connections {

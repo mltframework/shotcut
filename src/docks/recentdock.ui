@@ -13,7 +13,7 @@
   <property name="minimumSize">
    <size>
     <width>150</width>
-    <height>112</height>
+    <height>114</height>
    </size>
   </property>
   <property name="windowIcon">
@@ -52,6 +52,9 @@
     </item>
     <item>
      <widget class="QListView" name="listWidget">
+      <property name="contextMenuPolicy">
+       <enum>Qt::CustomContextMenu</enum>
+      </property>
       <property name="horizontalScrollBarPolicy">
        <enum>Qt::ScrollBarAlwaysOff</enum>
       </property>
@@ -68,6 +71,14 @@
     </item>
    </layout>
   </widget>
+  <action name="actionDelete">
+   <property name="text">
+    <string>Remove</string>
+   </property>
+   <property name="toolTip">
+    <string>Remove</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>

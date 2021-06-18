@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Meltytech, LLC
+ * Copyright (c) 2015-2021 Meltytech, LLC
  * Author: Amy Dennedy
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,10 +16,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.1
-import QtQuick.Controls 1.0
-import QtQuick.Layouts 1.0
-import Shotcut.Controls 1.0
+import QtQuick 2.12
+import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.12
+import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     width: 350
@@ -60,7 +60,7 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: preset
             parameters: ['delta', 'every', 'brightnessdelta_up', 'brightnessdelta_down', 'brightnessdelta_every', 'unevendevelop_up', 'unevendevelop_duration']
             Layout.columnSpan: 2
@@ -71,14 +71,14 @@ Item {
             text: qsTr('Vertical amount')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: deltaSlider
             minimumValue: 0
             maximumValue: 200
             value: filter.get('delta')
             onValueChanged: filter.set('delta', value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: deltaSlider.value = 14
         }
 
@@ -86,7 +86,7 @@ Item {
             text: qsTr('Vertical frequency')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: amountSlider
             minimumValue: 0
             maximumValue: 100
@@ -94,7 +94,7 @@ Item {
             value: filter.get('every')
             onValueChanged: filter.set('every', value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: amountSlider.value = 20
         }
 
@@ -102,14 +102,14 @@ Item {
             text: qsTr('Brightness up')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: brightDeltaSlider
             minimumValue: 0
             maximumValue: 100
             value: filter.get('brightnessdelta_up')
             onValueChanged: filter.set('brightnessdelta_up', value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: brightDeltaSlider.value = 20
         }
 
@@ -117,14 +117,14 @@ Item {
             text: qsTr('Brightness down')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: darkDeltaSlider
             minimumValue: 0
             maximumValue: 100
             value: filter.get('brightnessdelta_down')
             onValueChanged: filter.set('brightnessdelta_down', value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: darkDeltaSlider.value = 30
         }
 
@@ -132,7 +132,7 @@ Item {
             text: qsTr('Brightness frequency')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: valueSlider
             minimumValue: 0
             maximumValue: 100
@@ -140,7 +140,7 @@ Item {
             value: filter.get('brightnessdelta_every')
             onValueChanged: filter.set('brightnessdelta_every', value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: valueSlider.value = 70
         }
 
@@ -148,14 +148,14 @@ Item {
             text: qsTr('Uneven develop up')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: highDevelopSlider
             minimumValue: 0
             maximumValue: 100
             value: filter.get('unevendevelop_up')
             onValueChanged: filter.set('unevendevelop_up', value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: highDevelopSlider.value = 60
         }
 
@@ -163,14 +163,14 @@ Item {
             text: qsTr('Uneven develop down')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: lowDevelopSlider
             minimumValue: 0
             maximumValue: 100
             value: filter.get('unevendevelop_down')
             onValueChanged: filter.set('unevendevelop_down', value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: lowDevelopSlider.value = 20
         }
 
@@ -178,14 +178,14 @@ Item {
             text: qsTr('Uneven develop duration')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: durationSlider
             minimumValue: 0
             maximumValue: 1000
             value: filter.get('unevendevelop_duration')
             onValueChanged: filter.set('unevendevelop_duration', value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: durationSlider.value = 70
         }
 

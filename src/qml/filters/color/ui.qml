@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2020 Meltytech, LLC
+ * Copyright (c) 2014-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,10 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.1
-import QtQuick.Controls 1.4
-import QtQuick.Layouts 1.0
-import Shotcut.Controls 1.0
+import QtQuick 2.12
+import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.12
+import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     property var defaultParameters: ['lift_r', 'lift_g', 'lift_b', 'gamma_r', 'gamma_g', 'gamma_b', 'gain_r', 'gain_g', 'gain_b']
@@ -61,6 +61,9 @@ Item {
         gainRedSpinner.value = wheelToSpinner(scaleValueToWheel(filter.getDouble("gain_r", position), gainFactor))
         gainGreenSpinner.value = wheelToSpinner(scaleValueToWheel(filter.getDouble("gain_g", position), gainFactor))
         gainBlueSpinner.value = wheelToSpinner(scaleValueToWheel(filter.getDouble("gain_b", position), gainFactor))
+        liftKeyframesButton.checked = filter.keyframeCount('lift_r') > 0
+        gammaKeyframesButton.checked = filter.keyframeCount('gamma_r') > 0
+        gainKeyframesButton.checked = filter.keyframeCount('gain_r') > 0
         blockUpdate = false
     }
 
@@ -121,7 +124,7 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             Layout.columnSpan: 8
             parameters: defaultParameters
             onBeforePresetLoaded: {
@@ -142,7 +145,7 @@ Item {
 
         // Row 2
         Label { text: qsTr('Shadows (Lift)') }
-        UndoButton {
+        Shotcut.UndoButton {
             Layout.alignment: Qt.AlignRight
             onClicked: {
                 // Force a color change to make sure the color wheel is updated.
@@ -152,9 +155,8 @@ Item {
                 liftBlueSpinner.value = 0.0
             }
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: liftKeyframesButton
-            checked: filter.keyframeCount('lift_r') > 0
             Layout.alignment: Qt.AlignLeft
             onToggled: {
                 if (checked) {
@@ -172,7 +174,7 @@ Item {
             }
         }
         Label { text: qsTr('Midtones (Gamma)') }
-        UndoButton {
+        Shotcut.UndoButton {
             Layout.alignment: Qt.AlignRight
             onClicked: {
                 // Force a color change to make sure the color wheel is updated.
@@ -182,9 +184,8 @@ Item {
                 gammaBlueSpinner.value = 0.0
             }
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: gammaKeyframesButton
-            checked: filter.keyframeCount('gamma_r') > 0
             Layout.alignment: Qt.AlignLeft
             onToggled: {
                 if (checked) {
@@ -202,7 +203,7 @@ Item {
             }
         }
         Label { text: qsTr('Highlights (Gain)') }
-        UndoButton {
+        Shotcut.UndoButton {
             Layout.alignment: Qt.AlignRight
             onClicked: {
                 // Force a color change to make sure the color wheel is updated.
@@ -212,9 +213,8 @@ Item {
                 gainBlueSpinner.value = 0.0
             }
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: gainKeyframesButton
-            checked: filter.keyframeCount('gain_r') > 0
             Layout.alignment: Qt.AlignLeft
             onToggled: {
                 if (checked) {
@@ -233,7 +233,7 @@ Item {
         }
 
         // Row 3
-        ColorWheelItem {
+        Shotcut.ColorWheelItem {
             id: liftwheel
             Layout.columnSpan: 3
             implicitWidth: parent.width / 3 - parent.columnSpacing
@@ -269,7 +269,7 @@ Item {
                 }
             }
         }
-        ColorWheelItem {
+        Shotcut.ColorWheelItem {
             id: gammawheel
             Layout.columnSpan: 3
             implicitWidth: parent.width / 3 - parent.columnSpacing
@@ -305,7 +305,7 @@ Item {
                 }
             }
         }
-        ColorWheelItem {
+        Shotcut.ColorWheelItem {
             id: gainwheel
             Layout.columnSpan: 3
             implicitWidth: parent.width / 3 - parent.columnSpacing
@@ -347,11 +347,12 @@ Item {
             Layout.columnSpan: 3
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             Label { text: 'R' }
-            SpinBox {
+            Shotcut.DoubleSpinBox {
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                 id: liftRedSpinner
-                minimumValue: -100
-                maximumValue: 100
+                width: 115
+                from: -100
+                to: 100
                 decimals: 1
                 stepSize: 0.1
                 suffix: ' %'
@@ -366,11 +367,12 @@ Item {
             Layout.columnSpan: 3
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             Label { text: 'R' }
-            SpinBox {
+            Shotcut.DoubleSpinBox {
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                 id: gammaRedSpinner
-                minimumValue: -100
-                maximumValue: 100
+                width: 115
+                from: -100
+                to: 100
                 decimals: 1
                 stepSize: 0.1
                 suffix: ' %'
@@ -385,11 +387,12 @@ Item {
             Layout.columnSpan: 3
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             Label { text: 'R' }
-            SpinBox {
+            Shotcut.DoubleSpinBox {
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                 id: gainRedSpinner
-                minimumValue: -100
-                maximumValue: 100
+                width: 115
+                from: -100
+                to: 100
                 decimals: 1
                 stepSize: 0.1
                 suffix: ' %'
@@ -406,11 +409,12 @@ Item {
             Layout.columnSpan: 3
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             Label { text: 'G' }
-            SpinBox {
+            Shotcut.DoubleSpinBox {
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                 id: liftGreenSpinner
-                minimumValue: -100
-                maximumValue: 100
+                width: 115
+                from: -100
+                to: 100
                 decimals: 1
                 stepSize: 0.1
                 suffix: ' %'
@@ -425,11 +429,12 @@ Item {
             Layout.columnSpan: 3
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             Label { text: 'G' }
-            SpinBox {
+            Shotcut.DoubleSpinBox {
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                 id: gammaGreenSpinner
-                minimumValue: -100
-                maximumValue: 100
+                width: 115
+                from: -100
+                to: 100
                 decimals: 1
                 stepSize: 0.1
                 suffix: ' %'
@@ -444,11 +449,12 @@ Item {
             Layout.columnSpan: 3
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             Label { text: 'G' }
-            SpinBox {
+            Shotcut.DoubleSpinBox {
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                 id: gainGreenSpinner
-                minimumValue: -100
-                maximumValue: 100
+                width: 115
+                from: -100
+                to: 100
                 decimals: 1
                 stepSize: 0.1
                 suffix: ' %'
@@ -465,11 +471,12 @@ Item {
             Layout.columnSpan: 3
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             Label { text: 'B' }
-            SpinBox {
+            Shotcut.DoubleSpinBox {
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                 id: liftBlueSpinner
-                minimumValue: -100
-                maximumValue: 100
+                width: 115
+                from: -100
+                to: 100
                 decimals: 1
                 stepSize: 0.1
                 suffix: ' %'
@@ -484,11 +491,12 @@ Item {
             Layout.columnSpan: 3
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             Label { text: 'B' }
-            SpinBox {
+            Shotcut.DoubleSpinBox {
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                 id: gammaBlueSpinner
-                minimumValue: -100
-                maximumValue: 100
+                width: 115
+                from: -100
+                to: 100
                 decimals: 1
                 stepSize: 0.1
                 suffix: ' %'
@@ -503,11 +511,12 @@ Item {
             Layout.columnSpan: 3
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             Label { text: 'B' }
-            SpinBox {
+            Shotcut.DoubleSpinBox {
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                 id: gainBlueSpinner
-                minimumValue: -100
-                maximumValue: 100
+                width: 115
+                from: -100
+                to: 100
                 decimals: 1
                 stepSize: 0.1
                 suffix: ' %'
@@ -530,22 +539,21 @@ Item {
     Connections {
         target: parameters
         onKeyframeAdded: {
-            var n
             switch (parameter) {
             case 'lift_r':
-                n = filter.getDouble(parameter, position)
-                filter.set('lift_g', n, position)
-                filter.set('lift_b', n, position)
+                filter.set('lift_r', liftwheel.redF * 2.0 - 1.0, position)
+                filter.set('lift_g', liftwheel.greenF * 2.0 - 1.0, position)
+                filter.set('lift_b', liftwheel.blueF * 2.0 - 1.0, position)
                 break;
             case 'gamma_r':
-                n = filter.getDouble(parameter, position)
-                filter.set('gamma_g', n, position)
-                filter.set('gamma_b', n, position)
+                filter.set('gamma_r', scaleWheelToValue(gammawheel.redF, gammaFactor), position)
+                filter.set('gamma_g', scaleWheelToValue(gammawheel.greenF, gammaFactor), position)
+                filter.set('gamma_b', scaleWheelToValue(gammawheel.blueF, gammaFactor), position)
                 break;
             case 'gain_r':
-                n = filter.getDouble(parameter, position)
-                filter.set('gain_g', n, position)
-                filter.set('gain_b', n, position)
+                filter.set('gain_r', scaleWheelToValue(gainwheel.redF, gainFactor), position)
+                filter.set('gain_g', scaleWheelToValue(gainwheel.greenF, gainFactor), position)
+                filter.set('gain_b', scaleWheelToValue(gainwheel.blueF, gainFactor), position)
                 break;
             }
         }

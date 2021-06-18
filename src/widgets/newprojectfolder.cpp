@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2020 Meltytech, LLC
+ * Copyright (c) 2018-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,7 +33,8 @@
 
 NewProjectFolder::NewProjectFolder(QWidget* parent) :
     QWidget(parent),
-    ui(new Ui::NewProjectFolder)
+    ui(new Ui::NewProjectFolder),
+    m_isOpening(false)
 {
     ui->setupUi(this);
     setColors();
@@ -88,24 +89,13 @@ void NewProjectFolder::showEvent(QShowEvent*)
         }
     }
 
-    // Update recent projects.
-    m_model.clear();
-    foreach (QString s, Settings.recent()) {
-        if (s.endsWith(".mlt")) {
-            QStandardItem* item = new QStandardItem(Util::baseName(s));
-            item->setToolTip(QDir::toNativeSeparators(s));
-            m_model.appendRow(item);
-        }
-    }
-
+    updateRecentProjects();
     setProjectFolderButtonText(Settings.projectsFolder());
-    m_isOpening = false;
 }
 
 void NewProjectFolder::hideEvent(QHideEvent*)
 {
     ui->projectNameLineEdit->setText(QString());
-    m_isOpening = false;
 }
 
 bool NewProjectFolder::event(QEvent* event)
@@ -116,9 +106,22 @@ bool NewProjectFolder::event(QEvent* event)
     return result;
 }
 
+void NewProjectFolder::updateRecentProjects()
+{
+    m_model.clear();
+    foreach (QString s, Settings.recent()) {
+        if (s.endsWith(".mlt")) {
+            QStandardItem* item = new QStandardItem(Util::baseName(s));
+            item->setToolTip(QDir::toNativeSeparators(s));
+            m_model.appendRow(item);
+        }
+    }
+}
+
 void NewProjectFolder::on_projectsFolderButton_clicked()
 {
-    QString dirName = QFileDialog::getExistingDirectory(this, tr("Projects Folder"), Settings.projectsFolder());
+    QString dirName = QFileDialog::getExistingDirectory(this, tr("Projects Folder"), Settings.projectsFolder(),
+        Util::getFileDialogOptions());
     if (!dirName.isEmpty()) {
         setProjectFolderButtonText(dirName);
         Settings.setProjectsFolder(dirName);
@@ -183,6 +186,13 @@ void NewProjectFolder::on_startButton_clicked()
     QDir dir(Settings.projectsFolder());
     QString projectName = m_projectName;
     QString fileName = projectName;
+
+    if (projectName.contains('/') || projectName.contains('\\')) {
+        QMessageBox::warning(this, ui->newProjectLabel->text(), tr("The project name cannot include a slash."));
+        ui->startButton->setDisabled(true);
+        return;
+    }
+
     if (projectName.endsWith(".mlt"))
         projectName = projectName.mid(0, projectName.length() - 4);
     else
@@ -239,7 +249,9 @@ void NewProjectFolder::on_recentListView_clicked(const QModelIndex& index)
 {
     if (!m_isOpening) {
         m_isOpening = true;
-        MAIN.open(m_model.itemData(index)[Qt::ToolTipRole].toString());
+        auto data = m_model.itemData(index);
+        MAIN.open(data[Qt::ToolTipRole].toString());
+        m_isOpening = false;
     }
 }
 

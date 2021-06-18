@@ -25,38 +25,64 @@
 
 struct DatabaseJob;
 class QTimer;
-class Database : public QThread
+
+class Worker : public QObject
 {
     Q_OBJECT
-    explicit Database(QObject *parent = 0);
 
 public:
-    static Database& singleton(QWidget* parent = 0);
+    void submitAndWaitForJob(DatabaseJob * job);
+    void quit();
 
-    bool upgradeVersion1();
-    bool putThumbnail(const QString& hash, const QImage& image);
-    QImage getThumbnail(const QString& hash);
-    bool isShutdown() const;
-    bool isFailing() const { return m_isFailing; }
+signals:
+    void opened(bool);
+    void failing(bool);
+
+public slots:
+    void run();
 
 private slots:
     void commitTransaction();
 
-private slots:
-    void shutdown();
-
 private:
+    bool upgradeVersion1();
     void doJob(DatabaseJob * job);
-    void submitAndWaitForJob(DatabaseJob * job);
     void deleteOldThumbnails();
-    void run();
 
     QList<DatabaseJob*> m_jobs;
     QMutex m_mutex;
     QWaitCondition m_waitForFinished;
     QWaitCondition m_waitForNewJob;
-    QTimer * m_commitTimer;
-    bool m_isFailing;
+    QTimer* m_commitTimer {nullptr};
+    bool m_quit {false};
+};
+
+class Database : public QObject
+{
+    Q_OBJECT
+    explicit Database(QObject *parent = 0);
+
+public:
+    static Database& singleton(QObject *parent = 0);
+
+    bool putThumbnail(const QString& hash, const QImage& image);
+    QImage getThumbnail(const QString& hash);
+    bool isShutdown() const;
+    bool isFailing() const { return m_isFailing; }
+
+signals:
+    void start();
+
+private slots:
+    void shutdown();
+    void onOpened(bool success) { m_isOpened = success; }
+    void onFailing(bool failing) { m_isFailing = failing; }
+
+private:
+    Worker m_worker;
+    QThread m_thread;
+    bool m_isFailing {false};
+    bool m_isOpened {false};
 };
 
 #define DB Database::singleton()

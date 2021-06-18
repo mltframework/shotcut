@@ -1,13 +1,22 @@
+[![build-shotcut-linux](https://github.com/mltframework/shotcut/workflows/build-shotcut-linux/badge.svg)](https://github.com/mltframework/shotcut/actions?query=workflow%3Abuild-shotcut-linux+is%3Acompleted+branch%3Amaster)
+[![build-shotcut-macos](https://github.com/mltframework/shotcut/workflows/build-shotcut-macos/badge.svg)](https://github.com/mltframework/shotcut/actions?query=workflow%3Abuild-shotcut-macos+is%3Acompleted+branch%3Amaster)
+[![build-shotcut-windows](https://github.com/mltframework/shotcut/workflows/build-shotcut-windows/badge.svg)](https://github.com/mltframework/shotcut/actions?query=workflow%3Abuild-shotcut-windows+is%3Acompleted+branch%3Amaster)
+
+
 # Shotcut - a free, open source, cross-platform **video editor**
+
+<div align="center">
+
+<img src="https://www.shotcut.org/assets/img/screenshots/Shotcut-18.11.18.png" alt="screenshot" />
+
+</div>
 
 - Features: https://www.shotcut.org/features/
 - Roadmap: https://www.shotcut.org/roadmap/
 
 ## Install
 
-**Warning**: Shotcut is still in active development. So, do not expect a final product for now.
-
-Binaries are regularly built and are available at https://www.shotcut.org, on the Download section.
+Binaries are regularly built and are available at https://www.shotcut.org, on the Download page.
 
 ## Contributors
 
@@ -16,16 +25,16 @@ Binaries are regularly built and are available at https://www.shotcut.org, on th
 
 ## Dependencies
 
+Shotcut's direct (linked or hard runtime) dependencies are:
+
 - [MLT](https://www.mltframework.org/): multimedia authoring framework
 - [Qt 5](https://www.qt.io/): application and UI framework
 - [FFmpeg](https://www.ffmpeg.org/): multimedia format and codec libraries
-- [x264](https://www.videolan.org/developers/x264.html): H.264 encoder
-- [WebM](https://www.webmproject.org/): VP8 encoder
-- [LAME](http://lame.sourceforge.net/): MP3 encoder
 - [Frei0r](https://www.dyne.org/software/frei0r/): video plugins
-- [LADSPA](https://www.ladspa.org/): audio plugins
-- [WebVfx](https://github.com/mltframework/webvfx): video effects using web technologies
-- [Movit](https://git.sesse.net/?p=movit)
+- [SDL](http://www.libsdl.org/): cross-platform audio playback
+
+See https://shotcut.org/credits/ for a more complete list including indirect
+and bundled dependencies.
 
 ## Licence
 
@@ -45,7 +54,7 @@ MLT and other dependencies after updating.
 
 ### From command line
 
-First, check dependencies are satisfied and various paths correctly set to find different libraries and include files (Qt 5, MLT, Frei0r and so forth).
+First, check dependencies are satisfied and various paths correctly set to find different libraries and include files (Qt 5, MLT, frei0r and so forth).
 
 Build `Makefile`:
 
@@ -55,15 +64,19 @@ qmake PREFIX=/usr/local/
 Compile `shotcut`:
 
 ```
-make
+make -j8
+make install
 ```
 
-`make install` is partially working.
-
-Best way to test `shotcut` is to execute it from source folder:
-
+If you do not `make install` Shotcut will fail when you run it because it cannot locate its QML
+files. If you want to run `shotcut` from a build folder without installing you can
+make a symbolic link to the `qml` folder. It depends on where you build folder is, but assuming it
+is a sibling of the source tree folder:
 ```
-./src/shotcut
+cd build
+mkdir -p share/shotcut 
+cd share/shotcut
+ln -s ../../../shotcut/src/qml
 ```
 
 ## Translation

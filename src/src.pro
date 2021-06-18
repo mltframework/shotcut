@@ -1,8 +1,7 @@
 CONFIG   += link_prl
 
-QT       += widgets opengl xml network printsupport qml quick sql webkitwidgets
-QT       += multimedia websockets quickwidgets
-QT       += qml-private core-private quick-private gui-private
+QT       += widgets opengl xml network printsupport qml quick sql
+QT       += multimedia websockets quickwidgets quickcontrols2
 
 TARGET = shotcut
 TEMPLATE = app
@@ -11,11 +10,20 @@ win32:DEFINES += QT_STATIC
 
 SOURCES += main.cpp\
     dialogs/systemsyncdialog.cpp \
+    jobs/qimagejob.cpp \
     mainwindow.cpp \
     mltcontroller.cpp \
+    proxymanager.cpp \
+    qmltypes/qmlrichtext.cpp \
     scrubbar.cpp \
     openotherdialog.cpp \
     controllers/filtercontroller.cpp \
+    spatialmedia/box.cpp \
+    spatialmedia/container.cpp \
+    spatialmedia/mpeg4_container.cpp \
+    spatialmedia/sa3d.cpp \
+    spatialmedia/spatialmedia.cpp \
+    widgets/exportpresetstreeview.cpp \
     widgets/plasmawidget.cpp \
     widgets/lissajouswidget.cpp \
     widgets/isingwidget.cpp \
@@ -26,6 +34,7 @@ SOURCES += main.cpp\
     widgets/colorbarswidget.cpp \
     widgets/countproducerwidget.cpp \
     widgets/noisewidget.cpp \
+    widgets/producerpreviewwidget.cpp \
     widgets/pulseaudiowidget.cpp \
     widgets/screenselector.cpp \
     widgets/jackproducerwidget.cpp \
@@ -47,6 +56,9 @@ SOURCES += main.cpp\
     dialogs/filedatedialog.cpp \
     jobqueue.cpp \
     docks/jobsdock.cpp \
+    dialogs/multifileexportdialog.cpp \
+    dialogs/saveimagedialog.cpp \
+    dialogs/slideshowgeneratordialog.cpp \
     dialogs/textviewerdialog.cpp \
     models/playlistmodel.cpp \
     docks/playlistdock.cpp \
@@ -61,16 +73,12 @@ SOURCES += main.cpp\
     qmltypes/qmlapplication.cpp \
     qmltypes/qmlfile.cpp \
     qmltypes/qmlfilter.cpp \
-    qmltypes/qmlhtmleditor.cpp \
     qmltypes/qmlmetadata.cpp \
     qmltypes/timelineitems.cpp \
     qmltypes/qmlprofile.cpp \
-    htmleditor/htmleditor.cpp \
-    htmleditor/highlighter.cpp \
     settings.cpp \
     widgets/lineeditclear.cpp \
     leapnetworklistener.cpp \
-    widgets/webvfxproducer.cpp \
     database.cpp \
     widgets/gltestwidget.cpp \
     models/multitrackmodel.cpp \
@@ -111,6 +119,7 @@ SOURCES += main.cpp\
     models/audiolevelstask.cpp \
     mltxmlchecker.cpp \
     widgets/avfoundationproducerwidget.cpp \
+    widgets/frameratewidget.cpp \
     widgets/gdigrabwidget.cpp \
     widgets/trackpropertieswidget.cpp \
     widgets/timelinepropertieswidget.cpp \
@@ -121,20 +130,32 @@ SOURCES += main.cpp\
     docks/keyframesdock.cpp \
     qmltypes/qmlproducer.cpp \
     models/keyframesmodel.cpp \
+    widgets/slideshowgeneratorwidget.cpp \
     widgets/textproducerwidget.cpp \
     dialogs/listselectiondialog.cpp \
+    dialogs/longuitask.cpp \
     widgets/newprojectfolder.cpp \
-    qmltypes/webvfxtemplatesmodel.cpp \
     widgets/playlistlistview.cpp
 
 mac: OBJECTIVE_SOURCES = macos.mm
 
 HEADERS  += mainwindow.h \
+    defaultlayouts.h \
     dialogs/systemsyncdialog.h \
+    jobs/qimagejob.h \
     mltcontroller.h \
+    proxymanager.h \
+    qmltypes/qmlrichtext.h \
     scrubbar.h \
     openotherdialog.h \
     controllers/filtercontroller.h \
+    spatialmedia/box.h \
+    spatialmedia/constants.h \
+    spatialmedia/container.h \
+    spatialmedia/mpeg4_container.h \
+    spatialmedia/sa3d.h \
+    spatialmedia/spatialmedia.h \
+    widgets/exportpresetstreeview.h \
     widgets/plasmawidget.h \
     abstractproducerwidget.h \
     widgets/lissajouswidget.h \
@@ -146,6 +167,7 @@ HEADERS  += mainwindow.h \
     widgets/colorbarswidget.h \
     widgets/countproducerwidget.h \
     widgets/noisewidget.h \
+    widgets/producerpreviewwidget.h \
     widgets/pulseaudiowidget.h \
     widgets/screenselector.h \
     widgets/jackproducerwidget.h \
@@ -167,6 +189,9 @@ HEADERS  += mainwindow.h \
     dialogs/filedatedialog.h \
     jobqueue.h \
     docks/jobsdock.h \
+    dialogs/multifileexportdialog.h \
+    dialogs/saveimagedialog.h \
+    dialogs/slideshowgeneratordialog.h \
     dialogs/textviewerdialog.h \
     models/playlistmodel.h \
     docks/playlistdock.h \
@@ -182,16 +207,12 @@ HEADERS  += mainwindow.h \
     qmltypes/qmlapplication.h \
     qmltypes/qmlfile.h \
     qmltypes/qmlfilter.h \
-    qmltypes/qmlhtmleditor.h \
     qmltypes/qmlmetadata.h \
     qmltypes/timelineitems.h \
     qmltypes/qmlprofile.h \
-    htmleditor/htmleditor.h \
-    htmleditor/highlighter.h \
     settings.h \
     widgets/lineeditclear.h \
     leapnetworklistener.h \
-    widgets/webvfxproducer.h \
     database.h \
     widgets/gltestwidget.h \
     models/multitrackmodel.h \
@@ -234,6 +255,7 @@ HEADERS  += mainwindow.h \
     shotcut_mlt_properties.h \
     mltxmlchecker.h \
     widgets/avfoundationproducerwidget.h \
+    widgets/frameratewidget.h \
     widgets/gdigrabwidget.h \
     widgets/trackpropertieswidget.h \
     widgets/timelinepropertieswidget.h \
@@ -244,10 +266,11 @@ HEADERS  += mainwindow.h \
     docks/keyframesdock.h \
     qmltypes/qmlproducer.h \
     models/keyframesmodel.h \
+    widgets/slideshowgeneratorwidget.h \
     widgets/textproducerwidget.h \
     dialogs/listselectiondialog.h \
+    dialogs/longuitask.h \
     widgets/newprojectfolder.h \
-    qmltypes/webvfxtemplatesmodel.h \
     widgets/playlistlistview.h
 
 FORMS    += mainwindow.ui \
@@ -280,9 +303,6 @@ FORMS    += mainwindow.ui \
     docks/playlistdock.ui \
     dialogs/durationdialog.ui \
     dialogs/customprofiledialog.ui \
-    htmleditor/htmleditor.ui \
-    htmleditor/inserthtmldialog.ui \
-    widgets/webvfxproducer.ui \
     docks/timelinedock.ui \
     widgets/lumamixtransition.ui \
     widgets/directshowvideowidget.ui \
@@ -297,25 +317,38 @@ FORMS    += mainwindow.ui \
     widgets/newprojectfolder.ui
 
 RESOURCES += \
-    ../icons/resources.qrc \
-    ../other-resources.qrc
+    ../icons/resources.qrc
 
 OTHER_FILES += \
+    ../.github/workflows/build-linux.yml \
+    ../.github/workflows/build-linux-unstable.yml \
+    ../.github/workflows/build-macos.yml \
+    ../.github/workflows/build-macos-unstable.yml \
+    ../.github/workflows/build-sdk-windows.yml \
+    ../.github/workflows/build-sdk-windows-unstable.yml \
+    ../.github/workflows/build-windows.yml \
+    ../.github/workflows/build-windows-unstable.yml \
     ../COPYING \
+    ../README.md \
     ../packaging/windows/shotcut.rc \
     ../scripts/build-shotcut.sh \
+    ../scripts/build-shotcut-msys2.sh \
     ../packaging/macos/shotcut.icns \
     ../packaging/windows/shotcut.nsi \
     ../packaging/macos/Info.plist \
     ../icons/dark/index.theme \
     ../icons/light/index.theme \
+    ../packaging/linux/Makefile \
     ../packaging/linux/appimage/appimage.yml \
-    ../packaging/linux/snap/snapcraft.yaml \
-    ../packaging/linux/snap/package.mak \
-    ../packaging/linux/org.shotcut.Shotcut.appdata.xml \
+    ../packaging/linux/snapcraft.yaml.in \
+    ../packaging/linux/org.shotcut.Shotcut.metainfo.xml \
     ../packaging/linux/org.shotcut.Shotcut.desktop \
     ../packaging/linux/org.shotcut.Shotcut.xml \
-    ../packaging/linux/shotcut.1
+    ../packaging/linux/shotcut.1 \
+    ../.github/ISSUE_TEMPLATE.md \
+    ../scripts/codesign_and_notarize.sh \
+    ../scripts/notarize.sh \
+    ../scripts/staple.sh
 
 INCLUDEPATH = ../CuteLogger/include
 
@@ -348,15 +381,13 @@ mac {
     # pkg-config such that the PKG_CONFIG_PATH env var is not set.
     isEmpty(MLT_PREFIX) {
         MLT_PREFIX = /opt/local
-    }
-    isEmpty(PREFIX) {
-        INCLUDEPATH += $$MLT_PREFIX/include/mlt++
-        INCLUDEPATH += $$MLT_PREFIX/include/mlt
-        LIBS += -L$$MLT_PREFIX/lib -lmlt++ -lmlt
+        INCLUDEPATH += $$PREFIX/Contents/Frameworks/include/mlt-7/mlt++
+        INCLUDEPATH += $$PREFIX/Contents/Frameworks/include/mlt-7
+        LIBS += -L$$PREFIX/Contents/Frameworks -lmlt++-7 -lmlt-7
     } else {
-        INCLUDEPATH += $$PREFIX/Contents/Frameworks/include/mlt++
-        INCLUDEPATH += $$PREFIX/Contents/Frameworks/include/mlt
-        LIBS += -L$$PREFIX/Contents/Frameworks -lmlt++ -lmlt
+        INCLUDEPATH += $$MLT_PREFIX/include/mlt-7/mlt++
+        INCLUDEPATH += $$MLT_PREFIX/include/mlt-7
+        LIBS += -L$$MLT_PREFIX/lib -lmlt++-7 -lmlt-7
     }
 }
 win32 {
@@ -365,19 +396,22 @@ win32 {
         message("MLT_PATH not set; using ..\\..\\... You can change this with 'qmake MLT_PATH=...'")
         MLT_PATH = ..\\..\\..
     }
-    INCLUDEPATH += $$MLT_PATH\\include\\mlt++ $$MLT_PATH\\include\\mlt
-    LIBS += -L$$MLT_PATH\\lib -lmlt++ -lmlt -lopengl32
+    INCLUDEPATH += $$MLT_PATH\\include\\mlt-7\\mlt++ $$MLT_PATH\\include\\mlt-7
+    LIBS += -L$$MLT_PATH\\lib -lmlt++-7 -lmlt-7 -lopengl32
     CONFIG(debug, debug|release) {
         INCLUDEPATH += $$PWD/../drmingw/include
         LIBS += -L$$PWD/../drmingw/x64/lib -lexchndl
     }
     RC_FILE = ../packaging/windows/shotcut.rc
+    QT += winextras
+    HEADERS += \
+    windowstools.h
+    SOURCES += \
+    windowstools.cpp
 }
 unix:!mac {
-    QT += x11extras
     CONFIG += link_pkgconfig
-    PKGCONFIG += mlt++
-    LIBS += -lX11
+    PKGCONFIG += mlt++-7
 }
 
 unix:!mac:isEmpty(PREFIX) {
@@ -401,12 +435,12 @@ unix:!mac {
     isEmpty(SHOTCUT_DATE) {
         SHOTCUT_DATE = 20$$replace(SHOTCUT_VERSION, \., -)
     }
-    appdata = $$cat($$PWD/../packaging/linux/org.shotcut.Shotcut.appdata.xml.in, blob)
-    appdata = $$replace(appdata, @SHOTCUT_VERSION@, $$SHOTCUT_VERSION)
-    appdata = $$replace(appdata, @SHOTCUT_DATE@, $$SHOTCUT_DATE)
-    write_file($$OUT_PWD/../packaging/linux/org.shotcut.Shotcut.appdata.xml, appdata)
+    appdata = $$cat($$PWD/../packaging/linux/org.shotcut.Shotcut.metainfo.xml.in, blob)
+    appdata = $$replace(appdata, @METAINFO_RELEASE_VERSION@, $$SHOTCUT_VERSION)
+    appdata = $$replace(appdata, @METAINFO_RELEASE_DATE@, $$SHOTCUT_DATE)
+    write_file($$OUT_PWD/../packaging/linux/org.shotcut.Shotcut.metainfo.xml, appdata)
 
-    metainfo.files = $$OUT_PWD/../packaging/linux/org.shotcut.Shotcut.appdata.xml
+    metainfo.files = $$OUT_PWD/../packaging/linux/org.shotcut.Shotcut.metainfo.xml
     metainfo.path = $$PREFIX/share/metainfo
     desktop.files = $$PWD/../packaging/linux/org.shotcut.Shotcut.desktop
     desktop.path = $$PREFIX/share/applications
@@ -420,3 +454,4 @@ unix:!mac {
     man.path = $$PREFIX/share/man/man1
     INSTALLS += metainfo desktop mime icon64 icon128 man
 }
+

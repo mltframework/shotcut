@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Meltytech, LLC
+ * Copyright (c) 2020-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,10 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.1
-import QtQuick.Controls 1.1
-import QtQuick.Layouts 1.0
-import Shotcut.Controls 1.0
+import QtQuick 2.12
+import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.12
+import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     width: 200
@@ -49,6 +49,7 @@ Item {
         onOutChanged: updateFilter(null)
         onAnimateInChanged: updateFilter(null)
         onAnimateOutChanged: updateFilter(null)
+        onPropertyChanged: setControls()
     }
 
     Connections {
@@ -74,6 +75,7 @@ Item {
         blockUpdate = true
         octaveSlider.value = filter.getDouble('octaveshift', position)
         frequencySlider.value = 1.0 / Math.pow(2, filter.getDouble('octaveshift', position))
+        octaveKeyframesButton.checked = filter.keyframeCount('octaveshift') > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
         blockUpdate = false
         octaveSlider.enabled = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1)
     }
@@ -118,7 +120,7 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: preset
             Layout.columnSpan: parent.columns - 1
             parameters: ['octaveshift']
@@ -127,7 +129,6 @@ Item {
             }
             onPresetSelected: {
                 setControls()
-                octaveKeyframesButton.checked = filter.keyframeCount(parameters[0]) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
                 middleValue = filter.getDouble(parameters[0], filter.animateIn)
                 if (filter.animateIn > 0)
                     startValue = filter.getDouble(parameters[0], 0)
@@ -139,13 +140,14 @@ Item {
         Label {
             text: qsTr('Octave Shift')
             Layout.alignment: Qt.AlignRight
-            ToolTip { text: qsTr('Specify the pitch shift in octaves. -1 shifts down an octave. +1 shifts up an octave. 0 is unchanged.') }
+            Shotcut.HoverTip { text: qsTr('Specify the pitch shift in octaves.\n-1 shifts down an octave.\n+1 shifts up an octave.\n0 is unchanged.') }
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: octaveSlider
             minimumValue: -2.0
             maximumValue: 2.0
             decimals: 6
+            stepSize: 1.0/12.0 // 12 half steps in an octave
             spinnerWidth: 100
             onValueChanged: {
                 updateFilter(getPosition())
@@ -154,12 +156,11 @@ Item {
                 }
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: octaveSlider.value = 0.0
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: octaveKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('octaveshift') > 0
             onToggled: {
                 if (checked) {
                     blockUpdate = true
@@ -176,9 +177,9 @@ Item {
         Label {
             text: qsTr('Speed Compensation')
             Layout.alignment: Qt.AlignRight
-            ToolTip { text: qsTr('Specify the speed change that should be compensated for. 2x will halve the pitch to compensate for the speed being doubled.') }
+            Shotcut.HoverTip { text: qsTr('Specify the speed change that should be compensated for.\n2x will halve the pitch to compensate for the speed being doubled.') }
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             property bool noUpdate: false
             id: frequencySlider
             minimumValue: 0.25

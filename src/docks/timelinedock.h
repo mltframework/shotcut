@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 Meltytech, LLC
+ * Copyright (c) 2013-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -60,16 +60,11 @@ public:
     void setCurrentTrack(int currentTrack);
     int currentTrack() const;
     int clipCount(int trackIndex) const;
-    void zoomIn();
-    void zoomOut();
-    void resetZoom();
-    void makeTracksShorter();
-    void makeTracksTaller();
     void setSelectionFromJS(const QVariantList& list);
     void setSelection(QList<QPoint> selection = QList<QPoint>(), int trackIndex = -1, bool isMultitrack = false);
     QVariantList selectionForJS() const;
-    QList<QPoint> selection() const;
-    QVector<QUuid> selectionUuids();
+    const QList<QPoint> selection() const;
+    const QVector<QUuid> selectionUuids();
     void saveAndClearSelection();
     void restoreSelection();
     void selectClipUnderPlayhead();
@@ -104,6 +99,12 @@ signals:
     void filteredClicked();
     void durationChanged();
     void transitionAdded(int trackIndex, int clipIndex, int position, bool ripple);
+    void zoomIn();
+    void zoomOut();
+    void zoomToFit();
+    void resetZoom();
+    void makeTracksShorter();
+    void makeTracksTaller();
 
 public slots:
     void addAudioTrack();
@@ -116,7 +117,7 @@ public slots:
     void lift(int trackIndex, int clipIndex);
     void removeSelection(bool withCopy = false);
     void liftSelection();
-    void selectTrack(int by);
+    void incrementCurrentTrack(int by);
     void selectTrackHead(int trackIndex);
     void selectMultitrack();
     void copyClip(int trackIndex, int clipIndex);
@@ -131,7 +132,7 @@ public slots:
     bool trimClipOut(int trackIndex, int clipIndex, int delta, bool ripple);
     void insert(int trackIndex, int position = -1, const QString &xml = QString(), bool seek = true);
     void overwrite(int trackIndex, int position = -1, const QString &xml = QString(), bool seek = true);
-    void appendFromPlaylist(Mlt::Playlist* playlist);
+    void appendFromPlaylist(Mlt::Playlist* playlist, bool skipProxy);
     void splitClip(int trackIndex = -1, int clipIndex = -1);
     void fadeIn(int trackIndex, int clipIndex = -1, int duration = -1);
     void fadeOut(int trackIndex, int clipIndex = -1, int duration = -1);
@@ -165,6 +166,7 @@ protected:
 private:
     bool isBlank(int trackIndex, int clipIndex);
     void pulseLockButtonOnTrack(int trackIndex);
+    void emitNonSeekableWarning();
 
     Ui::TimelineDock *ui;
     QQuickWidget m_quickView;
@@ -189,8 +191,8 @@ private slots:
     void load(bool force = false);
     void onTopLevelChanged(bool floating);
     void onTransitionAdded(int trackIndex, int clipIndex, int position, bool ripple);
-    void onInserted(int trackIndex, int clipIndex);
-    void onOverWritten(int trackIndex, int clipIndex);
+    void selectClip(int trackIndex, int clipIndex);
+    void onMultitrackClosed();
 };
 
 class TimelineSelectionBlocker

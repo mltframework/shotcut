@@ -47,10 +47,12 @@ KeyframesDock::KeyframesDock(QmlProducer* qmlProducer, QWidget *parent)
     QIcon icon = QIcon::fromTheme("chronometer", QIcon(":/icons/oxygen/32x32/actions/chronometer.png"));
     setWindowIcon(icon);
     toggleViewAction()->setIcon(windowIcon());
-    setMinimumWidth(300);
+    setMinimumSize(200, 50);
     m_qview.setFocusPolicy(Qt::StrongFocus);
     m_qview.quickWindow()->setPersistentSceneGraph(false);
+#ifndef Q_OS_MAC
     m_qview.setAttribute(Qt::WA_AcceptTouchEvents);
+#endif
     setWidget(&m_qview);
 
     QmlUtilities::setCommonProperties(m_qview.rootContext());
@@ -101,7 +103,6 @@ void KeyframesDock::setCurrentFilter(QmlFilter* filter, QmlMetadata* meta)
     connect(filter, SIGNAL(animateInChanged()), &m_model, SLOT(reload()));
     connect(filter, SIGNAL(animateOutChanged()), &m_model, SLOT(reload()));
     connect(filter, SIGNAL(inChanged(int)), &m_model, SLOT(onFilterInChanged(int)));
-    connect(filter, SIGNAL(outChanged(int)), &m_model, SLOT(onFilterOutChanged(int)));
 }
 
 bool KeyframesDock::event(QEvent *event)

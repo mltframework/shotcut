@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Meltytech, LLC
+ * Copyright (c) 2018-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,55 +16,56 @@
  */
 
 import QtQuick 2.2
-import QtQuick.Controls 1.1
-import QtQuick.Controls.Styles 1.1
-import Shotcut.Controls 1.0 as Shotcut
+import QtQuick.Controls 2.12
 import QtQuick.Dialogs 1.2
+import Shotcut.Controls 1.0 as Shotcut
 
-CheckBox {
+ToolButton {
     id: checkbox
     enabled: metadata !== null && metadata.keyframes.enabled
     opacity: enabled? 1.0 : 0.0
 
     signal toggled()
 
-    style: CheckBoxStyle {
-        background: Rectangle {
-            implicitWidth: 20
-            implicitHeight: 20
-            radius: 3
-            SystemPalette { id: activePalette }
-            color: control.checked? activePalette.highlight : activePalette.button
-            border.color: activePalette.shadow
-            border.width: 1
-        }
-        indicator: ToolButton {
-            x: 3
-            implicitWidth: 16
-            implicitHeight: 16
-            iconName: 'chronometer'
-            iconSource: 'qrc:///icons/oxygen/32x32/actions/chronometer.png'
-        }
+    padding: 2
+    checkable: true
+    hoverEnabled: true
+
+    SystemPalette { id: activePalette }
+    palette.buttonText: activePalette.buttonText
+
+    Shotcut.HoverTip { text: qsTr('Use Keyframes for this parameter') }
+
+    background: Rectangle {
+        implicitWidth: 20
+        implicitHeight: 20
+        radius: 3
+        color: checked? activePalette.highlight : activePalette.button
+        border.color: activePalette.shadow
+        border.width: 1
     }
-    Shotcut.ToolTip { id: tooltip; text: qsTr('Use Keyframes for this parameter') }
+
+    icon.name: 'chronometer'
+    icon.source: 'qrc:///icons/oxygen/32x32/actions/chronometer.png'
 
     onClicked: {
-        tooltip.isVisible = false
         if (!checked) {
            checked = true
            confirmDialog.visible = true
         } else {
+            application.showStatusMessage(qsTr('Hold %1 to drag a keyframe vertical only or %2 to drag horizontal only')
+                .arg(application.OS === 'OS X'? '⌘' : 'Ctrl')
+                .arg(application.OS === 'OS X'? '⌥' : 'Alt'))
             keyframes.show()
             keyframes.raise()
             toggled()
         }
-        tooltip.isVisible = true
     }
 
     MessageDialog {
         id: confirmDialog
         visible: false
-        modality: Qt.WindowModal
+        modality: application.dialogModality
         icon: StandardIcon.Question
         title: qsTr("Confirm Removing Keyframes")
         text: qsTr('This will remove all keyframes for this parameter.<p>Do you still want to do this?')
@@ -72,7 +73,10 @@ CheckBox {
         onYes: {
             checkbox.checked = false
             checkbox.toggled()
+            parameters.reload()
         }
-        onNo: checkbox.checked = true
+        onNo: {
+            checkbox.checked = true
+        }
     }
 }

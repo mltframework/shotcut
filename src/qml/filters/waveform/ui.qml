@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2019 Meltytech, LLC
+ * Copyright (c) 2018-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,10 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.0
-import QtQuick.Controls 1.1
-import QtQuick.Layouts 1.1
-import Shotcut.Controls 1.0
+import QtQuick 2.12
+import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.12
+import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     property string rectProperty: "rect"
@@ -44,10 +44,10 @@ Item {
     }
 
     function setFilter() {
-        var x = parseFloat(rectX.text)
-        var y = parseFloat(rectY.text)
-        var w = parseFloat(rectW.text)
-        var h = parseFloat(rectH.text)
+        var x = rectX.value
+        var y = rectY.value
+        var w = rectW.value
+        var h = rectH.value
         if (x !== filterRect.x ||
             y !== filterRect.y ||
             w !== filterRect.width ||
@@ -68,6 +68,10 @@ Item {
         fillCheckbox.checked = filter.get('fill') == 1
         combineCheckbox.checked = filter.get('show_channel') == -1
         windowSlider.value = filter.getDouble('window')
+        rectX.value = filterRect.x
+        rectY.value = filterRect.y
+        rectW.value = filterRect.width
+        rectH.value = filterRect.height
         _disableUpdate = false
     }
 
@@ -80,7 +84,7 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: preset
             parameters: defaultParameters
             Layout.columnSpan: 4
@@ -95,7 +99,7 @@ Item {
             text: qsTr('Waveform Color')
             Layout.alignment: Qt.AlignRight
         }
-        GradientControl {
+        Shotcut.GradientControl {
             Layout.columnSpan: 4
             id: fgGradient
             onGradientChanged: {
@@ -108,7 +112,7 @@ Item {
             text: qsTr('Background Color')
             Layout.alignment: Qt.AlignRight
         }
-        ColorPicker {
+        Shotcut.ColorPicker {
             Layout.columnSpan: 4
             id: bgColor
             eyedropper: true
@@ -120,7 +124,7 @@ Item {
             text: qsTr('Thickness')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             Layout.columnSpan: 3
             id: thicknessSlider
             minimumValue: 0
@@ -129,7 +133,7 @@ Item {
             suffix: ' px'
             onValueChanged: filter.set("thickness", value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: thicknessSlider.value = 1
         }
 
@@ -139,18 +143,28 @@ Item {
         }
         RowLayout {
             Layout.columnSpan: 4
-            TextField {
+            Shotcut.DoubleSpinBox {
                 id: rectX
-                text: filterRect.x
+                value: filterRect.x
+                Layout.minimumWidth: 100
                 horizontalAlignment: Qt.AlignRight
-                onEditingFinished: setFilter()
+                decimals: 0
+                stepSize: 1
+                from: -999999999
+                to: 999999999
+                onValueModified: setFilter()
             }
-            Label { text: ',' }
-            TextField {
+            Label { text: ','; Layout.minimumWidth: 20; horizontalAlignment: Qt.AlignHCenter }
+            Shotcut.DoubleSpinBox {
                 id: rectY
-                text: filterRect.y
+                value: filterRect.y
+                Layout.minimumWidth: 100
                 horizontalAlignment: Qt.AlignRight
-                onEditingFinished: setFilter()
+                decimals: 0
+                stepSize: 1
+                from: -999999999
+                to: 999999999
+                onValueModified: setFilter()
             }
         }
 
@@ -160,18 +174,28 @@ Item {
         }
         RowLayout {
             Layout.columnSpan: 4
-            TextField {
+            Shotcut.DoubleSpinBox {
                 id: rectW
-                text: filterRect.width
+                value: filterRect.width
+                Layout.minimumWidth: 100
                 horizontalAlignment: Qt.AlignRight
-                onEditingFinished: setFilter()
+                decimals: 0
+                stepSize: 1
+                from: -999999999
+                to: 999999999
+                onValueModified: setFilter()
             }
-            Label { text: 'x' }
-            TextField {
+            Label { text: 'x'; Layout.minimumWidth: 20; horizontalAlignment: Qt.AlignHCenter }
+            Shotcut.DoubleSpinBox {
                 id: rectH
-                text: filterRect.height
+                value: filterRect.height
+                Layout.minimumWidth: 100
                 horizontalAlignment: Qt.AlignRight
-                onEditingFinished: setFilter()
+                decimals: 0
+                stepSize: 1
+                from: -999999999
+                to: 999999999
+                onValueModified: setFilter()
             }
         }
         
@@ -201,7 +225,7 @@ Item {
             text: qsTr('Window')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             Layout.columnSpan: 3
             id: windowSlider
             minimumValue: 0
@@ -210,7 +234,7 @@ Item {
             decimals: 0
             onValueChanged: filter.set("window", value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: windowSlider.value = 0.4
         }
 
@@ -223,8 +247,10 @@ Item {
         target: filter
         onChanged: {
             var newValue = filter.getRect(rectProperty)
-            if (filterRect !== newValue)
+            if (filterRect !== newValue) {
                 filterRect = newValue
+                setControls()
+            }
         }
     }
 }

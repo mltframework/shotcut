@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2019 Meltytech, LLC
+ * Copyright (c) 2018-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,10 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.0
-import QtQuick.Controls 1.1
-import QtQuick.Layouts 1.1
-import Shotcut.Controls 1.0
+import QtQuick 2.12
+import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.12
+import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     property string rectProperty: 'rect'
@@ -96,16 +96,17 @@ Item {
         var newValue = filter.getRect(rectProperty, position)
         if (filterRect !== newValue) {
             filterRect = newValue
-            rectX.text = filterRect.x.toFixed()
-            rectY.text = filterRect.y.toFixed()
-            rectW.text = filterRect.width.toFixed()
-            rectH.text = filterRect.height.toFixed()
+            rectX.value = filterRect.x.toFixed()
+            rectY.value = filterRect.y.toFixed()
+            rectW.value = filterRect.width.toFixed()
+            rectH.value = filterRect.height.toFixed()
         }
         var enabled = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1)
         rectX.enabled = enabled
         rectY.enabled = enabled
         rectW.enabled = enabled
         rectH.enabled = enabled
+        positionKeyframesButton.checked = filter.keyframeCount(rectProperty) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
     }
 
     GridLayout {
@@ -117,7 +118,7 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: preset
             parameters: [rectProperty]
             Layout.columnSpan: 5
@@ -144,35 +145,44 @@ Item {
         }
         RowLayout {
             Layout.columnSpan: 3
-            TextField {
+            Shotcut.DoubleSpinBox {
                 id: rectX
+                Layout.minimumWidth: 100
                 horizontalAlignment: Qt.AlignRight
-                onEditingFinished: if (filterRect.x !== parseFloat(text)) {
-                    filterRect.x = parseFloat(text)
+                decimals: 0
+                stepSize: 1
+                from: -999999999
+                to: 999999999
+                onValueModified: if (filterRect.x !== value) {
+                    filterRect.x = value
                     setFilter(getPosition())
                 }
             }
-            Label { text: ',' }
-            TextField {
+            Label { text: ','; Layout.minimumWidth: 20; horizontalAlignment: Qt.AlignHCenter }
+            Shotcut.DoubleSpinBox {
                 id: rectY
+                Layout.minimumWidth: 100
                 horizontalAlignment: Qt.AlignRight
-                onEditingFinished: if (filterRect.y !== parseFloat(text)) {
-                    filterRect.y = parseFloat(text)
+                decimals: 0
+                stepSize: 1
+                from: -999999999
+                to: 999999999
+                onValueModified: if (filterRect.y !== value) {
+                    filterRect.y = value
                     setFilter(getPosition())
                 }
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: {
-                rectX.text = rectY.text = 0
+                rectX.value = rectY.value = 0
                 filterRect.x = filterRect.y = 0
                 setFilter(getPosition())
             }
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: positionKeyframesButton
             Layout.rowSpan: 2
-            checked: filter.keyframeCount(rectProperty) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
             onToggled: {
                 if (checked) {
                     filter.clearSimpleAnimation(rectProperty)
@@ -191,28 +201,38 @@ Item {
         }
         RowLayout {
             Layout.columnSpan: 3
-            TextField {
+            Shotcut.DoubleSpinBox {
                 id: rectW
+                Layout.minimumWidth: 100
                 horizontalAlignment: Qt.AlignRight
-                onEditingFinished: if (filterRect.width !== parseFloat(text)) {
-                    filterRect.width = parseFloat(text)
+                decimals: 0
+                stepSize: 1
+                from: -999999999
+                to: 999999999
+                onValueModified: if (filterRect.width !== value) {
+                    filterRect.width = value
                     setFilter(getPosition())
                 }
             }
-            Label { text: 'x' }
-            TextField {
+            Label { text: 'x'; Layout.minimumWidth: 20; horizontalAlignment: Qt.AlignHCenter }
+            Shotcut.DoubleSpinBox {
                 id: rectH
+                Layout.minimumWidth: 100
                 horizontalAlignment: Qt.AlignRight
-                onEditingFinished: if (filterRect.height !== parseFloat(text)) {
-                    filterRect.height = parseFloat(text)
+                decimals: 0
+                stepSize: 1
+                from: -999999999
+                to: 999999999
+                onValueModified: if (filterRect.height !== value) {
+                    filterRect.height = value
                     setFilter(getPosition())
                 }
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: {
-                rectW.text = profile.width / 10
-                rectH.text = profile.height / 10
+                rectW.value = profile.width / 10
+                rectH.value = profile.height / 10
                 filterRect.width = profile.width / 10
                 filterRect.height = profile.height / 10
                 setFilter(getPosition())

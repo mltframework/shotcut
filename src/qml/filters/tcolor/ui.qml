@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Meltytech, LLC
+ * Copyright (c) 2015-2021 Meltytech, LLC
  * Author: Amy Dennedy
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,10 +16,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.1
-import QtQuick.Controls 1.1
-import QtQuick.Layouts 1.0
-import Shotcut.Controls 1.0
+import QtQuick 2.12
+import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.12
+import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     width: 350
@@ -48,7 +48,7 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: preset
             parameters: ['oversaturate_cr', 'oversaturate_cb']
             Layout.columnSpan: 2
@@ -59,7 +59,7 @@ Item {
             text: qsTr('Green')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: bySlider
             minimumValue: -300
             maximumValue: 300
@@ -67,7 +67,7 @@ Item {
             label: qsTr(' Red')
             onValueChanged: filter.set('oversaturate_cr', value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: bySlider.value = 190
         }
 
@@ -75,7 +75,7 @@ Item {
             text: qsTr('Yellow')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: rgSlider
             minimumValue: -300
             maximumValue: 300
@@ -83,7 +83,7 @@ Item {
             label: qsTr('Blue')
             onValueChanged: filter.set('oversaturate_cb', value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: rgSlider.value = 190
         }
 

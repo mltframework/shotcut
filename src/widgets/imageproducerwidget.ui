@@ -249,6 +249,13 @@
       </widget>
      </item>
      <item>
+      <widget class="QPushButton" name="proxyButton">
+       <property name="text">
+        <string>Proxy</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QPushButton" name="menuButton">
        <property name="toolTip">
         <string>Display a menu of additional actions</string>
@@ -257,8 +264,8 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset theme="format-justify-fill" resource="../../icons/resources.qrc">
-         <normaloff>:/icons/oxygen/32x32/actions/format-justify-fill.png</normaloff>:/icons/oxygen/32x32/actions/format-justify-fill.png</iconset>
+        <iconset theme="show-menu" resource="../../icons/resources.qrc">
+         <normaloff>:/icons/oxygen/32x32/actions/show-menu.png</normaloff>:/icons/oxygen/32x32/actions/show-menu.png</iconset>
        </property>
       </widget>
      </item>
@@ -304,6 +311,29 @@
   <action name="actionSetFileDate">
    <property name="text">
     <string>Set Creation Time...</string>
+   </property>
+  </action>
+  <action name="actionDisableProxy">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Disable Proxy</string>
+   </property>
+  </action>
+  <action name="actionMakeProxy">
+   <property name="text">
+    <string>Make Proxy</string>
+   </property>
+  </action>
+  <action name="actionDeleteProxy">
+   <property name="text">
+    <string>Delete Proxy</string>
+   </property>
+  </action>
+  <action name="actionCopyHashCode">
+   <property name="text">
+    <string>Copy Hash Code</string>
    </property>
   </action>
  </widget>

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 Meltytech, LLC
+ * Copyright (c) 2013-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -42,14 +42,14 @@ FiltersDock::FiltersDock(MetadataModel* metadataModel, AttachedFiltersModel* att
     QIcon filterIcon = QIcon::fromTheme("view-filter", QIcon(":/icons/oxygen/32x32/actions/view-filter.png"));
     setWindowIcon(filterIcon);
     toggleViewAction()->setIcon(windowIcon());
-    setMinimumWidth(300);
     m_qview.setFocusPolicy(Qt::StrongFocus);
     m_qview.quickWindow()->setPersistentSceneGraph(false);
-    m_qview.setAttribute(Qt::WA_AcceptTouchEvents);
-    setWidget(&m_qview);
 #ifdef Q_OS_MAC
     setFeatures(DockWidgetClosable | DockWidgetMovable);
+#else
+    m_qview.setAttribute(Qt::WA_AcceptTouchEvents);
 #endif
+    setWidget(&m_qview);
 
     QmlUtilities::setCommonProperties(m_qview.rootContext());
     m_qview.rootContext()->setContextProperty("view", new QmlView(&m_qview));
@@ -59,7 +59,7 @@ FiltersDock::FiltersDock(MetadataModel* metadataModel, AttachedFiltersModel* att
     connect(&m_producer, SIGNAL(seeked(int)), SIGNAL(seeked(int)));
     connect(this, SIGNAL(producerInChanged(int)), &m_producer, SIGNAL(inChanged(int)));
     connect(this, SIGNAL(producerOutChanged(int)), &m_producer, SIGNAL(outChanged(int)));
-    setCurrentFilter(0, 0, -1);
+    setCurrentFilter(0, 0, QmlFilter::NoCurrentFilter);
     connect(m_qview.quickWindow(), SIGNAL(sceneGraphInitialized()), SLOT(resetQview()));
 
     LOG_DEBUG() << "end";
@@ -94,8 +94,11 @@ bool FiltersDock::event(QEvent *event)
 void FiltersDock::keyPressEvent(QKeyEvent *event)
 {
     QDockWidget::keyPressEvent(event);
-    if (event->key() == Qt::Key_F)
+    if (event->key() == Qt::Key_F) {
         event->ignore();
+    } else if (event->key() == Qt::Key_Left || event->key() == Qt::Key_Right) {
+        event->accept();
+    }
 }
 
 void FiltersDock::onSeeked(int position)
@@ -160,5 +163,5 @@ void FiltersDock::resetQview()
 
     QObject::connect(m_qview.rootObject(), SIGNAL(currentFilterRequested(int)),
         SIGNAL(currentFilterRequested(int)));
-    emit currentFilterRequested(-1);
+    emit currentFilterRequested(QmlFilter::NoCurrentFilter);
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2019 Meltytech, LLC
+ * Copyright (c) 2018-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,8 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.0
-import QtQml.Models 2.1
+import QtQuick 2.12
+import QtQml.Models 2.12
 import org.shotcut.qml 1.0
 
 Item {
@@ -39,6 +39,38 @@ Item {
             return keyframesRepeater.itemAt(keyframeIndex)
         else
             return null
+    }
+
+    onMinimumChanged: canvas.requestPaint()
+    onMaximumChanged: canvas.requestPaint()
+
+    // When maximum == minimum only show the middle label
+    Text {
+        anchors.left: parent.left
+        anchors.top: parent.top
+        anchors.leftMargin: 3
+        visible: isCurve && (maximum != minimum)
+        opacity: 0.5
+        color: activePalette.buttonText
+        text: Number(maximum).toLocaleString(Qt.locale(), 'f', 1)
+    }
+    Text {
+        anchors.left: parent.left
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.leftMargin: 3
+        visible: isCurve
+        opacity: 0.6
+        color: activePalette.buttonText
+        text: Number(minimum + ((maximum - minimum) / 2)).toLocaleString(Qt.locale(), 'f', 1)
+    }
+    Text {
+        anchors.left: parent.left
+        anchors.bottom: parent.bottom
+        anchors.leftMargin: 3
+        visible: isCurve && (maximum != minimum)
+        opacity: 0.6
+        color: activePalette.buttonText
+        text: Number(minimum).toLocaleString(Qt.locale(), 'f', 1)
     }
 
     Repeater { id: keyframesRepeater; model: keyframeDelegateModel; onCountChanged: canvas.requestPaint() }
@@ -78,8 +110,7 @@ Item {
                 var widthOffset = keyframesRepeater.itemAt(0).width / 2
                 var heightOffset = keyframesRepeater.itemAt(0).height / 2
                 // Draw extent before first keyframe.
-                var startX = (filter.in - producer.in) * timeScale
-                ctx.moveTo(startX, keyframesRepeater.itemAt(0).y + heightOffset)
+                ctx.moveTo(0, keyframesRepeater.itemAt(0).y + heightOffset)
                 ctx.lineTo(keyframesRepeater.itemAt(0).x + widthOffset, keyframesRepeater.itemAt(0).y + heightOffset)
                 // Draw lines between keyframes.
                 for (var i = 1; i < keyframesRepeater.count; i++) {
@@ -98,9 +129,7 @@ Item {
                     }
                 }
                 // Draw extent after last keyframe.
-                var x = (filter.out - producer.in + 1) * timeScale
-                if (x > keyframesRepeater.itemAt(i - 1).x)
-                    ctx.lineTo(x, keyframesRepeater.itemAt(i - 1).y + heightOffset)
+                ctx.lineTo(width, keyframesRepeater.itemAt(i - 1).y + heightOffset)
             }
             ctx.stroke()
         }
@@ -110,7 +139,7 @@ Item {
         id: keyframeDelegateModel
         model: parameters
         Keyframe {
-            position: (filter.in - producer.in) + model.frame
+            property int frame: model.frame
             interpolation: model.interpolation
             name: model.name
             value: model.value
@@ -123,6 +152,12 @@ Item {
             parameterIndex: parameterRoot.DelegateModel.itemsIndex
             onClicked: parameterRoot.clicked(keyframe, parameterRoot)
             onInterpolationChanged: canvas.requestPaint()
+            Component.onCompleted: {
+                position = (filter.in - producer.in) + model.frame
+            }
+            onFrameChanged: {
+                position = (filter.in - producer.in) + model.frame
+            }
             onPositionChanged: canvas.requestPaint()
             onValueChanged: canvas.requestPaint()
         }

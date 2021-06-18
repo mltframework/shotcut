@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2012-2019 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2012-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,6 +23,7 @@
 #include <QAction>
 #include <QDir>
 #include <QKeyEvent>
+#include <QMenu>
 #include <Logger.h>
 
 static const int MaxItems = 100;
@@ -106,12 +106,16 @@ QString RecentDock::remove(const QString &s)
     return name;
 }
 
+void RecentDock::find()
+{
+    ui->lineEdit->setFocus();
+    ui->lineEdit->selectAll();
+}
+
 void RecentDock::keyPressEvent(QKeyEvent *event)
 {
     if (event->key() == Qt::Key_Backspace || event->key() == Qt::Key_Delete) {
-        m_recent.removeAt(ui->listWidget->currentIndex().row());
-        Settings.setRecent(m_recent);
-        m_model.removeRow(ui->listWidget->currentIndex().row());
+        on_actionDelete_triggered();
     } else {
         QDockWidget::keyPressEvent(event);
     }
@@ -120,4 +124,25 @@ void RecentDock::keyPressEvent(QKeyEvent *event)
 void RecentDock::on_lineEdit_textChanged(const QString& search)
 {
     m_proxyModel.setFilterFixedString(search);
+}
+
+void RecentDock::on_actionDelete_triggered()
+{
+    if (ui->listWidget->currentIndex().isValid()) {
+        auto row = ui->listWidget->currentIndex().row();
+        auto url = m_recent[row];
+        m_recent.removeAt(row);
+        Settings.setRecent(m_recent);
+        m_model.removeRow(row);
+        emit deleted(url);
+    }
+}
+
+void RecentDock::on_listWidget_customContextMenuRequested(const QPoint& pos)
+{
+    if (ui->listWidget->currentIndex().isValid()) {
+        QMenu menu(this);
+        menu.addAction(ui->actionDelete);
+        menu.exec(mapToGlobal(pos + QPoint(0, ui->lineEdit->height())));
+    }
 }

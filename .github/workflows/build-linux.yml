@@ -1,0 +1,90 @@
+name: build-shotcut-linux
+
+on:
+  workflow_dispatch:
+  schedule:
+    # nightly
+    - cron: '0 8 * * *'
+
+env:
+  IMAGE_NAME: mltframework/shotcut-build:qt5.15.2-ubuntu18.04
+
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Build
+        run: |
+          echo Preparing version
+          echo $(date +"%y.%m.%d") > VERSION
+          VERSION=$(cat VERSION)
+          echo VERSION=$VERSION
+          FILENAME_VERSION=$(echo $VERSION | tr -d .)
+          cd scripts
+          echo Making build script config file
+          echo CLEANUP=0 > build-shotcut.conf
+          echo SHOTCUT_VERSION=\"$VERSION\" >> build-shotcut.conf
+          docker run -v $PWD:/root/shotcut $IMAGE_NAME
+          echo Renaming build artifacts
+          mv shotcut.txz shotcut-linux-x86_64-$FILENAME_VERSION.txz
+          mv src.txz shotcut-src-$FILENAME_VERSION.txz
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: linux-portable
+          path: |
+            scripts/shotcut-linux-x86_64-*.txz
+
+      - name: Upload portable and source archives to S3
+        uses: mltframework/s3cmd-action@v0
+        with:
+          args: >-
+            --access_key=${{ secrets.AWS_ACCESS_KEY }}
+            --secret_key=${{ secrets.AWS_SECRET_KEY }}
+            --acl-public
+            --stop-on-error
+            put scripts/*.txz s3://builds.us.meltytech/shotcut/
+
+      - name: Package AppImage
+        run: |
+          sudo apt install desktop-file-utils
+          mkdir packaging/linux/Shotcut
+          cp VERSION packaging/linux/Shotcut/
+          cd packaging/linux
+          wget https://raw.githubusercontent.com/probonopd/AppImages/master/pkg2appimage
+          bash -ex pkg2appimage appimage/appimage.yml
+          FILENAME_VERSION=$(cat Shotcut/VERSION | tr -d .)
+          mv out/*.AppImage out/shotcut-linux-x86_64-$FILENAME_VERSION.AppImage
+          chmod +x out/shotcut-linux-x86_64-$FILENAME_VERSION.AppImage
+
+      - name: Upload AppImage to S3
+        uses: mltframework/s3cmd-action@v0
+        with:
+          args: >-
+            --access_key=${{ secrets.AWS_ACCESS_KEY }}
+            --secret_key=${{ secrets.AWS_SECRET_KEY }}
+            --acl-public
+            --stop-on-error
+            put packaging/linux/out/*.AppImage s3://builds.us.meltytech/shotcut/
+
+      - name: Install Snapcraft
+        uses: samuelmeuli/action-snapcraft@v1.2.0
+        with:
+          snapcraft_token: ${{ secrets.SNAPCRAFT_TOKEN }}
+          use_lxd: true
+      - name: Package snap
+        run: |
+          VERSION=$(cat VERSION)
+          mv scripts/shotcut-linux-x86_64-*.txz packaging/linux
+          cd packaging/linux
+          mkdir -p snap/gui
+          cp ../../icons/shotcut-logo-64.png snap/gui
+          sed 's|Icon=.*|Icon=${SNAP}/meta/gui/shotcut-logo-64.png|' org.shotcut.Shotcut.desktop > snap/gui/shotcut.desktop
+          FILENAME=$(ls *.txz)
+          sed "s/\$VERSION/${VERSION}/ ; s/\$FILENAME/${FILENAME}/" snapcraft.yaml.in > snap/snapcraft.yaml
+          sg lxd -c 'snapcraft --use-lxd'
+          snapcraft upload --release=edge shotcut_*.snap

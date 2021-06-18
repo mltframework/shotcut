@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>271</width>
-    <height>248</height>
+    <width>496</width>
+    <height>322</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -122,6 +122,41 @@
           <property name="value">
            <number>9</number>
           </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="aspectRatioComboBox">
+          <property name="maximumSize">
+           <size>
+            <width>20</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <item>
+           <property name="text">
+            <string notr="true">16:9 (wide)</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string notr="true">4:3 (SD)</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string notr="true">9:16 (vertical)</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string notr="true">1:1 (square)</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string notr="true">1.90:1 (DCI)</string>
+           </property>
+          </item>
          </widget>
         </item>
         <item>
@@ -247,6 +282,56 @@
          </widget>
         </item>
         <item>
+         <widget class="QComboBox" name="resolutionComboBox">
+          <property name="maximumSize">
+           <size>
+            <width>20</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <item>
+           <property name="text">
+            <string notr="true">1280 x 720 (HD)</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string notr="true">1920 x 1080 (FHD)</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string notr="true">2048 x 1080 (DCI 2K)</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string notr="true">2560 x 1440 (QHD 2K)</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string notr="true">2704 x 1520 (2.7K)</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string notr="true">3840 x 2160 (UHD 4K)</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string notr="true">4096 x 2160 (DCI 4K)</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string notr="true">5120 x 2880 (5K)</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item>
          <spacer name="horizontalSpacer_7">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
@@ -300,11 +385,6 @@
             <height>16777215</height>
            </size>
           </property>
-          <item>
-           <property name="text">
-            <string notr="true"/>
-           </property>
-          </item>
           <item>
            <property name="text">
             <string notr="true">23.976024</string>

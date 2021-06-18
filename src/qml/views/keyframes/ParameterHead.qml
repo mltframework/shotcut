@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2019 Meltytech, LLC
+ * Copyright (c) 2017-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,10 +15,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.0
-import QtQuick.Controls 1.0
-import QtQuick.Controls.Styles 1.0
-import QtQuick.Layouts 1.0
+import QtQuick 2.12
+import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.12
 import Shotcut.Controls 1.0 as Shotcut
 import 'Keyframes.js' as Logic
 
@@ -52,7 +51,10 @@ Rectangle {
             when: paramHeadRoot.current
             PropertyChanges {
                 target: paramHeadRoot
-                color: selectedTrackColor
+                color: Qt.rgba(selectedTrackColor.r * selectedTrackColor.a + activePalette.window.r * (1.0 - selectedTrackColor.a),
+                               selectedTrackColor.g * selectedTrackColor.a + activePalette.window.g * (1.0 - selectedTrackColor.a),
+                               selectedTrackColor.b * selectedTrackColor.a + activePalette.window.b * (1.0 - selectedTrackColor.a),
+                               1.0)
             }
         },
         State {
@@ -90,23 +92,30 @@ Rectangle {
             margins: (paramHeadRoot.height < 50)? 0 : 4
         }
 
-        Label {
-            text: trackName
-            color: activePalette.windowText
-            elide: Qt.ElideRight
-            x: 4
-            y: 3
-            width: paramHeadRoot.width - trackHeadColumn.anchors.margins * 2 - 8 - (paramHeadRoot.height < 30? 90 : 0)
-            Shotcut.ToolTip { text: parent.text }
+        Control {
+            id: control
+            width: paramHeadRoot.width - trackHeadColumn.anchors.margins * 2 - 8 - (paramHeadRoot.height < 30? toolButtonsLayout.width : 0)
+            contentItem: Label {
+                text: trackName
+                color: activePalette.windowText
+                elide: Qt.ElideRight
+                leftPadding: 4
+                topPadding: 3
+                width: control.width
+            }
+            Shotcut.HoverTip { text: trackName }
         }
         RowLayout {
-            spacing: 8
+            id: toolButtonsLayout
+            spacing: (paramHeadRoot.height < 30)? 0 : 6
             ToolButton {
                 id: previousButton
-                implicitWidth: 18
-                implicitHeight: 18
-                iconName: 'media-skip-backward'
-                iconSource: 'qrc:///icons/oxygen/32x32/actions/media-skip-backward.png'
+                icon.name: 'media-skip-backward'
+                icon.source: 'qrc:///icons/oxygen/32x32/actions/media-skip-backward.png'
+                icon.width: 16
+                icon.height: 16
+                padding: 1
+                focusPolicy: Qt.NoFocus
                 onClicked: {
                     if (delegateIndex >= 0) {
                         root.currentTrack = delegateIndex
@@ -115,21 +124,23 @@ Rectangle {
                         Logic.seekPreviousSimple()
                     }
                 }
-                tooltip: (delegateIndex >= 0) ? qsTr('Seek to previous keyframe') : qsTr('Seek backwards')
+                Shotcut.HoverTip { text: (delegateIndex >= 0) ? qsTr('Seek to previous keyframe') : qsTr('Seek backwards') }
             }
 
             ToolButton {
                 id: addButton
                 visible: delegateIndex >= 0
-                implicitWidth: 18
-                implicitHeight: 18
-                iconName: 'chronometer';
-                iconSource: 'qrc:///icons/oxygen/32x32/actions/chronometer.png'
+                icon.name: 'chronometer';
+                icon.source: 'qrc:///icons/oxygen/32x32/actions/chronometer.png'
+                icon.width: 16
+                icon.height: 16
+                padding: 1
+                focusPolicy: Qt.NoFocus
                 onClicked: {
                     parameters.addKeyframe(delegateIndex, producer.position - (filter.in - producer.in))
                     root.selection = [parameters.keyframeIndex(delegateIndex, producer.position)]
                 }
-                tooltip: qsTr('Add a keyframe at play head')
+                Shotcut.HoverTip { text: qsTr('Add a keyframe at play head') }
             }
             Item {
                 visible: delegateIndex < 0 && paramHeadRoot.height >= 30
@@ -140,17 +151,19 @@ Rectangle {
             ToolButton {
                 id: deleteButton
                 visible: delegateIndex >= 0
-                enabled: root.selection.length > 0
-                implicitWidth: 18
-                implicitHeight: 18
-                iconName: 'edit-delete'
-                iconSource: 'qrc:///icons/oxygen/32x32/actions/edit-delete.png'
+                enabled: delegateIndex === root.currentTrack && root.selection.length > 0
+                icon.width: 16
+                icon.height: 16
+                padding: 1
+                icon.name: 'edit-delete'
+                icon.source: 'qrc:///icons/oxygen/32x32/actions/edit-delete.png'
                 opacity: enabled? 1.0 : 0.5
+                focusPolicy: Qt.NoFocus
                 onClicked: {
-                    parameters.remove(root.currentTrack, root.selection[0])
+                    parameters.remove(delegateIndex, root.selection[0])
                     root.selection = []
                 }
-                tooltip: qsTr('Delete the selected keyframe')
+                Shotcut.HoverTip { text: qsTr('Delete the selected keyframe') }
             }
             Item {
                 visible: delegateIndex < 0 && paramHeadRoot.height >= 30
@@ -160,10 +173,12 @@ Rectangle {
 
             ToolButton {
                 id: nextButton
-                implicitWidth: 18
-                implicitHeight: 18
-                iconName: 'media-skip-forward'
-                iconSource: 'qrc:///icons/oxygen/32x32/actions/media-skip-forward.png'
+                icon.name: 'media-skip-forward'
+                icon.source: 'qrc:///icons/oxygen/32x32/actions/media-skip-forward.png'
+                icon.width: 16
+                icon.height: 16
+                padding: 1
+                focusPolicy: Qt.NoFocus
                 onClicked: {
                     if (delegateIndex >= 0) {
                         root.currentTrack = delegateIndex
@@ -172,18 +187,33 @@ Rectangle {
                         Logic.seekNextSimple()
                     }
                 }
-                tooltip: (delegateIndex >= 0) ? qsTr('Seek to next keyframe') : qsTr('Seek forwards')
+                Shotcut.HoverTip { text: (delegateIndex >= 0) ? qsTr('Seek to next keyframe') : qsTr('Seek forwards') }
             }
 
             ToolButton {
                 id: lockButton
                 visible: false && delegateIndex >= 0
-                implicitWidth: 18
-                implicitHeight: 18
-                iconName: isLocked ? 'object-locked' : 'object-unlocked'
-                iconSource: isLocked ? 'qrc:///icons/oxygen/32x32/status/object-locked.png' : 'qrc:///icons/oxygen/32x32/status/object-unlocked.png'
+                icon.name: isLocked ? 'object-locked' : 'object-unlocked'
+                icon.source: isLocked ? 'qrc:///icons/oxygen/32x32/status/object-locked.png' : 'qrc:///icons/oxygen/32x32/status/object-unlocked.png'
+                icon.width: 16
+                icon.height: 16
+                padding: 1
+                focusPolicy: Qt.NoFocus
 //                onClicked: timeline.setTrackLock(index, !isLocked)
-                tooltip: isLocked? qsTr('Unlock track') : qsTr('Lock track')
+                Shotcut.HoverTip { text: isLocked? qsTr('Unlock track') : qsTr('Lock track') }
+            }
+
+            Shotcut.ToolButton {
+                Shotcut.HoverTip { text: qsTr('Zoom keyframe values') }
+                focusPolicy: Qt.NoFocus
+                visible: delegateIndex >= 0 && paramHeadRoot.isCurve
+                checkable: true
+                action: Action {
+                    id: zoomFitKeyframeAction
+                    icon.name: 'zoom-fit-best'
+                    icon.source: 'qrc:///icons/oxygen/32x32/actions/zoom-fit-best.png'
+                    onTriggered: root.paramRepeater.itemAt(delegateIndex).zoomHeight = checked
+                }
             }
         }
     }

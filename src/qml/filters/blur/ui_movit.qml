@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2018 Meltytech, LLC
+ * Copyright (c) 2013-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,10 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.1
-import QtQuick.Controls 1.1
-import QtQuick.Layouts 1.0
-import Shotcut.Controls 1.0
+import QtQuick 2.12
+import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.12
+import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     width: 200
@@ -52,6 +52,7 @@ Item {
         var position = getPosition()
         blockUpdate = true
         slider.value = filter.getDouble('radius', position)
+        keyframesButton.checked = filter.keyframeCount('radius') > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
         blockUpdate = false
         slider.enabled = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1)
     }
@@ -97,7 +98,7 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: preset
             Layout.columnSpan: parent.columns - 1
             parameters: ['radius']
@@ -106,7 +107,6 @@ Item {
             }
             onPresetSelected: {
                 setControls()
-                keyframesButton.checked = filter.keyframeCount(parameters[0]) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
                 middleValue = filter.getDouble(parameters[0], filter.animateIn)
                 if (filter.animateIn > 0)
                     startValue = filter.getDouble(parameters[0], 0)
@@ -116,19 +116,18 @@ Item {
         }
 
         Label { text: qsTr('Radius') }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: slider
             minimumValue: 0
             maximumValue: 99.99
             decimals: 2
             onValueChanged: updateFilter(getPosition())
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: slider.value = 3.0
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: keyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('radius') > 0
             onToggled: {
                 if (checked) {
                     blockUpdate = true

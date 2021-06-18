@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2020 Meltytech, LLC
+ * Copyright (c) 2014-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,8 @@
 #include <QString>
 #include <QPalette>
 #include <QUrl>
+#include <QFileDialog>
+#include <MltProperties.h>
 
 class QWidget;
 class QDoubleSpinBox;
@@ -35,13 +37,13 @@ class Util
 private:
     Util() {}
 public:
-    static QString baseName(const QString &filePath);
+    static QString baseName(const QString &filePath, bool trimQuery = false);
     static void setColorsToHighlight(QWidget* widget, QPalette::ColorRole role = QPalette::Window);
     static void showInFolder(const QString &path);
-    static bool warnIfNotWritable(const QString& filePath, QWidget* parent, const QString& caption, bool remove = false);
+    static bool warnIfNotWritable(const QString& filePath, QWidget* parent, const QString& caption);
     static QString producerTitle(const Mlt::Producer& producer);
     static QString removeFileScheme(QUrl &url);
-    static QStringList sortedFileList(const QList<QUrl>& urls);
+    static const QStringList sortedFileList(const QList<QUrl>& urls);
     static int coerceMultiple(int value, int multiple = 2);
     static QList<QUrl> expandDirectories(const QList<QUrl>& urls);
     static bool isDecimalPoint(QChar ch);
@@ -51,6 +53,13 @@ public:
     static void showFrameRateDialog(const QString& caption, int numerator, QDoubleSpinBox* spinner, QWidget* parent = Q_NULLPTR);
     static QTemporaryFile* writableTemporaryFile(const QString& filePath = QString(), const QString& templateName = QString());
     static void applyCustomProperties(Mlt::Producer& destination, Mlt::Producer& source, int in, int out);
+    static QString getFileHash(const QString& path);
+    static QString getHash(Mlt::Properties& properties);
+    static bool hasDriveLetter(const QString& path);
+    static QFileDialog::Options getFileDialogOptions();
+    static bool isMemoryLow();
+    static QString removeQueryString(const QString& s);
+    static int greatestCommonDivisor(int m, int n);
 };
 
 #endif // UTIL_H

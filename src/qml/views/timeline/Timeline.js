@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 Meltytech, LLC
+ * Copyright (c) 2013-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,23 +15,23 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-function scrollIfNeeded() {
+function scrollIfNeeded(center) {
     var x = timeline.position * multitrack.scaleFactor;
-    if (!scrollView) return;
-    if (settings.timelineCenterPlayhead) {
-        if (x > scrollView.flickableItem.contentX + scrollView.width * 0.5)
-            scrollView.flickableItem.contentX = x - scrollView.width * 0.5;
-        else if (x < scrollView.width * 0.5)
-            scrollView.flickableItem.contentX = 0;
-        else if (x < scrollView.flickableItem.contentX + scrollView.width * 0.5)
-            scrollView.flickableItem.contentX = x - scrollView.width * 0.5;
+    if (!tracksFlickable) return;
+    if (settings.timelineCenterPlayhead || center) {
+        if (x > tracksFlickable.contentX + tracksFlickable.width * 0.5)
+            tracksFlickable.contentX = x - tracksFlickable.width * 0.5;
+        else if (x < tracksFlickable.width * 0.5)
+            tracksFlickable.contentX = 0;
+        else if (x < tracksFlickable.contentX + tracksFlickable.width * 0.5)
+            tracksFlickable.contentX = x - tracksFlickable.width * 0.5;
     } else {
-        if (x > scrollView.flickableItem.contentX + scrollView.width - 50)
-            scrollView.flickableItem.contentX = x - scrollView.width + 50;
+        if (x > tracksFlickable.contentX + tracksFlickable.width - 50)
+            tracksFlickable.contentX = x - tracksFlickable.width + 50;
         else if (x < 50)
-            scrollView.flickableItem.contentX = 0;
-        else if (x < scrollView.flickableItem.contentX + 50)
-            scrollView.flickableItem.contentX = x - 50;
+            tracksFlickable.contentX = 0;
+        else if (x < tracksFlickable.contentX + 50)
+            tracksFlickable.contentX = x - 50;
     }
 }
 
@@ -42,7 +42,7 @@ function dragging(pos, duration) {
         dropTarget.width = duration * multitrack.scaleFactor
 
         for (var i = 0; i < tracksRepeater.count; i++) {
-            var trackY = tracksRepeater.itemAt(i).y + headerHeight - scrollView.flickableItem.contentY
+            var trackY = tracksRepeater.itemAt(i).y + headerHeight - tracksFlickable.contentY
             var trackH = tracksRepeater.itemAt(i).height
             if (pos.y >= trackY && pos.y < trackY + trackH) {
                 currentTrack = i
@@ -62,15 +62,15 @@ function dragging(pos, duration) {
             dropTarget.visible = false
 
         // Scroll tracks if at edges.
-        if (pos.x > headerWidth + scrollView.width - 50) {
+        if (pos.x > headerWidth + tracksFlickable.width - 50) {
             // Right edge
             scrollTimer.backwards = false
             scrollTimer.start()
         } else if (pos.x >= headerWidth && pos.x < headerWidth + 50) {
             // Left edge
-            if (scrollView.flickableItem.contentX < 50) {
+            if (tracksFlickable.contentX < 50) {
                 scrollTimer.stop()
-                scrollView.flickableItem.contentX = 0;
+                tracksFlickable.contentX = 0;
             } else {
                 scrollTimer.backwards = true
                 scrollTimer.start()
@@ -81,12 +81,14 @@ function dragging(pos, duration) {
 
         if (toolbar.scrub) {
             timeline.position = Math.round(
-                (pos.x + scrollView.flickableItem.contentX - headerWidth) / multitrack.scaleFactor)
+                (pos.x + tracksFlickable.contentX - headerWidth) / multitrack.scaleFactor)
         }
         if (settings.timelineSnap) {
             for (i = 0; i < tracksRepeater.count; i++)
                 tracksRepeater.itemAt(i).snapDrop(pos)
         }
+    } else {
+        currentTrack = 0
     }
 }
 
@@ -96,7 +98,7 @@ function dropped() {
 }
 
 function acceptDrop(xml) {
-    var position = Math.round((dropTarget.x + scrollView.flickableItem.contentX - headerWidth) / multitrack.scaleFactor)
+    var position = Math.round((dropTarget.x + tracksFlickable.contentX - headerWidth) / multitrack.scaleFactor)
     if (settings.timelineRipple)
         timeline.insert(currentTrack, position, xml, false)
     else
@@ -112,8 +114,8 @@ function clamp(x, minimum, maximum) {
 }
 
 function scrollMax() {
-    var maxWidth = Math.max(scrollView.flickableItem.contentWidth - scrollView.width + 14, 0)
-    var maxHeight = Math.max(scrollView.flickableItem.contentHeight - scrollView.height + 14, 0)
+    var maxWidth = Math.max(tracksFlickable.contentWidth - tracksFlickable.width + 14, 0)
+    var maxHeight = Math.max(tracksFlickable.contentHeight - tracksFlickable.height + 14, 0)
     return Qt.point(maxWidth, maxHeight)
 }
 
@@ -135,16 +137,16 @@ function onMouseWheel(wheel) {
             var y = wheel.pixelDelta.y
             // Track pads provide both horizontal and vertical.
             if (!y || Math.abs(x) > 2)
-                scrollView.flickableItem.contentX = clamp(scrollView.flickableItem.contentX - x, 0, scrollMax().x)
-            scrollView.flickableItem.contentY = clamp(scrollView.flickableItem.contentY - y, 0, scrollMax().y)
+                tracksFlickable.contentX = clamp(tracksFlickable.contentX - x, 0, scrollMax().x)
+            tracksFlickable.contentY = clamp(tracksFlickable.contentY - y, 0, scrollMax().y)
         } else {
             // Vertical only mouse wheel requires modifier for vertical scroll.
             if (wheel.modifiers === Qt.AltModifier) {
                 n = Math.round((application.OS === 'OS X'? wheel.angleDelta.y : wheel.angleDelta.x) / 2)
-                scrollView.flickableItem.contentY = clamp(scrollView.flickableItem.contentY - n, 0, scrollMax().y)
+                tracksFlickable.contentY = clamp(tracksFlickable.contentY - n, 0, scrollMax().y)
             } else {
                 n = Math.round(wheel.angleDelta.y / 2)
-                scrollView.flickableItem.contentX = clamp(scrollView.flickableItem.contentX - n, 0, scrollMax().x)
+                tracksFlickable.contentX = clamp(tracksFlickable.contentX - n, 0, scrollMax().x)
             }
         }
     }

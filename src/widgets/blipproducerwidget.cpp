@@ -29,6 +29,7 @@ BlipProducerWidget::BlipProducerWidget(QWidget *parent) :
     Util::setColorsToHighlight(ui->nameLabel);
     ui->preset->saveDefaultPreset(getPreset());
     ui->preset->loadPresets();
+    on_periodSpinBox_valueChanged(ui->periodSpinBox->value());
 }
 
 BlipProducerWidget::~BlipProducerWidget()
@@ -61,6 +62,7 @@ void BlipProducerWidget::loadPreset(Mlt::Properties& p)
 
 void BlipProducerWidget::on_periodSpinBox_valueChanged(int value)
 {
+    ui->periodSpinBox->setSuffix(tr(" second(s)", nullptr, value));
     if (m_producer) {
         m_producer->set("period", value);
         m_producer->set(kShotcutDetailProperty, detail().toUtf8().constData());

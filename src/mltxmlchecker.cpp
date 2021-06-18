@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2019 Meltytech, LLC
+ * Copyright (c) 2014-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,6 +19,9 @@
 #include "mltcontroller.h"
 #include "shotcut_mlt_properties.h"
 #include "util.h"
+#include "proxymanager.h"
+#include "settings.h"
+
 #include <QLocale>
 #include <QDir>
 #include <QCoreApplication>
@@ -26,6 +29,7 @@
 #include <QRegExp>
 #include <Logger.h>
 #include <clocale>
+#include <utime.h>
 
 static QString getPrefix(const QString& name, const QString& value);
 
@@ -34,7 +38,8 @@ static bool isMltClass(const QStringRef& name)
     return name == "profile" || name == "producer" ||
            name == "filter" || name == "playlist" ||
            name == "tractor" || name == "track" ||
-           name == "transition" || name == "consumer";
+           name == "transition" || name == "consumer" ||
+           name == "chain" || name == "link";
 }
 
 static bool isNetworkResource(const QString& string)
@@ -64,7 +69,7 @@ MltXmlChecker::MltXmlChecker()
     m_unlinkedFilesModel.setColumnCount(ColumnCount);
 }
 
-bool MltXmlChecker::check(const QString& fileName)
+QXmlStreamReader::Error MltXmlChecker::check(const QString& fileName)
 {
     LOG_DEBUG() << "begin";
 
@@ -84,16 +89,28 @@ bool MltXmlChecker::check(const QString& fileName)
                 m_newXml.writeCharacters("\n");
                 m_newXml.writeStartElement("mlt");
                 foreach (QXmlStreamAttribute a, m_xml.attributes()) {
-                    if (a.name().toString().toUpper() != "LC_NUMERIC") {
-                        m_newXml.writeAttribute(a);
-                    } else {
+                    if (a.name().toString().toUpper() == "LC_NUMERIC") {
                         QString value = a.value().toString().toUpper();
                         // Determine whether this document uses a non-POSIX/-generic numeric locale.
                         m_usesLocale = (value != "" && value != "C" && value != "POSIX" && QLocale().decimalPoint() != '.');
                         // Upon correcting the document to conform to current system,
                         // update the declared LC_NUMERIC.
                         m_newXml.writeAttribute("LC_NUMERIC", m_usesLocale? QLocale().name() : "C");
+                    } else if (a.name().toString().toLower() == "version") {
+                        m_mltVersion = QVersionNumber::fromString(a.value());
+                    } else if (a.name().toString().toLower() == "title") {
+                        m_newXml.writeAttribute(a.name().toString(), "Shotcut version " SHOTCUT_VERSION);
+                        auto parts = a.value().split(' ');
+                        LOG_DEBUG() << parts;
+                        if (parts.size() > 2 && parts[1] == "version") {
+                            m_shotcutVersion = parts[2].toString();
+                        }
+                    } else {
+                        m_newXml.writeAttribute(a);
                     }
+                }
+                if (!checkMltVersion()) {
+                    return QXmlStreamReader::CustomError;
                 }
                 // We cannot apply the locale change to the session at this point
                 // because we are merely checking at this point and not loading.
@@ -123,6 +140,7 @@ bool MltXmlChecker::check(const QString& fileName)
             }
         }
     }
+    LOG_DEBUG() << m_tempFile->fileName();
     if (m_tempFile->isOpen()) {
         m_tempFile->close();
 
@@ -131,8 +149,8 @@ bool MltXmlChecker::check(const QString& fileName)
 //        LOG_DEBUG() << m_tempFile->readAll().constData();
 //        m_tempFile->close();
     }
-    LOG_DEBUG() << "end";
-    return m_xml.error() == QXmlStreamReader::NoError;
+    LOG_DEBUG() << "end" << m_xml.errorString();
+    return m_xml.error();
 }
 
 QString MltXmlChecker::errorString() const
@@ -183,12 +201,14 @@ void MltXmlChecker::readMlt()
             break;
         case QXmlStreamReader::StartElement: {
             const QString element = m_xml.name().toString();
+            isPropertyElement = false;
             if (element == "property") {
-                const QString name = m_xml.attributes().value("name").toString();
-                m_properties << MltProperty(name, m_xml.readElementText());
                 isPropertyElement = true;
+                if (isMltClass(&mlt_class)) {
+                    const QString name = m_xml.attributes().value("name").toString();
+                    m_properties << MltProperty(name, m_xml.readElementText());
+                }
             } else {
-                isPropertyElement = false;
                 processProperties();
                 m_newXml.writeStartElement(m_xml.namespaceUri().toString(), element);
                 if (isMltClass(m_xml.name()))
@@ -243,12 +263,19 @@ void MltXmlChecker::processProperties()
         newProperties << MltProperty(p.first, p.second);
     }
 
-    if (mlt_class == "filter" || mlt_class == "transition" || mlt_class == "producer") {
+    if (mlt_class == "filter" || mlt_class == "transition" || mlt_class == "producer"
+            || mlt_class == "chain" || mlt_class == "link") {
         checkGpuEffects(mlt_service);
         checkCpuEffects(mlt_service);
         checkUnlinkedFile(mlt_service);
         checkIncludesSelf(newProperties);
         checkLumaAlphaOver(mlt_service, newProperties);
+#if LIBMLT_VERSION_INT >= ((6<<16)+(23<<8))
+        replaceWebVfxCropFilters(mlt_service, newProperties);
+        replaceWebVfxChoppyFilter(mlt_service, newProperties);
+#endif
+        if (Settings.proxyEnabled())
+            checkForProxy(mlt_service, newProperties);
 
         // Second pass: amend property values.
         m_properties = newProperties;
@@ -265,7 +292,7 @@ void MltXmlChecker::processProperties()
                 // We no longer save this (leaks absolute paths).
                 p.second.clear();
             } else if (p.first == "audio_index" || p.first == "video_index") {
-                fixStreamIndex(p.second);
+                fixStreamIndex(p);
             }
 
             if (!p.second.isEmpty())
@@ -317,7 +344,7 @@ bool MltXmlChecker::fixWebVfxPath(QString& resource)
 {
     // The path, if absolute, should start with the Shotcut executable path.
     QFileInfo fi(resource);
-    if (fi.isAbsolute()) {
+    if (fi.isAbsolute() || Util::hasDriveLetter(resource)) {
         QDir appPath(QCoreApplication::applicationDirPath());
 
 #if defined(Q_OS_MAC)
@@ -371,20 +398,36 @@ static QString getPrefix(const QString& name, const QString& value)
     return QString();
 }
 
+static QString getSuffix(const QString& name, const QString& value)
+{
+    // avformat is only using "resource"
+    if (name == "resource") {
+        const QString queryDelimiter("\\?");
+        const auto i = value.lastIndexOf(queryDelimiter);
+        // webvfx "plain:"
+        if (i > 0) {
+            return value.mid(i);
+        }
+    }
+    return QString();
+}
+
 bool MltXmlChecker::readResourceProperty(const QString& name, QString& value)
 {
-    if (mlt_class == "filter" || mlt_class == "transition" || mlt_class == "producer")
+    if (mlt_class == "filter" || mlt_class == "transition" || mlt_class == "producer"
+            || mlt_class == "chain" || mlt_class == "link")
     if (name == "resource" || name == "src" || name == "filename"
             || name == "luma" || name == "luma.resource" || name == "composite.luma"
             || name == "producer.resource" || name == "av.file" || name == "warp_resource") {
 
         // Handle special prefix such as "plain:" or speed.
         m_resource.prefix = getPrefix(name, value);
+        m_resource.suffix = getSuffix(name, value);
+        auto filePath = value.mid(m_resource.prefix.size());
+        filePath = filePath.left(filePath.size() - m_resource.suffix.size());
         // Save the resource name (minus prefix) for later check for unlinked files.
-        m_resource.info.setFile(value.mid(m_resource.prefix.size()));
-        auto driveSeparators = value.midRef(1, 2);
-        auto hasDriveLetter = driveSeparators == ":/" || driveSeparators == ":\\";
-        if (!isNetworkResource(value) && m_resource.info.isRelative() && !hasDriveLetter)
+        m_resource.info.setFile(filePath);
+        if (!isNetworkResource(value) && m_resource.info.isRelative() && !Util::hasDriveLetter(value))
             m_resource.info.setFile(m_fileInfo.canonicalPath(), m_resource.info.filePath());
         return true;
     }
@@ -419,6 +462,10 @@ void MltXmlChecker::checkUnlinkedFile(const QString& mlt_service)
     if (fileName != "vidstab.trf")
     // not the generic <producer> resource
     if (fileName != "<producer>")
+    // not an invalid <tractor>
+    if (fileName != "<tractor>")
+    // not an invalid blank
+    if (mlt_service != "blank" || fileName != "blank")
     // not a URL
     if (!m_resource.info.filePath().isEmpty() && !isNetworkResource(m_resource.info.filePath()))
     // not an image sequence
@@ -453,19 +500,30 @@ bool MltXmlChecker::fixUnlinkedFile(QString& value)
                 value = value.mid(m_fileInfo.canonicalPath().size() + 1);
             // Restore special prefix such as "plain:" or speed value.
             value.prepend(m_resource.prefix);
+            value.append(m_resource.suffix);
             m_isCorrected = true;
+
+            Mlt::Producer producer(MLT.profile(), m_resource.info.filePath().toUtf8().constData());
+            if (producer.is_valid() && !::qstrcmp(producer.get("mlt_service"), "avformat")) {
+                m_resource.audio_index = producer.get_int("audio_index");
+                m_resource.video_index = producer.get_int("video_index");
+            }
             return true;
         }
     }
     return false;
 }
 
-void MltXmlChecker::fixStreamIndex(QString& value)
+void MltXmlChecker::fixStreamIndex(MltProperty& property)
 {
     // Remove a stream index property if re-linked file is different.
     if (!m_resource.hash.isEmpty() && !m_resource.newHash.isEmpty()
         && m_resource.hash != m_resource.newHash) {
-        value.clear();
+        if (property.first == "audio_index") {
+            property.second = QString::number(m_resource.audio_index);
+        } else if (property.first == "video_index") {
+            property.second = QString::number(m_resource.video_index);
+        }
     }
 }
 
@@ -508,4 +566,193 @@ void MltXmlChecker::checkLumaAlphaOver(const QString& mlt_service, QVector<MltXm
             m_isUpdated = true;
         }
     }
+}
+
+void MltXmlChecker::replaceWebVfxCropFilters(QString& mlt_service, QVector<MltXmlChecker::MltProperty>& properties)
+{
+    if (mlt_service == "webvfx") {
+        auto isCrop = false;
+        for (auto& p : properties) {
+            if (p.first == "shotcut:filter" && p.second == "webvfxCircularFrame") {
+                p.second = "cropCircle";
+                properties << MltProperty("circle", "1");
+                m_isUpdated = isCrop = true;
+                break;
+            }
+            if (p.first == "shotcut:filter" && p.second == "webvfxClip") {
+                p.second = "cropRectangle";
+                m_isUpdated = isCrop = true;
+                break;
+            }
+        }
+        if (isCrop) {
+            mlt_service = "qtcrop";
+            for (auto& p : properties) {
+                if (p.first == "resource") {
+                    properties.removeOne(p);
+                    break;
+                }
+            }
+            for (auto& p : properties) {
+                if (p.first == "mlt_service") {
+                    p.second = "qtcrop";
+                    break;
+                }
+            }
+        }
+    }
+}
+
+void MltXmlChecker::replaceWebVfxChoppyFilter(QString& mlt_service, QVector<MltXmlChecker::MltProperty>& properties)
+{
+    if (mlt_service == "webvfx") {
+        auto isChoppy = false;
+        QString shotcutFilter;
+        for (auto& p : properties) {
+            if (p.first == "shotcut:filter") {
+                shotcutFilter = p.second;
+                if (p.second == "webvfxChoppy") {
+                    properties.removeOne(p);
+                    m_isUpdated = isChoppy = true;
+                    break;
+                }
+            }
+        }
+        if (isChoppy) {
+            mlt_service = "choppy";
+            for (auto& p : properties) {
+                if (p.first == "resource") {
+                    properties.removeOne(p);
+                    break;
+                }
+            }
+            for (auto& p : properties) {
+                if (p.first == "mlt_service") {
+                    p.second = "choppy";
+                    break;
+                }
+            }
+        } else if (shotcutFilter.isEmpty()) {
+            mlt_service = "qtext";
+            m_isUpdated = true;
+            for (auto& p : properties) {
+                if (p.first == "resource") {
+                    auto pathName = p.second;
+                    auto plain = QLatin1String("plain:");
+                    if (pathName.startsWith(plain)) {
+                        pathName = pathName.mid(plain.size());
+                    }
+                    if (QFileInfo(pathName).isRelative()) {
+                        QDir projectDir(QFileInfo(m_tempFile->fileName()).dir());
+                        pathName = projectDir.filePath(pathName);
+                    }
+                    QFile file(pathName);
+                    if (file.open(QIODevice::ReadOnly)) {
+                        p.first = "html";
+                        p.second = QString::fromUtf8(file.readAll());
+                    }
+                    break;
+                }
+            }
+            for (auto& p : properties) {
+                if (p.first == "mlt_service") {
+                    p.second = "qtext";
+                    break;
+                }
+            }
+            properties << MltProperty("shotcut:filter", "richText");
+        }
+    }
+}
+
+void MltXmlChecker::checkForProxy(const QString& mlt_service, QVector<MltXmlChecker::MltProperty>& properties)
+{
+    bool isTimewarp = mlt_service == "timewarp";
+    if (mlt_service.startsWith("avformat") || isTimewarp) {
+        QString resource;
+        QString hash;
+        QString speed = "1";
+        for (auto& p : properties) {
+            if ((!isTimewarp && p.first == "resource") || p.first == "warp_resource") {
+                QFileInfo info(p.second);
+                if (info.isRelative())
+                    info.setFile(m_fileInfo.canonicalPath(), p.second);
+                resource = info.filePath();
+            } else if (p.first == kShotcutHashProperty) {
+                hash = p.second;
+            } else if (p.first == "warp_speed") {
+                speed = p.second;
+            } else if (p.first == kDisableProxyProperty && p.second == "1") {
+                return;
+            }
+        }
+        QDir proxyDir(Settings.proxyFolder());
+        QDir projectDir(QFileInfo(m_tempFile->fileName()).dir());
+        QString fileName = hash + ProxyManager::videoFilenameExtension();
+        projectDir.cd("proxies");
+        if (proxyDir.exists(fileName) || projectDir.exists(fileName)) {
+            ::utime(proxyDir.filePath(fileName).toUtf8().constData(), nullptr);
+            ::utime(projectDir.filePath(fileName).toUtf8().constData(), nullptr);
+            for (auto& p : properties) {
+                if (p.first == "resource") {
+                    if (projectDir.exists(fileName)) {
+                        p.second = projectDir.filePath(fileName);
+                    } else {
+                        p.second = proxyDir.filePath(fileName);
+                    }
+                    if (isTimewarp) {
+                        p.second = QString("%1:%2").arg(speed).arg(p.second);
+                    }
+                    break;
+                }
+            }
+            properties << MltProperty(kIsProxyProperty, "1");
+            properties << MltProperty(kOriginalResourceProperty, resource);
+            m_isUpdated = true;
+        }
+    } else if ((mlt_service == "qimage" || mlt_service == "pixbuf") && !properties.contains(MltProperty(kShotcutSequenceProperty, "1"))) {
+        QString resource;
+        QString hash;
+        for (auto& p : properties) {
+            if (p.first == "resource") {
+                QFileInfo info(p.second);
+                if (info.isRelative())
+                    info.setFile(m_fileInfo.canonicalPath(), p.second);
+                resource = info.filePath();
+            } else if (p.first == kShotcutHashProperty) {
+                hash = p.second;
+            } else if (p.first == kDisableProxyProperty && p.second == "1") {
+                return;
+            }
+        }
+        QDir proxyDir(Settings.proxyFolder());
+        QDir projectDir(QFileInfo(m_tempFile->fileName()).dir());
+        QString fileName = hash + ProxyManager::imageFilenameExtension();
+        projectDir.cd("proxies");
+        if (proxyDir.exists(fileName) || projectDir.exists(fileName)) {
+            ::utime(proxyDir.filePath(fileName).toUtf8().constData(), nullptr);
+            ::utime(projectDir.filePath(fileName).toUtf8().constData(), nullptr);
+            for (auto& p : properties) {
+                if (p.first == "resource") {
+                    if (projectDir.exists(fileName)) {
+                        p.second = projectDir.filePath(fileName);
+                    } else {
+                        p.second = proxyDir.filePath(fileName);
+                    }
+                    break;
+                }
+            }
+            properties << MltProperty(kIsProxyProperty, "1");
+            properties << MltProperty(kOriginalResourceProperty, resource);
+            m_isUpdated = true;
+        }
+    }
+}
+
+bool MltXmlChecker::checkMltVersion()
+{
+    if (m_mltVersion.majorVersion() > 7) {
+        return false;
+    }
+    return true;
 }

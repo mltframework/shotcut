@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2020 Meltytech, LLC
+ * Copyright (c) 2012-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -42,10 +42,12 @@ public:
 
 public slots:
     void updateDuration();
+    void rename();
+    void offerConvert(QString message, bool set709Convert = false, bool setSubClip = false);
 
 signals:
     void producerChanged(Mlt::Producer*);
-    void producerReopened();
+    void producerReopened(bool play);
     void modified();
 
 protected:
@@ -54,11 +56,9 @@ protected:
 private slots:
     void onFrameDisplayed(const SharedFrame&);
 
-    void onProducerChanged();
+    void onProducerChanged(Mlt::Producer*);
 
     void onFrameDecoded();
-
-    void on_resetButton_clicked();
 
     void on_videoTrackComboBox_activated(int index);
 
@@ -106,12 +106,25 @@ private slots:
 
     void on_convertButton_clicked();
 
+    void on_actionDisableProxy_triggered(bool checked);
+
+    void on_actionMakeProxy_triggered();
+
+    void on_actionDeleteProxy_triggered();
+
+    void on_actionCopyHashCode_triggered();
+
+    void on_proxyButton_clicked();
+
+    void on_actionReset_triggered();
+
+    void on_actionSetEquirectangular_triggered();
+
 private:
     Ui::AvformatProducerWidget *ui;
     int m_defaultDuration;
     bool m_recalcDuration;
     bool m_askToConvert;
-    bool m_userDefinedCaption;
 
     void reopen(Mlt::Producer* p);
     void recreateProducer();

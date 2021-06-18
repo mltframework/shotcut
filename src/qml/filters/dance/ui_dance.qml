@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Meltytech, LLC
+ * Copyright (c) 2019-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,10 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.0
-import QtQuick.Controls 1.1
-import QtQuick.Layouts 1.1
-import Shotcut.Controls 1.0
+import QtQuick 2.12
+import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.12
+import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     property var defaultParameters: ['osc', 'initial_zoom', 'zoom', 'up', 'down', 'left', 'right', 'clockwise', 'counterclockwise', 'frequency_low', 'frequency_high', 'threshold']
@@ -73,7 +73,7 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: preset
             parameters: defaultParameters
             Layout.columnSpan: 4
@@ -83,9 +83,9 @@ Item {
         Label {
             text: qsTr('Initial Zoom')
             Layout.alignment: Qt.AlignRight
-            ToolTip { text: qsTr('The amount to zoom the image before any motion occurs.') }
+            Shotcut.HoverTip { text: qsTr('The amount to zoom the image before any motion occurs.') }
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             Layout.columnSpan: 3
             id: initialZoomSlider
             minimumValue: 0
@@ -94,16 +94,16 @@ Item {
             suffix: ' %'
             onValueChanged: filter.set("initial_zoom", value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: initialZoomSlider.value = 100
         }
 
         Label {
             text: qsTr('Oscillation')
             Layout.alignment: Qt.AlignRight
-            ToolTip { text: qsTr('Oscillation can be useful to make the image move back and forth during long periods of sound.') }
+            Shotcut.HoverTip { text: qsTr('Oscillation can be useful to make the image move back and forth during long periods of sound.') }
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             Layout.columnSpan: 3
             id: oscSlider
             minimumValue: 0
@@ -112,16 +112,16 @@ Item {
             suffix: ' Hz'
             onValueChanged: filter.set("osc", value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: oscSlider.value = 5
         }
 
         Label {
             text: qsTr('Zoom')
             Layout.alignment: Qt.AlignRight
-            ToolTip { text: qsTr('The amount that the audio affects the zoom of the image.') }
+            Shotcut.HoverTip { text: qsTr('The amount that the audio affects the zoom of the image.') }
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             Layout.columnSpan: 3
             id: zoomSlider
             minimumValue: -100
@@ -130,16 +130,16 @@ Item {
             suffix: ' %'
             onValueChanged: filter.set("zoom", value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: zoomSlider.value = 10
         }
 
         Label {
             text: qsTr('Up')
             Layout.alignment: Qt.AlignRight
-            ToolTip { text: qsTr('The amount that the audio affects the upward offset of the image.') }
+            Shotcut.HoverTip { text: qsTr('The amount that the audio affects the upward offset of the image.') }
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             Layout.columnSpan: 3
             id: upSlider
             minimumValue: 0
@@ -148,16 +148,16 @@ Item {
             suffix: ' %'
             onValueChanged: filter.set("up", value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: upSlider.value = 0
         }
 
         Label {
             text: qsTr('Down')
             Layout.alignment: Qt.AlignRight
-            ToolTip { text: qsTr('The amount that the audio affects the downward offset of the image.') }
+            Shotcut.HoverTip { text: qsTr('The amount that the audio affects the downward offset of the image.') }
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             Layout.columnSpan: 3
             id: downSlider
             minimumValue: 0
@@ -166,16 +166,16 @@ Item {
             suffix: ' %'
             onValueChanged: filter.set("down", value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: downSlider.value = 0
         }
 
         Label {
             text: qsTr('Left')
             Layout.alignment: Qt.AlignRight
-            ToolTip { text: qsTr('The amount that the audio affects the left offset of the image.') }
+            Shotcut.HoverTip { text: qsTr('The amount that the audio affects the left offset of the image.') }
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             Layout.columnSpan: 3
             id: leftSlider
             minimumValue: 0
@@ -184,16 +184,16 @@ Item {
             suffix: ' %'
             onValueChanged: filter.set("left", value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: leftSlider.value = 0
         }
 
         Label {
             text: qsTr('Right')
             Layout.alignment: Qt.AlignRight
-            ToolTip { text: qsTr('The amount that the audio affects the right offset of the image.') }
+            Shotcut.HoverTip { text: qsTr('The amount that the audio affects the right offset of the image.') }
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             Layout.columnSpan: 3
             id: rightSlider
             minimumValue: 0
@@ -202,16 +202,16 @@ Item {
             suffix: ' %'
             onValueChanged: filter.set("right", value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: rightSlider.value = 0
         }
 
         Label {
             text: qsTr('Clockwise')
             Layout.alignment: Qt.AlignRight
-            ToolTip { text: qsTr('The amount that the audio affects the clockwise rotation of the image.') }
+            Shotcut.HoverTip { text: qsTr('The amount that the audio affects the clockwise rotation of the image.') }
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             Layout.columnSpan: 3
             id: clockwiseSlider
             minimumValue: 0
@@ -220,16 +220,16 @@ Item {
             suffix: qsTr(' deg')
             onValueChanged: filter.set("clockwise", value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: clockwiseSlider.value = 0
         }
 
         Label {
             text: qsTr('Counterclockwise')
             Layout.alignment: Qt.AlignRight
-            ToolTip { text: qsTr('The amount that the audio affects the counterclockwise rotation of the image.') }
+            Shotcut.HoverTip { text: qsTr('The amount that the audio affects the counterclockwise rotation of the image.') }
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             Layout.columnSpan: 3
             id: counterclockwiseSlider
             minimumValue: 0
@@ -238,16 +238,16 @@ Item {
             suffix: qsTr(' deg')
             onValueChanged: filter.set("counterclockwise", value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: counterclockwiseSlider.value = 0
         }
 
         Label {
             text: qsTr('Low Frequency')
             Layout.alignment: Qt.AlignRight
-            ToolTip { text: qsTr('The low end of the frequency range to be used to influence the image motion.') }
+            Shotcut.HoverTip { text: qsTr('The low end of the frequency range to be used to influence the image motion.') }
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             Layout.columnSpan: 3
             id: freqLowSlider
             minimumValue: 20
@@ -261,16 +261,16 @@ Item {
                 }
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: freqLowSlider.value = 20
         }
 
         Label {
             text: qsTr('High Frequency')
             Layout.alignment: Qt.AlignRight
-            ToolTip { text: qsTr('The high end of the frequency range to be used to influence the image motion.') }
+            Shotcut.HoverTip { text: qsTr('The high end of the frequency range to be used to influence the image motion.') }
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             Layout.columnSpan: 3
             id: freqHighSlider
             minimumValue: 20 + _minFreqDelta
@@ -284,16 +284,16 @@ Item {
                 }
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: freqHighSlider.value = 20000
         }
 
         Label {
             text: qsTr('Threshold')
             Layout.alignment: Qt.AlignRight
-            ToolTip { text: qsTr('The minimum amplitude of sound that must occur within the frequency range to cause the image to move.') }
+            Shotcut.HoverTip { text: qsTr('The minimum amplitude of sound that must occur within the frequency range to cause the image to move.') }
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             Layout.columnSpan: 3
             id: thresholdSlider
             minimumValue: -60
@@ -302,7 +302,7 @@ Item {
             suffix: ' dB'
             onValueChanged: filter.set("threshold", value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: thresholdSlider.value = -30
         }
         

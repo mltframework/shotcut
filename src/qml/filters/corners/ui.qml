@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2020 Meltytech, LLC
+ * Copyright (c) 2019-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,12 +15,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.0
-import QtQuick.Controls 1.1
-import QtQuick.Layouts 1.1
-import Shotcut.Controls 1.0
+import QtQuick 2.12
+import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.12
+import Shotcut.Controls 1.0 as Shotcut
 
-KeyframableFilter {
+Shotcut.KeyframableFilter {
     property string corner1xProperty: '0'
     property string corner1yProperty: '1'
     property string corner2xProperty: '2'
@@ -164,6 +164,11 @@ KeyframableFilter {
         setSliderValue(corner4xSlider, corners[3].x)
         setSliderValue(corner4ySlider, corners[3].y)
 
+        corner1KeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(corner1xProperty) > 0
+        stretchxKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(stretchxProperty) > 0
+        stretchyKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(stretchyProperty) > 0
+        featheralphaKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(featherProperty) > 0
+
         blockUpdate = false
         enableControls(isSimpleKeyframesActive())
     }
@@ -181,8 +186,8 @@ KeyframableFilter {
         updateFilter(corner3yProperty, sliderValue(corner3ySlider), corner1KeyframesButton)
         updateFilter(corner4xProperty, sliderValue(corner4xSlider), corner1KeyframesButton)
         updateFilter(corner4yProperty, sliderValue(corner4ySlider), corner1KeyframesButton)
-        updateFilter(stretchxProperty, stretchxSlider.value / stretchxSlider.maximumValue, stretchxKeyframesButton)
-        updateFilter(stretchyProperty, stretchySlider.value / stretchySlider.maximumValue, stretchyKeyframesButton)
+        updateFilter(stretchxProperty, 1.0 - stretchxSlider.value / stretchxSlider.maximumValue, stretchxKeyframesButton)
+        updateFilter(stretchyProperty, 1.0 - stretchySlider.value / stretchySlider.maximumValue, stretchyKeyframesButton)
         updateFilter(featherProperty, featheralphaSlider.value / featheralphaSlider.maximumValue, featheralphaKeyframesButton)
         updateFilterCorners()
     }
@@ -258,7 +263,7 @@ KeyframableFilter {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: preset
             parameters: [corner1xProperty, corner1yProperty, corner2xProperty, corner2yProperty, corner3xProperty, corner3yProperty, corner4xProperty, corner4yProperty, stretchxProperty, stretchyProperty, interpolatorProperty, transparentProperty, featherProperty, alphaOpProperty, cornerProperties[0], cornerProperties[1], cornerProperties[2], cornerProperties[3]]
             Layout.columnSpan: 3
@@ -289,7 +294,7 @@ KeyframableFilter {
             Layout.alignment: Qt.AlignRight
 
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: corner1xSlider
             minimumValue: -100
             maximumValue: 200
@@ -304,44 +309,59 @@ KeyframableFilter {
                 }
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: setSliderValue(corner1xSlider, corner1xDefault)
         }
-        KeyframesButton {
-            id: corner1KeyframesButton
+        ColumnLayout {
             Layout.rowSpan: 8
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(corner1xProperty) > 0
-            onToggled: {
-                toggleKeyframes(checked, corner1xProperty, corners[0].x)
-                toggleKeyframes(checked, corner1yProperty, corners[0].y)
-                toggleKeyframes(checked, corner2xProperty, corners[1].x)
-                toggleKeyframes(checked, corner2yProperty, corners[1].y)
-                toggleKeyframes(checked, corner3xProperty, corners[2].x)
-                toggleKeyframes(checked, corner3yProperty, corners[2].y)
-                toggleKeyframes(checked, corner4xProperty, corners[3].x)
-                toggleKeyframes(checked, corner4yProperty, corners[3].y)
-                for (var i in corners) {
-                    if (checked) {
-                        blockUpdate = true
-                        if (filter.animateIn > 0 || filter.animateOut > 0) {
-                            // Reset all of the simple keyframes.
-                            resetSimpleKeyframes()
-                            filter.animateIn = 0
-                            blockUpdate = false
-                            filter.animateOut = 0
+            height: corner1KeyframesButton.height * Layout.rowSpan
+            SystemPalette { id: activePalette }
+            Rectangle {
+                color: activePalette.text
+                width: 1
+                height: parent.height / 2
+                anchors.horizontalCenter: corner1KeyframesButton.horizontalCenter
+            }
+            Shotcut.KeyframesButton {
+                id: corner1KeyframesButton
+                onToggled: {
+                    toggleKeyframes(checked, corner1xProperty, corners[0].x)
+                    toggleKeyframes(checked, corner1yProperty, corners[0].y)
+                    toggleKeyframes(checked, corner2xProperty, corners[1].x)
+                    toggleKeyframes(checked, corner2yProperty, corners[1].y)
+                    toggleKeyframes(checked, corner3xProperty, corners[2].x)
+                    toggleKeyframes(checked, corner3yProperty, corners[2].y)
+                    toggleKeyframes(checked, corner4xProperty, corners[3].x)
+                    toggleKeyframes(checked, corner4yProperty, corners[3].y)
+                    for (var i in corners) {
+                        if (checked) {
+                            blockUpdate = true
+                            if (filter.animateIn > 0 || filter.animateOut > 0) {
+                                // Reset all of the simple keyframes.
+                                resetSimpleKeyframes()
+                                filter.animateIn = 0
+                                blockUpdate = false
+                                filter.animateOut = 0
+                            } else {
+                                filter.clearSimpleAnimation(cornerProperties[i])
+                                blockUpdate = false
+                            }
+                            // Set this keyframe value.
+                            filter.set(cornerProperties[i], corners[i], 1.0, getPosition())
                         } else {
-                            filter.clearSimpleAnimation(cornerProperties[i])
-                            blockUpdate = false
+                            // Remove keyframes and set the parameter.
+                            filter.resetProperty(cornerProperties[i])
+                            filter.set(cornerProperties[i], corners[i])
                         }
-                        // Set this keyframe value.
-                        filter.set(cornerProperties[i], corners[i], 1.0, getPosition())
-                    } else {
-                        // Remove keyframes and set the parameter.
-                        filter.resetProperty(cornerProperties[i])
-                        filter.set(cornerProperties[i], corners[i])
                     }
+                    setControls()
                 }
-                setControls()
+            }
+            Rectangle {
+                color: activePalette.text
+                width: 1
+                height: parent.height / 2
+                anchors.horizontalCenter: corner1KeyframesButton.horizontalCenter
             }
         }
 
@@ -350,7 +370,7 @@ KeyframableFilter {
             Layout.alignment: Qt.AlignRight
 
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: corner1ySlider
             minimumValue: -100
             maximumValue: 200
@@ -365,7 +385,7 @@ KeyframableFilter {
                 }
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: setSliderValue(corner1ySlider, corner1yDefault)
         }
 
@@ -374,7 +394,7 @@ KeyframableFilter {
             Layout.alignment: Qt.AlignRight
 
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: corner2xSlider
             minimumValue: -100
             maximumValue: 200
@@ -389,7 +409,7 @@ KeyframableFilter {
                 }
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: setSliderValue(corner2xSlider, corner2xDefault)
         }
 
@@ -398,7 +418,7 @@ KeyframableFilter {
             Layout.alignment: Qt.AlignRight
 
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: corner2ySlider
             minimumValue: -100
             maximumValue: 200
@@ -413,7 +433,7 @@ KeyframableFilter {
                 }
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: setSliderValue(corner2ySlider, corner2yDefault)
         }
 
@@ -422,7 +442,7 @@ KeyframableFilter {
             Layout.alignment: Qt.AlignRight
 
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: corner3xSlider
             minimumValue: -100
             maximumValue: 200
@@ -437,7 +457,7 @@ KeyframableFilter {
                 }
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: setSliderValue(corner3xSlider, corner3xDefault)
         }
 
@@ -446,7 +466,7 @@ KeyframableFilter {
             Layout.alignment: Qt.AlignRight
 
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: corner3ySlider
             minimumValue: -100
             maximumValue: 200
@@ -461,7 +481,7 @@ KeyframableFilter {
                 }
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: setSliderValue(corner3ySlider, corner3yDefault)
         }
 
@@ -470,7 +490,7 @@ KeyframableFilter {
             Layout.alignment: Qt.AlignRight
 
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: corner4xSlider
             minimumValue: -100
             maximumValue: 200
@@ -485,7 +505,7 @@ KeyframableFilter {
                 }
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: setSliderValue(corner4xSlider, corner4xDefault)
         }
 
@@ -494,7 +514,7 @@ KeyframableFilter {
             Layout.alignment: Qt.AlignRight
 
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: corner4ySlider
             minimumValue: -100
             maximumValue: 200
@@ -509,7 +529,7 @@ KeyframableFilter {
                 }
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: setSliderValue(corner4ySlider, corner4yDefault)
         }
 
@@ -517,7 +537,7 @@ KeyframableFilter {
             text: qsTr('Stretch X')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: stretchxSlider
             minimumValue: 0
             maximumValue: 100
@@ -526,12 +546,11 @@ KeyframableFilter {
             suffix: ' %'
             onValueChanged: updateFilter(stretchxProperty, 1.0 - stretchxSlider.value / stretchxSlider.maximumValue, stretchxKeyframesButton, getPosition())
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: stretchxSlider.value = stretchxDefault * stretchxSlider.maximumValue
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: stretchxKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(stretchxProperty) > 0
             onToggled: {
                 toggleKeyframes(checked, stretchxProperty, 1.0 - stretchxSlider.value / stretchxSlider.maximumValue)
                 setControls()
@@ -542,7 +561,7 @@ KeyframableFilter {
             text: qsTr('Y')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: stretchySlider
             minimumValue: 0
             maximumValue: 100
@@ -551,12 +570,11 @@ KeyframableFilter {
             suffix: ' %'
             onValueChanged: updateFilter(stretchyProperty, 1.0 - stretchySlider.value / stretchySlider.maximumValue, stretchyKeyframesButton, getPosition())
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: stretchySlider.value = stretchyDefault * stretchySlider.maximumValue
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: stretchyKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(stretchyProperty) > 0
             onToggled: {
                 toggleKeyframes(checked, stretchyProperty, 1.0 - stretchySlider.value / stretchySlider.maximumValue)
                 setControls()
@@ -567,18 +585,18 @@ KeyframableFilter {
             text: qsTr('Interpolator')
             Layout.alignment: Qt.AlignRight
         }
-        ComboBox {
+        Shotcut.ComboBox {
             id: interpolatorCombo
             implicitWidth: 180
-            model: [qsTr('Nearest Neighbor'), qsTr('Bilinear'), qsTr('Bicubic Smooth'), qsTr('Bicubic Sharp'), qsTr('Spline 4x4'), qsTr('Spline 6x6'), qsTr('Lanzcos')]
+            model: [qsTr('Nearest Neighbor'), qsTr('Bilinear'), qsTr('Bicubic Smooth'), qsTr('Bicubic Sharp'), qsTr('Spline 4x4'), qsTr('Spline 6x6'), 'Lanczos']
             onActivated: {
                 enabled = false
                 filter.set(interpolatorProperty, index / 6)
                 enabled = true
             }
         }
-        UndoButton {
-            onClicked: interpolatorCombo.currentIndex = interpolatorDefault * 6
+        Shotcut.UndoButton {
+            onClicked: filter.set(interpolatorProperty, interpolatorDefault)
             Layout.columnSpan: 2
         }
 
@@ -586,7 +604,7 @@ KeyframableFilter {
             text: qsTr('Alpha Operation')
             Layout.alignment: Qt.AlignRight
         }
-        ComboBox {
+        Shotcut.ComboBox {
             id: alphaoperationCombo
             implicitWidth: 180
             model: [qsTr('Opaque'), qsTr('Overwrite'), qsTr('Maximum'), qsTr('Minimum'), qsTr('Add'), qsTr('Subtract')]
@@ -597,10 +615,14 @@ KeyframableFilter {
                 enabled = true
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             Layout.columnSpan: 2
-            onClicked: alphaoperationCombo.currentIndex = filter.get(transparentBackground) === '1'?
-                           Math.round(alphaoperationDefault * 4) + 1 : 0
+            onClicked: {
+                alphaoperationCombo.currentIndex = filter.get(transparentProperty) === '1'?
+                    Math.round(alphaoperationDefault * 4) + 1 : 0
+                filter.set(transparentProperty, alphaoperationCombo.currentIndex > 0)
+                filter.set(alphaOpProperty, (alphaoperationCombo.currentIndex - 1) / 4)
+            }
         }
 
         Label {
@@ -608,7 +630,7 @@ KeyframableFilter {
             Layout.alignment: Qt.AlignRight
 
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: featheralphaSlider
             enabled: alphaoperationCombo.currentIndex > 0
             minimumValue: 0
@@ -618,12 +640,11 @@ KeyframableFilter {
             suffix: ' %'
             onValueChanged: updateFilter(featherProperty, featheralphaSlider.value / featheralphaSlider.maximumValue, featheralphaKeyframesButton, getPosition())
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: featheralphaSlider.value = featheralphaDefault * featheralphaSlider.maximumValue
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: featheralphaKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(featherProperty) > 0
             onToggled: {
                 enableControls(true)
                 toggleKeyframes(checked, featherProperty, featheralphaSlider.value / featheralphaSlider.maximumValue)
@@ -642,6 +663,7 @@ KeyframableFilter {
         onOutChanged: updateSimpleKeyframes()
         onAnimateInChanged: updateSimpleKeyframes()
         onAnimateOutChanged: updateSimpleKeyframes()
+        onPropertyChanged: setControls()
     }
 
     Connections {

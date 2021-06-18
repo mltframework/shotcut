@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>scripts/rangy-core.js</file>
-        <file>scripts/rangy-cssclassapplier.js</file>
-        <file>scripts/jquery.js</file>
-        <file>scripts/htmleditor.js</file>
-    </qresource>
-</RCC>

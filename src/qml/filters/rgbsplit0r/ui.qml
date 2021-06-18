@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Meltytech, LLC
+ * Copyright (c) 2019-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,12 +15,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.0
-import QtQuick.Controls 1.1
-import QtQuick.Layouts 1.1
-import Shotcut.Controls 1.0
+import QtQuick 2.12
+import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.12
+import Shotcut.Controls 1.0 as Shotcut
 
-KeyframableFilter {
+Shotcut.KeyframableFilter {
     property string verSplit: '0'
     property string horSplit: '1'
     property double  verSplitDefault: 0.4
@@ -47,7 +47,9 @@ KeyframableFilter {
         var position = getPosition()
         blockUpdate = true
         verSplitSlider.value = filter.getDouble(verSplit, position) * verSplitSlider.maximumValue
+        verKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(verSplit) > 0
         horSplitSlider.value = filter.getDouble(horSplit, position) * horSplitSlider.maximumValue
+        horKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(horSplit) > 0
         blockUpdate = false
         enableControls(isSimpleKeyframesActive())
     }
@@ -70,7 +72,7 @@ KeyframableFilter {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: preset
             parameters: [verSplit, horSplit]
             Layout.columnSpan: 3
@@ -85,7 +87,7 @@ KeyframableFilter {
             text: qsTr('Vertical')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: verSplitSlider
             minimumValue: 0
             maximumValue: 100
@@ -94,12 +96,11 @@ KeyframableFilter {
             suffix: ' %'
             onValueChanged: updateFilter(verSplit, value / maximumValue, verKeyframesButton, getPosition())
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: verSplitSlider.value = verSplitDefault * verSplitSlider.maximumValue
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: verKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(verSplit) > 0
             onToggled: {
                 enableControls(true)
                 toggleKeyframes(checked, verSplit, verSplitSlider.value / verSplitSlider.maximumValue)
@@ -110,7 +111,7 @@ KeyframableFilter {
             text: qsTr('Horizontal')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: horSplitSlider
             minimumValue: 0
             maximumValue: 100
@@ -119,12 +120,11 @@ KeyframableFilter {
             suffix: ' %'
             onValueChanged: updateFilter(horSplit, value / maximumValue, horKeyframesButton, getPosition())
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: horSplitSlider.value = horSplitDefault * horSplitSlider.maximumValue
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: horKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(horSplit) > 0
             onToggled: {
                 enableControls(true)
                 toggleKeyframes(checked, horSplit, horSplitSlider.value / horSplitSlider.maximumValue)
@@ -142,6 +142,7 @@ KeyframableFilter {
         onOutChanged: updateSimpleKeyframes()
         onAnimateInChanged: updateSimpleKeyframes()
         onAnimateOutChanged: updateSimpleKeyframes()
+        onPropertyChanged: setControls()
     }
 
     Connections {

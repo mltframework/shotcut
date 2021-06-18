@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2019 Meltytech, LLC
+ * Copyright (c) 2014-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,20 +15,23 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.1
-import QtQuick.Controls 1.1
-import QtQuick.Layouts 1.0
-import Shotcut.Controls 1.0
+import QtQuick 2.12
+import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.12
+import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     property int producerWidth: (producer.get('meta.media.width') === null)? profile.width :producer.get('meta.media.width')
     property int producerHeight: (producer.get('meta.media.height') === null)? profile.height : producer.get('meta.media.height')
+    property double widthScaleFactor: profile.width / producerWidth
+    property double heightScaleFactor: profile.height / producerHeight
     property var defaultParameters: ['left', 'right', 'top', 'bottom', 'center', 'center_bias']
+
     width: 350
     height: 200
     
     function setEnabled() {
-        if (filter.get('center') == 1) {
+        if (filter.get('center') === '1') {
             biasslider.enabled = true
             biasundo.enabled = true
             topslider.enabled = false
@@ -52,10 +55,20 @@ Item {
             rightundo.enabled = true
         }
     }
+
+    function setControls() {
+        centerCheckBox.checked = filter.get('center') === '1'
+        biasslider.value = filter.get('center_bias')
+        topslider.value = filter.get('top')
+        bottomslider.value = filter.get('bottom')
+        leftslider.value = filter.get('left')
+        rightslider.value = filter.get('right')
+    }
     
     Component.onCompleted: {
         if (filter.isNew) {
             // Set default parameter values
+            filter.set('use_profile', '1')
             filter.set("center", 0);
             filter.set("center_bias", 0);
             filter.set("top", 0);
@@ -64,14 +77,18 @@ Item {
             filter.set("right", 0);
             centerCheckBox.checked = false
             filter.savePreset(defaultParameters)
-
-            biasslider.value = +filter.get('center_bias')
-            topslider.value = +filter.get('top')
-            bottomslider.value = +filter.get('bottom')
-            leftslider.value = +filter.get('left')
-            rightslider.value = +filter.get('right')
+        } else {
+            if (filter.get('use_profile') !== '1') {
+                filter.blockSignals = true
+                filter.set('use_profile', '1')
+                filter.set('top', Math.round(filter.getDouble('top') * heightScaleFactor))
+                filter.set('bottom', Math.round(filter.getDouble('bottom') * heightScaleFactor))
+                filter.set('left', Math.round(filter.getDouble('left') * widthScaleFactor))
+                filter.blockSignals = false
+                filter.set('right', Math.round(filter.getDouble('right') * widthScaleFactor))
+            }
         }
-        centerCheckBox.checked = filter.get('center') == '1'
+        setControls()
         setEnabled()
     }
 
@@ -84,16 +101,11 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             Layout.columnSpan: 2
             parameters: defaultParameters
             onPresetSelected: {
-                centerCheckBox.checked = filter.get('center') == '1'
-                biasslider.value = +filter.get('center_bias')
-                topslider.value = +filter.get('top')
-                bottomslider.value = +filter.get('bottom')
-                leftslider.value = +filter.get('left')
-                rightslider.value = +filter.get('right')
+                setControls()
                 setEnabled()
             }
         }
@@ -101,7 +113,6 @@ Item {
         CheckBox {
             id: centerCheckBox
             text: qsTr('Center')
-            checked: filter.get('center') == '1'
             property bool isReady: false
             Component.onCompleted: isReady = true
             onClicked: {
@@ -112,9 +123,9 @@ Item {
             }
         }
         Item {
-            Layout.fillWidth: true;
+            width: 1
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: {
                 centerCheckBox.checked = false
                 filter.set('center', false)
@@ -126,15 +137,14 @@ Item {
             text: qsTr('Center bias')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: biasslider
-            minimumValue: -Math.max(producerWidth, producerHeight) / 2
-            maximumValue: Math.max(producerWidth, producerHeight) / 2
+            minimumValue: Math.round(-Math.max(profile.width, profile.height) / 2)
+            maximumValue: Math.round(Math.max(profile.width, profile.height) / 2)
             suffix: ' px'
-            value: +filter.get('center_bias')
             onValueChanged: filter.set('center_bias', value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             id: biasundo
             onClicked: biasslider.value = 0
         }
@@ -143,15 +153,14 @@ Item {
             text: qsTr('Top')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: topslider
             minimumValue: 0
-            maximumValue: producerHeight
+            maximumValue: profile.height
             suffix: ' px'
-            value: +filter.get('top')
             onValueChanged: filter.set('top', value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             id: topundo
             onClicked: topslider.value = 0
         }
@@ -160,15 +169,14 @@ Item {
             text: qsTr('Bottom')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: bottomslider
             minimumValue: 0
-            maximumValue: producerHeight
+            maximumValue: profile.height
             suffix: ' px'
-            value: +filter.get('bottom')
             onValueChanged: filter.set('bottom', value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             id: bottomundo
             onClicked: bottomslider.value = 0
         }
@@ -177,15 +185,14 @@ Item {
             text: qsTr('Left')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: leftslider
             minimumValue: 0
-            maximumValue: producerWidth
+            maximumValue: profile.width
             suffix: ' px'
-            value: +filter.get('left')
             onValueChanged: filter.set('left', value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             id: leftundo
             onClicked: leftslider.value = 0
         }
@@ -194,15 +201,14 @@ Item {
             text: qsTr('Right')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: rightslider
             minimumValue: 0
-            maximumValue: producerWidth
+            maximumValue: profile.width
             suffix: ' px'
-            value: +filter.get('right')
             onValueChanged: filter.set('right', value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             id: rightundo
             onClicked: rightslider.value = 0
         }

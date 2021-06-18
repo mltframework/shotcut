@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2018 Meltytech, LLC
- * Author: Brian Matherly
+ * Copyright (c) 2018-2021 Meltytech, LLC
+
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,10 +16,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.1
-import QtQuick.Controls 1.1
-import QtQuick.Layouts 1.0
-import Shotcut.Controls 1.0
+import QtQuick 2.12
+import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.12
+import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     width: 350
@@ -53,7 +53,7 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: preset
             parameters: ['x_scatter', 'y_scatter', 'scale', 'mix']
             Layout.columnSpan: 2
@@ -64,7 +64,7 @@ Item {
             text: qsTr('Line Width')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: xScatter
             minimumValue: 1
             maximumValue: 10
@@ -73,7 +73,7 @@ Item {
             value: filter.get('x_scatter')
             onValueChanged: filter.set('x_scatter', value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: xScatter.value = 2
         }
 
@@ -81,7 +81,7 @@ Item {
             text: qsTr('Line Height')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: yScatter
             minimumValue: 1
             maximumValue: 10
@@ -90,7 +90,7 @@ Item {
             value: filter.get('y_scatter')
             onValueChanged: filter.set('y_scatter', value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: yScatter.value = 2
         }
 
@@ -98,7 +98,7 @@ Item {
             text: qsTr('Contrast')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: scale
             minimumValue: 0
             maximumValue: 10
@@ -108,7 +108,7 @@ Item {
             value: filter.get('scale')
             onValueChanged: filter.set('scale', value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: scale.value = 1.5
         }
 
@@ -116,7 +116,7 @@ Item {
             text: qsTr('Color')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: mix
             minimumValue: 0
             maximumValue: 10
@@ -126,7 +126,7 @@ Item {
             value: filter.get('mix')
             onValueChanged: filter.set('mix', value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: mix.value = 0
         }
 

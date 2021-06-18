@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2019 Meltytech, LLC
+ * Copyright (c) 2013-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,14 +23,12 @@
 #include <QVariant>
 #include <QRectF>
 #include <QUuid>
-#include <MltFilter.h>
+#include <MltService.h>
 #include <MltProducer.h>
 #include <MltAnimation.h>
 
 #include "qmlmetadata.h"
 #include "shotcut_mlt_properties.h"
-
-#define MLT_VERSION_CPP_UPDATED ((6<<16)+(17<<8))
 
 class AbstractJob;
 class EncodeJob;
@@ -41,8 +39,8 @@ class QmlFilter : public QObject
     Q_PROPERTY(bool isNew READ isNew)
     Q_PROPERTY(QString path READ path)
     Q_PROPERTY(QStringList presets READ presets NOTIFY presetsChanged)
-    Q_PROPERTY(int in READ in WRITE setIn NOTIFY inChanged)
-    Q_PROPERTY(int out READ out WRITE setOut NOTIFY outChanged)
+    Q_PROPERTY(int in READ in NOTIFY inChanged)
+    Q_PROPERTY(int out READ out NOTIFY outChanged)
     Q_PROPERTY(int animateIn READ animateIn WRITE setAnimateIn NOTIFY animateInChanged)
     Q_PROPERTY(int animateOut READ animateOut WRITE setAnimateOut NOTIFY animateOutChanged)
     Q_PROPERTY(int duration READ duration NOTIFY durationChanged)
@@ -56,10 +54,16 @@ public:
         TIME_TIMECODE_DF,
         TIME_TIMECODE_NDF,
     };
-    Q_ENUMS(TimeFormat)
+    Q_ENUM(TimeFormat)
+
+    enum CurrentFilterIndex {
+        NoCurrentFilter = -1,
+        DeselectCurrentFilter = -2
+    };
+    Q_ENUM(CurrentFilterIndex)
 
     explicit QmlFilter();
-    explicit QmlFilter(Mlt::Filter& mltFilter, const QmlMetadata* metadata, QObject *parent = nullptr);
+    explicit QmlFilter(Mlt::Service& mltService, const QmlMetadata* metadata, QObject *parent = nullptr);
     ~QmlFilter();
 
     bool isNew() const { return m_isNew; }
@@ -68,6 +72,7 @@ public:
     Q_INVOKABLE QString get(QString name, int position = -1);
     Q_INVOKABLE double getDouble(QString name, int position = -1);
     Q_INVOKABLE QRectF getRect(QString name, int position = -1);
+    Q_INVOKABLE void removeRectPercents(QString name);
     Q_INVOKABLE QStringList getGradient(QString name);
     Q_INVOKABLE void set(QString name, QString value, int position = -1);
     Q_INVOKABLE void set(QString name, double value,
@@ -93,10 +98,8 @@ public:
     Q_INVOKABLE void getHash();
     Mlt::Producer& producer() { return m_producer; }
     int in();
-    void setIn(int value);
     int out();
-    void setOut(int value);
-    Mlt::Filter& filter() { return m_filter; }
+    Mlt::Service& service() { return m_service; }
     int animateIn();
     void setAnimateIn(int value);
     int animateOut();
@@ -107,7 +110,13 @@ public:
     Mlt::Animation getAnimation(const QString& name);
     Q_INVOKABLE int keyframeCount(const QString& name);
     mlt_keyframe_type getKeyframeType(Mlt::Animation& animation, int position, mlt_keyframe_type defaultType);
+    Q_INVOKABLE int getNextKeyframePosition(const QString& name, int position);
+    Q_INVOKABLE int getPrevKeyframePosition(const QString& name, int position);
     Q_INVOKABLE bool isAtLeastVersion(const QString& version);
+    Q_INVOKABLE static void deselect();
+    bool allowTrim() const;
+    bool allowAnimateIn() const;
+    bool allowAnimateOut() const;
 
 public slots:
     void preset(const QString& name);
@@ -122,10 +131,11 @@ signals:
     void animateInChanged();
     void animateOutChanged();
     void durationChanged();
+    void propertyChanged(QString name); // Use to let QML know when a specific property has changed
 
 private:
     const QmlMetadata* m_metadata;
-    Mlt::Filter m_filter;
+    Mlt::Service m_service;
     Mlt::Producer m_producer;
     QString m_path;
     bool m_isNew;
@@ -147,14 +157,10 @@ public slots:
 private:
     QString resultsFromXml(const QString& fileName, const QString& serviceName);
     void updateFilter(Mlt::Filter& filter, const QString& results);
-#if LIBMLT_VERSION_INT >= MLT_VERSION_CPP_UPDATED
     void updateJob(EncodeJob* job, const QString& results);
 
     QUuid m_uuid;
     QString m_serviceName;
-#else
-    Mlt::Filter m_filter;
-#endif
 };
 
 #endif // FILTER_H

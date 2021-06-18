@@ -9,22 +9,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>467</width>
-    <height>224</height>
+    <width>418</width>
+    <height>427</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="sizeConstraint">
+    <enum>QLayout::SetFixedSize</enum>
+   </property>
    <item>
     <widget class="QLabel" name="messageLabel">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="MinimumExpanding">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
      <property name="text">
       <string notr="true">messageLabel</string>
      </property>
@@ -79,7 +76,10 @@
       <number>1</number>
      </property>
      <property name="value">
-      <number>1</number>
+      <number>0</number>
+     </property>
+     <property name="sliderPosition">
+      <number>0</number>
      </property>
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -141,6 +141,108 @@
     </widget>
    </item>
    <item>
+    <widget class="QWidget" name="advancedWidget" native="true">
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <layout class="QGridLayout" name="gridLayout" columnstretch="0,1">
+        <item row="4" column="1">
+         <widget class="FrameRateWidget" name="fpsWidget" native="true">
+          <property name="toolTip">
+           <string>Override the frame rate to a specific value.</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0" colspan="2">
+         <widget class="Line" name="line">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="1">
+         <widget class="QCheckBox" name="fpsCheckBox">
+          <property name="toolTip">
+           <string>Change the frame rate from its source.</string>
+          </property>
+          <property name="text">
+           <string>Override frame rate</string>
+          </property>
+         </widget>
+        </item>
+        <item row="6" column="1">
+         <widget class="QCheckBox" name="convert709CheckBox">
+          <property name="toolTip">
+           <string>This is useful when the source video is HDR (High Dynamic Range), which requires tone-mapping to the old, standard range.</string>
+          </property>
+          <property name="text">
+           <string>Convert to BT.709 colorspace</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="0">
+         <widget class="QLabel" name="frcLabel">
+          <property name="text">
+           <string>Frame rate conversion</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="1">
+         <widget class="QComboBox" name="frcComboBox">
+          <property name="toolTip">
+           <string>Frame rate conversion method
+
+Duplicate: Duplicate frames.
+Blend: Blend frames.
+Motion Compensation: Interpolate new frames using motion compensation. This method is very slow and may result in artifacts.</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QCheckBox" name="subclipCheckBox">
+          <property name="toolTip">
+           <string>This option converts only the trimmed portion of the source
+clip plus a little instead of the entire clip. When this option is
+used not all of the matching source clips are replaced, instead
+only the currently selected one.</string>
+          </property>
+          <property name="text">
+           <string>Use sub-clip</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="0">
+         <widget class="QLabel" name="fpsLabel">
+          <property name="text">
+           <string>Frames/sec</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QCheckBox" name="deinterlaceCheckBox">
+          <property name="toolTip">
+           <string>If the source is progressive, each interlaced field will be converted to a progressive frame resulting in double frame rate.</string>
+          </property>
+          <property name="text">
+           <string>Deinterlace</string>
+          </property>
+         </widget>
+        </item>
+        <item row="7" column="1">
+         <widget class="QCheckBox" name="advancedCheckBox">
+          <property name="toolTip">
+           <string>Enable this to keep the Advanced section open for the next time this dialog appears.</string>
+          </property>
+          <property name="text">
+           <string>Keep Advanced open</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -152,6 +254,14 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>FrameRateWidget</class>
+   <extends>QWidget</extends>
+   <header>widgets/frameratewidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections>
   <connection>

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2019 Meltytech, LLC
+ * Copyright (c) 2018-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,16 +15,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.0
+import QtQuick 2.12
 import org.shotcut.qml 1.0
-import QtQuick.Controls 1.0
-import Shotcut.Controls 1.0
-import QtQuick.Window 2.2
+import QtQuick.Controls 2.12
 import 'Keyframes.js' as Logic
 
 Rectangle {
     id: keyframeRoot
-    property int position: 0
+    property int position
     property int interpolation: KeyframesModel.DiscreteInterpolation // rectangle for discrete
     property bool isSelected: false
     property string name: ''
@@ -39,6 +37,7 @@ Rectangle {
     property double maxDragX: activeClip.x + activeClip.width - width/2
     property double minDragY: activeClip.y - width/2
     property double maxDragY: activeClip.y + activeClip.height - width/2
+    property bool inRange: position >= (filter.in - producer.in) && position <= (filter.out - producer.in)
 
     signal clicked(var keyframe)
 
@@ -46,11 +45,12 @@ Rectangle {
 
     x: position * timeScale - width/2
     anchors.verticalCenter: parameterRoot.verticalCenter
-    anchors.verticalCenterOffset: isCurve ? trackValue : 0
+    anchors.verticalCenterOffset: isCurve ? minimum != maximum ? trackValue : 0 : 0
     height: 10
     width: height
-    color: isSelected? 'red' : activePalette.buttonText
+    color: isSelected ? 'red' : activePalette.buttonText
     border.color: activePalette.button
+    opacity: inRange ? 1.0 : 0.3
     border.width: 1
     radius: (interpolation === KeyframesModel.SmoothInterpolation)? height/2 : 0 // circle for smooth
     rotation: (interpolation === KeyframesModel.LinearInterpolation)? 45 : 0    // diamond for linear
@@ -62,8 +62,16 @@ Rectangle {
             parent.clicked(keyframeRoot)
             menu.popup()
         }
+        hoverEnabled: true
+        ToolTip {
+            text: name
+            visible: parent.containsMouse
+            delay: mouseAreaLeft.pressed? 0 : 1000
+            timeout: mouseAreaLeft.pressed? -1 : 5000
+        }
     }
     MouseArea {
+        id: mouseAreaLeft
         anchors.fill: parent
         acceptedButtons: Qt.LeftButton
         onClicked: producer.position = position
@@ -80,31 +88,40 @@ Rectangle {
         onPressed: {
             parent.clicked(keyframeRoot)
             if (isCurve) {
+               if (minimum == maximum) {
+                   // Do not allow vertical dragging when there is no range to drag across
+                   drag.minimumY = parent.y
+                   drag.maximumY = parent.y
+               } else {
+                  drag.minimumY = minDragY
+                  drag.maximumY = maxDragY
+               }
                if (mouse.modifiers & Qt.ControlModifier)
                    drag.axis = Drag.YAxis
                else if (mouse.modifiers & Qt.AltModifier)
                    drag.axis = Drag.XAxis
                else
                    drag.axis = Drag.XAndYAxis
-           }
+            }
         }
         onEntered: if (isCurve) parent.anchors.verticalCenter = undefined
         onReleased: if (isCurve) parent.anchors.verticalCenter = parameterRoot.verticalCenter
         onPositionChanged: {
-            var newPosition = Math.round(parent.x / timeScale + (parent.width/2))
-            if (newPosition !== keyframeRoot.position)
-                parameters.setPosition(parameterIndex, index, newPosition - (filter.in - producer.in))
-            if (isCurve) {
-                var trackValue = Math.min(Math.max(0, 1.0 - parent.y / (parameterRoot.height - parent.height)), 1.0)
-                trackValue = minimum + trackValue * (maximum - minimum)
-                parameters.setKeyframe(parameterIndex, trackValue, newPosition - (filter.in - producer.in), interpolation)
+            var newPosition = Math.round((parent.x + parent.width/2) / timeScale)
+            var keyPosition = newPosition - (filter.in - producer.in)
+            var trackValue = Math.min(Math.max(0, 1.0 - parent.y / (parameterRoot.height - parent.height)), 1.0)
+            trackValue = minimum + trackValue * (maximum - minimum)
+            if (drag.axis === Drag.XAxis && newPosition !== keyframeRoot.position) {
+                parameters.setKeyframePosition(parameterIndex, index, keyPosition)
+            }
+            else if (drag.axis === Drag.YAxis ||
+                     (drag.axis === Drag.XAndYAxis && newPosition === keyframeRoot.position)) {
+                parameters.setKeyframeValue(parameterIndex, index, trackValue)
+            }
+            else if (drag.axis === Drag.XAndYAxis) {
+                parameters.setKeyframeValuePosition(parameterIndex, index, trackValue, keyPosition)
             }
         }
-    }
-
-    ToolTip {
-        id: tooltip
-        text: name
         cursorShape: Qt.PointingHandCursor
     }
 
@@ -113,26 +130,23 @@ Rectangle {
         Menu {
             id: keyframeTypeSubmenu
             title: qsTr('Keyframe Type')
-            ExclusiveGroup { id: keyframeTypeGroup }
             MenuItem {
-                text: qsTr('Discrete')
+                text: qsTr('Hold')
                 checkable: true
                 checked: interpolation === KeyframesModel.DiscreteInterpolation
-                exclusiveGroup: keyframeTypeGroup
                 onTriggered: parameters.setInterpolation(parameterIndex, index, KeyframesModel.DiscreteInterpolation)
             }
             MenuItem {
                 text: qsTr('Linear')
                 checkable: true
                 checked: interpolation === KeyframesModel.LinearInterpolation
-                exclusiveGroup: keyframeTypeGroup
                 onTriggered: parameters.setInterpolation(parameterIndex, index, KeyframesModel.LinearInterpolation)
             }
             MenuItem {
                 text: qsTr('Smooth')
                 checkable: true
                 checked: interpolation === KeyframesModel.SmoothInterpolation
-                exclusiveGroup: keyframeTypeGroup
+                enabled: metadata.keyframes.allowSmooth
                 onTriggered: parameters.setInterpolation(parameterIndex, index, KeyframesModel.SmoothInterpolation)
             }
         }
@@ -144,14 +158,9 @@ Rectangle {
                 root.selection = []
             }
         }
-        onPopupVisibleChanged: {
-            if (visible && application.OS !== 'OS X' && __popupGeometry.height > 0) {
-                // Try to fix menu running off screen. This only works intermittently.
-                menu.__yOffset = Math.min(0, Screen.height - (__popupGeometry.y + __popupGeometry.height + 40))
-                menu.__xOffset = Math.min(0, Screen.width - (__popupGeometry.x + __popupGeometry.width))
-            }
+        MenuItem {
+            text: qsTr('Cancel')
+            onTriggered: menu.dismiss()
         }
-        onAboutToShow: tooltip.isVisible = false
-        onAboutToHide: tooltip.isVisible = true
     }
 }

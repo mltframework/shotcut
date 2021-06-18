@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2019 Meltytech, LLC
+ * Copyright (c) 2013-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,11 +15,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.1
-import QtQuick.Dialogs 1.1
-import QtQuick.Controls 1.0
-import QtQuick.Layouts 1.0
-import Shotcut.Controls 1.0
+import QtQuick 2.12
+import QtQuick.Controls 2.12
+import QtQuick.Dialogs 1.3
+import QtQuick.Layouts 1.12
+import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     id: stabilizeRoot
@@ -88,7 +88,7 @@ Item {
     FileDialog {
         id: fileDialog
         title: qsTr( 'Select a file to store analysis results.' )
-        modality: Qt.WindowModal
+        modality: application.dialogModality
         selectExisting: false
         selectMultiple: false
         selectFolder: false
@@ -131,18 +131,17 @@ Item {
             text: qsTr('Shakiness')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: shakinessSlider
             minimumValue: 1
             maximumValue: 10
-            tickmarksEnabled: true
             stepSize: 1
             onValueChanged: {
                 filter.set('shakiness', value)
                 analyzeValueChanged()
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: shakinessSlider.value = 4
         }
 
@@ -150,22 +149,21 @@ Item {
             text: qsTr('Accuracy')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: accuracySlider
             minimumValue: 1
             maximumValue: 15
-            tickmarksEnabled: true
             stepSize: 1
             onValueChanged: {
                 filter.set('accuracy', value)
                 analyzeValueChanged()
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: accuracySlider.value = 4
         }
 
-        Button {
+        Shotcut.Button {
             id: button
             text: qsTr('Analyze')
             Layout.alignment: Qt.AlignRight
@@ -194,7 +192,7 @@ Item {
             text: qsTr('Zoom')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: zoomSlider
             minimumValue: -50
             maximumValue: 50
@@ -206,7 +204,7 @@ Item {
                 filter.set("refresh", 1);
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: zoomSlider.value = 0
         }
 
@@ -214,18 +212,17 @@ Item {
             text: qsTr('Smoothing')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: smoothingSlider
             minimumValue: 0
             maximumValue: 100
-            tickmarksEnabled: true
             stepSize: 1
             value: filter.get('smoothing')
             onValueChanged: {
                 filter.set('smoothing', value)
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: smoothingSlider.value = 15
         }
 

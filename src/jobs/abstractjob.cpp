@@ -108,8 +108,10 @@ void AbstractJob::stop()
 
 void AbstractJob::onFinished(int exitCode, QProcess::ExitStatus exitStatus)
 {
-    m_log.append(readAll());
     const QTime& time = QTime::fromMSecsSinceStartOfDay(m_totalTime.elapsed());
+    if (isOpen()) {
+        m_log.append(readAll());
+    }
     if (exitStatus == QProcess::NormalExit && exitCode == 0 && !m_killed) {
         if (m_postJobAction) {
             m_postJobAction->doAction();

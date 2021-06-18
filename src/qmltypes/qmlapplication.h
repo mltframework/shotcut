@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2019 Meltytech, LLC
+ * Copyright (c) 2014-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,13 +31,15 @@ namespace Mlt {
 class QmlApplication : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(Qt::WindowModality dialogModality READ dialogModality);
+    Q_PROPERTY(Qt::WindowModality dialogModality READ dialogModality CONSTANT);
     Q_PROPERTY(QPoint mousePos READ mousePos);
     Q_PROPERTY(QColor toolTipBaseColor READ toolTipBaseColor NOTIFY paletteChanged)
     Q_PROPERTY(QColor toolTipTextColor READ toolTipTextColor NOTIFY paletteChanged)
     Q_PROPERTY(QString OS READ OS CONSTANT)
     Q_PROPERTY(QRect mainWinRect READ mainWinRect);
     Q_PROPERTY(bool hasFiltersOnClipboard READ hasFiltersOnClipboard NOTIFY filtersCopied)
+    Q_PROPERTY(qreal devicePixelRatio READ devicePixelRatio CONSTANT)
+    Q_PROPERTY(int maxTextureSize READ maxTextureSize CONSTANT)
 
 public:
     static QmlApplication& singleton();
@@ -54,6 +56,10 @@ public:
     Q_INVOKABLE static int audioChannels();
     Q_INVOKABLE static QString getNextProjectFile(const QString& filename);
     Q_INVOKABLE static bool isProjectFolder();
+    static qreal devicePixelRatio();
+    Q_INVOKABLE void showStatusMessage(const QString& message, int timeoutSeconds = 5);
+    static int maxTextureSize();
+    Q_INVOKABLE static bool confirmOutputFilter();
 
 signals:
     void paletteChanged();

@@ -10,12 +10,6 @@
     <height>644</height>
    </rect>
   </property>
-  <property name="minimumSize">
-   <size>
-    <width>442</width>
-    <height>202</height>
-   </size>
-  </property>
   <property name="windowIcon">
    <iconset theme="media-record" resource="../../icons/resources.qrc">
     <normaloff>:/icons/oxygen/32x32/actions/media-record.png</normaloff>:/icons/oxygen/32x32/actions/media-record.png</iconset>
@@ -66,7 +60,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QTreeView" name="presetsTree">
+       <widget class="ExportPresetsTreeView" name="presetsTree">
         <property name="editTriggers">
          <set>QAbstractItemView::NoEditTriggers</set>
         </property>
@@ -672,7 +666,7 @@
                      </item>
                      <item>
                       <property name="text">
-                       <string>Hyper/Lanczos (best)</string>
+                       <string notr="true">Lanczos (best)</string>
                       </property>
                      </item>
                     </widget>
@@ -1596,6 +1590,11 @@ in temporal compression</string>
                   </item>
                   <item>
                    <property name="text">
+                    <string notr="true">640k</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
                     <string notr="true">1M</string>
                    </property>
                   </item>
@@ -1881,6 +1880,11 @@ in temporal compression</string>
    <class>LineEditClear</class>
    <extends>QLineEdit</extends>
    <header>widgets/lineeditclear.h</header>
+  </customwidget>
+  <customwidget>
+   <class>ExportPresetsTreeView</class>
+   <extends>QTreeView</extends>
+   <header>widgets/exportpresetstreeview.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>

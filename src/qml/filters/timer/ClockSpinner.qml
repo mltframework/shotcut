@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Meltytech, LLC
+ * Copyright (c) 2018-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,20 +15,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.2
-import QtQuick.Layouts 1.1
-import QtQuick.Controls 1.1
-import Shotcut.Controls 1.0
+import QtQuick 2.12
+import QtQuick.Layouts 1.12
+import QtQuick.Controls 2.12
+import Shotcut.Controls 1.0 as Shotcut
 import org.shotcut.qml 1.0
 
-RowLayout {
+Item {
     id: root
     property double minimumValue: 0.0
     property double maximumValue: 1000.0
     property alias timeStr: timeField.text
     signal setDefaultClicked()
 
-    spacing: 0
+    implicitHeight: timeField.implicitHeight
+    implicitWidth: timeField.implicitWidth + decrementButton.implicitWidth + incrementButton.implicitWidth + undoButton.implicitWidth
 
     function setValueSeconds(seconds) {
         timeStr = secondsToTime(seconds)
@@ -82,83 +83,89 @@ RowLayout {
         return b[0] + "." + b[1]
     }
 
-    TextField {
-        id: timeField
-        text: "00:00:00.000"
-        horizontalAlignment: TextInput.AlignRight
-        validator: RegExpValidator {regExp: /^\s*(\d*:){0,2}(\d*[.])?\d*\s*$/}
-        onEditingFinished: {
-            console.log(text, timeToSeconds(text))
-            var seconds = clamp(timeToSeconds(text), minimumValue, maximumValue)
-            text = secondsToTime(seconds)
+    RowLayout {
+        spacing: 0
+
+        TextField {
+            id: timeField
+            text: "00:00:00.000"
+            horizontalAlignment: TextInput.AlignRight
+            selectByMouse: true
+            validator: RegExpValidator {regExp: /^\s*(\d*:){0,2}(\d*[.])?\d*\s*$/}
+            onEditingFinished: {
+                console.log(text, timeToSeconds(text))
+                var seconds = clamp(timeToSeconds(text), minimumValue, maximumValue)
+                text = secondsToTime(seconds)
+            }
+            Keys.onDownPressed: decrementAction.trigger()
+            Keys.onUpPressed: incrementAction.trigger()
+            onFocusChanged: if (focus) selectAll()
         }
-        Keys.onDownPressed: decrementAction.trigger()
-        Keys.onUpPressed: incrementAction.trigger()
-        onFocusChanged: if (focus) selectAll()
-    }
-    Button {
-        id: decrementButton
-        iconName: 'list-remove'
-        iconSource: 'qrc:///icons/oxygen/32x32/actions/list-remove.png'
-        tooltip: qsTr('Decrement')
-        implicitWidth: 20
-        implicitHeight: 20
-        MouseArea {
-            anchors.fill: parent
-            onPressed: decrementAction.trigger()
-            onPressAndHold: decrementTimer.start()
-            onReleased: decrementTimer.stop()
+        Shotcut.Button {
+            id: decrementButton
+            icon.name: 'list-remove'
+            icon.source: 'qrc:///icons/oxygen/32x32/actions/list-remove.png'
+            Shotcut.HoverTip { text: qsTr('Decrement') }
+            implicitWidth: 20
+            implicitHeight: 20
+            MouseArea {
+                anchors.fill: parent
+                onPressed: decrementAction.trigger()
+                onPressAndHold: decrementTimer.start()
+                onReleased: decrementTimer.stop()
+            }
+            Timer {
+                id: decrementTimer
+                repeat: true
+                interval: 200
+                triggeredOnStart: true
+                onTriggered: decrementAction.trigger()
+            }
         }
-        Timer {
-            id: decrementTimer
-            repeat: true
-            interval: 200
-            triggeredOnStart: true
-            onTriggered: decrementAction.trigger()
+        Shotcut.Button {
+            id: incrementButton
+            icon.name: 'list-add'
+            icon.source: 'qrc:///icons/oxygen/32x32/actions/list-add.png'
+            Shotcut.HoverTip { text: qsTr('Increment') }
+            implicitWidth: 20
+            implicitHeight: 20
+            MouseArea {
+                anchors.fill: parent
+                onPressed: incrementAction.trigger()
+                onPressAndHold: incrementTimer.start()
+                onReleased: incrementTimer.stop()
+            }
+            Timer {
+                id: incrementTimer
+                repeat: true
+                interval: 200
+                triggeredOnStart: true
+                onTriggered: incrementAction.trigger()
+            }
         }
-    }
-    Button {
-        id: incrementButton
-        iconName: 'list-add'
-        iconSource: 'qrc:///icons/oxygen/32x32/actions/list-add.png'
-        tooltip: qsTr('Increment')
-        implicitWidth: 20
-        implicitHeight: 20
-        MouseArea {
-            anchors.fill: parent
-            onPressed: incrementAction.trigger()
-            onPressAndHold: incrementTimer.start()
-            onReleased: incrementTimer.stop()
+        Shotcut.UndoButton {
+            id: undoButton
+            onClicked: root.setDefaultClicked()
         }
-        Timer {
-            id: incrementTimer
-            repeat: true
-            interval: 200
-            triggeredOnStart: true
-            onTriggered: incrementAction.trigger()
+        Action {
+            id: decrementAction
+            onTriggered: {
+                var frames = filter.framesFromTime(timeStr) - 1;
+                if( frames < 0 )
+                    frames = 0
+                var newTime = filter.timeFromFrames(frames, Filter.TIME_CLOCK)
+                var seconds = clamp(timeToSeconds(newTime), minimumValue, maximumValue)
+                timeField.text = secondsToTime(seconds)
+            }
         }
-    }
-    UndoButton {
-        onClicked: root.setDefaultClicked()
-    }
-    Action {
-        id: decrementAction
-        onTriggered: {
-            var frames = filter.framesFromTime(timeStr) - 1;
-            if( frames < 0 )
-                frames = 0
-            var newTime = filter.timeFromFrames(frames, Filter.TIME_CLOCK)
-            var seconds = clamp(timeToSeconds(newTime), minimumValue, maximumValue)
-            timeField.text = secondsToTime(seconds)
-        }
-    }
-    Action {
-        id: incrementAction
-        onTriggered: {
-            var frames = filter.framesFromTime(timeStr) + 1;
-            var newTime = filter.timeFromFrames(frames, Filter.TIME_CLOCK)
-            var seconds = clamp(timeToSeconds(newTime), minimumValue, maximumValue)
-            timeField.text = secondsToTime(seconds)
+        Action {
+            id: incrementAction
+            onTriggered: {
+                var frames = filter.framesFromTime(timeStr) + 1;
+                var newTime = filter.timeFromFrames(frames, Filter.TIME_CLOCK)
+                var seconds = clamp(timeToSeconds(newTime), minimumValue, maximumValue)
+                timeField.text = secondsToTime(seconds)
+            }
         }
     }
 }

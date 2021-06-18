@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2019 Meltytech, LLC
+ * Copyright (c) 2016-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -153,6 +153,10 @@ void PlaylistIconView::paintEvent(QPaintEvent*)
 {
     QPainter painter(viewport());
     QPalette pal(palette());
+    const auto proxy = tr("P", "The first letter or symbol of \"proxy\"");
+    const auto oldFont = painter.font();
+    auto boldFont(oldFont);
+    boldFont.setBold(true);
     painter.fillRect(rect(), pal.base());
 
     if (!model())
@@ -206,9 +210,19 @@ void PlaylistIconView::paintEvent(QPaintEvent*)
             }
 
             painter.drawImage(imageRect, thumb);
+            QStringList nameParts = idx.data(Qt::DisplayRole).toString().split('\n');
+            if (nameParts.size() > 1) {
+                const auto indexPos = imageRect.topLeft() + QPoint(5, 15);
+                painter.setFont(boldFont);
+                painter.setPen(pal.color(QPalette::Dark).darker());
+                painter.drawText(indexPos, proxy);
+                painter.setPen(pal.color(QPalette::WindowText));
+                painter.drawText(indexPos - QPoint(1, 1), proxy);
+                painter.setFont(oldFont);
+            }
             painter.setPen(pal.color(QPalette::WindowText));
             painter.drawText(textRect, Qt::AlignCenter,
-                    painter.fontMetrics().elidedText(idx.data(Qt::DisplayRole).toString(), Qt::ElideMiddle, textRect.width()));
+                    painter.fontMetrics().elidedText(nameParts.first(), Qt::ElideMiddle, textRect.width()));
 
             if (!m_draggingOverPos.isNull() && itemRect.contains(m_draggingOverPos)) {
                 QAbstractItemView::DropIndicatorPosition dropPos =
@@ -228,11 +242,13 @@ void PlaylistIconView::paintEvent(QPaintEvent*)
 
 void PlaylistIconView::mouseReleaseEvent(QMouseEvent *event)
 {
-    if (m_draggingOverPos.isNull() && m_pendingSelect.isValid()) {
-        selectionModel()->select(m_pendingSelect, QItemSelectionModel::ClearAndSelect);
-        viewport()->update();
+    if (event->button() == Qt::LeftButton) {
+        if (m_draggingOverPos.isNull() && m_pendingSelect.isValid()) {
+            selectionModel()->select(m_pendingSelect, QItemSelectionModel::ClearAndSelect);
+            viewport()->update();
+        }
+        m_pendingSelect = QModelIndex();
     }
-    m_pendingSelect = QModelIndex();
     QAbstractItemView::mouseReleaseEvent(event);
 }
 
@@ -295,8 +311,7 @@ void PlaylistIconView::keyReleaseEvent(QKeyEvent *event)
 {
     QAbstractItemView::keyPressEvent(event);
     event->ignore();
-    m_isToggleSelect = false;
-    m_isRangeSelect = false;
+    resetMultiSelect();
 }
 
 QAbstractItemView::DropIndicatorPosition PlaylistIconView::position(const QPoint &pos, const QRect &rect, const QModelIndex &index) const
@@ -336,4 +351,10 @@ void PlaylistIconView::updateSizes()
 
     verticalScrollBar()->setRange(0, m_gridSize.height() * model()->rowCount() / m_itemsPerRow - height() + m_gridSize.height());
     viewport()->update();
+}
+
+void PlaylistIconView::resetMultiSelect()
+{
+    m_isToggleSelect = false;
+    m_isRangeSelect = false;
 }

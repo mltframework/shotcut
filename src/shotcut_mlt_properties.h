@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 Meltytech, LLC
+ * Copyright (c) 2013-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -51,9 +51,10 @@
 // hide the VUI when the play head is not over the clip with the current filter.
 #define kShotcutVuiMetaProperty "meta.shotcut.vui"
 #define kDefaultAudioIndexProperty "shotcut:defaultAudioIndex"
-#define kOriginalResourceProperty "shotcut:originalResource"
+#define kOriginalResourceProperty "shotcut:resource"
 #define kOriginalInProperty "shotcut:originalIn"
 #define kOriginalOutProperty "shotcut:originalOut"
+#define kDisableProxyProperty "shotcut:disableProxy"
 
 /* Project specific properties */
 #define kShotcutProjectAudioChannels "shotcut:projectAudioChannels"
@@ -86,6 +87,12 @@
 #define kUuidProperty "_shotcut:uuid"
 #define kMultitrackItemProperty "_shotcut:multitrack-item"
 #define kExportFromProperty "_shotcut:exportFromDefault"
+#define kIsProxyProperty "shotcut:proxy"
+#define kTrackIndexProperty "_shotcut:trackIndex"
+#define kClipIndexProperty "_shotcut:clipIndex"
+#define kShotcutInProperty "_shotcut:in"
+#define kShotcutOutProperty "_shotcut:out"
+#define kNewTrackIndexProperty "_shotcut:newTrackIndex"
 
 #define kDefaultMltProfile "atsc_1080p_25"
 

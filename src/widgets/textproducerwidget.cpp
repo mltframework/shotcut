@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2019 Meltytech, LLC
+ * Copyright (c) 2018-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,6 +23,7 @@
 #include "shotcut_mlt_properties.h"
 #include "util.h"
 #include "mltcontroller.h"
+#include "qmltypes/qmlapplication.h"
 
 static const QString kTransparent = QObject::tr("transparent", "Open Other > Color");
 static const char* kFilterName = "dynamicText";
@@ -30,8 +31,8 @@ static const int kPointSize = 60;
 
 static QString colorToString(const QColor& color)
 {
-    return (color.alpha() == 0) ? kTransparent
-                                : QString().sprintf("#%02X%02X%02X%02X",
+    return (color == QColor(0, 0, 0, 0)) ? kTransparent
+                                : QString::asprintf("#%02X%02X%02X%02X",
                                                     qAlpha(color.rgba()),
                                                     qRed(color.rgba()),
                                                     qGreen(color.rgba()),
@@ -51,6 +52,11 @@ TextProducerWidget::TextProducerWidget(QWidget *parent) :
     ui->colorLabel->setText(kTransparent);
     Util::setColorsToHighlight(ui->label_2);
     ui->preset->saveDefaultPreset(getPreset());
+    Mlt::Properties p;
+    p.set("resource", "#FF000000");
+    ui->preset->savePreset(p, tr("black"));
+    p.set("resource", "#00000000");
+    ui->preset->savePreset(p, tr("transparent"));
     ui->preset->loadPresets();
 }
 
@@ -61,10 +67,23 @@ TextProducerWidget::~TextProducerWidget()
 
 void TextProducerWidget::on_colorButton_clicked()
 {
-    QColorDialog dialog;
+    QColor color = colorStringToResource(ui->colorLabel->text());
+    if (m_producer) {
+        color = QColor(QFileInfo(m_producer->get("resource")).baseName());
+    }
+    QColorDialog dialog(color);
     dialog.setOption(QColorDialog::ShowAlphaChannel);
+    dialog.setModal(QmlApplication::dialogModality());
     if (dialog.exec() == QDialog::Accepted) {
-        ui->colorLabel->setText(colorToString(dialog.currentColor()));
+        auto newColor = dialog.currentColor();
+        auto rgb = newColor;
+        auto transparent = QColor(0, 0, 0, 0);
+        rgb.setAlpha(color.alpha());
+        if (newColor.alpha() == 0 && (rgb != color ||
+            (newColor == transparent && color == transparent))) {
+            newColor.setAlpha(255);
+        }
+        ui->colorLabel->setText(colorToString(newColor));
         ui->colorLabel->setStyleSheet(QString("color: %1; background-color: %2")
                                       .arg((dialog.currentColor().value() < 150)? "white":"black")
                                       .arg(dialog.currentColor().name()));
@@ -81,7 +100,7 @@ Mlt::Producer* TextProducerWidget::newProducer(Mlt::Profile& profile)
 {
     Mlt::Producer* p = new Mlt::Producer(profile, "color:");
     p->set("resource", colorStringToResource(ui->colorLabel->text()).toLatin1().constData());
-    p->set("mlt_image_format", "rgb24a");
+    p->set("mlt_image_format", "rgba");
     MLT.setDurationFromDefault(p);
     p->set(kShotcutCaptionProperty, ui->colorLabel->text().toLatin1().constData());
     p->set(kShotcutDetailProperty, ui->colorLabel->text().toLatin1().constData());

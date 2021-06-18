@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2016 Meltytech, LLC
+ * Copyright (c) 2015-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,6 +17,8 @@
 
 #include "timelineitems.h"
 #include "mltcontroller.h"
+#include "settings.h"
+#include <Logger.h>
 
 #include <QQuickPaintedItem>
 #include <QPainter>
@@ -96,16 +98,22 @@ class TimelineWaveform : public QQuickPaintedItem
     Q_PROPERTY(QColor fillColor MEMBER m_color NOTIFY propertyChanged)
     Q_PROPERTY(int inPoint MEMBER m_inPoint NOTIFY inPointChanged)
     Q_PROPERTY(int outPoint MEMBER m_outPoint NOTIFY outPointChanged)
+    Q_PROPERTY(bool active MEMBER m_isActive NOTIFY propertyChanged)
 
 public:
     TimelineWaveform()
     {
-        setAntialiasing(QPainter::Antialiasing);
+        setAntialiasing(false);
+        setOpaquePainting(true);
+        if (Settings.timelineFramebufferWaveform())
+            setRenderTarget(QQuickPaintedItem::FramebufferObject);
         connect(this, SIGNAL(propertyChanged()), this, SLOT(update()));
     }
 
     void paint(QPainter *painter)
     {
+        if (!m_isActive)
+            return;
         QVariantList data = m_audioLevels.toList();
         if (data.isEmpty())
             return;
@@ -117,13 +125,15 @@ public:
         const int outPoint = qRound(m_outPoint / MLT.profile().fps() * 25.0);
         const qreal indicesPrPixel = qreal(outPoint - inPoint) / width();
 
+//        LOG_DEBUG() << "In/out points" << inPoint << "/" << outPoint;
+
         QPainterPath path;
         path.moveTo(-1, height());
         int i = 0;
         for (; i < width(); ++i)
         {
             int idx = inPoint + int(i * indicesPrPixel);
-            if (idx + 1 >= data.length())
+            if ((idx < 0) || (idx + 2 >= data.length()))
                 break;
             qreal level = qMax(data.at(idx).toReal(), data.at(idx + 1).toReal()) / 256;
             path.lineTo(i, height() - level * height());
@@ -146,6 +156,7 @@ private:
     int m_inPoint;
     int m_outPoint;
     QColor m_color;
+    bool m_isActive {true};
 };
 
 void registerTimelineItems()

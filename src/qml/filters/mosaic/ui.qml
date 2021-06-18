@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Meltytech, LLC
+ * Copyright (c) 2019-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,12 +15,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.1
-import QtQuick.Controls 1.1
-import QtQuick.Layouts 1.0
-import Shotcut.Controls 1.0
+import QtQuick 2.12
+import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.12
+import Shotcut.Controls 1.0 as Shotcut
 
-KeyframableFilter {
+Shotcut.KeyframableFilter {
     property string xsize: '0'
     property string ysize: '1'
     property real maxFilterPercent: 50.0
@@ -48,7 +48,9 @@ KeyframableFilter {
         var position = getPosition()
         blockUpdate = true
         xsizeSlider.value = filter.getDouble(xsize, position) * maxFilterPercent
+        xsizeKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(xsize) > 0
         ysizeSlider.value = filter.getDouble(ysize, position) * maxFilterPercent
+        ysizeKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(ysize) > 0
         blockUpdate = false
         enableControls(isSimpleKeyframesActive())
     }
@@ -71,7 +73,7 @@ KeyframableFilter {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: preset
             parameters: [xsize, ysize]
             Layout.columnSpan: 3
@@ -89,7 +91,7 @@ KeyframableFilter {
             text: qsTr('Width')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: xsizeSlider
             minimumValue: 0
             maximumValue: 20
@@ -98,12 +100,11 @@ KeyframableFilter {
             suffix: ' %'
             onValueChanged: updateFilter(xsize, xsizeSlider.value / maxFilterPercent, xsizeKeyframesButton, getPosition())
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: xsizeSlider.value = defaultValue * maxFilterPercent
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: xsizeKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(xsize) > 0
             onToggled: {
                 enableControls(true)
                 toggleKeyframes(checked, xsize, xsizeSlider.value / maxFilterPercent)
@@ -114,7 +115,7 @@ KeyframableFilter {
             text: qsTr('Height')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: ysizeSlider
             minimumValue: 0
             maximumValue: 20
@@ -123,12 +124,11 @@ KeyframableFilter {
             suffix: ' %'
             onValueChanged: updateFilter(ysize, ysizeSlider.value / maxFilterPercent, ysizeKeyframesButton, getPosition())
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: ysizeSlider.value = defaultValue * maxFilterPercent
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: ysizeKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(ysize) > 0
             onToggled: {
                 enableControls(true)
                 toggleKeyframes(checked, ysize, ysizeSlider.value / maxFilterPercent)
@@ -146,6 +146,7 @@ KeyframableFilter {
         onOutChanged: updateSimpleKeyframes()
         onAnimateInChanged: updateSimpleKeyframes()
         onAnimateOutChanged: updateSimpleKeyframes()
+        onPropertyChanged: setControls()
     }
 
     Connections {

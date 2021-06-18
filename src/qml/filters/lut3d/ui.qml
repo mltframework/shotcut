@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2019 Meltytech, LLC
+ * Copyright (c) 2016-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,10 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.1
-import QtQuick.Dialogs 1.1
-import QtQuick.Controls 1.1
-import QtQuick.Layouts 1.0
+import QtQuick 2.12
+import QtQuick.Dialogs 1.2
+import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.12
 import QtQuick.Window 2.1
 import Shotcut.Controls 1.0 as Shotcut
 import org.shotcut.qml 1.0 as Shotcut
@@ -43,6 +43,7 @@ Item {
 
         if (filter.isNew) {
             interpolationCombo.currentIndex = 1
+            filter.set('av.interp', interpolationCombo.values[1])
         } else {
             interpolationCombo.currentIndex = interpolationCombo.valueToIndex()
         }
@@ -51,7 +52,6 @@ Item {
             fileLabel.text = lutFile.fileName
             fileLabelTip.text = lutFile.filePath
         } else {
-            console.log('lutFile.url = ' + lutFile.url)
             fileLabel.text = qsTr("No File Loaded")
             fileLabel.color = 'red'
             fileLabelTip.text = qsTr('No 3D LUT file loaded.\nClick "Open" to load a file.')
@@ -60,12 +60,11 @@ Item {
 
     FileDialog {
         id: fileDialog
-        modality: Qt.WindowModal
+        modality: application.dialogModality
         selectMultiple: false
         selectFolder: false
         folder: settingsOpenPath
         nameFilters: ['3D-LUT Files (*.3dl *.cube *.dat *.m3d)', 'AfterEffects (*.3dl)', 'Iridas (*.cube)', 'DaVinci (*.dat)', 'Pandora (*.m3d)', 'All Files (*)']
-        selectedNameFilter: nameFilters[0]
         onAccepted: {
             lutFile.url = fileDialog.fileUrl
             lut3dRoot.fileOpened(lutFile.path)
@@ -81,7 +80,7 @@ Item {
         anchors.fill: parent
         anchors.margins: 8
 
-        Button {
+        Shotcut.Button {
             id: openButton
             text: qsTr('Open...')
             Layout.alignment: Qt.AlignRight
@@ -95,19 +94,19 @@ Item {
             id: fileLabel
             Layout.columnSpan: 2
             Layout.fillWidth: true
-            Shotcut.ToolTip { id: fileLabelTip }
+            Shotcut.HoverTip { id: fileLabelTip }
         }
 
         Label {
             text: qsTr('Interpolation')
             Layout.alignment: Qt.AlignRight
         }
-        ComboBox {
+        Shotcut.ComboBox {
             id: interpolationCombo
             implicitWidth: 180
             model: [qsTr('Nearest'), qsTr('Trilinear'), qsTr('Tetrahedral')]
             property var values: ['nearest', 'trilinear', 'tetrahedral']
-            onCurrentIndexChanged: filter.set('av.interp', values[currentIndex])
+            onActivated: filter.set('av.interp', values[currentIndex])
 
             function valueToIndex() {
                 var w = filter.get('av.interp')
@@ -118,7 +117,10 @@ Item {
             }
         }
         Shotcut.UndoButton {
-            onClicked: interpolationCombo.currentIndex = 1
+            onClicked: {
+                interpolationCombo.currentIndex = 1
+                filter.set('av.interp', interpolationCombo.values[1])
+            }
         }
 
         Item {

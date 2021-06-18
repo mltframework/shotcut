@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Meltytech, LLC
+ * Copyright (c) 2020-2021 Meltytech, LLC
  * Written by Austin Brooks <ab.shotcut@outlook.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,12 +17,11 @@
  */
 
 
-import QtQuick 2.2
-import QtQuick.Controls 1.1
-import QtQuick.Controls.Styles 1.1
-import QtQuick.Layouts 1.1
-import QtQuick.Window 2.1
-import Shotcut.Controls 1.0
+import QtQuick 2.12
+import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.12
+import QtQuick.Window 2.12
+import Shotcut.Controls 1.0 as Shotcut
 
 
 Item {
@@ -43,12 +42,12 @@ Item {
 
 
     width: 350
-    height: 350
+    height: 200
 
 
     function getComboIndex (value, values) {
         for ( var i = 0 ; i < values.length ; ++i ) {
-            if ( values[i] == value ) {
+            if ( values[i] === value ) {
                 return i
             }
         }
@@ -124,7 +123,7 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: idPreset
             Layout.columnSpan: 2
             parameters: allParams
@@ -137,14 +136,17 @@ Item {
             text: qsTr('Method')
             Layout.alignment: Qt.AlignRight
         }
-        ComboBox {
+        Shotcut.ComboBox {
             id: idMethod
             implicitWidth: 180
-            model: [qsTr('Soft'), qsTr('Garrote'), qsTr('Hard')]
-            onCurrentIndexChanged: filter.set(methodParam, methodValues[currentIndex])
+            model: [qsTr('Soft'), qsTr('Garrote'), qsTr('Hard', 'Remove Noise Wavelet filter')]
+            onActivated: filter.set(methodParam, methodValues[currentIndex])
         }
-        UndoButton {
-            onClicked: idMethod.currentIndex = getComboIndex(methodDefault, methodValues)
+        Shotcut.UndoButton {
+            onClicked: {
+                idMethod.currentIndex = getComboIndex(methodDefault, methodValues)
+                filter.set(methodParam, methodValues[idMethod.currentIndex])
+            }
         }
 
         // Row split
@@ -153,13 +155,13 @@ Item {
             text: qsTr('Decompose')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: idNsteps
             minimumValue: 1
             maximumValue: 32
             onValueChanged: filter.set(nstepsParam, value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: idNsteps.value = nstepsDefault
         }
 
@@ -169,13 +171,13 @@ Item {
             text: qsTr('Threshold')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: idThreshold
             minimumValue: 0
             maximumValue: 64
             onValueChanged: filter.set(thresholdParam, value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: idThreshold.value = thresholdDefault
         }
 
@@ -185,14 +187,14 @@ Item {
             text: qsTr('Percent')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: idPercent
             minimumValue: 0
             maximumValue: 100
             suffix: ' %'
             onValueChanged: filter.set(percentParam, value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: idPercent.value = percentDefault
         }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2020 Meltytech, LLC
+ * Copyright (c) 2012-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@
 #include "encodedock.h"
 #include "ui_encodedock.h"
 #include "dialogs/addencodepresetdialog.h"
+#include "dialogs/multifileexportdialog.h"
 #include "jobqueue.h"
 #include "mltcontroller.h"
 #include "mainwindow.h"
@@ -45,6 +46,11 @@
 static const int kOpenCaptureFileDelayMs = 1500;
 static const qint64 kFreeSpaceThesholdGB = 25LL * 1024 * 1024 * 1024;
 static const int kCustomPresetFileNameRole = Qt::UserRole + 1;
+#ifdef Q_OS_WIN
+    static const QString kNullTarget = "nul";
+#else
+    static const QString kNullTarget = "/dev/null";
+#endif
 
 static double getBufferSize(Mlt::Properties& preset, const char* property);
 
@@ -276,9 +282,9 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties& preset)
             else
                 ui->audioRateControlCombo->setCurrentIndex(RateControlQuality);
         }
-        else if (name == "vq") {
+        else if (name == "vq" || name == "vglobal_quality") {
             ui->videoRateControlCombo->setCurrentIndex(preset.get("vbufsize")? RateControlConstrained : RateControlQuality);
-            videoQuality = preset.get_int("vq");
+            videoQuality = preset.get_int(name.toUtf8().constData());
         }
         else if (name == "qscale") {
             ui->videoRateControlCombo->setCurrentIndex(preset.get("vbufsize")? RateControlConstrained : RateControlQuality);
@@ -338,6 +344,7 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties& preset)
                 ui->interpolationCombo->setCurrentIndex(3);
         }
         else if (name != "an" && name != "vn" && name != "threads"
+                 && !(name == "frame_rate_den" && preset.property_exists("frame_rate_num"))
                  && !name.startsWith('_') && !name.startsWith("meta.preset.")) {
             other.append(QString("%1=%2").arg(name).arg(preset.get(i)));
         }
@@ -361,15 +368,18 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties& preset)
         const QString& vcodec = ui->videoCodecCombo->currentText();
         //val = min + (max - min) * paramval;
         if (vcodec == "libx264" || vcodec == "libx265" || vcodec.contains("nvenc") || vcodec.endsWith("_amf")
-                || vcodec.endsWith("_qsv") || vcodec.endsWith("_videotoolbox") || vcodec.endsWith("_vaapi"))
+                || vcodec.endsWith("_videotoolbox") || vcodec.endsWith("_vaapi"))
             // 0 (best, 100%) - 51 (worst)
             ui->videoQualitySpinner->setValue(TO_RELATIVE(51, 0, videoQuality));
-        else if (vcodec.startsWith("libvpx")) // 0 (best, 100%) - 63 (worst)
+        else if (vcodec.endsWith("_qsv"))
+            // 1 (best, 100%) - 51 (worst)
+            ui->videoQualitySpinner->setValue(TO_RELATIVE(51, 1, videoQuality));
+        else if (vcodec.startsWith("libvpx") || vcodec.startsWith("libaom-")) // 0 (best, 100%) - 63 (worst)
             ui->videoQualitySpinner->setValue(TO_RELATIVE(63, 0, videoQuality));
         else // 1 (best, NOT 100%) - 31 (worst)
             ui->videoQualitySpinner->setValue(TO_RELATIVE(31, 1, videoQuality));
     }
-    on_videoCodecCombo_currentIndexChanged(ui->videoCodecCombo->currentIndex(), true);
+    onVideoCodecComboChanged(ui->videoCodecCombo->currentIndex(), true);
     on_audioRateControlCombo_activated(ui->audioRateControlCombo->currentIndex());
     on_videoRateControlCombo_activated(ui->videoRateControlCombo->currentIndex());
 }
@@ -386,10 +396,10 @@ void EncodeDock::onProducerOpened()
     ui->fromCombo->clear();
     if (MAIN.isMultitrackValid())
         ui->fromCombo->addItem(tr("Timeline"), "timeline");
-    if (MAIN.playlist() && MAIN.playlist()->count() > 0)
+    if (MAIN.playlist() && MAIN.playlist()->count() > 0) {
         ui->fromCombo->addItem(tr("Playlist"), "playlist");
-    if (MAIN.playlist() && MAIN.playlist()->count() > 1)
         ui->fromCombo->addItem(tr("Each Playlist Item"), "batch");
+    }
     if (MLT.isClip() && MLT.producer() && MLT.producer()->is_valid()
             && qstrcmp("_hide", MLT.producer()->get("resource"))) {
         ui->fromCombo->addItem(tr("Source"), "clip");
@@ -515,7 +525,7 @@ static void setIfNotSet(Mlt::Properties* properties, const char* name, T value)
          properties->set(name, value);
 }
 
-Mlt::Properties* EncodeDock::collectProperties(int realtime)
+Mlt::Properties* EncodeDock::collectProperties(int realtime, bool includeProfile)
 {
     Mlt::Properties* p = new Mlt::Properties;
     if (p && p->is_valid()) {
@@ -725,12 +735,14 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
                 case RateControlQuality: {
                     if (vcodec == "libx264") {
                         setIfNotSet(p, "crf", TO_ABSOLUTE(51, 0, vq));
-                    } else if (vcodec.startsWith("libvpx")) {
+                    } else if (vcodec.startsWith("libvpx") || vcodec.startsWith("libaom-")) {
                         setIfNotSet(p, "crf", TO_ABSOLUTE(63, 0, vq));
                         setIfNotSet(p, "vb", 0); // VP9 needs this to prevent constrained quality mode.
                     } else if (vcodec.endsWith("_vaapi")) {
                         setIfNotSet(p, "vglobal_quality", TO_ABSOLUTE(51, 0, vq));
                         setIfNotSet(p, "vq", TO_ABSOLUTE(51, 0, vq));
+                    } else if (vcodec.endsWith("_qsv")) {
+                        setIfNotSet(p, "qscale", TO_ABSOLUTE(51, 1, vq));
                     } else {
                         setIfNotSet(p, "qscale", TO_ABSOLUTE(31, 1, vq));
                     }
@@ -739,7 +751,7 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
                 case RateControlConstrained: {
                     if (vcodec == "libx264") {
                         setIfNotSet(p, "crf", TO_ABSOLUTE(51, 0, vq));
-                    } else if (vcodec.startsWith("libvpx")) {
+                    } else if (vcodec.startsWith("libvpx") || vcodec.startsWith("libaom-")) {
                         setIfNotSet(p, "crf", TO_ABSOLUTE(63, 0, vq));
                     } else if (vcodec.endsWith("_qsv") || vcodec.endsWith("_videotoolbox")) {
                         setIfNotSet(p, "vb", qRound(cvbr));
@@ -758,7 +770,7 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
                 setIfNotSet(p, "g", ui->gopSpinner->value());
                 setIfNotSet(p, "bf", ui->bFramesSpinner->value());
                 if (ui->strictGopCheckBox->isChecked()) {
-                    if (vcodec.startsWith("libvpx"))
+                    if (vcodec.startsWith("libvpx") || vcodec.startsWith("libaom-"))
                         setIfNotSet(p, "keyint_min", ui->gopSpinner->value());
                     else
                         setIfNotSet(p, "sc_threshold", 0);
@@ -770,20 +782,21 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
                     setIfNotSet(p, "connection_type", "x11");
                 }
             }
-            if (ui->widthSpinner->value() != MLT.profile().width()) {
+            if (includeProfile || ui->widthSpinner->value() != MLT.profile().width()) {
                 setIfNotSet(p, "width", ui->widthSpinner->value());
             }
-            if (ui->heightSpinner->value() != MLT.profile().height()) {
+            if (includeProfile || ui->heightSpinner->value() != MLT.profile().height()) {
                 setIfNotSet(p, "height", ui->heightSpinner->value());
             }
             if (ui->previewScaleCheckBox->isChecked() && !p->get("scale") && Settings.playerPreviewScale() > 0) {
                 p->set("scale", double(Settings.playerPreviewScale()) / MLT.profile().height());
             }
-            if (ui->aspectNumSpinner->value() != MLT.profile().display_aspect_num() ||
+            if (includeProfile ||
+                ui->aspectNumSpinner->value() != MLT.profile().display_aspect_num() ||
                 ui->aspectDenSpinner->value() != MLT.profile().display_aspect_den()) {
                 setIfNotSet(p, "aspect", double(ui->aspectNumSpinner->value()) / double(ui->aspectDenSpinner->value()));
             }
-            if (ui->scanModeCombo->currentIndex() != MLT.profile().progressive()) {
+            if (includeProfile || ui->scanModeCombo->currentIndex() != MLT.profile().progressive()) {
                 setIfNotSet(p, "progressive", ui->scanModeCombo->currentIndex());
             }
             setIfNotSet(p, "top_field_first", ui->fieldOrderCombo->currentIndex());
@@ -818,7 +831,7 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime)
             // If the frame rate is not specified in Other.
             if (!p->get("r") && !(p->get("frame_rate_num") && p->get("frame_rate_den"))
                 // Only if the frame rate spinner does not match the profile.
-                && qRound(ui->fpsSpinner->value() * 1000000.0) != qRound(MLT.profile().fps() * 1000000.0))
+                && (includeProfile || qRound(ui->fpsSpinner->value() * 1000000.0) != qRound(MLT.profile().fps() * 1000000.0)))
             {
                 // Convert some common non-integer frame rates to fractions.
                 if (qRound(ui->fpsSpinner->value() * 1000000.0) == 23976024) {
@@ -878,7 +891,7 @@ void EncodeDock::collectProperties(QDomElement& node, int realtime)
 MeltJob* EncodeDock::createMeltJob(Mlt::Producer* service, const QString& target, int realtime, int pass)
 {
     QString caption = tr("Export File");
-    if (Util::warnIfNotWritable(target, this, caption, true /* remove */))
+    if (Util::warnIfNotWritable(target, this, caption))
         return nullptr;
 
     // if image sequence, change filename to include number
@@ -913,15 +926,17 @@ MeltJob* EncodeDock::createMeltJob(Mlt::Producer* service, const QString& target
     // get temp filename
     QScopedPointer<QTemporaryFile> tmp{Util::writableTemporaryFile(target)};
     tmp->open();
+    QString fileName = tmp->fileName();
+    auto isProxy = ui->previewScaleCheckBox->isChecked() && Settings.proxyEnabled();
+    MLT.saveXML(fileName, service, false /* without relative paths */, tmp.get(), isProxy);
     tmp->close();
-    MLT.saveXML(tmp->fileName(), service, false /* without relative paths */, false /* without verify */);
 
     // parse xml
-    QFile f1(tmp->fileName());
+    QFile f1(fileName);
     f1.open(QIODevice::ReadOnly);
     QXmlSimpleReader xmlReader;
     QXmlInputSource xmlSource(&f1);
-    QDomDocument dom(tmp->fileName());
+    QDomDocument dom(fileName);
     dom.setContent(&xmlSource, &xmlReader);
     f1.close();
 
@@ -942,7 +957,7 @@ MeltJob* EncodeDock::createMeltJob(Mlt::Producer* service, const QString& target
     else
         dom.documentElement().insertAfter(consumerNode, profiles.at(profiles.length() - 1));
     consumerNode.setAttribute("mlt_service", "avformat");
-    consumerNode.setAttribute("target", mytarget);
+    consumerNode.setAttribute("target", pass == 1? kNullTarget : mytarget);
     collectProperties(consumerNode, realtime);
     if ("libx265" == ui->videoCodecCombo->currentText()) {
         if (pass == 1 || pass == 2) {
@@ -970,7 +985,7 @@ MeltJob* EncodeDock::createMeltJob(Mlt::Producer* service, const QString& target
 
     // Add autoclose to playlists.
     QDomNodeList playlists = dom.elementsByTagName("playlist");
-    for (int i = 0; i < playlists.length();++i)
+    for (int i = 0; i < playlists.length(); ++i)
         playlists.item(i).toElement().setAttribute("autoclose", 1);
 
     int frameRateNum = consumerNode.hasAttribute("frame_rate_num")? consumerNode.attribute("frame_rate_num").toInt() : MLT.profile().frame_rate_num();
@@ -1064,6 +1079,10 @@ public:
     int on_end_filter(Mlt::Filter*) { return 0; }
     int on_start_transition(Mlt::Transition*) { return 0; }
     int on_end_transition(Mlt::Transition*) { return 0; }
+    int on_start_chain(Mlt::Chain*) { return 0; }
+    int on_end_chain(Mlt::Chain*) { return 0; }
+    int on_start_link(Mlt::Link*) { return 0; }
+    int on_end_link(Mlt::Link*) { return 0; }
 };
 
 void EncodeDock::enqueueAnalysis()
@@ -1097,7 +1116,7 @@ void EncodeDock::enqueueAnalysis()
     }
 }
 
-void EncodeDock::enqueueMelt(const QString& target, int realtime)
+void EncodeDock::enqueueMelt(const QStringList& targets, int realtime)
 {
     Mlt::Producer* service = fromProducer();
     int pass = (ui->videoRateControlCombo->currentIndex() != RateControlQuality
@@ -1109,10 +1128,8 @@ void EncodeDock::enqueueMelt(const QString& target, int realtime)
             &&  ui->dualPassCheckbox->isEnabled() && ui->dualPassCheckbox->isChecked())? 1 : 0;
     if (!service) {
         // For each playlist item.
-        if (MAIN.playlist() && MAIN.playlist()->count() > 1) {
-            QFileInfo fi(target);
+        if (MAIN.playlist() && MAIN.playlist()->count() > 0) {
             int n = MAIN.playlist()->count();
-            int digits = QString::number(n).size();
             for (int i = 0; i < n; i++) {
                 QScopedPointer<Mlt::ClipInfo> info(MAIN.playlist()->clip_info(i));
                 if (!info) continue;
@@ -1120,13 +1137,11 @@ void EncodeDock::enqueueMelt(const QString& target, int realtime)
                 QScopedPointer<Mlt::Producer> producer(
                     new Mlt::Producer(MLT.profile(), "xml-string", xml.toUtf8().constData()));
                 producer->set_in_and_out(info->frame_in, info->frame_out);
-                QString filename = QString("%1/%2-%3.%4").arg(fi.path()).arg(fi.baseName())
-                                                         .arg(i + 1, digits, 10, QChar('0')).arg(fi.completeSuffix());
-                MeltJob* job = createMeltJob(producer.data(), filename, realtime, pass);
+                MeltJob* job = createMeltJob(producer.data(), targets[i], realtime, pass);
                 if (job) {
                     JOBS.add(job);
                     if (pass) {
-                        job = createMeltJob(producer.data(), filename, realtime, 2);
+                        job = createMeltJob(producer.data(), targets[i], realtime, 2);
                         if (job)
                             JOBS.add(job);
                     }
@@ -1134,11 +1149,11 @@ void EncodeDock::enqueueMelt(const QString& target, int realtime)
             }
         }
     } else {
-        MeltJob* job = createMeltJob(service, target, realtime, pass);
+        MeltJob* job = createMeltJob(service, targets[0], realtime, pass);
         if (job) {
             JOBS.add(job);
             if (pass) {
-                job = createMeltJob(service, target, realtime, 2);
+                job = createMeltJob(service, targets[0], realtime, 2);
                 if (job)
                     JOBS.add(job);
             }
@@ -1256,6 +1271,50 @@ void EncodeDock::filterX265Params(QStringList& other)
     }
 }
 
+void EncodeDock::onVideoCodecComboChanged(int index, bool ignorePreset)
+{
+    Q_UNUSED(index)
+    QString vcodec = ui->videoCodecCombo->currentText();
+    if (vcodec.contains("nvenc")) {
+        if (!ignorePreset) {
+            QString newValue;
+            foreach (QString line, ui->advancedTextEdit->toPlainText().split("\n")) {
+                if (!line.startsWith("preset=")) {
+                    newValue += line;
+                    newValue += "\n";
+                }
+            }
+            ui->advancedTextEdit->setPlainText(newValue);
+        }
+        if (vcodec.contains("hevc"))
+            ui->bFramesSpinner->setValue(0);
+        ui->dualPassCheckbox->setChecked(false);
+        ui->dualPassCheckbox->setEnabled(false);
+    } else if (vcodec.endsWith("_amf")) {
+        if (vcodec.startsWith("hevc_"))
+            ui->bFramesSpinner->setValue(0);
+        ui->dualPassCheckbox->setChecked(false);
+        ui->dualPassCheckbox->setEnabled(false);
+    } else if (vcodec.endsWith("_qsv")) {
+        if (vcodec.startsWith("hevc_") && !ui->advancedTextEdit->toPlainText().contains("load_plugin="))
+            ui->advancedTextEdit->appendPlainText("\nload_plugin=hevc_hw\n");
+        ui->dualPassCheckbox->setChecked(false);
+        ui->dualPassCheckbox->setEnabled(false);
+    } else if (vcodec.endsWith("_videotoolbox")) {
+        if (ui->videoRateControlCombo->currentIndex() == RateControlQuality) {
+            ui->videoRateControlCombo->setCurrentIndex(RateControlAverage);
+        }
+        ui->dualPassCheckbox->setChecked(false);
+        ui->dualPassCheckbox->setEnabled(false);
+    } else if (vcodec.endsWith("_vaapi")) {
+        ui->dualPassCheckbox->setChecked(false);
+        ui->dualPassCheckbox->setEnabled(false);
+    } else {
+        ui->dualPassCheckbox->setEnabled(true);
+    }
+    on_videoQualitySpinner_valueChanged(ui->videoQualitySpinner->value());
+}
+
 static double getBufferSize(Mlt::Properties& preset, const char* property)
 {
     double size = preset.get_double(property);
@@ -1335,6 +1394,11 @@ void EncodeDock::on_encodeButton_clicked()
         return;
     }
     bool seekable = MLT.isSeekable(fromProducer());
+
+    if (seekable && checkForMissingFiles()) {
+        return;
+    }
+
     QString directory = Settings.encodePath();
     if (!m_extension.isEmpty()) {
         if (!MAIN.fileName().isEmpty()) {
@@ -1347,91 +1411,108 @@ void EncodeDock::on_encodeButton_clicked()
         }
     }
 
-    QString caption = seekable? tr("Export File") : tr("Capture File");
-    QString nameFilter;
-    if (!m_extension.isEmpty())
-        nameFilter = tr("%1 (*.%2);;All Files (*)").arg(ui->formatCombo->currentText()).arg(m_extension);
-    else
-        tr("Determined by Export (*)");
-    m_outputFilename = QFileDialog::getSaveFileName(this, caption, directory, nameFilter);
-    if (!m_outputFilename.isEmpty()) {
-        QFileInfo fi(m_outputFilename);
-        MLT.pause();
-        Settings.setEncodePath(fi.path());
-        if (!m_extension.isEmpty()) {
+    QString caption = seekable ? tr("Export File") : tr("Capture File");
+    if (ui->fromCombo->currentData().toString() == "batch") {
+        caption = tr("Export Files");
+        MultiFileExportDialog dialog(tr("Export Each Playlist Item"), MAIN.playlist(),
+            QDir(directory).absolutePath(), QFileInfo(MAIN.fileName()).completeBaseName(), m_extension, this);
+        if (dialog.exec() != QDialog::Accepted) {
+            return;
+        }
+        m_outputFilenames = dialog.getExportFiles();
+    } else {
+        QString nameFilter;
+        if (!m_extension.isEmpty())
+            nameFilter = tr("%1 (*.%2);;All Files (*)").arg(ui->formatCombo->currentText()).arg(m_extension);
+        else
+            nameFilter = tr("Determined by Export (*)");
+        QString newName = QFileDialog::getSaveFileName(this, caption, directory, nameFilter,
+            nullptr, Util::getFileDialogOptions());
+        if (!newName.isEmpty() && !m_extension.isEmpty()) {
+            QFileInfo fi(newName);
             if (fi.suffix().isEmpty()) {
-                m_outputFilename += '.';
-                m_outputFilename += m_extension;
+                newName += '.';
+                newName += m_extension;
             }
         }
+        m_outputFilenames = QStringList(newName);
+    }
 
-        // Check if the drive this file will be on is getting low on space.
-        if (Settings.encodeFreeSpaceCheck()) {
-            QStorageInfo si(fi.path());
-            LOG_DEBUG() << si.bytesAvailable() << "bytes available on" << si.displayName();
-            if (si.isValid() && si.bytesAvailable() < kFreeSpaceThesholdGB) {
-                QMessageBox dialog(QMessageBox::Question, caption,
-                   tr("The drive you chose only has %1 MiB of free space.\n"
-                      "Do you still want to continue?")
-                   .arg(si.bytesAvailable() / 1024 / 1024),
-                   QMessageBox::No | QMessageBox::Yes, this);
-                dialog.setWindowModality(QmlApplication::dialogModality());
-                dialog.setDefaultButton(QMessageBox::Yes);
-                dialog.setEscapeButton(QMessageBox::No);
-                dialog.setCheckBox(new QCheckBox(tr("Do not show this anymore.", "Export free disk space warning dialog")));
-                int result = dialog.exec();
-                if (dialog.checkBox()->isChecked())
-                    Settings.setEncodeFreeSpaceCheck(false);
-                if (result == QMessageBox::No) {
-                    MAIN.showStatusMessage(tr("Export canceled."));
-                    return;
-                }
+    if (m_outputFilenames.isEmpty() || m_outputFilenames[0].isEmpty()) {
+        return;
+    }
+
+    QFileInfo fi(m_outputFilenames[0]);
+    MLT.pause();
+    Settings.setEncodePath(fi.path());
+
+    // Check if the drive this file will be on is getting low on space.
+    if (Settings.encodeFreeSpaceCheck()) {
+        QStorageInfo si(fi.path());
+        LOG_DEBUG() << si.bytesAvailable() << "bytes available on" << si.displayName();
+        if (si.isValid() && si.bytesAvailable() < kFreeSpaceThesholdGB) {
+            QMessageBox dialog(QMessageBox::Question, caption,
+               tr("The drive you chose only has %1 MiB of free space.\n"
+                  "Do you still want to continue?")
+               .arg(si.bytesAvailable() / 1024 / 1024),
+               QMessageBox::No | QMessageBox::Yes, this);
+            dialog.setWindowModality(QmlApplication::dialogModality());
+            dialog.setDefaultButton(QMessageBox::Yes);
+            dialog.setEscapeButton(QMessageBox::No);
+            dialog.setCheckBox(new QCheckBox(tr("Do not show this anymore.", "Export free disk space warning dialog")));
+            int result = dialog.exec();
+            if (dialog.checkBox()->isChecked())
+                Settings.setEncodeFreeSpaceCheck(false);
+            if (result == QMessageBox::No) {
+                MAIN.showStatusMessage(tr("Export canceled."));
+                return;
             }
         }
+    }
 
-        if (seekable) {
-            // Batch encode
-            int threadCount = QThread::idealThreadCount();
-            if (threadCount > 2 && ui->parallelCheckbox->isChecked())
-                threadCount = qMin(threadCount - 1, 4);
-            else
-                threadCount = 1;
-            enqueueAnalysis();
-            enqueueMelt(m_outputFilename, Settings.playerGPU()? -1 : -threadCount);
-        }
-        else if (MLT.producer()->get_int(kBackgroundCaptureProperty)) {
-            // Capture in background
-            ui->dualPassCheckbox->setChecked(false);
-            m_immediateJob.reset(createMeltJob(fromProducer(), m_outputFilename, -1));
-            if (m_immediateJob) {
-                // Close the player's producer to prevent resource contention.
-                MAIN.hideProducer();
+    if (seekable) {
+        MLT.purgeMemoryPool();
+        // Batch encode
+        int threadCount = QThread::idealThreadCount();
+        if (threadCount > 2 && ui->parallelCheckbox->isChecked())
+            threadCount = qMin(threadCount - 1, 4);
+        else
+            threadCount = 1;
+        enqueueAnalysis();
+        enqueueMelt(m_outputFilenames, Settings.playerGPU()? -1 : -threadCount);
+    }
+    else if (MLT.producer()->get_int(kBackgroundCaptureProperty)) {
+        // Capture in background
+        ui->dualPassCheckbox->setChecked(false);
+        m_immediateJob.reset(createMeltJob(fromProducer(), m_outputFilenames[0], -1));
+        if (m_immediateJob) {
+            // Close the player's producer to prevent resource contention.
+            MAIN.hideProducer();
 
-                m_immediateJob->setIsStreaming(true);
-                connect(m_immediateJob.data(), SIGNAL(finished(AbstractJob*,bool,QString)), this, SLOT(onFinished(AbstractJob*,bool)));
+            m_immediateJob->setIsStreaming(true);
+            connect(m_immediateJob.data(), SIGNAL(finished(AbstractJob*,bool,QString)), this, SLOT(onFinished(AbstractJob*,bool)));
 
-                if (MLT.resource().startsWith("gdigrab:") || MLT.resource().startsWith("x11grab:")) {
-                    ui->stopCaptureButton->show();
-                } else {
-                    ui->encodeButton->setText(tr("Stop Capture"));
-                    ui->fromCombo->setDisabled(true);
-                }
-                if (MLT.resource().startsWith("gdigrab:"))
-                    MAIN.showMinimized();
-
-                int msec = MLT.producer()->get_int(kBackgroundCaptureProperty) * 1000;
-                QTimer::singleShot(msec, m_immediateJob.data(), SLOT(start()));
+            if (MLT.resource().startsWith("gdigrab:") || MLT.resource().startsWith("x11grab:")) {
+                ui->stopCaptureButton->show();
+            } else {
+                ui->encodeButton->setText(tr("Stop Capture"));
+                ui->fromCombo->setDisabled(true);
             }
-        }
-        else {
-            // Capture to file
-            // use multi consumer to encode and preview simultaneously
-            ui->dualPassCheckbox->setChecked(false);
-            ui->encodeButton->setText(tr("Stop Capture"));
-            encode(m_outputFilename);
-            emit captureStateChanged(true);
-            ui->streamButton->setDisabled(true);
-        }
+            if (MLT.resource().startsWith("gdigrab:"))
+                MAIN.showMinimized();
+
+            int msec = MLT.producer()->get_int(kBackgroundCaptureProperty) * 1000;
+            QTimer::singleShot(msec, m_immediateJob.data(), SLOT(start()));
+       }
+    }
+    else {
+        // Capture to file
+        // use multi consumer to encode and preview simultaneously
+        ui->dualPassCheckbox->setChecked(false);
+        ui->encodeButton->setText(tr("Stop Capture"));
+        encode(m_outputFilenames[0]);
+        emit captureStateChanged(true);
+        ui->streamButton->setDisabled(true);
     }
 }
 
@@ -1522,13 +1603,13 @@ void EncodeDock::on_streamButton_clicked()
             emit captureStateChanged(true);
             emit ui->encodeButton->setDisabled(true);
         }
-        m_outputFilename.clear();
+        m_outputFilenames.clear();
     }
 }
 
 void EncodeDock::on_addPresetButton_clicked()
 {
-    QScopedPointer<Mlt::Properties> data(collectProperties(0));
+    QScopedPointer<Mlt::Properties> data(collectProperties(0, true));
     AddEncodePresetDialog dialog(this);
     QStringList ls;
 
@@ -1561,9 +1642,11 @@ void EncodeDock::on_addPresetButton_clicked()
                 if (dir.mkdir(subdir))
                     dir.cd(subdir);
             }
-            QFile f(dir.filePath(preset));
-            if (f.open(QIODevice::WriteOnly | QIODevice::Text))
-                f.write(dialog.properties().toUtf8());
+            {
+                QFile f(dir.filePath(preset));
+                if (f.open(QIODevice::WriteOnly | QIODevice::Text))
+                    f.write(dialog.properties().toUtf8());
+            }
 
             // add the preset and select it
             loadPresets();
@@ -1619,7 +1702,7 @@ void EncodeDock::on_stopCaptureButton_clicked()
     ui->stopCaptureButton->hide();
     if (m_immediateJob)
         m_immediateJob->stop();
-    if (!m_outputFilename.isEmpty())
+    if (!m_outputFilenames.isEmpty())
         QTimer::singleShot(kOpenCaptureFileDelayMs, this, SLOT(openCaptureFile()));
 }
 
@@ -1747,7 +1830,7 @@ void EncodeDock::on_resetButton_clicked()
 
 void EncodeDock::openCaptureFile()
 {
-    MAIN.open(m_outputFilename);
+    MAIN.open(m_outputFilenames[0]);
 }
 
 void EncodeDock::on_formatCombo_currentIndexChanged(int index)
@@ -1780,48 +1863,9 @@ void EncodeDock::on_fromCombo_currentIndexChanged(int index)
         ui->encodeButton->setText(tr("Capture File"));
 }
 
-void EncodeDock::on_videoCodecCombo_currentIndexChanged(int index, bool ignorePreset)
+void EncodeDock::on_videoCodecCombo_currentIndexChanged(int index)
 {
-    Q_UNUSED(index)
-    QString vcodec = ui->videoCodecCombo->currentText();
-    if (vcodec.contains("nvenc")) {
-        if (!ignorePreset) {
-            QString newValue;
-            foreach (QString line, ui->advancedTextEdit->toPlainText().split("\n")) {
-                if (!line.startsWith("preset=")) {
-                    newValue += line;
-                    newValue += "\n";
-                }
-            }
-            ui->advancedTextEdit->setPlainText(newValue);
-        }
-        if (vcodec.contains("hevc"))
-            ui->bFramesSpinner->setValue(0);
-        ui->dualPassCheckbox->setChecked(false);
-        ui->dualPassCheckbox->setEnabled(false);
-    } else if (vcodec.endsWith("_amf")) {
-        if (vcodec.startsWith("hevc_"))
-            ui->bFramesSpinner->setValue(0);
-        ui->dualPassCheckbox->setChecked(false);
-        ui->dualPassCheckbox->setEnabled(false);
-    } else if (vcodec.endsWith("_qsv")) {
-        if (vcodec.startsWith("hevc_") && !ui->advancedTextEdit->toPlainText().contains("load_plugin="))
-            ui->advancedTextEdit->appendPlainText("\nload_plugin=hevc_hw\n");
-        ui->dualPassCheckbox->setChecked(false);
-        ui->dualPassCheckbox->setEnabled(false);
-    } else if (vcodec.endsWith("_videotoolbox")) {
-        if (ui->videoRateControlCombo->currentIndex() == RateControlQuality) {
-            ui->videoRateControlCombo->setCurrentIndex(RateControlAverage);
-        }
-        ui->dualPassCheckbox->setChecked(false);
-        ui->dualPassCheckbox->setEnabled(false);
-    } else if (vcodec.endsWith("_vaapi")) {
-        ui->dualPassCheckbox->setChecked(false);
-        ui->dualPassCheckbox->setEnabled(false);
-    } else {
-        ui->dualPassCheckbox->setEnabled(true);
-    }
-    on_videoQualitySpinner_valueChanged(ui->videoQualitySpinner->value());
+    onVideoCodecComboChanged(index);
 }
 
 void EncodeDock::on_audioCodecCombo_currentIndexChanged(int index)
@@ -1885,45 +1929,8 @@ static QStringList codecs()
 void EncodeDock::on_hwencodeCheckBox_clicked(bool checked)
 {
     if (checked && Settings.encodeHardware().isEmpty()) {
-        MAIN.showStatusMessage(tr("Detecting hardware encoders..."));
-        QStringList hwlist;
-        QFileInfo ffmpegPath(qApp->applicationDirPath(), "ffmpeg");
-        foreach (const QString& codec, codecs()) {
-            LOG_INFO() << "checking for" << codec;
-            QProcess proc;
-            QStringList args;
-            args << "-hide_banner" << "-f" << "lavfi" << "-i" << "color=s=640x360" << "-frames" << "1" << "-an";
-            if (codec.endsWith("_vaapi"))
-                args << "-init_hw_device" << "vaapi=vaapi0:,connection_type=x11" << "-filter_hw_device" << "vaapi0" << "-vf" << "format=nv12,hwupload";
-            else if (codec == "hevc_qsv")
-                args << "-load_plugin" << "hevc_hw";
-            args << "-c:v" << codec << "-f" << "rawvideo" << "pipe:";
-            LOG_DEBUG() << ffmpegPath.absoluteFilePath() << args;
-            proc.setStandardOutputFile(QProcess::nullDevice());
-            proc.setReadChannel(QProcess::StandardError);
-            proc.start(ffmpegPath.absoluteFilePath(), args, QIODevice::ReadOnly);
-            bool started = proc.waitForStarted(2000);
-            bool finished = false;
-            QCoreApplication::processEvents();
-            if (started) {
-                finished = proc.waitForFinished(4000);
-                QCoreApplication::processEvents();
-            }
-            if (started && finished && proc.exitStatus() == QProcess::NormalExit && !proc.exitCode()) {
-                hwlist << codec;
-            } else {
-                QString output = proc.readAll();
-                foreach (const QString& line, output.split(QRegularExpression("[\r\n]"), QString::SkipEmptyParts))
-                    LOG_DEBUG() << line;
-            }
-        }
-        if (hwlist.isEmpty()) {
-            MAIN.showStatusMessage(tr("Nothing found"), 10);
+        if (!detectHardwareEncoders())
             ui->hwencodeCheckBox->setChecked(false);
-        } else {
-            MAIN.showStatusMessage(tr("Found %1").arg(hwlist.join(", ")));
-            Settings.setEncodeHardware(hwlist);
-        }
     }
     Settings.setEncodeUseHardware(ui->hwencodeCheckBox->isChecked());
     resetOptions();
@@ -1935,6 +1942,9 @@ void EncodeDock::on_hwencodeButton_clicked()
     dialog.setWindowModality(QmlApplication::dialogModality());
     dialog.setWindowTitle(tr("Configure Hardware Encoding"));
     dialog.setSelection(Settings.encodeHardware());
+    QPushButton* button = dialog.buttonBox()->addButton(tr("Detect"), QDialogButtonBox::ResetRole);
+    connect(button, SIGNAL(clicked()), &dialog, SLOT(reject()));
+    connect(button, SIGNAL(clicked()), this, SLOT(detectHardwareEncoders()));
 
     // Show the dialog.
     if (dialog.exec() == QDialog::Accepted) {
@@ -1942,7 +1952,7 @@ void EncodeDock::on_hwencodeButton_clicked()
         if (dialog.selection().isEmpty()) {
             ui->hwencodeCheckBox->setChecked(false);
             Settings.setEncodeUseHardware(false);
-        }            
+        }
     }
 }
 
@@ -1980,7 +1990,7 @@ void EncodeDock::on_videoQualitySpinner_valueChanged(int vq)
     QString s;
     if (vcodec == "libx264" || vcodec == "libx265") {
         s = QString("crf=%1").arg(TO_ABSOLUTE(51, 0, vq));
-    } else if (vcodec.startsWith("libvpx")) {
+    } else if (vcodec.startsWith("libvpx") || vcodec.startsWith("libaom-")) {
         s = QString("crf=%1").arg(TO_ABSOLUTE(63, 0, vq));
     } else if (vcodec.contains("nvenc")) {
         if (ui->videoRateControlCombo->currentIndex() == RateControlQuality)
@@ -1991,8 +2001,10 @@ void EncodeDock::on_videoQualitySpinner_valueChanged(int vq)
         s = QString("qp_i=qp_p=qp_b=%1").arg(TO_ABSOLUTE(51, 0, vq));
     } else if (vcodec.endsWith("_vaapi")) {
         s = QString("vglobal_quality=%1").arg(TO_ABSOLUTE(51, 0, vq));
+    } else if (vcodec.endsWith("_qsv")) {
+        s = QString("qscale=%1").arg(TO_ABSOLUTE(51, 1, vq));
     } else {
-        s = QString("qscale=%1").arg(TO_ABSOLUTE(31, 0, vq));
+        s = QString("qscale=%1").arg(TO_ABSOLUTE(31, 1, vq));
     }
     ui->videoQualitySuffixLabel->setText(s);
 }
@@ -2013,4 +2025,91 @@ void EncodeDock::on_audioQualitySpinner_valueChanged(int aq)
 void EncodeDock::on_parallelCheckbox_clicked(bool checked)
 {
     Settings.setEncodeParallelProcessing(checked);
+}
+
+bool EncodeDock::detectHardwareEncoders()
+{
+    MAIN.showStatusMessage(tr("Detecting hardware encoders..."));
+    QStringList hwlist;
+    QFileInfo ffmpegPath(qApp->applicationDirPath(), "ffmpeg");
+    foreach (const QString& codec, codecs()) {
+        LOG_INFO() << "checking for" << codec;
+        QProcess proc;
+        QStringList args;
+        args << "-hide_banner" << "-f" << "lavfi" << "-i" << "color=s=640x360" << "-frames" << "1" << "-an";
+        if (codec.endsWith("_vaapi"))
+            args << "-init_hw_device" << "vaapi=vaapi0:,connection_type=x11" << "-filter_hw_device" << "vaapi0" << "-vf" << "format=nv12,hwupload";
+        else if (codec == "hevc_qsv")
+            args << "-load_plugin" << "hevc_hw";
+        args << "-c:v" << codec << "-f" << "rawvideo" << "pipe:";
+        LOG_DEBUG() << ffmpegPath.absoluteFilePath() << args;
+        proc.setStandardOutputFile(QProcess::nullDevice());
+        proc.setReadChannel(QProcess::StandardError);
+        proc.start(ffmpegPath.absoluteFilePath(), args, QIODevice::ReadOnly);
+        bool started = proc.waitForStarted(2000);
+        bool finished = false;
+        QCoreApplication::processEvents();
+        if (started) {
+            finished = proc.waitForFinished(4000);
+            QCoreApplication::processEvents();
+        }
+        if (started && finished && proc.exitStatus() == QProcess::NormalExit && !proc.exitCode()) {
+            hwlist << codec;
+        } else {
+            QString output = proc.readAll();
+            foreach (const QString& line, output.split(QRegularExpression("[\r\n]"), QString::SkipEmptyParts))
+                LOG_DEBUG() << line;
+        }
+    }
+    if (hwlist.isEmpty()) {
+        MAIN.showStatusMessage(tr("Nothing found"), 10);
+    } else {
+        MAIN.showStatusMessage(tr("Found %1").arg(hwlist.join(", ")));
+        Settings.setEncodeHardware(hwlist);
+    }
+    return !hwlist.isEmpty();
+}
+
+bool EncodeDock::checkForMissingFiles()
+{
+    Mlt::Producer* service = fromProducer();
+    if (!service) {
+        service = MAIN.playlist();
+    }
+    if (!service) {
+        LOG_ERROR() << "Encode: No service to encode";
+        return true;
+    }
+    QScopedPointer<QTemporaryFile> tmp;
+    if (MAIN.fileName().isEmpty()) {
+        tmp.reset(Util::writableTemporaryFile(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + "/"));
+    } else {
+        QFileInfo info(MAIN.fileName());
+        QString templateFileName = QString("%1.XXXXXX").arg(QCoreApplication::applicationName());
+        tmp.reset(new QTemporaryFile(info.dir().filePath(templateFileName)));
+    }
+    tmp->open();
+    QString fileName = tmp->fileName();
+    auto isProxy = ui->previewScaleCheckBox->isChecked() && Settings.proxyEnabled();
+    MLT.saveXML(fileName, service, false /* without relative paths */, tmp.get(), isProxy);
+    tmp->close();
+    MltXmlChecker checker;
+    if (checker.check(fileName) != QXmlStreamReader::NoError) {
+        LOG_ERROR() << "Encode: Unable to check XML - skipping check";
+    } else if (checker.unlinkedFilesModel().rowCount() > 0) {
+        QMessageBox dialog(QMessageBox::Critical,
+           qApp->applicationName(),
+           tr("Your project is missing some files.\n\n"
+              "Save your project, close it, and reopen it.\n"
+              "Shotcut will attempt to repair your project."),
+           QMessageBox::Ok | QMessageBox::Ignore,
+           this);
+        dialog.setWindowModality(QmlApplication::dialogModality());
+        dialog.setDefaultButton(QMessageBox::Ok);
+        if (QMessageBox::Ignore == dialog.exec()) {
+            return false;
+        }
+        return true;
+    }
+    return false;
 }

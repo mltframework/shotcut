@@ -2,7 +2,9 @@
 *.so
 ui_*.h
 qrc_*.cpp
+moc_*.h
 moc_*.cpp
+*.moc
 *.prl
 *.a
 Makefile
@@ -18,3 +20,7 @@ src/shotcut
 src/qml/export-edl/node_modules
 *.qmlc
 *.jsc
+.project
+/.qmake.stash
+packaging/linux/org.shotcut.Shotcut.metainfo.xml
+build/

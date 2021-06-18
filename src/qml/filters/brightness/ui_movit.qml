@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2018 Meltytech, LLC
+ * Copyright (c) 2016-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,10 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.1
-import QtQuick.Controls 1.1
-import QtQuick.Layouts 1.0
-import Shotcut.Controls 1.0
+import QtQuick 2.12
+import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.12
+import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     width: 200
@@ -50,6 +50,7 @@ Item {
         onOutChanged: updateFilter(null)
         onAnimateInChanged: updateFilter(null)
         onAnimateOutChanged: updateFilter(null)
+        onPropertyChanged: setControls()
     }
 
     Connections {
@@ -74,6 +75,7 @@ Item {
         var position = getPosition()
         blockUpdate = true
         brightnessSlider.value = filter.getDouble('opacity', position) * 100.0
+        brightnessKeyframesButton.checked = filter.keyframeCount('opacity') > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
         blockUpdate = false
         brightnessSlider.enabled = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1)
     }
@@ -119,7 +121,7 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: preset
             Layout.columnSpan: parent.columns - 1
             parameters: ['opacity']
@@ -128,7 +130,6 @@ Item {
             }
             onPresetSelected: {
                 setControls()
-                brightnessKeyframesButton.checked = filter.keyframeCount(parameters[0]) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
                 middleValue = filter.getDouble(parameters[0], filter.animateIn)
                 if (filter.animateIn > 0)
                     startValue = filter.getDouble(parameters[0], 0)
@@ -141,7 +142,7 @@ Item {
             text: qsTr('Level')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: brightnessSlider
             minimumValue: 0.0
             maximumValue: 200.0
@@ -149,12 +150,11 @@ Item {
             suffix: ' %'
             onValueChanged: updateFilter(getPosition())
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: brightnessSlider.value = 100
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: brightnessKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('opacity') > 0
             onToggled: {
                 var value = brightnessSlider.value / 100.0
                 if (checked) {

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2016 Meltytech, LLC
+ * Copyright (c) 2013-2020 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,12 +16,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick.Controls 1.0
+import QtQuick.Controls 2.12
+import Shotcut.Controls 1.0 as Shotcut
 
-Button {
-    iconName: 'edit-undo'
-    iconSource: 'qrc:///icons/oxygen/32x32/actions/edit-undo.png'
-    tooltip: qsTr('Reset to default')
+Shotcut.Button {
+    icon.name: 'edit-undo'
+    icon.source: 'qrc:///icons/oxygen/32x32/actions/edit-undo.png'
+    Shotcut.HoverTip { text: qsTr('Reset to default') }
     implicitWidth: 20
     implicitHeight: 20
 }

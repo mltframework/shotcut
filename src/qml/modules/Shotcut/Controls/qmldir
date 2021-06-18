@@ -1,8 +1,10 @@
 module Shotcut.Controls
+Button 1.0 Button.qml
 ColorPicker 1.0 ColorPicker.qml
+DoubleSpinBox 1.0 DoubleSpinBox.qml
+Gauge 1.0 Gauge.qml
 GradientControl 1.0 GradientControl.qml
 Preset 1.0 Preset.qml
-ToolTip 1.0 ToolTip.qml
 UndoButton 1.0 UndoButton.qml
 KeyframesButton 1.0 KeyframesButton.qml
 TimeSpinner 1.0 TimeSpinner.qml
@@ -15,4 +17,7 @@ TextFilterVui 1.0 TextFilterVui.qml
 ToggleButton 1.0 ToggleButton.qml
 VuiBase 1.0 VuiBase.qml
 KeyframableFilter 1.0 KeyframableFilter.qml
-ToolBarToggle 1.0 ToolBarToggle.qml
+ToolButton 1.0 ToolButton.qml
+HoverTip 1.0 HoverTip.qml
+ComboBox 1.0 ComboBox.qml
+EditMenu 1.0 EditMenu.qml

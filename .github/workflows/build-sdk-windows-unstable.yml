@@ -1,0 +1,104 @@
+name: build-shotcut-sdk-windows-unstable
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Setup MSYS2
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: MINGW64
+          update: true
+          install: >-
+            base-devel bzip2 coreutils git gzip tar xz zip
+            mingw-w64-x86_64-toolchain
+            mingw-w64-x86_64-cmake
+            mingw-w64-x86_64-meson
+            mingw-w64-x86_64-nasm
+            mingw-w64-x86_64-ninja
+            mingw-w64-x86_64-python-pip
+            mingw-w64-x86_64-yasm
+            mingw-w64-x86_64-cairo
+            mingw-w64-x86_64-eigen3
+            mingw-w64-x86_64-dlfcn
+            mingw-w64-x86_64-fftw
+            mingw-w64-x86_64-harfbuzz
+            mingw-w64-x86_64-lame
+            mingw-w64-x86_64-libepoxy
+            mingw-w64-x86_64-libexif
+            mingw-w64-x86_64-libmfx
+            mingw-w64-x86_64-libsamplerate
+            mingw-w64-x86_64-libtheora
+            mingw-w64-x86_64-libvorbis
+            mingw-w64-x86_64-libvpx
+            mingw-w64-x86_64-libwebp
+            mingw-w64-x86_64-libxml2
+            mingw-w64-x86_64-openssl
+            mingw-w64-x86_64-opus
+            mingw-w64-x86_64-rubberband
+            mingw-w64-x86_64-sox
+            mingw-w64-x86_64-vid.stab
+            mingw-w64-x86_64-x264
+            mingw-w64-x86_64-x265
+
+      - uses: actions/checkout@v2
+
+      - name: Build
+        shell: msys2 {0}
+        run: |
+          pacman --noconfirm -Rdd mingw-w64-x86_64-aom
+          echo Preparing version
+          echo $(date +"UNSTABLE-%y.%m.%d") > VERSION
+          VERSION=$(cat VERSION)
+          echo VERSION=$VERSION
+          FILENAME_VERSION=$(echo $VERSION | tr -d .)
+          pushd "$HOME"
+          echo Downloading prebuilt SWH LADSPA plugins
+          curl -LO --no-progress-meter https://s3.amazonaws.com/misc.meltymedia/shotcut-build/swh-plugins-win64-0.4.15.tar.xz
+          echo Downloading a few other prebuilt dependencies
+          curl -LO --no-progress-meter https://s3.amazonaws.com/misc.meltymedia/shotcut-build/mlt-prebuilt-mingw64-v4.txz
+          echo Extracting prebuilt dependencies
+          tar -xJf mlt-prebuilt-mingw64-v4.txz
+          mkdir Qt
+          cd Qt
+          echo Downloading Qt
+          curl -LO --no-progress-meter https://s3.amazonaws.com/misc.meltymedia/shotcut-build/qt-5.15.2-x64-mingw810.txz
+          echo Extracting Qt
+          tar -xJf qt-5.15.2-x64-mingw810.txz
+          CHECKOUT_DIR=$(popd)
+          popd
+          echo Running the build script
+          echo INSTALL_DIR=\"$CHECKOUT_DIR/build\"
+          echo INSTALL_DIR=\"$CHECKOUT_DIR/build\" > build-shotcut.conf
+          echo MLT_HEAD=0 >> build-shotcut.conf
+          echo MLT_REVISION=v7 >> build-shotcut.conf
+          echo SHOTCUT_HEAD=0 >> build-shotcut.conf
+          echo SHOTCUT_REVISION=MLTv7 >> build-shotcut.conf
+          echo SHOTCUT_VERSION=\"$VERSION\" >> build-shotcut.conf
+          echo DEBUG_BUILD=1 >> build-shotcut.conf
+          bash scripts/build-shotcut-msys2.sh -s
+          mv build/shotcut-sdk.zip build/shotcut-win64-sdk-$FILENAME_VERSION.zip
+          echo Done
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: windows-sdk
+          path: ./build/shotcut-win64-sdk-*.zip
+
+      - name: Upload packages to S3
+        shell: msys2 {0}
+        run: |
+          echo Installing awscli
+          pip install awscli
+          export AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY }}
+          export AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_KEY }}
+          export AWS_DEFAULT_REGION=us-east-1
+          for file in build/*.zip; do
+            echo Uploading "$file" to S3
+            aws s3 cp --acl public-read "$file" s3://builds.us.meltytech/shotcut/ --no-progress
+          done

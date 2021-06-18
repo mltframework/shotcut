@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2019 Meltytech, LLC
+ * Copyright (c) 2015-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,12 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.1
-import QtQuick.Layouts 1.0
-import QtQuick.Controls 1.4
-import QtQuick.Controls.Styles 1.4
-import QtQuick.Extras 1.4
-import Shotcut.Controls 1.0
+import QtQuick 2.12
+import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.12
+import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     width: 350
@@ -62,7 +60,7 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: preset
             parameters: ['0', '1', '2']
             Layout.columnSpan: 2
@@ -72,9 +70,9 @@ Item {
         Label {
             text: qsTr('Input gain')
             Layout.alignment: Qt.AlignRight
-            ToolTip {text: qsTr('Gain that is applied to the input stage. Can be used to trim gain to bring it roughly under the limit or to push the signal against the limit.')}
+            Shotcut.HoverTip {text: qsTr('Gain that is applied to the input stage. Can be used to trim gain to bring it roughly under the limit or to push the signal against the limit.')}
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: sliderInput
             minimumValue: -20
             maximumValue: 20
@@ -85,16 +83,16 @@ Item {
                 filter.set('0', value)
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: sliderInput.value = 0
         }
 
         Label {
             text: qsTr('Limit')
             Layout.alignment: Qt.AlignRight
-            ToolTip {text: qsTr('The maximum output amplitude. Peaks over this level will be attenuated as smoothly as possible to bring them as close as possible to this level.')}
+            Shotcut.HoverTip {text: qsTr('The maximum output amplitude. Peaks over this level will be attenuated as smoothly as possible to bring them as close as possible to this level.')}
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: sliderLimit
             minimumValue: -20
             maximumValue: 0
@@ -105,16 +103,16 @@ Item {
                 filter.set('1', value)
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: sliderLimit.value = 0
         }
 
         Label {
             text: qsTr('Release')
             Layout.alignment: Qt.AlignRight
-            ToolTip {text: qsTr('The time taken for the limiter\'s attenuation to return to 0 dB\'s.')}
+            Shotcut.HoverTip {text: qsTr('The time taken for the limiter\'s attenuation to return to 0 dB\'s.')}
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: sliderRelease
             minimumValue: .01
             maximumValue: 2
@@ -125,7 +123,7 @@ Item {
                 filter.set('2', value)
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: sliderRelease.value = .51
         }
 
@@ -142,64 +140,21 @@ Item {
                 color: activePalette.text
             }
         }
-        
-        Component {
-            id: gaugeStyle
-            GaugeStyle {
-                valueBar: Rectangle {
-                    implicitWidth: 16
-                    color: 'transparent'
-                    Rectangle {
-                        anchors.right: parent.right
-                        width: parent.width
-                        height: 5
-                        radius: 3
-                        color: activePalette.highlight
-                    }
-                }
-                tickmark: Item {
-                    implicitWidth: 9
-                    implicitHeight: 1
-                    Rectangle {
-                        color: activePalette.windowText
-                        anchors.fill: parent
-                        anchors.leftMargin: 2
-                        anchors.rightMargin: 2
-                    }
-                }
-                minorTickmark: Item {
-                    implicitWidth: 6
-                    implicitHeight: 1
-                    Rectangle {
-                        color: activePalette.windowText
-                        anchors.fill: parent
-                        anchors.leftMargin: 2
-                        anchors.rightMargin: 2
-                    }
-                }
-                tickmarkLabel: Text {
-                    font.pixelSize: 12
-                    text: Math.round(parseFloat(styleData.value))
-                    color: activePalette.windowText
-                    antialiasing: true
-                 }
-            }
-        }
-        
+
         Label {
             text: qsTr('Gain Reduction')
             Layout.alignment: Qt.AlignRight | Qt.AlignTop
-            ToolTip {text: qsTr('Status indicator showing the gain reduction applied by the compressor.')}
+            Shotcut.HoverTip {text: qsTr('Status indicator showing the gain reduction applied by the compressor.')}
         }
-        Gauge {
+        Shotcut.Gauge {
             Layout.columnSpan: 2
             Layout.fillWidth: true
             id: grGauge
-            minimumValue: -24
+            from: -24
             value: 0
-            maximumValue: 0
+            to: 0
             orientation: Qt.Horizontal
-            style: gaugeStyle
+            decimals: 0
         }
 
         Item {

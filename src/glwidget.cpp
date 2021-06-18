@@ -97,6 +97,7 @@ GLWidget::GLWidget(QObject *parent)
     connect(quickWindow(), SIGNAL(sceneGraphInitialized()), SLOT(setBlankScene()), Qt::QueuedConnection);
     connect(quickWindow(), SIGNAL(beforeRendering()), SLOT(paintGL()), Qt::DirectConnection);
     connect(&m_refreshTimer, SIGNAL(timeout()), SLOT(onRefreshTimeout()));
+    connect(this, SIGNAL(rectChanged()), SIGNAL(zoomChanged()));
     LOG_DEBUG() << "end";
 }
 
@@ -135,6 +136,11 @@ void GLWidget::initializeGL()
     LOG_INFO() << "OpenGL renderer" << QString::fromUtf8((const char*) glGetString(GL_RENDERER));
     LOG_INFO() << "OpenGL threaded?" << quickWindow()->openglContext()->supportsThreadedOpenGL();
     LOG_INFO() << "OpenGL ES?" << quickWindow()->openglContext()->isOpenGLES();
+    glGetIntegerv(GL_MAX_TEXTURE_SIZE, &m_maxTextureSize);
+    LOG_INFO() << "OpenGL maximum texture size =" << m_maxTextureSize;
+    GLint dims[2];
+    glGetIntegerv(GL_MAX_VIEWPORT_DIMS, &dims[0]);
+    LOG_INFO() << "OpenGL maximum viewport size =" << dims[0] << "x" << dims[1];
 
     if (m_glslManager && quickWindow()->openglContext()->isOpenGLES()) {
         delete m_glslManager;
@@ -255,9 +261,9 @@ void GLWidget::createShader()
                                           "varying highp vec2 coordinates;"
                                           "void main(void) {"
                                           "  mediump vec3 texel;"
-                                          "  texel.r = texture2D(Ytex, coordinates).r - 0.0625;" // Y
-                                          "  texel.g = texture2D(Utex, coordinates).r - 0.5;"    // U
-                                          "  texel.b = texture2D(Vtex, coordinates).r - 0.5;"    // V
+                                          "  texel.r = texture2D(Ytex, coordinates).r -  16.0/255.0;" // Y
+                                          "  texel.g = texture2D(Utex, coordinates).r - 128.0/255.0;" // U
+                                          "  texel.b = texture2D(Vtex, coordinates).r - 128.0/255.0;" // V
                                           "  mediump mat3 coefficients;"
                                           "  if (colorspace == 601) {"
                                           "    coefficients = mat3("
@@ -349,8 +355,8 @@ void GLWidget::paintGL()
 #ifndef QT_NO_DEBUG
     QOpenGLFunctions* f = quickWindow()->openglContext()->functions();
 #endif
-    float width = this->width() * devicePixelRatio();
-    float height = this->height() * devicePixelRatio();
+    float width = this->width() * devicePixelRatioF();
+    float height = this->height() * devicePixelRatioF();
 
     glDisable(GL_BLEND);
     glDisable(GL_DEPTH_TEST);
@@ -373,7 +379,7 @@ void GLWidget::paintGL()
     } else if (m_glslManager) {
         m_mutex.lock();
         if (m_sharedFrame.is_valid()) {
-            m_texture[0] = *((GLuint*) m_sharedFrame.get_image(mlt_image_glsl_texture));
+            m_texture[0] = *((GLuint*) m_sharedFrame.get_image(mlt_image_opengl_texture));
         }
     }
 
@@ -414,8 +420,8 @@ void GLWidget::paintGL()
     QMatrix4x4 modelView;
     if (m_zoom > 0.0) {
         if (offset().x() || offset().y())
-            modelView.translate(-offset().x() * devicePixelRatio(),
-                                 offset().y() * devicePixelRatio());
+            modelView.translate(-offset().x() * devicePixelRatioF(),
+                                 offset().y() * devicePixelRatioF());
         modelView.scale(zoom(), zoom());
     }
     m_shader->setUniformValue(m_modelViewLocation, modelView);
@@ -423,8 +429,8 @@ void GLWidget::paintGL()
 
     // Provide vertices of triangle strip.
     QVector<QVector2D> vertices;
-    width = m_rect.width() * devicePixelRatio();
-    height = m_rect.height() * devicePixelRatio();
+    width = m_rect.width() * devicePixelRatioF();
+    height = m_rect.height() * devicePixelRatioF();
     vertices << QVector2D(-width/2.0f, -height/2.0f);
     vertices << QVector2D(-width/2.0f, height/2.0f);
     vertices << QVector2D(width/2.0f, -height/2.0f);
@@ -555,22 +561,28 @@ void GLWidget::createThread(RenderThread **thread, thread_function_t function, v
     (*thread)->start();
 }
 
-static void onThreadCreate(mlt_properties owner, GLWidget* self,
-    RenderThread** thread, int* priority, thread_function_t function, void* data )
+static void onThreadCreate(mlt_properties owner, GLWidget* self, mlt_event_data data)
 {
     Q_UNUSED(owner)
-    Q_UNUSED(priority)
-    self->createThread(thread, function, data);
+    auto threadData = (mlt_event_data_thread*) Mlt::EventData(data).to_object();
+    if (threadData) {
+        auto renderThread = (RenderThread*) threadData->thread;
+        self->createThread(&renderThread, threadData->function, threadData->data);
+    }
 }
 
-static void onThreadJoin(mlt_properties owner, GLWidget* self, RenderThread* thread)
+static void onThreadJoin(mlt_properties owner, GLWidget* self, mlt_event_data data)
 {
     Q_UNUSED(owner)
     Q_UNUSED(self)
-    if (thread) {
-        thread->quit();
-        thread->wait();
-        delete thread;
+    auto threadData = (mlt_event_data_thread*) Mlt::EventData(data).to_object();
+    if (threadData) {
+        auto renderThread = (RenderThread*) threadData->thread;
+        if (renderThread) {
+            renderThread->quit();
+            renderThread->wait();
+            delete renderThread;
+        }
     }
 }
 
@@ -653,9 +665,11 @@ int GLWidget::reconfigure(bool isMulti)
         m_threadStopEvent = 0;
 
         delete m_threadCreateEvent;
-        m_threadCreateEvent = m_consumer->listen("consumer-thread-create", this, (mlt_listener) onThreadCreate);
         delete m_threadJoinEvent;
-        m_threadJoinEvent = m_consumer->listen("consumer-thread-join", this, (mlt_listener) onThreadJoin);
+        if (m_glslManager) {
+            m_threadCreateEvent = m_consumer->listen("consumer-thread-create", this, (mlt_listener) onThreadCreate);
+            m_threadJoinEvent = m_consumer->listen("consumer-thread-join", this, (mlt_listener) onThreadJoin);
+        }
     }
     if (m_consumer->is_valid()) {
         // Connect the producer to the consumer - tell it to "run" later
@@ -736,7 +750,7 @@ QImage GLWidget::image() const
     }
     SharedFrame frame = m_frameRenderer->getDisplayFrame();
     if (frame.is_valid()) {
-        const uint8_t* image = frame.get_image(mlt_image_rgb24a);
+        const uint8_t* image = frame.get_image(mlt_image_rgba);
         if (image) {
             int width = frame.get_image_width();
             int height = frame.get_image_height();
@@ -797,7 +811,7 @@ void GLWidget::setOffsetY(int y)
 
 void GLWidget::setCurrentFilter(QmlFilter* filter, QmlMetadata* meta)
 {
-    if (meta && QFile::exists(meta->vuiFilePath().toLocalFile())) {
+    if (meta && meta->type() == QmlMetadata::Filter && QFile::exists(meta->vuiFilePath().toLocalFile())) {
         filter->producer().set(kShotcutVuiMetaProperty, 1);
         rootContext()->setContextProperty("filter", filter);
         setSource(meta->vuiFilePath());
@@ -821,11 +835,10 @@ void GLWidget::updateTexture(GLuint yName, GLuint uName, GLuint vName)
 }
 
 // MLT consumer-frame-show event handler
-void GLWidget::on_frame_show(mlt_consumer, void* self, mlt_frame frame_ptr)
+void GLWidget::on_frame_show(mlt_consumer, GLWidget* widget, mlt_event_data data)
 {
-    Mlt::Frame frame(frame_ptr);
-    if (frame.get_int("rendered")) {
-        GLWidget* widget = static_cast<GLWidget*>(self);
+    auto frame = Mlt::EventData(data).to_frame();
+    if (frame.is_valid() && frame.get_int("rendered")) {
         int timeout = (widget->consumer()->get_int("real_time") > 0)? 0: 1000;
         if (widget->m_frameRenderer && widget->m_frameRenderer->semaphore()->tryAcquire(1, timeout)) {
             QMetaObject::invokeMethod(widget->m_frameRenderer, "showFrame", Qt::QueuedConnection, Q_ARG(Mlt::Frame, frame));
@@ -906,7 +919,7 @@ void FrameRenderer::showFrame(Mlt::Frame frame)
             int width = 0;
             int height = 0;
             frame.set("movit.convert.use_texture", 1);
-            mlt_image_format format = mlt_image_glsl_texture;
+            mlt_image_format format = mlt_image_opengl_texture;
             const GLuint* textureId = (GLuint*) frame.get_image(format, width, height);
 
             m_context->makeCurrent(m_surface);

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2019 Meltytech, LLC
+ * Copyright (c) 2012-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,6 +30,8 @@
 #include "jobqueue.h"
 #include "jobs/videoqualityjob.h"
 #include "util.h"
+#include "spatialmedia/spatialmedia.h"
+
 #include <Logger.h>
 
 EncodeJob::EncodeJob(const QString &name, const QString &xml, int frameRateNum, int frameRateDen)
@@ -48,6 +50,10 @@ EncodeJob::EncodeJob(const QString &name, const QString &xml, int frameRateNum, 
     action = new QAction(tr("Measure Video Quality..."), this);
     connect(action, SIGNAL(triggered()), this, SLOT(onVideoQualityTriggered()));
     m_successActions << action;
+
+    action = new QAction(tr("Set Equirectangular..."), this);
+    connect(action, SIGNAL(triggered()), this, SLOT(onSpatialMediaTriggered()));
+    m_successActions << action;
 }
 
 void EncodeJob::onVideoQualityTriggered()
@@ -56,19 +62,19 @@ void EncodeJob::onVideoQualityTriggered()
     QString directory = Settings.encodePath();
     QString caption = tr("Video Quality Report");
     QString nameFilter = tr("Text Documents (*.txt);;All Files (*)");
-    QString reportPath= QFileDialog::getSaveFileName(&MAIN, caption, directory, nameFilter);
+    QString reportPath= QFileDialog::getSaveFileName(&MAIN, caption, directory, nameFilter,
+        nullptr, Util::getFileDialogOptions());
     if (!reportPath.isEmpty()) {
         QFileInfo fi(reportPath);
         if (fi.suffix().isEmpty())
             reportPath += ".txt";
 
-        if (Util::warnIfNotWritable(reportPath, &MAIN, caption, true /* remove */))
+        if (Util::warnIfNotWritable(reportPath, &MAIN, caption))
             return;
 
-        // Get temp filename for the new XML.
+        // Get temp file for the new XML.
         QScopedPointer<QTemporaryFile> tmp(Util::writableTemporaryFile(reportPath));
         tmp->open();
-        tmp->close();
 
         // Generate the XML for the comparison.
         Mlt::Tractor tractor(MLT.profile());
@@ -80,7 +86,8 @@ void EncodeJob::onVideoQualityTriggered()
             tractor.set_track(encoded, 1);
             tractor.plant_transition(vqm);
             vqm.set("render", 0);
-            MLT.saveXML(tmp->fileName(), &tractor, false /* without relative paths */, false /* do not verify */ );
+            MLT.saveXML(tmp->fileName(), &tractor, false /* without relative paths */, tmp.data());
+            tmp->close();
 
             // Add consumer element to XML.
             QFile f1(tmp->fileName());
@@ -102,6 +109,26 @@ void EncodeJob::onVideoQualityTriggered()
             // Create job and add it to the queue.
             JOBS.add(new VideoQualityJob(objectName(), dom.toString(2), reportPath,
                      MLT.profile().frame_rate_num(), MLT.profile().frame_rate_den()));
+        }
+    }
+}
+
+void EncodeJob::onSpatialMediaTriggered()
+{
+    // Get the location and file name for the report.
+    QString caption = tr("Set Equirectangular Projection");
+    QFileInfo info(objectName());
+    QString directory = QString("%1/%2 - ERP.%3")
+            .arg(Settings.encodePath())
+            .arg(info.completeBaseName())
+            .arg(info.suffix());
+    QString filePath = QFileDialog::getSaveFileName(&MAIN, caption, directory, QString(),
+        nullptr, Util::getFileDialogOptions());
+    if (!filePath.isEmpty()) {
+        if (SpatialMedia::injectSpherical(objectName().toStdString(), filePath.toStdString())) {
+            MAIN.showStatusMessage(tr("Successfully wrote %1").arg(QFileInfo(filePath).fileName()));
+        } else {
+            MAIN.showStatusMessage(tr("An error occurred saving the projection."));
         }
     }
 }

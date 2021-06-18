@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2014-2015 Meltytech, LLC
- * Author: Brian Matherly <code@brianmatherly.com>
+ * Copyright (c) 2014-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,7 +31,7 @@ function maxMenuHeight(pad) {
 function calcMenuRect(triggerItem, pad) {
     var result = Qt.rect(0, 0, 0, 0)
     var itemPos = triggerItem.mapToItem(null,0,0)
-    var triggerPos = Qt.point(itemPos.x + view.pos.x, itemPos.y + view.pos.y)
+    var triggerPos = Qt.point(itemPos.x + view.pos().x, itemPos.y + view.pos().y)
     var mainWinRect = application.mainWinRect
     
     result.height = Math.min(maxMenuHeight(pad), mainWinRect.height)

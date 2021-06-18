@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2018 Meltytech, LLC
+ * Copyright (c) 2013-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,10 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.1
-import QtQuick.Controls 1.1
-import QtQuick.Layouts 1.0
-import Shotcut.Controls 1.0
+import QtQuick 2.12
+import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.12
+import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     width: 200
@@ -55,19 +55,15 @@ Item {
         onOutChanged: updateFilter(null)
         onAnimateInChanged: updateFilter(null)
         onAnimateOutChanged: updateFilter(null)
+        onPropertyChanged: {
+            setControls()
+        }
     }
 
     Connections {
         target: producer
         onPositionChanged: {
-            if (filter.animateIn > 0 || filter.animateOut > 0) {
-                setControls()
-            } else {
-                blockUpdate = true
-                gainSlider.value = filter.getDouble('level', getPosition())
-                blockUpdate = false
-                gainSlider.enabled = true
-            }
+            setControls()
         }
     }
 
@@ -83,8 +79,13 @@ Item {
         var position = getPosition()
         blockUpdate = true
         gainSlider.value = filter.getDouble('level', position)
+        if (filter.animateIn > 0 || filter.animateOut > 0) {
+            gainSlider.enabled = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1)
+        } else {
+            gainSlider.enabled = true
+        }
+        gainKeyframesButton.checked = filter.keyframeCount('level') > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
         blockUpdate = false
-        gainSlider.enabled = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1)
     }
 
     function updateFilter(position) {
@@ -127,7 +128,7 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: preset
             Layout.columnSpan: parent.columns - 1
             parameters: ['level']
@@ -136,7 +137,6 @@ Item {
             }
             onPresetSelected: {
                 setControls()
-                gainKeyframesButton.checked = filter.keyframeCount(parameters[0]) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
                 middleValue = filter.getDouble(parameters[0], filter.animateIn)
                 if (filter.animateIn > 0)
                     startValue = filter.getDouble(parameters[0], 0)
@@ -149,7 +149,7 @@ Item {
             text: qsTr('Level')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: gainSlider
             minimumValue: -70
             maximumValue: 24
@@ -157,12 +157,11 @@ Item {
             decimals: 1
             onValueChanged: updateFilter(getPosition())
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: gainSlider.value = 0.0
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: gainKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('level') > 0
             onToggled: {
                 if (checked) {
                     blockUpdate = true

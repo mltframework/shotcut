@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2019 Meltytech, LLC
+ * Copyright (c) 2017-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,10 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.0
-import QtQuick.Controls 1.1
-import QtQuick.Layouts 1.1
-import Shotcut.Controls 1.0
+import QtQuick 2.12
+import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.12
+import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     property string rectProperty: "rect"
@@ -52,10 +52,10 @@ Item {
     }
 
     function setFilter() {
-        var x = parseFloat(rectX.text)
-        var y = parseFloat(rectY.text)
-        var w = parseFloat(rectW.text)
-        var h = parseFloat(rectH.text)
+        var x = rectX.value
+        var y = rectY.value
+        var w = rectW.value
+        var h = rectH.value
         if (x !== filterRect.x ||
             y !== filterRect.y ||
             w !== filterRect.width ||
@@ -81,6 +81,10 @@ Item {
         freqLowSlider.value = filter.getDouble('frequency_low')
         freqHighSlider.value = filter.getDouble('frequency_high')
         thresholdSlider.value = filter.getDouble('threshold')
+        rectX.value = filterRect.x
+        rectY.value = filterRect.y
+        rectW.value = filterRect.width
+        rectH.value = filterRect.height
         _disableUpdate = false
     }
 
@@ -93,7 +97,7 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: preset
             parameters: defaultParameters
             Layout.columnSpan: 4
@@ -108,7 +112,7 @@ Item {
             text: qsTr('Type')
             Layout.alignment: Qt.AlignRight
         }
-        ComboBox {
+        Shotcut.ComboBox {
             Layout.columnSpan: 4
             id: typeCombo
             model: [qsTr('Line'), qsTr('Bar')]
@@ -127,7 +131,7 @@ Item {
             text: qsTr('Spectrum Color')
             Layout.alignment: Qt.AlignRight
         }
-        GradientControl {
+        Shotcut.GradientControl {
             Layout.columnSpan: 4
             id: fgGradient
             onGradientChanged: {
@@ -140,7 +144,7 @@ Item {
             text: qsTr('Background Color')
             Layout.alignment: Qt.AlignRight
         }
-        ColorPicker {
+        Shotcut.ColorPicker {
             Layout.columnSpan: 4
             id: bgColor
             eyedropper: true
@@ -152,7 +156,7 @@ Item {
             text: qsTr('Thickness')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             Layout.columnSpan: 3
             id: thicknessSlider
             minimumValue: 0
@@ -161,7 +165,7 @@ Item {
             suffix: ' px'
             onValueChanged: filter.set("thickness", value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: thicknessSlider.value = 1
         }
 
@@ -171,18 +175,28 @@ Item {
         }
         RowLayout {
             Layout.columnSpan: 4
-            TextField {
+            Shotcut.DoubleSpinBox {
                 id: rectX
-                text: filterRect.x
+                value: filterRect.x
+                Layout.minimumWidth: 100
                 horizontalAlignment: Qt.AlignRight
-                onEditingFinished: if (filterRect.x !== parseFloat(text)) setFilter()
+                decimals: 0
+                stepSize: 1
+                from: -999999999
+                to: 999999999
+                onValueModified: if (filterRect.x !== value) setFilter()
             }
-            Label { text: ',' }
-            TextField {
+            Label { text: ','; Layout.minimumWidth: 20; horizontalAlignment: Qt.AlignHCenter }
+            Shotcut.DoubleSpinBox {
                 id: rectY
-                text: filterRect.y
+                value: filterRect.y
+                Layout.minimumWidth: 100
                 horizontalAlignment: Qt.AlignRight
-                onEditingFinished: if (filterRect.y !== parseFloat(text)) setFilter()
+                decimals: 0
+                stepSize: 1
+                from: -999999999
+                to: 999999999
+                onValueModified: if (filterRect.y !== value) setFilter()
             }
         }
 
@@ -192,18 +206,28 @@ Item {
         }
         RowLayout {
             Layout.columnSpan: 4
-            TextField {
+            Shotcut.DoubleSpinBox {
                 id: rectW
-                text: filterRect.width
+                value: filterRect.width
+                Layout.minimumWidth: 100
                 horizontalAlignment: Qt.AlignRight
-                onEditingFinished: if (filterRect.width !== parseFloat(text)) setFilter()
+                decimals: 0
+                stepSize: 1
+                from: -999999999
+                to: 999999999
+                onValueModified: if (filterRect.width !== value) setFilter()
             }
-            Label { text: 'x' }
-            TextField {
+            Label { text: 'x'; Layout.minimumWidth: 20; horizontalAlignment: Qt.AlignHCenter }
+            Shotcut.DoubleSpinBox {
                 id: rectH
-                text: filterRect.height
+                value: filterRect.height
+                Layout.minimumWidth: 100
                 horizontalAlignment: Qt.AlignRight
-                onEditingFinished: if (filterRect.height !== parseFloat(text)) setFilter()
+                decimals: 0
+                stepSize: 1
+                from: -999999999
+                to: 999999999
+                onValueModified: if (filterRect.height !== value) setFilter()
             }
         }
 
@@ -244,7 +268,7 @@ Item {
             text: qsTr('Tension')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             Layout.columnSpan: 3
             id: tensionSlider
             minimumValue: 0.0
@@ -252,7 +276,7 @@ Item {
             decimals: 1
             onValueChanged: filter.set("tension", value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: tensionSlider.value = 0.4
         }
 
@@ -260,7 +284,7 @@ Item {
             text: qsTr('Bands')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             Layout.columnSpan: 3
             id: bandsSlider
             minimumValue: 5
@@ -268,16 +292,16 @@ Item {
             decimals: 0
             onValueChanged: filter.set("bands", value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: bandsSlider.value = 31
         }
 
         Label {
             text: qsTr('Low Frequency')
             Layout.alignment: Qt.AlignRight
-            ToolTip { text: qsTr('The low end of the frequency range of the spectrum.') }
+            Shotcut.HoverTip { text: qsTr('The low end of the frequency range of the spectrum.') }
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             Layout.columnSpan: 3
             id: freqLowSlider
             minimumValue: 20
@@ -291,16 +315,16 @@ Item {
                 }
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: freqLowSlider.value = 20
         }
 
         Label {
             text: qsTr('High Frequency')
             Layout.alignment: Qt.AlignRight
-            ToolTip { text: qsTr('The high end of the frequency range of the spectrum.') }
+            Shotcut.HoverTip { text: qsTr('The high end of the frequency range of the spectrum.') }
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             Layout.columnSpan: 3
             id: freqHighSlider
             minimumValue: 20 + _minFreqDelta
@@ -314,7 +338,7 @@ Item {
                 }
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: freqHighSlider.value = 20000
         }
 
@@ -322,7 +346,7 @@ Item {
             text: qsTr('Threshold')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             Layout.columnSpan: 3
             id: thresholdSlider
             minimumValue: -60
@@ -331,7 +355,7 @@ Item {
             suffix: ' dB'
             onValueChanged: filter.set("threshold", value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: thresholdSlider.value = -60
         }
 
@@ -342,8 +366,10 @@ Item {
         target: filter
         onChanged: {
             var newValue = filter.getRect(rectProperty)
-            if (filterRect !== newValue)
+            if (filterRect !== newValue) {
                 filterRect = newValue
+                setControls()
+            }
         }
     }
 }

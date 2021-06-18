@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Meltytech, LLC
+ * Copyright (c) 2019-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,10 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.0
-import QtQuick.Controls 1.1
-import QtQuick.Layouts 1.1
-import Shotcut.Controls 1.0
+import QtQuick 2.12
+import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.12
+import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     property string rectProperty: "rect"
@@ -45,10 +45,10 @@ Item {
     }
 
     function setFilter() {
-        var x = parseFloat(rectX.text)
-        var y = parseFloat(rectY.text)
-        var w = parseFloat(rectW.text)
-        var h = parseFloat(rectH.text)
+        var x = rectX.value
+        var y = rectY.value
+        var w = rectW.value
+        var h = rectH.value
         if (x !== filterRect.x ||
             y !== filterRect.y ||
             w !== filterRect.width ||
@@ -68,6 +68,10 @@ Item {
         freqLowSlider.value = filter.getDouble('frequency_low')
         freqHighSlider.value = filter.getDouble('frequency_high')
         thresholdSlider.value = filter.getDouble('threshold')
+        rectX.value = filterRect.x
+        rectY.value = filterRect.y
+        rectW.value = filterRect.width
+        rectH.value = filterRect.height
         _disableUpdate = false
     }
 
@@ -80,7 +84,7 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: preset
             parameters: defaultParameters
             Layout.columnSpan: 4
@@ -95,7 +99,7 @@ Item {
             text: qsTr('Waveform Color')
             Layout.alignment: Qt.AlignRight
         }
-        GradientControl {
+        Shotcut.GradientControl {
             Layout.columnSpan: 4
             id: fgGradient
             onGradientChanged: {
@@ -110,18 +114,28 @@ Item {
         }
         RowLayout {
             Layout.columnSpan: 4
-            TextField {
+            Shotcut.DoubleSpinBox {
                 id: rectX
-                text: filterRect.x
+                value: filterRect.x
+                Layout.minimumWidth: 100
                 horizontalAlignment: Qt.AlignRight
-                onEditingFinished: setFilter()
+                decimals: 0
+                stepSize: 1
+                from: -999999999
+                to: 999999999
+                onValueModified: setFilter()
             }
-            Label { text: ',' }
-            TextField {
+            Label { text: ','; Layout.minimumWidth: 20; horizontalAlignment: Qt.AlignHCente }
+            Shotcut.DoubleSpinBox {
                 id: rectY
-                text: filterRect.y
+                value: filterRect.y
+                Layout.minimumWidth: 100
                 horizontalAlignment: Qt.AlignRight
-                onEditingFinished: setFilter()
+                decimals: 0
+                stepSize: 1
+                from: -999999999
+                to: 999999999
+                onValueModified: setFilter()
             }
         }
 
@@ -131,27 +145,37 @@ Item {
         }
         RowLayout {
             Layout.columnSpan: 4
-            TextField {
+            Shotcut.DoubleSpinBox {
                 id: rectW
-                text: filterRect.width
+                value: filterRect.width
+                Layout.minimumWidth: 100
                 horizontalAlignment: Qt.AlignRight
-                onEditingFinished: setFilter()
+                decimals: 0
+                stepSize: 1
+                from: -999999999
+                to: 999999999
+                onValueModified: setFilter()
             }
-            Label { text: 'x' }
-            TextField {
+            Label { text: 'x'; Layout.minimumWidth: 20; horizontalAlignment: Qt.AlignHCente }
+            Shotcut.DoubleSpinBox {
                 id: rectH
-                text: filterRect.height
+                value: filterRect.height
+                Layout.minimumWidth: 100
                 horizontalAlignment: Qt.AlignRight
-                onEditingFinished: setFilter()
+                decimals: 0
+                stepSize: 1
+                from: -999999999
+                to: 999999999
+                onValueModified: setFilter()
             }
         }
 
         Label {
             text: qsTr('Oscillation')
             Layout.alignment: Qt.AlignRight
-            ToolTip { text: qsTr('Oscillation can be useful to make the light blink during long periods of sound.') }
+            Shotcut.HoverTip { text: qsTr('Oscillation can be useful to make the light blink during long periods of sound.') }
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             Layout.columnSpan: 3
             id: oscSlider
             minimumValue: 0
@@ -160,16 +184,16 @@ Item {
             suffix: ' Hz'
             onValueChanged: filter.set("osc", value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: oscSlider.value = 5
         }
 
         Label {
             text: qsTr('Low Frequency')
             Layout.alignment: Qt.AlignRight
-            ToolTip { text: qsTr('The low end of the frequency range to be used to influence the light.') }
+            Shotcut.HoverTip { text: qsTr('The low end of the frequency range to be used to influence the light.') }
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             Layout.columnSpan: 3
             id: freqLowSlider
             minimumValue: 20
@@ -183,16 +207,16 @@ Item {
                 }
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: freqLowSlider.value = 20
         }
 
         Label {
             text: qsTr('High Frequency')
             Layout.alignment: Qt.AlignRight
-            ToolTip { text: qsTr('The high end of the frequency range to be used to influence the light.') }
+            Shotcut.HoverTip { text: qsTr('The high end of the frequency range to be used to influence the light.') }
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             Layout.columnSpan: 3
             id: freqHighSlider
             minimumValue: 20 + _minFreqDelta
@@ -206,16 +230,16 @@ Item {
                 }
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: freqHighSlider.value = 20000
         }
 
         Label {
             text: qsTr('Threshold')
             Layout.alignment: Qt.AlignRight
-            ToolTip { text: qsTr('The minimum amplitude of sound that must occur within the frequency range to cause the light to change.') }
+            Shotcut.HoverTip { text: qsTr('The minimum amplitude of sound that must occur within the frequency range to cause the light to change.') }
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             Layout.columnSpan: 3
             id: thresholdSlider
             minimumValue: -60
@@ -224,7 +248,7 @@ Item {
             suffix: ' dB'
             onValueChanged: filter.set("threshold", value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: thresholdSlider.value = -60
         }
         
@@ -235,8 +259,10 @@ Item {
         target: filter
         onChanged: {
             var newValue = filter.getRect(rectProperty)
-            if (filterRect !== newValue)
+            if (filterRect !== newValue) {
                 filterRect = newValue
+                setControls()
+            }
         }
     }
 }

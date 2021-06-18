@@ -55,19 +55,29 @@
 <context>
     <name>AttachedFiltersModel</name>
     <message>
-        <location filename="../src/models/attachedfiltersmodel.cpp" line="142"/>
+        <location filename="../src/models/attachedfiltersmodel.cpp" line="163"/>
         <source>Audio</source>
         <translation>Ses</translation>
     </message>
     <message>
-        <location filename="../src/models/attachedfiltersmodel.cpp" line="144"/>
+        <location filename="../src/models/attachedfiltersmodel.cpp" line="165"/>
+        <source>Time</source>
+        <translation>Zaman</translation>
+    </message>
+    <message>
+        <location filename="../src/models/attachedfiltersmodel.cpp" line="167"/>
         <source>GPU</source>
         <translation>GPU</translation>
     </message>
     <message>
-        <location filename="../src/models/attachedfiltersmodel.cpp" line="146"/>
+        <location filename="../src/models/attachedfiltersmodel.cpp" line="169"/>
         <source>Video</source>
         <translation>Video</translation>
+    </message>
+    <message>
+        <location filename="../src/models/attachedfiltersmodel.cpp" line="348"/>
+        <source>This file has B-frames, which is not supported by %1.</source>
+        <translation>Bu dosya, %1 tarafından desteklenmeyen B-karelerine sahip.</translation>
     </message>
 </context>
 <context>
@@ -198,7 +208,7 @@
     <message>
         <location filename="../src/widgets/scopes/audiowaveformscopewidget.cpp" line="272"/>
         <source>Ch: %1: %2 (%3 dBFS)</source>
-        <translation>Knl: %1: %2 (%3 dBFS)</translation>
+        <translation>Kanal: %1: %2 (%3 dBFS)</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/audiowaveformscopewidget.cpp" line="295"/>
@@ -234,28 +244,28 @@
         <translation>Video</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="345"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="371"/>
         <source>Broadcast Limited (MPEG)</source>
         <translation>Sınırlı Yayın (MPEG)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="350"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="376"/>
         <source>Full (JPEG)</source>
         <translation>Tam (JPEG)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="385"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="531"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="411"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="557"/>
         <source>Track</source>
         <translation>İz</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="373"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="399"/>
         <source>Aspect ratio</source>
         <translation>En boy oranı</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="438"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="464"/>
         <source>:</source>
         <translation>:</translation>
     </message>
@@ -265,20 +275,20 @@
         <translation>Tarama Kipi</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="482"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="508"/>
         <source>Interlaced</source>
         <translation>Ara geçişli</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="487"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="513"/>
         <source>Progressive</source>
         <translation>Tek geçişli</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="289"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="319"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="617"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="647"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="295"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="335"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="643"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="673"/>
         <source>Codec</source>
         <translation>Kodlayıcı/Çözücü</translation>
     </message>
@@ -303,251 +313,337 @@
         <translation>Renk Aralığı</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="294"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="324"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="300"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="340"/>
         <source>Resolution</source>
         <translation>Çözünürlük</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="299"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="329"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="305"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="345"/>
         <source>Frame rate</source>
         <translation>Kare Hızı</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="304"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="310"/>
         <source>Pixel format</source>
         <translation>Piksel Biçimi</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="309"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="637"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="777"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="315"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="355"/>
+        <source>Color space</source>
+        <translation>Renk uzayı</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="320"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="360"/>
+        <source>Color transfer</source>
+        <translation>Renk aktarım</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="325"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="663"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="803"/>
         <source>Name</source>
         <translation>Ad</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="314"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="642"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="782"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="330"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="668"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="808"/>
         <source>Value</source>
         <translation>Değer</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="334"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="632"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="662"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="350"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="658"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="688"/>
         <source>Format</source>
         <translation>Biçim</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="496"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="522"/>
         <source>Bottom Field First</source>
         <translation>Önce Alt Alan </translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="501"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="527"/>
         <source>Top Field First</source>
         <translation>Önce Üst Alan </translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="525"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="551"/>
         <source>Audio</source>
         <translation>Ses</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="622"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="652"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="648"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="678"/>
         <source>Channels</source>
         <translation>Kanallar </translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="627"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="657"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="653"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="683"/>
         <source>Sample rate</source>
         <translation>Örnekleme Hızı</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="670"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="696"/>
         <source>Adjust the audio/video synchronization. The center position is equivalent to no alteration.</source>
         <translation>Ses ve video eş zamanlamasını ayarlayın. Orta konum herhangi bir değişiklik olmadığı anlamına gelir.</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="689"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="715"/>
         <source>Sync</source>
         <translation>Eş zamanlama</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="714"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="740"/>
         <source> ms</source>
         <translation>ms</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="743"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="769"/>
         <source>Metadata</source>
         <translation>Üst Veri</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="813"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="950"/>
         <source>Reset</source>
         <translation>Sıfırla</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="827"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="955"/>
+        <source>Set Equirectangular...</source>
+        <translation>Dikdörtgen küre ayarla...</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="846"/>
         <source>Convert to Edit-friendly</source>
         <translation>Düzenleme dostu biçime dönüştür</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="830"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="849"/>
         <source>Convert...</source>
         <translation>Dönüştür...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="837"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="863"/>
         <source>Display a menu of additional actions</source>
         <translation>Ek işlemler menüsünü görüntüle</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="866"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="892"/>
         <source>Show in Folder</source>
         <translation>Klasörde Göster</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="871"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="897"/>
         <source>Copy Full File Path</source>
         <translation>Tam Dosya Yolunu Kopyala</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="876"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="902"/>
         <source>More Information...</source>
         <translation>Ayrıntılı Bilgiler...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="881"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="907"/>
         <source>Start Integrity Check Job</source>
         <translation>Bütünlük Denetimini Başlat</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="886"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="912"/>
         <source>Convert to Edit-friendly...</source>
         <translation>Düzenleme Dostu Biçime Dönüştür...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="896"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="922"/>
         <source>Set Creation Time...</source>
         <translation>Oluşturma Tarihini Ayarla...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="820"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="818"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="930"/>
+        <source>Disable Proxy</source>
+        <translation>Vekil kullanılmasın</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="935"/>
+        <source>Make Proxy</source>
+        <translation>Vekil Yap</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="940"/>
+        <source>Delete Proxy</source>
+        <translation>Vekili Sil</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="945"/>
+        <source>Copy Hash Code</source>
+        <translation>Hash Kodu Kopyala</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="839"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1032"/>
         <source>Reverse...</source>
         <translation>Ters...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="891"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="985"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="917"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1214"/>
         <source>Extract Sub-clip...</source>
         <translation>Alt-klibi dışa aktar...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="336"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="372"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="394"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="466"/>
         <source>None</source>
         <translation>Yok</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="393"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="412"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="431"/>
+        <source>unknown (%1)</source>
+        <translation>bilinmeyen (%1)</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="433"/>
+        <source>NA</source>
+        <translation>ED</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="487"/>
         <source>All</source>
         <translation>Tümü</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="471"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="527"/>
+        <source>(PROXY)</source>
+        <translation>(VEKİL)</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="571"/>
         <source>(variable)</source>
         <translation>(değişken)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="512"/>
-        <source>This file is variable frame rate, which is not reliable for editing. Do you want to convert it to an edit-friendly format?
-
-If yes, choose a format below and then click OK to choose a file name. After choosing a file name, a job is created. When it is done, double-click the job to open it.
-</source>
-        <translation>Bu dosya, düzenleme için güvenilir olmayan değişken kare hızına sahiptir. Düzenleme dostu bir biçime dönüştürmek ister misiniz? 
-
-Evetse, aşağıdan bir biçim seçin ve ardından bir dosya adı seçmek için Tamam&apos;ı tıklayın. Bir dosya adı seçtikten sonra bir görev oluşturulur. Tamamlandığında, açmak için görevi çift tıklayın.
-</translation>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="856"/>
+        <source>Proxy</source>
+        <translation>Vekil</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="525"/>
-        <source>This file does not support seeking and cannot be used for editing. Do you want to convert it to an edit-friendly format?
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="196"/>
+        <source> Do you want to convert it to an edit-friendly format?
 
-If yes, choose a format below and then click OK to choose a file name. After choosing a file name, a job is created. When it is done, double-click the job to open it.
+If yes, choose a format below and then click OK to choose a file name. After choosing a file name, a job is created. When it is done, it automatically replaces clips, or you can double-click the job to open it.
 </source>
-        <translation>Bu dosya aramayı desteklemiyor ve düzenleme için kullanılamıyor. Düzenleme dostu bir biçime dönüştürmek ister misiniz?
+        <translation> Düzenle dostu bir biçime dönüştürmek ister misiniz?
 
-Evetse, aşağıdan bir biçim seçin ve ardından bir dosya adı seçmek için Tamam&apos;ı tıklayın. Bir dosya adı seçtikten sonra bir görev oluşturulur. Tamamlandığında, açmak için görevi çift tıklayın.
-</translation>
+Evetse, aşağıdan bir biçim seçin sonra bir dosya adı seçmek için Tamam&apos;ı tıklayın. Bir dosya adı seçtikten sonra bir görev oluşturulur. Tamamlandığında, otomatik olarak kliplerin yerini alır veya görevi açmak için çift tıklayabilirsiniz.</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="731"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="814"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="610"/>
+        <source>This file uses color transfer characteristics %1, which may result in incorrect colors or brightness in Shotcut.</source>
+        <translation>Bu dosya %1 renk aktarım özelliklerini kullanıyor ve bu da Shotcut&apos;ta yanlış renklere veya parlaklığa neden olabilir.</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="613"/>
+        <source>This file is variable frame rate, which is not reliable for editing.</source>
+        <translation>Bu dosya, düzenleme için güvenilir olmayan değişken kare hızındadır.</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="616"/>
+        <source>This file does not support seeking and cannot be used for editing.</source>
+        <translation>Bu dosya aramayı desteklemiyor ve düzenleme için kullanılamaz.</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="802"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1028"/>
         <source>Choose an edit-friendly format below and then click OK to choose a file name. After choosing a file name, a job is created. When it is done, double-click the job to open it.
 </source>
         <translation>Aşağıdan düzenleme dostu bir biçim seçin ve ardından bir dosya adı seçmek için Tamam&apos;ı tıklayın. Bir dosya adı seçtikten sonra bir görev oluşturulur. Tamamlandığında, açmak için görevi çift tıklayın.
 </translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="766"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="878"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="915"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1105"/>
         <source>MP4 (*.mp4);;All Files (*)</source>
         <translation>MP4 (*.mp4);;Tüm dosyalar (*)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="778"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="901"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="927"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1128"/>
         <source>MOV (*.mov);;All Files (*)</source>
         <translation>MOV (*.mov);;Tüm Dosyalar (*)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="784"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="912"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="933"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1139"/>
         <source>MKV (*.mkv);;All Files (*)</source>
         <translation>MKV (*.mkv);;Tüm Dosyalar (*)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="788"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="940"/>
         <source>Converted</source>
         <translation>Dönüştürüldü</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="805"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="946"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="964"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1175"/>
         <source>Convert %1</source>
         <translation>%1 Dönüştür</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="916"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1143"/>
         <source>Reversed</source>
         <translation>Tersine</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="954"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1183"/>
         <source>Reverse %1</source>
         <translation>%1 Tersine</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="984"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="940"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1213"/>
         <source>Sub-clip</source>
         <translation>Alt-klip</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="986"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1215"/>
         <source>%1 (*.%2);;All Files (*)</source>
         <translation>%1 (*.%2);;Tüm Dosyalar (*)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1024"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1255"/>
         <source>Extract sub-clip %1</source>
         <translation>Alt-klip %1 dışa aktar</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1362"/>
+        <source>The hash code below is already copied to your clipboard:
+
+</source>
+        <translation>Aşağıdaki hash kodu zaten panonuza kopyalandı:
+
+</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1406"/>
+        <source>Set Equirectangular Projection</source>
+        <translation>Dikdörtgen küre izdüşümü ayarla</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1416"/>
+        <source>Successfully wrote %1</source>
+        <translation>%1 başarıyla yazıldı</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1418"/>
+        <source>An error occurred saving the projection.</source>
+        <translation>Projeksiyon kaydedilirken bir hata oluştu.</translation>
     </message>
 </context>
 <context>
@@ -583,60 +679,100 @@ Evetse, aşağıdan bir biçim seçin ve ardından bir dosya adı seçmek için 
     </message>
 </context>
 <context>
+    <name>BlipProducerWidget</name>
+    <message>
+        <location filename="../src/widgets/blipproducerwidget.ui" line="14"/>
+        <source>Form</source>
+        <translation>Form</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/blipproducerwidget.ui" line="26"/>
+        <source>Blip Flash</source>
+        <translation>Flaş Patlat</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/blipproducerwidget.ui" line="41"/>
+        <source>Frequency</source>
+        <translation>Frekans</translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../src/widgets/blipproducerwidget.cpp" line="65"/>
+        <source> second(s)</source>
+        <translation>
+            <numerusform> saniye</numerusform>
+        </translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/blipproducerwidget.cpp" line="87"/>
+        <source>Period: %1s</source>
+        <translation>Devre: %1s</translation>
+    </message>
+</context>
+<context>
     <name>Clip</name>
     <message>
-        <location filename="../src/qml/views/timeline/Clip.qml" line="629"/>
+        <location filename="../src/qml/views/timeline/Clip.qml" line="631"/>
         <source>Cut</source>
         <translation>Kes</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/Clip.qml" line="641"/>
+        <location filename="../src/qml/views/timeline/Clip.qml" line="643"/>
         <source>Copy</source>
         <translation>Kopyala</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/Clip.qml" line="648"/>
+        <location filename="../src/qml/views/timeline/Clip.qml" line="647"/>
         <source>Remove</source>
         <translation>Kaldır</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/Clip.qml" line="653"/>
+        <location filename="../src/qml/views/timeline/Clip.qml" line="656"/>
+        <source>More</source>
+        <translation>Daha</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/views/timeline/Clip.qml" line="659"/>
         <source>Lift</source>
         <translation>Çıkart</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/Clip.qml" line="658"/>
+        <location filename="../src/qml/views/timeline/Clip.qml" line="664"/>
         <source>Replace</source>
         <translation>Yerleştir</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/Clip.qml" line="667"/>
-        <source>Split At Playhead (S)</source>
-        <translation>Oynatma Kafasından Böl (S)</translation>
+        <location filename="../src/qml/views/timeline/Clip.qml" line="709"/>
+        <source>Cancel</source>
+        <translation>İptal</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/Clip.qml" line="673"/>
+        <location filename="../src/qml/views/timeline/Clip.qml" line="652"/>
+        <source>Split At Playhead</source>
+        <translation>Oynatma Kafasından Böl</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/views/timeline/Clip.qml" line="669"/>
         <source>Merge with next clip</source>
         <translation>Sonraki kliple birleştir </translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/Clip.qml" line="678"/>
+        <location filename="../src/qml/views/timeline/Clip.qml" line="674"/>
         <source>Detach Audio</source>
         <translation>Sesi Ayır</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/Clip.qml" line="683"/>
+        <location filename="../src/qml/views/timeline/Clip.qml" line="679"/>
         <source>Update Thumbnails</source>
         <translation>Küçük görselleri güncelle</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/keyframes/Clip.qml" line="489"/>
-        <location filename="../src/qml/views/timeline/Clip.qml" line="699"/>
+        <location filename="../src/qml/views/keyframes/Clip.qml" line="492"/>
+        <location filename="../src/qml/views/timeline/Clip.qml" line="695"/>
         <source>Rebuild Audio Waveform</source>
         <translation>Ses Dalga Biçimini Yeniden Oluştur</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/Clip.qml" line="704"/>
+        <location filename="../src/qml/views/timeline/Clip.qml" line="701"/>
         <source>Properties</source>
         <translation>Özellikler</translation>
     </message>
@@ -644,12 +780,12 @@ Evetse, aşağıdan bir biçim seçin ve ardından bir dosya adı seçmek için 
 <context>
     <name>ClockSpinner</name>
     <message>
-        <location filename="../src/qml/filters/timer/ClockSpinner.qml" line="103"/>
+        <location filename="../src/qml/filters/timer/ClockSpinner.qml" line="108"/>
         <source>Decrement</source>
         <translation>Azalma</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/timer/ClockSpinner.qml" line="124"/>
+        <location filename="../src/qml/filters/timer/ClockSpinner.qml" line="129"/>
         <source>Increment</source>
         <translation>Artış</translation>
     </message>
@@ -715,17 +851,17 @@ Evetse, aşağıdan bir biçim seçin ve ardından bir dosya adı seçmek için 
 <context>
     <name>ColorPicker</name>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/ColorPicker.qml" line="57"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/ColorPicker.qml" line="53"/>
         <source>Click to open color dialog</source>
         <translation>Renk penceresini açmak için tıklayın</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/ColorPicker.qml" line="62"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/ColorPicker.qml" line="59"/>
         <source>Please choose a color</source>
         <translation>Lütfen bir renk seçin</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/ColorPicker.qml" line="86"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/ColorPicker.qml" line="83"/>
         <source>Pick a color on the screen. By pressing the mouse button and then moving your mouse you can select a section of the screen from which to get an average color.</source>
         <translation>Ekranda bir renk seçin. Fare düğmesine basarak ve sonra farenizi hareket ettirerek ekranın ortalama bir renk alacağı bir bölümünü seçebilirsiniz.</translation>
     </message>
@@ -751,6 +887,16 @@ Evetse, aşağıdan bir biçim seçin ve ardından bir dosya adı seçmek için 
         <location filename="../src/widgets/colorproducerwidget.ui" line="48"/>
         <source>#00000000</source>
         <translation>#00000000</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/colorproducerwidget.cpp" line="56"/>
+        <source>black</source>
+        <translation>siyah</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/colorproducerwidget.cpp" line="58"/>
+        <source>transparent</source>
+        <translation>saydam</translation>
     </message>
 </context>
 <context>
@@ -895,47 +1041,47 @@ Evetse, aşağıdan bir biçim seçin ve ardından bir dosya adı seçmek için 
         <translation>: </translation>
     </message>
     <message>
-        <location filename="../src/dialogs/customprofiledialog.ui" line="145"/>
+        <location filename="../src/dialogs/customprofiledialog.ui" line="180"/>
         <source>Name</source>
         <translation>Ad </translation>
     </message>
     <message>
-        <location filename="../src/dialogs/customprofiledialog.ui" line="167"/>
+        <location filename="../src/dialogs/customprofiledialog.ui" line="202"/>
         <source>Interlaced</source>
         <translation>Ara geçişli</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/customprofiledialog.ui" line="172"/>
+        <location filename="../src/dialogs/customprofiledialog.ui" line="207"/>
         <source>Progressive</source>
         <translation>Tek geçişli</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/customprofiledialog.ui" line="195"/>
+        <location filename="../src/dialogs/customprofiledialog.ui" line="230"/>
         <source>Aspect ratio</source>
         <translation>En boy oranı</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/customprofiledialog.ui" line="229"/>
+        <location filename="../src/dialogs/customprofiledialog.ui" line="264"/>
         <source>x</source>
         <translation>x</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/customprofiledialog.ui" line="267"/>
+        <location filename="../src/dialogs/customprofiledialog.ui" line="352"/>
         <source>Frames/sec</source>
         <translation>Kare/sn</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/customprofiledialog.ui" line="373"/>
+        <location filename="../src/dialogs/customprofiledialog.ui" line="453"/>
         <source>Scan mode</source>
         <translation>Tarama Kipi</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/customprofiledialog.ui" line="405"/>
+        <location filename="../src/dialogs/customprofiledialog.ui" line="485"/>
         <source>&lt;small&gt;(Leave Name blank to skip saving a preset and use a temporary or project-specific Video Mode.)&lt;/small&gt;</source>
         <translation>&lt;small&gt;(Bir hazır ayarı kaydetmeyi atlamak ve geçici veya projeye özgü bir Video Kipi kullanmak için Adı boş bırakın.)&lt;/small&gt;</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/customprofiledialog.cpp" line="122"/>
+        <location filename="../src/dialogs/customprofiledialog.cpp" line="120"/>
         <source>Video Mode Frames/sec</source>
         <translation>Video Kipi Kare/sn</translation>
     </message>
@@ -975,19 +1121,6 @@ Evetse, aşağıdan bir biçim seçin ve ardından bir dosya adı seçmek için 
     </message>
 </context>
 <context>
-    <name>Dialog</name>
-    <message>
-        <location filename="../src/htmleditor/inserthtmldialog.ui" line="14"/>
-        <source>Insert HTML</source>
-        <translation>HTML Ekle </translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/inserthtmldialog.ui" line="20"/>
-        <source>HTML Code:</source>
-        <translation>HTML Kodu:</translation>
-    </message>
-</context>
-<context>
     <name>DirectShowVideoWidget</name>
     <message>
         <location filename="../src/widgets/directshowvideowidget.ui" line="14"/>
@@ -996,7 +1129,7 @@ Evetse, aşağıdan bir biçim seçin ve ardından bir dosya adı seçmek için 
     </message>
     <message>
         <location filename="../src/widgets/directshowvideowidget.ui" line="26"/>
-        <location filename="../src/widgets/directshowvideowidget.cpp" line="96"/>
+        <location filename="../src/widgets/directshowvideowidget.cpp" line="139"/>
         <source>Audio/Video Device</source>
         <translation>Ses/Video Aygıtı</translation>
     </message>
@@ -1031,174 +1164,222 @@ Evetse, aşağıdan bir biçim seçin ve ardından bir dosya adı seçmek için 
     </message>
 </context>
 <context>
+    <name>EditMenu</name>
+    <message>
+        <location filename="../src/qml/modules/Shotcut/Controls/EditMenu.qml" line="29"/>
+        <source>Undo</source>
+        <translation>Geri Al</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/modules/Shotcut/Controls/EditMenu.qml" line="35"/>
+        <source>Redo</source>
+        <translation>Yinele</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/modules/Shotcut/Controls/EditMenu.qml" line="42"/>
+        <source>Cut</source>
+        <translation>Kes</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/modules/Shotcut/Controls/EditMenu.qml" line="48"/>
+        <source>Copy</source>
+        <translation>Kopyala</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/modules/Shotcut/Controls/EditMenu.qml" line="54"/>
+        <source>Paste</source>
+        <translation>Yapıştır</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/modules/Shotcut/Controls/EditMenu.qml" line="60"/>
+        <source>Delete</source>
+        <translation>Sil</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/modules/Shotcut/Controls/EditMenu.qml" line="66"/>
+        <source>Clear</source>
+        <translation>Temizle</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/modules/Shotcut/Controls/EditMenu.qml" line="76"/>
+        <source>Select All</source>
+        <translation>Tümünü Seç</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/modules/Shotcut/Controls/EditMenu.qml" line="81"/>
+        <source>Cancel</source>
+        <translation>İptal</translation>
+    </message>
+</context>
+<context>
     <name>EncodeDock</name>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="24"/>
+        <location filename="../src/docks/encodedock.ui" line="18"/>
         <source>Export</source>
         <translation>Dışa Aktar</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="51"/>
+        <location filename="../src/docks/encodedock.ui" line="45"/>
         <source>&lt;b&gt;Presets&lt;/b&gt;</source>
         <translation>&lt;b&gt;Hazır ayarlar&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="64"/>
+        <location filename="../src/docks/encodedock.ui" line="58"/>
         <source>search</source>
         <translation>ara</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="95"/>
+        <location filename="../src/docks/encodedock.ui" line="89"/>
         <source>Add current settings as a new custom preset</source>
         <translation>Geçerli ayarları yeni bir özel hazır ayar olarak ekle</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="109"/>
+        <location filename="../src/docks/encodedock.ui" line="103"/>
         <source>Delete currently selected preset</source>
         <translation>Seçili olan hazır ayarı sil</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="175"/>
+        <location filename="../src/docks/encodedock.ui" line="169"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Export Help&lt;/span&gt;&lt;/p&gt;&lt;p&gt;The defaults create a H.264/AAC MP4 file, which is suitable for most users and purposes. Choose a &lt;span style=&quot; font-weight:600;&quot;&gt;Preset&lt;/span&gt; at the left before deciding to use the &lt;span style=&quot; font-weight:600;&quot;&gt;Advanced&lt;/span&gt; mode. The &lt;span style=&quot; font-weight:600;&quot;&gt;Advanced&lt;/span&gt; mode does not prevent creating an invalid combination of options!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Dışa aktar Yardımı&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Varsayılanlar, çoğu kullanıcı ve amaç için uygun olan bir H.264/AAC MP4 dosyası oluşturur. &lt;span style=&quot; font-weight:600;&quot;&gt;Gelişmiş&lt;/span&gt; modunu kullanmaya karar vermeden önce soldan bir &lt;span style=&quot; font-weight:600;&quot;&gt;Hazır Ayar&lt;/span&gt;seçin. &lt;span style=&quot; font-weight:600;&quot;&gt;Gelişmiş&lt;/span&gt;kip, seçeneklerin geçersiz kombinasyonu oluşturmasını engellemez.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="193"/>
+        <location filename="../src/docks/encodedock.ui" line="187"/>
         <source>From</source>
         <translation>Şuradan</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="223"/>
+        <location filename="../src/docks/encodedock.ui" line="217"/>
         <source>Format</source>
         <translation>Biçim</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="259"/>
+        <location filename="../src/docks/encodedock.ui" line="253"/>
         <source>Use hardware encoder</source>
         <translation>Donanım kodlayıcı kullan</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="266"/>
+        <location filename="../src/docks/encodedock.ui" line="260"/>
         <source>Configure...</source>
         <translation>Yapılandır...</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="300"/>
+        <location filename="../src/docks/encodedock.ui" line="294"/>
         <source>Video</source>
         <translation>Video</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="761"/>
+        <location filename="../src/docks/encodedock.ui" line="755"/>
         <source>Interpolation</source>
-        <translation>İnterpolasyon</translation>
+        <translation>Ara değerleme</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="354"/>
+        <location filename="../src/docks/encodedock.ui" line="348"/>
         <source>Field order</source>
         <translation>Alan sıralaması</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="364"/>
+        <location filename="../src/docks/encodedock.ui" line="358"/>
         <source>Aspect ratio</source>
         <translation>En boy oranı</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="582"/>
+        <location filename="../src/docks/encodedock.ui" line="576"/>
         <source>x</source>
         <translation>x </translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="324"/>
+        <location filename="../src/docks/encodedock.ui" line="318"/>
         <source>Scan mode</source>
         <translation>Tarama kipi</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="383"/>
+        <location filename="../src/docks/encodedock.ui" line="377"/>
         <source>Interlaced</source>
         <translation>Ara geçişli</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="388"/>
+        <location filename="../src/docks/encodedock.ui" line="382"/>
         <source>Progressive</source>
         <translation>Tek geçişli</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="344"/>
+        <location filename="../src/docks/encodedock.ui" line="338"/>
         <source>Resolution</source>
         <translation>Çözünürlük </translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="698"/>
+        <location filename="../src/docks/encodedock.ui" line="692"/>
         <source>Frames/sec</source>
         <translation>Kare/sn</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="726"/>
+        <location filename="../src/docks/encodedock.ui" line="720"/>
         <source>:</source>
         <translation>: </translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="626"/>
+        <location filename="../src/docks/encodedock.ui" line="620"/>
         <source>Bottom Field First</source>
         <translation>Önce Alt Alan </translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="631"/>
+        <location filename="../src/docks/encodedock.ui" line="625"/>
         <source>Top Field First</source>
         <translation>Önce Üst Alan </translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="417"/>
+        <location filename="../src/docks/encodedock.ui" line="411"/>
         <source>One Field (fast)</source>
         <translation>Bir Alan (Hızlı) </translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="422"/>
+        <location filename="../src/docks/encodedock.ui" line="416"/>
         <source>Linear Blend (fast)</source>
         <translation>Doğrusal Karışım (Hızlı)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="427"/>
+        <location filename="../src/docks/encodedock.ui" line="421"/>
         <source>YADIF - temporal only (good)</source>
         <translation>YADIF - sadece geçici (iyi) </translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="432"/>
+        <location filename="../src/docks/encodedock.ui" line="426"/>
         <source>YADIF - temporal + spatial (best)</source>
         <translation>YADIF - geçici + uzaysal (en iyi) </translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="334"/>
+        <location filename="../src/docks/encodedock.ui" line="328"/>
         <source>Deinterlacer</source>
         <translation>Ara Geçiş Giderici</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="660"/>
+        <location filename="../src/docks/encodedock.ui" line="654"/>
         <source>Nearest Neighbor (fast)</source>
         <translation>En Yakın Komşu (hızlı)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="665"/>
+        <location filename="../src/docks/encodedock.ui" line="659"/>
         <source>Bilinear (good)</source>
         <translation>İkili Doğrusal (iyi)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="670"/>
+        <location filename="../src/docks/encodedock.ui" line="664"/>
         <source>Bicubic (better)</source>
         <translation>Çift Kübik (daha iyi)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="675"/>
+        <location filename="../src/docks/encodedock.ui" line="669"/>
         <source>Hyper/Lanczos (best)</source>
         <translation>Hiper/Lanczos (çok iyi) </translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="771"/>
+        <location filename="../src/docks/encodedock.ui" line="765"/>
         <source>Use preview scaling</source>
         <translation>Önizleme ölçeklendirmesi kullan</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="778"/>
+        <location filename="../src/docks/encodedock.ui" line="772"/>
         <source>This enables multiple image processing threads.
 Sometimes, this can be a problem, and you can
 test if turning this off helps. For example, some
@@ -1213,406 +1394,431 @@ AVCHD ile birlikte YADIF ara geçiş giderme işlemi
 kullanılırken sorun çıktığı bildirilmiştir.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="786"/>
+        <location filename="../src/docks/encodedock.ui" line="780"/>
         <source>Parallel processing</source>
         <translation>Paralel işleme</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="800"/>
-        <location filename="../src/docks/encodedock.ui" line="809"/>
-        <location filename="../src/docks/encodedock.ui" line="1487"/>
+        <location filename="../src/docks/encodedock.ui" line="794"/>
+        <location filename="../src/docks/encodedock.ui" line="803"/>
+        <location filename="../src/docks/encodedock.ui" line="1481"/>
         <source>Codec</source>
         <translation>Kodlayıcı/Çözücü</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="839"/>
+        <location filename="../src/docks/encodedock.ui" line="833"/>
         <source>GOP</source>
         <translation>GOP</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="851"/>
+        <location filename="../src/docks/encodedock.ui" line="845"/>
         <source>GOP = group of pictures, which is the maximum key frame interval</source>
         <translation>GOP = maksimum anahtar kare aralığı olan resim grubu</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="864"/>
+        <location filename="../src/docks/encodedock.ui" line="858"/>
         <source>frames</source>
         <translation>kare</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="884"/>
+        <location filename="../src/docks/encodedock.ui" line="878"/>
         <source>A fixed GOP means that keyframes will
 not be inserted at detected scene changes.</source>
         <translation>Sabit bir GOP, algılanan sahne değişikliklerine
 anahtar karelerin eklenmeyeceği anlamına gelir.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="888"/>
+        <location filename="../src/docks/encodedock.ui" line="882"/>
         <source>Fixed</source>
         <translation>Sabit</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="912"/>
-        <location filename="../src/docks/encodedock.ui" line="1529"/>
+        <location filename="../src/docks/encodedock.ui" line="906"/>
+        <location filename="../src/docks/encodedock.ui" line="1523"/>
         <source>The average bit rate</source>
         <translation>Ortalama bit hızı</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1065"/>
-        <location filename="../src/docks/encodedock.ui" line="1607"/>
+        <location filename="../src/docks/encodedock.ui" line="1059"/>
+        <location filename="../src/docks/encodedock.ui" line="1606"/>
         <source>b/s</source>
         <translation> b/s</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1087"/>
+        <location filename="../src/docks/encodedock.ui" line="1081"/>
         <source>Disable video</source>
         <translation>Video kullanılmasın</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1094"/>
+        <location filename="../src/docks/encodedock.ui" line="1088"/>
         <source>Dual pass</source>
         <translation>Çift geçiş</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1101"/>
+        <location filename="../src/docks/encodedock.ui" line="1095"/>
         <source>B frames</source>
         <translation>B kareleri</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1113"/>
+        <location filename="../src/docks/encodedock.ui" line="1107"/>
         <source>B frames are the bidirectional &quot;delta&quot; pictures
 in temporal compression</source>
         <translation>B kareleri, geçici sıkıştırmada kullanılan
 çift yönlü &quot;delta&quot; resimleridir</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1152"/>
+        <location filename="../src/docks/encodedock.ui" line="1146"/>
         <source>Codec threads</source>
         <translation>Kodlayıcı/Çözücü Kopyası</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1167"/>
+        <location filename="../src/docks/encodedock.ui" line="1161"/>
         <source>(0 = auto)</source>
         <translation>(0 = Otomatik)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1189"/>
-        <location filename="../src/docks/encodedock.ui" line="1649"/>
+        <location filename="../src/docks/encodedock.ui" line="1183"/>
+        <location filename="../src/docks/encodedock.ui" line="1648"/>
         <source>Rate control</source>
         <translation>Hız Denetimi</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1202"/>
-        <location filename="../src/docks/encodedock.ui" line="1662"/>
+        <location filename="../src/docks/encodedock.ui" line="1196"/>
+        <location filename="../src/docks/encodedock.ui" line="1661"/>
         <source>Average Bitrate</source>
         <translation>Ortalama Bit Hızı</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1207"/>
-        <location filename="../src/docks/encodedock.ui" line="1667"/>
+        <location filename="../src/docks/encodedock.ui" line="1201"/>
+        <location filename="../src/docks/encodedock.ui" line="1666"/>
         <source>Constant Bitrate</source>
         <translation>Sabit Bit Hızı</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1212"/>
-        <location filename="../src/docks/encodedock.ui" line="1672"/>
+        <location filename="../src/docks/encodedock.ui" line="1206"/>
+        <location filename="../src/docks/encodedock.ui" line="1671"/>
         <source>Quality-based VBR</source>
         <translation>Kalite Temelli VBR </translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1217"/>
+        <location filename="../src/docks/encodedock.ui" line="1211"/>
         <source>Constrained VBR</source>
         <translation>Kısıtlanmış VBR </translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1240"/>
+        <location filename="../src/docks/encodedock.ui" line="1234"/>
         <source>Buffer size</source>
         <translation>Ara bellek boyutu</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1262"/>
+        <location filename="../src/docks/encodedock.ui" line="1256"/>
         <source>KiB</source>
         <translation>KiB</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1284"/>
-        <location filename="../src/docks/encodedock.ui" line="1695"/>
+        <location filename="../src/docks/encodedock.ui" line="1278"/>
+        <location filename="../src/docks/encodedock.ui" line="1694"/>
         <source>Quality</source>
         <translation>Kalite</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1296"/>
-        <location filename="../src/docks/encodedock.ui" line="1707"/>
+        <location filename="../src/docks/encodedock.ui" line="1290"/>
+        <location filename="../src/docks/encodedock.ui" line="1706"/>
         <source> %</source>
         <translation> %</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1312"/>
-        <location filename="../src/docks/encodedock.ui" line="1723"/>
+        <location filename="../src/docks/encodedock.ui" line="1306"/>
+        <location filename="../src/docks/encodedock.ui" line="1722"/>
         <source>TextLabel</source>
         <translation>Metin Etiketi </translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1334"/>
-        <location filename="../src/docks/encodedock.ui" line="1517"/>
+        <location filename="../src/docks/encodedock.ui" line="1328"/>
+        <location filename="../src/docks/encodedock.ui" line="1511"/>
         <source>Bitrate</source>
         <translation>Bit Hızı</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1345"/>
+        <location filename="../src/docks/encodedock.ui" line="1339"/>
         <source>Audio</source>
         <translation>Ses</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1354"/>
+        <location filename="../src/docks/encodedock.ui" line="1348"/>
         <source>Channels</source>
         <translation>Kanallar </translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1366"/>
+        <location filename="../src/docks/encodedock.ui" line="1360"/>
         <source>The number of audio channels in the output.</source>
         <translation>Çıkıştaki ses kanalı sayısı.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1370"/>
+        <location filename="../src/docks/encodedock.ui" line="1364"/>
         <source>1 (mono)</source>
         <translation>1 (mono)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1375"/>
+        <location filename="../src/docks/encodedock.ui" line="1369"/>
         <source>2 (stereo)</source>
         <translation>2 (stereo)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1380"/>
+        <location filename="../src/docks/encodedock.ui" line="1374"/>
         <source>6 (5.1)</source>
         <translation>6 (5.1)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1455"/>
+        <location filename="../src/docks/encodedock.ui" line="1449"/>
         <source>Hz</source>
         <translation>Hz</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1477"/>
+        <location filename="../src/docks/encodedock.ui" line="1471"/>
         <source>Sample rate</source>
         <translation>Örnekleme hızı</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1629"/>
+        <location filename="../src/docks/encodedock.ui" line="1628"/>
         <source>Disable audio</source>
         <translation>Ses kullanılmasın</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1746"/>
+        <location filename="../src/docks/encodedock.ui" line="1745"/>
         <source>Other</source>
         <translation>Diğer</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1788"/>
-        <location filename="../src/docks/encodedock.cpp" line="880"/>
-        <location filename="../src/docks/encodedock.cpp" line="1350"/>
-        <location filename="../src/docks/encodedock.cpp" line="1783"/>
+        <location filename="../src/docks/encodedock.ui" line="1787"/>
+        <location filename="../src/docks/encodedock.cpp" line="892"/>
+        <location filename="../src/docks/encodedock.cpp" line="1413"/>
+        <location filename="../src/docks/encodedock.cpp" line="1860"/>
         <source>Export File</source>
         <translation>Dosyayı Dışa Aktar</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1798"/>
+        <location filename="../src/docks/encodedock.ui" line="1797"/>
         <source>Reset options to defaults</source>
         <translation>Seçenekleri varsayılanlara sıfırla</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1801"/>
+        <location filename="../src/docks/encodedock.ui" line="1800"/>
         <source>Reset</source>
         <translation>Sıfırla</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1808"/>
+        <location filename="../src/docks/encodedock.ui" line="1807"/>
         <source>Advanced</source>
         <translation>Gelişmiş</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1818"/>
+        <location filename="../src/docks/encodedock.ui" line="1817"/>
         <source>Always start in Advanced mode</source>
         <translation>Her zaman Gelişmiş kipte başlat</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1828"/>
-        <location filename="../src/docks/encodedock.cpp" line="1493"/>
-        <location filename="../src/docks/encodedock.cpp" line="1500"/>
-        <location filename="../src/docks/encodedock.cpp" line="1611"/>
+        <location filename="../src/docks/encodedock.ui" line="1827"/>
+        <location filename="../src/docks/encodedock.cpp" line="1573"/>
+        <location filename="../src/docks/encodedock.cpp" line="1580"/>
+        <location filename="../src/docks/encodedock.cpp" line="1693"/>
         <source>Stream</source>
         <translation>Akış</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1855"/>
-        <location filename="../src/docks/encodedock.cpp" line="1330"/>
-        <location filename="../src/docks/encodedock.cpp" line="1416"/>
-        <location filename="../src/docks/encodedock.cpp" line="1430"/>
+        <location filename="../src/docks/encodedock.ui" line="1854"/>
+        <location filename="../src/docks/encodedock.cpp" line="1388"/>
+        <location filename="../src/docks/encodedock.cpp" line="1497"/>
+        <location filename="../src/docks/encodedock.cpp" line="1511"/>
         <source>Stop Capture</source>
         <translation>Yakalamayı Durdur</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="102"/>
+        <location filename="../src/docks/encodedock.cpp" line="108"/>
         <source>Automatic from extension</source>
         <translation>Uzantıdan otomatik</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="110"/>
-        <location filename="../src/docks/encodedock.cpp" line="120"/>
+        <location filename="../src/docks/encodedock.cpp" line="116"/>
+        <location filename="../src/docks/encodedock.cpp" line="126"/>
         <source>Default for format</source>
         <translation>Biçim Varsayılanı</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="388"/>
+        <location filename="../src/docks/encodedock.cpp" line="397"/>
         <source>Timeline</source>
         <translation>Zaman Akışı</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="390"/>
+        <location filename="../src/docks/encodedock.cpp" line="399"/>
         <source>Playlist</source>
         <translation>Oynatma Listesi</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="392"/>
+        <location filename="../src/docks/encodedock.cpp" line="400"/>
         <source>Each Playlist Item</source>
         <translation>Her Oynatma Listesi Ögesi</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="395"/>
-        <location filename="../src/docks/encodedock.cpp" line="400"/>
+        <location filename="../src/docks/encodedock.cpp" line="404"/>
+        <location filename="../src/docks/encodedock.cpp" line="409"/>
         <source>Source</source>
         <translation>Kaynak</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="407"/>
+        <location filename="../src/docks/encodedock.cpp" line="416"/>
         <source>You must enter numeric values using &apos;%1&apos; as the decimal point.</source>
         <translation>Ondalık nokta olarak &apos;%1&apos; kullanarak sayısal değerler girmelisiniz.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="415"/>
-        <location filename="../src/docks/encodedock.cpp" line="1277"/>
-        <location filename="../src/docks/encodedock.cpp" line="1278"/>
+        <location filename="../src/docks/encodedock.cpp" line="424"/>
+        <location filename="../src/docks/encodedock.cpp" line="1335"/>
+        <location filename="../src/docks/encodedock.cpp" line="1336"/>
         <source>Custom</source>
         <translation>Özel</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="451"/>
+        <location filename="../src/docks/encodedock.cpp" line="460"/>
         <source>Stock</source>
         <translation>Stok</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="454"/>
+        <location filename="../src/docks/encodedock.cpp" line="463"/>
         <source>Default</source>
         <translation>Varsayılan</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="932"/>
+        <location filename="../src/docks/encodedock.cpp" line="946"/>
         <source>You cannot write to a file that is in your project.
 Try again with a different folder or file name.</source>
         <translation>Projenizde bulunan bir dosyaya yazamazsınız.
 Farklı bir klasör ya da dosya adı ile yeniden deneyin.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1080"/>
+        <location filename="../src/docks/encodedock.cpp" line="1098"/>
         <source>Shotcut found filters that require analysis jobs that have not run.
 Do you want to run the analysis jobs now?</source>
         <translation>Shotcut, çalışmayan, analiz işlerini gerektiren filtreler buldu.
 Analiz işlerini şimdi çalıştırmak ister misiniz?</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1350"/>
-        <location filename="../src/docks/encodedock.cpp" line="1785"/>
+        <location filename="../src/docks/encodedock.cpp" line="1413"/>
+        <location filename="../src/docks/encodedock.cpp" line="1862"/>
         <source>Capture File</source>
         <translation>Yakalama Dosyası</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1353"/>
+        <location filename="../src/docks/encodedock.cpp" line="1415"/>
+        <source>Export Files</source>
+        <translation>Dosyaları Dışa Aktar</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/encodedock.cpp" line="1416"/>
+        <source>Export Each Playlist Item</source>
+        <translation>Oynatma Listesi Öğelerini Dışa Aktar</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/encodedock.cpp" line="1425"/>
         <source>%1 (*.%2);;All Files (*)</source>
         <translation>%1 (*.%2);;Tüm Dosyalar (*)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1355"/>
+        <location filename="../src/docks/encodedock.cpp" line="1427"/>
         <source>Determined by Export (*)</source>
         <translation>Dışa aktarma belirledi (*)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1374"/>
+        <location filename="../src/docks/encodedock.cpp" line="1454"/>
         <source>The drive you chose only has %1 MiB of free space.
 Do you still want to continue?</source>
         <translation>Seçtiğiniz sürücüde yalnızca %1 MB boş alan var.
 Yine de devam etmek ister misiniz?</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1381"/>
+        <location filename="../src/docks/encodedock.cpp" line="1461"/>
         <source>Do not show this anymore.</source>
         <comment>Export free disk space warning dialog</comment>
         <translation>Artık bunu gösterme.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1386"/>
+        <location filename="../src/docks/encodedock.cpp" line="1466"/>
         <source>Export canceled.</source>
         <translation>Dışa aktarma iptal edildi.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1488"/>
-        <location filename="../src/docks/encodedock.cpp" line="1509"/>
+        <location filename="../src/docks/encodedock.cpp" line="1568"/>
+        <location filename="../src/docks/encodedock.cpp" line="1589"/>
         <source>Stop Stream</source>
         <translation>Akışı Durdur</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1501"/>
+        <location filename="../src/docks/encodedock.cpp" line="1581"/>
         <source>Enter the network protocol scheme, address, port, and parameters as an URL:</source>
         <translation>Ağ protokolü şemasını, adresini, bağlantı noktasını ve parametrelerini URL olarak girin:</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1546"/>
+        <location filename="../src/docks/encodedock.cpp" line="1626"/>
         <source>Add Export Preset</source>
         <translation>Dışa Aktarma Hazır Ayarı Ekle</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1588"/>
+        <location filename="../src/docks/encodedock.cpp" line="1670"/>
         <source>Delete Preset</source>
         <translation>Hazır Ayarı Sil</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1589"/>
+        <location filename="../src/docks/encodedock.cpp" line="1671"/>
         <source>Are you sure you want to delete %1?</source>
         <translation>%1 ögesini silmek istediğinize emin misiniz?</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1715"/>
-        <location filename="../src/docks/encodedock.cpp" line="1720"/>
+        <location filename="../src/docks/encodedock.cpp" line="1798"/>
         <source>None</source>
         <translation>Yok</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1769"/>
+        <location filename="../src/docks/encodedock.cpp" line="1846"/>
         <source>KiB (%1s)</source>
         <translation>KiB (%1s)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1891"/>
+        <location filename="../src/docks/encodedock.cpp" line="1944"/>
+        <source>Detect</source>
+        <translation>Algıla</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/encodedock.cpp" line="2031"/>
         <source>Detecting hardware encoders...</source>
         <translation>Donanım kodlayıcıları algılıyor...</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1924"/>
+        <location filename="../src/docks/encodedock.cpp" line="2064"/>
         <source>Nothing found</source>
         <translation>Hiçbir şey bulunamadı</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1927"/>
+        <location filename="../src/docks/encodedock.cpp" line="2066"/>
         <source>Found %1</source>
         <translation>%1 bulundu</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1939"/>
+        <location filename="../src/docks/encodedock.cpp" line="2101"/>
+        <source>Your project is missing some files.
+
+Save your project, close it, and reopen it.
+Shotcut will attempt to repair your project.</source>
+        <translation>Projenizde bazı dosyalar eksik.
+
+Projenizi kaydedin, kapatın ve yeniden açın.
+Shotcut projenizi onarmaya çalışacak.</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/encodedock.cpp" line="1942"/>
         <source>Configure Hardware Encoding</source>
         <translation>Donanım Kodlamasını Yapılandır</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1960"/>
+        <location filename="../src/docks/encodedock.cpp" line="1966"/>
         <source>Export Frames/sec</source>
         <translation>Kare/sn Dışa Aktar</translation>
     </message>
@@ -1620,38 +1826,58 @@ Yine de devam etmek ister misiniz?</translation>
 <context>
     <name>EncodeJob</name>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="38"/>
+        <location filename="../src/jobs/encodejob.cpp" line="40"/>
         <source>Open</source>
         <translation>Açık</translation>
     </message>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="39"/>
+        <location filename="../src/jobs/encodejob.cpp" line="41"/>
         <source>Open the output file in the Shotcut player</source>
         <translation>Çıktı dosyasını Shotcut oynatıcıda aç</translation>
     </message>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="43"/>
-        <location filename="../src/jobs/encodejob.cpp" line="44"/>
+        <location filename="../src/jobs/encodejob.cpp" line="45"/>
+        <location filename="../src/jobs/encodejob.cpp" line="46"/>
         <source>Show In Folder</source>
         <translation>Klasörde Göster</translation>
     </message>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="48"/>
+        <location filename="../src/jobs/encodejob.cpp" line="50"/>
         <source>Measure Video Quality...</source>
         <translation>Video Kalitesini Ölç...</translation>
     </message>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="57"/>
+        <location filename="../src/jobs/encodejob.cpp" line="54"/>
+        <source>Set Equirectangular...</source>
+        <translation>Dikdörtgen küre ayarla...</translation>
+    </message>
+    <message>
+        <location filename="../src/jobs/encodejob.cpp" line="63"/>
         <source>Video Quality Report</source>
         <translation>Video Kalitesi Raporu</translation>
     </message>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="58"/>
+        <location filename="../src/jobs/encodejob.cpp" line="64"/>
         <source>Text Documents (*.txt);;All Files (*)</source>
         <translation>Metin Belgeleri (*.txt);;Tüm Dosyalar (*)</translation>
     </message>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="132"/>
+        <location filename="../src/jobs/encodejob.cpp" line="119"/>
+        <source>Set Equirectangular Projection</source>
+        <translation>Dikdörtgen küre izdüşümü ayarla</translation>
+    </message>
+    <message>
+        <location filename="../src/jobs/encodejob.cpp" line="129"/>
+        <source>Successfully wrote %1</source>
+        <translation>%1 başarıyla yazıldı</translation>
+    </message>
+    <message>
+        <location filename="../src/jobs/encodejob.cpp" line="131"/>
+        <source>An error occurred saving the projection.</source>
+        <translation>Projeksiyon kaydedilirken bir hata oluştu.</translation>
+    </message>
+    <message>
+        <location filename="../src/jobs/encodejob.cpp" line="159"/>
         <source>Export job failed; trying again without Parallel processing.</source>
         <translation>Dışa aktarma görevi başarısız oldu; Paralel işleme olmadan tekrar dene.</translation>
     </message>
@@ -1659,17 +1885,17 @@ Yine de devam etmek ister misiniz?</translation>
 <context>
     <name>FfmpegJob</name>
     <message>
-        <location filename="../src/jobs/ffmpegjob.cpp" line="37"/>
+        <location filename="../src/jobs/ffmpegjob.cpp" line="38"/>
         <source>Open</source>
         <translation>Aç</translation>
     </message>
     <message>
-        <location filename="../src/jobs/ffmpegjob.cpp" line="41"/>
+        <location filename="../src/jobs/ffmpegjob.cpp" line="42"/>
         <source>Check %1</source>
         <translation>%1 Denetle</translation>
     </message>
     <message>
-        <location filename="../src/jobs/ffmpegjob.cpp" line="70"/>
+        <location filename="../src/jobs/ffmpegjob.cpp" line="73"/>
         <source>FFmpeg Log</source>
         <translation>FFmpeg Günlüğü</translation>
     </message>
@@ -1685,37 +1911,37 @@ Yine de devam etmek ister misiniz?</translation>
 <context>
     <name>FileDateDialog</name>
     <message>
-        <location filename="../src/dialogs/filedatedialog.cpp" line="42"/>
+        <location filename="../src/dialogs/filedatedialog.cpp" line="43"/>
         <source>%1 File Date</source>
         <translation>%1 Dosya Tarihi</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/filedatedialog.cpp" line="98"/>
+        <location filename="../src/dialogs/filedatedialog.cpp" line="99"/>
         <source>Current Value</source>
         <translation>Mevcut Değer</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/filedatedialog.cpp" line="102"/>
+        <location filename="../src/dialogs/filedatedialog.cpp" line="103"/>
         <source>Now</source>
         <translation>Şimdi</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/filedatedialog.cpp" line="112"/>
+        <location filename="../src/dialogs/filedatedialog.cpp" line="109"/>
         <source>System - Modified</source>
         <translation>Sistem - Değiştirilme</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/filedatedialog.cpp" line="113"/>
+        <location filename="../src/dialogs/filedatedialog.cpp" line="110"/>
         <source>System - Created</source>
         <translation>Sistem - Oluşturulma</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/filedatedialog.cpp" line="122"/>
+        <location filename="../src/dialogs/filedatedialog.cpp" line="119"/>
         <source>Metadata - Creation Time</source>
         <translation>Metadata - Oluşturulma Zamanı</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/filedatedialog.cpp" line="127"/>
+        <location filename="../src/dialogs/filedatedialog.cpp" line="124"/>
         <source>Metadata - QuickTime date</source>
         <translation>Metadata - QuickTime tarihi</translation>
     </message>
@@ -1723,7 +1949,12 @@ Yine de devam etmek ister misiniz?</translation>
 <context>
     <name>FilterController</name>
     <message>
-        <location filename="../src/controllers/filtercontroller.cpp" line="209"/>
+        <location filename="../src/controllers/filtercontroller.cpp" line="94"/>
+        <source>(DEPRECATED)</source>
+        <translation>(KALDIRILAN)</translation>
+    </message>
+    <message>
+        <location filename="../src/controllers/filtercontroller.cpp" line="240"/>
         <source>Only one %1 filter is allowed.</source>
         <translation>Sadece bir %1 filtresine izin verilir.</translation>
     </message>
@@ -1731,47 +1962,57 @@ Yine de devam etmek ister misiniz?</translation>
 <context>
     <name>FilterMenu</name>
     <message>
-        <location filename="../src/qml/views/filter/FilterMenu.qml" line="60"/>
+        <location filename="../src/qml/views/filter/FilterMenu.qml" line="71"/>
         <source>search</source>
         <translation>ara</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/filter/FilterMenu.qml" line="93"/>
+        <location filename="../src/qml/views/filter/FilterMenu.qml" line="107"/>
         <source>Clear search</source>
         <translation>Aramayı temizle</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/filter/FilterMenu.qml" line="111"/>
+        <location filename="../src/qml/views/filter/FilterMenu.qml" line="125"/>
         <source>Show favorite filters</source>
         <translation>Sık kullanılan filtreleri göster</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/filter/FilterMenu.qml" line="121"/>
+        <location filename="../src/qml/views/filter/FilterMenu.qml" line="141"/>
         <source>Show video filters</source>
         <translation>Video filtrelerini göster</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/filter/FilterMenu.qml" line="131"/>
+        <location filename="../src/qml/views/filter/FilterMenu.qml" line="157"/>
         <source>Show audio filters</source>
         <translation>Ses filtrelerini göster</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/filter/FilterMenu.qml" line="144"/>
+        <location filename="../src/qml/views/filter/FilterMenu.qml" line="173"/>
+        <source>Time</source>
+        <translation>Zaman</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/views/filter/FilterMenu.qml" line="174"/>
+        <source>Show time filters</source>
+        <translation>Zaman filtrelerini göster</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/views/filter/FilterMenu.qml" line="196"/>
         <source>Close menu</source>
         <translation>Menüyü kapat</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/filter/FilterMenu.qml" line="110"/>
+        <location filename="../src/qml/views/filter/FilterMenu.qml" line="124"/>
         <source>Favorite</source>
         <translation>Sık kullanılan</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/filter/FilterMenu.qml" line="120"/>
+        <location filename="../src/qml/views/filter/FilterMenu.qml" line="140"/>
         <source>Video</source>
         <translation>Video</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/filter/FilterMenu.qml" line="130"/>
+        <location filename="../src/qml/views/filter/FilterMenu.qml" line="156"/>
         <source>Audio</source>
         <translation>Ses</translation>
     </message>
@@ -1782,6 +2023,14 @@ Yine de devam etmek ister misiniz?</translation>
         <location filename="../src/docks/filtersdock.cpp" line="37"/>
         <source>Filters</source>
         <translation>Filtreler</translation>
+    </message>
+</context>
+<context>
+    <name>FrameRateWidget</name>
+    <message>
+        <location filename="../src/widgets/frameratewidget.cpp" line="71"/>
+        <source>Convert Frames/sec</source>
+        <translation>Kare/sn Dönüştür</translation>
     </message>
 </context>
 <context>
@@ -1893,475 +2142,17 @@ eklentisiyle birlikte OpenGL 2.0 sürümü gereklidir. </translation>
         <translation>Renk #%1</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/GradientControl.qml" line="82"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/GradientControl.qml" line="84"/>
         <source>Color: %1
 Click to change</source>
         <translation>Renk: %1
 Tıkla değiştir</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/GradientControl.qml" line="190"/>
-        <source> colors</source>
-        <translation> renk</translation>
-    </message>
-</context>
-<context>
-    <name>HtmlEditor</name>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="14"/>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="162"/>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="749"/>
-        <source>HTML Editor</source>
-        <translation>HTML Düzenleyici</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="36"/>
-        <source>&amp;Edit</source>
-        <translation>Düz&amp;enle</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="52"/>
-        <source>F&amp;ormat</source>
-        <translation>&amp;Biçim</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="56"/>
-        <source>St&amp;yle</source>
-        <translation>&amp;Stil</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="70"/>
-        <source>&amp;Align</source>
-        <translation>&amp;Hizalama</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="101"/>
-        <source>&amp;File</source>
-        <translation>&amp;Dosya</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="115"/>
-        <source>Standard</source>
-        <translation>Standart</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="181"/>
-        <source>Tab 1</source>
-        <translation>Sekme 1</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="200"/>
-        <source>about:blank</source>
-        <translation>about:blank</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="209"/>
-        <source>Tab 2</source>
-        <translation>Sekme 2</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="245"/>
-        <source>&amp;New</source>
-        <translation>Ye&amp;ni</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="254"/>
-        <source>&amp;Open...</source>
-        <translation>&amp;Aç...</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="263"/>
-        <source>&amp;Save</source>
-        <translation>&amp;Kaydet</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="266"/>
-        <source>Ctrl+S</source>
-        <translation>Ctrl+S</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="271"/>
-        <source>Save &amp;As...</source>
-        <translation>&amp;Farklı Kaydet...</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="280"/>
-        <source>&amp;Undo</source>
-        <translation>&amp;Geri Al</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="283"/>
-        <source>Ctrl+Z</source>
-        <translation>Ctrl+Z</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="292"/>
-        <source>&amp;Redo</source>
-        <translation>&amp;Yinele</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="295"/>
-        <source>Ctrl+Shift+Z</source>
-        <translation>Ctrl+Shift+Z</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="304"/>
-        <source>Cu&amp;t</source>
-        <translation>&amp;Kes</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="307"/>
-        <source>Ctrl+X</source>
-        <translation>Ctrl+X</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="316"/>
-        <source>&amp;Copy</source>
-        <translation>K&amp;opyala</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="319"/>
-        <source>Ctrl+C</source>
-        <translation>Ctrl+C</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="328"/>
-        <source>&amp;Paste</source>
-        <translation>Ya&amp;pıştır</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="331"/>
-        <source>Ctrl+V</source>
-        <translation>Ctrl+V</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="340"/>
-        <source>Select A&amp;ll</source>
-        <translation>&amp;Tümünü Seç</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="343"/>
-        <source>Ctrl+A</source>
-        <translation>Ctrl+A</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="355"/>
-        <source>&amp;Bold</source>
-        <translation>&amp;Koyu</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="358"/>
-        <source>Ctrl+B</source>
-        <translation>Ctrl+B</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="370"/>
-        <source>&amp;Italic</source>
-        <translation>&amp;Yatık</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="373"/>
-        <source>Ctrl+I</source>
-        <translation>Ctrl+I</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="385"/>
-        <source>&amp;Underline</source>
-        <translation>&amp;Altı Çizili</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="388"/>
-        <source>Ctrl+U</source>
-        <translation>Ctrl+U</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="400"/>
-        <source>&amp;Strikethrough</source>
-        <translation>Ü&amp;zeri Çizili</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="409"/>
-        <source>Align &amp;Left</source>
-        <translation>&amp;Sola Hizala</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="418"/>
-        <source>Align &amp;Center</source>
-        <translation>&amp;Ortaya Hizala</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="427"/>
-        <source>Align &amp;Right</source>
-        <translation>S&amp;ağa Hizala</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="436"/>
-        <source>Align &amp;Justify</source>
-        <translation>&amp;Yanlara Hizala</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="445"/>
-        <source>I&amp;ncrease Indent</source>
-        <translation>G&amp;irintiyi Arttır</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="454"/>
-        <source>&amp;Decrease Indent</source>
-        <translation>&amp;Girintiyi Azalt</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="466"/>
-        <source>Bulle&amp;ted List</source>
-        <translation>Madde İmli &amp;Liste</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="478"/>
-        <source>&amp;Numbered List</source>
-        <translation>&amp;Numaralı Liste</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="487"/>
-        <source>Insert &amp;Image...</source>
-        <translation>Görsel &amp;Ekle...</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="496"/>
-        <source>Create Link...</source>
-        <translation>Bağlantı Ekle...</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="505"/>
-        <source>Zoom Out</source>
-        <translation>Uzaklaştır</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="514"/>
-        <source>Zoom In</source>
-        <translation>Yakınlaştır</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="523"/>
-        <source>C&amp;lose Window</source>
-        <translation>P&amp;encereyi Kapat</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="526"/>
-        <source>Close Window</source>
-        <translation>Pencereyi Kapat</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="529"/>
-        <source>Ctrl+W</source>
-        <translation>Ctrl+W</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="534"/>
-        <source>&amp;Paragraph</source>
-        <translation>&amp;Paragraf</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="539"/>
-        <source>Heading &amp;1</source>
-        <translation>&amp;1. Başlık</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="544"/>
-        <source>Heading &amp;2</source>
-        <translation>&amp;2. Başlık</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="549"/>
-        <source>Heading &amp;3</source>
-        <translation>&amp;3. Başlık</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="554"/>
-        <source>Heading &amp;4</source>
-        <translation>&amp;4. Başlık</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="559"/>
-        <source>Heading &amp;5</source>
-        <translation>&amp;5. Başlık</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="564"/>
-        <source>Heading &amp;6</source>
-        <translation>&amp;6. Başlık</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="569"/>
-        <source>Pre&amp;formatted</source>
-        <translation>&amp;Ön Biçimlendirilmiş</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="574"/>
-        <source>&amp;Address</source>
-        <translation>&amp;Adres</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="579"/>
-        <source>&amp;Font Name...</source>
-        <translation>&amp;Yazı Tipi Adı...</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="584"/>
-        <source>Text &amp;Color...</source>
-        <translation>Metin &amp;Rengi...</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="589"/>
-        <source>Bac&amp;kground Color...</source>
-        <translation>&amp;Art Alan Rengi...</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="597"/>
-        <source>Font Si&amp;ze...</source>
-        <translation>Metin &amp;Boyutu...</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="606"/>
-        <source>Insert HTML...</source>
-        <translation>HTML Ekle...</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="609"/>
-        <source>Insert HTML</source>
-        <translation>HTML Ekle</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="617"/>
-        <source>Text Outline...</source>
-        <translation>Metin kenarlığı...</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="625"/>
-        <source>Text Shadow...</source>
-        <translation>Metin Gölgesi...</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="66"/>
-        <source>WYSIWYG Editor</source>
-        <translation>WYSIWYG Düzenleyici</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="67"/>
-        <source>View Source</source>
-        <translation>Kaynağı Görüntüle</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="163"/>
-        <source>The document has been modified.
-Do you want to save your changes?</source>
-        <translation>Belgede değişiklikler yapılmış. 
-Değişiklikleri kaydetmek ister misiniz?</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="200"/>
-        <source>Open File...</source>
-        <translation>Dosya Aç...</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="201"/>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="236"/>
-        <source>HTML-Files (*.htm *.html);;All Files (*)</source>
-        <translation>HTML-Dosyaları (*.htm *.html);;Tüm Dosyalar (*)</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="211"/>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="235"/>
-        <source>Save as...</source>
-        <translation>Farklı Kaydet...</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="250"/>
-        <source>Common Graphics (*.png *.jpg *.jpeg *.gif *.svg);;</source>
-        <translation>Çok Bilinen Grafikler (*.png *.jpg *.jpeg *.gif *.svg);;</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="251"/>
-        <source>Portable Network Graphics (PNG) (*.png);;</source>
-        <translation>Taşınabilir Ağ Grafikleri (PNG) (*.png);;</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="252"/>
-        <source>JPEG (*.jpg *.jpeg);;</source>
-        <translation>JPEG (*.jpg *.jpeg);;</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="253"/>
-        <source>Graphics Interchange Format (*.gif);;</source>
-        <translation>Grafik Değişim Biçimi (*.gif);;</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="254"/>
-        <source>Scalable Vector Graphics (*.svg);;</source>
-        <translation>Ölçeklendirilebilir Vektör Grafiği (*.svg);;</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="255"/>
-        <source>All Files (*)</source>
-        <translation>Tüm Dosyalar (*)</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="257"/>
-        <source>Open image...</source>
-        <translation>Görsel Aç...</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="304"/>
-        <source>Create link</source>
-        <translation>Bağlantı oluştur</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="305"/>
-        <source>Enter URL</source>
-        <translation>URL Gir</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="496"/>
-        <source>Font</source>
-        <translation>Yazı Tipi</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="496"/>
-        <source>Select font:</source>
-        <translation>Yazı tipi seç:</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="506"/>
-        <source>Font Size</source>
-        <translation>Metin Boyutu</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="506"/>
-        <source>Size in points:</source>
-        <translation>Noktalar boyutu:</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="642"/>
-        <source>Open %1 ?</source>
-        <translation>%1 açılsın mı?</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="643"/>
-        <source>Open link</source>
-        <translation>Bağlantı aç</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="652"/>
-        <source>Text Outline</source>
-        <translation>Metin Kenarlığı</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="669"/>
-        <source>Text Shadow</source>
-        <translation>Metin Gölgesi</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="749"/>
-        <source>%1[*] - %2</source>
-        <translation>%1[*] - %2</translation>
+        <location filename="../src/qml/modules/Shotcut/Controls/GradientControl.qml" line="192"/>
+        <source>colors</source>
+        <comment>gradient control</comment>
+        <translation>renkler</translation>
     </message>
 </context>
 <context>
@@ -2422,24 +2213,44 @@ Değişiklikleri kaydetmek ister misiniz?</translation>
         <translation>resim başına </translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="254"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="261"/>
         <source>Display a menu of additional actions</source>
         <translation>Ek işlemler menüsünü göster</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="296"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="303"/>
         <source>Copy Full File Path</source>
         <translation>Tam Dosya Yolunu Kopyala</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="301"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="308"/>
         <source>Show in Folder</source>
         <translation>Klasörde Göster</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="306"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="313"/>
         <source>Set Creation Time...</source>
         <translation>Oluşturma Tarihini Ayarla...</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="321"/>
+        <source>Disable Proxy</source>
+        <translation>Vekil kullanılmasın</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="326"/>
+        <source>Make Proxy</source>
+        <translation>Vekil Yap</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="331"/>
+        <source>Delete Proxy</source>
+        <translation>Vekili Sil</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="336"/>
+        <source>Copy Hash Code</source>
+        <translation>Hash Kodu Kopyala</translation>
     </message>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="122"/>
@@ -2457,15 +2268,34 @@ Değişiklikleri kaydetmek ister misiniz?</translation>
         <translation>Sıfırla</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.cpp" line="235"/>
+        <location filename="../src/widgets/imageproducerwidget.cpp" line="93"/>
+        <source>(PROXY)</source>
+        <translation>(VEKİL)</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/imageproducerwidget.cpp" line="267"/>
         <source>Getting length of image sequence...</source>
         <translation>Görsel dizisinin uzunluğu alınıyor... </translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.cpp" line="247"/>
-        <location filename="../src/widgets/imageproducerwidget.cpp" line="263"/>
+        <location filename="../src/widgets/imageproducerwidget.cpp" line="279"/>
+        <location filename="../src/widgets/imageproducerwidget.cpp" line="297"/>
         <source>Reloading image sequence...</source>
         <translation>Görsel dizisi yeniden yükleniyor...</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/imageproducerwidget.cpp" line="426"/>
+        <source>The hash code below is already copied to your clipboard:
+
+</source>
+        <translation>Aşağıdaki hash kodu zaten panonuza kopyalandı:
+
+</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="254"/>
+        <source>Proxy</source>
+        <translation>Vekil</translation>
     </message>
 </context>
 <context>
@@ -2517,27 +2347,27 @@ Değişiklikleri kaydetmek ister misiniz?</translation>
 <context>
     <name>JobQueue</name>
     <message>
-        <location filename="../src/jobqueue.cpp" line="57"/>
+        <location filename="../src/jobqueue.cpp" line="59"/>
         <source>pending</source>
         <translation>bekliyor</translation>
     </message>
     <message>
-        <location filename="../src/jobqueue.cpp" line="63"/>
+        <location filename="../src/jobqueue.cpp" line="65"/>
         <source>Estimated Hours:Minutes:Seconds</source>
         <translation>Tahmini Saat:Dakika:Saniye</translation>
     </message>
     <message>
-        <location filename="../src/jobqueue.cpp" line="100"/>
+        <location filename="../src/jobqueue.cpp" line="105"/>
         <source>Elapsed Hours:Minutes:Seconds</source>
         <translation>Geçen Saat:Dakika:Saniye</translation>
     </message>
     <message>
-        <location filename="../src/jobqueue.cpp" line="103"/>
+        <location filename="../src/jobqueue.cpp" line="108"/>
         <source>stopped</source>
         <translation>durduruldu</translation>
     </message>
     <message>
-        <location filename="../src/jobqueue.cpp" line="106"/>
+        <location filename="../src/jobqueue.cpp" line="111"/>
         <source>failed</source>
         <translation>başarısız oldu</translation>
     </message>
@@ -2629,45 +2459,55 @@ görev üzerine sağ tıklayarak açılan menüyü kullanın.</translation>
 <context>
     <name>Keyframe</name>
     <message>
-        <location filename="../src/qml/views/keyframes/Keyframe.qml" line="115"/>
+        <location filename="../src/qml/views/keyframes/Keyframe.qml" line="132"/>
         <source>Keyframe Type</source>
         <translation>Anahtar kare türü</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/keyframes/Keyframe.qml" line="118"/>
-        <source>Discrete</source>
-        <translation>Ayrık</translation>
+        <location filename="../src/qml/views/keyframes/Keyframe.qml" line="134"/>
+        <source>Hold</source>
+        <translation>Tut</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/keyframes/Keyframe.qml" line="125"/>
+        <location filename="../src/qml/views/keyframes/Keyframe.qml" line="140"/>
         <source>Linear</source>
         <translation>Doğrusal</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/keyframes/Keyframe.qml" line="132"/>
+        <location filename="../src/qml/views/keyframes/Keyframe.qml" line="146"/>
         <source>Smooth</source>
         <translation>Pürüzsüz</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/keyframes/Keyframe.qml" line="141"/>
+        <location filename="../src/qml/views/keyframes/Keyframe.qml" line="155"/>
         <source>Remove</source>
         <translation>Kaldır</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/views/keyframes/Keyframe.qml" line="162"/>
+        <source>Cancel</source>
+        <translation>İptal</translation>
     </message>
 </context>
 <context>
     <name>KeyframesButton</name>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/KeyframesButton.qml" line="49"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/KeyframesButton.qml" line="37"/>
         <source>Use Keyframes for this parameter</source>
         <translation>Bu parametre için anahtar kareler kullan</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/KeyframesButton.qml" line="69"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/KeyframesButton.qml" line="56"/>
+        <source>Hold %1 to drag a keyframe vertical only or %2 to drag horizontal only</source>
+        <translation>Anahtar kareyi, yalnızca dikey sürüklemek için %1&apos;i, yalnızca yatay sürüklemek için %2&apos;i basılı tutun</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/modules/Shotcut/Controls/KeyframesButton.qml" line="70"/>
         <source>Confirm Removing Keyframes</source>
         <translation>Anahtar Karelerini Kaldırmayı Onayla</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/KeyframesButton.qml" line="70"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/KeyframesButton.qml" line="71"/>
         <source>This will remove all keyframes for this parameter.&lt;p&gt;Do you still want to do this?</source>
         <translation>Bu işlem bu parametredeki tüm anahtar kareleri kaldıracaktır. &lt;p&gt;Yine de bunu yapmak istiyor musunuz?</translation>
     </message>
@@ -2684,8 +2524,8 @@ görev üzerine sağ tıklayarak açılan menüyü kullanın.</translation>
     <name>KeyframesModel</name>
     <message>
         <location filename="../src/models/keyframesmodel.cpp" line="72"/>
-        <source>Discrete</source>
-        <translation>Ayrık</translation>
+        <source>Hold</source>
+        <translation>Tut</translation>
     </message>
     <message>
         <location filename="../src/models/keyframesmodel.cpp" line="75"/>
@@ -2701,39 +2541,44 @@ görev üzerine sağ tıklayarak açılan menüyü kullanın.</translation>
 <context>
     <name>KeyframesToolbar</name>
     <message>
-        <location filename="../src/qml/views/keyframes/KeyframesToolbar.qml" line="42"/>
+        <location filename="../src/qml/views/keyframes/KeyframesToolbar.qml" line="38"/>
         <source>Display a menu of additional actions</source>
         <translation>Ek işlemler menüsünü göster</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/keyframes/KeyframesToolbar.qml" line="57"/>
+        <location filename="../src/qml/views/keyframes/KeyframesToolbar.qml" line="55"/>
         <source>Set the filter start</source>
         <translation>Filtre başlangıcını ayarla</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/keyframes/KeyframesToolbar.qml" line="66"/>
+        <location filename="../src/qml/views/keyframes/KeyframesToolbar.qml" line="67"/>
         <source>Set the filter end</source>
         <translation>Filtre bitişini ayarla</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/keyframes/KeyframesToolbar.qml" line="75"/>
+        <location filename="../src/qml/views/keyframes/KeyframesToolbar.qml" line="79"/>
         <source>Set the first simple keyframe</source>
         <translation>İlk basit anahtar kareyi ayarla</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/keyframes/KeyframesToolbar.qml" line="84"/>
+        <location filename="../src/qml/views/keyframes/KeyframesToolbar.qml" line="91"/>
         <source>Set the second simple keyframe</source>
         <translation>İkinci basit anahtar kareyi ayarla</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/keyframes/KeyframesToolbar.qml" line="99"/>
-        <source>Zoom timeline out (-)</source>
-        <translation>Zaman akışını uzaklaştır (-)</translation>
+        <location filename="../src/qml/views/keyframes/KeyframesToolbar.qml" line="108"/>
+        <source>Zoom keyframes out (Alt+-)</source>
+        <translation>Anahtar kareleri uzaklaştır (Alt+-)</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/keyframes/KeyframesToolbar.qml" line="113"/>
-        <source>Zoom timeline in (+)</source>
-        <translation>Zaman akışını yakınlaştır (+)</translation>
+        <location filename="../src/qml/views/keyframes/KeyframesToolbar.qml" line="123"/>
+        <source>Zoom keyframes in (Alt++)</source>
+        <translation>Anahtar kareleri yakınlaştır (Alt++)</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/views/keyframes/KeyframesToolbar.qml" line="135"/>
+        <source>Zoom keyframes to fit (Alt+0)</source>
+        <translation>Anahtar kareleri sığdır (Alt+0)</translation>
     </message>
 </context>
 <context>
@@ -2928,7 +2773,7 @@ görev üzerine sağ tıklayarak açılan menüyü kullanın.</translation>
         <location filename="../src/widgets/lumamixtransition.ui" line="219"/>
         <location filename="../src/widgets/lumamixtransition.cpp" line="183"/>
         <location filename="../src/widgets/lumamixtransition.cpp" line="189"/>
-        <location filename="../src/widgets/lumamixtransition.cpp" line="202"/>
+        <location filename="../src/widgets/lumamixtransition.cpp" line="203"/>
         <source>Softness</source>
         <translation>Yumuşaklık</translation>
     </message>
@@ -3023,644 +2868,662 @@ ayarlayın ya da yalnızca A klibinin sesini
         <translation>&amp;Yerleşim</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="90"/>
+        <location filename="../src/mainwindow.ui" line="95"/>
         <source>&amp;Edit</source>
         <translation>D&amp;üzen</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="98"/>
+        <location filename="../src/mainwindow.ui" line="103"/>
         <source>&amp;Help</source>
         <translation>&amp;Yardım</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="111"/>
+        <location filename="../src/mainwindow.ui" line="117"/>
         <source>Settings</source>
         <translation>Ayarlar</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="115"/>
+        <location filename="../src/mainwindow.ui" line="121"/>
         <source>Audio Channels</source>
         <translation>Ses Kanalları</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="123"/>
+        <location filename="../src/mainwindow.ui" line="129"/>
         <source>Deinterlacer</source>
         <translation>Ara Geçiş Giderici</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="132"/>
+        <location filename="../src/mainwindow.ui" line="138"/>
         <source>Interpolation</source>
         <translation>İnterpolasyon</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="141"/>
+        <location filename="../src/mainwindow.ui" line="147"/>
         <source>Video Mode</source>
         <translation>Video Kipi</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="147"/>
+        <location filename="../src/mainwindow.ui" line="153"/>
         <source>External Monitor</source>
         <translation>Harici Ekran</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="153"/>
+        <location filename="../src/mainwindow.ui" line="159"/>
         <source>Language</source>
         <translation>Dil</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="158"/>
+        <location filename="../src/mainwindow.ui" line="164"/>
         <source>Theme</source>
         <translation>Tema</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="166"/>
+        <location filename="../src/mainwindow.ui" line="172"/>
         <source>Gamma</source>
         <translation>Gama</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="173"/>
+        <location filename="../src/mainwindow.ui" line="179"/>
         <source>Display Method</source>
         <translation>Görüntüleme Yöntemi</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="182"/>
+        <location filename="../src/mainwindow.ui" line="188"/>
         <source>App Data Directory</source>
         <translation>Uygulama Verileri Klasörü</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="189"/>
+        <location filename="../src/mainwindow.ui" line="195"/>
         <source>Preview Scaling</source>
         <translation>Önizleme Ölçeklendirmesi</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="227"/>
+        <location filename="../src/mainwindow.ui" line="204"/>
+        <source>Proxy</source>
+        <translation>Vekil</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="208"/>
+        <source>Storage</source>
+        <translation>Depolama</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="253"/>
         <source>Toolbar</source>
         <translation>Araç Çubuğu</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="273"/>
+        <location filename="../src/mainwindow.ui" line="308"/>
         <source>&amp;Open File...</source>
         <translation>D&amp;osya Aç...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="276"/>
+        <location filename="../src/mainwindow.ui" line="311"/>
         <source>Open a video, audio or image file</source>
         <translation>Bir video, ses ya da görsel dosyasını açar</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="279"/>
-        <source>Ctrl+O</source>
-        <translation>Ctrl+O</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.ui" line="287"/>
+        <location filename="../src/mainwindow.ui" line="322"/>
         <source>E&amp;xit</source>
         <translation>Çı&amp;kış</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="290"/>
+        <location filename="../src/mainwindow.ui" line="325"/>
         <source>Quit the application</source>
         <translation>Uygulamadan çıkar</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="293"/>
-        <source>Ctrl+Q</source>
-        <translation>Ctrl+Q</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.ui" line="298"/>
+        <location filename="../src/mainwindow.ui" line="333"/>
         <source>&amp;About Shotcut</source>
         <translation>&amp;Shotcut Hakkında</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="306"/>
+        <location filename="../src/mainwindow.ui" line="341"/>
         <source>About Qt</source>
         <translation>Qt Hakkında</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="314"/>
+        <location filename="../src/mainwindow.ui" line="349"/>
         <source>Open Other...</source>
         <translation>Farklı Aç...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="317"/>
-        <location filename="../src/mainwindow.ui" line="976"/>
+        <location filename="../src/mainwindow.ui" line="352"/>
+        <location filename="../src/mainwindow.ui" line="1026"/>
         <source>Open a device, stream or generator</source>
         <translation>Bir aygıt, akış ya da üreteç açar</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="320"/>
-        <source>Ctrl+Shift+O</source>
-        <translation>Ctrl+Shift+O</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.ui" line="332"/>
+        <location filename="../src/mainwindow.ui" line="367"/>
         <source>&amp;Save</source>
         <translation>&amp;Kaydet</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="335"/>
+        <location filename="../src/mainwindow.ui" line="370"/>
         <source>Save project as a MLT XML file</source>
         <translation>Projeyi bir MLT XML dosyası olarak kaydeder</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="338"/>
-        <source>Ctrl+S</source>
-        <translation>Ctrl+S</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.ui" line="346"/>
+        <location filename="../src/mainwindow.ui" line="381"/>
         <source>Save &amp;As...</source>
         <translation>&amp;Farklı Kaydet...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="349"/>
+        <location filename="../src/mainwindow.ui" line="384"/>
         <source>Save project to a different MLT XML file</source>
         <translation>Projeyi farklı bir MLT XML dosyası olarak kaydeder</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="352"/>
-        <source>Ctrl+Shift+S</source>
-        <translation>Ctrl+Shift+S</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.ui" line="361"/>
+        <location filename="../src/mainwindow.ui" line="396"/>
         <source>Export</source>
         <translation>Dışa Aktar</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="364"/>
+        <location filename="../src/mainwindow.ui" line="399"/>
         <source>Show the Export panel</source>
         <translation>Dışa aktarma panosunu göster</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="373"/>
+        <location filename="../src/mainwindow.ui" line="408"/>
         <source>&amp;Undo</source>
         <translation>&amp;Geri Al</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="382"/>
+        <location filename="../src/mainwindow.ui" line="417"/>
         <source>&amp;Redo</source>
         <translation>&amp;Yinele</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="387"/>
+        <location filename="../src/mainwindow.ui" line="422"/>
         <source>Forum...</source>
         <translation>Forum...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="392"/>
+        <location filename="../src/mainwindow.ui" line="427"/>
         <source>FAQ...</source>
         <translation>SSS...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="401"/>
-        <location filename="../src/mainwindow.cpp" line="3069"/>
+        <location filename="../src/mainwindow.ui" line="436"/>
+        <location filename="../src/mainwindow.cpp" line="1688"/>
+        <location filename="../src/mainwindow.cpp" line="3254"/>
         <source>Enter Full Screen</source>
         <translation>Tam Ekran Yap</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="404"/>
-        <source>Ctrl+Shift+F</source>
-        <translation>Ctrl+Shift+F</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.ui" line="413"/>
+        <location filename="../src/mainwindow.ui" line="448"/>
         <source>Peak Meter</source>
         <translation>Tepe Ölçer</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="416"/>
+        <location filename="../src/mainwindow.ui" line="451"/>
         <source>Show or hide the audio peak meter</source>
         <translation>Ses tepe ölçerini gösterir ya da gizler</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="425"/>
-        <location filename="../src/mainwindow.cpp" line="249"/>
+        <location filename="../src/mainwindow.ui" line="460"/>
+        <location filename="../src/mainwindow.cpp" line="290"/>
         <source>Properties</source>
         <translation>Özellikler</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="434"/>
+        <location filename="../src/mainwindow.ui" line="469"/>
         <source>Recent</source>
         <translation>Son Kullanılanlar</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="443"/>
+        <location filename="../src/mainwindow.ui" line="478"/>
         <source>Playlist</source>
         <translation>Oynatma Listesi</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="452"/>
-        <location filename="../src/mainwindow.cpp" line="374"/>
+        <location filename="../src/mainwindow.ui" line="487"/>
+        <location filename="../src/mainwindow.cpp" line="407"/>
         <source>History</source>
         <translation>Geçmiş</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="461"/>
-        <source>Full Screen</source>
-        <translation>Tam Ekran</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.ui" line="472"/>
+        <location filename="../src/mainwindow.ui" line="498"/>
         <source>Realtime (frame dropping)</source>
         <translation>Gerçek Zamanlı (kare düşmesi)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="483"/>
+        <location filename="../src/mainwindow.ui" line="509"/>
         <source>Progressive</source>
         <translation>Tek geçişli</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="491"/>
+        <location filename="../src/mainwindow.ui" line="517"/>
         <source>GPU Effects (unstable)</source>
         <translation>GPU Efektleri (kararsız)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="494"/>
+        <location filename="../src/mainwindow.ui" line="520"/>
         <source>Use GPU filters</source>
         <translation>GPU filtrelerini kullan</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="505"/>
+        <location filename="../src/mainwindow.ui" line="531"/>
         <source>1 (mono)</source>
         <translation>1 (mono)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="513"/>
+        <location filename="../src/mainwindow.ui" line="539"/>
         <source>2 (stereo)</source>
         <translation>2 (stereo)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="521"/>
+        <location filename="../src/mainwindow.ui" line="547"/>
         <source>6 (5.1)</source>
         <translation>6 (5.1)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="532"/>
+        <location filename="../src/mainwindow.ui" line="558"/>
         <source>One Field (fast)</source>
         <translation>Bir Alan (hızlı)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="540"/>
+        <location filename="../src/mainwindow.ui" line="566"/>
         <source>Linear Blend (fast)</source>
         <translation>Doğrusal Karışım (hızlı)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="548"/>
+        <location filename="../src/mainwindow.ui" line="574"/>
         <source>YADIF - temporal only (good)</source>
         <translation>YADIF - yalnız geçici (iyi)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="556"/>
+        <location filename="../src/mainwindow.ui" line="582"/>
         <source>YADIF - temporal + spatial (best)</source>
         <translation>YADIF - geçici + uzaysal (en iyi) </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="567"/>
+        <location filename="../src/mainwindow.ui" line="593"/>
         <source>Nearest Neighbor (fast)</source>
         <translation>En Yakın Komşu (hızlı)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="575"/>
+        <location filename="../src/mainwindow.ui" line="601"/>
         <source>Bilinear (good)</source>
         <translation>İkili Doğrusal (iyi)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="583"/>
+        <location filename="../src/mainwindow.ui" line="609"/>
         <source>Bicubic (better)</source>
         <translation>Çift Kübik (daha iyi)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="591"/>
+        <location filename="../src/mainwindow.ui" line="617"/>
         <source>Hyper/Lanczos (best)</source>
         <translation>Hiper/Lanczos (en iyi)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="602"/>
-        <location filename="../src/mainwindow.ui" line="754"/>
+        <location filename="../src/mainwindow.ui" line="628"/>
+        <location filename="../src/mainwindow.ui" line="780"/>
         <source>Automatic</source>
         <translation>Otomatik</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="613"/>
-        <location filename="../src/mainwindow.ui" line="1042"/>
+        <location filename="../src/mainwindow.ui" line="639"/>
+        <location filename="../src/mainwindow.ui" line="1092"/>
         <source>None</source>
         <translation>Yok</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="621"/>
+        <location filename="../src/mainwindow.ui" line="647"/>
         <source>Use JACK Audio</source>
         <translation>JACK Sesi Kullan</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="630"/>
+        <location filename="../src/mainwindow.ui" line="656"/>
         <source>Filters</source>
         <translation>Filtreler</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="633"/>
+        <location filename="../src/mainwindow.ui" line="659"/>
         <source>Modify the video image or audio</source>
         <translation>Video görselini ya da sesi değiştirir</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="638"/>
-        <location filename="../src/mainwindow.ui" line="954"/>
+        <location filename="../src/mainwindow.ui" line="664"/>
+        <location filename="../src/mainwindow.ui" line="1004"/>
         <source>Add...</source>
         <translation>Ekle...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="646"/>
+        <location filename="../src/mainwindow.ui" line="672"/>
         <source>System</source>
         <translation>Sistem</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="649"/>
+        <location filename="../src/mainwindow.ui" line="675"/>
         <source>Use the user or platform style, colors, and icons.</source>
         <translation>Kullanıcı ya da platform stilindeki renk ve simgeleri kullan.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="657"/>
+        <location filename="../src/mainwindow.ui" line="683"/>
         <source>Fusion Dark</source>
         <translation>Füzyon Koyu</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="665"/>
+        <location filename="../src/mainwindow.ui" line="691"/>
         <source>Fusion Light</source>
         <translation>Füzyon Açık</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="670"/>
+        <location filename="../src/mainwindow.ui" line="696"/>
         <source>Tutorials...</source>
         <translation>Eğitimler...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="679"/>
+        <location filename="../src/mainwindow.ui" line="705"/>
         <source>Timeline</source>
         <translation>Zaman Akışı</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="684"/>
-        <location filename="../src/mainwindow.ui" line="687"/>
+        <location filename="../src/mainwindow.ui" line="710"/>
+        <location filename="../src/mainwindow.ui" line="713"/>
         <source>Restore Default Layout</source>
         <translation>Varsayılan Yerleşimi Yükle</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="695"/>
+        <location filename="../src/mainwindow.ui" line="721"/>
         <source>Show Title Bars</source>
         <translation>Başlık Çubuklarını Göster</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="703"/>
+        <location filename="../src/mainwindow.ui" line="729"/>
         <source>Show Toolbar</source>
         <translation>Araç Çubuğunu Göster</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="708"/>
+        <location filename="../src/mainwindow.ui" line="734"/>
         <source>Upgrade...</source>
         <translation>Yükselt...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="713"/>
+        <location filename="../src/mainwindow.ui" line="739"/>
         <source>Open MLT XML As Clip...</source>
         <translation>Klip Olarak MLT XML Aç...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="716"/>
+        <location filename="../src/mainwindow.ui" line="742"/>
         <source>Open a MLT XML project file as a virtual clip</source>
         <translation>MLT XML proje dosyasını bir sanal klip olarak açar</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="727"/>
+        <location filename="../src/mainwindow.ui" line="753"/>
         <source>sRGB (computer)</source>
         <translation>sRGB (bilgisayar)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="735"/>
+        <location filename="../src/mainwindow.ui" line="761"/>
         <source>Rec. 709 (TV)</source>
         <translation>Rec. 709 (TV)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="743"/>
+        <location filename="../src/mainwindow.ui" line="769"/>
         <source>Scrub Audio</source>
         <translation>Ses Yumuşatma</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="778"/>
+        <location filename="../src/mainwindow.ui" line="804"/>
         <source>Software (Mesa)</source>
         <extracomment>Do not translate &quot;Mesa&quot;</extracomment>
         <translation>Yazılım (Mesa)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="783"/>
+        <location filename="../src/mainwindow.ui" line="809"/>
         <source>Application Log...</source>
         <translation>Uygulama Günlüğü...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="791"/>
+        <location filename="../src/mainwindow.ui" line="817"/>
         <source>Project</source>
         <translation>Proje</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="799"/>
-        <location filename="../src/mainwindow.ui" line="934"/>
+        <location filename="../src/mainwindow.ui" line="825"/>
+        <location filename="../src/mainwindow.ui" line="1195"/>
         <source>Player</source>
         <translation>Oynatıcı</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="807"/>
+        <location filename="../src/mainwindow.ui" line="833"/>
         <source>User Interface</source>
         <translation>Kullanıcı Arayüzü</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="816"/>
+        <location filename="../src/mainwindow.ui" line="842"/>
         <source>Close</source>
         <translation>Kapat</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="819"/>
-        <source>Ctrl+W</source>
-        <translation>Ctrl+W</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.ui" line="834"/>
+        <location filename="../src/mainwindow.ui" line="860"/>
         <source>Cu&amp;t</source>
         <translation>&amp;Kes</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="837"/>
-        <source>Ctrl+X</source>
-        <translation>Ctrl+X</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.ui" line="849"/>
+        <location filename="../src/mainwindow.ui" line="875"/>
         <source>&amp;Copy</source>
         <translation>K&amp;opyala</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="852"/>
-        <source>Ctrl+C</source>
-        <translation>Ctrl+C</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.ui" line="864"/>
+        <location filename="../src/mainwindow.ui" line="890"/>
         <source>&amp;Paste</source>
         <translation>Ya&amp;pıştır</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="867"/>
-        <source>Ctrl+V</source>
-        <translation>Ctrl+V</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.ui" line="872"/>
+        <location filename="../src/mainwindow.ui" line="898"/>
         <source>Export EDL...</source>
         <translation>EDL Olarak Dışa Aktar...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="877"/>
+        <location filename="../src/mainwindow.ui" line="903"/>
         <source>Export Frame...</source>
         <translation>Kareyi Dışa Aktar...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="880"/>
-        <source>Ctrl+Shift+E</source>
-        <translation>Ctrl+Shift+E</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.ui" line="885"/>
+        <location filename="../src/mainwindow.ui" line="911"/>
         <source>Export Video...</source>
         <translation>Video Olarak Dışa Aktar...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="888"/>
-        <source>Ctrl+E</source>
-        <translation>Ctrl+E</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.ui" line="893"/>
+        <location filename="../src/mainwindow.ui" line="919"/>
+        <location filename="../src/mainwindow.ui" line="1138"/>
         <source>Set...</source>
         <translation>Ayarla...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="898"/>
+        <location filename="../src/mainwindow.ui" line="924"/>
+        <location filename="../src/mainwindow.ui" line="1146"/>
         <source>Show...</source>
         <translation>Göster...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="901"/>
+        <location filename="../src/mainwindow.ui" line="927"/>
         <source>Show</source>
         <translation>Göster</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="910"/>
-        <location filename="../src/mainwindow.ui" line="913"/>
+        <location filename="../src/mainwindow.ui" line="936"/>
+        <location filename="../src/mainwindow.ui" line="939"/>
         <source>Keyframes</source>
         <translation>Anahtar kareler</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="918"/>
+        <location filename="../src/mainwindow.ui" line="944"/>
         <source>New</source>
         <translation>Yeni</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="921"/>
-        <source>Ctrl+N</source>
-        <translation>Ctrl+N</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.ui" line="926"/>
+        <location filename="../src/mainwindow.ui" line="952"/>
         <source>Keyboard Shortcuts...</source>
         <translation>Klavye Kısayolları...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="929"/>
-        <source>F1</source>
-        <translation>F1</translation>
+        <location filename="../src/mainwindow.ui" line="963"/>
+        <source>Audio</source>
+        <translation>Ses</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="939"/>
+        <location filename="../src/mainwindow.ui" line="966"/>
+        <source>Switch to the audio layout</source>
+        <translation>Ses yerleşimine geç</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="974"/>
+        <source>Logging</source>
+        <translation>Kaydetme</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="977"/>
+        <source>Switch to the logging layout</source>
+        <translation>Kaydetme yerleşimine geç</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="985"/>
+        <source>Editing</source>
+        <translation>Düzenleme</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="988"/>
+        <source>Switch to the editing layout</source>
+        <translation>Düzenleme yerleşimine geç</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="996"/>
+        <source>FX</source>
+        <translation>Efekt</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="999"/>
+        <source>Switch to the effects layout</source>
+        <translation>Efekt yerleşimine geç</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="1111"/>
+        <source>Topics</source>
+        <translation>Başlıklar</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="1119"/>
+        <source>Synchronization...</source>
+        <translation>Senkronizasyon...</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="1122"/>
+        <source>Synchronization</source>
+        <translation>Senkronizasyon</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="1130"/>
+        <source>Use Proxy</source>
+        <translation>Vekil Kullan</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="1141"/>
+        <source>Set the proxy storage folder</source>
+        <translation>Vekil depolama klasörünü ayarla</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="1149"/>
+        <source>Show the proxy storage folder</source>
+        <translation>Vekil depolama klasörünü göster</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="1160"/>
+        <source>Use Project Folder</source>
+        <translation>Proje Klasörünü Kullan</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="1163"/>
+        <source>Store proxies in the project folder if defined</source>
+        <translation>Tanımlanmışsa vekilleri proje klasöründe tut</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="1171"/>
+        <source>Use Hardware Encoder</source>
+        <translation>Donanım Kodlayıcı Kullan</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="1176"/>
+        <source>Configure Hardware Encoder...</source>
+        <translation>Donanım Kodlamasını Yapılandır...</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="1187"/>
+        <source>Switch to the color layout</source>
+        <translation>Renk yerleşimine geç</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="1198"/>
+        <source>Switch to the player only layout</source>
+        <translation>Oynatıcı yerleşimine geç</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="1211"/>
         <source>Playlist Project</source>
         <translation>Oynatma Listesi Projesi</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="944"/>
-        <source>Timeline Project</source>
-        <translation>Zaman Akışı Projesi</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.ui" line="949"/>
+        <location filename="../src/mainwindow.ui" line="1216"/>
         <source>Clip-only Project</source>
         <translation>Yalnız-klip Projesi</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="959"/>
-        <location filename="../src/mainwindow.ui" line="964"/>
+        <location filename="../src/mainwindow.ui" line="1009"/>
+        <location filename="../src/mainwindow.ui" line="1014"/>
         <source>Remove...</source>
         <translation>Kaldır...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="973"/>
+        <location filename="../src/mainwindow.ui" line="439"/>
+        <source>F11</source>
+        <translation>F11</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="1023"/>
         <source>Open Other</source>
         <translation>Farklı Aç</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="987"/>
+        <location filename="../src/mainwindow.ui" line="1037"/>
         <source>Clear Recent on Exit</source>
         <translation>Çıkışta Son Kullanılanları Temizle</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="995"/>
+        <location filename="../src/mainwindow.ui" line="1045"/>
         <source>Show Text Under Icons</source>
         <translation>Simge Altında Metin Göster</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1003"/>
+        <location filename="../src/mainwindow.ui" line="1053"/>
         <source>Show Small Icons</source>
         <translation>Küçük Simgeler Göster</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1012"/>
+        <location filename="../src/mainwindow.ui" line="1062"/>
         <source>Jobs</source>
         <translation>Görevler</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1020"/>
+        <location filename="../src/mainwindow.ui" line="1070"/>
         <source>540p</source>
         <translation>540p</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1023"/>
-        <source>F8</source>
-        <translation>F8</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.ui" line="1031"/>
+        <location filename="../src/mainwindow.ui" line="1081"/>
         <source>720p</source>
         <translation>720p</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1034"/>
-        <source>F9</source>
-        <translation>F9</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.ui" line="1045"/>
-        <source>F6</source>
-        <translation>F6</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.ui" line="1053"/>
+        <location filename="../src/mainwindow.ui" line="1103"/>
         <source>360p</source>
         <translation>360p</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1056"/>
-        <source>F7</source>
-        <translation>F7</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="126"/>
+        <location filename="../src/mainwindow.cpp" line="135"/>
         <source>Error: This program requires the JACK 1 library.
 
 Please install it using your package manager. It may be named libjack0, jack-audio-connection-kit, jack, or similar.</source>
@@ -3669,7 +3532,7 @@ Please install it using your package manager. It may be named libjack0, jack-aud
 Lütfen paket yöneticinizi kullanarak kitaplığı yükleyin. libjack0, jack-audio-connection-kit, jack ya da benzer bir adı olabilir.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="134"/>
+        <location filename="../src/mainwindow.cpp" line="143"/>
         <source>Error: This program requires the SDL 2 library.
 
 Please install it using your package manager. It may be named libsdl2-2.0-0, SDL2, or similar.</source>
@@ -3678,130 +3541,125 @@ Please install it using your package manager. It may be named libsdl2-2.0-0, SDL
 Lütfen paket yöneticinizi kullanarak yükleyin. Libsdl2-2.0-0, SDL2, veya benzerleri olarak adlandırılabilir.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="201"/>
-        <source>Ctrl+Z</source>
-        <translation>Ctrl+Z</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="203"/>
-        <source>Ctrl+Y</source>
-        <translation>Ctrl+Y</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="205"/>
-        <source>Ctrl+Shift+Z</source>
-        <translation>Ctrl+Shift+Z</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="586"/>
+        <location filename="../src/mainwindow.cpp" line="618"/>
         <source>Screen %1 (%2 x %3 @ %4 Hz)</source>
         <translation>Ekran %1 (%2 x %3 @ %4 Hz)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="620"/>
+        <location filename="../src/mainwindow.cpp" line="642"/>
         <source>Off</source>
         <translation>Kapalı</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="623"/>
+        <location filename="../src/mainwindow.cpp" line="645"/>
         <source>Internal</source>
         <translation>İç</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="626"/>
+        <location filename="../src/mainwindow.cpp" line="648"/>
         <source>External</source>
         <translation>Dış</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="640"/>
+        <location filename="../src/mainwindow.cpp" line="662"/>
         <source>DeckLink Keyer</source>
         <translation>DeckLink Anahtarlayıcı</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="866"/>
+        <location filename="../src/mainwindow.ui" line="1184"/>
+        <location filename="../src/mainwindow.cpp" line="897"/>
         <source>Color</source>
         <translation>Renk</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="868"/>
+        <location filename="../src/mainwindow.cpp" line="899"/>
         <source>Text</source>
         <translation>Metin</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="871"/>
+        <location filename="../src/mainwindow.cpp" line="902"/>
         <source>Noise</source>
         <translation>Gürültü</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="873"/>
+        <location filename="../src/mainwindow.cpp" line="904"/>
         <source>Ising</source>
         <translation>Ising</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="875"/>
+        <location filename="../src/mainwindow.cpp" line="906"/>
         <source>Lissajous</source>
         <translation>Lissajous Eğrileri</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="877"/>
+        <location filename="../src/mainwindow.cpp" line="908"/>
         <source>Plasma</source>
         <translation>Plazma</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="879"/>
+        <location filename="../src/mainwindow.cpp" line="910"/>
         <source>Color Bars</source>
         <translation>Renk Çubukları</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="881"/>
+        <location filename="../src/mainwindow.cpp" line="912"/>
         <source>Audio Tone</source>
         <translation>Ses Tonu</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="883"/>
+        <location filename="../src/mainwindow.cpp" line="914"/>
         <source>Count</source>
         <translation>Sayı</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="886"/>
+        <location filename="../src/mainwindow.cpp" line="916"/>
+        <source>Blip Flash</source>
+        <translation>Flaş Patlat</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="919"/>
         <source>Video4Linux</source>
         <translation>Video4Linux</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="887"/>
+        <location filename="../src/mainwindow.cpp" line="920"/>
         <source>PulseAudio</source>
         <translation>PulseAudio</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="888"/>
+        <location filename="../src/mainwindow.cpp" line="921"/>
         <source>JACK Audio</source>
         <translation>JACK Sesi</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="889"/>
+        <location filename="../src/mainwindow.cpp" line="922"/>
         <source>ALSA Audio</source>
         <translation>ALSA Ses</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="891"/>
+        <location filename="../src/mainwindow.cpp" line="924"/>
         <source>Audio/Video Device</source>
         <translation>Ses/Video Aygıtı</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="894"/>
+        <location filename="../src/mainwindow.cpp" line="927"/>
         <source>SDI/HDMI</source>
         <translation>SDI/HDMI</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="916"/>
-        <location filename="../src/mainwindow.cpp" line="918"/>
-        <location filename="../src/mainwindow.cpp" line="1334"/>
-        <location filename="../src/mainwindow.cpp" line="3696"/>
+        <location filename="../src/mainwindow.cpp" line="949"/>
+        <location filename="../src/mainwindow.cpp" line="951"/>
+        <location filename="../src/mainwindow.cpp" line="1355"/>
+        <location filename="../src/mainwindow.cpp" line="1376"/>
+        <location filename="../src/mainwindow.cpp" line="1429"/>
+        <location filename="../src/mainwindow.cpp" line="3843"/>
+        <location filename="../src/mainwindow.cpp" line="3857"/>
+        <location filename="../src/mainwindow.cpp" line="4694"/>
         <source>Failed to open </source>
-        <translation>Açılamadı</translation>
+        <translation>Açılamadı </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="944"/>
+        <location filename="../src/mainwindow.cpp" line="977"/>
         <source>The file you opened uses GPU effects, but GPU effects are not enabled.
 
 GPU effects are EXPERIMENTAL, UNSTABLE and UNSUPPORTED! Unsupported means do not report bugs about it.
@@ -3814,24 +3672,24 @@ GPU efektleri DENEYSEL, KARARSIZ ve DESTEKLENMEMİŞTİR! Desteklenmeyen araçla
 GPU efektlerini etkinleştirmek ve yeniden başlatmak istiyor musunuz?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="965"/>
+        <location filename="../src/mainwindow.cpp" line="998"/>
         <source>The file you opened uses CPU effects that are incompatible with GPU effects, but GPU effects are enabled.
 Do you want to disable GPU effects and restart?</source>
         <translation>Açtığınız dosya GPU efektleriyle uyumlu olmayan CPU efektleri kullanıyor, ancak GPU efektleri etkin.
 GPU efektlerini kapatmak ve yeniden başlatmak istiyor musunuz?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="988"/>
+        <location filename="../src/mainwindow.cpp" line="1021"/>
         <source>Repaired</source>
         <translation>Onarılmış</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1011"/>
+        <location filename="../src/mainwindow.cpp" line="1043"/>
         <source>Repairing the project failed.</source>
         <translation>Proje onarılamadı.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1023"/>
+        <location filename="../src/mainwindow.cpp" line="1055"/>
         <source>Shotcut noticed some problems in your project.
 Do you want Shotcut to try to repair it?
 
@@ -3845,155 +3703,225 @@ Evet seçerseniz Shotcut projenizin bir kopyasını oluşturarak
 adına &quot;- Onarılmış&quot; ekleyecek ve onu açacak.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1059"/>
+        <location filename="../src/mainwindow.cpp" line="1091"/>
         <source>Auto-saved files exist. Do you want to recover them now?</source>
         <translation>Otomatik olarak kaydedilen dosyalar var. Onları şimdi kurtarmak ister misiniz?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1174"/>
+        <location filename="../src/mainwindow.cpp" line="1169"/>
         <source>You cannot add a project to itself!</source>
         <translation>Kendisine bir proje ekleyemezsiniz!</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1209"/>
+        <location filename="../src/mainwindow.cpp" line="1205"/>
         <source>There was an error saving. Please try again.</source>
         <translation>Kaydederken bir hata oluştu. Lütfen tekrar deneyin.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1270"/>
+        <location filename="../src/mainwindow.cpp" line="1282"/>
+        <source>This project file requires a newer version!
+
+It was made with version </source>
+        <translation>Bu proje dosyası için daha yeni bir sürüm gerekir!
+
+Dosya şu versiyon ile yapılmış </translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="1307"/>
+        <source>You are running low on available memory!
+
+Please close other applications or web browser tabs and retry.
+Or save and restart Shotcut.</source>
+        <translation>Kullanılabilir bellek azalıyor!
+
+Lütfen diğer uygulamaları veya web tarayıcısı sekmelerini kapatın ve yeniden deneyin.
+Veya kaydedin ve Shotcut&apos;ı yeniden başlatın.</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="1343"/>
         <source>Opening %1</source>
         <translation>%1 Açılıyor</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1368"/>
-        <location filename="../src/mainwindow.cpp" line="3656"/>
+        <location filename="../src/mainwindow.cpp" line="1464"/>
+        <location filename="../src/mainwindow.cpp" line="3813"/>
         <source>Open File</source>
         <translation>Dosya Aç</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1648"/>
+        <location filename="../src/mainwindow.cpp" line="1465"/>
+        <source>All Files (*);;MLT XML (*.mlt)</source>
+        <translation>Tüm dosyalar (*);;MLT XML (*.mlt)</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="1750"/>
         <source>Untitled</source>
         <translation>Başlıksız</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1664"/>
-        <source>About Shotcut</source>
-        <translation>Shotcut Hakkında</translation>
+        <location filename="../src/mainwindow.cpp" line="1769"/>
+        <source>About %1</source>
+        <translation>%1 Hakkında</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1665"/>
-        <source>&lt;h1&gt;Shotcut version %1&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;https://www.shotcut.org/&quot;&gt;Shotcut&lt;/a&gt; is a free, open source, cross platform video editor.&lt;/p&gt;&lt;small&gt;&lt;p&gt;Copyright &amp;copy; 2011-2020 &lt;a href=&quot;https://www.meltytech.com/&quot;&gt;Meltytech&lt;/a&gt;, LLC&lt;/p&gt;&lt;p&gt;Licensed under the &lt;a href=&quot;https://www.gnu.org/licenses/gpl.html&quot;&gt;GNU General Public License v3.0&lt;/a&gt;&lt;/p&gt;&lt;p&gt;This program proudly uses the following projects:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://www.qt.io/&quot;&gt;Qt&lt;/a&gt; application and UI framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; multimedia authoring framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; multimedia format and codec libraries&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; H.264 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; VP8 and VP9 encoders&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; MP3 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt; video plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; audio plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;DefaultIcon&lt;/a&gt; icon collection by &lt;a href=&quot;http://www.interactivemania.com/&quot;&gt;interactivemania&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt;Oxygen&lt;/a&gt; icon collection&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;The source code used to build this program can be downloaded from &lt;a href=&quot;https://www.shotcut.org/&quot;&gt;shotcut.org&lt;/a&gt;.&lt;/p&gt;This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.&lt;/small&gt;</source>
-        <translation>&lt;h1&gt;Shotcut sürüm %1&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;https://www.shotcut.org/&quot;&gt;Shotcut&lt;/a&gt; ücretsiz, açık kaynak kodlu, çapraz platform bir video düzenleyicisidir.&lt;/p&gt;&lt;small&gt;&lt;p&gt;Telif hakkı &amp;copy; 2011-2020 &lt;a href=&quot;https://www.meltytech.com/&quot;&gt;Meltytech&lt;/a&gt;, LLC&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;https://www.gnu.org/licenses/gpl.html&quot;&gt;GNU Genel Kamu Lisansı v3.0&lt;/a&gt; koşullarında lisanslıdır&lt;/p&gt;&lt;p&gt;Bu program aşağıdaki projeleri gururla kullanır:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://www.qt.io/&quot;&gt;Qt&lt;/a&gt; uygulama ve UI iskeleti&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; multimedia yazarlık iskeleti&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; multimedia biçimleri ve kodek kütüphaneleri&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; H.264 kodlayıcı&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; VP8 ve VP9 kodlayıcılar&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; MP3 kodlayıcı&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt; video eklentileri&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; ses eklentileri&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;DefaultIcon&lt;/a&gt; simge kolleksiyonu &lt;a href=&quot;http://www.interactivemania.com/&quot;&gt;interactivemania&lt;/a&gt; tarafından&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt;Oxygen&lt;/a&gt; simge kolleksiyonu&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;Bu programı oluşturmak için kullanılan kaynak kodlar &lt;a href=&quot;https://www.shotcut.org/&quot;&gt;shotcut.org&lt;/a&gt; adresinden indirilebilir.&lt;/p&gt;Bu program, yararlı olacağı umuduyla dağıtılır ancak HERHANGİ BİR GARANTİSİ YOKTUR; TİCARİ veya BELİRLİ BİR AMACA UYGUNLUK garantisi dahil değildir.&lt;/small&gt;</translation>
+        <location filename="../src/mainwindow.cpp" line="1770"/>
+        <source>&lt;h1&gt;Shotcut version %2&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;%3&quot;&gt;%1&lt;/a&gt; is a free, open source, cross platform video editor.&lt;/p&gt;&lt;small&gt;&lt;p&gt;%4&lt;/p&gt;&lt;p&gt;Licensed under the %5&lt;/p&gt;&lt;p&gt;This program proudly uses the following projects:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://www.qt.io/&quot;&gt;Qt&lt;/a&gt; application and UI framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; multimedia authoring framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; multimedia format and codec libraries&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; H.264 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; VP8 and VP9 encoders&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; MP3 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt; video plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; audio plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;DefaultIcon&lt;/a&gt; icon collection by &lt;a href=&quot;http://www.interactivemania.com/&quot;&gt;interactivemania&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt;Oxygen&lt;/a&gt; icon collection&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;The source code used to build this program can be downloaded from &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt;.&lt;/p&gt;This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.&lt;/small&gt;</source>
+        <translation>&lt;h1&gt;Shotcut sürüm %2&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;%3&quot;&gt;%1&lt;/a&gt; ücretsiz, açık kaynak kodlu, çapraz platform bir video düzenleyicisidir.&lt;/p&gt;&lt;p&gt;%4&lt;/p&gt;&lt;p&gt;%5 koşullarında lisanslıdır.&lt;/p&gt;&lt;p&gt;Bu program aşağıdaki projeleri gururla kullanıyor:&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://www.qt.io/&quot;&gt;Qt&lt;/a&gt; uygulama ve UI kütüphanesi&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; Multimedya yazarlık kütüphanesi&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; multimedya formatı ve codec kütüphanesi&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; H.264 kodlayıcı&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; VP8 and VP9 kodlayıcılar&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; MP3 kodlayıcı&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt; video eklentileri&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; ses eklentileri&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.interactivemania.com/&quot;&gt;interactivemania&lt;/a&gt; tarafından &lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;DefaultIcon&lt;/a&gt;&#xa0;simge koleksiyonu&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt;Oxygen&lt;/a&gt; simge kolleksiyonu&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;Bu programı oluşturmak için kullanılan kaynak kodu &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt; adresinden indirilebilirsiniz.&lt;/p&gt;&lt;p&gt;&lt;small&gt;Bu program faydalı olacağı umuduyla dağıtılmıştır, ancak HİÇBİR GARANTİSİ YOKTUR; zımni SATILABİLİRLİK veya BELİRLİ BİR AMAÇ İÇİN UYGUNLUK garantisi yoktur.&lt;/small&gt;&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2228"/>
+        <location filename="../src/mainwindow.cpp" line="2385"/>
         <source>Non-Broadcast</source>
         <translation>Yayınlanmayacak</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2233"/>
+        <location filename="../src/mainwindow.cpp" line="2390"/>
         <source>DVD Widescreen NTSC</source>
         <translation>DVD Geniş Ekran NTSC</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2234"/>
+        <location filename="../src/mainwindow.cpp" line="2391"/>
         <source>DVD Widescreen PAL</source>
         <translation>DVD Geniş Ekran PAL</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2245"/>
+        <location filename="../src/mainwindow.cpp" line="2402"/>
         <source>Square 1080p 30 fps</source>
         <translation>Kare 1080p 30 fps</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2246"/>
+        <location filename="../src/mainwindow.cpp" line="2403"/>
         <source>Square 1080p 60 fps</source>
         <translation>Kare 1080p 60 fps</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2247"/>
+        <location filename="../src/mainwindow.cpp" line="2404"/>
         <source>Vertical HD 30 fps</source>
         <translation>Dikey HD 30 fps</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2248"/>
+        <location filename="../src/mainwindow.cpp" line="2405"/>
         <source>Vertical HD 60 fps</source>
         <translation>Dikey HD 60 fps</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2249"/>
+        <location filename="../src/mainwindow.cpp" line="2406"/>
         <source>Custom</source>
         <translation>Özel</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2279"/>
-        <location filename="../src/mainwindow.cpp" line="2538"/>
+        <location filename="../src/mainwindow.cpp" line="2436"/>
+        <location filename="../src/mainwindow.cpp" line="2704"/>
         <source>Saved %1</source>
         <translation>%1 Kaydedildi</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2530"/>
-        <location filename="../src/mainwindow.cpp" line="2552"/>
+        <location filename="../src/mainwindow.cpp" line="2696"/>
+        <location filename="../src/mainwindow.cpp" line="2718"/>
         <source>Save XML</source>
         <translation>XML Kaydet</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2553"/>
+        <location filename="../src/mainwindow.cpp" line="2720"/>
         <source>MLT XML (*.mlt)</source>
         <translation>MLT XML (*.mlt)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2572"/>
+        <location filename="../src/mainwindow.cpp" line="2739"/>
         <source>The project has been modified.
 Do you want to save your changes?</source>
         <translation>Projede değişiklikler yapılmış.
 Değişiklikleri kaydetmek ister misiniz?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2601"/>
+        <location filename="../src/mainwindow.cpp" line="2768"/>
         <source>There are incomplete jobs.
 Do you want to still want to exit?</source>
         <translation>Tamamlanmamış görevler var.
 Yine de çıkmak istiyor musunuz? </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2614"/>
+        <location filename="../src/mainwindow.cpp" line="2781"/>
         <source>An export is in progress.
 Do you want to still want to exit?</source>
         <translation>Devam eden bir dışa aktarma işlemi var.
 Yine de çıkmak ister misiniz?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3072"/>
+        <location filename="../src/mainwindow.cpp" line="1686"/>
+        <location filename="../src/mainwindow.cpp" line="3261"/>
         <source>Exit Full Screen</source>
         <translation>Tam Ekrandan Çık</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3085"/>
+        <location filename="../src/mainwindow.cpp" line="4658"/>
+        <source>Turn Proxy On</source>
+        <translation>Vekili Aç</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="4658"/>
+        <source>Turn Proxy Off</source>
+        <translation>Vekili Kapat</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="4662"/>
+        <source>Converting</source>
+        <translation>Dönüştürülüyor</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="4676"/>
+        <source>Do you want to create missing proxies for every file in this project?
+
+You must reopen your project after all proxy jobs are finished.</source>
+        <translation>Bu projedeki her dosya için eksik vekil dosyalar oluşturmak ister misiniz?
+
+Tüm vekil oluşturma işlemleri bittikten sonra projenizi yeniden açmalısınız.</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="4711"/>
+        <source>Proxy Folder</source>
+        <translation>Vekil Klasörü</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="4726"/>
+        <source>Do you want to move all files from the old folder to the new folder?</source>
+        <translation>Eski klasördeki tüm dosyaları yeni klasöre taşımak istiyor musunuz?</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="4733"/>
+        <source>Moving Files</source>
+        <translation>Dosyalar Taşınıyor</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="3274"/>
         <source>GPU effects are not supported</source>
         <translation>GPU efektleri desteklenmiyor </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3191"/>
+        <location filename="../src/mainwindow.cpp" line="3336"/>
         <source>Click here to check for a new version of Shotcut.</source>
         <translation>Shotcut&apos;ın yeni bir sürümünü kontrol etmek için buraya tıklayın.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3337"/>
+        <location filename="../src/mainwindow.cpp" line="3441"/>
+        <source>Open Files</source>
+        <translation>Dosyaları Aç</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="3475"/>
         <source>You must restart Shotcut to switch to the new language.
 Do you want to restart now?</source>
         <translation>Dil değişikliklerinin etkilili olması için Shotcut uygulamasını
 yeniden başlatmalısınız. Şimdi yeniden başlatmak ister misiniz?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3378"/>
+        <location filename="../src/mainwindow.cpp" line="3516"/>
         <source>Failed to connect to JACK.
 Please verify that JACK is installed and running.</source>
         <translation>JACK bağlantısı kurulamadı. 
 Lütfen JACK uygulamasının kurulu ve çalışır durumda olduğunu doğrulayın.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3387"/>
+        <location filename="../src/mainwindow.cpp" line="3525"/>
         <source>GPU effects are experimental and may cause instability on some systems. Some CPU effects are incompatible with GPU effects and will be disabled. A project created with GPU effects can not be converted to a CPU only project later.
 
 Do you want to enable GPU effects and restart Shotcut?</source>
@@ -4002,7 +3930,7 @@ Do you want to enable GPU effects and restart Shotcut?</source>
 GPU efektlerini etkinleştirmek ve Shotcut&apos;ı yeniden başlatmak istiyor musunuz?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3409"/>
+        <location filename="../src/mainwindow.cpp" line="3547"/>
         <source>Shotcut must restart to disable GPU effects.
 
 Disable GPU effects and restart?</source>
@@ -4011,23 +3939,23 @@ Disable GPU effects and restart?</source>
 GPU efektlerini kapat ve yeniden başlat?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3634"/>
+        <location filename="../src/mainwindow.cpp" line="3791"/>
         <source>Do you want to automatically check for updates in the future?</source>
         <translation>Gelecekte güncellemeler otomatik olarak kontrol edilsin, istiyor musunuz?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3641"/>
+        <location filename="../src/mainwindow.cpp" line="3798"/>
         <source>Do not show this anymore.</source>
         <comment>Automatic upgrade check dialog</comment>
         <translation>Bunu artık gösterme.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3657"/>
+        <location filename="../src/mainwindow.cpp" line="3814"/>
         <source>MLT XML (*.mlt);;All Files (*)</source>
         <translation>MLT XML (*.mlt);;Tüm Dosyalar (*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3674"/>
+        <location filename="../src/mainwindow.cpp" line="3831"/>
         <source>The decimal point of the MLT XML file
 you want to open is incompatible.
 
@@ -4038,7 +3966,7 @@ ondalık noktası uyumlu değil.
 Bu MLT XML dosyasını açmaya devam etmek istiyor musunuz?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3737"/>
+        <location filename="../src/mainwindow.cpp" line="3898"/>
         <source>You must restart Shotcut to change the display method.
 Do you want to restart now?</source>
         <translation>Görüntüleme yöntemini değiştirmek için Shotcut
@@ -4046,94 +3974,89 @@ uygulamasını yeniden başlatmanız gerekir.
 Şimdi yeniden başlatmak ister misiniz?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3759"/>
+        <location filename="../src/mainwindow.cpp" line="3920"/>
         <source>Application Log</source>
         <translation>Uygulama Günlüğü</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3798"/>
+        <location filename="../src/mainwindow.cpp" line="3961"/>
         <source>Shotcut version %1 is available! Click here to get it.</source>
         <translation>Shotcut %1 sürümü yayınlanmış! Almak için buraya tıklayın.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3804"/>
+        <location filename="../src/mainwindow.cpp" line="3967"/>
         <source>You are running the latest version of Shotcut.</source>
         <translation>Shotcut&apos;ın en son sürümünü çalıştırıyorsunuz.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3814"/>
+        <location filename="../src/mainwindow.cpp" line="3977"/>
         <source>Failed to read version.json when checking. Click here to go to the Web site.</source>
         <translation>Güncelleme denetimi sırasında version.json dosyası okunamadı. Web sitesine gitmek için buraya tıklayın.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3863"/>
+        <location filename="../src/mainwindow.cpp" line="4026"/>
         <source>Export EDL</source>
         <translation>EDL Olarak Dışa Aktar</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3864"/>
+        <location filename="../src/mainwindow.cpp" line="4028"/>
         <source>EDL (*.edl);;All Files (*)</source>
         <translation>EDL (*.edl);;Tüm dosyalar (*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3910"/>
+        <location filename="../src/mainwindow.cpp" line="4074"/>
         <source>A JavaScript error occurred during export.</source>
         <translation>Dışa aktarma sırasında bir JavaScript hatası oluştu.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3913"/>
+        <location filename="../src/mainwindow.cpp" line="4077"/>
         <source>Failed to open export-edl.js</source>
         <translation>export-edl.js açılamadı</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3941"/>
+        <location filename="../src/mainwindow.cpp" line="4102"/>
         <source>Export Frame</source>
         <translation>Kareyi Dışa Aktar</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3942"/>
-        <source>PNG (*.png);;BMP (*.bmp);;JPEG (*.jpg *.jpeg);;PPM (*.ppm);;TIFF (*.tif *.tiff);;WebP (*.webp);;All Files (*)</source>
-        <translation>PNG (*.png);;BMP (*.bmp);;JPEG (*.jpg *.jpeg);;PPM (*.ppm);;TIFF (*.tif *.tiff);;WebP (*.webp);;Tüm dosyalar (*)</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="3962"/>
+        <location filename="../src/mainwindow.cpp" line="4109"/>
         <source>Unable to export frame.</source>
         <translation>Kare dışa aktarılamadı.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3970"/>
+        <location filename="../src/mainwindow.cpp" line="4117"/>
         <source>You must restart Shotcut to change the data directory.
 Do you want to continue?</source>
         <translation>Veri klasörünü değiştirmek için Shotcut&apos;ı yeniden başlatmalısınız.
 Devam etmek istiyor musunuz?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3979"/>
+        <location filename="../src/mainwindow.cpp" line="4126"/>
         <source>Data Directory</source>
         <translation>Veri Klasörü</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4062"/>
+        <location filename="../src/mainwindow.cpp" line="4303"/>
         <source>Add Custom Layout</source>
         <translation>Özel Yerleşim Ekle</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4063"/>
+        <location filename="../src/mainwindow.cpp" line="4304"/>
         <source>Name</source>
         <translation>Ad</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4091"/>
+        <location filename="../src/mainwindow.cpp" line="4341"/>
         <source>Remove Video Mode</source>
         <translation>Video Modunu Kaldır</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4105"/>
+        <location filename="../src/mainwindow.cpp" line="4355"/>
         <source>Remove Layout</source>
         <translation>Yerleşimi Kaldır</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4234"/>
+        <location filename="../src/mainwindow.cpp" line="4475"/>
         <source>GPU effects are EXPERIMENTAL, UNSTABLE and UNSUPPORTED! Unsupported means do not report bugs about it.
 
 Do you want to disable GPU effects and restart Shotcut?</source>
@@ -4145,33 +4068,33 @@ GPU efektlerini kapatmak ve Shotcut&apos;ı yeniden başlatmak ister misiniz?</t
 <context>
     <name>MeltJob</name>
     <message>
-        <location filename="../src/jobs/meltjob.cpp" line="40"/>
+        <location filename="../src/jobs/meltjob.cpp" line="41"/>
         <source>View XML</source>
         <translation>XML Görünümü</translation>
     </message>
     <message>
-        <location filename="../src/jobs/meltjob.cpp" line="41"/>
+        <location filename="../src/jobs/meltjob.cpp" line="42"/>
         <source>View the MLT XML for this job</source>
         <translation>Bu görevin MLT XML dosyasını görüntüle </translation>
     </message>
     <message>
-        <location filename="../src/jobs/meltjob.cpp" line="50"/>
+        <location filename="../src/jobs/meltjob.cpp" line="51"/>
         <source>Open</source>
         <translation>Aç</translation>
     </message>
     <message>
-        <location filename="../src/jobs/meltjob.cpp" line="51"/>
+        <location filename="../src/jobs/meltjob.cpp" line="52"/>
         <source>Open the output file in the Shotcut player</source>
         <translation>Çıktı dosyasını Shotcut oynatıcıda aç</translation>
     </message>
     <message>
-        <location filename="../src/jobs/meltjob.cpp" line="55"/>
         <location filename="../src/jobs/meltjob.cpp" line="56"/>
+        <location filename="../src/jobs/meltjob.cpp" line="57"/>
         <source>Show In Folder</source>
         <translation>Klasörde Göster</translation>
     </message>
     <message>
-        <location filename="../src/jobs/meltjob.cpp" line="139"/>
+        <location filename="../src/jobs/meltjob.cpp" line="157"/>
         <source>MLT XML</source>
         <translation>MLT XML</translation>
     </message>
@@ -4399,7 +4322,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Birimi taramak için bir çalma listesi öğesini &lt;span style=&quot; font-weight:600;&quot;&gt;çift tıkla&lt;/span&gt; yın.&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Sunucunun klipler ağacından oynatma listesine &lt;span style=&quot; font-weight:600;&quot;&gt;sürükleyin ve bırakın&lt;/span&gt; veya &lt;span style=&quot; font-weight:600;&quot;&gt;Ekle&lt;/span&gt; ve &lt;span style=&quot; font-weight:600;&quot;&gt; Araya Ekle&lt;/span&gt; eylemleriyle kullanmak üzere bir klibi &lt;span style=&quot; font-weight:600;&quot;&gt;tek tıkla&lt;/span&gt;yın.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Sunucunun klipler ağacından oynatma listesine &lt;span style=&quot; font-weight:600;&quot;&gt;sürükleyin ve bırakın&lt;/span&gt;&#xa0;veya &lt;span style=&quot; font-weight:600;&quot;&gt;Ekle&lt;/span&gt; ve &lt;span style=&quot; font-weight:600;&quot;&gt; Araya Ekle&lt;/span&gt; eylemleriyle kullanmak üzere bir klibi &lt;span style=&quot; font-weight:600;&quot;&gt;tek tıkla&lt;/span&gt;yın.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedserverdock.ui" line="195"/>
@@ -4508,14 +4431,124 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>Mlt::GLWidget</name>
     <message>
-        <location filename="../src/glwidget.cpp" line="506"/>
+        <location filename="../src/glwidget.cpp" line="513"/>
         <source>You cannot drag from Project.</source>
         <translation>Projeden sürükleyemezsiniz.</translation>
     </message>
     <message>
-        <location filename="../src/glwidget.cpp" line="509"/>
+        <location filename="../src/glwidget.cpp" line="516"/>
         <source>You cannot drag a non-seekable source</source>
         <translation>Aranamayan kaynağı sürükleyemezsiniz</translation>
+    </message>
+</context>
+<context>
+    <name>MultiFileExportDialog</name>
+    <message>
+        <location filename="../src/dialogs/multifileexportdialog.cpp" line="59"/>
+        <source>Directory</source>
+        <translation>Klasör</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/multifileexportdialog.cpp" line="71"/>
+        <source>Prefix</source>
+        <translation>Ön ek</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/multifileexportdialog.cpp" line="72"/>
+        <source>export</source>
+        <translation>dışaaktar</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/multifileexportdialog.cpp" line="77"/>
+        <source>Field 1</source>
+        <translation>Alan 1</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/multifileexportdialog.cpp" line="84"/>
+        <source>Field 2</source>
+        <translation>Alan 2</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/multifileexportdialog.cpp" line="91"/>
+        <source>Field 3</source>
+        <translation>Alan 3</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/multifileexportdialog.cpp" line="99"/>
+        <source>Extension</source>
+        <translation>Uzantı</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/multifileexportdialog.cpp" line="195"/>
+        <source>None</source>
+        <translation>Yok</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/multifileexportdialog.cpp" line="196"/>
+        <source>Name</source>
+        <translation>Ad</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/multifileexportdialog.cpp" line="197"/>
+        <source>Index</source>
+        <translation>İndis</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/multifileexportdialog.cpp" line="198"/>
+        <source>Date</source>
+        <translation>Tarih</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/multifileexportdialog.cpp" line="199"/>
+        <source>Hash</source>
+        <translation>Hash</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/multifileexportdialog.cpp" line="222"/>
+        <source>Empty File Name</source>
+        <translation>Boş Dosya Adı</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/multifileexportdialog.cpp" line="224"/>
+        <source>Directory does not exist: %1</source>
+        <translation>Klasör yok: %1</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/multifileexportdialog.cpp" line="231"/>
+        <source>File Exists: %1</source>
+        <translation>Dosya var: %1</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/multifileexportdialog.cpp" line="236"/>
+        <source>Duplicate File Name: %1</source>
+        <translation>Çift Dosya Adı: %1</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/multifileexportdialog.cpp" line="262"/>
+        <source>Fix file name errors before export.</source>
+        <translation>Dışa aktarmadan önce dosya adı hatalarını düzeltin.</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/multifileexportdialog.cpp" line="267"/>
+        <source>Export Directory</source>
+        <translation>Dışa Aktarma Klasörü</translation>
+    </message>
+</context>
+<context>
+    <name>MultitrackModel</name>
+    <message>
+        <location filename="../src/models/multitrackmodel.cpp" line="115"/>
+        <source>(PROXY)</source>
+        <translation>(VEKİL)</translation>
+    </message>
+    <message>
+        <location filename="../src/models/multitrackmodel.cpp" line="2417"/>
+        <source>Error: Shotcut could not find the %1 plugin on your system.
+
+Please install the %2 plugins.</source>
+        <translation>Hata: Shotcut, sisteminizde %1 eklentisini bulamadı.
+
+Lütfen %2 eklentisini yükleyin.</translation>
     </message>
 </context>
 <context>
@@ -4600,7 +4633,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/widgets/newprojectfolder.ui" line="224"/>
         <source>Start</source>
-        <translation>Başla</translation>
+        <translation>Başlangıç</translation>
     </message>
     <message>
         <location filename="../src/widgets/newprojectfolder.ui" line="211"/>
@@ -4662,29 +4695,29 @@ Her proje için bu klasörde bir klasör oluşturulacaktır.</translation>
         <translation>Kaldır...</translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.cpp" line="121"/>
+        <location filename="../src/widgets/newprojectfolder.cpp" line="123"/>
         <source>Projects Folder</source>
         <translation>Projeler Klasörü</translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.cpp" line="150"/>
+        <location filename="../src/widgets/newprojectfolder.cpp" line="153"/>
         <source>Custom</source>
         <translation>Özel</translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.cpp" line="167"/>
+        <location filename="../src/widgets/newprojectfolder.cpp" line="170"/>
         <source>Remove Video Mode</source>
         <translation>Video Kipini Kaldır</translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.cpp" line="196"/>
+        <location filename="../src/widgets/newprojectfolder.cpp" line="199"/>
         <source>There is already a project with that name.
 Try again with a different name.</source>
         <translation>Zaten bu adda bir proje var.
 Farklı bir ad ile tekrar deneyin.</translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.cpp" line="204"/>
+        <location filename="../src/widgets/newprojectfolder.cpp" line="207"/>
         <source>Unable to create folder %1
 Perhaps you do not have permission.
 Try again with a different folder.</source>
@@ -4720,7 +4753,7 @@ Farklı bir klasörle tekrar deneyin.</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="36"/>
-        <location filename="../src/openotherdialog.cpp" line="146"/>
+        <location filename="../src/openotherdialog.cpp" line="150"/>
         <source>Network</source>
         <translation>Ağ</translation>
     </message>
@@ -4731,45 +4764,45 @@ Farklı bir klasörle tekrar deneyin.</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="43"/>
-        <location filename="../src/openotherdialog.cpp" line="148"/>
+        <location filename="../src/openotherdialog.cpp" line="152"/>
         <source>SDI/HDMI</source>
         <translation>SDI/HDMI</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="47"/>
-        <location filename="../src/openotherdialog.cpp" line="134"/>
+        <location filename="../src/openotherdialog.cpp" line="138"/>
         <source>Video4Linux</source>
         <translation>Video4Linux</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="49"/>
-        <location filename="../src/openotherdialog.cpp" line="136"/>
+        <location filename="../src/openotherdialog.cpp" line="140"/>
         <source>PulseAudio</source>
         <translation>PulseAudio</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="51"/>
-        <location filename="../src/openotherdialog.cpp" line="138"/>
+        <location filename="../src/openotherdialog.cpp" line="142"/>
         <source>JACK Audio</source>
         <translation>JACK Sesi</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="53"/>
-        <location filename="../src/openotherdialog.cpp" line="140"/>
+        <location filename="../src/openotherdialog.cpp" line="144"/>
         <source>ALSA Audio</source>
         <translation>ALSA Ses</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="56"/>
         <location filename="../src/openotherdialog.cpp" line="63"/>
-        <location filename="../src/openotherdialog.cpp" line="144"/>
+        <location filename="../src/openotherdialog.cpp" line="148"/>
         <source>Screen</source>
         <translation>Ekran</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="60"/>
         <location filename="../src/openotherdialog.cpp" line="67"/>
-        <location filename="../src/openotherdialog.cpp" line="142"/>
+        <location filename="../src/openotherdialog.cpp" line="146"/>
         <source>Audio/Video Device</source>
         <translation>Ses/Video Aygıtı</translation>
     </message>
@@ -4780,7 +4813,7 @@ Farklı bir klasörle tekrar deneyin.</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="74"/>
-        <location filename="../src/openotherdialog.cpp" line="150"/>
+        <location filename="../src/openotherdialog.cpp" line="154"/>
         <source>Color</source>
         <translation>Renk</translation>
     </message>
@@ -4791,88 +4824,99 @@ Farklı bir klasörle tekrar deneyin.</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="82"/>
-        <location filename="../src/openotherdialog.cpp" line="152"/>
+        <location filename="../src/openotherdialog.cpp" line="156"/>
         <source>Noise</source>
         <translation>Gürültü</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="86"/>
-        <location filename="../src/openotherdialog.cpp" line="154"/>
+        <location filename="../src/openotherdialog.cpp" line="158"/>
         <source>Ising</source>
         <translation>Ising</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="90"/>
-        <location filename="../src/openotherdialog.cpp" line="156"/>
+        <location filename="../src/openotherdialog.cpp" line="160"/>
         <source>Lissajous</source>
         <translation>Lissajous Eğrileri</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="94"/>
-        <location filename="../src/openotherdialog.cpp" line="158"/>
+        <location filename="../src/openotherdialog.cpp" line="162"/>
         <source>Plasma</source>
         <translation>Plazma</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="98"/>
-        <location filename="../src/openotherdialog.cpp" line="160"/>
+        <location filename="../src/openotherdialog.cpp" line="164"/>
         <source>Color Bars</source>
         <translation>Renk Çubukları</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="102"/>
-        <location filename="../src/openotherdialog.cpp" line="162"/>
+        <location filename="../src/openotherdialog.cpp" line="166"/>
         <source>Audio Tone</source>
         <translation>Ses Tonu</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="106"/>
-        <location filename="../src/openotherdialog.cpp" line="164"/>
+        <location filename="../src/openotherdialog.cpp" line="168"/>
         <source>Count</source>
         <translation>Sayı</translation>
+    </message>
+    <message>
+        <location filename="../src/openotherdialog.cpp" line="110"/>
+        <location filename="../src/openotherdialog.cpp" line="170"/>
+        <source>Blip Flash</source>
+        <translation>Flaş Patlat</translation>
     </message>
 </context>
 <context>
     <name>ParameterHead</name>
     <message>
-        <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="118"/>
+        <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="127"/>
         <source>Seek to previous keyframe</source>
         <translation>Önceki anahtar kareye atla</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="118"/>
+        <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="127"/>
         <source>Seek backwards</source>
         <translation>Geriye atla</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="132"/>
+        <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="143"/>
         <source>Add a keyframe at play head</source>
         <translation>Oynatma kafasına bir anahtar kare ekle</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="153"/>
+        <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="166"/>
         <source>Delete the selected keyframe</source>
         <translation>Seçili anahtar kareyi sil</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="175"/>
+        <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="190"/>
         <source>Seek to next keyframe</source>
         <translation>Sonraki anahtar kareye atla</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="175"/>
+        <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="190"/>
         <source>Seek forwards</source>
         <translation>İleriye atla</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="186"/>
+        <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="203"/>
         <source>Unlock track</source>
         <translation>İz kilidini aç</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="186"/>
+        <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="203"/>
         <source>Lock track</source>
         <translation>İzi kilitle</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="207"/>
+        <source>Zoom keyframe values</source>
+        <translation>Anahtar kare değerlerini yakınlaştır</translation>
     </message>
 </context>
 <context>
@@ -4921,262 +4965,278 @@ Farklı bir klasörle tekrar deneyin.</translation>
 <context>
     <name>Player</name>
     <message>
-        <location filename="../src/player.cpp" line="66"/>
+        <location filename="../src/player.cpp" line="68"/>
         <source>Source</source>
         <translation>Kaynak</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="67"/>
+        <location filename="../src/player.cpp" line="69"/>
         <source>Project</source>
         <translation>Proje</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="149"/>
+        <location filename="../src/player.cpp" line="153"/>
         <source>Adjust the audio volume</source>
         <translation>Ses seviyesini ayarla</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="168"/>
+        <location filename="../src/player.cpp" line="173"/>
         <source>Silence the audio</source>
         <translation>Sesi kapat</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="183"/>
+        <location filename="../src/player.cpp" line="188"/>
         <source>Transport Controls</source>
         <translation>Aktarım Kontrolleri</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="190"/>
+        <location filename="../src/player.cpp" line="195"/>
         <source>Current position</source>
         <translation>Geçerli Konum</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="194"/>
+        <location filename="../src/player.cpp" line="199"/>
         <source>Total Duration</source>
         <translation>Toplam Süre</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="199"/>
+        <location filename="../src/player.cpp" line="204"/>
         <source>In Point</source>
         <translation>Giriş Noktası</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="203"/>
+        <location filename="../src/player.cpp" line="208"/>
         <source>Selected Duration</source>
         <translation>Seçili Süre</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="219"/>
+        <location filename="../src/player.cpp" line="224"/>
         <source>Zoom Fit</source>
         <translation>Sığdır</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="222"/>
+        <location filename="../src/player.cpp" line="227"/>
         <source>Zoom 10%</source>
         <translation>%10 Yakınlaştır</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="225"/>
+        <location filename="../src/player.cpp" line="230"/>
         <source>Zoom 25%</source>
         <translation>%25 Yakınlaştır</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="228"/>
+        <location filename="../src/player.cpp" line="233"/>
         <source>Zoom 50%</source>
         <translation>%50 Yakınlaştır</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="231"/>
+        <location filename="../src/player.cpp" line="236"/>
         <source>Zoom 100%</source>
         <translation>%100 Yakınlaştır</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="234"/>
+        <location filename="../src/player.cpp" line="239"/>
         <source>Zoom 200%</source>
         <translation>%200 Yakınlaştır</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="254"/>
+        <location filename="../src/player.cpp" line="259"/>
         <source>Toggle zoom</source>
         <translation>Yakınlaştırmayı değiştir</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="262"/>
+        <location filename="../src/player.cpp" line="267"/>
         <source>2x2 Grid</source>
         <translation>2x2 Izgara</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="267"/>
+        <location filename="../src/player.cpp" line="272"/>
         <source>3x3 Grid</source>
         <translation>3x3 Izgara</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="271"/>
+        <location filename="../src/player.cpp" line="276"/>
         <source>4x4 Grid</source>
         <translation>4x4 Izgara</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="275"/>
+        <location filename="../src/player.cpp" line="280"/>
         <source>16x16 Grid</source>
         <translation>16x16 Izgara</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="283"/>
+        <location filename="../src/player.cpp" line="288"/>
         <source>10 Pixel Grid</source>
         <translation>10 Piksel Izgara</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="572"/>
+        <location filename="../src/player.cpp" line="592"/>
         <source>Not Seekable</source>
         <translation>Aranamaz</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="279"/>
+        <location filename="../src/player.cpp" line="284"/>
         <source>20 Pixel Grid</source>
         <translation>20 Piksel Izgara</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="237"/>
+        <location filename="../src/player.cpp" line="242"/>
         <source>Zoom 300%</source>
         <translation>%300 Yakınlaştır</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="240"/>
+        <location filename="../src/player.cpp" line="245"/>
         <source>Zoom 400%</source>
         <translation>%400 Yakınlaştır</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="243"/>
+        <location filename="../src/player.cpp" line="248"/>
         <source>Zoom 500%</source>
         <translation>%500 Yakınlaştır</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="246"/>
+        <location filename="../src/player.cpp" line="251"/>
         <source>Zoom 750%</source>
         <translation>%750 Yakınlaştır</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="249"/>
+        <location filename="../src/player.cpp" line="254"/>
         <source>Zoom 1000%</source>
         <translation>%1000 Yakınlaştır</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="287"/>
+        <location filename="../src/player.cpp" line="292"/>
         <source>80/90% Safe Areas</source>
         <translation>%80/90 Güvenli Alan</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="291"/>
+        <location filename="../src/player.cpp" line="296"/>
         <source>EBU R95 Safe Areas</source>
         <translation>EBU R95 Güvenli Alan</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="296"/>
+        <location filename="../src/player.cpp" line="301"/>
         <source>Snapping</source>
-        <translation>Yakalanıyor</translation>
+        <translation>Tuttur</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="305"/>
+        <location filename="../src/player.cpp" line="310"/>
         <source>Toggle grid display on the player</source>
         <translation>Oynatıcıdaki ızgara görüntüsünü değiştir</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="391"/>
-        <location filename="../src/player.cpp" line="502"/>
-        <location filename="../src/player.cpp" line="525"/>
-        <location filename="../src/player.cpp" line="779"/>
+        <location filename="../src/player.cpp" line="395"/>
+        <location filename="../src/player.cpp" line="521"/>
+        <location filename="../src/player.cpp" line="544"/>
+        <location filename="../src/player.cpp" line="798"/>
         <source>Play</source>
         <translation>Oynat</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="393"/>
-        <location filename="../src/player.cpp" line="503"/>
-        <location filename="../src/player.cpp" line="526"/>
-        <location filename="../src/player.cpp" line="780"/>
+        <location filename="../src/player.cpp" line="397"/>
+        <location filename="../src/player.cpp" line="522"/>
+        <location filename="../src/player.cpp" line="545"/>
+        <location filename="../src/player.cpp" line="799"/>
         <source>Start playback (L)</source>
         <translation>Oynatmayı başlat (L)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="396"/>
-        <location filename="../src/player.cpp" line="481"/>
-        <location filename="../src/player.cpp" line="786"/>
+        <location filename="../src/player.cpp" line="400"/>
+        <location filename="../src/player.cpp" line="500"/>
+        <location filename="../src/player.cpp" line="805"/>
         <source>Pause</source>
         <translation>Duraklat</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="398"/>
-        <location filename="../src/player.cpp" line="482"/>
-        <location filename="../src/player.cpp" line="787"/>
+        <location filename="../src/player.cpp" line="402"/>
+        <location filename="../src/player.cpp" line="501"/>
+        <location filename="../src/player.cpp" line="806"/>
         <source>Pause playback (K)</source>
         <translation>Oynatmayı duraklat (K)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="400"/>
+        <location filename="../src/player.cpp" line="404"/>
         <source>Skip Next</source>
         <translation>Sonrakine Atla</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="402"/>
+        <location filename="../src/player.cpp" line="406"/>
         <source>Skip to the next point (Alt+Right)</source>
         <translation>Sonraki noktaya atla (Alt+Sağ)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="405"/>
+        <location filename="../src/player.cpp" line="409"/>
         <source>Skip Previous</source>
         <translation>Öncekine Atla</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="407"/>
+        <location filename="../src/player.cpp" line="411"/>
         <source>Skip to the previous point (Alt+Left)</source>
         <translation>Önceki noktaya atla (Alt+Sol)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="410"/>
+        <location filename="../src/player.cpp" line="414"/>
         <source>Rewind</source>
         <translation>Geri Sar</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="412"/>
+        <location filename="../src/player.cpp" line="416"/>
         <source>Play quickly backwards (J)</source>
         <translation>Geriye hızlı oynat (J)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="414"/>
+        <location filename="../src/player.cpp" line="418"/>
         <source>Fast Forward</source>
         <translation>İleri Hızlı Sar</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="416"/>
+        <location filename="../src/player.cpp" line="420"/>
         <source>Play quickly forwards (L)</source>
         <translation>İleriye hızlı oynat (L)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="418"/>
+        <location filename="../src/player.cpp" line="422"/>
         <source>Volume</source>
         <translation>Ses Düzeyi</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="420"/>
+        <location filename="../src/player.cpp" line="424"/>
         <source>Show the volume control</source>
         <translation>Ses denetimini görüntüle</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="486"/>
+        <location filename="../src/player.cpp" line="505"/>
         <source>Stop</source>
         <translation>Durdur</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="487"/>
+        <location filename="../src/player.cpp" line="506"/>
         <source>Stop playback (K)</source>
         <translation>Oynatmayı durdur (K)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="999"/>
+        <location filename="../src/player.cpp" line="936"/>
+        <source>Proxy and preview scaling are ON at %1p</source>
+        <translation>%1p da vekil ve önizleme ölçeklemesi AÇIK</translation>
+    </message>
+    <message>
+        <location filename="../src/player.cpp" line="938"/>
+        <source>Proxy is ON at %1p</source>
+        <translation>%1p de Vekil AÇIK</translation>
+    </message>
+    <message>
+        <location filename="../src/player.cpp" line="940"/>
+        <source>Preview scaling is ON at %1p</source>
+        <translation>%1p de Önizleme ölçeklemesi AÇIK</translation>
+    </message>
+    <message>
+        <location filename="../src/player.cpp" line="1043"/>
         <source>Unmute</source>
         <translation>Sesi Aç</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="1004"/>
+        <location filename="../src/player.cpp" line="1016"/>
+        <location filename="../src/player.cpp" line="1048"/>
         <source>Mute</source>
         <translation>Sesi Kapat</translation>
     </message>
@@ -5229,19 +5289,19 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="193"/>
-        <location filename="../src/docks/playlistdock.ui" line="430"/>
+        <location filename="../src/docks/playlistdock.ui" line="435"/>
         <source>View as tiles</source>
         <translation>Görselli liste görünümü</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="207"/>
-        <location filename="../src/docks/playlistdock.ui" line="441"/>
+        <location filename="../src/docks/playlistdock.ui" line="446"/>
         <source>View as icons</source>
         <translation>Simge görünümü</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="221"/>
-        <location filename="../src/docks/playlistdock.ui" line="419"/>
+        <location filename="../src/docks/playlistdock.ui" line="424"/>
         <source>View as details</source>
         <translation>Ayrıntılı görünüm</translation>
     </message>
@@ -5287,25 +5347,10 @@ p, li { white-space: pre-wrap; }
         <translation>Araya Ekle</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="271"/>
-        <source>Shift+V</source>
-        <translation>Shift+V</translation>
-    </message>
-    <message>
         <location filename="../src/docks/playlistdock.ui" line="280"/>
         <location filename="../src/docks/playlistdock.ui" line="283"/>
         <source>Append</source>
         <translation>Ekle</translation>
-    </message>
-    <message>
-        <location filename="../src/docks/playlistdock.ui" line="286"/>
-        <source>Shift+A</source>
-        <translation>Shift+A</translation>
-    </message>
-    <message>
-        <location filename="../src/docks/playlistdock.ui" line="304"/>
-        <source>Shift+B</source>
-        <translation>Shift+B</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="309"/>
@@ -5318,24 +5363,9 @@ p, li { white-space: pre-wrap; }
         <translation>Klibi Kaynak oynatıcıda aç</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="315"/>
-        <source>Return</source>
-        <translation>Return</translation>
-    </message>
-    <message>
-        <location filename="../src/docks/playlistdock.ui" line="323"/>
-        <source>Shift+X</source>
-        <translation>Shift+X</translation>
-    </message>
-    <message>
         <location filename="../src/docks/playlistdock.ui" line="336"/>
         <source>Go to the start of this clip in the Project player</source>
         <translation>Proje oynatıcısında bu klibin başlangıcına git</translation>
-    </message>
-    <message>
-        <location filename="../src/docks/playlistdock.ui" line="339"/>
-        <source>Shift+Return</source>
-        <translation>Shift+Return</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="344"/>
@@ -5380,136 +5410,159 @@ p, li { white-space: pre-wrap; }
         <translation>Seçili olanı Zaman Akışı&apos;na Ekle</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="460"/>
+        <location filename="../src/docks/playlistdock.ui" line="403"/>
+        <source>Add Selected to Slideshow</source>
+        <translation>Seçili Olanları Slayt Gösterisine Ekle</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/playlistdock.ui" line="465"/>
         <source>Play After Open</source>
         <translation>Açtıktan Sonra Oynat</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="465"/>
+        <location filename="../src/docks/playlistdock.ui" line="470"/>
         <source>Select All</source>
         <translation>Tümünü Seç</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="468"/>
-        <source>Ctrl+Shift+A</source>
-        <translation>Ctrl+Shift+A</translation>
-    </message>
-    <message>
-        <location filename="../src/docks/playlistdock.ui" line="473"/>
+        <location filename="../src/docks/playlistdock.ui" line="478"/>
         <source>Select None</source>
         <translation>Hiçbir şey seçme</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="476"/>
-        <source>Ctrl+Shift+D</source>
-        <translation>Ctrl+Shift+D</translation>
-    </message>
-    <message>
-        <location filename="../src/docks/playlistdock.ui" line="481"/>
+        <location filename="../src/docks/playlistdock.ui" line="486"/>
         <source>Update Thumbnails</source>
         <translation>Küçük görselleri güncelle</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="403"/>
+        <location filename="../src/docks/playlistdock.ui" line="408"/>
         <source>Sort By Name</source>
         <translation>Ada Göre Sırala</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="408"/>
+        <location filename="../src/docks/playlistdock.ui" line="413"/>
         <source>Sort By Date</source>
         <translation>Tarihe Göre Sırala</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="416"/>
+        <location filename="../src/docks/playlistdock.ui" line="421"/>
         <source>Details</source>
         <translation>Ayrıntılar</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="427"/>
+        <location filename="../src/docks/playlistdock.ui" line="432"/>
         <source>Tiles</source>
         <translation>Görselli Liste</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="438"/>
+        <location filename="../src/docks/playlistdock.ui" line="443"/>
         <source>Icons</source>
         <translation>Simge</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="446"/>
+        <location filename="../src/docks/playlistdock.ui" line="451"/>
         <source>Copy</source>
         <translation>Kopyala</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="449"/>
+        <location filename="../src/docks/playlistdock.ui" line="454"/>
         <source>Open a copy of the clip in the Source player</source>
         <translation>Kaynak oynatıcıda klibin bir kopyasını aç</translation>
     </message>
-    <message>
-        <location filename="../src/docks/playlistdock.ui" line="452"/>
-        <source>Shift+C</source>
-        <translation>Shift+C</translation>
+    <message numerus="yes">
+        <location filename="../src/docks/playlistdock.cpp" line="255"/>
+        <source>Replace %n playlist items</source>
+        <translation>
+            <numerusform>%n oynatma listesi ögesini yerleştir</numerusform>
+        </translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="303"/>
+        <location filename="../src/docks/playlistdock.cpp" line="339"/>
         <source>Sort</source>
         <translation>Sırala</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="310"/>
+        <location filename="../src/docks/playlistdock.cpp" line="346"/>
         <source>View mode</source>
         <translation>Görünüm Kipi</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="317"/>
+        <location filename="../src/docks/playlistdock.cpp" line="353"/>
         <source>Thumbnails</source>
         <translation>Küçük Görseller</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="414"/>
-        <location filename="../src/docks/playlistdock.cpp" line="671"/>
+        <location filename="../src/docks/playlistdock.cpp" line="452"/>
+        <location filename="../src/docks/playlistdock.cpp" line="725"/>
         <source>You cannot insert a playlist into a playlist!</source>
         <translation>Bir oynatma listesine başka bir oynatma listesi eklenemez!</translation>
     </message>
+    <message numerus="yes">
+        <location filename="../src/docks/playlistdock.cpp" line="464"/>
+        <source>Remove %n playlist items</source>
+        <translation>
+            <numerusform>%n oynatma listesi ögesini kaldır</numerusform>
+        </translation>
+    </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="426"/>
-        <source>Remove %1 playlist items</source>
-        <translation>%1 oynatma listesi ögesini kaldır</translation>
+        <location filename="../src/docks/playlistdock.cpp" line="668"/>
+        <source>Add Files</source>
+        <translation>Dosyaları Ekle</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/playlistdock.cpp" line="867"/>
+        <source>Generating</source>
+        <translation>Oluşturuluyor</translation>
+    </message>
+</context>
+<context>
+    <name>PlaylistIconView</name>
+    <message>
+        <location filename="../src/widgets/playlisticonview.cpp" line="156"/>
+        <source>P</source>
+        <comment>The first letter or symbol of &quot;proxy&quot;</comment>
+        <translation>P</translation>
     </message>
 </context>
 <context>
     <name>PlaylistModel</name>
     <message>
-        <location filename="../src/models/playlistmodel.cpp" line="362"/>
+        <location filename="../src/models/playlistmodel.cpp" line="240"/>
+        <source>(PROXY)</source>
+        <translation>(VEKİL)</translation>
+    </message>
+    <message>
+        <location filename="../src/models/playlistmodel.cpp" line="385"/>
         <source>#</source>
         <translation>#</translation>
     </message>
     <message>
-        <location filename="../src/models/playlistmodel.cpp" line="364"/>
+        <location filename="../src/models/playlistmodel.cpp" line="387"/>
         <source>Thumbnails</source>
         <translation>Küçük Görseller</translation>
     </message>
     <message>
-        <location filename="../src/models/playlistmodel.cpp" line="366"/>
+        <location filename="../src/models/playlistmodel.cpp" line="389"/>
         <source>Clip</source>
         <translation>Klip</translation>
     </message>
     <message>
-        <location filename="../src/models/playlistmodel.cpp" line="368"/>
+        <location filename="../src/models/playlistmodel.cpp" line="391"/>
         <source>In</source>
         <translation>Giriş</translation>
     </message>
     <message>
-        <location filename="../src/models/playlistmodel.cpp" line="370"/>
+        <location filename="../src/models/playlistmodel.cpp" line="393"/>
         <source>Duration</source>
         <translation>Süre</translation>
     </message>
     <message>
-        <location filename="../src/models/playlistmodel.cpp" line="372"/>
+        <location filename="../src/models/playlistmodel.cpp" line="395"/>
         <source>Start</source>
         <translation>Başla</translation>
     </message>
     <message>
-        <location filename="../src/models/playlistmodel.cpp" line="374"/>
+        <location filename="../src/models/playlistmodel.cpp" line="397"/>
         <source>Date</source>
         <translation>Tarih</translation>
     </message>
@@ -5517,22 +5570,22 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>Preset</name>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="63"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="64"/>
         <source>Save</source>
         <translation>Kaydet</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="72"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="73"/>
         <source>Delete</source>
         <translation>Sil</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="84"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="85"/>
         <source>Save Preset</source>
         <translation>Hazır Ayarı Kaydet</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="101"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="102"/>
         <source>Name:</source>
         <translation>Ad:</translation>
     </message>
@@ -5543,18 +5596,18 @@ p, li { white-space: pre-wrap; }
         <translation>Tamam</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="128"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="127"/>
         <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="169"/>
         <source>Cancel</source>
         <translation>İptal</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="140"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="141"/>
         <source>Delete Preset</source>
         <translation>Hazır Ayarı Sil</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="149"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="150"/>
         <source>Are you sure you want to delete %1?</source>
         <translation>%1&apos;i silmek istediğinden emin misin?</translation>
     </message>
@@ -5656,6 +5709,14 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>QImageJob</name>
+    <message>
+        <location filename="../src/jobs/qimagejob.cpp" line="32"/>
+        <source>Make proxy for %1</source>
+        <translation>%1 için vekil yap</translation>
+    </message>
+</context>
+<context>
     <name>QObject</name>
     <message>
         <location filename="../src/commands/playlistcommands.cpp" line="32"/>
@@ -5703,183 +5764,216 @@ p, li { white-space: pre-wrap; }
         <translation>Oynatma listesi ögesi %1 bitişten kırp</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="34"/>
+        <location filename="../src/commands/playlistcommands.cpp" line="296"/>
+        <source>Replace playlist item %1</source>
+        <translation>Oynatma listesi %1 ögesini yerleştir</translation>
+    </message>
+    <message>
+        <location filename="../src/commands/timelinecommands.cpp" line="45"/>
         <source>Append to track</source>
         <translation>İze ekle</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="64"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="51"/>
+        <source>Append to Timeline</source>
+        <translation>Zaman akışında sona ekle</translation>
+    </message>
+    <message>
+        <location filename="../src/commands/timelinecommands.cpp" line="53"/>
+        <source>Preparing</source>
+        <translation>Hazırlanıyor</translation>
+    </message>
+    <message>
+        <location filename="../src/commands/timelinecommands.cpp" line="58"/>
+        <source>Appending</source>
+        <translation>Sona Ekleniyor</translation>
+    </message>
+    <message>
+        <location filename="../src/commands/timelinecommands.cpp" line="69"/>
+        <source>Finishing</source>
+        <translation>Tamamlanıyor</translation>
+    </message>
+    <message>
+        <location filename="../src/commands/timelinecommands.cpp" line="91"/>
         <source>Insert into track</source>
         <translation>İz içine araya ekle</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="103"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="100"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="144"/>
+        <source>Add Files</source>
+        <translation>Dosyaları Ekle</translation>
+    </message>
+    <message>
+        <location filename="../src/commands/timelinecommands.cpp" line="135"/>
         <source>Overwrite onto track</source>
         <translation>İz üzerine ekle</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="141"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="178"/>
         <source>Lift from track</source>
         <translation>İzden çıkart</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="168"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="205"/>
         <source>Remove from track</source>
         <translation>İzden kaldır</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="195"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="232"/>
         <source>Change track name</source>
         <translation>İz adını değiştir</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="217"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="254"/>
         <source>Merge adjacent clips</source>
         <translation>Bitişik klipleri birleştir</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="241"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="278"/>
         <source>Toggle track mute</source>
         <translation>İz sesini aç/kapat</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="262"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="299"/>
         <source>Toggle track hidden</source>
         <translation>İzi görüntüle/gizle</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="284"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="321"/>
         <source>Change track compositing</source>
         <translation>İz birleştirmesini değiştir</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="306"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="343"/>
         <source>Lock track</source>
         <translation>İzi Kilitle</translation>
     </message>
-    <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="343"/>
-        <source>Move %1 timelime clips</source>
-        <translation>%1 zaman akışı klibini taşı</translation>
+    <message numerus="yes">
+        <location filename="../src/commands/timelinecommands.cpp" line="380"/>
+        <source>Move %n timelime clips</source>
+        <translation>
+            <numerusform>%n zaman akışı klibini taşı</numerusform>
+        </translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="345"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="382"/>
         <source>Move timelime clip</source>
         <translation>Zaman akışı klibini taşı</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="439"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="476"/>
         <source>Trim clip in point</source>
         <translation>Klibi giriş noktasından kırp</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="487"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="525"/>
         <source>Trim clip out point</source>
         <translation>Klibi çıkış noktasından kırp</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="533"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="571"/>
         <source>Split clip</source>
         <translation>Klibi böl</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="559"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="598"/>
         <source>Adjust fade in</source>
         <translation>Arttırarak giriş ayarla</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="592"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="631"/>
         <source>Adjust fade out</source>
         <translation>Azaltarak çıkış ayarla</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="627"/>
-        <location filename="../src/commands/timelinecommands.cpp" line="747"/>
-        <location filename="../src/commands/timelinecommands.cpp" line="863"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="666"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="786"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="902"/>
         <source>Add transition</source>
         <translation>Geçiş ekle</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="659"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="698"/>
         <source>Trim transition in point</source>
         <translation>Geçişi giriş noktasından kırp</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="702"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="741"/>
         <source>Trim transition out point</source>
         <translation>Geçişi çıkış noktasından kırp</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="791"/>
-        <location filename="../src/commands/timelinecommands.cpp" line="826"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="830"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="865"/>
         <source>Remove transition</source>
         <translation>Geçişi kaldır</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="904"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="943"/>
         <source>Add video track</source>
         <translation>Video izi ekle</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="906"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="945"/>
         <source>Add audio track</source>
         <translation>Ses izi ekle</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="931"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="970"/>
         <source>Insert audio track</source>
         <translation>Araya ses izi ekle</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="933"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="972"/>
         <source>Insert video track</source>
         <translation>Araya video izi ekle</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="956"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="995"/>
         <source>Remove audio track</source>
         <translation>Ses izini kaldır</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="958"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="997"/>
         <source>Remove video track</source>
         <translation>Video izini kaldır</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="1013"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="1052"/>
         <source>Change track blend mode</source>
         <translation>İz karıştırma kipini değiştir</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="1053"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="1092"/>
         <source>Change clip properties</source>
         <translation>Klip özelliklerini değiştir</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="1098"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="1137"/>
         <source>Detach Audio</source>
         <translation>Sesi Ayır</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="1193"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="1230"/>
         <source>Replace timeline clip</source>
-        <translation>Zaman akışı klibini yerleştir</translation>
+        <translation>Zaman akışındaki klibi değiştir</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3300"/>
+        <location filename="../src/mainwindow.cpp" line="3451"/>
         <source>You cannot add a project to itself!</source>
         <translation>Bir projeyi kendisine ekleyemezsiniz!</translation>
     </message>
     <message>
-        <location filename="../src/mltxmlchecker.cpp" line="122"/>
+        <location filename="../src/mltxmlchecker.cpp" line="139"/>
         <source>The file is not a MLT XML file.</source>
         <translation>Dosya bir MLT XML dosyası değil.</translation>
     </message>
     <message>
-        <location filename="../src/util.cpp" line="113"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="793"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="923"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="992"/>
+        <location filename="../src/util.cpp" line="131"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="950"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1152"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1222"/>
         <source>Unable to write file %1
 Perhaps you do not have permission.
 Try again with a different folder.</source>
@@ -5888,42 +5982,47 @@ Yetkiniz olmayabilir
 Farklı bir klasör ile tekrar deneyin.</translation>
     </message>
     <message>
-        <location filename="../src/util.cpp" line="131"/>
+        <location filename="../src/util.cpp" line="147"/>
         <source>Transition</source>
         <translation>Geçiş</translation>
     </message>
     <message>
-        <location filename="../src/util.cpp" line="133"/>
+        <location filename="../src/util.cpp" line="149"/>
         <source>Track: %1</source>
         <translation>İz: %1</translation>
     </message>
     <message>
-        <location filename="../src/util.cpp" line="135"/>
-        <source>Master</source>
-        <translation>Ana</translation>
+        <location filename="../src/util.cpp" line="151"/>
+        <source>Output</source>
+        <translation>Çıktı</translation>
     </message>
     <message>
-        <location filename="../src/util.cpp" line="290"/>
+        <location filename="../src/util.cpp" line="306"/>
         <source>The value you entered is very similar to the common,
 more standard %1 = %2/1001.
 
 Do you want to use %1 = %2/1001 instead?</source>
         <translation>Girdiğiniz değer genel olana çok benzer
-daha standart %1 =%2/1001.
+daha standart %1 = %2/1001.
 
-Bunun yerine %1 =%2/1001 kullanmak ister misiniz?</translation>
+Bunun yerine %1 = %2/1001 kullanmak ister misiniz?</translation>
     </message>
     <message>
-        <location filename="../src/widgets/colorproducerwidget.cpp" line="27"/>
-        <location filename="../src/widgets/textproducerwidget.cpp" line="27"/>
+        <location filename="../src/widgets/colorproducerwidget.cpp" line="28"/>
+        <location filename="../src/widgets/textproducerwidget.cpp" line="28"/>
         <source>transparent</source>
         <comment>Open Other &gt; Color</comment>
         <translation>saydam</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="36"/>
-        <source>You cannot add a non-seekable source.</source>
-        <translation>Aranamayan bir kaynak ekleyemezsiniz.</translation>
+        <location filename="../src/docks/timelinedock.cpp" line="1107"/>
+        <source>Drop Files</source>
+        <translation>Dosyaları Sil</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/timelinedock.cpp" line="1136"/>
+        <source>Not adding non-seekable file: </source>
+        <translation>Aranamayan dosya eklenmiyor:</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.cpp" line="317"/>
@@ -5945,18 +6044,60 @@ Bunun yerine %1 =%2/1001 kullanmak ister misiniz?</translation>
         <source>Move %1 from %2 to %3</source>
         <translation>%1&apos;i %2&apos;den %3&apos;e taşı</translation>
     </message>
+    <message>
+        <location filename="../src/docks/playlistdock.cpp" line="866"/>
+        <source>Generate Slideshow</source>
+        <translation>Slayt Gösterisi Oluştur</translation>
+    </message>
+    <message>
+        <location filename="../src/proxymanager.cpp" line="213"/>
+        <source>Make proxy for %1</source>
+        <translation>%1 için vekil yap</translation>
+    </message>
+</context>
+<context>
+    <name>QmlApplication</name>
+    <message>
+        <location filename="../src/qmltypes/qmlapplication.cpp" line="190"/>
+        <source>&lt;p&gt;Do you really want to add filters to &lt;b&gt;Output&lt;/b&gt;?&lt;/p&gt;&lt;p&gt;&lt;b&gt;Timeline &gt; Output&lt;/b&gt; is currently selected. Adding filters to &lt;b&gt;Output&lt;/b&gt; affects ALL clips in the timeline including new ones that will be added.&lt;/p&gt;</source>
+        <translation>&lt;p&gt;Gerçekten &lt;b&gt;Çıktı&lt;/b&gt;&apos;ya filtre eklemek istiyor musunuz?&lt;/p&gt;&lt;p&gt;&lt;b&gt;Zaman Akışı &gt; Çıktı&lt;/b&gt; şu an seçili. &lt;b&gt;Çıktı&lt;/b&gt;ya filtre eklemek, zaman akışındaki yeni eklenecekler de dahil olmak üzere TÜM klipleri etkiler.&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <location filename="../src/qmltypes/qmlapplication.cpp" line="198"/>
+        <source>Do not show this anymore.</source>
+        <comment>confirm output filters dialog</comment>
+        <translation>Bunu artık gösterme.</translation>
+    </message>
 </context>
 <context>
     <name>QmlFilter</name>
     <message>
-        <location filename="../src/qmltypes/qmlfilter.cpp" line="298"/>
+        <location filename="../src/qmltypes/qmlfilter.cpp" line="325"/>
         <source>(defaults)</source>
         <translation>(varsayılanlar)</translation>
     </message>
     <message>
-        <location filename="../src/qmltypes/qmlfilter.cpp" line="377"/>
+        <location filename="../src/qmltypes/qmlfilter.cpp" line="425"/>
         <source>Analyze %1</source>
         <translation>Analiz %1</translation>
+    </message>
+</context>
+<context>
+    <name>QmlRichText</name>
+    <message>
+        <location filename="../src/qmltypes/qmlrichtext.cpp" line="130"/>
+        <source>Cannot save: </source>
+        <translation>Kaydedilemiyor:</translation>
+    </message>
+    <message>
+        <location filename="../src/qmltypes/qmlrichtext.cpp" line="159"/>
+        <source>Row</source>
+        <translation>Satır</translation>
+    </message>
+    <message>
+        <location filename="../src/qmltypes/qmlrichtext.cpp" line="161"/>
+        <source>Column</source>
+        <translation>Sütun</translation>
     </message>
 </context>
 <context>
@@ -5976,6 +6117,12 @@ Bunun yerine %1 =%2/1001 kullanmak ister misiniz?</translation>
         <source>search</source>
         <translation>ara</translation>
     </message>
+    <message>
+        <location filename="../src/docks/recentdock.ui" line="76"/>
+        <location filename="../src/docks/recentdock.ui" line="79"/>
+        <source>Remove</source>
+        <translation>Kaldır</translation>
+    </message>
 </context>
 <context>
     <name>SaveDefaultButton</name>
@@ -5983,6 +6130,14 @@ Bunun yerine %1 =%2/1001 kullanmak ister misiniz?</translation>
         <location filename="../src/qml/modules/Shotcut/Controls/SaveDefaultButton.qml" line="24"/>
         <source>Set as default</source>
         <translation>Varsayılan olarak ayarla </translation>
+    </message>
+</context>
+<context>
+    <name>SaveImageDialog</name>
+    <message>
+        <location filename="../src/dialogs/saveimagedialog.cpp" line="48"/>
+        <source>PNG (*.png);;BMP (*.bmp);;JPEG (*.jpg *.jpeg);;PPM (*.ppm);;TIFF (*.tif *.tiff);;WebP (*.webp);;All Files (*)</source>
+        <translation>PNG (*.png);;BMP (*.bmp);;JPEG (*.jpg *.jpeg);;PPM (*.ppm);;TIFF (*.tif *.tiff);;WebP (*.webp);;Tüm dosyalar (*)</translation>
     </message>
 </context>
 <context>
@@ -6016,27 +6171,27 @@ Bunun yerine %1 =%2/1001 kullanmak ister misiniz?</translation>
         <translation>Sil</translation>
     </message>
     <message>
-        <location filename="../src/widgets/servicepresetwidget.cpp" line="92"/>
+        <location filename="../src/widgets/servicepresetwidget.cpp" line="80"/>
         <source>(defaults)</source>
         <translation>(varsayılanlar)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/servicepresetwidget.cpp" line="99"/>
+        <location filename="../src/widgets/servicepresetwidget.cpp" line="87"/>
         <source>Save Preset</source>
         <translation>Hazır Ayarı Kaydet</translation>
     </message>
     <message>
-        <location filename="../src/widgets/servicepresetwidget.cpp" line="100"/>
+        <location filename="../src/widgets/servicepresetwidget.cpp" line="88"/>
         <source>Name:</source>
         <translation>Ad:</translation>
     </message>
     <message>
-        <location filename="../src/widgets/servicepresetwidget.cpp" line="168"/>
+        <location filename="../src/widgets/servicepresetwidget.cpp" line="173"/>
         <source>Delete Preset</source>
         <translation>Hazır Ayarı Sil</translation>
     </message>
     <message>
-        <location filename="../src/widgets/servicepresetwidget.cpp" line="169"/>
+        <location filename="../src/widgets/servicepresetwidget.cpp" line="174"/>
         <source>Are you sure you want to delete %1?</source>
         <translation>%1&apos;i silmek istediğinden emin misin?</translation>
     </message>
@@ -6052,282 +6207,568 @@ Bunun yerine %1 =%2/1001 kullanmak ister misiniz?</translation>
 <context>
     <name>SizePositionUI</name>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="50"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="73"/>
         <source>Bottom Left</source>
         <translation>Alt Sol</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="55"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="78"/>
         <source>Bottom Right</source>
         <translation>Alt Sağ</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="60"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="83"/>
         <source>Top Left</source>
         <translation>Üst Sol</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="65"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="88"/>
         <source>Top Right</source>
         <translation>Üst Sağ</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="72"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="95"/>
         <source>Slide In From Left</source>
         <translation>İçe Kaydır, Soldan</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="74"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="97"/>
         <source>Slide In From Right</source>
         <translation>İçe Kaydır, Sağdan</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="76"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="99"/>
         <source>Slide In From Top</source>
         <translation>İçe Kaydır, Üstten</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="78"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="101"/>
         <source>Slide In From Bottom</source>
         <translation>İçe Kaydır, Alttan</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="82"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="105"/>
         <source>Slide Out Left</source>
         <translation>Dışa Kaydır, Sola</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="84"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="107"/>
         <source>Slide Out Right</source>
         <translation>Dışa Kaydır, Sağa</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="86"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="109"/>
         <source>Slide Out Top</source>
         <translation>Dışa Kaydır, Üste</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="88"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="111"/>
         <source>Slide Out Bottom</source>
         <translation>Dışa Kaydır, Alta</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="93"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="116"/>
         <source>Slow Zoom In</source>
         <translation>Yavaş Yakınlaştır</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="95"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="118"/>
         <source>Slow Zoom Out</source>
         <translation>Yavaş Uzaklaştır</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="97"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="120"/>
         <source>Slow Pan Left</source>
         <translation>Yavaş Kaydır, Sola</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="98"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="121"/>
         <source>Slow Move Left</source>
         <translation>Yavaş Taşı, Sola</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="100"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="123"/>
         <source>Slow Pan Right</source>
         <translation>Yavaş Kaydır, Sağa</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="101"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="124"/>
         <source>Slow Move Right</source>
         <translation>Yavaş Taşı, Sağa</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="103"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="126"/>
         <source>Slow Pan Up</source>
         <translation>Yavaş Kaydır, Yukarı</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="104"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="127"/>
         <source>Slow Move Up</source>
         <translation>Yavaş Taşı, Yukarı</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="106"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="129"/>
         <source>Slow Pan Down</source>
         <translation>Yavaş Kaydır, Aşağı</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="107"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="130"/>
         <source>Slow Move Down</source>
         <translation>Yavaş Taşı, Aşağı</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="109"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="132"/>
         <source>Slow Zoom In, Pan Up Left</source>
         <translation>Yaklaşarak, Yukarı Sola Yavaş Kaydır</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="110"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="133"/>
         <source>Slow Zoom In, Move Up Left</source>
         <translation>Yaklaşarak, Yukarı Sola Yavaş Taşı</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="112"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="135"/>
         <source>Slow Zoom In, Pan Down Right</source>
         <translation>Yaklaşarak, Aşağı Sağa Yavaş Kaydır</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="113"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="136"/>
         <source>Slow Zoom In, Move Down Right</source>
         <translation>Yaklaşarak, Aşağı Sağa Yavaş Taşı</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="115"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="138"/>
         <source>Slow Zoom Out, Pan Up Right</source>
         <translation>Yaklaşarak, Yukarı Sağa Yavaş Kaydır</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="116"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="139"/>
         <source>Slow Zoom Out, Move Up Right</source>
         <translation>Uzaklaşarak, Yukarı Sağa Yavaş Taşı</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="118"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="141"/>
         <source>Slow Zoom Out, Pan Down Left</source>
         <translation>Uzaklaşarak, Aşağı Sola Yavaş Kaydır</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="119"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="142"/>
         <source>Slow Zoom Out, Move Down Left</source>
         <translation>Uzaklaşarak, Aşağı Sola Yavaş Taşı</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="121"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="144"/>
         <source>Slow Zoom In, Hold Bottom</source>
         <translation>Yavaş yaklaş, Alt sabit</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="123"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="146"/>
         <source>Slow Zoom In, Hold Top</source>
         <translation>Yavaş yaklaş, Üst sabit</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="125"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="148"/>
         <source>Slow Zoom In, Hold Left</source>
         <translation>Yavaş yaklaş, Sol sabit</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="127"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="150"/>
         <source>Slow Zoom In, Hold Right</source>
         <translation>Yavaş yaklaş, Sağ sabit</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="129"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="152"/>
         <source>Slow Zoom Out, Hold Bottom</source>
         <translation>Yavaş uzaklaş, Alt sabit</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="131"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="154"/>
         <source>Slow Zoom Out, Hold Top</source>
         <translation>Yavaş uzaklaş, Üst sabit</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="133"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="156"/>
         <source>Slow Zoom Out, Hold Left</source>
         <translation>Yavaş uzaklaş, Sol sabit</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="135"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="158"/>
         <source>Slow Zoom Out, Hold Right</source>
         <translation>Yavaş uzaklaş, Sağ sabit</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="293"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="472"/>
         <source>Preset</source>
         <translation>Hazır Ayar</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="318"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="504"/>
         <source>Position</source>
         <translation>Konum</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="365"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="582"/>
         <source>Size</source>
         <translation>Boyut</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="399"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="638"/>
+        <source>Zoom</source>
+        <translation>Yakınlaştır</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="681"/>
         <source>Size mode</source>
         <translation>Boyut kipi</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="404"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="686"/>
         <source>Fit</source>
         <translation>Sığdır</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="413"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="696"/>
         <source>Fill</source>
         <translation>Doldur</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="422"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="713"/>
         <source>Distort</source>
-        <translation>Dalgalı çarpıtma</translation>
+        <translation>Çarpıt</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="439"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="732"/>
         <source>Horizontal fit</source>
         <translation>Yatay sığdır</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="444"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="737"/>
         <source>Left</source>
         <translation>Sol</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="451"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="743"/>
         <source>Center</source>
         <translation>Orta</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="458"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="749"/>
         <source>Right</source>
         <translation>Sağ</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="472"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="762"/>
         <source>Vertical fit</source>
         <translation>Dikey sığdır</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="477"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="767"/>
         <source>Top</source>
         <translation>Üst</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="484"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="773"/>
         <source>Middle</source>
         <comment>Size and Position video filter</comment>
         <translation>Orta</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="491"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="779"/>
         <source>Bottom</source>
         <translation>Alt</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="149"/>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="168"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="792"/>
+        <source>Rotation</source>
+        <translation>Döndürme</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="803"/>
+        <source> °</source>
+        <comment>degrees</comment>
+        <translation> °</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="820"/>
+        <source>Background color</source>
+        <translation>Arka plan rengi</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="172"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="191"/>
         <source>Shake 1 Second - Scaled</source>
         <translation>1 Saniye çalkala - Ölçek değişmiş</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="158"/>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="177"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="181"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="200"/>
         <source>Shake 1 Second - Unscaled</source>
         <translation>1 Saniye çalkala - Ölçek aynı</translation>
+    </message>
+</context>
+<context>
+    <name>SizePositionVUI</name>
+    <message>
+        <location filename="../src/qml/filters/size_position/SizePositionVUI.qml" line="44"/>
+        <source>Click in rectangle + hold Shift to drag, Wheel to zoom, or %1+Wheel to rotate</source>
+        <translation>Dikdörtgeni tıklayın + Shift tuşu ile sürükleyin, tekerlek ile yaklaştırın veya %1+tekerlek ile döndürün</translation>
+    </message>
+</context>
+<context>
+    <name>SlideshowGeneratorDialog</name>
+    <message numerus="yes">
+        <location filename="../src/dialogs/slideshowgeneratordialog.cpp" line="33"/>
+        <source>Slideshow Generator - %n Clips</source>
+        <translation>
+            <numerusform>Slayt Gösterisi Oluşturucu - %n Klip</numerusform>
+        </translation>
+    </message>
+</context>
+<context>
+    <name>SlideshowGeneratorWidget</name>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="55"/>
+        <source>Clip duration</source>
+        <translation>Klip süresi</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="57"/>
+        <source>Set the duration of each clip in the slideshow.</source>
+        <translation>Slayt gösterisindeki her klibin süresini ayarla.</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="66"/>
+        <source>Aspect ratio conversion</source>
+        <translation>En boy oranı dönüşümü</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="68"/>
+        <source>Pad Black</source>
+        <translation>Siyah zemin</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="69"/>
+        <source>Crop Center</source>
+        <translation>Kırp Ortala</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="70"/>
+        <source>Crop and Pan</source>
+        <translation>Kırp ve Kaydır</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="74"/>
+        <source>Pad Blur</source>
+        <translation>Zemin Bulanıklığı</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="77"/>
+        <source>Choose an aspect ratio conversion method.</source>
+        <translation>En boy oranı dönüştürme yöntemi seç.</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="82"/>
+        <source>Zoom effect</source>
+        <translation>Yakınlaştırma efekti</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="84"/>
+        <source>Set the percentage of the zoom-in effect.
+0% will result in no zoom effect.</source>
+        <translation>Yakınlaştırma efektinin yüzde oranını ayarlayın.
+%0 yakınlaştırma efekti oluşturmaz.</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="92"/>
+        <source>Transition duration</source>
+        <translation>Geçiş süresi</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="94"/>
+        <source>Set the duration of the transition.
+May not be longer than half the duration of the clip.
+If the duration is 0, no transition will be created.</source>
+        <translation>Geçiş süresini ayarlayın.
+Klip süresinin yarısından daha uzun olamaz.
+Süre 0 ise, geçiş oluşturulmaz.</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="103"/>
+        <source>Transition type</source>
+        <translation>Geçiş türü</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="105"/>
+        <source>Random</source>
+        <translation>Rastgele</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="106"/>
+        <source>Dissolve</source>
+        <translation>Çözünme</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="107"/>
+        <source>Bar Horizontal</source>
+        <translation>Yatay Çubuk</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="108"/>
+        <source>Bar Vertical</source>
+        <translation>Dikey Çubuk</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="109"/>
+        <source>Barn Door Horizontal</source>
+        <translation>Çift Kapı-Yatay</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="110"/>
+        <source>Barn Door Vertical</source>
+        <translation>Çift Kapı-Dikey</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="111"/>
+        <source>Barn Door Diagonal SW-NE</source>
+        <translation>Çapraz Çift Kapı GB-KD</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="112"/>
+        <source>Barn Door Diagonal NW-SE</source>
+        <translation>Çapraz Çift Kapı KB-GD</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="113"/>
+        <source>Diagonal Top Left</source>
+        <translation>Çapraz Üst Sol</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="114"/>
+        <source>Diagonal Top Right</source>
+        <translation>Çapraz Üst Sağ</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="115"/>
+        <source>Matrix Waterfall Horizontal</source>
+        <translation>Matris Şelale Yatay</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="116"/>
+        <source>Matrix Waterfall Vertical</source>
+        <translation>Matris Şelale Dikey</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="117"/>
+        <source>Matrix Snake Horizontal</source>
+        <translation>Matris Kıvrım Yatay</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="118"/>
+        <source>Matrix Snake Parallel Horizontal</source>
+        <translation>Matris Kıvrım Paralel Yatay</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="119"/>
+        <source>Matrix Snake Vertical</source>
+        <translation>Matris Kıvrım Dikey</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="120"/>
+        <source>Matrix Snake Parallel Vertical</source>
+        <translation>Matrix Kıvrım Paralel Dikey</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="121"/>
+        <source>Barn V Up</source>
+        <translation>Ters V Kanat</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="122"/>
+        <source>Iris Circle</source>
+        <translation>İris Daire</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="123"/>
+        <source>Double Iris</source>
+        <translation>Çift İris</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="124"/>
+        <source>Iris Box</source>
+        <translation>İris Dikdörtgen</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="125"/>
+        <source>Box Bottom Right</source>
+        <translation>Dikdörtgen Sağ Alt</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="126"/>
+        <source>Box Bottom Left</source>
+        <translation>Dikdörtgen Sol Alt</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="127"/>
+        <source>Box Right Center</source>
+        <translation>Dikdörtgen Sağ Orta</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="128"/>
+        <source>Clock Top</source>
+        <translation>Saat Üst</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="129"/>
+        <source>Choose a transition effect.</source>
+        <translation>Bir geçiş efekti seçin.</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="134"/>
+        <source>Transition softness</source>
+        <translation>Geçiş yumuşaklığı</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="136"/>
+        <source>Change the softness of the edge of the wipe.</source>
+        <translation>Silme kenarının yumuşaklığını değiştirin.</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="478"/>
+        <source>Generating Preview...</source>
+        <translation>Önizleme Oluşturuluyor...</translation>
+    </message>
+</context>
+<context>
+    <name>SystemSyncDialog</name>
+    <message>
+        <location filename="../src/dialogs/systemsyncdialog.ui" line="14"/>
+        <source>Player Synchronization</source>
+        <translation>Oynatıcı Senkronizasyonu</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/systemsyncdialog.ui" line="20"/>
+        <source>Adjust your playback audio/video synchronization</source>
+        <translation>Oynatma ses/video senkronizasyonunuzu ayarlayın</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/systemsyncdialog.ui" line="48"/>
+        <source>Reset to default value 0</source>
+        <translation>Varsayılan değer 0 ile sıfırla</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/systemsyncdialog.ui" line="65"/>
+        <source>Video offset</source>
+        <translation>Video kayması</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/systemsyncdialog.ui" line="75"/>
+        <source>Apply</source>
+        <translation>Uygula</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/systemsyncdialog.ui" line="82"/>
+        <source> ms</source>
+        <translation> ms</translation>
     </message>
 </context>
 <context>
@@ -6348,80 +6789,88 @@ Bunun yerine %1 =%2/1001 kullanmak ister misiniz?</translation>
         <translation>Yazı Tipi</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="186"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="193"/>
         <source>Use font size</source>
         <translation>Metin boyutu kullan</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="201"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="208"/>
         <source>Outline</source>
         <translation>Kenarlık</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="211"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="218"/>
         <source>Thickness</source>
         <translation>Kalınlık </translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="225"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="231"/>
         <source>Background</source>
         <translation>Arka plan</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="235"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="241"/>
         <source>Padding</source>
         <translation>Dolgu</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="249"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="254"/>
         <source>Position</source>
         <translation>Konum</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="296"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="310"/>
         <source>Size</source>
         <translation>Boyut</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="330"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="354"/>
         <source>Horizontal fit</source>
         <translation>Yatay sığdır</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="335"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="359"/>
         <source>Left</source>
         <translation>Sol</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="341"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="365"/>
         <source>Center</source>
         <translation>Orta</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="347"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="371"/>
         <source>Right</source>
         <translation>Sağ</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="360"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="384"/>
         <source>Vertical fit</source>
         <translation>Dikey Sığdır</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="365"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="389"/>
         <source>Top</source>
         <translation>Üst</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="371"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="395"/>
         <source>Middle</source>
         <comment>Text video filter</comment>
         <translation>Orta</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="377"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="401"/>
         <source>Bottom</source>
         <translation>Alt</translation>
+    </message>
+</context>
+<context>
+    <name>TextFilterVui</name>
+    <message>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterVui.qml" line="34"/>
+        <source>Click in rectangle + hold Shift to drag</source>
+        <translation>Dikdörtgeni tıklayın + Shift tuşu ile sürükleyin</translation>
     </message>
 </context>
 <context>
@@ -6457,7 +6906,17 @@ Bunun yerine %1 =%2/1001 kullanmak ister misiniz?</translation>
         <translation>Metin özellikleri, &lt;b&gt;Tamam&lt;/b&gt;&apos;ı tıkladıktan sonra &lt;b&gt;Filtreler&lt;/b&gt; panelinde bulunur.</translation>
     </message>
     <message>
-        <location filename="../src/widgets/textproducerwidget.cpp" line="93"/>
+        <location filename="../src/widgets/textproducerwidget.cpp" line="57"/>
+        <source>black</source>
+        <translation>siyah</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/textproducerwidget.cpp" line="59"/>
+        <source>transparent</source>
+        <translation>saydam</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/textproducerwidget.cpp" line="112"/>
         <source>Edit your text using the Filters panel.</source>
         <translation>Filtreler panelini kullanarak metninizi düzenleyin.</translation>
     </message>
@@ -6483,17 +6942,17 @@ Bunun yerine %1 =%2/1001 kullanmak ister misiniz?</translation>
 <context>
     <name>TiledItemDelegate</name>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="101"/>
+        <location filename="../src/docks/playlistdock.cpp" line="110"/>
         <source>Duration: %1</source>
         <translation>Süre: %1</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="104"/>
+        <location filename="../src/docks/playlistdock.cpp" line="113"/>
         <source>In: %1</source>
         <translation>İçinde: %1</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="106"/>
+        <location filename="../src/docks/playlistdock.cpp" line="115"/>
         <source>Start: %1</source>
         <translation>Başla :%1</translation>
     </message>
@@ -6501,12 +6960,12 @@ Bunun yerine %1 =%2/1001 kullanmak ister misiniz?</translation>
 <context>
     <name>TimeSpinner</name>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TimeSpinner.qml" line="49"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TimeSpinner.qml" line="51"/>
         <source>Decrement</source>
         <translation>Azalma</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TimeSpinner.qml" line="70"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TimeSpinner.qml" line="72"/>
         <source>Increment</source>
         <translation>Artış</translation>
     </message>
@@ -6519,49 +6978,56 @@ Bunun yerine %1 =%2/1001 kullanmak ister misiniz?</translation>
         <translation>Zaman Akışı</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="158"/>
+        <location filename="../src/docks/timelinedock.cpp" line="168"/>
         <source>This track is locked</source>
         <translation>Bu iz kilitli  </translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="401"/>
+        <location filename="../src/docks/timelinedock.cpp" line="173"/>
+        <source>You cannot add a non-seekable source.</source>
+        <translation>Aranamayan bir kaynak ekleyemezsiniz.</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/timelinedock.cpp" line="402"/>
         <source>Failed to open </source>
         <translation>Açılamadı </translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="404"/>
+        <location filename="../src/docks/timelinedock.cpp" line="405"/>
         <source>You must save to Copy Timeline to Source.</source>
         <translation>Zaman Akışını Kaynağa Kopyala&apos;ya kaydetmeniz gerekir.</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="616"/>
+        <location filename="../src/docks/timelinedock.cpp" line="622"/>
         <source>Remove %1 from timeline</source>
         <translation>%1&apos;i zaman akışından kaldır</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="639"/>
+        <location filename="../src/docks/timelinedock.cpp" line="644"/>
         <source>Lift %1 from timeline</source>
         <translation>%1&apos;i zaman akışından çıkar</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="858"/>
+        <location filename="../src/docks/timelinedock.cpp" line="866"/>
         <source>There is nothing in the Source player.</source>
         <translation>Kaynak oynatıcıda hiçbir şey yok.</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="873"/>
+        <location filename="../src/docks/timelinedock.cpp" line="881"/>
         <source>You cannot replace a transition.</source>
         <translation>Bir geçişi yerleştiremezsiniz.</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1162"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1292"/>
         <source>You cannot split a transition.</source>
         <translation>Bir geçişi bölemezsiniz.</translation>
     </message>
-    <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1379"/>
-        <source>Replace %1 timeline clips</source>
-        <translation>%1 zaman akışı klibini yerleştir</translation>
+    <message numerus="yes">
+        <location filename="../src/docks/timelinedock.cpp" line="1513"/>
+        <source>Replace %n timeline clips</source>
+        <translation>
+            <numerusform>%n zaman akışı klibini yerleştir</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -6629,97 +7095,92 @@ Bunun yerine %1 =%2/1001 kullanmak ister misiniz?</translation>
 <context>
     <name>TimelineToolbar</name>
     <message>
-        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="105"/>
+        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="124"/>
         <source>Toggle snapping</source>
-        <translation>Yapmayı aç/kapat</translation>
+        <translation>Tuttur aç/kapat</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="115"/>
+        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="135"/>
         <source>Scrub while dragging</source>
         <translation>Sürüklerken kafayı taşı</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="125"/>
+        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="146"/>
         <source>Ripple trim and drop</source>
         <translation>Yeri ile buda ve düşür</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="126"/>
-        <source>Ripple</source>
-        <translation>Yeri ile</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="137"/>
+        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="157"/>
         <source>Ripple edits across all tracks</source>
         <translation>Tüm izler boyunca yeri ile düzenle</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="138"/>
-        <source>Ripple All</source>
-        <translation>Tüm yeri ile</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="198"/>
+        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="42"/>
         <source>Display a menu of additional actions</source>
         <translation>Ek işlemler menüsünü görüntüle</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="206"/>
+        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="54"/>
         <source>Cut - Copy the current clip to the Source
 player and ripple delete it</source>
         <translation>Kes - Geçerli klibi Kaynak oynatıcıya 
 kopyalar ve yeri ile siler</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="215"/>
+        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="61"/>
         <source>Copy - Copy the current clip to the Source player (C)</source>
         <translation>Kopyala - Geçerli klibi Kaynak oynatıcıya kopyalar (C)</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="224"/>
+        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="68"/>
         <source>Paste - Insert clip into the current track
 shifting following clips to the right (V)</source>
         <translation>Yapıştır - Klibi geçerli izde araya ekler
 ve sonraki klipleri sağa kaydırır (V)</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="232"/>
+        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="80"/>
         <source>Append to the current track (A)</source>
         <translation>Geçerli ize ekle (A)</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="240"/>
+        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="87"/>
         <source>Ripple Delete - Remove current clip
 shifting following clips to the left (X)</source>
         <translation>Yeri ile Sil - Geçerli klibi siler ve
 sonraki klipleri sola kaydırır (X)</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="248"/>
+        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="94"/>
         <source>Lift - Remove current clip without
 affecting position of other clips (Z)</source>
         <translation>Çıkar - Geçerli klibi diğer kliplerin
 konumunu etkilemeden siler (Z)</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="256"/>
+        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="101"/>
         <source>Overwrite clip onto the current track (B)</source>
         <translation>Klibi geçerli iz üzerine ekler (B)</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="264"/>
+        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="108"/>
         <source>Split At Playhead (S)</source>
         <translation>Oynatma Kafasından Böl (S)</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="272"/>
+        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="169"/>
         <source>Zoom timeline out (-)</source>
         <translation>Zaman akışını uzaklaştır (-)</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="280"/>
+        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="179"/>
         <source>Zoom timeline in (+)</source>
         <translation>Zaman akışını yakınlaştır (+)</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="186"/>
+        <source>Zoom timeline to fit (0)</source>
+        <translation>Zaman akışını sığdır (0)</translation>
     </message>
 </context>
 <context>
@@ -6763,37 +7224,37 @@ konumunu etkilemeden siler (Z)</translation>
 <context>
     <name>TrackHead</name>
     <message>
-        <location filename="../src/qml/views/timeline/TrackHead.qml" line="174"/>
+        <location filename="../src/qml/views/timeline/TrackHead.qml" line="184"/>
         <source>Unmute</source>
         <translation>Sesi Aç</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/TrackHead.qml" line="174"/>
+        <location filename="../src/qml/views/timeline/TrackHead.qml" line="184"/>
         <source>Mute</source>
         <translation>Sesi Kapat</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/TrackHead.qml" line="185"/>
+        <location filename="../src/qml/views/timeline/TrackHead.qml" line="197"/>
         <source>Show</source>
         <translation>Göster</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/TrackHead.qml" line="185"/>
+        <location filename="../src/qml/views/timeline/TrackHead.qml" line="197"/>
         <source>Hide</source>
         <translation>Gizle</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/TrackHead.qml" line="147"/>
+        <location filename="../src/qml/views/timeline/TrackHead.qml" line="154"/>
         <source>Unlock track</source>
         <translation>İz kilidini aç</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/TrackHead.qml" line="147"/>
+        <location filename="../src/qml/views/timeline/TrackHead.qml" line="154"/>
         <source>Lock track</source>
         <translation>İzi kilitle</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/TrackHead.qml" line="195"/>
+        <location filename="../src/qml/views/timeline/TrackHead.qml" line="208"/>
         <source>Filters</source>
         <translation>Filtreler</translation>
     </message>
@@ -6916,17 +7377,17 @@ konumunu etkilemeden siler (Z)</translation>
         <translation>İletişim</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="44"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="41"/>
         <source>good</source>
         <translation>iyi</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="54"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="51"/>
         <source>better</source>
         <translation>daha iyi</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="64"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="61"/>
         <source>best</source>
         <translation>en iyi</translation>
     </message>
@@ -6949,25 +7410,129 @@ konumunu etkilemeden siler (Z)</translation>
         <location filename="../src/dialogs/transcodedialog.ui" line="139"/>
         <source>Do not show this anymore.</source>
         <comment>Convert to edit-friendly format dialog</comment>
-        <translation>Bunu daha fazla gösterme.</translation>
+        <translation>Bunu artık gösterme.</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.cpp" line="29"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="165"/>
+        <source>Change the frame rate from its source.</source>
+        <translation>Kare hızını kaynağından değiştirin.</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/transcodedialog.ui" line="175"/>
+        <source>This is useful when the source video is HDR (High Dynamic Range), which requires tone-mapping to the old, standard range.</source>
+        <translation>Bu, kaynak video eski standart aralığa ton eşlemesi gerektiren HDR (Yüksek Dinamik Aralık) olduğunda kullanışlıdır.</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/transcodedialog.ui" line="185"/>
+        <source>Frame rate conversion</source>
+        <translation>Kare hızı dönüşümü</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/transcodedialog.ui" line="203"/>
+        <source>This option converts only the trimmed portion of the source
+clip plus a little instead of the entire clip. When this option is
+used not all of the matching source clips are replaced, instead
+only the currently selected one.</source>
+        <translation>Bu seçenek, kaynak klibin yalnızca kırpılmış kısmını ve
+tüm klibin yerine birazını dönüştürür. Bu seçenek kullanıldığında,
+eşleşen kaynak kliplerin tümü değiştirilmez, bunun yerine
+yalnızca o anda seçili olanı değiştirilir.</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/transcodedialog.ui" line="209"/>
+        <source>Use sub-clip</source>
+        <translation>Alt-klip kullan</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/transcodedialog.ui" line="223"/>
+        <source>If the source is progressive, each interlaced field will be converted to a progressive frame resulting in double frame rate.</source>
+        <translation>Kaynak aşamalıysa, her taramalı alan aşamalı bir kareye dönüştürülerek iki kare hızı elde edilir.</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/transcodedialog.ui" line="226"/>
+        <source>Deinterlace</source>
+        <translation>Ara Geçiş Gider</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/transcodedialog.ui" line="233"/>
+        <source>Enable this to keep the Advanced section open for the next time this dialog appears.</source>
+        <translation>Bu iletişim kutusunun sonraki görüntülenmesinde Gelişmiş bölümünün açık kalması için bunu etkinleştirin.</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/transcodedialog.ui" line="236"/>
+        <source>Keep Advanced open</source>
+        <translation>Gelişmiş açık kalsın</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/transcodedialog.ui" line="151"/>
+        <source>Override the frame rate to a specific value.</source>
+        <translation>Kare hızını belirli bir değerle değiştirir.</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/transcodedialog.ui" line="192"/>
+        <source>Frame rate conversion method
+
+Duplicate: Duplicate frames.
+Blend: Blend frames.
+Motion Compensation: Interpolate new frames using motion compensation. This method is very slow and may result in artifacts.</source>
+        <translation>Kare hızı dönüştürme yöntemi
+
+Çoğalt: Kareleri çoğaltır.
+Karıştır: Kareleri karıştırır.
+Hareket Telafisi: Hareket telafisini kullanarak yeni kareleri interpolasyon yapın. Bu yöntem çok yavaştır ve yapaylıkla sonuçlanabilir.</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/transcodedialog.ui" line="168"/>
+        <source>Override frame rate</source>
+        <translation>Kare hızını değiştir</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/transcodedialog.ui" line="216"/>
+        <source>Frames/sec</source>
+        <translation>Kare/sn</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/transcodedialog.ui" line="178"/>
+        <source>Convert to BT.709 colorspace</source>
+        <translation>BT.709 renk uzayına dönüştür</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/transcodedialog.cpp" line="33"/>
         <source>Convert to Edit-friendly...</source>
         <translation>Düzenleme Dostu Biçime Dönüştür...</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.cpp" line="49"/>
+        <location filename="../src/dialogs/transcodedialog.cpp" line="50"/>
+        <source>Duplicate (fast)</source>
+        <translation>Çoğalt (hızlı)</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/transcodedialog.cpp" line="51"/>
+        <source>Blend</source>
+        <translation>Karıştır</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/transcodedialog.cpp" line="52"/>
+        <source>Motion Compensation (slow)</source>
+        <translation>Hareket Telafisi (yavaş)</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/transcodedialog.cpp" line="55"/>
+        <source>Advanced</source>
+        <translation>Gelişmiş</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/transcodedialog.cpp" line="128"/>
         <source>Lossy: I-frame–only %1</source>
         <translation>Kayıplı: I-frame–only %1</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.cpp" line="52"/>
+        <location filename="../src/dialogs/transcodedialog.cpp" line="131"/>
         <source>Intermediate: %1</source>
         <translation>Orta seviye: %1</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.cpp" line="55"/>
+        <location filename="../src/dialogs/transcodedialog.cpp" line="134"/>
         <source>Lossless: %1</source>
         <translation>Kayıpsız: %1</translation>
     </message>
@@ -6975,7 +7540,7 @@ konumunu etkilemeden siler (Z)</translation>
 <context>
     <name>UndoButton</name>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/UndoButton.qml" line="24"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/UndoButton.qml" line="25"/>
         <source>Reset to default</source>
         <translation>Varsayılana sıfırla</translation>
     </message>
@@ -7154,39 +7719,39 @@ konumunu etkilemeden siler (Z)</translation>
 <context>
     <name>VideoHistogramScopeWidget</name>
     <message>
-        <location filename="../src/widgets/scopes/videohistogramscopewidget.cpp" line="101"/>
+        <location filename="../src/widgets/scopes/videohistogramscopewidget.cpp" line="102"/>
         <source>Luma</source>
         <translation>Işık</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videohistogramscopewidget.cpp" line="106"/>
+        <location filename="../src/widgets/scopes/videohistogramscopewidget.cpp" line="107"/>
         <source>Red</source>
         <translation>Kırmızı</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videohistogramscopewidget.cpp" line="111"/>
+        <location filename="../src/widgets/scopes/videohistogramscopewidget.cpp" line="112"/>
         <source>Green</source>
         <translation>Yeşil</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videohistogramscopewidget.cpp" line="116"/>
+        <location filename="../src/widgets/scopes/videohistogramscopewidget.cpp" line="117"/>
         <source>Blue</source>
         <translation>Mavi</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videohistogramscopewidget.cpp" line="200"/>
+        <location filename="../src/widgets/scopes/videohistogramscopewidget.cpp" line="201"/>
         <source>Value: %1
 IRE: %2</source>
         <translation>Değer: %1
 IRE: %2</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videohistogramscopewidget.cpp" line="204"/>
+        <location filename="../src/widgets/scopes/videohistogramscopewidget.cpp" line="205"/>
         <source>Value: %1</source>
         <translation>Değer: %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videohistogramscopewidget.cpp" line="212"/>
+        <location filename="../src/widgets/scopes/videohistogramscopewidget.cpp" line="213"/>
         <source>Video Histogram</source>
         <translation>Video Histogramı</translation>
     </message>
@@ -7443,34 +8008,6 @@ IRE: %2</translation>
     </message>
 </context>
 <context>
-    <name>WebvfxProducer</name>
-    <message>
-        <location filename="../src/widgets/webvfxproducer.ui" line="14"/>
-        <source>Form</source>
-        <translation>Biçim</translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/webvfxproducer.ui" line="23"/>
-        <source>Make background transparent</source>
-        <translation>Arka planı saydam yap</translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/webvfxproducer.ui" line="30"/>
-        <source>Reload</source>
-        <translation>Yeniden Yükle</translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/webvfxproducer.ui" line="53"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;For Advanced Users&lt;/span&gt;&lt;br/&gt;If you enable this, and you do not use the WebVfx JavaScript extension, your content will not render!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Uzman Kullanıcılar İçin&lt;/span&gt;&lt;br/&gt;Bu seçenek etkinleştirildiğinde WebVfx JavaScript eklentisi kullanılmazsa, içeriğiniz görüntülenmez!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/webvfxproducer.ui" line="56"/>
-        <source>Use WebVfx JavaScript extension</source>
-        <translation>WebVfx JavaScript eklentisini kullan</translation>
-    </message>
-</context>
-<context>
     <name>X11grabWidget</name>
     <message>
         <location filename="../src/widgets/x11grabwidget.ui" line="14"/>
@@ -7614,32 +8151,32 @@ Most users do not need to change this.</source>
 <context>
     <name>audioloudnessscope</name>
     <message>
-        <location filename="../src/qml/scopes/audioloudness/audioloudnessscope.qml" line="118"/>
+        <location filename="../src/qml/scopes/audioloudness/audioloudnessscope.qml" line="62"/>
         <source>Momentary Loudness.</source>
         <translation>Anlık Ses Şiddeti.</translation>
     </message>
     <message>
-        <location filename="../src/qml/scopes/audioloudness/audioloudnessscope.qml" line="152"/>
+        <location filename="../src/qml/scopes/audioloudness/audioloudnessscope.qml" line="96"/>
         <source>Short-term Loudness.</source>
         <translation>Kısa Süreli Ses Şiddeti.</translation>
     </message>
     <message>
-        <location filename="../src/qml/scopes/audioloudness/audioloudnessscope.qml" line="186"/>
+        <location filename="../src/qml/scopes/audioloudness/audioloudnessscope.qml" line="130"/>
         <source>Integrated Loudness.</source>
         <translation>Tümleşik Ses Şiddeti.</translation>
     </message>
     <message>
-        <location filename="../src/qml/scopes/audioloudness/audioloudnessscope.qml" line="220"/>
+        <location filename="../src/qml/scopes/audioloudness/audioloudnessscope.qml" line="164"/>
         <source>Loudness Range.</source>
         <translation>Ses Şiddeti Aralığı.</translation>
     </message>
     <message>
-        <location filename="../src/qml/scopes/audioloudness/audioloudnessscope.qml" line="254"/>
+        <location filename="../src/qml/scopes/audioloudness/audioloudnessscope.qml" line="198"/>
         <source>Peak.</source>
         <translation>Tepe.</translation>
     </message>
     <message>
-        <location filename="../src/qml/scopes/audioloudness/audioloudnessscope.qml" line="288"/>
+        <location filename="../src/qml/scopes/audioloudness/audioloudnessscope.qml" line="232"/>
         <source>True Peak.</source>
         <translation>Gerçek Tepe.</translation>
     </message>
@@ -7647,113 +8184,158 @@ Most users do not need to change this.</source>
 <context>
     <name>filterview</name>
     <message>
-        <location filename="../src/qml/views/filter/filterview.qml" line="119"/>
+        <location filename="../src/qml/views/filter/filterview.qml" line="121"/>
         <source>Nothing selected</source>
         <translation>Hiçbir şey seçilmedi</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/filter/filterview.qml" line="131"/>
+        <location filename="../src/qml/views/filter/filterview.qml" line="134"/>
         <source>Add a filter</source>
         <translation>Bir filtre ekle</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/filter/filterview.qml" line="140"/>
+        <location filename="../src/qml/views/filter/filterview.qml" line="148"/>
         <source>Remove selected filter</source>
         <translation>Seçili filtreyi kaldır</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/filter/filterview.qml" line="157"/>
+        <location filename="../src/qml/views/filter/filterview.qml" line="165"/>
         <source>Copy the filters</source>
         <translation>Filtreleri kopyala</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/filter/filterview.qml" line="167"/>
+        <location filename="../src/qml/views/filter/filterview.qml" line="175"/>
         <source>Paste filters</source>
         <translation>Filtreleri yapıştır</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/views/filter/filterview.qml" line="190"/>
+        <source>Move filter up</source>
+        <translation>Filtreyi yukarı taşı</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/views/filter/filterview.qml" line="200"/>
+        <source>Move filter down</source>
+        <translation>Filtreyi aşağı taşı</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/views/filter/filterview.qml" line="215"/>
+        <source>Deselect the filter</source>
+        <translation>Filtre seçimini kaldır</translation>
     </message>
 </context>
 <context>
     <name>keyframes</name>
     <message>
-        <location filename="../src/qml/views/keyframes/keyframes.qml" line="432"/>
+        <location filename="../src/qml/views/keyframes/keyframes.qml" line="474"/>
+        <source>Options</source>
+        <translation>Seçenekler</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/views/keyframes/keyframes.qml" line="477"/>
         <source>Show Audio Waveforms</source>
         <translation>Ses Dalga Biçimlerini Göster</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/keyframes/keyframes.qml" line="450"/>
+        <location filename="../src/qml/views/keyframes/keyframes.qml" line="495"/>
+        <source>Use Higher Performance Waveforms</source>
+        <translation>Daha Yüksek Performanslı Dalga Biçimleri Kullan</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/views/keyframes/keyframes.qml" line="505"/>
         <source>Show Video Thumbnails</source>
         <translation>Video Küçük Görsellerini Göster</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/keyframes/keyframes.qml" line="456"/>
+        <location filename="../src/qml/views/keyframes/keyframes.qml" line="511"/>
         <source>Center the Playhead</source>
         <translation>Oynatma kafası ortada</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/keyframes/keyframes.qml" line="463"/>
+        <location filename="../src/qml/views/keyframes/keyframes.qml" line="517"/>
+        <source>Scroll to Playhead on Zoom</source>
+        <translation>Yakınlaştırırken oynatma kafasını kaydır</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/views/keyframes/keyframes.qml" line="524"/>
         <source>Reload</source>
         <translation>Yeniden Yükle</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/views/keyframes/keyframes.qml" line="528"/>
+        <source>Cancel</source>
+        <translation>İptal</translation>
     </message>
 </context>
 <context>
     <name>main</name>
     <message>
-        <location filename="../src/main.cpp" line="141"/>
+        <location filename="../src/main.cpp" line="153"/>
         <source>Fill the screen with the Shotcut window.</source>
         <translation>Ekranı Shotcut penceresi ile kaplar.</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="145"/>
+        <location filename="../src/main.cpp" line="157"/>
         <source>Hide upgrade prompt and menu item.</source>
         <translation>Güncelleme uyarısı ve menü ögesini gizle</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="148"/>
+        <location filename="../src/main.cpp" line="160"/>
         <source>Use GPU processing.</source>
         <translation>Grafik İşlemci Kullan.</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="151"/>
+        <location filename="../src/main.cpp" line="163"/>
         <source>Clear Recent on Exit</source>
         <translation>Çıkışta Son Kullanılanları Temizle</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="154"/>
+        <location filename="../src/main.cpp" line="166"/>
         <source>The directory for app configuration and data.</source>
         <translation>Uygulama yapılandırması ve verileri için dizin.</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="155"/>
+        <location filename="../src/main.cpp" line="167"/>
         <source>directory</source>
         <translation>klasör</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="158"/>
+        <location filename="../src/main.cpp" line="170"/>
         <source>The scale factor for a high-DPI screen</source>
         <translation>Yüksek DPI ekran için ölçek faktörü</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="159"/>
+        <location filename="../src/main.cpp" line="171"/>
         <source>number</source>
         <translation>numara</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="162"/>
+        <location filename="../src/main.cpp" line="174"/>
         <source>A semicolon-separated list of scale factors for each screen</source>
         <translation>Her ekran için noktalı virgülle ayrılmış bir ölçek faktörü listesi</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="163"/>
+        <location filename="../src/main.cpp" line="175"/>
         <source>list</source>
         <translation>liste</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="166"/>
+        <location filename="../src/main.cpp" line="179"/>
+        <source>How to handle a fractional display scale: %1</source>
+        <translation>Kesirli bir görüntüleme ölçeği nasıl kullanılır: %1</translation>
+    </message>
+    <message>
+        <location filename="../src/main.cpp" line="181"/>
+        <source>string</source>
+        <translation>dizi</translation>
+    </message>
+    <message>
+        <location filename="../src/main.cpp" line="185"/>
         <source>Zero or more files or folders to open</source>
         <translation>Açmak için sıfır veya daha fazla dosya veya klasör</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="333"/>
+        <location filename="../src/main.cpp" line="369"/>
         <source>Loading plugins...</source>
         <translation>Eklentiler yükleniyor...</translation>
     </message>
@@ -7937,11 +8519,12 @@ Most users do not need to change this.</source>
         <translation>Metin: Basit</translation>
     </message>
     <message>
+        <location filename="../src/qml/filters/crop_rectangle/meta.qml" line="17"/>
         <location filename="../src/qml/filters/dynamictext/meta.qml" line="18"/>
-        <location filename="../src/qml/filters/rectangle/meta.qml" line="18"/>
+        <location filename="../src/qml/filters/pillar_echo/meta.qml" line="17"/>
+        <location filename="../src/qml/filters/richtext/meta.qml" line="19"/>
         <location filename="../src/qml/filters/spot_remover/meta.qml" line="17"/>
         <location filename="../src/qml/filters/timer/meta.qml" line="18"/>
-        <location filename="../src/qml/filters/webvfx_clip/meta.qml" line="17"/>
         <source>Position / Size</source>
         <translation>Konum / Boyut </translation>
     </message>
@@ -8018,6 +8601,12 @@ Most users do not need to change this.</source>
         <translation>Maske</translation>
     </message>
     <message>
+        <location filename="../src/qml/filters/bigsh0t_rect_to_eq/meta.qml" line="7"/>
+        <source>360: Rectilinear to Equirectangular</source>
+        <translation>360: Düzlemsel dikdörtgenden Dikdörtgen küreye</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/bigsh0t_rect_to_eq/meta.qml" line="17"/>
         <location filename="../src/qml/filters/mask/meta.qml" line="16"/>
         <location filename="../src/qml/filters/mask_alphaspot/meta.qml" line="16"/>
         <location filename="../src/qml/filters/rgbsplit0r/meta.qml" line="40"/>
@@ -8025,6 +8614,7 @@ Most users do not need to change this.</source>
         <translation>Yatay</translation>
     </message>
     <message>
+        <location filename="../src/qml/filters/bigsh0t_rect_to_eq/meta.qml" line="25"/>
         <location filename="../src/qml/filters/mask/meta.qml" line="24"/>
         <location filename="../src/qml/filters/mask_alphaspot/meta.qml" line="24"/>
         <location filename="../src/qml/filters/rgbsplit0r/meta.qml" line="32"/>
@@ -8076,22 +8666,22 @@ Most users do not need to change this.</source>
         <translation>Döndür ve Ölçekle</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/rotate/meta.qml" line="18"/>
+        <location filename="../src/qml/filters/rotate/meta.qml" line="19"/>
         <source>Rotation</source>
         <translation>Döndür</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/rotate/meta.qml" line="26"/>
+        <location filename="../src/qml/filters/rotate/meta.qml" line="27"/>
         <source>Scale</source>
         <translation>Ölçek</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/rotate/meta.qml" line="35"/>
+        <location filename="../src/qml/filters/rotate/meta.qml" line="36"/>
         <source>X offset</source>
         <translation>X kayması</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/rotate/meta.qml" line="39"/>
+        <location filename="../src/qml/filters/rotate/meta.qml" line="40"/>
         <source>Y offset</source>
         <translation>Y kayması</translation>
     </message>
@@ -8113,7 +8703,7 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/spillsuppress/meta.qml" line="24"/>
         <source>Key Spill: Simple</source>
-        <translation>Döküm Anahtarı: Örnek</translation>
+        <translation>Döküm Anahtarı: Basit</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/stabilize/meta.qml" line="6"/>
@@ -8136,7 +8726,7 @@ Most users do not need to change this.</source>
         <translation>Dalga</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/webvfx_circular_frame/meta.qml" line="7"/>
+        <location filename="../src/qml/filters/crop_circle/meta.qml" line="7"/>
         <source>Crop: Circle</source>
         <translation>Kırp: Daire</translation>
     </message>
@@ -8147,60 +8737,55 @@ Most users do not need to change this.</source>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="7"/>
-        <source>Hemispherical to Equirectangular</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="41"/>
-        <source>FrontX</source>
-        <translation>ÖnX</translation>
+        <source>360: Hemispherical to Equirectangular</source>
+        <translation>360: Yarım küreden Dikdörtgen küreye</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="49"/>
-        <source>FrontY</source>
-        <translation>ÖnY</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="57"/>
-        <source>FrontUp</source>
-        <translation>ÖnÜst</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="65"/>
-        <source>BackX</source>
-        <translation>ArkaX</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="73"/>
-        <source>BackY</source>
-        <translation>ArkaY</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="81"/>
-        <source>BackUp</source>
-        <translation>ArkaÜst</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="89"/>
-        <source>Fov</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="97"/>
+        <location filename="../src/qml/filters/crop_circle/meta.qml" line="16"/>
         <location filename="../src/qml/filters/halftone/meta.qml" line="16"/>
-        <location filename="../src/qml/filters/webvfx_circular_frame/meta.qml" line="16"/>
         <source>Radius</source>
         <translation>Yarıçap</translation>
     </message>
     <message>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="57"/>
+        <source>Front X</source>
+        <translation>Ön X</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="65"/>
+        <source>Front Y</source>
+        <translation>Ön Y</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="73"/>
+        <source>Front Up</source>
+        <translation>Ön Üst</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="81"/>
+        <source>Back X</source>
+        <translation>Arka X</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="89"/>
+        <source>Back Y</source>
+        <translation>Arka Y</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="97"/>
+        <source>Back Up</source>
+        <translation>Arka Üst</translation>
+    </message>
+    <message>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="105"/>
-        <source>NadirRadius</source>
-        <translation type="unfinished"></translation>
+        <source>Nadir Radius</source>
+        <translation>Ayak ucu Yarıçapı</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="113"/>
-        <source>nadirCorrectionStart</source>
-        <translation type="unfinished"></translation>
+        <source>Nadir Start</source>
+        <translation>Ayak ucu Başlangıcı</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/halftone/meta.qml" line="24"/>
@@ -8229,8 +8814,8 @@ Most users do not need to change this.</source>
     </message>
     <message>
         <location filename="../src/qml/filters/levels/meta.qml" line="6"/>
-        <location filename="../src/qml/filters/posterize/meta.qml" line="16"/>
         <source>Levels</source>
+        <comment>Levels video filter</comment>
         <translation>Seviyeler</translation>
     </message>
     <message>
@@ -8323,22 +8908,17 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/grid/meta.qml" line="15"/>
         <source>Rows</source>
-        <translation>Satırlar</translation>
+        <translation>Satır sayısı</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/grid/meta.qml" line="23"/>
         <source>Columns</source>
-        <translation>Sütunlar</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/aech0r/meta.qml" line="6"/>
-        <source>Analog Echo</source>
-        <translation>Analog Eko</translation>
+        <translation>Sütun sayısı</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/distort/meta.qml" line="23"/>
         <source>Distort</source>
-        <translation>Dalgalı çarpıtma</translation>
+        <translation>Çarpıt</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/distort/meta.qml" line="32"/>
@@ -8445,35 +9025,14 @@ Most users do not need to change this.</source>
         <translation>Gürültü Azalt: Akıllı Bulanık</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/webvfx/meta.qml" line="6"/>
-        <source>Text: HTML</source>
-        <translation>Metin: HTML</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/webvfx_clip/meta.qml" line="7"/>
+        <location filename="../src/qml/filters/crop_rectangle/meta.qml" line="7"/>
         <source>Crop: Rectangle</source>
         <translation>Kırp: Dikdörtgen</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/rectangle/meta.qml" line="7"/>
-        <source>Rectangle</source>
-        <translation>Dikdörtgen</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/rectangle/meta.qml" line="23"/>
-        <location filename="../src/qml/filters/webvfx_clip/meta.qml" line="22"/>
+        <location filename="../src/qml/filters/crop_rectangle/meta.qml" line="23"/>
         <source>Corner radius</source>
         <translation>Köşe yarıçapı</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/webvfx_swirl/meta.qml" line="7"/>
-        <source>Swirl</source>
-        <translation>Girdap</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/webvfx_threejs_text/meta.qml" line="7"/>
-        <source>Text: 3D</source>
-        <translation>Metin: 3B</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/meta.qml" line="6"/>
@@ -8516,6 +9075,12 @@ Most users do not need to change this.</source>
         <translation>Posterleştir</translation>
     </message>
     <message>
+        <location filename="../src/qml/filters/posterize/meta.qml" line="16"/>
+        <source>Levels</source>
+        <comment>Posterize filter</comment>
+        <translation>Seviyeler</translation>
+    </message>
+    <message>
         <location filename="../src/qml/filters/nervous/meta.qml" line="6"/>
         <source>Nervous</source>
         <translation>Asabi</translation>
@@ -8551,12 +9116,12 @@ Most users do not need to change this.</source>
         <translation>Yakınlaştır</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/webvfx_choppy/meta.qml" line="7"/>
+        <location filename="../src/qml/filters/choppy/meta.qml" line="6"/>
         <source>Choppy</source>
         <translation>Kare Atlat</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/webvfx_choppy/meta.qml" line="16"/>
+        <location filename="../src/qml/filters/choppy/meta.qml" line="15"/>
         <source>Repeat</source>
         <translation>Yinelenme</translation>
     </message>
@@ -8573,9 +9138,9 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/audio_pitch/meta.qml" line="7"/>
         <location filename="../src/qml/filters/audio_pitch/meta.qml" line="17"/>
-        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/meta.qml" line="25"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/meta.qml" line="26"/>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="25"/>
-        <location filename="../src/qml/filters/bigsh0t_transform_360/meta.qml" line="25"/>
+        <location filename="../src/qml/filters/bigsh0t_transform_360/meta.qml" line="26"/>
         <source>Pitch</source>
         <translation>Perde</translation>
     </message>
@@ -8586,77 +9151,53 @@ Most users do not need to change this.</source>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_mask/meta.qml" line="17"/>
-        <source>hfov0</source>
-        <translation type="unfinished"></translation>
+        <source>Horizontal Start</source>
+        <translation>Yatay Başlama</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_mask/meta.qml" line="25"/>
-        <source>hfov1</source>
-        <translation type="unfinished"></translation>
+        <source>Horizontal End</source>
+        <translation>Yatay Bitiş</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_mask/meta.qml" line="33"/>
-        <source>vfov0</source>
-        <translation type="unfinished"></translation>
+        <source>Vertical Start</source>
+        <translation>Dikey Başlama</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_mask/meta.qml" line="41"/>
-        <source>vfov1</source>
-        <translation type="unfinished"></translation>
+        <source>Vertical End</source>
+        <translation>Dikey Bitiş</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_to_rect/meta.qml" line="7"/>
-        <source>Equirectangular to Rectilinear</source>
-        <translation>Dikdörtgen küre Dikdörtgen çizgiye</translation>
+        <source>360: Equirectangular to Rectilinear</source>
+        <translation>360: Dikdörtgen küreden Düzlemsel Dikdörtgene</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/meta.qml" line="17"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/meta.qml" line="18"/>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="17"/>
-        <location filename="../src/qml/filters/bigsh0t_transform_360/meta.qml" line="17"/>
+        <location filename="../src/qml/filters/bigsh0t_transform_360/meta.qml" line="18"/>
         <source>Yaw</source>
-        <translation type="unfinished"></translation>
+        <translation>Döndür</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/meta.qml" line="33"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/meta.qml" line="34"/>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="33"/>
-        <location filename="../src/qml/filters/bigsh0t_transform_360/meta.qml" line="33"/>
+        <location filename="../src/qml/filters/bigsh0t_transform_360/meta.qml" line="34"/>
         <source>Roll</source>
-        <translation type="unfinished"></translation>
+        <translation>Yuvarla</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/meta.qml" line="41"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/meta.qml" line="42"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="41"/>
         <source>FOV</source>
-        <translation type="unfinished"></translation>
+        <translation>Görüş alanı</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/meta.qml" line="49"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/meta.qml" line="50"/>
         <source>Fisheye</source>
         <translation>Balık gözü</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/bigsh0t_rect_to_eq/meta.qml" line="7"/>
-        <source>Rectilinear to Equirectangular</source>
-        <translation>Dikdörtgen çizgi Dikdörtgen küreye</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/bigsh0t_rect_to_eq/meta.qml" line="17"/>
-        <source>hfov</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/bigsh0t_rect_to_eq/meta.qml" line="25"/>
-        <source>vfov</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/meta.qml" line="7"/>
-        <source>Stabilize 360</source>
-        <translation>Dengele 360</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/bigsh0t_transform_360/meta.qml" line="7"/>
-        <source>Transform 360</source>
-        <translation>Dönüştür 360</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/corners/meta.qml" line="23"/>
@@ -8683,18 +9224,68 @@ Most users do not need to change this.</source>
         <source>Feathering</source>
         <translation>Tüyleme</translation>
     </message>
+    <message>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/meta.qml" line="7"/>
+        <source>360: Stabilize</source>
+        <translation>360: Dengele</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/bigsh0t_transform_360/meta.qml" line="7"/>
+        <source>360: Transform</source>
+        <translation>360: Dönüştür</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/vaguedenoiser/meta.qml" line="26"/>
+        <source>Reduce Noise: Wavelet</source>
+        <translation>Gürültü Azalt: Dalgacık</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/meta.qml" line="7"/>
+        <source>Text: Rich</source>
+        <translation>Metin: Zengin</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/pillar_echo/meta.qml" line="7"/>
+        <source>Blur: Pad</source>
+        <translation>Bulanık: Zemin</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/audio_invert/meta.qml" line="7"/>
+        <source>Invert</source>
+        <translation>Ters Çevir</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/fspp/meta.qml" line="23"/>
+        <source>Reduce Noise: Quantization</source>
+        <translation>Gürültü Azalt: Niceleme</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/time_remap/meta.qml" line="7"/>
+        <source>Time Remap</source>
+        <translation>Zaman Eşleşmesi</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/time_remap/meta.qml" line="19"/>
+        <source>Time</source>
+        <translation>Zaman</translation>
+    </message>
 </context>
 <context>
     <name>meta_affine</name>
     <message>
         <location filename="../src/qml/filters/size_position/meta_affine.qml" line="7"/>
-        <source>Size and Position</source>
-        <translation>Boyut ve Konum</translation>
+        <source>Size, Position &amp; Rotate</source>
+        <translation>Boyut, Konum &amp; Döndür</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/meta_affine.qml" line="19"/>
-        <source>Position / Size</source>
-        <translation>Konum / Boyut</translation>
+        <source>Size &amp; Position</source>
+        <translation>Boyut &amp; Konum</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/size_position/meta_affine.qml" line="25"/>
+        <source>Rotation</source>
+        <translation>Döndürme</translation>
     </message>
 </context>
 <context>
@@ -8733,7 +9324,7 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/glow/meta_frei0r.qml" line="16"/>
         <source>Blur</source>
-        <translation>Bulanıklık</translation>
+        <translation>Bulanık</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/saturation/meta_frei0r.qml" line="6"/>
@@ -8787,7 +9378,7 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/blur/meta_movit.qml" line="6"/>
         <source>Blur</source>
-        <translation>Bulanıklık</translation>
+        <translation>Bulanık</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blur/meta_movit.qml" line="16"/>
@@ -8961,247 +9552,153 @@ Most users do not need to change this.</source>
     </message>
 </context>
 <context>
-    <name>simple_scroll_ui</name>
-    <message>
-        <location filename="../src/qml/filters/webvfx/templates/webvfx/Basic/Simple Scroll/simple_scroll_ui.qml" line="40"/>
-        <source>Direction</source>
-        <translation>Yön</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/webvfx/templates/webvfx/Basic/Simple Scroll/simple_scroll_ui.qml" line="43"/>
-        <source>Up</source>
-        <translation>Yukarı</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/webvfx/templates/webvfx/Basic/Simple Scroll/simple_scroll_ui.qml" line="43"/>
-        <source>Down</source>
-        <translation>Aşağı</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/webvfx/templates/webvfx/Basic/Simple Scroll/simple_scroll_ui.qml" line="43"/>
-        <source>Right</source>
-        <translation>Sağ</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/webvfx/templates/webvfx/Basic/Simple Scroll/simple_scroll_ui.qml" line="43"/>
-        <source>Left</source>
-        <translation>Sol</translation>
-    </message>
-</context>
-<context>
-    <name>text_outline</name>
-    <message>
-        <location filename="../src/qml/htmleditor/text_outline.qml" line="39"/>
-        <source>Width</source>
-        <translation>Genişlik</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/htmleditor/text_outline.qml" line="51"/>
-        <source>pixels</source>
-        <translation>Piksel</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/htmleditor/text_outline.qml" line="54"/>
-        <source>Color</source>
-        <translation>Renk</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/htmleditor/text_outline.qml" line="90"/>
-        <source>OK</source>
-        <translation>Tamam</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/htmleditor/text_outline.qml" line="102"/>
-        <source>Cancel</source>
-        <translation>İptal</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/htmleditor/text_outline.qml" line="109"/>
-        <source>Please choose a color</source>
-        <translation>Lütfen bir renk seçin</translation>
-    </message>
-</context>
-<context>
-    <name>text_shadow</name>
-    <message>
-        <location filename="../src/qml/htmleditor/text_shadow.qml" line="39"/>
-        <source>Horizontal</source>
-        <translation>Yatay</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/htmleditor/text_shadow.qml" line="51"/>
-        <location filename="../src/qml/htmleditor/text_shadow.qml" line="66"/>
-        <location filename="../src/qml/htmleditor/text_shadow.qml" line="81"/>
-        <source>pixels</source>
-        <translation>piksel</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/htmleditor/text_shadow.qml" line="54"/>
-        <source>Vertical</source>
-        <translation>Dikey</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/htmleditor/text_shadow.qml" line="69"/>
-        <source>Softness</source>
-        <translation>Yumuşaklık</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/htmleditor/text_shadow.qml" line="84"/>
-        <source>Color</source>
-        <translation>Renk</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/htmleditor/text_shadow.qml" line="120"/>
-        <source>OK</source>
-        <translation>Tamam</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/htmleditor/text_shadow.qml" line="136"/>
-        <source>Cancel</source>
-        <translation>İptal</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/htmleditor/text_shadow.qml" line="143"/>
-        <source>Please choose a color</source>
-        <translation>Lütfen bir renk seçin</translation>
-    </message>
-</context>
-<context>
     <name>timeline</name>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="150"/>
-        <source>Master</source>
-        <translation>Ana</translation>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="168"/>
+        <source>Output</source>
+        <translation>Çıktı</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="166"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="194"/>
         <source>Filters</source>
         <translation>Filtreler</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="373"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="425"/>
         <source>Insert</source>
         <translation>Araya ekle</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="373"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="425"/>
         <source>Overwrite</source>
         <translation>Üzerine yaz</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="437"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="489"/>
+        <source>Track Operations</source>
+        <translation>İz operasyonları</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="491"/>
         <source>Add Audio Track</source>
         <translation>Ses İzi Ekle</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="442"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="495"/>
         <source>Add Video Track</source>
         <translation>Video İzi Ekle</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="447"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="499"/>
         <source>Insert Track</source>
         <translation>İz Ekle</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="452"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="503"/>
         <source>Remove Track</source>
         <translation>İzi Kaldır</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="458"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="525"/>
+        <source>Selection</source>
+        <translation>Seçim</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="527"/>
         <source>Select All</source>
         <translation>Tümünü Seç</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="463"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="531"/>
         <source>Select None</source>
         <translation>Hiçbir şey seçme</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="472"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="568"/>
+        <source>Use Higher Performance Waveforms</source>
+        <translation>Daha Yüksek Performanslı Dalga Biçimleri Kullan</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="615"/>
+        <source>Cancel</source>
+        <translation>İptal</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="508"/>
+        <source>Track Height</source>
+        <translation>İz Yüksekliği</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="539"/>
+        <source>Options</source>
+        <translation>Seçenekler</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="542"/>
         <source>Ripple All Tracks</source>
         <translation>Tüm İzlerdeki Yeri ile</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="479"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="600"/>
         <source>Copy Timeline to Source</source>
         <translation>Zaman Akışını Kaynağa Kopyala</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="486"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="512"/>
         <source>Make Tracks Shorter</source>
         <translation>İzlerin yüksekliğini azalt</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="491"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="516"/>
         <source>Make Tracks Taller</source>
         <translation>İzlerin yüksekliğini arttır</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="500"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="548"/>
         <source>Show Audio Waveforms</source>
         <translation>Ses Dalga Biçimlerini Göster</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="520"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="578"/>
         <source>Show Video Thumbnails</source>
         <translation>Video Küçük Görsellerini Göster</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="526"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="584"/>
         <source>Center the Playhead</source>
         <translation>Oynatma kafası ortada</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="535"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="590"/>
+        <source>Scroll to Playhead on Zoom</source>
+        <translation>Yakınlaştırırken oynatma kafasını kaydır</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="597"/>
+        <source>Other</source>
+        <translation>Diğer</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="610"/>
         <source>Properties</source>
         <translation>Özellikler</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="539"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="604"/>
         <source>Reload</source>
         <translation>Yeniden Yükle</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="496"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="520"/>
         <source>Reset Track Height</source>
         <translation>İz yüksekliğini sıfırla</translation>
-    </message>
-</context>
-<context>
-    <name>two_column_scroll_ui</name>
-    <message>
-        <location filename="../src/qml/filters/webvfx/templates/webvfx/Basic/Two Column Scroll/two_column_scroll_ui.qml" line="40"/>
-        <source>Direction</source>
-        <translation>Yön</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/webvfx/templates/webvfx/Basic/Two Column Scroll/two_column_scroll_ui.qml" line="43"/>
-        <source>Up</source>
-        <translation>Yukarı</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/webvfx/templates/webvfx/Basic/Two Column Scroll/two_column_scroll_ui.qml" line="43"/>
-        <source>Down</source>
-        <translation>Aşağı</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/webvfx/templates/webvfx/Basic/Two Column Scroll/two_column_scroll_ui.qml" line="43"/>
-        <source>Right</source>
-        <translation>Sağ</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/webvfx/templates/webvfx/Basic/Two Column Scroll/two_column_scroll_ui.qml" line="43"/>
-        <source>Left</source>
-        <translation>Sol</translation>
     </message>
 </context>
 <context>
     <name>ui</name>
     <message>
         <location filename="../src/qml/filters/alpha_adjust/ui.qml" line="54"/>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="173"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="217"/>
         <source>Mode</source>
         <translation>Kip</translation>
     </message>
@@ -9237,40 +9734,42 @@ Most users do not need to change this.</source>
     </message>
     <message>
         <location filename="../src/qml/filters/alpha_adjust/ui.qml" line="68"/>
-        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="138"/>
+        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="136"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="125"/>
-        <location filename="../src/qml/filters/audio_noisegate/ui.qml" line="174"/>
+        <location filename="../src/qml/filters/audio_noisegate/ui.qml" line="179"/>
         <location filename="../src/qml/filters/mask_shape/ui.qml" line="313"/>
         <location filename="../src/qml/filters/smartblur/ui.qml" line="106"/>
+        <location filename="../src/qml/filters/vaguedenoiser/ui.qml" line="171"/>
         <source>Threshold</source>
         <translation>Eşik</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/alpha_adjust/ui.qml" line="69"/>
+        <location filename="../src/qml/filters/pillar_echo/ui.qml" line="255"/>
         <source>Blur</source>
-        <translation>Bulanıklık</translation>
+        <translation>Bulanık</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/alpha_adjust/ui.qml" line="80"/>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="296"/>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="355"/>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="414"/>
-        <location filename="../src/qml/filters/blur_exponential/ui.qml" line="86"/>
-        <location filename="../src/qml/filters/blur_gaussian/ui.qml" line="86"/>
-        <location filename="../src/qml/filters/blur_lowpass/ui.qml" line="86"/>
+        <location filename="../src/qml/filters/alpha_adjust/ui.qml" line="84"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="376"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="436"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="496"/>
+        <location filename="../src/qml/filters/blur_exponential/ui.qml" line="87"/>
+        <location filename="../src/qml/filters/blur_gaussian/ui.qml" line="87"/>
+        <location filename="../src/qml/filters/blur_lowpass/ui.qml" line="87"/>
         <location filename="../src/qml/filters/dust/ui.qml" line="75"/>
         <location filename="../src/qml/filters/lines/ui.qml" line="78"/>
         <location filename="../src/qml/filters/nervous/ui.qml" line="54"/>
         <location filename="../src/qml/filters/noise_fast/ui.qml" line="60"/>
-        <location filename="../src/qml/filters/noise_keyframes/ui.qml" line="84"/>
+        <location filename="../src/qml/filters/noise_keyframes/ui.qml" line="86"/>
         <location filename="../src/qml/filters/trails/ui.qml" line="62"/>
         <source>Amount</source>
         <translation>Miktar</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/alpha_adjust/ui.qml" line="102"/>
+        <location filename="../src/qml/filters/alpha_adjust/ui.qml" line="106"/>
         <location filename="../src/qml/filters/mask_shape/ui.qml" line="267"/>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="301"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="314"/>
         <location filename="../src/qml/filters/threshold/ui.qml" line="115"/>
         <source>Invert</source>
         <translation>Ters Çevir</translation>
@@ -9312,106 +9811,105 @@ Most users do not need to change this.</source>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_balance/ui.qml" line="122"/>
-        <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="58"/>
-        <location filename="../src/qml/filters/audio_pan/ui.qml" line="132"/>
-        <location filename="../src/qml/filters/audio_pan/ui.qml" line="137"/>
-        <location filename="../src/qml/filters/audio_swapchannels/ui.qml" line="59"/>
-        <location filename="../src/qml/filters/crop/ui.qml" line="177"/>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="537"/>
+        <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="61"/>
+        <location filename="../src/qml/filters/audio_pan/ui.qml" line="133"/>
+        <location filename="../src/qml/filters/audio_pan/ui.qml" line="138"/>
+        <location filename="../src/qml/filters/audio_swapchannels/ui.qml" line="62"/>
+        <location filename="../src/qml/filters/crop/ui.qml" line="185"/>
         <source>Left</source>
         <translation>Sol</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_balance/ui.qml" line="129"/>
-        <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="58"/>
-        <location filename="../src/qml/filters/audio_pan/ui.qml" line="132"/>
-        <location filename="../src/qml/filters/audio_pan/ui.qml" line="144"/>
-        <location filename="../src/qml/filters/audio_swapchannels/ui.qml" line="59"/>
-        <location filename="../src/qml/filters/crop/ui.qml" line="194"/>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="549"/>
+        <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="61"/>
+        <location filename="../src/qml/filters/audio_pan/ui.qml" line="133"/>
+        <location filename="../src/qml/filters/audio_pan/ui.qml" line="145"/>
+        <location filename="../src/qml/filters/audio_swapchannels/ui.qml" line="62"/>
+        <location filename="../src/qml/filters/crop/ui.qml" line="201"/>
         <source>Right</source>
         <translation>Sağ</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/aech0r/ui.qml" line="73"/>
-        <location filename="../src/qml/filters/audio_balance/ui.qml" line="101"/>
+        <location filename="../src/qml/filters/audio_balance/ui.qml" line="102"/>
         <location filename="../src/qml/filters/audio_bandpass/ui.qml" line="52"/>
-        <location filename="../src/qml/filters/audio_basstreble/ui.qml" line="169"/>
-        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="70"/>
+        <location filename="../src/qml/filters/audio_basstreble/ui.qml" line="168"/>
+        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="68"/>
         <location filename="../src/qml/filters/audio_delay/ui.qml" line="50"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="57"/>
-        <location filename="../src/qml/filters/audio_gain/ui.qml" line="127"/>
+        <location filename="../src/qml/filters/audio_gain/ui.qml" line="128"/>
         <location filename="../src/qml/filters/audio_highpass/ui.qml" line="50"/>
-        <location filename="../src/qml/filters/audio_limiter/ui.qml" line="62"/>
+        <location filename="../src/qml/filters/audio_limiter/ui.qml" line="60"/>
         <location filename="../src/qml/filters/audio_lowpass/ui.qml" line="52"/>
-        <location filename="../src/qml/filters/audio_noisegate/ui.qml" line="99"/>
-        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="86"/>
+        <location filename="../src/qml/filters/audio_noisegate/ui.qml" line="106"/>
+        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="82"/>
         <location filename="../src/qml/filters/audio_notch/ui.qml" line="51"/>
-        <location filename="../src/qml/filters/audio_pan/ui.qml" line="103"/>
-        <location filename="../src/qml/filters/audio_pitch/ui.qml" line="118"/>
+        <location filename="../src/qml/filters/audio_pan/ui.qml" line="105"/>
+        <location filename="../src/qml/filters/audio_pitch/ui.qml" line="120"/>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="106"/>
-        <location filename="../src/qml/filters/bigsh0t_eq_mask/ui.qml" line="48"/>
-        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/ui.qml" line="58"/>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="103"/>
-        <location filename="../src/qml/filters/bigsh0t_rect_to_eq/ui.qml" line="43"/>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="133"/>
-        <location filename="../src/qml/filters/bigsh0t_transform_360/ui.qml" line="48"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_mask/ui.qml" line="65"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/ui.qml" line="75"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="147"/>
+        <location filename="../src/qml/filters/bigsh0t_rect_to_eq/ui.qml" line="58"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="173"/>
+        <location filename="../src/qml/filters/bigsh0t_transform_360/ui.qml" line="68"/>
         <location filename="../src/qml/filters/bluescreen0r/ui.qml" line="50"/>
-        <location filename="../src/qml/filters/blur_exponential/ui.qml" line="68"/>
-        <location filename="../src/qml/filters/blur_gaussian/ui.qml" line="68"/>
-        <location filename="../src/qml/filters/blur_lowpass/ui.qml" line="68"/>
-        <location filename="../src/qml/filters/brightness/ui.qml" line="119"/>
-        <location filename="../src/qml/filters/chromahold/ui.qml" line="50"/>
-        <location filename="../src/qml/filters/color/ui.qml" line="121"/>
-        <location filename="../src/qml/filters/contrast/ui.qml" line="144"/>
-        <location filename="../src/qml/filters/corners/ui.qml" line="258"/>
-        <location filename="../src/qml/filters/crop/ui.qml" line="84"/>
-        <location filename="../src/qml/filters/distort/ui.qml" line="78"/>
-        <location filename="../src/qml/filters/dither/ui.qml" line="69"/>
+        <location filename="../src/qml/filters/blur_exponential/ui.qml" line="69"/>
+        <location filename="../src/qml/filters/blur_gaussian/ui.qml" line="69"/>
+        <location filename="../src/qml/filters/blur_lowpass/ui.qml" line="69"/>
+        <location filename="../src/qml/filters/brightness/ui.qml" line="121"/>
+        <location filename="../src/qml/filters/choppy/ui.qml" line="65"/>
+        <location filename="../src/qml/filters/chromahold/ui.qml" line="49"/>
+        <location filename="../src/qml/filters/color/ui.qml" line="124"/>
+        <location filename="../src/qml/filters/contrast/ui.qml" line="145"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="263"/>
+        <location filename="../src/qml/filters/crop/ui.qml" line="101"/>
+        <location filename="../src/qml/filters/crop_rectangle/ui.qml" line="176"/>
+        <location filename="../src/qml/filters/distort/ui.qml" line="81"/>
+        <location filename="../src/qml/filters/dither/ui.qml" line="70"/>
         <location filename="../src/qml/filters/dust/ui.qml" line="48"/>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="269"/>
-        <location filename="../src/qml/filters/elastic_scale/ui.qml" line="81"/>
-        <location filename="../src/qml/filters/glitch/ui.qml" line="81"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="155"/>
+        <location filename="../src/qml/filters/elastic_scale/ui.qml" line="86"/>
+        <location filename="../src/qml/filters/fspp/ui.qml" line="54"/>
+        <location filename="../src/qml/filters/glitch/ui.qml" line="85"/>
         <location filename="../src/qml/filters/gradient/ui.qml" line="200"/>
         <location filename="../src/qml/filters/grain/ui.qml" line="49"/>
-        <location filename="../src/qml/filters/grid/ui.qml" line="138"/>
-        <location filename="../src/qml/filters/halftone/ui.qml" line="81"/>
-        <location filename="../src/qml/filters/hqdn3d/ui.qml" line="70"/>
+        <location filename="../src/qml/filters/grid/ui.qml" line="140"/>
+        <location filename="../src/qml/filters/halftone/ui.qml" line="85"/>
+        <location filename="../src/qml/filters/hqdn3d/ui.qml" line="72"/>
         <location filename="../src/qml/filters/hue_lightness_saturation/ui.qml" line="54"/>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="98"/>
-        <location filename="../src/qml/filters/lenscorrection/ui.qml" line="81"/>
-        <location filename="../src/qml/filters/levels/ui.qml" line="154"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="99"/>
+        <location filename="../src/qml/filters/lenscorrection/ui.qml" line="85"/>
+        <location filename="../src/qml/filters/levels/ui.qml" line="158"/>
         <location filename="../src/qml/filters/lines/ui.qml" line="52"/>
-        <location filename="../src/qml/filters/mask/ui.qml" line="157"/>
-        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="158"/>
+        <location filename="../src/qml/filters/mask/ui.qml" line="161"/>
+        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="162"/>
         <location filename="../src/qml/filters/mask_shape/ui.qml" line="194"/>
-        <location filename="../src/qml/filters/mosaic/ui.qml" line="71"/>
+        <location filename="../src/qml/filters/mosaic/ui.qml" line="73"/>
         <location filename="../src/qml/filters/nervous/ui.qml" line="43"/>
         <location filename="../src/qml/filters/noise_fast/ui.qml" line="49"/>
-        <location filename="../src/qml/filters/noise_keyframes/ui.qml" line="66"/>
-        <location filename="../src/qml/filters/nosync/ui.qml" line="65"/>
+        <location filename="../src/qml/filters/noise_keyframes/ui.qml" line="68"/>
+        <location filename="../src/qml/filters/nosync/ui.qml" line="66"/>
         <location filename="../src/qml/filters/oldfilm/ui.qml" line="60"/>
-        <location filename="../src/qml/filters/opacity/ui.qml" line="107"/>
-        <location filename="../src/qml/filters/posterize/ui.qml" line="65"/>
-        <location filename="../src/qml/filters/rectangle/ui.qml" line="184"/>
-        <location filename="../src/qml/filters/rgbsplit0r/ui.qml" line="70"/>
-        <location filename="../src/qml/filters/rotate/ui.qml" line="130"/>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="109"/>
+        <location filename="../src/qml/filters/opacity/ui.qml" line="108"/>
+        <location filename="../src/qml/filters/pillar_echo/ui.qml" line="133"/>
+        <location filename="../src/qml/filters/posterize/ui.qml" line="67"/>
+        <location filename="../src/qml/filters/rgbsplit0r/ui.qml" line="72"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="233"/>
+        <location filename="../src/qml/filters/rotate/ui.qml" line="141"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="110"/>
         <location filename="../src/qml/filters/sepia/ui.qml" line="38"/>
         <location filename="../src/qml/filters/sketch/ui.qml" line="53"/>
         <location filename="../src/qml/filters/smartblur/ui.qml" line="57"/>
-        <location filename="../src/qml/filters/spot_remover/ui.qml" line="117"/>
+        <location filename="../src/qml/filters/spot_remover/ui.qml" line="118"/>
         <location filename="../src/qml/filters/tcolor/ui.qml" line="48"/>
-        <location filename="../src/qml/filters/threshold/ui.qml" line="71"/>
+        <location filename="../src/qml/filters/threshold/ui.qml" line="72"/>
+        <location filename="../src/qml/filters/time_remap/ui.qml" line="165"/>
         <location filename="../src/qml/filters/timer/ui.qml" line="113"/>
         <location filename="../src/qml/filters/trails/ui.qml" line="51"/>
-        <location filename="../src/qml/filters/vertigo/ui.qml" line="70"/>
+        <location filename="../src/qml/filters/vaguedenoiser/ui.qml" line="123"/>
+        <location filename="../src/qml/filters/vertigo/ui.qml" line="72"/>
         <location filename="../src/qml/filters/wave/ui.qml" line="44"/>
-        <location filename="../src/qml/filters/waveform/ui.qml" line="80"/>
-        <location filename="../src/qml/filters/webvfx_choppy/ui.qml" line="65"/>
-        <location filename="../src/qml/filters/webvfx_clip/ui.qml" line="180"/>
-        <location filename="../src/qml/filters/webvfx_ruttetraizer/ui.qml" line="59"/>
-        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="68"/>
+        <location filename="../src/qml/filters/waveform/ui.qml" line="84"/>
         <location filename="../src/qml/filters/white/ui.qml" line="65"/>
         <source>Preset</source>
         <translation>Hazır Ayar</translation>
@@ -9455,157 +9953,155 @@ Most users do not need to change this.</source>
         <translation>Islak</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_basstreble/ui.qml" line="201"/>
+        <location filename="../src/qml/filters/audio_basstreble/ui.qml" line="200"/>
         <source>Bass</source>
         <translation>Bas</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_basstreble/ui.qml" line="223"/>
+        <location filename="../src/qml/filters/audio_basstreble/ui.qml" line="222"/>
         <source>Middle</source>
         <comment>Bass &amp; Treble audio filter</comment>
         <translation>Orta</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_basstreble/ui.qml" line="245"/>
+        <location filename="../src/qml/filters/audio_basstreble/ui.qml" line="244"/>
         <source>Treble</source>
         <translation>Tiz</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="32"/>
-        <location filename="../src/qml/filters/audio_swapchannels/ui.qml" line="32"/>
+        <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="33"/>
+        <location filename="../src/qml/filters/audio_swapchannels/ui.qml" line="33"/>
         <source>Front left</source>
         <translation>Ön sol</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="33"/>
-        <location filename="../src/qml/filters/audio_swapchannels/ui.qml" line="33"/>
+        <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="34"/>
+        <location filename="../src/qml/filters/audio_swapchannels/ui.qml" line="34"/>
         <source>Front right</source>
         <translation>Ön sağ</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="34"/>
-        <location filename="../src/qml/filters/audio_swapchannels/ui.qml" line="34"/>
-        <location filename="../src/qml/filters/crop/ui.qml" line="103"/>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="543"/>
-        <location filename="../src/qml/filters/elastic_scale/ui.qml" line="101"/>
+        <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="35"/>
+        <location filename="../src/qml/filters/audio_swapchannels/ui.qml" line="35"/>
+        <location filename="../src/qml/filters/crop/ui.qml" line="115"/>
+        <location filename="../src/qml/filters/elastic_scale/ui.qml" line="106"/>
         <source>Center</source>
         <translation>Orta</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="35"/>
-        <location filename="../src/qml/filters/audio_swapchannels/ui.qml" line="35"/>
+        <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="36"/>
+        <location filename="../src/qml/filters/audio_swapchannels/ui.qml" line="36"/>
         <source>Low frequency</source>
         <translation>Düşük frekans</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="36"/>
-        <location filename="../src/qml/filters/audio_swapchannels/ui.qml" line="36"/>
+        <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="37"/>
+        <location filename="../src/qml/filters/audio_swapchannels/ui.qml" line="37"/>
         <source>Left surround</source>
         <translation>Sol surround</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="37"/>
-        <location filename="../src/qml/filters/audio_swapchannels/ui.qml" line="37"/>
+        <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="38"/>
+        <location filename="../src/qml/filters/audio_swapchannels/ui.qml" line="38"/>
         <source>Right surround</source>
         <translation>Sağ surround</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="55"/>
+        <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="58"/>
         <source>Copy from</source>
         <translation>Şuradan kopyala</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="61"/>
+        <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="64"/>
         <source>to</source>
         <translation>dan</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="81"/>
+        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="79"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="68"/>
         <source>RMS</source>
         <translation>RMS</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="83"/>
-        <location filename="../src/qml/filters/audio_expander/ui.qml" line="70"/>
+        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="81"/>
         <source>The balance between the RMS and peak envelope followers. RMS is generally better for subtle, musical compression and peak is better for heavier, fast compression and percussion.</source>
         <translation>RMS ve takipçi kipinin tepe noktası arasındaki denge. RMS genelde ince ayrıntılar için daha iyidir, müziksel sıkıştırma ise daha ağır, daha hızlı sıkıştırma sağlar ve vurmalı için daha uygundur.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="90"/>
+        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="88"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="77"/>
         <source>Peak</source>
         <translation>Tepe</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="102"/>
+        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="100"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="89"/>
-        <location filename="../src/qml/filters/audio_noisegate/ui.qml" line="199"/>
+        <location filename="../src/qml/filters/audio_noisegate/ui.qml" line="203"/>
         <source>Attack</source>
         <translation>Atak</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="120"/>
+        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="118"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="107"/>
-        <location filename="../src/qml/filters/audio_limiter/ui.qml" line="113"/>
+        <location filename="../src/qml/filters/audio_limiter/ui.qml" line="111"/>
         <source>Release</source>
         <translation>Serbest bırak</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="140"/>
+        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="138"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="127"/>
         <source>The point at which the compressor will start to kick in.</source>
         <translation>Sıkıştırıcının devreye gireceği nokta.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="158"/>
+        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="156"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="145"/>
         <source>Ratio</source>
         <translation>Oran</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="160"/>
+        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="158"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="147"/>
         <source>The gain reduction ratio used when the signal level exceeds the threshold.</source>
         <translation>Sinyal seviyesi eşiği aştığında kullanılan kazanç azaltma oranı.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="177"/>
+        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="175"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="164"/>
         <source>Knee radius</source>
         <translation>Dirsek yarıçapı</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="179"/>
+        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="177"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="166"/>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="217"/>
         <source>The distance from the threshold where the knee curve starts.</source>
         <translation>Dirsek eğrisinin başlama eşiğindeki uzaklık.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="197"/>
+        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="195"/>
         <source>Makeup gain</source>
         <translation>Yapı kazancı</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="199"/>
+        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="197"/>
         <source>The gain of the makeup input signal.</source>
         <translation>Yapı giriş sinyalinin kazancı.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="274"/>
-        <location filename="../src/qml/filters/audio_limiter/ui.qml" line="190"/>
+        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="230"/>
+        <location filename="../src/qml/filters/audio_limiter/ui.qml" line="145"/>
         <source>Gain Reduction</source>
         <translation>Kazanç Azaltma</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="276"/>
-        <location filename="../src/qml/filters/audio_limiter/ui.qml" line="192"/>
+        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="232"/>
+        <location filename="../src/qml/filters/audio_limiter/ui.qml" line="147"/>
         <source>Status indicator showing the gain reduction applied by the compressor.</source>
         <translation>Sıkıştırıcı tarafından uygulanan kazanç azalmasını gösteren durum göstergesi.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="292"/>
+        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="248"/>
         <source>About dynamic range compression</source>
         <translation>Dinamik aralık sıkıştırması hakkında </translation>
     </message>
@@ -9616,13 +10112,26 @@ Most users do not need to change this.</source>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_delay/ui.qml" line="63"/>
-        <source>The neutral delay time is 2 seconds. Times above 2 seconds will have reduced quality and times below will have increased CPU usage.</source>
-        <translation>Nötr gecikme süresi 2 saniyedir. 2 saniyenin üzerindeki süreler kaliteyi düşürür, altındaki süreler ise CPU kullanımını arttırır.</translation>
+        <source>The neutral delay time is 2 seconds.
+Times above 2 seconds will have reduced quality.
+Times below will have increased CPU usage.</source>
+        <translation>Nötr gecikme süresi 2 saniyedir.
+2 saniyenin üzerindeki süreler kaliteyi düşürecektir.
+Aşağıdaki süreler CPU kullanımını artıracaktır.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_delay/ui.qml" line="81"/>
         <source>Feedback</source>
         <translation>Geri Besleme</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/audio_expander/ui.qml" line="70"/>
+        <source>The balance between the RMS and peak envelope followers.
+RMS is generally better for subtle, musical compression.
+Peak is better for heavier, fast compression and percussion.</source>
+        <translation>RMS ve tepe zarf takipçileri arasındaki denge.
+RMS genellikle ince, müzikal sıkıştırma için daha iyidir.
+Tepe, daha ağır, hızlı sıkıştırma ve perküsyon için daha iyidir.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="184"/>
@@ -9631,26 +10140,28 @@ Most users do not need to change this.</source>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="186"/>
-        <source>The gain of the output signal. Used to correct for excessive amplitude caused by the extra dynamic range.</source>
-        <translation>Çıkış sinyalinin kazancı. Ekstra dinamik aralığın neden olduğu aşırı genliği düzeltmek için kullanılır.</translation>
+        <source>The gain of the output signal.
+Used to correct for excessive amplitude caused by the extra dynamic range.</source>
+        <translation>Çıkış sinyalinin kazancı.
+Ekstra dinamik aralığın neden olduğu aşırı genliği düzeltmek için kullanılır.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_fadein/ui.qml" line="52"/>
         <location filename="../src/qml/filters/audio_fadeout/ui.qml" line="58"/>
         <location filename="../src/qml/filters/fadein_brightness/ui.qml" line="63"/>
-        <location filename="../src/qml/filters/fadein_movit/ui.qml" line="55"/>
+        <location filename="../src/qml/filters/fadein_movit/ui.qml" line="54"/>
         <location filename="../src/qml/filters/fadeout_brightness/ui.qml" line="63"/>
         <location filename="../src/qml/filters/fadeout_movit/ui.qml" line="60"/>
-        <location filename="../src/qml/filters/timer/ui.qml" line="197"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="201"/>
         <source>Duration</source>
         <translation>Süre</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_gain/ui.qml" line="149"/>
-        <location filename="../src/qml/filters/brightness/ui.qml" line="141"/>
-        <location filename="../src/qml/filters/contrast/ui.qml" line="162"/>
-        <location filename="../src/qml/filters/opacity/ui.qml" line="130"/>
-        <location filename="../src/qml/filters/threshold/ui.qml" line="88"/>
+        <location filename="../src/qml/filters/brightness/ui.qml" line="142"/>
+        <location filename="../src/qml/filters/contrast/ui.qml" line="166"/>
+        <location filename="../src/qml/filters/opacity/ui.qml" line="131"/>
+        <location filename="../src/qml/filters/threshold/ui.qml" line="89"/>
         <source>Level</source>
         <translation>Seviye</translation>
     </message>
@@ -9661,138 +10172,138 @@ Most users do not need to change this.</source>
         <translation>Kesme frekansı</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_limiter/ui.qml" line="73"/>
+        <location filename="../src/qml/filters/audio_limiter/ui.qml" line="71"/>
         <source>Input gain</source>
         <translation>Giriş kazancı</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_limiter/ui.qml" line="75"/>
+        <location filename="../src/qml/filters/audio_limiter/ui.qml" line="73"/>
         <source>Gain that is applied to the input stage. Can be used to trim gain to bring it roughly under the limit or to push the signal against the limit.</source>
         <translation>Giriş aşamasına uygulanan kazanç. Kazanımı kabaca sınırın altına getirmek veya sinyali sınıra karşı itmek için kullanılabilir.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_limiter/ui.qml" line="93"/>
+        <location filename="../src/qml/filters/audio_limiter/ui.qml" line="91"/>
         <source>Limit</source>
         <translation>Sınır</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_limiter/ui.qml" line="95"/>
+        <location filename="../src/qml/filters/audio_limiter/ui.qml" line="93"/>
         <source>The maximum output amplitude. Peaks over this level will be attenuated as smoothly as possible to bring them as close as possible to this level.</source>
         <translation>Azami çıkış genliği. Bu seviyenin üzerindeki tepeler mümkün olduğunca düzgün bir şekilde azaltılacak ve bu seviyeye mümkün olduğunca yaklaştırılacaktır.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_limiter/ui.qml" line="115"/>
+        <location filename="../src/qml/filters/audio_limiter/ui.qml" line="113"/>
         <source>The time taken for the limiter&apos;s attenuation to return to 0 dB&apos;s.</source>
         <translation>Sınırlayıcının zayıflamasının 0 dB&apos;e dönmesi için geçen süre.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="97"/>
-        <location filename="../src/qml/filters/audio_normalize_2p/ui.qml" line="55"/>
+        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="93"/>
+        <location filename="../src/qml/filters/audio_normalize_2p/ui.qml" line="54"/>
         <source>Target Loudness</source>
         <translation>Hedef Ses Şiddeti</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="99"/>
+        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="95"/>
         <source>The target loudness of the output in LUFS.</source>
         <translation>LUFS çıkışının hedef ses şiddeti.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="116"/>
+        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="112"/>
         <source>Analysis Window</source>
         <translation>Analiz Penceresi</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="118"/>
+        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="114"/>
         <source>The amount of history to use to calculate the input loudness.</source>
         <translation>Giriş yüksekliğini hesaplamak için kullanılacak geçmiş miktarı.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="135"/>
+        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="131"/>
         <source>Maximum Gain</source>
         <translation>Azami Kazanç</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="137"/>
+        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="133"/>
         <source>The maximum that the gain can be increased.</source>
         <translation>Kazancın artırılabileceği azami değer.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="154"/>
+        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="150"/>
         <source>Minimum Gain</source>
         <translation>Asgari Kazanç</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="156"/>
+        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="152"/>
         <source>The maximum that the gain can be decreased.</source>
         <translation>Kazancın azaltılabileceği azami değer.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="173"/>
+        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="169"/>
         <source>Maximum Rate</source>
         <translation>Azami Oran</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="175"/>
+        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="171"/>
         <source>The maximum rate that the gain can be changed.</source>
         <translation>Kazancın değiştirilebileceği azami oran.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="250"/>
+        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="203"/>
         <source>Input Loudness</source>
         <translation>Giriş Ses Şiddeti</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="252"/>
+        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="205"/>
         <source>Status indicator showing the loudness measured on the input.</source>
         <translation>Girişte ölçülen ses şiddetini gösteren durum göstergesi.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="268"/>
+        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="221"/>
         <source>Output Gain</source>
         <translation>Çıkış Kazancı</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="270"/>
+        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="223"/>
         <source>Status indicator showing the gain being applied.</source>
         <translation>Uygulanan kazancı gösteren durum göstergesi.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="285"/>
+        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="237"/>
         <source>Reset</source>
         <translation>Sıfırla</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="287"/>
+        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="239"/>
         <source>Status indicator showing when the loudness measurement is reset.</source>
         <translation>Ses yüksekliği ölçümü sıfırlandığında gösterilen durum göstergesi.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_normalize_2p/ui.qml" line="31"/>
+        <location filename="../src/qml/filters/audio_normalize_2p/ui.qml" line="30"/>
         <location filename="../src/qml/filters/stabilize/ui.qml" line="46"/>
         <source>Analyzing...</source>
         <translation>Analiz ediliyor...</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_normalize_2p/ui.qml" line="34"/>
+        <location filename="../src/qml/filters/audio_normalize_2p/ui.qml" line="33"/>
         <location filename="../src/qml/filters/stabilize/ui.qml" line="49"/>
         <source>Analysis complete.</source>
         <translation>Analiz tamamlandı.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_normalize_2p/ui.qml" line="38"/>
+        <location filename="../src/qml/filters/audio_normalize_2p/ui.qml" line="37"/>
         <source>Click &quot;Analyze&quot; to use this filter.</source>
         <translation>Bu filtreyi kullanmak için &quot;Analiz et&quot; butonunu tıklayın.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_normalize_2p/ui.qml" line="74"/>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="177"/>
-        <location filename="../src/qml/filters/stabilize/ui.qml" line="170"/>
+        <location filename="../src/qml/filters/audio_normalize_2p/ui.qml" line="73"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="221"/>
+        <location filename="../src/qml/filters/stabilize/ui.qml" line="168"/>
         <source>Analyze</source>
         <translation>Analiz et</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_pan/ui.qml" line="126"/>
-        <location filename="../src/qml/filters/levels/ui.qml" line="173"/>
+        <location filename="../src/qml/filters/audio_pan/ui.qml" line="127"/>
+        <location filename="../src/qml/filters/levels/ui.qml" line="177"/>
         <location filename="../src/qml/filters/mask_shape/ui.qml" line="288"/>
         <source>Channel</source>
         <translation>Kanal</translation>
@@ -9888,345 +10399,294 @@ Most users do not need to change this.</source>
         <translation>Yankı hakkında</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_swapchannels/ui.qml" line="56"/>
+        <location filename="../src/qml/filters/audio_swapchannels/ui.qml" line="59"/>
         <source>Swap</source>
         <translation>Takas</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_swapchannels/ui.qml" line="62"/>
+        <location filename="../src/qml/filters/audio_swapchannels/ui.qml" line="65"/>
         <source>with</source>
         <translation>ile</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bluescreen0r/ui.qml" line="64"/>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="109"/>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="120"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="110"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="121"/>
         <source>Key color</source>
         <translation>Anahtar Renk</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bluescreen0r/ui.qml" line="82"/>
-        <location filename="../src/qml/filters/chromahold/ui.qml" line="82"/>
+        <location filename="../src/qml/filters/chromahold/ui.qml" line="81"/>
         <source>Distance</source>
         <translation>Uzaklık</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/color/ui.qml" line="144"/>
+        <location filename="../src/qml/filters/color/ui.qml" line="147"/>
         <source>Shadows (Lift)</source>
         <translation>Gölgeleler (Yüksek)</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/color/ui.qml" line="174"/>
+        <location filename="../src/qml/filters/color/ui.qml" line="176"/>
         <source>Midtones (Gamma)</source>
         <translation>Orta Tonlar (Gama)</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/color/ui.qml" line="204"/>
+        <location filename="../src/qml/filters/color/ui.qml" line="205"/>
         <source>Highlights (Gain)</source>
         <translation>Parlaklıklar (Kazanç)</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/crop/ui.qml" line="126"/>
+        <location filename="../src/qml/filters/crop/ui.qml" line="137"/>
         <source>Center bias</source>
         <translation>Merkez eğilimi</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/crop/ui.qml" line="143"/>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="567"/>
+        <location filename="../src/qml/filters/crop/ui.qml" line="153"/>
         <source>Top</source>
         <translation>Üst</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/crop/ui.qml" line="160"/>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="579"/>
+        <location filename="../src/qml/filters/crop/ui.qml" line="169"/>
         <source>Bottom</source>
         <translation>Alt</translation>
     </message>
     <message>
+        <location filename="../src/qml/filters/crop_rectangle/ui.qml" line="265"/>
         <location filename="../src/qml/filters/dust/ui.qml" line="59"/>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="498"/>
-        <location filename="../src/qml/filters/gradient/ui.qml" line="336"/>
-        <location filename="../src/qml/filters/rectangle/ui.qml" line="268"/>
-        <location filename="../src/qml/filters/spot_remover/ui.qml" line="189"/>
-        <location filename="../src/qml/filters/waveform/ui.qml" line="158"/>
-        <location filename="../src/qml/filters/webvfx_clip/ui.qml" line="261"/>
-        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="152"/>
+        <location filename="../src/qml/filters/gradient/ui.qml" line="346"/>
+        <location filename="../src/qml/filters/pillar_echo/ui.qml" line="213"/>
+        <location filename="../src/qml/filters/spot_remover/ui.qml" line="199"/>
+        <location filename="../src/qml/filters/waveform/ui.qml" line="172"/>
         <source>Size</source>
         <translation>Boyut</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="63"/>
-        <location filename="../src/qml/filters/levels/ui.qml" line="192"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="52"/>
+        <location filename="../src/qml/filters/levels/ui.qml" line="199"/>
         <location filename="../src/qml/filters/timer/ui.qml" line="55"/>
         <source>Bottom Left</source>
         <translation>Alt Sol</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="68"/>
-        <location filename="../src/qml/filters/levels/ui.qml" line="192"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="57"/>
+        <location filename="../src/qml/filters/levels/ui.qml" line="199"/>
         <location filename="../src/qml/filters/timer/ui.qml" line="60"/>
         <source>Bottom Right</source>
         <translation>Alt Sağ</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="73"/>
-        <location filename="../src/qml/filters/levels/ui.qml" line="192"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="62"/>
+        <location filename="../src/qml/filters/levels/ui.qml" line="199"/>
         <source>Top Left</source>
         <translation>Üst Sol</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="78"/>
-        <location filename="../src/qml/filters/levels/ui.qml" line="192"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="67"/>
+        <location filename="../src/qml/filters/levels/ui.qml" line="199"/>
         <source>Top Right</source>
         <translation>Üst Sağ</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="83"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="72"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="56"/>
         <source>Lower Third</source>
         <translation>Alt Bant</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="88"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="77"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="74"/>
         <source>Slide In From Left</source>
         <translation>İçe Kaydır, Soldan</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="90"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="79"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="76"/>
         <source>Slide In From Right</source>
         <translation>İçe Kaydır, Sağdan</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="92"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="81"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="78"/>
         <source>Slide In From Top</source>
         <translation>İçe Kaydır, Üstten</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="94"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="83"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="80"/>
         <source>Slide In From Bottom</source>
         <translation>İçe Kaydır, Alttan</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="98"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="87"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="84"/>
         <source>Slide Out Left</source>
         <translation>Dışa Kaydır, Sola</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="100"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="89"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="86"/>
         <source>Slide Out Right</source>
         <translation>Dışa Kaydır, Sağa</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="102"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="91"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="88"/>
         <source>Slide Out Top</source>
         <translation>Dışa Kaydır, Üste</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="104"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="93"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="90"/>
         <source>Slide Out Bottom</source>
         <translation>Dışa Kaydır, Alta</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="108"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="97"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="94"/>
         <source>Slow Zoom In</source>
         <translation>Yavaş Yakınlaştır</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="110"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="99"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="96"/>
         <source>Slow Zoom Out</source>
         <translation>Yavaş Uzaklaştır</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="112"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="101"/>
         <source>Slow Pan Left</source>
         <translation>Yavaş Kaydır, Sola</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="113"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="102"/>
         <source>Slow Move Left</source>
         <translation>Yavaş Taşı, Sola</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="115"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="104"/>
         <source>Slow Pan Right</source>
         <translation>Yavaş Kaydır, Sağa</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="116"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="105"/>
         <source>Slow Move Right</source>
         <translation>Yavaş Taşı, Sağa</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="118"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="107"/>
         <source>Slow Pan Up</source>
         <translation>Yavaş Kaydır, Yukarı</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="119"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="108"/>
         <source>Slow Move Up</source>
         <translation>Yavaş Taşı, Yukarı</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="121"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="110"/>
         <source>Slow Pan Down</source>
         <translation>Yavaş Kaydır, Aşağı</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="122"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="111"/>
         <source>Slow Move Down</source>
         <translation>Yavaş Taşı, Aşağı</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="124"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="113"/>
         <source>Slow Zoom In, Pan Up Left</source>
         <translation>Yavaş Yaklaş, Yukarı Sola Kaydır</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="125"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="114"/>
         <source>Slow Zoom In, Move Up Left</source>
         <translation>Yavaş Yaklaş, Yukarı Sola Taşı</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="127"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="116"/>
         <source>Slow Zoom In, Pan Down Right</source>
         <translation>Yavaş Yaklaş, Aşağı Sağa Kaydır</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="128"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="117"/>
         <source>Slow Zoom In, Move Down Right</source>
         <translation>Yavaş Yaklaş, Aşağı Sağa Taşı</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="130"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="119"/>
         <source>Slow Zoom Out, Pan Up Right</source>
         <translation>Yavaş Uzaklaş, Yukarı Sağa Kaydır</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="131"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="120"/>
         <source>Slow Zoom Out, Move Up Right</source>
         <translation>Yavaş Uzaklaşarak, Yukarı Sağa Taşı</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="133"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="122"/>
         <source>Slow Zoom Out, Pan Down Left</source>
         <translation>Yavaş Uzaklaş, Aşağı Sola Kaydır</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="134"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="123"/>
         <source>Slow Zoom Out, Move Down Left</source>
         <translation>Yavaş Uzaklaş, Aşağı Sola Taşı</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="202"/>
-        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="118"/>
-        <source>Bold</source>
-        <translation>Koyu</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="204"/>
-        <source>Italic</source>
-        <translation>Yatık</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="295"/>
-        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="80"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="177"/>
         <source>Text</source>
         <translation>Metin</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="322"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="248"/>
         <source>Insert field</source>
         <translation>Alan ekle</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="328"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="253"/>
         <source># (Hash sign)</source>
         <translation># (Kare işareti)</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="332"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="257"/>
         <source>Timecode</source>
         <translation>Zaman Kodu</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="336"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="261"/>
         <source>Frame #</source>
         <comment>Frame number</comment>
         <translation>Kare #</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="340"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="265"/>
         <source>File date</source>
         <translation>Dosya tarihi</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="344"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="269"/>
         <source>File name</source>
         <translation>Dosya adı</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="350"/>
-        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="93"/>
-        <source>Font</source>
-        <translation>Yazı Tipi</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="388"/>
-        <source>Use font size</source>
-        <translation>Metin boyutu kullan</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="403"/>
-        <location filename="../src/qml/filters/rectangle/ui.qml" line="347"/>
-        <source>Outline</source>
-        <translation>Kenarlık</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="413"/>
-        <location filename="../src/qml/filters/rectangle/ui.qml" line="360"/>
-        <location filename="../src/qml/filters/waveform/ui.qml" line="120"/>
-        <location filename="../src/qml/filters/webvfx_ruttetraizer/ui.qml" line="88"/>
+        <location filename="../src/qml/filters/waveform/ui.qml" line="124"/>
         <source>Thickness</source>
         <translation>Kalınlık</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="427"/>
-        <source>Background</source>
-        <translation>Arka plan</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="437"/>
-        <source>Padding</source>
-        <translation>Dolgu</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="451"/>
+        <location filename="../src/qml/filters/crop_rectangle/ui.qml" line="208"/>
         <location filename="../src/qml/filters/gradient/ui.qml" line="303"/>
-        <location filename="../src/qml/filters/rectangle/ui.qml" line="220"/>
-        <location filename="../src/qml/filters/spot_remover/ui.qml" line="142"/>
-        <location filename="../src/qml/filters/waveform/ui.qml" line="137"/>
-        <location filename="../src/qml/filters/webvfx_clip/ui.qml" line="213"/>
+        <location filename="../src/qml/filters/pillar_echo/ui.qml" line="158"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="260"/>
+        <location filename="../src/qml/filters/spot_remover/ui.qml" line="143"/>
+        <location filename="../src/qml/filters/waveform/ui.qml" line="141"/>
         <source>Position</source>
         <translation>Konum</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="532"/>
-        <source>Horizontal fit</source>
-        <translation>Yatay sığdır</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="562"/>
-        <source>Vertical fit</source>
-        <translation>Dikey sığdır</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="573"/>
-        <source>Middle</source>
-        <comment>Text video filter</comment>
-        <translation>Orta</translation>
-    </message>
-    <message>
         <location filename="../src/qml/filters/fadein_brightness/ui.qml" line="82"/>
-        <location filename="../src/qml/filters/fadein_movit/ui.qml" line="76"/>
+        <location filename="../src/qml/filters/fadein_movit/ui.qml" line="75"/>
         <location filename="../src/qml/filters/fadeout_brightness/ui.qml" line="82"/>
         <location filename="../src/qml/filters/fadeout_movit/ui.qml" line="79"/>
         <source>Adjust opacity instead of fade with black</source>
@@ -10240,7 +10700,6 @@ Most users do not need to change this.</source>
     <message>
         <location filename="../src/qml/filters/grain/ui.qml" line="76"/>
         <location filename="../src/qml/filters/mask_shape/ui.qml" line="295"/>
-        <location filename="../src/qml/filters/webvfx_ruttetraizer/ui.qml" line="71"/>
         <source>Brightness</source>
         <translation>Parlaklık</translation>
     </message>
@@ -10261,241 +10720,241 @@ Most users do not need to change this.</source>
         <translation>Doygunluk</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="132"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="133"/>
         <source>Target color</source>
         <translation>Hedef renk</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="155"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="156"/>
         <source>Mask type</source>
         <translation>Maske türü</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="161"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="162"/>
         <source>Color Distance</source>
         <translation>Renk Uzaklığı</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="161"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="162"/>
         <source>Transparency</source>
         <translation>Saydamlık</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="161"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="162"/>
         <source>Edge Inwards</source>
         <translation>İç Kenar</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="161"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="162"/>
         <source>Edge Outwards</source>
         <translation>Dış Kenar</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="169"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="173"/>
         <source>Tolerance</source>
         <translation>Tolerans</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="186"/>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="248"/>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="257"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="190"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="253"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="266"/>
         <source>Slope</source>
         <translation>Eğim</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="203"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="207"/>
         <source>Hue gate</source>
         <translation>Ton geçidi</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="220"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="224"/>
         <source>Saturation threshold</source>
         <translation>Doygunluk eşiği</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="237"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="241"/>
         <source>Operation 1</source>
         <translation>İşlem 1</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/blend_mode/ui.qml" line="48"/>
-        <location filename="../src/qml/filters/gradient/ui.qml" line="370"/>
+        <location filename="../src/qml/filters/blend_mode/ui.qml" line="49"/>
+        <location filename="../src/qml/filters/gradient/ui.qml" line="388"/>
         <source>Blend mode</source>
         <translation>Karıştırma kipi</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/blend_mode/ui.qml" line="53"/>
-        <location filename="../src/qml/filters/gradient/ui.qml" line="375"/>
+        <location filename="../src/qml/filters/blend_mode/ui.qml" line="54"/>
+        <location filename="../src/qml/filters/gradient/ui.qml" line="393"/>
         <source>Over</source>
         <translation>Üzeri</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/blend_mode/ui.qml" line="54"/>
-        <location filename="../src/qml/filters/gradient/ui.qml" line="376"/>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="243"/>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="274"/>
-        <location filename="../src/qml/filters/levels/ui.qml" line="192"/>
+        <location filename="../src/qml/filters/blend_mode/ui.qml" line="55"/>
+        <location filename="../src/qml/filters/gradient/ui.qml" line="394"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="247"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="281"/>
+        <location filename="../src/qml/filters/levels/ui.qml" line="199"/>
         <source>None</source>
         <translation>Yok</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/blend_mode/ui.qml" line="56"/>
-        <location filename="../src/qml/filters/gradient/ui.qml" line="378"/>
+        <location filename="../src/qml/filters/blend_mode/ui.qml" line="57"/>
+        <location filename="../src/qml/filters/gradient/ui.qml" line="396"/>
         <source>Saturate</source>
         <translation>Doygunluk</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/blend_mode/ui.qml" line="57"/>
-        <location filename="../src/qml/filters/gradient/ui.qml" line="379"/>
+        <location filename="../src/qml/filters/blend_mode/ui.qml" line="58"/>
+        <location filename="../src/qml/filters/gradient/ui.qml" line="397"/>
         <source>Multiply</source>
         <translation>Çoğalt</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/blend_mode/ui.qml" line="58"/>
-        <location filename="../src/qml/filters/gradient/ui.qml" line="380"/>
+        <location filename="../src/qml/filters/blend_mode/ui.qml" line="59"/>
+        <location filename="../src/qml/filters/gradient/ui.qml" line="398"/>
         <source>Screen</source>
         <translation>Ekran</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/blend_mode/ui.qml" line="59"/>
-        <location filename="../src/qml/filters/gradient/ui.qml" line="381"/>
+        <location filename="../src/qml/filters/blend_mode/ui.qml" line="60"/>
+        <location filename="../src/qml/filters/gradient/ui.qml" line="399"/>
         <source>Overlay</source>
         <translation>Kaplama</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/blend_mode/ui.qml" line="60"/>
-        <location filename="../src/qml/filters/gradient/ui.qml" line="382"/>
+        <location filename="../src/qml/filters/blend_mode/ui.qml" line="61"/>
+        <location filename="../src/qml/filters/gradient/ui.qml" line="400"/>
         <source>Darken</source>
         <translation>Koyulaştır</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/blend_mode/ui.qml" line="61"/>
-        <location filename="../src/qml/filters/gradient/ui.qml" line="383"/>
+        <location filename="../src/qml/filters/blend_mode/ui.qml" line="62"/>
+        <location filename="../src/qml/filters/gradient/ui.qml" line="401"/>
         <source>Dodge</source>
         <translation>Atlatma</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/blend_mode/ui.qml" line="62"/>
-        <location filename="../src/qml/filters/gradient/ui.qml" line="384"/>
+        <location filename="../src/qml/filters/blend_mode/ui.qml" line="63"/>
+        <location filename="../src/qml/filters/gradient/ui.qml" line="402"/>
         <source>Burn</source>
         <translation>Yanma</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/blend_mode/ui.qml" line="63"/>
-        <location filename="../src/qml/filters/gradient/ui.qml" line="385"/>
+        <location filename="../src/qml/filters/blend_mode/ui.qml" line="64"/>
+        <location filename="../src/qml/filters/gradient/ui.qml" line="403"/>
         <source>Hard Light</source>
         <translation>Sert Işık</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/blend_mode/ui.qml" line="64"/>
-        <location filename="../src/qml/filters/gradient/ui.qml" line="386"/>
+        <location filename="../src/qml/filters/blend_mode/ui.qml" line="65"/>
+        <location filename="../src/qml/filters/gradient/ui.qml" line="404"/>
         <source>Soft Light</source>
         <translation>Yumuşak Işık</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/blend_mode/ui.qml" line="65"/>
-        <location filename="../src/qml/filters/gradient/ui.qml" line="387"/>
+        <location filename="../src/qml/filters/blend_mode/ui.qml" line="66"/>
+        <location filename="../src/qml/filters/gradient/ui.qml" line="405"/>
         <source>Difference</source>
         <translation>Fark</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/blend_mode/ui.qml" line="66"/>
-        <location filename="../src/qml/filters/gradient/ui.qml" line="388"/>
+        <location filename="../src/qml/filters/blend_mode/ui.qml" line="67"/>
+        <location filename="../src/qml/filters/gradient/ui.qml" line="406"/>
         <source>Exclusion</source>
         <translation>Dışlama</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/blend_mode/ui.qml" line="67"/>
-        <location filename="../src/qml/filters/gradient/ui.qml" line="389"/>
+        <location filename="../src/qml/filters/blend_mode/ui.qml" line="68"/>
+        <location filename="../src/qml/filters/gradient/ui.qml" line="407"/>
         <source>HSL Hue</source>
         <translation>HSL Ton</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/blend_mode/ui.qml" line="68"/>
-        <location filename="../src/qml/filters/gradient/ui.qml" line="390"/>
+        <location filename="../src/qml/filters/blend_mode/ui.qml" line="69"/>
+        <location filename="../src/qml/filters/gradient/ui.qml" line="408"/>
         <source>HSL Saturation</source>
         <translation>HSL Doygunluğu</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/blend_mode/ui.qml" line="69"/>
-        <location filename="../src/qml/filters/gradient/ui.qml" line="391"/>
+        <location filename="../src/qml/filters/blend_mode/ui.qml" line="70"/>
+        <location filename="../src/qml/filters/gradient/ui.qml" line="409"/>
         <source>HSL Color</source>
         <translation>HSL Rengi</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/blend_mode/ui.qml" line="70"/>
-        <location filename="../src/qml/filters/gradient/ui.qml" line="392"/>
+        <location filename="../src/qml/filters/blend_mode/ui.qml" line="71"/>
+        <location filename="../src/qml/filters/gradient/ui.qml" line="410"/>
         <source>HSL Luminosity</source>
         <translation>HSL Parlaklığı</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="243"/>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="274"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="247"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="281"/>
         <source>De-Key</source>
         <translation>Çözücü-Anahtarı</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="243"/>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="274"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="247"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="281"/>
         <source>Desaturate</source>
         <translation>Solgunlaştır</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="243"/>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="274"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="247"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="281"/>
         <source>Adjust Luma</source>
         <translation>Işığı ayarla </translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="251"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="258"/>
         <source>Amount 1</source>
         <translation>Miktar 1</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="268"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="275"/>
         <source>Operation 2</source>
         <translation>İşlem 2</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="282"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="292"/>
         <source>Amount 2</source>
         <translation>Miktar 2</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="301"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="311"/>
         <source>Show mask</source>
         <translation>Maskeyi göster</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="311"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="321"/>
         <source>Send mask to alpha channel</source>
         <translation>Maskeyi alfa kanalına gönder</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lenscorrection/ui.qml" line="101"/>
+        <location filename="../src/qml/filters/lenscorrection/ui.qml" line="105"/>
         <source>X Center</source>
         <translation>X Merkezi</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lenscorrection/ui.qml" line="126"/>
+        <location filename="../src/qml/filters/lenscorrection/ui.qml" line="129"/>
         <source>Y Center</source>
         <translation>Y Merkezi</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lenscorrection/ui.qml" line="151"/>
+        <location filename="../src/qml/filters/lenscorrection/ui.qml" line="153"/>
         <source>Correction at Center</source>
         <translation>Merkezde Düzelt</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lenscorrection/ui.qml" line="176"/>
+        <location filename="../src/qml/filters/lenscorrection/ui.qml" line="177"/>
         <source>Correction at Edges</source>
         <translation>Kenarda Düzelt</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/lines/ui.qml" line="63"/>
-        <location filename="../src/qml/filters/mask/ui.qml" line="248"/>
-        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="249"/>
-        <location filename="../src/qml/filters/mosaic/ui.qml" line="89"/>
+        <location filename="../src/qml/filters/mask/ui.qml" line="256"/>
+        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="257"/>
+        <location filename="../src/qml/filters/mosaic/ui.qml" line="91"/>
         <source>Width</source>
         <translation>Genişlik</translation>
     </message>
@@ -10517,260 +10976,254 @@ Click &quot;Open&quot; to load a file.</source>
 Bir dosya yüklemek için &quot;Aç&quot; üzerine tıklayın.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lut3d/ui.qml" line="86"/>
-        <location filename="../src/qml/filters/webvfx/ui.qml" line="194"/>
+        <location filename="../src/qml/filters/lut3d/ui.qml" line="85"/>
         <source>Open...</source>
         <translation>Aç...</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lut3d/ui.qml" line="90"/>
+        <location filename="../src/qml/filters/lut3d/ui.qml" line="89"/>
         <source>Open 3D LUT File</source>
         <translation>3D LUT Dosyası Aç</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/ui.qml" line="84"/>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="147"/>
-        <location filename="../src/qml/filters/bigsh0t_rect_to_eq/ui.qml" line="63"/>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="205"/>
-        <location filename="../src/qml/filters/bigsh0t_transform_360/ui.qml" line="70"/>
-        <location filename="../src/qml/filters/lut3d/ui.qml" line="102"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/ui.qml" line="102"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="192"/>
+        <location filename="../src/qml/filters/bigsh0t_rect_to_eq/ui.qml" line="79"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="269"/>
+        <location filename="../src/qml/filters/bigsh0t_transform_360/ui.qml" line="91"/>
+        <location filename="../src/qml/filters/lut3d/ui.qml" line="101"/>
         <source>Interpolation</source>
-        <translation>İnterpolasyon</translation>
+        <translation>Ara değerleme</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/ui.qml" line="99"/>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="167"/>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="291"/>
-        <location filename="../src/qml/filters/bigsh0t_transform_360/ui.qml" line="85"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/ui.qml" line="118"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="215"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="370"/>
+        <location filename="../src/qml/filters/bigsh0t_transform_360/ui.qml" line="107"/>
         <source>Yaw</source>
-        <translation type="unfinished"></translation>
+        <translation>Döndür</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/ui.qml" line="117"/>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="185"/>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="350"/>
-        <location filename="../src/qml/filters/bigsh0t_transform_360/ui.qml" line="103"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/ui.qml" line="135"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="232"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="431"/>
+        <location filename="../src/qml/filters/bigsh0t_transform_360/ui.qml" line="124"/>
         <source>Pitch</source>
         <translation>Perde</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/ui.qml" line="135"/>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="203"/>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="409"/>
-        <location filename="../src/qml/filters/bigsh0t_transform_360/ui.qml" line="121"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/ui.qml" line="152"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="249"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="491"/>
+        <location filename="../src/qml/filters/bigsh0t_transform_360/ui.qml" line="141"/>
         <source>Roll</source>
-        <translation type="unfinished"></translation>
+        <translation>Yuvarla</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/ui.qml" line="153"/>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="241"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/ui.qml" line="169"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="288"/>
         <source>FOV</source>
-        <translation type="unfinished"></translation>
+        <translation>Görüş alanı</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/ui.qml" line="171"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/ui.qml" line="186"/>
         <source>Fisheye</source>
         <translation>Balık gözü</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lut3d/ui.qml" line="108"/>
+        <location filename="../src/qml/filters/lut3d/ui.qml" line="107"/>
+        <location filename="../src/qml/filters/time_remap/ui.qml" line="247"/>
         <source>Nearest</source>
         <translation>En yakın</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lut3d/ui.qml" line="108"/>
+        <location filename="../src/qml/filters/lut3d/ui.qml" line="107"/>
         <source>Trilinear</source>
         <translation>Üç çizgili</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lut3d/ui.qml" line="108"/>
+        <location filename="../src/qml/filters/lut3d/ui.qml" line="107"/>
         <source>Tetrahedral</source>
         <translation>Dörtlü üçgensel yüzey</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask/ui.qml" line="176"/>
-        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="177"/>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="274"/>
+        <location filename="../src/qml/filters/mask/ui.qml" line="180"/>
+        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="181"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="283"/>
         <source>Operation</source>
         <translation>İşlem</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="288"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="293"/>
         <source>Corner 1 X</source>
         <translation>Köşe 1 X</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="373"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="393"/>
         <source>Corner 2 X</source>
         <translation>Köşe 2 X</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="421"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="441"/>
         <source>Corner 3 X</source>
         <translation>Köşe 3 X</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="469"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="489"/>
         <source>Corner 4 X</source>
         <translation>Köşe 4 X</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="517"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="537"/>
         <source>Stretch X</source>
         <translation>Sündür X</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="567"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="585"/>
         <source>Interpolator</source>
-        <translation type="unfinished"></translation>
+        <translation>Ara değerleme yöntemi</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="573"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="591"/>
         <source>Nearest Neighbor</source>
         <translation>En Yakın Komşu</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="573"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="591"/>
         <source>Bilinear</source>
         <translation>İkili Doğrusal</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="573"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="591"/>
         <source>Bicubic Smooth</source>
         <translation>Çift kübik Pürüzsüz</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="573"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="591"/>
         <source>Bicubic Sharp</source>
         <translation>Çift Kübik Keskin</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="573"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="591"/>
         <source>Spline 4x4</source>
         <translation>Eğri çizgi 4x4</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="573"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="591"/>
         <source>Spline 6x6</source>
         <translation>Eğri çizgi 6x6</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="573"/>
-        <source>Lanzcos</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="586"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="604"/>
         <source>Alpha Operation</source>
         <translation>Alfa İşlemi</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="592"/>
-        <location filename="../src/qml/filters/mask/ui.qml" line="182"/>
-        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="183"/>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="283"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="610"/>
+        <location filename="../src/qml/filters/mask/ui.qml" line="186"/>
+        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="187"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="292"/>
         <source>Maximum</source>
         <translation>Azami</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="592"/>
-        <location filename="../src/qml/filters/mask/ui.qml" line="182"/>
-        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="183"/>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="284"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="610"/>
+        <location filename="../src/qml/filters/mask/ui.qml" line="186"/>
+        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="187"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="293"/>
         <source>Minimum</source>
         <translation>Asgari</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="592"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="610"/>
         <source>Opaque</source>
         <translation>Opak</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="592"/>
-        <location filename="../src/qml/filters/mask/ui.qml" line="182"/>
-        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="183"/>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="282"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="610"/>
+        <location filename="../src/qml/filters/mask/ui.qml" line="186"/>
+        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="187"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="291"/>
         <source>Overwrite</source>
         <translation>Üzerine yaz</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="607"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="629"/>
         <source>Feathering</source>
         <translation>Tüyleme</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/blend_mode/ui.qml" line="55"/>
-        <location filename="../src/qml/filters/corners/ui.qml" line="592"/>
-        <location filename="../src/qml/filters/gradient/ui.qml" line="377"/>
-        <location filename="../src/qml/filters/mask/ui.qml" line="182"/>
-        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="183"/>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="285"/>
+        <location filename="../src/qml/filters/blend_mode/ui.qml" line="56"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="610"/>
+        <location filename="../src/qml/filters/gradient/ui.qml" line="395"/>
+        <location filename="../src/qml/filters/mask/ui.qml" line="186"/>
+        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="187"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="294"/>
         <source>Add</source>
         <translation>Ekle</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="592"/>
-        <location filename="../src/qml/filters/mask/ui.qml" line="182"/>
-        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="183"/>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="286"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="610"/>
+        <location filename="../src/qml/filters/mask/ui.qml" line="186"/>
+        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="187"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="295"/>
         <source>Subtract</source>
         <translation>Çıkar</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask/ui.qml" line="191"/>
-        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="192"/>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="217"/>
+        <location filename="../src/qml/filters/mask/ui.qml" line="198"/>
+        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="199"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="218"/>
         <source>Shape</source>
         <translation>Şekil</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask/ui.qml" line="197"/>
-        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="198"/>
+        <location filename="../src/qml/filters/mask/ui.qml" line="204"/>
+        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="205"/>
         <source>Rectangle</source>
         <translation>Dikdörtgen</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask/ui.qml" line="197"/>
-        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="198"/>
+        <location filename="../src/qml/filters/mask/ui.qml" line="204"/>
+        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="205"/>
         <source>Ellipse</source>
         <translation>Elips</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask/ui.qml" line="197"/>
-        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="198"/>
+        <location filename="../src/qml/filters/mask/ui.qml" line="204"/>
+        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="205"/>
         <source>Triangle</source>
         <translation>Üçgen</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask/ui.qml" line="197"/>
-        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="198"/>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="227"/>
+        <location filename="../src/qml/filters/mask/ui.qml" line="204"/>
+        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="205"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="228"/>
         <source>Diamond</source>
         <translation>Elmas</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_mask/ui.qml" line="70"/>
-        <location filename="../src/qml/filters/bigsh0t_rect_to_eq/ui.qml" line="78"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_mask/ui.qml" line="88"/>
+        <location filename="../src/qml/filters/bigsh0t_rect_to_eq/ui.qml" line="95"/>
         <location filename="../src/qml/filters/gradient/ui.qml" line="64"/>
-        <location filename="../src/qml/filters/mask/ui.qml" line="206"/>
-        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="207"/>
-        <location filename="../src/qml/filters/rgbsplit0r/ui.qml" line="110"/>
-        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="202"/>
+        <location filename="../src/qml/filters/mask/ui.qml" line="216"/>
+        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="217"/>
+        <location filename="../src/qml/filters/rgbsplit0r/ui.qml" line="111"/>
         <source>Horizontal</source>
         <translation>Yatay</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_mask/ui.qml" line="75"/>
-        <location filename="../src/qml/filters/bigsh0t_eq_mask/ui.qml" line="116"/>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="418"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_mask/ui.qml" line="94"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_mask/ui.qml" line="134"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="478"/>
         <source>Start</source>
-        <translation>Başla</translation>
+        <translation>Başlangıç</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_mask/ui.qml" line="93"/>
-        <location filename="../src/qml/filters/bigsh0t_eq_mask/ui.qml" line="134"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_mask/ui.qml" line="111"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_mask/ui.qml" line="151"/>
         <source>End</source>
-        <translation>Son</translation>
+        <translation>Bitiş</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gradient/ui.qml" line="224"/>
@@ -10793,99 +11246,98 @@ Bir dosya yüklemek için &quot;Aç&quot; üzerine tıklayın.</translation>
         <translation>Renkler</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_mask/ui.qml" line="111"/>
-        <location filename="../src/qml/filters/bigsh0t_rect_to_eq/ui.qml" line="96"/>
-        <location filename="../src/qml/filters/mask/ui.qml" line="227"/>
-        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="228"/>
-        <location filename="../src/qml/filters/rgbsplit0r/ui.qml" line="85"/>
-        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="219"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_mask/ui.qml" line="128"/>
+        <location filename="../src/qml/filters/bigsh0t_rect_to_eq/ui.qml" line="112"/>
+        <location filename="../src/qml/filters/mask/ui.qml" line="236"/>
+        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="237"/>
+        <location filename="../src/qml/filters/rgbsplit0r/ui.qml" line="87"/>
         <source>Vertical</source>
         <translation>Dikey</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask/ui.qml" line="269"/>
-        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="270"/>
-        <location filename="../src/qml/filters/mosaic/ui.qml" line="114"/>
+        <location filename="../src/qml/filters/mask/ui.qml" line="276"/>
+        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="277"/>
+        <location filename="../src/qml/filters/mosaic/ui.qml" line="115"/>
         <source>Height</source>
         <translation>Yükseklik</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask/ui.qml" line="290"/>
-        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="291"/>
-        <location filename="../src/qml/filters/rotate/ui.qml" line="150"/>
+        <location filename="../src/qml/filters/mask/ui.qml" line="296"/>
+        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="297"/>
+        <location filename="../src/qml/filters/rotate/ui.qml" line="161"/>
         <source>Rotation</source>
         <translation>Döndürme</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask/ui.qml" line="308"/>
-        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="309"/>
-        <location filename="../src/qml/filters/mask_shape/ui.qml" line="335"/>
+        <location filename="../src/qml/filters/mask/ui.qml" line="314"/>
+        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="315"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="334"/>
         <source>Softness</source>
         <translation>Yumuşaklık</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="162"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="208"/>
         <source>Alignment</source>
         <translation>Hizala</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="221"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="266"/>
         <source>Lens</source>
-        <translation type="unfinished"></translation>
+        <translation>Lens</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="226"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="272"/>
         <source>Projection</source>
         <translation>Projeksiyon</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="259"/>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="400"/>
-        <location filename="../src/qml/filters/halftone/ui.qml" line="101"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="308"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="459"/>
+        <location filename="../src/qml/filters/crop_circle/ui.qml" line="99"/>
+        <location filename="../src/qml/filters/halftone/ui.qml" line="105"/>
         <location filename="../src/qml/filters/movit_diffusion/ui.qml" line="34"/>
-        <location filename="../src/qml/filters/webvfx_circular_frame/ui.qml" line="102"/>
         <source>Radius</source>
         <translation>Yarıçap</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="277"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="328"/>
         <source>Front</source>
         <translation>Ön</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="282"/>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="341"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="334"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="396"/>
         <source>X</source>
         <translation>X</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="300"/>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="359"/>
-        <location filename="../src/qml/filters/corners/ui.qml" line="349"/>
-        <location filename="../src/qml/filters/corners/ui.qml" line="397"/>
-        <location filename="../src/qml/filters/corners/ui.qml" line="445"/>
-        <location filename="../src/qml/filters/corners/ui.qml" line="493"/>
-        <location filename="../src/qml/filters/corners/ui.qml" line="542"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="353"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="415"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="369"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="417"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="465"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="513"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="561"/>
         <source>Y</source>
         <translation>Y</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="336"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="390"/>
         <source>Back</source>
         <translation>Arka</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="395"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="452"/>
         <source>Nadir</source>
-        <translation type="unfinished"></translation>
+        <translation>Ayak ucu</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/halftone/ui.qml" line="126"/>
+        <location filename="../src/qml/filters/halftone/ui.qml" line="129"/>
         <source>Cyan</source>
         <translation>Cam göbeği</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/halftone/ui.qml" line="151"/>
+        <location filename="../src/qml/filters/halftone/ui.qml" line="153"/>
         <source>Magenta</source>
         <translation>Eflatun</translation>
     </message>
@@ -10935,109 +11387,173 @@ Bir dosya yüklemek için &quot;Aç&quot; üzerine tıklayın.</translation>
         <translation>Düzensiz gelişme süresi</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask/ui.qml" line="299"/>
-        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="300"/>
-        <location filename="../src/qml/filters/rotate/ui.qml" line="159"/>
-        <location filename="../src/qml/filters/webvfx_ruttetraizer/ui.qml" line="159"/>
-        <location filename="../src/qml/filters/webvfx_ruttetraizer/ui.qml" line="175"/>
-        <location filename="../src/qml/filters/white/ui.qml" line="154"/>
+        <location filename="../src/qml/filters/mask/ui.qml" line="305"/>
+        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="306"/>
+        <location filename="../src/qml/filters/rotate/ui.qml" line="170"/>
         <source> deg</source>
         <comment>degrees</comment>
         <translation> derece</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/rotate/ui.qml" line="175"/>
-        <location filename="../src/qml/filters/webvfx_ruttetraizer/ui.qml" line="136"/>
+        <location filename="../src/qml/filters/rotate/ui.qml" line="185"/>
         <source>Scale</source>
         <translation>Ölçek</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/rotate/ui.qml" line="218"/>
+        <location filename="../src/qml/filters/rotate/ui.qml" line="227"/>
         <source>X offset</source>
         <translation>X Kayması</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/rotate/ui.qml" line="250"/>
+        <location filename="../src/qml/filters/rotate/ui.qml" line="258"/>
         <source>Y offset</source>
         <translation>Y Kayması</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="143"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="58"/>
+        <source>Full Screen</source>
+        <translation>Tam Ekran</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="63"/>
+        <source>Scroll Down</source>
+        <translation>Aşağı Kaydır</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="65"/>
+        <source>Scroll Up</source>
+        <translation>Yukarı Kaydır</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="67"/>
+        <source>Scroll Right</source>
+        <translation>Sağa Kaydır</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="69"/>
+        <source>Scroll Left</source>
+        <translation>Sola Kaydır</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="320"/>
+        <source>Background size</source>
+        <translation>Arka plan boyutu</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="366"/>
+        <source>Text size</source>
+        <translation>Yazı boyutu</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="388"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="412"/>
+        <source>Copy</source>
+        <translation>Kopyala</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="422"/>
+        <location filename="../src/qml/filters/rotate/ui.qml" line="289"/>
+        <source>Background color</source>
+        <translation>Arka plan rengi</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="438"/>
+        <source>Overflow</source>
+        <translation>Taşma</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="446"/>
+        <source>Automatic</source>
+        <translation>Otomatik</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="455"/>
+        <source>Visible</source>
+        <translation>Görünür</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="461"/>
+        <source>Hidden</source>
+        <translation>Gizli</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="144"/>
         <source>Color space</source>
         <translation>Renk uzayı</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="150"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="151"/>
         <source>Red-Green-Blue</source>
         <translation>Kırmızı-Yeşil-Mavi</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="156"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="157"/>
         <source>Hue-Chroma-Intensity</source>
         <translation>Ton-Kroma-Yoğunluk</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="166"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="167"/>
         <source>Red delta</source>
         <translation>Kırmızı delta </translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="166"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="167"/>
         <source>Hue delta</source>
         <translation>Ton delta</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="183"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="184"/>
         <source>Green delta</source>
         <translation>Yeşil delta </translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="183"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="184"/>
         <source>Chroma delta</source>
         <translation>Kroma delta</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="200"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="201"/>
         <source>Blue delta</source>
         <translation>Mavi delta</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="200"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="201"/>
         <source>Intensity delta</source>
         <translation>Yoğun delta</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="225"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="226"/>
         <source>Box</source>
         <translation>Dikdörtgen</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="226"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="227"/>
         <source>Ellipsoid</source>
         <translation>Elipsel</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="236"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="241"/>
         <source>Edge</source>
         <translation>Kenar</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="244"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="249"/>
         <source>Hard</source>
+        <comment>Chroma Key Advanced filter</comment>
         <translation>Sert</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="245"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="250"/>
         <source>Fat</source>
         <translation>Dolgun</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="246"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="251"/>
         <source>Normal</source>
         <translation>Normal </translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="247"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="252"/>
         <source>Thin</source>
         <translation>İnce</translation>
     </message>
@@ -11067,17 +11583,16 @@ Bir dosya yüklemek için &quot;Aç&quot; üzerine tıklayın.</translation>
         <translation>Kontrast</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/chromahold/ui.qml" line="64"/>
+        <location filename="../src/qml/filters/chromahold/ui.qml" line="63"/>
+        <location filename="../src/qml/filters/crop_circle/ui.qml" line="131"/>
         <location filename="../src/qml/filters/sketch/ui.qml" line="116"/>
-        <location filename="../src/qml/filters/webvfx_circular_frame/ui.qml" line="135"/>
-        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="130"/>
         <source>Color</source>
         <translation>Renk</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/smartblur/ui.qml" line="68"/>
         <source>Blur Radius</source>
-        <translation>Bulanıklık Yarıçapı </translation>
+        <translation>Bulanıklık Yarıçapı</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/smartblur/ui.qml" line="70"/>
@@ -11100,84 +11615,56 @@ Bir dosya yüklemek için &quot;Aç&quot; üzerine tıklayın.</translation>
         <translation>Orijinal piksel ve bulanık piksel arasındaki fark eşikten küçükse, pikseli bulanık pikselle değiştirilir.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/aech0r/ui.qml" line="86"/>
-        <source>Fade</source>
-        <translation>Soldur</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/aech0r/ui.qml" line="103"/>
-        <source>Fade period</source>
-        <translation>Solma periyodu</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/aech0r/ui.qml" line="125"/>
-        <source>Lighter</source>
-        <translation>Çakmak</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/aech0r/ui.qml" line="133"/>
-        <source>Plans fade</source>
-        <translation>Solma taslakları</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/aech0r/ui.qml" line="167"/>
-        <location filename="../src/qml/filters/levels/ui.qml" line="178"/>
+        <location filename="../src/qml/filters/levels/ui.qml" line="182"/>
         <location filename="../src/qml/filters/spillsuppress/ui.qml" line="46"/>
         <location filename="../src/qml/filters/tcolor/ui.qml" line="59"/>
         <source>Green</source>
         <translation>Yeşil</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/aech0r/ui.qml" line="183"/>
-        <location filename="../src/qml/filters/levels/ui.qml" line="178"/>
+        <location filename="../src/qml/filters/levels/ui.qml" line="182"/>
         <location filename="../src/qml/filters/spillsuppress/ui.qml" line="52"/>
         <location filename="../src/qml/filters/tcolor/ui.qml" line="83"/>
         <source>Blue</source>
         <translation>Mavi</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/aech0r/ui.qml" line="199"/>
-        <source>Comparison</source>
-        <translation>Karşılaştırma</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/aech0r/ui.qml" line="150"/>
-        <location filename="../src/qml/filters/levels/ui.qml" line="178"/>
+        <location filename="../src/qml/filters/levels/ui.qml" line="182"/>
         <source>Red</source>
         <translation>Kırmızı</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/levels/ui.qml" line="178"/>
+        <location filename="../src/qml/filters/levels/ui.qml" line="182"/>
         <source>Value</source>
         <translation>Değer</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/levels/ui.qml" line="187"/>
+        <location filename="../src/qml/filters/levels/ui.qml" line="194"/>
         <source>Histogram</source>
         <translation>Histogram</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/levels/ui.qml" line="205"/>
+        <location filename="../src/qml/filters/levels/ui.qml" line="217"/>
         <source>Input Black</source>
         <translation>Giriş Siyahı</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/levels/ui.qml" line="225"/>
+        <location filename="../src/qml/filters/levels/ui.qml" line="236"/>
         <source>Input White</source>
         <translation>Giriş Beyazı</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/levels/ui.qml" line="245"/>
+        <location filename="../src/qml/filters/levels/ui.qml" line="255"/>
         <source>Gamma</source>
         <translation>Gama</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/levels/ui.qml" line="265"/>
+        <location filename="../src/qml/filters/levels/ui.qml" line="274"/>
         <source>Output Black</source>
         <translation>Çıkış Siyahı</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/levels/ui.qml" line="280"/>
+        <location filename="../src/qml/filters/levels/ui.qml" line="289"/>
         <source>Output White</source>
         <translation>Çıkış Beyazı</translation>
     </message>
@@ -11202,18 +11689,18 @@ Bir dosya yüklemek için &quot;Aç&quot; üzerine tıklayın.</translation>
         <translation>Titreklik</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/stabilize/ui.qml" line="150"/>
+        <location filename="../src/qml/filters/stabilize/ui.qml" line="149"/>
         <source>Accuracy</source>
         <translation>Doğruluk</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/stabilize/ui.qml" line="189"/>
+        <location filename="../src/qml/filters/stabilize/ui.qml" line="187"/>
         <source>&lt;b&gt;Filter Options&lt;/b&gt;</source>
         <translation>&lt;b&gt;Filtre Seçenekleri&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/stabilize/ui.qml" line="194"/>
-        <location filename="../src/qml/filters/vertigo/ui.qml" line="113"/>
+        <location filename="../src/qml/filters/stabilize/ui.qml" line="192"/>
+        <location filename="../src/qml/filters/vertigo/ui.qml" line="114"/>
         <source>Zoom</source>
         <translation>Yakınlaştır</translation>
     </message>
@@ -11223,49 +11710,64 @@ Bir dosya yüklemek için &quot;Aç&quot; üzerine tıklayın.</translation>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="199"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="244"/>
         <source>Browse...</source>
         <translation>Gözat...</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="220"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="251"/>
+        <source>Start Offset</source>
+        <translation>Ofseti Başlat</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="260"/>
+        <source>seconds</source>
+        <translation>saniye</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="286"/>
         <source>Analysis</source>
         <translation>Analiz</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="225"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="293"/>
+        <source>Apply transform</source>
+        <translation>Dönüşümü uygula</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="300"/>
         <source>Sample Radius</source>
         <translation>Örnek Yarıçap</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="243"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="319"/>
         <source>Search Radius</source>
         <translation>Arama Yarıçap</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="279"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="357"/>
         <source>Track Points</source>
         <translation>İz noktaları</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="283"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="361"/>
         <source>Use backwards-facing track points</source>
-        <translation type="unfinished"></translation>
+        <translation>Arkaya dönük iz noktaları kullan</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="314"/>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="373"/>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="432"/>
-        <location filename="../src/qml/filters/stabilize/ui.qml" line="214"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="394"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="454"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="514"/>
+        <location filename="../src/qml/filters/stabilize/ui.qml" line="212"/>
         <source>Smoothing</source>
         <translation>Yumuşatma</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="332"/>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="391"/>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="450"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="412"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="472"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="533"/>
         <source>Time Bias</source>
-        <translation type="unfinished"></translation>
+        <translation>Zaman Sapması</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/tcolor/ui.qml" line="67"/>
@@ -11273,33 +11775,135 @@ Bir dosya yüklemek için &quot;Aç&quot; üzerine tıklayın.</translation>
         <translation>Kırmızı</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/halftone/ui.qml" line="176"/>
+        <location filename="../src/qml/filters/halftone/ui.qml" line="177"/>
         <location filename="../src/qml/filters/tcolor/ui.qml" line="75"/>
         <source>Yellow</source>
         <translation>Sarı</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/distort/ui.qml" line="95"/>
+        <location filename="../src/qml/filters/distort/ui.qml" line="98"/>
         <location filename="../src/qml/filters/wave/ui.qml" line="60"/>
         <source>Amplitude</source>
         <translation>Genlik</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/distort/ui.qml" line="120"/>
-        <location filename="../src/qml/filters/glitch/ui.qml" line="98"/>
+        <location filename="../src/qml/filters/distort/ui.qml" line="122"/>
+        <location filename="../src/qml/filters/glitch/ui.qml" line="102"/>
         <source>Frequency</source>
         <translation>Frekans</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/distort/ui.qml" line="145"/>
+        <location filename="../src/qml/filters/distort/ui.qml" line="146"/>
         <source>Velocity</source>
         <translation>Hız</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/vertigo/ui.qml" line="88"/>
+        <location filename="../src/qml/filters/time_remap/ui.qml" line="37"/>
+        <source>Hold %1 to drag a keyframe vertical only or %2 to drag horizontal only</source>
+        <translation>Anahtar kareyi, yalnızca dikey sürüklemek için %1&apos;i, yalnızca yatay sürüklemek için %2&apos;i basılı tutun</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/time_remap/ui.qml" line="98"/>
+        <source>Forward</source>
+        <translation>İleri</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/time_remap/ui.qml" line="100"/>
+        <source>Freeze</source>
+        <translation>Dondur</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/time_remap/ui.qml" line="102"/>
+        <location filename="../src/qml/filters/time_remap/ui.qml" line="103"/>
+        <source>%L1s</source>
+        <translation>%L1s</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/time_remap/ui.qml" line="110"/>
+        <source>Set Speed After</source>
+        <translation>Sonrasında Hızı Ayarla</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/time_remap/ui.qml" line="110"/>
+        <source>Set Speed Before</source>
+        <translation>Öncesinde Hızı Ayarla</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/time_remap/ui.qml" line="182"/>
+        <source>Time</source>
+        <translation>Zaman</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/time_remap/ui.qml" line="184"/>
+        <source>Map the specified input time to the current time. Use keyframes to vary the time mappings over time.</source>
+        <translation>Belirtilen giriş zamanını geçerli zamanla eşleyin. Zaman eşlemelerini zaman içinde değiştirmek için ana kareleri kullanın.</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/time_remap/ui.qml" line="203"/>
+        <source>Set the input time to achieve a desired speed before the current frame.</source>
+        <translation>Geçerli kareden önce istenen hıza ulaşmak için giriş zamanını ayarlayın.</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/time_remap/ui.qml" line="215"/>
+        <source>Set the input time to achieve a desired speed after the current frame.</source>
+        <translation>Geçerli kareden sonra istenen hıza ulaşmak için giriş zamanını ayarlayın.</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/time_remap/ui.qml" line="237"/>
+        <source>Image mode</source>
+        <translation>Görsel kip</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/time_remap/ui.qml" line="239"/>
+        <source>Use the specified image selection mode. Nearest will output the image that is nearest to the mapped time. Blend will blend all images that occur during the mapped time.</source>
+        <translation>Belirtilen görsel seçim kipini kullanın. En yakın, eşlenen zamana en yakın olan görüntüyü verir. Karıştır, eşlenen zaman boyunca meydana gelen tüm görüntüleri harmanlar.</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/time_remap/ui.qml" line="248"/>
+        <source>Blend</source>
+        <translation>Karıştır</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/time_remap/ui.qml" line="264"/>
+        <source>Enable pitch compensation</source>
+        <translation>Perde telafisi kullan</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/time_remap/ui.qml" line="289"/>
+        <location filename="../src/qml/filters/vertigo/ui.qml" line="90"/>
         <location filename="../src/qml/filters/wave/ui.qml" line="75"/>
         <source>Speed</source>
         <translation>Hız</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/time_remap/ui.qml" line="291"/>
+        <source>The instantaneous speed of the last frame that was processed.</source>
+        <translation>İşlenen son karenin anlık hızı.</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/time_remap/ui.qml" line="301"/>
+        <source>The instantaneous direction of the last frame that was processed.</source>
+        <translation>İşlenen son karenin anlık yönü.</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/time_remap/ui.qml" line="309"/>
+        <source>Input Time</source>
+        <translation>Giriş Zamanı</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/time_remap/ui.qml" line="311"/>
+        <source>The original clip time of the frame.</source>
+        <translation>Karenin orijinal klip zamanı.</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/time_remap/ui.qml" line="319"/>
+        <source>Output Time</source>
+        <translation>Çıkış Zamanı</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/time_remap/ui.qml" line="321"/>
+        <source>The mapped output time for the input frame.</source>
+        <translation>Giriş karesi için eşlenen çıktı zamanı.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/wave/ui.qml" line="92"/>
@@ -11312,107 +11916,6 @@ Bir dosya yüklemek için &quot;Aç&quot; üzerine tıklayın.</translation>
         <translation>Dikey bozulma?</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/webvfx/ui.qml" line="183"/>
-        <source>&lt;b&gt;File:&lt;/b&gt;</source>
-        <translation>&lt;b&gt;Dosya:&lt;/b&gt;</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/webvfx/ui.qml" line="209"/>
-        <source>Use WebVfx JavaScript extension</source>
-        <translation>WebVfx JavaScript Eklentisini Kullan</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/webvfx/ui.qml" line="213"/>
-        <source>For Advanced Users: </source>
-        <translation>Uzman Kullanıcılar İçin: </translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/webvfx/ui.qml" line="214"/>
-        <source>If you enable this, and you do not use the WebVfx JavaScript extension, your content will not render!</source>
-        <translation>Bu seçenek etkinleştirildiğinde WebVfx JavaScript eklentisi kullanılmaz ise içerik görüntülenmez! </translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/webvfx/ui.qml" line="226"/>
-        <source>Confirm Selection</source>
-        <translation>Seçimi Onayla</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/webvfx/ui.qml" line="227"/>
-        <source>Do you still want to use this?</source>
-        <translation>Yine de bunu kullanmak istiyor musunuz?</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/webvfx/ui.qml" line="198"/>
-        <source>Open HTML File</source>
-        <translation>HTML Dosyası Aç</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/webvfx/ui.qml" line="155"/>
-        <source>Templates</source>
-        <translation>Şablonlar</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/webvfx/ui.qml" line="170"/>
-        <source>Choose a Folder for HTML</source>
-        <translation>HTML için bir klasör seçin</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/webvfx/ui.qml" line="202"/>
-        <source>Load an existing HTML file.</source>
-        <translation>Var olan bir HTML dosyasını yükleyin.</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/webvfx/ui.qml" line="175"/>
-        <source>Save HTML File</source>
-        <translation>HTML Dosyasını Kaydet</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/webvfx/ui.qml" line="237"/>
-        <source>Edit...</source>
-        <translation>Düzenle...</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/webvfx/ui.qml" line="255"/>
-        <source>Reload</source>
-        <translation>Yeniden Yükle</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/webvfx_ruttetraizer/ui.qml" line="104"/>
-        <source>Density</source>
-        <translation>Yoğunluk</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/webvfx_ruttetraizer/ui.qml" line="120"/>
-        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="168"/>
-        <source>Depth</source>
-        <translation>Derinlik</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/webvfx_ruttetraizer/ui.qml" line="152"/>
-        <source>X Axis Rotation</source>
-        <translation>X Ekseninde Döndür</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/webvfx_ruttetraizer/ui.qml" line="168"/>
-        <source>Y Axis Rotation</source>
-        <translation>Y Ekseninde Döndür</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="33"/>
-        <source>3D Text</source>
-        <translation>3B Metin</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="125"/>
-        <source>Beveled</source>
-        <translation>Eğilimli</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="185"/>
-        <source>Tilt</source>
-        <translation>Eğim</translation>
-    </message>
-    <message>
         <location filename="../src/qml/filters/white/ui.qml" line="79"/>
         <source>Neutral color</source>
         <translation>Nötr renk</translation>
@@ -11421,6 +11924,11 @@ Bir dosya yüklemek için &quot;Aç&quot; üzerine tıklayın.</translation>
         <location filename="../src/qml/filters/white/ui.qml" line="103"/>
         <source>Color temperature</source>
         <translation>Renk sıcaklığı</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/white/ui.qml" line="153"/>
+        <source>degrees</source>
+        <translation>derece</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/timer/ui.qml" line="135"/>
@@ -11449,61 +11957,89 @@ Bir dosya yüklemek için &quot;Aç&quot; üzerine tıklayın.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/timer/ui.qml" line="145"/>
+        <source>MM:SS.SSS</source>
+        <translation>MM:SS.SSS</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/timer/ui.qml" line="146"/>
         <source>SS</source>
         <translation>SS</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/timer/ui.qml" line="146"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="147"/>
         <source>SS.S</source>
         <translation>SS.S</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/timer/ui.qml" line="147"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="148"/>
         <source>SS.SS</source>
         <translation>SS.SS</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/timer/ui.qml" line="155"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="149"/>
+        <source>SS.SSS</source>
+        <translation>SS.SSS</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/timer/ui.qml" line="248"/>
+        <source>When the direction is Down, the timer will count down to Offset.
+When the direction is Up, the timer will count up starting from Offset.</source>
+        <translation>Yön Aşağı olduğunda, zamanlayıcı Ofset&apos;e doğru geri sayar.
+Yön Yukarı olduğunda, zamanlayıcı Ofset&apos;ten başlayarak ileri sayar.</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/time_remap/ui.qml" line="299"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="158"/>
         <source>Direction</source>
         <translation>Yön</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="318"/>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="377"/>
-        <location filename="../src/qml/filters/timer/ui.qml" line="161"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="372"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="434"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="164"/>
         <source>Up</source>
         <translation>Yukarı</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/timer/ui.qml" line="162"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="165"/>
         <source>Down</source>
         <translation>Aşağı</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/timer/ui.qml" line="170"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="174"/>
         <source>Start Delay</source>
         <translation>Gecikme başlat</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/timer/ui.qml" line="189"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="188"/>
+        <source>The timer will be frozen from the beginning of the filter until the Start Delay time has elapsed.</source>
+        <translation>Zamanlayıcı, filtrenin başlangıcından Başlatma Gecikme süresi dolana kadar dondurulacaktır.</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/timer/ui.qml" line="193"/>
         <source>Set start to begin at the current position</source>
         <translation>Geçerli konumda başlamak için başlangıcı ayarla</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/timer/ui.qml" line="216"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="215"/>
+        <source>The timer will be frozen after the Duration has elapsed.</source>
+        <translation>Süre dolduktan sonra zamanlayıcı donacaktır.</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/timer/ui.qml" line="220"/>
         <source>Set duration to end at the current position</source>
         <translation>Geçerli konumda bitecek süreyi ayarla</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="261"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="338"/>
         <location filename="../src/qml/filters/gradient/ui.qml" line="255"/>
-        <location filename="../src/qml/filters/nosync/ui.qml" line="82"/>
-        <location filename="../src/qml/filters/timer/ui.qml" line="231"/>
+        <location filename="../src/qml/filters/nosync/ui.qml" line="83"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="234"/>
         <source>Offset</source>
         <translation>Kayma</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="185"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="229"/>
         <location filename="../src/qml/filters/mask_shape/ui.qml" line="211"/>
         <source>File</source>
         <translation>Dosya</translation>
@@ -11635,6 +12171,7 @@ Bir dosya yüklemek için &quot;Aç&quot; üzerine tıklayın.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask_shape/ui.qml" line="276"/>
+        <location filename="../src/qml/filters/time_remap/ui.qml" line="96"/>
         <source>Reverse</source>
         <translation>Ters</translation>
     </message>
@@ -11644,96 +12181,89 @@ Bir dosya yüklemek için &quot;Aç&quot; üzerine tıklayın.</translation>
         <translation>Alfa</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/waveform/ui.qml" line="95"/>
+        <location filename="../src/qml/filters/waveform/ui.qml" line="99"/>
         <source>Waveform Color</source>
         <translation>Dalga formu renği</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/waveform/ui.qml" line="108"/>
+        <location filename="../src/qml/filters/waveform/ui.qml" line="112"/>
         <source>Background Color</source>
         <translation>Arka Plan Rengi</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/waveform/ui.qml" line="179"/>
+        <location filename="../src/qml/filters/waveform/ui.qml" line="203"/>
         <source>Fill</source>
         <translation>Doldur</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/waveform/ui.qml" line="185"/>
+        <location filename="../src/qml/filters/waveform/ui.qml" line="209"/>
         <source>Fill the area under the waveform.</source>
         <translation>Dalga biçimi altındaki alanı doldur.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/waveform/ui.qml" line="190"/>
+        <location filename="../src/qml/filters/waveform/ui.qml" line="214"/>
         <source>Combine</source>
         <translation>Birleştir</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/waveform/ui.qml" line="196"/>
+        <location filename="../src/qml/filters/waveform/ui.qml" line="220"/>
         <source>Combine all channels into one waveform.</source>
         <translation>Tüm kanalları tek bir dalga formunda birleştir.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/waveform/ui.qml" line="201"/>
+        <location filename="../src/qml/filters/waveform/ui.qml" line="225"/>
         <source>Window</source>
         <translation>Pencere</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/grid/ui.qml" line="166"/>
-        <location filename="../src/qml/filters/grid/ui.qml" line="202"/>
+        <source>Rows</source>
+        <translation>Satır sayısı</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/grid/ui.qml" line="201"/>
         <source>Columns</source>
-        <translation>Sütunlar</translation>
+        <translation>Sütun sayısı</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/webvfx_swirl/ui.qml" line="42"/>
-        <source>Swirl amount</source>
-        <translation>Girdap miktarı</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/glitch/ui.qml" line="123"/>
+        <location filename="../src/qml/filters/glitch/ui.qml" line="126"/>
         <source>Block height</source>
         <translation>Blok yüksekliği</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/glitch/ui.qml" line="148"/>
+        <location filename="../src/qml/filters/glitch/ui.qml" line="150"/>
         <source>Shift intensity</source>
         <translation>Değişme yoğunluğu</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/glitch/ui.qml" line="173"/>
+        <location filename="../src/qml/filters/glitch/ui.qml" line="174"/>
         <source>Color intensity</source>
         <translation>Renk yoğunluğu</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/hqdn3d/ui.qml" line="88"/>
+        <location filename="../src/qml/filters/hqdn3d/ui.qml" line="90"/>
         <source>Spatial</source>
         <translation>Uzaysal</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/hqdn3d/ui.qml" line="113"/>
+        <location filename="../src/qml/filters/hqdn3d/ui.qml" line="114"/>
         <source>Temporal</source>
         <translation>Geçici</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/rectangle/ui.qml" line="301"/>
-        <location filename="../src/qml/filters/webvfx_clip/ui.qml" line="294"/>
+        <location filename="../src/qml/filters/crop_rectangle/ui.qml" line="308"/>
         <source>Corner radius</source>
         <translation>Köşe yarıçapı</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/rectangle/ui.qml" line="333"/>
-        <source>Fill color</source>
-        <translation>Dolgu rengi</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/webvfx_clip/ui.qml" line="326"/>
+        <location filename="../src/qml/filters/crop_rectangle/ui.qml" line="339"/>
         <source>Padding color</source>
         <translation>Dolgu rengi</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dither/ui.qml" line="86"/>
-        <location filename="../src/qml/filters/posterize/ui.qml" line="82"/>
+        <location filename="../src/qml/filters/dither/ui.qml" line="87"/>
         <source>Levels</source>
+        <comment>Dither video filter</comment>
         <translation>Seviyeler</translation>
     </message>
     <message>
@@ -11744,85 +12274,85 @@ Bir dosya yüklemek için &quot;Aç&quot; üzerine tıklayın.</translation>
     <message>
         <location filename="../src/qml/filters/dither/ui.qml" line="117"/>
         <source>2x2 Magic Square</source>
-        <translation type="unfinished"></translation>
+        <translation>2x2 Sihirli Kare</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dither/ui.qml" line="117"/>
         <source>4x4 Magic Square</source>
-        <translation type="unfinished"></translation>
+        <translation>4x4 Sihirli Kare</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dither/ui.qml" line="117"/>
         <source>4x4 Ordered</source>
-        <translation type="unfinished"></translation>
+        <translation>4x4 Düzenli</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dither/ui.qml" line="117"/>
         <source>4x4 Lines</source>
-        <translation type="unfinished"></translation>
+        <translation>4x4 Çizgi</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dither/ui.qml" line="118"/>
         <source>6x6 90 Degree Halftone</source>
-        <translation type="unfinished"></translation>
+        <translation>6x6 90 Derece Yarı Ton</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dither/ui.qml" line="118"/>
         <source>6x6 Ordered</source>
-        <translation type="unfinished"></translation>
+        <translation>6x6 Düzenli</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dither/ui.qml" line="118"/>
         <source>8x8 Ordered</source>
-        <translation type="unfinished"></translation>
+        <translation>8x8 Düzenli</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dither/ui.qml" line="119"/>
         <source>Order-3 Clustered</source>
-        <translation type="unfinished"></translation>
+        <translation>Düzen-3 Kümelenmiş</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dither/ui.qml" line="119"/>
         <source>Order-4 Ordered</source>
-        <translation type="unfinished"></translation>
+        <translation>Düzen-4 Düzenli</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dither/ui.qml" line="119"/>
         <source>Order-8 Ordered</source>
-        <translation type="unfinished"></translation>
+        <translation>Düzen-8 Düzenli</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/elastic_scale/ui.qml" line="103"/>
+        <location filename="../src/qml/filters/elastic_scale/ui.qml" line="108"/>
         <source>Horizontal center position of the linear area.</source>
         <translation>Doğrusal alanın yatay merkez konumu.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/elastic_scale/ui.qml" line="127"/>
+        <location filename="../src/qml/filters/elastic_scale/ui.qml" line="131"/>
         <source>Linear width</source>
         <translation>Doğrusal genişlik</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/elastic_scale/ui.qml" line="129"/>
+        <location filename="../src/qml/filters/elastic_scale/ui.qml" line="133"/>
         <source>Width of the linear area.</source>
         <translation>Doğrusal alanın genişliği.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/elastic_scale/ui.qml" line="153"/>
+        <location filename="../src/qml/filters/elastic_scale/ui.qml" line="156"/>
         <source>Linear scale factor</source>
         <translation>Doğrusal ölçek faktörü</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/elastic_scale/ui.qml" line="155"/>
+        <location filename="../src/qml/filters/elastic_scale/ui.qml" line="158"/>
         <source>Amount the linear area is scaled.</source>
         <translation>Doğrusal alanın ölçeklendiği miktar.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/elastic_scale/ui.qml" line="179"/>
+        <location filename="../src/qml/filters/elastic_scale/ui.qml" line="181"/>
         <source>Non-Linear scale factor</source>
         <translation>Doğrusal olmayan ölçek faktörü</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/elastic_scale/ui.qml" line="181"/>
+        <location filename="../src/qml/filters/elastic_scale/ui.qml" line="183"/>
         <source>Amount the outer left and outer right areas are scaled non linearly.</source>
         <translation>Dış sol ve dış sağ alanların doğrusal olmayan şekilde ölçeklendirildiği miktar.</translation>
     </message>
@@ -11832,82 +12362,173 @@ Bir dosya yüklemek için &quot;Aç&quot; üzerine tıklayın.</translation>
         <translation>Alfa kanalıyla karşılaştır</translation>
     </message>
     <message>
+        <location filename="../src/qml/filters/choppy/ui.qml" line="91"/>
         <location filename="../src/qml/filters/nervous/ui.qml" line="62"/>
         <location filename="../src/qml/filters/trails/ui.qml" line="70"/>
-        <location filename="../src/qml/filters/webvfx_choppy/ui.qml" line="91"/>
         <source> frames</source>
         <translation> kare</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/webvfx_choppy/ui.qml" line="83"/>
+        <location filename="../src/qml/filters/choppy/ui.qml" line="83"/>
         <source>Repeat</source>
         <translation>Yinele</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_noisegate/ui.qml" line="116"/>
+        <location filename="../src/qml/filters/audio_noisegate/ui.qml" line="123"/>
         <source>Key Filter: Low Frequency</source>
         <translation>Anahtar Filtre: Düşük Frekans</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_noisegate/ui.qml" line="141"/>
+        <location filename="../src/qml/filters/audio_noisegate/ui.qml" line="147"/>
         <source>Key Filter: High Frequency</source>
         <translation>Anahtar Filtre: Yüksek Frekans</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_noisegate/ui.qml" line="169"/>
+        <location filename="../src/qml/filters/audio_noisegate/ui.qml" line="174"/>
         <source>Output key only</source>
         <translation>Yalnızca çıkış anahtarı</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_noisegate/ui.qml" line="223"/>
+        <location filename="../src/qml/filters/audio_noisegate/ui.qml" line="226"/>
         <source>Hold</source>
         <translation>Tut</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_noisegate/ui.qml" line="247"/>
+        <location filename="../src/qml/filters/audio_noisegate/ui.qml" line="249"/>
         <source>Decay</source>
         <translation>Azaltma</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_noisegate/ui.qml" line="271"/>
+        <location filename="../src/qml/filters/audio_noisegate/ui.qml" line="272"/>
         <source>Range</source>
         <translation>Aralık</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_pitch/ui.qml" line="140"/>
+        <location filename="../src/qml/filters/audio_pitch/ui.qml" line="141"/>
         <source>Octave Shift</source>
         <translation>Oktav Değişimi</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_pitch/ui.qml" line="142"/>
-        <source>Specify the pitch shift in octaves. -1 shifts down an octave. +1 shifts up an octave. 0 is unchanged.</source>
-        <translation>Oktav cinsinden perde değişimini belirtin. -1 bir oktav aşağı değiştirir. +1 bir oktav yukarı değiştirir. 0 değiştirmez.</translation>
+        <location filename="../src/qml/filters/audio_pitch/ui.qml" line="143"/>
+        <source>Specify the pitch shift in octaves.
+-1 shifts down an octave.
++1 shifts up an octave.
+0 is unchanged.</source>
+        <translation>Oktav cinsinden perde kaymasını belirtin.
+-1 bir oktav aşağı kaydırır.
++1 bir oktav yukarı kaydırır.
+0 değiştirmez.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_pitch/ui.qml" line="177"/>
+        <location filename="../src/qml/filters/audio_pitch/ui.qml" line="180"/>
+        <source>Specify the speed change that should be compensated for.
+2x will halve the pitch to compensate for the speed being doubled.</source>
+        <translation>Telafi edilmesi gereken hız değişikliğini belirtin.
+2x, hızın iki katına çıkmasını telafi etmek için perdeyi yarıya indirir.</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/audio_pitch/ui.qml" line="178"/>
         <source>Speed Compensation</source>
         <translation>Hız Telafisi</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_pitch/ui.qml" line="179"/>
-        <source>Specify the speed change that should be compensated for. 2x will halve the pitch to compensate for the speed being doubled.</source>
-        <translation>Telafi edilmesi gereken hız değişikliğini belirtin. 2x iki katına çıkan hızı telafi etmek için perdeyi yarıya indirir.</translation>
+        <location filename="../src/qml/filters/vaguedenoiser/ui.qml" line="86"/>
+        <source>Light</source>
+        <translation>İnce</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/vaguedenoiser/ui.qml" line="93"/>
+        <source>Medium</source>
+        <translation>Orta</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/vaguedenoiser/ui.qml" line="100"/>
+        <source>Heavy</source>
+        <translation>Sert</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/vaguedenoiser/ui.qml" line="136"/>
+        <source>Method</source>
+        <translation>Yöntem</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/vaguedenoiser/ui.qml" line="142"/>
+        <source>Soft</source>
+        <translation>Yumuşak</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/vaguedenoiser/ui.qml" line="142"/>
+        <source>Garrote</source>
+        <translation>Boğma</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/vaguedenoiser/ui.qml" line="142"/>
+        <source>Hard</source>
+        <comment>Remove Noise Wavelet filter</comment>
+        <translation>Sert</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/vaguedenoiser/ui.qml" line="155"/>
+        <source>Decompose</source>
+        <translation>Ayrışma</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/vaguedenoiser/ui.qml" line="187"/>
+        <source>Percent</source>
+        <translation>Oran</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/vaguedenoiser/ui.qml" line="204"/>
+        <source>Max decompositions for the current video mode</source>
+        <translation>Geçerli video modu için maksimum ayrışma</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/vaguedenoiser/ui.qml" line="212"/>
+        <source>More information</source>
+        <translation>Ayrıntılı bilgiler</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/posterize/ui.qml" line="84"/>
+        <source>Levels</source>
+        <comment>Posterize filter</comment>
+        <translation>Seviyeler</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/crop_circle/ui.qml" line="152"/>
+        <location filename="../src/qml/filters/crop_rectangle/ui.qml" line="360"/>
+        <source>Transparent</source>
+        <translation>Saydam</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/bigsh0t_transform_360/ui.qml" line="162"/>
+        <source>Show grid</source>
+        <translation>Izgarayı göster</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/fspp/ui.qml" line="65"/>
+        <source>Quantization</source>
+        <translation>Niceleme</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/fspp/ui.qml" line="80"/>
+        <source>Strength</source>
+        <translation>Etki</translation>
     </message>
 </context>
 <context>
     <name>ui_boxblur</name>
     <message>
-        <location filename="../src/qml/filters/blur/ui_boxblur.qml" line="139"/>
+        <location filename="../src/qml/filters/blur/ui_boxblur.qml" line="141"/>
         <source>Preset</source>
         <translation>Hazır Ayar</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/blur/ui_boxblur.qml" line="167"/>
+        <location filename="../src/qml/filters/blur/ui_boxblur.qml" line="169"/>
         <source>Width</source>
         <translation>Genişlik</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/blur/ui_boxblur.qml" line="202"/>
+        <location filename="../src/qml/filters/blur/ui_boxblur.qml" line="203"/>
         <source>Height</source>
         <translation>Yükseklik</translation>
     </message>
@@ -12049,34 +12670,34 @@ Bir dosya yüklemek için &quot;Aç&quot; üzerine tıklayın.</translation>
 <context>
     <name>ui_frei0r</name>
     <message>
-        <location filename="../src/qml/filters/glow/ui_frei0r.qml" line="97"/>
-        <location filename="../src/qml/filters/saturation/ui_frei0r.qml" line="100"/>
-        <location filename="../src/qml/filters/sharpen/ui_frei0r.qml" line="129"/>
+        <location filename="../src/qml/filters/glow/ui_frei0r.qml" line="98"/>
+        <location filename="../src/qml/filters/saturation/ui_frei0r.qml" line="102"/>
+        <location filename="../src/qml/filters/sharpen/ui_frei0r.qml" line="131"/>
         <source>Preset</source>
         <translation>Hazır Ayar</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/glow/ui_frei0r.qml" line="116"/>
         <source>Blur</source>
-        <translation>Bulanıklık</translation>
+        <translation>Bulanık</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/saturation/ui_frei0r.qml" line="37"/>
+        <location filename="../src/qml/filters/saturation/ui_frei0r.qml" line="38"/>
         <source>Grayscale</source>
         <translation>Gri tonlama</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/saturation/ui_frei0r.qml" line="122"/>
+        <location filename="../src/qml/filters/saturation/ui_frei0r.qml" line="123"/>
         <source>Level</source>
         <translation>Seviye</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/sharpen/ui_frei0r.qml" line="146"/>
+        <location filename="../src/qml/filters/sharpen/ui_frei0r.qml" line="148"/>
         <source>Amount</source>
         <translation>Miktar</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/sharpen/ui_frei0r.qml" line="167"/>
+        <location filename="../src/qml/filters/sharpen/ui_frei0r.qml" line="168"/>
         <source>Size</source>
         <translation>Boyut</translation>
     </message>
@@ -12084,22 +12705,22 @@ Bir dosya yüklemek için &quot;Aç&quot; üzerine tıklayın.</translation>
 <context>
     <name>ui_frei0r_coloradj</name>
     <message>
-        <location filename="../src/qml/filters/color/ui_frei0r_coloradj.qml" line="60"/>
+        <location filename="../src/qml/filters/color/ui_frei0r_coloradj.qml" line="59"/>
         <source>Mode</source>
         <translation>Kip</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/color/ui_frei0r_coloradj.qml" line="64"/>
+        <location filename="../src/qml/filters/color/ui_frei0r_coloradj.qml" line="63"/>
         <source>Shadows (Lift)</source>
         <translation>Gölgeleler (Yüksek)</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/color/ui_frei0r_coloradj.qml" line="64"/>
+        <location filename="../src/qml/filters/color/ui_frei0r_coloradj.qml" line="63"/>
         <source>Midtones (Gamma)</source>
         <translation>Orta Tonlar (Gama)</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/color/ui_frei0r_coloradj.qml" line="64"/>
+        <location filename="../src/qml/filters/color/ui_frei0r_coloradj.qml" line="63"/>
         <source>Highlights (Gain)</source>
         <translation>Parlaklar (Kazanç)</translation>
     </message>
@@ -12107,62 +12728,62 @@ Bir dosya yüklemek için &quot;Aç&quot; üzerine tıklayın.</translation>
 <context>
     <name>ui_lightshow</name>
     <message>
-        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="80"/>
+        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="84"/>
         <source>Preset</source>
         <translation>Hazır Ayar</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="95"/>
+        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="99"/>
         <source>Waveform Color</source>
         <translation>Dalga Formu Rengi</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="108"/>
+        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="112"/>
         <source>Position</source>
         <translation>Konum</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="129"/>
+        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="143"/>
         <source>Size</source>
         <translation>Boyut</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="150"/>
+        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="174"/>
         <source>Oscillation</source>
         <translation>Salınım</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="152"/>
+        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="176"/>
         <source>Oscillation can be useful to make the light blink during long periods of sound.</source>
         <translation>Salınım, uzun ses sürelerinde ışığın yanıp sönmesini sağlamak için yararlı olabilir.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="168"/>
+        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="192"/>
         <source>Low Frequency</source>
         <translation>Düşük Frekans</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="170"/>
+        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="194"/>
         <source>The low end of the frequency range to be used to influence the light.</source>
         <translation>Işığı etkilemek için kullanılacak frekans aralığının düşük ucu.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="191"/>
+        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="215"/>
         <source>High Frequency</source>
         <translation>Yüksek Frekans</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="193"/>
+        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="217"/>
         <source>The high end of the frequency range to be used to influence the light.</source>
         <translation>Işığı etkilemek için kullanılacak frekans aralığının yüksek ucu.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="214"/>
+        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="238"/>
         <source>Threshold</source>
         <translation>Eşik</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="216"/>
+        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="240"/>
         <source>The minimum amplitude of sound that must occur within the frequency range to cause the light to change.</source>
         <translation>Işığın değişmesine neden olmak için frekans aralığında gerçekleşmesi gereken minimum ses genliği.</translation>
     </message>
@@ -12176,30 +12797,30 @@ Bir dosya yüklemek için &quot;Aç&quot; üzerine tıklayın.</translation>
         <translation>Yarıçap</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/brightness/ui_movit.qml" line="141"/>
+        <location filename="../src/qml/filters/brightness/ui_movit.qml" line="142"/>
         <location filename="../src/qml/filters/saturation/ui_movit.qml" line="120"/>
         <source>Level</source>
         <translation>Seviye</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/blur/ui_movit.qml" line="97"/>
-        <location filename="../src/qml/filters/brightness/ui_movit.qml" line="119"/>
+        <location filename="../src/qml/filters/blur/ui_movit.qml" line="98"/>
+        <location filename="../src/qml/filters/brightness/ui_movit.qml" line="121"/>
         <location filename="../src/qml/filters/glow/ui_movit.qml" line="133"/>
-        <location filename="../src/qml/filters/saturation/ui_movit.qml" line="99"/>
-        <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="137"/>
-        <location filename="../src/qml/filters/vignette/ui_movit.qml" line="128"/>
+        <location filename="../src/qml/filters/saturation/ui_movit.qml" line="100"/>
+        <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="141"/>
+        <location filename="../src/qml/filters/vignette/ui_movit.qml" line="130"/>
         <source>Preset</source>
         <translation>Hazır Ayar</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/glow/ui_movit.qml" line="173"/>
         <source>Highlight blurriness</source>
-        <translation>Bulanıklık vurgulansın</translation>
+        <translation>Bulanıklığı vurgula</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/glow/ui_movit.qml" line="194"/>
         <source>Highlight cutoff</source>
-        <translation>Kesimler vurgulansın</translation>
+        <translation>Kesmeyi vurgula</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/saturation/ui_movit.qml" line="36"/>
@@ -12207,32 +12828,32 @@ Bir dosya yüklemek için &quot;Aç&quot; üzerine tıklayın.</translation>
         <translation>Gri tonlama</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="155"/>
+        <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="159"/>
         <source>Circle radius</source>
         <translation>Daire yarıçapı</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="177"/>
+        <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="180"/>
         <source>Gaussian radius</source>
         <translation>Gauss yarıçapı</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="199"/>
+        <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="201"/>
         <source>Correlation</source>
         <translation>Karşılıklı ilişki</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="220"/>
+        <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="221"/>
         <source>Noise</source>
         <translation>Gürültü</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/vignette/ui_movit.qml" line="146"/>
+        <location filename="../src/qml/filters/vignette/ui_movit.qml" line="148"/>
         <source>Outer radius</source>
         <translation>Dış yarıçap</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/vignette/ui_movit.qml" line="166"/>
+        <location filename="../src/qml/filters/vignette/ui_movit.qml" line="167"/>
         <source>Inner radius</source>
         <translation>İç yarıçap</translation>
     </message>
@@ -12240,27 +12861,27 @@ Bir dosya yüklemek için &quot;Aç&quot; üzerine tıklayın.</translation>
 <context>
     <name>ui_oldfilm</name>
     <message>
-        <location filename="../src/qml/filters/vignette/ui_oldfilm.qml" line="139"/>
+        <location filename="../src/qml/filters/vignette/ui_oldfilm.qml" line="142"/>
         <source>Preset</source>
         <translation>Hazır Ayar</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/vignette/ui_oldfilm.qml" line="158"/>
+        <location filename="../src/qml/filters/vignette/ui_oldfilm.qml" line="161"/>
         <source>Radius</source>
         <translation>Yarıçap</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/vignette/ui_oldfilm.qml" line="178"/>
+        <location filename="../src/qml/filters/vignette/ui_oldfilm.qml" line="180"/>
         <source>Feathering</source>
-        <translation>Tüyleme</translation>
+        <translation>Tüylenme</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/vignette/ui_oldfilm.qml" line="200"/>
+        <location filename="../src/qml/filters/vignette/ui_oldfilm.qml" line="201"/>
         <source>Non-linear feathering</source>
-        <translation>Doğrusal-olmayan tüyler</translation>
+        <translation>Doğrusal-olmayan tüylenme</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/vignette/ui_oldfilm.qml" line="211"/>
+        <location filename="../src/qml/filters/vignette/ui_oldfilm.qml" line="212"/>
         <source>Opacity</source>
         <translation>Opaklık</translation>
     </message>
@@ -12268,112 +12889,112 @@ Bir dosya yüklemek için &quot;Aç&quot; üzerine tıklayın.</translation>
 <context>
     <name>ui_spectrum</name>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="93"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="97"/>
         <source>Preset</source>
         <translation>Hazır Ayar</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="108"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="112"/>
         <source>Type</source>
         <translation>Tür</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="114"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="118"/>
         <source>Line</source>
         <translation>Satır</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="114"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="118"/>
         <source>Bar</source>
         <translation>Çubuk</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="127"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="131"/>
         <source>Spectrum Color</source>
         <translation>Tayf Rengi</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="140"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="144"/>
         <source>Background Color</source>
         <translation>Arka Plan Rengi</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="152"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="156"/>
         <source>Thickness</source>
         <translation>Kalınlık </translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="169"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="173"/>
         <source>Position</source>
         <translation>Konum</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="190"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="204"/>
         <source>Size</source>
         <translation>Boyut</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="211"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="235"/>
         <source>Fill</source>
         <translation>Doldur</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="217"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="241"/>
         <source>Fill the area under the spectrum.</source>
         <translation>Tayfın altındaki alan doldurulsun.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="222"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="246"/>
         <source>Mirror</source>
         <translation>Ayna</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="228"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="252"/>
         <source>Mirror the spectrum.</source>
         <translation>Tayfı yansıt.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="233"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="257"/>
         <source>Reverse</source>
         <translation>Ters</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="239"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="263"/>
         <source>Reverse the spectrum.</source>
         <translation>Tayfı tersine çevir.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="244"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="268"/>
         <source>Tension</source>
         <translation>Gerilme</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="260"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="284"/>
         <source>Bands</source>
         <translation>Bantlar</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="276"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="300"/>
         <source>Low Frequency</source>
         <translation>Düşük Frekans</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="278"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="302"/>
         <source>The low end of the frequency range of the spectrum.</source>
         <translation>Tayfın frekans aralığının düşük ucu.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="299"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="323"/>
         <source>High Frequency</source>
         <translation>Yüksek Frekans</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="301"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="325"/>
         <source>The high end of the frequency range of the spectrum.</source>
         <translation>Tayfın frekans aralığının yüksek ucu.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="322"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="346"/>
         <source>Threshold</source>
         <translation>Eşik</translation>
     </message>
@@ -12388,17 +13009,207 @@ Bir dosya yüklemek için &quot;Aç&quot; üzerine tıklayın.</translation>
     <message>
         <location filename="../src/qml/filters/corners/vui.qml" line="292"/>
         <source>2</source>
-        <translation type="unfinished">2</translation>
+        <translation>2</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/corners/vui.qml" line="317"/>
         <source>3</source>
-        <translation type="unfinished">3</translation>
+        <translation>3</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/corners/vui.qml" line="342"/>
         <source>4</source>
-        <translation type="unfinished">4</translation>
+        <translation>4</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="50"/>
+        <source>Click in the rectangle to edit the text</source>
+        <translation>Metni düzenlemek için dikdörtgeni tıklayın</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="301"/>
+        <source>Text size</source>
+        <translation>Yazı boyutu</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="320"/>
+        <source>Text color</source>
+        <translation>Yazı rengi</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="398"/>
+        <source>Collapse Toolbar</source>
+        <translation>Araç Çubuğunu Daralt</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="398"/>
+        <source>Expand Toolbar</source>
+        <translation>Araç Çubuğunu Genişlet</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="480"/>
+        <source>Save As…</source>
+        <translation>Farklı Kaydet...</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="242"/>
+        <source>Menu</source>
+        <translation>Menü</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="439"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="465"/>
+        <source>Cancel</source>
+        <translation>İptal</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="447"/>
+        <source>File</source>
+        <translation>Dosya</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="453"/>
+        <source>Edit</source>
+        <translation>Düzenle</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="472"/>
+        <source>Open...</source>
+        <translation>Aç...</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="494"/>
+        <source>Undo</source>
+        <translation>Geri Al</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="499"/>
+        <source>Redo</source>
+        <translation>Yinele</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="504"/>
+        <source>Cut</source>
+        <translation>Kes</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="509"/>
+        <source>Copy</source>
+        <translation>Kopyala</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="514"/>
+        <source>Paste</source>
+        <translation>Yapıştır</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="519"/>
+        <source>Paste Text Only</source>
+        <translation>Düz metin olarak yapıştır</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="524"/>
+        <source>Delete</source>
+        <translation>Sil</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="529"/>
+        <source>Clear</source>
+        <translation>Temizle</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="537"/>
+        <source>Select All</source>
+        <translation>Tümünü Seç</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="543"/>
+        <source>Left</source>
+        <translation>Sol</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="552"/>
+        <source>Center</source>
+        <translation>Orta</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="561"/>
+        <source>Right</source>
+        <translation>Sağ</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="570"/>
+        <source>Justify</source>
+        <translation>İki yana yasla</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="579"/>
+        <source>Bold</source>
+        <translation>Kalın</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="588"/>
+        <source>Italic</source>
+        <translation>Yatık</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="597"/>
+        <source>Underline</source>
+        <translation>Altı Çizili</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="284"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="606"/>
+        <source>Font</source>
+        <translation>Yazı Tipi</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="617"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="668"/>
+        <source>Insert Table</source>
+        <translation>Tablo Ekle</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="622"/>
+        <source>Decrease Indent</source>
+        <translation>Girintiyi Azalt</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="629"/>
+        <source>Insert Indent</source>
+        <translation>Girintiyi Arttır</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="678"/>
+        <source>Rows</source>
+        <translation>Satır sayısı</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="692"/>
+        <source>Columns</source>
+        <translation>Sütun sayısı</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="705"/>
+        <source>Border</source>
+        <translation>Kenarlık</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/gradient/vui.qml" line="36"/>
+        <location filename="../src/qml/filters/lightshow/vui.qml" line="27"/>
+        <location filename="../src/qml/filters/pillar_echo/vui.qml" line="31"/>
+        <location filename="../src/qml/filters/spot_remover/vui.qml" line="31"/>
+        <location filename="../src/qml/filters/waveform/vui.qml" line="27"/>
+        <source>Click in rectangle + hold Shift to drag</source>
+        <translation>Dikdörtgeni tıklayın + Shift tuşu ile sürükleyin</translation>
+    </message>
+</context>
+<context>
+    <name>vui_spectrum</name>
+    <message>
+        <location filename="../src/qml/filters/spectrum/vui_spectrum.qml" line="27"/>
+        <source>Click in rectangle + hold Shift to drag</source>
+        <translation>Dikdörtgeni tıklayın + Shift tuşu ile sürükleyin</translation>
     </message>
 </context>
 </TS>

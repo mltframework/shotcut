@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2020 Meltytech, LLC
+ * Copyright (c) 2014-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.0
+import QtQuick 2.12
 SizePositionUI {
     fillProperty: 'transition.fill'
     distortProperty: 'transition.distort'
@@ -24,6 +24,7 @@ SizePositionUI {
     valignProperty: 'transition.valign'
     halignProperty: 'transition.halign'
     backgroundProperty: 'background'
+    rotationProperty: 'transition.fix_rotate_x'
     Component.onCompleted: {
         if (filter.isNew) {
             filter.set('transition.threads', 0)

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2018 Meltytech, LLC
+ * Copyright (c) 2014-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,10 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.1
-import QtQuick.Controls 1.1
-import QtQuick.Layouts 1.0
-import Shotcut.Controls 1.0
+import QtQuick 2.12
+import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.12
+import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     width: 350
@@ -54,6 +54,7 @@ Item {
         var position = getPosition()
         blockUpdate = true
         slider.value = filter.getDouble('opacity', position) * 100.0
+        keyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('opacity') > 0
         blockUpdate = false
         slider.enabled = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1)
     }
@@ -107,7 +108,7 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: preset
             Layout.columnSpan: parent.columns
             parameters: ['opacity', 'alpha']
@@ -130,19 +131,18 @@ Item {
             text: qsTr('Level')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: slider
             minimumValue: 0
             maximumValue: 100
             suffix: ' %'
             onValueChanged: updateFilter(getPosition())
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: slider.value = 100
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: keyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('opacity') > 0
             onToggled: {
                 var value = slider.value / 100.0
                 if (checked) {
@@ -172,6 +172,7 @@ Item {
         onOutChanged: updateFilter(null)
         onAnimateInChanged: updateFilter(null)
         onAnimateOutChanged: updateFilter(null)
+        onPropertyChanged: setControls()
     }
 
     Connections {

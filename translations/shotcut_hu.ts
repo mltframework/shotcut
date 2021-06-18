@@ -16,7 +16,7 @@
     <message>
         <location filename="../src/dialogs/addencodepresetdialog.ui" line="53"/>
         <source>Make final changes to the preset including removing items you do not want to include, or copy/paste the clipboard.</source>
-        <translation>Végezze el a beállítás végső módosításait beleértve azon elemek eltávolítását, amelyeket nem kíván beemelni, vagy használja a vágólapot.</translation>
+        <translation>Végezze el az előbeállítás utolsó módosításait, többek között az olyan elemek eltávolítását, amelyeket nem kíván belefoglalni, vagy másolja / illessze be a vágólapra.</translation>
     </message>
 </context>
 <context>
@@ -24,12 +24,12 @@
     <message>
         <location filename="../src/widgets/alsawidget.ui" line="14"/>
         <source>Form</source>
-        <translation>Adatlap</translation>
+        <translation>Űrlap</translation>
     </message>
     <message>
         <location filename="../src/widgets/alsawidget.ui" line="26"/>
         <source>ALSA Audio</source>
-        <translation>ALSA Hang</translation>
+        <translation>ALSA hang</translation>
     </message>
     <message>
         <location filename="../src/widgets/alsawidget.ui" line="54"/>
@@ -55,19 +55,29 @@
 <context>
     <name>AttachedFiltersModel</name>
     <message>
-        <location filename="../src/models/attachedfiltersmodel.cpp" line="142"/>
+        <location filename="../src/models/attachedfiltersmodel.cpp" line="163"/>
         <source>Audio</source>
         <translation>Hang</translation>
     </message>
     <message>
-        <location filename="../src/models/attachedfiltersmodel.cpp" line="144"/>
+        <location filename="../src/models/attachedfiltersmodel.cpp" line="165"/>
+        <source>Time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/models/attachedfiltersmodel.cpp" line="167"/>
         <source>GPU</source>
         <translation>GPU</translation>
     </message>
     <message>
-        <location filename="../src/models/attachedfiltersmodel.cpp" line="146"/>
+        <location filename="../src/models/attachedfiltersmodel.cpp" line="169"/>
         <source>Video</source>
         <translation>Videó</translation>
+    </message>
+    <message>
+        <location filename="../src/models/attachedfiltersmodel.cpp" line="348"/>
+        <source>This file has B-frames, which is not supported by %1.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -80,7 +90,7 @@
     <message>
         <location filename="../src/widgets/scopes/audioloudnessscopewidget.cpp" line="85"/>
         <source>Short Term Loudness</source>
-        <translation>Rövidtávú hangosság</translation>
+        <translation>Rövidtávú hangerő</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/audioloudnessscopewidget.cpp" line="88"/>
@@ -125,7 +135,7 @@
     <message>
         <location filename="../src/widgets/scopes/audioloudnessscopewidget.cpp" line="167"/>
         <source>Audio Loudness</source>
-        <translation>Hangosság</translation>
+        <translation>Hangerő</translation>
     </message>
 </context>
 <context>
@@ -192,7 +202,8 @@
         <location filename="../src/widgets/scopes/audiowaveformscopewidget.cpp" line="264"/>
         <source>Sample: %1
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Minta: %1
+</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/audiowaveformscopewidget.cpp" line="272"/>
@@ -210,7 +221,7 @@
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="14"/>
         <source>Form</source>
-        <translation>Adatlap</translation>
+        <translation>Űrlap</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="60"/>
@@ -233,28 +244,28 @@
         <translation>Videó</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="345"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="371"/>
         <source>Broadcast Limited (MPEG)</source>
-        <translation type="unfinished"></translation>
+        <translation>Broadcast Limited (MPEG)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="350"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="376"/>
         <source>Full (JPEG)</source>
-        <translation type="unfinished"></translation>
+        <translation>Teljes (JPEG)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="385"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="531"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="411"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="557"/>
         <source>Track</source>
         <translation>Sáv</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="373"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="399"/>
         <source>Aspect ratio</source>
         <translation>Képarány</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="438"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="464"/>
         <source>:</source>
         <translation>:</translation>
     </message>
@@ -264,20 +275,20 @@
         <translation>Beolvasás módja</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="482"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="508"/>
         <source>Interlaced</source>
         <translation>Ősszefűzött</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="487"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="513"/>
         <source>Progressive</source>
         <translation>Progresszív</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="289"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="319"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="617"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="647"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="295"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="335"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="643"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="673"/>
         <source>Codec</source>
         <translation>Kodek</translation>
     </message>
@@ -302,243 +313,331 @@
         <translation>Színtartomány</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="294"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="324"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="300"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="340"/>
         <source>Resolution</source>
         <translation>Felbontás</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="299"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="329"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="305"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="345"/>
         <source>Frame rate</source>
         <translation>Képfrissítés</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="304"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="310"/>
         <source>Pixel format</source>
-        <translation>Képpontos formátum</translation>
+        <translation>Képpontformátum</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="309"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="637"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="777"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="315"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="355"/>
+        <source>Color space</source>
+        <translation>Szín tér</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="320"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="360"/>
+        <source>Color transfer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="325"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="663"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="803"/>
         <source>Name</source>
         <translation>Név</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="314"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="642"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="782"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="330"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="668"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="808"/>
         <source>Value</source>
         <translation>Érték</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="334"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="632"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="662"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="350"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="658"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="688"/>
         <source>Format</source>
         <translation>Formátum</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="496"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="522"/>
         <source>Bottom Field First</source>
         <translation>Alsó mező először</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="501"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="527"/>
         <source>Top Field First</source>
         <translation>Felső mező először</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="525"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="551"/>
         <source>Audio</source>
         <translation>Hang</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="622"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="652"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="648"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="678"/>
         <source>Channels</source>
         <translation>Csatornák</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="627"/>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="657"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="653"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="683"/>
         <source>Sample rate</source>
         <translation>Mintavételezés sebessége</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="670"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="696"/>
         <source>Adjust the audio/video synchronization. The center position is equivalent to no alteration.</source>
         <translation>Hang/kép szinkronizáció változtatása - a középérték azt jelenti, nincs változás</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="689"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="715"/>
         <source>Sync</source>
         <translation>Szinkronizálás</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="714"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="740"/>
         <source> ms</source>
         <translation>ms</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="743"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="769"/>
         <source>Metadata</source>
         <translation>Metaadat</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="813"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="950"/>
         <source>Reset</source>
         <translation>Alapértékek visszaállítása</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="827"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="955"/>
+        <source>Set Equirectangular...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="846"/>
         <source>Convert to Edit-friendly</source>
-        <translation type="unfinished"></translation>
+        <translation>Konvertálás szerkesztésbaráttá</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="830"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="849"/>
         <source>Convert...</source>
-        <translation type="unfinished"></translation>
+        <translation>Konvertálás…</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="837"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="863"/>
         <source>Display a menu of additional actions</source>
-        <translation>További lehetőségek menüjének megjelenítése</translation>
+        <translation>További műveletek menüjének megjelenítése</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="866"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="892"/>
         <source>Show in Folder</source>
-        <translation>Mutasd mappában</translation>
+        <translation>Megjelenítés mappában</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="871"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="897"/>
         <source>Copy Full File Path</source>
         <translation>Fájl teljes útvonalának másolása</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="876"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="902"/>
         <source>More Information...</source>
-        <translation>Több információ...</translation>
+        <translation>További információ…</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="881"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="907"/>
         <source>Start Integrity Check Job</source>
         <translation>Integritás ellenőrzésének indítása</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="886"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="912"/>
         <source>Convert to Edit-friendly...</source>
-        <translation type="unfinished"></translation>
+        <translation>Konvertálás szerkesztésbaráttá…</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="896"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="922"/>
         <source>Set Creation Time...</source>
+        <translation>Létrehozás idejének beállítása…</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="930"/>
+        <source>Disable Proxy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="820"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="818"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="935"/>
+        <source>Make Proxy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="940"/>
+        <source>Delete Proxy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="945"/>
+        <source>Copy Hash Code</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="839"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1032"/>
         <source>Reverse...</source>
-        <translation type="unfinished"></translation>
+        <translation>Megfordítás…</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.ui" line="891"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="985"/>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="917"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1214"/>
         <source>Extract Sub-clip...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="336"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="372"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="394"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="466"/>
         <source>None</source>
         <translation>Nincs</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="393"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="412"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="431"/>
+        <source>unknown (%1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="433"/>
+        <source>NA</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="487"/>
         <source>All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="471"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="527"/>
+        <source>(PROXY)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="571"/>
         <source>(variable)</source>
+        <translation>(változó)</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/avformatproducerwidget.ui" line="856"/>
+        <source>Proxy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="512"/>
-        <source>This file is variable frame rate, which is not reliable for editing. Do you want to convert it to an edit-friendly format?
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="196"/>
+        <source> Do you want to convert it to an edit-friendly format?
 
-If yes, choose a format below and then click OK to choose a file name. After choosing a file name, a job is created. When it is done, double-click the job to open it.
+If yes, choose a format below and then click OK to choose a file name. After choosing a file name, a job is created. When it is done, it automatically replaces clips, or you can double-click the job to open it.
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="525"/>
-        <source>This file does not support seeking and cannot be used for editing. Do you want to convert it to an edit-friendly format?
-
-If yes, choose a format below and then click OK to choose a file name. After choosing a file name, a job is created. When it is done, double-click the job to open it.
-</source>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="610"/>
+        <source>This file uses color transfer characteristics %1, which may result in incorrect colors or brightness in Shotcut.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="731"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="814"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="613"/>
+        <source>This file is variable frame rate, which is not reliable for editing.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="616"/>
+        <source>This file does not support seeking and cannot be used for editing.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="802"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1028"/>
         <source>Choose an edit-friendly format below and then click OK to choose a file name. After choosing a file name, a job is created. When it is done, double-click the job to open it.
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="766"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="878"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="915"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1105"/>
         <source>MP4 (*.mp4);;All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>MP4 (*.mp4);;Minden fájl (*)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="778"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="901"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="927"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1128"/>
         <source>MOV (*.mov);;All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>MOV (*.mov);;Minden fájl (*)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="784"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="912"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="933"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1139"/>
         <source>MKV (*.mkv);;All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>MKV (*.mkv);;Minden fájl (*)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="788"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="940"/>
         <source>Converted</source>
-        <translation type="unfinished"></translation>
+        <translation>Konvertálva</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="805"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="946"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="964"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1175"/>
         <source>Convert %1</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 konvertálása</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="916"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1143"/>
         <source>Reversed</source>
-        <translation type="unfinished"></translation>
+        <translation>Megfordítva</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="954"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1183"/>
         <source>Reverse %1</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 megfordítása</translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="984"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="940"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1213"/>
         <source>Sub-clip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="986"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1215"/>
         <source>%1 (*.%2);;All Files (*)</source>
+        <translation>%1 (*.%2);;Minden fájl (*)</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1255"/>
+        <source>Extract sub-clip %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1024"/>
-        <source>Extract sub-clip %1</source>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1362"/>
+        <source>The hash code below is already copied to your clipboard:
+
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1406"/>
+        <source>Set Equirectangular Projection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1416"/>
+        <source>Successfully wrote %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1418"/>
+        <source>An error occurred saving the projection.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -547,13 +646,13 @@ If yes, choose a format below and then click OK to choose a file name. After cho
     <message>
         <location filename="../src/widgets/avfoundationproducerwidget.ui" line="14"/>
         <source>Form</source>
-        <translation>Adatlap</translation>
+        <translation>Űrlap</translation>
     </message>
     <message>
         <location filename="../src/widgets/avfoundationproducerwidget.ui" line="26"/>
         <location filename="../src/widgets/avfoundationproducerwidget.cpp" line="78"/>
         <source>Audio/Video Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Hang-/videoeszköz</translation>
     </message>
     <message>
         <location filename="../src/widgets/avfoundationproducerwidget.ui" line="39"/>
@@ -566,69 +665,109 @@ If yes, choose a format below and then click OK to choose a file name. After cho
     <message>
         <location filename="../src/widgets/avfoundationproducerwidget.ui" line="47"/>
         <source>Video Input</source>
-        <translation>Videó kimenet</translation>
+        <translation>Videobemenet</translation>
     </message>
     <message>
         <location filename="../src/widgets/avfoundationproducerwidget.ui" line="66"/>
         <source>Audio Input</source>
-        <translation>Audió bemenet</translation>
+        <translation>Hangbemenet</translation>
+    </message>
+</context>
+<context>
+    <name>BlipProducerWidget</name>
+    <message>
+        <location filename="../src/widgets/blipproducerwidget.ui" line="14"/>
+        <source>Form</source>
+        <translation>Űrlap</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/blipproducerwidget.ui" line="26"/>
+        <source>Blip Flash</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/blipproducerwidget.ui" line="41"/>
+        <source>Frequency</source>
+        <translation>Frekvencia</translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../src/widgets/blipproducerwidget.cpp" line="65"/>
+        <source> second(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/blipproducerwidget.cpp" line="87"/>
+        <source>Period: %1s</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>Clip</name>
     <message>
-        <location filename="../src/qml/views/timeline/Clip.qml" line="629"/>
+        <location filename="../src/qml/views/timeline/Clip.qml" line="631"/>
         <source>Cut</source>
-        <translation>Vágás</translation>
+        <translation>Kivágás</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/Clip.qml" line="641"/>
+        <location filename="../src/qml/views/timeline/Clip.qml" line="643"/>
         <source>Copy</source>
         <translation>Másolás</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/Clip.qml" line="648"/>
+        <location filename="../src/qml/views/timeline/Clip.qml" line="647"/>
         <source>Remove</source>
-        <translation>Törlés</translation>
+        <translation>Eltávolítás</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/Clip.qml" line="653"/>
+        <location filename="../src/qml/views/timeline/Clip.qml" line="656"/>
+        <source>More</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/views/timeline/Clip.qml" line="659"/>
         <source>Lift</source>
         <translation>Kiemelés</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/Clip.qml" line="658"/>
+        <location filename="../src/qml/views/timeline/Clip.qml" line="664"/>
         <source>Replace</source>
         <translation>Csere</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/Clip.qml" line="667"/>
-        <source>Split At Playhead (S)</source>
-        <translation>Szétválasztás a lejátszófejnél (S)</translation>
+        <location filename="../src/qml/views/timeline/Clip.qml" line="709"/>
+        <source>Cancel</source>
+        <translation>Mégse</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/Clip.qml" line="673"/>
+        <location filename="../src/qml/views/timeline/Clip.qml" line="652"/>
+        <source>Split At Playhead</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/views/timeline/Clip.qml" line="669"/>
         <source>Merge with next clip</source>
         <translation>Egyesítés a következő klippel</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/Clip.qml" line="678"/>
+        <location filename="../src/qml/views/timeline/Clip.qml" line="674"/>
         <source>Detach Audio</source>
-        <translation type="unfinished"></translation>
+        <translation>Hang leválasztása</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/Clip.qml" line="683"/>
+        <location filename="../src/qml/views/timeline/Clip.qml" line="679"/>
         <source>Update Thumbnails</source>
-        <translation type="unfinished"></translation>
+        <translation>Bélyegképek frissítése</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/keyframes/Clip.qml" line="489"/>
-        <location filename="../src/qml/views/timeline/Clip.qml" line="699"/>
+        <location filename="../src/qml/views/keyframes/Clip.qml" line="492"/>
+        <location filename="../src/qml/views/timeline/Clip.qml" line="695"/>
         <source>Rebuild Audio Waveform</source>
         <translation>Hanghullám újraépítése</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/Clip.qml" line="704"/>
+        <location filename="../src/qml/views/timeline/Clip.qml" line="701"/>
         <source>Properties</source>
         <translation>Tulajdonságok</translation>
     </message>
@@ -636,12 +775,12 @@ If yes, choose a format below and then click OK to choose a file name. After cho
 <context>
     <name>ClockSpinner</name>
     <message>
-        <location filename="../src/qml/filters/timer/ClockSpinner.qml" line="103"/>
+        <location filename="../src/qml/filters/timer/ClockSpinner.qml" line="108"/>
         <source>Decrement</source>
         <translation>Csökkenés</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/timer/ClockSpinner.qml" line="124"/>
+        <location filename="../src/qml/filters/timer/ClockSpinner.qml" line="129"/>
         <source>Increment</source>
         <translation>Növekedés</translation>
     </message>
@@ -651,7 +790,7 @@ If yes, choose a format below and then click OK to choose a file name. After cho
     <message>
         <location filename="../src/widgets/colorbarswidget.ui" line="14"/>
         <source>Form</source>
-        <translation>Adatlap</translation>
+        <translation>Űrlap</translation>
     </message>
     <message>
         <location filename="../src/widgets/colorbarswidget.ui" line="26"/>
@@ -707,19 +846,19 @@ If yes, choose a format below and then click OK to choose a file name. After cho
 <context>
     <name>ColorPicker</name>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/ColorPicker.qml" line="57"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/ColorPicker.qml" line="53"/>
         <source>Click to open color dialog</source>
-        <translation>Kattints a színkeverő megnyitásához</translation>
+        <translation>Kattintson a színkeverő megnyitásához</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/ColorPicker.qml" line="62"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/ColorPicker.qml" line="59"/>
         <source>Please choose a color</source>
-        <translation>Válassz egy színt</translation>
+        <translation>Válasszon ki egy színt</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/ColorPicker.qml" line="86"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/ColorPicker.qml" line="83"/>
         <source>Pick a color on the screen. By pressing the mouse button and then moving your mouse you can select a section of the screen from which to get an average color.</source>
-        <translation>Válasszon egy színt a képernyőn. Ha húzza az egeret, miközben nyomva tartja a gombot, kijelölhet egy részt a képernyőn, amelynek az átlaga lesz a szín.</translation>
+        <translation>Válasszon ki egy színt a képernyőn. Az egérgomb lenyomásával, majd az egér mozgatásával kijelölheti a képernyő egy részét, amelynek megkapja az átlagszínét.</translation>
     </message>
 </context>
 <context>
@@ -727,7 +866,7 @@ If yes, choose a format below and then click OK to choose a file name. After cho
     <message>
         <location filename="../src/widgets/colorproducerwidget.ui" line="14"/>
         <source>Form</source>
-        <translation>Adatlap</translation>
+        <translation>Űrlap</translation>
     </message>
     <message>
         <location filename="../src/widgets/colorproducerwidget.ui" line="20"/>
@@ -737,12 +876,22 @@ If yes, choose a format below and then click OK to choose a file name. After cho
     <message>
         <location filename="../src/widgets/colorproducerwidget.ui" line="35"/>
         <source>Color...</source>
-        <translation>Szín...</translation>
+        <translation>Szín…</translation>
     </message>
     <message>
         <location filename="../src/widgets/colorproducerwidget.ui" line="48"/>
         <source>#00000000</source>
         <translation>#00000000</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/colorproducerwidget.cpp" line="56"/>
+        <source>black</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/colorproducerwidget.cpp" line="58"/>
+        <source>transparent</source>
+        <translation>Átlátszó</translation>
     </message>
 </context>
 <context>
@@ -750,7 +899,7 @@ If yes, choose a format below and then click OK to choose a file name. After cho
     <message>
         <location filename="../src/widgets/countproducerwidget.ui" line="14"/>
         <source>Form</source>
-        <translation>Adatlap</translation>
+        <translation>Űrlap</translation>
     </message>
     <message>
         <location filename="../src/widgets/countproducerwidget.ui" line="26"/>
@@ -887,47 +1036,47 @@ If yes, choose a format below and then click OK to choose a file name. After cho
         <translation>:</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/customprofiledialog.ui" line="145"/>
+        <location filename="../src/dialogs/customprofiledialog.ui" line="180"/>
         <source>Name</source>
         <translation>Név</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/customprofiledialog.ui" line="167"/>
+        <location filename="../src/dialogs/customprofiledialog.ui" line="202"/>
         <source>Interlaced</source>
         <translation>Összefűzött</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/customprofiledialog.ui" line="172"/>
+        <location filename="../src/dialogs/customprofiledialog.ui" line="207"/>
         <source>Progressive</source>
         <translation>Progresszív</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/customprofiledialog.ui" line="195"/>
+        <location filename="../src/dialogs/customprofiledialog.ui" line="230"/>
         <source>Aspect ratio</source>
         <translation>Képarány</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/customprofiledialog.ui" line="229"/>
+        <location filename="../src/dialogs/customprofiledialog.ui" line="264"/>
         <source>x</source>
         <translation>x</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/customprofiledialog.ui" line="267"/>
+        <location filename="../src/dialogs/customprofiledialog.ui" line="352"/>
         <source>Frames/sec</source>
         <translation>Képkocka/mp</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/customprofiledialog.ui" line="373"/>
+        <location filename="../src/dialogs/customprofiledialog.ui" line="453"/>
         <source>Scan mode</source>
         <translation>Beolvasás módja</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/customprofiledialog.ui" line="405"/>
+        <location filename="../src/dialogs/customprofiledialog.ui" line="485"/>
         <source>&lt;small&gt;(Leave Name blank to skip saving a preset and use a temporary or project-specific Video Mode.)&lt;/small&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/customprofiledialog.cpp" line="122"/>
+        <location filename="../src/dialogs/customprofiledialog.cpp" line="120"/>
         <source>Video Mode Frames/sec</source>
         <translation type="unfinished"></translation>
     </message>
@@ -937,7 +1086,7 @@ If yes, choose a format below and then click OK to choose a file name. After cho
     <message>
         <location filename="../src/widgets/decklinkproducerwidget.ui" line="14"/>
         <source>Form</source>
-        <translation>Adatlap</translation>
+        <translation>Űrlap</translation>
     </message>
     <message>
         <location filename="../src/widgets/decklinkproducerwidget.ui" line="26"/>
@@ -953,7 +1102,7 @@ If yes, choose a format below and then click OK to choose a file name. After cho
     <message>
         <location filename="../src/widgets/decklinkproducerwidget.ui" line="67"/>
         <source>Signal mode</source>
-        <translation>Jel mód</translation>
+        <translation>Jelmód</translation>
     </message>
     <message>
         <location filename="../src/widgets/decklinkproducerwidget.ui" line="85"/>
@@ -963,20 +1112,7 @@ If yes, choose a format below and then click OK to choose a file name. After cho
     <message>
         <location filename="../src/widgets/decklinkproducerwidget.cpp" line="30"/>
         <source>Detect Automatically</source>
-        <translation>Érzékelje automatikusan</translation>
-    </message>
-</context>
-<context>
-    <name>Dialog</name>
-    <message>
-        <location filename="../src/htmleditor/inserthtmldialog.ui" line="14"/>
-        <source>Insert HTML</source>
-        <translation>HTML beszúrása</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/inserthtmldialog.ui" line="20"/>
-        <source>HTML Code:</source>
-        <translation>HTML kód:</translation>
+        <translation>Automatikus felismerés</translation>
     </message>
 </context>
 <context>
@@ -984,13 +1120,13 @@ If yes, choose a format below and then click OK to choose a file name. After cho
     <message>
         <location filename="../src/widgets/directshowvideowidget.ui" line="14"/>
         <source>Form</source>
-        <translation>Adatlap</translation>
+        <translation>Űrlap</translation>
     </message>
     <message>
         <location filename="../src/widgets/directshowvideowidget.ui" line="26"/>
-        <location filename="../src/widgets/directshowvideowidget.cpp" line="96"/>
+        <location filename="../src/widgets/directshowvideowidget.cpp" line="139"/>
         <source>Audio/Video Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Hang-/videoeszköz</translation>
     </message>
     <message>
         <location filename="../src/widgets/directshowvideowidget.ui" line="52"/>
@@ -1001,12 +1137,12 @@ If yes, choose a format below and then click OK to choose a file name. After cho
     <message>
         <location filename="../src/widgets/directshowvideowidget.ui" line="60"/>
         <source>Video Input</source>
-        <translation>Videó kimenet</translation>
+        <translation>Videobemenet</translation>
     </message>
     <message>
         <location filename="../src/widgets/directshowvideowidget.ui" line="70"/>
         <source>Audio Input</source>
-        <translation>Audió bemenet</translation>
+        <translation>Hangbemenet</translation>
     </message>
 </context>
 <context>
@@ -1023,174 +1159,222 @@ If yes, choose a format below and then click OK to choose a file name. After cho
     </message>
 </context>
 <context>
+    <name>EditMenu</name>
+    <message>
+        <location filename="../src/qml/modules/Shotcut/Controls/EditMenu.qml" line="29"/>
+        <source>Undo</source>
+        <translation>Visszavonás</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/modules/Shotcut/Controls/EditMenu.qml" line="35"/>
+        <source>Redo</source>
+        <translation>Újra</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/modules/Shotcut/Controls/EditMenu.qml" line="42"/>
+        <source>Cut</source>
+        <translation>Kivágás</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/modules/Shotcut/Controls/EditMenu.qml" line="48"/>
+        <source>Copy</source>
+        <translation>Másolás</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/modules/Shotcut/Controls/EditMenu.qml" line="54"/>
+        <source>Paste</source>
+        <translation>Beillesztés</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/modules/Shotcut/Controls/EditMenu.qml" line="60"/>
+        <source>Delete</source>
+        <translation>Törlés</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/modules/Shotcut/Controls/EditMenu.qml" line="66"/>
+        <source>Clear</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/modules/Shotcut/Controls/EditMenu.qml" line="76"/>
+        <source>Select All</source>
+        <translation>Az összes kijelölése</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/modules/Shotcut/Controls/EditMenu.qml" line="81"/>
+        <source>Cancel</source>
+        <translation>Mégse</translation>
+    </message>
+</context>
+<context>
     <name>EncodeDock</name>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="24"/>
+        <location filename="../src/docks/encodedock.ui" line="18"/>
         <source>Export</source>
         <translation>Exportálás</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="51"/>
+        <location filename="../src/docks/encodedock.ui" line="45"/>
         <source>&lt;b&gt;Presets&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Előbeállítások&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="64"/>
+        <location filename="../src/docks/encodedock.ui" line="58"/>
         <source>search</source>
         <translation>keresés</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="95"/>
+        <location filename="../src/docks/encodedock.ui" line="89"/>
         <source>Add current settings as a new custom preset</source>
-        <translation>A jelenlegi beállítások elmentése új, egyedi sablonként</translation>
+        <translation>Jelenlegi beállítások hozzáadása új egyedi előbeállításként</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="109"/>
+        <location filename="../src/docks/encodedock.ui" line="103"/>
         <source>Delete currently selected preset</source>
-        <translation>A kiválasztott sablon törlése</translation>
+        <translation>A jelenleg kijelölt előbeállítás törlése</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="175"/>
+        <location filename="../src/docks/encodedock.ui" line="169"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Export Help&lt;/span&gt;&lt;/p&gt;&lt;p&gt;The defaults create a H.264/AAC MP4 file, which is suitable for most users and purposes. Choose a &lt;span style=&quot; font-weight:600;&quot;&gt;Preset&lt;/span&gt; at the left before deciding to use the &lt;span style=&quot; font-weight:600;&quot;&gt;Advanced&lt;/span&gt; mode. The &lt;span style=&quot; font-weight:600;&quot;&gt;Advanced&lt;/span&gt; mode does not prevent creating an invalid combination of options!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Exportálás Súgó&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Az alapértelmezett értékek egy H.264 / AAC MP4 fájlt hoznak létre, amely a legtöbb felhasználó számára és a legtöbb célra megfelelő. Próbáljon a baloldali &lt;span style=&quot; font-weight:600;&quot;&gt;előbeállítások&lt;/span&gt;  közül választani, mielőtt a &lt;span style=&quot; font-weight:600;&quot;&gt;Haladó&lt;/span&gt; módot választja. A &lt;span style=&quot; font-weight:600;&quot;&gt;Haladó&lt;/span&gt; mód nem akadályozza meg az opciók érvénytelen kombinációjának létrehozását!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Exportálás súgó&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Az alapértelmezett értékek egy H.264 / AAC MP4 fájlt hoznak létre, amely a legtöbb felhasználó számára és a legtöbb célra megfelelő. Válasszon a baloldali &lt;span style=&quot; font-weight:600;&quot;&gt;előbeállítások&lt;/span&gt;  közül, mielőtt a &lt;span style=&quot; font-weight:600;&quot;&gt;Haladó&lt;/span&gt; mód mellett dönt. A &lt;span style=&quot; font-weight:600;&quot;&gt;Haladó&lt;/span&gt; mód nem akadályozza meg az opciók érvénytelen kombinációjának létrehozását!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="193"/>
+        <location filename="../src/docks/encodedock.ui" line="187"/>
         <source>From</source>
         <translation>Ebből</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="223"/>
+        <location filename="../src/docks/encodedock.ui" line="217"/>
         <source>Format</source>
         <translation>Formátum</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="259"/>
+        <location filename="../src/docks/encodedock.ui" line="253"/>
         <source>Use hardware encoder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="266"/>
+        <location filename="../src/docks/encodedock.ui" line="260"/>
         <source>Configure...</source>
-        <translation type="unfinished"></translation>
+        <translation>Konfigurálás…</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="300"/>
+        <location filename="../src/docks/encodedock.ui" line="294"/>
         <source>Video</source>
         <translation>Videó</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="761"/>
+        <location filename="../src/docks/encodedock.ui" line="755"/>
         <source>Interpolation</source>
         <translation>Interpoláció</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="354"/>
+        <location filename="../src/docks/encodedock.ui" line="348"/>
         <source>Field order</source>
         <translation>Mezők sorrendje</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="364"/>
+        <location filename="../src/docks/encodedock.ui" line="358"/>
         <source>Aspect ratio</source>
         <translation>Képarány</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="582"/>
+        <location filename="../src/docks/encodedock.ui" line="576"/>
         <source>x</source>
         <translation>x</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="324"/>
+        <location filename="../src/docks/encodedock.ui" line="318"/>
         <source>Scan mode</source>
         <translation>Beolvasás módja</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="383"/>
+        <location filename="../src/docks/encodedock.ui" line="377"/>
         <source>Interlaced</source>
         <translation>Ősszefűzött</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="388"/>
+        <location filename="../src/docks/encodedock.ui" line="382"/>
         <source>Progressive</source>
         <translation>Progresszív</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="344"/>
+        <location filename="../src/docks/encodedock.ui" line="338"/>
         <source>Resolution</source>
         <translation>Felbontás</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="698"/>
+        <location filename="../src/docks/encodedock.ui" line="692"/>
         <source>Frames/sec</source>
         <translation>Képkocka/mp</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="726"/>
+        <location filename="../src/docks/encodedock.ui" line="720"/>
         <source>:</source>
         <translation>:</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="626"/>
+        <location filename="../src/docks/encodedock.ui" line="620"/>
         <source>Bottom Field First</source>
         <translation>Alsó mező először</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="631"/>
+        <location filename="../src/docks/encodedock.ui" line="625"/>
         <source>Top Field First</source>
         <translation>Felső mező először</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="417"/>
+        <location filename="../src/docks/encodedock.ui" line="411"/>
         <source>One Field (fast)</source>
         <translation>Egy mező (gyors)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="422"/>
+        <location filename="../src/docks/encodedock.ui" line="416"/>
         <source>Linear Blend (fast)</source>
         <translation>Lineáris keverés (gyors)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="427"/>
+        <location filename="../src/docks/encodedock.ui" line="421"/>
         <source>YADIF - temporal only (good)</source>
         <translation>YADIF - csak időbeli (jó)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="432"/>
+        <location filename="../src/docks/encodedock.ui" line="426"/>
         <source>YADIF - temporal + spatial (best)</source>
         <translation>Yadif - időbeli + térbeli (legjobb)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="334"/>
+        <location filename="../src/docks/encodedock.ui" line="328"/>
         <source>Deinterlacer</source>
-        <translation>Deinterlacer</translation>
+        <translation>Összefűzést megszüntető eszköz</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="660"/>
+        <location filename="../src/docks/encodedock.ui" line="654"/>
         <source>Nearest Neighbor (fast)</source>
         <translation>Legközelebbi szomszéd (gyors)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="665"/>
+        <location filename="../src/docks/encodedock.ui" line="659"/>
         <source>Bilinear (good)</source>
         <translation>Bilinear (jó)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="670"/>
+        <location filename="../src/docks/encodedock.ui" line="664"/>
         <source>Bicubic (better)</source>
         <translation>Bicubic (jobb)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="675"/>
+        <location filename="../src/docks/encodedock.ui" line="669"/>
         <source>Hyper/Lanczos (best)</source>
         <translation>Hyper/Lanczos (legjobb)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="771"/>
+        <location filename="../src/docks/encodedock.ui" line="765"/>
         <source>Use preview scaling</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="778"/>
+        <location filename="../src/docks/encodedock.ui" line="772"/>
         <source>This enables multiple image processing threads.
 Sometimes, this can be a problem, and you can
 test if turning this off helps. For example, some
@@ -1200,401 +1384,425 @@ with parallel processing enabled.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="786"/>
+        <location filename="../src/docks/encodedock.ui" line="780"/>
         <source>Parallel processing</source>
         <translation>Párhuzamos feldolgozás</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="800"/>
-        <location filename="../src/docks/encodedock.ui" line="809"/>
-        <location filename="../src/docks/encodedock.ui" line="1487"/>
+        <location filename="../src/docks/encodedock.ui" line="794"/>
+        <location filename="../src/docks/encodedock.ui" line="803"/>
+        <location filename="../src/docks/encodedock.ui" line="1481"/>
         <source>Codec</source>
         <translation>Kodek</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="839"/>
+        <location filename="../src/docks/encodedock.ui" line="833"/>
         <source>GOP</source>
         <translation>GOP</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="851"/>
+        <location filename="../src/docks/encodedock.ui" line="845"/>
         <source>GOP = group of pictures, which is the maximum key frame interval</source>
         <translation>GOP = képek csoportja, amely a maximális kulcsképkocka intervallum</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="864"/>
+        <location filename="../src/docks/encodedock.ui" line="858"/>
         <source>frames</source>
         <translation>képkocka</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="884"/>
+        <location filename="../src/docks/encodedock.ui" line="878"/>
         <source>A fixed GOP means that keyframes will
 not be inserted at detected scene changes.</source>
         <translation>A rögzített GOP azt jelenti, hogy a kulcsképkockák nem kerülnek beszúrásra az érzékelt jelenet változásoknál</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="888"/>
+        <location filename="../src/docks/encodedock.ui" line="882"/>
         <source>Fixed</source>
         <translation>Állandó</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="912"/>
-        <location filename="../src/docks/encodedock.ui" line="1529"/>
+        <location filename="../src/docks/encodedock.ui" line="906"/>
+        <location filename="../src/docks/encodedock.ui" line="1523"/>
         <source>The average bit rate</source>
         <translation>Az átlagos bitráta</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1065"/>
-        <location filename="../src/docks/encodedock.ui" line="1607"/>
+        <location filename="../src/docks/encodedock.ui" line="1059"/>
+        <location filename="../src/docks/encodedock.ui" line="1606"/>
         <source>b/s</source>
         <translation>b/mp</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1087"/>
+        <location filename="../src/docks/encodedock.ui" line="1081"/>
         <source>Disable video</source>
         <translation>Videó kikapcsolása</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1094"/>
+        <location filename="../src/docks/encodedock.ui" line="1088"/>
         <source>Dual pass</source>
         <translation>Kettős menetben</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1101"/>
+        <location filename="../src/docks/encodedock.ui" line="1095"/>
         <source>B frames</source>
         <translation>B képkockák</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1113"/>
+        <location filename="../src/docks/encodedock.ui" line="1107"/>
         <source>B frames are the bidirectional &quot;delta&quot; pictures
 in temporal compression</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1152"/>
+        <location filename="../src/docks/encodedock.ui" line="1146"/>
         <source>Codec threads</source>
         <translation>Kodek szálak</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1167"/>
+        <location filename="../src/docks/encodedock.ui" line="1161"/>
         <source>(0 = auto)</source>
         <translation>(0 = auto)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1189"/>
-        <location filename="../src/docks/encodedock.ui" line="1649"/>
+        <location filename="../src/docks/encodedock.ui" line="1183"/>
+        <location filename="../src/docks/encodedock.ui" line="1648"/>
         <source>Rate control</source>
         <translation>Bitráta</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1202"/>
-        <location filename="../src/docks/encodedock.ui" line="1662"/>
+        <location filename="../src/docks/encodedock.ui" line="1196"/>
+        <location filename="../src/docks/encodedock.ui" line="1661"/>
         <source>Average Bitrate</source>
         <translation>Átlagos bitrate</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1207"/>
-        <location filename="../src/docks/encodedock.ui" line="1667"/>
+        <location filename="../src/docks/encodedock.ui" line="1201"/>
+        <location filename="../src/docks/encodedock.ui" line="1666"/>
         <source>Constant Bitrate</source>
         <translation>Állandó bitráta</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1212"/>
-        <location filename="../src/docks/encodedock.ui" line="1672"/>
+        <location filename="../src/docks/encodedock.ui" line="1206"/>
+        <location filename="../src/docks/encodedock.ui" line="1671"/>
         <source>Quality-based VBR</source>
         <translation>Minőség alapú változó bitráta</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1217"/>
+        <location filename="../src/docks/encodedock.ui" line="1211"/>
         <source>Constrained VBR</source>
         <translation>Korlátozott változó bitráta</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1240"/>
+        <location filename="../src/docks/encodedock.ui" line="1234"/>
         <source>Buffer size</source>
         <translation>Pufferméret</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1262"/>
+        <location filename="../src/docks/encodedock.ui" line="1256"/>
         <source>KiB</source>
         <translation>KiB</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1284"/>
-        <location filename="../src/docks/encodedock.ui" line="1695"/>
+        <location filename="../src/docks/encodedock.ui" line="1278"/>
+        <location filename="../src/docks/encodedock.ui" line="1694"/>
         <source>Quality</source>
         <translation>Minőség</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1296"/>
-        <location filename="../src/docks/encodedock.ui" line="1707"/>
+        <location filename="../src/docks/encodedock.ui" line="1290"/>
+        <location filename="../src/docks/encodedock.ui" line="1706"/>
         <source> %</source>
         <translation>%</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1312"/>
-        <location filename="../src/docks/encodedock.ui" line="1723"/>
+        <location filename="../src/docks/encodedock.ui" line="1306"/>
+        <location filename="../src/docks/encodedock.ui" line="1722"/>
         <source>TextLabel</source>
         <translation>Szövegcímke</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1334"/>
-        <location filename="../src/docks/encodedock.ui" line="1517"/>
+        <location filename="../src/docks/encodedock.ui" line="1328"/>
+        <location filename="../src/docks/encodedock.ui" line="1511"/>
         <source>Bitrate</source>
         <translation>Bitráta</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1345"/>
+        <location filename="../src/docks/encodedock.ui" line="1339"/>
         <source>Audio</source>
         <translation>Hang</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1354"/>
+        <location filename="../src/docks/encodedock.ui" line="1348"/>
         <source>Channels</source>
         <translation>Csatornák</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1366"/>
+        <location filename="../src/docks/encodedock.ui" line="1360"/>
         <source>The number of audio channels in the output.</source>
-        <translation type="unfinished"></translation>
+        <translation>A hangcsatornák száma a kimenetnél</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1370"/>
+        <location filename="../src/docks/encodedock.ui" line="1364"/>
         <source>1 (mono)</source>
-        <translation type="unfinished"></translation>
+        <translation>1 (mono)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1375"/>
+        <location filename="../src/docks/encodedock.ui" line="1369"/>
         <source>2 (stereo)</source>
-        <translation type="unfinished"></translation>
+        <translation>2 (sztereó)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1380"/>
+        <location filename="../src/docks/encodedock.ui" line="1374"/>
         <source>6 (5.1)</source>
-        <translation type="unfinished">6 (5.1)</translation>
+        <translation>6 (5.1)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1455"/>
+        <location filename="../src/docks/encodedock.ui" line="1449"/>
         <source>Hz</source>
         <translation>Hz</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1477"/>
+        <location filename="../src/docks/encodedock.ui" line="1471"/>
         <source>Sample rate</source>
         <translation>Mintavételezés sebessége</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1629"/>
+        <location filename="../src/docks/encodedock.ui" line="1628"/>
         <source>Disable audio</source>
         <translation>Hang kikapcsolása</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1746"/>
+        <location filename="../src/docks/encodedock.ui" line="1745"/>
         <source>Other</source>
         <translation>Más</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1788"/>
-        <location filename="../src/docks/encodedock.cpp" line="880"/>
-        <location filename="../src/docks/encodedock.cpp" line="1350"/>
-        <location filename="../src/docks/encodedock.cpp" line="1783"/>
+        <location filename="../src/docks/encodedock.ui" line="1787"/>
+        <location filename="../src/docks/encodedock.cpp" line="892"/>
+        <location filename="../src/docks/encodedock.cpp" line="1413"/>
+        <location filename="../src/docks/encodedock.cpp" line="1860"/>
         <source>Export File</source>
         <translation>Fájl exportálása</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1798"/>
+        <location filename="../src/docks/encodedock.ui" line="1797"/>
         <source>Reset options to defaults</source>
         <translation>Beállítások visszaállítása eredeti értékre</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1801"/>
+        <location filename="../src/docks/encodedock.ui" line="1800"/>
         <source>Reset</source>
         <translation>Alapértékek visszaállítása</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1808"/>
+        <location filename="../src/docks/encodedock.ui" line="1807"/>
         <source>Advanced</source>
-        <translation>Haladó</translation>
+        <translation>Speciális</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1818"/>
+        <location filename="../src/docks/encodedock.ui" line="1817"/>
         <source>Always start in Advanced mode</source>
-        <translation>Mindig haladó módban induljon</translation>
+        <translation>Mindig speciális módban induljon</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1828"/>
-        <location filename="../src/docks/encodedock.cpp" line="1493"/>
-        <location filename="../src/docks/encodedock.cpp" line="1500"/>
-        <location filename="../src/docks/encodedock.cpp" line="1611"/>
+        <location filename="../src/docks/encodedock.ui" line="1827"/>
+        <location filename="../src/docks/encodedock.cpp" line="1573"/>
+        <location filename="../src/docks/encodedock.cpp" line="1580"/>
+        <location filename="../src/docks/encodedock.cpp" line="1693"/>
         <source>Stream</source>
         <translation>Stream</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1855"/>
-        <location filename="../src/docks/encodedock.cpp" line="1330"/>
-        <location filename="../src/docks/encodedock.cpp" line="1416"/>
-        <location filename="../src/docks/encodedock.cpp" line="1430"/>
+        <location filename="../src/docks/encodedock.ui" line="1854"/>
+        <location filename="../src/docks/encodedock.cpp" line="1388"/>
+        <location filename="../src/docks/encodedock.cpp" line="1497"/>
+        <location filename="../src/docks/encodedock.cpp" line="1511"/>
         <source>Stop Capture</source>
         <translation>Felvétel leállítása</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="102"/>
+        <location filename="../src/docks/encodedock.cpp" line="108"/>
         <source>Automatic from extension</source>
         <translation>Automatikusan a kiterjesztésből</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="110"/>
-        <location filename="../src/docks/encodedock.cpp" line="120"/>
+        <location filename="../src/docks/encodedock.cpp" line="116"/>
+        <location filename="../src/docks/encodedock.cpp" line="126"/>
         <source>Default for format</source>
         <translation>Alapértelmezett formátum</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="388"/>
+        <location filename="../src/docks/encodedock.cpp" line="397"/>
         <source>Timeline</source>
         <translation>Idővonal</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="390"/>
+        <location filename="../src/docks/encodedock.cpp" line="399"/>
         <source>Playlist</source>
         <translation>Lejátszási lista</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="392"/>
+        <location filename="../src/docks/encodedock.cpp" line="400"/>
         <source>Each Playlist Item</source>
         <translation>Minden lejátszási lista elem</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="395"/>
-        <location filename="../src/docks/encodedock.cpp" line="400"/>
+        <location filename="../src/docks/encodedock.cpp" line="404"/>
+        <location filename="../src/docks/encodedock.cpp" line="409"/>
         <source>Source</source>
         <translation>Forrás</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="407"/>
+        <location filename="../src/docks/encodedock.cpp" line="416"/>
         <source>You must enter numeric values using &apos;%1&apos; as the decimal point.</source>
-        <translation type="unfinished"></translation>
+        <translation>A számszerű értékeknél tizedesvesszőként ezt kell használni: &apos;%1&apos;.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="415"/>
-        <location filename="../src/docks/encodedock.cpp" line="1277"/>
-        <location filename="../src/docks/encodedock.cpp" line="1278"/>
+        <location filename="../src/docks/encodedock.cpp" line="424"/>
+        <location filename="../src/docks/encodedock.cpp" line="1335"/>
+        <location filename="../src/docks/encodedock.cpp" line="1336"/>
         <source>Custom</source>
         <translation>Egyedi</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="451"/>
+        <location filename="../src/docks/encodedock.cpp" line="460"/>
         <source>Stock</source>
         <translation>Készlet</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="454"/>
+        <location filename="../src/docks/encodedock.cpp" line="463"/>
         <source>Default</source>
         <translation>Alapértelmezett</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="932"/>
+        <location filename="../src/docks/encodedock.cpp" line="946"/>
         <source>You cannot write to a file that is in your project.
 Try again with a different folder or file name.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nem írhat a projektben található egyik fájlba.
+Próbálkozzék újra egy másik mappa- vagy fájlnévvel.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1080"/>
+        <location filename="../src/docks/encodedock.cpp" line="1098"/>
         <source>Shotcut found filters that require analysis jobs that have not run.
 Do you want to run the analysis jobs now?</source>
-        <translation type="unfinished"></translation>
+        <translation>A Shotcut olyan szűrőket talált, amelyek még le nem futtatott elemzési feladatokat igényelnek.
+Szeretné ezeket az elemzési feladatokat most lefuttatni?</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1350"/>
-        <location filename="../src/docks/encodedock.cpp" line="1785"/>
+        <location filename="../src/docks/encodedock.cpp" line="1413"/>
+        <location filename="../src/docks/encodedock.cpp" line="1862"/>
         <source>Capture File</source>
         <translation>Fájl felvétele</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1353"/>
-        <source>%1 (*.%2);;All Files (*)</source>
+        <location filename="../src/docks/encodedock.cpp" line="1415"/>
+        <source>Export Files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1355"/>
+        <location filename="../src/docks/encodedock.cpp" line="1416"/>
+        <source>Export Each Playlist Item</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/encodedock.cpp" line="1425"/>
+        <source>%1 (*.%2);;All Files (*)</source>
+        <translation>%1 (*.%2);;Minden fájl (*)</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/encodedock.cpp" line="1427"/>
         <source>Determined by Export (*)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1374"/>
+        <location filename="../src/docks/encodedock.cpp" line="1454"/>
         <source>The drive you chose only has %1 MiB of free space.
 Do you still want to continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1381"/>
+        <location filename="../src/docks/encodedock.cpp" line="1461"/>
         <source>Do not show this anymore.</source>
         <comment>Export free disk space warning dialog</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ne jelenjék meg többé.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1386"/>
+        <location filename="../src/docks/encodedock.cpp" line="1466"/>
         <source>Export canceled.</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportálás megszakítva.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1488"/>
-        <location filename="../src/docks/encodedock.cpp" line="1509"/>
+        <location filename="../src/docks/encodedock.cpp" line="1568"/>
+        <location filename="../src/docks/encodedock.cpp" line="1589"/>
         <source>Stop Stream</source>
         <translation>Stream leállítása</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1501"/>
+        <location filename="../src/docks/encodedock.cpp" line="1581"/>
         <source>Enter the network protocol scheme, address, port, and parameters as an URL:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1546"/>
+        <location filename="../src/docks/encodedock.cpp" line="1626"/>
         <source>Add Export Preset</source>
-        <translation>Exportálási sablon hozzáadása</translation>
+        <translation>Exportálási előbeállítás hozzáadása</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1588"/>
+        <location filename="../src/docks/encodedock.cpp" line="1670"/>
         <source>Delete Preset</source>
-        <translation>Sablon törlése</translation>
+        <translation>Előbeállítás törlése</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1589"/>
+        <location filename="../src/docks/encodedock.cpp" line="1671"/>
         <source>Are you sure you want to delete %1?</source>
         <translation>Biztosan törölni akarod a(z) %1-t?</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1715"/>
-        <location filename="../src/docks/encodedock.cpp" line="1720"/>
+        <location filename="../src/docks/encodedock.cpp" line="1798"/>
         <source>None</source>
         <translation type="unfinished">Nincs</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1769"/>
+        <location filename="../src/docks/encodedock.cpp" line="1846"/>
         <source>KiB (%1s)</source>
         <translation>KiB (%1s)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1891"/>
+        <location filename="../src/docks/encodedock.cpp" line="1944"/>
+        <source>Detect</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/encodedock.cpp" line="2031"/>
         <source>Detecting hardware encoders...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1924"/>
+        <location filename="../src/docks/encodedock.cpp" line="2064"/>
         <source>Nothing found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1927"/>
+        <location filename="../src/docks/encodedock.cpp" line="2066"/>
         <source>Found %1</source>
+        <translation>%1 találat</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/encodedock.cpp" line="2101"/>
+        <source>Your project is missing some files.
+
+Save your project, close it, and reopen it.
+Shotcut will attempt to repair your project.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1939"/>
+        <location filename="../src/docks/encodedock.cpp" line="1942"/>
         <source>Configure Hardware Encoding</source>
-        <translation type="unfinished"></translation>
+        <translation>Hardveres kódolás konfigurálása</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1960"/>
+        <location filename="../src/docks/encodedock.cpp" line="1966"/>
         <source>Export Frames/sec</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1602,56 +1810,76 @@ Do you still want to continue?</source>
 <context>
     <name>EncodeJob</name>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="38"/>
+        <location filename="../src/jobs/encodejob.cpp" line="40"/>
         <source>Open</source>
         <translation>Megnyitás</translation>
     </message>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="39"/>
+        <location filename="../src/jobs/encodejob.cpp" line="41"/>
         <source>Open the output file in the Shotcut player</source>
         <translation>Kimeneti fájl megnyitása a Shotcut player-ben</translation>
     </message>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="43"/>
-        <location filename="../src/jobs/encodejob.cpp" line="44"/>
+        <location filename="../src/jobs/encodejob.cpp" line="45"/>
+        <location filename="../src/jobs/encodejob.cpp" line="46"/>
         <source>Show In Folder</source>
-        <translation>Mappában mutatás</translation>
+        <translation>Megjelenítés mappában</translation>
     </message>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="48"/>
+        <location filename="../src/jobs/encodejob.cpp" line="50"/>
         <source>Measure Video Quality...</source>
-        <translation>Videó minőségének mérése...</translation>
+        <translation>Videó minőségének mérése…</translation>
     </message>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="57"/>
+        <location filename="../src/jobs/encodejob.cpp" line="54"/>
+        <source>Set Equirectangular...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/jobs/encodejob.cpp" line="63"/>
         <source>Video Quality Report</source>
         <translation>Videóminőség jelentés</translation>
     </message>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="58"/>
+        <location filename="../src/jobs/encodejob.cpp" line="64"/>
         <source>Text Documents (*.txt);;All Files (*)</source>
+        <translation>Szöveges dokumentumok (*.txt);;Minden fájl (*)</translation>
+    </message>
+    <message>
+        <location filename="../src/jobs/encodejob.cpp" line="119"/>
+        <source>Set Equirectangular Projection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/jobs/encodejob.cpp" line="132"/>
-        <source>Export job failed; trying again without Parallel processing.</source>
+        <location filename="../src/jobs/encodejob.cpp" line="129"/>
+        <source>Successfully wrote %1</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/jobs/encodejob.cpp" line="131"/>
+        <source>An error occurred saving the projection.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/jobs/encodejob.cpp" line="159"/>
+        <source>Export job failed; trying again without Parallel processing.</source>
+        <translation>Az exportálás sikertelen; újbóli próbálkozás párhuzamos feldolgozás nélkül.</translation>
     </message>
 </context>
 <context>
     <name>FfmpegJob</name>
     <message>
-        <location filename="../src/jobs/ffmpegjob.cpp" line="37"/>
+        <location filename="../src/jobs/ffmpegjob.cpp" line="38"/>
         <source>Open</source>
         <translation>Megnyitás</translation>
     </message>
     <message>
-        <location filename="../src/jobs/ffmpegjob.cpp" line="41"/>
+        <location filename="../src/jobs/ffmpegjob.cpp" line="42"/>
         <source>Check %1</source>
         <translation>%1 vizsgálata</translation>
     </message>
     <message>
-        <location filename="../src/jobs/ffmpegjob.cpp" line="70"/>
+        <location filename="../src/jobs/ffmpegjob.cpp" line="73"/>
         <source>FFmpeg Log</source>
         <translation>FFmpeg napló</translation>
     </message>
@@ -1661,99 +1889,114 @@ Do you still want to continue?</source>
     <message>
         <location filename="../src/jobs/ffprobejob.cpp" line="56"/>
         <source>More Information</source>
-        <translation>Több információ</translation>
+        <translation>További információ</translation>
     </message>
 </context>
 <context>
     <name>FileDateDialog</name>
     <message>
-        <location filename="../src/dialogs/filedatedialog.cpp" line="42"/>
+        <location filename="../src/dialogs/filedatedialog.cpp" line="43"/>
         <source>%1 File Date</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 fájldátum</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/filedatedialog.cpp" line="98"/>
+        <location filename="../src/dialogs/filedatedialog.cpp" line="99"/>
         <source>Current Value</source>
-        <translation type="unfinished"></translation>
+        <translation>Jelenlegi érték</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/filedatedialog.cpp" line="102"/>
+        <location filename="../src/dialogs/filedatedialog.cpp" line="103"/>
         <source>Now</source>
-        <translation type="unfinished"></translation>
+        <translation>Most</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/filedatedialog.cpp" line="112"/>
+        <location filename="../src/dialogs/filedatedialog.cpp" line="109"/>
         <source>System - Modified</source>
-        <translation type="unfinished"></translation>
+        <translation>Rendszer – módosítva</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/filedatedialog.cpp" line="113"/>
+        <location filename="../src/dialogs/filedatedialog.cpp" line="110"/>
         <source>System - Created</source>
-        <translation type="unfinished"></translation>
+        <translation>Rendszer – létrehozva</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/filedatedialog.cpp" line="122"/>
+        <location filename="../src/dialogs/filedatedialog.cpp" line="119"/>
         <source>Metadata - Creation Time</source>
-        <translation type="unfinished"></translation>
+        <translation>Metaadatok – létrehozás ideje</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/filedatedialog.cpp" line="127"/>
+        <location filename="../src/dialogs/filedatedialog.cpp" line="124"/>
         <source>Metadata - QuickTime date</source>
-        <translation type="unfinished"></translation>
+        <translation>Metaadatok – Quicktime dátuma</translation>
     </message>
 </context>
 <context>
     <name>FilterController</name>
     <message>
-        <location filename="../src/controllers/filtercontroller.cpp" line="209"/>
+        <location filename="../src/controllers/filtercontroller.cpp" line="94"/>
+        <source>(DEPRECATED)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/controllers/filtercontroller.cpp" line="240"/>
         <source>Only one %1 filter is allowed.</source>
-        <translation>Csak egy %1 filter engfedélyezett.</translation>
+        <translation>Csak egy %1 szűrő engedélyezett.</translation>
     </message>
 </context>
 <context>
     <name>FilterMenu</name>
     <message>
-        <location filename="../src/qml/views/filter/FilterMenu.qml" line="60"/>
+        <location filename="../src/qml/views/filter/FilterMenu.qml" line="71"/>
         <source>search</source>
         <translation>keresés</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/filter/FilterMenu.qml" line="93"/>
+        <location filename="../src/qml/views/filter/FilterMenu.qml" line="107"/>
         <source>Clear search</source>
+        <translation>Keresés törlése</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/views/filter/FilterMenu.qml" line="125"/>
+        <source>Show favorite filters</source>
+        <translation>Kedvenc szűrők megjelenítése</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/views/filter/FilterMenu.qml" line="141"/>
+        <source>Show video filters</source>
+        <translation>Videószűrők megjelenítése</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/views/filter/FilterMenu.qml" line="157"/>
+        <source>Show audio filters</source>
+        <translation>Hangszűrők megjelenítése</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/views/filter/FilterMenu.qml" line="173"/>
+        <source>Time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/views/filter/FilterMenu.qml" line="111"/>
-        <source>Show favorite filters</source>
-        <translation>Kedvenc filterek mutatása</translation>
+        <location filename="../src/qml/views/filter/FilterMenu.qml" line="174"/>
+        <source>Show time filters</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/views/filter/FilterMenu.qml" line="121"/>
-        <source>Show video filters</source>
-        <translation>Videó filterek mutatása</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/views/filter/FilterMenu.qml" line="131"/>
-        <source>Show audio filters</source>
-        <translation>Audio filterek mutatása</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/views/filter/FilterMenu.qml" line="144"/>
+        <location filename="../src/qml/views/filter/FilterMenu.qml" line="196"/>
         <source>Close menu</source>
         <translation>Menü bezárása</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/filter/FilterMenu.qml" line="110"/>
+        <location filename="../src/qml/views/filter/FilterMenu.qml" line="124"/>
         <source>Favorite</source>
-        <translation type="unfinished"></translation>
+        <translation>Kedvenc</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/filter/FilterMenu.qml" line="120"/>
+        <location filename="../src/qml/views/filter/FilterMenu.qml" line="140"/>
         <source>Video</source>
         <translation>Videó</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/filter/FilterMenu.qml" line="130"/>
+        <location filename="../src/qml/views/filter/FilterMenu.qml" line="156"/>
         <source>Audio</source>
         <translation>Hang</translation>
     </message>
@@ -1767,16 +2010,24 @@ Do you still want to continue?</source>
     </message>
 </context>
 <context>
+    <name>FrameRateWidget</name>
+    <message>
+        <location filename="../src/widgets/frameratewidget.cpp" line="71"/>
+        <source>Convert Frames/sec</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>GDIgrabWidget</name>
     <message>
         <location filename="../src/widgets/gdigrabwidget.ui" line="14"/>
         <source>Form</source>
-        <translation>Adatlap</translation>
+        <translation>Űrlap</translation>
     </message>
     <message>
         <location filename="../src/widgets/gdigrabwidget.ui" line="33"/>
         <source>The vertical coordinate from the top edge when using a fixed capture region.</source>
-        <translation type="unfinished"></translation>
+        <translation>A felső széltől számított függőszintes koordináta rögzített felvételi régió használatakor.</translation>
     </message>
     <message>
         <location filename="../src/widgets/gdigrabwidget.ui" line="49"/>
@@ -1791,12 +2042,12 @@ Do you still want to continue?</source>
     <message>
         <location filename="../src/widgets/gdigrabwidget.ui" line="69"/>
         <source>Audio Input</source>
-        <translation>Audió bemenet</translation>
+        <translation>Hangbemenet</translation>
     </message>
     <message>
         <location filename="../src/widgets/gdigrabwidget.ui" line="79"/>
         <source>Width of the capture region</source>
-        <translation>A felvételre kerülő terület mérete</translation>
+        <translation>A rögzítendő terület szélessége</translation>
     </message>
     <message>
         <location filename="../src/widgets/gdigrabwidget.ui" line="92"/>
@@ -1827,7 +2078,7 @@ Do you still want to continue?</source>
     <message>
         <location filename="../src/widgets/gdigrabwidget.ui" line="131"/>
         <source>Show the capture region</source>
-        <translation>Rögzítési terület mutatása</translation>
+        <translation>Rögzítési terület megjelenítése</translation>
     </message>
     <message>
         <location filename="../src/widgets/gdigrabwidget.ui" line="138"/>
@@ -1842,7 +2093,7 @@ Do you still want to continue?</source>
     <message>
         <location filename="../src/widgets/gdigrabwidget.ui" line="161"/>
         <source>The horizontal coordinate from the left edge when using a fixed capture region.</source>
-        <translation type="unfinished"></translation>
+        <translation>A bal széltől számított vízszintes koordináta rögzített felvételi régió használatakor.</translation>
     </message>
     <message>
         <location filename="../src/widgets/gdigrabwidget.ui" line="177"/>
@@ -1872,477 +2123,20 @@ framebuffer object kiterjesztéssel.</translation>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/GradientControl.qml" line="64"/>
         <source>Color #%1</source>
-        <translation type="unfinished"></translation>
+        <translation>#%1 szín</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/GradientControl.qml" line="82"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/GradientControl.qml" line="84"/>
         <source>Color: %1
 Click to change</source>
+        <translation>Szín: %1
+A módosításhoz kattintson</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/modules/Shotcut/Controls/GradientControl.qml" line="192"/>
+        <source>colors</source>
+        <comment>gradient control</comment>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/GradientControl.qml" line="190"/>
-        <source> colors</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>HtmlEditor</name>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="14"/>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="162"/>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="749"/>
-        <source>HTML Editor</source>
-        <translation>HTML szerkesztő</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="36"/>
-        <source>&amp;Edit</source>
-        <translation>&amp;Szerkesztés</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="52"/>
-        <source>F&amp;ormat</source>
-        <translation>Formátum</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="56"/>
-        <source>St&amp;yle</source>
-        <translation>S&amp;tílus</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="70"/>
-        <source>&amp;Align</source>
-        <translation>I&amp;gazítás</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="101"/>
-        <source>&amp;File</source>
-        <translation>&amp;Fájl</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="115"/>
-        <source>Standard</source>
-        <translation>Standard</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="181"/>
-        <source>Tab 1</source>
-        <translation>Fül 1</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="200"/>
-        <source>about:blank</source>
-        <translation>about:blank</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="209"/>
-        <source>Tab 2</source>
-        <translation>Fül 2</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="245"/>
-        <source>&amp;New</source>
-        <translation>Ú&amp;j</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="254"/>
-        <source>&amp;Open...</source>
-        <translation>Meg&amp;nyitás...</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="263"/>
-        <source>&amp;Save</source>
-        <translation>Me&amp;ntés</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="266"/>
-        <source>Ctrl+S</source>
-        <translation>Ctrl+S</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="271"/>
-        <source>Save &amp;As...</source>
-        <translation>Me&amp;ntés másként...</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="280"/>
-        <source>&amp;Undo</source>
-        <translation>&amp;Visszavonás</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="283"/>
-        <source>Ctrl+Z</source>
-        <translation>Ctrl+Z</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="292"/>
-        <source>&amp;Redo</source>
-        <translation>V&amp;isszaállítás</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="295"/>
-        <source>Ctrl+Shift+Z</source>
-        <translation>Ctrl+Shift+Z</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="304"/>
-        <source>Cu&amp;t</source>
-        <translation>Kivá&amp;gás</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="307"/>
-        <source>Ctrl+X</source>
-        <translation>Ctrl+X</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="316"/>
-        <source>&amp;Copy</source>
-        <translation>&amp;Másolás</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="319"/>
-        <source>Ctrl+C</source>
-        <translation>Ctrl+C</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="328"/>
-        <source>&amp;Paste</source>
-        <translation>Bei&amp;llesztés</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="331"/>
-        <source>Ctrl+V</source>
-        <translation>Ctrl+V</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="340"/>
-        <source>Select A&amp;ll</source>
-        <translation>Kiválaszt min&amp;d</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="343"/>
-        <source>Ctrl+A</source>
-        <translation>Ctrl+A</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="355"/>
-        <source>&amp;Bold</source>
-        <translation>Félk&amp;övér</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="358"/>
-        <source>Ctrl+B</source>
-        <translation>Ctrl+B</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="370"/>
-        <source>&amp;Italic</source>
-        <translation>D&amp;őlt</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="373"/>
-        <source>Ctrl+I</source>
-        <translation>Ctrl+I</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="385"/>
-        <source>&amp;Underline</source>
-        <translation>Aláh&amp;úzás</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="388"/>
-        <source>Ctrl+U</source>
-        <translation>Ctrl+U</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="400"/>
-        <source>&amp;Strikethrough</source>
-        <translation>Áthúzott</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="409"/>
-        <source>Align &amp;Left</source>
-        <translation>Balra igazítás</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="418"/>
-        <source>Align &amp;Center</source>
-        <translation>Középre zárás</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="427"/>
-        <source>Align &amp;Right</source>
-        <translation>Jobbra igazítás</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="436"/>
-        <source>Align &amp;Justify</source>
-        <translation>Sorkizár</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="445"/>
-        <source>I&amp;ncrease Indent</source>
-        <translation>Behúzás növelése</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="454"/>
-        <source>&amp;Decrease Indent</source>
-        <translation>Behúzás csökkentése</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="466"/>
-        <source>Bulle&amp;ted List</source>
-        <translation>Felsorolás</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="478"/>
-        <source>&amp;Numbered List</source>
-        <translation>Számozott lista</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="487"/>
-        <source>Insert &amp;Image...</source>
-        <translation>Kép beillesztése...</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="496"/>
-        <source>Create Link...</source>
-        <translation>Link létrehozása...</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="505"/>
-        <source>Zoom Out</source>
-        <translation>Kicsinyítés</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="514"/>
-        <source>Zoom In</source>
-        <translation>Nagyítás</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="523"/>
-        <source>C&amp;lose Window</source>
-        <translation>Ablak bezárása</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="526"/>
-        <source>Close Window</source>
-        <translation>Ablak bezárása</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="529"/>
-        <source>Ctrl+W</source>
-        <translation>Ctrl+W</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="534"/>
-        <source>&amp;Paragraph</source>
-        <translation>Paragrafus</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="539"/>
-        <source>Heading &amp;1</source>
-        <translation>Címsor 1</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="544"/>
-        <source>Heading &amp;2</source>
-        <translation>Címsor 2</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="549"/>
-        <source>Heading &amp;3</source>
-        <translation>Címsor 3</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="554"/>
-        <source>Heading &amp;4</source>
-        <translation>Címsor 4</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="559"/>
-        <source>Heading &amp;5</source>
-        <translation>Címsor 5</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="564"/>
-        <source>Heading &amp;6</source>
-        <translation>Címsor 6</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="569"/>
-        <source>Pre&amp;formatted</source>
-        <translation>Formázott</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="574"/>
-        <source>&amp;Address</source>
-        <translation>Cím</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="579"/>
-        <source>&amp;Font Name...</source>
-        <translation>&amp;Betűtípus neve...</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="584"/>
-        <source>Text &amp;Color...</source>
-        <translation>Szöveg színe...</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="589"/>
-        <source>Bac&amp;kground Color...</source>
-        <translation>Háttérszín...</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="597"/>
-        <source>Font Si&amp;ze...</source>
-        <translation>Betű mérete...</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="606"/>
-        <source>Insert HTML...</source>
-        <translation>HTML beillesztése...</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="609"/>
-        <source>Insert HTML</source>
-        <translation>HTML beszúrása</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="617"/>
-        <source>Text Outline...</source>
-        <translation>Szöveg körvonala...</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.ui" line="625"/>
-        <source>Text Shadow...</source>
-        <translation>Szöveg árnyéka...</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="66"/>
-        <source>WYSIWYG Editor</source>
-        <translation>WYSIWYG szerkesztő</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="67"/>
-        <source>View Source</source>
-        <translation>Forrás megtekintése</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="163"/>
-        <source>The document has been modified.
-Do you want to save your changes?</source>
-        <translation>A dokumentum módosult.
-El akarja menteni a változásokat?</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="200"/>
-        <source>Open File...</source>
-        <translation>Fájl megnyitása</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="201"/>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="236"/>
-        <source>HTML-Files (*.htm *.html);;All Files (*)</source>
-        <translation>HTML-fájlok (*htm *html):; Minden fájl (*)</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="211"/>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="235"/>
-        <source>Save as...</source>
-        <translation>Mentés másként</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="250"/>
-        <source>Common Graphics (*.png *.jpg *.jpeg *.gif *.svg);;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="251"/>
-        <source>Portable Network Graphics (PNG) (*.png);;</source>
-        <translation>Portable Network Graphics (PNG) (*.png);;</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="252"/>
-        <source>JPEG (*.jpg *.jpeg);;</source>
-        <translation>JPEG (*.jpg *.jpeg);;</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="253"/>
-        <source>Graphics Interchange Format (*.gif);;</source>
-        <translation>Graphics Interchange Format (*.gif);;</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="254"/>
-        <source>Scalable Vector Graphics (*.svg);;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="255"/>
-        <source>All Files (*)</source>
-        <translation>Minden fájl (*)</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="257"/>
-        <source>Open image...</source>
-        <translation>Kép megnyitása...</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="304"/>
-        <source>Create link</source>
-        <translation>Link létrehozása</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="305"/>
-        <source>Enter URL</source>
-        <translation>URL beírása</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="496"/>
-        <source>Font</source>
-        <translation>Betűkészlet</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="496"/>
-        <source>Select font:</source>
-        <translation>Betűtípus kiválasztása:</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="506"/>
-        <source>Font Size</source>
-        <translation>Betűméret</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="506"/>
-        <source>Size in points:</source>
-        <translation>Méret pontokban</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="642"/>
-        <source>Open %1 ?</source>
-        <translation>%1 megnyitása?</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="643"/>
-        <source>Open link</source>
-        <translation>Link megnyitása</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="652"/>
-        <source>Text Outline</source>
-        <translation>Szöveg körvonal</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="669"/>
-        <source>Text Shadow</source>
-        <translation>Szöveg árnyék</translation>
-    </message>
-    <message>
-        <location filename="../src/htmleditor/htmleditor.cpp" line="749"/>
-        <source>%1[*] - %2</source>
-        <translation>%1[*] - %2</translation>
     </message>
 </context>
 <context>
@@ -2350,7 +2144,7 @@ El akarja menteni a változásokat?</translation>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="14"/>
         <source>Form</source>
-        <translation>Adatlap</translation>
+        <translation>Űrlap</translation>
     </message>
     <message>
         <location filename="../src/widgets/imageproducerwidget.ui" line="27"/>
@@ -2403,23 +2197,43 @@ El akarja menteni a változásokat?</translation>
         <translation>képenként</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="254"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="261"/>
         <source>Display a menu of additional actions</source>
-        <translation>További lehetőségek menüjének megjelenítése</translation>
+        <translation>További műveletek menüjének megjelenítése</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="296"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="303"/>
         <source>Copy Full File Path</source>
         <translation>Fájl teljes útvonalának másolása</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="301"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="308"/>
         <source>Show in Folder</source>
-        <translation>Mutasd mappában</translation>
+        <translation>Megjelenítés mappában</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.ui" line="306"/>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="313"/>
         <source>Set Creation Time...</source>
+        <translation>Létrehozás idejének beállítása…</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="321"/>
+        <source>Disable Proxy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="326"/>
+        <source>Make Proxy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="331"/>
+        <source>Delete Proxy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="336"/>
+        <source>Copy Hash Code</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2438,15 +2252,32 @@ El akarja menteni a változásokat?</translation>
         <translation>Alapértékek visszaállítása</translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.cpp" line="235"/>
-        <source>Getting length of image sequence...</source>
-        <translation>Képszekvencia hossza...</translation>
+        <location filename="../src/widgets/imageproducerwidget.cpp" line="93"/>
+        <source>(PROXY)</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/imageproducerwidget.cpp" line="247"/>
-        <location filename="../src/widgets/imageproducerwidget.cpp" line="263"/>
+        <location filename="../src/widgets/imageproducerwidget.cpp" line="267"/>
+        <source>Getting length of image sequence...</source>
+        <translation>Képsorozat hosszának beolvasása…</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/imageproducerwidget.cpp" line="279"/>
+        <location filename="../src/widgets/imageproducerwidget.cpp" line="297"/>
         <source>Reloading image sequence...</source>
-        <translation>Képszekvencia újratöltése...</translation>
+        <translation>Képsorozat újratöltése…</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/imageproducerwidget.cpp" line="426"/>
+        <source>The hash code below is already copied to your clipboard:
+
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/imageproducerwidget.ui" line="254"/>
+        <source>Proxy</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2454,7 +2285,7 @@ El akarja menteni a változásokat?</translation>
     <message>
         <location filename="../src/widgets/isingwidget.ui" line="14"/>
         <source>Form</source>
-        <translation>Adatlap</translation>
+        <translation>Űrlap</translation>
     </message>
     <message>
         <location filename="../src/widgets/isingwidget.ui" line="26"/>
@@ -2482,7 +2313,7 @@ El akarja menteni a változásokat?</translation>
     <message>
         <location filename="../src/widgets/jackproducerwidget.ui" line="14"/>
         <source>Form</source>
-        <translation>Adatlap</translation>
+        <translation>Űrlap</translation>
     </message>
     <message>
         <location filename="../src/widgets/jackproducerwidget.ui" line="26"/>
@@ -2492,33 +2323,33 @@ El akarja menteni a változásokat?</translation>
     <message>
         <location filename="../src/widgets/jackproducerwidget.ui" line="36"/>
         <source>You need to manually connect the JACK input ports.</source>
-        <translation>A bemeneti JACK portokat manuálisan kell csatlakoztatni.</translation>
+        <translation>A bemeneti JACK portokat kézzel kell csatlakoztatni.</translation>
     </message>
 </context>
 <context>
     <name>JobQueue</name>
     <message>
-        <location filename="../src/jobqueue.cpp" line="57"/>
+        <location filename="../src/jobqueue.cpp" line="59"/>
         <source>pending</source>
         <translation>függőben lévő</translation>
     </message>
     <message>
-        <location filename="../src/jobqueue.cpp" line="63"/>
+        <location filename="../src/jobqueue.cpp" line="65"/>
         <source>Estimated Hours:Minutes:Seconds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/jobqueue.cpp" line="100"/>
+        <location filename="../src/jobqueue.cpp" line="105"/>
         <source>Elapsed Hours:Minutes:Seconds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/jobqueue.cpp" line="103"/>
+        <location filename="../src/jobqueue.cpp" line="108"/>
         <source>stopped</source>
         <translation>leállítva</translation>
     </message>
     <message>
-        <location filename="../src/jobqueue.cpp" line="106"/>
+        <location filename="../src/jobqueue.cpp" line="111"/>
         <source>failed</source>
         <translation>hiba</translation>
     </message>
@@ -2555,7 +2386,7 @@ the list. This does not stop a currently running job. Right-
     <message>
         <location filename="../src/docks/jobsdock.ui" line="129"/>
         <source>Display a menu of additional actions</source>
-        <translation>További lehetőségek menüjének megjelenítése</translation>
+        <translation>További műveletek menüjének megjelenítése</translation>
     </message>
     <message>
         <location filename="../src/docks/jobsdock.ui" line="156"/>
@@ -2565,7 +2396,7 @@ the list. This does not stop a currently running job. Right-
     <message>
         <location filename="../src/docks/jobsdock.ui" line="159"/>
         <source>Stop the currently selected job</source>
-        <translation>A kiválasztott feladat leállítása</translation>
+        <translation>A jelenleg kijelölt feladat leállítása</translation>
     </message>
     <message>
         <location filename="../src/docks/jobsdock.ui" line="164"/>
@@ -2607,47 +2438,57 @@ the list. This does not stop a currently running job. Right-
 <context>
     <name>Keyframe</name>
     <message>
-        <location filename="../src/qml/views/keyframes/Keyframe.qml" line="115"/>
-        <source>Keyframe Type</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/views/keyframes/Keyframe.qml" line="118"/>
-        <source>Discrete</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/views/keyframes/Keyframe.qml" line="125"/>
-        <source>Linear</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/qml/views/keyframes/Keyframe.qml" line="132"/>
-        <source>Smooth</source>
+        <source>Keyframe Type</source>
+        <translation>Kulcsképkocka típusa</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/views/keyframes/Keyframe.qml" line="134"/>
+        <source>Hold</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/views/keyframes/Keyframe.qml" line="141"/>
+        <location filename="../src/qml/views/keyframes/Keyframe.qml" line="140"/>
+        <source>Linear</source>
+        <translation>Lineáris</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/views/keyframes/Keyframe.qml" line="146"/>
+        <source>Smooth</source>
+        <translation>Simított</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/views/keyframes/Keyframe.qml" line="155"/>
         <source>Remove</source>
-        <translation>Törlés</translation>
+        <translation>Eltávolítás</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/views/keyframes/Keyframe.qml" line="162"/>
+        <source>Cancel</source>
+        <translation>Mégse</translation>
     </message>
 </context>
 <context>
     <name>KeyframesButton</name>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/KeyframesButton.qml" line="49"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/KeyframesButton.qml" line="37"/>
         <source>Use Keyframes for this parameter</source>
-        <translation>Használjon kulcsképkockákat ehhez a paraméterhez</translation>
+        <translation>Kulcsképkockák használata ehhez a paraméterhez</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/KeyframesButton.qml" line="69"/>
-        <source>Confirm Removing Keyframes</source>
-        <translation>Erősítse meg a kulcsképkockák eltávolítását</translation>
+        <location filename="../src/qml/modules/Shotcut/Controls/KeyframesButton.qml" line="56"/>
+        <source>Hold %1 to drag a keyframe vertical only or %2 to drag horizontal only</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/KeyframesButton.qml" line="70"/>
+        <source>Confirm Removing Keyframes</source>
+        <translation>Kulcsképkockák eltávolításának megerősítése</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/modules/Shotcut/Controls/KeyframesButton.qml" line="71"/>
         <source>This will remove all keyframes for this parameter.&lt;p&gt;Do you still want to do this?</source>
-        <translation>Ezzel eltávolítja a paraméter összes kulcsképkockáját.&lt;p&gt;Még mindig meg akarja ezt megtenni?</translation>
+        <translation>Ezzel eltávolítja a paraméter összes kulcsképkockáját.&lt;p&gt;Még mindig meg akarja ezt tenni?</translation>
     </message>
 </context>
 <context>
@@ -2662,56 +2503,61 @@ the list. This does not stop a currently running job. Right-
     <name>KeyframesModel</name>
     <message>
         <location filename="../src/models/keyframesmodel.cpp" line="72"/>
-        <source>Discrete</source>
+        <source>Hold</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/models/keyframesmodel.cpp" line="75"/>
         <source>Linear</source>
-        <translation type="unfinished"></translation>
+        <translation>Lineáris</translation>
     </message>
     <message>
         <location filename="../src/models/keyframesmodel.cpp" line="78"/>
         <source>Smooth</source>
-        <translation type="unfinished"></translation>
+        <translation>Simított</translation>
     </message>
 </context>
 <context>
     <name>KeyframesToolbar</name>
     <message>
-        <location filename="../src/qml/views/keyframes/KeyframesToolbar.qml" line="42"/>
+        <location filename="../src/qml/views/keyframes/KeyframesToolbar.qml" line="38"/>
         <source>Display a menu of additional actions</source>
-        <translation>További lehetőségek menüjének megjelenítése</translation>
+        <translation>További műveletek menüjének megjelenítése</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/keyframes/KeyframesToolbar.qml" line="57"/>
+        <location filename="../src/qml/views/keyframes/KeyframesToolbar.qml" line="55"/>
         <source>Set the filter start</source>
-        <translation type="unfinished"></translation>
+        <translation>Szűrő kezdetének beállítása</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/keyframes/KeyframesToolbar.qml" line="66"/>
+        <location filename="../src/qml/views/keyframes/KeyframesToolbar.qml" line="67"/>
         <source>Set the filter end</source>
-        <translation type="unfinished"></translation>
+        <translation>Szűrő befejeződésének beállítása</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/keyframes/KeyframesToolbar.qml" line="75"/>
+        <location filename="../src/qml/views/keyframes/KeyframesToolbar.qml" line="79"/>
         <source>Set the first simple keyframe</source>
-        <translation type="unfinished"></translation>
+        <translation>Első egyszerű kulcsképkocka megadása</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/keyframes/KeyframesToolbar.qml" line="84"/>
+        <location filename="../src/qml/views/keyframes/KeyframesToolbar.qml" line="91"/>
         <source>Set the second simple keyframe</source>
+        <translation>Második egyszerű kulcsképkocka megadása</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/views/keyframes/KeyframesToolbar.qml" line="108"/>
+        <source>Zoom keyframes out (Alt+-)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/views/keyframes/KeyframesToolbar.qml" line="99"/>
-        <source>Zoom timeline out (-)</source>
-        <translation>Idővonal kicsinyítés (-)</translation>
+        <location filename="../src/qml/views/keyframes/KeyframesToolbar.qml" line="123"/>
+        <source>Zoom keyframes in (Alt++)</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/views/keyframes/KeyframesToolbar.qml" line="113"/>
-        <source>Zoom timeline in (+)</source>
-        <translation>Idővonal nagyítás (+)</translation>
+        <location filename="../src/qml/views/keyframes/KeyframesToolbar.qml" line="135"/>
+        <source>Zoom keyframes to fit (Alt+0)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2719,7 +2565,7 @@ the list. This does not stop a currently running job. Right-
     <message>
         <location filename="../src/widgets/lissajouswidget.ui" line="14"/>
         <source>Form</source>
-        <translation>Adatlap</translation>
+        <translation>Űrlap</translation>
     </message>
     <message>
         <location filename="../src/widgets/lissajouswidget.ui" line="26"/>
@@ -2750,7 +2596,7 @@ the list. This does not stop a currently running job. Right-
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="14"/>
         <source>Form</source>
-        <translation>Adatlap</translation>
+        <translation>Űrlap</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="26"/>
@@ -2805,27 +2651,27 @@ the list. This does not stop a currently running job. Right-
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="97"/>
         <source>Diagonal Top Left</source>
-        <translation>Átlós felülről balról</translation>
+        <translation>Átlós bal felső sarokból</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="102"/>
         <source>Diagonal Top Right</source>
-        <translation>Átlós felülről jobbról</translation>
+        <translation>Átlós jobb felső sarokból</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="107"/>
         <source>Matrix Waterfall Horizontal</source>
-        <translation>Vízszintes Mátrix vízesés</translation>
+        <translation>Vízszintes mátrix vízesés</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="112"/>
         <source>Matrix Waterfall Vertical</source>
-        <translation>Függőleges Mátrix vízesés</translation>
+        <translation>Függőleges mátrix vízesés</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="117"/>
         <source>Matrix Snake Horizontal</source>
-        <translation>Vízszintes Mátrix kígyó</translation>
+        <translation>Vízszintes mátrix kígyó</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="122"/>
@@ -2835,7 +2681,7 @@ the list. This does not stop a currently running job. Right-
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="127"/>
         <source>Matrix Snake Vertical</source>
-        <translation>Függőleges Mátrix kígyó</translation>
+        <translation>Függőleges mátrix kígyó</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="132"/>
@@ -2860,32 +2706,32 @@ the list. This does not stop a currently running job. Right-
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="152"/>
         <source>Iris Box</source>
-        <translation type="unfinished"></translation>
+        <translation>Íriszdoboz</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="157"/>
         <source>Box Bottom Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Doboz jobb alsó sarokból</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="162"/>
         <source>Box Bottom Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Doboz bal alsó sarokból</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="167"/>
         <source>Box Right Center</source>
-        <translation type="unfinished"></translation>
+        <translation>Doboz jobb középről</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="172"/>
         <source>Clock Top</source>
-        <translation type="unfinished"></translation>
+        <translation>Óra fent</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="177"/>
         <source>Custom...</source>
-        <translation>Egyéni...</translation>
+        <translation>Egyéni…</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="200"/>
@@ -2895,25 +2741,25 @@ the list. This does not stop a currently running job. Right-
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="207"/>
         <source>Swap the appearance of the A and B clips</source>
-        <translation type="unfinished"></translation>
+        <translation>Az A és a B klip megjelenésének megcserélése</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="210"/>
         <source>Invert Wipe</source>
-        <translation type="unfinished"></translation>
+        <translation>Törlésirány megfordítása</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="219"/>
         <location filename="../src/widgets/lumamixtransition.cpp" line="183"/>
         <location filename="../src/widgets/lumamixtransition.cpp" line="189"/>
-        <location filename="../src/widgets/lumamixtransition.cpp" line="202"/>
+        <location filename="../src/widgets/lumamixtransition.cpp" line="203"/>
         <source>Softness</source>
         <translation>Lágyság</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="232"/>
         <source>Change the softness of the edge of the wipe</source>
-        <translation>Áttűnési él lágyságának változtatása</translation>
+        <translation>A törlési él lágyságának módosítása</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="248"/>
@@ -2931,7 +2777,8 @@ the list. This does not stop a currently running job. Right-
         <source>Automatically fade-out the audio of clip A
 and fade-in the audio of clip B over the
 duration of the transition.</source>
-        <translation type="unfinished"></translation>
+        <translation>Az áttűnés időtartama alatt az A klip hangja fokozatosan elhal, 
+a B klip hangja pedig fokozatosan felerősödik.</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="280"/>
@@ -2996,781 +2843,794 @@ audio (0%) or clip B&apos;s audio (100%).</source>
         <translation>Elrendezés</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="90"/>
+        <location filename="../src/mainwindow.ui" line="95"/>
         <source>&amp;Edit</source>
         <translation>&amp;Szerkesztés</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="98"/>
+        <location filename="../src/mainwindow.ui" line="103"/>
         <source>&amp;Help</source>
-        <translation>&amp;Segítség</translation>
+        <translation>&amp;Súgó</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="111"/>
+        <location filename="../src/mainwindow.ui" line="117"/>
         <source>Settings</source>
         <translation>Beállítások</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="115"/>
+        <location filename="../src/mainwindow.ui" line="121"/>
         <source>Audio Channels</source>
-        <translation type="unfinished"></translation>
+        <translation>Hangcsatornák</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="123"/>
+        <location filename="../src/mainwindow.ui" line="129"/>
         <source>Deinterlacer</source>
-        <translation>Deinterlacer</translation>
+        <translation>Összefűzést megszüntető eszköz</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="132"/>
+        <location filename="../src/mainwindow.ui" line="138"/>
         <source>Interpolation</source>
         <translation>Interpoláció</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="141"/>
+        <location filename="../src/mainwindow.ui" line="147"/>
         <source>Video Mode</source>
         <translation>Videomód</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="147"/>
+        <location filename="../src/mainwindow.ui" line="153"/>
         <source>External Monitor</source>
         <translation>Külső monitor</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="153"/>
+        <location filename="../src/mainwindow.ui" line="159"/>
         <source>Language</source>
         <translation>Nyelv</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="158"/>
+        <location filename="../src/mainwindow.ui" line="164"/>
         <source>Theme</source>
         <translation>Téma</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="166"/>
+        <location filename="../src/mainwindow.ui" line="172"/>
         <source>Gamma</source>
         <translation>Gamma</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="173"/>
+        <location filename="../src/mainwindow.ui" line="179"/>
         <source>Display Method</source>
-        <translation>Megjelenítési mód</translation>
+        <translation>Megjelenítési módszer</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="182"/>
+        <location filename="../src/mainwindow.ui" line="188"/>
         <source>App Data Directory</source>
-        <translation>Program mappa</translation>
+        <translation>Alkalmazásadatok mappája</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="189"/>
+        <location filename="../src/mainwindow.ui" line="195"/>
         <source>Preview Scaling</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="227"/>
+        <location filename="../src/mainwindow.ui" line="204"/>
+        <source>Proxy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="208"/>
+        <source>Storage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="253"/>
         <source>Toolbar</source>
         <translation>Eszköztár</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="273"/>
+        <location filename="../src/mainwindow.ui" line="308"/>
         <source>&amp;Open File...</source>
-        <translation>Fájl &amp;megnyitása</translation>
+        <translation>Fájl &amp;megnyitása…</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="276"/>
+        <location filename="../src/mainwindow.ui" line="311"/>
         <source>Open a video, audio or image file</source>
         <translation>Videó, hang, vagy kép fájl megnyitása</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="279"/>
-        <source>Ctrl+O</source>
-        <translation>Ctrl+O</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.ui" line="287"/>
+        <location filename="../src/mainwindow.ui" line="322"/>
         <source>E&amp;xit</source>
         <translation>Kilépés</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="290"/>
+        <location filename="../src/mainwindow.ui" line="325"/>
         <source>Quit the application</source>
         <translation>Kilépés a programból</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="293"/>
-        <source>Ctrl+Q</source>
-        <translation>Ctrl+Q</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.ui" line="298"/>
+        <location filename="../src/mainwindow.ui" line="333"/>
         <source>&amp;About Shotcut</source>
         <translation>Shotcut névjegye</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="306"/>
+        <location filename="../src/mainwindow.ui" line="341"/>
         <source>About Qt</source>
         <translation>Qt névjegye</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="314"/>
+        <location filename="../src/mainwindow.ui" line="349"/>
         <source>Open Other...</source>
-        <translation>Egyéb megnyitása...</translation>
+        <translation>Egyéb megnyitása…</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="317"/>
-        <location filename="../src/mainwindow.ui" line="976"/>
+        <location filename="../src/mainwindow.ui" line="352"/>
+        <location filename="../src/mainwindow.ui" line="1026"/>
         <source>Open a device, stream or generator</source>
         <translation>Eszköz, stream vagy generáló megnyitása</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="320"/>
-        <source>Ctrl+Shift+O</source>
-        <translation>Ctrl+Shift+O</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.ui" line="332"/>
+        <location filename="../src/mainwindow.ui" line="367"/>
         <source>&amp;Save</source>
         <translation>Me&amp;ntés</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="335"/>
+        <location filename="../src/mainwindow.ui" line="370"/>
         <source>Save project as a MLT XML file</source>
         <translation>Projekt mentése mint MLT XML fájl</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="338"/>
-        <source>Ctrl+S</source>
-        <translation>Ctrl+S</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.ui" line="346"/>
+        <location filename="../src/mainwindow.ui" line="381"/>
         <source>Save &amp;As...</source>
-        <translation>Me&amp;ntés másként...</translation>
+        <translation>Me&amp;ntés másként…</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="349"/>
+        <location filename="../src/mainwindow.ui" line="384"/>
         <source>Save project to a different MLT XML file</source>
         <translation>Projekt mentése másik MLT XML fájlba</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="352"/>
-        <source>Ctrl+Shift+S</source>
-        <translation>Ctrl+Shift+S</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.ui" line="361"/>
+        <location filename="../src/mainwindow.ui" line="396"/>
         <source>Export</source>
         <translation>Exportálás</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="364"/>
+        <location filename="../src/mainwindow.ui" line="399"/>
         <source>Show the Export panel</source>
-        <translation>Export panel mutatása</translation>
+        <translation>Export panel megjelenítése</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="373"/>
+        <location filename="../src/mainwindow.ui" line="408"/>
         <source>&amp;Undo</source>
         <translation>Visszavonás</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="382"/>
+        <location filename="../src/mainwindow.ui" line="417"/>
         <source>&amp;Redo</source>
         <translation>Újra</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="387"/>
+        <location filename="../src/mainwindow.ui" line="422"/>
         <source>Forum...</source>
-        <translation>Fórum...</translation>
+        <translation>Fórum…</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="392"/>
+        <location filename="../src/mainwindow.ui" line="427"/>
         <source>FAQ...</source>
-        <translation>GYIK..</translation>
+        <translation>GYIK…</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="401"/>
-        <location filename="../src/mainwindow.cpp" line="3069"/>
+        <location filename="../src/mainwindow.ui" line="436"/>
+        <location filename="../src/mainwindow.cpp" line="1688"/>
+        <location filename="../src/mainwindow.cpp" line="3254"/>
         <source>Enter Full Screen</source>
         <translation>Teljes képernyós mód</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="404"/>
-        <source>Ctrl+Shift+F</source>
-        <translation>Ctrl+Shift+F</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.ui" line="413"/>
+        <location filename="../src/mainwindow.ui" line="448"/>
         <source>Peak Meter</source>
         <translation>Jelszintmérő</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="416"/>
+        <location filename="../src/mainwindow.ui" line="451"/>
         <source>Show or hide the audio peak meter</source>
         <translation>Az audio jelszintmérő megjelenítése vagy elrejtése</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="425"/>
-        <location filename="../src/mainwindow.cpp" line="249"/>
+        <location filename="../src/mainwindow.ui" line="460"/>
+        <location filename="../src/mainwindow.cpp" line="290"/>
         <source>Properties</source>
         <translation>Tulajdonságok</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="434"/>
+        <location filename="../src/mainwindow.ui" line="469"/>
         <source>Recent</source>
         <translation>Előzmények</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="443"/>
+        <location filename="../src/mainwindow.ui" line="478"/>
         <source>Playlist</source>
         <translation>Lejátszási lista</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="452"/>
-        <location filename="../src/mainwindow.cpp" line="374"/>
+        <location filename="../src/mainwindow.ui" line="487"/>
+        <location filename="../src/mainwindow.cpp" line="407"/>
         <source>History</source>
         <translation>Történet</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="461"/>
-        <source>Full Screen</source>
-        <translation>Teljes képernyő</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.ui" line="472"/>
+        <location filename="../src/mainwindow.ui" line="498"/>
         <source>Realtime (frame dropping)</source>
         <translation>Valósidejű (képkocka eldobás)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="483"/>
+        <location filename="../src/mainwindow.ui" line="509"/>
         <source>Progressive</source>
         <translation>Progresszív</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="491"/>
+        <location filename="../src/mainwindow.ui" line="517"/>
         <source>GPU Effects (unstable)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="494"/>
+        <location filename="../src/mainwindow.ui" line="520"/>
         <source>Use GPU filters</source>
-        <translation type="unfinished"></translation>
+        <translation>GPU szűrők használata</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="505"/>
+        <location filename="../src/mainwindow.ui" line="531"/>
         <source>1 (mono)</source>
-        <translation type="unfinished"></translation>
+        <translation>1 (mono)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="513"/>
+        <location filename="../src/mainwindow.ui" line="539"/>
         <source>2 (stereo)</source>
-        <translation type="unfinished"></translation>
+        <translation>2 (sztereó)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="521"/>
+        <location filename="../src/mainwindow.ui" line="547"/>
         <source>6 (5.1)</source>
-        <translation type="unfinished">6 (5.1)</translation>
+        <translation>6 (5.1)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="532"/>
+        <location filename="../src/mainwindow.ui" line="558"/>
         <source>One Field (fast)</source>
         <translation>Egy mező (gyors)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="540"/>
+        <location filename="../src/mainwindow.ui" line="566"/>
         <source>Linear Blend (fast)</source>
         <translation>Lineáris keverés (gyors)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="548"/>
+        <location filename="../src/mainwindow.ui" line="574"/>
         <source>YADIF - temporal only (good)</source>
         <translation>YADIF - csak időbeli (jó)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="556"/>
+        <location filename="../src/mainwindow.ui" line="582"/>
         <source>YADIF - temporal + spatial (best)</source>
         <translation>Yadif - időbeli + térbeli (legjobb)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="567"/>
+        <location filename="../src/mainwindow.ui" line="593"/>
         <source>Nearest Neighbor (fast)</source>
         <translation>Legközelebbi szomszéd (gyors)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="575"/>
+        <location filename="../src/mainwindow.ui" line="601"/>
         <source>Bilinear (good)</source>
         <translation>Bilinear (jó)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="583"/>
+        <location filename="../src/mainwindow.ui" line="609"/>
         <source>Bicubic (better)</source>
         <translation>Bicubic (jobb)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="591"/>
+        <location filename="../src/mainwindow.ui" line="617"/>
         <source>Hyper/Lanczos (best)</source>
         <translation>Hyper/Lanczos (legjobb)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="602"/>
-        <location filename="../src/mainwindow.ui" line="754"/>
+        <location filename="../src/mainwindow.ui" line="628"/>
+        <location filename="../src/mainwindow.ui" line="780"/>
         <source>Automatic</source>
         <translation>Automatikus</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="613"/>
-        <location filename="../src/mainwindow.ui" line="1042"/>
+        <location filename="../src/mainwindow.ui" line="639"/>
+        <location filename="../src/mainwindow.ui" line="1092"/>
         <source>None</source>
         <translation>Nincs</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="621"/>
+        <location filename="../src/mainwindow.ui" line="647"/>
         <source>Use JACK Audio</source>
         <translation>JACK audio használata</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="630"/>
+        <location filename="../src/mainwindow.ui" line="656"/>
         <source>Filters</source>
         <translation>Szűrők</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="633"/>
+        <location filename="../src/mainwindow.ui" line="659"/>
         <source>Modify the video image or audio</source>
         <translation>Videókép vagy hang módosítása</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="638"/>
-        <location filename="../src/mainwindow.ui" line="954"/>
+        <location filename="../src/mainwindow.ui" line="664"/>
+        <location filename="../src/mainwindow.ui" line="1004"/>
         <source>Add...</source>
-        <translation>Hozzáad...</translation>
+        <translation>Hozzáadás…</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="646"/>
+        <location filename="../src/mainwindow.ui" line="672"/>
         <source>System</source>
         <translation>Rendszer</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="649"/>
+        <location filename="../src/mainwindow.ui" line="675"/>
         <source>Use the user or platform style, colors, and icons.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="657"/>
+        <location filename="../src/mainwindow.ui" line="683"/>
         <source>Fusion Dark</source>
         <translation>Fusion Dark - sötét</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="665"/>
+        <location filename="../src/mainwindow.ui" line="691"/>
         <source>Fusion Light</source>
         <translation>Fusion Light - világos</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="670"/>
+        <location filename="../src/mainwindow.ui" line="696"/>
         <source>Tutorials...</source>
-        <translation>Oktatóanyagok...</translation>
+        <translation>Oktatóanyagok…</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="679"/>
+        <location filename="../src/mainwindow.ui" line="705"/>
         <source>Timeline</source>
         <translation>Idővonal</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="684"/>
-        <location filename="../src/mainwindow.ui" line="687"/>
+        <location filename="../src/mainwindow.ui" line="710"/>
+        <location filename="../src/mainwindow.ui" line="713"/>
         <source>Restore Default Layout</source>
         <translation>Alapértelmezett elrendezés visszaállítása</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="695"/>
+        <location filename="../src/mainwindow.ui" line="721"/>
         <source>Show Title Bars</source>
-        <translation>Címsorokat mutat</translation>
+        <translation>Címsorok megjelenítése</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="703"/>
+        <location filename="../src/mainwindow.ui" line="729"/>
         <source>Show Toolbar</source>
-        <translation>Eszköztár mutatása</translation>
+        <translation>Eszköztár megjelenítése</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="708"/>
+        <location filename="../src/mainwindow.ui" line="734"/>
         <source>Upgrade...</source>
-        <translation>Frissít...</translation>
+        <translation>Frissítés…</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="713"/>
+        <location filename="../src/mainwindow.ui" line="739"/>
         <source>Open MLT XML As Clip...</source>
-        <translation>MLT XML megnyitása klippként...</translation>
+        <translation>MLT XML megnyitása klipként…</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="716"/>
+        <location filename="../src/mainwindow.ui" line="742"/>
         <source>Open a MLT XML project file as a virtual clip</source>
         <translation>MLT XML projekt megnyitása virtuális klippként</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="727"/>
+        <location filename="../src/mainwindow.ui" line="753"/>
         <source>sRGB (computer)</source>
         <translation>sRGB (számítógép)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="735"/>
+        <location filename="../src/mainwindow.ui" line="761"/>
         <source>Rec. 709 (TV)</source>
         <translation>Rec. 709 (TV)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="743"/>
+        <location filename="../src/mainwindow.ui" line="769"/>
         <source>Scrub Audio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="778"/>
+        <location filename="../src/mainwindow.ui" line="804"/>
         <source>Software (Mesa)</source>
         <extracomment>Do not translate &quot;Mesa&quot;</extracomment>
         <translation>Szoftver (Mesa)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="783"/>
+        <location filename="../src/mainwindow.ui" line="809"/>
         <source>Application Log...</source>
-        <translation>Program napló...</translation>
+        <translation>Alkalmazásnapló…</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="791"/>
+        <location filename="../src/mainwindow.ui" line="817"/>
         <source>Project</source>
         <translation>Projekt</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="799"/>
-        <location filename="../src/mainwindow.ui" line="934"/>
+        <location filename="../src/mainwindow.ui" line="825"/>
+        <location filename="../src/mainwindow.ui" line="1195"/>
         <source>Player</source>
         <translation>Lejátszó</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="807"/>
+        <location filename="../src/mainwindow.ui" line="833"/>
         <source>User Interface</source>
         <translation>Felhasználó felület</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="816"/>
+        <location filename="../src/mainwindow.ui" line="842"/>
         <source>Close</source>
         <translation>Bezár</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="819"/>
-        <source>Ctrl+W</source>
-        <translation>Ctrl+W</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.ui" line="834"/>
+        <location filename="../src/mainwindow.ui" line="860"/>
         <source>Cu&amp;t</source>
         <translation>Kivágás</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="837"/>
-        <source>Ctrl+X</source>
-        <translation>Ctrl+X</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.ui" line="849"/>
+        <location filename="../src/mainwindow.ui" line="875"/>
         <source>&amp;Copy</source>
         <translation>Másolás</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="852"/>
-        <source>Ctrl+C</source>
-        <translation>Ctrl+C</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.ui" line="864"/>
+        <location filename="../src/mainwindow.ui" line="890"/>
         <source>&amp;Paste</source>
         <translation>Beillesztés</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="867"/>
-        <source>Ctrl+V</source>
-        <translation>Ctrl+V</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.ui" line="872"/>
+        <location filename="../src/mainwindow.ui" line="898"/>
         <source>Export EDL...</source>
-        <translation>EDL exportálása...</translation>
+        <translation>EDL exportálása…</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="877"/>
+        <location filename="../src/mainwindow.ui" line="903"/>
         <source>Export Frame...</source>
-        <translation>Képkocka exportálása...</translation>
+        <translation>Képkocka exportálása…</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="880"/>
-        <source>Ctrl+Shift+E</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.ui" line="885"/>
+        <location filename="../src/mainwindow.ui" line="911"/>
         <source>Export Video...</source>
         <translation>Videó exportálása...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="888"/>
-        <source>Ctrl+E</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.ui" line="893"/>
+        <location filename="../src/mainwindow.ui" line="919"/>
+        <location filename="../src/mainwindow.ui" line="1138"/>
         <source>Set...</source>
         <translation>Beállít</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="898"/>
+        <location filename="../src/mainwindow.ui" line="924"/>
+        <location filename="../src/mainwindow.ui" line="1146"/>
         <source>Show...</source>
-        <translation>Mutat...</translation>
+        <translation>Megjelenítés…</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="901"/>
+        <location filename="../src/mainwindow.ui" line="927"/>
         <source>Show</source>
-        <translation>Mutat</translation>
+        <translation>Megjelenítés</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="910"/>
-        <location filename="../src/mainwindow.ui" line="913"/>
+        <location filename="../src/mainwindow.ui" line="936"/>
+        <location filename="../src/mainwindow.ui" line="939"/>
         <source>Keyframes</source>
         <translation>Kulcsképkockák</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="918"/>
+        <location filename="../src/mainwindow.ui" line="944"/>
         <source>New</source>
         <translation>Új</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="921"/>
-        <source>Ctrl+N</source>
-        <translation>Ctrl+N</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.ui" line="926"/>
+        <location filename="../src/mainwindow.ui" line="952"/>
         <source>Keyboard Shortcuts...</source>
+        <translation>Billentyűparancsok…</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="963"/>
+        <source>Audio</source>
+        <translation>Hang</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="966"/>
+        <source>Switch to the audio layout</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="929"/>
-        <source>F1</source>
+        <location filename="../src/mainwindow.ui" line="974"/>
+        <source>Logging</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="939"/>
+        <location filename="../src/mainwindow.ui" line="977"/>
+        <source>Switch to the logging layout</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="985"/>
+        <source>Editing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="988"/>
+        <source>Switch to the editing layout</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="996"/>
+        <source>FX</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="999"/>
+        <source>Switch to the effects layout</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="1111"/>
+        <source>Topics</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="1119"/>
+        <source>Synchronization...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="1122"/>
+        <source>Synchronization</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="1130"/>
+        <source>Use Proxy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="1141"/>
+        <source>Set the proxy storage folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="1149"/>
+        <source>Show the proxy storage folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="1160"/>
+        <source>Use Project Folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="1163"/>
+        <source>Store proxies in the project folder if defined</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="1171"/>
+        <source>Use Hardware Encoder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="1176"/>
+        <source>Configure Hardware Encoder...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="1187"/>
+        <source>Switch to the color layout</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="1198"/>
+        <source>Switch to the player only layout</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="1211"/>
         <source>Playlist Project</source>
-        <translation>Projekt lejátszási listával</translation>
+        <translation>Lejátszási listás projekt</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="944"/>
-        <source>Timeline Project</source>
-        <translation>Projekt idővonallal</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.ui" line="949"/>
+        <location filename="../src/mainwindow.ui" line="1216"/>
         <source>Clip-only Project</source>
         <translation>Csak-klip projekt</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="959"/>
-        <location filename="../src/mainwindow.ui" line="964"/>
+        <location filename="../src/mainwindow.ui" line="1009"/>
+        <location filename="../src/mainwindow.ui" line="1014"/>
         <source>Remove...</source>
+        <translation>Eltávolítás…</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="439"/>
+        <source>F11</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="973"/>
+        <location filename="../src/mainwindow.ui" line="1023"/>
         <source>Open Other</source>
         <translation>Egyéb megnyitása</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="987"/>
+        <location filename="../src/mainwindow.ui" line="1037"/>
         <source>Clear Recent on Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Kilépéskor a legutóbbi törlése</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="995"/>
+        <location filename="../src/mainwindow.ui" line="1045"/>
         <source>Show Text Under Icons</source>
         <translation>Szöveg megjelenítése az ikonok alatt</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1003"/>
+        <location filename="../src/mainwindow.ui" line="1053"/>
         <source>Show Small Icons</source>
         <translation>Kis ikonok megjelenítése</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1012"/>
+        <location filename="../src/mainwindow.ui" line="1062"/>
         <source>Jobs</source>
         <translation>Feladatok</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1020"/>
+        <location filename="../src/mainwindow.ui" line="1070"/>
         <source>540p</source>
-        <translation type="unfinished">540p</translation>
+        <translation>540p</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1023"/>
-        <source>F8</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.ui" line="1031"/>
+        <location filename="../src/mainwindow.ui" line="1081"/>
         <source>720p</source>
-        <translation type="unfinished">720p</translation>
+        <translation>720p</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1034"/>
-        <source>F9</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.ui" line="1045"/>
-        <source>F6</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.ui" line="1053"/>
+        <location filename="../src/mainwindow.ui" line="1103"/>
         <source>360p</source>
-        <translation type="unfinished">360p</translation>
+        <translation>360p</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1056"/>
-        <source>F7</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="126"/>
+        <location filename="../src/mainwindow.cpp" line="135"/>
         <source>Error: This program requires the JACK 1 library.
 
 Please install it using your package manager. It may be named libjack0, jack-audio-connection-kit, jack, or similar.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="134"/>
+        <location filename="../src/mainwindow.cpp" line="143"/>
         <source>Error: This program requires the SDL 2 library.
 
 Please install it using your package manager. It may be named libsdl2-2.0-0, SDL2, or similar.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="201"/>
-        <source>Ctrl+Z</source>
-        <translation>Ctrl+Z</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="203"/>
-        <source>Ctrl+Y</source>
-        <translation>Ctrl+Y</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="205"/>
-        <source>Ctrl+Shift+Z</source>
-        <translation>Ctrl+Shift+Z</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="586"/>
+        <location filename="../src/mainwindow.cpp" line="618"/>
         <source>Screen %1 (%2 x %3 @ %4 Hz)</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 képernyő (%2 x %3 @ %4 Hz)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="620"/>
+        <location filename="../src/mainwindow.cpp" line="642"/>
         <source>Off</source>
         <translation>Ki</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="623"/>
+        <location filename="../src/mainwindow.cpp" line="645"/>
         <source>Internal</source>
         <translation>Belső</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="626"/>
+        <location filename="../src/mainwindow.cpp" line="648"/>
         <source>External</source>
         <translation>Külső</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="640"/>
+        <location filename="../src/mainwindow.cpp" line="662"/>
         <source>DeckLink Keyer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="866"/>
+        <location filename="../src/mainwindow.ui" line="1184"/>
+        <location filename="../src/mainwindow.cpp" line="897"/>
         <source>Color</source>
         <translation>Szín</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="868"/>
+        <location filename="../src/mainwindow.cpp" line="899"/>
         <source>Text</source>
         <translation>Szöveg</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="871"/>
+        <location filename="../src/mainwindow.cpp" line="902"/>
         <source>Noise</source>
         <translation>Zaj</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="873"/>
+        <location filename="../src/mainwindow.cpp" line="904"/>
         <source>Ising</source>
         <translation>Ising</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="875"/>
+        <location filename="../src/mainwindow.cpp" line="906"/>
         <source>Lissajous</source>
         <translation>Lissajous</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="877"/>
+        <location filename="../src/mainwindow.cpp" line="908"/>
         <source>Plasma</source>
         <translation>Plazma</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="879"/>
+        <location filename="../src/mainwindow.cpp" line="910"/>
         <source>Color Bars</source>
         <translation>Színsávok</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="881"/>
+        <location filename="../src/mainwindow.cpp" line="912"/>
         <source>Audio Tone</source>
         <translation>Hangszín</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="883"/>
+        <location filename="../src/mainwindow.cpp" line="914"/>
         <source>Count</source>
         <translation>Mennyiség</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="886"/>
+        <location filename="../src/mainwindow.cpp" line="916"/>
+        <source>Blip Flash</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="919"/>
         <source>Video4Linux</source>
         <translation>Video4Linux</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="887"/>
+        <location filename="../src/mainwindow.cpp" line="920"/>
         <source>PulseAudio</source>
         <translation>PulseAudio</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="888"/>
+        <location filename="../src/mainwindow.cpp" line="921"/>
         <source>JACK Audio</source>
         <translation>JACK Audio</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="889"/>
+        <location filename="../src/mainwindow.cpp" line="922"/>
         <source>ALSA Audio</source>
         <translation>ALSA Hang</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="891"/>
+        <location filename="../src/mainwindow.cpp" line="924"/>
         <source>Audio/Video Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Hang-/videoeszköz</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="894"/>
+        <location filename="../src/mainwindow.cpp" line="927"/>
         <source>SDI/HDMI</source>
         <translation>SDI/HDMI</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="916"/>
-        <location filename="../src/mainwindow.cpp" line="918"/>
-        <location filename="../src/mainwindow.cpp" line="1334"/>
-        <location filename="../src/mainwindow.cpp" line="3696"/>
+        <location filename="../src/mainwindow.cpp" line="949"/>
+        <location filename="../src/mainwindow.cpp" line="951"/>
+        <location filename="../src/mainwindow.cpp" line="1355"/>
+        <location filename="../src/mainwindow.cpp" line="1376"/>
+        <location filename="../src/mainwindow.cpp" line="1429"/>
+        <location filename="../src/mainwindow.cpp" line="3843"/>
+        <location filename="../src/mainwindow.cpp" line="3857"/>
+        <location filename="../src/mainwindow.cpp" line="4694"/>
         <source>Failed to open </source>
         <translation>Nem lehet megnyitni</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="944"/>
+        <location filename="../src/mainwindow.cpp" line="977"/>
         <source>The file you opened uses GPU effects, but GPU effects are not enabled.
 
 GPU effects are EXPERIMENTAL, UNSTABLE and UNSUPPORTED! Unsupported means do not report bugs about it.
@@ -3779,23 +3639,23 @@ Do you want to enable GPU effects and restart?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="965"/>
+        <location filename="../src/mainwindow.cpp" line="998"/>
         <source>The file you opened uses CPU effects that are incompatible with GPU effects, but GPU effects are enabled.
 Do you want to disable GPU effects and restart?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="988"/>
+        <location filename="../src/mainwindow.cpp" line="1021"/>
         <source>Repaired</source>
         <translation>Javítva</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1011"/>
+        <location filename="../src/mainwindow.cpp" line="1043"/>
         <source>Repairing the project failed.</source>
         <translation>A projekt javítása sikertelen.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1023"/>
+        <location filename="../src/mainwindow.cpp" line="1055"/>
         <source>Shotcut noticed some problems in your project.
 Do you want Shotcut to try to repair it?
 
@@ -3804,185 +3664,248 @@ with &quot;- Repaired&quot; in the file name and open it.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1059"/>
+        <location filename="../src/mainwindow.cpp" line="1091"/>
         <source>Auto-saved files exist. Do you want to recover them now?</source>
         <translation>Egy automatikusan mentett fájl már létezik. Vissza szeretné most állítani?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1174"/>
+        <location filename="../src/mainwindow.cpp" line="1169"/>
         <source>You cannot add a project to itself!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1209"/>
+        <location filename="../src/mainwindow.cpp" line="1205"/>
         <source>There was an error saving. Please try again.</source>
+        <translation>Hiba történt a mentéskor. Kérjük, próbálja meg újra.</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="1282"/>
+        <source>This project file requires a newer version!
+
+It was made with version </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1270"/>
+        <location filename="../src/mainwindow.cpp" line="1307"/>
+        <source>You are running low on available memory!
+
+Please close other applications or web browser tabs and retry.
+Or save and restart Shotcut.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="1343"/>
         <source>Opening %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1368"/>
-        <location filename="../src/mainwindow.cpp" line="3656"/>
+        <location filename="../src/mainwindow.cpp" line="1464"/>
+        <location filename="../src/mainwindow.cpp" line="3813"/>
         <source>Open File</source>
         <translation>Fájl megnyitása</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1648"/>
+        <location filename="../src/mainwindow.cpp" line="1465"/>
+        <source>All Files (*);;MLT XML (*.mlt)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="1750"/>
         <source>Untitled</source>
         <translation>Névtelen</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1664"/>
-        <source>About Shotcut</source>
-        <translation>Shotcut névjegye</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="1665"/>
-        <source>&lt;h1&gt;Shotcut version %1&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;https://www.shotcut.org/&quot;&gt;Shotcut&lt;/a&gt; is a free, open source, cross platform video editor.&lt;/p&gt;&lt;small&gt;&lt;p&gt;Copyright &amp;copy; 2011-2020 &lt;a href=&quot;https://www.meltytech.com/&quot;&gt;Meltytech&lt;/a&gt;, LLC&lt;/p&gt;&lt;p&gt;Licensed under the &lt;a href=&quot;https://www.gnu.org/licenses/gpl.html&quot;&gt;GNU General Public License v3.0&lt;/a&gt;&lt;/p&gt;&lt;p&gt;This program proudly uses the following projects:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://www.qt.io/&quot;&gt;Qt&lt;/a&gt; application and UI framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; multimedia authoring framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; multimedia format and codec libraries&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; H.264 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; VP8 and VP9 encoders&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; MP3 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt; video plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; audio plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;DefaultIcon&lt;/a&gt; icon collection by &lt;a href=&quot;http://www.interactivemania.com/&quot;&gt;interactivemania&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt;Oxygen&lt;/a&gt; icon collection&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;The source code used to build this program can be downloaded from &lt;a href=&quot;https://www.shotcut.org/&quot;&gt;shotcut.org&lt;/a&gt;.&lt;/p&gt;This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.&lt;/small&gt;</source>
+        <location filename="../src/mainwindow.cpp" line="1769"/>
+        <source>About %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2228"/>
+        <location filename="../src/mainwindow.cpp" line="1770"/>
+        <source>&lt;h1&gt;Shotcut version %2&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;%3&quot;&gt;%1&lt;/a&gt; is a free, open source, cross platform video editor.&lt;/p&gt;&lt;small&gt;&lt;p&gt;%4&lt;/p&gt;&lt;p&gt;Licensed under the %5&lt;/p&gt;&lt;p&gt;This program proudly uses the following projects:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://www.qt.io/&quot;&gt;Qt&lt;/a&gt; application and UI framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; multimedia authoring framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; multimedia format and codec libraries&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; H.264 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; VP8 and VP9 encoders&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; MP3 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt; video plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; audio plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;DefaultIcon&lt;/a&gt; icon collection by &lt;a href=&quot;http://www.interactivemania.com/&quot;&gt;interactivemania&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt;Oxygen&lt;/a&gt; icon collection&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;The source code used to build this program can be downloaded from &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt;.&lt;/p&gt;This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.&lt;/small&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="2385"/>
         <source>Non-Broadcast</source>
         <translation>Nem közvetítésre</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2233"/>
+        <location filename="../src/mainwindow.cpp" line="2390"/>
         <source>DVD Widescreen NTSC</source>
         <translation>DVD Szélesvásznú NTSC</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2234"/>
+        <location filename="../src/mainwindow.cpp" line="2391"/>
         <source>DVD Widescreen PAL</source>
         <translation>DVD Szélesvásznú PAL</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2245"/>
+        <location filename="../src/mainwindow.cpp" line="2402"/>
         <source>Square 1080p 30 fps</source>
-        <translation type="unfinished"></translation>
+        <translation>Négyzet 1080 pont 30 képkocka/másodperc</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2246"/>
+        <location filename="../src/mainwindow.cpp" line="2403"/>
         <source>Square 1080p 60 fps</source>
-        <translation type="unfinished"></translation>
+        <translation>Négyzet 1080 pont 60 képkocka/másodperc</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2247"/>
+        <location filename="../src/mainwindow.cpp" line="2404"/>
         <source>Vertical HD 30 fps</source>
-        <translation type="unfinished"></translation>
+        <translation>Függőleges HD 30 képkocka/másodperc</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2248"/>
+        <location filename="../src/mainwindow.cpp" line="2405"/>
         <source>Vertical HD 60 fps</source>
-        <translation type="unfinished"></translation>
+        <translation>Függőleges HD 60 képkocka/másodperc</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2249"/>
+        <location filename="../src/mainwindow.cpp" line="2406"/>
         <source>Custom</source>
         <translation>Egyedi</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2279"/>
-        <location filename="../src/mainwindow.cpp" line="2538"/>
+        <location filename="../src/mainwindow.cpp" line="2436"/>
+        <location filename="../src/mainwindow.cpp" line="2704"/>
         <source>Saved %1</source>
         <translation>%1 elmentve</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2530"/>
-        <location filename="../src/mainwindow.cpp" line="2552"/>
+        <location filename="../src/mainwindow.cpp" line="2696"/>
+        <location filename="../src/mainwindow.cpp" line="2718"/>
         <source>Save XML</source>
         <translation>XML mentés</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2553"/>
+        <location filename="../src/mainwindow.cpp" line="2720"/>
         <source>MLT XML (*.mlt)</source>
         <translation>MLT XML (*.mlt)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2572"/>
+        <location filename="../src/mainwindow.cpp" line="2739"/>
         <source>The project has been modified.
 Do you want to save your changes?</source>
-        <translation>A projekt módosításra került.
-El akarja menteni a változásokat?</translation>
+        <translation>A projekt módosult.
+Kívánja menteni a változásokat?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2601"/>
+        <location filename="../src/mainwindow.cpp" line="2768"/>
         <source>There are incomplete jobs.
 Do you want to still want to exit?</source>
         <translation>Befejezetlen feladatokat találtam.
 Mégis ki szeretne lépni?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2614"/>
+        <location filename="../src/mainwindow.cpp" line="2781"/>
         <source>An export is in progress.
 Do you want to still want to exit?</source>
         <translation>Exportálás folyamatban.
 Mégis ki szeretne lépni?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3072"/>
+        <location filename="../src/mainwindow.cpp" line="1686"/>
+        <location filename="../src/mainwindow.cpp" line="3261"/>
         <source>Exit Full Screen</source>
         <translation>Kilépés a teljes képernyőből</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3085"/>
+        <location filename="../src/mainwindow.cpp" line="4658"/>
+        <source>Turn Proxy On</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="4658"/>
+        <source>Turn Proxy Off</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="4662"/>
+        <source>Converting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="4676"/>
+        <source>Do you want to create missing proxies for every file in this project?
+
+You must reopen your project after all proxy jobs are finished.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="4711"/>
+        <source>Proxy Folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="4726"/>
+        <source>Do you want to move all files from the old folder to the new folder?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="4733"/>
+        <source>Moving Files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="3274"/>
         <source>GPU effects are not supported</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3191"/>
+        <location filename="../src/mainwindow.cpp" line="3336"/>
         <source>Click here to check for a new version of Shotcut.</source>
         <translation>Shotcut frissítés keresése.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3337"/>
+        <location filename="../src/mainwindow.cpp" line="3441"/>
+        <source>Open Files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="3475"/>
         <source>You must restart Shotcut to switch to the new language.
 Do you want to restart now?</source>
         <translation>Nyelvváltáshoz újra kell indítani a Shotcut-ot.
 Újra akarja indítani?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3378"/>
+        <location filename="../src/mainwindow.cpp" line="3516"/>
         <source>Failed to connect to JACK.
 Please verify that JACK is installed and running.</source>
         <translation>Nem lehet a JACK-hez kapcsolódni.
 Vizsgálja meg, hogy a JACK telepítve van-e és fut.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3387"/>
+        <location filename="../src/mainwindow.cpp" line="3525"/>
         <source>GPU effects are experimental and may cause instability on some systems. Some CPU effects are incompatible with GPU effects and will be disabled. A project created with GPU effects can not be converted to a CPU only project later.
 
 Do you want to enable GPU effects and restart Shotcut?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3409"/>
+        <location filename="../src/mainwindow.cpp" line="3547"/>
         <source>Shotcut must restart to disable GPU effects.
 
 Disable GPU effects and restart?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3634"/>
+        <location filename="../src/mainwindow.cpp" line="3791"/>
         <source>Do you want to automatically check for updates in the future?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3641"/>
+        <location filename="../src/mainwindow.cpp" line="3798"/>
         <source>Do not show this anymore.</source>
         <comment>Automatic upgrade check dialog</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ne jelenjék meg többé.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3657"/>
+        <location filename="../src/mainwindow.cpp" line="3814"/>
         <source>MLT XML (*.mlt);;All Files (*)</source>
         <translation>MLT XML (*.mlt);;Minden fájl (*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3674"/>
+        <location filename="../src/mainwindow.cpp" line="3831"/>
         <source>The decimal point of the MLT XML file
 you want to open is incompatible.
 
@@ -3990,101 +3913,96 @@ Do you want to continue to open this MLT XML file?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3737"/>
+        <location filename="../src/mainwindow.cpp" line="3898"/>
         <source>You must restart Shotcut to change the display method.
 Do you want to restart now?</source>
         <translation>A megjelenítés megváltoztatásához újra kell indítani a Shotcut-ot.
 Újra akarja indítani?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3759"/>
+        <location filename="../src/mainwindow.cpp" line="3920"/>
         <source>Application Log</source>
         <translation>Program napló</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3798"/>
+        <location filename="../src/mainwindow.cpp" line="3961"/>
         <source>Shotcut version %1 is available! Click here to get it.</source>
         <translation>Shotcut %1 verzió élerhető! Kattintson ide, hogy megszerezze.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3804"/>
+        <location filename="../src/mainwindow.cpp" line="3967"/>
         <source>You are running the latest version of Shotcut.</source>
         <translation>Ön a Shotcut legfrissebb verzióját használja.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3814"/>
+        <location filename="../src/mainwindow.cpp" line="3977"/>
         <source>Failed to read version.json when checking. Click here to go to the Web site.</source>
         <translation>A version.json fájl olvasása hibára futott. Kattintson ide a weboldal eléréséhez.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3863"/>
+        <location filename="../src/mainwindow.cpp" line="4026"/>
         <source>Export EDL</source>
         <translation>EDL exportálása</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3864"/>
+        <location filename="../src/mainwindow.cpp" line="4028"/>
         <source>EDL (*.edl);;All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>EDL (*.edl);;Minden fájl (*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3910"/>
+        <location filename="../src/mainwindow.cpp" line="4074"/>
         <source>A JavaScript error occurred during export.</source>
         <translation>JavaScript hiba történt az exportálás során.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3913"/>
+        <location filename="../src/mainwindow.cpp" line="4077"/>
         <source>Failed to open export-edl.js</source>
         <translation>Nem sikerült megnyitni az export-edl.js fájlt</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3941"/>
+        <location filename="../src/mainwindow.cpp" line="4102"/>
         <source>Export Frame</source>
         <translation>Képkocka exportálása</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3942"/>
-        <source>PNG (*.png);;BMP (*.bmp);;JPEG (*.jpg *.jpeg);;PPM (*.ppm);;TIFF (*.tif *.tiff);;WebP (*.webp);;All Files (*)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="3962"/>
+        <location filename="../src/mainwindow.cpp" line="4109"/>
         <source>Unable to export frame.</source>
         <translation>Nem lehet exportálni a képkockát.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3970"/>
+        <location filename="../src/mainwindow.cpp" line="4117"/>
         <source>You must restart Shotcut to change the data directory.
 Do you want to continue?</source>
         <translation>A Shotcut-ot újra kell indítani, hogy az adatmappa változás életbe lépjen.
 Folytatni akarja?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3979"/>
+        <location filename="../src/mainwindow.cpp" line="4126"/>
         <source>Data Directory</source>
         <translation>Adatmappa</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4062"/>
+        <location filename="../src/mainwindow.cpp" line="4303"/>
         <source>Add Custom Layout</source>
         <translation>Egyedi elrendezés hozzáadása</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4063"/>
+        <location filename="../src/mainwindow.cpp" line="4304"/>
         <source>Name</source>
         <translation>Név</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4091"/>
+        <location filename="../src/mainwindow.cpp" line="4341"/>
         <source>Remove Video Mode</source>
         <translation>Videomód eltávolítása</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4105"/>
+        <location filename="../src/mainwindow.cpp" line="4355"/>
         <source>Remove Layout</source>
         <translation>Elrendezés törlése</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4234"/>
+        <location filename="../src/mainwindow.cpp" line="4475"/>
         <source>GPU effects are EXPERIMENTAL, UNSTABLE and UNSUPPORTED! Unsupported means do not report bugs about it.
 
 Do you want to disable GPU effects and restart Shotcut?</source>
@@ -4094,33 +4012,33 @@ Do you want to disable GPU effects and restart Shotcut?</source>
 <context>
     <name>MeltJob</name>
     <message>
-        <location filename="../src/jobs/meltjob.cpp" line="40"/>
+        <location filename="../src/jobs/meltjob.cpp" line="41"/>
         <source>View XML</source>
         <translation>View XML</translation>
     </message>
     <message>
-        <location filename="../src/jobs/meltjob.cpp" line="41"/>
+        <location filename="../src/jobs/meltjob.cpp" line="42"/>
         <source>View the MLT XML for this job</source>
         <translation>MLT XML megjelenítése a feladathoz</translation>
     </message>
     <message>
-        <location filename="../src/jobs/meltjob.cpp" line="50"/>
+        <location filename="../src/jobs/meltjob.cpp" line="51"/>
         <source>Open</source>
         <translation>Megnyitás</translation>
     </message>
     <message>
-        <location filename="../src/jobs/meltjob.cpp" line="51"/>
+        <location filename="../src/jobs/meltjob.cpp" line="52"/>
         <source>Open the output file in the Shotcut player</source>
         <translation>Kimeneti fájl megnyitása a Shotcut player-ben</translation>
     </message>
     <message>
-        <location filename="../src/jobs/meltjob.cpp" line="55"/>
         <location filename="../src/jobs/meltjob.cpp" line="56"/>
+        <location filename="../src/jobs/meltjob.cpp" line="57"/>
         <source>Show In Folder</source>
-        <translation>Mappában mutatás</translation>
+        <translation>Megjelenítés mappában</translation>
     </message>
     <message>
-        <location filename="../src/jobs/meltjob.cpp" line="139"/>
+        <location filename="../src/jobs/meltjob.cpp" line="157"/>
         <source>MLT XML</source>
         <translation>MLT XML</translation>
     </message>
@@ -4185,7 +4103,7 @@ Do you want to disable GPU effects and restart Shotcut?</source>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.ui" line="98"/>
         <source>Display a menu of additional actions</source>
-        <translation>További lehetőségek menüjének megjelenítése</translation>
+        <translation>További műveletek menüjének megjelenítése</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedplaylistdock.ui" line="128"/>
@@ -4328,18 +4246,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Double-click&lt;/span&gt; a playlist item to seek the unit to it.&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Drag-n-drop&lt;/span&gt; from the server&apos;s clips tree to the playlist, or &lt;span style=&quot; font-weight:600;&quot;&gt;single-click&lt;/span&gt; a clip to select it for use with &lt;span style=&quot; font-weight:600;&quot;&gt;Add&lt;/span&gt; and &lt;span style=&quot; font-weight:600;&quot;&gt;Insert&lt;/span&gt; actions.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Single-click&lt;/span&gt; a unit to open its playlist.&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Double-click&lt;/span&gt; a unit to control it in the player, or &lt;span style=&quot; font-weight:600;&quot;&gt;right-click&lt;/span&gt; the unit for transport control actions.&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Single-click&lt;/span&gt; a playlist item to select it for edit operations (e.g. Insert).&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Double-click&lt;/span&gt; a playlist item to seek the unit to it.&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Drag-n-drop&lt;/span&gt; from the server&apos;s clips tree to the playlist, or &lt;span style=&quot; font-weight:600;&quot;&gt;single-click&lt;/span&gt; a clip to select it for use with &lt;span style=&quot; font-weight:600;&quot;&gt;Add&lt;/span&gt; and &lt;span style=&quot; font-weight:600;&quot;&gt;Insert&lt;/span&gt; actions.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedserverdock.ui" line="195"/>
@@ -4349,7 +4256,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/mvcp/meltedserverdock.ui" line="208"/>
         <source>Display a menu of additional actions</source>
-        <translation>További lehetőségek menüjének megjelenítése</translation>
+        <translation>További műveletek menüjének megjelenítése</translation>
     </message>
     <message>
         <location filename="../src/mvcp/meltedserverdock.ui" line="238"/>
@@ -4448,13 +4355,121 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>Mlt::GLWidget</name>
     <message>
-        <location filename="../src/glwidget.cpp" line="506"/>
+        <location filename="../src/glwidget.cpp" line="513"/>
         <source>You cannot drag from Project.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/glwidget.cpp" line="509"/>
+        <location filename="../src/glwidget.cpp" line="516"/>
         <source>You cannot drag a non-seekable source</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MultiFileExportDialog</name>
+    <message>
+        <location filename="../src/dialogs/multifileexportdialog.cpp" line="59"/>
+        <source>Directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/multifileexportdialog.cpp" line="71"/>
+        <source>Prefix</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/multifileexportdialog.cpp" line="72"/>
+        <source>export</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/multifileexportdialog.cpp" line="77"/>
+        <source>Field 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/multifileexportdialog.cpp" line="84"/>
+        <source>Field 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/multifileexportdialog.cpp" line="91"/>
+        <source>Field 3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/multifileexportdialog.cpp" line="99"/>
+        <source>Extension</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/multifileexportdialog.cpp" line="195"/>
+        <source>None</source>
+        <translation>Nincs</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/multifileexportdialog.cpp" line="196"/>
+        <source>Name</source>
+        <translation>Név</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/multifileexportdialog.cpp" line="197"/>
+        <source>Index</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/multifileexportdialog.cpp" line="198"/>
+        <source>Date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/multifileexportdialog.cpp" line="199"/>
+        <source>Hash</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/multifileexportdialog.cpp" line="222"/>
+        <source>Empty File Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/multifileexportdialog.cpp" line="224"/>
+        <source>Directory does not exist: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/multifileexportdialog.cpp" line="231"/>
+        <source>File Exists: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/multifileexportdialog.cpp" line="236"/>
+        <source>Duplicate File Name: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/multifileexportdialog.cpp" line="262"/>
+        <source>Fix file name errors before export.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/multifileexportdialog.cpp" line="267"/>
+        <source>Export Directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MultitrackModel</name>
+    <message>
+        <location filename="../src/models/multitrackmodel.cpp" line="115"/>
+        <source>(PROXY)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/models/multitrackmodel.cpp" line="2417"/>
+        <source>Error: Shotcut could not find the %1 plugin on your system.
+
+Please install the %2 plugins.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4506,7 +4521,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/widgets/networkproducerwidget.ui" line="14"/>
         <source>Form</source>
-        <translation>Adatlap</translation>
+        <translation>Űrlap</translation>
     </message>
     <message>
         <location filename="../src/widgets/networkproducerwidget.ui" line="26"/>
@@ -4529,7 +4544,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/widgets/newprojectfolder.ui" line="20"/>
         <source>Form</source>
-        <translation>Adatlap</translation>
+        <translation>Űrlap</translation>
     </message>
     <message>
         <location filename="../src/widgets/newprojectfolder.ui" line="181"/>
@@ -4597,36 +4612,38 @@ A folder will be created in this folder for each project.</source>
     <message>
         <location filename="../src/widgets/newprojectfolder.ui" line="360"/>
         <source>Remove...</source>
-        <translation type="unfinished"></translation>
+        <translation>Eltávolítás…</translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.cpp" line="121"/>
+        <location filename="../src/widgets/newprojectfolder.cpp" line="123"/>
         <source>Projects Folder</source>
         <translation>Projektek mappa</translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.cpp" line="150"/>
+        <location filename="../src/widgets/newprojectfolder.cpp" line="153"/>
         <source>Custom</source>
         <translation>Egyedi</translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.cpp" line="167"/>
+        <location filename="../src/widgets/newprojectfolder.cpp" line="170"/>
         <source>Remove Video Mode</source>
         <translation>Videomód eltávolítása</translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.cpp" line="196"/>
+        <location filename="../src/widgets/newprojectfolder.cpp" line="199"/>
         <source>There is already a project with that name.
 Try again with a different name.</source>
         <translation>Már létezik egy ilyen nevű projekt.
 Próbálkozzon újra egy másik névvel.</translation>
     </message>
     <message>
-        <location filename="../src/widgets/newprojectfolder.cpp" line="204"/>
+        <location filename="../src/widgets/newprojectfolder.cpp" line="207"/>
         <source>Unable to create folder %1
 Perhaps you do not have permission.
 Try again with a different folder.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nem sikerült a(z) %1 mappa létrehozása.
+Lehet, hogy nincs rá engedélye.
+Próbálja meg egy másik mappával.</translation>
     </message>
 </context>
 <context>
@@ -4634,7 +4651,7 @@ Try again with a different folder.</source>
     <message>
         <location filename="../src/widgets/noisewidget.ui" line="14"/>
         <source>Form</source>
-        <translation>Adatlap</translation>
+        <translation>Űrlap</translation>
     </message>
     <message>
         <location filename="../src/widgets/noisewidget.ui" line="26"/>
@@ -4656,7 +4673,7 @@ Try again with a different folder.</source>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="36"/>
-        <location filename="../src/openotherdialog.cpp" line="146"/>
+        <location filename="../src/openotherdialog.cpp" line="150"/>
         <source>Network</source>
         <translation>Hálózat</translation>
     </message>
@@ -4667,47 +4684,47 @@ Try again with a different folder.</source>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="43"/>
-        <location filename="../src/openotherdialog.cpp" line="148"/>
+        <location filename="../src/openotherdialog.cpp" line="152"/>
         <source>SDI/HDMI</source>
         <translation>SDI/HDMI</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="47"/>
-        <location filename="../src/openotherdialog.cpp" line="134"/>
+        <location filename="../src/openotherdialog.cpp" line="138"/>
         <source>Video4Linux</source>
         <translation>Video4Linux</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="49"/>
-        <location filename="../src/openotherdialog.cpp" line="136"/>
+        <location filename="../src/openotherdialog.cpp" line="140"/>
         <source>PulseAudio</source>
         <translation>PulseAudio</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="51"/>
-        <location filename="../src/openotherdialog.cpp" line="138"/>
+        <location filename="../src/openotherdialog.cpp" line="142"/>
         <source>JACK Audio</source>
         <translation>JACK Audio</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="53"/>
-        <location filename="../src/openotherdialog.cpp" line="140"/>
+        <location filename="../src/openotherdialog.cpp" line="144"/>
         <source>ALSA Audio</source>
         <translation>ALSA Hang</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="56"/>
         <location filename="../src/openotherdialog.cpp" line="63"/>
-        <location filename="../src/openotherdialog.cpp" line="144"/>
+        <location filename="../src/openotherdialog.cpp" line="148"/>
         <source>Screen</source>
         <translation>Képernyő</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="60"/>
         <location filename="../src/openotherdialog.cpp" line="67"/>
-        <location filename="../src/openotherdialog.cpp" line="142"/>
+        <location filename="../src/openotherdialog.cpp" line="146"/>
         <source>Audio/Video Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Hang-/videoeszköz</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="72"/>
@@ -4716,7 +4733,7 @@ Try again with a different folder.</source>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="74"/>
-        <location filename="../src/openotherdialog.cpp" line="150"/>
+        <location filename="../src/openotherdialog.cpp" line="154"/>
         <source>Color</source>
         <translation>Szín</translation>
     </message>
@@ -4727,88 +4744,99 @@ Try again with a different folder.</source>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="82"/>
-        <location filename="../src/openotherdialog.cpp" line="152"/>
+        <location filename="../src/openotherdialog.cpp" line="156"/>
         <source>Noise</source>
         <translation>Zaj</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="86"/>
-        <location filename="../src/openotherdialog.cpp" line="154"/>
+        <location filename="../src/openotherdialog.cpp" line="158"/>
         <source>Ising</source>
         <translation>Ising</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="90"/>
-        <location filename="../src/openotherdialog.cpp" line="156"/>
+        <location filename="../src/openotherdialog.cpp" line="160"/>
         <source>Lissajous</source>
         <translation>Lissajous</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="94"/>
-        <location filename="../src/openotherdialog.cpp" line="158"/>
+        <location filename="../src/openotherdialog.cpp" line="162"/>
         <source>Plasma</source>
         <translation>Plazma</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="98"/>
-        <location filename="../src/openotherdialog.cpp" line="160"/>
+        <location filename="../src/openotherdialog.cpp" line="164"/>
         <source>Color Bars</source>
         <translation>Színsávok</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="102"/>
-        <location filename="../src/openotherdialog.cpp" line="162"/>
+        <location filename="../src/openotherdialog.cpp" line="166"/>
         <source>Audio Tone</source>
         <translation>Hangszín</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.cpp" line="106"/>
-        <location filename="../src/openotherdialog.cpp" line="164"/>
+        <location filename="../src/openotherdialog.cpp" line="168"/>
         <source>Count</source>
         <translation>Mennyiség</translation>
+    </message>
+    <message>
+        <location filename="../src/openotherdialog.cpp" line="110"/>
+        <location filename="../src/openotherdialog.cpp" line="170"/>
+        <source>Blip Flash</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ParameterHead</name>
     <message>
-        <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="118"/>
+        <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="127"/>
         <source>Seek to previous keyframe</source>
-        <translation type="unfinished"></translation>
+        <translation>Keresés az előző kulcsképkockáig</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="118"/>
+        <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="127"/>
         <source>Seek backwards</source>
-        <translation type="unfinished"></translation>
+        <translation>Keresés visszafelé</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="132"/>
+        <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="143"/>
         <source>Add a keyframe at play head</source>
-        <translation type="unfinished"></translation>
+        <translation>Kulcsképkocka hozzáadása a lejátszófejnél</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="153"/>
+        <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="166"/>
         <source>Delete the selected keyframe</source>
-        <translation>A kiválasztott kulcsképkocka törlése</translation>
+        <translation>Kijelölt kulcsképkocka törlése</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="175"/>
+        <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="190"/>
         <source>Seek to next keyframe</source>
-        <translation type="unfinished"></translation>
+        <translation>Keresés a következő kulcsképkockáig</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="175"/>
+        <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="190"/>
         <source>Seek forwards</source>
-        <translation type="unfinished"></translation>
+        <translation>Keresés előrefelé</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="186"/>
+        <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="203"/>
         <source>Unlock track</source>
-        <translation>Sáv zárolás feloldása</translation>
+        <translation>Sávzárolás feloldása</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="186"/>
+        <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="203"/>
         <source>Lock track</source>
         <translation>Sáv zárolása</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="207"/>
+        <source>Zoom keyframe values</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4816,7 +4844,7 @@ Try again with a different folder.</source>
     <message>
         <location filename="../src/widgets/plasmawidget.ui" line="14"/>
         <source>Form</source>
-        <translation>Adatlap</translation>
+        <translation>Űrlap</translation>
     </message>
     <message>
         <location filename="../src/widgets/plasmawidget.ui" line="26"/>
@@ -4857,262 +4885,278 @@ Try again with a different folder.</source>
 <context>
     <name>Player</name>
     <message>
-        <location filename="../src/player.cpp" line="66"/>
+        <location filename="../src/player.cpp" line="68"/>
         <source>Source</source>
         <translation>Forrás</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="67"/>
+        <location filename="../src/player.cpp" line="69"/>
         <source>Project</source>
         <translation>Projekt</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="149"/>
+        <location filename="../src/player.cpp" line="153"/>
         <source>Adjust the audio volume</source>
         <translation>Hangerő beállítása</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="168"/>
+        <location filename="../src/player.cpp" line="173"/>
         <source>Silence the audio</source>
         <translation>Hang némítása</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="183"/>
+        <location filename="../src/player.cpp" line="188"/>
         <source>Transport Controls</source>
         <translation>Transport vezérlők</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="190"/>
+        <location filename="../src/player.cpp" line="195"/>
         <source>Current position</source>
         <translation>Jelenlegi poziíció</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="194"/>
+        <location filename="../src/player.cpp" line="199"/>
         <source>Total Duration</source>
         <translation>Teljes hossz</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="199"/>
+        <location filename="../src/player.cpp" line="204"/>
         <source>In Point</source>
         <translation>Abban a pontban</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="203"/>
+        <location filename="../src/player.cpp" line="208"/>
         <source>Selected Duration</source>
-        <translation>Kiválasztott rész hossza</translation>
+        <translation>Kijelölés hossza</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="219"/>
+        <location filename="../src/player.cpp" line="224"/>
         <source>Zoom Fit</source>
         <translation>Beleközelítés amíg elfér</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="222"/>
+        <location filename="../src/player.cpp" line="227"/>
         <source>Zoom 10%</source>
         <translation type="unfinished">200%-os nézet {10%?}</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="225"/>
+        <location filename="../src/player.cpp" line="230"/>
         <source>Zoom 25%</source>
         <translation>25%-os nézet</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="228"/>
+        <location filename="../src/player.cpp" line="233"/>
         <source>Zoom 50%</source>
         <translation>50%-os nézet</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="231"/>
+        <location filename="../src/player.cpp" line="236"/>
         <source>Zoom 100%</source>
         <translation>100%-os nézet</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="234"/>
+        <location filename="../src/player.cpp" line="239"/>
         <source>Zoom 200%</source>
         <translation>200%-os nézet</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="254"/>
+        <location filename="../src/player.cpp" line="259"/>
         <source>Toggle zoom</source>
         <translation>Beleközelítés ki/be kapcsolása</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="262"/>
+        <location filename="../src/player.cpp" line="267"/>
         <source>2x2 Grid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="267"/>
+        <location filename="../src/player.cpp" line="272"/>
         <source>3x3 Grid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="271"/>
+        <location filename="../src/player.cpp" line="276"/>
         <source>4x4 Grid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="275"/>
+        <location filename="../src/player.cpp" line="280"/>
         <source>16x16 Grid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="283"/>
+        <location filename="../src/player.cpp" line="288"/>
         <source>10 Pixel Grid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="572"/>
+        <location filename="../src/player.cpp" line="592"/>
         <source>Not Seekable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="279"/>
+        <location filename="../src/player.cpp" line="284"/>
         <source>20 Pixel Grid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="237"/>
+        <location filename="../src/player.cpp" line="242"/>
         <source>Zoom 300%</source>
         <translation type="unfinished">200%-os nézet {300%?}</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="240"/>
+        <location filename="../src/player.cpp" line="245"/>
         <source>Zoom 400%</source>
         <translation type="unfinished">200%-os nézet {400%?}</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="243"/>
+        <location filename="../src/player.cpp" line="248"/>
         <source>Zoom 500%</source>
         <translation type="unfinished">200%-os nézet {500%?}</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="246"/>
+        <location filename="../src/player.cpp" line="251"/>
         <source>Zoom 750%</source>
         <translation type="unfinished">200%-os nézet {750%?}</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="249"/>
+        <location filename="../src/player.cpp" line="254"/>
         <source>Zoom 1000%</source>
         <translation type="unfinished">200%-os nézet {1000%?}</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="287"/>
+        <location filename="../src/player.cpp" line="292"/>
         <source>80/90% Safe Areas</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="291"/>
+        <location filename="../src/player.cpp" line="296"/>
         <source>EBU R95 Safe Areas</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="296"/>
+        <location filename="../src/player.cpp" line="301"/>
         <source>Snapping</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="305"/>
+        <location filename="../src/player.cpp" line="310"/>
         <source>Toggle grid display on the player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="391"/>
-        <location filename="../src/player.cpp" line="502"/>
-        <location filename="../src/player.cpp" line="525"/>
-        <location filename="../src/player.cpp" line="779"/>
+        <location filename="../src/player.cpp" line="395"/>
+        <location filename="../src/player.cpp" line="521"/>
+        <location filename="../src/player.cpp" line="544"/>
+        <location filename="../src/player.cpp" line="798"/>
         <source>Play</source>
         <translation>Lejátszás</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="393"/>
-        <location filename="../src/player.cpp" line="503"/>
-        <location filename="../src/player.cpp" line="526"/>
-        <location filename="../src/player.cpp" line="780"/>
+        <location filename="../src/player.cpp" line="397"/>
+        <location filename="../src/player.cpp" line="522"/>
+        <location filename="../src/player.cpp" line="545"/>
+        <location filename="../src/player.cpp" line="799"/>
         <source>Start playback (L)</source>
         <translation>Lejátszás indítása (L)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="396"/>
-        <location filename="../src/player.cpp" line="481"/>
-        <location filename="../src/player.cpp" line="786"/>
+        <location filename="../src/player.cpp" line="400"/>
+        <location filename="../src/player.cpp" line="500"/>
+        <location filename="../src/player.cpp" line="805"/>
         <source>Pause</source>
         <translation>Szünet</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="398"/>
-        <location filename="../src/player.cpp" line="482"/>
-        <location filename="../src/player.cpp" line="787"/>
+        <location filename="../src/player.cpp" line="402"/>
+        <location filename="../src/player.cpp" line="501"/>
+        <location filename="../src/player.cpp" line="806"/>
         <source>Pause playback (K)</source>
         <translation>Lejátszás szüneteltetése (K)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="400"/>
+        <location filename="../src/player.cpp" line="404"/>
         <source>Skip Next</source>
         <translation>Ugrás a kövekezőre</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="402"/>
+        <location filename="../src/player.cpp" line="406"/>
         <source>Skip to the next point (Alt+Right)</source>
         <translation>Ugrás a következő pontra (Alt+Jobbra)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="405"/>
+        <location filename="../src/player.cpp" line="409"/>
         <source>Skip Previous</source>
         <translation>Ugrás az előzőre</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="407"/>
+        <location filename="../src/player.cpp" line="411"/>
         <source>Skip to the previous point (Alt+Left)</source>
         <translation>Ugrás az előző pontra (Alt+Balra)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="410"/>
+        <location filename="../src/player.cpp" line="414"/>
         <source>Rewind</source>
         <translation>Vissza</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="412"/>
+        <location filename="../src/player.cpp" line="416"/>
         <source>Play quickly backwards (J)</source>
         <translation>Lejátszás gyorsan visszafelé (J)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="414"/>
+        <location filename="../src/player.cpp" line="418"/>
         <source>Fast Forward</source>
         <translation>Gyorsan előre</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="416"/>
+        <location filename="../src/player.cpp" line="420"/>
         <source>Play quickly forwards (L)</source>
         <translation>Lejátszás gyorsan előre (L)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="418"/>
+        <location filename="../src/player.cpp" line="422"/>
         <source>Volume</source>
         <translation>Hangerő</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="420"/>
+        <location filename="../src/player.cpp" line="424"/>
         <source>Show the volume control</source>
-        <translation>Hangerőszabályzó mutatása</translation>
+        <translation>Hangerőszabályzó megjelenítése</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="486"/>
+        <location filename="../src/player.cpp" line="505"/>
         <source>Stop</source>
         <translation>Megállít</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="487"/>
+        <location filename="../src/player.cpp" line="506"/>
         <source>Stop playback (K)</source>
         <translation>Lejátszás megállítása (K)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="999"/>
+        <location filename="../src/player.cpp" line="936"/>
+        <source>Proxy and preview scaling are ON at %1p</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/player.cpp" line="938"/>
+        <source>Proxy is ON at %1p</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/player.cpp" line="940"/>
+        <source>Preview scaling is ON at %1p</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/player.cpp" line="1043"/>
         <source>Unmute</source>
         <translation>Némítás feloldása</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="1004"/>
+        <location filename="../src/player.cpp" line="1016"/>
+        <location filename="../src/player.cpp" line="1048"/>
         <source>Mute</source>
         <translation>Némítás</translation>
     </message>
@@ -5158,26 +5202,26 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="193"/>
-        <location filename="../src/docks/playlistdock.ui" line="430"/>
+        <location filename="../src/docks/playlistdock.ui" line="435"/>
         <source>View as tiles</source>
         <translation>Megtekintés csempeként</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="207"/>
-        <location filename="../src/docks/playlistdock.ui" line="441"/>
+        <location filename="../src/docks/playlistdock.ui" line="446"/>
         <source>View as icons</source>
         <translation>Megtekintés ikonként</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="221"/>
-        <location filename="../src/docks/playlistdock.ui" line="419"/>
+        <location filename="../src/docks/playlistdock.ui" line="424"/>
         <source>View as details</source>
         <translation>Megtekintés részletesen</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="235"/>
         <source>Display a menu of additional actions</source>
-        <translation>További lehetőségek menüjének megjelenítése</translation>
+        <translation>További műveletek menüjének megjelenítése</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="291"/>
@@ -5202,7 +5246,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/docks/playlistdock.ui" line="328"/>
         <source>Set Creation Time...</source>
-        <translation type="unfinished"></translation>
+        <translation>Létrehozás idejének beállítása…</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="333"/>
@@ -5216,24 +5260,9 @@ p, li { white-space: pre-wrap; }
         <translation>Beillesztés</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="271"/>
-        <source>Shift+V</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/docks/playlistdock.ui" line="280"/>
         <location filename="../src/docks/playlistdock.ui" line="283"/>
         <source>Append</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/playlistdock.ui" line="286"/>
-        <source>Shift+A</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/playlistdock.ui" line="304"/>
-        <source>Shift+B</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5247,23 +5276,8 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="315"/>
-        <source>Return</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/playlistdock.ui" line="323"/>
-        <source>Shift+X</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/docks/playlistdock.ui" line="336"/>
         <source>Go to the start of this clip in the Project player</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/playlistdock.ui" line="339"/>
-        <source>Shift+Return</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5285,13 +5299,13 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/docks/playlistdock.ui" line="363"/>
         <location filename="../src/docks/playlistdock.ui" line="366"/>
         <source>In and Out - Left/Right</source>
-        <translation>Kívül-belül - Bal/Jobb</translation>
+        <translation>Eleje-vége - Bal/Jobb</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="374"/>
         <location filename="../src/docks/playlistdock.ui" line="377"/>
         <source>In and Out - Top/Bottom</source>
-        <translation>Kívül-belül - Fent/Lent</translation>
+        <translation>Eleje-vége - Fent/Lent</translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="385"/>
@@ -5306,139 +5320,162 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/docks/playlistdock.ui" line="398"/>
         <source>Add Selected to Timeline</source>
-        <translation type="unfinished"></translation>
+        <translation>Kijelölés hozzáadása az idővonalhoz</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="460"/>
-        <source>Play After Open</source>
+        <location filename="../src/docks/playlistdock.ui" line="403"/>
+        <source>Add Selected to Slideshow</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/playlistdock.ui" line="465"/>
+        <source>Play After Open</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/playlistdock.ui" line="470"/>
         <source>Select All</source>
-        <translation>Kiválaszt mind</translation>
+        <translation>Az összes kijelölése</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="468"/>
-        <source>Ctrl+Shift+A</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/playlistdock.ui" line="473"/>
+        <location filename="../src/docks/playlistdock.ui" line="478"/>
         <source>Select None</source>
-        <translation type="unfinished"></translation>
+        <translation>Kijelölés törlése</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="476"/>
-        <source>Ctrl+Shift+D</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/playlistdock.ui" line="481"/>
+        <location filename="../src/docks/playlistdock.ui" line="486"/>
         <source>Update Thumbnails</source>
-        <translation type="unfinished"></translation>
+        <translation>Bélyegképek frissítése</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="403"/>
+        <location filename="../src/docks/playlistdock.ui" line="408"/>
         <source>Sort By Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="408"/>
+        <location filename="../src/docks/playlistdock.ui" line="413"/>
         <source>Sort By Date</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="416"/>
+        <location filename="../src/docks/playlistdock.ui" line="421"/>
         <source>Details</source>
         <translation>Részletek</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="427"/>
+        <location filename="../src/docks/playlistdock.ui" line="432"/>
         <source>Tiles</source>
         <translation>Csempék</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="438"/>
+        <location filename="../src/docks/playlistdock.ui" line="443"/>
         <source>Icons</source>
         <translation>Ikonok</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="446"/>
+        <location filename="../src/docks/playlistdock.ui" line="451"/>
         <source>Copy</source>
         <translation>Másolás</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.ui" line="449"/>
+        <location filename="../src/docks/playlistdock.ui" line="454"/>
         <source>Open a copy of the clip in the Source player</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <location filename="../src/docks/playlistdock.ui" line="452"/>
-        <source>Shift+C</source>
-        <translation type="unfinished"></translation>
+    <message numerus="yes">
+        <location filename="../src/docks/playlistdock.cpp" line="255"/>
+        <source>Replace %n playlist items</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="303"/>
+        <location filename="../src/docks/playlistdock.cpp" line="339"/>
         <source>Sort</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="310"/>
+        <location filename="../src/docks/playlistdock.cpp" line="346"/>
         <source>View mode</source>
         <translation>Megtekintési mód</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="317"/>
+        <location filename="../src/docks/playlistdock.cpp" line="353"/>
         <source>Thumbnails</source>
         <translation>Bélyegképek</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="414"/>
-        <location filename="../src/docks/playlistdock.cpp" line="671"/>
+        <location filename="../src/docks/playlistdock.cpp" line="452"/>
+        <location filename="../src/docks/playlistdock.cpp" line="725"/>
         <source>You cannot insert a playlist into a playlist!</source>
         <translation>Nem lehet lejátszási listát egy másik lejátszási listához adni!</translation>
     </message>
+    <message numerus="yes">
+        <location filename="../src/docks/playlistdock.cpp" line="464"/>
+        <source>Remove %n playlist items</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
+    </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="426"/>
-        <source>Remove %1 playlist items</source>
+        <location filename="../src/docks/playlistdock.cpp" line="668"/>
+        <source>Add Files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/playlistdock.cpp" line="867"/>
+        <source>Generating</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PlaylistIconView</name>
+    <message>
+        <location filename="../src/widgets/playlisticonview.cpp" line="156"/>
+        <source>P</source>
+        <comment>The first letter or symbol of &quot;proxy&quot;</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>PlaylistModel</name>
     <message>
-        <location filename="../src/models/playlistmodel.cpp" line="362"/>
+        <location filename="../src/models/playlistmodel.cpp" line="240"/>
+        <source>(PROXY)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/models/playlistmodel.cpp" line="385"/>
         <source>#</source>
         <translation>#</translation>
     </message>
     <message>
-        <location filename="../src/models/playlistmodel.cpp" line="364"/>
+        <location filename="../src/models/playlistmodel.cpp" line="387"/>
         <source>Thumbnails</source>
         <translation>Bélyegképek</translation>
     </message>
     <message>
-        <location filename="../src/models/playlistmodel.cpp" line="366"/>
+        <location filename="../src/models/playlistmodel.cpp" line="389"/>
         <source>Clip</source>
-        <translation>Klipp</translation>
+        <translation>Klip</translation>
     </message>
     <message>
-        <location filename="../src/models/playlistmodel.cpp" line="368"/>
+        <location filename="../src/models/playlistmodel.cpp" line="391"/>
         <source>In</source>
         <translation>B</translation>
     </message>
     <message>
-        <location filename="../src/models/playlistmodel.cpp" line="370"/>
+        <location filename="../src/models/playlistmodel.cpp" line="393"/>
         <source>Duration</source>
         <translation>Időtartam</translation>
     </message>
     <message>
-        <location filename="../src/models/playlistmodel.cpp" line="372"/>
+        <location filename="../src/models/playlistmodel.cpp" line="395"/>
         <source>Start</source>
         <translation>Start</translation>
     </message>
     <message>
-        <location filename="../src/models/playlistmodel.cpp" line="374"/>
+        <location filename="../src/models/playlistmodel.cpp" line="397"/>
         <source>Date</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5446,22 +5483,22 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>Preset</name>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="63"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="64"/>
         <source>Save</source>
         <translation>Mentés</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="72"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="73"/>
         <source>Delete</source>
         <translation>Törlés</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="84"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="85"/>
         <source>Save Preset</source>
-        <translation>Beállítás mentése</translation>
+        <translation>Előbeállítás mentése</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="101"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="102"/>
         <source>Name:</source>
         <translation>Név:</translation>
     </message>
@@ -5472,18 +5509,18 @@ p, li { white-space: pre-wrap; }
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="128"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="127"/>
         <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="169"/>
         <source>Cancel</source>
         <translation>Mégse</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="140"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="141"/>
         <source>Delete Preset</source>
-        <translation>Sablon törlése</translation>
+        <translation>Előbeállítás törlése</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="149"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="150"/>
         <source>Are you sure you want to delete %1?</source>
         <translation>Biztosan törölni akarja a(z) %1-t?</translation>
     </message>
@@ -5493,7 +5530,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/widgets/pulseaudiowidget.ui" line="14"/>
         <source>Form</source>
-        <translation>Adatlap</translation>
+        <translation>Űrlap</translation>
     </message>
     <message>
         <location filename="../src/widgets/pulseaudiowidget.ui" line="26"/>
@@ -5566,7 +5603,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/mvcp/qconsole.cpp" line="769"/>
         <source>Select All</source>
-        <translation>Kiválaszt mind</translation>
+        <translation>Az összes kijelölése</translation>
     </message>
     <message>
         <location filename="../src/mvcp/qconsole.cpp" line="770"/>
@@ -5582,6 +5619,14 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/mvcp/qconsole.cpp" line="837"/>
         <source>/</source>
         <translation>/</translation>
+    </message>
+</context>
+<context>
+    <name>QImageJob</name>
+    <message>
+        <location filename="../src/jobs/qimagejob.cpp" line="32"/>
+        <source>Make proxy for %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5632,205 +5677,240 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="34"/>
+        <location filename="../src/commands/playlistcommands.cpp" line="296"/>
+        <source>Replace playlist item %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/commands/timelinecommands.cpp" line="45"/>
         <source>Append to track</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="64"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="51"/>
+        <source>Append to Timeline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/commands/timelinecommands.cpp" line="53"/>
+        <source>Preparing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/commands/timelinecommands.cpp" line="58"/>
+        <source>Appending</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/commands/timelinecommands.cpp" line="69"/>
+        <source>Finishing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/commands/timelinecommands.cpp" line="91"/>
         <source>Insert into track</source>
         <translation>Sávba illesztés</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="103"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="100"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="144"/>
+        <source>Add Files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/commands/timelinecommands.cpp" line="135"/>
         <source>Overwrite onto track</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="141"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="178"/>
         <source>Lift from track</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="168"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="205"/>
         <source>Remove from track</source>
         <translation>Sávból eltávolítás</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="195"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="232"/>
         <source>Change track name</source>
         <translation>Sáv nevének megváltoztatása</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="217"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="254"/>
         <source>Merge adjacent clips</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="241"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="278"/>
         <source>Toggle track mute</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="262"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="299"/>
         <source>Toggle track hidden</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="284"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="321"/>
         <source>Change track compositing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="306"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="343"/>
         <source>Lock track</source>
         <translation>Sáv zárolása</translation>
     </message>
-    <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="343"/>
-        <source>Move %1 timelime clips</source>
-        <translation type="unfinished"></translation>
+    <message numerus="yes">
+        <location filename="../src/commands/timelinecommands.cpp" line="380"/>
+        <source>Move %n timelime clips</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="345"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="382"/>
         <source>Move timelime clip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="439"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="476"/>
         <source>Trim clip in point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="487"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="525"/>
         <source>Trim clip out point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="533"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="571"/>
         <source>Split clip</source>
-        <translation>Klipp szétválasztása</translation>
+        <translation>Klip szétválasztása</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="559"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="598"/>
         <source>Adjust fade in</source>
-        <translation>Fokozatos előtűnés hozzáadása</translation>
+        <translation>Fokozatos megjelenés hozzáadása</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="592"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="631"/>
         <source>Adjust fade out</source>
         <translation>Fokozatos eltűnés hozzáadása</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="627"/>
-        <location filename="../src/commands/timelinecommands.cpp" line="747"/>
-        <location filename="../src/commands/timelinecommands.cpp" line="863"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="666"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="786"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="902"/>
         <source>Add transition</source>
         <translation>Áttűnés hozzáadása</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="659"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="698"/>
         <source>Trim transition in point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="702"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="741"/>
         <source>Trim transition out point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="791"/>
-        <location filename="../src/commands/timelinecommands.cpp" line="826"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="830"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="865"/>
         <source>Remove transition</source>
         <translation>Átmenet eltávolítása</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="904"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="943"/>
         <source>Add video track</source>
         <translation>Videósáv hozzáadása</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="906"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="945"/>
         <source>Add audio track</source>
         <translation>Hangsáv hozzáadása</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="931"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="970"/>
         <source>Insert audio track</source>
         <translation>Hangsáv beszúrása</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="933"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="972"/>
         <source>Insert video track</source>
         <translation>Videósáv beszúrása</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="956"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="995"/>
         <source>Remove audio track</source>
         <translation>Hangsáv eltávolítása</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="958"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="997"/>
         <source>Remove video track</source>
         <translation>Videósáv eltávolítása</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="1013"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="1052"/>
         <source>Change track blend mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="1053"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="1092"/>
         <source>Change clip properties</source>
-        <translation>Klipp tulajdonságainak változtatása</translation>
+        <translation>Klip tulajdonságainak módosítása</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="1098"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="1137"/>
         <source>Detach Audio</source>
-        <translation type="unfinished"></translation>
+        <translation>Hang leválasztása</translation>
     </message>
     <message>
-        <location filename="../src/commands/timelinecommands.cpp" line="1193"/>
+        <location filename="../src/commands/timelinecommands.cpp" line="1230"/>
         <source>Replace timeline clip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3300"/>
+        <location filename="../src/mainwindow.cpp" line="3451"/>
         <source>You cannot add a project to itself!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mltxmlchecker.cpp" line="122"/>
+        <location filename="../src/mltxmlchecker.cpp" line="139"/>
         <source>The file is not a MLT XML file.</source>
         <translation>A fájl nem MLT XML.</translation>
     </message>
     <message>
-        <location filename="../src/util.cpp" line="113"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="793"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="923"/>
-        <location filename="../src/widgets/avformatproducerwidget.cpp" line="992"/>
+        <location filename="../src/util.cpp" line="131"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="950"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1152"/>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1222"/>
         <source>Unable to write file %1
 Perhaps you do not have permission.
 Try again with a different folder.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nem sikerült a(z) %1 fájl írása.
+Lehet, hogy nincs rá engedélye.
+Próbálja meg egy másik mappával.</translation>
     </message>
     <message>
-        <location filename="../src/util.cpp" line="131"/>
+        <location filename="../src/util.cpp" line="147"/>
         <source>Transition</source>
         <translation>Áttűnés</translation>
     </message>
     <message>
-        <location filename="../src/util.cpp" line="133"/>
+        <location filename="../src/util.cpp" line="149"/>
         <source>Track: %1</source>
         <translation>%1. sáv</translation>
     </message>
     <message>
-        <location filename="../src/util.cpp" line="135"/>
-        <source>Master</source>
+        <location filename="../src/util.cpp" line="151"/>
+        <source>Output</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/util.cpp" line="290"/>
+        <location filename="../src/util.cpp" line="306"/>
         <source>The value you entered is very similar to the common,
 more standard %1 = %2/1001.
 
@@ -5838,15 +5918,20 @@ Do you want to use %1 = %2/1001 instead?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/colorproducerwidget.cpp" line="27"/>
-        <location filename="../src/widgets/textproducerwidget.cpp" line="27"/>
+        <location filename="../src/widgets/colorproducerwidget.cpp" line="28"/>
+        <location filename="../src/widgets/textproducerwidget.cpp" line="28"/>
         <source>transparent</source>
         <comment>Open Other &gt; Color</comment>
         <translation>Átlátszó</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="36"/>
-        <source>You cannot add a non-seekable source.</source>
+        <location filename="../src/docks/timelinedock.cpp" line="1107"/>
+        <source>Drop Files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/timelinedock.cpp" line="1136"/>
+        <source>Not adding non-seekable file: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5869,18 +5954,60 @@ Do you want to use %1 = %2/1001 instead?</source>
         <source>Move %1 from %2 to %3</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../src/docks/playlistdock.cpp" line="866"/>
+        <source>Generate Slideshow</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/proxymanager.cpp" line="213"/>
+        <source>Make proxy for %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QmlApplication</name>
+    <message>
+        <location filename="../src/qmltypes/qmlapplication.cpp" line="190"/>
+        <source>&lt;p&gt;Do you really want to add filters to &lt;b&gt;Output&lt;/b&gt;?&lt;/p&gt;&lt;p&gt;&lt;b&gt;Timeline &gt; Output&lt;/b&gt; is currently selected. Adding filters to &lt;b&gt;Output&lt;/b&gt; affects ALL clips in the timeline including new ones that will be added.&lt;/p&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qmltypes/qmlapplication.cpp" line="198"/>
+        <source>Do not show this anymore.</source>
+        <comment>confirm output filters dialog</comment>
+        <translation>Ne jelenjék meg többé.</translation>
+    </message>
 </context>
 <context>
     <name>QmlFilter</name>
     <message>
-        <location filename="../src/qmltypes/qmlfilter.cpp" line="298"/>
+        <location filename="../src/qmltypes/qmlfilter.cpp" line="325"/>
         <source>(defaults)</source>
         <translation>(alapértelmezett)</translation>
     </message>
     <message>
-        <location filename="../src/qmltypes/qmlfilter.cpp" line="377"/>
+        <location filename="../src/qmltypes/qmlfilter.cpp" line="425"/>
         <source>Analyze %1</source>
-        <translation>Analízis %1</translation>
+        <translation>%1 elemzése</translation>
+    </message>
+</context>
+<context>
+    <name>QmlRichText</name>
+    <message>
+        <location filename="../src/qmltypes/qmlrichtext.cpp" line="130"/>
+        <source>Cannot save: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qmltypes/qmlrichtext.cpp" line="159"/>
+        <source>Row</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qmltypes/qmlrichtext.cpp" line="161"/>
+        <source>Column</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5893,12 +6020,18 @@ Do you want to use %1 = %2/1001 instead?</source>
     <message>
         <location filename="../src/docks/recentdock.ui" line="46"/>
         <source>Show only files with name matching text</source>
-        <translation type="unfinished"></translation>
+        <translation>Csak a szöveggel megegyező nevű fájlok megjelenítése</translation>
     </message>
     <message>
         <location filename="../src/docks/recentdock.ui" line="49"/>
         <source>search</source>
         <translation>keresés</translation>
+    </message>
+    <message>
+        <location filename="../src/docks/recentdock.ui" line="76"/>
+        <location filename="../src/docks/recentdock.ui" line="79"/>
+        <source>Remove</source>
+        <translation>Eltávolítás</translation>
     </message>
 </context>
 <context>
@@ -5907,6 +6040,14 @@ Do you want to use %1 = %2/1001 instead?</source>
         <location filename="../src/qml/modules/Shotcut/Controls/SaveDefaultButton.qml" line="24"/>
         <source>Set as default</source>
         <translation>Beállítás alapértelmezettként</translation>
+    </message>
+</context>
+<context>
+    <name>SaveImageDialog</name>
+    <message>
+        <location filename="../src/dialogs/saveimagedialog.cpp" line="48"/>
+        <source>PNG (*.png);;BMP (*.bmp);;JPEG (*.jpg *.jpeg);;PPM (*.ppm);;TIFF (*.tif *.tiff);;WebP (*.webp);;All Files (*)</source>
+        <translation>PNG (*.png);;BMP (*.bmp);;JPEG (*.jpg *.jpeg);;PPM (*.ppm);;TIFF (*.tif *.tiff);;WebP (*.webp);;Minden fájl (*)</translation>
     </message>
 </context>
 <context>
@@ -5922,12 +6063,12 @@ Do you want to use %1 = %2/1001 instead?</source>
     <message>
         <location filename="../src/widgets/servicepresetwidget.ui" line="14"/>
         <source>Form</source>
-        <translation>Adatlap</translation>
+        <translation>Űrlap</translation>
     </message>
     <message>
         <location filename="../src/widgets/servicepresetwidget.ui" line="25"/>
         <source>Preset</source>
-        <translation>Sablon</translation>
+        <translation>Előbeállítás</translation>
     </message>
     <message>
         <location filename="../src/widgets/servicepresetwidget.ui" line="45"/>
@@ -5940,27 +6081,27 @@ Do you want to use %1 = %2/1001 instead?</source>
         <translation>Törlés</translation>
     </message>
     <message>
-        <location filename="../src/widgets/servicepresetwidget.cpp" line="92"/>
+        <location filename="../src/widgets/servicepresetwidget.cpp" line="80"/>
         <source>(defaults)</source>
         <translation>(alapértelmezett)</translation>
     </message>
     <message>
-        <location filename="../src/widgets/servicepresetwidget.cpp" line="99"/>
+        <location filename="../src/widgets/servicepresetwidget.cpp" line="87"/>
         <source>Save Preset</source>
-        <translation>Beállítás mentése</translation>
+        <translation>Előbeállítás mentése</translation>
     </message>
     <message>
-        <location filename="../src/widgets/servicepresetwidget.cpp" line="100"/>
+        <location filename="../src/widgets/servicepresetwidget.cpp" line="88"/>
         <source>Name:</source>
         <translation>Név:</translation>
     </message>
     <message>
-        <location filename="../src/widgets/servicepresetwidget.cpp" line="168"/>
+        <location filename="../src/widgets/servicepresetwidget.cpp" line="173"/>
         <source>Delete Preset</source>
-        <translation>Sablon törlése</translation>
+        <translation>Előbeállítás törlése</translation>
     </message>
     <message>
-        <location filename="../src/widgets/servicepresetwidget.cpp" line="169"/>
+        <location filename="../src/widgets/servicepresetwidget.cpp" line="174"/>
         <source>Are you sure you want to delete %1?</source>
         <translation>Biztosan törölni akarja a %1-t?</translation>
     </message>
@@ -5970,288 +6111,571 @@ Do you want to use %1 = %2/1001 instead?</source>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/SimplePropertyUI.qml" line="14"/>
         <source>Custom Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Egyéni tulajdonságok</translation>
     </message>
 </context>
 <context>
     <name>SizePositionUI</name>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="50"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="73"/>
         <source>Bottom Left</source>
         <translation>Balra lent</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="55"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="78"/>
         <source>Bottom Right</source>
         <translation>Jobbra lent</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="60"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="83"/>
         <source>Top Left</source>
         <translation>Balra fent</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="65"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="88"/>
         <source>Top Right</source>
         <translation>Jobbra fent</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="72"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="95"/>
         <source>Slide In From Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="74"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="97"/>
         <source>Slide In From Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="76"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="99"/>
         <source>Slide In From Top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="78"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="101"/>
         <source>Slide In From Bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="82"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="105"/>
         <source>Slide Out Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="84"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="107"/>
         <source>Slide Out Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="86"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="109"/>
         <source>Slide Out Top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="88"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="111"/>
         <source>Slide Out Bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="93"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="116"/>
         <source>Slow Zoom In</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="95"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="118"/>
         <source>Slow Zoom Out</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="97"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="120"/>
         <source>Slow Pan Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="98"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="121"/>
         <source>Slow Move Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="100"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="123"/>
         <source>Slow Pan Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="101"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="124"/>
         <source>Slow Move Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="103"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="126"/>
         <source>Slow Pan Up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="104"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="127"/>
         <source>Slow Move Up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="106"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="129"/>
         <source>Slow Pan Down</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="107"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="130"/>
         <source>Slow Move Down</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="109"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="132"/>
         <source>Slow Zoom In, Pan Up Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="110"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="133"/>
         <source>Slow Zoom In, Move Up Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="112"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="135"/>
         <source>Slow Zoom In, Pan Down Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="113"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="136"/>
         <source>Slow Zoom In, Move Down Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="115"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="138"/>
         <source>Slow Zoom Out, Pan Up Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="116"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="139"/>
         <source>Slow Zoom Out, Move Up Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="118"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="141"/>
         <source>Slow Zoom Out, Pan Down Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="119"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="142"/>
         <source>Slow Zoom Out, Move Down Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="121"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="144"/>
         <source>Slow Zoom In, Hold Bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="123"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="146"/>
         <source>Slow Zoom In, Hold Top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="125"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="148"/>
         <source>Slow Zoom In, Hold Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="127"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="150"/>
         <source>Slow Zoom In, Hold Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="129"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="152"/>
         <source>Slow Zoom Out, Hold Bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="131"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="154"/>
         <source>Slow Zoom Out, Hold Top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="133"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="156"/>
         <source>Slow Zoom Out, Hold Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="135"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="158"/>
         <source>Slow Zoom Out, Hold Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="293"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="472"/>
         <source>Preset</source>
-        <translation>Sablon</translation>
+        <translation>Előbeállítás</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="318"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="504"/>
         <source>Position</source>
         <translation>Pozicíó</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="365"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="582"/>
         <source>Size</source>
         <translation>Méret</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="399"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="638"/>
+        <source>Zoom</source>
+        <translation>Nagyítás</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="681"/>
         <source>Size mode</source>
         <translation>Méret mód</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="404"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="686"/>
         <source>Fit</source>
         <translation>illesztés</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="413"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="696"/>
         <source>Fill</source>
         <translation>Kitöltés</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="422"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="713"/>
         <source>Distort</source>
         <translation>Torzítás</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="439"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="732"/>
         <source>Horizontal fit</source>
         <translation>Vízszintes illesztés</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="444"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="737"/>
         <source>Left</source>
         <translation>Balra</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="451"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="743"/>
         <source>Center</source>
         <translation>Középen</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="458"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="749"/>
         <source>Right</source>
         <translation>Jobbra</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="472"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="762"/>
         <source>Vertical fit</source>
         <translation>Függőleges illesztés</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="477"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="767"/>
         <source>Top</source>
         <translation>Fent</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="484"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="773"/>
         <source>Middle</source>
         <comment>Size and Position video filter</comment>
         <translation>Középen</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="491"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="779"/>
         <source>Bottom</source>
         <translation>Lent</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="149"/>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="168"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="792"/>
+        <source>Rotation</source>
+        <translation>Forgatás</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="803"/>
+        <source> °</source>
+        <comment>degrees</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="820"/>
+        <source>Background color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="172"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="191"/>
         <source>Shake 1 Second - Scaled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="158"/>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="177"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="181"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="200"/>
         <source>Shake 1 Second - Unscaled</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SizePositionVUI</name>
+    <message>
+        <location filename="../src/qml/filters/size_position/SizePositionVUI.qml" line="44"/>
+        <source>Click in rectangle + hold Shift to drag, Wheel to zoom, or %1+Wheel to rotate</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SlideshowGeneratorDialog</name>
+    <message numerus="yes">
+        <location filename="../src/dialogs/slideshowgeneratordialog.cpp" line="33"/>
+        <source>Slideshow Generator - %n Clips</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
+    </message>
+</context>
+<context>
+    <name>SlideshowGeneratorWidget</name>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="55"/>
+        <source>Clip duration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="57"/>
+        <source>Set the duration of each clip in the slideshow.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="66"/>
+        <source>Aspect ratio conversion</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="68"/>
+        <source>Pad Black</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="69"/>
+        <source>Crop Center</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="70"/>
+        <source>Crop and Pan</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="74"/>
+        <source>Pad Blur</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="77"/>
+        <source>Choose an aspect ratio conversion method.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="82"/>
+        <source>Zoom effect</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="84"/>
+        <source>Set the percentage of the zoom-in effect.
+0% will result in no zoom effect.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="92"/>
+        <source>Transition duration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="94"/>
+        <source>Set the duration of the transition.
+May not be longer than half the duration of the clip.
+If the duration is 0, no transition will be created.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="103"/>
+        <source>Transition type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="105"/>
+        <source>Random</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="106"/>
+        <source>Dissolve</source>
+        <translation>Feloldás</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="107"/>
+        <source>Bar Horizontal</source>
+        <translation>Vízszintes sáv</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="108"/>
+        <source>Bar Vertical</source>
+        <translation>Függőleges sáv</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="109"/>
+        <source>Barn Door Horizontal</source>
+        <translation>Vízszintes pajtaajtó</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="110"/>
+        <source>Barn Door Vertical</source>
+        <translation>Függőleges pajtaajtó</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="111"/>
+        <source>Barn Door Diagonal SW-NE</source>
+        <translation>Átlós pajtaajtó DNY-ÉK</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="112"/>
+        <source>Barn Door Diagonal NW-SE</source>
+        <translation>Átlós pajtaajtó ÉNY-DK</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="113"/>
+        <source>Diagonal Top Left</source>
+        <translation>Átlós bal felső sarokból</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="114"/>
+        <source>Diagonal Top Right</source>
+        <translation>Átlós jobb felső sarokból</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="115"/>
+        <source>Matrix Waterfall Horizontal</source>
+        <translation>Vízszintes mátrix vízesés</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="116"/>
+        <source>Matrix Waterfall Vertical</source>
+        <translation>Függőleges mátrix vízesés</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="117"/>
+        <source>Matrix Snake Horizontal</source>
+        <translation>Vízszintes mátrix kígyó</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="118"/>
+        <source>Matrix Snake Parallel Horizontal</source>
+        <translation>Párhuzamos vízszintes mátrix kígyó</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="119"/>
+        <source>Matrix Snake Vertical</source>
+        <translation>Függőleges mátrix kígyó</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="120"/>
+        <source>Matrix Snake Parallel Vertical</source>
+        <translation>Párhuzamos függőleges mátrix kígyó</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="121"/>
+        <source>Barn V Up</source>
+        <translation>V fel</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="122"/>
+        <source>Iris Circle</source>
+        <translation>Íriszkör</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="123"/>
+        <source>Double Iris</source>
+        <translation>Dupla írisz</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="124"/>
+        <source>Iris Box</source>
+        <translation>Íriszdoboz</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="125"/>
+        <source>Box Bottom Right</source>
+        <translation>Doboz jobb alsó sarokból</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="126"/>
+        <source>Box Bottom Left</source>
+        <translation>Doboz bal alsó sarokból</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="127"/>
+        <source>Box Right Center</source>
+        <translation>Doboz jobb középről</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="128"/>
+        <source>Clock Top</source>
+        <translation>Óra fent</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="129"/>
+        <source>Choose a transition effect.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="134"/>
+        <source>Transition softness</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="136"/>
+        <source>Change the softness of the edge of the wipe.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/slideshowgeneratorwidget.cpp" line="478"/>
+        <source>Generating Preview...</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SystemSyncDialog</name>
+    <message>
+        <location filename="../src/dialogs/systemsyncdialog.ui" line="14"/>
+        <source>Player Synchronization</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/systemsyncdialog.ui" line="20"/>
+        <source>Adjust your playback audio/video synchronization</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/systemsyncdialog.ui" line="48"/>
+        <source>Reset to default value 0</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/systemsyncdialog.ui" line="65"/>
+        <source>Video offset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/systemsyncdialog.ui" line="75"/>
+        <source>Apply</source>
+        <translation>Alkalmaz</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/systemsyncdialog.ui" line="82"/>
+        <source> ms</source>
+        <translation>ms</translation>
     </message>
 </context>
 <context>
@@ -6272,80 +6696,88 @@ Do you want to use %1 = %2/1001 instead?</source>
         <translation>Betűkészlet</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="186"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="193"/>
         <source>Use font size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="201"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="208"/>
         <source>Outline</source>
         <translation>Körvonal</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="211"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="218"/>
         <source>Thickness</source>
         <translation>Vastagság</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="225"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="231"/>
         <source>Background</source>
         <translation>Háttér</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="235"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="241"/>
         <source>Padding</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="249"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="254"/>
         <source>Position</source>
         <translation>Pozicíó</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="296"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="310"/>
         <source>Size</source>
         <translation>Méret</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="330"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="354"/>
         <source>Horizontal fit</source>
         <translation>Vízszintes illesztés</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="335"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="359"/>
         <source>Left</source>
         <translation>Balra</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="341"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="365"/>
         <source>Center</source>
         <translation>Középen</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="347"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="371"/>
         <source>Right</source>
         <translation>Jobbra</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="360"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="384"/>
         <source>Vertical fit</source>
         <translation>Függőleges illesztés</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="365"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="389"/>
         <source>Top</source>
         <translation>Fent</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="371"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="395"/>
         <source>Middle</source>
         <comment>Text video filter</comment>
         <translation>Középen</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="377"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterUi.qml" line="401"/>
         <source>Bottom</source>
         <translation>Lent</translation>
+    </message>
+</context>
+<context>
+    <name>TextFilterVui</name>
+    <message>
+        <location filename="../src/qml/modules/Shotcut/Controls/TextFilterVui.qml" line="34"/>
+        <source>Click in rectangle + hold Shift to drag</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6353,7 +6785,7 @@ Do you want to use %1 = %2/1001 instead?</source>
     <message>
         <location filename="../src/widgets/textproducerwidget.ui" line="14"/>
         <source>Form</source>
-        <translation>Adatlap</translation>
+        <translation>Űrlap</translation>
     </message>
     <message>
         <location filename="../src/widgets/textproducerwidget.ui" line="26"/>
@@ -6381,9 +6813,19 @@ Do you want to use %1 = %2/1001 instead?</source>
         <translation>A szövegtulajdonságok az &lt;b&gt;OK&lt;/b&gt; gombra kattintva érhetők el a &lt;b&gt;Szűrők&lt;/b&gt; panelen.</translation>
     </message>
     <message>
-        <location filename="../src/widgets/textproducerwidget.cpp" line="93"/>
-        <source>Edit your text using the Filters panel.</source>
+        <location filename="../src/widgets/textproducerwidget.cpp" line="57"/>
+        <source>black</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/textproducerwidget.cpp" line="59"/>
+        <source>transparent</source>
+        <translation>Átlátszó</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/textproducerwidget.cpp" line="112"/>
+        <source>Edit your text using the Filters panel.</source>
+        <translation>A szöveget a Szűrők panel használatával szerkesztheti.</translation>
     </message>
 </context>
 <context>
@@ -6401,23 +6843,23 @@ Do you want to use %1 = %2/1001 instead?</source>
     <message>
         <location filename="../src/dialogs/textviewerdialog.cpp" line="46"/>
         <source>Text Documents (*.txt);;All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Szöveges dokumentumok (*.txt);;Minden fájl (*)</translation>
     </message>
 </context>
 <context>
     <name>TiledItemDelegate</name>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="101"/>
+        <location filename="../src/docks/playlistdock.cpp" line="110"/>
         <source>Duration: %1</source>
         <translation>Hossz: %1</translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="104"/>
+        <location filename="../src/docks/playlistdock.cpp" line="113"/>
         <source>In: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/playlistdock.cpp" line="106"/>
+        <location filename="../src/docks/playlistdock.cpp" line="115"/>
         <source>Start: %1</source>
         <translation>Start: %1</translation>
     </message>
@@ -6425,12 +6867,12 @@ Do you want to use %1 = %2/1001 instead?</source>
 <context>
     <name>TimeSpinner</name>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TimeSpinner.qml" line="49"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TimeSpinner.qml" line="51"/>
         <source>Decrement</source>
         <translation>Csökkenés</translation>
     </message>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/TimeSpinner.qml" line="70"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/TimeSpinner.qml" line="72"/>
         <source>Increment</source>
         <translation>Növekedés</translation>
     </message>
@@ -6443,49 +6885,56 @@ Do you want to use %1 = %2/1001 instead?</source>
         <translation>Idővonal</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="158"/>
+        <location filename="../src/docks/timelinedock.cpp" line="168"/>
         <source>This track is locked</source>
         <translation>A sáv zárolva</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="401"/>
+        <location filename="../src/docks/timelinedock.cpp" line="173"/>
+        <source>You cannot add a non-seekable source.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/timelinedock.cpp" line="402"/>
         <source>Failed to open </source>
         <translation>Nem lehet megnyitni</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="404"/>
+        <location filename="../src/docks/timelinedock.cpp" line="405"/>
         <source>You must save to Copy Timeline to Source.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="616"/>
+        <location filename="../src/docks/timelinedock.cpp" line="622"/>
         <source>Remove %1 from timeline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="639"/>
+        <location filename="../src/docks/timelinedock.cpp" line="644"/>
         <source>Lift %1 from timeline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="858"/>
+        <location filename="../src/docks/timelinedock.cpp" line="866"/>
         <source>There is nothing in the Source player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="873"/>
+        <location filename="../src/docks/timelinedock.cpp" line="881"/>
         <source>You cannot replace a transition.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1162"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1292"/>
         <source>You cannot split a transition.</source>
         <translation>Áttűnést nem lehet szétválasztani.</translation>
     </message>
-    <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1379"/>
-        <source>Replace %1 timeline clips</source>
-        <translation type="unfinished"></translation>
+    <message numerus="yes">
+        <location filename="../src/docks/timelinedock.cpp" line="1513"/>
+        <source>Replace %n timeline clips</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -6493,7 +6942,7 @@ Do you want to use %1 = %2/1001 instead?</source>
     <message>
         <location filename="../src/widgets/timelinepropertieswidget.ui" line="14"/>
         <source>Form</source>
-        <translation>Adatlap</translation>
+        <translation>Űrlap</translation>
     </message>
     <message>
         <location filename="../src/widgets/timelinepropertieswidget.ui" line="26"/>
@@ -6537,7 +6986,7 @@ Do you want to use %1 = %2/1001 instead?</source>
     <message>
         <location filename="../src/widgets/timelinepropertieswidget.cpp" line="34"/>
         <source>%L1 fps</source>
-        <translation>%L1 fps</translation>
+        <translation>%L1 képkocka/másodperc</translation>
     </message>
     <message>
         <location filename="../src/widgets/timelinepropertieswidget.cpp" line="36"/>
@@ -6553,93 +7002,89 @@ Do you want to use %1 = %2/1001 instead?</source>
 <context>
     <name>TimelineToolbar</name>
     <message>
-        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="105"/>
+        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="124"/>
         <source>Toggle snapping</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="115"/>
+        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="135"/>
         <source>Scrub while dragging</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="125"/>
+        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="146"/>
         <source>Ripple trim and drop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="126"/>
-        <source>Ripple</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="137"/>
+        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="157"/>
         <source>Ripple edits across all tracks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="138"/>
-        <source>Ripple All</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="198"/>
+        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="42"/>
         <source>Display a menu of additional actions</source>
-        <translation>További lehetőségek menüjének megjelenítése</translation>
+        <translation>További műveletek menüjének megjelenítése</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="206"/>
+        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="54"/>
         <source>Cut - Copy the current clip to the Source
 player and ripple delete it</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="215"/>
+        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="61"/>
         <source>Copy - Copy the current clip to the Source player (C)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="224"/>
+        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="68"/>
         <source>Paste - Insert clip into the current track
 shifting following clips to the right (V)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="232"/>
+        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="80"/>
         <source>Append to the current track (A)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="240"/>
+        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="87"/>
         <source>Ripple Delete - Remove current clip
 shifting following clips to the left (X)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="248"/>
+        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="94"/>
         <source>Lift - Remove current clip without
 affecting position of other clips (Z)</source>
-        <translation type="unfinished"></translation>
+        <translation>Kiemelés – A jelenlegi klip eltávolítása anélkül,
+hogy a többi klip pozíciója megváltoznék (Z)</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="256"/>
+        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="101"/>
         <source>Overwrite clip onto the current track (B)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="264"/>
+        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="108"/>
         <source>Split At Playhead (S)</source>
         <translation>Szétválasztás a lejátszófejnél (S)</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="272"/>
+        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="169"/>
         <source>Zoom timeline out (-)</source>
         <translation>Idővonal kicsinyítés (-)</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="280"/>
+        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="179"/>
         <source>Zoom timeline in (+)</source>
         <translation>Idővonal nagyítás (+)</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="186"/>
+        <source>Zoom timeline to fit (0)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6647,7 +7092,7 @@ affecting position of other clips (Z)</source>
     <message>
         <location filename="../src/widgets/toneproducerwidget.ui" line="14"/>
         <source>Form</source>
-        <translation>Adatlap</translation>
+        <translation>Űrlap</translation>
     </message>
     <message>
         <location filename="../src/widgets/toneproducerwidget.ui" line="26"/>
@@ -6683,37 +7128,37 @@ affecting position of other clips (Z)</source>
 <context>
     <name>TrackHead</name>
     <message>
-        <location filename="../src/qml/views/timeline/TrackHead.qml" line="174"/>
+        <location filename="../src/qml/views/timeline/TrackHead.qml" line="184"/>
         <source>Unmute</source>
         <translation>Némítás feloldása</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/TrackHead.qml" line="174"/>
+        <location filename="../src/qml/views/timeline/TrackHead.qml" line="184"/>
         <source>Mute</source>
         <translation>Némítás</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/TrackHead.qml" line="185"/>
+        <location filename="../src/qml/views/timeline/TrackHead.qml" line="197"/>
         <source>Show</source>
-        <translation>Mutat</translation>
+        <translation>Megjelenítés</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/TrackHead.qml" line="185"/>
+        <location filename="../src/qml/views/timeline/TrackHead.qml" line="197"/>
         <source>Hide</source>
         <translation>Elrejtés</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/TrackHead.qml" line="147"/>
+        <location filename="../src/qml/views/timeline/TrackHead.qml" line="154"/>
         <source>Unlock track</source>
         <translation>Sáv zárolás feloldása</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/TrackHead.qml" line="147"/>
+        <location filename="../src/qml/views/timeline/TrackHead.qml" line="154"/>
         <source>Lock track</source>
         <translation>Sáv zárolása</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/TrackHead.qml" line="195"/>
+        <location filename="../src/qml/views/timeline/TrackHead.qml" line="208"/>
         <source>Filters</source>
         <translation>Szűrők</translation>
     </message>
@@ -6723,7 +7168,7 @@ affecting position of other clips (Z)</source>
     <message>
         <location filename="../src/widgets/trackpropertieswidget.ui" line="14"/>
         <source>Form</source>
-        <translation>Adatlap</translation>
+        <translation>Űrlap</translation>
     </message>
     <message>
         <location filename="../src/widgets/trackpropertieswidget.ui" line="38"/>
@@ -6836,17 +7281,17 @@ affecting position of other clips (Z)</source>
         <translation>Párbeszédablak</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="44"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="41"/>
         <source>good</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="54"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="51"/>
         <source>better</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.ui" line="64"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="61"/>
         <source>best</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6869,25 +7314,122 @@ affecting position of other clips (Z)</source>
         <location filename="../src/dialogs/transcodedialog.ui" line="139"/>
         <source>Do not show this anymore.</source>
         <comment>Convert to edit-friendly format dialog</comment>
+        <translation>Ne jelenjék meg többé.</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/transcodedialog.ui" line="165"/>
+        <source>Change the frame rate from its source.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.cpp" line="29"/>
+        <location filename="../src/dialogs/transcodedialog.ui" line="175"/>
+        <source>This is useful when the source video is HDR (High Dynamic Range), which requires tone-mapping to the old, standard range.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/transcodedialog.ui" line="185"/>
+        <source>Frame rate conversion</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/transcodedialog.ui" line="203"/>
+        <source>This option converts only the trimmed portion of the source
+clip plus a little instead of the entire clip. When this option is
+used not all of the matching source clips are replaced, instead
+only the currently selected one.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/transcodedialog.ui" line="209"/>
+        <source>Use sub-clip</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/transcodedialog.ui" line="223"/>
+        <source>If the source is progressive, each interlaced field will be converted to a progressive frame resulting in double frame rate.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/transcodedialog.ui" line="226"/>
+        <source>Deinterlace</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/transcodedialog.ui" line="233"/>
+        <source>Enable this to keep the Advanced section open for the next time this dialog appears.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/transcodedialog.ui" line="236"/>
+        <source>Keep Advanced open</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/transcodedialog.ui" line="151"/>
+        <source>Override the frame rate to a specific value.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/transcodedialog.ui" line="192"/>
+        <source>Frame rate conversion method
+
+Duplicate: Duplicate frames.
+Blend: Blend frames.
+Motion Compensation: Interpolate new frames using motion compensation. This method is very slow and may result in artifacts.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/transcodedialog.ui" line="168"/>
+        <source>Override frame rate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/transcodedialog.ui" line="216"/>
+        <source>Frames/sec</source>
+        <translation>Képkocka/mp</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/transcodedialog.ui" line="178"/>
+        <source>Convert to BT.709 colorspace</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/transcodedialog.cpp" line="33"/>
         <source>Convert to Edit-friendly...</source>
+        <translation>Konvertálás szerkesztésbaráttá…</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/transcodedialog.cpp" line="50"/>
+        <source>Duplicate (fast)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/dialogs/transcodedialog.cpp" line="49"/>
-        <source>Lossy: I-frame–only %1</source>
+        <location filename="../src/dialogs/transcodedialog.cpp" line="51"/>
+        <source>Blend</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/dialogs/transcodedialog.cpp" line="52"/>
-        <source>Intermediate: %1</source>
+        <source>Motion Compensation (slow)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/dialogs/transcodedialog.cpp" line="55"/>
+        <source>Advanced</source>
+        <translation>Speciális</translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/transcodedialog.cpp" line="128"/>
+        <source>Lossy: I-frame–only %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/transcodedialog.cpp" line="131"/>
+        <source>Intermediate: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dialogs/transcodedialog.cpp" line="134"/>
         <source>Lossless: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6895,7 +7437,7 @@ affecting position of other clips (Z)</source>
 <context>
     <name>UndoButton</name>
     <message>
-        <location filename="../src/qml/modules/Shotcut/Controls/UndoButton.qml" line="24"/>
+        <location filename="../src/qml/modules/Shotcut/Controls/UndoButton.qml" line="25"/>
         <source>Reset to default</source>
         <translation>Visszaállítás alapértelmezettre</translation>
     </message>
@@ -6920,7 +7462,7 @@ affecting position of other clips (Z)</source>
     <message>
         <location filename="../src/dialogs/unlinkedfilesdialog.ui" line="81"/>
         <source>Search in Folder...</source>
-        <translation type="unfinished"></translation>
+        <translation>Keresés mappában…</translation>
     </message>
     <message>
         <location filename="../src/dialogs/unlinkedfilesdialog.cpp" line="42"/>
@@ -6943,7 +7485,7 @@ affecting position of other clips (Z)</source>
     <message>
         <location filename="../src/widgets/video4linuxwidget.ui" line="14"/>
         <source>Form</source>
-        <translation>Adatlap</translation>
+        <translation>Űrlap</translation>
     </message>
     <message>
         <location filename="../src/widgets/video4linuxwidget.ui" line="36"/>
@@ -6968,7 +7510,7 @@ affecting position of other clips (Z)</source>
     <message>
         <location filename="../src/widgets/video4linuxwidget.ui" line="82"/>
         <source>fps</source>
-        <translation>fps</translation>
+        <translation>képkocka/másodperc</translation>
     </message>
     <message>
         <location filename="../src/widgets/video4linuxwidget.ui" line="102"/>
@@ -7033,7 +7575,7 @@ affecting position of other clips (Z)</source>
     <message>
         <location filename="../src/widgets/video4linuxwidget.ui" line="213"/>
         <source>Audio Input</source>
-        <translation>Audió bemenet</translation>
+        <translation>Hangbemenet</translation>
     </message>
     <message>
         <location filename="../src/widgets/video4linuxwidget.ui" line="223"/>
@@ -7074,38 +7616,38 @@ affecting position of other clips (Z)</source>
 <context>
     <name>VideoHistogramScopeWidget</name>
     <message>
-        <location filename="../src/widgets/scopes/videohistogramscopewidget.cpp" line="101"/>
+        <location filename="../src/widgets/scopes/videohistogramscopewidget.cpp" line="102"/>
         <source>Luma</source>
         <translation>Luma</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videohistogramscopewidget.cpp" line="106"/>
+        <location filename="../src/widgets/scopes/videohistogramscopewidget.cpp" line="107"/>
         <source>Red</source>
         <translation>Vörös</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videohistogramscopewidget.cpp" line="111"/>
+        <location filename="../src/widgets/scopes/videohistogramscopewidget.cpp" line="112"/>
         <source>Green</source>
         <translation>Zöld</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videohistogramscopewidget.cpp" line="116"/>
+        <location filename="../src/widgets/scopes/videohistogramscopewidget.cpp" line="117"/>
         <source>Blue</source>
         <translation>Kék</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videohistogramscopewidget.cpp" line="200"/>
+        <location filename="../src/widgets/scopes/videohistogramscopewidget.cpp" line="201"/>
         <source>Value: %1
 IRE: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videohistogramscopewidget.cpp" line="204"/>
+        <location filename="../src/widgets/scopes/videohistogramscopewidget.cpp" line="205"/>
         <source>Value: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/videohistogramscopewidget.cpp" line="212"/>
+        <location filename="../src/widgets/scopes/videohistogramscopewidget.cpp" line="213"/>
         <source>Video Histogram</source>
         <translation>Video hisztogram</translation>
     </message>
@@ -7130,7 +7672,7 @@ IRE: %2</source>
     <message>
         <location filename="../src/jobs/videoqualityjob.cpp" line="45"/>
         <source>Show In Folder</source>
-        <translation>Mappában mutatás</translation>
+        <translation>Megjelenítés mappában</translation>
     </message>
     <message>
         <location filename="../src/jobs/videoqualityjob.cpp" line="49"/>
@@ -7245,7 +7787,7 @@ Value: %2</source>
     <message>
         <location filename="../src/widgets/scopes/videorgbwaveformscopewidget.cpp" line="170"/>
         <source>Video RGB Waveform</source>
-        <translation type="unfinished"></translation>
+        <translation>RGB videohullám</translation>
     </message>
 </context>
 <context>
@@ -7289,7 +7831,7 @@ IRE: %2</source>
     <message>
         <location filename="../src/widgets/scopes/videowaveformscopewidget.cpp" line="155"/>
         <source>Video Waveform</source>
-        <translation>Videó hullámforma</translation>
+        <translation>Videohullám</translation>
     </message>
 </context>
 <context>
@@ -7342,7 +7884,7 @@ IRE: %2</source>
     <message>
         <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="156"/>
         <source>Lock/Unlock the selected pixel</source>
-        <translation type="unfinished"></translation>
+        <translation>Kijelölt képpont zárolása/feloldása</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="248"/>
@@ -7356,39 +7898,11 @@ IRE: %2</source>
     </message>
 </context>
 <context>
-    <name>WebvfxProducer</name>
-    <message>
-        <location filename="../src/widgets/webvfxproducer.ui" line="14"/>
-        <source>Form</source>
-        <translation>Adatlap</translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/webvfxproducer.ui" line="23"/>
-        <source>Make background transparent</source>
-        <translation>Háttér átlátszóvá tétele</translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/webvfxproducer.ui" line="30"/>
-        <source>Reload</source>
-        <translation>Újratöltés</translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/webvfxproducer.ui" line="53"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;For Advanced Users&lt;/span&gt;&lt;br/&gt;If you enable this, and you do not use the WebVfx JavaScript extension, your content will not render!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Haladó felhasználóknak&lt;/span&gt;&lt;br/&gt;Ha ezt engedélyezi és nem használja a WebVfx JavaScript kiterjesztést, akkor a tartalom nem fog lerendelődni!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/webvfxproducer.ui" line="56"/>
-        <source>Use WebVfx JavaScript extension</source>
-        <translation>WebVfx JavaScript kiegészítő használata</translation>
-    </message>
-</context>
-<context>
     <name>X11grabWidget</name>
     <message>
         <location filename="../src/widgets/x11grabwidget.ui" line="14"/>
         <source>Form</source>
-        <translation>Adatlap</translation>
+        <translation>Űrlap</translation>
     </message>
     <message>
         <location filename="../src/widgets/x11grabwidget.ui" line="20"/>
@@ -7413,12 +7927,12 @@ IRE: %2</source>
     <message>
         <location filename="../src/widgets/x11grabwidget.ui" line="66"/>
         <source>The horizontal coordinate from the left edge when using a fixed capture region.</source>
-        <translation type="unfinished"></translation>
+        <translation>A bal széltől számított vízszintes koordináta rögzített felvételi régió használatakor.</translation>
     </message>
     <message>
         <location filename="../src/widgets/x11grabwidget.ui" line="82"/>
         <source>The vertical coordinate from the top edge when using a fixed capture region.</source>
-        <translation type="unfinished"></translation>
+        <translation>A felső széltől számított függőszintes koordináta rögzített felvételi régió használatakor.</translation>
     </message>
     <message>
         <location filename="../src/widgets/x11grabwidget.ui" line="92"/>
@@ -7445,8 +7959,7 @@ IRE: %2</source>
         <location filename="../src/widgets/x11grabwidget.ui" line="121"/>
         <source>An X11 display name of the form hostname:displaynumber.screennumber
 Most users do not need to change this.</source>
-        <translation>An X11 display name of the form hostname:displaynumber.screennumber
-Most users do not need to change this.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/widgets/x11grabwidget.ui" line="125"/>
@@ -7461,12 +7974,12 @@ Most users do not need to change this.</translation>
     <message>
         <location filename="../src/widgets/x11grabwidget.ui" line="142"/>
         <source>Show the capture region</source>
-        <translation>Rögzítési terület mutatása</translation>
+        <translation>Rögzítési terület megjelenítése</translation>
     </message>
     <message>
         <location filename="../src/widgets/x11grabwidget.ui" line="149"/>
         <source>Audio Input</source>
-        <translation>Audió bemenet</translation>
+        <translation>Hangbemenet</translation>
     </message>
     <message>
         <location filename="../src/widgets/x11grabwidget.ui" line="172"/>
@@ -7511,7 +8024,7 @@ Most users do not need to change this.</translation>
     <message>
         <location filename="../src/widgets/x11grabwidget.ui" line="252"/>
         <source>Width of the capture region</source>
-        <translation>A felvételre kerülő terület mérete</translation>
+        <translation>A rögzítendő terület szélessége</translation>
     </message>
     <message>
         <location filename="../src/widgets/x11grabwidget.ui" line="265"/>
@@ -7527,32 +8040,32 @@ Most users do not need to change this.</translation>
 <context>
     <name>audioloudnessscope</name>
     <message>
-        <location filename="../src/qml/scopes/audioloudness/audioloudnessscope.qml" line="118"/>
+        <location filename="../src/qml/scopes/audioloudness/audioloudnessscope.qml" line="62"/>
         <source>Momentary Loudness.</source>
         <translation>Pillanatnyi hangerő.</translation>
     </message>
     <message>
-        <location filename="../src/qml/scopes/audioloudness/audioloudnessscope.qml" line="152"/>
+        <location filename="../src/qml/scopes/audioloudness/audioloudnessscope.qml" line="96"/>
         <source>Short-term Loudness.</source>
         <translation>Rövidtávú hangerő.</translation>
     </message>
     <message>
-        <location filename="../src/qml/scopes/audioloudness/audioloudnessscope.qml" line="186"/>
+        <location filename="../src/qml/scopes/audioloudness/audioloudnessscope.qml" line="130"/>
         <source>Integrated Loudness.</source>
         <translation>Összesített hangerő</translation>
     </message>
     <message>
-        <location filename="../src/qml/scopes/audioloudness/audioloudnessscope.qml" line="220"/>
+        <location filename="../src/qml/scopes/audioloudness/audioloudnessscope.qml" line="164"/>
         <source>Loudness Range.</source>
-        <translation type="unfinished"></translation>
+        <translation>Hangerőtartomány.</translation>
     </message>
     <message>
-        <location filename="../src/qml/scopes/audioloudness/audioloudnessscope.qml" line="254"/>
+        <location filename="../src/qml/scopes/audioloudness/audioloudnessscope.qml" line="198"/>
         <source>Peak.</source>
         <translation>Jelszint.</translation>
     </message>
     <message>
-        <location filename="../src/qml/scopes/audioloudness/audioloudnessscope.qml" line="288"/>
+        <location filename="../src/qml/scopes/audioloudness/audioloudnessscope.qml" line="232"/>
         <source>True Peak.</source>
         <translation>Valós jelszint.</translation>
     </message>
@@ -7560,113 +8073,158 @@ Most users do not need to change this.</translation>
 <context>
     <name>filterview</name>
     <message>
-        <location filename="../src/qml/views/filter/filterview.qml" line="119"/>
+        <location filename="../src/qml/views/filter/filterview.qml" line="121"/>
         <source>Nothing selected</source>
-        <translation>Nincs kiválasztva semmi</translation>
+        <translation>Semmi sincs kijelölve</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/filter/filterview.qml" line="131"/>
+        <location filename="../src/qml/views/filter/filterview.qml" line="134"/>
         <source>Add a filter</source>
-        <translation>Filter hozzáadása</translation>
+        <translation>Szűrő hozzáadása</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/filter/filterview.qml" line="140"/>
+        <location filename="../src/qml/views/filter/filterview.qml" line="148"/>
         <source>Remove selected filter</source>
-        <translation>Kiválasztott szűrő eltávolítása</translation>
+        <translation>Kijelölt szűrő eltávolítása</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/filter/filterview.qml" line="157"/>
+        <location filename="../src/qml/views/filter/filterview.qml" line="165"/>
         <source>Copy the filters</source>
         <translation>Szűrők másolása</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/filter/filterview.qml" line="167"/>
+        <location filename="../src/qml/views/filter/filterview.qml" line="175"/>
         <source>Paste filters</source>
         <translation>Szűrők beillesztése</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/views/filter/filterview.qml" line="190"/>
+        <source>Move filter up</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/views/filter/filterview.qml" line="200"/>
+        <source>Move filter down</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/views/filter/filterview.qml" line="215"/>
+        <source>Deselect the filter</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>keyframes</name>
     <message>
-        <location filename="../src/qml/views/keyframes/keyframes.qml" line="432"/>
-        <source>Show Audio Waveforms</source>
-        <translation>Hanghullámok mutatása</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/views/keyframes/keyframes.qml" line="450"/>
-        <source>Show Video Thumbnails</source>
-        <translation>Videó bélyegképek mutatása</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/views/keyframes/keyframes.qml" line="456"/>
-        <source>Center the Playhead</source>
+        <location filename="../src/qml/views/keyframes/keyframes.qml" line="474"/>
+        <source>Options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/views/keyframes/keyframes.qml" line="463"/>
+        <location filename="../src/qml/views/keyframes/keyframes.qml" line="477"/>
+        <source>Show Audio Waveforms</source>
+        <translation>Hanghullámok megjelenítése</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/views/keyframes/keyframes.qml" line="495"/>
+        <source>Use Higher Performance Waveforms</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/views/keyframes/keyframes.qml" line="505"/>
+        <source>Show Video Thumbnails</source>
+        <translation>Videó bélyegképek megjelenítése</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/views/keyframes/keyframes.qml" line="511"/>
+        <source>Center the Playhead</source>
+        <translation>Lejátszófej középre hozása</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/views/keyframes/keyframes.qml" line="517"/>
+        <source>Scroll to Playhead on Zoom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/views/keyframes/keyframes.qml" line="524"/>
         <source>Reload</source>
         <translation>Újratöltés</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/views/keyframes/keyframes.qml" line="528"/>
+        <source>Cancel</source>
+        <translation>Mégse</translation>
     </message>
 </context>
 <context>
     <name>main</name>
     <message>
-        <location filename="../src/main.cpp" line="141"/>
+        <location filename="../src/main.cpp" line="153"/>
         <source>Fill the screen with the Shotcut window.</source>
         <translation>Töltse ki a képernyőt a Shotcut ablakával.</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="145"/>
+        <location filename="../src/main.cpp" line="157"/>
         <source>Hide upgrade prompt and menu item.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="148"/>
+        <location filename="../src/main.cpp" line="160"/>
         <source>Use GPU processing.</source>
         <translation>GPU feldolgozás használata.</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="151"/>
+        <location filename="../src/main.cpp" line="163"/>
         <source>Clear Recent on Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Kilépéskor a legutóbbi törlése</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="154"/>
+        <location filename="../src/main.cpp" line="166"/>
         <source>The directory for app configuration and data.</source>
-        <translation type="unfinished"></translation>
+        <translation>Az alkalmazás konfigurálásának és adatainak könyvtára.</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="155"/>
+        <location filename="../src/main.cpp" line="167"/>
         <source>directory</source>
         <translation>mappa</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="158"/>
+        <location filename="../src/main.cpp" line="170"/>
         <source>The scale factor for a high-DPI screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="159"/>
+        <location filename="../src/main.cpp" line="171"/>
         <source>number</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="162"/>
+        <location filename="../src/main.cpp" line="174"/>
         <source>A semicolon-separated list of scale factors for each screen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="163"/>
+        <location filename="../src/main.cpp" line="175"/>
         <source>list</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="166"/>
+        <location filename="../src/main.cpp" line="179"/>
+        <source>How to handle a fractional display scale: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/main.cpp" line="181"/>
+        <source>string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/main.cpp" line="185"/>
         <source>Zero or more files or folders to open</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="333"/>
+        <location filename="../src/main.cpp" line="369"/>
         <source>Loading plugins...</source>
         <translation>Kiegészítők betöltése...</translation>
     </message>
@@ -7727,7 +8285,7 @@ Most users do not need to change this.</translation>
     <message>
         <location filename="../src/qml/filters/audio_fadein/meta.qml" line="8"/>
         <source>Fade In Audio</source>
-        <translation>Hang fokozatos előtűnése</translation>
+        <translation>Hang fokozatos megjelenése</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_fadeout/meta.qml" line="8"/>
@@ -7847,22 +8405,23 @@ Most users do not need to change this.</translation>
     <message>
         <location filename="../src/qml/filters/dynamictext/meta.qml" line="7"/>
         <source>Text: Simple</source>
-        <translation type="unfinished"></translation>
+        <translation>Szöveg: egyszerű</translation>
     </message>
     <message>
+        <location filename="../src/qml/filters/crop_rectangle/meta.qml" line="17"/>
         <location filename="../src/qml/filters/dynamictext/meta.qml" line="18"/>
-        <location filename="../src/qml/filters/rectangle/meta.qml" line="18"/>
+        <location filename="../src/qml/filters/pillar_echo/meta.qml" line="17"/>
+        <location filename="../src/qml/filters/richtext/meta.qml" line="19"/>
         <location filename="../src/qml/filters/spot_remover/meta.qml" line="17"/>
         <location filename="../src/qml/filters/timer/meta.qml" line="18"/>
-        <location filename="../src/qml/filters/webvfx_clip/meta.qml" line="17"/>
         <source>Position / Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Pozíció / Méret</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fadein_brightness/meta.qml" line="7"/>
         <location filename="../src/qml/filters/fadein_movit/meta.qml" line="7"/>
         <source>Fade In Video</source>
-        <translation>Videó fokozatos előtűnése</translation>
+        <translation>Videó fokozatos megjelenése</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/fadeout_brightness/meta.qml" line="7"/>
@@ -7928,9 +8487,15 @@ Most users do not need to change this.</translation>
     <message>
         <location filename="../src/qml/filters/mask/meta.qml" line="6"/>
         <source>Mask</source>
+        <translation>Maszk</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/bigsh0t_rect_to_eq/meta.qml" line="7"/>
+        <source>360: Rectilinear to Equirectangular</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../src/qml/filters/bigsh0t_rect_to_eq/meta.qml" line="17"/>
         <location filename="../src/qml/filters/mask/meta.qml" line="16"/>
         <location filename="../src/qml/filters/mask_alphaspot/meta.qml" line="16"/>
         <location filename="../src/qml/filters/rgbsplit0r/meta.qml" line="40"/>
@@ -7938,6 +8503,7 @@ Most users do not need to change this.</translation>
         <translation>Vízszintes</translation>
     </message>
     <message>
+        <location filename="../src/qml/filters/bigsh0t_rect_to_eq/meta.qml" line="25"/>
         <location filename="../src/qml/filters/mask/meta.qml" line="24"/>
         <location filename="../src/qml/filters/mask_alphaspot/meta.qml" line="24"/>
         <location filename="../src/qml/filters/rgbsplit0r/meta.qml" line="32"/>
@@ -7966,7 +8532,7 @@ Most users do not need to change this.</translation>
     <message>
         <location filename="../src/qml/filters/mosaic/meta.qml" line="23"/>
         <source>Mosaic</source>
-        <translation type="unfinished"></translation>
+        <translation>Mozaik</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/movit_diffusion/meta.qml" line="6"/>
@@ -7989,29 +8555,29 @@ Most users do not need to change this.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/rotate/meta.qml" line="18"/>
+        <location filename="../src/qml/filters/rotate/meta.qml" line="19"/>
         <source>Rotation</source>
         <translation>Forgatás</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/rotate/meta.qml" line="26"/>
+        <location filename="../src/qml/filters/rotate/meta.qml" line="27"/>
         <source>Scale</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/rotate/meta.qml" line="35"/>
+        <location filename="../src/qml/filters/rotate/meta.qml" line="36"/>
         <source>X offset</source>
         <translation>X eltolás</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/rotate/meta.qml" line="39"/>
+        <location filename="../src/qml/filters/rotate/meta.qml" line="40"/>
         <source>Y offset</source>
         <translation>Y eltolás</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/select0r/meta.qml" line="24"/>
         <source>Chroma Key: Advanced</source>
-        <translation>Chroma Key: Haladó</translation>
+        <translation>Chroma Key: Speciális</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sepia/meta.qml" line="6"/>
@@ -8049,7 +8615,7 @@ Most users do not need to change this.</translation>
         <translation>Hullám</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/webvfx_circular_frame/meta.qml" line="7"/>
+        <location filename="../src/qml/filters/crop_circle/meta.qml" line="7"/>
         <source>Crop: Circle</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8060,70 +8626,65 @@ Most users do not need to change this.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="7"/>
-        <source>Hemispherical to Equirectangular</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="41"/>
-        <source>FrontX</source>
+        <source>360: Hemispherical to Equirectangular</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="49"/>
-        <source>FrontY</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="57"/>
-        <source>FrontUp</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="65"/>
-        <source>BackX</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="73"/>
-        <source>BackY</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="81"/>
-        <source>BackUp</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="89"/>
-        <source>Fov</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="97"/>
+        <location filename="../src/qml/filters/crop_circle/meta.qml" line="16"/>
         <location filename="../src/qml/filters/halftone/meta.qml" line="16"/>
-        <location filename="../src/qml/filters/webvfx_circular_frame/meta.qml" line="16"/>
         <source>Radius</source>
         <translation>Sugár</translation>
     </message>
     <message>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="57"/>
+        <source>Front X</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="65"/>
+        <source>Front Y</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="73"/>
+        <source>Front Up</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="81"/>
+        <source>Back X</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="89"/>
+        <source>Back Y</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="97"/>
+        <source>Back Up</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="105"/>
-        <source>NadirRadius</source>
+        <source>Nadir Radius</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="113"/>
-        <source>nadirCorrectionStart</source>
+        <source>Nadir Start</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/halftone/meta.qml" line="24"/>
         <source>Cyan</source>
-        <translation type="unfinished"></translation>
+        <translation>Cián (kék)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/halftone/meta.qml" line="32"/>
         <source>Magenta</source>
-        <translation type="unfinished"></translation>
+        <translation>Magenta</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/halftone/meta.qml" line="40"/>
@@ -8142,8 +8703,8 @@ Most users do not need to change this.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/levels/meta.qml" line="6"/>
-        <location filename="../src/qml/filters/posterize/meta.qml" line="16"/>
         <source>Levels</source>
+        <comment>Levels video filter</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -8184,12 +8745,12 @@ Most users do not need to change this.</translation>
     <message>
         <location filename="../src/qml/filters/audio_noisegate/meta.qml" line="16"/>
         <source>Key Filter: Low Frequency</source>
-        <translation type="unfinished"></translation>
+        <translation>Kulcsszűrő: alacsony frekvencia</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_noisegate/meta.qml" line="24"/>
         <source>Key Filter: High Frequency</source>
-        <translation type="unfinished"></translation>
+        <translation>Kulcsszűrő: magas frekvencia</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_noisegate/meta.qml" line="32"/>
@@ -8221,7 +8782,7 @@ Most users do not need to change this.</translation>
     <message>
         <location filename="../src/qml/filters/waveform/meta.qml" line="7"/>
         <source>Audio Waveform Visualization</source>
-        <translation type="unfinished"></translation>
+        <translation>Hanghullám megjelenése</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/chromahold/meta.qml" line="23"/>
@@ -8231,22 +8792,17 @@ Most users do not need to change this.</translation>
     <message>
         <location filename="../src/qml/filters/grid/meta.qml" line="6"/>
         <source>Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Rács</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/grid/meta.qml" line="15"/>
         <source>Rows</source>
-        <translation type="unfinished"></translation>
+        <translation>Sorok</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/grid/meta.qml" line="23"/>
         <source>Columns</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/aech0r/meta.qml" line="6"/>
-        <source>Analog Echo</source>
-        <translation type="unfinished"></translation>
+        <translation>Oszlopok</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/distort/meta.qml" line="23"/>
@@ -8358,34 +8914,13 @@ Most users do not need to change this.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/webvfx/meta.qml" line="6"/>
-        <source>Text: HTML</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/webvfx_clip/meta.qml" line="7"/>
+        <location filename="../src/qml/filters/crop_rectangle/meta.qml" line="7"/>
         <source>Crop: Rectangle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/rectangle/meta.qml" line="7"/>
-        <source>Rectangle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/rectangle/meta.qml" line="23"/>
-        <location filename="../src/qml/filters/webvfx_clip/meta.qml" line="22"/>
+        <location filename="../src/qml/filters/crop_rectangle/meta.qml" line="23"/>
         <source>Corner radius</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/webvfx_swirl/meta.qml" line="7"/>
-        <source>Swirl</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/webvfx_threejs_text/meta.qml" line="7"/>
-        <source>Text: 3D</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -8429,6 +8964,12 @@ Most users do not need to change this.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../src/qml/filters/posterize/meta.qml" line="16"/>
+        <source>Levels</source>
+        <comment>Posterize filter</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/qml/filters/nervous/meta.qml" line="6"/>
         <source>Nervous</source>
         <translation type="unfinished"></translation>
@@ -8464,12 +9005,12 @@ Most users do not need to change this.</translation>
         <translation>Nagyítás</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/webvfx_choppy/meta.qml" line="7"/>
+        <location filename="../src/qml/filters/choppy/meta.qml" line="6"/>
         <source>Choppy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/webvfx_choppy/meta.qml" line="16"/>
+        <location filename="../src/qml/filters/choppy/meta.qml" line="15"/>
         <source>Repeat</source>
         <translation>Ismétlés</translation>
     </message>
@@ -8486,9 +9027,9 @@ Most users do not need to change this.</translation>
     <message>
         <location filename="../src/qml/filters/audio_pitch/meta.qml" line="7"/>
         <location filename="../src/qml/filters/audio_pitch/meta.qml" line="17"/>
-        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/meta.qml" line="25"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/meta.qml" line="26"/>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="25"/>
-        <location filename="../src/qml/filters/bigsh0t_transform_360/meta.qml" line="25"/>
+        <location filename="../src/qml/filters/bigsh0t_transform_360/meta.qml" line="26"/>
         <source>Pitch</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8499,76 +9040,52 @@ Most users do not need to change this.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_mask/meta.qml" line="17"/>
-        <source>hfov0</source>
+        <source>Horizontal Start</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_mask/meta.qml" line="25"/>
-        <source>hfov1</source>
+        <source>Horizontal End</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_mask/meta.qml" line="33"/>
-        <source>vfov0</source>
+        <source>Vertical Start</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_mask/meta.qml" line="41"/>
-        <source>vfov1</source>
+        <source>Vertical End</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_to_rect/meta.qml" line="7"/>
-        <source>Equirectangular to Rectilinear</source>
+        <source>360: Equirectangular to Rectilinear</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/meta.qml" line="17"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/meta.qml" line="18"/>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="17"/>
-        <location filename="../src/qml/filters/bigsh0t_transform_360/meta.qml" line="17"/>
+        <location filename="../src/qml/filters/bigsh0t_transform_360/meta.qml" line="18"/>
         <source>Yaw</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/meta.qml" line="33"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/meta.qml" line="34"/>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="33"/>
-        <location filename="../src/qml/filters/bigsh0t_transform_360/meta.qml" line="33"/>
+        <location filename="../src/qml/filters/bigsh0t_transform_360/meta.qml" line="34"/>
         <source>Roll</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/meta.qml" line="41"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/meta.qml" line="42"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="41"/>
         <source>FOV</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/meta.qml" line="49"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/meta.qml" line="50"/>
         <source>Fisheye</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/bigsh0t_rect_to_eq/meta.qml" line="7"/>
-        <source>Rectilinear to Equirectangular</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/bigsh0t_rect_to_eq/meta.qml" line="17"/>
-        <source>hfov</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/bigsh0t_rect_to_eq/meta.qml" line="25"/>
-        <source>vfov</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/meta.qml" line="7"/>
-        <source>Stabilize 360</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/bigsh0t_transform_360/meta.qml" line="7"/>
-        <source>Transform 360</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -8596,18 +9113,68 @@ Most users do not need to change this.</translation>
         <source>Feathering</source>
         <translation>Lágy perem</translation>
     </message>
+    <message>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/meta.qml" line="7"/>
+        <source>360: Stabilize</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/bigsh0t_transform_360/meta.qml" line="7"/>
+        <source>360: Transform</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/vaguedenoiser/meta.qml" line="26"/>
+        <source>Reduce Noise: Wavelet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/meta.qml" line="7"/>
+        <source>Text: Rich</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/pillar_echo/meta.qml" line="7"/>
+        <source>Blur: Pad</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/audio_invert/meta.qml" line="7"/>
+        <source>Invert</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/fspp/meta.qml" line="23"/>
+        <source>Reduce Noise: Quantization</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/time_remap/meta.qml" line="7"/>
+        <source>Time Remap</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/time_remap/meta.qml" line="19"/>
+        <source>Time</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>meta_affine</name>
     <message>
         <location filename="../src/qml/filters/size_position/meta_affine.qml" line="7"/>
-        <source>Size and Position</source>
-        <translation>Méret és pozíció</translation>
+        <source>Size, Position &amp; Rotate</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/meta_affine.qml" line="19"/>
-        <source>Position / Size</source>
+        <source>Size &amp; Position</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/size_position/meta_affine.qml" line="25"/>
+        <source>Rotation</source>
+        <translation>Forgatás</translation>
     </message>
 </context>
 <context>
@@ -8809,7 +9376,7 @@ Most users do not need to change this.</translation>
     <message>
         <location filename="../src/qml/filters/size_position/meta_movit.qml" line="21"/>
         <source>Position / Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Pozíció / Méret</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vignette/meta_movit.qml" line="6"/>
@@ -8874,247 +9441,153 @@ Most users do not need to change this.</translation>
     </message>
 </context>
 <context>
-    <name>simple_scroll_ui</name>
-    <message>
-        <location filename="../src/qml/filters/webvfx/templates/webvfx/Basic/Simple Scroll/simple_scroll_ui.qml" line="40"/>
-        <source>Direction</source>
-        <translation>Irány</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/webvfx/templates/webvfx/Basic/Simple Scroll/simple_scroll_ui.qml" line="43"/>
-        <source>Up</source>
-        <translation>Fel</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/webvfx/templates/webvfx/Basic/Simple Scroll/simple_scroll_ui.qml" line="43"/>
-        <source>Down</source>
-        <translation>Le</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/webvfx/templates/webvfx/Basic/Simple Scroll/simple_scroll_ui.qml" line="43"/>
-        <source>Right</source>
-        <translation>Jobbra</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/webvfx/templates/webvfx/Basic/Simple Scroll/simple_scroll_ui.qml" line="43"/>
-        <source>Left</source>
-        <translation>Balra</translation>
-    </message>
-</context>
-<context>
-    <name>text_outline</name>
-    <message>
-        <location filename="../src/qml/htmleditor/text_outline.qml" line="39"/>
-        <source>Width</source>
-        <translation>Szélesség</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/htmleditor/text_outline.qml" line="51"/>
-        <source>pixels</source>
-        <translation>pixel</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/htmleditor/text_outline.qml" line="54"/>
-        <source>Color</source>
-        <translation>Szín</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/htmleditor/text_outline.qml" line="90"/>
-        <source>OK</source>
-        <translation>OK</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/htmleditor/text_outline.qml" line="102"/>
-        <source>Cancel</source>
-        <translation>Mégse</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/htmleditor/text_outline.qml" line="109"/>
-        <source>Please choose a color</source>
-        <translation>Válasszon egy színt</translation>
-    </message>
-</context>
-<context>
-    <name>text_shadow</name>
-    <message>
-        <location filename="../src/qml/htmleditor/text_shadow.qml" line="39"/>
-        <source>Horizontal</source>
-        <translation>Vízszintes</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/htmleditor/text_shadow.qml" line="51"/>
-        <location filename="../src/qml/htmleditor/text_shadow.qml" line="66"/>
-        <location filename="../src/qml/htmleditor/text_shadow.qml" line="81"/>
-        <source>pixels</source>
-        <translation>pixel</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/htmleditor/text_shadow.qml" line="54"/>
-        <source>Vertical</source>
-        <translation>Függőleges</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/htmleditor/text_shadow.qml" line="69"/>
-        <source>Softness</source>
-        <translation>Lágyság</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/htmleditor/text_shadow.qml" line="84"/>
-        <source>Color</source>
-        <translation>Szín</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/htmleditor/text_shadow.qml" line="120"/>
-        <source>OK</source>
-        <translation>OK</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/htmleditor/text_shadow.qml" line="136"/>
-        <source>Cancel</source>
-        <translation>Mégse</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/htmleditor/text_shadow.qml" line="143"/>
-        <source>Please choose a color</source>
-        <translation>Válasszon egy színt</translation>
-    </message>
-</context>
-<context>
     <name>timeline</name>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="150"/>
-        <source>Master</source>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="168"/>
+        <source>Output</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="166"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="194"/>
         <source>Filters</source>
         <translation>Szűrők</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="373"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="425"/>
         <source>Insert</source>
         <translation>Beillesztés</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="373"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="425"/>
         <source>Overwrite</source>
         <translation>Felülírás</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="437"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="489"/>
+        <source>Track Operations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="491"/>
         <source>Add Audio Track</source>
         <translation>Új audiósáv</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="442"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="495"/>
         <source>Add Video Track</source>
         <translation>Új videósáv</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="447"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="499"/>
         <source>Insert Track</source>
         <translation>Sáv beillesztése</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="452"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="503"/>
         <source>Remove Track</source>
         <translation>Sáv eltávolítása</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="458"/>
-        <source>Select All</source>
-        <translation>Kiválaszt mind</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="463"/>
-        <source>Select None</source>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="525"/>
+        <source>Selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="472"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="527"/>
+        <source>Select All</source>
+        <translation>Az összes kijelölése</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="531"/>
+        <source>Select None</source>
+        <translation>Kijelölés törlése</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="568"/>
+        <source>Use Higher Performance Waveforms</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="615"/>
+        <source>Cancel</source>
+        <translation>Mégse</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="508"/>
+        <source>Track Height</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="539"/>
+        <source>Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="542"/>
         <source>Ripple All Tracks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="479"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="600"/>
         <source>Copy Timeline to Source</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="486"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="512"/>
         <source>Make Tracks Shorter</source>
         <translation>Alacsonyabb idővonal sávok</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="491"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="516"/>
         <source>Make Tracks Taller</source>
         <translation>Magasabb idővonal sávok</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="500"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="548"/>
         <source>Show Audio Waveforms</source>
-        <translation>Hanghullámok mutatása</translation>
+        <translation>Hanghullámok megjelenítése</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="520"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="578"/>
         <source>Show Video Thumbnails</source>
-        <translation>Videó bélyegképek mutatása</translation>
+        <translation>Videó bélyegképek megjelenítése</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="526"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="584"/>
         <source>Center the Playhead</source>
+        <translation>Lejátszófej középre hozása</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="590"/>
+        <source>Scroll to Playhead on Zoom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="535"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="597"/>
+        <source>Other</source>
+        <translation>Más</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="610"/>
         <source>Properties</source>
         <translation>Tulajdonságok</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="539"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="604"/>
         <source>Reload</source>
         <translation>Újratöltés</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="496"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="520"/>
         <source>Reset Track Height</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>two_column_scroll_ui</name>
-    <message>
-        <location filename="../src/qml/filters/webvfx/templates/webvfx/Basic/Two Column Scroll/two_column_scroll_ui.qml" line="40"/>
-        <source>Direction</source>
-        <translation>Irány</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/webvfx/templates/webvfx/Basic/Two Column Scroll/two_column_scroll_ui.qml" line="43"/>
-        <source>Up</source>
-        <translation>Fel</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/webvfx/templates/webvfx/Basic/Two Column Scroll/two_column_scroll_ui.qml" line="43"/>
-        <source>Down</source>
-        <translation>Le</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/webvfx/templates/webvfx/Basic/Two Column Scroll/two_column_scroll_ui.qml" line="43"/>
-        <source>Right</source>
-        <translation>Jobbra</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/webvfx/templates/webvfx/Basic/Two Column Scroll/two_column_scroll_ui.qml" line="43"/>
-        <source>Left</source>
-        <translation>Balra</translation>
     </message>
 </context>
 <context>
     <name>ui</name>
     <message>
         <location filename="../src/qml/filters/alpha_adjust/ui.qml" line="54"/>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="173"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="217"/>
         <source>Mode</source>
         <translation>Mód</translation>
     </message>
@@ -9150,40 +9623,42 @@ Most users do not need to change this.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/alpha_adjust/ui.qml" line="68"/>
-        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="138"/>
+        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="136"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="125"/>
-        <location filename="../src/qml/filters/audio_noisegate/ui.qml" line="174"/>
+        <location filename="../src/qml/filters/audio_noisegate/ui.qml" line="179"/>
         <location filename="../src/qml/filters/mask_shape/ui.qml" line="313"/>
         <location filename="../src/qml/filters/smartblur/ui.qml" line="106"/>
+        <location filename="../src/qml/filters/vaguedenoiser/ui.qml" line="171"/>
         <source>Threshold</source>
         <translation>Küszöb</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/alpha_adjust/ui.qml" line="69"/>
+        <location filename="../src/qml/filters/pillar_echo/ui.qml" line="255"/>
         <source>Blur</source>
         <translation>Elmosás</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/alpha_adjust/ui.qml" line="80"/>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="296"/>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="355"/>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="414"/>
-        <location filename="../src/qml/filters/blur_exponential/ui.qml" line="86"/>
-        <location filename="../src/qml/filters/blur_gaussian/ui.qml" line="86"/>
-        <location filename="../src/qml/filters/blur_lowpass/ui.qml" line="86"/>
+        <location filename="../src/qml/filters/alpha_adjust/ui.qml" line="84"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="376"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="436"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="496"/>
+        <location filename="../src/qml/filters/blur_exponential/ui.qml" line="87"/>
+        <location filename="../src/qml/filters/blur_gaussian/ui.qml" line="87"/>
+        <location filename="../src/qml/filters/blur_lowpass/ui.qml" line="87"/>
         <location filename="../src/qml/filters/dust/ui.qml" line="75"/>
         <location filename="../src/qml/filters/lines/ui.qml" line="78"/>
         <location filename="../src/qml/filters/nervous/ui.qml" line="54"/>
         <location filename="../src/qml/filters/noise_fast/ui.qml" line="60"/>
-        <location filename="../src/qml/filters/noise_keyframes/ui.qml" line="84"/>
+        <location filename="../src/qml/filters/noise_keyframes/ui.qml" line="86"/>
         <location filename="../src/qml/filters/trails/ui.qml" line="62"/>
         <source>Amount</source>
         <translation>Mérték</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/alpha_adjust/ui.qml" line="102"/>
+        <location filename="../src/qml/filters/alpha_adjust/ui.qml" line="106"/>
         <location filename="../src/qml/filters/mask_shape/ui.qml" line="267"/>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="301"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="314"/>
         <location filename="../src/qml/filters/threshold/ui.qml" line="115"/>
         <source>Invert</source>
         <translation type="unfinished"></translation>
@@ -9225,109 +9700,108 @@ Most users do not need to change this.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_balance/ui.qml" line="122"/>
-        <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="58"/>
-        <location filename="../src/qml/filters/audio_pan/ui.qml" line="132"/>
-        <location filename="../src/qml/filters/audio_pan/ui.qml" line="137"/>
-        <location filename="../src/qml/filters/audio_swapchannels/ui.qml" line="59"/>
-        <location filename="../src/qml/filters/crop/ui.qml" line="177"/>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="537"/>
+        <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="61"/>
+        <location filename="../src/qml/filters/audio_pan/ui.qml" line="133"/>
+        <location filename="../src/qml/filters/audio_pan/ui.qml" line="138"/>
+        <location filename="../src/qml/filters/audio_swapchannels/ui.qml" line="62"/>
+        <location filename="../src/qml/filters/crop/ui.qml" line="185"/>
         <source>Left</source>
         <translation>Balra</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_balance/ui.qml" line="129"/>
-        <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="58"/>
-        <location filename="../src/qml/filters/audio_pan/ui.qml" line="132"/>
-        <location filename="../src/qml/filters/audio_pan/ui.qml" line="144"/>
-        <location filename="../src/qml/filters/audio_swapchannels/ui.qml" line="59"/>
-        <location filename="../src/qml/filters/crop/ui.qml" line="194"/>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="549"/>
+        <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="61"/>
+        <location filename="../src/qml/filters/audio_pan/ui.qml" line="133"/>
+        <location filename="../src/qml/filters/audio_pan/ui.qml" line="145"/>
+        <location filename="../src/qml/filters/audio_swapchannels/ui.qml" line="62"/>
+        <location filename="../src/qml/filters/crop/ui.qml" line="201"/>
         <source>Right</source>
         <translation>Jobbra</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/aech0r/ui.qml" line="73"/>
-        <location filename="../src/qml/filters/audio_balance/ui.qml" line="101"/>
+        <location filename="../src/qml/filters/audio_balance/ui.qml" line="102"/>
         <location filename="../src/qml/filters/audio_bandpass/ui.qml" line="52"/>
-        <location filename="../src/qml/filters/audio_basstreble/ui.qml" line="169"/>
-        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="70"/>
+        <location filename="../src/qml/filters/audio_basstreble/ui.qml" line="168"/>
+        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="68"/>
         <location filename="../src/qml/filters/audio_delay/ui.qml" line="50"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="57"/>
-        <location filename="../src/qml/filters/audio_gain/ui.qml" line="127"/>
+        <location filename="../src/qml/filters/audio_gain/ui.qml" line="128"/>
         <location filename="../src/qml/filters/audio_highpass/ui.qml" line="50"/>
-        <location filename="../src/qml/filters/audio_limiter/ui.qml" line="62"/>
+        <location filename="../src/qml/filters/audio_limiter/ui.qml" line="60"/>
         <location filename="../src/qml/filters/audio_lowpass/ui.qml" line="52"/>
-        <location filename="../src/qml/filters/audio_noisegate/ui.qml" line="99"/>
-        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="86"/>
+        <location filename="../src/qml/filters/audio_noisegate/ui.qml" line="106"/>
+        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="82"/>
         <location filename="../src/qml/filters/audio_notch/ui.qml" line="51"/>
-        <location filename="../src/qml/filters/audio_pan/ui.qml" line="103"/>
-        <location filename="../src/qml/filters/audio_pitch/ui.qml" line="118"/>
+        <location filename="../src/qml/filters/audio_pan/ui.qml" line="105"/>
+        <location filename="../src/qml/filters/audio_pitch/ui.qml" line="120"/>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="106"/>
-        <location filename="../src/qml/filters/bigsh0t_eq_mask/ui.qml" line="48"/>
-        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/ui.qml" line="58"/>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="103"/>
-        <location filename="../src/qml/filters/bigsh0t_rect_to_eq/ui.qml" line="43"/>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="133"/>
-        <location filename="../src/qml/filters/bigsh0t_transform_360/ui.qml" line="48"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_mask/ui.qml" line="65"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/ui.qml" line="75"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="147"/>
+        <location filename="../src/qml/filters/bigsh0t_rect_to_eq/ui.qml" line="58"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="173"/>
+        <location filename="../src/qml/filters/bigsh0t_transform_360/ui.qml" line="68"/>
         <location filename="../src/qml/filters/bluescreen0r/ui.qml" line="50"/>
-        <location filename="../src/qml/filters/blur_exponential/ui.qml" line="68"/>
-        <location filename="../src/qml/filters/blur_gaussian/ui.qml" line="68"/>
-        <location filename="../src/qml/filters/blur_lowpass/ui.qml" line="68"/>
-        <location filename="../src/qml/filters/brightness/ui.qml" line="119"/>
-        <location filename="../src/qml/filters/chromahold/ui.qml" line="50"/>
-        <location filename="../src/qml/filters/color/ui.qml" line="121"/>
-        <location filename="../src/qml/filters/contrast/ui.qml" line="144"/>
-        <location filename="../src/qml/filters/corners/ui.qml" line="258"/>
-        <location filename="../src/qml/filters/crop/ui.qml" line="84"/>
-        <location filename="../src/qml/filters/distort/ui.qml" line="78"/>
-        <location filename="../src/qml/filters/dither/ui.qml" line="69"/>
+        <location filename="../src/qml/filters/blur_exponential/ui.qml" line="69"/>
+        <location filename="../src/qml/filters/blur_gaussian/ui.qml" line="69"/>
+        <location filename="../src/qml/filters/blur_lowpass/ui.qml" line="69"/>
+        <location filename="../src/qml/filters/brightness/ui.qml" line="121"/>
+        <location filename="../src/qml/filters/choppy/ui.qml" line="65"/>
+        <location filename="../src/qml/filters/chromahold/ui.qml" line="49"/>
+        <location filename="../src/qml/filters/color/ui.qml" line="124"/>
+        <location filename="../src/qml/filters/contrast/ui.qml" line="145"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="263"/>
+        <location filename="../src/qml/filters/crop/ui.qml" line="101"/>
+        <location filename="../src/qml/filters/crop_rectangle/ui.qml" line="176"/>
+        <location filename="../src/qml/filters/distort/ui.qml" line="81"/>
+        <location filename="../src/qml/filters/dither/ui.qml" line="70"/>
         <location filename="../src/qml/filters/dust/ui.qml" line="48"/>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="269"/>
-        <location filename="../src/qml/filters/elastic_scale/ui.qml" line="81"/>
-        <location filename="../src/qml/filters/glitch/ui.qml" line="81"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="155"/>
+        <location filename="../src/qml/filters/elastic_scale/ui.qml" line="86"/>
+        <location filename="../src/qml/filters/fspp/ui.qml" line="54"/>
+        <location filename="../src/qml/filters/glitch/ui.qml" line="85"/>
         <location filename="../src/qml/filters/gradient/ui.qml" line="200"/>
         <location filename="../src/qml/filters/grain/ui.qml" line="49"/>
-        <location filename="../src/qml/filters/grid/ui.qml" line="138"/>
-        <location filename="../src/qml/filters/halftone/ui.qml" line="81"/>
-        <location filename="../src/qml/filters/hqdn3d/ui.qml" line="70"/>
+        <location filename="../src/qml/filters/grid/ui.qml" line="140"/>
+        <location filename="../src/qml/filters/halftone/ui.qml" line="85"/>
+        <location filename="../src/qml/filters/hqdn3d/ui.qml" line="72"/>
         <location filename="../src/qml/filters/hue_lightness_saturation/ui.qml" line="54"/>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="98"/>
-        <location filename="../src/qml/filters/lenscorrection/ui.qml" line="81"/>
-        <location filename="../src/qml/filters/levels/ui.qml" line="154"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="99"/>
+        <location filename="../src/qml/filters/lenscorrection/ui.qml" line="85"/>
+        <location filename="../src/qml/filters/levels/ui.qml" line="158"/>
         <location filename="../src/qml/filters/lines/ui.qml" line="52"/>
-        <location filename="../src/qml/filters/mask/ui.qml" line="157"/>
-        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="158"/>
+        <location filename="../src/qml/filters/mask/ui.qml" line="161"/>
+        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="162"/>
         <location filename="../src/qml/filters/mask_shape/ui.qml" line="194"/>
-        <location filename="../src/qml/filters/mosaic/ui.qml" line="71"/>
+        <location filename="../src/qml/filters/mosaic/ui.qml" line="73"/>
         <location filename="../src/qml/filters/nervous/ui.qml" line="43"/>
         <location filename="../src/qml/filters/noise_fast/ui.qml" line="49"/>
-        <location filename="../src/qml/filters/noise_keyframes/ui.qml" line="66"/>
-        <location filename="../src/qml/filters/nosync/ui.qml" line="65"/>
+        <location filename="../src/qml/filters/noise_keyframes/ui.qml" line="68"/>
+        <location filename="../src/qml/filters/nosync/ui.qml" line="66"/>
         <location filename="../src/qml/filters/oldfilm/ui.qml" line="60"/>
-        <location filename="../src/qml/filters/opacity/ui.qml" line="107"/>
-        <location filename="../src/qml/filters/posterize/ui.qml" line="65"/>
-        <location filename="../src/qml/filters/rectangle/ui.qml" line="184"/>
-        <location filename="../src/qml/filters/rgbsplit0r/ui.qml" line="70"/>
-        <location filename="../src/qml/filters/rotate/ui.qml" line="130"/>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="109"/>
+        <location filename="../src/qml/filters/opacity/ui.qml" line="108"/>
+        <location filename="../src/qml/filters/pillar_echo/ui.qml" line="133"/>
+        <location filename="../src/qml/filters/posterize/ui.qml" line="67"/>
+        <location filename="../src/qml/filters/rgbsplit0r/ui.qml" line="72"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="233"/>
+        <location filename="../src/qml/filters/rotate/ui.qml" line="141"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="110"/>
         <location filename="../src/qml/filters/sepia/ui.qml" line="38"/>
         <location filename="../src/qml/filters/sketch/ui.qml" line="53"/>
         <location filename="../src/qml/filters/smartblur/ui.qml" line="57"/>
-        <location filename="../src/qml/filters/spot_remover/ui.qml" line="117"/>
+        <location filename="../src/qml/filters/spot_remover/ui.qml" line="118"/>
         <location filename="../src/qml/filters/tcolor/ui.qml" line="48"/>
-        <location filename="../src/qml/filters/threshold/ui.qml" line="71"/>
+        <location filename="../src/qml/filters/threshold/ui.qml" line="72"/>
+        <location filename="../src/qml/filters/time_remap/ui.qml" line="165"/>
         <location filename="../src/qml/filters/timer/ui.qml" line="113"/>
         <location filename="../src/qml/filters/trails/ui.qml" line="51"/>
-        <location filename="../src/qml/filters/vertigo/ui.qml" line="70"/>
+        <location filename="../src/qml/filters/vaguedenoiser/ui.qml" line="123"/>
+        <location filename="../src/qml/filters/vertigo/ui.qml" line="72"/>
         <location filename="../src/qml/filters/wave/ui.qml" line="44"/>
-        <location filename="../src/qml/filters/waveform/ui.qml" line="80"/>
-        <location filename="../src/qml/filters/webvfx_choppy/ui.qml" line="65"/>
-        <location filename="../src/qml/filters/webvfx_clip/ui.qml" line="180"/>
-        <location filename="../src/qml/filters/webvfx_ruttetraizer/ui.qml" line="59"/>
-        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="68"/>
+        <location filename="../src/qml/filters/waveform/ui.qml" line="84"/>
         <location filename="../src/qml/filters/white/ui.qml" line="65"/>
         <source>Preset</source>
-        <translation>Sablon</translation>
+        <translation>Előbeállítás</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_bandpass/ui.qml" line="63"/>
@@ -9368,157 +9842,155 @@ Most users do not need to change this.</translation>
         <translation>Nedves</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_basstreble/ui.qml" line="201"/>
+        <location filename="../src/qml/filters/audio_basstreble/ui.qml" line="200"/>
         <source>Bass</source>
         <translation>Basszus</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_basstreble/ui.qml" line="223"/>
+        <location filename="../src/qml/filters/audio_basstreble/ui.qml" line="222"/>
         <source>Middle</source>
         <comment>Bass &amp; Treble audio filter</comment>
         <translation>Középen</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_basstreble/ui.qml" line="245"/>
+        <location filename="../src/qml/filters/audio_basstreble/ui.qml" line="244"/>
         <source>Treble</source>
         <translation>Magas</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="32"/>
-        <location filename="../src/qml/filters/audio_swapchannels/ui.qml" line="32"/>
-        <source>Front left</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="33"/>
         <location filename="../src/qml/filters/audio_swapchannels/ui.qml" line="33"/>
-        <source>Front right</source>
+        <source>Front left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="34"/>
         <location filename="../src/qml/filters/audio_swapchannels/ui.qml" line="34"/>
-        <location filename="../src/qml/filters/crop/ui.qml" line="103"/>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="543"/>
-        <location filename="../src/qml/filters/elastic_scale/ui.qml" line="101"/>
-        <source>Center</source>
-        <translation>Középen</translation>
+        <source>Front right</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="35"/>
         <location filename="../src/qml/filters/audio_swapchannels/ui.qml" line="35"/>
-        <source>Low frequency</source>
-        <translation type="unfinished"></translation>
+        <location filename="../src/qml/filters/crop/ui.qml" line="115"/>
+        <location filename="../src/qml/filters/elastic_scale/ui.qml" line="106"/>
+        <source>Center</source>
+        <translation>Középen</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="36"/>
         <location filename="../src/qml/filters/audio_swapchannels/ui.qml" line="36"/>
-        <source>Left surround</source>
+        <source>Low frequency</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="37"/>
         <location filename="../src/qml/filters/audio_swapchannels/ui.qml" line="37"/>
+        <source>Left surround</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="38"/>
+        <location filename="../src/qml/filters/audio_swapchannels/ui.qml" line="38"/>
         <source>Right surround</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="55"/>
+        <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="58"/>
         <source>Copy from</source>
         <translation>Másolás innen</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="61"/>
+        <location filename="../src/qml/filters/audio_channelcopy/ui.qml" line="64"/>
         <source>to</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="81"/>
+        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="79"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="68"/>
         <source>RMS</source>
         <translation>RMS</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="83"/>
-        <location filename="../src/qml/filters/audio_expander/ui.qml" line="70"/>
+        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="81"/>
         <source>The balance between the RMS and peak envelope followers. RMS is generally better for subtle, musical compression and peak is better for heavier, fast compression and percussion.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="90"/>
+        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="88"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="77"/>
         <source>Peak</source>
         <translation>Jelszint</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="102"/>
+        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="100"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="89"/>
-        <location filename="../src/qml/filters/audio_noisegate/ui.qml" line="199"/>
+        <location filename="../src/qml/filters/audio_noisegate/ui.qml" line="203"/>
         <source>Attack</source>
         <translation>Támadás</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="120"/>
+        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="118"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="107"/>
-        <location filename="../src/qml/filters/audio_limiter/ui.qml" line="113"/>
+        <location filename="../src/qml/filters/audio_limiter/ui.qml" line="111"/>
         <source>Release</source>
         <translation>Kioldás</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="140"/>
+        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="138"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="127"/>
         <source>The point at which the compressor will start to kick in.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="158"/>
+        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="156"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="145"/>
         <source>Ratio</source>
         <translation>Arány</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="160"/>
+        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="158"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="147"/>
         <source>The gain reduction ratio used when the signal level exceeds the threshold.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="177"/>
+        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="175"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="164"/>
         <source>Knee radius</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="179"/>
+        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="177"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="166"/>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="217"/>
         <source>The distance from the threshold where the knee curve starts.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="197"/>
+        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="195"/>
         <source>Makeup gain</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="199"/>
+        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="197"/>
         <source>The gain of the makeup input signal.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="274"/>
-        <location filename="../src/qml/filters/audio_limiter/ui.qml" line="190"/>
+        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="230"/>
+        <location filename="../src/qml/filters/audio_limiter/ui.qml" line="145"/>
         <source>Gain Reduction</source>
-        <translation type="unfinished"></translation>
+        <translation>Erősítéscsökkentés</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="276"/>
-        <location filename="../src/qml/filters/audio_limiter/ui.qml" line="192"/>
+        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="232"/>
+        <location filename="../src/qml/filters/audio_limiter/ui.qml" line="147"/>
         <source>Status indicator showing the gain reduction applied by the compressor.</source>
-        <translation type="unfinished"></translation>
+        <translation>A tömörítő által alkalmazott erősítéscsökkentést megjelenítő állapotmutató.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="292"/>
+        <location filename="../src/qml/filters/audio_compressor/ui.qml" line="248"/>
         <source>About dynamic range compression</source>
         <translation>A dinamikus tartomány-tömörítésről</translation>
     </message>
@@ -9529,7 +10001,9 @@ Most users do not need to change this.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_delay/ui.qml" line="63"/>
-        <source>The neutral delay time is 2 seconds. Times above 2 seconds will have reduced quality and times below will have increased CPU usage.</source>
+        <source>The neutral delay time is 2 seconds.
+Times above 2 seconds will have reduced quality.
+Times below will have increased CPU usage.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -9538,32 +10012,40 @@ Most users do not need to change this.</translation>
         <translation>Visszajelzés</translation>
     </message>
     <message>
+        <location filename="../src/qml/filters/audio_expander/ui.qml" line="70"/>
+        <source>The balance between the RMS and peak envelope followers.
+RMS is generally better for subtle, musical compression.
+Peak is better for heavier, fast compression and percussion.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="184"/>
         <source>Attenuation</source>
         <translation>Csillapítás</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="186"/>
-        <source>The gain of the output signal. Used to correct for excessive amplitude caused by the extra dynamic range.</source>
+        <source>The gain of the output signal.
+Used to correct for excessive amplitude caused by the extra dynamic range.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_fadein/ui.qml" line="52"/>
         <location filename="../src/qml/filters/audio_fadeout/ui.qml" line="58"/>
         <location filename="../src/qml/filters/fadein_brightness/ui.qml" line="63"/>
-        <location filename="../src/qml/filters/fadein_movit/ui.qml" line="55"/>
+        <location filename="../src/qml/filters/fadein_movit/ui.qml" line="54"/>
         <location filename="../src/qml/filters/fadeout_brightness/ui.qml" line="63"/>
         <location filename="../src/qml/filters/fadeout_movit/ui.qml" line="60"/>
-        <location filename="../src/qml/filters/timer/ui.qml" line="197"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="201"/>
         <source>Duration</source>
         <translation>Időtartam</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_gain/ui.qml" line="149"/>
-        <location filename="../src/qml/filters/brightness/ui.qml" line="141"/>
-        <location filename="../src/qml/filters/contrast/ui.qml" line="162"/>
-        <location filename="../src/qml/filters/opacity/ui.qml" line="130"/>
-        <location filename="../src/qml/filters/threshold/ui.qml" line="88"/>
+        <location filename="../src/qml/filters/brightness/ui.qml" line="142"/>
+        <location filename="../src/qml/filters/contrast/ui.qml" line="166"/>
+        <location filename="../src/qml/filters/opacity/ui.qml" line="131"/>
+        <location filename="../src/qml/filters/threshold/ui.qml" line="89"/>
         <source>Level</source>
         <translation>Szint</translation>
     </message>
@@ -9574,138 +10056,138 @@ Most users do not need to change this.</translation>
         <translation>Levágás frekvencia</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_limiter/ui.qml" line="73"/>
+        <location filename="../src/qml/filters/audio_limiter/ui.qml" line="71"/>
         <source>Input gain</source>
-        <translation type="unfinished"></translation>
+        <translation>Bemeneti erősítés</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_limiter/ui.qml" line="75"/>
+        <location filename="../src/qml/filters/audio_limiter/ui.qml" line="73"/>
         <source>Gain that is applied to the input stage. Can be used to trim gain to bring it roughly under the limit or to push the signal against the limit.</source>
-        <translation type="unfinished"></translation>
+        <translation>A bemeneti szakaszra alkalmazott erősítés. Felhasználható az erősítés levágására, hogy nagyjából a határ alá szorítsuk vagy a jel határ felé tolására.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_limiter/ui.qml" line="93"/>
+        <location filename="../src/qml/filters/audio_limiter/ui.qml" line="91"/>
         <source>Limit</source>
         <translation>Határ</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_limiter/ui.qml" line="95"/>
+        <location filename="../src/qml/filters/audio_limiter/ui.qml" line="93"/>
         <source>The maximum output amplitude. Peaks over this level will be attenuated as smoothly as possible to bring them as close as possible to this level.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_limiter/ui.qml" line="115"/>
+        <location filename="../src/qml/filters/audio_limiter/ui.qml" line="113"/>
         <source>The time taken for the limiter&apos;s attenuation to return to 0 dB&apos;s.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="97"/>
-        <location filename="../src/qml/filters/audio_normalize_2p/ui.qml" line="55"/>
+        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="93"/>
+        <location filename="../src/qml/filters/audio_normalize_2p/ui.qml" line="54"/>
         <source>Target Loudness</source>
         <translation>Cél hangerő</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="99"/>
+        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="95"/>
         <source>The target loudness of the output in LUFS.</source>
         <translation>A kimenet célhangereje LUFS-ban. </translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="116"/>
+        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="112"/>
         <source>Analysis Window</source>
-        <translation>Analízis ablak</translation>
+        <translation>Elemzési ablak</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="118"/>
+        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="114"/>
         <source>The amount of history to use to calculate the input loudness.</source>
         <translation>A bemeneti hangerő kiszámításához felhasznált előzmények mennyisége.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="135"/>
+        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="131"/>
         <source>Maximum Gain</source>
         <translation>Maximális erősítés</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="137"/>
+        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="133"/>
         <source>The maximum that the gain can be increased.</source>
-        <translation>Az erősítés maximuma, amire növelhető.</translation>
+        <translation>Az erősítés növelésének legnagyobb értéke.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="154"/>
+        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="150"/>
         <source>Minimum Gain</source>
         <translation>Minimális erősítés</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="156"/>
+        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="152"/>
         <source>The maximum that the gain can be decreased.</source>
-        <translation>Az erősítés maximuma, amire csökkenthető.</translation>
+        <translation>Az erősítés csökkentésének legkisebb értéke.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="173"/>
+        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="169"/>
         <source>Maximum Rate</source>
         <translation>Maximális arány</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="175"/>
+        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="171"/>
         <source>The maximum rate that the gain can be changed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Az erősítés módosításának legnagyobb aránya.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="250"/>
+        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="203"/>
         <source>Input Loudness</source>
         <translation>Bemeneti hangerő</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="252"/>
+        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="205"/>
         <source>Status indicator showing the loudness measured on the input.</source>
-        <translation type="unfinished"></translation>
+        <translation>A bemenetnél mért hangerőt megjelenítő állapotmutató.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="268"/>
+        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="221"/>
         <source>Output Gain</source>
         <translation>Kimeneti erősítés</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="270"/>
+        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="223"/>
         <source>Status indicator showing the gain being applied.</source>
-        <translation type="unfinished"></translation>
+        <translation>Az alkalmazott erősítést megjelenítő állapotmutató.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="285"/>
+        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="237"/>
         <source>Reset</source>
         <translation>Alapértékek visszaállítása</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="287"/>
+        <location filename="../src/qml/filters/audio_normalize_1p/ui.qml" line="239"/>
         <source>Status indicator showing when the loudness measurement is reset.</source>
-        <translation type="unfinished"></translation>
+        <translation>A hangerőmérés alaphelyzetét megjelenítő állapotmutató.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_normalize_2p/ui.qml" line="31"/>
+        <location filename="../src/qml/filters/audio_normalize_2p/ui.qml" line="30"/>
         <location filename="../src/qml/filters/stabilize/ui.qml" line="46"/>
         <source>Analyzing...</source>
-        <translation>Analizálás...</translation>
+        <translation>Elemzés…</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_normalize_2p/ui.qml" line="34"/>
+        <location filename="../src/qml/filters/audio_normalize_2p/ui.qml" line="33"/>
         <location filename="../src/qml/filters/stabilize/ui.qml" line="49"/>
         <source>Analysis complete.</source>
-        <translation>Analízis befejezve.</translation>
+        <translation>Az elemzés befejeződött.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_normalize_2p/ui.qml" line="38"/>
+        <location filename="../src/qml/filters/audio_normalize_2p/ui.qml" line="37"/>
         <source>Click &quot;Analyze&quot; to use this filter.</source>
-        <translation>A szűrő használatához kattintson az &quot;Analizálás&quot;-ra.</translation>
+        <translation>A szűrő használatához kattintson az „Elemzés”-re.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_normalize_2p/ui.qml" line="74"/>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="177"/>
-        <location filename="../src/qml/filters/stabilize/ui.qml" line="170"/>
+        <location filename="../src/qml/filters/audio_normalize_2p/ui.qml" line="73"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="221"/>
+        <location filename="../src/qml/filters/stabilize/ui.qml" line="168"/>
         <source>Analyze</source>
-        <translation>Analizálás</translation>
+        <translation>Elemzés</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_pan/ui.qml" line="126"/>
-        <location filename="../src/qml/filters/levels/ui.qml" line="173"/>
+        <location filename="../src/qml/filters/audio_pan/ui.qml" line="127"/>
+        <location filename="../src/qml/filters/levels/ui.qml" line="177"/>
         <location filename="../src/qml/filters/mask_shape/ui.qml" line="288"/>
         <source>Channel</source>
         <translation>Csatorna</translation>
@@ -9801,349 +10283,298 @@ Most users do not need to change this.</translation>
         <translation>A reverb-ről</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_swapchannels/ui.qml" line="56"/>
+        <location filename="../src/qml/filters/audio_swapchannels/ui.qml" line="59"/>
         <source>Swap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_swapchannels/ui.qml" line="62"/>
+        <location filename="../src/qml/filters/audio_swapchannels/ui.qml" line="65"/>
         <source>with</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bluescreen0r/ui.qml" line="64"/>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="109"/>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="120"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="110"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="121"/>
         <source>Key color</source>
         <translation>Kulcs szín</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bluescreen0r/ui.qml" line="82"/>
-        <location filename="../src/qml/filters/chromahold/ui.qml" line="82"/>
+        <location filename="../src/qml/filters/chromahold/ui.qml" line="81"/>
         <source>Distance</source>
         <translation>Távolság</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/color/ui.qml" line="144"/>
+        <location filename="../src/qml/filters/color/ui.qml" line="147"/>
         <source>Shadows (Lift)</source>
         <translation>Árnyékok (emelés)</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/color/ui.qml" line="174"/>
+        <location filename="../src/qml/filters/color/ui.qml" line="176"/>
         <source>Midtones (Gamma)</source>
         <translation>Középtónus (Gamma)</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/color/ui.qml" line="204"/>
+        <location filename="../src/qml/filters/color/ui.qml" line="205"/>
         <source>Highlights (Gain)</source>
         <translation>Kiemelés (Erősítés)</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/crop/ui.qml" line="126"/>
+        <location filename="../src/qml/filters/crop/ui.qml" line="137"/>
         <source>Center bias</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/crop/ui.qml" line="143"/>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="567"/>
+        <location filename="../src/qml/filters/crop/ui.qml" line="153"/>
         <source>Top</source>
         <translation>Fent</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/crop/ui.qml" line="160"/>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="579"/>
+        <location filename="../src/qml/filters/crop/ui.qml" line="169"/>
         <source>Bottom</source>
         <translation>Lent</translation>
     </message>
     <message>
+        <location filename="../src/qml/filters/crop_rectangle/ui.qml" line="265"/>
         <location filename="../src/qml/filters/dust/ui.qml" line="59"/>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="498"/>
-        <location filename="../src/qml/filters/gradient/ui.qml" line="336"/>
-        <location filename="../src/qml/filters/rectangle/ui.qml" line="268"/>
-        <location filename="../src/qml/filters/spot_remover/ui.qml" line="189"/>
-        <location filename="../src/qml/filters/waveform/ui.qml" line="158"/>
-        <location filename="../src/qml/filters/webvfx_clip/ui.qml" line="261"/>
-        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="152"/>
+        <location filename="../src/qml/filters/gradient/ui.qml" line="346"/>
+        <location filename="../src/qml/filters/pillar_echo/ui.qml" line="213"/>
+        <location filename="../src/qml/filters/spot_remover/ui.qml" line="199"/>
+        <location filename="../src/qml/filters/waveform/ui.qml" line="172"/>
         <source>Size</source>
         <translation>Méret</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="63"/>
-        <location filename="../src/qml/filters/levels/ui.qml" line="192"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="52"/>
+        <location filename="../src/qml/filters/levels/ui.qml" line="199"/>
         <location filename="../src/qml/filters/timer/ui.qml" line="55"/>
         <source>Bottom Left</source>
         <translation>Balra lent</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="68"/>
-        <location filename="../src/qml/filters/levels/ui.qml" line="192"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="57"/>
+        <location filename="../src/qml/filters/levels/ui.qml" line="199"/>
         <location filename="../src/qml/filters/timer/ui.qml" line="60"/>
         <source>Bottom Right</source>
         <translation>Jobbra lent</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="73"/>
-        <location filename="../src/qml/filters/levels/ui.qml" line="192"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="62"/>
+        <location filename="../src/qml/filters/levels/ui.qml" line="199"/>
         <source>Top Left</source>
         <translation>Balra fent</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="78"/>
-        <location filename="../src/qml/filters/levels/ui.qml" line="192"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="67"/>
+        <location filename="../src/qml/filters/levels/ui.qml" line="199"/>
         <source>Top Right</source>
         <translation>Jobbra fent</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="83"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="72"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="56"/>
         <source>Lower Third</source>
         <translation>Alsó harmad</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="88"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="77"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="74"/>
         <source>Slide In From Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="90"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="79"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="76"/>
         <source>Slide In From Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="92"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="81"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="78"/>
         <source>Slide In From Top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="94"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="83"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="80"/>
         <source>Slide In From Bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="98"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="87"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="84"/>
         <source>Slide Out Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="100"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="89"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="86"/>
         <source>Slide Out Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="102"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="91"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="88"/>
         <source>Slide Out Top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="104"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="93"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="90"/>
         <source>Slide Out Bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="108"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="97"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="94"/>
         <source>Slow Zoom In</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="110"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="99"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="96"/>
         <source>Slow Zoom Out</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="112"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="101"/>
         <source>Slow Pan Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="113"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="102"/>
         <source>Slow Move Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="115"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="104"/>
         <source>Slow Pan Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="116"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="105"/>
         <source>Slow Move Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="118"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="107"/>
         <source>Slow Pan Up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="119"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="108"/>
         <source>Slow Move Up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="121"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="110"/>
         <source>Slow Pan Down</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="122"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="111"/>
         <source>Slow Move Down</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="124"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="113"/>
         <source>Slow Zoom In, Pan Up Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="125"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="114"/>
         <source>Slow Zoom In, Move Up Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="127"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="116"/>
         <source>Slow Zoom In, Pan Down Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="128"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="117"/>
         <source>Slow Zoom In, Move Down Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="130"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="119"/>
         <source>Slow Zoom Out, Pan Up Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="131"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="120"/>
         <source>Slow Zoom Out, Move Up Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="133"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="122"/>
         <source>Slow Zoom Out, Pan Down Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="134"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="123"/>
         <source>Slow Zoom Out, Move Down Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="202"/>
-        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="118"/>
-        <source>Bold</source>
-        <translation>Félkövér</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="204"/>
-        <source>Italic</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="295"/>
-        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="80"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="177"/>
         <source>Text</source>
         <translation>Szöveg</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="322"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="248"/>
         <source>Insert field</source>
         <translation>Mező beillesztése</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="328"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="253"/>
         <source># (Hash sign)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="332"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="257"/>
         <source>Timecode</source>
         <translation>Időbélyeg</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="336"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="261"/>
         <source>Frame #</source>
         <comment>Frame number</comment>
         <translation>Képkocka #</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="340"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="265"/>
         <source>File date</source>
         <translation>Fájl dátuma</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="344"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="269"/>
         <source>File name</source>
         <translation>Fájlnév</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="350"/>
-        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="93"/>
-        <source>Font</source>
-        <translation>Betűkészlet</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="388"/>
-        <source>Use font size</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="403"/>
-        <location filename="../src/qml/filters/rectangle/ui.qml" line="347"/>
-        <source>Outline</source>
-        <translation>Körvonal</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="413"/>
-        <location filename="../src/qml/filters/rectangle/ui.qml" line="360"/>
-        <location filename="../src/qml/filters/waveform/ui.qml" line="120"/>
-        <location filename="../src/qml/filters/webvfx_ruttetraizer/ui.qml" line="88"/>
+        <location filename="../src/qml/filters/waveform/ui.qml" line="124"/>
         <source>Thickness</source>
         <translation>Vastagság</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="427"/>
-        <source>Background</source>
-        <translation>Háttér</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="437"/>
-        <source>Padding</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="451"/>
+        <location filename="../src/qml/filters/crop_rectangle/ui.qml" line="208"/>
         <location filename="../src/qml/filters/gradient/ui.qml" line="303"/>
-        <location filename="../src/qml/filters/rectangle/ui.qml" line="220"/>
-        <location filename="../src/qml/filters/spot_remover/ui.qml" line="142"/>
-        <location filename="../src/qml/filters/waveform/ui.qml" line="137"/>
-        <location filename="../src/qml/filters/webvfx_clip/ui.qml" line="213"/>
+        <location filename="../src/qml/filters/pillar_echo/ui.qml" line="158"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="260"/>
+        <location filename="../src/qml/filters/spot_remover/ui.qml" line="143"/>
+        <location filename="../src/qml/filters/waveform/ui.qml" line="141"/>
         <source>Position</source>
         <translation>Pozicíó</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="532"/>
-        <source>Horizontal fit</source>
-        <translation>Vízszintes illesztés</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="562"/>
-        <source>Vertical fit</source>
-        <translation>Függőleges illesztés</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="573"/>
-        <source>Middle</source>
-        <comment>Text video filter</comment>
-        <translation>Középen</translation>
-    </message>
-    <message>
         <location filename="../src/qml/filters/fadein_brightness/ui.qml" line="82"/>
-        <location filename="../src/qml/filters/fadein_movit/ui.qml" line="76"/>
+        <location filename="../src/qml/filters/fadein_movit/ui.qml" line="75"/>
         <location filename="../src/qml/filters/fadeout_brightness/ui.qml" line="82"/>
         <location filename="../src/qml/filters/fadeout_movit/ui.qml" line="79"/>
         <source>Adjust opacity instead of fade with black</source>
-        <translation type="unfinished"></translation>
+        <translation>Átlátszóság beállítása a feketével való áttűnés helyett</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/grain/ui.qml" line="60"/>
@@ -10153,7 +10584,6 @@ Most users do not need to change this.</translation>
     <message>
         <location filename="../src/qml/filters/grain/ui.qml" line="76"/>
         <location filename="../src/qml/filters/mask_shape/ui.qml" line="295"/>
-        <location filename="../src/qml/filters/webvfx_ruttetraizer/ui.qml" line="71"/>
         <source>Brightness</source>
         <translation>Fényesség</translation>
     </message>
@@ -10174,241 +10604,241 @@ Most users do not need to change this.</translation>
         <translation>Telítettség</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="132"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="133"/>
         <source>Target color</source>
         <translation>Cél szín</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="155"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="156"/>
         <source>Mask type</source>
         <translation>Maszk típusa</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="161"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="162"/>
         <source>Color Distance</source>
         <translation>Szín távolság</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="161"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="162"/>
         <source>Transparency</source>
         <translation>Átlátszóság</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="161"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="162"/>
         <source>Edge Inwards</source>
         <translation>Él befelé</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="161"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="162"/>
         <source>Edge Outwards</source>
         <translation>Él kifelé</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="169"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="173"/>
         <source>Tolerance</source>
         <translation>Tolerancia</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="186"/>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="248"/>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="257"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="190"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="253"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="266"/>
         <source>Slope</source>
         <translation>Lejtő</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="203"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="207"/>
         <source>Hue gate</source>
         <translation>Színezet kapu</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="220"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="224"/>
         <source>Saturation threshold</source>
         <translation>Telítettség küszöbérték</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="237"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="241"/>
         <source>Operation 1</source>
         <translation>Művelet 1</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/blend_mode/ui.qml" line="48"/>
-        <location filename="../src/qml/filters/gradient/ui.qml" line="370"/>
+        <location filename="../src/qml/filters/blend_mode/ui.qml" line="49"/>
+        <location filename="../src/qml/filters/gradient/ui.qml" line="388"/>
         <source>Blend mode</source>
         <translation>Keverő mód</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/blend_mode/ui.qml" line="53"/>
-        <location filename="../src/qml/filters/gradient/ui.qml" line="375"/>
+        <location filename="../src/qml/filters/blend_mode/ui.qml" line="54"/>
+        <location filename="../src/qml/filters/gradient/ui.qml" line="393"/>
         <source>Over</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/blend_mode/ui.qml" line="54"/>
-        <location filename="../src/qml/filters/gradient/ui.qml" line="376"/>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="243"/>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="274"/>
-        <location filename="../src/qml/filters/levels/ui.qml" line="192"/>
+        <location filename="../src/qml/filters/blend_mode/ui.qml" line="55"/>
+        <location filename="../src/qml/filters/gradient/ui.qml" line="394"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="247"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="281"/>
+        <location filename="../src/qml/filters/levels/ui.qml" line="199"/>
         <source>None</source>
         <translation>Nincs</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/blend_mode/ui.qml" line="56"/>
-        <location filename="../src/qml/filters/gradient/ui.qml" line="378"/>
+        <location filename="../src/qml/filters/blend_mode/ui.qml" line="57"/>
+        <location filename="../src/qml/filters/gradient/ui.qml" line="396"/>
         <source>Saturate</source>
         <translation>Telítés</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/blend_mode/ui.qml" line="57"/>
-        <location filename="../src/qml/filters/gradient/ui.qml" line="379"/>
+        <location filename="../src/qml/filters/blend_mode/ui.qml" line="58"/>
+        <location filename="../src/qml/filters/gradient/ui.qml" line="397"/>
         <source>Multiply</source>
         <translation>Többszörözés</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/blend_mode/ui.qml" line="58"/>
-        <location filename="../src/qml/filters/gradient/ui.qml" line="380"/>
+        <location filename="../src/qml/filters/blend_mode/ui.qml" line="59"/>
+        <location filename="../src/qml/filters/gradient/ui.qml" line="398"/>
         <source>Screen</source>
         <translation>Képernyő</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/blend_mode/ui.qml" line="59"/>
-        <location filename="../src/qml/filters/gradient/ui.qml" line="381"/>
+        <location filename="../src/qml/filters/blend_mode/ui.qml" line="60"/>
+        <location filename="../src/qml/filters/gradient/ui.qml" line="399"/>
         <source>Overlay</source>
         <translation>Átfedés</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/blend_mode/ui.qml" line="60"/>
-        <location filename="../src/qml/filters/gradient/ui.qml" line="382"/>
+        <location filename="../src/qml/filters/blend_mode/ui.qml" line="61"/>
+        <location filename="../src/qml/filters/gradient/ui.qml" line="400"/>
         <source>Darken</source>
         <translation>Sötétítés</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/blend_mode/ui.qml" line="61"/>
-        <location filename="../src/qml/filters/gradient/ui.qml" line="383"/>
+        <location filename="../src/qml/filters/blend_mode/ui.qml" line="62"/>
+        <location filename="../src/qml/filters/gradient/ui.qml" line="401"/>
         <source>Dodge</source>
         <translation>Fakítás</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/blend_mode/ui.qml" line="62"/>
-        <location filename="../src/qml/filters/gradient/ui.qml" line="384"/>
+        <location filename="../src/qml/filters/blend_mode/ui.qml" line="63"/>
+        <location filename="../src/qml/filters/gradient/ui.qml" line="402"/>
         <source>Burn</source>
         <translation>Színégetés</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/blend_mode/ui.qml" line="63"/>
-        <location filename="../src/qml/filters/gradient/ui.qml" line="385"/>
+        <location filename="../src/qml/filters/blend_mode/ui.qml" line="64"/>
+        <location filename="../src/qml/filters/gradient/ui.qml" line="403"/>
         <source>Hard Light</source>
         <translation>Erős fény</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/blend_mode/ui.qml" line="64"/>
-        <location filename="../src/qml/filters/gradient/ui.qml" line="386"/>
+        <location filename="../src/qml/filters/blend_mode/ui.qml" line="65"/>
+        <location filename="../src/qml/filters/gradient/ui.qml" line="404"/>
         <source>Soft Light</source>
         <translation>Gyenge fény</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/blend_mode/ui.qml" line="65"/>
-        <location filename="../src/qml/filters/gradient/ui.qml" line="387"/>
+        <location filename="../src/qml/filters/blend_mode/ui.qml" line="66"/>
+        <location filename="../src/qml/filters/gradient/ui.qml" line="405"/>
         <source>Difference</source>
         <translation>Különbség</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/blend_mode/ui.qml" line="66"/>
-        <location filename="../src/qml/filters/gradient/ui.qml" line="388"/>
+        <location filename="../src/qml/filters/blend_mode/ui.qml" line="67"/>
+        <location filename="../src/qml/filters/gradient/ui.qml" line="406"/>
         <source>Exclusion</source>
         <translation>Kivétel</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/blend_mode/ui.qml" line="67"/>
-        <location filename="../src/qml/filters/gradient/ui.qml" line="389"/>
+        <location filename="../src/qml/filters/blend_mode/ui.qml" line="68"/>
+        <location filename="../src/qml/filters/gradient/ui.qml" line="407"/>
         <source>HSL Hue</source>
         <translation>HSL színárnyalat</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/blend_mode/ui.qml" line="68"/>
-        <location filename="../src/qml/filters/gradient/ui.qml" line="390"/>
+        <location filename="../src/qml/filters/blend_mode/ui.qml" line="69"/>
+        <location filename="../src/qml/filters/gradient/ui.qml" line="408"/>
         <source>HSL Saturation</source>
         <translation>HSL színtelítettség</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/blend_mode/ui.qml" line="69"/>
-        <location filename="../src/qml/filters/gradient/ui.qml" line="391"/>
+        <location filename="../src/qml/filters/blend_mode/ui.qml" line="70"/>
+        <location filename="../src/qml/filters/gradient/ui.qml" line="409"/>
         <source>HSL Color</source>
         <translation>HSL szín</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/blend_mode/ui.qml" line="70"/>
-        <location filename="../src/qml/filters/gradient/ui.qml" line="392"/>
+        <location filename="../src/qml/filters/blend_mode/ui.qml" line="71"/>
+        <location filename="../src/qml/filters/gradient/ui.qml" line="410"/>
         <source>HSL Luminosity</source>
         <translation>HSL fényintenzitás</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="243"/>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="274"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="247"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="281"/>
         <source>De-Key</source>
         <translation>Key kihagyása</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="243"/>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="274"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="247"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="281"/>
         <source>Desaturate</source>
         <translation>Színtelenítés</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="243"/>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="274"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="247"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="281"/>
         <source>Adjust Luma</source>
         <translation>Luma beállítása</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="251"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="258"/>
         <source>Amount 1</source>
         <translation>Mérték 1</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="268"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="275"/>
         <source>Operation 2</source>
         <translation>Művelet 2</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="282"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="292"/>
         <source>Amount 2</source>
         <translation>Mérték 2</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="301"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="311"/>
         <source>Show mask</source>
-        <translation>Mutasd a maszkot</translation>
+        <translation>Maszk megjelenítése</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="311"/>
+        <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="321"/>
         <source>Send mask to alpha channel</source>
         <translation>Maszk alfa csatornára</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lenscorrection/ui.qml" line="101"/>
+        <location filename="../src/qml/filters/lenscorrection/ui.qml" line="105"/>
         <source>X Center</source>
         <translation>X Közép</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lenscorrection/ui.qml" line="126"/>
+        <location filename="../src/qml/filters/lenscorrection/ui.qml" line="129"/>
         <source>Y Center</source>
         <translation>Y közép</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lenscorrection/ui.qml" line="151"/>
+        <location filename="../src/qml/filters/lenscorrection/ui.qml" line="153"/>
         <source>Correction at Center</source>
         <translation>Korrekció középen</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lenscorrection/ui.qml" line="176"/>
+        <location filename="../src/qml/filters/lenscorrection/ui.qml" line="177"/>
         <source>Correction at Edges</source>
         <translation>Korrekció a széleknél</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/lines/ui.qml" line="63"/>
-        <location filename="../src/qml/filters/mask/ui.qml" line="248"/>
-        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="249"/>
-        <location filename="../src/qml/filters/mosaic/ui.qml" line="89"/>
+        <location filename="../src/qml/filters/mask/ui.qml" line="256"/>
+        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="257"/>
+        <location filename="../src/qml/filters/mosaic/ui.qml" line="91"/>
         <source>Width</source>
         <translation>Szélesség</translation>
     </message>
@@ -10430,258 +10860,252 @@ Click &quot;Open&quot; to load a file.</source>
 Kattintson a &quot;Megnyitás&quot;-ra és töltsön be egy fájlt.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lut3d/ui.qml" line="86"/>
-        <location filename="../src/qml/filters/webvfx/ui.qml" line="194"/>
+        <location filename="../src/qml/filters/lut3d/ui.qml" line="85"/>
         <source>Open...</source>
         <translation>Megnyitás...</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lut3d/ui.qml" line="90"/>
+        <location filename="../src/qml/filters/lut3d/ui.qml" line="89"/>
         <source>Open 3D LUT File</source>
         <translation>3D LUT fájl megnyitása</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/ui.qml" line="84"/>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="147"/>
-        <location filename="../src/qml/filters/bigsh0t_rect_to_eq/ui.qml" line="63"/>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="205"/>
-        <location filename="../src/qml/filters/bigsh0t_transform_360/ui.qml" line="70"/>
-        <location filename="../src/qml/filters/lut3d/ui.qml" line="102"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/ui.qml" line="102"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="192"/>
+        <location filename="../src/qml/filters/bigsh0t_rect_to_eq/ui.qml" line="79"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="269"/>
+        <location filename="../src/qml/filters/bigsh0t_transform_360/ui.qml" line="91"/>
+        <location filename="../src/qml/filters/lut3d/ui.qml" line="101"/>
         <source>Interpolation</source>
         <translation>Interpoláció</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/ui.qml" line="99"/>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="167"/>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="291"/>
-        <location filename="../src/qml/filters/bigsh0t_transform_360/ui.qml" line="85"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/ui.qml" line="118"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="215"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="370"/>
+        <location filename="../src/qml/filters/bigsh0t_transform_360/ui.qml" line="107"/>
         <source>Yaw</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/ui.qml" line="117"/>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="185"/>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="350"/>
-        <location filename="../src/qml/filters/bigsh0t_transform_360/ui.qml" line="103"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/ui.qml" line="135"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="232"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="431"/>
+        <location filename="../src/qml/filters/bigsh0t_transform_360/ui.qml" line="124"/>
         <source>Pitch</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/ui.qml" line="135"/>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="203"/>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="409"/>
-        <location filename="../src/qml/filters/bigsh0t_transform_360/ui.qml" line="121"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/ui.qml" line="152"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="249"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="491"/>
+        <location filename="../src/qml/filters/bigsh0t_transform_360/ui.qml" line="141"/>
         <source>Roll</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/ui.qml" line="153"/>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="241"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/ui.qml" line="169"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="288"/>
         <source>FOV</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/ui.qml" line="171"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_to_rect/ui.qml" line="186"/>
         <source>Fisheye</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lut3d/ui.qml" line="108"/>
+        <location filename="../src/qml/filters/lut3d/ui.qml" line="107"/>
+        <location filename="../src/qml/filters/time_remap/ui.qml" line="247"/>
         <source>Nearest</source>
         <translation>Legközelebbi</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lut3d/ui.qml" line="108"/>
+        <location filename="../src/qml/filters/lut3d/ui.qml" line="107"/>
         <source>Trilinear</source>
         <translation>Trilinear</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lut3d/ui.qml" line="108"/>
+        <location filename="../src/qml/filters/lut3d/ui.qml" line="107"/>
         <source>Tetrahedral</source>
         <translation>Tetrahedral</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask/ui.qml" line="176"/>
-        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="177"/>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="274"/>
+        <location filename="../src/qml/filters/mask/ui.qml" line="180"/>
+        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="181"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="283"/>
         <source>Operation</source>
         <translation>Művelet</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="288"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="293"/>
         <source>Corner 1 X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="373"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="393"/>
         <source>Corner 2 X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="421"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="441"/>
         <source>Corner 3 X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="469"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="489"/>
         <source>Corner 4 X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="517"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="537"/>
         <source>Stretch X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="567"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="585"/>
         <source>Interpolator</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="573"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="591"/>
         <source>Nearest Neighbor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="573"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="591"/>
         <source>Bilinear</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="573"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="591"/>
         <source>Bicubic Smooth</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="573"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="591"/>
         <source>Bicubic Sharp</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="573"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="591"/>
         <source>Spline 4x4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="573"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="591"/>
         <source>Spline 6x6</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="573"/>
-        <source>Lanzcos</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="586"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="604"/>
         <source>Alpha Operation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="592"/>
-        <location filename="../src/qml/filters/mask/ui.qml" line="182"/>
-        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="183"/>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="283"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="610"/>
+        <location filename="../src/qml/filters/mask/ui.qml" line="186"/>
+        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="187"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="292"/>
         <source>Maximum</source>
         <translation>Maximum</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="592"/>
-        <location filename="../src/qml/filters/mask/ui.qml" line="182"/>
-        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="183"/>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="284"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="610"/>
+        <location filename="../src/qml/filters/mask/ui.qml" line="186"/>
+        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="187"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="293"/>
         <source>Minimum</source>
         <translation>Minimum</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="592"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="610"/>
         <source>Opaque</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="592"/>
-        <location filename="../src/qml/filters/mask/ui.qml" line="182"/>
-        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="183"/>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="282"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="610"/>
+        <location filename="../src/qml/filters/mask/ui.qml" line="186"/>
+        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="187"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="291"/>
         <source>Overwrite</source>
         <translation>Felülírás</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="607"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="629"/>
         <source>Feathering</source>
         <translation>Lágy perem</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/blend_mode/ui.qml" line="55"/>
-        <location filename="../src/qml/filters/corners/ui.qml" line="592"/>
-        <location filename="../src/qml/filters/gradient/ui.qml" line="377"/>
-        <location filename="../src/qml/filters/mask/ui.qml" line="182"/>
-        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="183"/>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="285"/>
+        <location filename="../src/qml/filters/blend_mode/ui.qml" line="56"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="610"/>
+        <location filename="../src/qml/filters/gradient/ui.qml" line="395"/>
+        <location filename="../src/qml/filters/mask/ui.qml" line="186"/>
+        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="187"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="294"/>
         <source>Add</source>
         <translation>Hozzáadás</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/corners/ui.qml" line="592"/>
-        <location filename="../src/qml/filters/mask/ui.qml" line="182"/>
-        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="183"/>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="286"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="610"/>
+        <location filename="../src/qml/filters/mask/ui.qml" line="186"/>
+        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="187"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="295"/>
         <source>Subtract</source>
         <translation>Kivon</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask/ui.qml" line="191"/>
-        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="192"/>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="217"/>
+        <location filename="../src/qml/filters/mask/ui.qml" line="198"/>
+        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="199"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="218"/>
         <source>Shape</source>
         <translation>Alakzat</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask/ui.qml" line="197"/>
-        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="198"/>
+        <location filename="../src/qml/filters/mask/ui.qml" line="204"/>
+        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="205"/>
         <source>Rectangle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask/ui.qml" line="197"/>
-        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="198"/>
+        <location filename="../src/qml/filters/mask/ui.qml" line="204"/>
+        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="205"/>
         <source>Ellipse</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask/ui.qml" line="197"/>
-        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="198"/>
+        <location filename="../src/qml/filters/mask/ui.qml" line="204"/>
+        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="205"/>
         <source>Triangle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask/ui.qml" line="197"/>
-        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="198"/>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="227"/>
+        <location filename="../src/qml/filters/mask/ui.qml" line="204"/>
+        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="205"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="228"/>
         <source>Diamond</source>
         <translation>Gyémánt</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_mask/ui.qml" line="70"/>
-        <location filename="../src/qml/filters/bigsh0t_rect_to_eq/ui.qml" line="78"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_mask/ui.qml" line="88"/>
+        <location filename="../src/qml/filters/bigsh0t_rect_to_eq/ui.qml" line="95"/>
         <location filename="../src/qml/filters/gradient/ui.qml" line="64"/>
-        <location filename="../src/qml/filters/mask/ui.qml" line="206"/>
-        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="207"/>
-        <location filename="../src/qml/filters/rgbsplit0r/ui.qml" line="110"/>
-        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="202"/>
+        <location filename="../src/qml/filters/mask/ui.qml" line="216"/>
+        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="217"/>
+        <location filename="../src/qml/filters/rgbsplit0r/ui.qml" line="111"/>
         <source>Horizontal</source>
         <translation>Vízszintes</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_mask/ui.qml" line="75"/>
-        <location filename="../src/qml/filters/bigsh0t_eq_mask/ui.qml" line="116"/>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="418"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_mask/ui.qml" line="94"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_mask/ui.qml" line="134"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="478"/>
         <source>Start</source>
         <translation>Start</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_mask/ui.qml" line="93"/>
-        <location filename="../src/qml/filters/bigsh0t_eq_mask/ui.qml" line="134"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_mask/ui.qml" line="111"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_mask/ui.qml" line="151"/>
         <source>End</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10693,7 +11117,7 @@ Kattintson a &quot;Megnyitás&quot;-ra és töltsön be egy fájlt.</translation
     <message>
         <location filename="../src/qml/filters/gradient/ui.qml" line="230"/>
         <source>Linear</source>
-        <translation type="unfinished"></translation>
+        <translation>Lineáris</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gradient/ui.qml" line="239"/>
@@ -10703,104 +11127,103 @@ Kattintson a &quot;Megnyitás&quot;-ra és töltsön be egy fájlt.</translation
     <message>
         <location filename="../src/qml/filters/gradient/ui.qml" line="271"/>
         <source>Colors</source>
-        <translation type="unfinished"></translation>
+        <translation>Színek</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_eq_mask/ui.qml" line="111"/>
-        <location filename="../src/qml/filters/bigsh0t_rect_to_eq/ui.qml" line="96"/>
-        <location filename="../src/qml/filters/mask/ui.qml" line="227"/>
-        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="228"/>
-        <location filename="../src/qml/filters/rgbsplit0r/ui.qml" line="85"/>
-        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="219"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_mask/ui.qml" line="128"/>
+        <location filename="../src/qml/filters/bigsh0t_rect_to_eq/ui.qml" line="112"/>
+        <location filename="../src/qml/filters/mask/ui.qml" line="236"/>
+        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="237"/>
+        <location filename="../src/qml/filters/rgbsplit0r/ui.qml" line="87"/>
         <source>Vertical</source>
         <translation>Függőleges</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask/ui.qml" line="269"/>
-        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="270"/>
-        <location filename="../src/qml/filters/mosaic/ui.qml" line="114"/>
+        <location filename="../src/qml/filters/mask/ui.qml" line="276"/>
+        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="277"/>
+        <location filename="../src/qml/filters/mosaic/ui.qml" line="115"/>
         <source>Height</source>
         <translation>Magasság</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask/ui.qml" line="290"/>
-        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="291"/>
-        <location filename="../src/qml/filters/rotate/ui.qml" line="150"/>
+        <location filename="../src/qml/filters/mask/ui.qml" line="296"/>
+        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="297"/>
+        <location filename="../src/qml/filters/rotate/ui.qml" line="161"/>
         <source>Rotation</source>
         <translation>Forgatás</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask/ui.qml" line="308"/>
-        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="309"/>
-        <location filename="../src/qml/filters/mask_shape/ui.qml" line="335"/>
+        <location filename="../src/qml/filters/mask/ui.qml" line="314"/>
+        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="315"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="334"/>
         <source>Softness</source>
         <translation>Lágyság</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="162"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="208"/>
         <source>Alignment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="221"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="266"/>
         <source>Lens</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="226"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="272"/>
         <source>Projection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="259"/>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="400"/>
-        <location filename="../src/qml/filters/halftone/ui.qml" line="101"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="308"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="459"/>
+        <location filename="../src/qml/filters/crop_circle/ui.qml" line="99"/>
+        <location filename="../src/qml/filters/halftone/ui.qml" line="105"/>
         <location filename="../src/qml/filters/movit_diffusion/ui.qml" line="34"/>
-        <location filename="../src/qml/filters/webvfx_circular_frame/ui.qml" line="102"/>
         <source>Radius</source>
         <translation>Sugár</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="277"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="328"/>
         <source>Front</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="282"/>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="341"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="334"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="396"/>
         <source>X</source>
         <translation>X</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="300"/>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="359"/>
-        <location filename="../src/qml/filters/corners/ui.qml" line="349"/>
-        <location filename="../src/qml/filters/corners/ui.qml" line="397"/>
-        <location filename="../src/qml/filters/corners/ui.qml" line="445"/>
-        <location filename="../src/qml/filters/corners/ui.qml" line="493"/>
-        <location filename="../src/qml/filters/corners/ui.qml" line="542"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="353"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="415"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="369"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="417"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="465"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="513"/>
+        <location filename="../src/qml/filters/corners/ui.qml" line="561"/>
         <source>Y</source>
         <translation>Y</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="336"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="390"/>
         <source>Back</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="395"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="452"/>
         <source>Nadir</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/halftone/ui.qml" line="126"/>
+        <location filename="../src/qml/filters/halftone/ui.qml" line="129"/>
         <source>Cyan</source>
-        <translation type="unfinished"></translation>
+        <translation>Cián (kék)</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/halftone/ui.qml" line="151"/>
+        <location filename="../src/qml/filters/halftone/ui.qml" line="153"/>
         <source>Magenta</source>
-        <translation type="unfinished"></translation>
+        <translation>Magenta</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/movit_diffusion/ui.qml" line="52"/>
@@ -10810,7 +11233,7 @@ Kattintson a &quot;Megnyitás&quot;-ra és töltsön be egy fájlt.</translation
     <message>
         <location filename="../src/qml/filters/oldfilm/ui.qml" line="71"/>
         <source>Vertical amount</source>
-        <translation>Függőleges érték</translation>
+        <translation>Függőleges mennyiség</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/oldfilm/ui.qml" line="86"/>
@@ -10848,109 +11271,173 @@ Kattintson a &quot;Megnyitás&quot;-ra és töltsön be egy fájlt.</translation
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/mask/ui.qml" line="299"/>
-        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="300"/>
-        <location filename="../src/qml/filters/rotate/ui.qml" line="159"/>
-        <location filename="../src/qml/filters/webvfx_ruttetraizer/ui.qml" line="159"/>
-        <location filename="../src/qml/filters/webvfx_ruttetraizer/ui.qml" line="175"/>
-        <location filename="../src/qml/filters/white/ui.qml" line="154"/>
+        <location filename="../src/qml/filters/mask/ui.qml" line="305"/>
+        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="306"/>
+        <location filename="../src/qml/filters/rotate/ui.qml" line="170"/>
         <source> deg</source>
         <comment>degrees</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/rotate/ui.qml" line="175"/>
-        <location filename="../src/qml/filters/webvfx_ruttetraizer/ui.qml" line="136"/>
+        <location filename="../src/qml/filters/rotate/ui.qml" line="185"/>
         <source>Scale</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/rotate/ui.qml" line="218"/>
+        <location filename="../src/qml/filters/rotate/ui.qml" line="227"/>
         <source>X offset</source>
         <translation>X eltolás</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/rotate/ui.qml" line="250"/>
+        <location filename="../src/qml/filters/rotate/ui.qml" line="258"/>
         <source>Y offset</source>
         <translation>Y eltolás</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="143"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="58"/>
+        <source>Full Screen</source>
+        <translation>Teljes képernyő</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="63"/>
+        <source>Scroll Down</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="65"/>
+        <source>Scroll Up</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="67"/>
+        <source>Scroll Right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="69"/>
+        <source>Scroll Left</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="320"/>
+        <source>Background size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="366"/>
+        <source>Text size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="388"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="412"/>
+        <source>Copy</source>
+        <translation>Másolás</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="422"/>
+        <location filename="../src/qml/filters/rotate/ui.qml" line="289"/>
+        <source>Background color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="438"/>
+        <source>Overflow</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="446"/>
+        <source>Automatic</source>
+        <translation>Automatikus</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="455"/>
+        <source>Visible</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="461"/>
+        <source>Hidden</source>
+        <translation>Rejtett</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="144"/>
         <source>Color space</source>
         <translation>Szín tér</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="150"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="151"/>
         <source>Red-Green-Blue</source>
         <translation>Vörös-Zöld-Kék</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="156"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="157"/>
         <source>Hue-Chroma-Intensity</source>
         <translation>Színárnyalat-Chroma-intenzitás</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="166"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="167"/>
         <source>Red delta</source>
         <translation>Vörös delta</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="166"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="167"/>
         <source>Hue delta</source>
         <translation>Színárnyalat delta</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="183"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="184"/>
         <source>Green delta</source>
         <translation>Zöld delta</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="183"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="184"/>
         <source>Chroma delta</source>
         <translation>Chroma delta</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="200"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="201"/>
         <source>Blue delta</source>
         <translation>Kék delta</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="200"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="201"/>
         <source>Intensity delta</source>
         <translation>Intenzitás delta</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="225"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="226"/>
         <source>Box</source>
         <translation>Doboz</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="226"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="227"/>
         <source>Ellipsoid</source>
         <translation>Ellipszis</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="236"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="241"/>
         <source>Edge</source>
         <translation>Szél</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="244"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="249"/>
         <source>Hard</source>
+        <comment>Chroma Key Advanced filter</comment>
         <translation>Kemény</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="245"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="250"/>
         <source>Fat</source>
         <translation>Kövér</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="246"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="251"/>
         <source>Normal</source>
         <translation>Normál</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/select0r/ui.qml" line="247"/>
+        <location filename="../src/qml/filters/select0r/ui.qml" line="252"/>
         <source>Thin</source>
         <translation>Vékony</translation>
     </message>
@@ -10980,10 +11467,9 @@ Kattintson a &quot;Megnyitás&quot;-ra és töltsön be egy fájlt.</translation
         <translation>Kontraszt</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/chromahold/ui.qml" line="64"/>
+        <location filename="../src/qml/filters/chromahold/ui.qml" line="63"/>
+        <location filename="../src/qml/filters/crop_circle/ui.qml" line="131"/>
         <location filename="../src/qml/filters/sketch/ui.qml" line="116"/>
-        <location filename="../src/qml/filters/webvfx_circular_frame/ui.qml" line="135"/>
-        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="130"/>
         <source>Color</source>
         <translation>Szín</translation>
     </message>
@@ -11013,101 +11499,73 @@ Kattintson a &quot;Megnyitás&quot;-ra és töltsön be egy fájlt.</translation
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/aech0r/ui.qml" line="86"/>
-        <source>Fade</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/aech0r/ui.qml" line="103"/>
-        <source>Fade period</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/aech0r/ui.qml" line="125"/>
-        <source>Lighter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/aech0r/ui.qml" line="133"/>
-        <source>Plans fade</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/aech0r/ui.qml" line="167"/>
-        <location filename="../src/qml/filters/levels/ui.qml" line="178"/>
+        <location filename="../src/qml/filters/levels/ui.qml" line="182"/>
         <location filename="../src/qml/filters/spillsuppress/ui.qml" line="46"/>
         <location filename="../src/qml/filters/tcolor/ui.qml" line="59"/>
         <source>Green</source>
         <translation>Zöld</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/aech0r/ui.qml" line="183"/>
-        <location filename="../src/qml/filters/levels/ui.qml" line="178"/>
+        <location filename="../src/qml/filters/levels/ui.qml" line="182"/>
         <location filename="../src/qml/filters/spillsuppress/ui.qml" line="52"/>
         <location filename="../src/qml/filters/tcolor/ui.qml" line="83"/>
         <source>Blue</source>
         <translation>Kék</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/aech0r/ui.qml" line="199"/>
-        <source>Comparison</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/aech0r/ui.qml" line="150"/>
-        <location filename="../src/qml/filters/levels/ui.qml" line="178"/>
+        <location filename="../src/qml/filters/levels/ui.qml" line="182"/>
         <source>Red</source>
         <translation>Vörös</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/levels/ui.qml" line="178"/>
+        <location filename="../src/qml/filters/levels/ui.qml" line="182"/>
         <source>Value</source>
         <translation>Érték</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/levels/ui.qml" line="187"/>
+        <location filename="../src/qml/filters/levels/ui.qml" line="194"/>
         <source>Histogram</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/levels/ui.qml" line="205"/>
+        <location filename="../src/qml/filters/levels/ui.qml" line="217"/>
         <source>Input Black</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/levels/ui.qml" line="225"/>
+        <location filename="../src/qml/filters/levels/ui.qml" line="236"/>
         <source>Input White</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/levels/ui.qml" line="245"/>
+        <location filename="../src/qml/filters/levels/ui.qml" line="255"/>
         <source>Gamma</source>
         <translation>Gamma</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/levels/ui.qml" line="265"/>
+        <location filename="../src/qml/filters/levels/ui.qml" line="274"/>
         <source>Output Black</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/levels/ui.qml" line="280"/>
+        <location filename="../src/qml/filters/levels/ui.qml" line="289"/>
         <source>Output White</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/stabilize/ui.qml" line="29"/>
         <source>Click Analyze to use this filter.</source>
-        <translation>A szűrő használatához kattintson az &quot;Analizálás&quot;-ra.</translation>
+        <translation>A szűrő használatához kattintson az Elemzésre</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/stabilize/ui.qml" line="90"/>
         <source>Select a file to store analysis results.</source>
-        <translation type="unfinished"></translation>
+        <translation>Az elemzés eredményeinek tárolásához jelöljön ki egy fájlt.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/stabilize/ui.qml" line="126"/>
         <source>&lt;b&gt;Analyze Options&lt;/b&gt;</source>
-        <translation>&lt;b&gt;Analízis beállítások&lt;/b&gt;</translation>
+        <translation>&lt;b&gt;Elemzés beállításai&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/stabilize/ui.qml" line="131"/>
@@ -11115,18 +11573,18 @@ Kattintson a &quot;Megnyitás&quot;-ra és töltsön be egy fájlt.</translation
         <translation>Rázkódás</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/stabilize/ui.qml" line="150"/>
+        <location filename="../src/qml/filters/stabilize/ui.qml" line="149"/>
         <source>Accuracy</source>
         <translation>Pontosság</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/stabilize/ui.qml" line="189"/>
+        <location filename="../src/qml/filters/stabilize/ui.qml" line="187"/>
         <source>&lt;b&gt;Filter Options&lt;/b&gt;</source>
-        <translation>&lt;b&gt;Szűrő beállítások&lt;/b&gt;</translation>
+        <translation>&lt;b&gt;Szűrőbeállítások&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/stabilize/ui.qml" line="194"/>
-        <location filename="../src/qml/filters/vertigo/ui.qml" line="113"/>
+        <location filename="../src/qml/filters/stabilize/ui.qml" line="192"/>
+        <location filename="../src/qml/filters/vertigo/ui.qml" line="114"/>
         <source>Zoom</source>
         <translation>Nagyítás</translation>
     </message>
@@ -11136,47 +11594,62 @@ Kattintson a &quot;Megnyitás&quot;-ra és töltsön be egy fájlt.</translation
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="199"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="244"/>
         <source>Browse...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="220"/>
-        <source>Analysis</source>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="251"/>
+        <source>Start Offset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="225"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="260"/>
+        <source>seconds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="286"/>
+        <source>Analysis</source>
+        <translation>Elemzés</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="293"/>
+        <source>Apply transform</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="300"/>
         <source>Sample Radius</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="243"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="319"/>
         <source>Search Radius</source>
-        <translation type="unfinished"></translation>
+        <translation>Keresési sugár</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="279"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="357"/>
         <source>Track Points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="283"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="361"/>
         <source>Use backwards-facing track points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="314"/>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="373"/>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="432"/>
-        <location filename="../src/qml/filters/stabilize/ui.qml" line="214"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="394"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="454"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="514"/>
+        <location filename="../src/qml/filters/stabilize/ui.qml" line="212"/>
         <source>Smoothing</source>
         <translation>Simítás</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="332"/>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="391"/>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="450"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="412"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="472"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="533"/>
         <source>Time Bias</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11186,33 +11659,135 @@ Kattintson a &quot;Megnyitás&quot;-ra és töltsön be egy fájlt.</translation
         <translation>Vörös</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/halftone/ui.qml" line="176"/>
+        <location filename="../src/qml/filters/halftone/ui.qml" line="177"/>
         <location filename="../src/qml/filters/tcolor/ui.qml" line="75"/>
         <source>Yellow</source>
         <translation>Sárga</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/distort/ui.qml" line="95"/>
+        <location filename="../src/qml/filters/distort/ui.qml" line="98"/>
         <location filename="../src/qml/filters/wave/ui.qml" line="60"/>
         <source>Amplitude</source>
         <translation>Amplitudó</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/distort/ui.qml" line="120"/>
-        <location filename="../src/qml/filters/glitch/ui.qml" line="98"/>
+        <location filename="../src/qml/filters/distort/ui.qml" line="122"/>
+        <location filename="../src/qml/filters/glitch/ui.qml" line="102"/>
         <source>Frequency</source>
         <translation>Frekvencia</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/distort/ui.qml" line="145"/>
+        <location filename="../src/qml/filters/distort/ui.qml" line="146"/>
         <source>Velocity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/vertigo/ui.qml" line="88"/>
+        <location filename="../src/qml/filters/time_remap/ui.qml" line="37"/>
+        <source>Hold %1 to drag a keyframe vertical only or %2 to drag horizontal only</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/time_remap/ui.qml" line="98"/>
+        <source>Forward</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/time_remap/ui.qml" line="100"/>
+        <source>Freeze</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/time_remap/ui.qml" line="102"/>
+        <location filename="../src/qml/filters/time_remap/ui.qml" line="103"/>
+        <source>%L1s</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/time_remap/ui.qml" line="110"/>
+        <source>Set Speed After</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/time_remap/ui.qml" line="110"/>
+        <source>Set Speed Before</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/time_remap/ui.qml" line="182"/>
+        <source>Time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/time_remap/ui.qml" line="184"/>
+        <source>Map the specified input time to the current time. Use keyframes to vary the time mappings over time.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/time_remap/ui.qml" line="203"/>
+        <source>Set the input time to achieve a desired speed before the current frame.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/time_remap/ui.qml" line="215"/>
+        <source>Set the input time to achieve a desired speed after the current frame.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/time_remap/ui.qml" line="237"/>
+        <source>Image mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/time_remap/ui.qml" line="239"/>
+        <source>Use the specified image selection mode. Nearest will output the image that is nearest to the mapped time. Blend will blend all images that occur during the mapped time.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/time_remap/ui.qml" line="248"/>
+        <source>Blend</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/time_remap/ui.qml" line="264"/>
+        <source>Enable pitch compensation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/time_remap/ui.qml" line="289"/>
+        <location filename="../src/qml/filters/vertigo/ui.qml" line="90"/>
         <location filename="../src/qml/filters/wave/ui.qml" line="75"/>
         <source>Speed</source>
         <translation>Sebesség</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/time_remap/ui.qml" line="291"/>
+        <source>The instantaneous speed of the last frame that was processed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/time_remap/ui.qml" line="301"/>
+        <source>The instantaneous direction of the last frame that was processed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/time_remap/ui.qml" line="309"/>
+        <source>Input Time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/time_remap/ui.qml" line="311"/>
+        <source>The original clip time of the frame.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/time_remap/ui.qml" line="319"/>
+        <source>Output Time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/time_remap/ui.qml" line="321"/>
+        <source>The mapped output time for the input frame.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/wave/ui.qml" line="92"/>
@@ -11225,107 +11800,6 @@ Kattintson a &quot;Megnyitás&quot;-ra és töltsön be egy fájlt.</translation
         <translation>Deformálja függőlegesen?</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/webvfx/ui.qml" line="183"/>
-        <source>&lt;b&gt;File:&lt;/b&gt;</source>
-        <translation>&lt;b&gt;Fájl:&lt;/b&gt;</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/webvfx/ui.qml" line="209"/>
-        <source>Use WebVfx JavaScript extension</source>
-        <translation>WebVfx JavaScript kiegészítő használata</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/webvfx/ui.qml" line="213"/>
-        <source>For Advanced Users: </source>
-        <translation>Haladó felhasználóknak:</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/webvfx/ui.qml" line="214"/>
-        <source>If you enable this, and you do not use the WebVfx JavaScript extension, your content will not render!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/webvfx/ui.qml" line="226"/>
-        <source>Confirm Selection</source>
-        <translation>Kiválasztás jóváhagyása</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/webvfx/ui.qml" line="227"/>
-        <source>Do you still want to use this?</source>
-        <translation>Még mindig használni akarja?</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/webvfx/ui.qml" line="198"/>
-        <source>Open HTML File</source>
-        <translation>HTML betöltése</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/webvfx/ui.qml" line="155"/>
-        <source>Templates</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/webvfx/ui.qml" line="170"/>
-        <source>Choose a Folder for HTML</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/webvfx/ui.qml" line="202"/>
-        <source>Load an existing HTML file.</source>
-        <translation>Létező HTML fájl betöltése.</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/webvfx/ui.qml" line="175"/>
-        <source>Save HTML File</source>
-        <translation>HTML mentése</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/webvfx/ui.qml" line="237"/>
-        <source>Edit...</source>
-        <translation>Szerkesztés...</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/webvfx/ui.qml" line="255"/>
-        <source>Reload</source>
-        <translation>Újratöltés</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/webvfx_ruttetraizer/ui.qml" line="104"/>
-        <source>Density</source>
-        <translation>Sűrűség</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/webvfx_ruttetraizer/ui.qml" line="120"/>
-        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="168"/>
-        <source>Depth</source>
-        <translation>Mélység</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/webvfx_ruttetraizer/ui.qml" line="152"/>
-        <source>X Axis Rotation</source>
-        <translation>X tengely forgás</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/webvfx_ruttetraizer/ui.qml" line="168"/>
-        <source>Y Axis Rotation</source>
-        <translation>Y tengely forgás</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="33"/>
-        <source>3D Text</source>
-        <translation>3D szöveg</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="125"/>
-        <source>Beveled</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/webvfx_threejs_text/ui.qml" line="185"/>
-        <source>Tilt</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/qml/filters/white/ui.qml" line="79"/>
         <source>Neutral color</source>
         <translation>Semleges szín</translation>
@@ -11334,6 +11808,11 @@ Kattintson a &quot;Megnyitás&quot;-ra és töltsön be egy fájlt.</translation
         <location filename="../src/qml/filters/white/ui.qml" line="103"/>
         <source>Color temperature</source>
         <translation>Színhőmérséklet</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/white/ui.qml" line="153"/>
+        <source>degrees</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/timer/ui.qml" line="135"/>
@@ -11362,61 +11841,88 @@ Kattintson a &quot;Megnyitás&quot;-ra és töltsön be egy fájlt.</translation
     </message>
     <message>
         <location filename="../src/qml/filters/timer/ui.qml" line="145"/>
-        <source>SS</source>
+        <source>MM:SS.SSS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/timer/ui.qml" line="146"/>
-        <source>SS.S</source>
+        <source>SS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/timer/ui.qml" line="147"/>
+        <source>SS.S</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/timer/ui.qml" line="148"/>
         <source>SS.SS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/timer/ui.qml" line="155"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="149"/>
+        <source>SS.SSS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/timer/ui.qml" line="248"/>
+        <source>When the direction is Down, the timer will count down to Offset.
+When the direction is Up, the timer will count up starting from Offset.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/time_remap/ui.qml" line="299"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="158"/>
         <source>Direction</source>
         <translation>Irány</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="318"/>
-        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="377"/>
-        <location filename="../src/qml/filters/timer/ui.qml" line="161"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="372"/>
+        <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="434"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="164"/>
         <source>Up</source>
         <translation>Fel</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/timer/ui.qml" line="162"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="165"/>
         <source>Down</source>
         <translation>Le</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/timer/ui.qml" line="170"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="174"/>
         <source>Start Delay</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/timer/ui.qml" line="189"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="188"/>
+        <source>The timer will be frozen from the beginning of the filter until the Start Delay time has elapsed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/timer/ui.qml" line="193"/>
         <source>Set start to begin at the current position</source>
+        <translation>Kezdés beállítása a jelenlegi pozíciónál történő induláshoz</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/timer/ui.qml" line="215"/>
+        <source>The timer will be frozen after the Duration has elapsed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/timer/ui.qml" line="216"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="220"/>
         <source>Set duration to end at the current position</source>
-        <translation type="unfinished"></translation>
+        <translation>Időtartam beállítása a jelenlegi pozíciónál történő befejeződéshez</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="261"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="338"/>
         <location filename="../src/qml/filters/gradient/ui.qml" line="255"/>
-        <location filename="../src/qml/filters/nosync/ui.qml" line="82"/>
-        <location filename="../src/qml/filters/timer/ui.qml" line="231"/>
+        <location filename="../src/qml/filters/nosync/ui.qml" line="83"/>
+        <location filename="../src/qml/filters/timer/ui.qml" line="234"/>
         <source>Offset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="185"/>
+        <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="229"/>
         <location filename="../src/qml/filters/mask_shape/ui.qml" line="211"/>
         <source>File</source>
         <translation>Fájl</translation>
@@ -11474,7 +11980,7 @@ Kattintson a &quot;Megnyitás&quot;-ra és töltsön be egy fájlt.</translation
     <message>
         <location filename="../src/qml/filters/mask_shape/ui.qml" line="217"/>
         <source>Matrix Waterfall Vertical</source>
-        <translation>Függőleges Mátrix vízesés</translation>
+        <translation>Függőleges mátrix vízesés</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask_shape/ui.qml" line="217"/>
@@ -11489,7 +11995,7 @@ Kattintson a &quot;Megnyitás&quot;-ra és töltsön be egy fájlt.</translation
     <message>
         <location filename="../src/qml/filters/mask_shape/ui.qml" line="217"/>
         <source>Matrix Snake Vertical</source>
-        <translation>Függőleges Mátrix kígyó</translation>
+        <translation>Függőleges mátrix kígyó</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask_shape/ui.qml" line="217"/>
@@ -11514,27 +12020,27 @@ Kattintson a &quot;Megnyitás&quot;-ra és töltsön be egy fájlt.</translation
     <message>
         <location filename="../src/qml/filters/mask_shape/ui.qml" line="217"/>
         <source>Iris Box</source>
-        <translation type="unfinished"></translation>
+        <translation>Íriszdoboz</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask_shape/ui.qml" line="217"/>
         <source>Box Bottom Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Doboz bal alulról</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask_shape/ui.qml" line="217"/>
         <source>Box Bottom Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Doboz bal alulról</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask_shape/ui.qml" line="217"/>
         <source>Box Right Center</source>
-        <translation type="unfinished"></translation>
+        <translation>Doboz jobb középről</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask_shape/ui.qml" line="217"/>
         <source>Clock Top</source>
-        <translation type="unfinished"></translation>
+        <translation>Óra fent</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask_shape/ui.qml" line="220"/>
@@ -11548,6 +12054,7 @@ Kattintson a &quot;Megnyitás&quot;-ra és töltsön be egy fájlt.</translation
     </message>
     <message>
         <location filename="../src/qml/filters/mask_shape/ui.qml" line="276"/>
+        <location filename="../src/qml/filters/time_remap/ui.qml" line="96"/>
         <source>Reverse</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11557,96 +12064,89 @@ Kattintson a &quot;Megnyitás&quot;-ra és töltsön be egy fájlt.</translation
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/waveform/ui.qml" line="95"/>
+        <location filename="../src/qml/filters/waveform/ui.qml" line="99"/>
         <source>Waveform Color</source>
-        <translation type="unfinished"></translation>
+        <translation>Hullámforma színe</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/waveform/ui.qml" line="108"/>
+        <location filename="../src/qml/filters/waveform/ui.qml" line="112"/>
         <source>Background Color</source>
         <translation>Háttérszín</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/waveform/ui.qml" line="179"/>
+        <location filename="../src/qml/filters/waveform/ui.qml" line="203"/>
         <source>Fill</source>
         <translation>Kitöltés</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/waveform/ui.qml" line="185"/>
+        <location filename="../src/qml/filters/waveform/ui.qml" line="209"/>
         <source>Fill the area under the waveform.</source>
-        <translation type="unfinished"></translation>
+        <translation>A hullámforma alatti terület kitöltése.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/waveform/ui.qml" line="190"/>
+        <location filename="../src/qml/filters/waveform/ui.qml" line="214"/>
         <source>Combine</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/waveform/ui.qml" line="196"/>
+        <location filename="../src/qml/filters/waveform/ui.qml" line="220"/>
         <source>Combine all channels into one waveform.</source>
-        <translation type="unfinished"></translation>
+        <translation>Az összes csatorna egyesítése egyetlen hullámformába.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/waveform/ui.qml" line="201"/>
+        <location filename="../src/qml/filters/waveform/ui.qml" line="225"/>
         <source>Window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/qml/filters/grid/ui.qml" line="166"/>
-        <location filename="../src/qml/filters/grid/ui.qml" line="202"/>
+        <source>Rows</source>
+        <translation>Sorok</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/grid/ui.qml" line="201"/>
         <source>Columns</source>
-        <translation type="unfinished"></translation>
+        <translation>Oszlopok</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/webvfx_swirl/ui.qml" line="42"/>
-        <source>Swirl amount</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/glitch/ui.qml" line="123"/>
+        <location filename="../src/qml/filters/glitch/ui.qml" line="126"/>
         <source>Block height</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/glitch/ui.qml" line="148"/>
+        <location filename="../src/qml/filters/glitch/ui.qml" line="150"/>
         <source>Shift intensity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/glitch/ui.qml" line="173"/>
+        <location filename="../src/qml/filters/glitch/ui.qml" line="174"/>
         <source>Color intensity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/hqdn3d/ui.qml" line="88"/>
+        <location filename="../src/qml/filters/hqdn3d/ui.qml" line="90"/>
         <source>Spatial</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/hqdn3d/ui.qml" line="113"/>
+        <location filename="../src/qml/filters/hqdn3d/ui.qml" line="114"/>
         <source>Temporal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/rectangle/ui.qml" line="301"/>
-        <location filename="../src/qml/filters/webvfx_clip/ui.qml" line="294"/>
+        <location filename="../src/qml/filters/crop_rectangle/ui.qml" line="308"/>
         <source>Corner radius</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/rectangle/ui.qml" line="333"/>
-        <source>Fill color</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/webvfx_clip/ui.qml" line="326"/>
+        <location filename="../src/qml/filters/crop_rectangle/ui.qml" line="339"/>
         <source>Padding color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dither/ui.qml" line="86"/>
-        <location filename="../src/qml/filters/posterize/ui.qml" line="82"/>
+        <location filename="../src/qml/filters/dither/ui.qml" line="87"/>
         <source>Levels</source>
+        <comment>Dither video filter</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -11705,37 +12205,37 @@ Kattintson a &quot;Megnyitás&quot;-ra és töltsön be egy fájlt.</translation
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/elastic_scale/ui.qml" line="103"/>
+        <location filename="../src/qml/filters/elastic_scale/ui.qml" line="108"/>
         <source>Horizontal center position of the linear area.</source>
-        <translation type="unfinished"></translation>
+        <translation>A lineáris terület vízszintes középpozíciója.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/elastic_scale/ui.qml" line="127"/>
+        <location filename="../src/qml/filters/elastic_scale/ui.qml" line="131"/>
         <source>Linear width</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/elastic_scale/ui.qml" line="129"/>
+        <location filename="../src/qml/filters/elastic_scale/ui.qml" line="133"/>
         <source>Width of the linear area.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/elastic_scale/ui.qml" line="153"/>
+        <location filename="../src/qml/filters/elastic_scale/ui.qml" line="156"/>
         <source>Linear scale factor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/elastic_scale/ui.qml" line="155"/>
+        <location filename="../src/qml/filters/elastic_scale/ui.qml" line="158"/>
         <source>Amount the linear area is scaled.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/elastic_scale/ui.qml" line="179"/>
+        <location filename="../src/qml/filters/elastic_scale/ui.qml" line="181"/>
         <source>Non-Linear scale factor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/elastic_scale/ui.qml" line="181"/>
+        <location filename="../src/qml/filters/elastic_scale/ui.qml" line="183"/>
         <source>Amount the outer left and outer right areas are scaled non linearly.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11745,82 +12245,169 @@ Kattintson a &quot;Megnyitás&quot;-ra és töltsön be egy fájlt.</translation
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../src/qml/filters/choppy/ui.qml" line="91"/>
         <location filename="../src/qml/filters/nervous/ui.qml" line="62"/>
         <location filename="../src/qml/filters/trails/ui.qml" line="70"/>
-        <location filename="../src/qml/filters/webvfx_choppy/ui.qml" line="91"/>
         <source> frames</source>
         <translation>képkocka</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/webvfx_choppy/ui.qml" line="83"/>
+        <location filename="../src/qml/filters/choppy/ui.qml" line="83"/>
         <source>Repeat</source>
         <translation>Ismétlés</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_noisegate/ui.qml" line="116"/>
+        <location filename="../src/qml/filters/audio_noisegate/ui.qml" line="123"/>
         <source>Key Filter: Low Frequency</source>
-        <translation type="unfinished"></translation>
+        <translation>Kulcsszűrő: alacsony frekvencia</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_noisegate/ui.qml" line="141"/>
+        <location filename="../src/qml/filters/audio_noisegate/ui.qml" line="147"/>
         <source>Key Filter: High Frequency</source>
-        <translation type="unfinished"></translation>
+        <translation>Kulcsszűrő: magas frekvencia</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_noisegate/ui.qml" line="169"/>
+        <location filename="../src/qml/filters/audio_noisegate/ui.qml" line="174"/>
         <source>Output key only</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_noisegate/ui.qml" line="223"/>
+        <location filename="../src/qml/filters/audio_noisegate/ui.qml" line="226"/>
         <source>Hold</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_noisegate/ui.qml" line="247"/>
+        <location filename="../src/qml/filters/audio_noisegate/ui.qml" line="249"/>
         <source>Decay</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_noisegate/ui.qml" line="271"/>
+        <location filename="../src/qml/filters/audio_noisegate/ui.qml" line="272"/>
         <source>Range</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_pitch/ui.qml" line="140"/>
+        <location filename="../src/qml/filters/audio_pitch/ui.qml" line="141"/>
         <source>Octave Shift</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_pitch/ui.qml" line="142"/>
-        <source>Specify the pitch shift in octaves. -1 shifts down an octave. +1 shifts up an octave. 0 is unchanged.</source>
+        <location filename="../src/qml/filters/audio_pitch/ui.qml" line="143"/>
+        <source>Specify the pitch shift in octaves.
+-1 shifts down an octave.
++1 shifts up an octave.
+0 is unchanged.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_pitch/ui.qml" line="177"/>
+        <location filename="../src/qml/filters/audio_pitch/ui.qml" line="180"/>
+        <source>Specify the speed change that should be compensated for.
+2x will halve the pitch to compensate for the speed being doubled.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/audio_pitch/ui.qml" line="178"/>
         <source>Speed Compensation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audio_pitch/ui.qml" line="179"/>
-        <source>Specify the speed change that should be compensated for. 2x will halve the pitch to compensate for the speed being doubled.</source>
+        <location filename="../src/qml/filters/vaguedenoiser/ui.qml" line="86"/>
+        <source>Light</source>
+        <translation>Fény</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/vaguedenoiser/ui.qml" line="93"/>
+        <source>Medium</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/vaguedenoiser/ui.qml" line="100"/>
+        <source>Heavy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/vaguedenoiser/ui.qml" line="136"/>
+        <source>Method</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/vaguedenoiser/ui.qml" line="142"/>
+        <source>Soft</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/vaguedenoiser/ui.qml" line="142"/>
+        <source>Garrote</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/vaguedenoiser/ui.qml" line="142"/>
+        <source>Hard</source>
+        <comment>Remove Noise Wavelet filter</comment>
+        <translation>Kemény</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/vaguedenoiser/ui.qml" line="155"/>
+        <source>Decompose</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/vaguedenoiser/ui.qml" line="187"/>
+        <source>Percent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/vaguedenoiser/ui.qml" line="204"/>
+        <source>Max decompositions for the current video mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/vaguedenoiser/ui.qml" line="212"/>
+        <source>More information</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/posterize/ui.qml" line="84"/>
+        <source>Levels</source>
+        <comment>Posterize filter</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/crop_circle/ui.qml" line="152"/>
+        <location filename="../src/qml/filters/crop_rectangle/ui.qml" line="360"/>
+        <source>Transparent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/bigsh0t_transform_360/ui.qml" line="162"/>
+        <source>Show grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/fspp/ui.qml" line="65"/>
+        <source>Quantization</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/fspp/ui.qml" line="80"/>
+        <source>Strength</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ui_boxblur</name>
     <message>
-        <location filename="../src/qml/filters/blur/ui_boxblur.qml" line="139"/>
+        <location filename="../src/qml/filters/blur/ui_boxblur.qml" line="141"/>
         <source>Preset</source>
-        <translation>Sablon</translation>
+        <translation>Előbeállítás</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/blur/ui_boxblur.qml" line="167"/>
+        <location filename="../src/qml/filters/blur/ui_boxblur.qml" line="169"/>
         <source>Width</source>
         <translation>Szélesség</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/blur/ui_boxblur.qml" line="202"/>
+        <location filename="../src/qml/filters/blur/ui_boxblur.qml" line="203"/>
         <source>Height</source>
         <translation>Magasság</translation>
     </message>
@@ -11830,7 +12417,7 @@ Kattintson a &quot;Megnyitás&quot;-ra és töltsön be egy fájlt.</translation
     <message>
         <location filename="../src/qml/filters/dance/ui_dance.qml" line="73"/>
         <source>Preset</source>
-        <translation>Sablon</translation>
+        <translation>Előbeállítás</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dance/ui_dance.qml" line="84"/>
@@ -11962,11 +12549,11 @@ Kattintson a &quot;Megnyitás&quot;-ra és töltsön be egy fájlt.</translation
 <context>
     <name>ui_frei0r</name>
     <message>
-        <location filename="../src/qml/filters/glow/ui_frei0r.qml" line="97"/>
-        <location filename="../src/qml/filters/saturation/ui_frei0r.qml" line="100"/>
-        <location filename="../src/qml/filters/sharpen/ui_frei0r.qml" line="129"/>
+        <location filename="../src/qml/filters/glow/ui_frei0r.qml" line="98"/>
+        <location filename="../src/qml/filters/saturation/ui_frei0r.qml" line="102"/>
+        <location filename="../src/qml/filters/sharpen/ui_frei0r.qml" line="131"/>
         <source>Preset</source>
-        <translation>Sablon</translation>
+        <translation>Előbeállítás</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/glow/ui_frei0r.qml" line="116"/>
@@ -11974,22 +12561,22 @@ Kattintson a &quot;Megnyitás&quot;-ra és töltsön be egy fájlt.</translation
         <translation>Elmosás</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/saturation/ui_frei0r.qml" line="37"/>
+        <location filename="../src/qml/filters/saturation/ui_frei0r.qml" line="38"/>
         <source>Grayscale</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/saturation/ui_frei0r.qml" line="122"/>
+        <location filename="../src/qml/filters/saturation/ui_frei0r.qml" line="123"/>
         <source>Level</source>
         <translation>Szint</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/sharpen/ui_frei0r.qml" line="146"/>
+        <location filename="../src/qml/filters/sharpen/ui_frei0r.qml" line="148"/>
         <source>Amount</source>
         <translation>Mérték</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/sharpen/ui_frei0r.qml" line="167"/>
+        <location filename="../src/qml/filters/sharpen/ui_frei0r.qml" line="168"/>
         <source>Size</source>
         <translation>Méret</translation>
     </message>
@@ -11997,22 +12584,22 @@ Kattintson a &quot;Megnyitás&quot;-ra és töltsön be egy fájlt.</translation
 <context>
     <name>ui_frei0r_coloradj</name>
     <message>
-        <location filename="../src/qml/filters/color/ui_frei0r_coloradj.qml" line="60"/>
+        <location filename="../src/qml/filters/color/ui_frei0r_coloradj.qml" line="59"/>
         <source>Mode</source>
         <translation>Mód</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/color/ui_frei0r_coloradj.qml" line="64"/>
+        <location filename="../src/qml/filters/color/ui_frei0r_coloradj.qml" line="63"/>
         <source>Shadows (Lift)</source>
         <translation>Árnyékok (emelés)</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/color/ui_frei0r_coloradj.qml" line="64"/>
+        <location filename="../src/qml/filters/color/ui_frei0r_coloradj.qml" line="63"/>
         <source>Midtones (Gamma)</source>
         <translation>Középtónus (Gamma)</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/color/ui_frei0r_coloradj.qml" line="64"/>
+        <location filename="../src/qml/filters/color/ui_frei0r_coloradj.qml" line="63"/>
         <source>Highlights (Gain)</source>
         <translation>Kiemelés (Erősítés)</translation>
     </message>
@@ -12020,62 +12607,62 @@ Kattintson a &quot;Megnyitás&quot;-ra és töltsön be egy fájlt.</translation
 <context>
     <name>ui_lightshow</name>
     <message>
-        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="80"/>
+        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="84"/>
         <source>Preset</source>
-        <translation>Sablon</translation>
+        <translation>Előbeállítás</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="95"/>
+        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="99"/>
         <source>Waveform Color</source>
-        <translation type="unfinished"></translation>
+        <translation>Hullámforma színe</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="108"/>
+        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="112"/>
         <source>Position</source>
         <translation>Pozicíó</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="129"/>
+        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="143"/>
         <source>Size</source>
         <translation>Méret</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="150"/>
+        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="174"/>
         <source>Oscillation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="152"/>
+        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="176"/>
         <source>Oscillation can be useful to make the light blink during long periods of sound.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="168"/>
+        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="192"/>
         <source>Low Frequency</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="170"/>
+        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="194"/>
         <source>The low end of the frequency range to be used to influence the light.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="191"/>
+        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="215"/>
         <source>High Frequency</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="193"/>
+        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="217"/>
         <source>The high end of the frequency range to be used to influence the light.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="214"/>
+        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="238"/>
         <source>Threshold</source>
         <translation>Küszöb</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="216"/>
+        <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="240"/>
         <source>The minimum amplitude of sound that must occur within the frequency range to cause the light to change.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12089,20 +12676,20 @@ Kattintson a &quot;Megnyitás&quot;-ra és töltsön be egy fájlt.</translation
         <translation>Sugár</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/brightness/ui_movit.qml" line="141"/>
+        <location filename="../src/qml/filters/brightness/ui_movit.qml" line="142"/>
         <location filename="../src/qml/filters/saturation/ui_movit.qml" line="120"/>
         <source>Level</source>
         <translation>Szint</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/blur/ui_movit.qml" line="97"/>
-        <location filename="../src/qml/filters/brightness/ui_movit.qml" line="119"/>
+        <location filename="../src/qml/filters/blur/ui_movit.qml" line="98"/>
+        <location filename="../src/qml/filters/brightness/ui_movit.qml" line="121"/>
         <location filename="../src/qml/filters/glow/ui_movit.qml" line="133"/>
-        <location filename="../src/qml/filters/saturation/ui_movit.qml" line="99"/>
-        <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="137"/>
-        <location filename="../src/qml/filters/vignette/ui_movit.qml" line="128"/>
+        <location filename="../src/qml/filters/saturation/ui_movit.qml" line="100"/>
+        <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="141"/>
+        <location filename="../src/qml/filters/vignette/ui_movit.qml" line="130"/>
         <source>Preset</source>
-        <translation>Sablon</translation>
+        <translation>Előbeállítás</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/glow/ui_movit.qml" line="173"/>
@@ -12120,32 +12707,32 @@ Kattintson a &quot;Megnyitás&quot;-ra és töltsön be egy fájlt.</translation
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="155"/>
+        <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="159"/>
         <source>Circle radius</source>
         <translation>Kör sugár</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="177"/>
+        <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="180"/>
         <source>Gaussian radius</source>
-        <translation>Gaussian sugár</translation>
+        <translation>Gauss-sugár</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="199"/>
+        <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="201"/>
         <source>Correlation</source>
         <translation>Összefüggés</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="220"/>
+        <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="221"/>
         <source>Noise</source>
         <translation>Zaj</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/vignette/ui_movit.qml" line="146"/>
+        <location filename="../src/qml/filters/vignette/ui_movit.qml" line="148"/>
         <source>Outer radius</source>
         <translation>Külső sugár</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/vignette/ui_movit.qml" line="166"/>
+        <location filename="../src/qml/filters/vignette/ui_movit.qml" line="167"/>
         <source>Inner radius</source>
         <translation>Belső sugár</translation>
     </message>
@@ -12153,27 +12740,27 @@ Kattintson a &quot;Megnyitás&quot;-ra és töltsön be egy fájlt.</translation
 <context>
     <name>ui_oldfilm</name>
     <message>
-        <location filename="../src/qml/filters/vignette/ui_oldfilm.qml" line="139"/>
+        <location filename="../src/qml/filters/vignette/ui_oldfilm.qml" line="142"/>
         <source>Preset</source>
-        <translation>Sablon</translation>
+        <translation>Előbeállítás</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/vignette/ui_oldfilm.qml" line="158"/>
+        <location filename="../src/qml/filters/vignette/ui_oldfilm.qml" line="161"/>
         <source>Radius</source>
         <translation>Sugár</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/vignette/ui_oldfilm.qml" line="178"/>
+        <location filename="../src/qml/filters/vignette/ui_oldfilm.qml" line="180"/>
         <source>Feathering</source>
         <translation>Lágy perem</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/vignette/ui_oldfilm.qml" line="200"/>
+        <location filename="../src/qml/filters/vignette/ui_oldfilm.qml" line="201"/>
         <source>Non-linear feathering</source>
         <translation>Nem lineáris lágy perem</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/vignette/ui_oldfilm.qml" line="211"/>
+        <location filename="../src/qml/filters/vignette/ui_oldfilm.qml" line="212"/>
         <source>Opacity</source>
         <translation>Átlátszatlanság</translation>
     </message>
@@ -12181,112 +12768,112 @@ Kattintson a &quot;Megnyitás&quot;-ra és töltsön be egy fájlt.</translation
 <context>
     <name>ui_spectrum</name>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="93"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="97"/>
         <source>Preset</source>
-        <translation>Sablon</translation>
+        <translation>Előbeállítás</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="108"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="112"/>
         <source>Type</source>
         <translation>Típus</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="114"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="118"/>
         <source>Line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="114"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="118"/>
         <source>Bar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="127"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="131"/>
         <source>Spectrum Color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="140"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="144"/>
         <source>Background Color</source>
         <translation>Háttérszín</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="152"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="156"/>
         <source>Thickness</source>
         <translation>Vastagság</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="169"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="173"/>
         <source>Position</source>
         <translation>Pozicíó</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="190"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="204"/>
         <source>Size</source>
         <translation>Méret</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="211"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="235"/>
         <source>Fill</source>
         <translation>Kitöltés</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="217"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="241"/>
         <source>Fill the area under the spectrum.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="222"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="246"/>
         <source>Mirror</source>
         <translation>Tükrözés</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="228"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="252"/>
         <source>Mirror the spectrum.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="233"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="257"/>
         <source>Reverse</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="239"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="263"/>
         <source>Reverse the spectrum.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="244"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="268"/>
         <source>Tension</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="260"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="284"/>
         <source>Bands</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="276"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="300"/>
         <source>Low Frequency</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="278"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="302"/>
         <source>The low end of the frequency range of the spectrum.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="299"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="323"/>
         <source>High Frequency</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="301"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="325"/>
         <source>The high end of the frequency range of the spectrum.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="322"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="346"/>
         <source>Threshold</source>
         <translation>Küszöb</translation>
     </message>
@@ -12301,17 +12888,207 @@ Kattintson a &quot;Megnyitás&quot;-ra és töltsön be egy fájlt.</translation
     <message>
         <location filename="../src/qml/filters/corners/vui.qml" line="292"/>
         <source>2</source>
-        <translation type="unfinished">2</translation>
+        <translation>2</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/corners/vui.qml" line="317"/>
         <source>3</source>
-        <translation type="unfinished">3</translation>
+        <translation>3</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/corners/vui.qml" line="342"/>
         <source>4</source>
-        <translation type="unfinished">4</translation>
+        <translation>4</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="50"/>
+        <source>Click in the rectangle to edit the text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="301"/>
+        <source>Text size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="320"/>
+        <source>Text color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="398"/>
+        <source>Collapse Toolbar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="398"/>
+        <source>Expand Toolbar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="480"/>
+        <source>Save As…</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="242"/>
+        <source>Menu</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="439"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="465"/>
+        <source>Cancel</source>
+        <translation>Mégse</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="447"/>
+        <source>File</source>
+        <translation>Fájl</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="453"/>
+        <source>Edit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="472"/>
+        <source>Open...</source>
+        <translation>Megnyitás...</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="494"/>
+        <source>Undo</source>
+        <translation>Visszavonás</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="499"/>
+        <source>Redo</source>
+        <translation>Újra</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="504"/>
+        <source>Cut</source>
+        <translation>Kivágás</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="509"/>
+        <source>Copy</source>
+        <translation>Másolás</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="514"/>
+        <source>Paste</source>
+        <translation>Beillesztés</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="519"/>
+        <source>Paste Text Only</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="524"/>
+        <source>Delete</source>
+        <translation>Törlés</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="529"/>
+        <source>Clear</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="537"/>
+        <source>Select All</source>
+        <translation>Az összes kijelölése</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="543"/>
+        <source>Left</source>
+        <translation>Balra</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="552"/>
+        <source>Center</source>
+        <translation>Középen</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="561"/>
+        <source>Right</source>
+        <translation>Jobbra</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="570"/>
+        <source>Justify</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="579"/>
+        <source>Bold</source>
+        <translation>Félkövér</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="588"/>
+        <source>Italic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="597"/>
+        <source>Underline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="284"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="606"/>
+        <source>Font</source>
+        <translation>Betűkészlet</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="617"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="668"/>
+        <source>Insert Table</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="622"/>
+        <source>Decrease Indent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="629"/>
+        <source>Insert Indent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="678"/>
+        <source>Rows</source>
+        <translation>Sorok</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="692"/>
+        <source>Columns</source>
+        <translation>Oszlopok</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="705"/>
+        <source>Border</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/gradient/vui.qml" line="36"/>
+        <location filename="../src/qml/filters/lightshow/vui.qml" line="27"/>
+        <location filename="../src/qml/filters/pillar_echo/vui.qml" line="31"/>
+        <location filename="../src/qml/filters/spot_remover/vui.qml" line="31"/>
+        <location filename="../src/qml/filters/waveform/vui.qml" line="27"/>
+        <source>Click in rectangle + hold Shift to drag</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>vui_spectrum</name>
+    <message>
+        <location filename="../src/qml/filters/spectrum/vui_spectrum.qml" line="27"/>
+        <source>Click in rectangle + hold Shift to drag</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

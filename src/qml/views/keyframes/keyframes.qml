@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2020 Meltytech, LLC
+ * Copyright (c) 2017-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,12 +15,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.5
-import QtQml.Models 2.1
-import QtQuick.Controls 1.3
-import Shotcut.Controls 1.0
-import QtGraphicalEffects 1.0
-import QtQuick.Window 2.2
+import QtQuick 2.12
+import QtQml.Models 2.12
+import QtQuick.Controls 2.12
+import Shotcut.Controls 1.0 as Shotcut
+import QtGraphicalEffects 1.12
 import 'Keyframes.js' as Logic
 
 Rectangle {
@@ -32,11 +31,12 @@ Rectangle {
     property int selectedIndex: -1
     property int headerWidth: 140
     property int currentTrack: 0
-    property color selectedTrackColor: Qt.rgba(0.8, 0.8, 0, 0.3);
+    property color selectedTrackColor: Qt.rgba(0.8, 0.8, 0, 0.3)
     property bool stopScrolling: false
     property color shotcutBlue: Qt.rgba(23/255, 92/255, 118/255, 1.0)
     property double timeScale: 1.0
     property var selection: []
+    property alias paramRepeater: parametersRepeater
 
     signal keyframeClicked()
 
@@ -51,17 +51,27 @@ Rectangle {
 
     function setZoom(value, targetX) {
         if (!targetX)
-            targetX = scrollView.flickableItem.contentX + scrollView.width / 2
-        var offset = targetX - scrollView.flickableItem.contentX
+            targetX = tracksFlickable.contentX + tracksFlickable.width / 2
+        var offset = targetX - tracksFlickable.contentX
         var before = timeScale
 
         keyframesToolbar.scaleSlider.value = value
 
-        scrollView.flickableItem.contentX = Logic.clamp((targetX * timeScale / before) - offset, 0, Logic.scrollMax().x)
+        tracksFlickable.contentX = Logic.clamp((targetX * timeScale / before) - offset, 0, Logic.scrollMax().x)
+    }
+
+    Timer {
+        id: scrollZoomTimer
+        interval: 100
+        onTriggered: {
+            Logic.scrollIfNeeded(true)
+        }
     }
 
     function adjustZoom(by, targetX) {
         setZoom(keyframesToolbar.scaleSlider.value + by, targetX)
+        if (settings.timelineScrollZoom)
+            scrollZoomTimer.restart()
     }
 
     function zoomIn() {
@@ -70,6 +80,11 @@ Rectangle {
 
     function zoomOut() {
         adjustZoom(-0.0625)
+    }
+
+    function zoomToFit() {
+        setZoom(Math.pow((tracksFlickable.width - 50) * timeScale / tracksContainer.width - 0.01, 1/3))
+        tracksFlickable.contentX = 0
     }
 
     function resetZoom() {
@@ -90,7 +105,8 @@ Rectangle {
     }
 
     Row {
-        anchors.top: keyframesToolbar.bottom
+        anchors.fill: parent
+        anchors.topMargin: keyframesToolbar.height
         Column {
             z: 1
 
@@ -103,7 +119,7 @@ Rectangle {
             }
             Flickable {
                 // Non-slider scroll area for the track headers.
-                contentY: scrollView.flickableItem.contentY
+                contentY: tracksFlickable.contentY
                 width: headerWidth
                 height: trackHeaders.height
                 interactive: false
@@ -117,7 +133,6 @@ Rectangle {
                         trackName: metadata !== null? metadata.name : ''
                         width: headerWidth
                         height: Logic.trackHeight(true)
-                        selected: false
 //                        onIsLockedChanged: parametersRepeater.itemAt(index).isLocked = isLocked
                     }
                     Repeater {
@@ -130,12 +145,9 @@ Rectangle {
 //                            isLocked: model.locked
                             width: headerWidth
                             height: Logic.trackHeight(isCurve)
-                            current: false // index === currentTrack
+                            current: index === currentTrack
 //                            onIsLockedChanged: parametersRepeater.itemAt(index).isLocked = isLocked
-                            onClicked: {
-                                currentTrack = index
-//                                timeline.selectTrackHead(currentTrack)
-                            }
+                            onClicked: currentTrack = index
                         }
                     }
                 }
@@ -158,7 +170,10 @@ Rectangle {
             // This provides continuous scrubbing and scimming at the left/right edges.
             focus: true
             hoverEnabled: true
-            onClicked: producer.position = (scrollView.flickableItem.contentX + mouse.x) / timeScale
+            onClicked: {
+                producer.position = (tracksFlickable.contentX + mouse.x) / timeScale
+                bubbleHelp.hide()
+            }
             onWheel: Logic.onMouseWheel(wheel)
             onDoubleClicked: {
                 // Figure out which parameter row that is in.
@@ -198,7 +213,8 @@ Rectangle {
             onExited: scim = false
             onPositionChanged: {
                 if (mouse.modifiers === (Qt.ShiftModifier | Qt.AltModifier) || mouse.buttons === Qt.LeftButton) {
-                    producer.position = (scrollView.flickableItem.contentX + mouse.x) / timeScale
+                    producer.position = (tracksFlickable.contentX + mouse.x) / timeScale
+                    bubbleHelp.hide()
                     scim = true
                 }
                 else
@@ -219,32 +235,58 @@ Rectangle {
                 }
             }
 
-            Column {
+            Item {
                 Flickable {
                     // Non-slider scroll area for the Ruler.
                     id: rulerFlickable
-                    contentX: scrollView.flickableItem.contentX
+                    contentX: tracksFlickable.contentX
                     width: root.width - headerWidth
                     height: ruler.height
                     interactive: false
                     // workaround to fix https://github.com/mltframework/shotcut/issues/777
-                    onContentXChanged: if (contentX === 0) contentX = scrollView.flickableItem.contentX
+                    onContentXChanged: if (contentX === 0) contentX = tracksFlickable.contentX
 
                     Ruler {
                         id: ruler
                         width: producer.duration * timeScale
                     }
                 }
-                ScrollView {
-                    id: scrollView
-                    width: root.width - headerWidth
-                    height: root.height - ruler.height - keyframesToolbar.height
+                Flickable {
+                    id: tracksFlickable
+                    y: ruler.height
+                    width: root.width - headerWidth - 16
+                    height: root.height - keyframesToolbar.height - ruler.height - 16
+                    clip: true
                     // workaround to fix https://github.com/mltframework/shotcut/issues/777
-                    flickableItem.onContentXChanged: rulerFlickable.contentX = flickableItem.contentX
+                    onContentXChanged: rulerFlickable.contentX = contentX
+                    interactive: false
+                    contentWidth: tracksContainer.width + headerWidth
+                    contentHeight: trackHeaders.height + 30 // 30 is padding
+                    ScrollBar.horizontal: ScrollBar {
+                        id: horizontalScrollBar
+                        height: 16
+                        policy: ScrollBar.AlwaysOn
+                        visible: tracksFlickable.contentWidth > tracksFlickable.width
+                        parent: tracksFlickable.parent
+                        anchors.top: tracksFlickable.bottom
+                        anchors.left: tracksFlickable.left
+                        anchors.right: tracksFlickable.right
+                        background: Rectangle { color: parent.palette.alternateBase }
+                    }
+                    ScrollBar.vertical: ScrollBar {
+                        width: 16
+                        policy: ScrollBar.AlwaysOn
+                        visible: tracksFlickable.contentHeight > tracksFlickable.height
+                        parent: tracksFlickable.parent
+                        anchors.top: tracksFlickable.top
+                        anchors.left: tracksFlickable.right
+                        anchors.bottom: tracksFlickable.bottom
+                        anchors.bottomMargin: -16
+                        background: Rectangle { color: parent.palette.alternateBase }
+                    }
 
                     MouseArea {
-                        width: tracksContainer.width + headerWidth
-                        height: trackHeaders.height + 30 // 30 is padding
+                        anchors.fill: parent
                         acceptedButtons: Qt.NoButton
                         onWheel: Logic.onMouseWheel(wheel)
 
@@ -261,7 +303,7 @@ Rectangle {
                                 model: parameters
                                 Rectangle {
                                     width: tracksContainer.width
-                                    color: (false /*index === currentTrack*/)? selectedTrackColor : (index % 2)? activePalette.alternateBase : activePalette.base
+                                    color: (index === currentTrack)? selectedTrackColor : (index % 2)? activePalette.alternateBase : activePalette.base
                                     height: Logic.trackHeight(model.isCurve)
                                 }
                             }
@@ -306,7 +348,7 @@ Rectangle {
                                         onTrimmingIn: {
                                             var n = filter.in + delta
                                             if (delta != 0 && n >= producer.in && n <= filter.out) {
-                                                filter.in = n
+                                                parameters.trimFilterIn(n)
                                                 // Show amount trimmed as a time in a "bubble" help.
                                                 var s = application.timecode(Math.abs(clip.originalX))
                                                 s = '%1%2 = %3'.arg((clip.originalX < 0)? '-' : (clip.originalX > 0)? '+' : '')
@@ -319,7 +361,7 @@ Rectangle {
                                         onTrimmingOut: {
                                             var n = filter.out - delta
                                             if (delta != 0 && n >= filter.in && n <= producer.out) {
-                                                filter.out = n
+                                                parameters.trimFilterOut(n)
                                                 // Show amount trimmed as a time in a "bubble" help.
                                                 var s = application.timecode(Math.abs(clip.originalX))
                                                 s = '%1%2 = %3'.arg((clip.originalX < 0)? '+' : (clip.originalX > 0)? '-' : '')
@@ -358,17 +400,17 @@ Rectangle {
                 visible: producer.position > -1 && metadata !== null
                 color: activePalette.text
                 width: 1
-                height: root.height - scrollView.__horizontalScrollBar.height - keyframesToolbar.height
-                x: producer.position * timeScale - scrollView.flickableItem.contentX
+                height: root.height - keyframesToolbar.height - horizontalScrollBar.height
+                x: producer.position * timeScale - tracksFlickable.contentX
                 y: 0
             }
-            TimelinePlayhead {
+            Shotcut.TimelinePlayhead {
                 id: playhead
                 visible: producer.position > -1 && metadata !== null
-                x: producer.position * timeScale - scrollView.flickableItem.contentX - 5
+                x: producer.position * timeScale - tracksFlickable.contentX - width/2
                 y: 0
-                width: 11
-                height: 5
+                width: 16
+                height: 8
             }
         }
     }
@@ -403,8 +445,8 @@ Rectangle {
             anchors.centerIn: parent
         }
         function show(x, y, text) {
-            bubbleHelp.x = x + tracksArea.x - scrollView.flickableItem.contentX - bubbleHelpLabel.width
-            bubbleHelp.y = Math.max(keyframesToolbar.height, y + tracksArea.y - scrollView.flickableItem.contentY - bubbleHelpLabel.height)
+            bubbleHelp.x = x + tracksArea.x - tracksFlickable.contentX - bubbleHelpLabel.width
+            bubbleHelp.y = Math.max(keyframesToolbar.height, y + tracksArea.y - tracksFlickable.contentY - bubbleHelpLabel.height)
             bubbleHelp.text = text
             if (bubbleHelp.state !== 'visible')
                 bubbleHelp.state = 'visible'
@@ -428,47 +470,63 @@ Rectangle {
 
     Menu {
         id: menu
-        MenuItem {
-            text: qsTr('Show Audio Waveforms')
-            checkable: true
-            checked: settings.timelineShowWaveforms
-            onTriggered: {
-                if (checked) {
-                    if (settings.timelineShowWaveforms) {
-                        settings.timelineShowWaveforms = checked
-                        redrawWaveforms()
+        Menu {
+            title: qsTr('Options')
+            width: 310
+            MenuItem {
+                text: qsTr('Show Audio Waveforms')
+                checkable: true
+                checked: settings.timelineShowWaveforms
+                onTriggered: {
+                    if (checked) {
+                        if (settings.timelineShowWaveforms) {
+                            settings.timelineShowWaveforms = checked
+                            redrawWaveforms()
+                        } else {
+                            settings.timelineShowWaveforms = checked
+                            producer.remakeAudioLevels()
+                        }
                     } else {
                         settings.timelineShowWaveforms = checked
-                        producer.remakeAudioLevels()
                     }
-                } else {
-                    settings.timelineShowWaveforms = checked
                 }
             }
+            MenuItem {
+                text: qsTr('Use Higher Performance Waveforms')
+                checkable: true
+                checked: settings.timelineFramebufferWaveform
+                onTriggered: {
+                    settings.timelineFramebufferWaveform = checked
+                    if (settings.timelineShowWaveforms)
+                        multitrack.reload()
+                }
+            }
+            MenuItem {
+                text: qsTr('Show Video Thumbnails')
+                checkable: true
+                checked: settings.timelineShowThumbnails
+                onTriggered: settings.timelineShowThumbnails = checked
+            }
+            MenuItem {
+                text: qsTr('Center the Playhead') + (application.OS === 'OS X'? '    ⇧⌘P' : ' (Ctrl+Shift+P)')
+                checkable: true
+                checked: settings.timelineCenterPlayhead
+                onTriggered: settings.timelineCenterPlayhead = checked
+            }
+            MenuItem {
+                text: qsTr('Scroll to Playhead on Zoom') + (application.OS === 'OS X'? '    ⌥⌘P' : ' (Ctrl+Alt+P)')
+                checkable: true
+                checked: settings.timelineScrollZoom
+                onTriggered: settings.timelineScrollZoom = checked
+            }
         }
         MenuItem {
-            text: qsTr('Show Video Thumbnails')
-            checkable: true
-            checked: settings.timelineShowThumbnails
-            onTriggered: settings.timelineShowThumbnails = checked
-        }
-        MenuItem {
-            text: qsTr('Center the Playhead')
-            checkable: true
-            checked: settings.timelineCenterPlayhead
-            onTriggered: settings.timelineCenterPlayhead = checked
-        }
-        MenuSeparator {}
-        MenuItem {
-            text: qsTr('Reload')
+            text: qsTr('Reload') + (application.OS === 'OS X'? '    F5' : ' (F5)')
             onTriggered: parameters.reload()
         }
-        onPopupVisibleChanged: {
-            if (visible && application.OS === 'Windows' && __popupGeometry.height > 0) {
-                // Try to fix menu running off screen. This only works intermittently.
-                menu.__yOffset = Math.min(0, Screen.height - (__popupGeometry.y + __popupGeometry.height + 40))
-                menu.__xOffset = Math.min(0, Screen.width - (__popupGeometry.x + __popupGeometry.width))
-            }
+        MenuItem {
+            text: qsTr('Cancel')
+            onTriggered: menu.dismiss()
         }
     }
 
@@ -479,8 +537,9 @@ Rectangle {
             rootIndex: parameterDelegateModel.modelIndex(index)
             width: producer.duration * timeScale
             isCurve: model.isCurve
-            minimum: model.minimum
-            maximum: model.maximum
+            property bool zoomHeight: false
+            minimum: zoomHeight ? model.lowest : model.minimum
+            maximum: zoomHeight ? model.highest : model.maximum
             height: Logic.trackHeight(model.isCurve)
             onClicked: {
                 currentTrack = parameter.DelegateModel.itemsIndex
@@ -512,6 +571,7 @@ Rectangle {
         target: keyframes
         onZoomIn: zoomIn()
         onZoomOut: zoomOut()
+        onZoomToFit: zoomToFit()
         onResetZoom: resetZoom()
         onSeekPreviousSimple: Logic.seekPreviousSimple()
         onSeekNextSimple: Logic.seekNextSimple()
@@ -528,8 +588,8 @@ Rectangle {
         onTriggered: {
             var delta = backwards? -10 : 10
             if (item) item.x += delta
-            scrollView.flickableItem.contentX += delta
-            if (scrollView.flickableItem.contentX <= 0)
+            tracksFlickable.contentX += delta
+            if (tracksFlickable.contentX <= 0)
                 stop()
         }
     }

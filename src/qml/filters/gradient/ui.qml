@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Meltytech, LLC
+ * Copyright (c) 2019-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,10 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.0
-import QtQuick.Controls 1.1
-import QtQuick.Layouts 1.1
-import Shotcut.Controls 1.0
+import QtQuick 2.12
+import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.12
+import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     property string rectProperty: 'shotcut:rect'
@@ -177,10 +177,10 @@ Item {
         var newValue = filter.getRect(rectProperty, position)
         if (filterRect !== newValue) {
             filterRect = newValue
-            rectX.text = filterRect.x.toFixed()
-            rectY.text = filterRect.y.toFixed()
-            rectW.text = filterRect.width.toFixed()
-            rectH.text = filterRect.height.toFixed()
+            rectX.value = filterRect.x.toFixed()
+            rectY.value = filterRect.y.toFixed()
+            rectW.value = filterRect.width.toFixed()
+            rectH.value = filterRect.height.toFixed()
         }
         var enabled = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1)
         rectX.enabled = enabled
@@ -189,7 +189,7 @@ Item {
         rectH.enabled = enabled
     }
 
-    ExclusiveGroup { id: patternGroup }
+    ButtonGroup { id: patternGroup }
 
     GridLayout {
         columns: 3
@@ -200,7 +200,7 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: preset
             parameters: [patternProperty, rectProperty, startColorProperty, startOpacityProperty, endColorProperty, endOpacityProperty, blendProperty]
             Layout.columnSpan: 2
@@ -228,7 +228,7 @@ Item {
             RadioButton {
                 id: linearRadioButton
                 text: qsTr('Linear')
-                exclusiveGroup: patternGroup
+                ButtonGroup.group: patternGroup
                 onClicked: {
                     filter.set(patternProperty, 'gradient_linear')
                     setFilter(null)
@@ -237,14 +237,14 @@ Item {
             RadioButton {
                 id: radialRadioButton
                 text: qsTr('Radial')
-                exclusiveGroup: patternGroup
+                ButtonGroup.group: patternGroup
                 onClicked: {
                     filter.set(patternProperty, 'gradient_radial')
                     setFilter(null)
                 }
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: {
                 linearRadioButton.checked = true
                 filter.set(patternProperty, 'gradient_linear')
@@ -255,7 +255,7 @@ Item {
             text: qsTr('Offset')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: offsetSlider
             minimumValue: 0
             maximumValue: 99.9
@@ -263,7 +263,7 @@ Item {
             suffix: ' %'
             onValueChanged: filter.set(offsetProperty, value / 100)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: offsetSlider.value = 0
         }
 
@@ -271,7 +271,7 @@ Item {
             text: qsTr('Colors')
             Layout.alignment: Qt.AlignRight
         }
-        GradientControl {
+        Shotcut.GradientControl {
             id: gradient
             spinnerVisible: false
             function cssColor(color) {
@@ -292,7 +292,7 @@ Item {
                  }
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: {
                 gradient.colors = ['#ff000000', '#ffffffff']
                 gradient.gradientChanged()
@@ -306,28 +306,38 @@ Item {
             font.italic: true
         }
         RowLayout {
-            TextField {
+            Shotcut.DoubleSpinBox {
                 id: rectX
+                Layout.minimumWidth: 100
                 horizontalAlignment: Qt.AlignRight
-                onEditingFinished: if (filterRect.x !== parseFloat(text)) {
-                    filterRect.x = parseFloat(text)
+                decimals: 0
+                stepSize: 1
+                from: -999999999
+                to: 999999999
+                onValueModified: if (filterRect.x !== value) {
+                    filterRect.x = value
                     setFilter(getPosition())
                 }
             }
-            Label { text: ',' }
-            TextField {
+            Label { text: ','; Layout.minimumWidth: 20; horizontalAlignment: Qt.AlignHCente }
+            Shotcut.DoubleSpinBox {
                 id: rectY
+                Layout.minimumWidth: 100
                 horizontalAlignment: Qt.AlignRight
-                onEditingFinished: if (filterRect.y !== parseFloat(text)) {
-                    filterRect.y = parseFloat(text)
+                decimals: 0
+                stepSize: 1
+                from: -999999999
+                to: 999999999
+                onValueModified: if (filterRect.y !== value) {
+                    filterRect.y = value
                     setFilter(getPosition())
                 }
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: {
-                rectX.text = rectY.text = 0
-                filterRect.x = filterRect.y = 0
+                filterRect.x = rectX.value = profile.width / 2
+                filterRect.y = rectY.value = 0
                 setFilter(getPosition())
             }
         }
@@ -339,36 +349,44 @@ Item {
             font.italic: true
         }
         RowLayout {
-            TextField {
+            Shotcut.DoubleSpinBox {
                 id: rectW
+                Layout.minimumWidth: 100
                 horizontalAlignment: Qt.AlignRight
-                onEditingFinished: if (filterRect.width !== parseFloat(text)) {
-                    filterRect.width = parseFloat(text)
+                decimals: 0
+                stepSize: 1
+                from: -999999999
+                to: 999999999
+                onValueModified: if (filterRect.width !== value) {
+                    filterRect.width = value
                     setFilter(getPosition())
                 }
             }
-            Label { text: 'x' }
-            TextField {
+            Label { text: 'x'; Layout.minimumWidth: 20; horizontalAlignment: Qt.AlignHCente }
+            Shotcut.DoubleSpinBox {
                 id: rectH
+                Layout.minimumWidth: 100
                 horizontalAlignment: Qt.AlignRight
-                onEditingFinished: if (filterRect.height !== parseFloat(text)) {
-                    filterRect.height = parseFloat(text)
+                decimals: 0
+                stepSize: 1
+                from: -999999999
+                to: 999999999
+                onValueModified: if (filterRect.height !== value) {
+                    filterRect.height = value
                     setFilter(getPosition())
                 }
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: {
-                rectW.text = profile.width
-                rectH.text = profile.height
-                filterRect.width = profile.width
-                filterRect.height = profile.height
+                filterRect.width = rectW.value = profile.width * 0.01
+                filterRect.height = rectH.value = profile.height
                 setFilter(getPosition())
             }
         }
 
         Label { text: qsTr('Blend mode') }
-        ComboBox {
+        Shotcut.ComboBox {
             id: blendCombo
             model: ListModel {
                 id: comboItems
@@ -391,12 +409,16 @@ Item {
                 ListElement { text: qsTr('HSL Color'); value: 'hslcolor' }
                 ListElement { text: qsTr('HSL Luminosity'); value: 'hslluminocity' }
             }
-            onCurrentIndexChanged: {
+            textRole: 'text'
+            onActivated: {
                 filter.set(blendProperty, comboItems.get(currentIndex).value)
             }
         }
-        UndoButton {
-            onClicked: blendCombo.currentIndex = 0
+        Shotcut.UndoButton {
+            onClicked: {
+                filter.set(blendProperty, comboItems.get(0).value)
+                blendCombo.currentIndex = 0
+            }
         }
 
         Item { Layout.fillHeight: true }

@@ -24,6 +24,7 @@
 #include <QAction>
 #include <QDialog>
 #include <QDir>
+#include <QTimer>
 #include <Logger.h>
 #include "mainwindow.h"
 #include "dialogs/textviewerdialog.h"
@@ -84,11 +85,20 @@ MeltJob::~MeltJob()
 
 void MeltJob::start()
 {
+    if (m_args.isEmpty() && !m_xml) {
+        AbstractJob::start();
+        LOG_ERROR() << "the job XML is empty!";
+        appendToLog("Error: the job XML is empty!\n");
+        QTimer::singleShot(0, [=]() {
+            emit finished(this, false);
+        });
+        return;
+    }
     QString shotcutPath = qApp->applicationDirPath();
-#ifdef Q_OS_WIN
-    QFileInfo meltPath(shotcutPath, "qmelt.exe");
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
+    QFileInfo meltPath(shotcutPath, "melt-7");
 #else
-    QFileInfo meltPath(shotcutPath, "qmelt");
+    QFileInfo meltPath(shotcutPath, "melt");
 #endif
     setReadChannel(QProcess::StandardError);
     QStringList args;
@@ -98,11 +108,19 @@ void MeltJob::start()
     if (m_args.size() > 0) {
         args.append(m_args);
     } else if (m_useMultiConsumer) {
-        args << xmlPath() + "?multi:1";
+        args << "xml:" + QUrl::toPercentEncoding(xmlPath()) + "?multi:1";
     } else {
-        args << xmlPath();
+        args << "xml:" + QUrl::toPercentEncoding(xmlPath());
     }
-    LOG_DEBUG() << meltPath.absoluteFilePath() << args;
+    LOG_DEBUG() << meltPath.absoluteFilePath()  + " " + args.join(' ');
+#ifndef Q_OS_MAC
+    QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
+    // These environment variables fix rich text rendering for high DPI
+    // fractional or otherwise.
+    env.insert("QT_AUTO_SCREEN_SCALE_FACTOR", "1");
+    env.insert("QT_SCALE_FACTOR_ROUNDING_POLICY", "PassThrough");
+    setProcessEnvironment(env);
+#endif
 #ifdef Q_OS_WIN
     if (m_isStreaming) args << "-getc";
     QProcess::start(meltPath.absoluteFilePath(), args);

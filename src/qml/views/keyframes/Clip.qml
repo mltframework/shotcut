@@ -15,12 +15,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.2
-import QtQuick.Controls 1.0
-import Shotcut.Controls 1.0
-import QtGraphicalEffects 1.0
-import QtQml.Models 2.2
-import QtQuick.Window 2.2
+import QtQuick 2.12
+import QtQuick.Controls 2.12
+import Shotcut.Controls 1.0 as Shotcut
 
 Rectangle {
     id: clipRoot
@@ -91,7 +88,8 @@ Rectangle {
 
     Image {
         id: outThumbnail
-        visible: settings.timelineShowThumbnails && outThumbnailVisible && metadata !== null && parent.height > 20
+        visible: settings.timelineShowThumbnails && outThumbnailVisible && metadata !== null &&
+                 parent.height > 20 && x > inThumbnail.width
         anchors.right: parent.right
         anchors.top: parent.top
         anchors.topMargin: parent.border.width
@@ -124,12 +122,13 @@ Rectangle {
         anchors.bottom: parent.bottom
         anchors.margins: parent.border.width
         opacity: 0.7
-        property int maxWidth: 10000
+        property int maxWidth: Math.max(application.maxTextureSize / 2, 2048)
         property int innerWidth: clipRoot.width - clipRoot.border.width * 2
 
         Repeater {
             id: waveformRepeater
-            TimelineWaveform {
+            model: Math.ceil(waveform.innerWidth / waveform.maxWidth)
+            Shotcut.TimelineWaveform {
                 width: Math.min(waveform.innerWidth, waveform.maxWidth)
                 height: waveform.height
                 fillColor: getColor()
@@ -137,6 +136,10 @@ Rectangle {
                 inPoint: Math.round((clipRoot.inPoint + index * waveform.maxWidth / timeScale) * speed) * channels
                 outPoint: inPoint + Math.round(width / timeScale * speed) * channels
                 levels: audioLevels
+                active: ((clipRoot.x + x + width)   > tracksFlickable.contentX) && // right edge
+                        ((clipRoot.x + x)           < tracksFlickable.contentX + tracksFlickable.width) && // left edge
+                        ((trackRoot.y + y + height) > tracksFlickable.contentY) && // bottom edge
+                        ((trackRoot.y + y)          < tracksFlickable.contentY + tracksFlickable.height) // top edge
             }
         }
     }
@@ -228,7 +231,7 @@ Rectangle {
         onClicked: menu.popup()
     }
 
-    TimelineTriangle {
+    Shotcut.TimelineTriangle {
         id: animateInTriangle
         visible: !isBlank
         width: parent.animateIn * timeScale
@@ -308,7 +311,7 @@ Rectangle {
         }
     }
 
-    TimelineTriangle {
+    Shotcut.TimelineTriangle {
         id: animateOutTriangle
         visible: !isBlank
         width: parent.animateOut * timeScale
@@ -488,13 +491,6 @@ Rectangle {
             visible: !isBlank && settings.timelineShowWaveforms
             text: qsTr('Rebuild Audio Waveform')
             onTriggered: producer.remakeAudioLevels()
-        }
-        onPopupVisibleChanged: {
-            if (visible && application.OS !== 'OS X' && __popupGeometry.height > 0) {
-                // Try to fix menu running off screen. This only works intermittently.
-                menu.__yOffset = Math.min(0, Screen.height - (__popupGeometry.y + __popupGeometry.height + 40))
-                menu.__xOffset = Math.min(0, Screen.width - (__popupGeometry.x + __popupGeometry.width))
-            }
         }
     }
 }

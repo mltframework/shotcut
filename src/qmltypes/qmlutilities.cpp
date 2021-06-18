@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2019 Meltytech, LLC
+ * Copyright (c) 2013-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,10 +23,9 @@
 #include "qmltypes/qmlview.h"
 #include "qmltypes/qmlfile.h"
 #include "qmltypes/qmlfilter.h"
-#include "qmltypes/qmlhtmleditor.h"
 #include "qmltypes/qmlmetadata.h"
+#include "qmltypes/qmlrichtext.h"
 #include "qmltypes/timelineitems.h"
-#include "qmltypes/webvfxtemplatesmodel.h"
 #include "settings.h"
 #include "models/metadatamodel.h"
 #include "models/keyframesmodel.h"
@@ -46,10 +45,10 @@ void QmlUtilities::registerCommonTypes()
 {
     qmlRegisterType<QmlFile>("org.shotcut.qml", 1, 0, "File");
     qmlRegisterType<QmlFilter>("org.shotcut.qml", 1, 0, "Filter");
-    qmlRegisterType<QmlHtmlEditor>("org.shotcut.qml", 1, 0, "HtmlEditor");
     qmlRegisterType<QmlMetadata>("org.shotcut.qml", 1, 0, "Metadata");
     qmlRegisterType<QmlKeyframesMetadata>();
     qmlRegisterType<QmlKeyframesParameter>("org.shotcut.qml", 1,0, "Parameter");
+    qmlRegisterType<QmlRichText>("org.shotcut.qml", 1, 0, "RichText");
     qmlRegisterType<KeyframesModel>("org.shotcut.qml", 1,0, "KeyframesModel");
     qmlRegisterType<QmlUtilities>("org.shotcut.qml", 1, 0, "Utilities");
     // MetadataModel is registered to access its MetadataFilter enum.
@@ -57,7 +56,6 @@ void QmlUtilities::registerCommonTypes()
                                               "You cannot create a MetadataModel from QML.");
     qmlRegisterType<ColorPickerItem>("Shotcut.Controls", 1, 0, "ColorPickerItem");
     qmlRegisterType<ColorWheelItem>("Shotcut.Controls", 1, 0, "ColorWheelItem");
-    qmlRegisterType<WebvfxTemplatesModel>("org.shotcut.qml", 1, 0, "WebvfxTemplatesModel");
     registerTimelineItems();
 }
 

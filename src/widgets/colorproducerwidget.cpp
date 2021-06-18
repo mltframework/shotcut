@@ -22,14 +22,15 @@
 #include "shotcut_mlt_properties.h"
 #include "util.h"
 #include "mltcontroller.h"
+#include "qmltypes/qmlapplication.h"
 #include "Logger.h"
 
 static const QString kTransparent = QObject::tr("transparent", "Open Other > Color");
 
 static QString colorToString(const QColor& color)
 {
-    return (color.alpha() == 0) ? kTransparent
-                                : QString().sprintf("#%02X%02X%02X%02X",
+    return (color == QColor(0, 0, 0, 0)) ? kTransparent
+                                : QString::asprintf("#%02X%02X%02X%02X",
                                                     qAlpha(color.rgba()),
                                                     qRed(color.rgba()),
                                                     qGreen(color.rgba()),
@@ -50,6 +51,11 @@ ColorProducerWidget::ColorProducerWidget(QWidget *parent) :
     ui->colorLabel->setText(kTransparent);
     Util::setColorsToHighlight(ui->lineEdit, QPalette::Base);
     ui->preset->saveDefaultPreset(getPreset());
+    Mlt::Properties p;
+    p.set("resource", "#FF000000");
+    ui->preset->savePreset(p, tr("black"));
+    p.set("resource", "#00000000");
+    ui->preset->savePreset(p, tr("transparent"));
     ui->preset->loadPresets();
 }
 
@@ -60,13 +66,26 @@ ColorProducerWidget::~ColorProducerWidget()
 
 void ColorProducerWidget::on_colorButton_clicked()
 {
-    QColorDialog dialog;
+    QColor color = colorStringToResource(ui->colorLabel->text());
+    if (m_producer) {
+        color = QColor(QFileInfo(m_producer->get("resource")).baseName());
+    }
+    QColorDialog dialog(color);
     dialog.setOption(QColorDialog::ShowAlphaChannel);
+    dialog.setModal(QmlApplication::dialogModality());
     if (dialog.exec() == QDialog::Accepted) {
-        ui->colorLabel->setText(colorToString(dialog.currentColor()));
+        auto newColor = dialog.currentColor();
+        auto rgb = newColor;
+        auto transparent = QColor(0, 0, 0, 0);
+        rgb.setAlpha(color.alpha());
+        if (newColor.alpha() == 0 && (rgb != color ||
+            (newColor == transparent && color == transparent))) {
+            newColor.setAlpha(255);
+        }
+        ui->colorLabel->setText(colorToString(newColor));
         ui->colorLabel->setStyleSheet(QString("color: %1; background-color: %2")
-                                      .arg((dialog.currentColor().value() < 150)? "white":"black")
-                                      .arg(dialog.currentColor().name()));
+                                      .arg((newColor.value() < 150)? "white":"black")
+                                      .arg(newColor.name()));
         if (m_producer) {
             m_producer->set("resource", colorStringToResource(ui->colorLabel->text()).toLatin1().constData());
             m_producer->set(kShotcutCaptionProperty, ui->colorLabel->text().toLatin1().constData());
@@ -80,7 +99,7 @@ Mlt::Producer* ColorProducerWidget::newProducer(Mlt::Profile& profile)
 {
     Mlt::Producer* p = new Mlt::Producer(profile, "color:");
     p->set("resource", colorStringToResource(ui->colorLabel->text()).toLatin1().constData());
-    p->set("mlt_image_format", "rgb24a");
+    p->set("mlt_image_format", "rgba");
     MLT.setDurationFromDefault(p);
     if (ui->lineEdit->text().isEmpty() || ui->lineEdit->text() == m_title) {
         p->set(kShotcutCaptionProperty, ui->colorLabel->text().toLatin1().constData());
@@ -124,6 +143,12 @@ void ColorProducerWidget::loadPreset(Mlt::Properties& p)
         caption = m_title;
     }
     ui->lineEdit->setText(caption);
+}
+
+void ColorProducerWidget::rename()
+{
+    ui->lineEdit->setFocus();
+    ui->lineEdit->selectAll();
 }
 
 void ColorProducerWidget::on_preset_selected(void* p)

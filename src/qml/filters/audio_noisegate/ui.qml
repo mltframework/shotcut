@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Meltytech, LLC
+ * Copyright (c) 2019-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,12 +15,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.0
-import QtQuick.Controls 1.1
-import QtQuick.Layouts 1.1
-import Shotcut.Controls 1.0
+import QtQuick 2.12
+import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.12
+import Shotcut.Controls 1.0 as Shotcut
 
-KeyframableFilter {
+Shotcut.KeyframableFilter {
 
     property string lfkey: '0'
     property string hfkey: '1'
@@ -71,6 +71,13 @@ KeyframableFilter {
         holdSlider.value = filter.getDouble(hold, position)
         decaySlider.value = filter.getDouble(decay, position)
         rangeSlider.value = filter.getDouble(range, position)
+        lfkeyKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(lfkey) > 0
+        hfkeyKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(hfkey) > 0
+        thresholdKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(threshold) > 0
+        attackKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(attack) > 0
+        holdKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(hold) > 0
+        decayKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(decay) > 0
+        rangeKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(range) > 0
         blockUpdate = false
         enableControls(isSimpleKeyframesActive())
     }
@@ -99,7 +106,7 @@ KeyframableFilter {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: preset
             parameters: [lfkey, hfkey, threshold, attack, hold, decay, range]
             Layout.columnSpan: 3
@@ -116,7 +123,7 @@ KeyframableFilter {
             text: qsTr('Key Filter: Low Frequency')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: lfkeySlider
             minimumValue: 33.6
             maximumValue: 4800
@@ -125,12 +132,11 @@ KeyframableFilter {
             suffix: ' Hz'
             onValueChanged: updateFilter(lfkey, value, lfkeyKeyframesButton, getPosition())
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: lfkeySlider.value = lfkeyDefault
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: lfkeyKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(lfkey) > 0
             onToggled: {
                 enableControls(true)
                 toggleKeyframes(checked, lfkey, lfkeySlider.value)
@@ -141,7 +147,7 @@ KeyframableFilter {
             text: qsTr('Key Filter: High Frequency')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: hfkeySlider
             minimumValue: 240
             maximumValue: 23520
@@ -150,12 +156,11 @@ KeyframableFilter {
             suffix: ' Hz'
             onValueChanged: updateFilter(hfkey, value, hfkeyKeyframesButton, getPosition())
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: hfkeySlider.value = hfkeyDefault
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: hfkeyKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(hfkey) > 0
             onToggled: {
                 enableControls(true)
                 toggleKeyframes(checked, hfkey, hfkeySlider.value)
@@ -174,7 +179,7 @@ KeyframableFilter {
             text: qsTr('Threshold')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: thresholdSlider
             minimumValue: -70
             maximumValue: 20
@@ -183,12 +188,11 @@ KeyframableFilter {
             suffix: ' dB'
             onValueChanged: updateFilter(threshold, value, thresholdKeyframesButton, getPosition())
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: thresholdSlider.value = thresholdDefault
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: thresholdKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(threshold) > 0
             onToggled: {
                 enableControls(true)
                 toggleKeyframes(checked, threshold, thresholdSlider.value)
@@ -199,7 +203,7 @@ KeyframableFilter {
             text: qsTr('Attack')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: attackSlider
             minimumValue: 0.01
             maximumValue: 1000
@@ -207,12 +211,11 @@ KeyframableFilter {
             suffix: ' ms'
             onValueChanged: updateFilter(attack, value, attackKeyframesButton, getPosition())
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: attackSlider.value = attackDefault
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: attackKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(attack) > 0
             onToggled: {
                 enableControls(true)
                 toggleKeyframes(checked, attack, attackSlider.value)
@@ -223,7 +226,7 @@ KeyframableFilter {
             text: qsTr('Hold')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: holdSlider
             minimumValue: 2
             maximumValue: 2000
@@ -231,12 +234,11 @@ KeyframableFilter {
             suffix: ' ms'
             onValueChanged: updateFilter(hold, value , holdKeyframesButton, getPosition())
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: holsSlider.value = holdDefault
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: holdKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(hold) > 0
             onToggled: {
                 enableControls(true)
                 toggleKeyframes(checked, hold, holdSlider.value)
@@ -247,7 +249,7 @@ KeyframableFilter {
             text: qsTr('Decay')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: decaySlider
             minimumValue: 2
             maximumValue: 4000
@@ -255,12 +257,11 @@ KeyframableFilter {
             suffix: ' ms'
             onValueChanged: updateFilter(decay, value, decayKeyframesButton, getPosition())
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: decaySlider.value = decayDefault
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: decayKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(decay) > 0
             onToggled: {
                 enableControls(true)
                 toggleKeyframes(checked, decay, decaySlider.value)
@@ -271,7 +272,7 @@ KeyframableFilter {
             text: qsTr('Range')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: rangeSlider
             minimumValue: -90
             maximumValue: 0
@@ -280,12 +281,11 @@ KeyframableFilter {
             suffix: ' dB'
             onValueChanged: updateFilter(range, value, rangeKeyframesButton, getPosition())
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: rangeSlider.value = rangeDefault
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: rangeKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(range) > 0
             onToggled: {
                 enableControls(true)
                 toggleKeyframes(checked, range, rangeSlider.value)
@@ -303,6 +303,7 @@ KeyframableFilter {
         onOutChanged: updateSimpleKeyframes()
         onAnimateInChanged: updateSimpleKeyframes()
         onAnimateOutChanged: updateSimpleKeyframes()
+        onPropertyChanged: setControls()
     }
 
     Connections {

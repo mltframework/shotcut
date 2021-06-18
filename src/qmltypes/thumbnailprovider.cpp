@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2019 Meltytech, LLC
+ * Copyright (c) 2013-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@
 #include "mltcontroller.h"
 #include "models/playlistmodel.h"
 #include "database.h"
+#include "util.h"
 
 #include <Logger.h>
 
@@ -53,6 +54,7 @@ QImage ThumbnailProvider::requestImage(const QString &id, QSize *size, const QSi
         frameNumber = qRound(frameNumber / MLT.profile().fps() * m_profile.fps());
 
         resource = resource.left(resource.lastIndexOf('#'));
+        resource = Util::removeQueryString(resource);
         properties.set("_profile", m_profile.get_profile(), 0);
 
         QString key = cacheKey(properties, service, resource, hash, frameNumber);

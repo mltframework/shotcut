@@ -8,4 +8,8 @@ Metadata {
     mlt_service: "loudness"
     qml: "ui.qml"
     isClipOnly: true
+    allowMultiple: false
+    keyframes {
+        allowTrim: false
+    }
 }

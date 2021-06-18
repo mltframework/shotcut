@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2016 Meltytech, LLC
- * Author: Brian Matherly <code@brianmatherly.com>
+ * Copyright (c) 2016-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,13 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.2
-import QtQuick.Controls 1.4
-import QtQuick.Controls.Styles 1.4
-import QtQuick.Layouts 1.0
-import QtQuick.Extras 1.4
-import QtQml 2.2
-import Shotcut.Controls 1.0
+import QtQuick 2.12
+import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.12
+import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     width: 480
@@ -86,7 +82,7 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: preset
             parameters: ['target_loudness', 'window', 'max_gain', 'min_gain', 'max_rate']
             Layout.columnSpan: 2
@@ -96,9 +92,9 @@ Item {
         Label {
             text: qsTr('Target Loudness')
             Layout.alignment: Qt.AlignRight
-            ToolTip {text: qsTr('The target loudness of the output in LUFS.')}
+            Shotcut.HoverTip {text: qsTr('The target loudness of the output in LUFS.')}
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: programSlider
             minimumValue: -50.0
             maximumValue: -10.0
@@ -108,16 +104,16 @@ Item {
             value: filter.getDouble('target_loudness')
             onValueChanged: filter.set('target_loudness', value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: programSlider.value = -23.0
         }
 
         Label {
             text: qsTr('Analysis Window')
             Layout.alignment: Qt.AlignRight
-            ToolTip {text: qsTr('The amount of history to use to calculate the input loudness.')}
+            Shotcut.HoverTip {text: qsTr('The amount of history to use to calculate the input loudness.')}
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: windowSlider
             minimumValue: 2
             maximumValue: 600
@@ -127,16 +123,16 @@ Item {
             value: filter.getDouble('window')
             onValueChanged: filter.set('window', value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: windowSlider.value = 20.0
         }
 
         Label {
             text: qsTr('Maximum Gain')
             Layout.alignment: Qt.AlignRight
-            ToolTip {text: qsTr('The maximum that the gain can be increased.')}
+            Shotcut.HoverTip {text: qsTr('The maximum that the gain can be increased.')}
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: maxgainSlider
             minimumValue: 0.0
             maximumValue: 30.0
@@ -146,16 +142,16 @@ Item {
             value: filter.getDouble('max_gain')
             onValueChanged: filter.set('max_gain', value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: maxgainSlider.value = 15
         }
 
         Label {
             text: qsTr('Minimum Gain')
             Layout.alignment: Qt.AlignRight
-            ToolTip {text: qsTr('The maximum that the gain can be decreased.')}
+            Shotcut.HoverTip {text: qsTr('The maximum that the gain can be decreased.')}
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: mingainSlider
             minimumValue: -30.0
             maximumValue: 0.0
@@ -165,16 +161,16 @@ Item {
             value: filter.getDouble('min_gain')
             onValueChanged: filter.set('min_gain', value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: mingainSlider.value = -15.0
         }
 
         Label {
             text: qsTr('Maximum Rate')
             Layout.alignment: Qt.AlignRight
-            ToolTip {text: qsTr('The maximum rate that the gain can be changed.')}
+            Shotcut.HoverTip {text: qsTr('The maximum rate that the gain can be changed.')}
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: maxrateSlider
             minimumValue: 0.5
             maximumValue: 9.0
@@ -185,7 +181,7 @@ Item {
             value: filter.getDouble('max_rate')
             onValueChanged: filter.set('max_rate', value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: maxrateSlider.value = 3.0
         }
         
@@ -202,95 +198,62 @@ Item {
                 color: activePalette.text
             }
         }
-        
-        Component {
-            id: gaugeStyle
-            GaugeStyle {
-                valueBar: Rectangle {
-                    implicitWidth: 16
-                    color: 'transparent'
-                    Rectangle {
-                        anchors.right: parent.right
-                        width: parent.width
-                        height: 5
-                        radius: 3
-                        color: activePalette.highlight
-                    }
-                }
-                tickmark: Item {
-                    implicitWidth: 9
-                    implicitHeight: 1
-                    Rectangle {
-                        color: activePalette.windowText
-                        anchors.fill: parent
-                        anchors.leftMargin: 2
-                        anchors.rightMargin: 2
-                    }
-                }
-                minorTickmark: Item {
-                    implicitWidth: 6
-                    implicitHeight: 1
-                    Rectangle {
-                        color: activePalette.windowText
-                        anchors.fill: parent
-                        anchors.leftMargin: 2
-                        anchors.rightMargin: 2
-                    }
-                }
-                tickmarkLabel: Text {
-                    font.pixelSize: 12
-                    text: Math.round(parseFloat(styleData.value))
-                    color: activePalette.windowText
-                    antialiasing: true
-                 }
-            }
-        }
-        
+
         Label {
             text: qsTr('Input Loudness')
             Layout.alignment: Qt.AlignRight | Qt.AlignTop
-            ToolTip {text: qsTr('Status indicator showing the loudness measured on the input.')}
+            Shotcut.HoverTip {text: qsTr('Status indicator showing the loudness measured on the input.')}
         }
-        Gauge {
+        Shotcut.Gauge {
             Layout.columnSpan: 2
             Layout.fillWidth: true
             Layout.leftMargin: 4
             Layout.rightMargin: 4
             id: loudnessGauge
-            minimumValue: -50
+            from: -50
             value: -50
-            maximumValue: 0
+            to: 0
             orientation: Qt.Horizontal
-            style: gaugeStyle
+            decimals: 0
         }
         
         Label {
             text: qsTr('Output Gain')
             Layout.alignment: Qt.AlignRight | Qt.AlignTop
-            ToolTip {text: qsTr('Status indicator showing the gain being applied.')}
+            Shotcut.HoverTip {text: qsTr('Status indicator showing the gain being applied.')}
         }
-        Gauge {
+        Shotcut.Gauge {
             Layout.columnSpan: 2
             Layout.fillWidth: true
             id: gainGauge
-            minimumValue: Math.floor(mingainSlider.value)
+            from: Math.floor(mingainSlider.value)
             value: 0
-            maximumValue: Math.ceil(maxgainSlider.value)
-            tickmarkStepSize: (maximumValue - minimumValue) / 6
+            to: Math.ceil(maxgainSlider.value)
             orientation: Qt.Horizontal
-            style: gaugeStyle
+            decimals: 1
         }
 
         Label {
             text: qsTr('Reset')
             Layout.alignment: Qt.AlignRight
-            ToolTip {text: qsTr('Status indicator showing when the loudness measurement is reset.')}
+            Shotcut.HoverTip {text: qsTr('Status indicator showing when the loudness measurement is reset.')}
         }
-        StatusIndicator {
+        Rectangle {
+            property bool active: false
             Layout.columnSpan: 2
-            Layout.maximumHeight: 20
             id: resetIndicator
-            color: activePalette.highlight
+            width: 20
+            height: width
+            radius: 10
+            color: activePalette.alternateBase
+            Rectangle {
+                x: 3
+                y: 3
+                width: 14
+                height: width
+                radius: 7
+                color: parent.active? activePalette.highlight : activePalette.base
+            }
         }
 
         Item {

@@ -16,7 +16,7 @@ Name "Shotcut"
 OutFile "shotcut-setup.exe"
 
 ; The default installation directory
-InstallDir $PROGRAMFILES\Shotcut
+InstallDir $PROGRAMFILES64\Shotcut
 
 ; Registry key to check for directory (so if you install again, it will 
 ; overwrite the old one automatically)

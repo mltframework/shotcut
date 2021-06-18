@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2015 Meltytech, LLC
+ * Copyright (c) 2014-2021 Meltytech, LLC
  * Author: Dan Dennedy <dan@dennedy.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,10 +16,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.1
-import QtQuick.Controls 1.0
-import QtQuick.Layouts 1.0
-import Shotcut.Controls 1.0
+import QtQuick 2.12
+import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.12
+import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     width: 350
@@ -44,7 +44,7 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: preset
             Layout.columnSpan: 2
             parameters: ['wave', 'speed', 'deformX', 'deformX']
@@ -60,14 +60,14 @@ Item {
             text: qsTr('Amplitude')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: waveSlider
             minimumValue: 1
             maximumValue: 500
             value: filter.getDouble('wave')
             onValueChanged: filter.set('wave', value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: waveSlider.value = 10
         }
 
@@ -75,14 +75,14 @@ Item {
             text: qsTr('Speed')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: speedSlider
             minimumValue: 0
             maximumValue: 1000
             value: filter.getDouble('speed')
             onValueChanged: filter.set('speed', value)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: speedSlider.value = 5
         }
 

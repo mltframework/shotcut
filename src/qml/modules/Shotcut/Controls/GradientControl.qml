@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Meltytech, LLC
+ * Copyright (c) 2019-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,10 +16,10 @@
  */
 import QtGraphicalEffects 1.0
 import QtQuick 2.1
-import QtQuick.Controls 1.4
+import QtQuick.Controls 2.12
 import QtQuick.Dialogs 1.2
 import QtQuick.Layouts 1.1
-import Shotcut.Controls 1.0
+import Shotcut.Controls 1.0 as Shotcut
 
 RowLayout {
     property var colors: []
@@ -72,14 +72,16 @@ RowLayout {
                     // If the user changed color but left alpha at 0,
                     // they probably want to reset alpha to opaque.
                     console.log('currentColor.a=' + currentColor.a + ' currentColor=' + currentColor + ' myColor=' + myColor)
-                    if (currentColor.a === 0 && !Qt.colorEqual(currentColor, myColor))
+                    if (currentColor.a === 0 && (!Qt.colorEqual(currentColor, myColor) ||
+                                                 (Qt.colorEqual(currentColor, 'transparent') && Qt.colorEqual(myColor, 'transparent')))) {
                         currentColor.a = 1.0
+                    }
                     parent.parent._setStopColor(handelRect.stopIndex, String(currentColor))
                 }
-                modality: Qt.ApplicationModal
+                modality: application.dialogModality
             }
 
-            ToolTip { text: qsTr('Color: %1\nClick to change').arg(color) }
+            Shotcut.HoverTip { text: qsTr('Color: %1\nClick to change').arg(color) }
         }
     }
 
@@ -179,15 +181,15 @@ RowLayout {
         }
     }
 
-    SpinBox {
+    Shotcut.DoubleSpinBox {
         Layout.alignment: Qt.AlignVCenter
         id: gradientSpinner
+        width: 100
         value: colors.length
-        minimumValue: 1
-        maximumValue: 10
-        decimals: 0
+        from: 1
+        to: 10
         stepSize: 1
-        suffix: qsTr(' colors')
+        suffix: qsTr('colors', 'gradient control')
         onValueChanged: {
             _setStopCount(value)
         }

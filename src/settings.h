@@ -33,6 +33,8 @@ class ShotcutSettings : public QObject
     Q_PROPERTY(bool timelineRippleAllTracks READ timelineRippleAllTracks WRITE setTimelineRippleAllTracks NOTIFY timelineRippleAllTracksChanged)
     Q_PROPERTY(bool timelineSnap READ timelineSnap WRITE setTimelineSnap NOTIFY timelineSnapChanged)
     Q_PROPERTY(bool timelineCenterPlayhead READ timelineCenterPlayhead WRITE setTimelineCenterPlayhead NOTIFY timelineCenterPlayheadChanged)
+    Q_PROPERTY(bool timelineScrollZoom READ timelineScrollZoom WRITE setTimelineScrollZoom NOTIFY timelineScrollZoomChanged)
+    Q_PROPERTY(bool timelineFramebufferWaveform READ timelineFramebufferWaveform WRITE setTimelineFramebufferWaveform NOTIFY timelineFramebufferWaveformChanged)
     Q_PROPERTY(QString openPath READ openPath WRITE setOpenPath NOTIFY openPathChanged)
     Q_PROPERTY(QString savePath READ savePath WRITE setSavePath NOTIFY savePathChanged)
     Q_PROPERTY(QString playlistThumbnails READ playlistThumbnails WRITE setPlaylistThumbnails NOTIFY playlistThumbnailsChanged)
@@ -44,6 +46,7 @@ class ShotcutSettings : public QObject
     Q_PROPERTY(double videoInDuration READ videoInDuration WRITE setVideoInDuration NOTIFY videoInDurationChanged)
     Q_PROPERTY(double videoOutDuration READ videoOutDuration WRITE setVideoOutDuration NOTIFY videoOutDurationChanged)
     Q_PROPERTY(bool smallIcons READ smallIcons WRITE setSmallIcons NOTIFY smallIconsChanged)
+    Q_PROPERTY(bool askOutputFilter READ askOutputFilter WRITE setAskOutputFilter NOTIFY askOutputFilterChanged)
 
 public:
     static ShotcutSettings& singleton();
@@ -51,6 +54,7 @@ public:
     explicit ShotcutSettings(const QString& appDataLocation);
     void log();
 
+    // general
     QString language() const;
     void setLanguage(const QString&);
     double imageDuration() const;
@@ -81,7 +85,12 @@ public:
     void setWindowStateDefault(const QByteArray&);
     QString viewMode() const;
     void setViewMode(const QString& viewMode);
+    QString exportFrameSuffix() const;
+    void setExportFrameSuffix(const QString& suffix);
+    bool convertAdvanced() const;
+    void setConvertAdvanced(bool);
 
+    // encode
     QString encodePath() const;
     void setEncodePath(const QString&);
     bool encodeFreeSpaceCheck() const;
@@ -97,6 +106,7 @@ public:
     bool encodeParallelProcessing() const;
     void setEncodeParallelProcessing(bool);
 
+    // player
     int playerAudioChannels() const;
     void setPlayerAudioChannels(int);
     QString playerDeinterlacer() const;
@@ -133,18 +143,19 @@ public:
     int playerVideoDelayMs() const;
     void setPlayerVideoDelayMs(int);
 
+    // playlist
     QString playlistThumbnails() const;
     void setPlaylistThumbnails(const QString&);
     bool playlistAutoplay() const;
     void setPlaylistAutoplay(bool);
 
+    // timeline
     bool timelineDragScrub() const;
     void setTimelineDragScrub(bool);
     bool timelineShowWaveforms() const;
     void setTimelineShowWaveforms(bool);
     bool timelineShowThumbnails() const;
     void setTimelineShowThumbnails(bool);
-
     bool timelineRipple() const;
     void setTimelineRipple(bool);
     bool timelineRippleAllTracks() const;
@@ -155,33 +166,37 @@ public:
     void setTimelineCenterPlayhead(bool);
     int timelineTrackHeight() const;
     void setTimelineTrackHeight(int);
+    bool timelineScrollZoom() const;
+    void setTimelineScrollZoom(bool);
+    bool timelineFramebufferWaveform() const;
+    void setTimelineFramebufferWaveform(bool);
 
+    // filter
     QString filterFavorite(const QString& filterName);
     void setFilterFavorite(const QString& filterName, const QString& value);
-
     double audioInDuration() const;
     void setAudioInDuration(double);
-
     double audioOutDuration() const;
     void setAudioOutDuration(double);
-
     double videoInDuration() const;
     void setVideoInDuration(double);
-
     double videoOutDuration() const;
     void setVideoOutDuration(double);
+    bool askOutputFilter() const;
+    void setAskOutputFilter(bool);
 
+    // scope
     bool loudnessScopeShowMeter(const QString& meter) const;
     void setLoudnessScopeShowMeter(const QString& meter, bool b);
 
+    // general continued
     int drawMethod() const;
     void setDrawMethod(int);
-
     bool noUpgrade() const;
     void setNoUpgrade(bool value);
     bool checkUpgradeAutomatic();
     void setCheckUpgradeAutomatic(bool b);
-    bool askUpgradeAutmatic();
+    bool askUpgradeAutomatic();
     void setAskUpgradeAutomatic(bool b);
 
     void sync();
@@ -189,18 +204,31 @@ public:
     static void setAppDataForSession(const QString& location);
     void setAppDataLocally(const QString& location);
 
+    // layout
     QStringList layouts() const;
     bool setLayout(const QString& name, const QByteArray& geometry, const QByteArray& state);
     QByteArray layoutGeometry(const QString& name);
     QByteArray layoutState(const QString& name);
     bool removeLayout(const QString& name);
+    int layoutMode() const;
+    void setLayoutMode(int mode = 0);
 
+    // general continued
     bool clearRecent() const;
     void setClearRecent(bool);
-
     QString projectsFolder() const;
     void setProjectsFolder(const QString& path);
-    
+
+    // proxy
+    bool proxyEnabled() const;
+    void setProxyEnabled(bool);
+    QString proxyFolder() const;
+    void setProxyFolder(const QString& path);
+    bool proxyUseProjectFolder() const;
+    void setProxyUseProjectFolder(bool);
+    bool proxyUseHardware() const;
+    void setProxyUseHardware(bool);
+
     int undoLimit() const;
 
 signals:
@@ -213,6 +241,8 @@ signals:
     void timelineRippleAllTracksChanged();
     void timelineSnapChanged();
     void timelineCenterPlayheadChanged();
+    void timelineScrollZoomChanged();
+    void timelineFramebufferWaveformChanged();
     void playerAudioChannelsChanged(int);
     void playerGpuChanged();
     void audioInDurationChanged();
@@ -222,6 +252,7 @@ signals:
     void playlistThumbnailsChanged();
     void viewModeChanged();
     void smallIconsChanged();
+    void askOutputFilterChanged();
 
 private:
     QSettings settings;

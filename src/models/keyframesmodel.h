@@ -45,6 +45,8 @@ public:
         IsCurveRole,      /// parameter only
         MinimumValueRole, /// parameter only
         MaximumValueRole, /// parameter only
+        LowestValueRole,  /// parameter only
+        HighestValueRole, /// parameter only
         FrameNumberRole,  /// keyframe only
         KeyframeTypeRole, /// keyframe only
         NumericValueRole, /// keyframe only
@@ -69,10 +71,11 @@ public:
     Q_INVOKABLE int keyframeIndex(int parameterIndex, int currentPosition);
     Q_INVOKABLE int parameterIndex(const QString& propertyName) const;
     Q_INVOKABLE bool setInterpolation(int parameterIndex, int keyframeIndex, InterpolationType type);
-    Q_INVOKABLE bool setPosition(int parameterIndex, int keyframeIndex, int position);
+    Q_INVOKABLE void setKeyframePosition(int parameterIndex, int keyframeIndex, int position);
     Q_INVOKABLE void addKeyframe(int parameterIndex, double value, int position, InterpolationType type);
     Q_INVOKABLE void addKeyframe(int parameterIndex, int position);
-    Q_INVOKABLE void setKeyframe(int parameterIndex, double value, int position, InterpolationType type);
+    Q_INVOKABLE void setKeyframeValue(int parameterIndex, int keyframeIndex, double value);
+    Q_INVOKABLE void setKeyframeValuePosition(int parameterIndex, int keyframeIndex, double value, int position);
     Q_INVOKABLE bool isKeyframe(int parameterIndex, int position);
 
 signals:
@@ -83,7 +86,8 @@ public slots:
     void reload();
     void onFilterChanged(const QString& property);
     void onFilterInChanged(int delta);
-    void onFilterOutChanged(int delta);
+    void trimFilterIn(int in);
+    void trimFilterOut(int out);
 
 private:
     QList<QString> m_propertyNames;

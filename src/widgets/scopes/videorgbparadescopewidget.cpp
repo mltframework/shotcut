@@ -56,7 +56,7 @@ void VideoRgbParadeScopeWidget::refreshScope(const QSize& size, bool full)
         QColor bgColor( 0, 0, 0 ,0xff );
         m_renderImg.fill(bgColor);
 
-        const uint8_t* src = m_frame.get_image(mlt_image_rgb24);
+        const uint8_t* src = m_frame.get_image(mlt_image_rgb);
         uint8_t* dst = m_renderImg.scanLine(0);
         size_t rOffset = 0;
         size_t gOffset = rOffset + width;
@@ -107,7 +107,7 @@ void VideoRgbParadeScopeWidget::paintEvent(QPaintEvent*)
     QFontMetrics fm(font);
     QPen pen;
     pen.setColor(TEXT_COLOR);
-    pen.setWidth(devicePixelRatio());
+    pen.setWidth(qRound(devicePixelRatioF()));
     p.setPen(pen);
     p.setFont(font);
 

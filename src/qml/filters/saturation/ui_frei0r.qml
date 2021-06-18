@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2018 Meltytech, LLC
+ * Copyright (c) 2013-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,10 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.1
-import QtQuick.Controls 1.0
-import QtQuick.Layouts 1.0
-import Shotcut.Controls 1.0
+import QtQuick 2.12
+import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.12
+import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     width: 350
@@ -31,6 +31,7 @@ Item {
     property double endValue: 0.125
 
     Component.onCompleted: {
+        filter.set('threads', 0)
         if (filter.isNew) {
             // Set default parameter values
             filter.set(saturationParameter, 0)
@@ -55,6 +56,7 @@ Item {
         var position = getPosition()
         blockUpdate = true
         slider.value = filter.getDouble(saturationParameter, position) * frei0rMaximum
+        keyframesButton.checked = filter.keyframeCount(saturationParameter) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
         blockUpdate = false
         slider.enabled = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1)
     }
@@ -100,7 +102,7 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: preset
             Layout.columnSpan: 3
             parameters: [saturationParameter]
@@ -109,7 +111,6 @@ Item {
             }
             onPresetSelected: {
                 setControls()
-                keyframesButton.checked = filter.keyframeCount(parameters[0]) > 0 && filter.animateIn <= 0 && filter.animateOut <= 0
                 middleValue = filter.getDouble(saturationParameter, filter.animateIn)
                 if (filter.animateIn > 0)
                     startValue = filter.getDouble(saturationParameter, 0)
@@ -122,19 +123,18 @@ Item {
             text: qsTr('Level')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: slider
             minimumValue: 0
             maximumValue: 300
             suffix: ' %'
             onValueChanged: updateFilter(getPosition())
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: slider.value = 100
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: keyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(saturationParameter) > 0
             onToggled: {
                 var value = slider.value / frei0rMaximum
                 if (checked) {
@@ -160,6 +160,7 @@ Item {
         onOutChanged: updateFilter(null)
         onAnimateInChanged: updateFilter(null)
         onAnimateOutChanged: updateFilter(null)
+        onPropertyChanged: setControls()
     }
 
     Connections {

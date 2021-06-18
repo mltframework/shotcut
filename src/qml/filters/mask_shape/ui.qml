@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2019 Meltytech, LLC
+ * Copyright (c) 2018-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,11 +15,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.1
-import QtQuick.Controls 1.1
-import QtQuick.Layouts 1.0
-import QtQuick.Dialogs 1.1
-import Shotcut.Controls 1.0
+import QtQuick 2.12
+import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.12
+import QtQuick.Dialogs 1.2
+import Shotcut.Controls 1.0 as Shotcut
 import org.shotcut.qml 1.0 as Shotcut
 
 Item {
@@ -74,9 +74,9 @@ Item {
         var position = getPosition()
         blockUpdate = true
         thresholdSlider.value = filter.getDouble('filter.mix', position)
+        thresholdKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('filter.mix') > 0
         blockUpdate = false
-        thresholdSlider.enabled
-            = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1)
+        thresholdSlider.enabled = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1)
     }
     
     function setControls() {
@@ -86,13 +86,13 @@ Item {
             for (var i = 1; i < resourceCombo.model.length; ++i) {
                 var s = (i < 10) ? '%luma0%1.pgm' : '%luma%1.pgm'
                 if (s.arg(i) === resource) {
-                    resourceCombo.currentIndex = i
+                    resourceCombo.currentIndex = (i === 1)? 0 : i
                     break
                 }
             }
             alphaRadioButton.enabled = false
         } else {
-            resourceCombo.currentIndex = 0
+            resourceCombo.currentIndex = 1
             shapeFile.url = resource
             fileLabel.text = shapeFile.fileName
             fileLabelTip.text = shapeFile.filePath
@@ -169,7 +169,7 @@ Item {
     Shotcut.File { id: shapeFile }
     FileDialog {
         id: fileDialog
-        modality: Qt.WindowModal
+        modality: application.dialogModality
         selectMultiple: false
         selectFolder: false
         folder: settingsOpenPath
@@ -194,7 +194,7 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: preset
             Layout.columnSpan: 3
             parameters: ['filter.mix', 'filter.softness', 'filter.use_luminance', 'filter.invert', 'filter.resource', 'filter.use_mix']
@@ -211,14 +211,14 @@ Item {
             text: qsTr('File')
             Layout.alignment: Qt.AlignRight
         }
-        ComboBox {
+        Shotcut.ComboBox {
             id: resourceCombo
             implicitWidth: 250
-            model: [qsTr('Custom...'), qsTr('Bar Horizontal'), qsTr('Bar Vertical'), qsTr('Barn Door Horizontal'), qsTr('Barn Door Vertical'), qsTr('Barn Door Diagonal SW-NE'), qsTr('Barn Door Diagonal NW-SE'), qsTr('Diagonal Top Left'), qsTr('Diagonal Top Right'), qsTr('Matrix Waterfall Horizontal'), qsTr('Matrix Waterfall Vertical'), qsTr('Matrix Snake Horizontal'), qsTr('Matrix Snake Parallel Horizontal'), qsTr('Matrix Snake Vertical'), qsTr('Matrix Snake Parallel Vertical'), qsTr('Barn V Up'), qsTr('Iris Circle'), qsTr('Double Iris'), qsTr('Iris Box'), qsTr('Box Bottom Right'), qsTr('Box Bottom Left'), qsTr('Box Right Center'), qsTr('Clock Top')]
-            currentIndex: 1
-            ToolTip {
+            model: [qsTr('Bar Horizontal'), qsTr('Custom...'), qsTr('Bar Vertical'), qsTr('Barn Door Horizontal'), qsTr('Barn Door Vertical'), qsTr('Barn Door Diagonal SW-NE'), qsTr('Barn Door Diagonal NW-SE'), qsTr('Diagonal Top Left'), qsTr('Diagonal Top Right'), qsTr('Matrix Waterfall Horizontal'), qsTr('Matrix Waterfall Vertical'), qsTr('Matrix Snake Horizontal'), qsTr('Matrix Snake Parallel Horizontal'), qsTr('Matrix Snake Vertical'), qsTr('Matrix Snake Parallel Vertical'), qsTr('Barn V Up'), qsTr('Iris Circle'), qsTr('Double Iris'), qsTr('Iris Box'), qsTr('Box Bottom Right'), qsTr('Box Bottom Left'), qsTr('Box Right Center'), qsTr('Clock Top')]
+            currentIndex: 0
+            Shotcut.HoverTip {
                 text: qsTr('Set a mask from another file\'s brightness or alpha.')
-                isVisible: !resourceCombo.pressed
+                visible: !resourceCombo.pressed
             }
             onActivated: {
                 // toggling focus works around a weird bug involving sticky
@@ -230,13 +230,13 @@ Item {
             function updateResource(index) {
                 fileLabel.text = ''
                 fileLabelTip.text = ''
-                if (index === 0) {
+                if (index === 1) {
                     fileDialog.selectExisting = true
                     fileDialog.title = qsTr('Open Mask File')
                     fileDialog.open()
                 } else {
                     var s = (index < 10) ? '%luma0%1.pgm' : '%luma%1.pgm'
-                    filter.set('filter.resource', s.arg(index))
+                    filter.set('filter.resource', s.arg(index === 0? 1 : index))
                     previousResourceComboIndex = index
                     brightnessRadioButton.checked = true
                     filter.set('filter.use_luminance', 1)
@@ -244,22 +244,22 @@ Item {
                 }
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: {
-                resourceCombo.currentIndex = 1
+                resourceCombo.currentIndex = 0
                 resourceCombo.updateResource(resourceCombo.currentIndex)
             }
         }
-        Item { Layout.fillWidth: true }
+        Item { width: 1 }
 
-        Item { Layout.fillWidth: true }
+        Item { width: 1 }
         Label {
             id: fileLabel
             Layout.columnSpan: 3
-            ToolTip { id: fileLabelTip }
+            Shotcut.HoverTip { id: fileLabelTip }
         }
 
-        Item { Layout.fillWidth: true }
+        Item { width: 1 }
         RowLayout {
             Layout.columnSpan: 3
             CheckBox {
@@ -267,21 +267,21 @@ Item {
                 text: qsTr('Invert')
                 onClicked: filter.set('filter.invert', checked)
             }
-            UndoButton {
+            Shotcut.UndoButton {
                 onClicked: invertCheckBox.checked = false
             }
-            Item { Layout.fillWidth: true }
+            Item { width: 1 }
             CheckBox {
                 id: reverseCheckBox
                 text: qsTr('Reverse')
                 visible: filter.isAtLeastVersion('2')
                 onClicked: filter.set('filter.reverse', checked)
             }
-            UndoButton {
+            Shotcut.UndoButton {
                 visible: reverseCheckBox.visible
                 onClicked: reverseCheckBox.checked = false
             }
-            Item { Layout.fillWidth: true }
+            Item { width: 1 }
         }
 
         Label {
@@ -289,24 +289,24 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
         RowLayout {
-            ExclusiveGroup { id: channelGroup }
+            ButtonGroup { id: channelGroup }
             RadioButton {
                 id: brightnessRadioButton
                 text: qsTr('Brightness')
-                exclusiveGroup: channelGroup
+                ButtonGroup.group: channelGroup
                 onClicked: filter.set('filter.use_luminance', 1)
             }
             RadioButton {
                 id: alphaRadioButton
                 text: qsTr('Alpha')
-                exclusiveGroup: channelGroup
+                ButtonGroup.group: channelGroup
                 onClicked: filter.set('filter.use_luminance', 0)
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: brightnessRadioButton.checked = true
         }
-        Item { Layout.fillWidth: true }
+        Item { width: 1 }
 
         CheckBox {
             id: thresholdCheckBox
@@ -314,7 +314,7 @@ Item {
             Layout.alignment: Qt.AlignRight
             onClicked: filter.set('filter.use_mix', checked)
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: thresholdSlider
             minimumValue: 0
             maximumValue: 100
@@ -322,12 +322,11 @@ Item {
             suffix: ' %'
             onValueChanged: updateFilter('filter.mix', value, getPosition(), thresholdKeyframesButton)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: thresholdSlider.value = 50
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: thresholdKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('filter.mix') > 0
             onToggled: onKeyframesButtonClicked(checked, 'filter.mix', thresholdSlider.value)
         }
 
@@ -335,7 +334,7 @@ Item {
             text: qsTr('Softness')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: softnessSlider
             minimumValue: 0
             maximumValue: 100
@@ -343,10 +342,10 @@ Item {
             suffix: ' %'
             onValueChanged: filter.set('filter.softness', value/100)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: softnessSlider.value = 0
         }
-        Item { Layout.fillWidth: true }
+        Item { width: 1 }
 
     }
 
@@ -360,6 +359,7 @@ Item {
         onOutChanged: updatedSimpleAnimation()
         onAnimateInChanged: updatedSimpleAnimation()
         onAnimateOutChanged: updatedSimpleAnimation()
+        onPropertyChanged: setControls()
     }
 
     Connections {

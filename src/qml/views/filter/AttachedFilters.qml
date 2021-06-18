@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2019 Meltytech, LLC
+ * Copyright (c) 2014-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,9 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.0
-import QtQuick.Controls 1.1
-import QtQml.Models 2.1
+import QtQuick 2.12
+import QtQuick.Controls 2.12
+import QtQml.Models 2.12
+import org.shotcut.qml 1.0 as Shotcut
 
 Rectangle {
     id: attachedFilters
@@ -72,9 +73,14 @@ Rectangle {
                 CheckBox {
                     id: filterDelegateCheck
                     anchors.verticalCenter: parent.verticalCenter
-                    checkedState: model.checkState
-                    onClicked: {
-                        model.checkState = !model.checkState
+                    enabled: model.pluginType != Shotcut.Metadata.Link
+                    opacity: enabled ? 1.0 : 0.5
+                    checkState: model.checkState
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            model.checkState = !model.checkState
+                        }
                     }
                 }
                 
@@ -125,6 +131,12 @@ Rectangle {
 
     ScrollView {
         anchors.fill: parent
+        clip: true
+        ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
+        ScrollBar.vertical.policy: ScrollBar.AlwaysOn
+        ScrollBar.vertical.visible: contentHeight > height
+        ScrollBar.vertical.width: 16
+
         ListView {
             id: attachedFiltersView
             

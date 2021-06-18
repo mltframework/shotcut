@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Meltytech, LLC
+ * Copyright (c) 2019-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,11 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.2
-import QtQuick.Controls 1.1
-import QtQuick.Layouts 1.1
-import Shotcut.Controls 1.0
-import QtQuick.Controls.Styles 1.1
+import QtQuick 2.12
+import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.12
+import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     property string colorParam: 'av.color'
@@ -50,7 +49,7 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: presetItem
             Layout.columnSpan: 2
             onPresetSelected: {
@@ -64,7 +63,7 @@ Item {
             text: qsTr('Color')
             Layout.alignment: Qt.AlignRight
         }
-        ColorPicker {
+        Shotcut.ColorPicker {
             id: colorPicker
             onValueChanged: {
                 filter.set(colorParam, value)
@@ -73,7 +72,7 @@ Item {
             onPickStarted: filter.set('disable', 1)
             onPickCancelled: filter.set('disable', 0)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: colorPicker.value = colorDefault
         }
 
@@ -82,7 +81,7 @@ Item {
             text: qsTr('Distance')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: distanceSlider
             minimumValue: 0
             maximumValue: 100
@@ -91,7 +90,7 @@ Item {
             value: filter.getDouble(distanceParam) * 100
             onValueChanged: filter.set(distanceParam, value / 100)
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: distanceSlider.value = distanceDefault
         }
 

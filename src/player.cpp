@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2020 Meltytech, LLC
+ * Copyright (c) 2012-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,6 +23,8 @@
 #include "settings.h"
 #include "util.h"
 #include "widgets/newprojectfolder.h"
+#include "proxymanager.h"
+#include <Logger.h>
 
 #include <QtWidgets>
 #include <limits>
@@ -79,7 +81,7 @@ Player::Player(QWidget *parent)
     Util::setColorsToHighlight(m_statusLabel, QPalette::Button);
     tabLayout->addWidget(m_statusLabel);
     tabLayout->addStretch(1);
-    if (Settings.drawMethod() == Qt::AA_UseDesktopOpenGL) {
+    if (Settings.drawMethod() != Qt::AA_UseOpenGLES) {
         QGraphicsOpacityEffect *effect = new QGraphicsOpacityEffect(this);
         m_statusLabel->setGraphicsEffect(effect);
         m_statusFadeIn = new QPropertyAnimation(effect, "opacity", this);
@@ -96,6 +98,8 @@ Player::Player(QWidget *parent)
         connect(&m_statusTimer, SIGNAL(timeout()), m_statusFadeOut, SLOT(start()));
         connect(m_statusFadeOut, SIGNAL(finished()), SLOT(onFadeOutFinished()));
         m_statusFadeOut->start();
+    } else {
+        connect(&m_statusTimer, SIGNAL(timeout()), SLOT(onFadeOutFinished()));
     }
 
     // Add the layouts for managing video view, scroll bars, and audio controls.
@@ -148,6 +152,7 @@ Player::Player(QWidget *parent)
     m_savedVolume = MLT.volume();
     m_volumeSlider->setToolTip(tr("Adjust the audio volume"));
     connect(m_volumeSlider, SIGNAL(valueChanged(int)), this, SLOT(onVolumeChanged(int)));
+    connect(m_volumeSlider, &QAbstractSlider::sliderReleased, m_volumePopup, &QWidget::hide);
 
     // Add mute-volume buttons layout
 #ifdef Q_OS_MAC
@@ -170,7 +175,7 @@ Player::Player(QWidget *parent)
     m_muteButton->setChecked(Settings.playerMuted());
     onMuteButtonToggled(Settings.playerMuted());
     volumeLayoutH->addWidget(m_muteButton);
-    connect(m_muteButton, SIGNAL(toggled(bool)), this, SLOT(onMuteButtonToggled(bool)));
+    connect(m_muteButton, SIGNAL(clicked(bool)), this, SLOT(onMuteButtonToggled(bool)));
 
     // Add the scrub bar.
     m_scrubber = new ScrubBar(this);
@@ -327,7 +332,6 @@ Player::Player(QWidget *parent)
     connect(m_scrubber, SIGNAL(inChanged(int)), this, SLOT(onInChanged(int)));
     connect(m_scrubber, SIGNAL(outChanged(int)), this, SLOT(onOutChanged(int)));
     connect(m_positionSpinner, SIGNAL(valueChanged(int)), this, SLOT(seek(int)));
-    connect(m_positionSpinner, SIGNAL(editingFinished()), this, SLOT(setFocus()));
     connect(this, SIGNAL(endOfStream()), this, SLOT(pause()));
     connect(this, SIGNAL(gridChanged(int)), MLT.videoWidget(), SLOT(setGrid(int)));
     connect(this, SIGNAL(zoomChanged(float)), MLT.videoWidget(), SLOT(setZoom(float)));
@@ -423,16 +427,24 @@ void Player::retranslateUi(QWidget* widget)
 
 void Player::setIn(int pos)
 {
+    LOG_DEBUG() << "in" << pos << "out" << m_previousOut;
+    // Changing out must come before in because mlt_playlist will automatically swap them if out < in
+    if (pos >= 0 && pos > m_previousOut) {
+        onOutChanged(m_duration - 1);
+        m_scrubber->setOutPoint(m_duration - 1);
+    }
     m_scrubber->setInPoint(pos);
-    if (pos >= 0 && pos > m_previousOut)
-        setOut(m_duration - 1);
 }
 
 void Player::setOut(int pos)
 {
+    LOG_DEBUG() << "in" << m_previousIn << "out" << pos;
+    // Changing in must come before out because mlt_playlist will automatically swap them if out < in
+    if (pos >= 0 && pos < m_previousIn) {
+        onInChanged(0);
+        m_scrubber->setInPoint(0);
+    }
     m_scrubber->setOutPoint(pos);
-    if (pos >= 0 && pos < m_previousIn)
-        setIn(0);
 }
 
 void Player::setMarkers(const QList<int> &markers)
@@ -466,6 +478,13 @@ bool Player::event(QEvent* event)
         m_videoScrollWidget->show();
     }
     return result;
+}
+
+void Player::keyPressEvent(QKeyEvent* event)
+{
+    QWidget::keyPressEvent(event);
+    if (!event->isAccepted())
+        MAIN.keyPressEvent(event);
 }
 
 void Player::play(double speed)
@@ -524,6 +543,7 @@ void Player::seek(int position)
     actionPlay->setIcon(m_playIcon);
     actionPlay->setText(tr("Play"));
     actionPlay->setToolTip(tr("Start playback (L)"));
+    m_playPosition = std::numeric_limits<int>::max();
 }
 
 void Player::reset()
@@ -598,7 +618,7 @@ void Player::onProducerOpened(bool play)
             QTimer::singleShot(500, this, SLOT(postProducerOpened()));
         } else {
             if (MLT.consumer()->is_stopped()) {
-                this->play();
+                QTimer::singleShot(500, this, SLOT(play()));
             } else {
                 // This seek purges the consumer to prevent latent end-of-stream detection.
                 seek(0);
@@ -675,7 +695,6 @@ void Player::onFrameDisplayed(const SharedFrame& frame)
         m_scrubber->onSeek(position);
         if (m_playPosition < m_previousOut && m_position >= m_previousOut) {
             seek(m_previousOut);
-            m_playPosition = std::numeric_limits<int>::max();
         }
     }
     if (position >= m_duration - 1)
@@ -836,7 +855,7 @@ void Player::setStatusLabel(const QString &text, int timeoutSeconds, QAction* ac
     else
         disconnect(m_statusLabel, SIGNAL(clicked(bool)));
 
-    if (Settings.drawMethod() == Qt::AA_UseDesktopOpenGL) {
+    if (Settings.drawMethod() != Qt::AA_UseOpenGLES) {
         // Cancel the fade out.
         if (m_statusFadeOut->state() == QAbstractAnimation::Running) {
             m_statusFadeOut->stop();
@@ -853,12 +872,18 @@ void Player::setStatusLabel(const QString &text, int timeoutSeconds, QAction* ac
             // Fade in.
             if (m_statusFadeIn->state() != QAbstractAnimation::Running && !m_statusTimer.isActive()) {
                 m_statusFadeIn->start();
-                m_statusTimer.start(timeoutSeconds * 1000);
+                if (timeoutSeconds > 0)
+                    m_statusTimer.start(timeoutSeconds * 1000);
             }
         }
-    } else { // DirectX or software GL
-        m_statusLabel->show();
-        QTimer::singleShot(timeoutSeconds * 1000, this, SLOT(onFadeOutFinished()));
+    } else { // DirectX
+        if (text.isEmpty()) {
+            m_statusLabel->hide();
+        } else {
+            m_statusLabel->show();
+            if (timeoutSeconds > 0)
+                m_statusTimer.start(timeoutSeconds * 1000);
+        }
     }
 }
 
@@ -866,9 +891,7 @@ void Player::onFadeOutFinished()
 {
     m_statusLabel->disconnect(SIGNAL(clicked(bool)));
     m_statusLabel->setToolTip(QString());
-    // DirectX or software GL
-    if (Settings.drawMethod() != Qt::AA_UseDesktopOpenGL)
-        m_statusLabel->hide();
+    showIdleStatus();
 }
 
 void Player::adjustScrollBars(float horizontal, float vertical)
@@ -907,6 +930,24 @@ double Player::setVolume(int volume)
     return gain;
 }
 
+void Player::showIdleStatus()
+{
+    if (Settings.proxyEnabled() && Settings.playerPreviewScale() > 0) {
+        setStatusLabel(tr("Proxy and preview scaling are ON at %1p").arg(ProxyManager::resolution()), -1, nullptr);
+    } else if (Settings.proxyEnabled()) {
+        setStatusLabel(tr("Proxy is ON at %1p").arg(ProxyManager::resolution()), -1, nullptr);
+    } else if (Settings.playerPreviewScale() > 0) {
+        setStatusLabel(tr("Preview scaling is ON at %1p").arg(Settings.playerPreviewScale()), -1, nullptr);
+    } else {
+        setStatusLabel("", -1, nullptr);
+    }
+}
+
+void Player::focusPositionSpinner() const
+{
+    m_positionSpinner->setFocus(Qt::ShortcutFocusReason);
+}
+
 void Player::moveVideoToScreen(int screen)
 {
     if (screen == m_monitorScreen) return;
@@ -915,9 +956,9 @@ void Player::moveVideoToScreen(int screen)
         if (!m_videoScrollWidget->isFullScreen()) return;
         m_videoScrollWidget->showNormal();
         m_videoLayout->insertWidget(0, m_videoScrollWidget, 10);
-    } else if (QApplication::desktop()->screenCount() > 1) {
+    } else if (QGuiApplication::screens().size() > 1) {
         // -1 = find first screen the app is not using
-        for (int i = 0; screen == -1 && i < QApplication::desktop()->screenCount(); i++) {
+        for (int i = 0; screen == -1 && i < QGuiApplication::screens().size(); i++) {
             if (i != QApplication::desktop()->screenNumber(this))
                 screen = i;
         }
@@ -970,6 +1011,9 @@ void Player::onVolumeChanged(int volume)
     Settings.setPlayerVolume(volume);
     Settings.setPlayerMuted(false);
     m_muteButton->setChecked(false);
+    actionVolume->setIcon(QIcon::fromTheme("player-volume", QIcon(":/icons/oxygen/32x32/actions/player-volume.png")));
+    m_muteButton->setIcon(QIcon::fromTheme("audio-volume-muted", QIcon(":/icons/oxygen/32x32/status/audio-volume-muted.png")));
+    m_muteButton->setToolTip(tr("Mute"));
 }
 
 void Player::onCaptureStateChanged(bool active)

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2018 Meltytech, LLC
+ * Copyright (c) 2013-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,9 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.1
-import QtQuick.Controls 1.0
-import QtQuick.Layouts 1.0
+import QtQuick 2.12
+import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.12
+import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     width: 100
@@ -40,7 +41,9 @@ Item {
         if (filter.isNew) {
             // Set default parameter values
             fromCombo.currentIndex = 0
+            filter.set(fromParameter, 0)
             toCombo.currentIndex = (application.audioChannels() === 1) ? 0 : 1
+            filter.set(fromParameter, toCombo.currentIndex)
         } else {
             // Initialize parameter values
             fromCombo.currentIndex = filter.get(fromParameter)
@@ -54,16 +57,16 @@ Item {
 
         RowLayout {
             Label { text: qsTr('Swap') }
-            ComboBox {
+            Shotcut.ComboBox {
                 id: fromCombo
                 model: [qsTr('Left'), qsTr('Right')]
-                onCurrentIndexChanged: filter.set(fromParameter, currentIndex)
+                onActivated: filter.set(fromParameter, currentIndex)
             }
             Label { text: qsTr('with') }
-            ComboBox {
+            Shotcut.ComboBox {
                 id: toCombo
                 model: fromCombo.model
-                onCurrentIndexChanged: filter.set(toParameter, currentIndex)
+                onActivated: filter.set(toParameter, currentIndex)
             }
         }
         Item {

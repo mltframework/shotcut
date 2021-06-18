@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2019 Meltytech, LLC
+ * Copyright (c) 2013-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -151,6 +151,19 @@ private:
     int m_in;
     int m_oldOut;
     int m_newOut;
+};
+
+class ReplaceCommand : public QUndoCommand
+{
+public:
+    ReplaceCommand(PlaylistModel& model, const QString& xml, int row, QUndoCommand * parent = 0);
+    void redo();
+    void undo();
+private:
+    PlaylistModel& m_model;
+    QString m_newXml;
+    QString m_oldXml;
+    int m_row;
 };
 
 }

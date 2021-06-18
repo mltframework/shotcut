@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Meltytech, LLC
+ * Copyright (c) 2015-2021 Meltytech, LLC
  * Author: Lauren Dennedy
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,10 +16,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.1
-import QtQuick.Controls 1.0
-import QtQuick.Layouts 1.0
-import Shotcut.Controls 1.0
+import QtQuick 2.12
+import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.12
+import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     width: 350
@@ -50,7 +50,7 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: preset
             parameters: ['0', '1', 'wetness']
             Layout.columnSpan: 2
@@ -60,9 +60,9 @@ Item {
         Label {
             text: qsTr('Delay')
             Layout.alignment: Qt.AlignRight
-            ToolTip {text: qsTr('The neutral delay time is 2 seconds. Times above 2 seconds will have reduced quality and times below will have increased CPU usage.')}
+            Shotcut.HoverTip {text: qsTr('The neutral delay time is 2 seconds.\nTimes above 2 seconds will have reduced quality.\nTimes below will have increased CPU usage.')}
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: sliderDelay
             minimumValue: 0
             maximumValue: 4
@@ -73,7 +73,7 @@ Item {
                 filter.set('0', value)
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: sliderDelay.value = 1
         }
 
@@ -81,7 +81,7 @@ Item {
             text: qsTr('Feedback')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: sliderFeedback
             minimumValue: -70
             maximumValue: 0
@@ -92,7 +92,7 @@ Item {
                 filter.set('1', value)
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: sliderFeedback.value = -10
         }
 
@@ -100,7 +100,7 @@ Item {
             text: qsTr('Dry')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: sliderWetness
             minimumValue: 0
             maximumValue: 100
@@ -112,7 +112,7 @@ Item {
                 filter.set('wetness', value / maximumValue)
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: sliderWetness.value = sliderWetness.maximumValue
         }
 

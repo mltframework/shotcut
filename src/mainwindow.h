@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2020 Meltytech, LLC
+ * Copyright (c) 2011-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,7 +25,6 @@
 #include <QNetworkAccessManager>
 #include <QScopedPointer>
 #include <QSharedPointer>
-#include <QRunnable>
 #include "mltcontroller.h"
 #include "mltxmlchecker.h"
 
@@ -44,35 +43,26 @@ class QActionGroup;
 class FilterController;
 class ScopeController;
 class FiltersDock;
-class HtmlEditor;
 class TimelineDock;
 class AutoSaveFile;
 class QNetworkReply;
 class KeyframesDock;
-
-class AppendTask : public QObject, public QRunnable
-{
-    Q_OBJECT
-public:
-    AppendTask(const QStringList& filenames)
-        : QRunnable()
-        , filenames(filenames)
-        {}
-    void run();
-
-signals:
-    void appendToPlaylist(QString);
-    void done();
-
-private:
-    const QStringList filenames;
-};
 
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
+    enum LayoutMode {
+        Custom = 0,
+        Logging,
+        Editing,
+        Effects,
+        Color,
+        Audio,
+        PlayerOnly
+    };
+
     static MainWindow& singleton();
     ~MainWindow();
     void open(Mlt::Producer* producer);
@@ -83,19 +73,17 @@ public:
     static void changeTheme(const QString& theme);
     PlaylistDock* playlistDock() const { return m_playlistDock; }
     FilterController* filterController() const { return m_filterController; }
-    HtmlEditor* htmlEditor() const { return m_htmlEditor.data(); }
     Mlt::Playlist* playlist() const;
+    bool isPlaylistValid() const;
     Mlt::Producer* multitrack() const;
     bool isMultitrackValid() const;
     void doAutosave();
     void setFullScreen(bool isFullScreen);
     QString removeFileScheme(QUrl& url);
     QString untitledFileName() const;
-    QString getFileHash(const QString& path) const;
-    QString getHash(Mlt::Properties& properties) const;
     void setProfile(const QString& profile_name);
     QString fileName() const { return m_currentFile; }
-    bool isSourceClipMyProject(QString resource = MLT.resource());
+    bool isSourceClipMyProject(QString resource = MLT.resource(), bool withDialog = true);
     bool keyframesDockIsVisible() const;
 
     void keyPressEvent(QKeyEvent*);
@@ -112,14 +100,17 @@ public:
     QUuid timelineClipUuid(int trackIndex, int clipIndex);
     void replaceInTimeline(const QUuid& uuid, Mlt::Producer& producer);
     Mlt::ClipInfo* timelineClipInfoByUuid(const QUuid& uuid, int& trackIndex, int& clipIndex);
-    void replaceAllByHash(const QString& hash, Mlt::Producer& producer);
+    void replaceAllByHash(const QString& hash, Mlt::Producer& producer, bool isProxy = false);
 
 signals:
     void audioChannelsChanged();
-    void producerOpened();
+    void producerOpened(bool withReopen = true);
     void profileChanged();
     void openFailed(QString);
     void aboutToShutDown();
+    void renameRequested();
+    void serviceInChanged(int delta, Mlt::Service*);
+    void serviceOutChanged(int delta, Mlt::Service*);
 
 protected:
     MainWindow();
@@ -148,6 +139,11 @@ private:
     void setAudioChannels(int channels);
     void showSaveError();
     void setPreviewScale(int scale);
+    void setVideoModeMenu();
+    void resetVideoModeMenu();
+    void resetDockCorners();
+    void showIncompatibleProjectMessage(const QString& shotcutVersion);
+    void restartAfterChangeTheme();
 
     Ui::MainWindow* ui;
     Player* m_player;
@@ -174,7 +170,6 @@ private:
     QStringList m_multipleFiles;
     bool m_isPlaylistLoaded;
     QActionGroup* m_languagesGroup;
-    QScopedPointer<HtmlEditor> m_htmlEditor;
     QSharedPointer<AutoSaveFile> m_autosaveFile;
     QMutex m_autosaveMutex;
     QTimer m_autosaveTimer;
@@ -192,8 +187,7 @@ private:
 public slots:
     bool isCompatibleWithGpuMode(MltXmlChecker& checker);
     bool isXmlRepaired(MltXmlChecker& checker, QString& fileName);
-    void updateAutoSave();
-    void open(QString url, const Mlt::Properties* = 0);
+    void open(QString url, const Mlt::Properties* = nullptr, bool play = true);
     void openMultiple(const QStringList& paths);
     void openMultiple(const QList<QUrl>& urls);
     void openVideo();
@@ -208,7 +202,6 @@ public slots:
     QWidget* loadProducerWidget(Mlt::Producer* producer);
     void onProducerOpened(bool withReopen = true);
     void onGpuNotSupported();
-    void editHTML(const QString& fileName);
     void stepLeftOneFrame();
     void stepRightOneFrame();
     void stepLeftOneSecond();
@@ -293,7 +286,7 @@ private slots:
     void onFocusObjectChanged(QObject *obj) const;
     void onFocusWindowChanged(QWindow *window) const;
     void onTimelineClipSelected();
-    void onAddAllToTimeline(Mlt::Playlist* playlist);
+    void onAddAllToTimeline(Mlt::Playlist* playlist, bool skipProxy);
     void on_actionScrubAudio_triggered(bool checked);
 #if !defined(Q_OS_MAC)
     void onDrawingMethodTriggered(QAction*);
@@ -315,16 +308,18 @@ private slots:
     void on_actionAppDataShow_triggered();
     void on_actionNew_triggered();
     void on_actionKeyboardShortcuts_triggered();
+    void on_actionLayoutLogging_triggered();
+    void on_actionLayoutEditing_triggered();
+    void on_actionLayoutEffects_triggered();
+    void on_actionLayoutColor_triggered();
+    void on_actionLayoutAudio_triggered();
     void on_actionLayoutPlayer_triggered();
     void on_actionLayoutPlaylist_triggered();
-    void on_actionLayoutTimeline_triggered();
     void on_actionLayoutClip_triggered();
     void on_actionLayoutAdd_triggered();
     void onLayoutTriggered(QAction*);
     void on_actionProfileRemove_triggered();
     void on_actionLayoutRemove_triggered();
-    void onAppendToPlaylist(const QString& xml);
-    void onAppendTaskDone();
     void on_actionOpenOther2_triggered();
     void onOpenOtherTriggered(QWidget* widget);
     void onOpenOtherTriggered();
@@ -340,6 +335,14 @@ private slots:
     void on_actionPreview720_triggered(bool checked);
     void on_actionTopics_triggered();
     void on_actionSync_triggered();
+    void on_actionUseProxy_triggered(bool checked);
+    void on_actionProxyStorageSet_triggered();
+    void on_actionProxyStorageShow_triggered();
+    void on_actionProxyUseProjectFolder_triggered(bool checked);
+    void on_actionProxyUseHardware_triggered(bool checked);
+    void on_actionProxyConfigureHardware_triggered();
+    void updateLayoutSwitcher();
+    void clearCurrentLayout();
 };
 
 #define MAIN MainWindow::singleton()

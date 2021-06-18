@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 Meltytech, LLC
+ * Copyright (c) 2013-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,10 +15,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.2
-import QtQuick.Controls 1.0
-import QtQuick.Layouts 1.0
-import QtGraphicalEffects 1.0
+import QtQuick 2.12
+import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.12
 import Shotcut.Controls 1.0 as Shotcut
 
 ToolBar {
@@ -28,222 +27,250 @@ ToolBar {
 
     SystemPalette { id: activePalette }
 
+    id: toolbar
     width: 200
-    height: settings.smallIcons? 28 : snapButton.height + 4
-    anchors.margins: 0
+    height: settings.smallIcons ? 25 : 33
 
     RowLayout {
-        ToolButton {
-            id: hiddenButton
-            visible: false
-        }
-        ToolButton {
+        y: 2
+
+        Shotcut.ToolButton {
+            id: menuButton
+            implicitHeight: toolbar.height - 3
+            implicitWidth: implicitHeight
             action: menuAction
-            implicitWidth: settings.smallIcons? 18 : hiddenButton.implicitWidth
-            implicitHeight: implicitWidth
+            Shotcut.HoverTip { text: qsTr('Display a menu of additional actions') }
+            focusPolicy: Qt.NoFocus
         }
         Button { // separator
             enabled: false
             implicitWidth: 2
-            implicitHeight: settings.smallIcons? 14 : (hiddenButton.implicitHeight - 8)
+            implicitHeight: toolbar.height / 2
         }
-        ToolButton {
+        Shotcut.ToolButton {
+            implicitHeight: toolbar.height - 3
+            implicitWidth: implicitHeight
             action: cutAction
-            implicitWidth: settings.smallIcons? 18 : hiddenButton.implicitWidth
-            implicitHeight: implicitWidth
+            Shotcut.HoverTip { text: qsTr('Cut - Copy the current clip to the Source\nplayer and ripple delete it') }
+            focusPolicy: Qt.NoFocus
         }
-        ToolButton {
+        Shotcut.ToolButton {
+            implicitHeight: toolbar.height - 3
+            implicitWidth: implicitHeight
             action: copyAction
-            implicitWidth: settings.smallIcons? 18 : hiddenButton.implicitWidth
-            implicitHeight: implicitWidth
+            Shotcut.HoverTip { text: qsTr('Copy - Copy the current clip to the Source player (C)') }
+            focusPolicy: Qt.NoFocus
         }
-        ToolButton {
+        Shotcut.ToolButton {
+            implicitHeight: toolbar.height - 3
+            implicitWidth: implicitHeight
             action: insertAction
-            implicitWidth: settings.smallIcons? 18 : hiddenButton.implicitWidth
-            implicitHeight: implicitWidth
+            Shotcut.HoverTip { text: qsTr('Paste - Insert clip into the current track\nshifting following clips to the right (V)') }
+            focusPolicy: Qt.NoFocus
         }
         Button { // separator
             enabled: false
             implicitWidth: 2
-            implicitHeight: settings.smallIcons? 14 : (hiddenButton.implicitHeight - 8)
+            implicitHeight: toolbar.height / 2
         }
-        ToolButton {
+        Shotcut.ToolButton {
+            implicitHeight: toolbar.height - 3
+            implicitWidth: implicitHeight
             action: appendAction
-            implicitWidth: settings.smallIcons? 18 : hiddenButton.implicitWidth
-            implicitHeight: implicitWidth
+            Shotcut.HoverTip { text: qsTr('Append to the current track (A)') }
+            focusPolicy: Qt.NoFocus
         }
-        ToolButton {
+        Shotcut.ToolButton {
+            implicitHeight: toolbar.height - 3
+            implicitWidth: implicitHeight
             action: deleteAction
-            implicitWidth: settings.smallIcons? 18 : hiddenButton.implicitWidth
-            implicitHeight: implicitWidth
+            Shotcut.HoverTip { text: qsTr('Ripple Delete - Remove current clip\nshifting following clips to the left (X)') }
+            focusPolicy: Qt.NoFocus
         }
-        ToolButton {
+        Shotcut.ToolButton {
+            implicitHeight: toolbar.height - 3
+            implicitWidth: implicitHeight
             action: liftAction
-            implicitWidth: settings.smallIcons? 18 : hiddenButton.implicitWidth
-            implicitHeight: implicitWidth
+            Shotcut.HoverTip { text: qsTr('Lift - Remove current clip without\naffecting position of other clips (Z)') }
+            focusPolicy: Qt.NoFocus
         }
-        ToolButton {
+        Shotcut.ToolButton {
+            implicitHeight: toolbar.height - 3
+            implicitWidth: implicitHeight
             action: overwriteAction
-            implicitWidth: settings.smallIcons? 18 : hiddenButton.implicitWidth
-            implicitHeight: implicitWidth
+            Shotcut.HoverTip { text: qsTr('Overwrite clip onto the current track (B)') }
+            focusPolicy: Qt.NoFocus
         }
-        ToolButton {
+        Shotcut.ToolButton {
+            implicitHeight: toolbar.height - 3
+            implicitWidth: implicitHeight
             action: splitAction
-            implicitWidth: settings.smallIcons? 18 : hiddenButton.implicitWidth
-            implicitHeight: implicitWidth
+            Shotcut.HoverTip { text: qsTr('Split At Playhead (S)') }
+            focusPolicy: Qt.NoFocus
         }
         Button { // separator
             enabled: false
             implicitWidth: 2
-            implicitHeight: settings.smallIcons? 14 : (hiddenButton.implicitHeight - 8)
+            implicitHeight: toolbar.height / 2
         }
-        Shotcut.ToolBarToggle {
+        Shotcut.ToolButton {
             id: snapButton
+            implicitHeight: toolbar.height - 3
+            implicitWidth: implicitHeight
             checked: settings.timelineSnap
-            iconName: 'snap'
-            iconSource: 'qrc:///icons/oxygen/32x32/actions/snap.png'
-            tooltip: qsTr('Toggle snapping')
-            implicitWidth: settings.smallIcons? 18 : hiddenButton.implicitWidth
-            implicitHeight: implicitWidth
+            icon.name: 'snap'
+            icon.source: 'qrc:///icons/oxygen/32x32/actions/snap.png'
+            focusPolicy: Qt.NoFocus
+            Shotcut.HoverTip { text: qsTr('Toggle snapping') }
             onClicked: settings.timelineSnap = !settings.timelineSnap
         }
-        Shotcut.ToolBarToggle {
+        Shotcut.ToolButton {
             id: scrubButton
+            implicitHeight: toolbar.height - 3
+            implicitWidth: implicitHeight
             checked: settings.timelineDragScrub
-            iconName: 'scrub_drag'
-            iconSource: 'qrc:///icons/oxygen/32x32/actions/scrub_drag.png'
-            tooltip: qsTr('Scrub while dragging')
-            implicitWidth: settings.smallIcons? 18 : hiddenButton.implicitWidth
-            implicitHeight: implicitWidth
+            icon.name: 'scrub_drag'
+            icon.source: 'qrc:///icons/oxygen/32x32/actions/scrub_drag.png'
+            focusPolicy: Qt.NoFocus
+            Shotcut.HoverTip { text: qsTr('Scrub while dragging') }
             onClicked: settings.timelineDragScrub = !settings.timelineDragScrub
         }
-        Shotcut.ToolBarToggle {
+        Shotcut.ToolButton {
             id: rippleButton
+            implicitHeight: toolbar.height - 3
+            implicitWidth: implicitHeight
             checked: settings.timelineRipple
-            iconName: 'target'
-            iconSource: 'qrc:///icons/oxygen/32x32/actions/target.png'
-            tooltip: qsTr('Ripple trim and drop')
-            implicitWidth: settings.smallIcons? 18 : hiddenButton.implicitWidth
-            implicitHeight: implicitWidth
+            icon.name: 'target'
+            icon.source: 'qrc:///icons/oxygen/32x32/actions/target.png'
+            focusPolicy: Qt.NoFocus
+            Shotcut.HoverTip { text: qsTr('Ripple trim and drop') }
             onClicked: settings.timelineRipple = !settings.timelineRipple
         }
-        Shotcut.ToolBarToggle {
+        Shotcut.ToolButton {
             id: rippleAllButton
+            implicitHeight: toolbar.height - 3
+            implicitWidth: implicitHeight
             checked: settings.timelineRippleAllTracks
-            iconName: 'ripple-all'
-            iconSource: 'qrc:///icons/oxygen/32x32/actions/ripple-all.png'
-            tooltip: qsTr('Ripple edits across all tracks')
-            implicitWidth: settings.smallIcons? 18 : hiddenButton.implicitWidth
-            implicitHeight: implicitWidth
+            icon.name: 'ripple-all'
+            icon.source: 'qrc:///icons/oxygen/32x32/actions/ripple-all.png'
+            focusPolicy: Qt.NoFocus
+            Shotcut.HoverTip { text: qsTr('Ripple edits across all tracks') }
             onClicked: settings.timelineRippleAllTracks = !settings.timelineRippleAllTracks
         }
         Button { // separator
             enabled: false
             implicitWidth: 2
-            implicitHeight: settings.smallIcons? 14 : (hiddenButton.implicitHeight - 8)
+            implicitHeight: toolbar.height / 2
         }
-        ToolButton {
+        Shotcut.ToolButton {
+            implicitHeight: toolbar.height - 3
+            implicitWidth: implicitHeight
             action: zoomOutAction
-            implicitWidth: settings.smallIcons? 18 : hiddenButton.implicitWidth
-            implicitHeight: implicitWidth
+            Shotcut.HoverTip { text: qsTr("Zoom timeline out (-)") }
+            focusPolicy: Qt.NoFocus
         }
         ZoomSlider {
             id: scaleSlider
         }
-        ToolButton {
+        Shotcut.ToolButton {
+            implicitHeight: toolbar.height - 3
+            implicitWidth: implicitHeight
             action: zoomInAction
-            implicitWidth: settings.smallIcons? 18 : hiddenButton.implicitWidth
-            implicitHeight: implicitWidth
+            Shotcut.HoverTip { text: qsTr("Zoom timeline in (+)") }
+            focusPolicy: Qt.NoFocus
+        }
+        Shotcut.ToolButton {
+            implicitHeight: toolbar.height - 3
+            implicitWidth: implicitHeight
+            action: zoomFitAction
+            Shotcut.HoverTip { text: qsTr('Zoom timeline to fit (0)') }
+            focusPolicy: Qt.NoFocus
         }
     }
 
     Action {
         id: menuAction
-        tooltip: qsTr('Display a menu of additional actions')
-        iconName: 'format-justify-fill'
-        iconSource: 'qrc:///icons/oxygen/32x32/actions/format-justify-fill.png'
+        icon.name: 'show-menu'
+        icon.source: 'qrc:///icons/oxygen/32x32/actions/show-menu.png'
         onTriggered: menu.popup()
     }
 
     Action {
         id: cutAction
-        tooltip: qsTr('Cut - Copy the current clip to the Source\nplayer and ripple delete it')
-        iconName: 'edit-cut'
-        iconSource: 'qrc:///icons/oxygen/32x32/actions/edit-cut.png'
+        icon.name: 'edit-cut'
+        icon.source: 'qrc:///icons/oxygen/32x32/actions/edit-cut.png'
         enabled: timeline.selection.length
         onTriggered: timeline.removeSelection(true)
     }
 
     Action {
         id: copyAction
-        tooltip: qsTr('Copy - Copy the current clip to the Source player (C)')
-        iconName: 'edit-copy'
-        iconSource: 'qrc:///icons/oxygen/32x32/actions/edit-copy.png'
+        icon.name: 'edit-copy'
+        icon.source: 'qrc:///icons/oxygen/32x32/actions/edit-copy.png'
         enabled: timeline.selection.length
         onTriggered: timeline.copyClip(timeline.selection[0].y, timeline.selection[0].x)
     }
 
     Action {
         id: insertAction
-        tooltip: qsTr('Paste - Insert clip into the current track\nshifting following clips to the right (V)')
-        iconName: 'edit-paste'
-        iconSource: 'qrc:///icons/oxygen/32x32/actions/edit-paste.png'
+        icon.name: 'edit-paste'
+        icon.source: 'qrc:///icons/oxygen/32x32/actions/edit-paste.png'
         onTriggered: timeline.insert(currentTrack)
     }
 
     Action {
         id: appendAction
-        tooltip: qsTr('Append to the current track (A)')
-        iconName: 'list-add'
-        iconSource: 'qrc:///icons/oxygen/32x32/actions/list-add.png'
+        icon.name: 'list-add'
+        icon.source: 'qrc:///icons/oxygen/32x32/actions/list-add.png'
         onTriggered: timeline.append(currentTrack)
     }
 
     Action {
         id: deleteAction
-        tooltip: qsTr('Ripple Delete - Remove current clip\nshifting following clips to the left (X)')
-        iconName: 'list-remove'
-        iconSource: 'qrc:///icons/oxygen/32x32/actions/list-remove.png'
+        icon.name: 'list-remove'
+        icon.source: 'qrc:///icons/oxygen/32x32/actions/list-remove.png'
         onTriggered: timeline.removeSelection()
    }
 
     Action {
         id: liftAction
-        tooltip: qsTr('Lift - Remove current clip without\naffecting position of other clips (Z)')
-        iconName: 'lift'
-        iconSource: 'qrc:///icons/oxygen/32x32/actions/lift.png'
+        icon.name: 'lift'
+        icon.source: 'qrc:///icons/oxygen/32x32/actions/lift.png'
         onTriggered: timeline.liftSelection()
     }
 
     Action {
         id: overwriteAction
-        tooltip: qsTr('Overwrite clip onto the current track (B)')
-        iconName: 'overwrite'
-        iconSource: 'qrc:///icons/oxygen/32x32/actions/overwrite.png'
+        icon.name: 'overwrite'
+        icon.source: 'qrc:///icons/oxygen/32x32/actions/overwrite.png'
         onTriggered: timeline.overwrite(currentTrack)
     }
 
     Action {
         id: splitAction
-        tooltip: qsTr('Split At Playhead (S)')
-        iconName: 'slice'
-        iconSource: 'qrc:///icons/oxygen/32x32/actions/slice.png'
+        icon.name: 'slice'
+        icon.source: 'qrc:///icons/oxygen/32x32/actions/slice.png'
         onTriggered: timeline.splitClip(currentTrack)
     }
 
     Action {
         id: zoomOutAction
-        tooltip: qsTr("Zoom timeline out (-)")
-        iconName: 'zoom-out'
-        iconSource: 'qrc:///icons/oxygen/32x32/actions/zoom-out.png'
+        icon.name: 'zoom-out'
+        icon.source: 'qrc:///icons/oxygen/32x32/actions/zoom-out.png'
         onTriggered: root.zoomOut()
     }
 
     Action {
         id: zoomInAction
-        tooltip: qsTr("Zoom timeline in (+)")
-        iconName: 'zoom-in'
-        iconSource: 'qrc:///icons/oxygen/32x32/actions/zoom-in.png'
+        icon.name: 'zoom-in'
+        icon.source: 'qrc:///icons/oxygen/32x32/actions/zoom-in.png'
         onTriggered: root.zoomIn()
+    }
+
+    Action {
+        id: zoomFitAction
+        icon.name: 'zoom-fit-best'
+        icon.source: 'qrc:///icons/oxygen/32x32/actions/zoom-fit-best.png'
+        onTriggered: root.zoomToFit()
     }
 }

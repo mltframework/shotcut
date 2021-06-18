@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2020 Meltytech, LLC
+ * Copyright (c) 2014-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,18 +30,35 @@
 #include <QDoubleSpinBox>
 #include <QTemporaryFile>
 #include <QApplication>
+#include <QCryptographicHash>
+#include <QtGlobal>
 
+#include <MltChain.h>
 #include <MltProducer.h>
 #include <Logger.h>
 #include "shotcut_mlt_properties.h"
 #include "qmltypes/qmlapplication.h"
+#include "proxymanager.h"
 
-QString Util::baseName(const QString &filePath)
+#ifdef Q_OS_WIN
+#include <windows.h>
+#endif
+
+#ifdef Q_OS_MAC
+static const unsigned int kLowMemoryThresholdPercent = 10U;
+#else
+static const unsigned int kLowMemoryThresholdKB = 256U * 1024U;
+#endif
+
+QString Util::baseName(const QString &filePath, bool trimQuery)
 {
     QString s = filePath;
     // Only if absolute path and not a URI.
     if (s.startsWith('/') || s.midRef(1, 2) == ":/" || s.midRef(1, 2) == ":\\")
         s = QFileInfo(s).fileName();
+    if (trimQuery) {
+        return removeQueryString(s);
+    }
     return s;
 }
 
@@ -72,7 +89,7 @@ void Util::setColorsToHighlight(QWidget* widget, QPalette::ColorRole role)
 
 void Util::showInFolder(const QString& path)
 {
-    QFileInfo info(path);
+    QFileInfo info(removeQueryString(path));
 #if defined(Q_OS_WIN)
     QStringList args;
     if (!info.isDir())
@@ -100,23 +117,22 @@ void Util::showInFolder(const QString& path)
     QDesktopServices::openUrl(QUrl::fromLocalFile(info.isDir()? path : info.path()));
 }
 
-bool Util::warnIfNotWritable(const QString& filePath, QWidget* parent, const QString& caption, bool remove)
+bool Util::warnIfNotWritable(const QString& filePath, QWidget* parent, const QString& caption)
 {
     // Returns true if not writable.
     if (!filePath.isEmpty() && !filePath.contains("://")) {
-        // Do a hard check by writing to the file.
-        QFile file(filePath);
-        file.open(QIODevice::WriteOnly | QIODevice::Append);
-        if (file.write("") < 0) {
-            QFileInfo fi(filePath);
+        QFileInfo info(filePath);
+        if (!info.isDir()) {
+            info = QFileInfo(info.dir().path());
+        }
+        if (!info.isWritable()) {
+            info = QFileInfo(filePath);
             QMessageBox::warning(parent, caption,
                                  QObject::tr("Unable to write file %1\n"
                                     "Perhaps you do not have permission.\n"
                                     "Try again with a different folder.")
-                                 .arg(fi.fileName()));
+                                 .arg(info.fileName()));
             return true;
-        } else if (remove) {
-            file.remove();
         }
     }
     return false;
@@ -131,13 +147,11 @@ QString Util::producerTitle(const Mlt::Producer& producer)
         return QObject::tr("Transition");
     if (p.get(kTrackNameProperty))
         return QObject::tr("Track: %1").arg(QString::fromUtf8(p.get(kTrackNameProperty)));
-    if (tractor_type == p.type())
-        return QObject::tr("Master");
+    if (mlt_service_tractor_type == p.type())
+        return QObject::tr("Output");
     if (p.get(kShotcutCaptionProperty))
         return QString::fromUtf8(p.get(kShotcutCaptionProperty));
-    if (p.get("resource"))
-        return Util::baseName(QString::fromUtf8(p.get("resource")));
-    return result;
+    return Util::baseName(ProxyManager::resource(p));
 }
 
 QString Util::removeFileScheme(QUrl& url)
@@ -150,23 +164,23 @@ QString Util::removeFileScheme(QUrl& url)
 
 static inline bool isValidGoProFirstFilePrefix(const QFileInfo& info)
 {
-    QStringList list {"GOPR", "GH01", "GS01"};
-    return list.contains(info.baseName().toUpper());
+    QStringList list {"GOPR", "GH01", "GS01", "GX01"};
+    return list.contains(info.baseName().left(4).toUpper());
 }
 
 static inline bool isValidGoProPrefix(const QFileInfo& info)
 {
-    QStringList list {"GP", "GH", "GS"};
-    return list.contains(info.baseName().toUpper());
+    QStringList list {"GP", "GH", "GS", "GX"};
+    return list.contains(info.baseName().left(2).toUpper());
 }
 
 static inline bool isValidGoProSuffix(const QFileInfo& info)
 {
-    QStringList list {"MP4", "LRV", "360"};
+    QStringList list {"MP4", "LRV", "360", "WAV"};
     return list.contains(info.suffix().toUpper());
 }
 
-QStringList Util::sortedFileList(const QList<QUrl>& urls)
+const QStringList Util::sortedFileList(const QList<QUrl>& urls)
 {
     QStringList result;
     QMap<QString, QStringList> goproFiles;
@@ -174,17 +188,19 @@ QStringList Util::sortedFileList(const QList<QUrl>& urls)
     // First look for GoPro main files.
     foreach (QUrl url, urls) {
         QFileInfo fi(removeFileScheme(url));
-        if (fi.baseName().size() == 8 && isValidGoProSuffix(fi) && isValidGoProFirstFilePrefix(fi))
+        if (fi.baseName().size() == 8 && isValidGoProSuffix(fi) && isValidGoProFirstFilePrefix(fi)) {
             goproFiles[fi.baseName().mid(4)] << fi.filePath();
+        }
     }
     // Then, look for GoPro split files.
     foreach (QUrl url, urls) {
         QFileInfo fi(removeFileScheme(url));
-        if (fi.baseName().size() == 8 && isValidGoProSuffix(fi) && isValidGoProPrefix(fi)) {
+        if (fi.baseName().size() == 8 && isValidGoProSuffix(fi) && isValidGoProPrefix(fi) && !isValidGoProFirstFilePrefix(fi)) {
             QString goproNumber = fi.baseName().mid(4);
             // Only if there is a matching main GoPro file.
-            if (goproFiles.contains(goproNumber) && goproFiles[goproNumber].size())
+            if (goproFiles.contains(goproNumber) && goproFiles[goproNumber].size()) {
                 goproFiles[goproNumber] << fi.filePath();
+            }
         }
     }
     // Next, sort the GoPro files.
@@ -338,7 +354,8 @@ void Util::applyCustomProperties(Mlt::Producer& destination, Mlt::Producer& sour
     p.clear(kDefaultAudioIndexProperty);
     p.clear(kOriginalInProperty);
     p.clear(kOriginalOutProperty);
-    p.clear(kOriginalResourceProperty);
+    if (!p.get_int(kIsProxyProperty))
+        p.clear(kOriginalResourceProperty);
     destination.pass_list(source, "mlt_service, audio_index, video_index, force_progressive, force_tff,"
                        "force_aspect_ratio, video_delay, color_range, warp_speed, warp_pitch,"
                        kAspectRatioNumerator ","
@@ -348,26 +365,182 @@ void Util::applyCustomProperties(Mlt::Producer& destination, Mlt::Producer& sour
                        kDefaultAudioIndexProperty ","
                        kOriginalInProperty ","
                        kOriginalOutProperty ","
-                       kOriginalResourceProperty);
+                       kOriginalResourceProperty ","
+                       kDisableProxyProperty);
     if (!destination.get("_shotcut:resource")) {
         destination.set("_shotcut:resource", destination.get("resource"));
         destination.set("_shotcut:length", destination.get("length"));
     }
+    QString resource = ProxyManager::resource(destination);
     if (!qstrcmp("timewarp", source.get("mlt_service"))) {
-        QString resource = destination.get("_shotcut:resource");
         auto speed = qAbs(source.get_double("warp_speed"));
-        auto caption = QString("%1 (%2x)").arg(Util::baseName(resource)).arg(speed);
+        auto caption = QString("%1 (%2x)").arg(Util::baseName(resource, true)).arg(speed);
         destination.set(kShotcutCaptionProperty, caption.toUtf8().constData());
 
+        resource = destination.get("_shotcut:resource");
         destination.set("warp_resource", resource.toUtf8().constData());
-        resource = QString("%1:%2:%3").arg("timewarp").arg(source.get("warp_speed")).arg(resource);
+        resource = QString("%1:%2:%3").arg("timewarp", source.get("warp_speed"), resource);
         destination.set("resource", resource.toUtf8().constData());
         double speedRatio = 1.0 / speed;
         int length = qRound(destination.get_length() * speedRatio);
         destination.set("length", destination.frames_to_time(length, mlt_time_clock));
     } else {
+        auto caption = Util::baseName(resource, true);
+        destination.set(kShotcutCaptionProperty, caption.toUtf8().constData());
+
+        p.clear("warp_resource");
         destination.set("resource", destination.get("_shotcut:resource"));
         destination.set("length", destination.get("_shotcut:length"));
     }
     destination.set_in_and_out(in, out);
+}
+
+QString Util::getFileHash(const QString& path)
+{
+    // This routine is intentionally copied from Kdenlive.
+    QFile file(removeQueryString(path));
+    if (file.open(QIODevice::ReadOnly)) {
+        QByteArray fileData;
+         // 1 MB = 1 second per 450 files (or faster)
+         // 10 MB = 9 seconds per 450 files (or faster)
+        if (file.size() > 1000000*2) {
+            fileData = file.read(1000000);
+            if (file.seek(file.size() - 1000000))
+                fileData.append(file.readAll());
+        } else {
+            fileData = file.readAll();
+        }
+        file.close();
+        return QCryptographicHash::hash(fileData, QCryptographicHash::Md5).toHex();
+    }
+    return QString();
+}
+
+QString Util::getHash(Mlt::Properties& properties)
+{
+    QString hash = properties.get(kShotcutHashProperty);
+    if (hash.isEmpty()) {
+        QString service = properties.get("mlt_service");
+        QString resource = QString::fromUtf8(properties.get("resource"));
+
+        if (properties.get_int(kIsProxyProperty) && properties.get(kOriginalResourceProperty))
+            resource = QString::fromUtf8(properties.get(kOriginalResourceProperty));
+        else if (service == "timewarp")
+            resource = QString::fromUtf8(properties.get("warp_resource"));
+        else if (service == "vidstab")
+            resource = QString::fromUtf8(properties.get("filename"));
+        hash = getFileHash(resource);
+        if (!hash.isEmpty())
+            properties.set(kShotcutHashProperty, hash.toLatin1().constData());
+    }
+    return hash;
+}
+
+bool Util::hasDriveLetter(const QString& path)
+{
+    auto driveSeparators = path.midRef(1, 2);
+    return driveSeparators == ":/" || driveSeparators == ":\\";
+}
+
+QFileDialog::Options Util::getFileDialogOptions()
+{
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
+    if (qEnvironmentVariableIsSet("SNAP")) {
+        return QFileDialog::DontUseNativeDialog;
+    }
+#endif
+    return QFileDialog::Options();
+}
+
+bool Util::isMemoryLow()
+{
+#if defined(Q_OS_WIN)
+    unsigned int availableKB = UINT_MAX;
+    MEMORYSTATUSEX memory_status;
+    ZeroMemory(&memory_status, sizeof(MEMORYSTATUSEX));
+    memory_status.dwLength = sizeof(MEMORYSTATUSEX);
+    if (GlobalMemoryStatusEx(&memory_status)) {
+        availableKB = memory_status.ullAvailPhys / 1024UL;
+    }
+    LOG_INFO() << "available RAM = " << availableKB << "KB";
+    return availableKB < kLowMemoryThresholdKB;
+#elif defined(Q_OS_MAC)
+    QProcess p;
+    p.start("memory_pressure");
+    p.waitForFinished();
+    auto lines = p.readAllStandardOutput();
+    p.close();
+    for (const auto& line : lines.split('\n')) {
+        if (line.startsWith("System-wide memory free")) {
+            auto fields = line.split(':');
+            for (auto s : fields) {
+                bool ok = false;
+                auto percentage = s.replace('%', "").toUInt(&ok);
+                if (ok) {
+                    LOG_INFO() << percentage << '%';
+                    return percentage <= kLowMemoryThresholdPercent;
+                }
+            }
+        }
+    }
+    return false;
+#elif defined(__FreeBSD__)
+    QProcess p;
+    p.start("sysctl -n hw.usermem");
+    p.waitForFinished();
+    auto lines = p.readAllStandardOutput();
+    p.close();
+    bool ok = false;
+    auto availableKB = lines.toUInt(&ok);
+    if (ok) {
+	    return availableKB < kLowMemoryThresholdKB;
+    }
+
+    return false;
+#elif defined(Q_OS_LINUX)
+    unsigned int availableKB = UINT_MAX;
+    QFile meminfo("/proc/meminfo");
+    if (meminfo.open(QIODevice::ReadOnly)) {
+        for (auto line = meminfo.readLine(1024); availableKB == UINT_MAX && !line.isEmpty(); line = meminfo.readLine(1024)) {
+            if (line.startsWith("MemAvailable")) {
+                const auto& fields = line.split(' ');
+                for (const auto& s : fields) {
+                    bool ok = false;
+                    auto kB = s.toUInt(&ok);
+                    if (ok) {
+                        availableKB = kB;
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    meminfo.close();
+    LOG_INFO() << "available RAM = " << availableKB << "KB";
+    return availableKB < kLowMemoryThresholdKB;
+#endif
+}
+
+QString Util::removeQueryString(const QString& s)
+{
+    auto i = s.lastIndexOf("\\?");
+    if (i < 0) {
+        i = s.lastIndexOf("%5C?");
+    }
+    if (i > 0 ) {
+        return s.left(i);
+    }
+    return s;
+}
+
+int Util::greatestCommonDivisor(int m, int n)
+{
+    int gcd, remainder;
+    while (n) {
+        remainder = m % n;
+        m = n;
+        n = remainder;
+    }
+    gcd = m;
+    return gcd;
 }

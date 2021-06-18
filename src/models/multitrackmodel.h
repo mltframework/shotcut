@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 Meltytech, LLC
+ * Copyright (c) 2013-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -108,7 +108,6 @@ public:
     void insertTrack(int trackIndex, TrackType type = VideoTrackType);
     void insertOrAdjustBlankAt(QList<int> tracks, int position, int length);
     bool mergeClipWithNext(int trackIndex, int clipIndex, bool dryrun);
-    void adjustClipFilters(Mlt::Producer& producer, int in, int out, int inDelta, int outDelta);
     Mlt::ClipInfo *findClipByUuid(const QUuid& uuid, int& trackIndex, int& clipIndex);
 
 signals:
@@ -122,9 +121,8 @@ signals:
     void showStatusMessage(QString);
     void durationChanged();
     void filteredChanged();
-    void filterInChanged(int delta, Mlt::Filter*);
-    void filterOutChanged(int delta, Mlt::Filter*);
     void reloadRequested();
+    void appended(int trackIndex, int clipIndex);
     void inserted(int trackIndex, int clipIndex);
     void overWritten(int trackIndex, int clipIndex);
 
@@ -148,8 +146,6 @@ public slots:
     void liftClip(int trackIndex, int clipIndex);
     void splitClip(int trackIndex, int clipIndex, int position);
     void joinClips(int trackIndex, int clipIndex);
-    void appendFromPlaylist(Mlt::Playlist* playlist, int trackIndex);
-    void overwriteFromPlaylist(Mlt::Playlist& playlist, int trackIndex, int position);
     void fadeIn(int trackIndex, int clipIndex, int duration);
     void fadeOut(int trackIndex, int clipIndex, int duration);
     bool addTransitionValid(int fromTrack, int toTrack, int clipIndex, int position, bool ripple);
@@ -162,13 +158,13 @@ public slots:
     bool trimTransitionOutValid(int trackIndex, int clipIndex, int delta);
     void trimTransitionOut(int trackIndex, int clipIndex, int delta);
     bool addTransitionByTrimInValid(int trackIndex, int clipIndex, int delta);
-    void addTransitionByTrimIn(int trackIndex, int clipIndex, int delta);
+    int addTransitionByTrimIn(int trackIndex, int clipIndex, int delta);
     bool addTransitionByTrimOutValid(int trackIndex, int clipIndex, int delta);
     void addTransitionByTrimOut(int trackIndex, int clipIndex, int delta);
     bool removeTransitionByTrimInValid(int trackIndex, int clipIndex, int delta);
     bool removeTransitionByTrimOutValid(int trackIndex, int clipIndex, int delta);
     void filterAddedOrRemoved(Mlt::Producer *producer);
-    void onFilterChanged(Mlt::Filter* filter);
+    void onFilterChanged(Mlt::Service* service);
     void reload(bool asynchronous = false);
     void replace(int trackIndex, int clipIndex, Mlt::Producer& clip, bool copyFilters = true);
 
@@ -195,6 +191,7 @@ private:
     bool isFiltered(Mlt::Producer* producer = 0) const;
     int getDuration();
     void adjustServiceFilterDurations(Mlt::Service& service, int duration);
+    bool warnIfInvalid(Mlt::Service& service);
 
     friend class UndoHelper;
 

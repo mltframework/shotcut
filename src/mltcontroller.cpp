@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2020 Meltytech, LLC
+ * Copyright (c) 2011-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,8 +21,9 @@
 #include <QMetaType>
 #include <QFileInfo>
 #include <QUuid>
-#include <QTemporaryFile>
-#include <QXmlStreamReader>
+#include <QSaveFile>
+#include <QTextStream>
+#include <QThreadPool>
 #include <Logger.h>
 #include <Mlt.h>
 #include <cmath>
@@ -36,12 +37,14 @@
 #include "controllers/filtercontroller.h"
 #include "qmltypes/qmlmetadata.h"
 #include "util.h"
+#include "proxymanager.h"
 
 namespace Mlt {
 
 static const int kThumbnailOutSeekFactor = 5;
 static Controller* instance = nullptr;
 const QString XmlMimeType("application/vnd.mlt+xml");
+static const char* kMltXmlPropertyName = "string";
 
 Controller::Controller()
     : m_profile(kDefaultMltProfile)
@@ -103,19 +106,20 @@ static bool isFpsDifferent(double a, double b)
 int Controller::open(const QString &url, const QString& urlToSave)
 {
     int error = 0;
+    Mlt::Producer* newProducer = nullptr;
 
     close();
 
     if (Settings.playerGPU() && !profile().is_explicit())
         // Prevent loading normalizing filters, which might be Movit ones that
         // may not have a proper OpenGL context when requesting a sample frame.
-        m_producer.reset(new Mlt::Producer(profile(), "abnormal", url.toUtf8().constData()));
+        newProducer = new Mlt::Producer(profile(), "abnormal", url.toUtf8().constData());
     else
-        m_producer.reset(new Mlt::Producer(profile(), url.toUtf8().constData()));
-    if (m_producer->is_valid()) {
+        newProducer = new Mlt::Producer(profile(), url.toUtf8().constData());
+    if (newProducer && newProducer->is_valid()) {
         double fps = profile().fps();
         if (!profile().is_explicit()) {
-            profile().from_producer(*m_producer);
+            profile().from_producer(*newProducer);
             profile().set_width(Util::coerceMultiple(profile().width()));
             profile().set_height(Util::coerceMultiple(profile().height()));
         }
@@ -123,38 +127,38 @@ int Controller::open(const QString &url, const QString& urlToSave)
         setPreviewScale(Settings.playerPreviewScale());
         if ( url.endsWith(".mlt") ) {
             // Load the number of audio channels being used when this project was created.
-            int channels = m_producer->get_int(kShotcutProjectAudioChannels);
+            int channels = newProducer->get_int(kShotcutProjectAudioChannels);
             if (!channels)
                 channels = 2;
             m_audioChannels = channels;
-            if (m_producer->get_int(kShotcutProjectFolder)) {
+            if (newProducer->get_int(kShotcutProjectFolder)) {
                 QFileInfo info(url);
                 setProjectFolder(info.absolutePath());
+                ProxyManager::removePending();
             } else {
                 setProjectFolder(QString());
             }
         }
         if (isFpsDifferent(profile().fps(), fps) || (Settings.playerGPU() && !profile().is_explicit())) {
             // Reload with correct FPS or with Movit normalizing filters attached.
-            m_producer.reset(new Mlt::Producer(profile(), url.toUtf8().constData()));
+            delete newProducer;
+            newProducer = new Mlt::Producer(profile(), url.toUtf8().constData());
         }
-        // Convert avformat to avformat-novalidate so that XML loads faster.
-        if (!qstrcmp(m_producer->get("mlt_service"), "avformat")) {
-            m_producer->set("mlt_service", "avformat-novalidate");
-            m_producer->set("mute_on_pause", 0);
-        }
-        if (m_url.isEmpty() && QString(m_producer->get("xml")) == "was here") {
-            if (m_producer->get_int("_original_type") != tractor_type ||
-               (m_producer->get_int("_original_type") == tractor_type && m_producer->get(kShotcutXmlProperty)))
+        if (m_url.isEmpty() && QString(newProducer->get("xml")) == "was here") {
+            if (newProducer->get_int("_original_type") != mlt_service_tractor_type ||
+               (newProducer->get_int("_original_type") == mlt_service_tractor_type && newProducer->get(kShotcutXmlProperty)))
                 m_url = urlToSave;
         }
-        setImageDurationFromDefault(m_producer.data());
-        lockCreationTime(m_producer.data());
+        Producer* producer = setupNewProducer(newProducer);
+        delete newProducer;
+        newProducer = producer;
     }
     else {
-        m_producer.reset();
+        delete newProducer;
+        newProducer = nullptr;
         error = 1;
     }
+    m_producer.reset(newProducer);
     return error;
 }
 
@@ -229,6 +233,11 @@ bool Controller::isPaused() const
     return m_producer && qAbs(m_producer->get_speed()) < 0.1;
 }
 
+static void fire_jack_seek_event(mlt_properties jack, int position)
+{
+    mlt_events_fire(jack, "jack-seek", mlt_event_data_from_int(position));
+}
+
 void Controller::pause()
 {
     if (m_producer && !isPaused()) {
@@ -249,9 +258,9 @@ void Controller::pause()
     }
     if (m_jackFilter) {
         stopJack();
-        int position = m_producer->position();
+        int position = (m_producer && m_producer->is_valid())? m_producer->position() : 0;
         ++m_skipJackEvents;
-        mlt_events_fire(m_jackFilter->get_properties(), "jack-seek", &position, NULL);
+        fire_jack_seek_event(m_jackFilter->get_properties(), position);
     }
     setVolume(m_volume);
 }
@@ -265,10 +274,10 @@ void Controller::stop()
     stopJack();
 }
 
-void Controller::on_jack_started(mlt_properties, void* object, const mlt_position *position)
+void Controller::on_jack_started(mlt_properties, void* object, mlt_event_data data)
 {
-    if (object && position)
-        (static_cast<Controller*>(object))->onJackStarted(*position);
+    if (object)
+        (static_cast<Controller*>(object))->onJackStarted(Mlt::EventData(data).to_int());
 }
 
 void Controller::onJackStarted(int position)
@@ -280,10 +289,10 @@ void Controller::onJackStarted(int position)
     }
 }
 
-void Controller::on_jack_stopped(mlt_properties, void* object, const mlt_position *position)
+void Controller::on_jack_stopped(mlt_properties, void* object, mlt_event_data data)
 {
-    if (object && position)
-        (static_cast<Controller*>(object))->onJackStopped(*position);
+    if (object)
+        (static_cast<Controller*>(object))->onJackStopped(EventData(data).to_int());
 }
 
 void Controller::onJackStopped(int position)
@@ -430,7 +439,7 @@ void Controller::seek(int position)
     if (m_jackFilter) {
         stopJack();
         ++m_skipJackEvents;
-        mlt_events_fire(m_jackFilter->get_properties(), "jack-seek", &position, NULL);
+        fire_jack_seek_event(m_jackFilter->get_properties(), position);
     }
 }
 
@@ -443,23 +452,15 @@ void Controller::refreshConsumer(bool scrubAudio)
     }
 }
 
-bool Controller::saveXML(const QString& filename, Service* service, bool withRelativePaths, bool verify)
+bool Controller::saveXML(const QString& filename, Service* service, bool withRelativePaths,
+                         QTemporaryFile* tempFile, bool proxy)
 {
     QMutexLocker locker(&m_saveXmlMutex);
     QFileInfo fi(filename);
-    QTemporaryFile tmp;
-    QString mltFileName = filename;
-    // First, write to a temp file.
-    if (verify) {
-        tmp.setFileTemplate(fi.absolutePath().append("/shotcut-XXXXXX.mlt"));
-        tmp.open();
-        tmp.close();
-        mltFileName = tmp.fileName();
-        LOG_DEBUG() << "writing temporary XML file" << mltFileName;
-    }
-    Consumer c(profile(), "xml", mltFileName.toUtf8().constData());
+    Consumer c(profile(), "xml", proxy? filename.toUtf8().constData() : kMltXmlPropertyName);
     Service s(service? service->get_service() : m_producer->get_service());
     if (s.is_valid()) {
+        QString root = withRelativePaths? fi.absolutePath() : "";
         s.set(kShotcutProjectAudioChannels, m_audioChannels);
         s.set(kShotcutProjectFolder, m_projectFolder.isEmpty()? 0 : 1);
         int ignore = s.get_int("ignore_points");
@@ -468,87 +469,39 @@ bool Controller::saveXML(const QString& filename, Service* service, bool withRel
         c.set("time_format", "clock");
         c.set("no_meta", 1);
         c.set("store", "shotcut");
-        c.set("root", withRelativePaths? fi.absolutePath().toUtf8().constData() : "");
-        c.set("root", "");
+        c.set("root", root.toUtf8().constData());
         c.set("no_root", 1);
         c.set("title", QString("Shotcut version ").append(SHOTCUT_VERSION).toUtf8().constData());
         c.connect(s);
         c.start();
         if (ignore)
             s.set("ignore_points", ignore);
-
-        if (verify) {
-            // Check if the temp file is well-formed XML.
-            tmp.open();
-            QXmlStreamReader xml(&tmp);
-            while (!xml.atEnd())
-                xml.readNext();
-            tmp.close();
-            if (!xml.hasError()) {
-                // QFile::rename() can fail and remove the destination file. See its docs.
-                // So, save an existing target file as a backup.
-                QString backupName;
-                if (QFile::exists(filename)) {
-                    QTemporaryFile backupTmp;
-                    backupTmp.setFileTemplate(
-                        QString("%1/%2 - backup - XXXXXX.mlt").arg(fi.absolutePath()).arg(fi.completeBaseName()));
-                    // Only remove the backup file if we successfully move the temp file to target.
-                    backupTmp.setAutoRemove(false);
-                    QFile existingFile(filename);
-                    if (existingFile.open(QIODevice::ReadOnly)) {
-                        // Copy contents of existing file to temporary backup file.
-                        backupTmp.open();
-                        backupName = backupTmp.fileName();
-                        LOG_DEBUG() << "copy to backup" << filename << backupName;
-                        QByteArray buffer;
-                        while (!(buffer = existingFile.read(1048576LL /*1MiB*/)).isEmpty()) {
-                            backupTmp.write(buffer);
-                        }
-                        if (existingFile.error() != QFileDevice::NoError) {
-                            LOG_ERROR() << "backup error" << existingFile.errorString();
-                            return false;
-                        }
-                        if (backupTmp.size() != existingFile.size()) {
-                            LOG_ERROR() << "backup file size problem: existing file size" << existingFile.size() << ", backup file size" << backupTmp.size();
-                            return false;
-                        }
-                        backupTmp.close();
-                        existingFile.close();
-                        // Remove the existing file as its name becomes the target for rename.
-                        if (!existingFile.remove()) {
-                            LOG_ERROR() << "failed to remove existing file" << filename;
-                            return false;
-                        }
-                    } else {
-                        // Do not overwrite the backup file.
-                        LOG_ERROR() << "failed to open existing file" << filename << "for backup:" << existingFile.errorString();
-                        return false;
-                    }
+        auto xml = QString::fromUtf8(c.get(kMltXmlPropertyName));
+        if (!proxy && ProxyManager::filterXML(xml, root)) { // also verifies
+            if (tempFile) {
+                QTextStream stream(tempFile);
+                stream.setCodec("UTF-8");
+                stream << xml;
+                if (tempFile->error() != QFileDevice::NoError) {
+                    LOG_ERROR() << "error while writing MLT XML file" << tempFile->fileName() << ":" << tempFile->errorString();
+                    return false;
                 }
-                // If the file is good, then move it into place.
-                LOG_DEBUG() << "rename" << mltFileName << filename;
-                tmp.setAutoRemove(false);
-                int attempts = 5;
-                for (int i = 0; i < attempts; i++) {
-                    if (tmp.rename(filename)) {
-                        // Double-check the rename operation.
-                        if (QFile::exists(filename) && QFile::exists(backupName))
-                            QFile::remove(backupName);
-                        return true;
-                    } 
-                    LOG_WARNING() << "rename failed, trying again";
-                    
-#ifdef Q_OS_WIN
-                    ::Sleep(200);
-#else
-                    ::usleep(200000);
-#endif
+            } else {
+                QSaveFile file(filename);
+                file.setDirectWriteFallback(true);
+                if (!file.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
+                    LOG_ERROR() << "failed to open MLT XML file for writing" << filename;
+                    return false;
                 }
-                LOG_ERROR() << "rename failed" << mltFileName << filename;
-                return false;
+                QTextStream stream(&file);
+                stream.setCodec("UTF-8");
+                stream << xml;
+                if (file.error() != QFileDevice::NoError) {
+                    LOG_ERROR() << "error while writing MLT XML file" << filename << ":" << file.errorString();
+                    return false;
+                }
+                return file.commit();
             }
-        } else {
-            return true;
         }
     }
     return false;
@@ -556,8 +509,7 @@ bool Controller::saveXML(const QString& filename, Service* service, bool withRel
 
 QString Controller::XML(Service* service, bool withProfile, bool withMetadata)
 {
-    static const char* propertyName = "string";
-    Consumer c(profile(), "xml", propertyName);
+    Consumer c(profile(), "xml", kMltXmlPropertyName);
     Service s(service? service->get_service() : (m_producer && m_producer->is_valid())? m_producer->get_service() : nullptr);
     if (!s.is_valid())
         return "";
@@ -574,7 +526,7 @@ QString Controller::XML(Service* service, bool withProfile, bool withMetadata)
     c.start();
     if (ignore)
         s.set("ignore_points", ignore);
-    return QString::fromUtf8(c.get(propertyName));
+    return QString::fromUtf8(c.get(kMltXmlPropertyName));
 }
 
 int Controller::consumerChanged()
@@ -599,7 +551,7 @@ void Controller::setProfile(const QString& profile_name)
 {
     LOG_DEBUG() << "setting to profile" << (profile_name.isEmpty()? "Automatic" : profile_name);
     if (!profile_name.isEmpty()) {
-        Mlt::Profile tmp(profile_name.toLatin1().constData());
+        Mlt::Profile tmp(profile_name.toUtf8().constData());
         m_profile.set_colorspace(tmp.colorspace());
         m_profile.set_frame_rate(tmp.frame_rate_num(), tmp.frame_rate_den());
         m_profile.set_height(Util::coerceMultiple(tmp.height()));
@@ -685,14 +637,14 @@ bool Controller::isPlaylist() const
 {
     return m_producer && m_producer->is_valid() &&
           !m_producer->get_int(kShotcutVirtualClip) &&
-            (m_producer->get_int("_original_type") == playlist_type || resource() == "<playlist>");
+            (m_producer->get_int("_original_type") == mlt_service_playlist_type || resource() == "<playlist>");
 }
 
 bool Controller::isMultitrack() const
 {
     return m_producer && m_producer->is_valid()
         && !m_producer->get_int(kShotcutVirtualClip)
-        && (m_producer->get_int("_original_type") == tractor_type || resource() == "<tractor>")
+        && (m_producer->get_int("_original_type") == mlt_service_tractor_type || resource() == "<tractor>")
             && (m_producer->get(kShotcutXmlProperty));
 }
 
@@ -736,6 +688,8 @@ void Controller::rewind(bool forceChangeDirection)
             m_producer->set_speed(speed * 2.0);
         else
             m_producer->set_speed(::floor(speed * 0.5));
+        if (m_consumer && m_consumer->is_valid())
+            m_consumer->purge();
     }
 }
 
@@ -754,6 +708,8 @@ void Controller::fastForward(bool forceChangeDirection)
             m_producer->set_speed(speed * 2.0);
         else
             m_producer->set_speed(::ceil(speed * 0.5));
+        if (m_consumer && m_consumer->is_valid())
+            m_consumer->purge();
     }
 }
 
@@ -782,95 +738,26 @@ void Controller::next(int currentPosition)
 void Controller::setIn(int in)
 {
     if (m_producer && m_producer->is_valid()) {
-        // Adjust filters.
-        bool changed = false;
-        int n = m_producer->filter_count();
-        for (int i = 0; i < n; i++) {
-            QScopedPointer<Filter> filter(m_producer->filter(i));
-            if (filter && filter->is_valid()) {
-                if (QString(filter->get(kShotcutFilterProperty)).startsWith("fadeIn")) {
-                    if (!filter->get(kShotcutAnimInProperty)) {
-                        // Convert legacy fadeIn filters.
-                        filter->set(kShotcutAnimInProperty, filter->get_length());
-                    }
-                    filter->set_in_and_out(in, filter->get_out());
-                    changed = true;
-                } else if (!filter->get_int("_loader") && filter->get_in() == m_producer->get_in()) {
-                    filter->set_in_and_out(in, filter->get_out());
-                    changed = true;
-                }
-            }
+        int delta = in - m_producer->get_in();
+        if (!delta) {
+            return;
         }
-        if (changed)
-            Controller::refreshConsumer();
+        adjustClipFilters(*m_producer, m_producer->get_in(), m_producer->get_out(), delta, 0);
         m_producer->set("in", in);
+        Controller::refreshConsumer();
     }
 }
 
 void Controller::setOut(int out)
 {
     if (m_producer && m_producer->is_valid()) {
-        // Adjust all filters that have an explicit duration.
-        bool changed = false;
-        int n = m_producer->filter_count();
-        for (int i = 0; i < n; i++) {
-            QScopedPointer<Filter> filter(m_producer->filter(i));
-            if (filter && filter->is_valid()) {
-                QString filterName = filter->get(kShotcutFilterProperty);
-                if (filterName.startsWith("fadeOut")) {
-                    if (!filter->get(kShotcutAnimOutProperty)) {
-                        // Convert legacy fadeOut filters.
-                        filter->set(kShotcutAnimOutProperty, filter->get_length());
-                    }
-                    filter->set_in_and_out(filter->get_in(), out);
-                    changed = true;
-                    if (filterName == "fadeOutBrightness") {
-                        const char* key = filter->get_int("alpha") != 1? "alpha" : "level";
-                        filter->clear(key);
-                        filter->anim_set(key, 1, filter->get_length() - filter->get_int(kShotcutAnimOutProperty));
-                        filter->anim_set(key, 0, filter->get_length() - 1);
-                    } else if (filterName == "fadeOutMovit") {
-                        filter->clear("opacity");
-                        filter->anim_set("opacity", 1, filter->get_length() - filter->get_int(kShotcutAnimOutProperty), 0, mlt_keyframe_smooth);
-                        filter->anim_set("opacity", 0, filter->get_length() - 1);
-                    } else if (filterName == "fadeOutVolume") {
-                        filter->clear("level");
-                        filter->anim_set("level", 0, filter->get_length() - filter->get_int(kShotcutAnimOutProperty));
-                        filter->anim_set("level", -60, filter->get_length() - 1);
-                    }
-                } else if (!filter->get_int("_loader") && filter->get_out() == m_producer->get_out()) {
-                    filter->set_in_and_out(filter->get_in(), out);
-                    changed = true;
-
-                    // Update simple keyframes of non-current filters.
-                    if (filter->get_int(kShotcutAnimOutProperty) > 0
-                        && MAIN.filterController()->currentFilter()
-                        && MAIN.filterController()->currentFilter()->filter().get_filter() != filter.data()->get_filter()) {
-                        QmlMetadata* meta = MAIN.filterController()->metadataForService(filter.data());
-                        if (meta && meta->keyframes()) {
-                            foreach (QString name, meta->keyframes()->simpleProperties()) {
-                                const char* propertyName = name.toUtf8().constData();
-                                if (!filter->get_animation(propertyName))
-                                    // Cause a string property to be interpreted as animated value.
-                                    filter->anim_get_double(propertyName, 0, filter->get_length());
-                                Mlt::Animation animation = filter->get_animation(propertyName);
-                                if (animation.is_valid()) {
-                                    int n = animation.key_count();
-                                    if (n > 1) {
-                                        animation.set_length(filter->get_length());
-                                        animation.key_set_frame(n - 2, filter->get_length() - filter->get_int(kShotcutAnimOutProperty));
-                                        animation.key_set_frame(n - 1, filter->get_length() - 1);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            if (changed)
-                Controller::refreshConsumer();
+        int delta = out - m_producer->get_out();
+        if (!delta) {
+            return;
         }
+        adjustClipFilters(*m_producer, m_producer->get_in(), m_producer->get_out(), 0, -delta);
         m_producer->set("out", out);
+        Controller::refreshConsumer();
     }
 }
 
@@ -905,7 +792,7 @@ QImage Controller::image(Mlt::Frame* frame, int width, int height)
             frame->set("deinterlace_method", "onefield");
             frame->set("top_field_first", -1);
         }
-        mlt_image_format format = mlt_image_rgb24a;
+        mlt_image_format format = mlt_image_rgba;
         const uchar *image = frame->get_image(format, width, height);
         if (image) {
             QImage temp(width, height, QImage::Format_ARGB32);
@@ -940,13 +827,13 @@ QImage Controller::image(Producer& producer, int frameNumber, int width, int hei
 
 void Controller::updateAvformatCaching(int trackCount)
 {
-    int i = QThread::idealThreadCount() + trackCount * 2;
+    int i = QThreadPool::globalInstance()->maxThreadCount() + trackCount * 2;
     mlt_service_cache_set_size(nullptr, "producer_avformat", qMax(4, i));
 }
 
 bool Controller::isAudioFilter(const QString &name)
 {
-    QScopedPointer<Properties> metadata(m_repo->metadata(filter_type, name.toLatin1().constData()));
+    QScopedPointer<Properties> metadata(m_repo->metadata(mlt_service_filter_type, name.toLatin1().constData()));
     if (metadata->is_valid()) {
         Properties tags(metadata->get_data("tags"));
         if (tags.is_valid()) {
@@ -981,7 +868,7 @@ int Controller::realTime() const
 void Controller::setImageDurationFromDefault(Service* service) const
 {
     if (service && service->is_valid()) {
-        if (isImageProducer(service)) {
+        if (isImageProducer(service) && !service->get_int("shotcut_sequence")) {
             service->set("ttl", 1);
             service->set("length", service->frames_to_time(qRound(m_profile.fps() * kMaxImageDurationSecs), mlt_time_clock));
             service->set("out", qRound(m_profile.fps() * Settings.imageDuration()) - 1);
@@ -1010,6 +897,47 @@ void Controller::lockCreationTime(Producer* producer) const
             producer->set_creation_time(creation_time);
         }
     }
+}
+
+Producer* Controller::setupNewProducer(Producer* newProducer) const
+{
+    // Call this function before adding a new producer to Shotcut so that
+    // It will be configured correctly. The returned producer must be deleted.
+    QString serviceName = newProducer->get("mlt_service");
+    if (serviceName == "avformat")
+    {
+        // Convert avformat to avformat-novalidate so that XML loads faster.
+        newProducer->set("mlt_service", "avformat-novalidate");
+    }
+    setImageDurationFromDefault(newProducer);
+    lockCreationTime(newProducer);
+    newProducer->get_length_time(mlt_time_clock);
+
+    if (serviceName.startsWith("avformat"))
+    {
+        newProducer->set("mute_on_pause", 0);
+        // Encapsulate in a chain to enable timing effects
+        if (newProducer->type() != mlt_service_chain_type)
+        {
+            Mlt::Chain* chain = new Mlt::Chain(MLT.profile());
+            chain->set_source(*newProducer);
+
+            // Move all non-loader filters to the chain in case this was a clip-only project.
+            int i = 0;
+            QScopedPointer<Mlt::Filter> filter(newProducer->filter(i));
+            while (filter && filter->is_valid()) {
+                if (!filter->get_int("_loader")) {
+                    newProducer->detach(*filter);
+                    chain->Service::attach(*filter);
+                } else {
+                    ++i;
+                }
+                filter.reset(newProducer->filter(i));
+            }
+            return chain;
+        }
+    }
+    return new Mlt::Producer(newProducer);
 }
 
 QUuid Controller::uuid(Mlt::Properties &properties) const
@@ -1052,6 +980,22 @@ void Controller::copyFilters(Producer& fromProducer, Producer& toProducer, bool 
                     if (fromFilter->get_out() != out) {
                         toFilter.set(kFilterOutProperty, fromFilter->get_out() - fromFilter->get_in());
                     }
+                }
+            }
+        }
+    }
+
+    if (fromProducer.type() == mlt_service_chain_type && toProducer.type() == mlt_service_chain_type) {
+        Mlt::Chain fromChain(fromProducer);
+        Mlt::Chain toChain(toProducer);
+        count = fromChain.link_count();
+        for (int i = 0; i < count; i++) {
+            QScopedPointer<Mlt::Link> fromLink(fromChain.link(i));
+            if (fromLink && fromLink->is_valid() && fromLink->get("mlt_service")) {
+                Mlt::Link toLink(fromLink->get("mlt_service"));
+                if (toLink.is_valid()) {
+                    toLink.inherit(*fromLink);
+                    toChain.attach(toLink);
                 }
             }
         }
@@ -1129,11 +1073,10 @@ void Controller::adjustFilters(Producer& producer, int index)
                     QmlMetadata* meta = MAIN.filterController()->metadataForService(filter.data());
                     if (meta && meta->keyframes()) {
                         foreach (QString name, meta->keyframes()->simpleProperties()) {
-                            const char* propertyName = name.toUtf8().constData();
-                            if (!filter->get_animation(propertyName))
+                            if (!filter->get_animation(name.toUtf8().constData()))
                                 // Cause a string property to be interpreted as animated value.
-                                filter->anim_get_double(propertyName, 0, filter->get_length());
-                            Mlt::Animation animation = filter->get_animation(propertyName);
+                                filter->anim_get_double(name.toUtf8().constData(), 0, filter->get_length());
+                            Mlt::Animation animation = filter->get_animation(name.toUtf8().constData());
                             if (animation.is_valid()) {
                                 int n = animation.key_count();
                                 if (n > 1) {
@@ -1150,6 +1093,181 @@ void Controller::adjustFilters(Producer& producer, int index)
     }
     if (changed)
         MLT.refreshConsumer();
+}
+
+static void shiftKeyframes(Mlt::Service* service, QmlMetadata* meta, int delta)
+{
+    if (!meta || !meta->keyframes() || meta->keyframes()->parameterCount() < 1) {
+        return;
+    }
+    QmlKeyframesMetadata* keyMeta = meta->keyframes();
+    for (int parameterIndex = 0; parameterIndex < keyMeta->parameterCount(); parameterIndex++) {
+        QmlKeyframesParameter* paramMeta = keyMeta->parameter(parameterIndex);
+        QString name = paramMeta->property();
+        Mlt::Animation animation = service->get_animation(qUtf8Printable(name));
+        if (animation.is_valid()) {
+            // Keyframes are not allowed to have negative positions because
+            // there is no way for the user to interact with them.
+            // Handle keyframes that will become negative by deleting them.
+            if (animation.key_get_frame(0) < delta)
+            {
+                // Create a new keyframe at position that will become 0 based on interpolated value
+                int previous = animation.previous_key(delta);
+                mlt_keyframe_type existingType = animation.keyframe_type(previous);
+                if (paramMeta->isRectangle()) {
+                    auto value = service->anim_get_rect(qUtf8Printable(name), delta);
+                    service->anim_set(qUtf8Printable(name), value, delta, 0, existingType);
+                } else {
+                    double value = service->anim_get_double(qUtf8Printable(name), delta);
+                    service->anim_set(qUtf8Printable(name), value, delta, 0, existingType);
+                    foreach (QString gangName, paramMeta->gangedProperties()) {
+                        Mlt::Animation gangAnim = service->get_animation(qUtf8Printable(gangName));
+                        double gangValue = service->anim_get_double(qUtf8Printable(gangName), delta);
+                        service->anim_set(qUtf8Printable(gangName), gangValue, delta, existingType);
+                    }
+                }
+                // Remove all keyframes that will be negative position
+                int count = animation.key_count();
+                for (int keyframeIndex = 0; keyframeIndex < count;) {
+                    int frame = animation.key_get_frame(keyframeIndex);
+                    if (frame < delta) {
+                        animation.remove(frame);
+                        animation.interpolate();
+                        --count;
+                    } else {
+                        break;
+                    }
+                }
+                foreach (QString gangName, paramMeta->gangedProperties()) {
+                    Mlt::Animation gangAnim = service->get_animation(qUtf8Printable(gangName));
+                    int gangKeyCount = gangAnim.key_count();
+                    for (int keyframeIndex = 0; keyframeIndex < gangKeyCount;) {
+                        int frame = gangAnim.key_get_frame(keyframeIndex);
+                        if (frame < delta) {
+                            gangAnim.remove(frame);
+                            gangAnim.interpolate();
+                            gangKeyCount -= 1;
+                        } else {
+                            break;
+                        }
+                    }
+                }
+            }
+            // Shift all the keyframes proportional to the delta
+            animation.shift_frames(-delta);
+            foreach (QString gangName, paramMeta->gangedProperties()) {
+                Mlt::Animation gangAnim = service->get_animation(qUtf8Printable(gangName));
+                gangAnim.shift_frames(-delta);
+            }
+        }
+    }
+}
+
+void Controller::adjustFilter(Mlt::Filter* filter, int in, int out, int inDelta, int outDelta)
+{
+    if (!filter || !filter->is_valid()) {
+        return;
+    }
+
+    QString filterName = filter->get(kShotcutFilterProperty);
+    QmlMetadata* meta = MAIN.filterController()->metadataForService(filter);
+    if (inDelta) {
+        if (in + inDelta < 0) {
+            inDelta = -in;
+        }
+        if (filter->get_int(kShotcutAnimInProperty) == filter->get_int(kShotcutAnimOutProperty)) {
+            // Shift all keyframes proportional to the in delta if they are not simple keyframes
+            shiftKeyframes(filter,  meta, inDelta);
+        }
+        if (filterName.startsWith("fadeIn")) {
+            if (!filter->get(kShotcutAnimInProperty)) {
+                // Convert legacy fadeIn filters.
+                filter->set(kShotcutAnimInProperty, filter->get_length());
+            }
+            filter->set_in_and_out(in + inDelta, filter->get_out());
+            emit MAIN.serviceInChanged(inDelta, filter);
+        } else if (!filter->get_int("_loader") && filter->get_in() <= in) {
+            filter->set_in_and_out(in + inDelta, filter->get_out());
+            emit MAIN.serviceInChanged(inDelta, filter);
+        }
+    }
+
+    if (outDelta) {
+        if (filterName.startsWith("fadeOut")) {
+            if (!filter->get(kShotcutAnimOutProperty)) {
+                // Convert legacy fadeOut filters.
+                filter->set(kShotcutAnimOutProperty, filter->get_length());
+            }
+            filter->set_in_and_out(filter->get_in(), out - outDelta);
+            if (filterName == "fadeOutBrightness") {
+                const char* key = filter->get_int("alpha") != 1? "alpha" : "level";
+                filter->clear(key);
+                filter->anim_set(key, 1, filter->get_length() - filter->get_int(kShotcutAnimOutProperty));
+                filter->anim_set(key, 0, filter->get_length() - 1);
+            } else if (filterName == "fadeOutMovit") {
+                filter->clear("opacity");
+                filter->anim_set("opacity", 1, filter->get_length() - filter->get_int(kShotcutAnimOutProperty), 0, mlt_keyframe_smooth);
+                filter->anim_set("opacity", 0, filter->get_length() - 1);
+            } else if (filterName == "fadeOutVolume") {
+                filter->clear("level");
+                filter->anim_set("level", 0, filter->get_length() - filter->get_int(kShotcutAnimOutProperty));
+                filter->anim_set("level", -60, filter->get_length() - 1);
+            }
+            emit MAIN.serviceOutChanged(outDelta, filter);
+        } else if (!filter->get_int("_loader")  && filter->get_out() >= out) {
+            filter->set_in_and_out(filter->get_in(), out - outDelta);
+            emit MAIN.serviceOutChanged(outDelta, filter);
+
+            // Update simple keyframes
+            if (filter->get_int(kShotcutAnimOutProperty) && meta && meta->keyframes()) {
+                foreach (QString name, meta->keyframes()->simpleProperties()) {
+                    if (!filter->get_animation(name.toUtf8().constData()))
+                        // Cause a string property to be interpreted as animated value.
+                        filter->anim_get_double(name.toUtf8().constData(), 0, filter->get_length());
+                    Mlt::Animation animation = filter->get_animation(name.toUtf8().constData());
+                    if (animation.is_valid()) {
+                        int n = animation.key_count();
+                        if (n > 1) {
+                            animation.set_length(filter->get_length());
+                            animation.key_set_frame(n - 2, filter->get_length() - filter->get_int(kShotcutAnimOutProperty));
+                            animation.key_set_frame(n - 1, filter->get_length() - 1);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+void Controller::adjustClipFilters(Mlt::Producer& producer, int in, int out, int inDelta, int outDelta)
+{
+    for (int j = 0; j < producer.filter_count(); j++) {
+        QScopedPointer<Mlt::Filter> filter(producer.filter(j));
+        adjustFilter(filter.data(), in, out, inDelta, outDelta);
+    }
+
+    // Adjust link in/out
+    if (producer.type() == mlt_service_chain_type) {
+        Mlt::Chain chain(producer);
+        int link_count = chain.link_count();
+        for (int j = 0; j < chain.link_count(); j++) {
+            QScopedPointer<Mlt::Link> link(chain.link(j));
+            QmlMetadata* meta = MAIN.filterController()->metadataForService(link.data());
+            if (link && link->is_valid()) {
+                if (inDelta) {
+                    shiftKeyframes(link.data(),  meta, inDelta);
+                }
+                if (link->get_out() >= out) {
+                    link->set_in_and_out(link->get_in(), out - outDelta);
+                    emit MAIN.serviceOutChanged(outDelta, link.data());
+                }
+                if (link->get_in() <= in) {
+                    link->set_in_and_out(in + inDelta, link->get_out());
+                    emit MAIN.serviceInChanged(inDelta, link.data());
+                }
+            }
+        }
+    }
 }
 
 void Controller::setSavedProducer(Mlt::Producer* producer)
@@ -1233,7 +1351,6 @@ int Controller::filterOut(Playlist& playlist, int clipIndex)
 
 void Controller::setPreviewScale(int scale)
 {
-#if LIBMLT_VERSION_INT >= MLT_VERSION_PREVIEW_SCALE
     auto width = m_profile.width();
     auto height = m_profile.height();
     if (scale > 0) {
@@ -1249,7 +1366,6 @@ void Controller::setPreviewScale(int scale)
         m_consumer->set("width", width);
         m_consumer->set("height", height);
     }
-#endif
 }
 
 void Controller::updatePreviewProfile()
@@ -1262,6 +1378,32 @@ void Controller::updatePreviewProfile()
     m_previewProfile.set_sample_aspect(m_profile.sample_aspect_num(), m_profile.sample_aspect_den());
     m_previewProfile.set_display_aspect(m_profile.display_aspect_num(), m_profile.display_aspect_den());
     m_previewProfile.set_explicit(true);
+}
+
+void Controller::purgeMemoryPool()
+{
+    ::mlt_pool_purge();
+}
+
+bool Controller::fullRange(Producer& producer)
+{
+    bool full = !qstrcmp(producer.get("meta.media.color_range"), "full");
+    for (int i = 0; !full && i < producer.get_int("meta.media.nb_streams"); i++) {
+        QString key = QString("meta.media.%1.stream.type").arg(i);
+        QString streamType(producer.get(key.toLatin1().constData()));
+        if (streamType == "video") {
+            if (i == producer.get_int("video_index")) {
+                key = QString("meta.media.%1.codec.pix_fmt").arg(i);
+                QString pix_fmt = QString::fromLatin1(producer.get(key.toLatin1().constData()));
+                if (pix_fmt.startsWith("yuvj")) {
+                    full = true;
+                } else if (pix_fmt.contains("gbr") || pix_fmt.contains("rgb")) {
+                    full = true;
+                }
+            }
+        }
+    }
+    return full;
 }
 
 void TransportControl::play(double speed)

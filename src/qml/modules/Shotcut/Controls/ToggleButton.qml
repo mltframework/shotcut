@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Meltytech, LLC
+ * Copyright (c) 2018-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,35 +16,25 @@
  */
 
 import QtQuick 2.2
-import QtQuick.Controls 1.1
-import QtQuick.Controls.Styles 1.1
+import QtQuick.Controls 2.12
 import Shotcut.Controls 1.0 as Shotcut
 
-CheckBox {
-    property string iconName
-    property url iconSource
-    property alias tooltip: tooltip.text
-    property bool border: true
-    implicitWidth: 26
-    implicitHeight: 22
+ToolButton {
+    padding: 2
+    checkable: true
+    hoverEnabled: true
+    display: AbstractButton.TextBesideIcon
 
-    anchors.verticalCenter: parent.verticalCenter
-    style: CheckBoxStyle {
-        background: Rectangle {
-            radius: 3
-            SystemPalette { id: activePalette }
-            color: control.checked? activePalette.highlight : activePalette.button
-            border.color: activePalette.shadow
-            border.width: (control.border && !control.checked) ? 1 : 0
-        }
-        indicator: ToolButton {
-            id: toolbutton
-            x: control.border? 3 : 0
-            implicitWidth: control.border? 20 : 26
-            implicitHeight: control.border? 18 : 22
-            iconName: control.iconName
-            iconSource: control.iconSource
-        }
+    SystemPalette { id: activePalette }
+    palette.buttonText: activePalette.buttonText
+
+    background: Rectangle {
+        radius: 3
+        color: parent.checked ? activePalette.highlight : activePalette.button
+        border.color: activePalette.shadow
+        border.width: parent.checked ? 0 : 1
     }
-    Shotcut.ToolTip { id: tooltip }
+
+    Keys.onReturnPressed: clicked()
+    Keys.onEnterPressed: clicked()
 }

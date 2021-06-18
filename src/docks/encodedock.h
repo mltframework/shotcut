@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2020 Meltytech, LLC
+ * Copyright (c) 2012-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -60,6 +60,8 @@ public slots:
     void onAudioChannelsChanged();
     void onProducerOpened();
     void onProfileChanged();
+    void on_hwencodeButton_clicked();
+    bool detectHardwareEncoders();
 
 private slots:
     void on_presetsTree_clicked(const QModelIndex &index);
@@ -97,7 +99,7 @@ private slots:
 
     void on_fromCombo_currentIndexChanged(int index);
 
-    void on_videoCodecCombo_currentIndexChanged(int index, bool ignorePreset = false);
+    void on_videoCodecCombo_currentIndexChanged(int index);
 
     void on_audioCodecCombo_currentIndexChanged(int index);
 
@@ -110,8 +112,6 @@ private slots:
     void on_advancedButton_clicked(bool checked);
 
     void on_hwencodeCheckBox_clicked(bool checked);
-
-    void on_hwencodeButton_clicked();
 
     void on_advancedCheckBox_clicked(bool checked);
 
@@ -143,23 +143,23 @@ private:
     QString m_extension;
     Mlt::Properties *m_profiles;
     PresetsProxyModel m_presetsModel;
-    QString m_outputFilename;
+    QStringList m_outputFilenames;
     bool m_isDefaultSettings;
     double m_fps;
 
     void loadPresets();
-    Mlt::Properties* collectProperties(int realtime);
+    Mlt::Properties* collectProperties(int realtime, bool includeProfile = false);
     void collectProperties(QDomElement& node, int realtime);
     MeltJob* createMeltJob(Mlt::Producer* service, const QString& target, int realtime, int pass = 0);
     void runMelt(const QString& target, int realtime = -1);
-#if LIBMLT_VERSION_INT >= MLT_VERSION_CPP_UPDATED
     void enqueueAnalysis();
-#endif
-    void enqueueMelt(const QString& target, int realtime);
+    void enqueueMelt(const QStringList& targets, int realtime);
     void encode(const QString& target);
     void resetOptions();
     Mlt::Producer* fromProducer() const;
     static void filterX265Params(QStringList& other);
+    void onVideoCodecComboChanged(int index, bool ignorePreset = false);
+    bool checkForMissingFiles();
 };
 
 #endif // ENCODEDOCK_H

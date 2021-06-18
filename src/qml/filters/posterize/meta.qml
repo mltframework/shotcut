@@ -13,7 +13,7 @@ Metadata {
         simpleProperties: ['0']
         parameters: [
             Parameter {
-                name: qsTr('Levels')
+                name: qsTr('Levels', 'Posterize filter')
                 property: '0'
                 isSimple: true
                 isCurve: true

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Meltytech, LLC
+ * Copyright (c) 2019-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,12 +15,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.0
-import QtQuick.Controls 1.1
-import QtQuick.Layouts 1.1
-import Shotcut.Controls 1.0
+import QtQuick 2.12
+import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.12
+import Shotcut.Controls 1.0 as Shotcut
 
-KeyframableFilter {
+Shotcut.KeyframableFilter {
     property string glitchFreq: '0'
     property string blockH: '1'
     property string shiftInt: '2'
@@ -53,9 +53,13 @@ KeyframableFilter {
         var position = getPosition()
         blockUpdate = true
         glitchFreqSlider.value = filter.getDouble(glitchFreq, position) * glitchFreqSlider.maximumValue
+        glitchKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(glitchFreq) > 0
         blockHSlider.value = filter.getDouble(blockH, position) * blockHSlider.maximumValue
+        blockKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(blockH) > 0
         shiftIntSlider.value = filter.getDouble(shiftInt, position) * shiftIntSlider.maximumValue
+        shiftKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(shiftInt) > 0
         colorIntSlider.value = filter.getDouble(colorInt, position) * colorIntSlider.maximumValue
+        colorKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(colorInt) > 0
         blockUpdate = false
         enableControls(isSimpleKeyframesActive())
     }
@@ -81,7 +85,7 @@ KeyframableFilter {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: preset
             parameters: [glitchFreq, blockH, shiftInt, colorInt]
             Layout.columnSpan: 3
@@ -98,7 +102,7 @@ KeyframableFilter {
             text: qsTr('Frequency')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: glitchFreqSlider
             minimumValue: 0
             maximumValue: 100
@@ -107,12 +111,11 @@ KeyframableFilter {
             suffix: ' %'
             onValueChanged: updateFilter(glitchFreq, glitchFreqSlider.value / glitchFreqSlider.maximumValue, glitchKeyframesButton, getPosition())
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: glitchFreqSlider.value = glitchFreqDefault * glitchFreqSlider.maximumValue
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: glitchKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(glitchFreq) > 0
             onToggled: {
                 enableControls(true)
                 toggleKeyframes(checked, glitchFreq, glitchFreqSlider.value / glitchFreqSlider.maximumValue)
@@ -123,7 +126,7 @@ KeyframableFilter {
             text: qsTr('Block height')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: blockHSlider
             minimumValue: 0
             maximumValue: 100
@@ -132,23 +135,22 @@ KeyframableFilter {
             suffix: ' %'
             onValueChanged: updateFilter(blockH, blockHSlider.value / blockHSlider.maximumValue, blockKeyframesButton, getPosition())
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: blockHSlider.value = blockHDefault * blockHSlider.maximumValue
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: blockKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(blockH) > 0
             onToggled: {
                 enableControls(true)
                 toggleKeyframes(checked, blockH, blockHSlider.value / blockHSlider.maximumValue)
             }
         }
 
-Label {
+        Label {
             text: qsTr('Shift intensity')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: shiftIntSlider
             minimumValue: 0
             maximumValue: 100
@@ -157,12 +159,11 @@ Label {
             suffix: ' %'
             onValueChanged: updateFilter(shiftInt, shiftIntSlider.value / shiftIntSlider.maximumValue, shiftKeyframesButton, getPosition())
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: shiftIntSlider.value = shiftIntDefault * shiftIntSlider.maximumValue
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: shiftKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(shiftInt) > 0
             onToggled: {
                 enableControls(true)
                 toggleKeyframes(checked, shiftInt, shiftIntSlider.value / shiftIntSlider.maximumValue)
@@ -173,7 +174,7 @@ Label {
             text: qsTr('Color intensity')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: colorIntSlider
             minimumValue: 0
             maximumValue: 100
@@ -182,12 +183,11 @@ Label {
             suffix: ' %'
             onValueChanged: updateFilter(colorInt, colorIntSlider.value / colorIntSlider.maximumValue, colorKeyframesButton, getPosition())
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: colorIntSlider.value = colorIntDefault * colorIntSlider.maximumValue
         }
-        KeyframesButton {
+        Shotcut.KeyframesButton {
             id: colorKeyframesButton
-            checked: filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(colorInt) > 0
             onToggled: {
                 enableControls(true)
                 toggleKeyframes(checked, colorInt, colorIntSlider.value / colorIntSlider.maximumValue)
@@ -205,6 +205,7 @@ Label {
         onOutChanged: updateSimpleKeyframes()
         onAnimateInChanged: updateSimpleKeyframes()
         onAnimateOutChanged: updateSimpleKeyframes()
+        onPropertyChanged: setControls()
     }
 
     Connections {

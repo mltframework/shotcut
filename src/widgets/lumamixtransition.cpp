@@ -141,7 +141,7 @@ Mlt::Transition *LumaMixTransition::getTransition(const QString &name)
 {
     QScopedPointer<Mlt::Service> service(m_producer.producer());
     while (service && service->is_valid()) {
-        if (service->type() == transition_type) {
+        if (service->type() == mlt_service_transition_type) {
             Mlt::Transition transition(*service);
             if (name == transition.get("mlt_service"))
                 return new Mlt::Transition(transition);
@@ -192,11 +192,12 @@ void LumaMixTransition::on_lumaCombo_activated(int index)
 #ifdef Q_OS_MAC
             path.append("/*");
 #endif
-            QString filename = QFileDialog::getOpenFileName(this, tr("Open File"), path);
+            QString filename = QFileDialog::getOpenFileName(this, tr("Open File"), path,
+                    QString(), nullptr, Util::getFileDialogOptions());
             activateWindow();
             if (!filename.isEmpty()) {
                 transition->set("resource", filename.toUtf8().constData());
-                MAIN.getHash(*transition);
+                Util::getHash(*transition);
             }
         } else {
             ui->softnessLabel->setText(tr("Softness"));

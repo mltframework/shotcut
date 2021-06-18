@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2018 Meltytech, LLC
+ * Copyright (c) 2014-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -39,14 +39,25 @@ public:
         ServiceRole,
         IsAudioRole,
         NeedsGpuRole,
-        VisibleRole
+        VisibleRole,
+        PluginTypeRole,
     };
 
     enum MetadataFilter {
         NoFilter,
         FavoritesFilter,
         VideoFilter,
-        AudioFilter
+        AudioFilter,
+        LinkFilter,
+    };
+
+    enum FilterMaskBits {
+        HiddenMaskBit = 1 << 0,
+        clipOnlyMaskBit = 1 << 1,
+        gpuIncompatibleMaskBit = 1 << 2,
+        gpuAlternativeMaskBit = 1 << 3,
+        needsGPUMaskBit = 1 << 4,
+        linkMaskBit = 1 << 5,
     };
 
     explicit MetadataModel(QObject *parent = 0);
@@ -67,6 +78,7 @@ public:
     void setSearch(const QString& search);
     Q_INVOKABLE bool isVisible(int row) const;
     void setIsClipProducer(bool isClipProducer);
+    void setIsChainProducer(bool isChainProducer);
 
 signals:
     void filterChanged();
@@ -77,7 +89,11 @@ private:
     MetadataList m_list;
     MetadataFilter m_filter;
     bool m_isClipProducer;
+    bool m_isChainProducer;
     QString m_search;
+    unsigned m_filterMask;
+
+    unsigned computeFilterMask(const QmlMetadata* meta);
 };
 
 #endif // METADATAMODEL_H

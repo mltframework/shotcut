@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2019 Meltytech, LLC
+ * Copyright (c) 2015-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,10 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.1
-import QtQuick.Controls 1.0
-import QtQuick.Layouts 1.0
-import Shotcut.Controls 1.0
+import QtQuick 2.12
+import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.12
+import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     width: 350
@@ -106,7 +106,7 @@ Item {
             text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
-        Preset {
+        Shotcut.Preset {
             id: preset
             parameters: ['0', '1', '2', '3', '4', '5', '6']
             Layout.columnSpan: 2
@@ -116,9 +116,9 @@ Item {
         Label {
             text: qsTr('Room size')
             Layout.alignment: Qt.AlignRight
-            ToolTip {text: qsTr('The size of the room, in meters. Excessively large, and excessively small values will make it sound a bit unrealistic. Values of around 30 sound good.')}
+            Shotcut.HoverTip {text: qsTr('The size of the room, in meters. Excessively large, and excessively small values will make it sound a bit unrealistic. Values of around 30 sound good.')}
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: sliderRoom
             minimumValue: 1
             maximumValue: 300
@@ -128,7 +128,7 @@ Item {
                 filter.set('0', value)
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: sliderRoom.value = 30
         }
 
@@ -136,7 +136,7 @@ Item {
             text: qsTr('Reverb time')
             Layout.alignment: Qt.AlignRight
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: sliderTime
             minimumValue: .1
             maximumValue: 30
@@ -147,16 +147,16 @@ Item {
                 filter.set('1', value)
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: sliderTime.value = 7.5
         }
 
         Label {
             text: qsTr('Damping')
             Layout.alignment: Qt.AlignRight
-            ToolTip {text: qsTr('This controls the high frequency damping (a lowpass filter), values near 1 will make it sound very bright, values near 0 will make it sound very dark.')}
+            Shotcut.HoverTip {text: qsTr('This controls the high frequency damping (a lowpass filter), values near 1 will make it sound very bright, values near 0 will make it sound very dark.')}
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: sliderDamp
             minimumValue: 0
             maximumValue: 100
@@ -167,16 +167,16 @@ Item {
                 filter.set('2', value / maximumValue)
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: sliderDamp.value = 0.5 * sliderDamp.maximumValue
         }
 
         Label {
             text: qsTr('Input bandwidth')
             Layout.alignment: Qt.AlignRight
-            ToolTip {text: qsTr('This is like a damping control for the input, it has a similar effect to the damping control, but is subtly different.')}
+            Shotcut.HoverTip {text: qsTr('This is like a damping control for the input, it has a similar effect to the damping control, but is subtly different.')}
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: sliderInput
             minimumValue: 0
             maximumValue: 100
@@ -187,16 +187,16 @@ Item {
                 filter.set('3', value / maximumValue)
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: sliderInput.value = 0.75 * sliderInput.maximumValue
         }
 
         Label {
             text: qsTr('Dry signal level')
             Layout.alignment: Qt.AlignRight
-            ToolTip {text: qsTr('The amount of dry signal to be mixed with the reverberated signal.')}
+            Shotcut.HoverTip {text: qsTr('The amount of dry signal to be mixed with the reverberated signal.')}
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: sliderDry
             minimumValue: -70
             maximumValue: 0
@@ -207,16 +207,16 @@ Item {
                 filter.set('4', value)
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: sliderDry.value = 0
         }
 
         Label {
             text: qsTr('Early reflection level')
             Layout.alignment: Qt.AlignRight
-            ToolTip {text: qsTr('The distance from the threshold where the knee curve starts.')}
+            Shotcut.HoverTip {text: qsTr('The distance from the threshold where the knee curve starts.')}
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: sliderReflection
             minimumValue: -70
             maximumValue: 0
@@ -227,15 +227,15 @@ Item {
             }
         }
 
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: sliderReflection.value = -10
         }
         Label {
             text: qsTr('Tail level')
             Layout.alignment: Qt.AlignRight
-            ToolTip {text: qsTr('The quantity of early reflections (scatter reflections directly from the source).')}
+            Shotcut.HoverTip {text: qsTr('The quantity of early reflections (scatter reflections directly from the source).')}
         }
-        SliderSpinner {
+        Shotcut.SliderSpinner {
             id: sliderTail
             minimumValue: -70
             maximumValue: 0
@@ -246,7 +246,7 @@ Item {
                 filter.set('6', value)
             }
         }
-        UndoButton {
+        Shotcut.UndoButton {
             onClicked: sliderTail.value = -17.5
         }
 

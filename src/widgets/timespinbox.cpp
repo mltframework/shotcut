@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2012-2019 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2012-2020 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -66,10 +65,10 @@ QString TimeSpinBox::textFromValue(int val) const
 
 void TimeSpinBox::keyPressEvent(QKeyEvent* event)
 {
-    if (event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return)
-        clearFocus();
-    else
-        QSpinBox::keyPressEvent(event);
+    QSpinBox::keyPressEvent(event);
+    if (event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return) {
+        event->accept();
+    }
 }
 
 
