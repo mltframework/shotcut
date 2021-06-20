@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2019 Meltytech, LLC
+ * Copyright (c) 2012-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -70,7 +70,9 @@ bool AbstractJob::stopped() const
 
 void AbstractJob::appendToLog(const QString& s)
 {
-    m_log.append(s);
+    if (m_log.size() < 100*1024*1024 /* MiB */) {
+        m_log.append(s);
+    }
 }
 
 QString AbstractJob::log() const
