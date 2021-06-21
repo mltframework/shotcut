@@ -33,6 +33,7 @@ class QmlProducer : public QObject
     Q_PROPERTY(int out READ out() NOTIFY outChanged)
     Q_PROPERTY(int aspectRatio READ aspectRatio() NOTIFY producerChanged)
     Q_PROPERTY(int duration READ duration() NOTIFY durationChanged)
+    Q_PROPERTY(int length READ length() NOTIFY lengthChanged)
     Q_PROPERTY(QString resource READ resource() NOTIFY producerChanged)
     Q_PROPERTY(QString mlt_service READ mlt_service() NOTIFY producerChanged)
     Q_PROPERTY(QString hash READ hash() NOTIFY producerChanged)
@@ -51,6 +52,7 @@ public:
     int out();
     double aspectRatio();
     int duration() { return m_producer.is_valid()? out() - in() + 1 : 0; }
+    int length() { return m_producer.is_valid()? m_producer.get_length() : 0; }
     QString resource();
     QString mlt_service() { return m_producer.is_valid()? m_producer.get("mlt_service") : QString(); }
     QString hash() { return m_producer.is_valid()? m_producer.get(kShotcutHashProperty) : QString(); }
@@ -78,6 +80,7 @@ signals:
     void outChanged(int delta);
     void audioLevelsChanged();
     void durationChanged();
+    void lengthChanged();
 
 public slots:
     void setProducer(Mlt::Producer& producer);
