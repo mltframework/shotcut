@@ -128,31 +128,31 @@ Item {
         }
         onAccepted: {
             var position = getPosition()
+            var maxValue = (producer.length - producer.in) / profile.fps
+            var newValue = filter.getDouble("map", position)
             if (direction == 'after') {
                 var nextPosition = filter.getNextKeyframePosition("map", position)
                 if (nextPosition > position) {
                     var deltaTime = ((nextPosition - position) / profile.fps) * speedSlider.value
                     var nextValue = filter.getDouble("map", nextPosition)
-                    var newValue = nextValue - deltaTime;
-                    if (newValue < 0) {
-                        newValue = 0
-                    }
-                    filter.set('map', newValue, position)
-                    timer.start()
+                    newValue = nextValue - deltaTime;
                 }
             } else { // before
                 var prevPosition = filter.getPrevKeyframePosition("map", position)
                 if (prevPosition < position && prevPosition >= 0) {
                     var deltaTime = ((position - prevPosition) / profile.fps) * speedSlider.value
                     var prevValue = filter.getDouble("map", prevPosition)
-                    var newValue = prevValue + deltaTime;
-                    if (newValue < 0) {
-                        newValue = 0
-                    }
-                    filter.set('map', newValue, position)
-                    timer.start()
+                    newValue = prevValue + deltaTime;
                 }
             }
+            if (newValue < 0) {
+                newValue = 0
+            }
+            if (newValue > maxValue) {
+                newValue = maxValue
+            }
+            filter.set('map', newValue, position)
+            timer.start()
         }
     }
 
@@ -187,7 +187,7 @@ Item {
             Shotcut.TimeSpinner {
                 id: mapSpinner
                 minimumValue: 0
-                maximumValue: 1000000
+                maximumValue: producer.length - producer.in
                 saveButtonVisible: false
                 undoButtonVisible: false
                 onValueChanged: {

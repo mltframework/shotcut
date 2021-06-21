@@ -237,5 +237,6 @@ void QmlProducer::setProducer(Mlt::Producer& producer)
     emit producerChanged();
     emit inChanged(0);
     emit outChanged(0);
+    emit lengthChanged();
 }
 

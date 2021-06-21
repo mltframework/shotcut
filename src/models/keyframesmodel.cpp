@@ -137,7 +137,7 @@ QVariant KeyframesModel::data(const QModelIndex& index, int role) const
             if (param->rangeType() == QmlKeyframesParameter::MinMax) {
                 return m_metadata->keyframes()->parameter(m_metadataIndex[index.row()])->maximum();
             } else if (param->rangeType() == QmlKeyframesParameter::ClipLength) {
-                int length = m_filter->producer().get_length() - 1;
+                int length = m_filter->producer().get_length() - m_filter->in();
                 return (double)length / MLT.profile().fps();
             }
             return 0.0;

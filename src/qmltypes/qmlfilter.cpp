@@ -676,9 +676,7 @@ int QmlFilter::getNextKeyframePosition(const QString& name, int position)
     int result = -1;
     Mlt::Animation animation = getAnimation(name);
     if (animation.is_valid()) {
-        position -= in();
         result = animation.next_key(animation.is_key(position) ? position + 1: position);
-        result += in();
     }
     return result;
 }
@@ -688,9 +686,7 @@ int QmlFilter::getPrevKeyframePosition(const QString& name, int position)
     int result = -1;
     Mlt::Animation animation = getAnimation(name);
     if (animation.is_valid()) {
-        position -= in();
         result = animation.previous_key(animation.is_key(position) ? position - 1: position);
-        result += in();
     }
     return result;
 }
