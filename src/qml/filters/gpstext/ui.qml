@@ -27,15 +27,18 @@ import QtQml.Models 2.12
 Item {
     id: gpsTextRoot
     width: 300
-    height: 800
+    height: 700
     
     property url settingsOpenPath: 'file:///' + settings.openPath
     Shotcut.File { id: gpsFile }
     
+    signal fileOpened(string path)
+    onFileOpened: settings.openPath = path
+    
     Component.onCompleted: {
         var resource = filter.get('gps.file')
         gpsFile.url = resource
-        
+   
         filter.blockSignals = true
 
         filter.set(textFilterUi.middleValue, Qt.rect(0, 0, profile.width, profile.height))
@@ -76,23 +79,18 @@ Item {
         //gps properties
         if (filter.isNew) {
             filter.set('major_offset', 0);
-            filter.set('minor_offset', 0);
             filter.set('majoroffset_sign', 1);
             filter.set('smoothing_value', 5);
             filter.set('videofile_timezone_seconds', 0);
-            set_sec_offset_to_textfields(0);
             filter.set('speed_multiplier', 1)
             filter.set('updates_per_second', 1);
+            filter.set('gps_processing_start_time', 'yyyy-MM-dd hh:mm:ss');
         }
         else {
             if (filter.get('gps_processing_start_time') == 'yyyy-MM-dd hh:mm:ss' && filter.get('gps_start_text') != '')
                 filter.set('gps_processing_start_time', filter.get('gps_start_text'));
         }
-        if (filter.get('gps_start_text') == '')
-            filter.set('gps_processing_start_time', 'yyyy-MM-dd hh:mm:ss');
-        else
-            filter.set('gps_processing_start_time', filter.get('gps_start_text'));
-        
+
         filter.blockSignals = false
 
         setControls();
@@ -108,6 +106,7 @@ Item {
         nameFilters: ['Supported files (*.gpx *.tcx)', 'GPS Exchange Format (*.gpx)', 'Training Center XML (*.tcx)']
         onAccepted: {
             gpsFile.url = fileDialog.fileUrl
+            gpsTextRoot.fileOpened(gpsFile.path)
             fileLabel.text = gpsFile.fileName
             fileLabel.color = activePalette.text
             fileLabelTip.text = gpsFile.filePath
@@ -146,11 +145,12 @@ Item {
         triggeredOnStart: false
         property int calls: 0
         onTriggered: {
-            if (filter.get('gps_start_text') == '' || filter.get('gps_start_text') == '--') {
+            if (filter.get('gps_start_text') == '') {
                 calls += 1;
                 if (calls > 10) {
                     gpsFinishParseTimer.stop();
                     calls = 0;
+                    filter.set('gps_processing_start_time', 'yyyy-MM-dd hh:mm:ss');
                     gps_setControls();
                 }
             }
@@ -167,7 +167,6 @@ Item {
         textArea.text = filter.get('argument');
         textFilterUi.setControls();
 
-        //gps properties
         if (filter.isNew) {
             set_sec_offset_to_textfields(0);
         }
@@ -179,13 +178,12 @@ Item {
         speed_multiplier.text = filter.get('speed_multiplier');
         video_start.text = filter.get('video_start_text');
         gps_start.text = filter.get('gps_start_text');
-        offset_slider.value = filter.get('minor_offset');
     }
 
     function gps_setControls() {
         if (gpsFile.exists()) {
             fileLabel.text = gpsFile.fileName
-            fileLabelTip.text = gpsFile.filePath
+            fileLabelTip.text = gpsFile.filePath + "\nGPS start time: " + filter.get('gps_start_text') + "\nVideo start time: " + filter.get('video_start_text')
         } else {
             fileLabel.text = qsTr("No File Loaded")
             fileLabel.color = 'red'
@@ -194,8 +192,6 @@ Item {
 
         video_start.text = filter.get('video_start_text');
         gps_start.text = filter.get('gps_start_text');
-        if (filter.get('gps_processing_start_time') == 'yyyy-MM-dd hh:mm:ss' && filter.get('gps_start_text') != '')
-            filter.set('gps_processing_start_time', filter.get('gps_start_text'));
         gps_processing_start.text = filter.get('gps_processing_start_time');
     }
     
@@ -209,10 +205,19 @@ Item {
         filter.set('major_offset', Number(offset_sec).toFixed(0))
     }
     
-    //updates text values in each TextField.text to individual parts of the number 
+    //transforms a wheel-up/down event into the correct offset direction
+    function wheel_offset(val) {
+        var offset = Number(filter.get("major_offset"));
+        if (offset < 0)
+            val *= -1;
+        if (offset == 0 && val<0) return; //fix unnatural behaviour when substracting at offset 0
+        set_sec_offset_to_textfields( offset + val );
+    }
+
+    //splits (and fills) seconds into days/hours/mins/secs textfields
     function set_sec_offset_to_textfields(secs) {
         if (secs === '')
-            return; 
+            return;
             
         if (secs < 0) {
             combo_majoroffset_sign.currentIndex = 1
@@ -228,10 +233,10 @@ Item {
         offset_mins.text = parseInt( Math.abs(secs)/60%60 , 10 )
         offset_secs.text = parseInt( Math.abs(secs)%60 , 10 )
         
+        //toFixed(0) avoids scientific notation!
         filter.set('major_offset', Number(secs).toFixed(0))
     }
-    
-    
+
     
     GridLayout {
         id: mainGrid
@@ -252,7 +257,6 @@ Item {
         }
         Label {
             id: fileLabel
-            Layout.columnSpan: 1
             Layout.fillWidth: true
             Shotcut.HoverTip { id: fileLabelTip }
         }
@@ -260,213 +264,144 @@ Item {
 
         Label {
             topPadding: 10
-            bottomPadding: 5
-            text: qsTr('<b>Sync Options</b>')
+            text: qsTr('<b>GPS options</b>')
             Layout.columnSpan: 2
-        }
-        
-        RowLayout {
-            width: 300
-            Layout.columnSpan: 2
-            
-            Label {
-                text: qsTr('Video start time:')
-                leftPadding: 10
-                Layout.alignment: Qt.AlignRight
-                Shotcut.HoverTip { text: qsTr('DateTime for the video file') }
-            } Label {
-                id: video_start
-                text: filter.get('video_start_text')
-                Layout.alignment: Qt.AlignLeft
-                Layout.columnSpan: 1
-                Shotcut.HoverTip { text: "This time will be used for synchronization.\nLikely in UTC or local time." }
-            }
-            
-            Label {
-                id: start_location_datetime
-                text: qsTr('GPS start time:')
-                leftPadding: 20
-                Layout.alignment: Qt.AlignRight
-                Shotcut.HoverTip { text: qsTr('DateTime for the GPS file') }
-            } Label {
-                id: gps_start
-                text: filter.get('gps_start_text')
-                Layout.alignment: Qt.AlignLeft
-                Layout.columnSpan: 1
-                Shotcut.HoverTip { text: qsTr('This time will be used for synchronization.\nAlways in UTC timezone.') }
-            }
         }
         
         Label {
             id: gps_sync_major
-            text: qsTr('GPS major offset')
+            text: qsTr('GPS offset')
             Layout.alignment: Qt.AlignRight
             leftPadding: 10
-            Shotcut.HoverTip { text: qsTr('This value is added to video time to sync with gps time.') }
-        } 
-        GridLayout {
-            rows: 1
-            columns: 2
-            width: 300
-            
-            RowLayout {
-                Layout.alignment: Qt.AlignLeft
-                Shotcut.ComboBox {
-                    id: combo_majoroffset_sign
-                    implicitWidth: 40
-                    model: ListModel {
-                        id: sign_val
-                        ListElement { text: '+'; value: 1}
-                        ListElement { text: '-'; value: -1}
-                    }
-                    currentIndex: 0
-                    textRole: 'text'
-                    Shotcut.HoverTip { text: qsTr('+ : Adds time to video (use if GPS is ahead)\n - : Substracts time from video (use if video is ahead)') }
-                    onActivated: {
-                        filter.set('majoroffset_sign', sign_val.get(currentIndex).value)
-                        recompute_major_offset()
-                    }
-                }
-                Label {
-                    text: qsTr('days:')
-                    Layout.alignment: Qt.AlignRight
-                    Shotcut.HoverTip { text: qsTr('Number of days to add/substract to video time to sync them.') }
-                }
-                TextField {
-                    id: offset_days
-                    text: '0'
-                    horizontalAlignment: TextInput.AlignLeft
-                    validator: IntValidator {bottom: 0; top: 36600;}
-                    implicitWidth: 25
-                    onFocusChanged: if (focus) selectAll()
-                    onEditingFinished: recompute_major_offset()
-                }
-                Label {
-                    text: qsTr(' h:')
-                    Layout.alignment: Qt.AlignRight
-                    Shotcut.HoverTip { text: qsTr('Number of hours to add/substract to video time to sync them.') }
-                } 
-                TextField {
-                    id: offset_hours
-                    text: '0'
-                    horizontalAlignment: TextInput.AlignLeft
-                    validator: IntValidator {bottom: 0; top: 59;}
-                    implicitWidth: 20
-                    onFocusChanged: if (focus) selectAll()
-                    onEditingFinished: recompute_major_offset()
-                }
-                Label {
-                    text: qsTr(' m:')
-                    Layout.alignment: Qt.AlignRight
-                    Shotcut.HoverTip { text: qsTr('Number of minutes to add/substract to video time to sync them.') }
-                } 
-                TextField {
-                    id: offset_mins
-                    text: '0'
-                    horizontalAlignment: TextInput.AlignLeft
-                    validator: IntValidator {bottom: 0; top: 59;}
-                    implicitWidth: 20
-                    onFocusChanged: if (focus) selectAll()
-                    onEditingFinished: recompute_major_offset() 
-                }
-                Label {
-                    text: qsTr(' s:')
-                    Layout.alignment: Qt.AlignRight
-                    Shotcut.HoverTip { text: qsTr('Number of seconds to add/substract to video time to sync them.') }
-                } 
-                TextField {
-                    id: offset_secs
-                    text: '0'
-                    horizontalAlignment: TextInput.AlignLeft
-                    validator: IntValidator {bottom: 0; top: 59;}
-                    implicitWidth: 20
-                    onFocusChanged: if (focus) selectAll()
-                    onEditingFinished: recompute_major_offset()
-                }
-            }
-            
-            RowLayout {
-                Layout.leftMargin: 18
-                Layout.alignment: Qt.AlignRight
-                Shotcut.Button {
-                    icon.source: 'qrc:///icons/dark/32x32/document-open-recent'
-                    Shotcut.HoverTip { text: 'Remove timezone time from video file (convert to UTC)' +
-                        '\n\nLocal timezone to remove: ' + filter.get('videofile_timezone_seconds') + ' seconds' +
-                        '\nNote: use this if your video camera doesn\'t have timezone settings as it usually  will set local time as UTC timezone.' }
-                    implicitWidth: 20
-                    implicitHeight: 20
-                    onClicked: { set_sec_offset_to_textfields(filter.get('videofile_timezone_seconds')) }
-                }
-                Shotcut.Button {
-                    icon.source: 'qrc:///icons/dark/32x32/media-skip-backward'
-                    Shotcut.HoverTip { text: 'Sync start of GPS to start of video file' +
-                        '\nNote: use this if you started GPS and video recording at the same time' }
-                    implicitWidth: 20
-                    implicitHeight: 20
-                    onClicked: { set_sec_offset_to_textfields(filter.get('auto_gps_offset_start')) }
-                }
-                Shotcut.Button {
-                    icon.source: 'qrc:///icons/dark/32x32/media-playback-pause'
-                    Shotcut.HoverTip { text: 'Sync start of GPS to current video file time at playhead' +
-                        '\nNote: use this if you started GPS recording after video recording and filmed the moment of first fix' }
-                    implicitWidth: 20
-                    implicitHeight: 20
-                    onClicked: { set_sec_offset_to_textfields(filter.get('auto_gps_offset_now')) }
-                }
-                Shotcut.UndoButton {
-                    onClicked: {
-                        set_sec_offset_to_textfields(0);
-                        //offset_secs.text = 0; 
-                    }
-                }
-            }
-        }
-        
-        Label {
-            id: gps_sync_minor
-            text: qsTr('GPS minor offset')
-            Layout.alignment: Qt.AlignRight
-            leftPadding: 10
-            Shotcut.HoverTip { text: qsTr('This value is also added to gps time to sync with video time') }
+            Shotcut.HoverTip { text: qsTr('This is added to video time to sync with gps time.') }
         } 
         RowLayout {
-            Shotcut.SliderSpinner {
-                id: offset_slider
-                minimumValue: -60
-                maximumValue: 60
-                Layout.maximumWidth: 300
-                implicitWidth: 300
-                suffix: ' seconds'
-                onValueChanged: {
-                    filter.set('minor_offset', value)
+            Shotcut.ComboBox {
+                id: combo_majoroffset_sign
+                implicitWidth: 39
+                model: ListModel {
+                    id: sign_val
+                    ListElement { text: '+'; value: 1}
+                    ListElement { text: '-'; value: -1}
                 }
+                currentIndex: 0
+                textRole: 'text'
+                Shotcut.HoverTip { text: qsTr('+ : Adds time to video (use if GPS is ahead)\n - : Substracts time from video (use if video is ahead)') }
+                onActivated: {
+                    filter.set('majoroffset_sign', sign_val.get(currentIndex).value)
+                    recompute_major_offset()
+                }
+            }
+            Label {
+                text: qsTr('days:')
+                Layout.alignment: Qt.AlignRight
+                Shotcut.HoverTip { text: qsTr('Number of days to add/substract to video time to sync them.') }
+            }
+            TextField {
+                id: offset_days
+                text: '0'
+                horizontalAlignment: TextInput.AlignRight
+                validator: IntValidator {bottom: 0; top: 36600;}
+                implicitWidth: 25
+                MouseArea {
+                    anchors.fill: parent
+                    onWheel: wheel_offset( wheel.angleDelta.y>0 ? 86400 : -86400 )
+                    onClicked: offset_days.forceActiveFocus()
+                }
+                onFocusChanged: if (focus) selectAll()
+                onEditingFinished: recompute_major_offset()
+                Shotcut.HoverTip { text: qsTr('Number of days to add/substract to video time to sync them.') }
+            }
+            Label {
+                text: qsTr(' h:')
+                Layout.alignment: Qt.AlignRight
+                Shotcut.HoverTip { text: qsTr('Number of hours to add/substract to video time to sync them.') }
+            }
+            TextField {
+                id: offset_hours
+                text: '0'
+                horizontalAlignment: TextInput.AlignRight
+                validator: IntValidator {bottom: 0; top: 59;}
+                implicitWidth: 20
+                MouseArea {
+                    anchors.fill: parent
+                    onWheel: wheel_offset( wheel.angleDelta.y>0 ? 3600 : -3600 )
+                    onClicked: { offset_hours.forceActiveFocus() }
+                }
+                onFocusChanged: if (focus) selectAll()
+                onEditingFinished: recompute_major_offset();
+                Shotcut.HoverTip { text: qsTr('Number of hours to add/substract to video time to sync them.') }
+            }
+            Label {
+                text: qsTr('m:')
+                Layout.alignment: Qt.AlignRight
+                Shotcut.HoverTip { text: qsTr('Number of minutes to add/substract to video time to sync them.') }
+            }
+            TextField {
+                id: offset_mins
+                text: '0'
+                horizontalAlignment: TextInput.AlignRight
+                validator: IntValidator {bottom: 0; top: 59;}
+                implicitWidth: 20
+                MouseArea {
+                    anchors.fill: parent
+                    onWheel: wheel_offset( wheel.angleDelta.y>0 ? 60 : -60 )
+                    onClicked: { offset_mins.forceActiveFocus() }
+                }
+                onFocusChanged: if (focus) selectAll()
+                onEditingFinished: recompute_major_offset()
+                Shotcut.HoverTip { text: qsTr('Number of minutes to add/substract to video time to sync them.') }
+            }
+            Label {
+                text: qsTr('s:')
+                Layout.alignment: Qt.AlignRight
+                Shotcut.HoverTip { text: qsTr('Number of seconds to add/substract to video time to sync them.') }
+            }
+            TextField {
+                id: offset_secs
+                text: '0'
+                horizontalAlignment: TextInput.AlignRight
+                validator: IntValidator {bottom: 0; top: 59;}
+                implicitWidth: 20
+                MouseArea {
+                    anchors.fill: parent
+                    onWheel: wheel_offset( wheel.angleDelta.y>0 ? 1 : -1 )
+                    onClicked: { offset_secs.forceActiveFocus() }
+                }
+                onFocusChanged: if (focus) selectAll()
+                onEditingFinished: recompute_major_offset()
+                Shotcut.HoverTip { text: qsTr('Number of seconds to add/substract to video time to sync them.\nNote: you can use mousewheel to change values') }
+            }
+
+            //buttons:
+            Shotcut.Button {
+                icon.source: 'qrc:///icons/dark/32x32/document-open-recent'
+                Shotcut.HoverTip { text: 'Remove timezone time from video file (convert to UTC)' +
+                    '\n\nLocal timezone to remove: ' + filter.get('videofile_timezone_seconds') + ' seconds' +
+                    '\nNote: use this if your video camera doesn\'t have timezone settings as it usually  will set local time as UTC timezone.' }
+                implicitWidth: 20
+                implicitHeight: 20
+                onClicked: { set_sec_offset_to_textfields(filter.get('videofile_timezone_seconds')) }
             }
             Shotcut.Button {
-                icon.source: 'qrc:///icons/dark/32x32/lift'
-                Shotcut.HoverTip { text: qsTr('Move this offset into the major offset above') }
-                implicitWidth: 20 
+                icon.source: 'qrc:///icons/dark/32x32/media-skip-backward'
+                Shotcut.HoverTip { text: 'Sync start of GPS to start of video file' +
+                    '\nNote: use this if you started GPS and video recording at the same time' }
+                implicitWidth: 20
                 implicitHeight: 20
-                onClicked: {
-                    var new_offset = parseInt(Number(filter.get('minor_offset')), 10) + parseInt(Number(filter.get('major_offset')), 10); 
-                    set_sec_offset_to_textfields(new_offset); 
-                    offset_slider.value = 0;
-                    filter.set('minor_offset', 0);
-                }
+                onClicked: { set_sec_offset_to_textfields(filter.get('auto_gps_offset_start')) }
+            }
+            Shotcut.Button {
+                icon.source: 'qrc:///icons/dark/32x32/media-playback-pause'
+                Shotcut.HoverTip { text: 'Sync start of GPS to current video time' +
+                    '\nNote: use this if you started GPS recording after video recording and filmed the moment of first fix' }
+                implicitWidth: 20
+                implicitHeight: 20
+                onClicked: { set_sec_offset_to_textfields(filter.get('auto_gps_offset_now')) }
             }
             Shotcut.UndoButton {
-                Layout.alignment: Qt.AlignLeft
-                onClicked: { 
-                    offset_slider.value = 0; 
-                    filter.set('minor_offset', 0)
-                }
+                onClicked: set_sec_offset_to_textfields(0);
             }
-        }
-                
-        Label {
-            topPadding: 10
-            bottomPadding: 5
-            text: qsTr('<b>Processing Options</b>')
-            Layout.columnSpan: 2
         }
         
         Label {
@@ -537,17 +472,14 @@ Item {
                 }
             }
         }
-        
+
+        Label {
+            text: qsTr('Processing start')
+            leftPadding: 10
+            Layout.alignment: Qt.AlignRight
+            Shotcut.HoverTip { text: qsTr('GPS distances are calculated since the start of gps file, if you want to ignore the begining (for example when tracking a single lap) you can set here the time to start processing (UTC).') }
+        }
         RowLayout {
-            Layout.columnSpan: 2
-            width: 250
-            
-            Label {
-                text: qsTr('Start processing at')
-                leftPadding: 10
-                Layout.alignment: Qt.AlignRight
-                Shotcut.HoverTip { text: qsTr('GPS distances are calculated since the start of gps file, if you want to ignore the begining (for example when tracking a single lap) you can set here the time to start processing (UTC).') }
-            }
             TextField {
                 id: gps_processing_start
                 text: 'yyyy-MM-dd hh:mm:ss'
@@ -557,37 +489,32 @@ Item {
                 Shotcut.HoverTip { text: qsTr('Insert a date and time formatted as: YYYY-MM-DD HH:MM:SS (all fields mandatory), UTC timezone - same as GPS (use #gps_datetime_now# in filter to get current time).') }
                 onEditingFinished: filter.set('gps_processing_start_time', gps_processing_start.text);
             }
+            Shotcut.Button {
+                icon.source: 'qrc:///icons/dark/32x32/media-playback-pause'
+                Shotcut.HoverTip { text: 'Set start of GPS processing to current video time' }
+                implicitWidth: 20
+                implicitHeight: 20
+                onClicked: {
+                    var gps_time_now = filter.get('auto_gps_processing_start_now')
+                    gps_processing_start.text = gps_time_now
+                    filter.set('gps_processing_start_time', gps_time_now);
+                }
+            }
             Shotcut.UndoButton {
                 onClicked: {
                     gps_processing_start.text = filter.get('gps_start_text');
                     filter.set('gps_processing_start_time', filter.get('gps_start_text'));
                 }
             }
-            /*
-            //TODO: button to set current time as processing start (need to somehow convert current gps time to proper datetime)
-            Shotcut.Button {
-                //icon.source: 'qrc:///icons/dark/32x32/media-skip-forward'
-                icon.source: 'qrc:///icons/dark/32x32/media-playback-pause'
-                Shotcut.HoverTip { 
-                    text: 'Sync start of GPS processing to current video file time at playhead'
-                }
-                implicitWidth: 20
-                implicitHeight: 20
-                onClicked: {
-                    var seconds = Date.parse(filter.get('gps_start_text'))/1000 + filter.get('auto_gps_offset_now');
-                    var d = new Date(seconds*1000)
-                    gps_processing_start.text = d.toUTCString();
-                }
-            }
-            */
         }
-                
+
+
         Label {
             topPadding: 10
-            bottomPadding: 5
-            text: qsTr('<b>Text Options</b>')
+            text: qsTr('<b>Text options</b>')
             Layout.columnSpan: 2
         }
+
         
         Label {
             text: qsTr('Preset')
@@ -595,7 +522,6 @@ Item {
         }
         Shotcut.Preset {
             id: preset
-            Layout.columnSpan: 1
             parameters: textFilterUi.parameters.concat(['argument'])
             onBeforePresetLoaded: {
                 filter.resetProperty(textFilterUi.rectProperty)
@@ -617,7 +543,6 @@ Item {
             Layout.alignment: Qt.AlignRight | Qt.AlignTop
         }
         Item {
-            Layout.columnSpan: 1
             FontMetrics {
                 id: fontMetrics
                 font: textArea.font
@@ -762,10 +687,10 @@ Item {
             Layout.columnSpan: 2
         }
 
+
         Label {
             topPadding: 10
-            bottomPadding: 5
-            text: qsTr('<b>Advanced Options</b>')
+            text: qsTr('<b>Speed options</b>')
             Layout.columnSpan: 2
         }
 
@@ -779,7 +704,7 @@ Item {
             TextField {
                 id: speed_multiplier
                 text: '1'
-                //TODO: restrict to type double
+                validator: DoubleValidator {bottom: 0; top: 1000;}
                 horizontalAlignment: TextInput.AlignRight
                 implicitWidth: 25
                 onFocusChanged: if (focus) selectAll()
@@ -805,7 +730,7 @@ Item {
             TextField {
                 id: updates_per_second
                 text: '1'
-                //TODO: restrict to type double
+                validator: DoubleValidator {bottom: 0; top: 1000;}
                 horizontalAlignment: TextInput.AlignRight
                 implicitWidth: 25
                 onFocusChanged: if (focus) selectAll()
@@ -820,6 +745,48 @@ Item {
                 }
             }
         }
-        
+
+
+        Rectangle {
+            Layout.columnSpan: parent.columns
+            Layout.fillWidth: true
+            Layout.minimumHeight: 12
+            color: 'transparent'
+            Rectangle {
+                anchors.verticalCenter: parent.verticalCenter
+                width: parent.width
+                height: 2
+                radius: 2
+                color: activePalette.text
+            }
+        }
+
+
+        Label {
+            text: qsTr('Video start time:')
+            leftPadding: 10
+            Layout.alignment: Qt.AlignRight
+            Shotcut.HoverTip { text: qsTr('DateTime for the video file') }
+        } Label {
+            id: video_start
+            text: filter.get('video_start_text')
+            Layout.alignment: Qt.AlignLeft
+            Shotcut.HoverTip { text: "This time will be used for synchronization.\nLikely in UTC or local time." }
+        }
+
+        Label {
+            id: start_location_datetime
+            text: qsTr('GPS start time:')
+            leftPadding: 10
+            Layout.alignment: Qt.AlignRight
+            Shotcut.HoverTip { text: qsTr('DateTime for the GPS file') }
+        } Label {
+            id: gps_start
+            text: filter.get('gps_start_text')
+            Layout.alignment: Qt.AlignLeft
+            Shotcut.HoverTip { text: qsTr('This time will be used for synchronization.\nAlways in UTC timezone.') }
+        }
+
+        Item { Layout.fillHeight: true }
     }
 }
