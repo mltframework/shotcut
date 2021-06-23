@@ -198,6 +198,7 @@ void LumaMixTransition::on_lumaCombo_activated(int index)
             if (!filename.isEmpty()) {
                 transition->set("resource", filename.toUtf8().constData());
                 Util::getHash(*transition);
+                Settings.setOpenPath(QFileInfo(filename).path());
             }
         } else {
             ui->softnessLabel->setText(tr("Softness"));
