@@ -78,7 +78,7 @@ Item {
 
         //gps properties
         if (filter.isNew) {
-            filter.set('major_offset', 0);
+            filter.set('time_offset', 0);
             filter.set('majoroffset_sign', 1);
             filter.set('smoothing_value', 5);
             filter.set('videofile_timezone_seconds', 0);
@@ -171,7 +171,7 @@ Item {
             set_sec_offset_to_textfields(0);
         }
         else {
-            set_sec_offset_to_textfields(filter.get('major_offset'));
+            set_sec_offset_to_textfields(filter.get('time_offset'));
             combo_smoothing.currentIndex = smooth_value_to_index(filter.get('smoothing_value'));
         }
 
@@ -196,18 +196,18 @@ Item {
     }
     
     //this function combines the text values from sign combobox * days/hours/mins/sec TextFields into an int
-    function recompute_major_offset() {
+    function recompute_time_offset() {
         var offset_sec = parseInt(Number(offset_days.text), 10)*24*60*60 + 
                          parseInt(Number(offset_hours.text), 10)*60*60 +
                          parseInt(Number(offset_mins.text), 10)*60 +
                          parseInt(Number(offset_secs.text), 10);
         offset_sec *= parseInt(filter.get('majoroffset_sign'), 10);
-        filter.set('major_offset', Number(offset_sec).toFixed(0))
+        filter.set('time_offset', Number(offset_sec).toFixed(0))
     }
     
     //transforms a wheel-up/down event into the correct offset direction
     function wheel_offset(val) {
-        var offset = Number(filter.get("major_offset"));
+        var offset = Number(filter.get("time_offset"));
         if (offset < 0)
             val *= -1;
         if (offset == 0 && val<0) return; //fix unnatural behaviour when substracting at offset 0
@@ -234,7 +234,7 @@ Item {
         offset_secs.text = parseInt( Math.abs(secs)%60 , 10 )
         
         //toFixed(0) avoids scientific notation!
-        filter.set('major_offset', Number(secs).toFixed(0))
+        filter.set('time_offset', Number(secs).toFixed(0))
     }
 
     
@@ -289,7 +289,7 @@ Item {
                 Shotcut.HoverTip { text: qsTr('+ : Adds time to video (use if GPS is ahead)\n - : Substracts time from video (use if video is ahead)') }
                 onActivated: {
                     filter.set('majoroffset_sign', sign_val.get(currentIndex).value)
-                    recompute_major_offset()
+                    recompute_time_offset()
                 }
             }
             Label {
@@ -309,7 +309,7 @@ Item {
                     onClicked: offset_days.forceActiveFocus()
                 }
                 onFocusChanged: if (focus) selectAll()
-                onEditingFinished: recompute_major_offset()
+                onEditingFinished: recompute_time_offset()
                 Shotcut.HoverTip { text: qsTr('Number of days to add/substract to video time to sync them.') }
             }
             Label {
@@ -329,7 +329,7 @@ Item {
                     onClicked: { offset_hours.forceActiveFocus() }
                 }
                 onFocusChanged: if (focus) selectAll()
-                onEditingFinished: recompute_major_offset();
+                onEditingFinished: recompute_time_offset();
                 Shotcut.HoverTip { text: qsTr('Number of hours to add/substract to video time to sync them.') }
             }
             Label {
@@ -349,7 +349,7 @@ Item {
                     onClicked: { offset_mins.forceActiveFocus() }
                 }
                 onFocusChanged: if (focus) selectAll()
-                onEditingFinished: recompute_major_offset()
+                onEditingFinished: recompute_time_offset()
                 Shotcut.HoverTip { text: qsTr('Number of minutes to add/substract to video time to sync them.') }
             }
             Label {
@@ -369,7 +369,7 @@ Item {
                     onClicked: { offset_secs.forceActiveFocus() }
                 }
                 onFocusChanged: if (focus) selectAll()
-                onEditingFinished: recompute_major_offset()
+                onEditingFinished: recompute_time_offset()
                 Shotcut.HoverTip { text: qsTr('Number of seconds to add/substract to video time to sync them.\nNote: you can use mousewheel to change values') }
             }
 
