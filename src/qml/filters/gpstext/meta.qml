@@ -19,22 +19,22 @@ import QtQuick 2.0
 import org.shotcut.qml 1.0
 
 Metadata {
-	type: Metadata.Filter
-	name: qsTr("GPS text")
-	mlt_service: 'gpstext'
-	qml: 'ui.qml'
-	vui: 'vui.qml'
-	keyframes {
-		allowAnimateIn: true
-		allowAnimateOut: true
-		simpleProperties: ['geometry']
-		parameters: [
-			Parameter {
-				name: qsTr('Position / Size')
-				property: 'geometry'
-				isSimple: true
-				isRectangle: true
-			}
-		]
-	}
+    type: Metadata.Filter
+    name: qsTr("GPS Text")
+    mlt_service: 'gpstext'
+    qml: 'ui.qml'
+    vui: 'vui.qml'
+    keyframes {
+        allowAnimateIn: true
+        allowAnimateOut: true
+        simpleProperties: ['geometry']
+        parameters: [
+            Parameter {
+                name: qsTr('Position / Size')
+                property: 'geometry'
+                isSimple: true
+                isRectangle: true
+            }
+        ]
+    }
 }
