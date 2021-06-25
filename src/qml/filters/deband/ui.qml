@@ -150,7 +150,7 @@ Item {
             filter.set(directionParam, directionDefault)
             filter.set(blurParam, blurDefault)
             filter.set(couplingParam, couplingDefault)
-            filter.savePreset(allParams, qsTr('FFmpeg default values'))
+            filter.savePreset(allParams, qsTr('Average strength'))
 
             // Custom preset
             filter.set(thr1Param, 0.0150291)
@@ -162,7 +162,7 @@ Item {
             filter.set(directionParam, directionMax)
             filter.set(blurParam, true)
             filter.set(couplingParam, false)
-            filter.savePreset(allParams, qsTr('Blue gradient in open sky'))
+            filter.savePreset(allParams, qsTr('Blue sky'))
 
             // Custom preset
             filter.set(thr1Param, 0.0150291)
@@ -174,7 +174,7 @@ Item {
             filter.set(directionParam, directionMax)
             filter.set(blurParam, true)
             filter.set(couplingParam, false)
-            filter.savePreset(allParams, qsTr('Red gradient in open sky'))
+            filter.savePreset(allParams, qsTr('Red sky'))
 
             // Custom preset
             filter.set(thr1Param, 0.0100294)
@@ -186,10 +186,14 @@ Item {
             filter.set(directionParam, directionMax)
             filter.set(blurParam, true)
             filter.set(couplingParam, false)
-            filter.savePreset(allParams, qsTr('Full range to Limited range'))
+            filter.savePreset(allParams, qsTr('Minimal strength'))
+
+            // Custom preset
+            // Same as "Minimal" preset for now
+            filter.savePreset(allParams, qsTr('Full range to limited range'))
 
             // Default preset
-            // Same as Full to Limited preset
+            // Same as "Full to limited" preset; assumed most common use case
             filter.savePreset(allParams)
         }
         filter.blockSignals = false
@@ -198,8 +202,8 @@ Item {
     }
 
 
-    width: 350
-    height: 450
+    width: 500
+    height: 360
 
 
     GridLayout {
@@ -223,7 +227,8 @@ Item {
         // Row split
 
         Label {
-            text: qsTr('Y/R Threshold')
+            text: qsTr('Contrast Threshold')
+            Shotcut.HoverTip { text: qsTr('Banding similarity within first component\nY (luma) in YCbCr mode\nRed in RGB mode') }
             Layout.alignment: Qt.AlignRight
         }
         Shotcut.SliderSpinner {
@@ -241,7 +246,8 @@ Item {
         // Row split
 
         Label {
-            text: qsTr('Cb/G Threshold')
+            text: qsTr('Blue Threshold')
+            Shotcut.HoverTip { text: qsTr('Banding similarity within second component\nCb (blue) in YCbCr mode\nGreen in RGB mode') }
             Layout.alignment: Qt.AlignRight
         }
         Shotcut.SliderSpinner {
@@ -259,7 +265,8 @@ Item {
         // Row split
 
         Label {
-            text: qsTr('Cr/B Threshold')
+            text: qsTr('Red Threshold')
+            Shotcut.HoverTip { text: qsTr('Banding similarity within third component\nCr (red) in YCbCr mode\nBlue in RGB mode') }
             Layout.alignment: Qt.AlignRight
         }
         Shotcut.SliderSpinner {
@@ -278,6 +285,7 @@ Item {
 
         Label {
             text: qsTr('Alpha Threshold')
+            Shotcut.HoverTip { text: qsTr('Banding similarity within fourth component') }
             Layout.alignment: Qt.AlignRight
         }
         Shotcut.SliderSpinner {
@@ -294,24 +302,23 @@ Item {
 
         // Row split
 
-        Label {}
+        Item {
+            Layout.fillWidth: true
+        }
         CheckBox {
             id: idLink
             text: qsTr('Link thresholds')
             onClicked: filter.set(linkParam, checked)
         }
-        Label {}
-
-        // Filler
-
-        Label {
-            Layout.columnSpan: 3
+        Item {
+            Layout.fillWidth: true
         }
 
         // Row split
 
         Label {
             text: qsTr('Pixel Range')
+            Shotcut.HoverTip { text: qsTr('The size of bands being targeted') }
             Layout.alignment: Qt.AlignRight
         }
         Shotcut.SliderSpinner {
@@ -330,18 +337,23 @@ Item {
 
         // Row split
 
-        Label {}
+        Item {
+            Layout.fillWidth: true
+        }
         CheckBox {
             id: idRangeRand
-            text: qsTr('Randomize between zero and value')
+            text: qsTr('Randomize pixel range between zero and value')
             onClicked: filter.set(rangeParam, checked ? rootToSqr(idRange.value) : -rootToSqr(idRange.value))
         }
-        Label {}
+        Item {
+            Layout.fillWidth: true
+        }
 
         // Row split
 
         Label {
             text: qsTr('Direction')
+            Shotcut.HoverTip { text: qsTr('Up = 270°\nDown = 90°\nLeft = 180°\nRight = 0° or 360°\nAll = 360° + Randomize') }
             Layout.alignment: Qt.AlignRight
         }
         Shotcut.SliderSpinner {
@@ -349,7 +361,6 @@ Item {
             minimumValue: 0
             maximumValue: 360
             suffix: ' °'
-            Shotcut.HoverTip { text: qsTr('Up = 270°\nDown = 90°\nLeft = 180°\nRight = 0°/360°') }
             onValueChanged: filter.set(directionParam, idDirectionRand.checked ? degToRad(value) : -degToRad(value))
         }
         Shotcut.UndoButton {
@@ -361,26 +372,26 @@ Item {
 
         // Row split
 
-        Label {}
+        Item {
+            Layout.fillWidth: true
+        }
         CheckBox {
             id: idDirectionRand
-            text: qsTr('Randomize between 0° and value')
+            text: qsTr('Randomize direction between zero degrees and value')
             onClicked: filter.set(directionParam, checked ? degToRad(idDirection.value) : -degToRad(idDirection.value))
         }
-        Label {}
-
-        // Filler
-
-        Label {
-            Layout.columnSpan: 3
+        Item {
+            Layout.fillWidth: true
         }
 
         // Row split
 
-        Label {}
+        Item {
+            Layout.fillWidth: true
+        }
         CheckBox {
             id: idBlur
-            text: qsTr('Use average of neighbors')
+            text: qsTr('Measure similarity using average of neighbors')
             Shotcut.HoverTip { text: qsTr('Compare to thresholds using average versus exact neighbor values') }
             onClicked: filter.set(blurParam, checked)
         }
@@ -393,10 +404,12 @@ Item {
 
         // Row split
 
-        Label {}
+        Item {
+            Layout.fillWidth: true
+        }
         CheckBox {
             id: idCoupling
-            text: qsTr('All components required')
+            text: qsTr('All components required to trigger deband')
             Shotcut.HoverTip { text: qsTr('Deband only if all pixel components (including alpha) are within thresholds') }
             onClicked: filter.set(couplingParam, checked)
         }
@@ -405,29 +418,6 @@ Item {
                 filter.set(couplingParam, couplingDefault)
                 idCoupling.checked = couplingDefault
             }
-        }
-
-        // Filler
-
-        Label {
-            Layout.columnSpan: 3
-        }
-
-        // Row split
-
-        Label {
-            text: qsTr('More information') + ': <a href="http://ffmpeg.org/ffmpeg-all.html#deband">FFmpeg deband</a>'
-            Shotcut.HoverTip { text: 'http://ffmpeg.org/ffmpeg-all.html#deband' }
-            Layout.alignment: Qt.AlignHCenter
-            Layout.columnSpan: 3
-
-            MouseArea {
-                anchors.fill: parent
-                acceptedButtons: Qt.NoButton
-                cursorShape: parent.hoveredLink ? Qt.PointingHandCursor : Qt.ArrowCursor
-            }
-
-            onLinkActivated: Qt.openUrlExternally(link)
         }
 
         // Filler
