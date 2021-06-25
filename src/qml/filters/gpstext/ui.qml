@@ -370,7 +370,7 @@ Item {
                 }
                 onFocusChanged: if (focus) selectAll()
                 onEditingFinished: recompute_time_offset()
-                Shotcut.HoverTip { text: qsTr('Number of seconds to add/substract to video time to sync them.\nNote: you can use mousewheel to change values') }
+                Shotcut.HoverTip { text: qsTr('Number of seconds to add/substract to video time to sync them.\nTip: you can use mousewheel to change values') }
             }
 
             //buttons:
@@ -724,7 +724,7 @@ Item {
             text: qsTr('Update speed')
             leftPadding: 10
             Layout.alignment: Qt.AlignRight
-            Shotcut.HoverTip { text: qsTr('Set how many text updates to show per second.\nNote: this can\'t be faster than gps frequency') }
+            Shotcut.HoverTip { text: qsTr('Set how many text updates to show per second.\nSet to 0 to only print real points (no interpolation).') }
         }
         RowLayout {
             TextField {
