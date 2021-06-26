@@ -176,6 +176,7 @@ Item {
         }
 
         speed_multiplier.text = filter.get('speed_multiplier');
+        updates_per_second.text = filter.get('updates_per_second')
         video_start.text = filter.get('video_start_text');
         gps_start.text = filter.get('gps_start_text');
     }
@@ -184,6 +185,7 @@ Item {
         if (gpsFile.exists()) {
             fileLabel.text = gpsFile.fileName
             fileLabelTip.text = gpsFile.filePath + "\nGPS start time: " + filter.get('gps_start_text') + "\nVideo start time: " + filter.get('video_start_text')
+            application.showStatusMessage(qsTr('Mouse over filter elements for tips'))
         } else {
             fileLabel.text = qsTr("No File Loaded")
             fileLabel.color = 'red'
@@ -415,16 +417,16 @@ Item {
                 implicitWidth: 300
                 id: combo_smoothing
                 model: 
-                    [   qsTr('0 (raw data)'),                   //0
-                        qsTr('1 (interpolate missing data)'),   //1
-                        qsTr('3 points'),                       //2
-                        qsTr('5 points'),                       //3
-                        qsTr('7 points'),                       //4
-                        qsTr('11 points'),                      //5
-                        qsTr('15 points'),                      //6
-                        qsTr('31 points'),                      //7
-                        qsTr('63 points'),                      //8
-                        qsTr('127 points')                      //9
+                    [   qsTr('0 (raw data)'),                     //0
+                        qsTr('1 (interpolate and process data)'), //1
+                        qsTr('3 points'),                         //2
+                        qsTr('5 points'),                         //3
+                        qsTr('7 points'),                         //4
+                        qsTr('11 points'),                        //5
+                        qsTr('15 points'),                        //6
+                        qsTr('31 points'),                        //7
+                        qsTr('63 points'),                        //8
+                        qsTr('127 points')                        //9
                     ]
                 Shotcut.HoverTip { text: qsTr('Smoothing is done by taking the average of X points.\nInterpolation is linearly done for missing values of altitude or heart rate.\nGPS data (speed, distance etc) computing is done only for smoothing > 0') }
                 currentIndex: 3
@@ -486,7 +488,7 @@ Item {
                 horizontalAlignment: TextInput.AlignRight
                 //TODO: regex to validate date yyyy-MM-dd hh:mm:ss
                 implicitWidth: 128
-                Shotcut.HoverTip { text: qsTr('Insert a date and time formatted as: YYYY-MM-DD HH:MM:SS (all fields mandatory), UTC timezone - same as GPS (use #gps_datetime_now# in filter to get current time).') }
+                Shotcut.HoverTip { text: qsTr('Insert a date and time formatted as: YYYY-MM-DD HH:MM:SS (all fields mandatory), UTC timezone - same as GPS.') }
                 onEditingFinished: filter.set('gps_processing_start_time', gps_processing_start.text);
             }
             Shotcut.Button {
