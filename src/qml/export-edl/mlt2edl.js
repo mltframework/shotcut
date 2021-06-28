@@ -1,5 +1,5 @@
 /*
- * MltXmlParser class Copyright (c) 2016-2020 Meltytech, LLC
+ * MltXmlParser class Copyright (c) 2016-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -173,18 +173,27 @@ MltXmlParser.prototype.getPlaylists = function() {
     return playlistList;
 };
 
+MltXmlParser.prototype.makeProducer = function(p) {
+    var pDict = {};
+    pDict.id = p.attr.id;
+    pDict.inTime = p.attr.in;
+    pDict.outTime = p.attr.out;
+    p.childrenNamed('property').forEach(function(property){
+        pDict[property.attr.name] = property.val;
+    });
+    return pDict;
+}
+
 MltXmlParser.prototype.getProducers = function() {
     var producerList = [];
-    var producers = this.xmldoc.childrenNamed('producer');
-    producers.forEach(function(p) {
-        var pDict = {};
-        pDict.id = p.attr.id;
-        pDict.inTime = p.attr.in;
-        pDict.outTime = p.attr.out;
-        p.childrenNamed('property').forEach(function(property){
-            pDict[property.attr.name] = property.val;
-        });
-        producerList.push(pDict);
+    var self = this;
+    var producers = this.xmldoc.childrenNamed('chain');
+    producers.forEach(function (p) {
+        producerList.push(self.makeProducer(p));
+    });
+    producers = this.xmldoc.childrenNamed('producer');
+    producers.forEach(function (p) {
+        producerList.push(self.makeProducer(p));
     });
     return producerList;
 };
