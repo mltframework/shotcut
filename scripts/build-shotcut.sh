@@ -57,6 +57,7 @@ FFMPEG_SUPPORT_AMF=1
 FFMPEG_SUPPORT_QSV=1
 FFMPEG_SUPPORT_DAV1D=1
 FFMPEG_SUPPORT_AOM=1
+FFMPEG_SUPPORT_WEBP=1
 FFMPEG_ADDITIONAL_OPTIONS=
 ENABLE_VIDSTAB=1
 VIDSTAB_HEAD=1
@@ -693,6 +694,9 @@ function set_globals {
   fi
   if test 1 = "$FFMPEG_SUPPORT_AOM" ; then
     CONFIG[0]="${CONFIG[0]} --enable-libaom --disable-decoder=libaom_av1"
+  fi
+  if test 1 = "$FFMPEG_SUPPORT_WEBP" ; then
+    CONFIG[0]="${CONFIG[0]} --enable-libwebp"
   fi
   # Add optional parameters
   CONFIG[0]="${CONFIG[0]} $FFMPEG_ADDITIONAL_OPTIONS"
