@@ -903,6 +903,7 @@ Producer* Controller::setupNewProducer(Producer* newProducer) const
 {
     // Call this function before adding a new producer to Shotcut so that
     // It will be configured correctly. The returned producer must be deleted.
+    Producer* ret = nullptr;
     QString serviceName = newProducer->get("mlt_service");
     if (serviceName == "avformat")
     {
@@ -911,7 +912,7 @@ Producer* Controller::setupNewProducer(Producer* newProducer) const
     }
     setImageDurationFromDefault(newProducer);
     lockCreationTime(newProducer);
-    newProducer->get_length_time(mlt_time_clock);
+    QString length = newProducer->get_length_time(mlt_time_clock);
 
     if (serviceName.startsWith("avformat"))
     {
@@ -934,10 +935,14 @@ Producer* Controller::setupNewProducer(Producer* newProducer) const
                 }
                 filter.reset(newProducer->filter(i));
             }
-            return chain;
+            ret = chain;
         }
     }
-    return new Mlt::Producer(newProducer);
+    if (ret) {
+        ret = new Mlt::Producer(newProducer);
+    }
+    ret->set("length", qUtf8Printable(length));
+    return ret;
 }
 
 QUuid Controller::uuid(Mlt::Properties &properties) const
