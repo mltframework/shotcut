@@ -911,7 +911,7 @@ Producer* Controller::setupNewProducer(Producer* newProducer) const
     }
     setImageDurationFromDefault(newProducer);
     lockCreationTime(newProducer);
-    QString length = newProducer->get_length_time(mlt_time_clock);
+    newProducer->get_length_time(mlt_time_clock);
 
     if (serviceName.startsWith("avformat"))
     {
@@ -921,6 +921,7 @@ Producer* Controller::setupNewProducer(Producer* newProducer) const
         {
             Mlt::Chain* chain = new Mlt::Chain(MLT.profile());
             chain->set_source(*newProducer);
+            chain->get_length_time(mlt_time_clock);
 
             // Move all non-loader filters to the chain in case this was a clip-only project.
             int i = 0;
@@ -934,7 +935,6 @@ Producer* Controller::setupNewProducer(Producer* newProducer) const
                 }
                 filter.reset(newProducer->filter(i));
             }
-            chain->set("length", qUtf8Printable(length));
             return chain;
         }
     }
