@@ -903,7 +903,6 @@ Producer* Controller::setupNewProducer(Producer* newProducer) const
 {
     // Call this function before adding a new producer to Shotcut so that
     // It will be configured correctly. The returned producer must be deleted.
-    Producer* ret = nullptr;
     QString serviceName = newProducer->get("mlt_service");
     if (serviceName == "avformat")
     {
@@ -935,14 +934,11 @@ Producer* Controller::setupNewProducer(Producer* newProducer) const
                 }
                 filter.reset(newProducer->filter(i));
             }
-            ret = chain;
+            chain->set("length", qUtf8Printable(length));
+            return chain;
         }
     }
-    if (ret) {
-        ret = new Mlt::Producer(newProducer);
-    }
-    ret->set("length", qUtf8Printable(length));
-    return ret;
+    return new Mlt::Producer(newProducer);
 }
 
 QUuid Controller::uuid(Mlt::Properties &properties) const
