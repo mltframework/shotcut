@@ -227,7 +227,7 @@ Item {
         // Row split
 
         Label {
-            text: qsTr('Contrast Threshold')
+            text: qsTr('Contrast threshold')
             Shotcut.HoverTip { text: qsTr('Banding similarity within first component\nY (luma) in YCbCr mode\nRed in RGB mode') }
             Layout.alignment: Qt.AlignRight
         }
@@ -246,7 +246,7 @@ Item {
         // Row split
 
         Label {
-            text: qsTr('Blue Threshold')
+            text: qsTr('Blue threshold')
             Shotcut.HoverTip { text: qsTr('Banding similarity within second component\nCb (blue) in YCbCr mode\nGreen in RGB mode') }
             Layout.alignment: Qt.AlignRight
         }
@@ -265,7 +265,7 @@ Item {
         // Row split
 
         Label {
-            text: qsTr('Red Threshold')
+            text: qsTr('Red threshold')
             Shotcut.HoverTip { text: qsTr('Banding similarity within third component\nCr (red) in YCbCr mode\nBlue in RGB mode') }
             Layout.alignment: Qt.AlignRight
         }
@@ -284,7 +284,7 @@ Item {
         // Row split
 
         Label {
-            text: qsTr('Alpha Threshold')
+            text: qsTr('Alpha threshold')
             Shotcut.HoverTip { text: qsTr('Banding similarity within fourth component') }
             Layout.alignment: Qt.AlignRight
         }
@@ -317,7 +317,7 @@ Item {
         // Row split
 
         Label {
-            text: qsTr('Pixel Range')
+            text: qsTr('Pixel range')
             Shotcut.HoverTip { text: qsTr('The size of bands being targeted') }
             Layout.alignment: Qt.AlignRight
         }
