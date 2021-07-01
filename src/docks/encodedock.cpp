@@ -376,6 +376,8 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties& preset)
             ui->videoQualitySpinner->setValue(TO_RELATIVE(51, 1, videoQuality));
         else if (vcodec.startsWith("libvpx") || vcodec.startsWith("libaom-")) // 0 (best, 100%) - 63 (worst)
             ui->videoQualitySpinner->setValue(TO_RELATIVE(63, 0, videoQuality));
+        else if (vcodec.startsWith("libwebp")) // 100 (best) - 0 (worst)
+            ui->videoQualitySpinner->setValue(TO_RELATIVE(0, 100, videoQuality));
         else // 1 (best, NOT 100%) - 31 (worst)
             ui->videoQualitySpinner->setValue(TO_RELATIVE(31, 1, videoQuality));
     }
@@ -743,6 +745,8 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime, bool includeProfile
                         setIfNotSet(p, "vq", TO_ABSOLUTE(51, 0, vq));
                     } else if (vcodec.endsWith("_qsv")) {
                         setIfNotSet(p, "qscale", TO_ABSOLUTE(51, 1, vq));
+                    } else if (vcodec.startsWith("libwebp")) {
+                        setIfNotSet(p, "qscale", TO_ABSOLUTE(0, 100, vq));
                     } else {
                         setIfNotSet(p, "qscale", TO_ABSOLUTE(31, 1, vq));
                     }
@@ -759,6 +763,8 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime, bool includeProfile
                         setIfNotSet(p, "vb", vbitrate.toLatin1().constData());
                         setIfNotSet(p, "vglobal_quality", TO_ABSOLUTE(51, 0, vq));
                         setIfNotSet(p, "vq", TO_ABSOLUTE(51, 0, vq));
+                    } else if (vcodec.startsWith("libwebp")) {
+                        setIfNotSet(p, "qscale", TO_ABSOLUTE(0, 100, vq));
                     } else {
                         setIfNotSet(p, "qscale", TO_ABSOLUTE(31, 1, vq));
                     }
@@ -898,7 +904,7 @@ MeltJob* EncodeDock::createMeltJob(Mlt::Producer* service, const QString& target
     QString mytarget = target;
     if (!ui->disableVideoCheckbox->isChecked()) {
         const QString& codec = ui->videoCodecCombo->currentText();
-        if (codec == "bmp" || codec == "dpx" || codec == "png" || codec == "ppm" ||
+        if (codec == "bmp" || codec == "dpx" || codec == "png" || codec == "ppm" || (codec == "libwebp" && ui->formatCombo->currentText() == "image2") ||
                 codec == "targa" || codec == "tiff" || (codec == "mjpeg" && ui->formatCombo->currentText() == "image2")) {
             QFileInfo fi(mytarget);
             mytarget = QString("%1/%2-%05d.%3").arg(fi.path()).arg(fi.baseName()).arg(fi.completeSuffix());
@@ -2003,6 +2009,8 @@ void EncodeDock::on_videoQualitySpinner_valueChanged(int vq)
         s = QString("vglobal_quality=%1").arg(TO_ABSOLUTE(51, 0, vq));
     } else if (vcodec.endsWith("_qsv")) {
         s = QString("qscale=%1").arg(TO_ABSOLUTE(51, 1, vq));
+    } else if (vcodec.startsWith("libwebp")) {
+        s = QString("qscale=%1").arg(TO_ABSOLUTE(0, 100, vq));
     } else {
         s = QString("qscale=%1").arg(TO_ABSOLUTE(31, 1, vq));
     }
