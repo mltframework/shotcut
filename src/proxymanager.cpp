@@ -214,7 +214,7 @@ void ProxyManager::generateVideoProxy(Mlt::Producer& producer, bool fullRange, S
     if (replace) {
         job->setPostJobAction(new ProxyReplacePostJobAction(resource, fileName, hash));
     } else {
-        job->setPostJobAction(new ProxyFinalizePostJobAction(fileName));
+        job->setPostJobAction(new ProxyFinalizePostJobAction(resource, fileName));
     }
     JOBS.add(job);
 }
@@ -238,7 +238,7 @@ void ProxyManager::generateImageProxy(Mlt::Producer& producer, bool replace)
     if (replace) {
         job->setPostJobAction(new ProxyReplacePostJobAction(resource, fileName, hash));
     } else {
-        job->setPostJobAction(new ProxyFinalizePostJobAction(fileName));
+        job->setPostJobAction(new ProxyFinalizePostJobAction(resource, fileName));
     }
     JOBS.add(job);
 }

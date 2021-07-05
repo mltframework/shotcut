@@ -85,6 +85,7 @@ void ReplaceAllPostJobAction::doAction()
 
 void ProxyReplacePostJobAction::doAction()
 {
+    FilePropertiesPostJobAction::doAction();
     QFileInfo info(m_dstFile);
     QString newFileName = info.path() + "/" + info.baseName() + "." + info.suffix();
     if (QFile::rename(m_dstFile, newFileName)) {
@@ -107,6 +108,7 @@ void ProxyReplacePostJobAction::doAction()
 
 void ProxyFinalizePostJobAction::doAction()
 {
+    FilePropertiesPostJobAction::doAction();
     QFileInfo info(m_dstFile);
     QString newFileName = info.path() + "/" + info.baseName() + "." + info.suffix();
     if (!QFile::rename(m_dstFile, newFileName)) {

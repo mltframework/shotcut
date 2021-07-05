@@ -86,11 +86,11 @@ private:
     QString m_hash;
 };
 
-class ProxyReplacePostJobAction : public PostJobAction
+class ProxyReplacePostJobAction : public FilePropertiesPostJobAction
 {
 public:
     ProxyReplacePostJobAction(const QString& srcFile, const QString& dstFile, const QString& srcHash)
-        : PostJobAction()
+        : FilePropertiesPostJobAction(srcFile, dstFile)
         , m_srcFile(srcFile)
         , m_dstFile(dstFile)
         , m_hash(srcHash)
@@ -103,11 +103,11 @@ private:
     QString m_hash;
 };
 
-class ProxyFinalizePostJobAction : public PostJobAction
+class ProxyFinalizePostJobAction : public FilePropertiesPostJobAction
 {
 public:
-    ProxyFinalizePostJobAction(const QString& dstFile)
-        : PostJobAction()
+    ProxyFinalizePostJobAction(const QString& srcFile, const QString& dstFile)
+        : FilePropertiesPostJobAction(srcFile, dstFile)
         , m_dstFile(dstFile)
         {}
     void doAction();
