@@ -38,13 +38,13 @@ DropArea {
                         ctx.rect(0.035 * rectW + rectX + 2, 0.035 * rectH + rectY + 2, 0.93 * rectW - 1, 0.93 * rectH - 1)
                     } else {
                         // vertical grid lines
-                        for(var x = 0; x * gridSizeX < parent.width; x++)
+                        for(var x = 0; x * gridSizeX < parent.width + gridSizeX; x++)
                         {
                             context.moveTo(gridOffsetX + x * gridSizeX + 1, 0)
                             context.lineTo(gridOffsetX + x * gridSizeX + 1, parent.height)
                         }
                         // horizontal grid lines
-                        for(var y = 0; y * gridSizeY < parent.height; y++)
+                        for(var y = 0; y * gridSizeY < parent.height + gridSizeY; y++)
                         {
                             context.moveTo(0, gridOffsetY + y * gridSizeY + 1)
                             context.lineTo(parent.width, gridOffsetY + y * gridSizeY + 1)
@@ -69,13 +69,13 @@ DropArea {
                     ctx.rect(0.035 * rectW + rectX + 1, 0.035 * rectH + rectY + 1, 0.93 * rectW - 2, 0.93 * rectH - 2)
                 } else {
                     // vertical grid lines
-                    for(var x = 0; x * gridSizeX < parent.width; x++)
+                    for(var x = 0; x * gridSizeX < parent.width + gridSizeX; x++)
                     {
                         context.moveTo(gridOffsetX + x * gridSizeX, 0)
                         context.lineTo(gridOffsetX + x * gridSizeX, parent.height)
                     }
                     // horizontal grid lines
-                    for(var y = 0; y * gridSizeY < parent.height; y++)
+                    for(var y = 0; y * gridSizeY < parent.height + gridSizeY; y++)
                     {
                         context.moveTo(0, gridOffsetY + y * gridSizeY)
                         context.lineTo(parent.width, gridOffsetY + y * gridSizeY)
