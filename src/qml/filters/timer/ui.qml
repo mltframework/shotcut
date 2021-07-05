@@ -196,7 +196,7 @@ Item {
                 Shotcut.HoverTip { text: qsTr('Set start to begin at the current position') }
                 implicitWidth: 20
                 implicitHeight: 20
-                onClicked: startSpinner.setValueSeconds(producer.position / profile.fps)
+                onClicked: startSpinner.setValueSeconds((producer.position - (filter.in - producer.in)) / profile.fps)
             }
         }
 
@@ -225,7 +225,7 @@ Item {
                 implicitHeight: 20
                 onClicked: {
                     var startTime = startSpinner.getValueSeconds()
-                    var endTime = producer.position / profile.fps
+                    var endTime = (producer.position - (filter.in - producer.in)) / profile.fps
                     if (endTime > startTime) {
                         durationSpinner.setValueSeconds(endTime - startTime)
                     }
