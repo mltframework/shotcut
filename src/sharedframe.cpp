@@ -252,3 +252,8 @@ const int16_t* SharedFrame::get_audio() const
     int samples = get_audio_samples();
     return (int16_t*)d->f.get_audio(format, frequency, channels, samples);
 }
+
+Mlt::Producer* SharedFrame::get_original_producer()
+{
+    return d->f.get_original_producer();
+}

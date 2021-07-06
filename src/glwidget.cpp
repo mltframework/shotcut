@@ -761,6 +761,21 @@ QImage GLWidget::image() const
     return QImage();
 }
 
+bool GLWidget::imageIsProxy() const
+{
+    bool isProxy = false;
+    SharedFrame frame = m_frameRenderer->getDisplayFrame();
+    if (frame.is_valid()) {
+        Mlt::Producer* frameProducer = frame.get_original_producer();
+        if (frameProducer && frameProducer->is_valid() && frameProducer->get_int(kIsProxyProperty))
+        {
+            isProxy = true;
+        }
+        delete frameProducer;
+    }
+    return isProxy;
+}
+
 void GLWidget::requestImage() const
 {
     m_frameRenderer->requestImage();
