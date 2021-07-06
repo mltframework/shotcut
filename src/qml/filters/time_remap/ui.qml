@@ -39,26 +39,27 @@ Item {
                 .arg(application.OS === 'OS X'? '⌥' : 'Alt'))
         }
         blockUpdate = false
-        setControls()
+        timer.restart()
     }
 
     Connections {
         target: filter
         onInChanged: {
-            setControls()
+            timer.restart()
         }
         onOutChanged: {
-            setControls()
+            timer.restart()
         }
         onPropertyChanged: {
-            setControls()
+            timer.restart()
         }
     }
 
     Timer {
         id: timer
         interval: 200
-        repeat: false
+        repeat: true
+        triggeredOnStart: true
         onTriggered: {
             setControls()
         }
@@ -67,7 +68,7 @@ Item {
     Connections {
         target: producer
         onPositionChanged: {
-            timer.start()
+            timer.restart()
         }
     }
 
@@ -152,7 +153,7 @@ Item {
                 newValue = maxValue
             }
             filter.set('map', newValue, position)
-            timer.start()
+            timer.restart()
         }
     }
 
@@ -173,7 +174,7 @@ Item {
                 filter.resetProperty(parameters[0])
             }
             onPresetSelected: {
-                setControls()
+                timer.restart()
                 mapKeyframesButton.checked = filter.keyframeCount(parameters[0]) > 0
             }
         }
@@ -193,7 +194,7 @@ Item {
                 onValueChanged: {
                     if (blockUpdate) return
                     filter.set('map', mapSpinner.value / profile.fps, getPosition())
-                    timer.start()
+                    timer.restart()
                 }
             }
             Shotcut.Button {
@@ -229,7 +230,7 @@ Item {
                 filter.set('map', filter.duration / profile.fps, filter.duration)
                 filter.blockSignals = false
                 filter.changed('map')
-                timer.start()
+                timer.restart()
             }
         }
 
