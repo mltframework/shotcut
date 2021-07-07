@@ -681,15 +681,21 @@ void TimelineDock::selectMultitrack()
 
 void TimelineDock::copyClip()
 {
-    if (selection().isEmpty())
-            return;
+    QList<QPoint> selected;
+
+    if (selection().isEmpty()) {
+        int trackIndex = currentTrack();
+        int clipIndex = clipIndexAtPlayhead(trackIndex);
+        selected.append(QPoint(clipIndex, trackIndex));
+    } else {
+        selected = selection();
+    }
 
     setCopiedFromPlaylist(false);
 
     m_producers.clear();
 
     //preserve the order of the clips in the timeline
-    QList<QPoint> selected = selection();
     std::sort(selected.begin(), selected.end(),
               [] (const QPoint& clip1, const QPoint& clip2){return clip1.x() > clip2.x();});
 
