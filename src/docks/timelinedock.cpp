@@ -1177,8 +1177,11 @@ void TimelineDock::insert(int trackIndex, int position, const QString &xml, bool
         return;
     }
 
+    QVector<Mlt::Producer> localCopiedProducer;
     if (m_producers.isEmpty()) {
-        return;
+        Mlt::Producer producer(MLT.isClip()? MLT.producer() : MLT.savedProducer());
+        ProxyManager::generateIfNotExists(producer);
+       localCopiedProducer.append(producer);
     }
 
     // Validations
@@ -1204,7 +1207,7 @@ void TimelineDock::insert(int trackIndex, int position, const QString &xml, bool
         position = 0;
 
     MAIN.undoStack()->push(
-        new Timeline::InsertSelectionCommand(m_model, m_producers, trackIndex, position, seek));
+        new Timeline::InsertSelectionCommand(m_model, m_producers.isEmpty() ? localCopiedProducer : m_producers, trackIndex, position, seek));
 }
 
 void TimelineDock::selectClip(int trackIndex, int clipIndex)
