@@ -270,6 +270,7 @@ Item {
                 onValueChanged: {
                     filter.set("speed", speedSpinner.value)
                 }
+                Shotcut.HoverTip { text: qsTr('Timer seconds per playback second. Scales Duration but does not affect Start Delay or Offset.') }
             }
         }
 
