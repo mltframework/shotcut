@@ -367,7 +367,7 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties& preset)
     if (ui->videoRateControlCombo->currentIndex() == RateControlQuality && videoQuality > -1) {
         const QString& vcodec = ui->videoCodecCombo->currentText();
         //val = min + (max - min) * paramval;
-        if (vcodec == "libx264" || vcodec == "libx265" || vcodec.contains("nvenc") || vcodec.endsWith("_amf")
+        if (vcodec.startsWith("libx264") || vcodec == "libx265" || vcodec.contains("nvenc") || vcodec.endsWith("_amf")
                 || vcodec.endsWith("_videotoolbox") || vcodec.endsWith("_vaapi"))
             // 0 (best, 100%) - 51 (worst)
             ui->videoQualitySpinner->setValue(TO_RELATIVE(51, 0, videoQuality));
@@ -735,7 +735,7 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime, bool includeProfile
                     break;
                     }
                 case RateControlQuality: {
-                    if (vcodec == "libx264") {
+                    if (vcodec.startsWith("libx264")) {
                         setIfNotSet(p, "crf", TO_ABSOLUTE(51, 0, vq));
                     } else if (vcodec.startsWith("libvpx") || vcodec.startsWith("libaom-")) {
                         setIfNotSet(p, "crf", TO_ABSOLUTE(63, 0, vq));
@@ -753,7 +753,7 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime, bool includeProfile
                     break;
                     }
                 case RateControlConstrained: {
-                    if (vcodec == "libx264") {
+                    if (vcodec.startsWith("libx264")) {
                         setIfNotSet(p, "crf", TO_ABSOLUTE(51, 0, vq));
                     } else if (vcodec.startsWith("libvpx") || vcodec.startsWith("libaom-")) {
                         setIfNotSet(p, "crf", TO_ABSOLUTE(63, 0, vq));
@@ -861,7 +861,7 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime, bool includeProfile
             if (ui->formatCombo->currentText() == "image2")
                 setIfNotSet(p, "threads", 1);
             else if (ui->videoCodecThreadsSpinner->value() == 0
-                     && ui->videoCodecCombo->currentText() != "libx264"
+                     && !ui->videoCodecCombo->currentText().startsWith("libx264")
                      && ui->videoCodecCombo->currentText() != "libx265")
                 setIfNotSet(p, "threads", ui->videoCodecThreadsSpinner->maximum() - 1);
             else
@@ -871,7 +871,7 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime, bool includeProfile
                     && !vcodec.endsWith("_videotoolbox") && !vcodec.endsWith("_vaapi") &&
                 ui->dualPassCheckbox->isEnabled() && ui->dualPassCheckbox->isChecked())
                 setIfNotSet(p, "pass", 1);
-            if (ui->scanModeCombo->currentIndex() == 0 && ui->fieldOrderCombo->currentIndex() == 0 && vcodec == "libx264") {
+            if (ui->scanModeCombo->currentIndex() == 0 && ui->fieldOrderCombo->currentIndex() == 0 && vcodec.startsWith("libx264")) {
                 QString x264params = QString::fromUtf8(p->get("x264-params"));
                 if (!x264params.contains("bff=") && !x264params.contains("tff=")) {
                     x264params.prepend("bff=1:");
@@ -1994,7 +1994,7 @@ void EncodeDock::on_videoQualitySpinner_valueChanged(int vq)
 {
     const QString& vcodec = ui->videoCodecCombo->currentText();
     QString s;
-    if (vcodec == "libx264" || vcodec == "libx265") {
+    if (vcodec.startsWith("libx264") || vcodec == "libx265") {
         s = QString("crf=%1").arg(TO_ABSOLUTE(51, 0, vq));
     } else if (vcodec.startsWith("libvpx") || vcodec.startsWith("libaom-")) {
         s = QString("crf=%1").arg(TO_ABSOLUTE(63, 0, vq));
