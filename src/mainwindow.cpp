@@ -4112,10 +4112,13 @@ void MainWindow::onGLWidgetImageReady()
     if (Settings.playerGPU() || Settings.playerPreviewScale()) {
         MLT.setPreviewScale(Settings.playerPreviewScale());
     }
-    if (glw->imageIsProxy() && !image.isNull()) {
+    if (!image.isNull() &&
+        (glw->imageIsProxy() || (MLT.isMultitrack() && Settings.proxyEnabled()))
+
+    ) {
         QMessageBox dialog(QMessageBox::Question,
                            tr("Export frame from proxy?"),
-                           tr("This frame is from a lower resolution proxy instead of the original source.\n\n"
+                           tr("This frame may be from a lower resolution proxy instead of the original source.\n\n"
                               "Do you still want to continue?"),
                            QMessageBox::No | QMessageBox::Yes,
                            this);
