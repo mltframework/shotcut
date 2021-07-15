@@ -35,22 +35,22 @@ Item {
     // Parameters
 
     property string thr1Param: 'av.1thr'
-    property double thr1Default: 0.02
+    property double thr1Default: 0.0100294
 
     property string thr2Param: 'av.2thr'
-    property double thr2Default: 0.02
+    property double thr2Default: 0.0100294
 
     property string thr3Param: 'av.3thr'
-    property double thr3Default: 0.02
+    property double thr3Default: 0.0100294
 
     property string thr4Param: 'av.4thr'
-    property double thr4Default: 0.02
+    property double thr4Default: 0.0100294
 
     property string linkParam: 'ui.link'
     property bool linkDefault: true
 
     property string rangeParam: 'av.range'
-    property int rangeDefault: 16
+    property int rangeDefault: 23
 
     property string directionParam: 'av.direction'
     property double directionDefault: directionMax
@@ -141,15 +141,27 @@ Item {
         filter.blockSignals = true
         if (filter.isNew) {
             // Custom preset
-            filter.set(thr1Param, thr1Default)
-            filter.set(thr2Param, thr2Default)
-            filter.set(thr3Param, thr3Default)
-            filter.set(thr4Param, thr4Default)
-            filter.set(linkParam, linkDefault)
-            filter.set(rangeParam, rangeDefault)
-            filter.set(directionParam, directionDefault)
-            filter.set(blurParam, blurDefault)
-            filter.set(couplingParam, couplingDefault)
+            filter.set(thr1Param, 0.0100294)
+            filter.set(thr2Param, 0.0100294)
+            filter.set(thr3Param, 0.0100294)
+            filter.set(thr4Param, 0.0100294)
+            filter.set(linkParam, true)
+            filter.set(rangeParam, 23)
+            filter.set(directionParam, directionMax)
+            filter.set(blurParam, true)
+            filter.set(couplingParam, false)
+            filter.savePreset(allParams, qsTr('Minimal strength'))
+
+            // Custom preset
+            filter.set(thr1Param, 0.02)
+            filter.set(thr2Param, 0.02)
+            filter.set(thr3Param, 0.02)
+            filter.set(thr4Param, 0.02)
+            filter.set(linkParam, true)
+            filter.set(rangeParam, 16)
+            filter.set(directionParam, directionMax)
+            filter.set(blurParam, true)
+            filter.set(couplingParam, false)
             filter.savePreset(allParams, qsTr('Average strength'))
 
             // Custom preset
@@ -177,19 +189,15 @@ Item {
             filter.savePreset(allParams, qsTr('Red sky'))
 
             // Custom preset
-            filter.set(thr1Param, 0.0100294)
-            filter.set(thr2Param, 0.0100294)
-            filter.set(thr3Param, 0.0100294)
-            filter.set(thr4Param, 0.0100294)
-            filter.set(linkParam, true)
-            filter.set(rangeParam, 23)
-            filter.set(directionParam, directionMax)
-            filter.set(blurParam, true)
-            filter.set(couplingParam, false)
-            filter.savePreset(allParams, qsTr('Minimal strength'))
-
-            // Custom preset
-            // Same as "Minimal" preset for now
+            filter.set(thr1Param, thr1Default)
+            filter.set(thr2Param, thr2Default)
+            filter.set(thr3Param, thr3Default)
+            filter.set(thr4Param, thr4Default)
+            filter.set(linkParam, linkDefault)
+            filter.set(rangeParam, rangeDefault)
+            filter.set(directionParam, directionDefault)
+            filter.set(blurParam, blurDefault)
+            filter.set(couplingParam, couplingDefault)
             filter.savePreset(allParams, qsTr('Full range to limited range'))
 
             // Default preset
