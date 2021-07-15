@@ -141,6 +141,18 @@ Item {
         filter.blockSignals = true
         if (filter.isNew) {
             // Custom preset
+            filter.set(thr1Param, 0.0100294)
+            filter.set(thr2Param, 0.0100294)
+            filter.set(thr3Param, 0.0100294)
+            filter.set(thr4Param, 0.0100294)
+            filter.set(linkParam, true)
+            filter.set(rangeParam, 23)
+            filter.set(directionParam, directionMax)
+            filter.set(blurParam, true)
+            filter.set(couplingParam, false)
+            filter.savePreset(allParams, qsTr('Minimal strength'))
+
+            // Custom preset
             filter.set(thr1Param, 0.02)
             filter.set(thr2Param, 0.02)
             filter.set(thr3Param, 0.02)
@@ -186,10 +198,6 @@ Item {
             filter.set(directionParam, directionDefault)
             filter.set(blurParam, blurDefault)
             filter.set(couplingParam, couplingDefault)
-            filter.savePreset(allParams, qsTr('Minimal strength'))
-
-            // Custom preset
-            // Same as "Minimal" preset for now
             filter.savePreset(allParams, qsTr('Full range to limited range'))
 
             // Default preset
