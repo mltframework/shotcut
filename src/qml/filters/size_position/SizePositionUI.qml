@@ -279,8 +279,10 @@ Item {
                 filter.set(rectProperty, filter.getRect(endValue), 1.0, filter.duration - 1)
             }
         } else if (!positionKeyframesButton.checked) {
+            filter.blockSignals = true
             filter.resetProperty(rectProperty)
             filter.set(rectProperty, filter.getRect(middleValue))
+            filter.blockSignals = false
         } else if (position !== null) {
             filter.set(rectProperty, filterRect, 1.0, position)
         }
@@ -842,10 +844,10 @@ Item {
     }
 
     function updateSimpleKeyframes() {
+        setFilter(null)
         if (rotationProperty) {
             updateRotation()
         }
-        setFilter(null)
     }
 
     Connections {
