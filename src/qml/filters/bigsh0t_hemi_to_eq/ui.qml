@@ -32,26 +32,120 @@ Item {
     property int interpolationValue : 0;
     property int projectionValue : 0;
 
-    Connections { target: filter; onChanged: setControls(); onInChanged: { updateProperty_yaw (null); } onOutChanged: { updateProperty_yaw (null); } onAnimateInChanged: { updateProperty_yaw (null); } onAnimateOutChanged: { updateProperty_yaw (null); } }
-    Connections { target: filter; onChanged: setControls(); onInChanged: { updateProperty_pitch (null); } onOutChanged: { updateProperty_pitch (null); } onAnimateInChanged: { updateProperty_pitch (null); } onAnimateOutChanged: { updateProperty_pitch (null); } }
-    Connections { target: filter; onChanged: setControls(); onInChanged: { updateProperty_roll (null); } onOutChanged: { updateProperty_roll (null); } onAnimateInChanged: { updateProperty_roll (null); } onAnimateOutChanged: { updateProperty_roll (null); } }
+    function updateSimpleKeyframes() {
+        if (filter.animateIn <= 0 && filter.animateOut <= 0) {
+            // When disabling simple keyframes. Clear out the keyframes before proceeding.
+            filter.blockSignals = true
+            if (!yawKeyframesButton.checked && filter.keyframeCount("yaw") > 0) {
+                filter.resetProperty("yaw")
+            }
+            if (!pitchKeyframesButton.checked && filter.keyframeCount("pitch") > 0) {
+                filter.resetProperty("pitch")
+            }
+            if (!rollKeyframesButton.checked && filter.keyframeCount("roll") > 0) {
+                filter.resetProperty("roll")
+            }
+            if (!frontXKeyframesButton.checked && filter.keyframeCount("frontX") > 0) {
+                filter.resetProperty("frontX")
+            }
+            if (!frontYKeyframesButton.checked && filter.keyframeCount("frontY") > 0) {
+                filter.resetProperty("frontY")
+            }
+            if (!frontUpKeyframesButton.checked && filter.keyframeCount("frontUp") > 0) {
+                filter.resetProperty("frontUp")
+            }
+            if (!backXKeyframesButton.checked && filter.keyframeCount("backX") > 0) {
+                filter.resetProperty("backX")
+            }
+            if (!backYKeyframesButton.checked && filter.keyframeCount("backY") > 0) {
+                filter.resetProperty("backY")
+            }
+            if (!backUpKeyframesButton.checked && filter.keyframeCount("backUp") > 0) {
+                filter.resetProperty("backUp")
+            }
+            if (!fovKeyframesButton.checked && filter.keyframeCount("fov") > 0) {
+                filter.resetProperty("fov")
+            }
+            if (!radiusKeyframesButton.checked && filter.keyframeCount("radius") > 0) {
+                filter.resetProperty("radius")
+            }
+            if (!radiusKeyframesButton.checked && filter.keyframeCount("radius") > 0) {
+                filter.resetProperty("radius")
+            }
+            if (!nadirRadiusKeyframesButton.checked && filter.keyframeCount("nadirRadius") > 0) {
+                filter.resetProperty("nadirRadius")
+            }
+            if (!nadirCorrectionStartKeyframesButton.checked && filter.keyframeCount("nadirCorrectionStart") > 0) {
+                filter.resetProperty("nadirCorrectionStart")
+            }
+            filter.blockSignals = false
+        } else if (filter.animateIn > 0 || filter.animateOut > 0) {
+            // When enabling simple keyframes, initialize the keyframes with the current value
+            if (filter.keyframeCount("yaw") <= 0) {
+                yawStart = yawMiddle = yawEnd = filter.getDouble("yaw")
+            }
+            if (filter.keyframeCount("pitch") <= 0) {
+                pitchStart = pitchMiddle = pitchEnd = filter.getDouble("pitch")
+            }
+            if (filter.keyframeCount("roll") <= 0) {
+                rollStart = rollMiddle = rollEnd = filter.getDouble("roll")
+            }
+            if (filter.keyframeCount("frontX") <= 0) {
+                frontXStart = frontXMiddle = frontXEnd = filter.getDouble("frontX")
+            }
+            if (filter.keyframeCount("frontY") <= 0) {
+                frontYStart = frontYMiddle = frontYEnd = filter.getDouble("frontY")
+            }
+            if (filter.keyframeCount("frontUp") <= 0) {
+                frontUpStart = frontUpMiddle = frontUpEnd = filter.getDouble("frontUp")
+            }
+            if (filter.keyframeCount("backX") <= 0) {
+                backXStart = backXMiddle = backXEnd = filter.getDouble("backX")
+            }
+            if (filter.keyframeCount("backY") <= 0) {
+                backYStart = backYMiddle = backYEnd = filter.getDouble("backY")
+            }
+            if (filter.keyframeCount("backUp") <= 0) {
+                backUpStart = backUpMiddle = backUpEnd = filter.getDouble("backUp")
+            }
+            if (filter.keyframeCount("fov") <= 0) {
+                fovStart = fovMiddle = fovEnd = filter.getDouble("fov")
+            }
+            if (filter.keyframeCount("radius") <= 0) {
+                radiusStart = radiusMiddle = radiusEnd = filter.getDouble("radius")
+            }
+            if (filter.keyframeCount("nadirRadius") <= 0) {
+                nadirRadiusStart = nadirRadiusMiddle = nadirRadiusEnd = filter.getDouble("nadirRadius")
+            }
+            if (filter.keyframeCount("nadirCorrectionStart") <= 0) {
+                nadirCorrectionStartStart = nadirCorrectionStartMiddle = nadirCorrectionStartEnd = filter.getDouble("nadirCorrectionStart")
+            }
+        }
+        updateProperty_yaw(null)
+        updateProperty_pitch(null)
+        updateProperty_roll(null)
+        updateProperty_frontX(null)
+        updateProperty_frontY(null)
+        updateProperty_frontUp(null)
+        updateProperty_backX(null)
+        updateProperty_backY(null)
+        updateProperty_backUp(null)
+        updateProperty_fov(null)
+        updateProperty_radius(null)
+        updateProperty_nadirRadius(null)
+        updateProperty_nadirCorrectionStart(null)
+        updateProperty_interpolation()
+        updateProperty_projection()
+    }
 
-    Connections { target: filter; onChanged: setControls(); onInChanged: { updateProperty_frontX (null); } onOutChanged: { updateProperty_frontX (null); } onAnimateInChanged: { updateProperty_frontX (null); } onAnimateOutChanged: { updateProperty_frontX (null); } }
-    Connections { target: filter; onChanged: setControls(); onInChanged: { updateProperty_frontY (null); } onOutChanged: { updateProperty_frontY (null); } onAnimateInChanged: { updateProperty_frontY (null); } onAnimateOutChanged: { updateProperty_frontY (null); } }
-    Connections { target: filter; onChanged: setControls(); onInChanged: { updateProperty_frontUp (null); } onOutChanged: { updateProperty_frontUp (null); } onAnimateInChanged: { updateProperty_frontUp (null); } onAnimateOutChanged: { updateProperty_frontUp (null); } }
-
-    Connections { target: filter; onChanged: setControls(); onInChanged: { updateProperty_backX (null); } onOutChanged: { updateProperty_backX (null); } onAnimateInChanged: { updateProperty_backX (null); } onAnimateOutChanged: { updateProperty_backX (null); } }
-    Connections { target: filter; onChanged: setControls(); onInChanged: { updateProperty_backY (null); } onOutChanged: { updateProperty_backY (null); } onAnimateInChanged: { updateProperty_backY (null); } onAnimateOutChanged: { updateProperty_backY (null); } }
-    Connections { target: filter; onChanged: setControls(); onInChanged: { updateProperty_backUp (null); } onOutChanged: { updateProperty_backUp (null); } onAnimateInChanged: { updateProperty_backUp (null); } onAnimateOutChanged: { updateProperty_backUp (null); } }
-
-    Connections { target: filter; onChanged: setControls(); onInChanged: { updateProperty_fov (null); } onOutChanged: { updateProperty_fov (null); } onAnimateInChanged: { updateProperty_fov (null); } onAnimateOutChanged: { updateProperty_fov (null); } }
-    Connections { target: filter; onChanged: setControls(); onInChanged: { updateProperty_radius (null); } onOutChanged: { updateProperty_radius (null); } onAnimateInChanged: { updateProperty_radius (null); } onAnimateOutChanged: { updateProperty_radius (null); } }
-
-    Connections { target: filter; onChanged: setControls(); onInChanged: { updateProperty_nadirRadius (null); } onOutChanged: { updateProperty_nadirRadius (null); } onAnimateInChanged: { updateProperty_nadirRadius (null); } onAnimateOutChanged: { updateProperty_nadirRadius (null); } }
-    Connections { target: filter; onChanged: setControls(); onInChanged: { updateProperty_nadirCorrectionStart (null); } onOutChanged: { updateProperty_nadirCorrectionStart (null); } onAnimateInChanged: { updateProperty_nadirCorrectionStart (null); } onAnimateOutChanged: { updateProperty_nadirCorrectionStart (null); } }
-
-    Connections { target: filter; onChanged: setControls(); onInChanged: { updateProperty_interpolation (); } onOutChanged: { updateProperty_interpolation (); } onAnimateInChanged: { updateProperty_interpolation (); } onAnimateOutChanged: { updateProperty_interpolation (); } }
-    Connections { target: filter; onChanged: setControls(); onInChanged: { updateProperty_projection (); } onOutChanged: { updateProperty_projection (); } onAnimateInChanged: { updateProperty_projection (); } onAnimateOutChanged: { updateProperty_projection (); } }
+    Connections {
+        target: filter
+        onChanged: setControls()
+        onInChanged: updateSimpleKeyframes()
+        onOutChanged: updateSimpleKeyframes()
+        onAnimateInChanged: updateSimpleKeyframes()
+        onAnimateOutChanged: updateSimpleKeyframes()
+    }
 
     Component.onCompleted: {
         if (filter.isNew) { filter.set("yaw", 0); } else { yawMiddle = filter.getDouble("yaw", filter.animateIn); if (filter.animateIn > 0) { yawStart = filter.getDouble("yaw", 0); } if (filter.animateOut > 0) { yawEnd = filter.getDouble("yaw", filter.duration - 1); } }

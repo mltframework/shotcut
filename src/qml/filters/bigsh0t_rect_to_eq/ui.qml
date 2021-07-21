@@ -15,9 +15,39 @@ Item {
     property double vfovStart : 0.0; property double vfovMiddle : 0.0; property double vfovEnd : 0.0;
     property int interpolationValue : 0;
 
-    Connections { target: filter; onChanged: setControls(); onInChanged: { updateProperty_hfov (null); } onOutChanged: { updateProperty_hfov (null); } onAnimateInChanged: { updateProperty_hfov (null); } onAnimateOutChanged: { updateProperty_hfov (null); } }
-    Connections { target: filter; onChanged: setControls(); onInChanged: { updateProperty_vfov (null); } onOutChanged: { updateProperty_vfov (null); } onAnimateInChanged: { updateProperty_vfov (null); } onAnimateOutChanged: { updateProperty_vfov (null); } }
-    Connections { target: filter; onChanged: setControls(); onInChanged: { updateProperty_interpolation (); } onOutChanged: { updateProperty_interpolation (); } onAnimateInChanged: { updateProperty_interpolation (); } onAnimateOutChanged: { updateProperty_interpolation (); } }
+    function updateSimpleKeyframes() {
+        if (filter.animateIn <= 0 && filter.animateOut <= 0) {
+            // When disabling simple keyframes. Clear out the keyframes before proceeding.
+            filter.blockSignals = true
+            if (!hfovKeyframesButton.checked && filter.keyframeCount("hfov") > 0) {
+                filter.resetProperty("hfov")
+            }
+            if (!vfovKeyframesButton.checked && filter.keyframeCount("vfov") > 0) {
+                filter.resetProperty("vfov")
+            }
+            filter.blockSignals = false
+        } else if (filter.animateIn > 0 || filter.animateOut > 0) {
+            // When enabling simple keyframes, initialize the keyframes with the current value
+            if (filter.keyframeCount("hfov") <= 0) {
+                hfovStart = hfovMiddle = hfovEnd = filter.getDouble("hfov")
+            }
+            if (filter.keyframeCount("vfov") <= 0) {
+                vfovStart = vfovMiddle = vfovEnd = filter.getDouble("vfov")
+            }
+        }
+        updateProperty_hfov(null)
+        updateProperty_vfov(null)
+        updateProperty_interpolation()
+    }
+
+    Connections {
+        target: filter
+        onChanged: setControls()
+        onInChanged: updateSimpleKeyframes()
+        onOutChanged: updateSimpleKeyframes()
+        onAnimateInChanged: updateSimpleKeyframes()
+        onAnimateOutChanged: updateSimpleKeyframes()
+    }
 
     Component.onCompleted: {
         if (filter.isNew) { filter.set("hfov", 90); } else { hfovMiddle = filter.getDouble("hfov", filter.animateIn); if (filter.animateIn > 0) { hfovStart = filter.getDouble("hfov", 0); } if (filter.animateOut > 0) { hfovEnd = filter.getDouble("hfov", filter.duration - 1); } }

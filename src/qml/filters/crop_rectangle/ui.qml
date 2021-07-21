@@ -372,6 +372,17 @@ Item {
     }
 
     function updateFilter() {
+        if (filter.animateIn <= 0 && filter.animateOut <= 0) {
+            // When disabling simple keyframes. Clear out the keyframes before proceeding.
+            filter.blockSignals = true
+            if (!positionKeyframesButton.checked && filter.keyframeCount(rectProperty) > 0) {
+                filter.resetProperty(rectProperty)
+            }
+            if (!radiusKeyframesButton.checked && filter.keyframeCount('radius') > 0) {
+                filter.resetProperty('radius')
+            }
+            filter.blockSignals = false
+        }
         updateFilterRatio(null)
         updateFilterRect(null)
     }

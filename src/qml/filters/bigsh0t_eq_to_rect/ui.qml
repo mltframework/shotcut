@@ -18,12 +18,60 @@ Item {
     property double fisheyeStart : 0.0; property double fisheyeMiddle : 0.0; property double fisheyeEnd : 0.0;
     property int interpolationValue : 0;
 
-    Connections { target: filter; onChanged: setControls(); onInChanged: { updateProperty_yaw (null); } onOutChanged: { updateProperty_yaw (null); } onAnimateInChanged: { updateProperty_yaw (null); } onAnimateOutChanged: { updateProperty_yaw (null); } }
-    Connections { target: filter; onChanged: setControls(); onInChanged: { updateProperty_pitch (null); } onOutChanged: { updateProperty_pitch (null); } onAnimateInChanged: { updateProperty_pitch (null); } onAnimateOutChanged: { updateProperty_pitch (null); } }
-    Connections { target: filter; onChanged: setControls(); onInChanged: { updateProperty_roll (null); } onOutChanged: { updateProperty_roll (null); } onAnimateInChanged: { updateProperty_roll (null); } onAnimateOutChanged: { updateProperty_roll (null); } }
-    Connections { target: filter; onChanged: setControls(); onInChanged: { updateProperty_fov (null); } onOutChanged: { updateProperty_fov (null); } onAnimateInChanged: { updateProperty_fov (null); } onAnimateOutChanged: { updateProperty_fov (null); } }
-    Connections { target: filter; onChanged: setControls(); onInChanged: { updateProperty_fisheye (null); } onOutChanged: { updateProperty_fisheye (null); } onAnimateInChanged: { updateProperty_fisheye (null); } onAnimateOutChanged: { updateProperty_fisheye (null); } }
-    Connections { target: filter; onChanged: setControls(); onInChanged: { updateProperty_interpolation (); } onOutChanged: { updateProperty_interpolation (); } onAnimateInChanged: { updateProperty_interpolation (); } onAnimateOutChanged: { updateProperty_interpolation (); } }
+    function updateSimpleKeyframes() {
+        if (filter.animateIn <= 0 && filter.animateOut <= 0) {
+            // When disabling simple keyframes. Clear out the keyframes before proceeding.
+            filter.blockSignals = true
+            if (!yawKeyframesButton.checked && filter.keyframeCount("yaw") > 0) {
+                filter.resetProperty("yaw")
+            }
+            if (!pitchKeyframesButton.checked && filter.keyframeCount("pitch") > 0) {
+                filter.resetProperty("pitch")
+            }
+            if (!rollKeyframesButton.checked && filter.keyframeCount("roll") > 0) {
+                filter.resetProperty("roll")
+            }
+            if (!fovKeyframesButton.checked && filter.keyframeCount("fov") > 0) {
+                filter.resetProperty("fov")
+            }
+            if (!fisheyeKeyframesButton.checked && filter.keyframeCount("fisheye") > 0) {
+                filter.resetProperty("fisheye")
+            }
+            filter.blockSignals = false
+        } else if (filter.animateIn > 0 || filter.animateOut > 0) {
+            // When enabling simple keyframes, initialize the keyframes with the current value
+            if (filter.keyframeCount("yaw") <= 0) {
+                yawStart = yawMiddle = yawEnd = filter.getDouble("yaw")
+            }
+            if (filter.keyframeCount("pitch") <= 0) {
+                pitchStart = pitchMiddle = pitchEnd = filter.getDouble("pitch")
+            }
+            if (filter.keyframeCount("roll") <= 0) {
+                rollStart = rollMiddle = rollEnd = filter.getDouble("roll")
+            }
+            if (filter.keyframeCount("fov") <= 0) {
+                fovStart = fovMiddle = fovEnd = filter.getDouble("fov")
+            }
+            if (filter.keyframeCount("fisheye") <= 0) {
+                fisheyeStart = fisheyeMiddle = fisheyeEnd = filter.getDouble("fisheye")
+            }
+        }
+        updateProperty_yaw (null)
+        updateProperty_pitch (null)
+        updateProperty_roll (null)
+        updateProperty_fov (null)
+        updateProperty_fisheye (null)
+        updateProperty_interpolation ()
+    }
+
+    Connections {
+        target: filter
+        onChanged: setControls()
+        onInChanged: updateSimpleKeyframes()
+        onOutChanged: updateSimpleKeyframes()
+        onAnimateInChanged: updateSimpleKeyframes()
+        onAnimateOutChanged: updateSimpleKeyframes()
+    }
 
     Component.onCompleted: {
         if (filter.isNew) { filter.set("yaw", 0); } else { yawMiddle = filter.getDouble("yaw", filter.animateIn); if (filter.animateIn > 0) { yawStart = filter.getDouble("yaw", 0); } if (filter.animateOut > 0) { yawEnd = filter.getDouble("yaw", filter.duration - 1); } }

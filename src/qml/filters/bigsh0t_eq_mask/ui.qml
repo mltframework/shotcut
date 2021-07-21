@@ -16,10 +16,52 @@ Item {
     property double vfov0Start : 0.0; property double vfov0Middle : 0.0; property double vfov0End : 0.0;
     property double vfov1Start : 0.0; property double vfov1Middle : 0.0; property double vfov1End : 0.0;
 
-    Connections { target: filter; onChanged: setControls(); onInChanged: { updateProperty_hfov0 (null); } onOutChanged: { updateProperty_hfov0 (null); } onAnimateInChanged: { updateProperty_hfov0 (null); } onAnimateOutChanged: { updateProperty_hfov0 (null); } }
-    Connections { target: filter; onChanged: setControls(); onInChanged: { updateProperty_hfov1 (null); } onOutChanged: { updateProperty_hfov1 (null); } onAnimateInChanged: { updateProperty_hfov1 (null); } onAnimateOutChanged: { updateProperty_hfov1 (null); } }
-    Connections { target: filter; onChanged: setControls(); onInChanged: { updateProperty_vfov0 (null); } onOutChanged: { updateProperty_vfov0 (null); } onAnimateInChanged: { updateProperty_vfov0 (null); } onAnimateOutChanged: { updateProperty_vfov0 (null); } }
-    Connections { target: filter; onChanged: setControls(); onInChanged: { updateProperty_vfov1 (null); } onOutChanged: { updateProperty_vfov1 (null); } onAnimateInChanged: { updateProperty_vfov1 (null); } onAnimateOutChanged: { updateProperty_vfov1 (null); } }
+    function updateSimpleKeyframes() {
+        if (filter.animateIn <= 0 && filter.animateOut <= 0) {
+            // When disabling simple keyframes. Clear out the keyframes before proceeding.
+            filter.blockSignals = true
+            if (!hfov0KeyframesButton.checked && filter.keyframeCount("hfov0") > 0) {
+                filter.resetProperty("hfov0")
+            }
+            if (!hfov1KeyframesButton.checked && filter.keyframeCount("hfov1") > 0) {
+                filter.resetProperty("hfov1")
+            }
+            if (!vfov0KeyframesButton.checked && filter.keyframeCount("vfov0") > 0) {
+                filter.resetProperty("vfov0")
+            }
+            if (!vfov1KeyframesButton.checked && filter.keyframeCount("vfov1") > 0) {
+                filter.resetProperty("vfov1")
+            }
+            filter.blockSignals = false
+        } else if (filter.animateIn > 0 || filter.animateOut > 0) {
+            // When enabling simple keyframes, initialize the keyframes with the current value
+            if (filter.keyframeCount("hfov0") <= 0) {
+                hfov0Start = hfov0Middle = hfov0End = filter.getDouble("hfov0")
+            }
+            if (filter.keyframeCount("hfov1") <= 0) {
+                hfov1Start = hfov1Middle = hfov1End = filter.getDouble("hfov1")
+            }
+            if (filter.keyframeCount("vfov0") <= 0) {
+                vfov0Start = vfov0Middle = vfov0End = filter.getDouble("vfov0")
+            }
+            if (filter.keyframeCount("vfov1") <= 0) {
+                vfov1Start = vfov1Middle = vfov1End = filter.getDouble("vfov1")
+            }
+        }
+        updateProperty_hfov0(null)
+        updateProperty_hfov1(null)
+        updateProperty_vfov0(null)
+        updateProperty_vfov1(null)
+    }
+
+    Connections {
+        target: filter
+        onChanged: setControls()
+        onInChanged: updateSimpleKeyframes()
+        onOutChanged: updateSimpleKeyframes()
+        onAnimateInChanged: updateSimpleKeyframes()
+        onAnimateOutChanged: updateSimpleKeyframes()
+    }
 
     Component.onCompleted: {
         if (filter.isNew) { filter.set("hfov0", 180); } else { hfov0Middle = filter.getDouble("hfov0", filter.animateIn); if (filter.animateIn > 0) { hfov0Start = filter.getDouble("hfov0", 0); } if (filter.animateOut > 0) { hfov0End = filter.getDouble("hfov0", filter.duration - 1); } }

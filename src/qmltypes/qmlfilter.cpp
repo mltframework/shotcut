@@ -528,8 +528,11 @@ int QmlFilter::animateIn()
 
 void QmlFilter::setAnimateIn(int value)
 {
-    m_service.set(kShotcutAnimInProperty, m_service.frames_to_time(qBound(0, value, duration()), mlt_time_clock));
-    emit animateInChanged();
+    value = qBound(0, value, duration());
+    if (value != m_service.time_to_frames(m_service.get(kShotcutAnimInProperty))) {
+        m_service.set(kShotcutAnimInProperty, m_service.frames_to_time(value, mlt_time_clock));
+        emit animateInChanged();
+    }
 }
 
 int QmlFilter::animateOut()
@@ -539,8 +542,11 @@ int QmlFilter::animateOut()
 
 void QmlFilter::setAnimateOut(int value)
 {
-    m_service.set(kShotcutAnimOutProperty, m_service.frames_to_time(qBound(0, value, duration()), mlt_time_clock));
-    emit animateOutChanged();
+    value = qBound(0, value, duration());
+    if (value != m_service.time_to_frames(m_service.get(kShotcutAnimOutProperty))) {
+        m_service.set(kShotcutAnimOutProperty, m_service.frames_to_time(value, mlt_time_clock));
+        emit animateOutChanged();
+    }
 }
 
 int QmlFilter::duration()
