@@ -10,7 +10,7 @@ Metadata {
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true
-        simpleProperties: ['filter.1', 'filter.2', 'filter.3', 'filter.4']
+        simpleProperties: ['filter.1', 'filter.2', 'filter.3', 'filter.4', 'filter.5']
         parameters: [
             Parameter {
                 name: qsTr('Horizontal')
@@ -43,6 +43,14 @@ Metadata {
                 isCurve: true
                 minimum: 0
                 maximum: 1
+            },
+            Parameter {
+                name: qsTr('Rotation')
+                property: 'filter.5'
+                isSimple: true
+                isCurve: true
+                minimum: 0.5 - 179.9 / 360
+                maximum: 0.5 + 179.9 / 360
             }
         ]
     }

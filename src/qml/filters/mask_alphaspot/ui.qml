@@ -31,9 +31,9 @@ Item {
     property string paramOperation: 'filter.9'
     property var defaultParameters: [paramHorizontal, paramVertical, paramWidth, paramHeight,  paramShape, paramRotation, paramSoftness, paramOperation]
     property bool blockUpdate: true
-    property var startValues: [0.5, 0.5, 0.1, 0.1]
-    property var middleValues: [0.5, 0.5, 0.1, 0.1]
-    property var endValues: [0.5, 0.5, 0.1, 0.1]
+    property var startValues: [0.5, 0.5, 0.1, 0.1, 0.5]
+    property var middleValues: [0.5, 0.5, 0.1, 0.1, 0.5]
+    property var endValues: [0.5, 0.5, 0.1, 0.1, 0.5]
 
     width: 350
     height: 250
@@ -61,18 +61,21 @@ Item {
         middleValues = [filter.getDouble(paramHorizontal, filter.animateIn),
                         filter.getDouble(paramVertical, filter.animateIn),
                         filter.getDouble(paramWidth, filter.animateIn),
-                        filter.getDouble(paramHeight, filter.animateIn)]
+                        filter.getDouble(paramHeight, filter.animateIn),
+                        filter.getDouble(paramRotation, filter.animateIn)]
         if (filter.animateIn > 0) {
             startValues = [filter.getDouble(paramHorizontal, 0),
                            filter.getDouble(paramVertical, 0),
                            filter.getDouble(paramWidth, 0),
-                           filter.getDouble(paramHeight, 0)]
+                           filter.getDouble(paramHeight, 0),
+                           filter.getDouble(paramRotation, 0)]
         }
         if (filter.animateOut > 0) {
             endValues = [filter.getDouble(paramHorizontal, filter.duration - 1),
                          filter.getDouble(paramVertical, filter.duration - 1),
                          filter.getDouble(paramWidth, filter.duration - 1),
-                         filter.getDouble(paramHeight, filter.duration - 1)]
+                         filter.getDouble(paramHeight, filter.duration - 1),
+                         filter.getDouble(paramRotation, filter.duration - 1)]
         }
     }
 
@@ -91,12 +94,13 @@ Item {
         widthKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(paramWidth) > 0
         heightSlider.value     = filter.getDouble(paramHeight, position) * 100
         heightKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(paramHeight) > 0
+        rotationSlider.updateFromFilter()
+        rotationKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(paramRotation) > 0
         blockUpdate = false
-        horizontalSlider.enabled = verticalSlider.enabled = widthSlider.enabled = heightSlider.enabled
+        horizontalSlider.enabled = verticalSlider.enabled = widthSlider.enabled = heightSlider.enabled = rotationSlider.enabled
             = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1)
         operationCombo.currentIndex = Math.round(filter.getDouble(paramOperation) * 4)
         shapeCombo.currentIndex = Math.round(filter.getDouble(paramShape) * 3)
-        rotationSlider.value = (filter.getDouble(paramRotation) - 0.5) * 360
         softnessSlider.value = filter.getDouble(paramSoftness) * 100
     }
 
@@ -141,6 +145,7 @@ Item {
                 filter.resetProperty(paramVertical)
                 filter.resetProperty(paramWidth)
                 filter.resetProperty(paramHeight)
+                filter.resetProperty(paramRotation)
                 filter.animateIn = filter.animateOut = 0
             } else {
                 filter.clearSimpleAnimation(parameter)
@@ -170,6 +175,7 @@ Item {
                 filter.resetProperty(paramVertical)
                 filter.resetProperty(paramWidth)
                 filter.resetProperty(paramHeight)
+                filter.resetProperty(paramRotation)
             }
             onPresetSelected: {
                 setControls()
@@ -304,11 +310,20 @@ Item {
             decimals: 1
             spinnerWidth: 110
             suffix: qsTr(' deg', 'degrees')
-            onValueChanged: filter.set(paramRotation, 0.5 + value / 360)
+            function updateFromFilter() {
+                value = (filter.getDouble(paramRotation, getPosition()) - 0.5) * 360
+            }
+            function filterValue() {
+                return 0.5 + value / 360
+            }
+            onValueChanged: updateFilter(paramRotation, filterValue(), getPosition(), rotationKeyframesButton)
         }
         Shotcut.UndoButton {
-            Layout.columnSpan: 2
             onClicked: rotationSlider.value = 0
+        }
+        Shotcut.KeyframesButton {
+            id: rotationKeyframesButton
+            onToggled: onKeyframesButtonClicked(checked, paramRotation, rotationSlider.filterValue())
         }
 
         Label {
@@ -339,6 +354,7 @@ Item {
         updateFilter(paramVertical,   verticalSlider.value/100,   getPosition(), verticalKeyframesButton)
         updateFilter(paramWidth,      widthSlider.value/100,      getPosition(), widthKeyframesButton)
         updateFilter(paramHeight,     heightSlider.value/100,     getPosition(), heightKeyframesButton)
+        updateFilter(paramRotation, rotationSlider.filterValue(), getPosition(), rotationKeyframesButton)
     }
 
     Connections {
@@ -361,6 +377,7 @@ Item {
                 verticalSlider.value   = filter.getDouble(paramVertical,   getPosition()) * 100
                 widthSlider.value      = filter.getDouble(paramWidth,      getPosition()) * 100
                 heightSlider.value     = filter.getDouble(paramHeight,     getPosition()) * 100
+                rotationSlider.updateFromFilter()
                 blockUpdate = false
                 horizontalSlider.enabled = verticalSlider.enabled = widthSlider.enabled = heightSlider.enabled = true
             }
