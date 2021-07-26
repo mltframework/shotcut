@@ -111,14 +111,13 @@ Item {
         title: direction == 'after' ? qsTr('Set Speed After') : qsTr('Set Speed Before')
         standardButtons: StandardButton.Ok | StandardButton.Cancel
         modality: application.dialogModality
-        width: 300
-        height: 75
-        GridLayout {
-            anchors.fill: parent
-            anchors.margins: 8
+        width: 400
+        height: 95
+        ColumnLayout {
             Shotcut.SliderSpinner {
-                Layout.bottomMargin: 12
                 id: speedSlider
+                Layout.bottomMargin: 8
+                Layout.preferredWidth: 400
                 value: 1.0
                 minimumValue: -3.0
                 maximumValue: 3.0
@@ -126,33 +125,119 @@ Item {
                 stepSize: 0.1
                 suffix: "x"
             }
+            Shotcut.ComboBox {
+                id: lockCombo
+                Layout.preferredWidth: 400
+                model: ListModel {
+                    id: lockModel
+                    ListElement { text: qsTr('Modify current mapping'); value: 'out' }
+                    ListElement { text: qsTr('Lock current mapping'); value: 'in' }
+                }
+                textRole: "text"
+                currentIndex: 0
+                function getLock() {
+                    return lockModel.get(currentIndex).value
+                }
+            }
+            Label {
+                Layout.bottomMargin: 12
+                Layout.preferredWidth: 400
+                wrapMode: Text.WordWrap
+                text: qsTr('"Modify current mapping" will modify the input time at the current position.\n' +
+                           '"Lock current mapping" will lock the input time at the current position and modify the value of an adjacent keyframe')
+            }
         }
         onAccepted: {
-            var position = getPosition()
+            var currPosition = getPosition()
+            var maxPosition = producer.out - producer.in
+            var currValue = filter.getDouble("map", currPosition)
             var maxValue = (producer.length - producer.in) / profile.fps
-            var newValue = filter.getDouble("map", position)
-            if (direction == 'after') {
-                var nextPosition = filter.getNextKeyframePosition("map", position)
-                if (nextPosition > position) {
-                    var deltaTime = ((nextPosition - position) / profile.fps) * speedSlider.value
+            var newValue = currValue
+            var newPosition = currPosition
+            var lock = lockCombo.getLock()
+            if (direction == 'after' && lock == 'out') {
+                var nextPosition = filter.getNextKeyframePosition("map", currPosition)
+                if (nextPosition > currPosition) {
+                    var deltaTime = ((nextPosition - currPosition) / profile.fps) * speedSlider.value
                     var nextValue = filter.getDouble("map", nextPosition)
                     newValue = nextValue - deltaTime;
                 }
-            } else { // before
-                var prevPosition = filter.getPrevKeyframePosition("map", position)
-                if (prevPosition < position && prevPosition >= 0) {
-                    var deltaTime = ((position - prevPosition) / profile.fps) * speedSlider.value
+            } else if (direction == 'before' && lock == 'out') {
+                var prevPosition = filter.getPrevKeyframePosition("map", currPosition)
+                if (prevPosition < currPosition && prevPosition >= 0) {
+                    var deltaTime = ((currPosition - prevPosition) / profile.fps) * speedSlider.value
                     var prevValue = filter.getDouble("map", prevPosition)
                     newValue = prevValue + deltaTime;
                 }
+            } else if (direction == 'after' && lock == 'in') {
+                // Lock the input value
+                filter.set('map', currValue, currPosition)
+                // Calculate the value of the next keyframe
+                var nextPosition = filter.getNextKeyframePosition("map", currPosition)
+                if (nextPosition == -1 || nextPosition > maxPosition) {
+                    nextPosition = maxPosition
+                }
+                if (nextPosition > currPosition) {
+                    var deltaTime = ((nextPosition - currPosition) / profile.fps) * speedSlider.value
+                    newValue = currValue + deltaTime;
+                    newPosition = nextPosition
+                }
+                if (newValue > maxValue)
+                {
+                    var deltaPosition = ((maxValue - currValue) / speedSlider.value) * profile.fps
+                    newPosition = Math.floor(currPosition + deltaPosition)
+                    var deltaTime = ((newPosition - currPosition) / profile.fps) * speedSlider.value
+                    newValue = currValue + deltaTime;
+                }
+                if (newValue < 0)
+                {
+                    var deltaPosition = ((0 - currValue) / speedSlider.value) * profile.fps
+                    newPosition = Math.floor(currPosition + deltaPosition)
+                    var deltaTime = ((newPosition - currPosition) / profile.fps) * speedSlider.value
+                    newValue = currValue + deltaTime;
+                }
+            } else if (direction == 'before' && lock == 'in') {
+                // Lock the input value
+                filter.set('map', currValue, currPosition)
+                // Calculate the value of the next keyframe
+                var prevPosition = filter.getPrevKeyframePosition("map", currPosition)
+                if (prevPosition < 0 || prevPosition == currPosition) {
+                    prevPosition = 0
+                }
+                if (prevPosition < currPosition && prevPosition >= 0) {
+                    var deltaTime = ((currPosition - prevPosition) / profile.fps) * speedSlider.value
+                    newValue = currValue - deltaTime;
+                    newPosition = prevPosition
+                }
+                if (newValue > maxValue)
+                {
+                    var deltaPosition = Math.ceil(((maxValue - currValue) / speedSlider.value) * profile.fps)
+                    newPosition = currPosition + deltaPosition
+                    var deltaTime = ((currPosition - newPosition) / profile.fps) * speedSlider.value
+                    newValue = currValue - deltaTime;
+                }
+                if (newValue < 0)
+                {
+                    var deltaPosition = Math.ceil(((0 - currValue) / speedSlider.value) * profile.fps)
+                    newPosition = currPosition + deltaPosition
+                    var deltaTime = ((currPosition - newPosition) / profile.fps) * speedSlider.value
+                    newValue = currValue - deltaTime;
+                }
             }
+
             if (newValue < 0) {
                 newValue = 0
             }
             if (newValue > maxValue) {
                 newValue = maxValue
             }
-            filter.set('map', newValue, position)
+            if (newPosition < 0) {
+                newPosition = 0
+            }
+            if (newPosition > maxPosition) {
+                newPosition = maxPosition
+            }
+            filter.set('map', newValue, newPosition)
             timer.restart()
         }
     }
