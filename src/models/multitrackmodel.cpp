@@ -1116,6 +1116,10 @@ int MultitrackModel::appendClip(int trackIndex, Mlt::Producer &clip)
 
 void MultitrackModel::removeClip(int trackIndex, int clipIndex, bool rippleAllTracks)
 {
+    if (trackIndex >= m_trackList.size()) {
+        return;
+    }
+
     int i = m_trackList.at(trackIndex).mlt_index;
     QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
     int clipPlaytime = -1;
@@ -1162,6 +1166,10 @@ void MultitrackModel::removeClip(int trackIndex, int clipIndex, bool rippleAllTr
 
 void MultitrackModel::liftClip(int trackIndex, int clipIndex)
 {
+    if (trackIndex >= m_trackList.size()) {
+        return;
+    }
+
     int i = m_trackList.at(trackIndex).mlt_index;
     QScopedPointer<Mlt::Producer> track(m_tractor->track(i));
     if (track) {

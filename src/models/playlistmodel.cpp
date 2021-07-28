@@ -221,6 +221,7 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
     }
 
     QScopedPointer<Mlt::ClipInfo> info(m_playlist->clip_info(index.row()));
+    if (info)
     switch (field) {
     case FIELD_INDEX:
         return QString::number(index.row() + 1);

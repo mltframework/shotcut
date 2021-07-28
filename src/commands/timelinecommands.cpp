@@ -415,7 +415,7 @@ void MoveClipCommand::redo()
         if (!m_redo) {
             // On the initial pass, remove clips while recording info about them.
             QScopedPointer<Mlt::ClipInfo> info(m_model.findClipByUuid(MLT.uuid(clip), trackIndex, clipIndex));
-            if (info->producer && info->producer->is_valid()) {
+            if (info && info->producer && info->producer->is_valid()) {
                 info->producer->set(kNewTrackIndexProperty, qBound(0, trackIndex + m_trackDelta, m_model.trackList().size() - 1));
                 info->producer->pass_property(*info->cut, kPlaylistStartProperty);
                 info->producer->set(kTrackIndexProperty, trackIndex);
