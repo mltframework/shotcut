@@ -168,7 +168,7 @@ Rectangle {
         Shotcut.Button {
             id: pasteButton
             implicitWidth: height
-            enabled: application.hasFiltersOnClipboard && attachedfiltersmodel.isProducerSelected
+            enabled: attachedfiltersmodel.isProducerSelected
             opacity: enabled ? 1.0 : 0.5
             icon.name: 'edit-paste'
             icon.source: 'qrc:///icons/oxygen/32x32/actions/edit-paste.png'

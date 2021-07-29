@@ -53,7 +53,7 @@ Controller::Controller()
     LOG_DEBUG() << "begin";
     m_repo = Mlt::Factory::init();
     resetLocale();
-    m_filtersClipboard.reset(new Mlt::Producer(profile(), "color", "black"));
+    initFiltersClipboard();
     updateAvformatCaching(0);
     LOG_DEBUG() << "end";
 }
@@ -321,6 +321,14 @@ void Controller::stopJack()
     if (m_jackFilter) {
         m_skipJackEvents = 2;
         m_jackFilter->fire_event("jack-stop");
+    }
+}
+
+void Controller::initFiltersClipboard()
+{
+    m_filtersClipboard.reset(new Mlt::Producer(profile(), "color", "black"));
+    if (m_filtersClipboard->is_valid()) {
+        m_filtersClipboard->set(kShotcutFiltersClipboard, 1);
     }
 }
 
@@ -1006,22 +1014,26 @@ void Controller::copyFilters(Producer& fromProducer, Producer& toProducer, bool 
 void Controller::copyFilters(Mlt::Producer* producer)
 {
     if (producer && producer->is_valid()) {
-        m_filtersClipboard.reset(new Mlt::Producer(profile(), "color", "black"));
+        initFiltersClipboard();
         copyFilters(*producer, *m_filtersClipboard);
     } else if (m_producer && m_producer->is_valid()) {
-        m_filtersClipboard.reset(new Mlt::Producer(profile(), "color", "black"));
+        initFiltersClipboard();
         copyFilters(*m_producer, *m_filtersClipboard);
     }
 }
 
-void Controller::pasteFilters(Mlt::Producer* producer)
+void Controller::pasteFilters(Mlt::Producer* producer, Producer* fromProducer)
 {
     Mlt::Producer* targetProducer = (producer && producer->is_valid())? producer
                       :(m_producer && m_producer->is_valid())? m_producer.data()
                       : nullptr;
     if (targetProducer) {
         int j = targetProducer->filter_count();
-        copyFilters(*m_filtersClipboard, *targetProducer, true);
+        if (fromProducer && fromProducer->is_valid()) {
+            copyFilters(*fromProducer, *targetProducer, true);
+        } else if (hasFiltersOnClipboard()) {
+            copyFilters(*m_filtersClipboard, *targetProducer, true);
+        }
         adjustFilters(*targetProducer, j);
     }
 }

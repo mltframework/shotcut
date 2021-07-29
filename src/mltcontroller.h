@@ -125,12 +125,15 @@ public:
     QUuid ensureHasUuid(Mlt::Properties& properties) const;
     static void copyFilters(Mlt::Producer& fromProducer, Mlt::Producer& toProducer, bool fromClipboard = false);
     void copyFilters(Mlt::Producer* producer = nullptr);
-    void pasteFilters(Mlt::Producer* producer = nullptr);
+    void pasteFilters(Mlt::Producer* producer = nullptr, Mlt::Producer* fromProducer = nullptr);
     static void adjustFilters(Mlt::Producer& producer, int startIndex = 0);
     static void adjustFilter(Mlt::Filter* filter, int in, int out, int inDelta, int outDelta);
     static void adjustClipFilters(Mlt::Producer& producer, int in, int out, int inDelta, int outDelta);
     bool hasFiltersOnClipboard() const {
         return m_filtersClipboard->is_valid() && m_filtersClipboard->filter_count() > 0;
+    }
+    QString filtersClipboardXML() {
+        return XML(m_filtersClipboard.get());
     }
 
     int audioChannels() const {
@@ -197,6 +200,7 @@ private:
     static void on_jack_stopped(mlt_properties owner, void* object, mlt_event_data data);
     void onJackStopped(int position);
     void stopJack();
+    void initFiltersClipboard();
 };
 
 } // namespace

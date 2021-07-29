@@ -30,6 +30,7 @@
 #include <QFileInfo>
 #include <QMessageBox>
 #include <QCheckBox>
+#include <QClipboard>
 #ifdef Q_OS_WIN
 #include <QLocale>
 #else
@@ -109,6 +110,7 @@ void QmlApplication::copyFilters()
 {
     QScopedPointer<Mlt::Producer> producer(new Mlt::Producer(MAIN.filterController()->attachedModel()->producer()));
     MLT.copyFilters(producer.data());
+    QGuiApplication::clipboard()->setText(MLT.filtersClipboardXML());
     emit QmlApplication::singleton().filtersCopied();
 }
 
@@ -116,7 +118,18 @@ void QmlApplication::pasteFilters()
 {
     QScopedPointer<Mlt::Producer> producer(new Mlt::Producer(MAIN.filterController()->attachedModel()->producer()));
     if (confirmOutputFilter()) {
-        MLT.pasteFilters(producer.data());
+        QString s = QGuiApplication::clipboard()->text();
+        if (s.contains("<mlt ")) {
+            Mlt::Profile profile(kDefaultMltProfile);
+            Mlt::Producer filtersProducer(profile, "xml-string", s.toUtf8().constData());
+            if (filtersProducer.is_valid() && filtersProducer.filter_count() > 0 && filtersProducer.get_int(kShotcutFiltersClipboard)) {
+                MLT.pasteFilters(producer.get(), &filtersProducer);
+            } else {
+                MLT.pasteFilters(producer.data());
+            }
+        } else {
+            MLT.pasteFilters(producer.data());
+        }
         emit QmlApplication::singleton().filtersPasted(MAIN.filterController()->attachedModel()->producer());
     }
 }
