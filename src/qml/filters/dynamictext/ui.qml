@@ -22,7 +22,7 @@ import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     width: 500
-    height: 350
+    height: 380
 
     Component.onCompleted: {
         filter.blockSignals = true
