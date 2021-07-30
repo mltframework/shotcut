@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2018 Meltytech, LLC
+ * Copyright (c) 2013-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,44 +18,9 @@
 #ifndef DATABASE_H
 #define DATABASE_H
 
-#include <QThread>
 #include <QImage>
-#include <QMutex>
-#include <QWaitCondition>
-
-struct DatabaseJob;
-class QTimer;
-
-class Worker : public QObject
-{
-    Q_OBJECT
-
-public:
-    void submitAndWaitForJob(DatabaseJob * job);
-    void quit();
-
-signals:
-    void opened(bool);
-    void failing(bool);
-
-public slots:
-    void run();
-
-private slots:
-    void commitTransaction();
-
-private:
-    bool upgradeVersion1();
-    void doJob(DatabaseJob * job);
-    void deleteOldThumbnails();
-
-    QList<DatabaseJob*> m_jobs;
-    QMutex m_mutex;
-    QWaitCondition m_waitForFinished;
-    QWaitCondition m_waitForNewJob;
-    QTimer* m_commitTimer {nullptr};
-    bool m_quit {false};
-};
+#include <QDir>
+#include <QTimer>
 
 class Database : public QObject
 {
@@ -67,22 +32,13 @@ public:
 
     bool putThumbnail(const QString& hash, const QImage& image);
     QImage getThumbnail(const QString& hash);
-    bool isShutdown() const;
-    bool isFailing() const { return m_isFailing; }
-
-signals:
-    void start();
-
-private slots:
-    void shutdown();
-    void onOpened(bool success) { m_isOpened = success; }
-    void onFailing(bool failing) { m_isFailing = failing; }
 
 private:
-    Worker m_worker;
-    QThread m_thread;
-    bool m_isFailing {false};
-    bool m_isOpened {false};
+    QDir thumbnailsDir();
+    QTimer m_deleteTimer;
+
+private slots:
+    void deleteOldThumbnails();
 };
 
 #define DB Database::singleton()

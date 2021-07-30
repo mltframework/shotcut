@@ -59,8 +59,7 @@ void AudioLevelsTask::start(Mlt::Producer& producer, QObject* object, const QMod
     if (Settings.timelineShowWaveforms() && producer.is_valid()) {
 
         QString serviceName = producer.get("mlt_service");
-        if (DB.isShutdown()
-            || serviceName == "pixbuf" || serviceName == "qimage" || serviceName == "webvfx"
+        if (   serviceName == "pixbuf" || serviceName == "qimage" || serviceName == "webvfx"
             || serviceName == "color"|| serviceName.startsWith("frei0r"))
             return;
 
@@ -167,7 +166,7 @@ void AudioLevelsTask::run()
     // 2 channels interleaved of uchar values
     QVariantList levels;
     QImage image = DB.getThumbnail(cacheKey());
-    if ((image.isNull() || m_isForce) && !DB.isFailing()) {
+    if (image.isNull() || m_isForce) {
         const char* key[2] = { "meta.media.audio_level.0", "meta.media.audio_level.1"};
         QElapsedTimer updateTime;
         updateTime.start();

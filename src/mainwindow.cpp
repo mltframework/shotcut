@@ -2604,7 +2604,6 @@ void MainWindow::showEvent(QShowEvent* event)
     on_actionShowSmallIcons_toggled(Settings.smallIcons());
 
     windowHandle()->installEventFilter(this);
-    Database::singleton(this);
 
 #ifndef SHOTCUT_NOUPGRADE
     if (!Settings.noUpgrade() && !qApp->property("noupgrade").toBool())
