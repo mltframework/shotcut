@@ -598,6 +598,25 @@ void KeyframesModel::reload()
 
 void KeyframesModel::onFilterChanged(const QString& property)
 {
+    bool isKeyframeProperty = false;
+    for (int p = 0; p < m_metadata->keyframes()->parameterCount() && isKeyframeProperty == false; p++) {
+        if (m_metadata->keyframes()->parameter(p)->property() == property) {
+            isKeyframeProperty = true;
+            break;
+        }
+        QString name;
+        foreach (name, m_metadata->keyframes()->parameter(p)->gangedProperties()) {
+            if (name == property) {
+                isKeyframeProperty = true;
+                break;
+            }
+        }
+    }
+    if (!isKeyframeProperty) {
+        // Does not affect this model.
+        return;
+    }
+
     int i = m_propertyNames.indexOf(property);
     if (i < 0) {
         // First keyframe added. Reset model to add this parameter.
