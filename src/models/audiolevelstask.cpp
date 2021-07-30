@@ -59,9 +59,11 @@ void AudioLevelsTask::start(Mlt::Producer& producer, QObject* object, const QMod
     if (Settings.timelineShowWaveforms() && producer.is_valid()) {
 
         QString serviceName = producer.get("mlt_service");
-        if (   serviceName == "pixbuf" || serviceName == "qimage" || serviceName == "webvfx"
-            || serviceName == "color"|| serviceName.startsWith("frei0r"))
+        if (serviceName == "pixbuf" || serviceName == "qimage" || serviceName == "webvfx" ||
+            serviceName == "color"  || serviceName.startsWith("frei0r") ||
+            (serviceName.startsWith("avformat") && producer.get_int("audio_index") == -1)) {
             return;
+        }
 
         AudioLevelsTask* task = new AudioLevelsTask(producer, object, index);
         tasksListMutex.lock();
