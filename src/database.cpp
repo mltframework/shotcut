@@ -55,6 +55,7 @@ QDir Database::thumbnailsDir()
         if (dir.mkdir(subfolder)) {
             dir.cd(subfolder);
 
+            // Convert the DB data to files on the filesystem.
             LongUiTask longTask(QObject::tr("Converting Thumbnails"));
             QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
             QDir appDir(Settings.appDataLocation());
@@ -83,7 +84,6 @@ QDir Database::thumbnailsDir()
                 db.close();
                 QSqlDatabase::removeDatabase("QSQLITE");
             }
-            QFile::remove(dbFilePath);
         }
     }
     return dir;
