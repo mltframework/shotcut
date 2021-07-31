@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2018 Meltytech, LLC
+ * Copyright (c) 2013-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,34 +19,24 @@
 #include "models/playlistmodel.h"
 #include "mainwindow.h"
 #include "settings.h"
+#include "dialogs/longuitask.h"
 #include <QtSql>
 #include <QDir>
+#include <QFileInfo>
 #include <Logger.h>
-
-struct DatabaseJob {
-    enum Type {
-        PutThumbnail,
-        GetThumbnail
-    } type;
-
-    QImage image;
-    QString hash;
-    bool result {false};
-    bool completed {false};
-};
+#include <utime.h>
 
 static QMutex g_mutex;
 static Database* instance = nullptr;
-static bool g_isShutdown = false;
+static const int kMaxThumbnailCount = 10000;
+static const int kDeleteThumbnailsTimeoutMs = 2000;
 
 Database::Database(QObject *parent) : QObject(parent)
 {
-    m_worker.moveToThread(&m_thread);
-    connect(this, &Database::start, &m_worker, &Worker::run);
-    connect(&m_worker, &Worker::opened, this, &Database::onOpened);
-    connect(&m_worker, &Worker::failing, this, &Database::onFailing);
-    connect(&MAIN, &MainWindow::aboutToShutDown, this, &Database::shutdown, Qt::DirectConnection);
-    m_thread.start();
+    m_deleteTimer.setInterval(kDeleteThumbnailsTimeoutMs);
+    m_deleteTimer.setSingleShot(true);
+    connect(&m_deleteTimer, &QTimer::timeout, this, &Database::deleteOldThumbnails);
+    thumbnailsDir(); // convert from db to filesystem if needed
 }
 
 Database &Database::singleton(QObject *parent)
@@ -54,199 +44,73 @@ Database &Database::singleton(QObject *parent)
     QMutexLocker locker(&g_mutex);
     if (!instance) {
         instance = new Database(parent);
-        emit instance->start();
     }
     return *instance;
 }
 
-bool Worker::upgradeVersion1()
+QDir Database::thumbnailsDir()
 {
-    bool success = false;
-    QSqlQuery query;
-    if (query.exec("CREATE TABLE thumbnails (hash TEXT PRIMARY KEY NOT NULL, accessed DATETIME NOT NULL, image BLOB);")) {
-        success = query.exec("UPDATE version SET version = 1;");
-        if (!success)
-            LOG_ERROR() << query.lastError();
-    } else {
-        LOG_ERROR() << "Failed to create thumbnails table.";
-    }
-    return success;
-}
+    QDir dir(Settings.appDataLocation());
+    const char* subfolder = "thumbnails";
+    if (!dir.cd(subfolder)) {
+        if (dir.mkdir(subfolder)) {
+            dir.cd(subfolder);
 
-void Worker::doJob(DatabaseJob * job)
-{
-    if (!m_commitTimer->isActive())
-        QSqlDatabase::database().transaction();
-    m_commitTimer->start();
-
-    if (job->type == DatabaseJob::PutThumbnail) {
-        QByteArray ba;
-        QBuffer buffer(&ba);
-        buffer.open(QIODevice::WriteOnly);
-        job->image.save(&buffer, "PNG");
-
-        QSqlQuery query;
-        query.prepare("DELETE FROM thumbnails WHERE hash = :hash;");
-        query.bindValue(":hash", job->hash);
-        query.exec();
-        query.prepare("INSERT INTO thumbnails VALUES (:hash, datetime('now'), :image);");
-        query.bindValue(":hash", job->hash);
-        query.bindValue(":image", ba);
-        job->result = query.exec();
-        if (!job->result)
-            LOG_ERROR() << query.lastError();
-        emit failing(!job->result);
-    } else if (job->type == DatabaseJob::GetThumbnail) {
-        QImage result;
-        QSqlQuery query;
-        query.prepare("SELECT image FROM thumbnails WHERE hash = :hash;");
-        query.bindValue(":hash", job->hash);
-        if (query.exec() && query.first()) {
-            result.loadFromData(query.value(0).toByteArray(), "PNG");
-            QSqlQuery update;
-            update.prepare("UPDATE thumbnails SET accessed = datetime('now') WHERE hash = :hash ;");
-            update.bindValue(":hash", job->hash);
-            auto isFailing = !update.exec();
-            emit failing(isFailing);
-            if (isFailing)
-                LOG_ERROR() << update.lastError();
+            // Convert the DB data to files on the filesystem.
+            LongUiTask longTask(QObject::tr("Converting Thumbnails"));
+            QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+            QDir appDir(Settings.appDataLocation());
+            QString dbFilePath = appDir.filePath("db.sqlite3");
+            db.setDatabaseName(dbFilePath);
+            if (db.open()) {
+                QSqlQuery query;
+                QImage img;
+                query.setForwardOnly(true);
+                int n = -1;
+                if (query.exec("SELECT COUNT(*) FROM thumbnails;") && query.next()) {
+                    n = query.value(0).toInt();
+                }
+                query.exec("SELECT hash, accessed, image FROM thumbnails;");
+                for (int i = 0; query.next(); i++) {
+                    QString fileName = query.value(0).toString() + ".png";
+                    longTask.reportProgress(QObject::tr("Please wait for this one-time update to the thumbnail cache..."), i, n);
+                    if (img.loadFromData(query.value(2).toByteArray(), "PNG")) {
+                        img.save(dir.filePath(fileName));
+                        auto accessed = query.value(1).toDateTime();
+                        auto offset = accessed.timeZone().offsetFromUtc(accessed);
+                        struct utimbuf utimes {accessed.toSecsSinceEpoch() + offset, accessed.toSecsSinceEpoch() + offset};
+                        ::utime(dir.filePath(fileName).toUtf8().constData(), &utimes);
+                    }
+                }
+                db.close();
+                QSqlDatabase::removeDatabase("QSQLITE");
+            }
         }
-        job->image = result;
     }
-    deleteOldThumbnails();
-    job->completed = true;
-}
-
-void Worker::commitTransaction()
-{
-    QSqlDatabase::database().commit();
+    return dir;
 }
 
 bool Database::putThumbnail(const QString& hash, const QImage& image)
 {
-    if (!m_isOpened) return false;
-    DatabaseJob job;
-    job.type = DatabaseJob::PutThumbnail;
-    job.hash = hash;
-    job.image = image;
-    m_worker.submitAndWaitForJob(&job);
-    return job.result;
-}
-
-void Worker::submitAndWaitForJob(DatabaseJob * job)
-{
-    job->completed = false;
-    QMutexLocker locker(&m_mutex);
-    m_jobs.append(job);
-    if (m_jobs.size() == 1) {
-        //worker was idle until now
-        m_waitForNewJob.wakeAll();
-    }
-    while (!job->completed) {
-        m_waitForFinished.wait(&m_mutex);
-    }
-}
-
-void Worker::quit()
-{
-    QMutexLocker locker(&m_mutex);
-    m_quit = true;
-    m_waitForNewJob.wakeAll();
+    m_deleteTimer.start();
+    return image.save(thumbnailsDir().filePath(hash + ".png"));
 }
 
 QImage Database::getThumbnail(const QString &hash)
 {
-    if (!m_isOpened) return QImage();
-    DatabaseJob job;
-    job.type = DatabaseJob::GetThumbnail;
-    job.hash = hash;
-    m_worker.submitAndWaitForJob(&job);
-    return job.image;
+    QString filePath = thumbnailsDir().filePath(hash + ".png");
+    ::utime(filePath.toUtf8().constData(), nullptr);
+    return QImage(filePath);
 }
 
-bool Database::isShutdown() const
+void Database::deleteOldThumbnails()
 {
-    return g_isShutdown;
-}
-
-void Database::shutdown()
-{
-    g_isShutdown = true;
-    LOG_DEBUG() << "tell worker to quit";
-    m_worker.quit();
-    LOG_DEBUG() << "quit thread";
-    m_thread.quit();
-    LOG_DEBUG() << "wait for thread";
-    m_thread.wait();
-    instance = nullptr;
-    LOG_DEBUG() << "end";
-}
-
-void Worker::deleteOldThumbnails()
-{
-    QSqlQuery query;
-    // OFFSET is the number of thumbnails to cache.
-    if (!query.exec("DELETE FROM thumbnails WHERE hash IN (SELECT hash FROM thumbnails ORDER BY accessed DESC LIMIT -1 OFFSET 10000);"))
-        LOG_ERROR() << query.lastError();
-}
-
-void Worker::run()
-{
-    QDir dir(Settings.appDataLocation());
-    if (!dir.exists())
-        dir.mkpath(dir.path());
-
-    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName(dir.filePath("db.sqlite3"));
-    auto result = db.open();
-    emit opened(result);
-    if (!result) {
-        LOG_ERROR() << "database open failed";
-        return;
-    }
-
-    m_commitTimer = new QTimer();
-    m_commitTimer->setSingleShot(true);
-    m_commitTimer->setInterval(5000);
-    connect(m_commitTimer, SIGNAL(timeout()),
-            this, SLOT(commitTransaction()));
-
-    // Initialize version table, if needed.
-    int version = 0;
-    QSqlQuery query;
-    if (query.exec("CREATE TABLE version (version INTEGER);")) {
-        if (!query.exec("INSERT INTO version VALUES (0);"))
-            LOG_ERROR() << "Failed to create version table.";
-    } else if (query.exec("SELECT version FROM version")) {
-        query.next();
-        version = query.value(0).toInt();
-    } else {
-        LOG_ERROR() << "Failed to get version.";
-    }
-    if (version < 1 && upgradeVersion1())
-        version = 1;
-    LOG_DEBUG() << "Database version is" << version;
-
-    while (!m_quit) {
-        DatabaseJob * newJob = nullptr;
-        m_mutex.lock();
-        if (m_jobs.isEmpty())
-            m_waitForNewJob.wait(&m_mutex, 1000);
-        else
-            newJob = m_jobs.takeFirst();
-        m_mutex.unlock();
-        if (newJob) {
-            doJob(newJob);
-            m_waitForFinished.wakeAll();
+    QDir dir = thumbnailsDir();
+    auto ls = dir.entryList(QDir::Files | QDir::NoDotAndDotDot | QDir::Readable, QDir::Time);
+    for (int i = kMaxThumbnailCount; i < ls.size(); i++) {
+        QString filePath = dir.filePath(ls[i]);
+        if (!QFile::remove(filePath)) {
+            LOG_WARNING() << "failed to delete" << filePath;
         }
     }
-    if (m_commitTimer->isActive())
-        commitTransaction();
-    delete m_commitTimer;
-
-    QString connection = QSqlDatabase::database().connectionName();
-    QSqlDatabase::database().close();
-//    QSqlDatabase::removeDatabase(connection);
-    LOG_DEBUG() << "database closed";
 }
-

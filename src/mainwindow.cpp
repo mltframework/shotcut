@@ -2604,7 +2604,6 @@ void MainWindow::showEvent(QShowEvent* event)
     on_actionShowSmallIcons_toggled(Settings.smallIcons());
 
     windowHandle()->installEventFilter(this);
-    Database::singleton(this);
 
 #ifndef SHOTCUT_NOUPGRADE
     if (!Settings.noUpgrade() && !qApp->property("noupgrade").toBool())
@@ -2615,6 +2614,10 @@ void MainWindow::showEvent(QShowEvent* event)
     WindowsTaskbarButton::getInstance().setParentWindow(this);
 #endif
     onAutosaveTimeout();
+
+    QTimer::singleShot(1000, [=]() {
+        Database::singleton(this);
+    });
 }
 
 void MainWindow::on_actionOpenOther_triggered()
