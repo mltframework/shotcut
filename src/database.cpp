@@ -36,6 +36,7 @@ Database::Database(QObject *parent) : QObject(parent)
     m_deleteTimer.setInterval(kDeleteThumbnailsTimeoutMs);
     m_deleteTimer.setSingleShot(true);
     connect(&m_deleteTimer, &QTimer::timeout, this, &Database::deleteOldThumbnails);
+    thumbnailsDir(); // convert from db to filesystem if needed
 }
 
 Database &Database::singleton(QObject *parent)

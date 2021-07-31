@@ -2614,6 +2614,10 @@ void MainWindow::showEvent(QShowEvent* event)
     WindowsTaskbarButton::getInstance().setParentWindow(this);
 #endif
     onAutosaveTimeout();
+
+    QTimer::singleShot(1000, [=]() {
+        Database::singleton(this);
+    });
 }
 
 void MainWindow::on_actionOpenOther_triggered()
