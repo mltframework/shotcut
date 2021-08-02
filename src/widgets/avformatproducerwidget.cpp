@@ -756,6 +756,7 @@ void AvformatProducerWidget::on_menuButton_clicked()
     if (GetFilenameFromProducer(producer()).toLower().endsWith(".mp4")) {
         menu.addAction(ui->actionSetEquirectangular);
     }
+    menu.addAction(ui->actionFFmpegVideoQuality);
     menu.exec(ui->menuButton->mapToGlobal(QPoint(0, 0)));
 }
 
@@ -1418,5 +1419,31 @@ void AvformatProducerWidget::on_actionSetEquirectangular_triggered()
         } else {
             MAIN.showStatusMessage(tr("An error occurred saving the projection."));
         }
+    }
+}
+
+void AvformatProducerWidget::on_actionFFmpegVideoQuality_triggered()
+{
+    QString caption = tr("Choose the Other Video");
+    QFileInfo info(GetFilenameFromProducer(producer()));
+    QString directory = QString("%1/%2 - ERP.%3").arg(info.path(), info.completeBaseName(), info.suffix());
+    QString filePath = QFileDialog::getOpenFileName(&MAIN, caption, directory, QString(),
+        nullptr, Util::getFileDialogOptions());
+    if (!filePath.isEmpty()) {
+        QString resource = GetFilenameFromProducer(producer());
+        QDir dir = QmlApplication::dataDir();
+        dir.cd("vmaf");
+        QStringList args;
+        args << "-hide_banner";
+        args << "-i" << resource;
+        args << "-i" << filePath;
+        args << "-filter_complex";
+        int width = m_producer->get_int("meta.media.width");
+        int height = m_producer->get_int("meta.media.height");
+        args << QString("[0:v]setpts=PTS-STARTPTS[reference];[1:v]scale=%1:%2:flags=bicubic,setpts=PTS-STARTPTS[distorted];[distorted][reference]libvmaf=log_fmt=csv:log_path=/dev/stderr:psnr=true:ssim=true:model_path=%3")
+                .arg(width).arg(height)
+                .arg((width < 3840 && height < 2160)? dir.filePath("vmaf_v0.6.1.json") : dir.filePath("vmaf_4k_v0.6.1.json"));
+        args << "-f" << "null" << "pipe:";
+        JOBS.add(new FfmpegJob(resource, args));
     }
 }

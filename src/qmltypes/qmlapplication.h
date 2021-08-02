@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2020 Meltytech, LLC
+ * Copyright (c) 2014-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -60,6 +60,7 @@ public:
     Q_INVOKABLE void showStatusMessage(const QString& message, int timeoutSeconds = 5);
     static int maxTextureSize();
     Q_INVOKABLE static bool confirmOutputFilter();
+    static QDir dataDir();
 
 signals:
     void paletteChanged();

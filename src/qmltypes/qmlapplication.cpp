@@ -216,3 +216,18 @@ bool QmlApplication::confirmOutputFilter()
     }
     return result;
 }
+
+QDir QmlApplication::dataDir()
+{
+    QDir dir(qApp->applicationDirPath());
+#if defined(Q_OS_MAC)
+    dir.cdUp();
+    dir.cd("Resources");
+#else
+    #if defined(Q_OS_UNIX)
+    dir.cdUp();
+    #endif
+    dir.cd("share");
+#endif
+    return dir;
+}

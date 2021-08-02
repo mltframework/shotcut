@@ -120,6 +120,8 @@ private slots:
 
     void on_actionSetEquirectangular_triggered();
 
+    void on_actionFFmpegVideoQuality_triggered();
+
 private:
     Ui::AvformatProducerWidget *ui;
     int m_defaultDuration;

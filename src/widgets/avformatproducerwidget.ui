@@ -979,6 +979,11 @@
     <string>Set Equirectangular...</string>
    </property>
   </action>
+  <action name="actionFFmpegVideoQuality">
+   <property name="text">
+    <string>Measure Video Quality...</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>

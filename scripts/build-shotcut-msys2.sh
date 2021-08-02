@@ -51,6 +51,9 @@ DAV1D_HEAD=1
 DAV1D_REVISION=
 AOM_HEAD=0
 AOM_REVISION="v2.0.2"
+ENABLE_VMAF=1
+VMAF_HEAD=0
+VMAF_REVISION="v2.2.0"
 
 
 # QT_INCLUDE_DIR="$(pkg-config --variable=prefix QtCore)/include"
@@ -172,6 +175,9 @@ function to_key {
     ;;
     aom)
       echo 11
+    ;;
+    vmaf)
+      echo 12
     ;;
     *)
       echo UNKNOWN
@@ -344,6 +350,9 @@ function set_globals {
     if test "$ENABLE_ZIMG" = 1 ; then
         SUBDIRS="zimg $SUBDIRS"
     fi
+    if test "$ENABLE_VMAF" = 1 ; then
+        SUBDIRS="vmaf $SUBDIRS"
+    fi
     SUBDIRS="$SUBDIRS mlt shotcut"
   fi
 
@@ -383,6 +392,7 @@ function set_globals {
   REPOLOCS[9]="git://github.com/sekrit-twc/zimg.git"
   REPOLOCS[10]="https://code.videolan.org/videolan/dav1d.git"
   REPOLOCS[11]="https://aomedia.googlesource.com/aom"
+  REPOLOCS[12]="git://github.com/Netflix/vmaf.git"
 
   # REPOTYPE Array holds the repo types. (Yes, this might be redundant, but easy for me)
   REPOTYPES[0]="git"
@@ -397,6 +407,7 @@ function set_globals {
   REPOTYPES[9]="git"
   REPOTYPES[10]="git"
   REPOTYPES[11]="git"
+  REPOTYPES[12]="git"
 
   # And, set up the revisions
   REVISIONS[0]=""
@@ -438,6 +449,10 @@ function set_globals {
   if test 0 = "$AOM_HEAD" -a "$AOM_REVISION" ; then
     REVISIONS[11]="$AOM_REVISION"
   fi
+  REVISIONS[12]=""
+  if test 0 = "$VMAF_HEAD" -a "$VMAF_REVISION" ; then
+    REVISIONS[12]="$VMAF_REVISION"
+  fi
 
   # Figure out the number of cores in the system. Used both by make and startup script
   CPUS=$(nproc)
@@ -476,6 +491,9 @@ function set_globals {
   # Add optional parameters
   if [ "$ENABLE_ZIMG" = "1" ]; then
     CONFIG[0]="${CONFIG[0]} --enable-libzimg"
+  fi
+  if [ "$ENABLE_VMAF" = "1" ]; then
+    CONFIG[0]="${CONFIG[0]} --enable-libvmaf"
   fi
   CONFIG[0]="${CONFIG[0]} $FFMPEG_ADDITIONAL_OPTIONS"
   CFLAGS_[0]="-I$FINAL_INSTALL_DIR/include $CFLAGS"
@@ -549,6 +567,17 @@ function set_globals {
   CONFIG[11]="cmake -GNinja -DCMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR $CMAKE_DEBUG_FLAG -DBUILD_SHARED_LIBS=1 -DCONFIG_AV1_DECODER=0 -DENABLE_EXAMPLES=0 -DENABLE_TESTS=0 ../aom"
   CFLAGS_[11]=$CFLAGS
   LDFLAGS_[11]=$LDFLAGS
+
+  #####
+  # vmaf
+  CONFIG[12]="meson setup libvmaf/build --prefix=$FINAL_INSTALL_DIR --libdir=$FINAL_INSTALL_DIR/lib"
+  if [ "$DEBUG_BUILD" = "1" ]; then
+    CONFIG[12]="${CONFIG[12]} --buildtype=debug"
+  else
+    CONFIG[12]="${CONFIG[12]} --buildtype=release"
+  fi
+  CFLAGS_[12]=$CFLAGS
+  LDFLAGS_[12]=$LDFLAGS
 }
 
 ######################################################################
@@ -873,6 +902,8 @@ function configure_compile_install_subproject {
     cmd ninja -j $MAKEJ || die "Unable to build $1"
   elif test "dav1d" = "$1"; then
     cmd ninja -C builddir -j $MAKEJ || die "Unable to build $1"
+  elif test "vmaf" = "$1"; then
+    cmd ninja -C libvmaf/build -j $MAKEJ || die "Unable to build $1"
   elif test "$MYCONFIG" != ""; then
     cmd make -j$MAKEJ || die "Unable to build $1"
   fi
@@ -898,6 +929,9 @@ function configure_compile_install_subproject {
     cmd install -p -c *.dll "$FINAL_INSTALL_DIR"/lib/frei0r-1  || die "Unable to install $1"
   elif test "dav1d" = "$1"; then
     cmd meson install -C builddir || die "Unable to install $1"
+  elif test "vmaf" = "$1"; then
+    cmd ninja install -C libvmaf/build || die "Unable to install $1"
+    cmd install -p -c model/*.json "$FINAL_INSTALL_DIR"/share/vmaf || die "Unable to install $1"
   elif test "$MYCONFIG" != "" ; then
     cmd make install || die "Unable to install $1"
   fi

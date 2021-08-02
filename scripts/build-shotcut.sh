@@ -58,6 +58,7 @@ FFMPEG_SUPPORT_QSV=1
 FFMPEG_SUPPORT_DAV1D=1
 FFMPEG_SUPPORT_AOM=1
 FFMPEG_SUPPORT_WEBP=1
+FFMPEG_SUPPORT_VMAF=1
 FFMPEG_ADDITIONAL_OPTIONS=
 ENABLE_VIDSTAB=1
 VIDSTAB_HEAD=1
@@ -81,6 +82,8 @@ DAV1D_HEAD=1
 DAV1D_REVISION=
 AOM_HEAD=0
 AOM_REVISION="v2.0.2"
+VMAF_HEAD=0
+VMAF_REVISION="v2.2.0"
 QT_VERSION_DEFAULT=5.15.2
 QT_VERSION_DARWIN=5.12.10
 
@@ -231,6 +234,9 @@ function to_key {
     ;;
     aom)
       echo 22
+    ;;
+    vmaf)
+      echo 23
     ;;
     *)
       echo UNKNOWN
@@ -446,6 +452,9 @@ function set_globals {
     if test "$FFMPEG_SUPPORT_AOM" = 1 && test "$AOM_HEAD" = 1 -o "$AOM_REVISION" != ""; then
         SUBDIRS="aom $SUBDIRS"
     fi
+    if test "$FFMPEG_SUPPORT_VMAF" = 1 && test "$VMAF_HEAD" = 1 -o "$VMAF_REVISION" != ""; then
+        SUBDIRS="vmaf $SUBDIRS"
+    fi
   fi
 
   if [ "$DEBUG_BUILD" = "1" ]; then
@@ -493,6 +502,7 @@ function set_globals {
   REPOLOCS[20]="https://github.com/sekrit-twc/zimg.git"
   REPOLOCS[21]="https://code.videolan.org/videolan/dav1d.git"
   REPOLOCS[22]="https://aomedia.googlesource.com/aom"
+  REPOLOCS[23]="https://github.com/Netflix/vmaf.git"
 
   # REPOTYPE Array holds the repo types. (Yes, this might be redundant, but easy for me)
   REPOTYPES[0]="git"
@@ -515,6 +525,7 @@ function set_globals {
   REPOTYPES[20]="git"
   REPOTYPES[21]="git"
   REPOTYPES[22]="git"
+  REPOTYPES[23]="git"
 
   # And, set up the revisions
   REVISIONS[0]=""
@@ -697,6 +708,9 @@ function set_globals {
   fi
   if test 1 = "$FFMPEG_SUPPORT_WEBP" ; then
     CONFIG[0]="${CONFIG[0]} --enable-libwebp"
+  fi
+  if test 1 = "$FFMPEG_SUPPORT_VMAF" ; then
+    CONFIG[0]="${CONFIG[0]} --enable-libvmaf"
   fi
   # Add optional parameters
   CONFIG[0]="${CONFIG[0]} $FFMPEG_ADDITIONAL_OPTIONS"
@@ -923,6 +937,17 @@ function set_globals {
   [ "$TARGET_OS" = "Darwin" -a "$TARGET_ARCH" = "arm64" ] && CONFIG[22]="${CONFIG[22]} -DCONFIG_RUNTIME_CPU_DETECT=0"
   CFLAGS_[22]=$CFLAGS
   LDFLAGS_[22]=$LDFLAGS
+
+  #####
+  # vmaf
+  CONFIG[23]="meson setup libvmaf/build --prefix=$FINAL_INSTALL_DIR --libdir=$FINAL_INSTALL_DIR/lib"
+  if [ "$DEBUG_BUILD" = "1" ]; then
+    CONFIG[23]="${CONFIG[23]} --buildtype=debug"
+  else
+    CONFIG[23]="${CONFIG[23]} --buildtype=release"
+  fi
+  CFLAGS_[23]=$CFLAGS
+  LDFLAGS_[23]=$LDFLAGS
 }
 
 ######################################################################
@@ -1519,6 +1544,8 @@ function configure_compile_install_subproject {
     cmd ninja -C builddir -j $MAKEJ || die "Unable to build $1"
   elif test "aom" = "$1" -o "mlt" = "$1"; then
     cmd ninja -j $MAKEJ || die "Unable to build $1"
+  elif test "vmaf" = "$1" ; then
+    cmd ninja -C libvmaf/build -j $MAKEJ || die "Unable to build $1"
   elif test "$MYCONFIG" != ""; then
     cmd make -j$MAKEJ || die "Unable to build $1"
   fi
@@ -1568,6 +1595,9 @@ function configure_compile_install_subproject {
       cmd meson install -C builddir || die "Unable to install $1"
     elif test "aom" = "$1" -o "mlt" = "$1" ; then
       cmd ninja install || die "Unable to install $1"
+    elif test "vmaf" = "$1" ; then
+      cmd ninja install -C libvmaf/build || die "Unable to install $1"
+      cmd install -p -c model/*.json "$FINAL_INSTALL_DIR"/share/vmaf || die "Unable to install $1"
     elif test "$MYCONFIG" != "" ; then
       cmd make install || die "Unable to install $1"
     fi
@@ -1902,6 +1932,10 @@ function deploy_mac
   # Movit shaders
   log Copying Movit shaders
   cmd cp -a "$FINAL_INSTALL_DIR"/share/movit Resources
+
+  # VMAF models
+  log Copying VMAF models
+  cmd cp -a "$FINAL_INSTALL_DIR"/share/vmaf Resources
 
   log Fixing rpath in libraries
   cmd find . -name '*.dylib' -exec sh -c "install_name_tool -delete_rpath \"/opt/local/lib/libomp\" {} 2> /dev/null" \;

@@ -68,16 +68,7 @@ void QmlUtilities::setCommonProperties(QQmlContext* context)
 
 QDir QmlUtilities::qmlDir()
 {
-    QDir dir(qApp->applicationDirPath());
-#if defined(Q_OS_MAC)
-    dir.cdUp();
-    dir.cd("Resources");
-#else
-    #if defined(Q_OS_UNIX)
-    dir.cdUp();
-    #endif
-    dir.cd("share");
-#endif
+    QDir dir = QmlApplication::dataDir();
     dir.cd("shotcut");
     dir.cd("qml");
     return dir;
