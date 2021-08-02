@@ -570,7 +570,7 @@ function set_globals {
 
   #####
   # vmaf
-  CONFIG[12]="meson setup libvmaf/build --prefix=$FINAL_INSTALL_DIR --libdir=$FINAL_INSTALL_DIR/lib"
+  CONFIG[12]="meson setup libvmaf/build libvmaf --prefix=$FINAL_INSTALL_DIR --libdir=$FINAL_INSTALL_DIR/lib"
   if [ "$DEBUG_BUILD" = "1" ]; then
     CONFIG[12]="${CONFIG[12]} --buildtype=debug"
   else
