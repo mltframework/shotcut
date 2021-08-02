@@ -931,6 +931,7 @@ function configure_compile_install_subproject {
     cmd meson install -C builddir || die "Unable to install $1"
   elif test "vmaf" = "$1"; then
     cmd ninja install -C libvmaf/build || die "Unable to install $1"
+    cmd install -d "$FINAL_INSTALL_DIR"/share/vmaf
     cmd install -p -c model/*.json "$FINAL_INSTALL_DIR"/share/vmaf || die "Unable to install $1"
   elif test "$MYCONFIG" != "" ; then
     cmd make install || die "Unable to install $1"
