@@ -154,8 +154,15 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties& preset)
 
     // Default the HEVC crf to 28 per libx265 default.
     QString vcodec = QString::fromLatin1(preset.get("vcodec"));
-    if (vcodec == "libx265" || vcodec.contains("hevc"))
+    if (vcodec == "libx265" || vcodec.contains("hevc")) {
         ui->videoQualitySpinner->setValue(45);
+
+        // Apple needs codec ID hvc1 even though technically that is not what we are writing.
+        QString f = preset.get("f");
+        if (!preset.property_exists("vtag") && (f == "mp4" || f == "mov")) {
+            other.append("vtag=hvc1");
+        }
+    }
 
     for (int i = 0; i < preset.count(); i++) {
         QString name(preset.get_name(i));
