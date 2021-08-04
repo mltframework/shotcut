@@ -218,11 +218,7 @@ QVariant MultitrackModel::data(const QModelIndex &index, int role) const
             case IsLockedRole:
                 return track->get_int(kTrackLockProperty);
             case IsCompositeRole: {
-                QScopedPointer<Mlt::Transition> transition(getTransition("frei0r.cairoblend", i));
-                if (!transition)
-                    transition.reset(getTransition("qtblend", i));
-                if (!transition)
-                    transition.reset(getTransition("movit.overlay", i));
+                QScopedPointer<Mlt::Transition> transition(getVideoBlendTransition(i));
                 if (transition && transition->is_valid()) {
                     if (!transition->get_int("disable"))
                         return true;
@@ -370,19 +366,9 @@ void MultitrackModel::setTrackComposite(int row, bool composite)
 {
     if (row < m_trackList.size()) {
         int i = m_trackList.at(row).mlt_index;
-        QScopedPointer<Mlt::Transition> transition(getTransition("frei0r.cairoblend", i));
-        if (transition) {
+        QScopedPointer<Mlt::Transition> transition(getVideoBlendTransition(i));
+        if (transition && transition->is_valid()) {
             transition->set("disable", !composite);
-        } else {
-            transition.reset(getTransition("qtblend", i));
-            if (transition) {
-                transition->set("disable", !composite);
-            } else {
-                transition.reset(getTransition("movit.overlay", i));
-                if (transition) {
-                    transition->set("disable", !composite);
-                }
-            }
         }
         MLT.refreshConsumer();
 
@@ -2443,6 +2429,43 @@ bool MultitrackModel::warnIfInvalid(Mlt::Service& service)
     return false;
 }
 
+Mlt::Transition* MultitrackModel::getVideoBlendTransition(int trackIndex) const
+{
+    auto transition = getTransition("frei0r.cairoblend", trackIndex);
+    if (!transition)
+        transition = getTransition("movit.overlay", trackIndex);
+    if (!transition)
+        transition = getTransition("qtblend", trackIndex);
+    return transition;
+}
+
+void MultitrackModel::refreshVideoBlendTransitions()
+{
+    // Get the MLT index of the bottom-most video track
+    int a_track = 0;
+    for (auto& t : m_trackList) {
+        if (t.type == VideoTrackType)
+            a_track = t.mlt_index;
+    }
+    // For each video track
+    for (auto& t : m_trackList) {
+        if (t.type == VideoTrackType) {
+            QScopedPointer<Mlt::Transition> transition(getVideoBlendTransition(t.mlt_index));
+            if (transition && transition->is_valid()) {
+                // Normalize its video blending transition
+                if (transition->get_a_track() != 0) {
+                    transition->set("a_track", a_track);
+                }
+                if (t.number) {
+                    transition->clear("disable");
+                } else {
+                    transition->set("disable", 1);
+                }
+            }
+        }
+    }
+}
+
 void MultitrackModel::adjustTrackFilters()
 {
     if (!m_tractor) return;
@@ -2601,17 +2624,13 @@ void MultitrackModel::removeTrack(int trackIndex)
 {
     if (trackIndex >= 0 && trackIndex < m_trackList.size()) {
         const Track& track = m_trackList.value(trackIndex);
-        QScopedPointer<Mlt::Transition> transition(getTransition("frei0r.cairoblend", track.mlt_index));
+        QScopedPointer<Mlt::Transition> transition(getVideoBlendTransition(track.mlt_index));
 
         // Remove transitions.
-        if (!transition)
-            transition.reset(getTransition("qtblend", track.mlt_index));
-        if (!transition)
-            transition.reset(getTransition("movit.overlay", track.mlt_index));
-        if (transition)
+        if (transition && transition->is_valid())
             m_tractor->field()->disconnect_service(*transition);
         transition.reset(getTransition("mix", track.mlt_index));
-        if (transition)
+        if (transition && transition->is_valid())
             m_tractor->field()->disconnect_service(*transition);
 
 //        foreach (Track t, m_trackList) LOG_DEBUG() << (t.type == VideoTrackType?"Video":"Audio") << "track number" << t.number << "mlt_index" << t.mlt_index;
@@ -2637,11 +2656,7 @@ void MultitrackModel::removeTrack(int trackIndex)
 
                 // Disable compositing on the bottom video track.
                 if (m_trackList[row].number == 0 && t.type == VideoTrackType) {
-                    QScopedPointer<Mlt::Transition> transition(getTransition("frei0r.cairoblend", 1));
-                    if (!transition)
-                        transition.reset(getTransition("qtblend", 1));
-                    if (!transition)
-                        transition.reset(getTransition("movit.overlay", 1));
+                    QScopedPointer<Mlt::Transition> transition(getVideoBlendTransition(1));
                     if (transition && transition->is_valid())
                         transition->set("disable", 1);
                     emit dataChanged(modelIndex, modelIndex, QVector<int>() << IsBottomVideoRole << IsCompositeRole);
@@ -2754,11 +2769,16 @@ void MultitrackModel::insertTrack(int trackIndex, TrackType type)
     const char* videoTransitionName = Settings.playerGPU()? "movit.overlay" : "frei0r.cairoblend";
     if (type == VideoTrackType) {
         ++i;
-        auto transition = getTransition(videoTransitionName, track.mlt_index);
-        if (!transition) {
-            transition = getTransition("qtblend", track.mlt_index);
+        lower.reset(getVideoBlendTransition(track.mlt_index));
+        if (trackIndex > 0 && track.type == AudioTrackType) {
+            Track& upperTrack = m_trackList[qBound(0, trackIndex - 1, m_trackList.count() - 1)];
+            if (upperTrack.type == VideoTrackType) {
+                // Special case of insert new V1
+                i = 1;
+                lower.reset(getVideoBlendTransition(upperTrack.mlt_index));
+                track.number = -1;
+            }
         }
-        lower.reset(transition);
     }
 
     if (trackIndex >= m_trackList.count()) {
@@ -2778,7 +2798,7 @@ void MultitrackModel::insertTrack(int trackIndex, TrackType type)
     int last_mlt_index = 0;
     int row = 0;
     foreach (Track t, m_trackList) {
-        if (t.type == track.type) {
+        if (t.type == type) {
             if ((t.type == VideoTrackType && t.number > track.number) ||
                 (t.type == AudioTrackType && t.number >= track.number)) {
                 // Rename default track names.
@@ -2836,14 +2856,25 @@ void MultitrackModel::insertTrack(int trackIndex, TrackType type)
         if (warnIfInvalid(composite)) {
             return;
         }
-        if (lower) {
+        if (lower && lower->is_valid()) {
             QScopedPointer<Mlt::Service> consumer(lower->consumer());
             if (consumer->is_valid()) {
                 // Insert the new transition.
-                LOG_DEBUG() << "inserting transition" << last_mlt_index << i;
-                composite.connect(*lower, last_mlt_index, i);
-                Mlt::Transition t((mlt_transition) consumer->get_service());
-                t.connect(composite, consumer->get_int("a_track"), consumer->get_int("b_track"));
+                if (i == 1) {
+                    // Special case of insert new V1
+                    LOG_DEBUG() << "inserting transition" << 0 << i;
+                    QScopedPointer<Mlt::Service> lowerProducer(lower->producer());
+                    if (lowerProducer->is_valid()) {
+                        composite.connect(*lowerProducer, 0, i);
+                        Mlt::Transition t((mlt_transition) lowerProducer->get_service());
+                        lower->connect(composite, i, t.get_int("b_track"));
+                    }
+                } else {
+                    LOG_DEBUG() << "inserting transition" << last_mlt_index << i;
+                    composite.connect(*lower, last_mlt_index, i);
+                    Mlt::Transition t((mlt_transition) consumer->get_service());
+                    t.connect(composite, t.get_int("a_track"), t.get_int("b_track"));
+                }
             } else {
                 // Append the new transition.
                 LOG_DEBUG() << "appending transition";
@@ -2860,6 +2891,7 @@ void MultitrackModel::insertTrack(int trackIndex, TrackType type)
     Track t;
     t.mlt_index = i;
     t.type = type;
+    t.number = 0;
     QString trackName;
     if (t.type == VideoTrackType) {
         t.number = videoTrackCount - trackIndex;
@@ -2872,6 +2904,7 @@ void MultitrackModel::insertTrack(int trackIndex, TrackType type)
     playlist.set(kTrackNameProperty, trackName.toUtf8().constData());
     beginInsertRows(QModelIndex(), trackIndex, trackIndex);
     m_trackList.insert(trackIndex, t);
+    refreshVideoBlendTransitions();
     endInsertRows();
     emit modified();
 //    foreach (Track t, m_trackList) LOG_DEBUG() << (t.type == VideoTrackType?"Video":"Audio") << "track number" << t.number << "mlt_index" << t.mlt_index;
@@ -3160,9 +3193,7 @@ void MultitrackModel::refreshTrackList()
 
                 // Always disable compositing on V1.
                 if (v == 1) {
-                    QScopedPointer<Mlt::Transition> transition(getTransition("frei0r.cairoblend", 1));
-                    if (!transition)
-                        transition.reset(getTransition("movit.overlay", 1));
+                    QScopedPointer<Mlt::Transition> transition(getVideoBlendTransition(1));
                     if (transition && transition->is_valid())
                         transition->set("disable", 1);
                 }
@@ -3277,11 +3308,10 @@ void MultitrackModel::convertOldDoc()
         if (t.type == VideoTrackType)
             a_track = t.mlt_index;
     }
-    QString name = Settings.playerGPU()? "movit.overlay" : "frei0r.cairoblend";
     foreach (Track t, m_trackList) {
         if (t.type == VideoTrackType) {
-            QScopedPointer<Mlt::Transition> transition(getTransition(name, t.mlt_index));
-            if (transition && transition->get_a_track() != 0)
+            QScopedPointer<Mlt::Transition> transition(getVideoBlendTransition(t.mlt_index));
+            if (transition && transition->is_valid() && transition->get_a_track() != 0)
                 transition->set("a_track", a_track);
         }
     }

@@ -19,6 +19,8 @@ import QtQuick 2.12
 import QtQml.Models 2.12
 import QtQuick.Controls 2.12
 import QtGraphicalEffects 1.12
+import QtQuick.Window 2.12
+import QtQuick.Layouts 1.12
 import Shotcut.Controls 1.0 as Shotcut
 import 'Timeline.js' as Logic
 
@@ -497,7 +499,13 @@ Rectangle {
             }
             MenuItem {
                 text: qsTr('Insert Track') + (application.OS === 'OS X'? '    ⌥⌘I' : ' (Ctrl+Alt+I)')
-                onTriggered: timeline.insertTrack()
+                onTriggered: {
+                    if (currentTrack > 0 && trackHeaderRepeater.itemAt(currentTrack - 1).isBottomVideo) {
+                        trackTypeDialog.show()
+                    } else {
+                        timeline.insertTrack()
+                    }
+                }
             }
             MenuItem {
                 text: qsTr('Remove Track') + (application.OS === 'OS X'? '    ⌥⌘U' : ' (Ctrl+Alt+U)')
@@ -734,6 +742,43 @@ Rectangle {
             tracksFlickable.contentX += delta
             if (tracksFlickable.contentX <= 0)
                 stop()
+        }
+    }
+
+    Window {
+        id: trackTypeDialog
+        width: 400
+        height: 80
+        flags: Qt.Dialog
+        color: activePalette.window
+        modality: application.dialogModality
+
+        GridLayout {
+            columns: 4
+            anchors.fill: parent
+            anchors.margins: 8
+
+            Label {
+                text: qsTr('Do you want to insert an audio or video track?')
+                Layout.columnSpan: 4
+                Layout.alignment: Qt.AlignHCenter
+            }
+            Label { Layout.fillWidth: true }
+            RadioButton {
+                text: qsTr("Audio")
+                onClicked: {
+                    timeline.insertAudioTrack()
+                    trackTypeDialog.close()
+                }
+            }
+            RadioButton {
+                text: qsTr("Video")
+                onClicked: {
+                    timeline.insertVideoTrack()
+                    trackTypeDialog.close()
+                }
+            }
+            Label { Layout.fillWidth: true }
         }
     }
 }

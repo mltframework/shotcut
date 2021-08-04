@@ -443,7 +443,7 @@ private:
 class InsertTrackCommand : public QUndoCommand
 {
 public:
-    InsertTrackCommand(MultitrackModel& model, int trackIndex, QUndoCommand* parent = 0);
+    InsertTrackCommand(MultitrackModel& model, int trackIndex, TrackType trackType = PlaylistTrackType, QUndoCommand* parent = 0);
     void redo();
     void undo();
 private:

@@ -963,12 +963,15 @@ void AddTrackCommand::undo()
     m_model.removeTrack(m_trackIndex);
 }
 
-InsertTrackCommand::InsertTrackCommand(MultitrackModel& model, int trackIndex, QUndoCommand* parent)
+InsertTrackCommand::InsertTrackCommand(MultitrackModel& model, int trackIndex, TrackType trackType, QUndoCommand* parent)
     : QUndoCommand(parent)
     , m_model(model)
     , m_trackIndex(trackIndex)
-    , m_trackType(model.trackList().size() > 0 ? model.trackList().at(trackIndex).type : VideoTrackType)
+    , m_trackType(trackType)
 {
+    if (trackType != AudioTrackType && trackType != VideoTrackType) {
+        m_trackType = model.trackList().size() > 0 ? model.trackList().at(trackIndex).type : VideoTrackType;
+    }
     if (m_trackType == AudioTrackType)
         setText(QObject::tr("Insert audio track"));
     else if (m_trackType == VideoTrackType)

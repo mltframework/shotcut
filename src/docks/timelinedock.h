@@ -141,6 +141,8 @@ public slots:
     void seekInPoint(int clipIndex);
     void clearSelectionIfInvalid();
     void insertTrack();
+    void insertAudioTrack();
+    void insertVideoTrack();
     void removeTrack();
     void onProducerChanged(Mlt::Producer*);
     void emitSelectedFromSelection();

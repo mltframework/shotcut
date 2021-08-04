@@ -441,6 +441,22 @@ void TimelineDock::insertTrack()
                 new Timeline::InsertTrackCommand(m_model, currentTrack()));
 }
 
+void TimelineDock::insertAudioTrack()
+{
+    if (m_selection.selectedTrack != -1)
+        setSelection();
+    MAIN.undoStack()->push(
+                new Timeline::InsertTrackCommand(m_model, currentTrack(), AudioTrackType));
+}
+
+void TimelineDock::insertVideoTrack()
+{
+    if (m_selection.selectedTrack != -1)
+        setSelection();
+    MAIN.undoStack()->push(
+                new Timeline::InsertTrackCommand(m_model, currentTrack(), VideoTrackType));
+}
+
 void TimelineDock::removeTrack()
 {
     if (m_model.trackList().size() > 0) {

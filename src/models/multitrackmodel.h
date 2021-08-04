@@ -192,6 +192,8 @@ private:
     int getDuration();
     void adjustServiceFilterDurations(Mlt::Service& service, int duration);
     bool warnIfInvalid(Mlt::Service& service);
+    Mlt::Transition* getVideoBlendTransition(int trackIndex) const;
+    void refreshVideoBlendTransitions();
 
     friend class UndoHelper;
 
