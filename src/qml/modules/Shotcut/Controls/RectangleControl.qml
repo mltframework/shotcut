@@ -61,6 +61,15 @@ Item {
         topRightHandle.y = topLeftHandle.y
         bottomLeftHandle.x = topLeftHandle.x
         bottomLeftHandle.y = bottomRightHandle.y
+
+        topHandle.x = topLeftHandle.x + (rect.width * widthScale) / 2 - (handleSize / 2)
+        topHandle.y = topLeftHandle.y
+        bottomHandle.x = topLeftHandle.x + (rect.width * widthScale) / 2 - (handleSize / 2)
+        bottomHandle.y = bottomRightHandle.y
+        leftHandle.x = topLeftHandle.x
+        leftHandle.y = topLeftHandle.y + (rect.height * heightScale) / 2 - (handleSize / 2)
+        rightHandle.x = bottomRightHandle.x
+        rightHandle.y = topLeftHandle.y + (rect.height * heightScale) / 2 - (handleSize / 2)
     }
 
     function snapGrid(v, gridSize) {
@@ -216,6 +225,15 @@ Item {
                 bottomLeftHandle.anchors.bottom = rectangle.bottom
                 bottomRightHandle.anchors.right = rectangle.right
                 bottomRightHandle.anchors.bottom = rectangle.bottom
+ 
+                topHandle.anchors.horizontalCenter = rectangle.horizontalCenter
+                topHandle.anchors.top = rectangle.top
+                bottomHandle.anchors.horizontalCenter = rectangle.horizontalCenter
+                bottomHandle.anchors.bottom = rectangle.bottom
+                leftHandle.anchors.verticalCenter = rectangle.verticalCenter
+                leftHandle.anchors.left = rectangle.left
+                rightHandle.anchors.verticalCenter = rectangle.verticalCenter
+                rightHandle.anchors.right = rectangle.right
             }
             onPositionChanged: {
                 rectangle.x = snapX(rectangle.x + rectangle.width / 2) - rectangle.width / 2
@@ -236,6 +254,15 @@ Item {
                 bottomLeftHandle.anchors.bottom = undefined
                 bottomRightHandle.anchors.right = undefined
                 bottomRightHandle.anchors.bottom = undefined
+
+                topHandle.anchors.horizontalCenter = undefined
+                topHandle.anchors.top = undefined
+                bottomHandle.anchors.horizontalCenter = undefined
+                bottomHandle.anchors.bottom = undefined
+                leftHandle.anchors.verticalCenter = undefined
+                leftHandle.anchors.left = undefined
+                rightHandle.anchors.verticalCenter = undefined
+                rightHandle.anchors.right = undefined
             }
         }
 
@@ -311,8 +338,19 @@ Item {
             onEntered: {
                 rectangle.anchors.top = parent.top
                 rectangle.anchors.left = parent.left
+                rectangle.anchors.bottom = bottomRightHandle.bottom
+                rectangle.anchors.right = bottomRightHandle.right
                 topRightHandle.anchors.top = rectangle.top
                 bottomLeftHandle.anchors.left = rectangle.left
+ 
+                topHandle.anchors.horizontalCenter = rectangle.horizontalCenter
+                topHandle.anchors.top = rectangle.top
+                bottomHandle.anchors.horizontalCenter = rectangle.horizontalCenter
+                bottomHandle.anchors.bottom = rectangle.bottom
+                leftHandle.anchors.verticalCenter = rectangle.verticalCenter
+                leftHandle.anchors.left = rectangle.left
+                rightHandle.anchors.verticalCenter = rectangle.verticalCenter
+                rightHandle.anchors.right = rectangle.right
             }
             onPositionChanged: {
                 topLeftHandle.x = snapX(topLeftHandle.x)
@@ -327,6 +365,163 @@ Item {
                 rectChanged(rectangle)
                 topRightHandle.anchors.top = undefined
                 bottomLeftHandle.anchors.left = undefined
+
+                topHandle.anchors.horizontalCenter = undefined
+                topHandle.anchors.top = undefined
+                bottomHandle.anchors.horizontalCenter = undefined
+                bottomHandle.anchors.bottom = undefined
+                leftHandle.anchors.verticalCenter = undefined
+                leftHandle.anchors.left = undefined
+                rightHandle.anchors.verticalCenter = undefined
+                rightHandle.anchors.right = undefined
+            }
+        }
+    }
+
+    Rectangle {
+        id: topHandle
+        color: handleColor
+        width: handleSize
+        height: handleSize
+        visible: aspectRatio !== 0.0 ? false : !isRotated()  
+        MouseArea {
+            anchors.fill: parent
+            acceptedButtons: Qt.LeftButton
+            cursorShape: Qt.SizeVerCursor
+            drag.target: parent
+            onEntered: {
+                rectangle.anchors.top = parent.top
+                topLeftHandle.anchors.top = rectangle.top
+                topRightHandle.anchors.top = rectangle.top
+
+                leftHandle.anchors.verticalCenter = rectangle.verticalCenter
+                rightHandle.anchors.verticalCenter = rectangle.verticalCenter
+            }
+            onPositionChanged: {
+                topHandle.x = topLeftHandle.x + rectangle.width / 2 - (handleSize / 2)
+                topHandle.y = snapY(topHandle.y)
+                parent.x = Math.min(parent.x, bottomHandle.x)
+                parent.y = Math.min(parent.y, bottomHandle.y)
+                rectChanged(rectangle)
+            }
+            onReleased: {
+                rectChanged(rectangle)
+                topLeftHandle.anchors.top = undefined
+                topRightHandle.anchors.top = undefined
+
+                leftHandle.anchors.verticalCenter = undefined
+                rightHandle.anchors.verticalCenter = undefined
+            }
+        }
+    }
+
+    Rectangle {
+        id: bottomHandle
+        color: handleColor
+        width: handleSize
+        height: handleSize
+        visible: aspectRatio !== 0.0 ? false : !isRotated()  
+        MouseArea {
+            anchors.fill: parent
+            acceptedButtons: Qt.LeftButton
+            cursorShape: Qt.SizeVerCursor
+            drag.target: parent
+            onEntered: {
+                rectangle.anchors.bottom = parent.bottom
+                bottomLeftHandle.anchors.bottom = rectangle.bottom
+                bottomRightHandle.anchors.bottom = rectangle.bottom
+
+                leftHandle.anchors.verticalCenter = rectangle.verticalCenter
+                rightHandle.anchors.verticalCenter = rectangle.verticalCenter
+            }
+            onPositionChanged: {
+                bottomHandle.x = topLeftHandle.x + rectangle.width / 2 - (handleSize / 2)
+                bottomHandle.y = snapY(bottomHandle.y + handleSize) - handleSize
+                parent.x = Math.max(parent.x, topHandle.x)
+                parent.y = Math.max(parent.y, topHandle.y)
+                rectChanged(rectangle)
+            }
+            onReleased: {
+                rectChanged(rectangle)
+                bottomLeftHandle.anchors.bottom = undefined
+                bottomRightHandle.anchors.bottom = undefined
+
+                leftHandle.anchors.verticalCenter = undefined
+                rightHandle.anchors.verticalCenter = undefined
+            }
+        }
+    }
+
+    Rectangle {
+        id: leftHandle
+        color: handleColor
+        width: handleSize
+        height: handleSize
+        visible: aspectRatio !== 0.0 ? false : !isRotated()  
+        MouseArea {
+            anchors.fill: parent
+            acceptedButtons: Qt.LeftButton
+            cursorShape: Qt.SizeHorCursor
+            drag.target: parent
+            onEntered: {
+                rectangle.anchors.left = parent.left
+                topLeftHandle.anchors.left = rectangle.left
+                bottomLeftHandle.anchors.left = rectangle.left
+
+                topHandle.anchors.horizontalCenter = rectangle.horizontalCenter
+                bottomHandle.anchors.horizontalCenter = rectangle.horizontalCenter
+            }
+            onPositionChanged: {
+                leftHandle.x = snapX(leftHandle.x)
+                leftHandle.y = topLeftHandle.y + rectangle.height / 2 - (handleSize / 2)
+                parent.x = Math.min(parent.x, rightHandle.x)
+                parent.y = Math.min(parent.y, rightHandle.y)
+                rectChanged(rectangle)
+            }
+            onReleased: {
+                rectChanged(rectangle)
+                topLeftHandle.anchors.left = undefined
+                bottomLeftHandle.anchors.left = undefined
+
+                topHandle.anchors.horizontalCenter = undefined
+                bottomHandle.anchors.horizontalCenter = undefined
+            }
+        }
+    }
+
+    Rectangle {
+        id: rightHandle
+        color: handleColor
+        width: handleSize
+        height: handleSize
+        visible: aspectRatio !== 0.0 ? false : !isRotated()  
+        MouseArea {
+            anchors.fill: parent
+            acceptedButtons: Qt.LeftButton
+            cursorShape: Qt.SizeHorCursor
+            drag.target: parent
+            onEntered: {
+                rectangle.anchors.right = parent.right
+                topRightHandle.anchors.right = rectangle.right
+                bottomRightHandle.anchors.right = rectangle.right
+
+                topHandle.anchors.horizontalCenter = rectangle.horizontalCenter
+                bottomHandle.anchors.horizontalCenter = rectangle.horizontalCenter
+            }
+            onPositionChanged: {
+                rightHandle.x = snapX(rightHandle.x + handleSize) - handleSize
+                rightHandle.y = topLeftHandle.y + rectangle.height / 2 - (handleSize / 2)
+                parent.x = Math.max(parent.x, leftHandle.x)
+                parent.y = Math.max(parent.y, leftHandle.y)
+                rectChanged(rectangle)
+            }
+            onReleased: {
+                rectChanged(rectangle)
+                topRightHandle.anchors.right = undefined
+                bottomRightHandle.anchors.right = undefined
+
+                topHandle.anchors.horizontalCenter = undefined
+                bottomHandle.anchors.horizontalCenter = undefined
             }
         }
     }
@@ -349,6 +544,15 @@ Item {
                 rectangle.anchors.left = bottomLeftHandle.left
                 topLeftHandle.anchors.top = rectangle.top
                 bottomRightHandle.anchors.right = rectangle.right
+
+                topHandle.anchors.horizontalCenter = rectangle.horizontalCenter
+                topHandle.anchors.top = rectangle.top
+                bottomHandle.anchors.horizontalCenter = rectangle.horizontalCenter
+                bottomHandle.anchors.bottom = rectangle.bottom
+                leftHandle.anchors.verticalCenter = rectangle.verticalCenter
+                leftHandle.anchors.left = rectangle.left
+                rightHandle.anchors.verticalCenter = rectangle.verticalCenter
+                rightHandle.anchors.right = rectangle.right
             }
             onPositionChanged: {
                 topRightHandle.x = snapX(topRightHandle.x + handleSize) - handleSize
@@ -363,6 +567,15 @@ Item {
                 rectChanged(rectangle)
                 topLeftHandle.anchors.top = undefined
                 bottomRightHandle.anchors.right = undefined
+
+                topHandle.anchors.horizontalCenter = undefined
+                topHandle.anchors.top = undefined
+                bottomHandle.anchors.horizontalCenter = undefined
+                bottomHandle.anchors.bottom = undefined
+                leftHandle.anchors.verticalCenter = undefined
+                leftHandle.anchors.left = undefined
+                rightHandle.anchors.verticalCenter = undefined
+                rightHandle.anchors.right = undefined
             }
         }
     }
@@ -385,6 +598,15 @@ Item {
                 rectangle.anchors.right = topRightHandle.right
                 topLeftHandle.anchors.left = rectangle.left
                 bottomRightHandle.anchors.bottom = rectangle.bottom
+
+                topHandle.anchors.horizontalCenter = rectangle.horizontalCenter
+                topHandle.anchors.top = rectangle.top
+                bottomHandle.anchors.horizontalCenter = rectangle.horizontalCenter
+                bottomHandle.anchors.bottom = rectangle.bottom
+                leftHandle.anchors.verticalCenter = rectangle.verticalCenter
+                leftHandle.anchors.left = rectangle.left
+                rightHandle.anchors.verticalCenter = rectangle.verticalCenter
+                rightHandle.anchors.right = rectangle.right
             }
             onPositionChanged: {
                 bottomLeftHandle.x = snapX(bottomLeftHandle.x)
@@ -399,6 +621,15 @@ Item {
                 rectChanged(rectangle)
                 topLeftHandle.anchors.left = undefined
                 bottomRightHandle.anchors.bottom = undefined
+
+                topHandle.anchors.horizontalCenter = undefined
+                topHandle.anchors.top = undefined
+                bottomHandle.anchors.horizontalCenter = undefined
+                bottomHandle.anchors.bottom = undefined
+                leftHandle.anchors.verticalCenter = undefined
+                leftHandle.anchors.left = undefined
+                rightHandle.anchors.verticalCenter = undefined
+                rightHandle.anchors.right = undefined
             }
         }
     }
@@ -419,6 +650,15 @@ Item {
                 rectangle.anchors.right = parent.right
                 topRightHandle.anchors.right = rectangle.right
                 bottomLeftHandle.anchors.bottom = rectangle.bottom
+
+                topHandle.anchors.horizontalCenter = rectangle.horizontalCenter
+                topHandle.anchors.top = rectangle.top
+                bottomHandle.anchors.horizontalCenter = rectangle.horizontalCenter
+                bottomHandle.anchors.bottom = rectangle.bottom
+                leftHandle.anchors.verticalCenter = rectangle.verticalCenter
+                leftHandle.anchors.left = rectangle.left
+                rightHandle.anchors.verticalCenter = rectangle.verticalCenter
+                rightHandle.anchors.right = rectangle.right
             }
             onPositionChanged: {
                 bottomRightHandle.x = snapX(bottomRightHandle.x + handleSize) - handleSize
@@ -433,6 +673,15 @@ Item {
                 rectChanged(rectangle)
                 topRightHandle.anchors.right = undefined
                 bottomLeftHandle.anchors.bottom = undefined
+
+                topHandle.anchors.horizontalCenter = undefined
+                topHandle.anchors.top = undefined
+                bottomHandle.anchors.horizontalCenter = undefined
+                bottomHandle.anchors.bottom = undefined
+                leftHandle.anchors.verticalCenter = undefined
+                leftHandle.anchors.left = undefined
+                rightHandle.anchors.verticalCenter = undefined
+                rightHandle.anchors.right = undefined
             }
         }
     }
