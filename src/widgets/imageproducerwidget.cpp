@@ -182,9 +182,16 @@ void ImageProducerWidget::recreateProducer()
 
 void ImageProducerWidget::on_resetButton_clicked()
 {
+    if (!m_producer)
+        return;
+
     const char *s = m_producer->get(kShotcutResourceProperty);
     if (!s)
-        s = m_producer->get(kShotcutResourceProperty);
+        s = m_producer->get(kOriginalResourceProperty);
+    if (!s)
+       s = m_producer->get("resource");
+    if (!s)
+        return;
     Mlt::Producer* p = new Mlt::Producer(MLT.profile(), s);
     Mlt::Controller::copyFilters(*m_producer, *p);
     if (m_producer->get(kMultitrackItemProperty)) {
