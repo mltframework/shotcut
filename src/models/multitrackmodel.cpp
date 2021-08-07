@@ -2767,7 +2767,7 @@ bool MultitrackModel::isTransition(Mlt::Playlist &playlist, int clipIndex) const
     return false;
 }
 
-void MultitrackModel::insertTrack(int trackIndex, TrackType type)
+void MultitrackModel::insertTrackAbove(int trackIndex, TrackType type)
 {
     if (!m_tractor || trackIndex <= 0) {
         addVideoTrack();
