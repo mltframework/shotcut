@@ -98,7 +98,7 @@ QVariant KeyframesModel::data(const QModelIndex& index, int role) const
                         return result;
                     }
                     case MaximumFrameRole: {
-                        int minimum = animation.previous_key(qMax(0, position - 1)) + 1;
+                        int minimum = (index.row() > 0 && position > 0) ? (animation.previous_key(position - 1) + 1) : 0;
                         int result = animation.next_key(position + 1) - 1;
                         result = (result < minimum) ? m_filter->producer().get_out() : result;
 //                        LOG_DEBUG() << "keyframeIndex" << index.row() << "maximumFrame" << result;
