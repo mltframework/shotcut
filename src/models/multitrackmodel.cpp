@@ -443,7 +443,19 @@ int MultitrackModel::trimClipIn(int trackIndex, int clipIndex, int delta, bool r
         }
 
         Mlt::Playlist playlist(*track);
+        if (!playlist.is_valid()) {
+            LOG_DEBUG() << "Invalid Playlist" << trackIndex;
+            continue;
+        }
+        if (clipIndex >= playlist.count()) {
+            LOG_DEBUG() << "Invalid Clip Index" << clipIndex;
+            continue;
+        }
         QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(clipIndex));
+        if (!info) {
+            LOG_DEBUG() << "Invalid clip info";
+            continue;
+        }
         int filterIn = MLT.filterIn(playlist, clipIndex);
         int filterOut = MLT.filterOut(playlist, clipIndex);
 
