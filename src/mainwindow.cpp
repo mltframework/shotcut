@@ -95,6 +95,8 @@
 #include <QDirIterator>
 #include <QQuickWindow>
 #include <QVersionNumber>
+#include <QApplication>
+#include <QClipboard>
 #include <clocale>
 
 static bool eventDebugCallback(void **data)
@@ -502,6 +504,13 @@ MainWindow::MainWindow()
     connect(leap, SIGNAL(jogLeftSecond()), SLOT(stepLeftOneSecond()));
 
     connect(&m_network, SIGNAL(finished(QNetworkReply*)), SLOT(onUpgradeCheckFinished(QNetworkReply*)));
+    resetSourceUpdated();
+    if (MLT.isMltXml(QGuiApplication::clipboard()->text())) {
+        onClipboardChanged();
+    } else {
+        m_clipboardUpdatedAt.setSecsSinceEpoch(0);
+    }
+    connect(QGuiApplication::clipboard(), &QClipboard::dataChanged, this, &MainWindow::onClipboardChanged);
 
     QThreadPool::globalInstance()->setMaxThreadCount(qMin(4, QThreadPool::globalInstance()->maxThreadCount()));
 
@@ -1384,6 +1393,7 @@ void MainWindow::open(QString url, const Mlt::Properties* properties, bool play)
         if (modified || QFile::exists(url)) {
             MLT.profile().set_explicit(false);
             setWindowModified(modified);
+            resetSourceUpdated();
         }
     }
     if (!playlist() && !multitrack()) {
@@ -1391,6 +1401,7 @@ void MainWindow::open(QString url, const Mlt::Properties* properties, bool play)
             return;
         setCurrentFile("");
         setWindowModified(modified);
+        sourceUpdated();
         MLT.resetURL();
         // Return to automatic video mode if selected.
         if (m_profileGroup->checkedAction() && m_profileGroup->checkedAction()->data().toString().isEmpty())
@@ -2432,6 +2443,7 @@ void MainWindow::newProject(const QString &filename, bool isProjectFolder)
             m_autosaveFile.reset(new AutoSaveFile(filename));
         setCurrentFile(filename);
         setWindowModified(false);
+        resetSourceUpdated();
         if (MLT.producer())
             showStatusMessage(tr("Saved %1").arg(m_currentFile));
         m_undoStack->setClean();
@@ -2689,6 +2701,7 @@ void MainWindow::onProducerChanged()
     if (playlist() && MLT.producer() && MLT.producer()->is_valid()
         && MLT.producer()->get_int(kPlaylistIndexProperty))
         m_playlistDock->setUpdateButtonEnabled(true);
+    sourceUpdated();
 }
 
 bool MainWindow::on_actionSave_triggered()
@@ -2906,6 +2919,7 @@ void MainWindow::onPlaylistClosed()
     setAudioChannels(Settings.playerAudioChannels());
     setCurrentFile("");
     setWindowModified(false);
+    resetSourceUpdated();
     m_undoStack->clear();
     MLT.resetURL();
     QMutexLocker locker(&m_autosaveMutex);
@@ -2936,6 +2950,7 @@ void MainWindow::onMultitrackClosed()
     resetVideoModeMenu();
     setCurrentFile("");
     setWindowModified(false);
+    resetSourceUpdated();
     m_undoStack->clear();
     MLT.resetURL();
     QMutexLocker locker(&m_autosaveMutex);
@@ -2998,17 +3013,20 @@ void MainWindow::onCutModified()
     }
     if (playlist())
         m_playlistDock->setUpdateButtonEnabled(true);
+    sourceUpdated();
 }
 
 void MainWindow::onProducerModified()
 {
     setWindowModified(true);
+    sourceUpdated();
 }
 
 void MainWindow::onFilterModelChanged()
 {
     MLT.refreshConsumer();
     setWindowModified(true);
+    sourceUpdated();
     if (playlist())
         m_playlistDock->setUpdateButtonEnabled(true);
 }
@@ -3301,7 +3319,7 @@ void MainWindow::setInToCurrent(bool ripple)
 {
     if (m_player->tabIndex() == Player::ProjectTabIndex && isMultitrackValid()) {
         m_timelineDock->trimClipAtPlayhead(TimelineDock::TrimInPoint, ripple);
-    } else if (MLT.isSeekable() && MLT.isClip()) {
+    } else if (MLT.isSeekableClip()) {
         m_player->setIn(m_player->position());
         int delta = m_player->position() - MLT.producer()->get_in();
         emit m_player->inChanged(delta);
@@ -3312,7 +3330,7 @@ void MainWindow::setOutToCurrent(bool ripple)
 {
     if (m_player->tabIndex() == Player::ProjectTabIndex && isMultitrackValid()) {
         m_timelineDock->trimClipAtPlayhead(TimelineDock::TrimOutPoint, ripple);
-    } else if (MLT.isSeekable() && MLT.isClip()) {
+    } else if (MLT.isSeekableClip()) {
         m_player->setOut(m_player->position());
         int delta = m_player->position() - MLT.producer()->get_out();
         emit m_player->outChanged(delta);
@@ -4621,7 +4639,7 @@ void MainWindow::replaceAllByHash(const QString& hash, Mlt::Producer& producer, 
     Util::getHash(producer);
     if (!isProxy)
         m_recentDock->add(producer.get("resource"));
-    if (MLT.isClip() && MLT.producer() && Util::getHash(*MLT.producer()) == hash) {
+    if (MLT.isClip() && Util::getHash(*MLT.producer()) == hash) {
         Util::applyCustomProperties(producer, *MLT.producer(), MLT.producer()->get_in(), MLT.producer()->get_out());
         MLT.copyFilters(*MLT.producer(), producer);
         MLT.close();
@@ -4876,4 +4894,24 @@ void MainWindow::clearCurrentLayout()
     if (currentLayout) {
         currentLayout->setChecked(false);
     }
+}
+
+void MainWindow::onClipboardChanged()
+{
+    if (MLT.isMltXml(QGuiApplication::clipboard()->text())) {
+        m_clipboardUpdatedAt = QDateTime::currentDateTime();
+        LOG_DEBUG() << m_clipboardUpdatedAt;
+    }
+}
+
+void MainWindow::sourceUpdated()
+{
+    if (MLT.isClip()) {
+        m_sourceUpdatedAt = QDateTime::currentDateTime();
+    }
+}
+
+void MainWindow::resetSourceUpdated()
+{
+    m_sourceUpdatedAt.setSecsSinceEpoch(0);
 }

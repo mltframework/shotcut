@@ -175,6 +175,9 @@ public:
     void updatePreviewProfile();
     static void purgeMemoryPool();
     static bool fullRange(Mlt::Producer& producer);
+    static bool isMltXml(const QString& s) {
+        return s.contains("<mlt ");
+    }
 
 protected:
     Mlt::Repository* m_repo;

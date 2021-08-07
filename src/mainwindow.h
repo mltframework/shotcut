@@ -25,6 +25,7 @@
 #include <QNetworkAccessManager>
 #include <QScopedPointer>
 #include <QSharedPointer>
+#include <QDateTime>
 #include "mltcontroller.h"
 #include "mltxmlchecker.h"
 
@@ -101,6 +102,9 @@ public:
     void replaceInTimeline(const QUuid& uuid, Mlt::Producer& producer);
     Mlt::ClipInfo* timelineClipInfoByUuid(const QUuid& uuid, int& trackIndex, int& clipIndex);
     void replaceAllByHash(const QString& hash, Mlt::Producer& producer, bool isProxy = false);
+    bool isClipboardNewer() const {
+        return m_clipboardUpdatedAt > m_sourceUpdatedAt;
+    }
 
 signals:
     void audioChannelsChanged();
@@ -179,6 +183,8 @@ private:
     QNetworkAccessManager m_network;
     QString m_upgradeUrl;
     KeyframesDock* m_keyframesDock;
+    QDateTime m_clipboardUpdatedAt;
+    QDateTime m_sourceUpdatedAt;
 
 #ifdef WITH_LIBLEAP
     LeapListener m_leapListener;
@@ -343,6 +349,9 @@ private slots:
     void on_actionProxyConfigureHardware_triggered();
     void updateLayoutSwitcher();
     void clearCurrentLayout();
+    void onClipboardChanged();
+    void sourceUpdated();
+    void resetSourceUpdated();
 };
 
 #define MAIN MainWindow::singleton()

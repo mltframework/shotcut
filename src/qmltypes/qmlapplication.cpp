@@ -119,7 +119,7 @@ void QmlApplication::pasteFilters()
     QScopedPointer<Mlt::Producer> producer(new Mlt::Producer(MAIN.filterController()->attachedModel()->producer()));
     if (confirmOutputFilter()) {
         QString s = QGuiApplication::clipboard()->text();
-        if (s.contains("<mlt ")) {
+        if (MLT.isMltXml(s)) {
             Mlt::Profile profile(kDefaultMltProfile);
             Mlt::Producer filtersProducer(profile, "xml-string", s.toUtf8().constData());
             if (filtersProducer.is_valid() && filtersProducer.filter_count() > 0 && filtersProducer.get_int(kShotcutFiltersClipboard)) {

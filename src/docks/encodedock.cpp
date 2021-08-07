@@ -409,8 +409,7 @@ void EncodeDock::onProducerOpened()
         ui->fromCombo->addItem(tr("Playlist"), "playlist");
         ui->fromCombo->addItem(tr("Each Playlist Item"), "batch");
     }
-    if (MLT.isClip() && MLT.producer() && MLT.producer()->is_valid()
-            && qstrcmp("_hide", MLT.producer()->get("resource"))) {
+    if (MLT.isClip() && qstrcmp("_hide", MLT.producer()->get("resource"))) {
         ui->fromCombo->addItem(tr("Source"), "clip");
         if (MLT.producer()->get_int(kBackgroundCaptureProperty) || MLT.producer()->get_int(kExportFromProperty))
             index = ui->fromCombo->count() - 1;

@@ -33,6 +33,8 @@
 #include <QAction>
 #include <QtQml>
 #include <QtQuick>
+#include <QGuiApplication>
+#include <QClipboard>
 #include <Logger.h>
 
 static const char* kFileUrlProtocol = "file://";
@@ -568,11 +570,37 @@ void TimelineDock::append(int trackIndex)
         return;
     }
     if (MAIN.isSourceClipMyProject()) return;
-    if (MLT.isSeekableClip() || MLT.savedProducer()) {
-        Mlt::Producer producer(MLT.isClip()? MLT.producer() : MLT.savedProducer());
-        ProxyManager::generateIfNotExists(producer);
+
+    // Use MLT XML on the clipboard if it exists and is newer than source clip.
+    QString xmlToUse = QGuiApplication::clipboard()->text();
+    if (MLT.isMltXml(xmlToUse) && MAIN.isClipboardNewer()) {
+        if (!Settings.proxyEnabled()) {
+            ProxyManager::filterXML(xmlToUse, "");
+        }
+    } else {
+        xmlToUse.clear();
+    }
+
+    if (MLT.isSeekableClip() || MLT.savedProducer() || !xmlToUse.isEmpty()) {
+        if (xmlToUse.isEmpty()) {
+            Mlt::Producer producer(MLT.isClip()? MLT.producer() : MLT.savedProducer());
+            ProxyManager::generateIfNotExists(producer);
+            xmlToUse = MLT.XML(&producer);
+        }
+        if (xmlToUse.isEmpty()) {
+            return;
+        }
+        if (m_model.trackList().size() == 0) {
+            addVideoTrack();
+        }
+
         MAIN.undoStack()->push(
-            new Timeline::AppendCommand(m_model, trackIndex, MLT.XML(&producer)));
+            new Timeline::AppendCommand(m_model, trackIndex, xmlToUse));
+
+        if (m_position < 0) {
+            // This happens when pasting in a new session
+            MAIN.openCut(new Mlt::Producer(m_model.tractor()));
+        }
     } else if (!MLT.isSeekableClip()) {
         emitNonSeekableWarning();
     }
@@ -711,6 +739,7 @@ void TimelineDock::copyClip(int trackIndex, int clipIndex)
         p.seek(info->frame_in);
         p.set_in_and_out(info->frame_in, info->frame_out);
         MLT.setSavedProducer(&p);
+        QGuiApplication::clipboard()->setText(MLT.XML(&p));
         emit clipCopied();
     }
 }
@@ -1124,7 +1153,7 @@ static QString convertUrlsToXML(const QString& xml)
         Mlt::Playlist playlist(MLT.profile());
         QList<QUrl> urls;
         const auto& strings = xml.split(kFilesUrlDelimiter);
-        for (auto s : strings) {
+        for (const auto &s : strings) {
 #ifdef Q_OS_WIN
             if (!s.startsWith(kFileUrlProtocol)) {
                 s.prepend(kFileUrlProtocol);
@@ -1182,28 +1211,46 @@ void TimelineDock::insert(int trackIndex, int position, const QString &xml, bool
         MAIN.open(Util::removeFileScheme(url), &properties, false /* play */ );
     }
 
-    if (MLT.isSeekableClip() || MLT.savedProducer() || !xml.isEmpty()) {
-        QString xmlToUse;
+    // Use MLT XML on the clipboard if it exists and is newer than source clip.
+    QString xmlToUse = QGuiApplication::clipboard()->text();
+    if (MLT.isMltXml(xmlToUse) && MAIN.isClipboardNewer()) {
+        if (!Settings.proxyEnabled()) {
+            ProxyManager::filterXML(xmlToUse, "");
+        }
+    } else {
+        xmlToUse.clear();
+    }
+
+    if (MLT.isSeekableClip() || MLT.savedProducer() || !xml.isEmpty() || !xmlToUse.isEmpty()) {
         QScopedPointer<TimelineSelectionBlocker> selectBlocker;
-        if (xml.isEmpty()) {
+        if (xmlToUse.isEmpty() && xml.isEmpty()) {
             Mlt::Producer producer(MLT.isClip()? MLT.producer() : MLT.savedProducer());
             ProxyManager::generateIfNotExists(producer);
             xmlToUse = MLT.XML(&producer);
-        } else {
+        } else if (xml.startsWith(kFileUrlProtocol)) {
             xmlToUse = convertUrlsToXML(xml);
-            if (xml.startsWith(kFileUrlProtocol) && xml.split(kFilesUrlDelimiter).size() > 1) {
+            if (xml.split(kFilesUrlDelimiter).size() > 1) {
                 selectBlocker.reset(new TimelineSelectionBlocker(*this));
             }
         }
         if (xmlToUse.isEmpty()) {
             return;
         }
-        if (position < 0)
-            position = m_position;
-        if (m_model.trackList().size() == 0)
+        if (position < 0) {
+            position = qMax(m_position, 0);
+        }
+        if (m_model.trackList().size() == 0) {
             position = 0;
+            addVideoTrack();
+        }
+
         MAIN.undoStack()->push(
             new Timeline::InsertCommand(m_model, trackIndex, position, xmlToUse, seek));
+
+        if (m_position < 0) {
+            // This happens when pasting in a new session
+            MAIN.openCut(new Mlt::Producer(m_model.tractor()));
+        }
     } else if (!MLT.isSeekableClip()) {
         emitNonSeekableWarning();
     }
@@ -1244,25 +1291,43 @@ void TimelineDock::overwrite(int trackIndex, int position, const QString &xml, b
         MAIN.open(Util::removeFileScheme(url), &properties, false /* play */ );
     }
 
-    if (MLT.isSeekableClip() || MLT.savedProducer() || !xml.isEmpty()) {
-        QString xmlToUse;
+    // Use MLT XML on the clipboard if it exists and is newer than source clip.
+    QString xmlToUse = QGuiApplication::clipboard()->text();
+    if (MLT.isMltXml(xmlToUse) && MAIN.isClipboardNewer()) {
+        if (!Settings.proxyEnabled()) {
+            ProxyManager::filterXML(xmlToUse, "");
+        }
+    } else {
+        xmlToUse.clear();
+    }
+
+    if (MLT.isSeekableClip() || MLT.savedProducer() || !xml.isEmpty() || !xmlToUse.isEmpty()) {
         QScopedPointer<TimelineSelectionBlocker> selectBlocker;
-        if (xml.isEmpty()) {
+        if (xmlToUse.isEmpty() && xml.isEmpty()) {
             Mlt::Producer producer(MLT.isClip()? MLT.producer() : MLT.savedProducer());
             ProxyManager::generateIfNotExists(producer);
             xmlToUse = MLT.XML(&producer);
-        } else {
+        } else if (xml.startsWith(kFileUrlProtocol)) {
             xmlToUse = convertUrlsToXML(xml);
-            if (xml.startsWith(kFileUrlProtocol) && xml.split(kFilesUrlDelimiter).size() > 1) {
+            if (xml.split(kFilesUrlDelimiter).size() > 1) {
                 selectBlocker.reset(new TimelineSelectionBlocker(*this));
             }
         }
-        if (position < 0)
-            position = m_position;
-        if (m_model.trackList().size() == 0)
+        if (position < 0) {
+            position = qMax(m_position, 0);
+        }
+        if (m_model.trackList().size() == 0) {
             position = 0;
+            addVideoTrack();
+        }
+
         MAIN.undoStack()->push(
             new Timeline::OverwriteCommand(m_model, trackIndex, position, xmlToUse, seek));
+
+        if (m_position < 0) {
+            // This happens when pasting in a new session
+            MAIN.openCut(new Mlt::Producer(m_model.tractor()));
+        }
     } else if (!MLT.isSeekableClip()) {
         emitNonSeekableWarning();
     }

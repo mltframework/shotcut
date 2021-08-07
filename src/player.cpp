@@ -708,8 +708,7 @@ void Player::updateSelection()
         m_selectedLabel->setText(MLT.producer()->frames_to_time(MLT.producer()->get_playtime()));
     } else {
         m_inPointLabel->setText("--:--:--:-- / ");
-        if (MLT.producer() && MLT.isClip() &&
-                MLT.producer()->get_out() < m_duration - 1) {
+        if (MLT.isClip() && MLT.producer()->get_out() < m_duration - 1) {
             m_selectedLabel->setText(MLT.producer()->frames_to_time(MLT.producer()->get_playtime()));
         } else if (!MLT.producer() || MLT.producer()->get_in() == 0) {
             m_selectedLabel->setText("--:--:--:--");

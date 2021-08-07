@@ -633,7 +633,7 @@ bool Controller::isSeekable(Producer* p) const
 
 bool Controller::isClip() const
 {
-    return !isPlaylist() && !isMultitrack();
+    return producer() && producer()->is_valid() && !isPlaylist() && !isMultitrack();
 }
 
 bool Controller::isSeekableClip()

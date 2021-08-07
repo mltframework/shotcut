@@ -40,6 +40,8 @@
 #include <QHeaderView>
 #include <QKeyEvent>
 #include <QDir>
+#include <QGuiApplication>
+#include <QClipboard>
 
 static const int kInOutChangedTimeoutMs = 100;
 
@@ -1075,6 +1077,7 @@ void PlaylistDock::on_actionCopy_triggered()
         QString xml = MLT.XML(i->producer);
         Mlt::Producer* p = new Mlt::Producer(MLT.profile(), "xml-string", xml.toUtf8().constData());
         p->set_in_and_out(i->frame_in, i->frame_out);
+        QGuiApplication::clipboard()->setText(MLT.XML(p));
         emit clipOpened(p);
         delete i;
         m_iconsView->resetMultiSelect();
