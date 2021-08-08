@@ -16,7 +16,6 @@ Metadata {
             Parameter {
                 name: qsTr('Width')
                 property: 'hori'
-                isSimple: true
                 isCurve: true
                 minimum: 0
                 maximum: 99
@@ -24,7 +23,6 @@ Metadata {
             Parameter {
                 name: qsTr('Height')
                 property: 'vert'
-                isSimple: true
                 isCurve: true
                 minimum: 0
                 maximum: 99

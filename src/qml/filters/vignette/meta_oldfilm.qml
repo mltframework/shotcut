@@ -16,7 +16,6 @@ Metadata {
             Parameter {
                 name: qsTr('Radius')
                 property: 'radius'
-                isSimple: true
                 isCurve: true
                 minimum: 0
                 maximum: 1
@@ -24,7 +23,6 @@ Metadata {
             Parameter {
                 name: qsTr('Feathering')
                 property: 'smooth'
-                isSimple: true
                 isCurve: true
                 minimum: 0
                 maximum: 5
@@ -32,7 +30,6 @@ Metadata {
             Parameter {
                 name: qsTr('Opacity')
                 property: 'opacity'
-                isSimple: true
                 isCurve: true
                 minimum: 1
                 maximum: 0

@@ -15,7 +15,6 @@ Metadata {
             Parameter {
                 name: qsTr('Offset')
                 property: '0'
-                isSimple: true
                 isCurve: true
                 minimum: 0
                 maximum: 1

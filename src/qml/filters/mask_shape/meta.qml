@@ -15,7 +15,6 @@ Metadata {
             Parameter {
                 name: qsTr('Threshold')
                 property: 'filter.mix'
-                isSimple: true
                 isCurve: true
                 minimum: 0
                 maximum: 100

@@ -31,7 +31,6 @@ Metadata {
             Parameter {
                 name: qsTr('X Center')
                 property: '0'
-                isSimple: true
                 isCurve: true
                 minimum: 0
                 maximum: 1
@@ -39,7 +38,6 @@ Metadata {
             Parameter {
                 name: qsTr('Y Center')
                 property: '1'
-                isSimple: true
                 isCurve: true
                 minimum: 0
                 maximum: 1
@@ -47,7 +45,6 @@ Metadata {
             Parameter {
                 name: qsTr('Correction at Center')
                 property: '2'
-                isSimple: true
                 isCurve: true
                 minimum: 0
                 maximum: 1
@@ -55,7 +52,6 @@ Metadata {
             Parameter {
                 name: qsTr('Correction at Edges')
                 property: '3'
-                isSimple: true
                 isCurve: true
                 minimum: 0
                 maximum: 1

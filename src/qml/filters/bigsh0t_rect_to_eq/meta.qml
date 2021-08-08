@@ -16,7 +16,6 @@ Metadata {
             Parameter {
                 name: qsTr('Horizontal')
                 property: 'hfov'
-                isSimple: true
                 isCurve: true
                 minimum: 0
                 maximum: 180
@@ -24,7 +23,6 @@ Metadata {
             Parameter {
                 name: qsTr('Vertical')
                 property: 'vfov'
-                isSimple: true
                 isCurve: true
                 minimum: 0
                 maximum: 180

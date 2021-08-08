@@ -16,13 +16,11 @@ Metadata {
             Parameter {
                 name: qsTr('Position / Size')
                 property: 'rect'
-                isSimple: true
                 isRectangle: true
             },
             Parameter {
                 name: qsTr('Corner radius')
                 property: 'radius'
-                isSimple: true
                 isCurve: true
                 minimum: 0
                 maximum: 1

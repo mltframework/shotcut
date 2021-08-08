@@ -16,7 +16,6 @@ Metadata {
             Parameter {
                 name: qsTr('Level')
                 property: 'level'
-                isSimple: true
                 isCurve: true
                 minimum: -70
                 maximum: 24

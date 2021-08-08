@@ -14,7 +14,6 @@ Metadata {
             Parameter {
                 name: qsTr('Repeat')
                 property: 'amount'
-                isSimple: true
                 isCurve: true
                 minimum: 0
                 maximum: 60

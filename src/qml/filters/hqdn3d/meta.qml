@@ -31,7 +31,6 @@ Metadata {
             Parameter {
                 name: qsTr('Spatial')
                 property: '0'
-                isSimple: true
                 isCurve: true
                 minimum: 0
                 maximum: 1
@@ -39,7 +38,6 @@ Metadata {
             Parameter {
                 name: qsTr('Temporal')
                 property: '1'
-                isSimple: true
                 isCurve: true
                 minimum: 0
                 maximum: 1

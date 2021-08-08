@@ -18,7 +18,6 @@ Metadata {
             Parameter {
                 name: qsTr('Rotation')
                 property: 'transition.fix_rotate_x'
-                isSimple: true
                 isCurve: true
                 minimum: -360
                 maximum: 360
@@ -27,7 +26,6 @@ Metadata {
                 name: qsTr('Scale')
                 property: 'transition.scale_x'
                 gangedProperties: ['transition.scale_y']
-                isSimple: true
                 isCurve: true
                 minimum: 0.001
                 maximum: 10

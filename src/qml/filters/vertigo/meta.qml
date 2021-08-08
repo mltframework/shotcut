@@ -32,7 +32,6 @@ Metadata {
             Parameter {
                 name: qsTr('Speed')
                 property: '0'
-                isSimple: true
                 isCurve: true
                 minimum: 0
                 maximum: 1
@@ -40,7 +39,6 @@ Metadata {
             Parameter {
                 name: qsTr('Zoom')
                 property: '1'
-                isSimple: true
                 isCurve: true
                 minimum: 0
                 maximum: 1

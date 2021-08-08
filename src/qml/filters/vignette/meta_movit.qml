@@ -15,7 +15,6 @@ Metadata {
             Parameter {
                 name: qsTr('Outer radius')
                 property: 'radius'
-                isSimple: true
                 isCurve: true
                 minimum: 0
                 maximum: 1
@@ -23,7 +22,6 @@ Metadata {
             Parameter {
                 name: qsTr('Inner radius')
                 property: 'inner_radius'
-                isSimple: true
                 isCurve: true
                 minimum: 0
                 maximum: 1

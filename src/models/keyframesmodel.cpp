@@ -237,15 +237,13 @@ void KeyframesModel::load(QmlFilter* filter, QmlMetadata* meta)
     m_metadataIndex.clear();
     m_filter = filter;
     m_metadata = meta;
-    if (m_filter && m_metadata)
+    if (m_filter && m_metadata && m_filter->animateIn() <= 0 && m_filter->animateOut() <= 0)
     for (int i = 0; i < m_metadata->keyframes()->parameterCount(); i++) {
-        if (!m_metadata->keyframes()->parameter(i)->isSimple() || (m_filter->animateIn() <= 0 && m_filter->animateOut() <= 0)) {
-            if (m_filter->keyframeCount(m_metadata->keyframes()->parameter(i)->property()) > 0) {
-                m_propertyNames << m_metadata->keyframes()->parameter(i)->property();
-                m_keyframeCounts << keyframeCount(m_propertyNames.count() - 1);
-                m_metadataIndex << i;
-//            LOG_DEBUG() << m_propertyNames.last() << m_filter->get(m_propertyNames.last()) << keyframeCount(i);
-            }
+        if (m_filter->keyframeCount(m_metadata->keyframes()->parameter(i)->property()) > 0) {
+            m_propertyNames << m_metadata->keyframes()->parameter(i)->property();
+            m_keyframeCounts << keyframeCount(m_propertyNames.count() - 1);
+            m_metadataIndex << i;
+//        LOG_DEBUG() << m_propertyNames.last() << m_filter->get(m_propertyNames.last()) << keyframeCount(i);
         }
     }
     endResetModel();
@@ -589,14 +587,12 @@ void KeyframesModel::reload()
     m_propertyNames.clear();
     m_keyframeCounts.clear();
     m_metadataIndex.clear();
-    if (m_filter)
+    if (m_filter && m_metadata && m_filter->animateIn() <= 0 && m_filter->animateOut() <= 0)
     for (int i = 0; i < m_metadata->keyframes()->parameterCount(); i++) {
-        if (!m_metadata->keyframes()->parameter(i)->isSimple() || (m_filter->animateIn() <= 0 && m_filter->animateOut() <= 0)) {
-            if (m_filter->keyframeCount(m_metadata->keyframes()->parameter(i)->property()) > 0) {
-                m_propertyNames << m_metadata->keyframes()->parameter(i)->property();
-                m_keyframeCounts << keyframeCount(m_propertyNames.count() - 1);
-                m_metadataIndex << i;
-            }
+        if (m_filter->keyframeCount(m_metadata->keyframes()->parameter(i)->property()) > 0) {
+            m_propertyNames << m_metadata->keyframes()->parameter(i)->property();
+            m_keyframeCounts << keyframeCount(m_propertyNames.count() - 1);
+            m_metadataIndex << i;
         }
     }
     endResetModel();
@@ -653,7 +649,7 @@ void KeyframesModel::onFilterChanged(const QString& property)
     }
 }
 
-void KeyframesModel::onFilterInChanged(int delta)
+void KeyframesModel::onFilterInChanged(int /*delta*/)
 {
     QTimer::singleShot(0, this, SLOT(reload()));
 }
