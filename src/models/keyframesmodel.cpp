@@ -581,6 +581,30 @@ bool KeyframesModel::isKeyframe(int parameterIndex, int position)
     return false;
 }
 
+bool KeyframesModel::advancedKeyframesInUse()
+{
+    if (m_filter && m_metadata && m_filter->animateIn() <= 0 && m_filter->animateOut() <= 0)
+    for (int i = 0; i < m_metadata->keyframes()->parameterCount(); i++) {
+        if (m_filter->keyframeCount(m_metadata->keyframes()->parameter(i)->property()) > 0) {
+            return true;
+        }
+    }
+    return false;
+}
+
+void KeyframesModel::removeAdvancedKeyframes()
+{
+    if (m_filter && m_metadata && m_filter->animateIn() <= 0 && m_filter->animateOut() <= 0) {
+        for (int i = 0; i < m_metadata->keyframes()->parameterCount(); i++) {
+            QString name = m_metadata->keyframes()->parameter(i)->property();
+            if (m_filter->keyframeCount(name) > 0) {
+                m_filter->set(name, m_filter->get(name, 0));
+            }
+        }
+        reload();
+    }
+}
+
 void KeyframesModel::reload()
 {
     beginResetModel();

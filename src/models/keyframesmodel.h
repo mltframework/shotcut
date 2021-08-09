@@ -77,6 +77,8 @@ public:
     Q_INVOKABLE void setKeyframeValue(int parameterIndex, int keyframeIndex, double value);
     Q_INVOKABLE void setKeyframeValuePosition(int parameterIndex, int keyframeIndex, double value, int position);
     Q_INVOKABLE bool isKeyframe(int parameterIndex, int position);
+    Q_INVOKABLE bool advancedKeyframesInUse();
+    Q_INVOKABLE void removeAdvancedKeyframes();
 
 signals:
     void loaded();
