@@ -48,6 +48,12 @@ Database &Database::singleton(QObject *parent)
     return *instance;
 }
 
+static QString toFileName(const QString& s)
+{
+    QString result = s;
+    return result.replace(':', '-') +  + ".png";
+}
+
 QDir Database::thumbnailsDir()
 {
     QDir dir(Settings.appDataLocation());
@@ -72,7 +78,7 @@ QDir Database::thumbnailsDir()
                 }
                 query.exec("SELECT hash, accessed, image FROM thumbnails;");
                 for (int i = 0; query.next(); i++) {
-                    QString fileName = query.value(0).toString() + ".png";
+                    QString fileName = toFileName(query.value(0).toString());
                     longTask.reportProgress(QObject::tr("Please wait for this one-time update to the thumbnail cache..."), i, n);
                     if (img.loadFromData(query.value(2).toByteArray(), "PNG")) {
                         img.save(dir.filePath(fileName));
@@ -93,12 +99,12 @@ QDir Database::thumbnailsDir()
 bool Database::putThumbnail(const QString& hash, const QImage& image)
 {
     m_deleteTimer.start();
-    return image.save(thumbnailsDir().filePath(hash + ".png"));
+    return image.save(thumbnailsDir().filePath(toFileName(hash)));
 }
 
 QImage Database::getThumbnail(const QString &hash)
 {
-    QString filePath = thumbnailsDir().filePath(hash + ".png");
+    QString filePath = thumbnailsDir().filePath(toFileName(hash));
     ::utime(filePath.toUtf8().constData(), nullptr);
     return QImage(filePath);
 }
