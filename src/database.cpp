@@ -36,6 +36,7 @@ Database::Database(QObject *parent) : QObject(parent)
     m_deleteTimer.setInterval(kDeleteThumbnailsTimeoutMs);
     m_deleteTimer.setSingleShot(true);
     connect(&m_deleteTimer, &QTimer::timeout, this, &Database::deleteOldThumbnails);
+    connect(this, SIGNAL(triggerDelete()), &m_deleteTimer, SLOT(start()), Qt::QueuedConnection);
     thumbnailsDir(); // convert from db to filesystem if needed
 }
 
@@ -98,7 +99,7 @@ QDir Database::thumbnailsDir()
 
 bool Database::putThumbnail(const QString& hash, const QImage& image)
 {
-    m_deleteTimer.start();
+    emit triggerDelete();
     return image.save(thumbnailsDir().filePath(toFileName(hash)));
 }
 
