@@ -28,16 +28,15 @@
 
 static QMutex g_mutex;
 static Database* instance = nullptr;
-static const int kMaxThumbnailCount = 10000;
-static const int kDeleteThumbnailsTimeoutMs = 2000;
+static const int kMaxThumbnailCount = 5000;
+static const int kDeleteThumbnailsTimeoutMs = 60000;
 
 Database::Database(QObject *parent) : QObject(parent)
 {
     m_deleteTimer.setInterval(kDeleteThumbnailsTimeoutMs);
-    m_deleteTimer.setSingleShot(true);
-    connect(&m_deleteTimer, &QTimer::timeout, this, &Database::deleteOldThumbnails);
-    connect(this, SIGNAL(triggerDelete()), &m_deleteTimer, SLOT(start()), Qt::QueuedConnection);
+    connect(&m_deleteTimer, SIGNAL(timeout()), this, SLOT(deleteOldThumbnails()));
     thumbnailsDir(); // convert from db to filesystem if needed
+    m_deleteTimer.start();
 }
 
 Database &Database::singleton(QObject *parent)
@@ -77,7 +76,7 @@ QDir Database::thumbnailsDir()
                 if (query.exec("SELECT COUNT(*) FROM thumbnails;") && query.next()) {
                     n = query.value(0).toInt();
                 }
-                query.exec("SELECT hash, accessed, image FROM thumbnails;");
+                query.exec(QString("SELECT hash, accessed, image FROM thumbnails ORDER BY accessed DESC LIMIT %1").arg(kMaxThumbnailCount));
                 for (int i = 0; query.next(); i++) {
                     QString fileName = toFileName(query.value(0).toString());
                     longTask.reportProgress(QObject::tr("Please wait for this one-time update to the thumbnail cache..."), i, n);
@@ -99,7 +98,6 @@ QDir Database::thumbnailsDir()
 
 bool Database::putThumbnail(const QString& hash, const QImage& image)
 {
-    emit triggerDelete();
     return image.save(thumbnailsDir().filePath(toFileName(hash)));
 }
 
@@ -112,12 +110,15 @@ QImage Database::getThumbnail(const QString &hash)
 
 void Database::deleteOldThumbnails()
 {
-    QDir dir = thumbnailsDir();
-    auto ls = dir.entryList(QDir::Files | QDir::NoDotAndDotDot | QDir::Readable, QDir::Time);
-    for (int i = kMaxThumbnailCount; i < ls.size(); i++) {
-        QString filePath = dir.filePath(ls[i]);
-        if (!QFile::remove(filePath)) {
-            LOG_WARNING() << "failed to delete" << filePath;
+    QtConcurrent::run([=]() {
+        QDir dir = thumbnailsDir();
+        auto ls = dir.entryList(QDir::Files | QDir::NoDotAndDotDot | QDir::Readable, QDir::Time);
+        LOG_DEBUG() << "removing" << ls.size() - kMaxThumbnailCount;
+        for (int i = kMaxThumbnailCount; i < ls.size(); i++) {
+            QString filePath = dir.filePath(ls[i]);
+            if (!QFile::remove(filePath)) {
+                LOG_WARNING() << "failed to delete" << filePath;
+            }
         }
-    }
+    });
 }

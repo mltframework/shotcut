@@ -33,9 +33,6 @@ public:
     bool putThumbnail(const QString& hash, const QImage& image);
     QImage getThumbnail(const QString& hash);
 
-signals:
-    void triggerDelete();
-
 private:
     QDir thumbnailsDir();
     QTimer m_deleteTimer;

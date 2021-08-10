@@ -510,7 +510,7 @@ MainWindow::MainWindow()
     } else {
         m_clipboardUpdatedAt.setSecsSinceEpoch(0);
     }
-    connect(QGuiApplication::clipboard(), &QClipboard::dataChanged, this, &MainWindow::onClipboardChanged);
+    connect(QGuiApplication::clipboard(), SIGNAL(dataChanged()), this, SLOT(onClipboardChanged()));
 
     QThreadPool::globalInstance()->setMaxThreadCount(qMin(4, QThreadPool::globalInstance()->maxThreadCount()));
 
