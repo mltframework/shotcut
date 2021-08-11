@@ -30,8 +30,8 @@ Item {
             filter.set('mirror', 'horizontal')
         } else {
             var current = filter.get('mirror')
-            for (var i = 0; i < displayModel.count; ++i) {
-                if (displayModel.get(i).value === current) {
+            for (var i = 0; i < modeModel.count; ++i) {
+                if (modeModel.get(i).value === current) {
                     modeCombo.currentIndex = i
                     break
                 }
