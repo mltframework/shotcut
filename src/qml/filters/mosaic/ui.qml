@@ -60,8 +60,8 @@ Shotcut.KeyframableFilter {
     }
 
     function updateSimpleKeyframes() {
-        updateFilter(xsize, xsizeSlider.value / maxFilterPercent, xsizeKeyframesButton)
-        updateFilter(ysize, ysizeSlider.value / maxFilterPercent, ysizeKeyframesButton)
+        updateFilter(xsize, xsizeSlider.value / maxFilterPercent, xsizeKeyframesButton, null)
+        updateFilter(ysize, ysizeSlider.value / maxFilterPercent, ysizeKeyframesButton, null)
     }
 
     GridLayout {

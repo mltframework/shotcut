@@ -70,10 +70,10 @@ Shotcut.KeyframableFilter {
     }
 
     function updateSimpleKeyframes() {
-        updateFilter(glitchFreq, glitchFreqSlider.value / glitchFreqSlider.maximumValue, glitchKeyframesButton)
-        updateFilter(blockH, blockHSlider.value / blockHSlider.maximumValue, blockKeyframesButton)
-        updateFilter(shiftInt, shiftIntSlider.value / shiftIntSlider.maximumValue, shiftKeyframesButton)
-        updateFilter(colorInt, colorIntSlider.value / colorIntSlider.maximumValue, colorKeyframesButton)
+        updateFilter(glitchFreq, glitchFreqSlider.value / glitchFreqSlider.maximumValue, glitchKeyframesButton, null)
+        updateFilter(blockH, blockHSlider.value / blockHSlider.maximumValue, blockKeyframesButton, null)
+        updateFilter(shiftInt, shiftIntSlider.value / shiftIntSlider.maximumValue, shiftKeyframesButton, null)
+        updateFilter(colorInt, colorIntSlider.value / colorIntSlider.maximumValue, colorKeyframesButton, null)
     }
 
     GridLayout {

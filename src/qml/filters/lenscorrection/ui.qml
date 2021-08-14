@@ -70,10 +70,10 @@ Shotcut.KeyframableFilter {
     }
 
     function updateSimpleKeyframes() {
-        updateFilter(xcenter, xcenterSlider.value / xcenterSlider.maximumValue, xcenKeyframesButton)
-        updateFilter(ycenter, ycenterSlider.value / ycenterSlider.maximumValue, ycentKeyframesButton)
-        updateFilter(correctionnearcenter, correctionnearcenterSlider.value / correctionnearcenterSlider.maximumValue, cncenKeyframesButton)
-        updateFilter(correctionnearedges, correctionnearedgesSlider.value / correctionnearedgesSlider.maximumValue, cnedgeKeyframesButton)
+        updateFilter(xcenter, xcenterSlider.value / xcenterSlider.maximumValue, xcenKeyframesButton, null)
+        updateFilter(ycenter, ycenterSlider.value / ycenterSlider.maximumValue, ycentKeyframesButton, null)
+        updateFilter(correctionnearcenter, correctionnearcenterSlider.value / correctionnearcenterSlider.maximumValue, cncenKeyframesButton, null)
+        updateFilter(correctionnearedges, correctionnearedgesSlider.value / correctionnearedgesSlider.maximumValue, cnedgeKeyframesButton, null)
     }
 
     GridLayout {

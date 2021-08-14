@@ -56,7 +56,7 @@ Shotcut.KeyframableFilter {
     }
 
     function updateSimpleKeyframes() {
-        updateFilter(amount, amountSlider.value / amountSlider.maximumValue, amountKeyframesButton)
+        updateFilter(amount, amountSlider.value / amountSlider.maximumValue, amountKeyframesButton, null)
         
     }
 

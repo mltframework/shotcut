@@ -59,8 +59,8 @@ Shotcut.KeyframableFilter {
     }
 
     function updateSimpleKeyframes() {
-        updateFilter(spatial, spatialSlider.value / spatialSlider.maximumValue, spatialKeyframesButton)
-        updateFilter(temporal, temporalSlider.value / temporalSlider.maximumValue, temporalKeyframesButton)
+        updateFilter(spatial, spatialSlider.value / spatialSlider.maximumValue, spatialKeyframesButton, null)
+        updateFilter(temporal, temporalSlider.value / temporalSlider.maximumValue, temporalKeyframesButton, null)
     }
 
     GridLayout {

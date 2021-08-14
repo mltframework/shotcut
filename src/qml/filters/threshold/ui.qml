@@ -60,7 +60,7 @@ Shotcut.KeyframableFilter {
     }
 
     function updateSimpleKeyframes() {
-        updateFilter(threshold, thresholdSlider.value / thresholdSlider.maximumValue * 255, thresholdKeyframesButton)
+        updateFilter(threshold, thresholdSlider.value / thresholdSlider.maximumValue * 255, thresholdKeyframesButton, null)
     }
 
     GridLayout {

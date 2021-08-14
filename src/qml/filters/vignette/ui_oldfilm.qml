@@ -233,9 +233,9 @@ Item {
     }
 
     function updateSimpleAnimation() {
-        updateFilter('radius', radiusSlider.value / 100.0, getPosition(), radiusKeyframesButton)
-        updateFilter('smooth', smoothSlider.value / 100.0, getPosition(), smoothKeyframesButton)
-        updateFilter('opacity', 1.0 - opacitySlider.value / 100.0, getPosition(), opacityKeyframesButton)
+        updateFilter('radius', radiusSlider.value / 100.0, null, radiusKeyframesButton)
+        updateFilter('smooth', smoothSlider.value / 100.0, null, smoothKeyframesButton)
+        updateFilter('opacity', 1.0 - opacitySlider.value / 100.0, null, opacityKeyframesButton)
     }
 
     Connections {

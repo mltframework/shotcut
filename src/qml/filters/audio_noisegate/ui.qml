@@ -88,13 +88,13 @@ Shotcut.KeyframableFilter {
     }
 
     function updateSimpleKeyframes() {
-        updateFilter(lfkey, lfkeySlider.value, lfkeyKeyframesButton)
-        updateFilter(hfkey, hfkeySlider.value, hfkeyKeyframesButton)
-        updateFilter(threshold, thresholdSlider.value, thresholdKeyframesButton)
-        updateFilter(attack, attackSlider.value, attackKeyframesButton)
-        updateFilter(hold, holdSlider.value, holdKeyframesButton)
-        updateFilter(decay, decaySlider.value, decayKeyframesButton)
-        updateFilter(range, rangeSlider.value, rangeKeyframesButton)
+        updateFilter(lfkey, lfkeySlider.value, lfkeyKeyframesButton, null)
+        updateFilter(hfkey, hfkeySlider.value, hfkeyKeyframesButton, null)
+        updateFilter(threshold, thresholdSlider.value, thresholdKeyframesButton, null)
+        updateFilter(attack, attackSlider.value, attackKeyframesButton, null)
+        updateFilter(hold, holdSlider.value, holdKeyframesButton, null)
+        updateFilter(decay, decaySlider.value, decayKeyframesButton, null)
+        updateFilter(range, rangeSlider.value, rangeKeyframesButton, null)
     }
 
     GridLayout {

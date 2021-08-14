@@ -188,8 +188,8 @@ Item {
     }
 
     function updateSimpleAnimation() {
-        updateFilter('radius', radiusSlider.value / 100.0, getPosition(), radiusKeyframesButton)
-        updateFilter('inner_radius', innerSlider.value / 100.0, getPosition(), innerKeyframesButton)
+        updateFilter('radius', radiusSlider.value / 100.0, null, radiusKeyframesButton)
+        updateFilter('inner_radius', innerSlider.value / 100.0, null, innerKeyframesButton)
     }
 
     Connections {

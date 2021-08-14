@@ -350,7 +350,7 @@ Item {
     }
 
     function updatedSimpleAnimation() {
-        updateFilter('filter.mix', thresholdSlider.value, getPosition(), thresholdKeyframesButton)
+        updateFilter('filter.mix', thresholdSlider.value, null, thresholdKeyframesButton)
     }
 
     Connections {

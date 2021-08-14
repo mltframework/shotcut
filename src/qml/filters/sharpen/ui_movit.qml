@@ -242,10 +242,10 @@ Item {
     }
 
     function updateSimpleAnimation() {
-        updateFilter('circle_radius', circleSlider.value, getPosition(), circleKeyframesButton)
-        updateFilter('gaussian_radius', gaussianSlider.value, getPosition(), gaussianKeyframesButton)
-        updateFilter('correlation', correlationSlider.value, getPosition(), correlationKeyframesButton)
-        updateFilter('noise', noiseSlider.value, getPosition(), noiseKeyframesButton)
+        updateFilter('circle_radius', circleSlider.value, null, circleKeyframesButton)
+        updateFilter('gaussian_radius', gaussianSlider.value, null, gaussianKeyframesButton)
+        updateFilter('correlation', correlationSlider.value, null, correlationKeyframesButton)
+        updateFilter('noise', noiseSlider.value, null, noiseKeyframesButton)
     }
 
     Connections {

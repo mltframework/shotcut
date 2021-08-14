@@ -59,8 +59,8 @@ Shotcut.KeyframableFilter {
     }
 
     function updateSimpleKeyframes() {
-        updateFilter(verSplit, verSplitSlider.value / verSplitSlider.maximumValue, verKeyframesButton)
-        updateFilter(horSplit, horSplitSlider.value / horSplitSlider.maximumValue, horKeyframesButton)
+        updateFilter(verSplit, verSplitSlider.value / verSplitSlider.maximumValue, verKeyframesButton, null)
+        updateFilter(horSplit, horSplitSlider.value / horSplitSlider.maximumValue, horKeyframesButton, null)
     }
 
     GridLayout {

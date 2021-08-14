@@ -334,10 +334,10 @@ Item {
     }
 
     function updatedSimpleAnimation() {
-        updateFilter(paramHorizontal, horizontalSlider.value/100, getPosition(), horizontalKeyframesButton)
-        updateFilter(paramVertical,   verticalSlider.value/100,   getPosition(), verticalKeyframesButton)
-        updateFilter(paramWidth,      widthSlider.value/100,      getPosition(), widthKeyframesButton)
-        updateFilter(paramHeight,     heightSlider.value/100,     getPosition(), heightKeyframesButton)
+        updateFilter(paramHorizontal, horizontalSlider.value/100, null, horizontalKeyframesButton)
+        updateFilter(paramVertical,   verticalSlider.value/100,   null, verticalKeyframesButton)
+        updateFilter(paramWidth,      widthSlider.value/100,      null, widthKeyframesButton)
+        updateFilter(paramHeight,     heightSlider.value/100,     null, heightKeyframesButton)
     }
 
     Connections {

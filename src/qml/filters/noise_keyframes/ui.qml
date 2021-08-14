@@ -55,7 +55,7 @@ Shotcut.KeyframableFilter {
     }
 
     function updateSimpleKeyframes() {
-        updateFilter(noise, noiseSlider.value / noiseSlider.maximumValue, noiseKeyframesButton)
+        updateFilter(noise, noiseSlider.value / noiseSlider.maximumValue, noiseKeyframesButton, null)
         
     }
 

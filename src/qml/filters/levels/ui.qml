@@ -306,9 +306,9 @@ Item {
     }
 
     function updateSimpleAnimation() {
-        updateFilter(inputBlackParam, inputBlackSlider.value / inputBlackSlider.maximumValue, getPosition(), inputBlackKeyframesButton)
-        updateFilter(inputWhiteParam, inputWhiteSlider.value / inputWhiteSlider.maximumValue, getPosition(), inputWhiteKeyframesButton)
-        updateFilter(gammaParam, gammaSlider.value / gammaSlider.maximumValue, getPosition(), gammaKeyframesButton)
+        updateFilter(inputBlackParam, inputBlackSlider.value / inputBlackSlider.maximumValue, null, inputBlackKeyframesButton)
+        updateFilter(inputWhiteParam, inputWhiteSlider.value / inputWhiteSlider.maximumValue, null, inputWhiteKeyframesButton)
+        updateFilter(gammaParam, gammaSlider.value / gammaSlider.maximumValue, null, gammaKeyframesButton)
     }
 
     Connections {

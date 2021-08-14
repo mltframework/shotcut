@@ -128,7 +128,7 @@ Shotcut.KeyframableFilter {
     }
 
     function updateSimpleKeyframes() {
-        updateFilter('transition.fix_rotate_x', rotationSlider.value, rotationKeyframesButton)
+        updateFilter('transition.fix_rotate_x', rotationSlider.value, rotationKeyframesButton, null)
         updateFilterScale(null)
     }
     

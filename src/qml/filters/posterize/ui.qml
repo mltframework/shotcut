@@ -55,7 +55,7 @@ Shotcut.KeyframableFilter {
     }
 
     function updateSimpleKeyframes() {
-        updateFilter(levels, levelsSlider.value / levelsSlider.maximumValue, levelKeyframesButton)
+        updateFilter(levels, levelsSlider.value / levelsSlider.maximumValue, levelKeyframesButton, null)
     }
 
     GridLayout {

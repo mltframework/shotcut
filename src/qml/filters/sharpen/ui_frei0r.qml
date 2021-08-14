@@ -190,8 +190,8 @@ Item {
     }
 
     function updateSimpleAnimation() {
-        updateFilter(paramAmount, amountSlider.value / 100.0, getPosition(), amountKeyframesButton)
-        updateFilter(paramSize, sizeSlider.value / 100.0, getPosition(), sizeKeyframesButton)
+        updateFilter(paramAmount, amountSlider.value / 100.0, null, amountKeyframesButton)
+        updateFilter(paramSize, sizeSlider.value / 100.0, null, sizeKeyframesButton)
     }
 
     Connections {

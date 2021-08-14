@@ -67,9 +67,9 @@ Shotcut.KeyframableFilter {
     }
 
     function updateSimpleKeyframes() {
-        updateFilter(amplitude, amplitudeSlider.value / amplitudeSlider.maximumValue, amplitudeKeyframesButton)
-        updateFilter(frequency, frequencySlider.value / frequencySlider.maximumValue, frequencyKeyframesButton)
-        updateFilter(velocity, velocitySlider.value / velocitySlider.maximumValue, velocityKeyframesButton)
+        updateFilter(amplitude, amplitudeSlider.value / amplitudeSlider.maximumValue, amplitudeKeyframesButton, null)
+        updateFilter(frequency, frequencySlider.value / frequencySlider.maximumValue, frequencyKeyframesButton, null)
+        updateFilter(velocity, velocitySlider.value / velocitySlider.maximumValue, velocityKeyframesButton, null)
     }
 
     GridLayout {
