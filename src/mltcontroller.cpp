@@ -1184,6 +1184,11 @@ void Controller::adjustFilter(Mlt::Filter* filter, int in, int out, int inDelta,
 
     QString filterName = filter->get(kShotcutFilterProperty);
     QmlMetadata* meta = MAIN.filterController()->metadataForService(filter);
+
+    if ((inDelta || outDelta) && meta && meta->mlt_service().startsWith("vidstab")) {
+        filter->clear("results");
+    }
+
     if (inDelta) {
         if (in + inDelta < 0) {
             inDelta = -in;

@@ -32,7 +32,6 @@ Item {
         filter.set('analyze', 0)
         shakinessSlider.value = filter.getDouble('shakiness')
         accuracySlider.value = filter.getDouble('accuracy')
-        button.enabled = !hasAnalysisCompleted()
         setStatus(false)
     }
 
@@ -55,7 +54,6 @@ Item {
     }
 
     function analyzeValueChanged() {
-        button.enabled = true
         status.text = _analysisRequiredMessage
     }
 
@@ -83,6 +81,8 @@ Item {
             filter.set("reload", 1);
             setStatus(false)
         }
+        onInChanged: analyzeValueChanged()
+        onOutChanged: analyzeValueChanged()
     }
     
     FileDialog {
@@ -111,9 +111,6 @@ Item {
                 filename += ".stab"
             }
             startAnalyzeJob(filename)
-        }
-        onRejected: {
-            button.enabled = true
         }
     }
 
@@ -168,7 +165,6 @@ Item {
             text: qsTr('Analyze')
             Layout.alignment: Qt.AlignRight
             onClicked: {
-                button.enabled = false
                 var filename = application.getNextProjectFile('stab')
                 if (filename) {
                     stabilizeRoot.fileSaved(filename)
