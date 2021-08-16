@@ -261,7 +261,6 @@ void ImageProducerWidget::on_sequenceCheckBox_clicked(bool checked)
             begin.prepend(name[i - 1]);
         if (count) {
             m_producer->set("begin", begin.toLatin1().constData());
-            int j = begin.toInt();
             name.replace(i, count, QString("0%1d").arg(count).prepend('%'));
             QString serviceName = m_producer->get("mlt_service");
             if (!serviceName.isEmpty())
@@ -271,18 +270,27 @@ void ImageProducerWidget::on_sequenceCheckBox_clicked(bool checked)
             m_producer->set("resource", resource.toUtf8().constData());
 
             // Count the number of consecutive files.
+            // Allow for gaps of up to 100 missing files as is supported by producer_qimage
             MAIN.showStatusMessage(tr("Getting length of image sequence..."));
             QCoreApplication::processEvents();
             name = info.fileName();
             name.replace(i, count, "%1");
             resource = info.path().append('/').append(name);
-            for (i = j; QFile::exists(resource.arg(i, count, 10, QChar('0'))); ++i) {
+            int imageCount = 0;
+            i = begin.toInt();
+            for (int gap = 0; gap < 100;) {
+                if (QFile::exists(resource.arg(i, count, 10, QChar('0')))) {
+                    imageCount++;
+                    gap = 0;
+                } else {
+                    gap ++;
+                }
+                i++;
                 if (i % 100 == 0)
                     QCoreApplication::processEvents();
             }
-            i -= j;
-            m_producer->set("length", m_producer->frames_to_time(i * m_producer->get_int("ttl"), mlt_time_clock));
-            ui->durationSpinBox->setValue(i);
+            m_producer->set("length", m_producer->frames_to_time(imageCount * m_producer->get_int("ttl"), mlt_time_clock));
+            ui->durationSpinBox->setValue(imageCount);
             MAIN.showStatusMessage(tr("Reloading image sequence..."));
             QCoreApplication::processEvents();
         }
