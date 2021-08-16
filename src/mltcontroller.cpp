@@ -1268,7 +1268,7 @@ void Controller::adjustClipFilters(Mlt::Producer& producer, int in, int out, int
     if (producer.type() == mlt_service_chain_type) {
         Mlt::Chain chain(producer);
         int link_count = chain.link_count();
-        for (int j = 0; j < chain.link_count(); j++) {
+        for (int j = 0; j < link_count; j++) {
             QScopedPointer<Mlt::Link> link(chain.link(j));
             QmlMetadata* meta = MAIN.filterController()->metadataForService(link.data());
             if (link && link->is_valid()) {
