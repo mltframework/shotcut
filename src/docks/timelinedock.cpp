@@ -561,6 +561,12 @@ void TimelineDock::onSeeked(int position)
     }
 }
 
+
+static bool isSystemClipboardValid(const QString& xml)
+{
+    return MLT.isMltXml(xml) && MAIN.isClipboardNewer() && !xml.contains(kShotcutFiltersClipboard);
+}
+
 void TimelineDock::append(int trackIndex)
 {
     if (trackIndex < 0)
@@ -573,7 +579,7 @@ void TimelineDock::append(int trackIndex)
 
     // Use MLT XML on the clipboard if it exists and is newer than source clip.
     QString xmlToUse = QGuiApplication::clipboard()->text();
-    if (MLT.isMltXml(xmlToUse) && MAIN.isClipboardNewer()) {
+    if (isSystemClipboardValid(xmlToUse)) {
         if (!Settings.proxyEnabled()) {
             ProxyManager::filterXML(xmlToUse, "");
         }
@@ -1213,7 +1219,7 @@ void TimelineDock::insert(int trackIndex, int position, const QString &xml, bool
 
     // Use MLT XML on the clipboard if it exists and is newer than source clip.
     QString xmlToUse = QGuiApplication::clipboard()->text();
-    if (MLT.isMltXml(xmlToUse) && MAIN.isClipboardNewer()) {
+    if (isSystemClipboardValid(xmlToUse)) {
         if (!Settings.proxyEnabled()) {
             ProxyManager::filterXML(xmlToUse, "");
         }
@@ -1293,7 +1299,7 @@ void TimelineDock::overwrite(int trackIndex, int position, const QString &xml, b
 
     // Use MLT XML on the clipboard if it exists and is newer than source clip.
     QString xmlToUse = QGuiApplication::clipboard()->text();
-    if (MLT.isMltXml(xmlToUse) && MAIN.isClipboardNewer()) {
+    if (isSystemClipboardValid(xmlToUse)) {
         if (!Settings.proxyEnabled()) {
             ProxyManager::filterXML(xmlToUse, "");
         }

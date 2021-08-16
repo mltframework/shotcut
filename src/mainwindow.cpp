@@ -4898,7 +4898,8 @@ void MainWindow::clearCurrentLayout()
 
 void MainWindow::onClipboardChanged()
 {
-    if (MLT.isMltXml(QGuiApplication::clipboard()->text())) {
+    auto s = QGuiApplication::clipboard()->text();
+    if (MLT.isMltXml(s) && !s.contains(kShotcutFiltersClipboard)) {
         m_clipboardUpdatedAt = QDateTime::currentDateTime();
         LOG_DEBUG() << m_clipboardUpdatedAt;
     }
