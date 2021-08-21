@@ -107,7 +107,8 @@ void InsertCommand::redo()
             longTask.reportProgress(QFileInfo(ProxyManager::resource(clip)).fileName(), n - i - 1, n);
             ProxyManager::generateIfNotExists(clip);
             clip.set_in_and_out(info->frame_in, info->frame_out);
-            m_model.insertClip(m_trackIndex, clip, m_position, m_rippleAllTracks, false);
+            bool lastClip = i == 0;
+            m_model.insertClip(m_trackIndex, clip, m_position, m_rippleAllTracks, false, lastClip);
         }
     } else {
         ProxyManager::generateIfNotExists(clip);
@@ -151,7 +152,8 @@ void OverwriteCommand::redo()
             longTask.reportProgress(QFileInfo(ProxyManager::resource(clip)).fileName(), i, n);
             ProxyManager::generateIfNotExists(clip);
             clip.set_in_and_out(info->frame_in, info->frame_out);
-            m_model.overwrite(m_trackIndex, clip, position, false);
+            bool lastClip = i == (n - 1);
+            m_model.overwrite(m_trackIndex, clip, position, false, lastClip);
             position += info->frame_count;
         }
     } else {

@@ -139,8 +139,8 @@ public slots:
     void notifyClipOut(int trackIndex, int clipIndex);
     bool moveClip(int fromTrack, int toTrack, int clipIndex, int position, bool ripple, bool rippleAllTracks);
     int overwriteClip(int trackIndex, Mlt::Producer& clip, int position, bool seek = true);
-    QString overwrite(int trackIndex, Mlt::Producer& clip, int position, bool seek = true);
-    int insertClip(int trackIndex, Mlt::Producer& clip, int position, bool rippleAllTracks, bool seek = true);
+    QString overwrite(int trackIndex, Mlt::Producer& clip, int position, bool seek = true, bool notify = true);
+    int insertClip(int trackIndex, Mlt::Producer& clip, int position, bool rippleAllTracks, bool seek = true, bool notify = true);
     int appendClip(int trackIndex, Mlt::Producer &clip);
     void removeClip(int trackIndex, int clipIndex, bool rippleAllTracks);
     void liftClip(int trackIndex, int clipIndex);
