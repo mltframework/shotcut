@@ -616,6 +616,9 @@ void Player::onProducerOpened(bool play)
         if (m_pauseAfterOpen) {
             m_pauseAfterOpen = false;
             QTimer::singleShot(500, this, SLOT(postProducerOpened()));
+            if (!MLT.isClip()) {
+                MLT.producer()->seek(0);
+            }
         } else {
             if (MLT.consumer()->is_stopped()) {
                 QTimer::singleShot(500, this, SLOT(play()));
