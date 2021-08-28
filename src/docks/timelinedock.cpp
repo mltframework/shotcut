@@ -548,7 +548,7 @@ void TimelineDock::onShowFrame(const SharedFrame& frame)
     if (m_ignoreNextPositionChange) {
         m_ignoreNextPositionChange = false;
     } else if (MLT.isMultitrack() && m_position != frame.get_position()) {
-        m_position = frame.get_position();
+        m_position = qMin(frame.get_position(), m_model.tractor()->get_length());
         emit positionChanged();
     }
 }
@@ -556,7 +556,7 @@ void TimelineDock::onShowFrame(const SharedFrame& frame)
 void TimelineDock::onSeeked(int position)
 {
     if (MLT.isMultitrack() && m_position != position) {
-        m_position = position;
+        m_position = qMin(position, m_model.tractor()->get_length());
         emit positionChanged();
     }
 }

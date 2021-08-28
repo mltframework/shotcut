@@ -536,7 +536,7 @@ void Player::seek(int position)
 {
     if (m_isSeekable) {
         if (position >= 0) {
-            emit seeked(qMin(position, m_duration - 1));
+            emit seeked(qMin(position, MLT.isMultitrack()? m_duration : m_duration - 1));
         }
     }
     // Seek implies pause.

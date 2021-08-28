@@ -1815,7 +1815,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         break;
     case Qt::Key_End:
         if (MLT.producer())
-            m_player->seek(MLT.producer()->get_length() - 1);
+            m_player->seek(MLT.producer()->get_length());
         break;
     case Qt::Key_Left:
         if ((event->modifiers() & Qt::ControlModifier) && m_timelineDock->isVisible()) {
