@@ -970,7 +970,7 @@ QUuid Controller::ensureHasUuid(Mlt::Properties& properties) const
     return newUid;
 }
 
-void Controller::copyFilters(Producer& fromProducer, Producer& toProducer, bool fromClipboard)
+void Controller::copyFilters(Producer& fromProducer, Producer& toProducer, bool fromClipboard, bool includeDisabled)
 {
     int in = fromProducer.get(kFilterInProperty)? fromProducer.get_int(kFilterInProperty) : fromProducer.get_in();
     int out = fromProducer.get(kFilterOutProperty)? fromProducer.get_int(kFilterOutProperty) : fromProducer.get_out();
@@ -978,7 +978,8 @@ void Controller::copyFilters(Producer& fromProducer, Producer& toProducer, bool 
     
     for (int i = 0; i < count; i++) {
         QScopedPointer<Mlt::Filter> fromFilter(fromProducer.filter(i));
-        if (fromFilter && fromFilter->is_valid() && !fromFilter->get_int("_loader") && fromFilter->get("mlt_service")) {
+        if (fromFilter && fromFilter->is_valid() && !fromFilter->get_int("_loader") && fromFilter->get("mlt_service")
+            && (includeDisabled || !fromFilter->get_int("disable"))) {
             Mlt::Filter toFilter(MLT.profile(), fromFilter->get("mlt_service"));
             if (toFilter.is_valid()) {
                 toFilter.inherit(*fromFilter);
@@ -1015,10 +1016,10 @@ void Controller::copyFilters(Mlt::Producer* producer)
 {
     if (producer && producer->is_valid()) {
         initFiltersClipboard();
-        copyFilters(*producer, *m_filtersClipboard);
+        copyFilters(*producer, *m_filtersClipboard, false, false);
     } else if (m_producer && m_producer->is_valid()) {
         initFiltersClipboard();
-        copyFilters(*m_producer, *m_filtersClipboard);
+        copyFilters(*m_producer, *m_filtersClipboard, false, false);
     }
 }
 

@@ -123,7 +123,7 @@ public:
     QUuid uuid(Mlt::Properties &properties) const;
     void setUuid(Mlt::Properties &properties, QUuid uid) const;
     QUuid ensureHasUuid(Mlt::Properties& properties) const;
-    static void copyFilters(Mlt::Producer& fromProducer, Mlt::Producer& toProducer, bool fromClipboard = false);
+    static void copyFilters(Mlt::Producer& fromProducer, Mlt::Producer& toProducer, bool fromClipboard = false, bool includeDisabled = true);
     void copyFilters(Mlt::Producer* producer = nullptr);
     void pasteFilters(Mlt::Producer* producer = nullptr, Mlt::Producer* fromProducer = nullptr);
     static void adjustFilters(Mlt::Producer& producer, int startIndex = 0);
