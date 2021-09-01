@@ -690,7 +690,7 @@ void Player::onFrameDisplayed(const SharedFrame& frame)
         onProducerOpened(false);
     }
     int position = frame.get_position();
-    if (position < m_duration) {
+    if (position <= m_duration) {
         m_position = position;
         m_positionSpinner->blockSignals(true);
         m_positionSpinner->setValue(position);
