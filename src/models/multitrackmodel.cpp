@@ -2455,14 +2455,20 @@ Mlt::Transition* MultitrackModel::getVideoBlendTransition(int trackIndex) const
     return transition;
 }
 
-void MultitrackModel::refreshVideoBlendTransitions()
+int MultitrackModel::bottomVideoTrackMltIndex() const
 {
     // Get the MLT index of the bottom-most video track
-    int a_track = 0;
+    int track = 0;
     for (auto& t : m_trackList) {
         if (t.type == VideoTrackType)
-            a_track = t.mlt_index;
+            track = t.mlt_index;
     }
+    return track;
+}
+
+void MultitrackModel::refreshVideoBlendTransitions()
+{
+    int a_track = bottomVideoTrackMltIndex();
     // For each video track
     for (auto& t : m_trackList) {
         if (t.type == VideoTrackType) {
@@ -3319,11 +3325,7 @@ void MultitrackModel::convertOldDoc()
     }
 
     // Change a_track of composite transitions to bottom video track.
-    int a_track = 0;
-    foreach (Track t, m_trackList) {
-        if (t.type == VideoTrackType)
-            a_track = t.mlt_index;
-    }
+    int a_track = bottomVideoTrackMltIndex();
     foreach (Track t, m_trackList) {
         if (t.type == VideoTrackType) {
             QScopedPointer<Mlt::Transition> transition(getVideoBlendTransition(t.mlt_index));

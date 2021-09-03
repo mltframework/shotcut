@@ -194,6 +194,7 @@ private:
     bool warnIfInvalid(Mlt::Service& service);
     Mlt::Transition* getVideoBlendTransition(int trackIndex) const;
     void refreshVideoBlendTransitions();
+    int bottomVideoTrackMltIndex() const;
 
     friend class UndoHelper;
 
