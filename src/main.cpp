@@ -45,6 +45,7 @@ extern "C"
 }
 #endif
 
+static const int kMaxCacheCount = 5000;
 #ifdef Q_OS_WIN
 static const char* kDefaultScaleRoundPolicy = "RoundPreferFloor";
 #else
@@ -369,6 +370,26 @@ int main(int argc, char **argv)
     splash.showMessage(QCoreApplication::translate("main", "Loading plugins..."), Qt::AlignRight | Qt::AlignVCenter);
     splash.show();
     a.processEvents();
+
+    // Expire old items from the qmlcache
+    splash.showMessage(QCoreApplication::translate("main", "Expiring cache..."), Qt::AlignRight | Qt::AlignVCenter);
+    a.processEvents();
+    auto dir = QDir(QStandardPaths::standardLocations(QStandardPaths::CacheLocation).constFirst());
+    if (dir.exists() && dir.cd("qmlcache")) {
+        auto ls = dir.entryList(QDir::Files | QDir::Readable | QDir::NoDotAndDotDot, QDir::Time);
+        if (qMax(0, ls.size() - kMaxCacheCount) > 0) {
+            LOG_INFO() << "removing" << qMax(0, ls.size() - kMaxCacheCount) << "from" << dir.path();
+        }
+        for (int i = kMaxCacheCount; i < ls.size(); i++) {
+            QString filePath = dir.filePath(ls[i]);
+            if (!QFile::remove(filePath)) {
+                LOG_WARNING() << "failed to delete" << filePath;
+            }
+            if (i % 1000 == 0) {
+                a.processEvents();
+            }
+        }
+    }
 
     QQuickStyle::setStyle("Fusion");
     a.setProperty("system-style", a.style()->objectName());
