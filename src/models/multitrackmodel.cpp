@@ -1365,13 +1365,18 @@ void MultitrackModel::fadeIn(int trackIndex, int clipIndex, int duration)
                         if (Settings.playerGPU()) {
                             Mlt::Filter f(MLT.profile(), "movit.opacity");
                             f.set(kShotcutFilterProperty, "fadeInMovit");
-                            f.set("alpha", 1);
+                            f.set("alpha", i == bottomVideoTrackMltIndex()? 1 : -1);
                             info->producer->attach(f);
                             filter.reset(new Mlt::Filter(f));
                         } else {
                             Mlt::Filter f(MLT.profile(), "brightness");
                             f.set(kShotcutFilterProperty, "fadeInBrightness");
-                            f.set("alpha", 1);
+                            if (i == bottomVideoTrackMltIndex()) {
+                                f.set("alpha", 1);
+                            } else {
+                                f.set("alpha", 0);
+                                f.set("level", 1);
+                            }
                             info->producer->attach(f);
                             filter.reset(new Mlt::Filter(f));
                         }
@@ -1473,13 +1478,18 @@ void MultitrackModel::fadeOut(int trackIndex, int clipIndex, int duration)
                         if (Settings.playerGPU()) {
                             Mlt::Filter f(MLT.profile(), "movit.opacity");
                             f.set(kShotcutFilterProperty, "fadeOutMovit");
-                            f.set("alpha", 1);
+                            f.set("alpha", i == bottomVideoTrackMltIndex()? 1 : -1);
                             info->producer->attach(f);
                             filter.reset(new Mlt::Filter(f));
                         } else {
                             Mlt::Filter f(MLT.profile(), "brightness");
                             f.set(kShotcutFilterProperty, "fadeOutBrightness");
-                            f.set("alpha", 1);
+                            if (i == bottomVideoTrackMltIndex()) {
+                                f.set("alpha", 1);
+                            } else {
+                                f.set("alpha", 0);
+                                f.set("level", 1);
+                            }
                             info->producer->attach(f);
                             filter.reset(new Mlt::Filter(f));
                         }
