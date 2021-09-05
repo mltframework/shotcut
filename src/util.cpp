@@ -544,3 +544,25 @@ int Util::greatestCommonDivisor(int m, int n)
     gcd = m;
     return gcd;
 }
+
+void Util::normalizeFrameRate(double fps, int& numerator, int& denominator)
+{
+    // Convert some common non-integer frame rates to fractions.
+    if (qRound(fps * 1000000.0) == 23976024) {
+        numerator = 24000;
+        denominator = 1001;
+    } else if (qRound(fps * 100000.0) == 2997003) {
+        numerator = 30000;
+        denominator = 1001;
+    } else if (qRound(fps * 1000000.0) == 47952048) {
+        numerator = 48000;
+         denominator = 1001;
+    } else if (qRound(fps * 100000.0) == 5994006) {
+        numerator = 60000;
+        denominator = 1001;
+    } else {
+        // Workaround storing QDoubleSpinBox::value() loses precision.
+        numerator = qRound(fps * 1000000.0);
+        denominator = 1000000;
+    }
+}

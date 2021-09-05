@@ -60,6 +60,7 @@ public:
     static bool isMemoryLow();
     static QString removeQueryString(const QString& s);
     static int greatestCommonDivisor(int m, int n);
+    static void normalizeFrameRate(double fps, int& numerator, int& denominator);
 };
 
 #endif // UTIL_H

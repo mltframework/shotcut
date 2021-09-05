@@ -845,24 +845,10 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime, bool includeProfile
                 // Only if the frame rate spinner does not match the profile.
                 && (includeProfile || qRound(ui->fpsSpinner->value() * 1000000.0) != qRound(MLT.profile().fps() * 1000000.0)))
             {
-                // Convert some common non-integer frame rates to fractions.
-                if (qRound(ui->fpsSpinner->value() * 1000000.0) == 23976024) {
-                    p->set("frame_rate_num", 24000);
-                    p->set("frame_rate_den", 1001);
-                } else if (qRound(ui->fpsSpinner->value() * 100000.0) == 2997003) {
-                    p->set("frame_rate_num", 30000);
-                    p->set("frame_rate_den", 1001);
-                } else if (qRound(ui->fpsSpinner->value() * 1000000.0) == 47952048) {
-                    p->set("frame_rate_num", 48000);
-                    p->set("frame_rate_den", 1001);
-                } else if (qRound(ui->fpsSpinner->value() * 100000.0) == 5994006) {
-                    p->set("frame_rate_num", 60000);
-                    p->set("frame_rate_den", 1001);
-                } else {
-                    // Workaround storing QDoubleSpinBox::value() loses precision.
-                    p->set("frame_rate_num", qRound(ui->fpsSpinner->value() * 1000000.0));
-                    p->set("frame_rate_den", 1000000);
-                }
+                int numerator, denominator;
+                Util::normalizeFrameRate(ui->fpsSpinner->value(), numerator, denominator);
+                p->set("frame_rate_num", numerator);
+                p->set("frame_rate_den", denominator);
             }
             if (ui->formatCombo->currentText() == "image2")
                 setIfNotSet(p, "threads", 1);

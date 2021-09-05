@@ -57,23 +57,9 @@ void CustomProfileDialog::on_buttonBox_accepted()
     QSize sar(ui->aspectNumSpinner->value() * ui->heightSpinner->value(), ui->aspectDenSpinner->value() * ui->widthSpinner->value());
     auto gcd = Util::greatestCommonDivisor(sar.width(), sar.height());
     MLT.profile().set_sample_aspect(sar.width() / gcd, sar.height() / gcd);
-    switch (int(ui->fpsSpinner->value() * 10)) {
-    case 239:
-        MLT.profile().set_frame_rate(24000, 1001);
-        break;
-    case 299:
-        MLT.profile().set_frame_rate(30000, 1001);
-        break;
-    case 479:
-        MLT.profile().set_frame_rate(48000, 1001);
-        break;
-    case 599:
-        MLT.profile().set_frame_rate(60000, 1001);
-        break;
-    default:
-        MLT.profile().set_frame_rate(ui->fpsSpinner->value() * 1000, 1000);
-        break;
-    }
+    int numerator, denominator;
+    Util::normalizeFrameRate(ui->fpsSpinner->value(), numerator, denominator);
+    MLT.profile().set_frame_rate(numerator, denominator);
     MLT.profile().set_progressive(ui->scanModeCombo->currentIndex());
     MLT.profile().set_colorspace((ui->colorspaceCombo->currentIndex() == 1)? 709 : 601);
     MLT.updatePreviewProfile();
