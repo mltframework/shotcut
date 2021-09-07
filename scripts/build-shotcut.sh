@@ -858,11 +858,7 @@ function set_globals {
   ######
   # x265
   CFLAGS_[13]=$CFLAGS
-  if test "$TARGET_OS" = "Win32" -o "$TARGET_OS" = "Win64" ; then
-    CONFIG[13]="cmake -DCMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -DCMAKE_TOOLCHAIN_FILE=my.cmake -DENABLE_CLI=OFF $CMAKE_DEBUG_FLAG"
-  else
-    CONFIG[13]="cmake -DCMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -DENABLE_CLI=OFF $CMAKE_DEBUG_FLAG"
-  fi
+  CONFIG[13]="cmake -G Ninja -D CMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -DENABLE_CLI=OFF -D ENABLE_SHARED=ON -D EXTRA_LIB='x265_main10.a' -D LINKED_10BIT=ON -D EXTRA_LINK_FLAGS='-L.' $CMAKE_DEBUG_FLAG"
   LDFLAGS_[13]=$LDFLAGS
 
   #######
@@ -1482,7 +1478,12 @@ function configure_compile_install_subproject {
 
   # Special hack for x265
   if test "x265" = "$1"; then
-    cd source
+    [ ! -d "10bit" ] && mkdir 10bit
+    cd 10bit
+    cmd cmake -G Ninja -D ENABLE_CLI=OFF -D ENABLE_SHARED=OFF -D EXPORT_C_API=OFF -D HIGH_BIT_DEPTH=ON $CMAKE_DEBUG_FLAG ../source
+    cmd ninja
+    cd ../source
+    cmd ln -s ../10bit/libx265.a libx265_main10.a
   fi
 
   # Special hack for AMF
@@ -1544,6 +1545,16 @@ function configure_compile_install_subproject {
     cmd ninja -C builddir -j $MAKEJ || die "Unable to build $1"
   elif test "aom" = "$1" -o "mlt" = "$1"; then
     cmd ninja -j $MAKEJ || die "Unable to build $1"
+  elif test "x265" = "$1" ; then
+    cmd ninja -j $MAKEJ || die "Unable to build $1"
+    cmd mv libx265.a libx265_main.a
+    ar -M <<EOF
+CREATE libx265.a
+ADDLIB libx265_main.a
+ADDLIB libx265_main10.a
+SAVE
+END
+EOF
   elif test "vmaf" = "$1" ; then
     cmd ninja -C libvmaf/build -j $MAKEJ || die "Unable to build $1"
   elif test "$MYCONFIG" != ""; then
@@ -1593,7 +1604,7 @@ function configure_compile_install_subproject {
       fi
     elif test "dav1d" = "$1" -o "rubberband" = "$1" ; then
       cmd meson install -C builddir || die "Unable to install $1"
-    elif test "aom" = "$1" -o "mlt" = "$1" ; then
+    elif test "aom" = "$1" -o "mlt" = "$1" -o "x265" = "$1" ; then
       cmd ninja install || die "Unable to install $1"
     elif test "vmaf" = "$1" ; then
       cmd ninja install -C libvmaf/build || die "Unable to install $1"
