@@ -1233,7 +1233,7 @@ void TimelineDock::insert(int trackIndex, int position, const QString &xml, bool
             Mlt::Producer producer(MLT.isClip()? MLT.producer() : MLT.savedProducer());
             ProxyManager::generateIfNotExists(producer);
             xmlToUse = MLT.XML(&producer);
-        } else if (xmlToUse.isEmpty()) {
+        } else if (!xml.isEmpty()) {
             xmlToUse = convertUrlsToXML(xml);
             if (xml.startsWith(kFileUrlProtocol) && xml.split(kFilesUrlDelimiter).size() > 1) {
                 selectBlocker.reset(new TimelineSelectionBlocker(*this));
@@ -1313,7 +1313,7 @@ void TimelineDock::overwrite(int trackIndex, int position, const QString &xml, b
             Mlt::Producer producer(MLT.isClip()? MLT.producer() : MLT.savedProducer());
             ProxyManager::generateIfNotExists(producer);
             xmlToUse = MLT.XML(&producer);
-        } else if (xmlToUse.isEmpty()) {
+        } else if (!xml.isEmpty()) {
             xmlToUse = convertUrlsToXML(xml);
             if (xml.startsWith(kFileUrlProtocol) && xml.split(kFilesUrlDelimiter).size() > 1) {
                 selectBlocker.reset(new TimelineSelectionBlocker(*this));
