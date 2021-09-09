@@ -164,13 +164,13 @@ QString Util::removeFileScheme(QUrl& url)
 
 static inline bool isValidGoProFirstFilePrefix(const QFileInfo& info)
 {
-    QStringList list {"GOPR", "GH01", "GS01", "GX01"};
+    QStringList list {"GOPR", "GH01", "GL01", "GM01", "GS01", "GX01"};
     return list.contains(info.baseName().left(4).toUpper());
 }
 
 static inline bool isValidGoProPrefix(const QFileInfo& info)
 {
-    QStringList list {"GP", "GH", "GS", "GX"};
+    QStringList list {"GP", "GH", "GL", "GM", "GS", "GX"};
     return list.contains(info.baseName().left(2).toUpper());
 }
 
