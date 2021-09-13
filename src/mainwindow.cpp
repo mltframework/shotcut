@@ -188,6 +188,7 @@ MainWindow::MainWindow()
     connect(ui->actionAbout_Qt, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
     connect(this, &MainWindow::producerOpened, this, &MainWindow::onProducerOpened);
     connect(ui->mainToolBar, SIGNAL(visibilityChanged(bool)), SLOT(onToolbarVisibilityChanged(bool)));
+    ui->actionSave->setEnabled(false);
 
     // Accept drag-n-drop of files.
     this->setAcceptDrops(true);
@@ -2687,6 +2688,7 @@ void MainWindow::onProducerOpened(bool withReopen)
         Util::getHash(*MLT.producer());
         ui->actionPaste->setEnabled(true);
     }
+    ui->actionSave->setEnabled(true);
     QMutexLocker locker(&m_autosaveMutex);
     if (m_autosaveFile)
         setCurrentFile(m_autosaveFile->managedFileName());
@@ -3966,6 +3968,7 @@ void MainWindow::on_actionClose_triggered()
         setCurrentFile("");
         MLT.resetURL();
         MLT.setProjectFolder(QString());
+        ui->actionSave->setEnabled(false);
         MLT.stop();
         if (multitrack())
             m_timelineDock->model()->close();
