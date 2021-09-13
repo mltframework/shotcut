@@ -3960,6 +3960,11 @@ void MainWindow::on_actionClose_triggered()
 {
     if (continueModified()) {
         LOG_DEBUG() << "";
+        QMutexLocker locker(&m_autosaveMutex);
+        m_autosaveFile.reset();
+        locker.unlock();
+        setCurrentFile("");
+        MLT.resetURL();
         MLT.setProjectFolder(QString());
         MLT.stop();
         if (multitrack())
