@@ -686,6 +686,20 @@ void MltXmlChecker::checkForProxy(const QString& mlt_service, QVector<MltXmlChec
                 return;
             }
         }
+
+        // Use GoPro LRV if available
+        if (QFile::exists(ProxyManager::GoProProxyFilePath(resource))) {
+            for (auto& p : properties) {
+                if (p.first == "resource") {
+                    p.second = ProxyManager::GoProProxyFilePath(resource);
+                    properties << MltProperty(kIsProxyProperty, "1");
+                    properties << MltProperty(kOriginalResourceProperty, resource);
+                    m_isUpdated = true;
+                    return;
+                }
+            }
+        }
+
         QDir proxyDir(Settings.proxyFolder());
         QDir projectDir(QFileInfo(m_tempFile->fileName()).dir());
         QString fileName = hash + ProxyManager::videoFilenameExtension();

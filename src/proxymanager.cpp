@@ -35,6 +35,7 @@
 
 static const char* kProxySubfolder = "proxies";
 static const char* kProxyVideoExtension = ".mp4";
+static const char* kGoProProxyVideoExtension = ".LRV";
 static const char* kProxyPendingVideoExtension = ".pending.mp4";
 static const char* kProxyImageExtension = ".jpg";
 static const char* kProxyPendingImageExtension = ".pending.jpg";
@@ -374,9 +375,7 @@ bool ProxyManager::filterXML(QString& xmlString, QString root)
     }
 
     // Useful for debugging
-//        tempFile.open();
-//        LOG_DEBUG() << tempFile.readAll().constData();
-//        tempFile.close();
+//    LOG_DEBUG() << output;
 
     if (!xml.hasError()) {
         xmlString = output;
@@ -392,6 +391,9 @@ bool ProxyManager::fileExists(Mlt::Producer& producer)
     QString service = QString::fromLatin1(producer.get("mlt_service"));
     QString fileName;
     if (service.startsWith("avformat")) {
+        if (QFile::exists(GoProProxyFilePath(producer.get("resource")))) {
+            return true;
+        }
         fileName = Util::getHash(producer) + kProxyVideoExtension;
     } else if (isValidImage(producer)) {
         fileName = Util::getHash(producer) + kProxyImageExtension;
@@ -467,7 +469,15 @@ bool ProxyManager::generateIfNotExists(Mlt::Producer& producer, bool replace)
             QDir projectDir(MLT.projectFolder());
             QString fileName;
             if (service.startsWith("avformat")) {
-                fileName = Util::getHash(producer) + kProxyVideoExtension;
+                auto gopro = GoProProxyFilePath(producer.get("resource"));
+                if (QFile::exists(gopro)) {
+                    producer.set(kIsProxyProperty, 1);
+                    producer.set(kOriginalResourceProperty, producer.get("resource"));
+                    producer.set("resource", gopro.toUtf8().constData());
+                    return true;
+                } else {
+                    fileName = Util::getHash(producer) + kProxyVideoExtension;
+                }
             } else if (isValidImage(producer)) {
                 fileName = Util::getHash(producer) + kProxyImageExtension;
             } else {
@@ -599,4 +609,14 @@ bool ProxyManager::removePending()
     }
     //TODO if any pending remove, let user know and offer to regenerate?
     return foundAny;
+}
+
+QString ProxyManager::GoProProxyFilePath(const QString& resource)
+{
+    auto fi = QFileInfo(resource);
+    auto base = fi.baseName();
+    base = "GL" + base.mid(2);
+    auto result = fi.absoluteDir().filePath(base + kGoProProxyVideoExtension);
+    LOG_DEBUG() << result;
+    return result;
 }
