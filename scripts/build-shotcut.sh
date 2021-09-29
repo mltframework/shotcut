@@ -1433,7 +1433,7 @@ function configure_compile_install_subproject {
 
   feedback_status Configuring $1
 
-  # Special hack for ffmpeg
+  # Special hack for ffmpeg on Windows
   if [ "FFmpeg" = "$1" ] && [ "$TARGET_OS" = "Win32" -o "$TARGET_OS" = "Win64" ]; then
     cmd sed 's/fopen(/av_fopen_utf8(/' -i libavfilter/vf_lut3d.c
   fi
@@ -1462,7 +1462,7 @@ function configure_compile_install_subproject {
     export CXXFLAGS="$CFLAGS"
   fi
 
-  # Special hack for vid.stab
+  # Special hack for vid.stab on Windows
   if test "vid.stab" = "$1" -a "$TARGET_OS" = "Win32"; then
     sed 's/-O3/-O2/' -i CMakeLists.txt
   fi
@@ -1610,6 +1610,8 @@ EOF
       cmd ninja install -C libvmaf/build || die "Unable to install $1"
       cmd install -d "$FINAL_INSTALL_DIR"/share/vmaf
       cmd install -p -c model/*.json "$FINAL_INSTALL_DIR"/share/vmaf || die "Unable to install $1"
+    elif test "ladspa" = "$1" ; then
+      cmd install -p -c ladspa.h "$FINAL_INSTALL_DIR"/include || die "Unable to install ladspa.h"
     elif test "$MYCONFIG" != "" ; then
       cmd make install || die "Unable to install $1"
     fi
