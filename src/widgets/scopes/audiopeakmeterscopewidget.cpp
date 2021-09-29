@@ -17,6 +17,7 @@
  */
 
 #include "audiopeakmeterscopewidget.h"
+#include "settings.h"
 #include <Logger.h>
 #include <QVBoxLayout>
 #include <MltProfile.h>
@@ -29,7 +30,7 @@ AudioPeakMeterScopeWidget::AudioPeakMeterScopeWidget()
   , m_filter(0)
   , m_audioMeter(0)
   , m_orientation((Qt::Orientation)-1)
-  , m_channels( 0 )
+  , m_channels( Settings.playerAudioChannels() )
 {
     LOG_DEBUG() << "begin";
     m_filter = new Mlt::Filter(MLT.profile(), "audiolevel");
