@@ -1611,6 +1611,7 @@ EOF
       cmd install -d "$FINAL_INSTALL_DIR"/share/vmaf
       cmd install -p -c model/*.json "$FINAL_INSTALL_DIR"/share/vmaf || die "Unable to install $1"
     elif test "ladspa" = "$1" ; then
+      cmd make install || die "Unable to install $1"
       cmd install -p -c ladspa.h "$FINAL_INSTALL_DIR"/include || die "Unable to install ladspa.h"
     elif test "$MYCONFIG" != "" ; then
       cmd make install || die "Unable to install $1"
