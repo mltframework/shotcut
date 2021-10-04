@@ -1824,6 +1824,7 @@ void EncodeDock::on_resetButton_clicked()
     m_isDefaultSettings = true;
     resetOptions();
     onProfileChanged();
+    ui->presetsTree->setCurrentIndex(QModelIndex());
 }
 
 void EncodeDock::openCaptureFile()
