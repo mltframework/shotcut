@@ -1528,15 +1528,19 @@ void MainWindow::showStatusMessage(QAction* action, int timeoutSeconds)
     // This object takes ownership of the passed action.
     // This version does not currently log its message.
     m_statusBarAction.reset(action);
-    action->setParent(0);
+    action->setParent(nullptr);
     m_player->setStatusLabel(action->text(), timeoutSeconds, action);
 }
 
-void MainWindow::showStatusMessage(const QString& message, int timeoutSeconds)
+void MainWindow::showStatusMessage(const QString& message, int timeoutSeconds, QPalette::ColorRole role)
 {
     LOG_INFO() << message;
-    m_player->setStatusLabel(message, timeoutSeconds, 0 /* QAction */);
-    m_statusBarAction.reset();
+    auto action = new QAction;
+    connect(action, &QAction::triggered, [=]() {
+        showStatusMessage(QString(), 0);
+    });
+    m_statusBarAction.reset(action);
+    m_player->setStatusLabel(message, timeoutSeconds, action, role);
 }
 
 void MainWindow::seekPlaylist(int start)

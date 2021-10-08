@@ -107,7 +107,7 @@ public slots:
     void switchToTab(TabIndex index);
     void enableTab(TabIndex index, bool enabled = true);
     void onTabBarClicked(int index);
-    void setStatusLabel(const QString& text, int timeoutSeconds, QAction* action);
+    void setStatusLabel(const QString& text, int timeoutSeconds, QAction* action, QPalette::ColorRole role = QPalette::ToolTipBase);
     void showIdleStatus();
     void focusPositionSpinner() const;
 

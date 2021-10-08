@@ -57,7 +57,7 @@ public:
     Q_INVOKABLE static QString getNextProjectFile(const QString& filename);
     Q_INVOKABLE static bool isProjectFolder();
     static qreal devicePixelRatio();
-    Q_INVOKABLE void showStatusMessage(const QString& message, int timeoutSeconds = 5);
+    Q_INVOKABLE void showStatusMessage(const QString& message, int timeoutSeconds = 15);
     static int maxTextureSize();
     Q_INVOKABLE static bool confirmOutputFilter();
     static QDir dataDir();

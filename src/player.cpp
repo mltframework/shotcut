@@ -78,7 +78,7 @@ Player::Player(QWidget *parent)
     m_statusLabel = new QPushButton;
     m_statusLabel->setFlat(true);
     m_statusLabel->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
-    Util::setColorsToHighlight(m_statusLabel, QPalette::Button);
+    m_statusLabel->setAutoFillBackground(true);
     tabLayout->addWidget(m_statusLabel);
     tabLayout->addStretch(1);
     if (Settings.drawMethod() != Qt::AA_UseOpenGLES) {
@@ -845,13 +845,23 @@ void Player::onTabBarClicked(int index)
     }
 }
 
-void Player::setStatusLabel(const QString &text, int timeoutSeconds, QAction* action)
+void Player::setStatusLabel(const QString &text, int timeoutSeconds, QAction* action, QPalette::ColorRole role)
 {
     QString s = QString("  %1  ").arg(
                 m_statusLabel->fontMetrics().elidedText(text, Qt::ElideRight,
                     m_scrubber->width() - m_tabs->width() - 30));
     m_statusLabel->setText(s);
     m_statusLabel->setToolTip(text);
+    auto palette = QApplication::palette();
+    if (role == QPalette::ToolTipBase) {
+        palette.setColor(QPalette::Button, palette.color(role));
+        palette.setColor(QPalette::ButtonText, palette.color(QPalette::ToolTipText));
+    } else {
+        palette.setColor(QPalette::Button, palette.color(role));
+        palette.setColor(QPalette::ButtonText, palette.color(QPalette::WindowText));
+    }
+    m_statusLabel->setPalette(palette);
+
     if (action)
         connect(m_statusLabel, SIGNAL(clicked(bool)), action, SIGNAL(triggered(bool)));
     else
@@ -935,11 +945,11 @@ double Player::setVolume(int volume)
 void Player::showIdleStatus()
 {
     if (Settings.proxyEnabled() && Settings.playerPreviewScale() > 0) {
-        setStatusLabel(tr("Proxy and preview scaling are ON at %1p").arg(ProxyManager::resolution()), -1, nullptr);
+        setStatusLabel(tr("Proxy and preview scaling are ON at %1p").arg(ProxyManager::resolution()), -1, nullptr, QPalette::AlternateBase);
     } else if (Settings.proxyEnabled()) {
-        setStatusLabel(tr("Proxy is ON at %1p").arg(ProxyManager::resolution()), -1, nullptr);
+        setStatusLabel(tr("Proxy is ON at %1p").arg(ProxyManager::resolution()), -1, nullptr, QPalette::AlternateBase);
     } else if (Settings.playerPreviewScale() > 0) {
-        setStatusLabel(tr("Preview scaling is ON at %1p").arg(Settings.playerPreviewScale()), -1, nullptr);
+        setStatusLabel(tr("Preview scaling is ON at %1p").arg(Settings.playerPreviewScale()), -1, nullptr, QPalette::AlternateBase);
     } else {
         setStatusLabel("", -1, nullptr);
     }
