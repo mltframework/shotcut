@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2018 Meltytech, LLC
+ * Copyright (c) 2012-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -49,8 +49,8 @@ private slots:
     void on_colorButton_clicked();
     void on_preset_selected(void* p);
     void on_preset_saveClicked();
-
     void on_lineEdit_editingFinished();
+    void on_notesTextEdit_textChanged();
 
 private:
     Ui::ColorProducerWidget *ui;

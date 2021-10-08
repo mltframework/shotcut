@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2020 Meltytech, LLC
+ * Copyright (c) 2012-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -57,6 +57,8 @@ ColorProducerWidget::ColorProducerWidget(QWidget *parent) :
     p.set("resource", "#00000000");
     ui->preset->savePreset(p, tr("transparent"));
     ui->preset->loadPresets();
+    ui->notesLabel->setVisible(false);
+    ui->notesTextEdit->setVisible(false);
 }
 
 ColorProducerWidget::~ColorProducerWidget()
@@ -143,6 +145,9 @@ void ColorProducerWidget::loadPreset(Mlt::Properties& p)
         caption = m_title;
     }
     ui->lineEdit->setText(caption);
+    ui->notesLabel->setVisible(true);
+    ui->notesTextEdit->setVisible(true);
+    ui->notesTextEdit->setPlainText(QString::fromUtf8(p.get(kCommentProperty)));
 }
 
 void ColorProducerWidget::rename()
@@ -174,5 +179,16 @@ void ColorProducerWidget::on_lineEdit_editingFinished()
             m_producer->set(kShotcutCaptionProperty, caption.toUtf8().constData());
         }
         emit modified();
+    }
+}
+
+void ColorProducerWidget::on_notesTextEdit_textChanged()
+{
+    if (m_producer && m_producer->is_valid()) {
+        QString existing = QString::fromUtf8(m_producer->get(kCommentProperty));
+        if (ui->notesTextEdit->toPlainText() != existing) {
+            m_producer->set(kCommentProperty, ui->notesTextEdit->toPlainText().toUtf8().constData());
+            emit modified();
+        }
     }
 }

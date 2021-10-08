@@ -25,6 +25,32 @@
     </widget>
    </item>
    <item>
+    <widget class="QLabel" name="notesLabel">
+     <property name="text">
+      <string>Comments:</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPlainTextEdit" name="notesTextEdit">
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>60</height>
+      </size>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::StrongFocus</enum>
+     </property>
+     <property name="tabChangesFocus">
+      <bool>true</bool>
+     </property>
+     <property name="plainText">
+      <string/>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="ServicePresetWidget" name="preset" native="true"/>
    </item>
    <item>
@@ -91,8 +117,9 @@
   </customwidget>
  </customwidgets>
  <tabstops>
-  <tabstop>colorButton</tabstop>
   <tabstop>lineEdit</tabstop>
+  <tabstop>notesTextEdit</tabstop>
+  <tabstop>colorButton</tabstop>
  </tabstops>
  <resources/>
  <connections/>
