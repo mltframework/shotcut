@@ -36,7 +36,7 @@ Item {
     property var endValues: [0.5, 0.5, 0.1, 0.1, 0.5]
 
     width: 350
-    height: 250
+    height: 300
 
     Component.onCompleted: {
         if (filter.isNew) {
@@ -327,6 +327,7 @@ Item {
         }
 
         Label {
+            id: softnessLabel
             text: qsTr('Softness')
             Layout.alignment: Qt.AlignRight
         }
@@ -343,9 +344,15 @@ Item {
             onClicked: softnessSlider.value = 20
         }
 
-        Item {
-            Layout.columnSpan: 2
-            Layout.fillHeight: true;
+        Shotcut.TipBox {
+            Layout.columnSpan: parent.columns
+            Layout.fillWidth: true
+            Layout.margins: 10
+            text: qsTr('Tip: Mask other video filters by adding filters after this one followed by <b>Mask: Apply</b>')
+        }
+
+        Label {
+            Layout.fillHeight: true
         }
     }
 

@@ -47,7 +47,6 @@ Shotcut.VuiBase {
         textArea.text = filter.get('html')
         fontSizeSpinBox.value = document.fontSize
         toolbar.expanded = filter.get('_shotcut:toolbarCollapsed') !== '1'
-        application.showStatusMessage(qsTr('Click in the rectangle to edit the text'))
     }
 
     function getPosition() {

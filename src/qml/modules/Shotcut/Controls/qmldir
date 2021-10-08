@@ -21,3 +21,4 @@ ToolButton 1.0 ToolButton.qml
 HoverTip 1.0 HoverTip.qml
 ComboBox 1.0 ComboBox.qml
 EditMenu 1.0 EditMenu.qml
+TipBox 1.0 TipBox.qml

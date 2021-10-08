@@ -23,7 +23,7 @@ import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     width: 200
-    height: 50
+    height: 225
     property bool blockUpdate: true
 
     Component.onCompleted: {
@@ -372,7 +372,7 @@ Item {
         }
 
         Label {
-            text: qsTr('Speed')
+            text: qsTr('Speed:')
             Layout.alignment: Qt.AlignRight
             Shotcut.HoverTip { text: qsTr('The instantaneous speed of the last frame that was processed.') }
         }
@@ -382,7 +382,7 @@ Item {
         }
 
         Label {
-            text: qsTr('Direction')
+            text: qsTr('Direction:')
             Layout.alignment: Qt.AlignRight
             Shotcut.HoverTip { text: qsTr('The instantaneous direction of the last frame that was processed.') }
         }
@@ -392,7 +392,7 @@ Item {
         }
 
         Label {
-            text: qsTr('Input Time')
+            text: qsTr('Input Time:')
             Layout.alignment: Qt.AlignRight
             Shotcut.HoverTip { text: qsTr('The original clip time of the frame.') }
         }
@@ -402,7 +402,7 @@ Item {
         }
 
         Label {
-            text: qsTr('Output Time')
+            text: qsTr('Output Time:')
             Layout.alignment: Qt.AlignRight
             Shotcut.HoverTip { text: qsTr('The mapped output time for the input frame.') }
         }

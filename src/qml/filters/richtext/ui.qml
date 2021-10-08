@@ -34,7 +34,7 @@ Item {
                                        Math.round(profile.height * 0.8))
 
     width: 350
-    height: 150
+    height: 200
 
     Component.onCompleted: {
         filter.blockSignals = true
@@ -254,6 +254,13 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
                     filter.set(endValue, filter.getRect(rectProperty, filter.duration - 1))
                 filter.blockSignals = false
             }
+        }
+
+        Shotcut.TipBox {
+            Layout.columnSpan: parent.columns
+            Layout.margins: 10
+            Layout.fillWidth: true
+            text: qsTr('Click in the rectangle atop the video to edit the text.')
         }
 
         Label {

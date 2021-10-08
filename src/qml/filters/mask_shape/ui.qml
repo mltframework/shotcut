@@ -32,7 +32,7 @@ Item {
     property int previousResourceComboIndex
 
     width: 350
-    height: 250
+    height: 275
 
     Component.onCompleted: {
         if (filter.isNew) {
@@ -347,6 +347,16 @@ Item {
         }
         Item { width: 1 }
 
+        Shotcut.TipBox {
+            Layout.columnSpan: parent.columns
+            Layout.fillWidth: true
+            Layout.margins: 10
+            text: qsTr('Tip: Mask other video filters by adding filters after this one followed by <b>Mask: Apply</b>')
+        }
+
+        Label {
+            Layout.fillHeight: true
+        }
     }
 
     function updatedSimpleAnimation() {
