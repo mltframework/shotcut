@@ -172,7 +172,7 @@ QVariant AttachedFiltersModel::data(const QModelIndex &index, int role) const
         }
     case PluginTypeRole: {
             const QmlMetadata* meta = m_metaList[index.row()];
-            QVariant result = meta->type();
+            QVariant result = meta? meta->type() : QmlMetadata::Filter;
             return result;
         }
         break;
