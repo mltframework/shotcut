@@ -730,23 +730,85 @@ void TimelineDock::selectMultitrack()
     emit selected(m_model.tractor());
 }
 
+
+template<typename T>
+static void insertSorted(std::vector<T> & vec, T const& item)
+{
+    vec.insert(std::upper_bound(vec.begin(), vec.end(), item), item);
+}
+
 void TimelineDock::copyClip(int trackIndex, int clipIndex)
 {
-    if (trackIndex < 0)
-        trackIndex = currentTrack();
-    if (clipIndex < 0)
-        clipIndex = clipIndexAtPlayhead(trackIndex);
-    Q_ASSERT(trackIndex >= 0 && clipIndex >= 0);
-    QScopedPointer<Mlt::ClipInfo> info(getClipInfo(trackIndex, clipIndex));
-    if (info) {
-        QString xml = MLT.XML(info->producer);
-        Mlt::Producer p(MLT.profile(), "xml-string", xml.toUtf8().constData());
-        p.set_speed(0);
-        p.seek(info->frame_in);
-        p.set_in_and_out(info->frame_in, info->frame_out);
-        MLT.setSavedProducer(&p);
-        QGuiApplication::clipboard()->setText(MLT.XML(&p));
-        emit clipCopied();
+    auto selected = selection();
+    if (selected.size() < 1) {
+        if (trackIndex < 0)
+            trackIndex = currentTrack();
+        if (clipIndex < 0)
+            clipIndex = clipIndexAtPlayhead(trackIndex);
+        Q_ASSERT(trackIndex >= 0 && clipIndex >= 0);
+        QScopedPointer<Mlt::ClipInfo> info(getClipInfo(trackIndex, clipIndex));
+        if (info) {
+            QString xml = MLT.XML(info->producer);
+            Mlt::Producer p(MLT.profile(), "xml-string", xml.toUtf8().constData());
+            p.set_speed(0);
+            p.seek(info->frame_in);
+            p.set_in_and_out(info->frame_in, info->frame_out);
+            MLT.setSavedProducer(&p);
+            QGuiApplication::clipboard()->setText(MLT.XML(&p));
+            emit clipCopied();
+        }
+    } else {
+        // Determine the track indices
+        auto minY = std::numeric_limits<int>::max();
+        auto maxY = -1;
+        auto minStart = std::numeric_limits<int>::max();
+        for (auto& a : selected) {
+            minY = std::min(minY, a.y());
+            maxY = std::max(maxY, a.y());
+            auto info = getClipInfo(a.y(), a.x());
+            if (info) minStart = std::min(minStart, info->start);
+            delete info;
+        }
+        // Create the tracks
+        Mlt::Tractor tractor(MLT.profile());
+        tractor.set(kShotcutXmlProperty, 1);
+        for (int trackIndex = minY, i = 0; trackIndex <= maxY; trackIndex++, i++) {
+            Mlt::Playlist playlist(MLT.profile());
+            if (m_model.trackList()[trackIndex].type == AudioTrackType) {
+                playlist.set("hide", 1);
+                playlist.set(kAudioTrackProperty, 1);
+            } else {
+                playlist.set(kVideoTrackProperty, 1);
+            }
+            tractor.set_track(playlist, i);
+
+            // Sort all the clips on this track
+            std::vector<int> clipIndices;
+            for (auto& a : selected) {
+                if (a.y() == trackIndex) {
+                    clipIndices.insert(std::upper_bound(clipIndices.begin(), clipIndices.end(), a.x()), a.x());
+                }
+            }
+
+            // Add the clips to the tracks
+            if (clipIndices.size() > 0) {
+                int prevEnd = minStart;
+                auto mlt_index = m_model.trackList()[trackIndex].mlt_index;
+                QScopedPointer<Mlt::Producer> sourceTrack(m_model.tractor()->track(mlt_index));
+                if (sourceTrack) {
+                    Mlt::Playlist sourcePlaylist(*sourceTrack);
+                    Mlt::ClipInfo info;
+                    for (auto clipIndex : clipIndices) {
+                        sourcePlaylist.clip_info(clipIndex, &info);
+                        playlist.blank(info.start - prevEnd - 1);
+                        playlist.append(*info.producer, info.frame_in, info.frame_out);
+                        prevEnd = info.start + info.frame_count;
+                    }
+                }
+            }
+        }
+        // Put XML in clipboard
+        QGuiApplication::clipboard()->setText(MLT.XML(&tractor));
     }
 }
 
