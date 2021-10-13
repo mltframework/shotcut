@@ -661,15 +661,21 @@ void TimelineDock::removeSelection(bool withCopy)
     // Cut
     if (withCopy) {
         auto clip = selection().first();
-        copyClip(clip.y(), clip.x());
-        remove(clip.y(), clip.x());
-        return;
+        copy(clip.y(), clip.x());
+        if (selection().size() < 2) {
+            remove(clip.y(), clip.x());
+            return;
+        }
     }
 
     // Ripple delete
     int n = selection().size();
-    if (n > 1)
-        MAIN.undoStack()->beginMacro(tr("Remove %1 from timeline").arg(n));
+    if (n > 1) {
+        if (withCopy)
+            MAIN.undoStack()->beginMacro(tr("Cut %1 from timeline").arg(n));
+        else
+            MAIN.undoStack()->beginMacro(tr("Remove %1 from timeline").arg(n));
+    }
     int trackIndex, clipIndex;
     for (const auto& uuid : selectionUuids()) {
         delete m_model.findClipByUuid(uuid, trackIndex, clipIndex);
@@ -737,10 +743,10 @@ static void insertSorted(std::vector<T> & vec, T const& item)
     vec.insert(std::upper_bound(vec.begin(), vec.end(), item), item);
 }
 
-void TimelineDock::copyClip(int trackIndex, int clipIndex)
+void TimelineDock::copy(int trackIndex, int clipIndex)
 {
     auto selected = selection();
-    if (selected.size() < 1) {
+    if (selected.size() < 2) {
         if (trackIndex < 0)
             trackIndex = currentTrack();
         if (clipIndex < 0)
@@ -1316,7 +1322,7 @@ void TimelineDock::insert(int trackIndex, int position, const QString &xml, bool
         if (producer.is_valid() && producer.type() == mlt_service_tractor_type && producer.get_int(kShotcutXmlProperty)) {
             Mlt::Tractor tractor(producer);
             Mlt::ClipInfo info;
-            MAIN.undoStack()->beginMacro(tr("Insert multiple clips"));
+            MAIN.undoStack()->beginMacro(tr("Insert multiple into timeline"));
 
             // Loop over each source track
             for (int mltTrackIndex = 0; mltTrackIndex < tractor.count(); mltTrackIndex++) {

@@ -208,7 +208,7 @@ ToolBar {
         icon.name: 'edit-copy'
         icon.source: 'qrc:///icons/oxygen/32x32/actions/edit-copy.png'
         enabled: timeline.selection.length
-        onTriggered: timeline.copyClip(timeline.selection[0].y, timeline.selection[0].x)
+        onTriggered: timeline.copy(timeline.selection[0].y, timeline.selection[0].x)
     }
 
     Action {

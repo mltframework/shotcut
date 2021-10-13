@@ -1907,10 +1907,10 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
             m_timelineDock->show();
             m_timelineDock->raise();
             if (m_timelineDock->selection().isEmpty()) {
-                m_timelineDock->copyClip(-1, -1);
+                m_timelineDock->copy(-1, -1);
             } else {
                 auto& selected = m_timelineDock->selection().first();
-                m_timelineDock->copyClip(selected.y(), selected.x());
+                m_timelineDock->copy(selected.y(), selected.x());
             }
         }
         break;
@@ -4051,7 +4051,7 @@ void MainWindow::on_actionCopy_triggered()
     m_timelineDock->show();
     m_timelineDock->raise();
     if (!m_timelineDock->selection().isEmpty())
-        m_timelineDock->copyClip(m_timelineDock->selection().first().y(), m_timelineDock->selection().first().x());
+        m_timelineDock->copy(m_timelineDock->selection().first().y(), m_timelineDock->selection().first().x());
 }
 
 void MainWindow::on_actionPaste_triggered()
