@@ -596,12 +596,62 @@ void TimelineDock::append(int trackIndex)
         if (xmlToUse.isEmpty()) {
             return;
         }
-        if (m_model.trackList().size() == 0) {
-            addVideoTrack();
-        }
 
-        MAIN.undoStack()->push(
-            new Timeline::AppendCommand(m_model, trackIndex, xmlToUse));
+        // Insert multiple if the XML is a <tractor> with child <property name="shotcut">1</property>
+        // No need to create a track in an empty timeline.
+        // This can be a macro of QUndoCommands.
+        Mlt::Producer producer(MLT.profile(), "xml-string", xmlToUse.toUtf8().constData());
+        if (producer.is_valid() && producer.type() == mlt_service_tractor_type && producer.get_int(kShotcutXmlProperty)) {
+            Mlt::Tractor tractor(producer);
+            Mlt::ClipInfo info;
+            MAIN.undoStack()->beginMacro(tr("Append multiple to timeline"));
+
+            // Loop over each source track
+            for (int mltTrackIndex = 0; mltTrackIndex < tractor.count(); mltTrackIndex++) {
+                QScopedPointer<Mlt::Producer> srcTrack(tractor.track(mltTrackIndex));
+                if (srcTrack) {
+
+                    // Insert track if needed
+                    const auto trackIndex = currentTrack() + mltTrackIndex;
+                    bool insert = trackIndex >= m_model.trackList().size();
+                    if (!insert) {
+                        const auto& shotcutTrack = m_model.trackList()[trackIndex];
+                        insert = (shotcutTrack.type == AudioTrackType && !srcTrack->get_int(kAudioTrackProperty)) ||
+                                 (shotcutTrack.type == VideoTrackType && !srcTrack->get_int(kVideoTrackProperty));
+                    }
+                    if (insert) {
+                        if (srcTrack->get_int(kAudioTrackProperty)) {
+                            MAIN.undoStack()->push(
+                                new Timeline::InsertTrackCommand(m_model, trackIndex, AudioTrackType));
+                        } else {
+                            MAIN.undoStack()->push(
+                                new Timeline::InsertTrackCommand(m_model, trackIndex, VideoTrackType));
+                        }
+                    }
+
+                    // Insert the clips for this track
+                    Mlt::Playlist playlist(*srcTrack);
+                    for (int mltClipIndex = 0; mltClipIndex < playlist.count(); mltClipIndex++) {
+                        if (!playlist.is_blank(mltClipIndex)) {
+                            playlist.clip_info(mltClipIndex, &info);
+                            Mlt::Producer clip(info.producer);
+                            clip.set_in_and_out(info.frame_in, info.frame_out);
+                            MAIN.undoStack()->push(
+                                new Timeline::AppendCommand(m_model, trackIndex, MLT.XML(&clip)));
+                        }
+                    }
+                }
+            }
+            MAIN.undoStack()->endMacro();
+
+        } else {
+            if (m_model.trackList().size() == 0) {
+                addVideoTrack();
+            }
+
+            MAIN.undoStack()->push(
+                new Timeline::AppendCommand(m_model, trackIndex, xmlToUse));
+        }
 
         if (m_position < 0) {
             // This happens when pasting in a new session
@@ -1439,14 +1489,63 @@ void TimelineDock::overwrite(int trackIndex, int position, const QString &xml, b
         if (position < 0) {
             position = qMax(m_position, 0);
         }
-        if (m_model.trackList().size() == 0) {
-            position = 0;
-            addVideoTrack();
+
+        // Overwrite multiple if the XML is a <tractor> with child <property name="shotcut">1</property>
+        // No need to create a track in an empty timeline.
+        // This can be a macro of QUndoCommands.
+        Mlt::Producer producer(MLT.profile(), "xml-string", xmlToUse.toUtf8().constData());
+        if (producer.is_valid() && producer.type() == mlt_service_tractor_type && producer.get_int(kShotcutXmlProperty)) {
+            Mlt::Tractor tractor(producer);
+            Mlt::ClipInfo info;
+            MAIN.undoStack()->beginMacro(tr("Overwrite multiple onto timeline"));
+
+            // Loop over each source track
+            for (int mltTrackIndex = 0; mltTrackIndex < tractor.count(); mltTrackIndex++) {
+                QScopedPointer<Mlt::Producer> srcTrack(tractor.track(mltTrackIndex));
+                if (srcTrack) {
+
+                    // Insert track if needed
+                    const auto trackIndex = currentTrack() + mltTrackIndex;
+                    bool insert = trackIndex >= m_model.trackList().size();
+                    if (!insert) {
+                        const auto& shotcutTrack = m_model.trackList()[trackIndex];
+                        insert = (shotcutTrack.type == AudioTrackType && !srcTrack->get_int(kAudioTrackProperty)) ||
+                                 (shotcutTrack.type == VideoTrackType && !srcTrack->get_int(kVideoTrackProperty));
+                    }
+                    if (insert) {
+                        if (srcTrack->get_int(kAudioTrackProperty)) {
+                            MAIN.undoStack()->push(
+                                new Timeline::InsertTrackCommand(m_model, trackIndex, AudioTrackType));
+                        } else {
+                            MAIN.undoStack()->push(
+                                new Timeline::InsertTrackCommand(m_model, trackIndex, VideoTrackType));
+                        }
+                    }
+
+                    // Insert the clips for this track
+                    Mlt::Playlist playlist(*srcTrack);
+                    for (int mltClipIndex = 0; mltClipIndex < playlist.count(); mltClipIndex++) {
+                        if (!playlist.is_blank(mltClipIndex)) {
+                            playlist.clip_info(mltClipIndex, &info);
+                            Mlt::Producer clip(info.producer);
+                            clip.set_in_and_out(info.frame_in, info.frame_out);
+                            MAIN.undoStack()->push(
+                                new Timeline::OverwriteCommand(m_model, trackIndex, position + info.start, MLT.XML(&clip), seek));
+                        }
+                    }
+                }
+            }
+            MAIN.undoStack()->endMacro();
+
+        } else {
+            if (m_model.trackList().size() == 0) {
+                position = 0;
+                addVideoTrack();
+            }
+
+            MAIN.undoStack()->push(
+                new Timeline::OverwriteCommand(m_model, trackIndex, position, xmlToUse, seek));
         }
-
-        MAIN.undoStack()->push(
-            new Timeline::OverwriteCommand(m_model, trackIndex, position, xmlToUse, seek));
-
         if (m_position < 0) {
             // This happens when pasting in a new session
             MAIN.openCut(new Mlt::Producer(m_model.tractor()));
