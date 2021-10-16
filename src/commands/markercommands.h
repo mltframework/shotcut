@@ -36,18 +36,6 @@ private:
     int m_index;
 };
 
-class InsertCommand : public QUndoCommand
-{
-public:
-    InsertCommand(MarkersModel& model, const Marker& newMarker, int index);
-    void redo();
-    void undo();
-private:
-    MarkersModel& m_model;
-    Marker m_newMarker;
-    int m_index;
-};
-
 class AppendCommand : public QUndoCommand
 {
 public:
