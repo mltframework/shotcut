@@ -108,6 +108,13 @@ ToolBar {
             Shotcut.HoverTip { text: qsTr('Split At Playhead (S)') }
             focusPolicy: Qt.NoFocus
         }
+        Shotcut.ToolButton {
+            implicitHeight: toolbar.height - 3
+            implicitWidth: implicitHeight
+            action: markerAction
+            Shotcut.HoverTip { text: qsTr('Marker (M)') }
+            focusPolicy: Qt.NoFocus
+        }
         Button { // separator
             enabled: false
             implicitWidth: 2
@@ -251,6 +258,13 @@ ToolBar {
         icon.name: 'slice'
         icon.source: 'qrc:///icons/oxygen/32x32/actions/slice.png'
         onTriggered: timeline.splitClip(currentTrack)
+    }
+
+    Action {
+        id: markerAction
+        icon.name: 'marker'
+        icon.source: 'qrc:///icons/oxygen/32x32/actions/marker.png'
+        onTriggered: timeline.createMarker()
     }
 
     Action {
