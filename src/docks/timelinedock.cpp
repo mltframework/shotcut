@@ -1098,7 +1098,12 @@ void TimelineDock::editMarker(int markerIndex)
 
 void TimelineDock::deleteMarker(int markerIndex)
 {
-    m_markersModel.remove(markerIndex);
+    if (markerIndex < 0) {
+        markerIndex = m_markersModel.markerIndexForPosition(m_position);
+    }
+    if (markerIndex >= 0) {
+        m_markersModel.remove(markerIndex);
+    }
 }
 
 void TimelineDock::setTrackName(int trackIndex, const QString &value)
