@@ -55,7 +55,10 @@ Item {
         title: qsTr('Marker Operations')
         MenuItem {
             text: qsTr('Edit...')
-            onTriggered: root.editRequested(root.index)
+            onTriggered: {
+                menu.dismiss()
+                root.editRequested(root.index)
+            }
         }
         MenuItem {
             text: qsTr('Delete')
@@ -97,10 +100,11 @@ Item {
             }
             onPressed: {
                dragStartX = markerStart.x
-               if (mouse.modifiers & Qt.ControlModifier)
+               if (mouse.modifiers & Qt.ControlModifier) {
                    lockWidth = -1
-               else
+               } else if (mouse.button === Qt.LeftButton) {
                    lockWidth = markerEnd.x - markerStart.x
+               }
             }
             onPositionChanged: {
                 if (lockWidth != -1) {
@@ -113,8 +117,11 @@ Item {
                 }
             }
             onClicked: {
-                if (mouse.button == Qt.RightButton)
+                if (mouse.button === Qt.RightButton) {
                     menu.popup()
+                } else {
+                    timeline.position = start
+                }
             }
         }
     }
@@ -169,8 +176,11 @@ Item {
                 }
             }
             onClicked: {
-                if (mouse.button == Qt.RightButton)
+                if (mouse.button === Qt.RightButton) {
                     menu.popup()
+                } else {
+                    timeline.position = end
+                }
             }
         }
     }
@@ -217,8 +227,11 @@ Item {
                 }
             }
             onClicked: {
-                if (mouse.button == Qt.RightButton)
+                if (mouse.button === Qt.RightButton) {
                     menu.popup()
+                } else {
+                    timeline.position = mouse.x/timeScale < (end - start)/2 ? start : end
+                }
             }
         }
     }
