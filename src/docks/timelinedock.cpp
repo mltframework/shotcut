@@ -1071,7 +1071,7 @@ void TimelineDock::replace(int trackIndex, int clipIndex, const QString& xml)
 void TimelineDock::createMarker()
 {
     Markers::Marker marker;
-    marker.text = QString("Marker %1").arg(m_markersModel.uniqueKey());
+    marker.text = QString("Marker %1").arg(m_markersModel.uniqueKey() + 1);
     marker.color = Settings.markerColor();
     marker.start = position();
     marker.end = position();
