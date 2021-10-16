@@ -270,5 +270,8 @@
         <file>oxygen/32x32/actions/list-add-files.png</file>
         <file>light/32x32/list-add-files.png</file>
         <file>dark/32x32/list-add-files.png</file>
+        <file>oxygen/32x32/actions/marker.png</file>
+        <file>light/32x32/marker.png</file>
+        <file>dark/32x32/marker.png</file>
     </qresource>
 </RCC>

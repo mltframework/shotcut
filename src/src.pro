@@ -58,7 +58,7 @@ SOURCES += main.cpp\
     docks/jobsdock.cpp \
     dialogs/multifileexportdialog.cpp \
     dialogs/saveimagedialog.cpp \
-    dialogs/editMarkerdialog.cpp \
+    dialogs/editmarkerdialog.cpp \
     dialogs/slideshowgeneratordialog.cpp \
     dialogs/textviewerdialog.cpp \
     models/playlistmodel.cpp \
