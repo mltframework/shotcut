@@ -27,7 +27,7 @@ DeleteCommand::DeleteCommand(MarkersModel& model, const Marker& delMarker, int i
     , m_delMarker(delMarker)
     , m_index(index)
 {
-    setText(QObject::tr("Delete Marker: %1").arg(m_delMarker.text));
+    setText(QObject::tr("Delete marker: %1").arg(m_delMarker.text));
 }
 
 void DeleteCommand::redo()
@@ -46,7 +46,7 @@ InsertCommand::InsertCommand(MarkersModel& model, const Marker& newMarker, int i
     , m_newMarker(newMarker)
     , m_index(index)
 {
-    setText(QObject::tr("Insert Marker: %1").arg(newMarker.text));
+    setText(QObject::tr("Insert marker: %1").arg(newMarker.text));
 }
 
 void InsertCommand::redo()
@@ -65,7 +65,7 @@ AppendCommand::AppendCommand(MarkersModel& model, const Marker& newMarker, int i
     , m_newMarker(newMarker)
     , m_index(index)
 {
-    setText(QObject::tr("Append Marker: %1").arg(m_newMarker.text));
+    setText(QObject::tr("Add marker: %1").arg(m_newMarker.text));
 }
 
 void AppendCommand::redo()
@@ -88,11 +88,11 @@ UpdateCommand::UpdateCommand(MarkersModel& model, const Marker& newMarker, const
 {
     if (m_newMarker.text == m_oldMarker.text && m_newMarker.color == m_oldMarker.color )
     {
-        setText(QObject::tr("Move Marker: %1").arg(m_oldMarker.text));
+        setText(QObject::tr("Move marker: %1").arg(m_oldMarker.text));
     }
     else
     {
-        setText(QObject::tr("Edit Marker: %1").arg(m_oldMarker.text));
+        setText(QObject::tr("Edit marker: %1").arg(m_oldMarker.text));
     }
 }
 
