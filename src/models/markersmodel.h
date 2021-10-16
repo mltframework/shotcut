@@ -57,6 +57,7 @@ public:
     void load(Mlt::Producer* producer);
     Markers::Marker getMarker(int markerIndex);
     int uniqueKey() const;
+    int markerIndexForPosition(int position);
 
     // These should only be called by the marker commands
     void doRemove(int markerIndex);
