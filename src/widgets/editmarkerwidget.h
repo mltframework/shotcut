@@ -39,6 +39,7 @@ public:
 
 private slots:
     void on_colorButton_clicked();
+    void on_startSpinner_valueChanged(int);
 
 private:
     QLineEdit* m_textField;

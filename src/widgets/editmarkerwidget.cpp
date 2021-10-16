@@ -61,8 +61,11 @@ EditMarkerWidget::EditMarkerWidget(QWidget *parent, const QString& text, const Q
     grid->addWidget(new QLabel(tr("End")), 3, 0, Qt::AlignRight);
     m_endSpinner = new TimeSpinBox();
     m_endSpinner->setValue(end);
+    m_endSpinner->setMinimum(start);
     m_endSpinner->setToolTip(tr("Set the end time for this marker."));
     grid->addWidget(m_endSpinner, 3, 1);
+
+    connect(m_startSpinner, SIGNAL(valueChanged(int)), this, SLOT(on_startSpinner_valueChanged(int)));
 }
 
 EditMarkerWidget::~EditMarkerWidget()
@@ -101,4 +104,9 @@ void EditMarkerWidget::on_colorButton_clicked()
                                       .arg((newColor.value() < 150)? "white":"black")
                                       .arg(newColor.name()));
     }
+}
+
+void EditMarkerWidget::on_startSpinner_valueChanged(int value)
+{
+    m_endSpinner->setMinimum(value);
 }
