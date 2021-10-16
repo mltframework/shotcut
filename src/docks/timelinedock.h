@@ -158,7 +158,7 @@ public slots:
     void replace(int trackIndex, int clipIndex, const QString& xml = QString());
     void createMarker();
     void editMarker(int markerIndex);
-    void deleteMarker(int markerIndex);
+    void deleteMarker(int markerIndex = -1);
 
 protected:
     void dragEnterEvent(QDragEnterEvent* event);

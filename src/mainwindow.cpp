@@ -1983,13 +1983,18 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
     case Qt::Key_M:
 #ifdef Q_OS_MAC
         // OS X uses Cmd+M to minimize an app.
-        if (event->modifiers() & Qt::MetaModifier && isMultitrackValid())
+        if (event->modifiers() & Qt::MetaModifier && isMultitrackValid()) {
 #else
-        if (event->modifiers() & Qt::ControlModifier && isMultitrackValid())
+        if (event->modifiers() & Qt::ControlModifier && isMultitrackValid()) {
 #endif
-            m_timelineDock->toggleTrackMute(m_timelineDock->currentTrack());
-        else if (event->modifiers() == Qt::NoModifier && isMultitrackValid())
+            if (event->modifiers() & Qt::AltModifier) {
+                m_timelineDock->deleteMarker();
+            } else {
+                m_timelineDock->toggleTrackMute(m_timelineDock->currentTrack());
+            }
+        } else if (event->modifiers() == Qt::NoModifier && isMultitrackValid()) {
             m_timelineDock->createMarker();
+        }
         break;
     case Qt::Key_I:
         if (event->modifiers() == Qt::ControlModifier) {
