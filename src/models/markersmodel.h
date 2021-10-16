@@ -67,7 +67,6 @@ public:
 
 public slots:
     void remove(int markerIndex);
-    void insert(int markerIndex, const Markers::Marker& marker);
     void append(const Markers::Marker& marker);
     void update(int markerIndex, const Markers::Marker& marker);
     void move(int markerIndex, int start, int end);

@@ -40,25 +40,6 @@ void DeleteCommand::undo()
     m_model.doInsert(m_index, m_delMarker);
 }
 
-InsertCommand::InsertCommand(MarkersModel& model, const Marker& newMarker, int index)
-    : QUndoCommand(0)
-    , m_model(model)
-    , m_newMarker(newMarker)
-    , m_index(index)
-{
-    setText(QObject::tr("Insert marker: %1").arg(newMarker.text));
-}
-
-void InsertCommand::redo()
-{
-    m_model.doInsert(m_index, m_newMarker);
-}
-
-void InsertCommand::undo()
-{
-    m_model.doRemove(m_index);
-}
-
 AppendCommand::AppendCommand(MarkersModel& model, const Marker& newMarker, int index)
     : QUndoCommand(0)
     , m_model(model)

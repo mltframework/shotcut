@@ -137,21 +137,6 @@ void MarkersModel::doRemove(int markerIndex)
     delete markersListProperties;
 }
 
-void MarkersModel::insert( int markerIndex, const Markers::Marker& marker )
-{
-    if (!m_producer) {
-        LOG_ERROR() << "No producer";
-        return;
-    }
-    QModelIndex modelIndex = index(markerIndex, 0);
-    if (!modelIndex.isValid()) {
-        LOG_ERROR() << "Invalid Index: " << markerIndex;
-        return;
-    }
-    Markers::InsertCommand* command = new Markers::InsertCommand(*this, marker, modelIndex.row());
-    MAIN.undoStack()->push(command);
-}
-
 void MarkersModel::doInsert(int markerIndex,  const Markers::Marker& marker )
 {
     if (!m_producer) {
