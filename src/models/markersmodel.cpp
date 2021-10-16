@@ -303,6 +303,20 @@ int MarkersModel::uniqueKey() const
     return key;
 }
 
+int MarkersModel::markerIndexForPosition(int position)
+{
+    Mlt::Properties* markerList = m_producer->get_props(kShotcutMarkersProperty);
+    if (markerList &&  markerList->is_valid()) {
+        for (const auto i : qAsConst(m_keys)) {
+            QScopedPointer<Mlt::Properties> marker(markerList->get_props(qPrintable(QString::number(i))));
+            if (marker && marker->is_valid() && position == m_producer->time_to_frames(marker->get("start"))) {
+                return i;
+            }
+        }
+    }
+    return -1;
+}
+
 Mlt::Properties* MarkersModel::getMarkerProperties(int markerIndex)
 {
     Mlt::Properties* markerProperties = nullptr;

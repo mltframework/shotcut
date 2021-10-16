@@ -1070,20 +1070,16 @@ void TimelineDock::replace(int trackIndex, int clipIndex, const QString& xml)
 
 void TimelineDock::createMarker()
 {
+    int index = m_markersModel.markerIndexForPosition(m_position);
+    if (index >= 0) {
+        return editMarker(index);
+    }
     Markers::Marker marker;
     marker.text = QString("Marker %1").arg(m_markersModel.uniqueKey() + 1);
     marker.color = Settings.markerColor();
     marker.start = position();
     marker.end = position();
-    EditMarkerDialog dialog(this, marker.text, marker.color, marker.start, marker.end);
-    dialog.setWindowModality(QmlApplication::dialogModality());
-    dialog.exec();
-    marker.text = dialog.getText();
-    marker.color = dialog.getColor();
-    marker.start = dialog.getStart();
-    marker.end = dialog.getEnd();
     m_markersModel.append(marker);
-    Settings.setMarkerColor(marker.color);
 }
 
 void TimelineDock::editMarker(int markerIndex)
