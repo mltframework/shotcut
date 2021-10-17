@@ -22,6 +22,8 @@ Repeater {
     property real timeScale: 1.0
     signal editRequested(int index)
     signal deleteRequested(int index)
+    signal exited()
+    signal mouseStatusChanged(int mouseX, int mouseY, var text, int start, int end)
     Marker {
         timeScale: parent.timeScale
         start: model.start
@@ -31,5 +33,7 @@ Repeater {
         index: model.index
         onEditRequested: markerbar.editRequested(index)
         onDeleteRequested: markerbar.deleteRequested(index)
+        onExited: markerbar.exited()
+        onMouseStatusChanged: markerbar.mouseStatusChanged(mouseX, mouseY, text, start, end)
     }
 }

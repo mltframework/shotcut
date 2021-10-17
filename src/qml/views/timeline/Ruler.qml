@@ -54,6 +54,17 @@ Rectangle {
         }
     }
 
+    MouseArea {
+        anchors.fill: parent
+        hoverEnabled: true
+        acceptedButtons: Qt.NoButton
+        onExited: bubbleHelp.hide()
+        onPositionChanged: {
+            var text = application.timecode(mouse.x / timeScale)
+            bubbleHelp.show(mouse.x + bubbleHelp.width - 8, mouse.y + 65, text)
+        }
+    }
+
     Shotcut.MarkerBar {
         anchors.top: rulerTop.top
         anchors.left: parent.left
@@ -66,16 +77,15 @@ Rectangle {
         onDeleteRequested: {
             parent.deleteMarkerRequested(index)
         }
-    }
-
-    MouseArea {
-        anchors.fill: parent
-        hoverEnabled: true
-        acceptedButtons: Qt.NoButton
         onExited: bubbleHelp.hide()
-        onPositionChanged: {
-            var text = application.timecode(mouse.x / timeScale)
-            bubbleHelp.show(mouse.x + bubbleHelp.width - 8, mouse.y + 65, text)
+        onMouseStatusChanged: {
+            var rangeText = ""
+            if (start === end)
+                rangeText = application.timecode(start)
+            else
+                rangeText = application.timecode(start) + " - " + application.timecode(end)
+            var msg = text + "\n" + rangeText
+            bubbleHelp.show(mouseX + bubbleHelp.width - 8, mouseY + 87, msg)
         }
     }
 

@@ -29,6 +29,8 @@ Item {
     property var index: 0
     signal editRequested(int index)
     signal deleteRequested(int index)
+    signal exited()
+    signal mouseStatusChanged(int mouseX, int mouseY, var text, int start, int end)
     x: 0
     width: parent.width
     height: 17
@@ -88,9 +90,11 @@ Item {
             id: startMouseArea
             anchors.fill: parent
             acceptedButtons: Qt.LeftButton | Qt.RightButton
+            hoverEnabled: true
             cursorShape: Qt.PointingHandCursor
             property int lockWidth: 0
             property var dragStartX: 0
+            property bool dragInProgress: false
             drag {
                 target: pressedButtons & Qt.LeftButton ? parent : undefined
                 axis: Drag.XAxis
@@ -99,19 +103,26 @@ Item {
                 maximumX: startMouseArea.lockWidth == -1 ? markerEnd.x - 7 : root.width
             }
             onPressed: {
-               dragStartX = markerStart.x
-               if (mouse.modifiers & Qt.ControlModifier) {
-                   lockWidth = -1
-               } else if (mouse.button === Qt.LeftButton) {
-                   lockWidth = markerEnd.x - markerStart.x
-               }
-            }
-            onPositionChanged: {
-                if (lockWidth != -1) {
-                    markerEnd.x = markerStart.x + lockWidth
+                if (mouse.button === Qt.LeftButton) {
+                    dragInProgress = true
+                    dragStartX = markerStart.x
+                    if (mouse.modifiers & Qt.ControlModifier) {
+                        lockWidth = -1
+                    } else {
+                        lockWidth = markerEnd.x - markerStart.x
+                    }
                 }
             }
+            onPositionChanged: {
+                if (dragInProgress) {
+                    if (lockWidth != -1) {
+                        markerEnd.x = markerStart.x + lockWidth
+                    }
+                }
+                mouseStatusChanged(mouse.x + markerStart.x, mouse.y, text, (markerStart.x + 7) / timeScale, markerEnd.x / timeScale)
+            }
             onReleased: {
+                dragInProgress = false
                 if (mouse.button == Qt.LeftButton && markerStart.x != dragStartX) {
                     markers.move(index, Math.round((markerStart.x + 7) / timeScale), Math.round(markerEnd.x / timeScale))
                 }
@@ -123,6 +134,7 @@ Item {
                     timeline.position = start
                 }
             }
+            onExited: root.exited()
         }
     }
 
@@ -148,9 +160,11 @@ Item {
             id: endMouseArea
             anchors.fill: parent
             acceptedButtons: Qt.LeftButton | Qt.RightButton
+            hoverEnabled: true
             cursorShape: Qt.PointingHandCursor
             property int lockWidth: 0
             property var dragStartX: 0
+            property bool dragInProgress: false
             drag {
                 target: pressedButtons & Qt.LeftButton ? parent : undefined
                 axis: Drag.XAxis
@@ -159,18 +173,25 @@ Item {
                 maximumX: root.width
             }
             onPressed: {
-               dragStartX = markerEnd.x
-               if (mouse.modifiers & Qt.ControlModifier)
-                   lockWidth = -1
-               else
-                   lockWidth = markerEnd.x - markerStart.x
-            }
-            onPositionChanged: {
-                if (lockWidth != -1) {
-                    markerStart.x = markerEnd.x - lockWidth
+                if (mouse.button === Qt.LeftButton) {
+                    dragInProgress = true
+                    dragStartX = markerEnd.x
+                    if (mouse.modifiers & Qt.ControlModifier)
+                        lockWidth = -1
+                    else
+                        lockWidth = markerEnd.x - markerStart.x
                 }
             }
+            onPositionChanged: {
+                if (dragInProgress) {
+                    if (lockWidth != -1) {
+                        markerStart.x = markerEnd.x - lockWidth
+                    }
+                }
+                mouseStatusChanged(mouse.x + markerEnd.x, mouse.y, text, (markerStart.x + 7) / timeScale, markerEnd.x / timeScale)
+            }
             onReleased: {
+                dragInProgress = false
                 if (mouse.button == Qt.LeftButton && markerEnd.x != dragStartX) {
                     markers.move(index, Math.round((markerStart.x + 7) / timeScale), Math.round(markerEnd.x / timeScale))
                 }
@@ -182,6 +203,7 @@ Item {
                     timeline.position = end
                 }
             }
+            onExited: root.exited()
         }
     }
 
@@ -196,10 +218,12 @@ Item {
             id: linkMouseArea
             anchors.fill: parent
             acceptedButtons: Qt.LeftButton | Qt.RightButton
+            hoverEnabled: true
             cursorShape: Qt.PointingHandCursor
             property var dragStartX
             property int startDragStartX
             property int endDragStartX
+            property bool dragInProgress: false
             drag {
                 target: pressedButtons & Qt.LeftButton ? parent : undefined
                 axis: Drag.XAxis
@@ -208,22 +232,31 @@ Item {
                 maximumX: root.width
             }
             onPressed: {
-                markerLink.anchors.left = undefined
-                markerLink.anchors.right = undefined
-                dragStartX = markerLink.x
-                startDragStartX = markerStart.x
-                endDragStartX = markerEnd.x
+                if (mouse.button === Qt.LeftButton) {
+                    dragInProgress = true
+                    markerLink.anchors.left = undefined
+                    markerLink.anchors.right = undefined
+                    dragStartX = markerLink.x
+                    startDragStartX = markerStart.x
+                    endDragStartX = markerEnd.x
+                }
             }
             onPositionChanged: {
-                var delta = dragStartX - markerLink.x
-                markerStart.x = startDragStartX - delta
-                markerEnd.x = endDragStartX - delta
+                if (dragInProgress) {
+                    var delta = dragStartX - markerLink.x
+                    markerStart.x = startDragStartX - delta
+                    markerEnd.x = endDragStartX - delta
+                }
+                mouseStatusChanged(mouse.x + markerLink.x, mouse.y, text, (markerStart.x + 7) / timeScale, markerEnd.x / timeScale)
             }
             onReleased: {
-                markerLink.anchors.left = markerStart.right
-                markerLink.anchors.right = markerEnd.left
-                if (mouse.button == Qt.LeftButton && dragStartX != markerLink.x) {
-                    markers.move(index, (markerStart.x + 7) / timeScale, markerEnd.x / timeScale)
+                dragInProgress = false
+                if (mouse.button === Qt.LeftButton) {
+                    markerLink.anchors.left = markerStart.right
+                    markerLink.anchors.right = markerEnd.left
+                    if (dragStartX != markerLink.x) {
+                        markers.move(index, (markerStart.x + 7) / timeScale, markerEnd.x / timeScale)
+                    }
                 }
             }
             onClicked: {
@@ -233,6 +266,7 @@ Item {
                     timeline.position = mouse.x/timeScale < (end - start)/2 ? start : end
                 }
             }
+            onExited: root.exited()
         }
     }
 }
