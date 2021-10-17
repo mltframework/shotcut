@@ -295,7 +295,7 @@ int MarkersModel::uniqueKey() const
 
 int MarkersModel::markerIndexForPosition(int position)
 {
-    Mlt::Properties* markerList = m_producer->get_props(kShotcutMarkersProperty);
+    QScopedPointer<Mlt::Properties> markerList(m_producer->get_props(kShotcutMarkersProperty));
     if (markerList &&  markerList->is_valid()) {
         for (const auto i : qAsConst(m_keys)) {
             QScopedPointer<Mlt::Properties> marker(markerList->get_props(qPrintable(QString::number(i))));
@@ -310,7 +310,7 @@ int MarkersModel::markerIndexForPosition(int position)
 QMap<int, QString> MarkersModel::ranges()
 {
     QMap<int, QString> result;
-    Mlt::Properties* markerList = m_producer->get_props(kShotcutMarkersProperty);
+    QScopedPointer<Mlt::Properties> markerList(m_producer->get_props(kShotcutMarkersProperty));
     if (markerList &&  markerList->is_valid()) {
         for (const auto i : qAsConst(m_keys)) {
             QScopedPointer<Mlt::Properties> marker(markerList->get_props(qPrintable(QString::number(i))));
