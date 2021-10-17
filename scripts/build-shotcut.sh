@@ -1583,7 +1583,7 @@ EOF
         cmd install -p -c COPYING "$FINAL_INSTALL_DIR"
         cmd install -p -c "$QTDIR"/translations/qt_*.qm "$FINAL_INSTALL_DIR"/share/shotcut/translations
         cmd install -p -c "$QTDIR"/translations/qtbase_*.qm "$FINAL_INSTALL_DIR"/share/shotcut/translations
-        cmd install -p -c "$QTDIR"/lib/libQt5{Core,DBus,Gui,Multimedia,Network,OpenGL,Qml,QmlModels,QmlWorkerScript,Quick,QuickControls2,QuickTemplates2,QuickWidgets,Sql,Svg,WebSockets,Widgets,Xml,X11Extras,XcbQpa}.so.5 "$FINAL_INSTALL_DIR"/lib
+        cmd install -p -c "$QTDIR"/lib/libQt5{Core,DBus,Gui,Multimedia,Network,OpenGL,Qml,QmlModels,QmlWorkerScript,Quick,QuickControls2,QuickShapes,QuickTemplates2,QuickWidgets,Sql,Svg,WebSockets,Widgets,Xml,X11Extras,XcbQpa}.so.5 "$FINAL_INSTALL_DIR"/lib
         cmd install -p -c "$QTDIR"/lib/lib{icudata,icui18n,icuuc}.so* "$FINAL_INSTALL_DIR"/lib
         cmd install -d "$FINAL_INSTALL_DIR"/lib/qt5/sqldrivers
         cmd cp -a "$QTDIR"/plugins/{audio,egldeviceintegrations,generic,iconengines,imageformats,mediaservice,platforminputcontexts,platforms,platformthemes,wayland-decoration-client,wayland-graphics-integration-client,wayland-graphics-integration-server,wayland-shell-integration,xcbglintegrations} "$FINAL_INSTALL_DIR"/lib/qt5
