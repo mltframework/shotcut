@@ -449,6 +449,7 @@ MainWindow::MainWindow()
     connect(this, SIGNAL(audioChannelsChanged()), m_encodeDock, SLOT(onAudioChannelsChanged()));
     connect(m_playlistDock->model(), SIGNAL(modified()), m_encodeDock, SLOT(onProducerOpened()));
     connect(m_timelineDock, SIGNAL(clipCopied()), m_encodeDock, SLOT(onProducerOpened()));
+    connect(m_timelineDock, SIGNAL(markerRangesChanged()), m_encodeDock, SLOT(onProducerOpened()));
     m_encodeDock->onProfileChanged();
 
     m_jobsDock = new JobsDock(this);

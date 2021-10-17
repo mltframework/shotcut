@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2020 Meltytech, LLC
+ * Copyright (c) 2012-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -112,6 +112,12 @@ void MeltJob::start()
     } else {
         args << "xml:" + QUrl::toPercentEncoding(xmlPath());
     }
+    if (m_in > -1) {
+        args << QString("in=%1").arg(m_in);
+    }
+    if (m_out > -1) {
+        args << QString("out=%1").arg(m_out);
+    }
     LOG_DEBUG() << meltPath.absoluteFilePath()  + " " + args.join(' ');
 #ifndef Q_OS_MAC
     QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
@@ -149,6 +155,12 @@ void MeltJob::setIsStreaming(bool streaming)
 void MeltJob::setUseMultiConsumer(bool multi)
 {
     m_useMultiConsumer = multi;
+}
+
+void MeltJob::setInAndOut(int in, int out)
+{
+    m_in = in;
+    m_out = out;
 }
 
 void MeltJob::onViewXmlTriggered()

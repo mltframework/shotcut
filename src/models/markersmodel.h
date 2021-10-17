@@ -31,8 +31,8 @@ class Marker
 {
 public:
     QString text;
-    int start;
-    int end;
+    int start {-1};
+    int end {-1};
     QColor color;
 };
 
@@ -58,12 +58,16 @@ public:
     Markers::Marker getMarker(int markerIndex);
     int uniqueKey() const;
     int markerIndexForPosition(int position);
+    QMap<int, QString> ranges();
 
     // These should only be called by the marker commands
     void doRemove(int markerIndex);
     void doInsert(int markerIndex, const Markers::Marker& marker);
     void doAppend(const Markers::Marker& marker);
     void doUpdate(int markerIndex,  const Markers::Marker& marker);
+
+signals:
+    void rangesChanged();
 
 public slots:
     void remove(int markerIndex);

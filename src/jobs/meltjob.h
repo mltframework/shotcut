@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2019 Meltytech, LLC
+ * Copyright (c) 2012-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,6 +33,7 @@ public:
     QString xmlPath() const { return m_xml->fileName(); }
     void setIsStreaming(bool streaming);
     void setUseMultiConsumer(bool multi = true);
+    void setInAndOut(int in, int out);
 
 public slots:
     void start();
@@ -55,6 +56,8 @@ private:
     int m_currentFrame;
     Mlt::Profile m_profile;
     bool m_useMultiConsumer;
+    int m_in {-1};
+    int m_out {-1};
 };
 
 #endif // MELTJOB_H

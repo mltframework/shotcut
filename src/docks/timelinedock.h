@@ -106,6 +106,7 @@ signals:
     void resetZoom();
     void makeTracksShorter();
     void makeTracksTaller();
+    void markerRangesChanged();
 
 public slots:
     void addAudioTrack();
