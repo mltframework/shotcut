@@ -1071,6 +1071,8 @@ void TimelineDock::replace(int trackIndex, int clipIndex, const QString& xml)
 
 void TimelineDock::createMarker()
 {
+    if (!m_model.trackList().count() || MLT.producer()->get_length() <= 1)
+        return;
     int index = m_markersModel.markerIndexForPosition(m_position);
     if (index >= 0) {
         return editMarker(index);
@@ -1493,7 +1495,6 @@ void TimelineDock::onMultitrackClosed()
 
 void TimelineDock::reloadTimelineMarkers()
 {
-qDebug() << m_model.tractor();
     m_markersModel.load(m_model.tractor());
 }
 
