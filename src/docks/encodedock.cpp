@@ -29,6 +29,7 @@
 #include "util.h"
 #include "dialogs/listselectiondialog.h"
 #include "qmltypes/qmlfilter.h"
+#include "models/markersmodel.h"
 
 #include <Logger.h>
 #include <QtWidgets>
@@ -416,6 +417,19 @@ void EncodeDock::onProducerOpened()
     } else if (MLT.savedProducer() && MLT.savedProducer()->is_valid()
                && qstrcmp("_hide", MLT.savedProducer()->get("resource"))) {
         ui->fromCombo->addItem(tr("Source"), "clip");
+    }
+    if (MAIN.isMultitrackValid()) {
+        MarkersModel markersModel;
+        markersModel.load(MAIN.multitrack());
+        const auto markerStr = tr("Marker");
+        auto ranges = markersModel.ranges();
+        for (auto i = ranges.constBegin(); i != ranges.constEnd(); ++i) {
+            if (i.value().startsWith(markerStr)) {
+                ui->fromCombo->addItem(i.value(), QString("marker:%1").arg(i.key()));
+            } else {
+                ui->fromCombo->addItem(QString("%1: %2").arg(tr("Marker"), i.value()), QString("marker:%1").arg(i.key()));
+            }
+        }
     }
     ui->fromCombo->blockSignals(false);
     if (!m_immediateJob) {
@@ -994,6 +1008,20 @@ MeltJob* EncodeDock::createMeltJob(Mlt::Producer* service, const QString& target
             ui->heightSpinner->value() != MLT.profile().height() ||
             double(ui->aspectNumSpinner->value()) / double(ui->aspectDenSpinner->value()) != MLT.profile().dar() ||
             (ui->fromCombo->currentData().toString() != "clip" && qFloor(ui->fpsSpinner->value() * 10000.0) != qFloor(MLT.profile().fps() * 10000.0)));
+
+    const auto& from = ui->fromCombo->currentData().toString();
+    if (MAIN.isMultitrackValid() && from.startsWith("marker:")) {
+        bool ok = false;
+        int index = from.midRef(7).toInt(&ok);
+        if (ok) {
+            MarkersModel markersModel;
+            markersModel.load(MAIN.multitrack());
+            auto marker = markersModel.getMarker(index);
+            if (marker.end > marker.start) {
+                job->setInAndOut(marker.start, marker.end);
+            }
+        }
+    }
     return job;
 }
 
@@ -1233,7 +1261,7 @@ Mlt::Producer *EncodeDock::fromProducer() const
         return MLT.isClip()? MLT.producer() : MLT.savedProducer();
     else if (from == "playlist")
         return MAIN.playlist();
-    else if (from == "timeline")
+    else if (from == "timeline" || from.startsWith("marker:"))
         return MAIN.multitrack();
     else
         return 0;

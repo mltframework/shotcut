@@ -129,10 +129,12 @@ void MarkersModel::doRemove(int markerIndex)
         delete markersListProperties;
         return;
     }
+    auto marker = getMarker(markerIndex);
     beginRemoveRows(QModelIndex(), modelIndex.row(), modelIndex.row());
     markersListProperties->clear(qPrintable(QString::number(m_keys[modelIndex.row()])));
     m_keys.removeAt(modelIndex.row());
     endRemoveRows();
+    if (marker.end > marker.start) emit rangesChanged();
 
     delete markersListProperties;
 }
@@ -165,6 +167,7 @@ void MarkersModel::doInsert(int markerIndex,  const Markers::Marker& marker )
     markersListProperties->set(qPrintable(QString::number(key)), markerProperties);
     m_keys.insert(modelIndex.row(), key);
     endInsertRows();
+    if (marker.end > marker.start) emit rangesChanged();
 
     delete markersListProperties;
 }
@@ -202,6 +205,7 @@ void MarkersModel::doAppend( const Markers::Marker& marker )
     markersListProperties->set(qPrintable(QString::number(key)), markerProperties);
     m_keys.append(key);
     endInsertRows();
+    if (marker.end > marker.start) emit rangesChanged();
 
     delete markersListProperties;
 }
@@ -239,6 +243,7 @@ void MarkersModel::doUpdate(int markerIndex,  const Markers::Marker& marker)
     delete markerProperties;
 
     emit dataChanged(modelIndex, modelIndex, QVector<int>() << TextRole << StartRole << EndRole << ColorRole);
+    if (marker.end > marker.start) emit rangesChanged();
 }
 
 void MarkersModel::move(int markerIndex, int start, int end)
@@ -300,6 +305,25 @@ int MarkersModel::markerIndexForPosition(int position)
         }
     }
     return -1;
+}
+
+QMap<int, QString> MarkersModel::ranges()
+{
+    QMap<int, QString> result;
+    Mlt::Properties* markerList = m_producer->get_props(kShotcutMarkersProperty);
+    if (markerList &&  markerList->is_valid()) {
+        for (const auto i : qAsConst(m_keys)) {
+            QScopedPointer<Mlt::Properties> marker(markerList->get_props(qPrintable(QString::number(i))));
+            if (marker && marker->is_valid()) {
+                Markers::Marker m;
+                propertiesToMarker(marker.get(), m, m_producer);
+                if (m.end > m.start) {
+                    result[i] = m.text;
+                }
+            }
+        }
+    }
+    return result;
 }
 
 Mlt::Properties* MarkersModel::getMarkerProperties(int markerIndex)

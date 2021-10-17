@@ -96,6 +96,7 @@ TimelineDock::TimelineDock(QWidget *parent) :
     connect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame&)), this, SLOT(onShowFrame(const SharedFrame&)));
     connect(this, SIGNAL(visibilityChanged(bool)), this, SLOT(load()));
     connect(this, SIGNAL(topLevelChanged(bool)), this, SLOT(onTopLevelChanged(bool)));
+    connect(&m_markersModel, SIGNAL(rangesChanged()), this, SIGNAL(markerRangesChanged()));
     LOG_DEBUG() << "end";
 }
 
@@ -403,7 +404,7 @@ bool TimelineDock::isRipple() const
 void TimelineDock::copyToSource()
 {
     if (model()->tractor() && model()->tractor()->is_valid()) {
-        if (MAIN.on_actionSave_triggered()) {
+        if (!MAIN.isWindowModified() || MAIN.on_actionSave_triggered()) {
             if (!MLT.openXML(MAIN.fileName())) {
                 MLT.producer()->set(kExportFromProperty, 1);
                 MAIN.open(MLT.producer());
