@@ -24,6 +24,7 @@ Repeater {
     signal deleteRequested(int index)
     signal exited()
     signal mouseStatusChanged(int mouseX, int mouseY, var text, int start, int end)
+    signal seekRequested(int pos)
     Marker {
         timeScale: parent.timeScale
         start: model.start
@@ -35,5 +36,6 @@ Repeater {
         onDeleteRequested: markerbar.deleteRequested(index)
         onExited: markerbar.exited()
         onMouseStatusChanged: markerbar.mouseStatusChanged(mouseX, mouseY, text, start, end)
+        onSeekRequested: markerbar.seekRequested(pos)
     }
 }

@@ -87,6 +87,7 @@ Rectangle {
             var msg = text + "\n" + rangeText
             bubbleHelp.show(mouseX + bubbleHelp.width - 8, mouseY + 87, msg)
         }
+        onSeekRequested: timeline.position = pos
     }
 
     Connections {

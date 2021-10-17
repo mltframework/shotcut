@@ -31,6 +31,7 @@ Item {
     signal deleteRequested(int index)
     signal exited()
     signal mouseStatusChanged(int mouseX, int mouseY, var text, int start, int end)
+    signal seekRequested(int pos)
     x: 0
     width: parent.width
     height: 17
@@ -131,7 +132,7 @@ Item {
                 if (mouse.button === Qt.RightButton) {
                     menu.popup()
                 } else {
-                    timeline.position = start
+                    root.seekRequested(start)
                 }
             }
             onExited: root.exited()
@@ -200,7 +201,7 @@ Item {
                 if (mouse.button === Qt.RightButton) {
                     menu.popup()
                 } else {
-                    timeline.position = end
+                    root.seekRequested(end)
                 }
             }
             onExited: root.exited()
@@ -263,7 +264,7 @@ Item {
                 if (mouse.button === Qt.RightButton) {
                     menu.popup()
                 } else {
-                    timeline.position = mouse.x/timeScale < (end - start)/2 ? start : end
+                    root.seekRequested(mouse.x/timeScale < (end - start)/2 ? start : end)
                 }
             }
             onExited: root.exited()
