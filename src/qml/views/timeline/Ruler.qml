@@ -83,7 +83,7 @@ Rectangle {
             if (start === end)
                 rangeText = application.timecode(start)
             else
-                rangeText = application.timecode(start) + " - " + application.timecode(end)
+                rangeText = application.timecode(start) + " - " + application.timecode(end) + "\n" + application.timecode(end - start)
             var msg = text + "\n" + rangeText
             bubbleHelp.show(mouseX + bubbleHelp.width - 8, mouseY + 87, msg)
         }
