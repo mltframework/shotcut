@@ -68,6 +68,7 @@ public:
 
 signals:
     void rangesChanged();
+    void modified();
 
 public slots:
     void remove(int markerIndex);

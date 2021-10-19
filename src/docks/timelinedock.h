@@ -51,6 +51,7 @@ public:
     };
 
     MultitrackModel* model() { return &m_model; }
+    MarkersModel* markersModel() { return & m_markersModel; }
     int position() const { return m_position; }
     void setPosition(int position);
     Mlt::ClipInfo* getClipInfo(int trackIndex, int clipIndex);

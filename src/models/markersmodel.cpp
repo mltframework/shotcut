@@ -137,6 +137,7 @@ void MarkersModel::doRemove(int markerIndex)
     if (marker.end > marker.start) emit rangesChanged();
 
     delete markersListProperties;
+    emit modified();
 }
 
 void MarkersModel::doInsert(int markerIndex,  const Markers::Marker& marker )
@@ -175,6 +176,7 @@ void MarkersModel::doInsert(int markerIndex,  const Markers::Marker& marker )
     if (marker.end > marker.start) emit rangesChanged();
 
     delete markersListProperties;
+    emit modified();
 }
 
 void MarkersModel::append( const Markers::Marker& marker )
@@ -213,6 +215,7 @@ void MarkersModel::doAppend( const Markers::Marker& marker )
     if (marker.end > marker.start) emit rangesChanged();
 
     delete markersListProperties;
+    emit modified();
 }
 
 void MarkersModel::update(int markerIndex,  const Markers::Marker& marker)
@@ -249,6 +252,7 @@ void MarkersModel::doUpdate(int markerIndex,  const Markers::Marker& marker)
 
     emit dataChanged(modelIndex, modelIndex, QVector<int>() << TextRole << StartRole << EndRole << ColorRole);
     if (marker.end > marker.start) emit rangesChanged();
+    emit modified();
 }
 
 void MarkersModel::move(int markerIndex, int start, int end)
