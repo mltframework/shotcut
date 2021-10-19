@@ -1989,7 +1989,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
 #else
         if (event->modifiers() & Qt::ControlModifier && isMultitrackValid()) {
 #endif
-            if (event->modifiers() & Qt::AltModifier) {
+            if (event->modifiers() & Qt::ShiftModifier) {
                 m_timelineDock->deleteMarker();
             } else {
                 m_timelineDock->toggleTrackMute(m_timelineDock->currentTrack());
