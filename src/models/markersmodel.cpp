@@ -146,7 +146,12 @@ void MarkersModel::doInsert(int markerIndex,  const Markers::Marker& marker )
         return;
     }
 
-    QModelIndex modelIndex = index(markerIndex, 0);
+    QModelIndex modelIndex;
+    if (markerIndex == markerCount())
+        // Allow inserting after the last marker
+        modelIndex = createIndex(markerIndex, 0, (int)0);
+    else
+        modelIndex = index(markerIndex, 0);
     if (!modelIndex.isValid()) {
         LOG_ERROR() << "Invalid Index: " << markerIndex;
         return;
