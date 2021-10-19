@@ -1090,13 +1090,14 @@ void TimelineDock::editMarker(int markerIndex)
     Markers::Marker marker = m_markersModel.getMarker(markerIndex);
     EditMarkerDialog dialog(this, marker.text, marker.color, marker.start, marker.end);
     dialog.setWindowModality(QmlApplication::dialogModality());
-    dialog.exec();
-    marker.text = dialog.getText();
-    marker.color = dialog.getColor();
-    marker.start = dialog.getStart();
-    marker.end = dialog.getEnd();
-    m_markersModel.update(markerIndex, marker);
-    Settings.setMarkerColor(marker.color);
+    if (dialog.exec() == QDialog::Accepted) {
+        marker.text = dialog.getText();
+        marker.color = dialog.getColor();
+        marker.start = dialog.getStart();
+        marker.end = dialog.getEnd();
+        m_markersModel.update(markerIndex, marker);
+        Settings.setMarkerColor(marker.color);
+    }
 }
 
 void TimelineDock::deleteMarker(int markerIndex)
