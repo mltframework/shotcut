@@ -35,12 +35,10 @@ EditMarkerWidget::EditMarkerWidget(QWidget *parent, const QString& text, const Q
     QGridLayout* grid = new QGridLayout();
     setLayout(grid);
 
-    grid->addWidget(new QLabel(tr("Text")), 0, 0, Qt::AlignRight);
     m_textField = new QLineEdit(text);
     m_textField->setToolTip(tr("Set the text for this marker."));
-    grid->addWidget(m_textField, 0, 1);
+    grid->addWidget(m_textField, 0, 0, 1, 2);
 
-    grid->addWidget(new QLabel(""), 1, 0, Qt::AlignRight);
     m_colorButton = new QPushButton(tr("Color..."));
     connect(m_colorButton, SIGNAL(clicked()), SLOT(on_colorButton_clicked()));
     m_colorLabel = new QLabel(color.name(QColor::HexRgb));
@@ -50,7 +48,7 @@ EditMarkerWidget::EditMarkerWidget(QWidget *parent, const QString& text, const Q
     QHBoxLayout* colorHbox = new QHBoxLayout();
     colorHbox->addWidget(m_colorButton);
     colorHbox->addWidget(m_colorLabel);
-    grid->addLayout(colorHbox, 1, 1);
+    grid->addLayout(colorHbox, 1, 0, 1, 2);
 
     grid->addWidget(new QLabel(tr("Start")), 2, 0, Qt::AlignRight);
     m_startSpinner = new TimeSpinBox();
