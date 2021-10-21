@@ -49,6 +49,7 @@ static const char* kMltXmlPropertyName = "string";
 Controller::Controller()
     : m_profile(kDefaultMltProfile)
     , m_previewProfile(kDefaultMltProfile)
+    , m_blockRefresh(false)
 {
     LOG_DEBUG() << "begin";
     m_repo = Mlt::Factory::init();
@@ -453,7 +454,7 @@ void Controller::seek(int position)
 
 void Controller::refreshConsumer(bool scrubAudio)
 {
-    if (m_consumer) {
+    if (!m_blockRefresh && m_consumer) {
         // need to refresh consumer when paused
         m_consumer->set("scrub_audio", scrubAudio);
         m_consumer->set("refresh", 1);
@@ -1423,6 +1424,12 @@ bool Controller::fullRange(Producer& producer)
         }
     }
     return full;
+}
+
+bool Controller::blockRefresh(bool block)
+{
+    m_blockRefresh = block;
+    return m_blockRefresh;
 }
 
 void TransportControl::play(double speed)

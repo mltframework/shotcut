@@ -508,11 +508,8 @@ MainWindow::MainWindow()
 
     connect(&m_network, SIGNAL(finished(QNetworkReply*)), SLOT(onUpgradeCheckFinished(QNetworkReply*)));
     resetSourceUpdated();
-    if (MLT.isMltXml(QGuiApplication::clipboard()->text())) {
-        onClipboardChanged();
-    } else {
-        m_clipboardUpdatedAt.setSecsSinceEpoch(0);
-    }
+    m_clipboardUpdatedAt.setSecsSinceEpoch(0);
+    onClipboardChanged();
     connect(QGuiApplication::clipboard(), SIGNAL(dataChanged()), this, SLOT(onClipboardChanged()));
 
     QThreadPool::globalInstance()->setMaxThreadCount(qMin(4, QThreadPool::globalInstance()->maxThreadCount()));

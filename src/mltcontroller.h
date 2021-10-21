@@ -178,6 +178,20 @@ public:
     static bool isMltXml(const QString& s) {
         return s.contains("<mlt ");
     }
+    bool blockRefresh(bool block);
+
+    class RefreshBlocker
+    {
+    public:
+        RefreshBlocker()
+        {
+            singleton().blockRefresh(true);
+        }
+        ~RefreshBlocker()
+        {
+            singleton().blockRefresh(false);
+        }
+    };
 
 protected:
     Mlt::Repository* m_repo;
@@ -197,6 +211,7 @@ private:
     unsigned m_skipJackEvents{0};
     QString m_projectFolder;
     QMutex m_saveXmlMutex;
+    bool m_blockRefresh;
 
     static void on_jack_started(mlt_properties owner, void* object, mlt_event_data data);
     void onJackStarted(int position);
