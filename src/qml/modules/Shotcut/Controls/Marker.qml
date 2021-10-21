@@ -67,6 +67,10 @@ Item {
             text: qsTr('Delete')
             onTriggered: root.deleteRequested(root.index)
         }
+        MenuItem {
+            text: qsTr('Cancel')
+            onTriggered: menu.dismiss()
+        }
     }
 
     Shape {
