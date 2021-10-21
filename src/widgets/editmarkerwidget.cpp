@@ -18,6 +18,7 @@
 #include "editmarkerwidget.h"
 
 #include "Logger.h"
+#include "mltcontroller.h"
 #include "qmltypes/qmlapplication.h"
 #include "widgets/timespinbox.h"
 
@@ -29,7 +30,7 @@
 #include <QLineEdit>
 #include <QPushButton>
 
-EditMarkerWidget::EditMarkerWidget(QWidget *parent, const QString& text, const QColor& color, int start, int end)
+EditMarkerWidget::EditMarkerWidget(QWidget *parent, const QString& text, const QColor& color, int start, int end, int maxEnd)
     : QWidget(parent)
 {
     QGridLayout* grid = new QGridLayout();
@@ -52,18 +53,26 @@ EditMarkerWidget::EditMarkerWidget(QWidget *parent, const QString& text, const Q
 
     grid->addWidget(new QLabel(tr("Start")), 2, 0, Qt::AlignRight);
     m_startSpinner = new TimeSpinBox();
+    m_startSpinner->setMinimum(0);
+    m_startSpinner->setMaximum(end);
     m_startSpinner->setValue(start);
     m_startSpinner->setToolTip(tr("Set the start time for this marker."));
+    connect(m_startSpinner, SIGNAL(valueChanged(int)), this, SLOT(on_startSpinner_valueChanged(int)));
     grid->addWidget(m_startSpinner, 2, 1);
 
     grid->addWidget(new QLabel(tr("End")), 3, 0, Qt::AlignRight);
     m_endSpinner = new TimeSpinBox();
-    m_endSpinner->setValue(end);
     m_endSpinner->setMinimum(start);
+    m_endSpinner->setMaximum(maxEnd);
+    m_endSpinner->setValue(end);
     m_endSpinner->setToolTip(tr("Set the end time for this marker."));
+    connect(m_endSpinner, SIGNAL(valueChanged(int)), this, SLOT(on_endSpinner_valueChanged(int)));
     grid->addWidget(m_endSpinner, 3, 1);
 
-    connect(m_startSpinner, SIGNAL(valueChanged(int)), this, SLOT(on_startSpinner_valueChanged(int)));
+    grid->addWidget(new QLabel(tr("Duration")), 4, 0, Qt::AlignRight);
+    m_durationLabel = new QLabel();
+    updateDuration();
+    grid->addWidget(m_durationLabel, 4, 1);
 }
 
 EditMarkerWidget::~EditMarkerWidget()
@@ -107,4 +116,17 @@ void EditMarkerWidget::on_colorButton_clicked()
 void EditMarkerWidget::on_startSpinner_valueChanged(int value)
 {
     m_endSpinner->setMinimum(value);
+    updateDuration();
+}
+
+void EditMarkerWidget::on_endSpinner_valueChanged(int value)
+{
+    m_startSpinner->setMaximum(value);
+    updateDuration();
+}
+
+void EditMarkerWidget::updateDuration()
+{
+    int duration = m_endSpinner->value() - m_startSpinner->value() + 1;
+    m_durationLabel->setText(MLT.producer()->frames_to_time(duration));
 }

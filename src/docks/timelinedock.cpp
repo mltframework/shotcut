@@ -1088,7 +1088,7 @@ void TimelineDock::createMarker()
 void TimelineDock::editMarker(int markerIndex)
 {
     Markers::Marker marker = m_markersModel.getMarker(markerIndex);
-    EditMarkerDialog dialog(this, marker.text, marker.color, marker.start, marker.end);
+    EditMarkerDialog dialog(this, marker.text, marker.color, marker.start, marker.end, m_model.tractor()->get_length() - 1);
     dialog.setWindowModality(QmlApplication::dialogModality());
     if (dialog.exec() == QDialog::Accepted) {
         marker.text = dialog.getText();

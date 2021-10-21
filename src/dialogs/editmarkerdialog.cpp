@@ -24,14 +24,14 @@
 #include <QDialogButtonBox>
 #include <QVBoxLayout>
 
-EditMarkerDialog::EditMarkerDialog(QWidget *parent, const QString& text, const QColor& color, int start, int end)
+EditMarkerDialog::EditMarkerDialog(QWidget *parent, const QString& text, const QColor& color, int start, int end, int maxEnd)
     : QDialog(parent)
 {
     setWindowTitle(tr("Edit Marker"));
 
     QVBoxLayout* VLayout = new QVBoxLayout(this);
 
-    m_sWidget = new EditMarkerWidget(this, text, color, start, end);
+    m_sWidget = new EditMarkerWidget(this, text, color, start, end, maxEnd);
     VLayout->addWidget(m_sWidget);
 
     m_buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Close);

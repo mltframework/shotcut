@@ -30,7 +30,7 @@ class EditMarkerWidget : public QWidget
     Q_OBJECT
 
 public:
-    EditMarkerWidget(QWidget *parent, const QString& text, const QColor& color, int start, int end);
+    EditMarkerWidget(QWidget *parent, const QString& text, const QColor& color, int start, int end, int maxEnd);
     virtual ~EditMarkerWidget();
     QString getText();
     QColor getColor();
@@ -40,6 +40,7 @@ public:
 private slots:
     void on_colorButton_clicked();
     void on_startSpinner_valueChanged(int);
+    void on_endSpinner_valueChanged(int);
 
 private:
     QLineEdit* m_textField;
@@ -47,6 +48,8 @@ private:
     QLabel* m_colorLabel;
     TimeSpinBox* m_startSpinner;
     TimeSpinBox* m_endSpinner;
+    QLabel* m_durationLabel;
+    void updateDuration();
 };
 
 #endif // EDITMARKERWIDGET_H
