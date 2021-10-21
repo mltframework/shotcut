@@ -621,13 +621,7 @@ void TimelineDock::append(int trackIndex)
 
                     // Insert track if needed
                     const auto trackIndex = currentTrack() + mltTrackIndex;
-                    bool insert = trackIndex >= m_model.trackList().size();
-                    if (!insert) {
-                        const auto& shotcutTrack = m_model.trackList()[trackIndex];
-                        insert = (shotcutTrack.type == AudioTrackType && !srcTrack->get_int(kAudioTrackProperty)) ||
-                                 (shotcutTrack.type == VideoTrackType && !srcTrack->get_int(kVideoTrackProperty));
-                    }
-                    if (insert) {
+                    if (trackIndex >= m_model.trackList().size()) {
                         if (srcTrack->get_int(kAudioTrackProperty)) {
                             MAIN.undoStack()->push(
                                 new Timeline::InsertTrackCommand(m_model, trackIndex, AudioTrackType));
@@ -1428,15 +1422,9 @@ void TimelineDock::insert(int trackIndex, int position, const QString &xml, bool
                 QScopedPointer<Mlt::Producer> srcTrack(tractor.track(mltTrackIndex));
                 if (srcTrack) {
 
-                    // Insert track if needed
+                    // Add track if needed
                     const auto trackIndex = currentTrack() + mltTrackIndex;
-                    bool insert = trackIndex >= m_model.trackList().size();
-                    if (!insert) {
-                        const auto& shotcutTrack = m_model.trackList()[trackIndex];
-                        insert = (shotcutTrack.type == AudioTrackType && !srcTrack->get_int(kAudioTrackProperty)) ||
-                                 (shotcutTrack.type == VideoTrackType && !srcTrack->get_int(kVideoTrackProperty));
-                    }
-                    if (insert) {
+                    if (trackIndex >= m_model.trackList().size()) {
                         if (srcTrack->get_int(kAudioTrackProperty)) {
                             MAIN.undoStack()->push(
                                 new Timeline::InsertTrackCommand(m_model, trackIndex, AudioTrackType));
@@ -1558,15 +1546,9 @@ void TimelineDock::overwrite(int trackIndex, int position, const QString &xml, b
                 QScopedPointer<Mlt::Producer> srcTrack(tractor.track(mltTrackIndex));
                 if (srcTrack) {
 
-                    // Insert track if needed
+                    // Add track if needed
                     const auto trackIndex = currentTrack() + mltTrackIndex;
-                    bool insert = trackIndex >= m_model.trackList().size();
-                    if (!insert) {
-                        const auto& shotcutTrack = m_model.trackList()[trackIndex];
-                        insert = (shotcutTrack.type == AudioTrackType && !srcTrack->get_int(kAudioTrackProperty)) ||
-                                 (shotcutTrack.type == VideoTrackType && !srcTrack->get_int(kVideoTrackProperty));
-                    }
-                    if (insert) {
+                    if (trackIndex >= m_model.trackList().size()) {
                         if (srcTrack->get_int(kAudioTrackProperty)) {
                             MAIN.undoStack()->push(
                                 new Timeline::InsertTrackCommand(m_model, trackIndex, AudioTrackType));
