@@ -2830,8 +2830,8 @@ void MultitrackModel::insertTrackAbove(int trackIndex, TrackType type)
     int last_mlt_index = 0;
     int row = 0;
     foreach (Track t, m_trackList) {
-        if (t.type == type) {
-            if ((t.type == VideoTrackType && t.number > track.number) ||
+        if (t.type == type && !(track.type == VideoTrackType && track.number == -1)) {
+            if ((t.type == VideoTrackType && t.number >= track.number) ||
                 (t.type == AudioTrackType && t.number >= track.number)) {
                 // Rename default track names.
                 QScopedPointer<Mlt::Producer> mltTrack(m_tractor->track(t.mlt_index));

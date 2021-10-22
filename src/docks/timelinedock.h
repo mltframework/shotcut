@@ -175,6 +175,7 @@ private:
     bool isBlank(int trackIndex, int clipIndex);
     void pulseLockButtonOnTrack(int trackIndex);
     void emitNonSeekableWarning();
+    void addTrackIfNeeded(int mltTrackIndex, Mlt::Producer* srcTrack);
 
     Ui::TimelineDock *ui;
     QQuickWidget m_quickView;

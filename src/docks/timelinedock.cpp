@@ -183,6 +183,20 @@ void TimelineDock::emitNonSeekableWarning()
     emit showStatusMessage(tr("You cannot add a non-seekable source."));
 }
 
+void TimelineDock::addTrackIfNeeded(int trackIndex, Mlt::Producer* srcTrack)
+{
+    const auto n = m_model.trackList().size();
+    if (trackIndex >= n) {
+        if (srcTrack->get_int(kAudioTrackProperty) || m_model.trackList()[n - 1].type == AudioTrackType) {
+            MAIN.undoStack()->push(
+                new Timeline::InsertTrackCommand(m_model, trackIndex, AudioTrackType));
+        } else {
+            MAIN.undoStack()->push(
+                new Timeline::InsertTrackCommand(m_model, trackIndex, VideoTrackType));
+        }
+    }
+}
+
 void TimelineDock::chooseClipAtPosition(int position, int& trackIndex, int& clipIndex)
 {
     QScopedPointer<Mlt::Producer> clip;
@@ -619,18 +633,8 @@ void TimelineDock::append(int trackIndex)
             for (int mltTrackIndex = 0; mltTrackIndex < tractor.count(); mltTrackIndex++) {
                 QScopedPointer<Mlt::Producer> srcTrack(tractor.track(mltTrackIndex));
                 if (srcTrack) {
-
-                    // Insert track if needed
                     const auto trackIndex = currentTrack() + mltTrackIndex;
-                    if (trackIndex >= m_model.trackList().size()) {
-                        if (srcTrack->get_int(kAudioTrackProperty)) {
-                            MAIN.undoStack()->push(
-                                new Timeline::InsertTrackCommand(m_model, trackIndex, AudioTrackType));
-                        } else {
-                            MAIN.undoStack()->push(
-                                new Timeline::InsertTrackCommand(m_model, trackIndex, VideoTrackType));
-                        }
-                    }
+                    addTrackIfNeeded(trackIndex, srcTrack.get());
 
                     // Insert the clips for this track
                     Mlt::Playlist playlist(*srcTrack);
@@ -1424,18 +1428,8 @@ void TimelineDock::insert(int trackIndex, int position, const QString &xml, bool
             for (int mltTrackIndex = 0; mltTrackIndex < tractor.count(); mltTrackIndex++) {
                 QScopedPointer<Mlt::Producer> srcTrack(tractor.track(mltTrackIndex));
                 if (srcTrack) {
-
-                    // Add track if needed
                     const auto trackIndex = currentTrack() + mltTrackIndex;
-                    if (trackIndex >= m_model.trackList().size()) {
-                        if (srcTrack->get_int(kAudioTrackProperty)) {
-                            MAIN.undoStack()->push(
-                                new Timeline::InsertTrackCommand(m_model, trackIndex, AudioTrackType));
-                        } else {
-                            MAIN.undoStack()->push(
-                                new Timeline::InsertTrackCommand(m_model, trackIndex, VideoTrackType));
-                        }
-                    }
+                    addTrackIfNeeded(trackIndex, srcTrack.get());
 
                     // Insert the clips for this track
                     Mlt::Playlist playlist(*srcTrack);
@@ -1549,18 +1543,8 @@ void TimelineDock::overwrite(int trackIndex, int position, const QString &xml, b
             for (int mltTrackIndex = 0; mltTrackIndex < tractor.count(); mltTrackIndex++) {
                 QScopedPointer<Mlt::Producer> srcTrack(tractor.track(mltTrackIndex));
                 if (srcTrack) {
-
-                    // Add track if needed
                     const auto trackIndex = currentTrack() + mltTrackIndex;
-                    if (trackIndex >= m_model.trackList().size()) {
-                        if (srcTrack->get_int(kAudioTrackProperty)) {
-                            MAIN.undoStack()->push(
-                                new Timeline::InsertTrackCommand(m_model, trackIndex, AudioTrackType));
-                        } else {
-                            MAIN.undoStack()->push(
-                                new Timeline::InsertTrackCommand(m_model, trackIndex, VideoTrackType));
-                        }
-                    }
+                    addTrackIfNeeded(trackIndex, srcTrack.get());
 
                     // Insert the clips for this track
                     Mlt::Playlist playlist(*srcTrack);
