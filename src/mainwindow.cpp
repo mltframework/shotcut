@@ -2638,7 +2638,7 @@ void MainWindow::showEvent(QShowEvent* event)
 #endif
     onAutosaveTimeout();
 
-    QTimer::singleShot(1000, [=]() {
+    QTimer::singleShot(1000, this, [=]() {
         Database::singleton(this);
     });
 }
@@ -2687,7 +2687,7 @@ void MainWindow::onProducerOpened(bool withReopen)
             m_player->enableTab(Player::ProjectTabIndex);
             m_player->switchToTab(Player::ProjectTabIndex);
             m_timelineDock->selectMultitrack();
-            QTimer::singleShot(0, [=]() {
+            QTimer::singleShot(0, this, [=]() {
                 m_timelineDock->setSelection();
             });
         }

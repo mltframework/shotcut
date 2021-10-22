@@ -89,7 +89,7 @@ void MeltJob::start()
         AbstractJob::start();
         LOG_ERROR() << "the job XML is empty!";
         appendToLog("Error: the job XML is empty!\n");
-        QTimer::singleShot(0, [=]() {
+        QTimer::singleShot(0, this, [=]() {
             emit finished(this, false);
         });
         return;
