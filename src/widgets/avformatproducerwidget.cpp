@@ -301,7 +301,7 @@ void AvformatProducerWidget::recreateProducer()
 {
     Mlt::Producer* p = newProducer(MLT.profile());
     p->pass_list(*m_producer, "audio_index, video_index, force_aspect_ratio,"
-                 "video_delay, force_progressive, force_tff, set.force_full_luma, color_range, warp_pitch,"
+                 "video_delay, force_progressive, force_tff, set.force_full_luma, color_range, warp_pitch, rotate,"
                  kAspectRatioNumerator ","
                  kAspectRatioDenominator ","
                  kShotcutHashProperty ","
@@ -407,6 +407,11 @@ void AvformatProducerWidget::onFrameDecoded()
                     color_range = 1;
                     ui->rangeComboBox->setEnabled(false);
                 }
+                key = QString("meta.media.%1.codec.rotate").arg(i);
+                int rotation = m_producer->property_exists("rotate") ?
+                    m_producer->get_int("rotate") :
+                    m_producer->get_int(key.toLatin1().constData());
+                ui->rotationComboBox->setCurrentIndex(rotation / 90);
                 ui->videoTableWidget->setItem(3, 1, new QTableWidgetItem(pix_fmt));
                 key = QString("meta.media.%1.codec.colorspace").arg(i);
                 int colorspace = m_producer->get_int(key.toLatin1().constData());
@@ -1445,5 +1450,13 @@ void AvformatProducerWidget::on_actionFFmpegVideoQuality_triggered()
                 .arg((width < 3840 && height < 2160)? dir.filePath("vmaf_v0.6.1.json") : dir.filePath("vmaf_4k_v0.6.1.json"));
         args << "-f" << "null" << "pipe:";
         JOBS.add(new FfmpegJob(resource, args));
+    }
+}
+
+void AvformatProducerWidget::on_rotationComboBox_activated(int index)
+{
+    if (m_producer) {
+        m_producer->set("rotate", index * 90);
+        recreateProducer();
     }
 }

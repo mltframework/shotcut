@@ -113,7 +113,8 @@ void Database::deleteOldThumbnails()
     QtConcurrent::run([=]() {
         QDir dir = thumbnailsDir();
         auto ls = dir.entryList(QDir::Files | QDir::NoDotAndDotDot | QDir::Readable, QDir::Time);
-        LOG_DEBUG() << "removing" << ls.size() - kMaxThumbnailCount;
+        if (ls.size() > 0)
+            LOG_DEBUG() << "removing" << ls.size() - kMaxThumbnailCount;
         for (int i = kMaxThumbnailCount; i < ls.size(); i++) {
             QString filePath = dir.filePath(ls[i]);
             if (!QFile::remove(filePath)) {

@@ -347,6 +347,7 @@ void Util::applyCustomProperties(Mlt::Producer& destination, Mlt::Producer& sour
     p.clear("speed");
     p.clear("warp_speed");
     p.clear("warp_pitch");
+    p.clear("rotate");
     p.clear(kAspectRatioNumerator);
     p.clear(kAspectRatioDenominator);
     p.clear(kCommentProperty);
@@ -357,7 +358,7 @@ void Util::applyCustomProperties(Mlt::Producer& destination, Mlt::Producer& sour
     if (!p.get_int(kIsProxyProperty))
         p.clear(kOriginalResourceProperty);
     destination.pass_list(source, "mlt_service, audio_index, video_index, force_progressive, force_tff,"
-                       "force_aspect_ratio, video_delay, color_range, warp_speed, warp_pitch,"
+                       "force_aspect_ratio, video_delay, color_range, warp_speed, warp_pitch, rotate,"
                        kAspectRatioNumerator ","
                        kAspectRatioDenominator ","
                        kCommentProperty ","
