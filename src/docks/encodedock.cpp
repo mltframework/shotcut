@@ -2142,3 +2142,12 @@ bool EncodeDock::checkForMissingFiles()
     }
     return false;
 }
+
+void EncodeDock::on_resolutionComboBox_activated(const QString &arg1)
+{
+    if (arg1.isEmpty()) return;
+    auto parts = arg1.splitRef(' ');
+    ui->widthSpinner->setValue(parts[0].toInt());
+    ui->heightSpinner->setValue(parts[2].toInt());
+}
+

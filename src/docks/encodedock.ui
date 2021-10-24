@@ -594,6 +594,56 @@
                     </widget>
                    </item>
                    <item>
+                    <widget class="QComboBox" name="resolutionComboBox">
+                     <property name="maximumSize">
+                      <size>
+                       <width>20</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <item>
+                      <property name="text">
+                       <string notr="true">1280 x 720 (HD)</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string notr="true">1920 x 1080 (FHD)</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string notr="true">2048 x 1080 (DCI 2K)</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string notr="true">2560 x 1440 (QHD 2K)</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string notr="true">2704 x 1520 (2.7K)</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string notr="true">3840 x 2160 (UHD 4K)</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string notr="true">4096 x 2160 (DCI 4K)</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string notr="true">5120 x 2880 (5K)</string>
+                      </property>
+                     </item>
+                    </widget>
+                   </item>
+                   <item>
                     <spacer name="horizontalSpacer_7">
                      <property name="orientation">
                       <enum>Qt::Horizontal</enum>
@@ -1895,6 +1945,7 @@ in temporal compression</string>
   <tabstop>tabWidget</tabstop>
   <tabstop>widthSpinner</tabstop>
   <tabstop>heightSpinner</tabstop>
+  <tabstop>resolutionComboBox</tabstop>
   <tabstop>aspectNumSpinner</tabstop>
   <tabstop>aspectDenSpinner</tabstop>
   <tabstop>fpsSpinner</tabstop>

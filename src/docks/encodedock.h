@@ -125,6 +125,8 @@ private slots:
 
     void on_parallelCheckbox_clicked(bool checked);
 
+    void on_resolutionComboBox_activated(const QString &arg1);
+
 private:
     enum {
         RateControlAverage = 0,
