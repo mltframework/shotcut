@@ -123,6 +123,7 @@ protected:
     void dropEvent(QDropEvent*);
     void closeEvent(QCloseEvent*);
     void showEvent(QShowEvent*);
+    void hideEvent(QHideEvent* event);
 
 private:
     void setupSettingsMenu();
