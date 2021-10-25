@@ -247,11 +247,17 @@ void MarkersModel::doUpdate(int markerIndex,  const Markers::Marker& marker)
         delete markerProperties;
         return;
     }
+    Markers::Marker markerBefore;
+    propertiesToMarker(markerProperties, markerBefore, m_producer);
+
     markerToProperties(marker, markerProperties, m_producer);
     delete markerProperties;
 
     emit dataChanged(modelIndex, modelIndex, QVector<int>() << TextRole << StartRole << EndRole << ColorRole);
-    if (marker.end > marker.start) emit rangesChanged();
+    if ((markerBefore.end == markerBefore.start && marker.end > marker.start) ||
+        (markerBefore.end != markerBefore.start && marker.end == marker.start)) {
+        emit rangesChanged();
+    }
     emit modified();
 }
 
