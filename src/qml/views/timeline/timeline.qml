@@ -464,6 +464,7 @@ Rectangle {
         ]
         Label {
             id: bubbleHelpLabel
+            textFormat: Text.RichText
             color: application.toolTipTextColor
             anchors.centerIn: parent
         }

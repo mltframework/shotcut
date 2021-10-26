@@ -34,7 +34,7 @@ EditMarkerDialog::EditMarkerDialog(QWidget *parent, const QString& text, const Q
     m_sWidget = new EditMarkerWidget(this, text, color, start, end, maxEnd);
     VLayout->addWidget(m_sWidget);
 
-    m_buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Close);
+    m_buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
     VLayout->addWidget(m_buttonBox);
     connect(m_buttonBox, SIGNAL(clicked(QAbstractButton*)), this, SLOT(clicked(QAbstractButton*)));
 

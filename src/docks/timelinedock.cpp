@@ -1085,6 +1085,7 @@ void TimelineDock::createMarker()
     marker.start = position();
     marker.end = position();
     m_markersModel.append(marker);
+    emit showStatusMessage(tr("Added marker: \"%1\". Hold Ctl and drag to create a range").arg(marker.text));
 }
 
 void TimelineDock::editMarker(int markerIndex)
