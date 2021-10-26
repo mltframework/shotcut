@@ -632,8 +632,7 @@ Rectangle {
             text: qsTr('Cut') + (application.OS === 'OS X'? '    ⌘X' : ' (Ctrl+X)')
             onTriggered: {
                 if (!trackRoot.isLocked) {
-                    timeline.copy(trackIndex, index)
-                    timeline.remove(trackIndex, index)
+                    timeline.removeSelection(true)
                 } else {
                     root.pulseLockButtonOnTrack(currentTrack)
                 }
@@ -646,7 +645,7 @@ Rectangle {
         }
         MenuItem {
             text: qsTr('Remove') + (isBlank? '' : (application.OS === 'OS X'? '    X' : ' (X)'))
-            onTriggered: timeline.remove(trackIndex, index)
+            onTriggered: isBlank? timeline.remove(trackIndex, index) : timeline.removeSelection(false)
         }
         MenuItem {
             enabled: !isBlank && !isTransition
@@ -658,7 +657,7 @@ Rectangle {
             MenuItem {
                 enabled: !isBlank
                 text: qsTr('Lift') + (application.OS === 'OS X'? '    Z' : ' (Z)')
-                onTriggered: timeline.lift(trackIndex, index)
+                onTriggered: timeline.liftSelection()
             }
             MenuItem {
                 enabled: !isTransition
