@@ -23,6 +23,15 @@
 
 #include <Logger.h>
 
+enum Columns {
+    COLUMN_COLOR = 0,
+    COLUMN_TEXT,
+    COLUMN_START,
+    COLUMN_END,
+    COLUMN_DURATION,
+    COLUMN_COUNT
+};
+
 static void markerToProperties(const Markers::Marker& marker, Mlt::Properties* properties, Mlt::Producer* producer)
 {
     properties->set("text", qUtf8Printable(marker.text));
@@ -232,9 +241,10 @@ void MarkersModel::update(int markerIndex,  const Markers::Marker& marker)
 
 void MarkersModel::doUpdate(int markerIndex,  const Markers::Marker& marker)
 {
-    QModelIndex modelIndex = index(markerIndex, 0);
-    if (!modelIndex.isValid()) {
-        LOG_ERROR() << "Invalid Index: " << markerIndex;
+    QModelIndex startIndex = index(markerIndex, 0);
+    QModelIndex endIndex = index(markerIndex, COLUMN_COUNT - 1);
+    if (!startIndex.isValid() || !endIndex.isValid()) {
+        LOG_ERROR() << "Invalid Index: " << startIndex << endIndex;
         return;
     }
     Mlt::Properties* markerProperties = getMarkerProperties(markerIndex);
@@ -249,7 +259,7 @@ void MarkersModel::doUpdate(int markerIndex,  const Markers::Marker& marker)
     markerToProperties(marker, markerProperties, m_producer);
     delete markerProperties;
 
-    emit dataChanged(modelIndex, modelIndex, QVector<int>() << TextRole << StartRole << EndRole << ColorRole);
+    emit dataChanged(startIndex, endIndex, QVector<int>() << Qt::DisplayRole << TextRole << StartRole << EndRole << ColorRole);
     if ((markerBefore.end == markerBefore.start && marker.end > marker.start) ||
         (markerBefore.end != markerBefore.start && marker.end == marker.start) ||
         (markerBefore.text != marker.text)) {
@@ -376,17 +386,29 @@ int MarkersModel::rowCount(const QModelIndex& parent) const
 int MarkersModel::columnCount(const QModelIndex& parent) const
 {
     Q_UNUSED(parent)
-    return 1;
+    return COLUMN_COUNT;
 }
 
 QVariant MarkersModel::data(const QModelIndex& index, int role) const
 {
     QVariant result;
+
+    switch (role) {
+        case Qt::ToolTipRole:
+        case Qt::StatusTipRole:
+        case Qt::DecorationRole:
+        case Qt::FontRole:
+        case Qt::TextAlignmentRole:
+        case Qt::CheckStateRole:
+        case Qt::SizeHintRole:
+            return result;
+    }
+
     if (!m_producer) {
         LOG_DEBUG() << "No Producer: " << index.row() << index.column() << role;
         return result;
     }
-    if (!index.isValid() || index.column() != 0 || index.row() < 0 || index.row() >= markerCount()) {
+    if (!index.isValid() || index.column() < 0 || index.column() >= COLUMN_COUNT || index.row() < 0 || index.row() >= markerCount()) {
         LOG_ERROR() << "Invalid Index: " << index.row() << index.column() << role;
         return result;
     }
@@ -406,9 +428,44 @@ QVariant MarkersModel::data(const QModelIndex& index, int role) const
 
     Markers::Marker marker;
     propertiesToMarker(markerProperties, marker, m_producer);
-
     switch (role) {
         case Qt::DisplayRole:
+            switch (index.column()) {
+                case COLUMN_COLOR:
+                    result = marker.color;
+                    break;
+                case COLUMN_TEXT:
+                    result = marker.text;
+                    break;
+                case COLUMN_START:
+                    result = QString(m_producer->frames_to_time(marker.start, mlt_time_smpte_df));
+                    break;
+                case COLUMN_END:
+                    result = QString(m_producer->frames_to_time(marker.end, mlt_time_smpte_df));
+                    break;
+                case COLUMN_DURATION:
+                    result = QString(m_producer->frames_to_time(marker.end - marker.start, mlt_time_smpte_df));
+                    break;
+                default:
+                    LOG_ERROR() << "Invalid Column" << index.column() << role;
+                    break;
+            }
+            break;
+        case Qt::BackgroundRole:
+            if (index.column() == COLUMN_COLOR) {
+                result = marker.color;
+            }
+            break;
+        case Qt::ForegroundRole:
+            if (index.column() == COLUMN_COLOR) {
+                // Pick a contrasting color
+                if (marker.color.value() < 127) {
+                    result = QColor(Qt::white);
+                } else {
+                    result = QColor(Qt::black);
+                }
+            }
+            break;
         case TextRole:
             result = marker.text;
             break;
@@ -422,7 +479,7 @@ QVariant MarkersModel::data(const QModelIndex& index, int role) const
             result = marker.color;
             break;
         default:
-            LOG_ERROR() << "Invalid Role" << index.row() << role;
+            LOG_ERROR() << "Invalid Role" << index.row() << index.column() << roleNames()[role] << role;
             break;
     }
     delete markersListProperties;
@@ -430,10 +487,32 @@ QVariant MarkersModel::data(const QModelIndex& index, int role) const
     return result;
 }
 
+QVariant MarkersModel::headerData(int section, Qt::Orientation orientation, int role) const
+{
+    if (role == Qt::DisplayRole && orientation == Qt::Horizontal)
+    {
+        switch (section) {
+        case COLUMN_COLOR:
+            return tr("Color");
+        case COLUMN_TEXT:
+            return tr("Marker");
+        case COLUMN_START:
+            return tr("Start");
+        case COLUMN_END:
+            return tr("End");
+        case COLUMN_DURATION:
+            return tr("Duration");
+        default:
+            break;
+        }
+    }
+    return QVariant();
+}
+
 QModelIndex MarkersModel::index(int row, int column, const QModelIndex& parent) const
 {
     Q_UNUSED(parent)
-    if (column != 0 || row < 0 || row >= markerCount())
+    if (column < 0 || column >= COLUMN_COUNT || row < 0 || row >= markerCount())
         return QModelIndex();
     return createIndex(row, column, (int)0);
 }
@@ -446,7 +525,7 @@ QModelIndex MarkersModel::parent(const QModelIndex& index) const
 
 QHash<int, QByteArray> MarkersModel::roleNames() const
 {
-    QHash<int, QByteArray> roles;
+    QHash<int, QByteArray> roles = QAbstractItemModel::roleNames();
     roles[TextRole]        = "text";
     roles[StartRole]       = "start";
     roles[EndRole]         = "end";

@@ -130,6 +130,7 @@ SOURCES += main.cpp\
     dialogs/unlinkedfilesdialog.cpp \
     dialogs/transcodedialog.cpp \
     docks/keyframesdock.cpp \
+    docks/markersdock.cpp \
     qmltypes/qmlproducer.cpp \
     models/keyframesmodel.cpp \
     models/markersmodel.cpp \
@@ -270,6 +271,7 @@ HEADERS  += mainwindow.h \
     dialogs/unlinkedfilesdialog.h \
     dialogs/transcodedialog.h \
     docks/keyframesdock.h \
+    docks/markersdock.h \
     qmltypes/qmlproducer.h \
     models/keyframesmodel.h \
     models/markersmodel.h \
