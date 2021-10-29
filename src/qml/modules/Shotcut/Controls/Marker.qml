@@ -17,7 +17,7 @@
 
 import QtQuick 2.12
 import QtQuick.Controls 2.12
-import QtQuick.Shapes 1.12
+import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     id: root
@@ -73,23 +73,12 @@ Item {
         }
     }
 
-    Shape {
+    Shotcut.MarkerStart {
         id: markerStart
         width: 7
         height: 17
         x: (start * timeScale) - 7
-        antialiasing: true
-        ShapePath {
-            strokeWidth: 1
-            strokeColor: 'transparent'
-            fillColor: root.markerColor
-            startX: 0
-            startY: 0
-            PathLine { x: 0; y: 10 }
-            PathLine { x: 7; y: 17 }
-            PathLine { x: 7; y: 0 }
-            PathLine { x: 0; y: 0 }
-        }
+        fillColor: root.markerColor
 
         MouseArea {
             id: startMouseArea
@@ -143,23 +132,12 @@ Item {
         }
     }
 
-    Shape {
+    Shotcut.MarkerEnd {
         id: markerEnd
         width: 7
         height: 17
         x: end * timeScale
-        antialiasing: true
-        ShapePath {
-            strokeWidth: 1
-            strokeColor: 'transparent'
-            fillColor: root.markerColor
-            startX: 0
-            startY: 0
-            PathLine { x: 0; y: 17 }
-            PathLine { x: 7; y: 10 }
-            PathLine { x: 7; y: 0 }
-            PathLine { x: 0; y: 0 }
-        }
+        fillColor: root.markerColor
 
         MouseArea {
             id: endMouseArea

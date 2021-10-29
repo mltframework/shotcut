@@ -159,12 +159,76 @@ private:
     bool m_isActive {true};
 };
 
+class MarkerStart : public QQuickPaintedItem
+{
+    Q_OBJECT
+    Q_PROPERTY(QColor fillColor MEMBER m_color NOTIFY propertyChanged)
+
+public:
+    MarkerStart()
+    {
+        setAntialiasing(QPainter::Antialiasing);
+        setOpaquePainting(true);
+        connect(this, SIGNAL(propertyChanged()), this, SLOT(update()));
+    }
+
+    void paint(QPainter *painter)
+    {
+        QPainterPath path;
+        path.moveTo(0, 0);
+        path.lineTo(0, 10);
+        path.lineTo(7, 17);
+        path.lineTo(7, 0);
+        path.lineTo(0, 0);
+        painter->fillPath(path, m_color);
+    }
+
+signals:
+    void propertyChanged();
+
+private:
+    QColor m_color;
+};
+
+class MarkerEnd : public QQuickPaintedItem
+{
+    Q_OBJECT
+    Q_PROPERTY(QColor fillColor MEMBER m_color NOTIFY propertyChanged)
+
+public:
+    MarkerEnd()
+    {
+        setAntialiasing(QPainter::Antialiasing);
+        setOpaquePainting(true);
+        connect(this, SIGNAL(propertyChanged()), this, SLOT(update()));
+    }
+
+    void paint(QPainter *painter)
+    {
+        QPainterPath path;
+        path.moveTo(0, 17);
+        path.lineTo(7, 10);
+        path.lineTo(7, 0);
+        path.lineTo(0, 0);
+        painter->fillPath(path, m_color);
+    }
+
+signals:
+    void propertyChanged();
+
+private:
+    QColor m_color;
+};
+
+
 void registerTimelineItems()
 {
     qmlRegisterType<TimelineTransition>("Shotcut.Controls", 1, 0, "TimelineTransition");
     qmlRegisterType<TimelinePlayhead>("Shotcut.Controls", 1, 0, "TimelinePlayhead");
     qmlRegisterType<TimelineTriangle>("Shotcut.Controls", 1, 0, "TimelineTriangle");
     qmlRegisterType<TimelineWaveform>("Shotcut.Controls", 1, 0, "TimelineWaveform");
+    qmlRegisterType<MarkerStart>("Shotcut.Controls", 1, 0, "MarkerStart");
+    qmlRegisterType<MarkerEnd>("Shotcut.Controls", 1, 0, "MarkerEnd");
 }
 
 #include "timelineitems.moc"
