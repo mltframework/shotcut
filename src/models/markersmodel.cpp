@@ -28,12 +28,8 @@ static void markerToProperties(const Markers::Marker& marker, Mlt::Properties* p
     properties->set("text", qUtf8Printable(marker.text));
     properties->set("start", producer->frames_to_time(marker.start, mlt_time_clock));
     properties->set("end", producer->frames_to_time(marker.end, mlt_time_clock));
-    mlt_color color;
-    color.r = marker.color.red();
-    color.g = marker.color.green();
-    color.b = marker.color.blue();
-    color.a = 0xFF;
-    properties->set("color", color);
+    auto s = QString::asprintf("#%02X%02X%02X", marker.color.red(), marker.color.green(), marker.color.blue());
+    properties->set("color", s.toLatin1().constData());
 }
 
 static void propertiesToMarker(Mlt::Properties* properties, Markers::Marker& marker, Mlt::Producer* producer)
