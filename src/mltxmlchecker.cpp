@@ -692,6 +692,9 @@ void MltXmlChecker::checkForProxy(const QString& mlt_service, QVector<MltXmlChec
             for (auto& p : properties) {
                 if (p.first == "resource") {
                     p.second = ProxyManager::GoProProxyFilePath(resource);
+                    if (isTimewarp) {
+                        p.second = QString("%1:%2").arg(speed).arg(p.second);
+                    }
                     properties << MltProperty(kIsProxyProperty, "1");
                     properties << MltProperty(kOriginalResourceProperty, resource);
                     m_isUpdated = true;
