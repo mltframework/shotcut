@@ -251,7 +251,8 @@ void MarkersModel::doUpdate(int markerIndex,  const Markers::Marker& marker)
 
     emit dataChanged(modelIndex, modelIndex, QVector<int>() << TextRole << StartRole << EndRole << ColorRole);
     if ((markerBefore.end == markerBefore.start && marker.end > marker.start) ||
-        (markerBefore.end != markerBefore.start && marker.end == marker.start)) {
+        (markerBefore.end != markerBefore.start && marker.end == marker.start) ||
+        (markerBefore.text != marker.text)) {
         emit rangesChanged();
     }
     emit modified();
