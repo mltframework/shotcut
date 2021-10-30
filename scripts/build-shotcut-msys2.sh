@@ -1069,10 +1069,10 @@ function deploy
 
   log Copying some libs from Qt
   if [ "$DEBUG_BUILD" != "1" -o "$SDK" = "1" ]; then
-    cmd cp -p "$QTDIR"/bin/Qt5{Core,Gui,Multimedia,Network,OpenGL,Qml,QmlModels,QmlWorkerScript,Quick,QuickControls2,QuickShapes,QuickTemplates2,QuickWidgets,Sql,Svg,WebSockets,Widgets,WinExtras,Xml}.dll .
+    cmd cp -p "$QTDIR"/bin/Qt5{Core,Gui,Multimedia,Network,OpenGL,Qml,QmlModels,QmlWorkerScript,Quick,QuickControls2,QuickTemplates2,QuickWidgets,Sql,Svg,WebSockets,Widgets,WinExtras,Xml}.dll .
   fi
   if [ "$DEBUG_BUILD" = "1" -o "$SDK" = "1" ]; then
-    cmd cp -p "$QTDIR"/bin/Qt5{Core,Gui,Multimedia,Network,OpenGL,Qml,QmlModels,QmlWorkerScript,Quick,QuickControls2,QuickShapes,QuickTemplates2,QuickWidgets,Sql,Svg,WebSockets,Widgets,WinExtras,Xml}d.dll .
+    cmd cp -p "$QTDIR"/bin/Qt5{Core,Gui,Multimedia,Network,OpenGL,Qml,QmlModels,QmlWorkerScript,Quick,QuickControls2,QuickTemplates2,QuickWidgets,Sql,Svg,WebSockets,Widgets,WinExtras,Xml}d.dll .
   fi
 
   if [ "ENABLE_SWH_PLUGINS" != "1" ]; then
