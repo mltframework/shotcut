@@ -141,39 +141,39 @@
 <context>
     <name>AudioPeakMeterScopeWidget</name>
     <message>
-        <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="90"/>
+        <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="91"/>
         <source>Audio Peak Meter</source>
         <translation>Meidheadair-bharran fuaime</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="107"/>
-        <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="109"/>
+        <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="108"/>
+        <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="110"/>
         <source>L</source>
         <translation>L</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="107"/>
-        <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="109"/>
+        <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="108"/>
+        <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="110"/>
         <source>R</source>
         <translation>R</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="109"/>
+        <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="110"/>
         <source>C</source>
         <translation>C</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="109"/>
+        <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="110"/>
         <source>LF</source>
         <translation>LF</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="109"/>
+        <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="110"/>
         <source>Ls</source>
         <translation>Ls</translation>
     </message>
     <message>
-        <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="109"/>
+        <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="110"/>
         <source>Rs</source>
         <translation>Rs</translation>
     </message>
@@ -735,63 +735,63 @@ Ma tha, tagh fòrmat gu h-ìosal is briog air “Ceart ma-thà” a thaghadh ain
         <translation>Gearr às</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/Clip.qml" line="644"/>
+        <location filename="../src/qml/views/timeline/Clip.qml" line="643"/>
         <source>Copy</source>
         <translation>Dèan lethbhreac</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/Clip.qml" line="648"/>
+        <location filename="../src/qml/views/timeline/Clip.qml" line="647"/>
         <source>Remove</source>
         <translation>Thoir air falbh</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/Clip.qml" line="657"/>
+        <location filename="../src/qml/views/timeline/Clip.qml" line="656"/>
         <source>More</source>
         <translation>Barrachd</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/Clip.qml" line="660"/>
+        <location filename="../src/qml/views/timeline/Clip.qml" line="659"/>
         <source>Lift</source>
         <translation>Tog</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/Clip.qml" line="665"/>
+        <location filename="../src/qml/views/timeline/Clip.qml" line="664"/>
         <source>Replace</source>
         <translation>Cuir ’na àite</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/Clip.qml" line="710"/>
+        <location filename="../src/qml/views/timeline/Clip.qml" line="709"/>
         <source>Cancel</source>
         <translation>Sguir dheth</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/Clip.qml" line="653"/>
+        <location filename="../src/qml/views/timeline/Clip.qml" line="652"/>
         <source>Split At Playhead</source>
         <translation>Sgoilt aig a’ cheann-chluich</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/Clip.qml" line="670"/>
+        <location filename="../src/qml/views/timeline/Clip.qml" line="669"/>
         <source>Merge with next clip</source>
         <translation>Co-aonaich leis an ath-chliop</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/Clip.qml" line="675"/>
+        <location filename="../src/qml/views/timeline/Clip.qml" line="674"/>
         <source>Detach Audio</source>
         <translation>Dealaich an fhuaim</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/Clip.qml" line="680"/>
+        <location filename="../src/qml/views/timeline/Clip.qml" line="679"/>
         <source>Update Thumbnails</source>
         <translation>Ùraich na dealbhagan</translation>
     </message>
     <message>
         <location filename="../src/qml/views/keyframes/Clip.qml" line="492"/>
-        <location filename="../src/qml/views/timeline/Clip.qml" line="696"/>
+        <location filename="../src/qml/views/timeline/Clip.qml" line="695"/>
         <source>Rebuild Audio Waveform</source>
         <translation>Ath-thog cruth-tuinn na fuaime</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/Clip.qml" line="702"/>
+        <location filename="../src/qml/views/timeline/Clip.qml" line="701"/>
         <source>Properties</source>
         <translation>Roghainnean</translation>
     </message>
@@ -898,12 +898,17 @@ Ma tha, tagh fòrmat gu h-ìosal is briog air “Ceart ma-thà” a thaghadh ain
         <translation>Dath</translation>
     </message>
     <message>
-        <location filename="../src/widgets/colorproducerwidget.ui" line="35"/>
+        <location filename="../src/widgets/colorproducerwidget.ui" line="30"/>
+        <source>Comments:</source>
+        <translation type="unfinished">Beachdan:</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/colorproducerwidget.ui" line="61"/>
         <source>Color...</source>
         <translation>Dath…</translation>
     </message>
     <message>
-        <location filename="../src/widgets/colorproducerwidget.ui" line="48"/>
+        <location filename="../src/widgets/colorproducerwidget.ui" line="74"/>
         <source>#00000000</source>
         <translation>#00000000</translation>
     </message>
@@ -1100,7 +1105,7 @@ Ma tha, tagh fòrmat gu h-ìosal is briog air “Ceart ma-thà” a thaghadh ain
         <translation>&lt;small&gt;(Fàg an t-ainm bàn mur eil thu airson ro-sheata a shàbhaladh ’s tu airson modh video sealadach no sònraichte dhan phròiseact a chleachdadh)&lt;/small&gt;</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/customprofiledialog.cpp" line="120"/>
+        <location filename="../src/dialogs/customprofiledialog.cpp" line="106"/>
         <source>Video Mode Frames/sec</source>
         <translation>Frèam/diog modh a’ video</translation>
     </message>
@@ -1180,6 +1185,52 @@ Ma tha, tagh fòrmat gu h-ìosal is briog air “Ceart ma-thà” a thaghadh ain
         <location filename="../src/dialogs/durationdialog.ui" line="25"/>
         <source>Duration</source>
         <translation>Faid</translation>
+    </message>
+</context>
+<context>
+    <name>EditMarkerDialog</name>
+    <message>
+        <location filename="../src/dialogs/editmarkerdialog.cpp" line="30"/>
+        <source>Edit Marker</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>EditMarkerWidget</name>
+    <message>
+        <location filename="../src/widgets/editmarkerwidget.cpp" line="42"/>
+        <source>Set the text for this marker.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/editmarkerwidget.cpp" line="45"/>
+        <source>Color...</source>
+        <translation type="unfinished">Dath…</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/editmarkerwidget.cpp" line="54"/>
+        <source>Start</source>
+        <translation type="unfinished">Tòisich</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/editmarkerwidget.cpp" line="59"/>
+        <source>Set the start time for this marker.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/editmarkerwidget.cpp" line="63"/>
+        <source>End</source>
+        <translation type="unfinished">Deireadh</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/editmarkerwidget.cpp" line="68"/>
+        <source>Set the end time for this marker.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/editmarkerwidget.cpp" line="72"/>
+        <source>Duration:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1288,7 +1339,7 @@ Ma tha, tagh fòrmat gu h-ìosal is briog air “Ceart ma-thà” a thaghadh ain
         <translation>Video</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="755"/>
+        <location filename="../src/docks/encodedock.ui" line="805"/>
         <source>Interpolation</source>
         <translation>Eadar-phòlachadh</translation>
     </message>
@@ -1328,22 +1379,22 @@ Ma tha, tagh fòrmat gu h-ìosal is briog air “Ceart ma-thà” a thaghadh ain
         <translation>Dùmhlachd-bhreacaidh</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="692"/>
+        <location filename="../src/docks/encodedock.ui" line="742"/>
         <source>Frames/sec</source>
         <translation>Frèam/diog</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="720"/>
+        <location filename="../src/docks/encodedock.ui" line="770"/>
         <source>:</source>
         <translation>:</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="620"/>
+        <location filename="../src/docks/encodedock.ui" line="670"/>
         <source>Bottom Field First</source>
         <translation>An raon aig a’ bhonn an toiseach</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="625"/>
+        <location filename="../src/docks/encodedock.ui" line="675"/>
         <source>Top Field First</source>
         <translation>An raon air a’ bharr an toiseach</translation>
     </message>
@@ -1373,27 +1424,27 @@ Ma tha, tagh fòrmat gu h-ìosal is briog air “Ceart ma-thà” a thaghadh ain
         <translation>Dì-fhilleadh</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="654"/>
+        <location filename="../src/docks/encodedock.ui" line="704"/>
         <source>Nearest Neighbor (fast)</source>
         <translation>Nàbaidhean as fhaisge (luath)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="659"/>
+        <location filename="../src/docks/encodedock.ui" line="709"/>
         <source>Bilinear (good)</source>
         <translation>Dà-loidhneach (math)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="664"/>
+        <location filename="../src/docks/encodedock.ui" line="714"/>
         <source>Bicubic (better)</source>
         <translation>Dà-chiùbach (nas fhearr)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="765"/>
+        <location filename="../src/docks/encodedock.ui" line="815"/>
         <source>Use preview scaling</source>
         <translation>Cleachd sgèileadh ro-sheallaidh</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="772"/>
+        <location filename="../src/docks/encodedock.ui" line="822"/>
         <source>This enables multiple image processing threads.
 Sometimes, this can be a problem, and you can
 test if turning this off helps. For example, some
@@ -1408,296 +1459,302 @@ chaidh aithris gun do dh’adhbharaich seo trioblaid nuair
 a bha am pròiseasadh co-shìnteach an comas.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="780"/>
+        <location filename="../src/docks/encodedock.ui" line="830"/>
         <source>Parallel processing</source>
         <translation>Pròiseasadh co-shìnteach</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="794"/>
-        <location filename="../src/docks/encodedock.ui" line="803"/>
-        <location filename="../src/docks/encodedock.ui" line="1481"/>
+        <location filename="../src/docks/encodedock.ui" line="844"/>
+        <location filename="../src/docks/encodedock.ui" line="853"/>
+        <location filename="../src/docks/encodedock.ui" line="1531"/>
         <source>Codec</source>
         <translation>Codec</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="833"/>
+        <location filename="../src/docks/encodedock.ui" line="883"/>
         <source>GOP</source>
         <translation>GOP</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="845"/>
+        <location filename="../src/docks/encodedock.ui" line="895"/>
         <source>GOP = group of pictures, which is the maximum key frame interval</source>
         <translation>GOP = group of pictures (buidheann dhe dhealbhan), seo an t-eadaramh as motha eadar dà fhrèam-iuchrach</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="858"/>
+        <location filename="../src/docks/encodedock.ui" line="908"/>
         <source>frames</source>
         <translation>freamaichean</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="878"/>
+        <location filename="../src/docks/encodedock.ui" line="928"/>
         <source>A fixed GOP means that keyframes will
 not be inserted at detected scene changes.</source>
         <translation>Is ciall dha GOP socraichte nach dèid frèam-iuchrach a chur
 a-steach nuair a mhothaichear air atharrachadh gu sealladh ùr.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="882"/>
+        <location filename="../src/docks/encodedock.ui" line="932"/>
         <source>Fixed</source>
         <translation>Socraichte</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="906"/>
-        <location filename="../src/docks/encodedock.ui" line="1523"/>
+        <location filename="../src/docks/encodedock.ui" line="956"/>
+        <location filename="../src/docks/encodedock.ui" line="1573"/>
         <source>The average bit rate</source>
         <translation>Reat cuibheasach nam biod</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1059"/>
-        <location filename="../src/docks/encodedock.ui" line="1606"/>
+        <location filename="../src/docks/encodedock.ui" line="1109"/>
+        <location filename="../src/docks/encodedock.ui" line="1656"/>
         <source>b/s</source>
         <translation>biod/diog</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1081"/>
+        <location filename="../src/docks/encodedock.ui" line="1131"/>
         <source>Disable video</source>
         <translation>Cuir a’ video à comas</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1088"/>
+        <location filename="../src/docks/encodedock.ui" line="1138"/>
         <source>Dual pass</source>
         <translation>Bealach dùbailte</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1095"/>
+        <location filename="../src/docks/encodedock.ui" line="1145"/>
         <source>B frames</source>
         <translation>Frèamaichean B</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1107"/>
+        <location filename="../src/docks/encodedock.ui" line="1157"/>
         <source>B frames are the bidirectional &quot;delta&quot; pictures
 in temporal compression</source>
         <translation>’S e na dealbhan dà-chomhaireach no “delta” ann an
 dùmhlachadh ùine a tha sna frèamaichean B</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1146"/>
+        <location filename="../src/docks/encodedock.ui" line="1196"/>
         <source>Codec threads</source>
         <translation>Snàithean codec</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1161"/>
+        <location filename="../src/docks/encodedock.ui" line="1211"/>
         <source>(0 = auto)</source>
         <translation>(0 = fèin-obrachail)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1183"/>
-        <location filename="../src/docks/encodedock.ui" line="1648"/>
+        <location filename="../src/docks/encodedock.ui" line="1233"/>
+        <location filename="../src/docks/encodedock.ui" line="1698"/>
         <source>Rate control</source>
         <translation>Smachd air an reat</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1196"/>
-        <location filename="../src/docks/encodedock.ui" line="1661"/>
+        <location filename="../src/docks/encodedock.ui" line="1246"/>
+        <location filename="../src/docks/encodedock.ui" line="1711"/>
         <source>Average Bitrate</source>
         <translation>Reat cuibheasach nam biod</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1201"/>
-        <location filename="../src/docks/encodedock.ui" line="1666"/>
+        <location filename="../src/docks/encodedock.ui" line="1251"/>
+        <location filename="../src/docks/encodedock.ui" line="1716"/>
         <source>Constant Bitrate</source>
         <translation>Reat cunbhalach nam biod</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1206"/>
-        <location filename="../src/docks/encodedock.ui" line="1671"/>
+        <location filename="../src/docks/encodedock.ui" line="1256"/>
+        <location filename="../src/docks/encodedock.ui" line="1721"/>
         <source>Quality-based VBR</source>
         <translation>Reat caochlaideach a-rèir càileachd</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1211"/>
+        <location filename="../src/docks/encodedock.ui" line="1261"/>
         <source>Constrained VBR</source>
         <translation>VBR cuingichte</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1234"/>
+        <location filename="../src/docks/encodedock.ui" line="1284"/>
         <source>Buffer size</source>
         <translation>Meud a’ bhufair</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1256"/>
+        <location filename="../src/docks/encodedock.ui" line="1306"/>
         <source>KiB</source>
         <translation>KiB</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1278"/>
-        <location filename="../src/docks/encodedock.ui" line="1694"/>
+        <location filename="../src/docks/encodedock.ui" line="1328"/>
+        <location filename="../src/docks/encodedock.ui" line="1744"/>
         <source>Quality</source>
         <translation>Càileachd</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1290"/>
-        <location filename="../src/docks/encodedock.ui" line="1706"/>
+        <location filename="../src/docks/encodedock.ui" line="1340"/>
+        <location filename="../src/docks/encodedock.ui" line="1756"/>
         <source> %</source>
         <translation> %</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1306"/>
-        <location filename="../src/docks/encodedock.ui" line="1722"/>
+        <location filename="../src/docks/encodedock.ui" line="1356"/>
+        <location filename="../src/docks/encodedock.ui" line="1772"/>
         <source>TextLabel</source>
         <translation>Leubail an teacsa</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1328"/>
-        <location filename="../src/docks/encodedock.ui" line="1511"/>
+        <location filename="../src/docks/encodedock.ui" line="1378"/>
+        <location filename="../src/docks/encodedock.ui" line="1561"/>
         <source>Bitrate</source>
         <translation>Reat bhiodan</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1339"/>
+        <location filename="../src/docks/encodedock.ui" line="1389"/>
         <source>Audio</source>
         <translation>Fuaim</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1348"/>
+        <location filename="../src/docks/encodedock.ui" line="1398"/>
         <source>Channels</source>
         <translation>Seanailean</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1360"/>
+        <location filename="../src/docks/encodedock.ui" line="1410"/>
         <source>The number of audio channels in the output.</source>
         <translation>Uiread de sheanailean fuaime san às-chur.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1364"/>
+        <location filename="../src/docks/encodedock.ui" line="1414"/>
         <source>1 (mono)</source>
         <translation>1 (mono)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1369"/>
+        <location filename="../src/docks/encodedock.ui" line="1419"/>
         <source>2 (stereo)</source>
         <translation>2 (stereo)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1374"/>
+        <location filename="../src/docks/encodedock.ui" line="1424"/>
         <source>6 (5.1)</source>
         <translation>6 (5.1)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1449"/>
+        <location filename="../src/docks/encodedock.ui" line="1499"/>
         <source>Hz</source>
         <translation>Hz</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1471"/>
+        <location filename="../src/docks/encodedock.ui" line="1521"/>
         <source>Sample rate</source>
         <translation>Reat samplachaidh</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1628"/>
+        <location filename="../src/docks/encodedock.ui" line="1678"/>
         <source>Disable audio</source>
         <translation>Cuir an fhuaim à comas</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1745"/>
+        <location filename="../src/docks/encodedock.ui" line="1795"/>
         <source>Other</source>
         <translation>Roghainnean eile</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1787"/>
+        <location filename="../src/docks/encodedock.ui" line="1837"/>
         <location filename="../src/docks/encodedock.cpp" line="905"/>
-        <location filename="../src/docks/encodedock.cpp" line="1426"/>
-        <location filename="../src/docks/encodedock.cpp" line="1873"/>
+        <location filename="../src/docks/encodedock.cpp" line="1440"/>
+        <location filename="../src/docks/encodedock.cpp" line="1888"/>
         <source>Export File</source>
         <translation>Às-phortaich am faidhle</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1797"/>
+        <location filename="../src/docks/encodedock.ui" line="1847"/>
         <source>Reset options to defaults</source>
         <translation>Ath-shuidhich air na bun-roghainnean</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1800"/>
+        <location filename="../src/docks/encodedock.ui" line="1850"/>
         <source>Reset</source>
         <translation>Ath-shuidhich</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1807"/>
+        <location filename="../src/docks/encodedock.ui" line="1857"/>
         <source>Advanced</source>
         <translation>Adhartach</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1817"/>
+        <location filename="../src/docks/encodedock.ui" line="1867"/>
         <source>Always start in Advanced mode</source>
         <translation>Tòisich sa mhodh adhartach an-còmhnaidh</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1827"/>
-        <location filename="../src/docks/encodedock.cpp" line="1586"/>
-        <location filename="../src/docks/encodedock.cpp" line="1593"/>
-        <location filename="../src/docks/encodedock.cpp" line="1706"/>
+        <location filename="../src/docks/encodedock.ui" line="1877"/>
+        <location filename="../src/docks/encodedock.cpp" line="1600"/>
+        <location filename="../src/docks/encodedock.cpp" line="1607"/>
+        <location filename="../src/docks/encodedock.cpp" line="1720"/>
         <source>Stream</source>
         <translation>Sruthadh</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.ui" line="1854"/>
-        <location filename="../src/docks/encodedock.cpp" line="1401"/>
-        <location filename="../src/docks/encodedock.cpp" line="1510"/>
+        <location filename="../src/docks/encodedock.ui" line="1904"/>
+        <location filename="../src/docks/encodedock.cpp" line="1415"/>
         <location filename="../src/docks/encodedock.cpp" line="1524"/>
+        <location filename="../src/docks/encodedock.cpp" line="1538"/>
         <source>Stop Capture</source>
         <translation>Sguir dhen ghlacadh</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="108"/>
+        <location filename="../src/docks/encodedock.cpp" line="109"/>
         <source>Automatic from extension</source>
         <translation>Gu fèin-obrachail on leudachan</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="116"/>
-        <location filename="../src/docks/encodedock.cpp" line="126"/>
+        <location filename="../src/docks/encodedock.cpp" line="117"/>
+        <location filename="../src/docks/encodedock.cpp" line="127"/>
         <source>Default for format</source>
         <translation>A’ bhun-roghainn air an fhòrmat</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="407"/>
+        <location filename="../src/docks/encodedock.cpp" line="408"/>
         <source>Timeline</source>
         <translation>Loidhne-ama</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="409"/>
+        <location filename="../src/docks/encodedock.cpp" line="410"/>
         <source>Playlist</source>
         <translation>Liosta-chluich</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="410"/>
+        <location filename="../src/docks/encodedock.cpp" line="411"/>
         <source>Each Playlist Item</source>
         <translation>Gach nì na liosta-cluich</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="413"/>
-        <location filename="../src/docks/encodedock.cpp" line="418"/>
+        <location filename="../src/docks/encodedock.cpp" line="414"/>
+        <location filename="../src/docks/encodedock.cpp" line="419"/>
         <source>Source</source>
         <translation>Tùs</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="425"/>
+        <location filename="../src/docks/encodedock.cpp" line="424"/>
+        <location filename="../src/docks/encodedock.cpp" line="430"/>
+        <source>Marker</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/encodedock.cpp" line="439"/>
         <source>You must enter numeric values using &apos;%1&apos; as the decimal point.</source>
         <translation>Feumaidh tu àireamhan a chur a-steach le “%1” ’na phuing dheicheach.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="433"/>
-        <location filename="../src/docks/encodedock.cpp" line="1348"/>
-        <location filename="../src/docks/encodedock.cpp" line="1349"/>
+        <location filename="../src/docks/encodedock.cpp" line="447"/>
+        <location filename="../src/docks/encodedock.cpp" line="1362"/>
+        <location filename="../src/docks/encodedock.cpp" line="1363"/>
         <source>Custom</source>
         <translation>Gnàthaichte</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="469"/>
+        <location filename="../src/docks/encodedock.cpp" line="483"/>
         <source>Stock</source>
         <translation>Stòras</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="472"/>
+        <location filename="../src/docks/encodedock.cpp" line="486"/>
         <source>Default</source>
         <translation>Bun-roghainn</translation>
     </message>
@@ -1709,114 +1766,114 @@ Try again with a different folder or file name.</source>
 Feuch ris a-rithist le ainm pasgain no faidhle eile.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1111"/>
+        <location filename="../src/docks/encodedock.cpp" line="1125"/>
         <source>Shotcut found filters that require analysis jobs that have not run.
 Do you want to run the analysis jobs now?</source>
         <translation>Lorg Shotcut criathrag a tha feumach air obraichean sgrùdaidh nach each a ruith.
 A bheil thu airson an sgrùdadh a ruith an-dràsta?</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1426"/>
-        <location filename="../src/docks/encodedock.cpp" line="1875"/>
+        <location filename="../src/docks/encodedock.cpp" line="1440"/>
+        <location filename="../src/docks/encodedock.cpp" line="1890"/>
         <source>Capture File</source>
         <translation>Faidhle glacaidh</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1428"/>
+        <location filename="../src/docks/encodedock.cpp" line="1442"/>
         <source>Export Files</source>
         <translation>Às-phortaich faidhlichean</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1429"/>
+        <location filename="../src/docks/encodedock.cpp" line="1443"/>
         <source>Export Each Playlist Item</source>
         <translation>Às-phortaich nithean na liosta-chluiche fa leth</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1438"/>
+        <location filename="../src/docks/encodedock.cpp" line="1452"/>
         <source>%1 (*.%2);;All Files (*)</source>
         <translation>%1 (*.%2);;A h-uile faidhle (*)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1440"/>
+        <location filename="../src/docks/encodedock.cpp" line="1454"/>
         <source>Determined by Export (*)</source>
         <translation>Suidhichidh an t-às-phortadh e (*)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1467"/>
+        <location filename="../src/docks/encodedock.cpp" line="1481"/>
         <source>The drive you chose only has %1 MiB of free space.
 Do you still want to continue?</source>
         <translation>Chan eil ach %1 MiB a dh’àite saor air fhàgail air an draibh a thagh thu.
 A bheil thu airson leantainn air adhart co-dhiù?</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1474"/>
+        <location filename="../src/docks/encodedock.cpp" line="1488"/>
         <source>Do not show this anymore.</source>
         <comment>Export free disk space warning dialog</comment>
         <translation>Na seall seo tuilleadh.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1479"/>
+        <location filename="../src/docks/encodedock.cpp" line="1493"/>
         <source>Export canceled.</source>
         <translation>Chaidh sgur dhen às-phortadh.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1581"/>
-        <location filename="../src/docks/encodedock.cpp" line="1602"/>
+        <location filename="../src/docks/encodedock.cpp" line="1595"/>
+        <location filename="../src/docks/encodedock.cpp" line="1616"/>
         <source>Stop Stream</source>
         <translation>Sguir dhen t-sruthadh</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1594"/>
+        <location filename="../src/docks/encodedock.cpp" line="1608"/>
         <source>Enter the network protocol scheme, address, port, and parameters as an URL:</source>
         <translation>Cuir a-steach sgeama pròtacail, seòladh, port agus paramadairean lìonraidh ’na URL:</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1639"/>
+        <location filename="../src/docks/encodedock.cpp" line="1653"/>
         <source>Add Export Preset</source>
         <translation>Cuir ris ro-shuidheachadh an às-chuir</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1683"/>
+        <location filename="../src/docks/encodedock.cpp" line="1697"/>
         <source>Delete Preset</source>
         <translation>Sguab às an ro-shuidheachadh</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1684"/>
+        <location filename="../src/docks/encodedock.cpp" line="1698"/>
         <source>Are you sure you want to delete %1?</source>
         <translation>A bheil thu cinnteach gu bheil thu airson %1 a sguabadh às?</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1811"/>
+        <location filename="../src/docks/encodedock.cpp" line="1825"/>
         <source>None</source>
         <translation>Chan eil gin</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1859"/>
+        <location filename="../src/docks/encodedock.cpp" line="1874"/>
         <source>KiB (%1s)</source>
         <translation>KiB (%1s)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1957"/>
+        <location filename="../src/docks/encodedock.cpp" line="1972"/>
         <source>Detect</source>
         <translation>Mothaich dha</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2046"/>
+        <location filename="../src/docks/encodedock.cpp" line="2061"/>
         <source>Detecting hardware encoders...</source>
         <translation>A’ lorg inneal-còdachaidh bathair-chruaidh…</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2079"/>
+        <location filename="../src/docks/encodedock.cpp" line="2094"/>
         <source>Nothing found</source>
         <translation>Cha deach gin a lorg</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2081"/>
+        <location filename="../src/docks/encodedock.cpp" line="2096"/>
         <source>Found %1</source>
         <translation>Chaidh %1 a lorg</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2116"/>
+        <location filename="../src/docks/encodedock.cpp" line="2131"/>
         <source>Your project is missing some files.
 
 Save your project, close it, and reopen it.
@@ -1827,12 +1884,12 @@ Sàbhail am pròiseact agad, dùin e is fosgail e às ùr.
 Feuchaidh Shotcut ris am pròiseact agad a chàradh.</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1955"/>
+        <location filename="../src/docks/encodedock.cpp" line="1970"/>
         <source>Configure Hardware Encoding</source>
         <translation>Rèitich còdachadh bathair-chruaidh</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1979"/>
+        <location filename="../src/docks/encodedock.cpp" line="1994"/>
         <source>Export Frames/sec</source>
         <translation>Frèam/diog an às-phortaidh</translation>
     </message>
@@ -3058,8 +3115,8 @@ no fuaim clip B (100%) a-mhàin.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="436"/>
-        <location filename="../src/mainwindow.cpp" line="1699"/>
-        <location filename="../src/mainwindow.cpp" line="3275"/>
+        <location filename="../src/mainwindow.cpp" line="1703"/>
+        <location filename="../src/mainwindow.cpp" line="3287"/>
         <source>Enter Full Screen</source>
         <translation>Cuir air am modh làn-sgrìn</translation>
     </message>
@@ -3075,7 +3132,7 @@ no fuaim clip B (100%) a-mhàin.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="460"/>
-        <location filename="../src/mainwindow.cpp" line="292"/>
+        <location filename="../src/mainwindow.cpp" line="293"/>
         <source>Properties</source>
         <translation>Roghainnean</translation>
     </message>
@@ -3091,7 +3148,7 @@ no fuaim clip B (100%) a-mhàin.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="487"/>
-        <location filename="../src/mainwindow.cpp" line="409"/>
+        <location filename="../src/mainwindow.cpp" line="411"/>
         <source>History</source>
         <translation>Eachdraidh</translation>
     </message>
@@ -3690,9 +3747,9 @@ Stàlaich e le manaidsear nam pacaidean agad. Bidh libsdl2-2.0-0, SDL2 no ainm c
         <location filename="../src/mainwindow.cpp" line="1364"/>
         <location filename="../src/mainwindow.cpp" line="1385"/>
         <location filename="../src/mainwindow.cpp" line="1440"/>
-        <location filename="../src/mainwindow.cpp" line="3878"/>
-        <location filename="../src/mainwindow.cpp" line="3892"/>
-        <location filename="../src/mainwindow.cpp" line="4746"/>
+        <location filename="../src/mainwindow.cpp" line="3890"/>
+        <location filename="../src/mainwindow.cpp" line="3904"/>
+        <location filename="../src/mainwindow.cpp" line="4764"/>
         <source>Failed to open </source>
         <translation>Dh’fhàillig leis an fhosgladh </translation>
     </message>
@@ -3781,7 +3838,7 @@ No sàbhail is ath-thòisich Shotcut.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1475"/>
-        <location filename="../src/mainwindow.cpp" line="3848"/>
+        <location filename="../src/mainwindow.cpp" line="3860"/>
         <source>Open File</source>
         <translation>Fosgail faidhle</translation>
     </message>
@@ -3791,121 +3848,121 @@ No sàbhail is ath-thòisich Shotcut.</translation>
         <translation>A h-uile faidhle (*);;MLT XML (*.mlt)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1761"/>
+        <location filename="../src/mainwindow.cpp" line="1765"/>
         <source>Untitled</source>
         <translation>Gun tiotal</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1780"/>
+        <location filename="../src/mainwindow.cpp" line="1784"/>
         <source>About %1</source>
         <translation>Mu %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1781"/>
+        <location filename="../src/mainwindow.cpp" line="1785"/>
         <source>&lt;h1&gt;Shotcut version %2&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;%3&quot;&gt;%1&lt;/a&gt; is a free, open source, cross platform video editor.&lt;/p&gt;&lt;small&gt;&lt;p&gt;%4&lt;/p&gt;&lt;p&gt;Licensed under the %5&lt;/p&gt;&lt;p&gt;This program proudly uses the following projects:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://www.qt.io/&quot;&gt;Qt&lt;/a&gt; application and UI framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; multimedia authoring framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; multimedia format and codec libraries&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; H.264 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; VP8 and VP9 encoders&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; MP3 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt; video plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; audio plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;DefaultIcon&lt;/a&gt; icon collection by &lt;a href=&quot;http://www.interactivemania.com/&quot;&gt;interactivemania&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt;Oxygen&lt;/a&gt; icon collection&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;The source code used to build this program can be downloaded from &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt;.&lt;/p&gt;This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.&lt;/small&gt;</source>
         <translation>&lt;h1&gt;Shotcut tionndadh %2&lt;/h1&gt;&lt;p&gt;’S e deasaiche video saor, open source is iomadh ùrlair a th’ ann an &lt;a href=&quot;%3&quot;&gt;%1&lt;/a&gt;.&lt;/p&gt;&lt;small&gt;&lt;p&gt;%4&lt;/p&gt;&lt;p&gt;Fo cheadachas %5&lt;/p&gt;&lt;p&gt;Tha am pròiseact seo a’ cleachdadh nam pròiseactan urramach a leanas:&lt;ul&gt;&lt;li&gt;Frèam-obrach aplacaidean is eadar-aghaidhean &lt;a href=&quot;https://www.qt.io/&quot;&gt;Qt&lt;/a&gt; &lt;/li&gt;&lt;li&gt;Frèam-obrach ùghdarrachadh ioma-mheadhanan &lt;a href=&quot;https://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Leabhar-lannan fòrmat ioma-mheadhanan is codec &lt;a href=&quot;https://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Inneal-còrachaidh &lt;a href=&quot;https://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; H.264&lt;/li&gt;&lt;li&gt;Innealan-còdachaidh &lt;a href=&quot;https://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; VP8 ’s VP9&lt;/li&gt;&lt;li&gt;Inneal-còdachaidh &lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; MP3&lt;/li&gt;&lt;li&gt;Plugain video &lt;a href=&quot;https://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Plugain fuaime &lt;a href=&quot;https://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Cruinneachadh ìomhaigheagan &lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;DefaultIcon&lt;/a&gt; le &lt;a href=&quot;http://www.interactivemania.com/&quot;&gt;interactivemania&lt;/a&gt;&lt;/li&gt;&lt;li&gt;Cruinneachadh ìomhaigheagan &lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt;Oxygen&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;’S urrainn dhut am bun-tùs gus am prògram seo a thogail a luchdadh a-nuas air &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt;.&lt;/p&gt;Tha sinn a’ sgaoileadh am prògram seo an dòchas gum bi e feumail ach GUN BHARANTAS SAM BITH; cha doir sinn eadhon barantas GUN GABH A REIC no gu bheil e FREAGARRACH AIRSON AMAIS SHÒNRAICHTE.&lt;/small&gt;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2396"/>
+        <location filename="../src/mainwindow.cpp" line="2407"/>
         <source>Non-Broadcast</source>
         <translation>Neo-chraolaidh</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2401"/>
+        <location filename="../src/mainwindow.cpp" line="2412"/>
         <source>DVD Widescreen NTSC</source>
         <translation>DVD sgrìn-leathann NTSC</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2402"/>
+        <location filename="../src/mainwindow.cpp" line="2413"/>
         <source>DVD Widescreen PAL</source>
         <translation>DVD sgrìn-leathann PAL</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2413"/>
+        <location filename="../src/mainwindow.cpp" line="2424"/>
         <source>Square 1080p 30 fps</source>
         <translation>Ceàrnach 1080p 30 fps</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2414"/>
+        <location filename="../src/mainwindow.cpp" line="2425"/>
         <source>Square 1080p 60 fps</source>
         <translation>Ceàrnach 1080p 60 fps</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2415"/>
+        <location filename="../src/mainwindow.cpp" line="2426"/>
         <source>Vertical HD 30 fps</source>
         <translation>Inghearach HD 30 fps</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2416"/>
+        <location filename="../src/mainwindow.cpp" line="2427"/>
         <source>Vertical HD 60 fps</source>
         <translation>Inghearach HD 60 fps</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2417"/>
+        <location filename="../src/mainwindow.cpp" line="2428"/>
         <source>Custom</source>
         <translation>Gnàthaichte</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2448"/>
-        <location filename="../src/mainwindow.cpp" line="2720"/>
+        <location filename="../src/mainwindow.cpp" line="2459"/>
+        <location filename="../src/mainwindow.cpp" line="2732"/>
         <source>Saved %1</source>
         <translation>Chaidh %1 a shàbhaladh</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2712"/>
-        <location filename="../src/mainwindow.cpp" line="2734"/>
+        <location filename="../src/mainwindow.cpp" line="2724"/>
+        <location filename="../src/mainwindow.cpp" line="2746"/>
         <source>Save XML</source>
         <translation>Sàbhail XML</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2736"/>
+        <location filename="../src/mainwindow.cpp" line="2748"/>
         <source>MLT XML (*.mlt)</source>
         <translation>MLT XML (*.mlt)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2755"/>
+        <location filename="../src/mainwindow.cpp" line="2767"/>
         <source>The project has been modified.
 Do you want to save your changes?</source>
         <translation>Chaidh am pròiseact atharrachadh.
 A bheil thu airson na dh’atharraich thu a shàbhaladh?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2784"/>
+        <location filename="../src/mainwindow.cpp" line="2796"/>
         <source>There are incomplete jobs.
 Do you want to still want to exit?</source>
         <translation>Tha saothair ann nach eil deiseil.
 A bheil thu airson fàgail an-seo co-dhiù?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2797"/>
+        <location filename="../src/mainwindow.cpp" line="2809"/>
         <source>An export is in progress.
 Do you want to still want to exit?</source>
         <translation>Tha faidhle ’ga às-phortadh.
 A bheil thu airson fàgail an-seo co-dhiù?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1697"/>
-        <location filename="../src/mainwindow.cpp" line="3282"/>
+        <location filename="../src/mainwindow.cpp" line="1701"/>
+        <location filename="../src/mainwindow.cpp" line="3294"/>
         <source>Exit Full Screen</source>
         <translation>Fàg am modh làn-sgrìn</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4710"/>
+        <location filename="../src/mainwindow.cpp" line="4728"/>
         <source>Turn Proxy On</source>
         <translation>Cuir am progsaidh air</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4710"/>
+        <location filename="../src/mainwindow.cpp" line="4728"/>
         <source>Turn Proxy Off</source>
         <translation>Cuir am progsaidh dheth</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4714"/>
+        <location filename="../src/mainwindow.cpp" line="4732"/>
         <source>Converting</source>
         <translation>’Ga iompachadh</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4728"/>
+        <location filename="../src/mainwindow.cpp" line="4746"/>
         <source>Do you want to create missing proxies for every file in this project?
 
 You must reopen your project after all proxy jobs are finished.</source>
@@ -3914,51 +3971,51 @@ You must reopen your project after all proxy jobs are finished.</source>
 Feumaidh tu am pròiseact fhosgladh às ùr nuair a bhios na h-obraichean progsaidh uile deiseil.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4763"/>
+        <location filename="../src/mainwindow.cpp" line="4781"/>
         <source>Proxy Folder</source>
         <translation>Pasgan progsaidh</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4778"/>
+        <location filename="../src/mainwindow.cpp" line="4796"/>
         <source>Do you want to move all files from the old folder to the new folder?</source>
         <translation>A bheil thu airson na faidhlichean uile a ghluasad on t-seann-phasgan dhan phasgan ùr?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4785"/>
+        <location filename="../src/mainwindow.cpp" line="4803"/>
         <source>Moving Files</source>
         <translation>A’ gluasad fhaidhlichean</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3295"/>
+        <location filename="../src/mainwindow.cpp" line="3307"/>
         <source>GPU effects are not supported</source>
         <translation>Chan eil taic ri èifeachdan GPU ann</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3357"/>
+        <location filename="../src/mainwindow.cpp" line="3369"/>
         <source>Click here to check for a new version of Shotcut.</source>
         <translation>Briog an-seo gus sùil a thoirt airson tionndadh ùr dhe Shotcut.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3462"/>
+        <location filename="../src/mainwindow.cpp" line="3474"/>
         <source>Open Files</source>
         <translation>Fosgail faidhlichean</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3496"/>
+        <location filename="../src/mainwindow.cpp" line="3508"/>
         <source>You must restart Shotcut to switch to the new language.
 Do you want to restart now?</source>
         <translation>Feumaidh tu Shotcut ath-thòiseachadh mus faic thu an cànan ùr.
 A bheil thu airson ath-thòiseachadh an-dràsta?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3537"/>
+        <location filename="../src/mainwindow.cpp" line="3549"/>
         <source>Failed to connect to JACK.
 Please verify that JACK is installed and running.</source>
         <translation>Cha deach leinn ceangal ri JACK.
 Dearbhaich gun deach JACK a stàladh agus gu bheil e ’ga ruith.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3546"/>
+        <location filename="../src/mainwindow.cpp" line="3558"/>
         <source>GPU effects are experimental and may cause instability on some systems. Some CPU effects are incompatible with GPU effects and will be disabled. A project created with GPU effects can not be converted to a CPU only project later.
 
 Do you want to enable GPU effects and restart Shotcut?</source>
@@ -3967,7 +4024,7 @@ Do you want to enable GPU effects and restart Shotcut?</source>
 A bheil thu airson èifeachdan GPU a chur an comas agus Shotcut ath-thòiseachadh?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3568"/>
+        <location filename="../src/mainwindow.cpp" line="3580"/>
         <source>Shotcut must restart to disable GPU effects.
 
 Disable GPU effects and restart?</source>
@@ -3976,30 +4033,30 @@ Disable GPU effects and restart?</source>
 A bheil thu airson èifeachdan GPU a chur à comas agus ath-thòiseachadh?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3705"/>
+        <location filename="../src/mainwindow.cpp" line="3717"/>
         <source>You must restart %1 to switch to the new theme.
 Do you want to restart now?</source>
         <translation>Feumaidh tu %1 ath-thòiseachadh airson leum a ghearradh dhan ùrlar ùr.
 A bheil thu airson ath-thòiseachadh an-dràsta?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3826"/>
+        <location filename="../src/mainwindow.cpp" line="3838"/>
         <source>Do you want to automatically check for updates in the future?</source>
         <translation>A bheil thu airson sùil a thoirt airson ùrachaidhean gu fèin-obrachail o seo a-mach?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3833"/>
+        <location filename="../src/mainwindow.cpp" line="3845"/>
         <source>Do not show this anymore.</source>
         <comment>Automatic upgrade check dialog</comment>
         <translation>Na seall seo tuilleadh.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3849"/>
+        <location filename="../src/mainwindow.cpp" line="3861"/>
         <source>MLT XML (*.mlt);;All Files (*)</source>
         <translation>MLT XML (*.mlt);;A h-uile faidhle (*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3866"/>
+        <location filename="../src/mainwindow.cpp" line="3878"/>
         <source>The decimal point of the MLT XML file
 you want to open is incompatible.
 
@@ -4010,59 +4067,59 @@ a tha thu airson fhosgladh co-chòrdail.
 A bheil thu airson leantainn air adhart le fosgladh an fhaidhle MLT XML seo?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3933"/>
+        <location filename="../src/mainwindow.cpp" line="3945"/>
         <source>You must restart Shotcut to change the display method.
 Do you want to restart now?</source>
         <translation>Feumaidh tu Shotcut ath-thòiseachadh gus am modh taisbeaniadh atharrachadh.
 A bheil thu airson ath-thòiseachadh an-dràsta?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3955"/>
+        <location filename="../src/mainwindow.cpp" line="3967"/>
         <source>Application Log</source>
         <translation>Loga na aplacaid</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3996"/>
+        <location filename="../src/mainwindow.cpp" line="4014"/>
         <source>Shotcut version %1 is available! Click here to get it.</source>
         <translation>Tha Shotcut tionndadh %1 ri fhaighinn! Briog an-seo gus fhaighinn.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4002"/>
+        <location filename="../src/mainwindow.cpp" line="4020"/>
         <source>You are running the latest version of Shotcut.</source>
         <translation>Tha thu a’ ruith an tionndadh as ùire dhe Shotcut.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4012"/>
+        <location filename="../src/mainwindow.cpp" line="4030"/>
         <source>Failed to read version.json when checking. Click here to go to the Web site.</source>
         <translation>Cha deach leinn version.json a leughadh gus sùil a thoirt air. Briog an-seo gus tadhal air an làrach-lìn.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4061"/>
+        <location filename="../src/mainwindow.cpp" line="4079"/>
         <source>Export EDL</source>
         <translation>Às-phortaich EDL</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4063"/>
+        <location filename="../src/mainwindow.cpp" line="4081"/>
         <source>EDL (*.edl);;All Files (*)</source>
         <translation>EDL (*.edl);;A h-uile faidhle (*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4109"/>
+        <location filename="../src/mainwindow.cpp" line="4127"/>
         <source>A JavaScript error occurred during export.</source>
         <translation>Tachair mearachd JavaScript rè an às-phortaidh.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4112"/>
+        <location filename="../src/mainwindow.cpp" line="4130"/>
         <source>Failed to open export-edl.js</source>
         <translation>Cha deach leinn export-edl.js fhosgladh</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4141"/>
+        <location filename="../src/mainwindow.cpp" line="4159"/>
         <source>Export frame from proxy?</source>
         <translation>Às-phortadh frèama o phrogsaidh</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4142"/>
+        <location filename="../src/mainwindow.cpp" line="4160"/>
         <source>This frame may be from a lower resolution proxy instead of the original source.
 
 Do you still want to continue?</source>
@@ -4071,55 +4128,78 @@ Do you still want to continue?</source>
 A bheil thu airson leantainn air adhart co-dhiù?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4154"/>
+        <location filename="../src/mainwindow.cpp" line="4172"/>
         <source>Export Frame</source>
         <translation>Às-phortaich an fhrèam</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4161"/>
+        <location filename="../src/mainwindow.cpp" line="4179"/>
         <source>Unable to export frame.</source>
         <translation>Cha deach leinn am frèam às-phortadh.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4169"/>
+        <location filename="../src/mainwindow.cpp" line="4187"/>
         <source>You must restart Shotcut to change the data directory.
 Do you want to continue?</source>
         <translation>Feumaidh tu Shotcut ath-thòiseachadh gus am pasgan dàta atharrachadh.
 A bheil thu airson leantainn air adhart?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4178"/>
+        <location filename="../src/mainwindow.cpp" line="4196"/>
         <source>Data Directory</source>
         <translation>Pasgan dàta</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4355"/>
+        <location filename="../src/mainwindow.cpp" line="4373"/>
         <source>Add Custom Layout</source>
         <translation>Cuir co-dhealbhachd gnàthaichte ris</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4356"/>
+        <location filename="../src/mainwindow.cpp" line="4374"/>
         <source>Name</source>
         <translation>Ainm</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4393"/>
+        <location filename="../src/mainwindow.cpp" line="4411"/>
         <source>Remove Video Mode</source>
         <translation>Thoir air falbh am modh video</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4407"/>
+        <location filename="../src/mainwindow.cpp" line="4425"/>
         <source>Remove Layout</source>
         <translation>Thoir air falbh a’ cho-dhealbhachd</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4527"/>
+        <location filename="../src/mainwindow.cpp" line="4545"/>
         <source>GPU effects are EXPERIMENTAL, UNSTABLE and UNSUPPORTED! Unsupported means do not report bugs about it.
 
 Do you want to disable GPU effects and restart Shotcut?</source>
         <translation>’S ann gu bheil na h-èifeachdan GPU fo dheuchainn fhathast. Chan eil iad seasmhach is chan fhaigh thu taic mun dèidhinn! Is ciall dha seo nach bu chòir dhut bugaichean aithris mun dèidhinn air an àm seo.
 
 A bheil thu airson èifeachdan GPU a chur an comas agus Shotcut ath-thòiseachadh?</translation>
+    </message>
+</context>
+<context>
+    <name>Marker</name>
+    <message>
+        <location filename="../src/qml/modules/Shotcut/Controls/Marker.qml" line="58"/>
+        <source>Marker Operations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/modules/Shotcut/Controls/Marker.qml" line="60"/>
+        <source>Edit...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/modules/Shotcut/Controls/Marker.qml" line="67"/>
+        <source>Delete</source>
+        <translation type="unfinished">Sguab às</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/modules/Shotcut/Controls/Marker.qml" line="71"/>
+        <source>Cancel</source>
+        <translation type="unfinished">Sguir dheth</translation>
     </message>
 </context>
 <context>
@@ -4151,7 +4231,7 @@ A bheil thu airson èifeachdan GPU a chur an comas agus Shotcut ath-thòiseachad
         <translation>Seall sa phasgan</translation>
     </message>
     <message>
-        <location filename="../src/jobs/meltjob.cpp" line="157"/>
+        <location filename="../src/jobs/meltjob.cpp" line="169"/>
         <source>MLT XML</source>
         <translation>MLT XML</translation>
     </message>
@@ -4602,7 +4682,7 @@ p, li { white-space: pre-wrap; }
         <translation>(PROGSAIDH)</translation>
     </message>
     <message>
-        <location filename="../src/models/multitrackmodel.cpp" line="2441"/>
+        <location filename="../src/models/multitrackmodel.cpp" line="2451"/>
         <source>Error: Shotcut could not find the %1 plugin on your system.
 
 Please install the %2 plugins.</source>
@@ -5280,28 +5360,28 @@ Feuch ris a-rithist le pasgan eile.</translation>
         <translation>Cuir stad air a’ chluich (K)</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="938"/>
+        <location filename="../src/player.cpp" line="948"/>
         <source>Proxy and preview scaling are ON at %1p</source>
         <translation>Tha progsaidh is sgèileadh an ro-sheallaidh AIR aig %1p</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="940"/>
+        <location filename="../src/player.cpp" line="950"/>
         <source>Proxy is ON at %1p</source>
         <translation>Tha progsaidh AIR aig %1p</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="942"/>
+        <location filename="../src/player.cpp" line="952"/>
         <source>Preview scaling is ON at %1p</source>
         <translation>Tha sgèileadh an ro-sheallaidh AIR aig %1p</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="1045"/>
+        <location filename="../src/player.cpp" line="1055"/>
         <source>Unmute</source>
         <translation>Dì-mhùch</translation>
     </message>
     <message>
-        <location filename="../src/player.cpp" line="1018"/>
-        <location filename="../src/player.cpp" line="1050"/>
+        <location filename="../src/player.cpp" line="1028"/>
+        <location filename="../src/player.cpp" line="1060"/>
         <source>Mute</source>
         <translation>Mùch</translation>
     </message>
@@ -6049,7 +6129,7 @@ p, li { white-space: pre-wrap; }
         <translation>Cuir an àite cliop na loidhne-ama</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3472"/>
+        <location filename="../src/mainwindow.cpp" line="3484"/>
         <source>You cannot add a project to itself!</source>
         <translation>Chan urrainn dhut pròiseact a cur ris e fhèin!</translation>
     </message>
@@ -6104,12 +6184,12 @@ A bheil thu airson %1 = %2/1001 a chleachdadh ’na àite?</translation>
         <translation>trìd-shoilleir</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1158"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1329"/>
         <source>Drop Files</source>
         <translation>Leig às faidhlichean</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1187"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1358"/>
         <source>Not adding non-seekable file: </source>
         <translation>Cha dèid am faidhle seo a chur ris o nach gabh a shireadh ann: </translation>
     </message>
@@ -6139,7 +6219,7 @@ A bheil thu airson %1 = %2/1001 a chleachdadh ’na àite?</translation>
         <translation>Gin taisbeanadh-shleamhnagan</translation>
     </message>
     <message>
-        <location filename="../src/proxymanager.cpp" line="213"/>
+        <location filename="../src/proxymanager.cpp" line="214"/>
         <source>Make proxy for %1</source>
         <translation>Cruthaich progsaidh airson %1</translation>
     </message>
@@ -6152,6 +6232,26 @@ A bheil thu airson %1 = %2/1001 a chleachdadh ’na àite?</translation>
         <location filename="../src/database.cpp" line="82"/>
         <source>Please wait for this one-time update to the thumbnail cache...</source>
         <translation>Fuirich ort fhad ’s a nì sinn ùrachadh air tasgadan nan dealbhagan…</translation>
+    </message>
+    <message>
+        <location filename="../src/commands/markercommands.cpp" line="30"/>
+        <source>Delete marker: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/commands/markercommands.cpp" line="49"/>
+        <source>Add marker: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/commands/markercommands.cpp" line="72"/>
+        <source>Move marker: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/commands/markercommands.cpp" line="76"/>
+        <source>Edit marker: %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7080,52 +7180,77 @@ Is ciall dha 0 nach dèid tar-mhùthadh a chruthachadh idir.</translation>
         <translation>Loidhne-ama</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="170"/>
+        <location filename="../src/docks/timelinedock.cpp" line="178"/>
         <source>This track is locked</source>
         <translation>Tha an traca seo glaiste</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="175"/>
+        <location filename="../src/docks/timelinedock.cpp" line="183"/>
         <source>You cannot add a non-seekable source.</source>
         <translation>Chan urrainn dhut tùs a chur ris nach gabh a shireadh ann.</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="404"/>
+        <location filename="../src/docks/timelinedock.cpp" line="428"/>
         <source>Failed to open </source>
         <translation>Dh’fhàillig leis an fhosgladh </translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="407"/>
+        <location filename="../src/docks/timelinedock.cpp" line="431"/>
         <source>You must save to Copy Timeline to Source.</source>
         <translation>Feumaidh tu a shàbhaladh mus urrainn dhut lethbhreac dhen loidhne-ama a chur gun tùs.</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="672"/>
+        <location filename="../src/docks/timelinedock.cpp" line="631"/>
+        <source>Append multiple to timeline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/timelinedock.cpp" line="735"/>
+        <source>Cut %1 from timeline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/timelinedock.cpp" line="737"/>
         <source>Remove %1 from timeline</source>
         <translation>Thoir %1 air falbh on loidhne-ama</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="694"/>
+        <location filename="../src/docks/timelinedock.cpp" line="760"/>
         <source>Lift %1 from timeline</source>
         <translation>Tog %1 on loidhne-ama</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="917"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1045"/>
         <source>There is nothing in the Source player.</source>
         <translation>Chan eil dad am broinn cluicheadair an tùis.</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="932"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1060"/>
         <source>You cannot replace a transition.</source>
         <translation>Chan urrainn dhut rud a chur an àite tar-mhùthaidh.</translation>
     </message>
     <message>
-        <location filename="../src/docks/timelinedock.cpp" line="1383"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1088"/>
+        <source>Added marker: &quot;%1&quot;. Hold %2 and drag to create a range</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/timelinedock.cpp" line="1428"/>
+        <source>Insert multiple into timeline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/timelinedock.cpp" line="1543"/>
+        <source>Overwrite multiple onto timeline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/timelinedock.cpp" line="1627"/>
         <source>You cannot split a transition.</source>
         <translation>Chan urrainn dhut tar-mhùthadh a sgoltadh.</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/docks/timelinedock.cpp" line="1604"/>
+        <location filename="../src/docks/timelinedock.cpp" line="1848"/>
         <source>Replace %n timeline clips</source>
         <translation>
             <numerusform>Cuir an àite %n chliop na loidhne-ama</numerusform>
@@ -7200,22 +7325,22 @@ Is ciall dha 0 nach dèid tar-mhùthadh a chruthachadh idir.</translation>
 <context>
     <name>TimelineToolbar</name>
     <message>
-        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="124"/>
+        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="131"/>
         <source>Toggle snapping</source>
         <translation>Toglaich an greimeachadh</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="135"/>
+        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="142"/>
         <source>Scrub while dragging</source>
         <translation>Sgrubaig leis an t-slaodadh</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="146"/>
+        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="153"/>
         <source>Ripple trim and drop</source>
         <translation>Beàrr is leig às le dlùthadh</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="157"/>
+        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="164"/>
         <source>Ripple edits across all tracks</source>
         <translation>Deasaich le dlùthachadh thar nan tracaichean uile</translation>
     </message>
@@ -7273,17 +7398,22 @@ bhuaidh air ionad nan cliop eile (Z)</translation>
         <translation>Sgoilt aig a’ cheann-chluich (S)</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="169"/>
+        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="115"/>
+        <source>Marker (M)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="176"/>
         <source>Zoom timeline out (-)</source>
         <translation>Sùm a-mach an loidhne-ama (-)</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="179"/>
+        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="186"/>
         <source>Zoom timeline in (+)</source>
         <translation>Sùm a-steach an loidhne-ama (-)</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="186"/>
+        <location filename="../src/qml/views/timeline/TimelineToolbar.qml" line="193"/>
         <source>Zoom timeline to fit (0)</source>
         <translation>Co-fhreagair an sùm ris an loidhne-ama (0)</translation>
     </message>
@@ -8375,74 +8505,79 @@ Cha leig a’ mhòrchuid a leas seo atharrachadh idir.</translation>
 <context>
     <name>main</name>
     <message>
-        <location filename="../src/main.cpp" line="153"/>
+        <location filename="../src/main.cpp" line="154"/>
         <source>Fill the screen with the Shotcut window.</source>
         <translation>Lìon an sgrìn le uinneag Shotcut.</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="157"/>
+        <location filename="../src/main.cpp" line="158"/>
         <source>Hide upgrade prompt and menu item.</source>
         <translation>Falaich ceist nan ùrachaidhean ’s nì a’ chlàir-thaice.</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="160"/>
+        <location filename="../src/main.cpp" line="161"/>
         <source>Use GPU processing.</source>
         <translation>Cleachd pròiseasadh GPU.</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="163"/>
+        <location filename="../src/main.cpp" line="164"/>
         <source>Clear Recent on Exit</source>
         <translation>Falamhaich na nithean o chionn ghoirid nuair a dh’fhàgas tu an-seo</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="166"/>
+        <location filename="../src/main.cpp" line="167"/>
         <source>The directory for app configuration and data.</source>
         <translation>Am pasgan airson rèiteachadh is dàta na h-aplacaid.</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="167"/>
+        <location filename="../src/main.cpp" line="168"/>
         <source>directory</source>
         <translation>pasgan</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="170"/>
+        <location filename="../src/main.cpp" line="171"/>
         <source>The scale factor for a high-DPI screen</source>
         <translation>Factar sgèilidh airson sgrìn le DPI àrd</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="171"/>
+        <location filename="../src/main.cpp" line="172"/>
         <source>number</source>
         <translation>àireamh</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="174"/>
+        <location filename="../src/main.cpp" line="175"/>
         <source>A semicolon-separated list of scale factors for each screen</source>
         <translation>Liosta de dh’fhactaran sgèilidh air gach sgrìn, sgaraichte le leth-choileanan</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="175"/>
+        <location filename="../src/main.cpp" line="176"/>
         <source>list</source>
         <translation>liosta</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="179"/>
+        <location filename="../src/main.cpp" line="180"/>
         <source>How to handle a fractional display scale: %1</source>
         <translation>Mar a thèid sgèile taisbeanaidh bhloigheach a làimhseachadh: %1</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="181"/>
+        <location filename="../src/main.cpp" line="182"/>
         <source>string</source>
         <translation>sreang</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="185"/>
+        <location filename="../src/main.cpp" line="186"/>
         <source>Zero or more files or folders to open</source>
         <translation>Neoini faidhle no pasgan ri fhosgladh no a bharrachd</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="369"/>
+        <location filename="../src/main.cpp" line="370"/>
         <source>Loading plugins...</source>
         <translation>A’ luchdadh nam plugan…</translation>
+    </message>
+    <message>
+        <location filename="../src/main.cpp" line="375"/>
+        <source>Expiring cache...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9074,6 +9209,12 @@ Cha leig a’ mhòrchuid a leas seo atharrachadh idir.</translation>
         <translation>Sgleò: Easponantail</translation>
     </message>
     <message>
+        <location filename="../src/qml/filters/bigsh0t_eq_to_stereo/meta.qml" line="7"/>
+        <source>360: Equirectangular to Stereographic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/bigsh0t_eq_to_stereo/meta.qml" line="50"/>
         <location filename="../src/qml/filters/blur_exponential/meta.qml" line="33"/>
         <location filename="../src/qml/filters/blur_gaussian/meta.qml" line="33"/>
         <location filename="../src/qml/filters/blur_lowpass/meta.qml" line="33"/>
@@ -9246,6 +9387,7 @@ Cha leig a’ mhòrchuid a leas seo atharrachadh idir.</translation>
         <location filename="../src/qml/filters/audio_pitch/meta.qml" line="7"/>
         <location filename="../src/qml/filters/audio_pitch/meta.qml" line="17"/>
         <location filename="../src/qml/filters/bigsh0t_eq_to_rect/meta.qml" line="26"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_to_stereo/meta.qml" line="26"/>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="25"/>
         <location filename="../src/qml/filters/bigsh0t_transform_360/meta.qml" line="26"/>
         <source>Pitch</source>
@@ -9283,6 +9425,7 @@ Cha leig a’ mhòrchuid a leas seo atharrachadh idir.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_to_rect/meta.qml" line="18"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_to_stereo/meta.qml" line="18"/>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="17"/>
         <location filename="../src/qml/filters/bigsh0t_transform_360/meta.qml" line="18"/>
         <source>Yaw</source>
@@ -9290,6 +9433,7 @@ Cha leig a’ mhòrchuid a leas seo atharrachadh idir.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_to_rect/meta.qml" line="34"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_to_stereo/meta.qml" line="34"/>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="33"/>
         <location filename="../src/qml/filters/bigsh0t_transform_360/meta.qml" line="34"/>
         <source>Roll</source>
@@ -9297,6 +9441,7 @@ Cha leig a’ mhòrchuid a leas seo atharrachadh idir.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_to_rect/meta.qml" line="42"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_to_stereo/meta.qml" line="42"/>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="41"/>
         <source>FOV</source>
         <translation>Raon-seallaidh</translation>
@@ -9390,6 +9535,11 @@ Cha leig a’ mhòrchuid a leas seo atharrachadh idir.</translation>
         <location filename="../src/qml/filters/reflect/meta.qml" line="6"/>
         <source>Reflect</source>
         <translation>Ath-thilgeil</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/mask_chromakey/meta.qml" line="23"/>
+        <source>Mask: Chroma Key</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9686,147 +9836,147 @@ Cha leig a’ mhòrchuid a leas seo atharrachadh idir.</translation>
         <translation>Criathragan</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="427"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="433"/>
         <source>Insert</source>
         <translation>Cuir a-steach</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="427"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="433"/>
         <source>Overwrite</source>
         <translation>Sgrìobh thairis air</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="491"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="498"/>
         <source>Track Operations</source>
         <translation>Obrachaidhean traca</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="493"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="500"/>
         <source>Add Audio Track</source>
         <translation>Cuir traca fuaime ris</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="497"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="504"/>
         <source>Add Video Track</source>
         <translation>Cuir traca video ris</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="501"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="508"/>
         <source>Insert Track</source>
         <translation>Cuir a-steach traca</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="511"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="518"/>
         <source>Remove Track</source>
         <translation>Thoir air falbh an traca</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="533"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="540"/>
         <source>Selection</source>
         <translation>Taghadh</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="535"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="542"/>
         <source>Select All</source>
         <translation>Tagh na h-uile</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="539"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="546"/>
         <source>Select None</source>
         <translation>Na tagh dad</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="576"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="583"/>
         <source>Use Higher Performance Waveforms</source>
         <translation>Cleachd cruthan-tuinn le dèanadas àrd</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="623"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="630"/>
         <source>Cancel</source>
         <translation>Sguir dheth</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="762"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="769"/>
         <source>Do you want to insert an audio or video track?</source>
         <translation>A bheil thu airson traca fuaime no video a chur a-steach?</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="768"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="775"/>
         <source>Audio</source>
         <translation>Fuaim</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="775"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="782"/>
         <source>Video</source>
         <translation>Video</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="516"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="523"/>
         <source>Track Height</source>
         <translation>Àirde nan tracaichean</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="547"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="554"/>
         <source>Options</source>
         <translation>Roghainnean</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="550"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="557"/>
         <source>Ripple All Tracks</source>
         <translation>Dlùth a h-uile traca</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="608"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="615"/>
         <source>Copy Timeline to Source</source>
         <translation>Cuir lethbhreac dhen loidhne-ama gun tùs</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="520"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="527"/>
         <source>Make Tracks Shorter</source>
         <translation>Dèan nas ìsle</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="524"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="531"/>
         <source>Make Tracks Taller</source>
         <translation>Dèan nas àirde</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="556"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="563"/>
         <source>Show Audio Waveforms</source>
         <translation>Seall cruthan-tuinn fuaime</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="586"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="593"/>
         <source>Show Video Thumbnails</source>
         <translation>Seall dealbhagan video</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="592"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="599"/>
         <source>Center the Playhead</source>
         <translation>Meadhanaich an ceann-cluich</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="598"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="605"/>
         <source>Scroll to Playhead on Zoom</source>
         <translation>Sgrolaich dhan cheann-chluich nuair a thèid a shùmadh</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="605"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="612"/>
         <source>Other</source>
         <translation>Roghainnean eile</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="618"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="625"/>
         <source>Properties</source>
         <translation>Roghainnean</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="612"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="619"/>
         <source>Reload</source>
         <translation>Ath-luchdaich</translation>
     </message>
     <message>
-        <location filename="../src/qml/views/timeline/timeline.qml" line="528"/>
+        <location filename="../src/qml/views/timeline/timeline.qml" line="535"/>
         <source>Reset Track Height</source>
         <translation>Ath-shuidhich an àirde</translation>
     </message>
@@ -9889,6 +10039,7 @@ Cha leig a’ mhòrchuid a leas seo atharrachadh idir.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/alpha_adjust/ui.qml" line="84"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_to_stereo/ui.qml" line="235"/>
         <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="376"/>
         <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="436"/>
         <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="496"/>
@@ -9988,6 +10139,7 @@ Cha leig a’ mhòrchuid a leas seo atharrachadh idir.</translation>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="106"/>
         <location filename="../src/qml/filters/bigsh0t_eq_mask/ui.qml" line="107"/>
         <location filename="../src/qml/filters/bigsh0t_eq_to_rect/ui.qml" line="123"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_to_stereo/ui.qml" line="123"/>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="241"/>
         <location filename="../src/qml/filters/bigsh0t_rect_to_eq/ui.qml" line="88"/>
         <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="173"/>
@@ -10025,6 +10177,7 @@ Cha leig a’ mhòrchuid a leas seo atharrachadh idir.</translation>
         <location filename="../src/qml/filters/lines/ui.qml" line="52"/>
         <location filename="../src/qml/filters/mask/ui.qml" line="161"/>
         <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="167"/>
+        <location filename="../src/qml/filters/mask_chromakey/ui.qml" line="52"/>
         <location filename="../src/qml/filters/mask_shape/ui.qml" line="194"/>
         <location filename="../src/qml/filters/mosaic/ui.qml" line="73"/>
         <location filename="../src/qml/filters/nervous/ui.qml" line="43"/>
@@ -10291,9 +10444,9 @@ Thèid a chleachdadh airson a’ mheudachd anabarrach a chàradh a dh’adhbhara
         <location filename="../src/qml/filters/audio_fadein/ui.qml" line="52"/>
         <location filename="../src/qml/filters/audio_fadeout/ui.qml" line="58"/>
         <location filename="../src/qml/filters/fadein_brightness/ui.qml" line="63"/>
-        <location filename="../src/qml/filters/fadein_movit/ui.qml" line="54"/>
+        <location filename="../src/qml/filters/fadein_movit/ui.qml" line="55"/>
         <location filename="../src/qml/filters/fadeout_brightness/ui.qml" line="63"/>
-        <location filename="../src/qml/filters/fadeout_movit/ui.qml" line="60"/>
+        <location filename="../src/qml/filters/fadeout_movit/ui.qml" line="61"/>
         <location filename="../src/qml/filters/timer/ui.qml" line="204"/>
         <source>Duration</source>
         <translation>Faid</translation>
@@ -10553,6 +10706,7 @@ Thèid a chleachdadh airson a’ mheudachd anabarrach a chàradh a dh’adhbhara
     <message>
         <location filename="../src/qml/filters/bluescreen0r/ui.qml" line="64"/>
         <location filename="../src/qml/filters/keyspillm0pup/ui.qml" line="110"/>
+        <location filename="../src/qml/filters/mask_chromakey/ui.qml" line="66"/>
         <location filename="../src/qml/filters/select0r/ui.qml" line="121"/>
         <source>Key color</source>
         <translation>Dath na h-iuchrach</translation>
@@ -10560,6 +10714,7 @@ Thèid a chleachdadh airson a’ mheudachd anabarrach a chàradh a dh’adhbhara
     <message>
         <location filename="../src/qml/filters/bluescreen0r/ui.qml" line="82"/>
         <location filename="../src/qml/filters/chromahold/ui.qml" line="81"/>
+        <location filename="../src/qml/filters/mask_chromakey/ui.qml" line="84"/>
         <source>Distance</source>
         <translation>Astar</translation>
     </message>
@@ -10784,33 +10939,33 @@ Thèid a chleachdadh airson a’ mheudachd anabarrach a chàradh a dh’adhbhara
         <translation>Teacsa</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="248"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="255"/>
         <source>Insert field</source>
         <translation>Cuir a-steach raon</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="253"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="260"/>
         <source># (Hash sign)</source>
         <translation># (hais)</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="257"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="264"/>
         <source>Timecode</source>
         <translation>Còd-ama</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="261"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="268"/>
         <source>Frame #</source>
         <comment>Frame number</comment>
         <translation># Frèam</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="265"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="272"/>
         <source>File date</source>
         <translation>Ceann-là faidhle</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/dynamictext/ui.qml" line="269"/>
+        <location filename="../src/qml/filters/dynamictext/ui.qml" line="276"/>
         <source>File name</source>
         <translation>Ainm faidhle</translation>
     </message>
@@ -10823,7 +10978,7 @@ Thèid a chleachdadh airson a’ mheudachd anabarrach a chàradh a dh’adhbhara
         <location filename="../src/qml/filters/crop_rectangle/ui.qml" line="208"/>
         <location filename="../src/qml/filters/gradient/ui.qml" line="303"/>
         <location filename="../src/qml/filters/pillar_echo/ui.qml" line="158"/>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="260"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="267"/>
         <location filename="../src/qml/filters/spot_remover/ui.qml" line="143"/>
         <location filename="../src/qml/filters/waveform/ui.qml" line="141"/>
         <source>Position</source>
@@ -10831,9 +10986,9 @@ Thèid a chleachdadh airson a’ mheudachd anabarrach a chàradh a dh’adhbhara
     </message>
     <message>
         <location filename="../src/qml/filters/fadein_brightness/ui.qml" line="82"/>
-        <location filename="../src/qml/filters/fadein_movit/ui.qml" line="75"/>
+        <location filename="../src/qml/filters/fadein_movit/ui.qml" line="76"/>
         <location filename="../src/qml/filters/fadeout_brightness/ui.qml" line="82"/>
-        <location filename="../src/qml/filters/fadeout_movit/ui.qml" line="79"/>
+        <location filename="../src/qml/filters/fadeout_movit/ui.qml" line="80"/>
         <source>Adjust opacity instead of fade with black</source>
         <translation>Gleus an trìd-dhoilleireachd seach crìonadh le dubh</translation>
     </message>
@@ -11132,6 +11287,7 @@ Briog air “Fosgail” gus faidhle a luchdadh.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_to_rect/ui.qml" line="150"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_to_stereo/ui.qml" line="150"/>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="286"/>
         <location filename="../src/qml/filters/bigsh0t_rect_to_eq/ui.qml" line="109"/>
         <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="269"/>
@@ -11142,6 +11298,7 @@ Briog air “Fosgail” gus faidhle a luchdadh.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_to_rect/ui.qml" line="166"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_to_stereo/ui.qml" line="167"/>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="309"/>
         <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="370"/>
         <location filename="../src/qml/filters/bigsh0t_transform_360/ui.qml" line="143"/>
@@ -11150,6 +11307,7 @@ Briog air “Fosgail” gus faidhle a luchdadh.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_to_rect/ui.qml" line="183"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_to_stereo/ui.qml" line="184"/>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="326"/>
         <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="431"/>
         <location filename="../src/qml/filters/bigsh0t_transform_360/ui.qml" line="160"/>
@@ -11158,6 +11316,7 @@ Briog air “Fosgail” gus faidhle a luchdadh.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_to_rect/ui.qml" line="200"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_to_stereo/ui.qml" line="201"/>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="343"/>
         <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="491"/>
         <location filename="../src/qml/filters/bigsh0t_transform_360/ui.qml" line="177"/>
@@ -11166,6 +11325,7 @@ Briog air “Fosgail” gus faidhle a luchdadh.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_to_rect/ui.qml" line="217"/>
+        <location filename="../src/qml/filters/bigsh0t_eq_to_stereo/ui.qml" line="218"/>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/ui.qml" line="382"/>
         <source>FOV</source>
         <translation>Raon-seallaidh</translation>
@@ -11415,7 +11575,7 @@ Briog air “Fosgail” gus faidhle a luchdadh.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask/ui.qml" line="314"/>
-        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="330"/>
+        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="331"/>
         <location filename="../src/qml/filters/mask_shape/ui.qml" line="334"/>
         <source>Softness</source>
         <translation>Maothachd</translation>
@@ -11580,44 +11740,49 @@ Briog air “Fosgail” gus faidhle a luchdadh.</translation>
         <translation>Sgrolaich gun taobh chlì</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="320"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="263"/>
+        <source>Click in the rectangle atop the video to edit the text.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="327"/>
         <source>Background size</source>
         <translation>Meud a’ chùlaibh</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="366"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="373"/>
         <source>Text size</source>
         <translation>Meud an teacsa</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="388"/>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="412"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="395"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="419"/>
         <source>Copy</source>
         <translation>Dèan lethbhreac</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="422"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="429"/>
         <location filename="../src/qml/filters/rotate/ui.qml" line="289"/>
         <source>Background color</source>
         <translation>Dath a’ chùlaibh</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="438"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="445"/>
         <source>Overflow</source>
         <translation>Taosgadh</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="446"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="453"/>
         <source>Automatic</source>
         <translation>Fèin-obrachail</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="455"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="462"/>
         <source>Visible</source>
         <translation>Faicsinneach</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/ui.qml" line="461"/>
+        <location filename="../src/qml/filters/richtext/ui.qml" line="468"/>
         <source>Hidden</source>
         <translation>Falaichte</translation>
     </message>
@@ -12032,6 +12197,20 @@ Glaisidh “Glais am mapadh leithreach” àm an ion-chuir aig an ionad làithre
     </message>
     <message>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="375"/>
+        <source>Speed:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/time_remap/ui.qml" line="395"/>
+        <source>Input Time:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/time_remap/ui.qml" line="405"/>
+        <source>Output Time:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/qml/filters/timer/ui.qml" line="256"/>
         <location filename="../src/qml/filters/vertigo/ui.qml" line="90"/>
         <location filename="../src/qml/filters/wave/ui.qml" line="75"/>
@@ -12044,24 +12223,19 @@ Glaisidh “Glais am mapadh leithreach” àm an ion-chuir aig an ionad làithre
         <translation>An luaths sa bhad air an fhrèam mu dheireadh a chaidh a phròiseasadh.</translation>
     </message>
     <message>
+        <location filename="../src/qml/filters/time_remap/ui.qml" line="385"/>
+        <source>Direction:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="387"/>
         <source>The instantaneous direction of the last frame that was processed.</source>
         <translation>A’ chomhair sa bhad air an fhrèam mu dheireadh a chaidh a phròiseasadh.</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/time_remap/ui.qml" line="395"/>
-        <source>Input Time</source>
-        <translation>Àm an ion-chuir</translation>
-    </message>
-    <message>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="397"/>
         <source>The original clip time of the frame.</source>
         <translation>An t-àm a tha aig an fhrèam sa chliop tùsail.</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/time_remap/ui.qml" line="405"/>
-        <source>Output Time</source>
-        <translation>Àm an às-chuir</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="407"/>
@@ -12254,7 +12428,6 @@ Gorm sa mhodh RGB</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/deband/ui.qml" line="363"/>
-        <location filename="../src/qml/filters/time_remap/ui.qml" line="385"/>
         <location filename="../src/qml/filters/timer/ui.qml" line="161"/>
         <source>Direction</source>
         <translation>Comhair</translation>
@@ -13173,6 +13346,13 @@ Suidhich air 0 gus nach dèid ach fìor-phuingean a shealltainn (às aonais eada
         <source>This time will be used for synchronization.</source>
         <translation>Thèid an t-àm seo a chleachdadh airson an t-sioncronachaidh.</translation>
     </message>
+    <message>
+        <location filename="../src/qml/filters/mask_alphaspot/ui.qml" line="351"/>
+        <location filename="../src/qml/filters/mask_chromakey/ui.qml" line="104"/>
+        <location filename="../src/qml/filters/mask_shape/ui.qml" line="354"/>
+        <source>Tip: Mask other video filters by adding filters after this one followed by &lt;b&gt;Mask: Apply&lt;/b&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ui_boxblur</name>
@@ -13681,175 +13861,170 @@ Suidhich air 0 gus nach dèid ach fìor-phuingean a shealltainn (às aonais eada
         <translation>4</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="50"/>
-        <source>Click in the rectangle to edit the text</source>
-        <translation>Brùth sa cheart-cheàrnach a dheasachadh an teacsa</translation>
-    </message>
-    <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="301"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="300"/>
         <source>Text size</source>
         <translation>Meud an teacsa</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="320"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="319"/>
         <source>Text color</source>
         <translation>Dath an teacsa</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="398"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="397"/>
         <source>Collapse Toolbar</source>
         <translation>Co-theannaich am bàr-ineal</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="398"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="397"/>
         <source>Expand Toolbar</source>
         <translation>Leudaich am bàr-inneal</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="480"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="479"/>
         <source>Save As…</source>
         <translation>Sàbhail mar…</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="242"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="241"/>
         <source>Menu</source>
         <translation>Clàr-taice</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="439"/>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="465"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="438"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="464"/>
         <source>Cancel</source>
         <translation>Sguir dheth</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="447"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="446"/>
         <source>File</source>
         <translation>Faidhle</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="453"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="452"/>
         <source>Edit</source>
         <translation>Deasaich</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="472"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="471"/>
         <source>Open...</source>
         <translation>Fosgail…</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="494"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="493"/>
         <source>Undo</source>
         <translation>Neo-dhèan</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="499"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="498"/>
         <source>Redo</source>
         <translation>Ath-dhèan</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="504"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="503"/>
         <source>Cut</source>
         <translation>Gearr às</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="509"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="508"/>
         <source>Copy</source>
         <translation>Dèan lethbhreac</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="514"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="513"/>
         <source>Paste</source>
         <translation>Cuir ann</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="519"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="518"/>
         <source>Paste Text Only</source>
         <translation>Cuir ann ’na theacsa a-mhàin</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="524"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="523"/>
         <source>Delete</source>
         <translation>Sguab às</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="529"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="528"/>
         <source>Clear</source>
         <translation>Falamhaich</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="537"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="536"/>
         <source>Select All</source>
         <translation>Tagh na h-uile</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="543"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="542"/>
         <source>Left</source>
         <translation>Clì</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="552"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="551"/>
         <source>Center</source>
         <translation>Meadhan</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="561"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="560"/>
         <source>Right</source>
         <translation>Deas</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="570"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="569"/>
         <source>Justify</source>
         <translation>Blocaich</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="579"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="578"/>
         <source>Bold</source>
         <translation>Trom</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="588"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="587"/>
         <source>Italic</source>
         <translation>Clò Eadailteach</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="597"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="596"/>
         <source>Underline</source>
         <translation>Fo-loidhne</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="284"/>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="606"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="283"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="605"/>
         <source>Font</source>
         <translation>Cruth-clò</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="617"/>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="668"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="616"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="667"/>
         <source>Insert Table</source>
         <translation>Cuir a-steach clàr</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="622"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="621"/>
         <source>Decrease Indent</source>
         <translation>Lùghdaich eag</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="629"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="628"/>
         <source>Insert Indent</source>
         <translation>Cuir a-steach eag</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="678"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="677"/>
         <source>Rows</source>
         <translation>Ràghan</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="692"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="691"/>
         <source>Columns</source>
         <translation>Colbhan</translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/richtext/vui.qml" line="705"/>
+        <location filename="../src/qml/filters/richtext/vui.qml" line="704"/>
         <source>Border</source>
         <translation>Iomall</translation>
     </message>
