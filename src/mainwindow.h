@@ -202,6 +202,7 @@ public slots:
     void closeProducer();
     void showStatusMessage(QAction* action, int timeoutSeconds = 5);
     void showStatusMessage(const QString& message, int timeoutSeconds = 5, QPalette::ColorRole role = QPalette::ToolTipBase);
+    void onStatusMessageClicked();
     void seekPlaylist(int start);
     void seekTimeline(int position, bool seekPlayer = true);
     void seekKeyframes(int position);

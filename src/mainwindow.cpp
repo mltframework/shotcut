@@ -1535,11 +1535,14 @@ void MainWindow::showStatusMessage(const QString& message, int timeoutSeconds, Q
 {
     LOG_INFO() << message;
     auto action = new QAction;
-    connect(action, &QAction::triggered, [=]() {
-        showStatusMessage(QString(), 0);
-    });
+    connect(action, SIGNAL(triggered()), this, SLOT(onStatusMessageClicked()));
     m_statusBarAction.reset(action);
     m_player->setStatusLabel(message, timeoutSeconds, action, role);
+}
+
+void MainWindow::onStatusMessageClicked()
+{
+    showStatusMessage(QString(), 0);
 }
 
 void MainWindow::seekPlaylist(int start)
