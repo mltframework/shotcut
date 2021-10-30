@@ -35,7 +35,7 @@ class TimelineTransition : public QQuickPaintedItem
 public:
     TimelineTransition()
     {
-        setAntialiasing(QPainter::Antialiasing);
+        setAntialiasing(true);
         connect(this, SIGNAL(propertyChanged()), this, SLOT(update()));
     }
 
@@ -79,7 +79,7 @@ class TimelineTriangle : public QQuickPaintedItem
 public:
     TimelineTriangle()
     {
-        setAntialiasing(QPainter::Antialiasing);
+        setAntialiasing(true);
     }
     void paint(QPainter *painter)
     {
@@ -167,8 +167,7 @@ class MarkerStart : public QQuickPaintedItem
 public:
     MarkerStart()
     {
-        setAntialiasing(QPainter::Antialiasing);
-        setOpaquePainting(true);
+        setAntialiasing(true);
         connect(this, SIGNAL(propertyChanged()), this, SLOT(update()));
     }
 
@@ -198,8 +197,7 @@ class MarkerEnd : public QQuickPaintedItem
 public:
     MarkerEnd()
     {
-        setAntialiasing(QPainter::Antialiasing);
-        setOpaquePainting(true);
+        setAntialiasing(true);
         connect(this, SIGNAL(propertyChanged()), this, SLOT(update()));
     }
 
