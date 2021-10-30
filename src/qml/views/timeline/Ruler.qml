@@ -84,7 +84,7 @@ Rectangle {
                 msg += "<br>" + application.timecode(start)
             } else {
                 msg += "<br>" + application.timecode(start) + " - " + application.timecode(end)
-                msg += "<center>" + application.timecode(end - start) + "</center>"
+                msg += "<center>" + application.timecode(end - start + 1) + "</center>"
             }
             bubbleHelp.show(mouseX + bubbleHelp.width - 8, mouseY + 87, msg)
         }
