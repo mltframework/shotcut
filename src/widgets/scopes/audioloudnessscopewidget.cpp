@@ -159,7 +159,8 @@ void AudioLoudnessScopeWidget::refreshScope(const QSize& /*size*/, bool /*full*/
     }
 
     // Update the time with every frame.
-    m_timeLabel->setText( m_loudnessFilter->get_time( "frames_processed" ) );
+    QString time = m_loudnessFilter->get_time("frames_processed");
+    QMetaObject::invokeMethod(m_timeLabel, "setText", Qt::QueuedConnection, Q_ARG(const QString &, time));
 }
 
 QString AudioLoudnessScopeWidget::getTitle()
