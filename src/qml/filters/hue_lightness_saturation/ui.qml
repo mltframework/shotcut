@@ -20,33 +20,56 @@ import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 import Shotcut.Controls 1.0 as Shotcut
 
-Item {
-    property double hueDegreeDefault: 100
-    property double lightnessDefault: 100
-    property double saturationDefault: 100
+Shotcut.KeyframableFilter {
+    property double hueDegreeDefault: 0
+    property double lightnessDefault: 0
+    property double saturationDefault: 1
 
-    property var defaultParameters: ["av.h", "av.b", "av.s"]
+
+    keyframableParameters: ['av.h', 'av.b', 'av.s']
+    startValues: [hueDegreeDefault, lightnessDefault, saturationDefault]
+    middleValues: [hueDegreeDefault, lightnessDefault, saturationDefault]
+    endValues: [hueDegreeDefault, lightnessDefault, saturationDefault]
 
     width: 200
     height: 125
     Component.onCompleted: {
         if (filter.isNew) {
-            filter.set("av.h", (hueDegreeDefault - 100) * 360 / 100)
-            filter.set("av.b", (lightnessDefault - 100) * 10 / 100)
-            filter.set("av.s", saturationDefault / 100)
-            filter.savePreset(defaultParameters)
+            filter.set('av.h', hueDegreeDefault)
+            filter.set('av.b', lightnessDefault)
+            filter.set('av.s', saturationDefault)
+            filter.savePreset(keyframableParameters)
         }
         setControls()
     }
 
     function setControls() {
-        hueDegreeSlider.value = filter.getDouble("av.h") * 100 / 360 + 100
-        lightnessSlider.value = filter.getDouble("av.b") * 100 / 10 + 100
-        saturationSlider.value = filter.getDouble("av.s") * 100
+        var position = getPosition()
+        blockUpdate = true
+        hueDegreeSlider.value = filter.getDouble('av.h', position) * 100 / 360 + 100
+        hueKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('av.h') > 0
+        lightnessSlider.value = filter.getDouble('av.b', position) * 100 / 10 + 100
+        lightnessKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('av.b') > 0
+        saturationSlider.value = filter.getDouble('av.s', position) * 100
+        saturationKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('av.s') > 0
+        blockUpdate = false
+        enableControls(isSimpleKeyframesActive())
+    }
+
+    function enableControls(enabled) {
+        hueDegreeSlider.enabled = enabled
+        lightnessSlider.enabled = enabled
+        saturationSlider.enabled = enabled
+    }
+
+    function updateSimpleKeyframes() {
+        updateFilter('av.h', (hueDegreeSlider.value - 100) * 360 / 100, hueKeyframesButton, null)
+        updateFilter('av.b', (lightnessSlider.value - 100) * 10 / 100, lightnessKeyframesButton, null)
+        updateFilter('av.s', saturationSlider.value / 100, saturationKeyframesButton, null)
     }
 
     GridLayout {
-        columns: 3
+        columns: 4
         anchors.fill: parent
         anchors.margins: 8
 
@@ -56,9 +79,17 @@ Item {
         }
         Shotcut.Preset {
             id: presetItem
-            Layout.columnSpan: 2
-            parameters: defaultParameters
-            onPresetSelected: setControls()
+            Layout.columnSpan: 3
+            parameters: keyframableParameters
+            onBeforePresetLoaded: {
+                filter.resetProperty('av.h')
+                filter.resetProperty('av.b')
+                filter.resetProperty('av.s')
+            }
+            onPresetSelected: {
+                setControls()
+                initializeSimpleKeyframes()
+            }
         }
 
         Label {
@@ -70,10 +101,17 @@ Item {
             minimumValue: 0
             maximumValue: 200
             suffix: ' %'
-            onValueChanged: filter.set("av.h", (value - 100) * 360 / 100)
+            onValueChanged: updateFilter('av.h', (value - 100) * 360 / 100, hueKeyframesButton, getPosition())
         }
         Shotcut.UndoButton {
-            onClicked: hueDegreeSlider.value = hueDegreeDefault
+            onClicked: hueDegreeSlider.value = 100
+        }
+        Shotcut.KeyframesButton {
+            id: hueKeyframesButton
+            onToggled: {
+                enableControls(true)
+                toggleKeyframes(checked, 'av.h', (hueDegreeSlider.value - 100) * 360 / 100)
+            }
         }
 
         Label {
@@ -85,12 +123,19 @@ Item {
             minimumValue: 0
             maximumValue: 200
             suffix: ' %'
-            onValueChanged: filter.set("av.b", (value - 100) * 10 / 100)
+            onValueChanged: updateFilter('av.b', (value - 100) * 10 / 100, lightnessKeyframesButton, getPosition())
         }
         Shotcut.UndoButton {
-            onClicked: lightnessSlider.value = lightnessDefault
+            onClicked: lightnessSlider.value = 100
         }
-        
+        Shotcut.KeyframesButton {
+            id: lightnessKeyframesButton
+            onToggled: {
+                enableControls(true)
+                toggleKeyframes(checked, 'av.b', (lightnessSlider.value - 100) * 10 / 100)
+            }
+        }
+
         Label {
             text: qsTr('Saturation')
             Layout.alignment: Qt.AlignRight
@@ -100,12 +145,33 @@ Item {
             minimumValue: 0
             maximumValue: 500
             suffix: ' %'
-            onValueChanged: filter.set("av.s", value / 100.0)
+            onValueChanged: updateFilter('av.s', value / 100.0, saturationKeyframesButton, getPosition())
         }
         Shotcut.UndoButton {
-            onClicked: saturationSlider.value = saturationDefault
+            onClicked: saturationSlider.value = 100
+        }
+        Shotcut.KeyframesButton {
+            id: saturationKeyframesButton
+            onToggled: {
+                enableControls(true)
+                toggleKeyframes(checked, 'av.s', saturationSlider.value / 100)
+            }
         }
 
         Item { Layout.fillHeight: true }
+    }
+
+    Connections {
+        target: filter
+        onInChanged: updateSimpleKeyframes()
+        onOutChanged: updateSimpleKeyframes()
+        onAnimateInChanged: updateSimpleKeyframes()
+        onAnimateOutChanged: updateSimpleKeyframes()
+        onPropertyChanged: setControls()
+    }
+
+    Connections {
+        target: producer
+        onPositionChanged: setControls()
     }
 }
