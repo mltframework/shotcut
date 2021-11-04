@@ -23,4 +23,35 @@ Metadata {
     name: qsTr("Hue/Lightness/Saturation")
     mlt_service: 'avfilter.hue'
     qml: 'ui.qml'
+    keyframes {
+        allowAnimateIn: true
+        allowAnimateOut: true
+        simpleProperties: ['av.h', 'av.b', 'av.s']
+        parameters: [
+            Parameter {
+                name: qsTr('Hue')
+                property: 'av.h'
+                isSimple: true
+                isCurve: true
+                minimum: -360
+                maximum: 360
+            },
+            Parameter {
+                name: qsTr('Lightness')
+                property: 'av.b'
+                isSimple: true
+                isCurve: true
+                minimum: -10
+                maximum: 10
+            },
+            Parameter {
+                name: qsTr('Saturation')
+                property: 'av.s'
+                isSimple: true
+                isCurve: true
+                minimum: 0
+                maximum: 5
+            }
+        ]
+    }
 }
