@@ -70,13 +70,16 @@ void MarkersModel::load(Mlt::Producer* producer)
         if (markerList &&  markerList->is_valid()) {
             int count = markerList->count();
             for (int i = 0; i < count; i++) {
-                Mlt::Properties* marker = markerList->get_props_at(i);
-                if (marker && marker->is_valid()) {
+                Mlt::Properties* markerProperties = markerList->get_props_at(i);
+                if (markerProperties && markerProperties->is_valid()) {
                     char* key = markerList->get_name(i);
                     int intKey = QString(key).toInt();
                     m_keys << intKey;
+                    Markers::Marker marker;
+                    propertiesToMarker(markerProperties, marker, producer);
+                    updateRecentColors(marker.color);
                 }
-                delete marker;
+                delete markerProperties;
             }
         }
         delete markerList;
@@ -178,6 +181,7 @@ void MarkersModel::doInsert(int markerIndex,  const Markers::Marker& marker )
     markersListProperties->set(qUtf8Printable(QString::number(key)), markerProperties);
     m_keys.insert(modelIndex.row(), key);
     endInsertRows();
+    updateRecentColors(marker.color);
     if (marker.end > marker.start) emit rangesChanged();
 
     delete markersListProperties;
@@ -216,6 +220,7 @@ void MarkersModel::doAppend( const Markers::Marker& marker )
     int key = uniqueKey();
     markersListProperties->set(qUtf8Printable(QString::number(key)), markerProperties);
     m_keys.append(key);
+    updateRecentColors(marker.color);
     endInsertRows();
     if (marker.end > marker.start) emit rangesChanged();
 
@@ -258,6 +263,7 @@ void MarkersModel::doUpdate(int markerIndex,  const Markers::Marker& marker)
 
     markerToProperties(marker, markerProperties, m_producer);
     delete markerProperties;
+    updateRecentColors(marker.color);
 
     emit dataChanged(startIndex, endIndex, QVector<int>() << Qt::DisplayRole << TextRole << StartRole << EndRole << ColorRole);
     if ((markerBefore.end == markerBefore.start && marker.end > marker.start) ||
@@ -281,6 +287,23 @@ void MarkersModel::move(int markerIndex, int start, int end)
     Markers::Marker newMarker = oldMarker;
     newMarker.start = start;
     newMarker.end = end;
+
+    Markers::UpdateCommand* command = new Markers::UpdateCommand(*this, newMarker, oldMarker, markerIndex);
+    MAIN.undoStack()->push(command);
+}
+
+void MarkersModel::setColor(int markerIndex, const QColor& color)
+{
+    Mlt::Properties* markerProperties = getMarkerProperties(markerIndex);
+    if (!markerProperties || !markerProperties->is_valid()) {
+        LOG_ERROR() << "Marker does not exist" << markerIndex;
+        delete markerProperties;
+        return;
+    }
+    Markers::Marker oldMarker;
+    propertiesToMarker(markerProperties, oldMarker, m_producer);
+    Markers::Marker newMarker = oldMarker;
+    newMarker.color = color;
 
     Markers::UpdateCommand* command = new Markers::UpdateCommand(*this, newMarker, oldMarker, markerIndex);
     MAIN.undoStack()->push(command);
@@ -353,6 +376,11 @@ QMap<int, QString> MarkersModel::ranges()
     return result;
 }
 
+QStringList MarkersModel::recentColors()
+{
+    return m_recentColors.values();
+}
+
 Mlt::Properties* MarkersModel::getMarkerProperties(int markerIndex)
 {
     Mlt::Properties* markerProperties = nullptr;
@@ -380,6 +408,12 @@ Mlt::Properties* MarkersModel::getMarkerProperties(int markerIndex)
     }
     delete markersListProperties;
     return markerProperties;
+}
+
+void MarkersModel::updateRecentColors(const QColor& color)
+{
+    m_recentColors.insert(color.rgb(), color.name());
+    emit recentColorsChanged();
 }
 
 int MarkersModel::rowCount(const QModelIndex& parent) const

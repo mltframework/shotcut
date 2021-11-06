@@ -41,6 +41,7 @@ public:
 class MarkersModel : public QAbstractItemModel
 {
     Q_OBJECT
+    Q_PROPERTY(QStringList recentColors READ recentColors NOTIFY recentColorsChanged)
 
 public:
 
@@ -60,6 +61,7 @@ public:
     int markerIndexForPosition(int position);
     QModelIndex modelIndexForRow(int row);
     QMap<int, QString> ranges();
+    QStringList recentColors();
 
     // These should only be called by the marker commands
     void doRemove(int markerIndex);
@@ -70,12 +72,14 @@ public:
 signals:
     void rangesChanged();
     void modified();
+    void recentColorsChanged();
 
 public slots:
     void remove(int markerIndex);
     void append(const Markers::Marker& marker);
     void update(int markerIndex, const Markers::Marker& marker);
     void move(int markerIndex, int start, int end);
+    void setColor(int markerIndex, const QColor& color);
 
 protected:
     // Implement QAbstractItemModel
@@ -91,9 +95,11 @@ private:
     int markerCount() const;
     int keyIndex(int key) const;
     Mlt::Properties* getMarkerProperties(int markerIndex);
+    void updateRecentColors(const QColor& color);
 
     Mlt::Producer* m_producer;
     QList<int> m_keys;
+    QMap<QRgb, QString> m_recentColors;
 };
 
 #endif // MARKERSMODEL_H
