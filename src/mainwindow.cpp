@@ -464,10 +464,13 @@ MainWindow::MainWindow()
 
     m_markersDock = new MarkersDock(this);
     m_markersDock->hide();
+    m_markersDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_6));
     m_markersDock->setModel(m_timelineDock->markersModel());
     ui->menuView->addAction(m_markersDock->toggleViewAction());
     connect(m_markersDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onMarkersDockTriggered(bool)));
+    connect(ui->actionMarkers, SIGNAL(triggered()), this, SLOT(onMarkersDockTriggered()));
     connect(m_markersDock, SIGNAL(seekRequested(int)), SLOT(seekTimeline(int)));
+    connect(m_markersDock, SIGNAL(addRequested()), m_timelineDock, SLOT(createMarker()));
 
     addDockWidget(Qt::LeftDockWidgetArea, m_propertiesDock);
     addDockWidget(Qt::RightDockWidgetArea, m_recentDock);
@@ -2004,7 +2007,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
                 m_timelineDock->toggleTrackMute(m_timelineDock->currentTrack());
             }
         } else if (event->modifiers() == Qt::NoModifier && isMultitrackValid()) {
-            m_timelineDock->createMarker();
+            m_timelineDock->createOrEditMarker();
         }
         break;
     case Qt::Key_I:

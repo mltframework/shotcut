@@ -1071,13 +1071,24 @@ void TimelineDock::replace(int trackIndex, int clipIndex, const QString& xml)
     }
 }
 
+void TimelineDock::createOrEditMarker()
+{
+    if (!m_model.trackList().count() || MLT.producer()->get_length() <= 1)
+        return;
+    int index = m_markersModel.markerIndexForPosition(m_position);
+    if (index >= 0) {
+        editMarker(index);
+    }
+    createMarker();
+}
+
 void TimelineDock::createMarker()
 {
     if (!m_model.trackList().count() || MLT.producer()->get_length() <= 1)
         return;
     int index = m_markersModel.markerIndexForPosition(m_position);
     if (index >= 0) {
-        return editMarker(index);
+        return;
     }
     Markers::Marker marker;
     marker.text = QString("Marker %1").arg(m_markersModel.uniqueKey() + 1);

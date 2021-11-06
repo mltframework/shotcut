@@ -58,6 +58,7 @@ public:
     Markers::Marker getMarker(int markerIndex);
     int uniqueKey() const;
     int markerIndexForPosition(int position);
+    QModelIndex modelIndexForRow(int row);
     QMap<int, QString> ranges();
 
     // These should only be called by the marker commands

@@ -329,6 +329,11 @@ int MarkersModel::markerIndexForPosition(int position)
     return -1;
 }
 
+QModelIndex MarkersModel::modelIndexForRow(int row)
+{
+    return index(row, 0);
+}
+
 QMap<int, QString> MarkersModel::ranges()
 {
     QMap<int, QString> result;

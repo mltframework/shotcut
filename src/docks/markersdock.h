@@ -21,8 +21,10 @@
 #include <QDockWidget>
 #include <QItemSelectionModel>
 
+class EditMarkerWidget;
 class MarkerTreeView;
 class MarkersModel;
+class QPushButton;
 class QSortFilterProxyModel;
 
 class MarkersDock : public QDockWidget
@@ -36,14 +38,28 @@ public:
 
 signals:
     void seekRequested(int pos);
+    void addRequested();
 
 private slots:
     void onSelectionChanged(QModelIndex& index);
+    void onAddRequested();
+    void onRemoveRequested();
+    void onClearSelectionRequested();
+    void onRowsInserted(const QModelIndex &parent, int first, int last);
+    void onDataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight, const QVector<int> &roles = QVector<int>());
+    void onValuesChanged();
 
 private:
+    void enableButtons(bool enable);
+
     MarkersModel* m_model;
     QSortFilterProxyModel* m_proxyModel;
     MarkerTreeView* m_treeView;
+    QPushButton* m_addButton;
+    QPushButton* m_removeButton;
+    QPushButton* m_clearButton;
+    EditMarkerWidget* m_editMarkerWidget;
+    bool m_blockSelectionEvent;
 };
 
 #endif // MARKERSDOCK_H
