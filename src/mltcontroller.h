@@ -30,13 +30,8 @@
 // forward declarations
 class QQuickView;
 
-#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
-#   define MLT_LC_CATEGORY LC_NUMERIC
-#   define MLT_LC_NAME     "LC_NUMERIC"
-#else
-#   define MLT_LC_CATEGORY LC_ALL
-#   define MLT_LC_NAME     "LC_ALL"
-#endif
+#define MLT_LC_CATEGORY LC_ALL
+#define MLT_LC_NAME     "LC_ALL"
 
 namespace Mlt {
 
