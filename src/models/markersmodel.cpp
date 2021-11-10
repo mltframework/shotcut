@@ -312,7 +312,7 @@ int MarkersModel::markerIndexForPosition(int position)
         for (const auto i : qAsConst(m_keys)) {
             QScopedPointer<Mlt::Properties> marker(markerList->get_props(qUtf8Printable(QString::number(i))));
             if (marker && marker->is_valid() && position == m_producer->time_to_frames(marker->get("start"))) {
-                return i;
+                return keyIndex(i);
             }
         }
     }
