@@ -355,6 +355,8 @@ Rectangle {
                                                                .arg(s.substring(3))
                                                                .arg(application.timecode(n))
                                                 bubbleHelp.show(clip.x, trackRoot.y + trackRoot.height, s)
+                                            } else {
+                                                clip.originalX -= delta
                                             }
                                         }
                                         onTrimmedIn: bubbleHelp.hide()
@@ -368,6 +370,8 @@ Rectangle {
                                                                .arg(s.substring(3))
                                                                .arg(application.timecode(n))
                                                 bubbleHelp.show(clip.x + clip.width, trackRoot.y + trackRoot.height, s)
+                                            } else {
+                                                clip.originalX -= delta
                                             }
                                         }
                                         onTrimmedOut: bubbleHelp.hide()

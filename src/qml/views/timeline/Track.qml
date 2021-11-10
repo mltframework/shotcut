@@ -160,6 +160,8 @@ Rectangle {
                     } else {
                         clip.originalX -= originalDelta
                     }
+                } else {
+                    clip.originalX -= originalDelta
                 }
             }
             onTrimmedIn: {
@@ -186,6 +188,8 @@ Rectangle {
                     } else {
                         clip.originalX -= originalDelta
                     }
+                } else
+                    clip.originalX -= originalDelta
                 }
             }
             onTrimmedOut: {
