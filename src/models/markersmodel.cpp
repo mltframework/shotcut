@@ -274,6 +274,46 @@ void MarkersModel::doUpdate(int markerIndex,  const Markers::Marker& marker)
     emit modified();
 }
 
+void MarkersModel::doClear()
+{
+    if (!m_producer) {
+        LOG_ERROR() << "No producer";
+        return;
+    }
+
+    beginResetModel();
+    m_keys.clear();
+    static_cast<Mlt::Properties*>(m_producer)->clear(kShotcutMarkersProperty);
+    endResetModel();
+    emit modified();
+    emit rangesChanged();
+}
+
+void MarkersModel::doReplace(QList<Markers::Marker>& markers)
+{
+    if (!m_producer) {
+        LOG_ERROR() << "No producer";
+        return;
+    }
+
+    beginResetModel();
+    m_keys.clear();
+    Mlt::Properties* markersListProperties = new Mlt::Properties;
+    m_producer->set(kShotcutMarkersProperty, *markersListProperties);
+    for (int i = 0; i < markers.size(); i++) {
+        Mlt::Properties markerProperties;
+        markerToProperties(markers[i], &markerProperties, m_producer);
+        markersListProperties->set(qUtf8Printable(QString::number(i)), markerProperties);
+        m_keys << i;
+        m_recentColors.insert(markers[i].color.rgb(), markers[i].color.name());
+    }
+    endResetModel();
+    delete markersListProperties;
+    emit modified();
+    emit rangesChanged();
+    emit recentColorsChanged();
+}
+
 void MarkersModel::move(int markerIndex, int start, int end)
 {
     Mlt::Properties* markerProperties = getMarkerProperties(markerIndex);
@@ -307,6 +347,35 @@ void MarkersModel::setColor(int markerIndex, const QColor& color)
 
     Markers::UpdateCommand* command = new Markers::UpdateCommand(*this, newMarker, oldMarker, markerIndex);
     MAIN.undoStack()->push(command);
+}
+
+void MarkersModel::clear()
+{
+    if (!m_producer) {
+        LOG_ERROR() << "No producer";
+        return;
+    }
+
+    Mlt::Properties* markersListProperties = m_producer->get_props(kShotcutMarkersProperty);
+    if (!markersListProperties || !markersListProperties->is_valid()) {
+        delete markersListProperties;
+        return;
+    } else {
+        int count = markersListProperties->count();
+        QList<Markers::Marker> markerList;
+        for (int i = 0; i < count; i++) {
+            Mlt::Properties* markerProperties = markersListProperties->get_props_at(i);
+            if (markerProperties && markerProperties->is_valid()) {
+                Markers::Marker marker;
+                propertiesToMarker(markerProperties, marker, m_producer);
+                markerList << marker;
+            }
+            delete markerProperties;
+        }
+        Markers::ClearCommand* command = new Markers::ClearCommand(*this, markerList);
+        MAIN.undoStack()->push(command);
+    }
+    delete markersListProperties;
 }
 
 int MarkersModel::markerCount() const

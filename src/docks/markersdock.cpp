@@ -19,6 +19,7 @@
 
 #include "mainwindow.h"
 #include "models/markersmodel.h"
+#include "settings.h"
 #include "widgets/editmarkerwidget.h"
 #include <Logger.h>
 
@@ -27,6 +28,7 @@
 #include <QHBoxLayout>
 #include <QHeaderView>
 #include <QIcon>
+#include <QMenu>
 #include <QPushButton>
 #include <QSortFilterProxyModel>
 #include <QSpacerItem>
@@ -113,6 +115,34 @@ MarkersDock::MarkersDock(QWidget *parent) :
          connect(m_clearButton, SIGNAL(clicked()), SLOT(onClearSelectionRequested()));
     buttonLayout->addWidget(m_clearButton);
 
+    m_moreButton = new QPushButton(this);
+    m_moreButton->setIcon(QIcon::fromTheme("show-menu", QIcon(":/icons/oxygen/32x32/actions/show-menu.png")));
+    m_moreButton->setMaximumSize(22,22);
+    m_moreButton->setToolTip(tr("Display a menu of additional actions"));
+    QMenu* moreMenu = new QMenu(this);
+    moreMenu->addAction(tr("Remove all"), this, SLOT(onRemoveAllRequested()));
+    QMenu* columnsMenu = new QMenu(tr("Columns"), this);
+    QAction* action;
+    action = columnsMenu->addAction(tr("Color"), this, SLOT(onColorColumnToggled(bool)));
+    action->setCheckable(true);
+    action->setChecked(Settings.markersShowColumn("color"));
+    action = columnsMenu->addAction(tr("Text"), this, SLOT(onTextColumnToggled(bool)));
+    action->setCheckable(true);
+    action->setChecked(Settings.markersShowColumn("text"));
+    action = columnsMenu->addAction(tr("Start"), this, SLOT(onStartColumnToggled(bool)));
+    action->setCheckable(true);
+    action->setChecked(Settings.markersShowColumn("start"));
+    action = columnsMenu->addAction(tr("End"), this, SLOT(onEndColumnToggled(bool)));
+    action->setCheckable(true);
+    action->setChecked(Settings.markersShowColumn("end"));
+    action = columnsMenu->addAction(tr("Duration"), this, SLOT(onDurationColumnToggled(bool)));
+    action->setCheckable(true);
+    action->setChecked(Settings.markersShowColumn("duration"));
+    moreMenu->addMenu(columnsMenu);
+    m_moreButton->setMenu(moreMenu);
+
+    buttonLayout->addWidget(m_moreButton);
+
     buttonLayout->addStretch();
     enableButtons(false);
 
@@ -137,6 +167,11 @@ void MarkersDock::setModel(MarkersModel* model)
     m_proxyModel = new QSortFilterProxyModel(this);
     m_proxyModel->setSourceModel(m_model);
     m_treeView->setModel(m_proxyModel);
+    m_treeView->setColumnHidden(0, !Settings.markersShowColumn("color"));
+    m_treeView->setColumnHidden(1, !Settings.markersShowColumn("text"));
+    m_treeView->setColumnHidden(2, !Settings.markersShowColumn("start"));
+    m_treeView->setColumnHidden(3, !Settings.markersShowColumn("end"));
+    m_treeView->setColumnHidden(4, !Settings.markersShowColumn("duration"));
     connect(m_model, SIGNAL(rowsInserted(const QModelIndex&, int, int)), this, SLOT(onRowsInserted(const QModelIndex&, int, int)));
     connect(m_model, SIGNAL(dataChanged(const QModelIndex&, const QModelIndex&, const QVector<int>&)), this, SLOT(onDataChanged(const QModelIndex&, const QModelIndex&, const QVector<int>&)));
     m_blockSelectionEvent = false;
@@ -187,6 +222,42 @@ void MarkersDock::onClearSelectionRequested()
 {
     m_treeView->clearSelection();
 }
+
+void MarkersDock::onRemoveAllRequested()
+{
+    m_model->clear();
+}
+
+void MarkersDock::onColorColumnToggled(bool checked)
+{
+    Settings.setMarkersShowColumn("color", checked);
+    m_treeView->setColumnHidden(0, !checked);
+}
+
+void MarkersDock::onTextColumnToggled(bool checked)
+{
+    Settings.setMarkersShowColumn("text", checked);
+    m_treeView->setColumnHidden(1, !checked);
+}
+
+void MarkersDock::onStartColumnToggled(bool checked)
+{
+    Settings.setMarkersShowColumn("start", checked);
+    m_treeView->setColumnHidden(2, !checked);
+}
+
+void MarkersDock::onEndColumnToggled(bool checked)
+{
+    Settings.setMarkersShowColumn("end", checked);
+    m_treeView->setColumnHidden(3, !checked);
+}
+
+void MarkersDock::onDurationColumnToggled(bool checked)
+{
+    Settings.setMarkersShowColumn("duration", checked);
+    m_treeView->setColumnHidden(4, !checked);
+}
+
 
 void MarkersDock::onRowsInserted(const QModelIndex &parent, int first, int last)
 {

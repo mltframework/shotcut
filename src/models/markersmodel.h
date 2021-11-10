@@ -68,6 +68,8 @@ public:
     void doInsert(int markerIndex, const Markers::Marker& marker);
     void doAppend(const Markers::Marker& marker);
     void doUpdate(int markerIndex,  const Markers::Marker& marker);
+    void doClear();
+    void doReplace(QList<Markers::Marker>& markers);
 
 signals:
     void rangesChanged();
@@ -80,6 +82,7 @@ public slots:
     void update(int markerIndex, const Markers::Marker& marker);
     void move(int markerIndex, int start, int end);
     void setColor(int markerIndex, const QColor& color);
+    void clear();
 
 protected:
     // Implement QAbstractItemModel

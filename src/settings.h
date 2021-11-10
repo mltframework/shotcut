@@ -89,8 +89,6 @@ public:
     void setExportFrameSuffix(const QString& suffix);
     bool convertAdvanced() const;
     void setConvertAdvanced(bool);
-    void setMarkerColor(const QColor& color);
-    QColor markerColor();
 
     // encode
     QString encodePath() const;
@@ -190,6 +188,12 @@ public:
     // scope
     bool loudnessScopeShowMeter(const QString& meter) const;
     void setLoudnessScopeShowMeter(const QString& meter, bool b);
+
+    // Markers
+    void setMarkerColor(const QColor& color);
+    QColor markerColor() const;
+    void setMarkersShowColumn(const QString& column, bool b);
+    bool markersShowColumn(const QString& column) const;
 
     // general continued
     int drawMethod() const;

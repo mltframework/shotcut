@@ -45,6 +45,12 @@ private slots:
     void onAddRequested();
     void onRemoveRequested();
     void onClearSelectionRequested();
+    void onRemoveAllRequested();
+    void onColorColumnToggled(bool checked);
+    void onTextColumnToggled(bool checked);
+    void onStartColumnToggled(bool checked);
+    void onEndColumnToggled(bool checked);
+    void onDurationColumnToggled(bool checked);
     void onRowsInserted(const QModelIndex &parent, int first, int last);
     void onDataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight, const QVector<int> &roles = QVector<int>());
     void onValuesChanged();
@@ -58,6 +64,7 @@ private:
     QPushButton* m_addButton;
     QPushButton* m_removeButton;
     QPushButton* m_clearButton;
+    QPushButton* m_moreButton;
     EditMarkerWidget* m_editMarkerWidget;
     bool m_blockSelectionEvent;
 };
