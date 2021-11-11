@@ -174,6 +174,7 @@ void MarkersDock::setModel(MarkersModel* model)
     m_treeView->setColumnHidden(4, !Settings.markersShowColumn("duration"));
     connect(m_model, SIGNAL(rowsInserted(const QModelIndex&, int, int)), this, SLOT(onRowsInserted(const QModelIndex&, int, int)));
     connect(m_model, SIGNAL(dataChanged(const QModelIndex&, const QModelIndex&, const QVector<int>&)), this, SLOT(onDataChanged(const QModelIndex&, const QModelIndex&, const QVector<int>&)));
+    connect(m_model, SIGNAL(modelReset()), this, SLOT(onModelReset()));
     m_blockSelectionEvent = false;
 }
 
@@ -258,7 +259,6 @@ void MarkersDock::onDurationColumnToggled(bool checked)
     m_treeView->setColumnHidden(4, !checked);
 }
 
-
 void MarkersDock::onRowsInserted(const QModelIndex &parent, int first, int last)
 {
     QModelIndex sourceIndex = m_model->modelIndexForRow(first);
@@ -299,6 +299,12 @@ void MarkersDock::onValuesChanged()
             }
         }
     }
+}
+
+void MarkersDock::onModelReset()
+{
+    m_treeView->clearSelection();
+    m_editMarkerWidget->setVisible(false);
 }
 
 void MarkersDock::enableButtons(bool enable)

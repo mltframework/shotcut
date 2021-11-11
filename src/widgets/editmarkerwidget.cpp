@@ -157,6 +157,6 @@ void EditMarkerWidget::updateDuration()
         int duration = m_endSpinner->value() - m_startSpinner->value() + 1;
         m_durationLabel->setText(MLT.producer()->frames_to_time(duration));
     } else {
-        m_durationLabel->setText("00:00:00:00");
+        m_durationLabel->setText("--:--:--:--");
     }
 }

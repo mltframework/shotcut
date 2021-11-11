@@ -84,7 +84,6 @@ void MarkersModel::load(Mlt::Producer* producer)
         }
         delete markerList;
     }
-
     endResetModel();
 }
 

@@ -54,6 +54,7 @@ private slots:
     void onRowsInserted(const QModelIndex &parent, int first, int last);
     void onDataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight, const QVector<int> &roles = QVector<int>());
     void onValuesChanged();
+    void onModelReset();
 
 private:
     void enableButtons(bool enable);
