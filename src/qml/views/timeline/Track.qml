@@ -188,7 +188,7 @@ Rectangle {
                     } else {
                         clip.originalX -= originalDelta
                     }
-                } else
+                } else {
                     clip.originalX -= originalDelta
                 }
             }
