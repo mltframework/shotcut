@@ -476,8 +476,7 @@ Rectangle {
                     var newDuration = Math.round((parent.x + parent.width) / timeScale)
                     var delta = duration - newDuration
                     if (Math.abs(delta) > 0) {
-                        if (clipDuration - originalX - delta > 0)
-                            originalX += delta
+                        originalX += delta
                         clipRoot.trimmingOut(clipRoot, delta, mouse)
                         duration = newDuration
                     }
