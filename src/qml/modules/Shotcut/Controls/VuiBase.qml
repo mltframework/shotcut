@@ -18,8 +18,8 @@ DropArea {
                 var zoomOffsetY = ( video.rect.height - rectH ) / 2
                 var rectX = video.rect.x - video.offset.x + zoomOffsetX
                 var rectY = video.rect.y - video.offset.y + zoomOffsetY
-                var gridSizeX = (video.grid > 10000) ? (video.grid - 10000) * zoom : rectW / video.grid
-                var gridSizeY = (video.grid > 10000) ? (video.grid - 10000) * zoom : rectH / video.grid
+                var gridSizeX = (video.grid > 10000) ? rectW / (profile.width / (video.grid - 10000)) : rectW / video.grid
+                var gridSizeY = (video.grid > 10000) ? rectH / (profile.height / (video.grid - 10000)) : rectH / video.grid
                 var gridOffsetX = rectX % gridSizeX
                 var gridOffsetY = rectY % gridSizeY
 
