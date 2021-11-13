@@ -213,7 +213,7 @@ Shotcut.KeyframableFilter {
         updateFilter(stretchxProperty, 1.0 - stretchxSlider.value / stretchxSlider.maximumValue, stretchxKeyframesButton, null)
         updateFilter(stretchyProperty, 1.0 - stretchySlider.value / stretchySlider.maximumValue, stretchyKeyframesButton, null)
         updateFilter(featherProperty, featheralphaSlider.value / featheralphaSlider.maximumValue, featheralphaKeyframesButton, null)
-        updateFilterCorners()
+        updateFilterCorners(null)
     }
 
     function resetFilter() {
