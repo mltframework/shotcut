@@ -81,11 +81,11 @@ Item {
         }
         Menu {
             id: colorMenu
+            width: 100
             title: qsTr('Color')
             Instantiator {
                 model: markers.recentColors
                 MenuItem {
-                    implicitHeight: 14
                     id: menuItem
                     background: Rectangle {
                         color: modelData
