@@ -24,8 +24,9 @@
 class EditMarkerWidget;
 class MarkerTreeView;
 class MarkersModel;
-class QPushButton;
+class QLineEdit;
 class QSortFilterProxyModel;
+class QToolButton;
 
 class MarkersDock : public QDockWidget
 {
@@ -46,6 +47,7 @@ private slots:
     void onRemoveRequested();
     void onClearSelectionRequested();
     void onRemoveAllRequested();
+    void onSearchChanged();
     void onColorColumnToggled(bool checked);
     void onTextColumnToggled(bool checked);
     void onStartColumnToggled(bool checked);
@@ -62,10 +64,12 @@ private:
     MarkersModel* m_model;
     QSortFilterProxyModel* m_proxyModel;
     MarkerTreeView* m_treeView;
-    QPushButton* m_addButton;
-    QPushButton* m_removeButton;
-    QPushButton* m_clearButton;
-    QPushButton* m_moreButton;
+    QToolButton* m_addButton;
+    QToolButton* m_removeButton;
+    QToolButton* m_clearButton;
+    QToolButton* m_moreButton;
+    QLineEdit* m_searchField;
+    QToolButton* m_clearSearchButton;
     EditMarkerWidget* m_editMarkerWidget;
     bool m_blockSelectionEvent;
 };

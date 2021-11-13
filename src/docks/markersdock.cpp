@@ -28,11 +28,12 @@
 #include <QHBoxLayout>
 #include <QHeaderView>
 #include <QIcon>
+#include <QLineEdit>
 #include <QMenu>
-#include <QPushButton>
 #include <QSortFilterProxyModel>
 #include <QSpacerItem>
 #include <QTreeView>
+#include <QToolButton>
 #include <QVBoxLayout>
 #include <QtWidgets/QScrollArea>
 
@@ -65,6 +66,8 @@ protected:
 
 MarkersDock::MarkersDock(QWidget *parent) :
     QDockWidget(parent)
+  , m_model(nullptr)
+  , m_proxyModel(nullptr)
   , m_blockSelectionEvent(false)
 {
     LOG_DEBUG() << "begin";
@@ -94,31 +97,38 @@ MarkersDock::MarkersDock(QWidget *parent) :
     QHBoxLayout* buttonLayout = new QHBoxLayout();
     vboxLayout->addLayout(buttonLayout);
 
-    m_addButton = new QPushButton(this);
+    m_addButton = new QToolButton(this);
     m_addButton->setIcon(QIcon::fromTheme("list-add", QIcon(":/icons/oxygen/32x32/actions/list-add.png")));
     m_addButton->setMaximumSize(22,22);
+    m_addButton->setToolTip(tr("Add a marker at the current time"));
+    m_addButton->setAutoRaise(true);
     if (!connect(m_addButton, &QAbstractButton::clicked, this, &MarkersDock::onAddRequested))
          connect(m_addButton, SIGNAL(clicked()), SLOT(onAddRequested()));
     buttonLayout->addWidget(m_addButton);
 
-    m_removeButton = new QPushButton(this);
+    m_removeButton = new QToolButton(this);
     m_removeButton->setIcon(QIcon::fromTheme("list-remove", QIcon(":/icons/oxygen/32x32/actions/list-remove.png")));
     m_removeButton->setMaximumSize(22,22);
+    m_removeButton->setToolTip(tr("Remove the selected marker"));
+    m_removeButton->setAutoRaise(true);
     if (!connect(m_removeButton, &QAbstractButton::clicked, this, &MarkersDock::onRemoveRequested))
          connect(m_removeButton, SIGNAL(clicked()), SLOT(onRemoveRequested()));
     buttonLayout->addWidget(m_removeButton);
 
-    m_clearButton = new QPushButton(this);
+    m_clearButton = new QToolButton(this);
     m_clearButton->setIcon(QIcon::fromTheme("window-close", QIcon(":/icons/oxygen/32x32/actions/window-close.png")));
     m_clearButton->setMaximumSize(22,22);
+    m_clearButton->setToolTip(tr("Deselect the marker"));
+    m_clearButton->setAutoRaise(true);
     if (!connect(m_clearButton, &QAbstractButton::clicked, this, &MarkersDock::onClearSelectionRequested))
          connect(m_clearButton, SIGNAL(clicked()), SLOT(onClearSelectionRequested()));
     buttonLayout->addWidget(m_clearButton);
 
-    m_moreButton = new QPushButton(this);
+    m_moreButton = new QToolButton(this);
     m_moreButton->setIcon(QIcon::fromTheme("show-menu", QIcon(":/icons/oxygen/32x32/actions/show-menu.png")));
     m_moreButton->setMaximumSize(22,22);
     m_moreButton->setToolTip(tr("Display a menu of additional actions"));
+    m_moreButton->setAutoRaise(true);
     QMenu* moreMenu = new QMenu(this);
     moreMenu->addAction(tr("Remove all"), this, SLOT(onRemoveAllRequested()));
     QMenu* columnsMenu = new QMenu(tr("Columns"), this);
@@ -140,8 +150,23 @@ MarkersDock::MarkersDock(QWidget *parent) :
     action->setChecked(Settings.markersShowColumn("duration"));
     moreMenu->addMenu(columnsMenu);
     m_moreButton->setMenu(moreMenu);
-
+    m_moreButton->setPopupMode(QToolButton::QToolButton::InstantPopup);
     buttonLayout->addWidget(m_moreButton);
+
+    m_searchField = new QLineEdit(this);
+    m_searchField->setPlaceholderText(tr("search"));
+    if (!connect(m_searchField, &QLineEdit::textChanged, this, &MarkersDock::onSearchChanged))
+         connect(m_searchField, SIGNAL(textChanged(const QString &)), SLOT(onSearchChanged()));
+    buttonLayout->addWidget(m_searchField);
+
+    m_clearSearchButton = new QToolButton(this);
+    m_clearSearchButton->setIcon(QIcon::fromTheme("edit-clear", QIcon(":/icons/oxygen/32x32/actions/edit-clear.png")));
+    m_clearSearchButton->setMaximumSize(22,22);
+    m_clearSearchButton->setToolTip(tr("Clear search"));
+    m_clearSearchButton->setAutoRaise(true);
+    if (!connect(m_clearSearchButton, &QAbstractButton::clicked, m_searchField, &QLineEdit::clear))
+         connect(m_clearSearchButton, SIGNAL(clicked()), m_searchField, SLOT(clear()));
+    buttonLayout->addWidget(m_clearSearchButton);
 
     buttonLayout->addStretch();
     enableButtons(false);
@@ -166,6 +191,7 @@ void MarkersDock::setModel(MarkersModel* model)
     m_model = model;
     m_proxyModel = new QSortFilterProxyModel(this);
     m_proxyModel->setSourceModel(m_model);
+    m_proxyModel->setFilterKeyColumn(1);
     m_treeView->setModel(m_proxyModel);
     m_treeView->setColumnHidden(0, !Settings.markersShowColumn("color"));
     m_treeView->setColumnHidden(1, !Settings.markersShowColumn("text"));
@@ -227,6 +253,13 @@ void MarkersDock::onClearSelectionRequested()
 void MarkersDock::onRemoveAllRequested()
 {
     m_model->clear();
+}
+
+void MarkersDock::onSearchChanged()
+{
+    if (m_proxyModel) {
+        m_proxyModel->setFilterRegExp(QRegExp(m_searchField->text(), Qt::CaseInsensitive, QRegExp::FixedString));
+    }
 }
 
 void MarkersDock::onColorColumnToggled(bool checked)
