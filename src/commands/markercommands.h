@@ -61,6 +61,17 @@ private:
     int m_index;
 };
 
+class ClearCommand : public QUndoCommand
+{
+public:
+    ClearCommand(MarkersModel& model, QList<Marker>& clearMarkers);
+    void redo();
+    void undo();
+private:
+    MarkersModel& m_model;
+    QList<Marker> m_clearMarkers;
+};
+
 }
 
 #endif // MARKERCOMMANDS_H

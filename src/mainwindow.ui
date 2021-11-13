@@ -290,6 +290,7 @@
    <addaction name="actionHistory"/>
    <addaction name="actionEncode"/>
    <addaction name="actionJobs"/>
+   <addaction name="actionMarkers"/>
    <addaction name="dummyAction"/>
    <addaction name="actionLayoutLogging"/>
    <addaction name="actionLayoutEditing"/>
@@ -1072,6 +1073,15 @@
    </property>
    <property name="text">
     <string>Jobs</string>
+   </property>
+  </action>
+  <action name="actionMarkers">
+   <property name="icon">
+    <iconset theme="marker" resource="../icons/resources.qrc">
+     <normaloff>:/icons/oxygen/32x32/actions/marker.png</normaloff>:/icons/oxygen/32x32/actions/marker.png</iconset>
+   </property>
+   <property name="text">
+    <string>Markers</string>
    </property>
   </action>
   <action name="actionPreview540">

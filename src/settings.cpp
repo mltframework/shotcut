@@ -299,16 +299,6 @@ void ShotcutSettings::setConvertAdvanced(bool b)
     settings.setValue("convertAdvanced", b);
 }
 
-void ShotcutSettings::setMarkerColor(const QColor& color)
-{
-    settings.setValue("markerColor", color.name());
-}
-
-QColor ShotcutSettings::markerColor()
-{
-    return QColor(settings.value("markerColor", "green").toString());
-}
-
 bool ShotcutSettings::showConvertClipDialog() const
 {
     return settings.value("showConvertClipDialog", true).toBool();
@@ -715,6 +705,26 @@ bool ShotcutSettings::loudnessScopeShowMeter(const QString& meter) const
 void ShotcutSettings::setLoudnessScopeShowMeter(const QString& meter, bool b)
 {
     settings.setValue("scope/loudness/" + meter, b);
+}
+
+void ShotcutSettings::setMarkerColor(const QColor& color)
+{
+    settings.setValue("markers/color", color.name());
+}
+
+QColor ShotcutSettings::markerColor() const
+{
+    return QColor(settings.value("markers/color", "green").toString());
+}
+
+void ShotcutSettings::setMarkersShowColumn(const QString& column, bool b)
+{
+    settings.setValue("markers/columns/" + column, b);
+}
+
+bool ShotcutSettings::markersShowColumn(const QString& column) const
+{
+    return settings.value("markers/columns/" + column, true).toBool();
 }
 
 int ShotcutSettings::drawMethod() const

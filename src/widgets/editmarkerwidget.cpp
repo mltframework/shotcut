@@ -29,6 +29,7 @@
 #include <QLabel>
 #include <QLineEdit>
 #include <QPushButton>
+#include <QSignalBlocker>
 
 EditMarkerWidget::EditMarkerWidget(QWidget *parent, const QString& text, const QColor& color, int start, int end, int maxEnd)
     : QWidget(parent)
@@ -39,6 +40,7 @@ EditMarkerWidget::EditMarkerWidget(QWidget *parent, const QString& text, const Q
     grid->setColumnMinimumWidth(1, 125);
 
     m_textField = new QLineEdit(text);
+    connect(m_textField, SIGNAL(editingFinished()), SIGNAL(valuesChanged()));
     m_textField->setToolTip(tr("Set the text for this marker."));
     grid->addWidget(m_textField, 0, 0, 1, 2);
 
@@ -99,6 +101,27 @@ int EditMarkerWidget::getEnd()
     return m_endSpinner->value();
 }
 
+void EditMarkerWidget::setValues(const QString& text, const QColor& color, int start, int end, int maxEnd)
+{
+    QSignalBlocker textBlocker(m_textField);
+    QSignalBlocker colorBlocker(m_colorLabel);
+    QSignalBlocker startBlocker(m_startSpinner);
+    QSignalBlocker endBlocker(m_endSpinner);
+    m_textField->setText(text);
+    m_colorLabel->setText(color.name(QColor::HexRgb));
+    m_colorLabel->setStyleSheet(QString("color: %1; background-color: %2")
+            .arg((color.value() < 150)? "white":"black")
+            .arg(color.name()));
+    m_startSpinner->setMinimum(0);
+    m_startSpinner->setMaximum(end);
+    m_startSpinner->setValue(start);
+    m_endSpinner->setMinimum(start);
+    m_endSpinner->setMaximum(maxEnd);
+    m_endSpinner->setValue(end);
+    updateDuration();
+    emit valuesChanged();
+}
+
 void EditMarkerWidget::on_colorButton_clicked()
 {
     QColor color = QColor(m_colorLabel->text());
@@ -111,22 +134,29 @@ void EditMarkerWidget::on_colorButton_clicked()
                                       .arg((newColor.value() < 150)? "white":"black")
                                       .arg(newColor.name()));
     }
+    emit valuesChanged();
 }
 
 void EditMarkerWidget::on_startSpinner_valueChanged(int value)
 {
     m_endSpinner->setMinimum(value);
     updateDuration();
+    emit valuesChanged();
 }
 
 void EditMarkerWidget::on_endSpinner_valueChanged(int value)
 {
     m_startSpinner->setMaximum(value);
     updateDuration();
+    emit valuesChanged();
 }
 
 void EditMarkerWidget::updateDuration()
 {
-    int duration = m_endSpinner->value() - m_startSpinner->value() + 1;
-    m_durationLabel->setText(MLT.producer()->frames_to_time(duration));
+    if (MLT.producer()) {
+        int duration = m_endSpinner->value() - m_startSpinner->value() + 1;
+        m_durationLabel->setText(MLT.producer()->frames_to_time(duration));
+    } else {
+        m_durationLabel->setText("--:--:--:--");
+    }
 }

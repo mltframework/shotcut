@@ -17,6 +17,7 @@
 
 import QtQuick 2.12
 import QtQuick.Controls 2.12
+import QtQuick.Dialogs 1.3
 import Shotcut.Controls 1.0 as Shotcut
 
 Item {
@@ -53,6 +54,17 @@ Item {
         markerEnd.x = end * timeScale
     }
 
+    ColorDialog {
+        id: colorDialog
+        title: qsTr("Marker Color")
+        showAlphaChannel: false
+        color: root.markerColor
+        onAccepted: {
+            markers.setColor(root.index, color)
+        }
+        modality: application.dialogModality
+    }
+
     Menu {
         id: menu
         title: qsTr('Marker Operations')
@@ -67,6 +79,34 @@ Item {
             text: qsTr('Delete')
             onTriggered: root.deleteRequested(root.index)
         }
+        Menu {
+            id: colorMenu
+            width: 100
+            title: qsTr('Color')
+            Instantiator {
+                model: markers.recentColors
+                MenuItem {
+                    id: menuItem
+                    background: Rectangle {
+                        color: modelData
+                        border.width: 3
+                        border.color: menuItem.highlighted ? activePalette.highlight : modelData
+                    }
+                    onTriggered: markers.setColor(root.index, modelData)
+                }
+                onObjectAdded: colorMenu.insertItem(index, object)
+                onObjectRemoved: colorMenu.removeItem(object)
+            }
+            MenuSeparator { }
+            MenuItem {
+                text: qsTr('Other...')
+                onTriggered: {
+                    colorDialog.color = root.markerColor
+                    colorDialog.open()
+                }
+            }
+        }
+        MenuSeparator { }
         MenuItem {
             text: qsTr('Cancel')
             onTriggered: menu.dismiss()

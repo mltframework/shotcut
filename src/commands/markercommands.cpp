@@ -87,5 +87,22 @@ void UpdateCommand::undo()
     m_model.doUpdate(m_index, m_oldMarker);
 }
 
+ClearCommand::ClearCommand(MarkersModel& model, QList<Marker>& clearMarkers)
+    : QUndoCommand(0)
+    , m_model(model)
+    , m_clearMarkers(clearMarkers)
+{
+    setText(QObject::tr("Clear markers"));
+}
+
+void ClearCommand::redo()
+{
+    m_model.doClear();
+}
+
+void ClearCommand::undo()
+{
+    m_model.doReplace(m_clearMarkers);
+}
 
 } // namespace Markers
