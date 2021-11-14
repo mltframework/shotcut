@@ -146,7 +146,9 @@ void UndoHelper::undoChanges()
     debugPrintState();
 #endif
     if (m_hints & RestoreTracks) {
-        return restoreAffectedTracks();
+        restoreAffectedTracks();
+        emit m_model.modified();
+        return;
     }
     int indexAdjustment = 0;
 
