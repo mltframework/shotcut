@@ -82,7 +82,7 @@ Item {
         Menu {
             id: colorMenu
             width: 100
-            title: qsTr('Color')
+            title: qsTr('Recent Color')
             Instantiator {
                 model: markers.recentColors
                 MenuItem {
@@ -97,13 +97,12 @@ Item {
                 onObjectAdded: colorMenu.insertItem(index, object)
                 onObjectRemoved: colorMenu.removeItem(object)
             }
-            MenuSeparator { }
-            MenuItem {
-                text: qsTr('Other...')
-                onTriggered: {
-                    colorDialog.color = root.markerColor
-                    colorDialog.open()
-                }
+        }
+        MenuItem {
+            text: qsTr('Other Color...')
+            onTriggered: {
+                colorDialog.color = root.markerColor
+                colorDialog.open()
             }
         }
         MenuSeparator { }
