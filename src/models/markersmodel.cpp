@@ -436,7 +436,7 @@ QMap<int, QString> MarkersModel::ranges()
                 Markers::Marker m;
                 propertiesToMarker(marker.get(), m, m_producer);
                 if (m.end > m.start) {
-                    result[i] = m.text;
+                    result[keyIndex(i)] = m.text;
                 }
             }
         }
