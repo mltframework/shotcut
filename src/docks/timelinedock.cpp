@@ -1111,7 +1111,6 @@ void TimelineDock::editMarker(int markerIndex)
         marker.start = dialog.getStart();
         marker.end = dialog.getEnd();
         m_markersModel.update(markerIndex, marker);
-        Settings.setMarkerColor(marker.color);
     }
 }
 

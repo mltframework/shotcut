@@ -19,6 +19,7 @@
 
 #include "commands/markercommands.h"
 #include "mainwindow.h"
+#include "settings.h"
 #include "shotcut_mlt_properties.h"
 
 #include <Logger.h>
@@ -481,6 +482,7 @@ Mlt::Properties* MarkersModel::getMarkerProperties(int markerIndex)
 void MarkersModel::updateRecentColors(const QColor& color)
 {
     m_recentColors.insert(color.rgb(), color.name());
+    Settings.setMarkerColor(color);
     emit recentColorsChanged();
 }
 
