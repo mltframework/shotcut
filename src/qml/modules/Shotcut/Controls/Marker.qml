@@ -79,10 +79,17 @@ Item {
             text: qsTr('Delete')
             onTriggered: root.deleteRequested(root.index)
         }
+        MenuItem {
+            text: qsTr('Choose Color...')
+            onTriggered: {
+                colorDialog.color = root.markerColor
+                colorDialog.open()
+            }
+        }
         Menu {
             id: colorMenu
             width: 100
-            title: qsTr('Recent Color')
+            title: qsTr('Choose Recent Color')
             Instantiator {
                 model: markers.recentColors
                 MenuItem {
@@ -96,13 +103,6 @@ Item {
                 }
                 onObjectAdded: colorMenu.insertItem(index, object)
                 onObjectRemoved: colorMenu.removeItem(object)
-            }
-        }
-        MenuItem {
-            text: qsTr('Other Color...')
-            onTriggered: {
-                colorDialog.color = root.markerColor
-                colorDialog.open()
             }
         }
         MenuSeparator { }
