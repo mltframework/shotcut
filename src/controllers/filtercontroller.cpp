@@ -31,7 +31,7 @@
 #include <MltLink.h>
 
 FilterController::FilterController(QObject* parent) : QObject(parent),
- m_mltService(0),
+ m_mltService(nullptr),
  m_metadataModel(this),
  m_attachedModel(this),
  m_currentFilterIndex(QmlFilter::NoCurrentFilter)
@@ -101,7 +101,7 @@ void FilterController::loadFilterMetadata() {
 
 QmlMetadata *FilterController::metadataForService(Mlt::Service *service)
 {
-    QmlMetadata* meta = 0;
+    QmlMetadata* meta = nullptr;
     int rowCount = m_metadataModel.rowCount();
     QString uniqueId = service->get(kShotcutFilterProperty);
 
@@ -119,6 +119,15 @@ QmlMetadata *FilterController::metadataForService(Mlt::Service *service)
     }
 
     return meta;
+}
+
+void FilterController::onUndoOrRedo(Mlt::Service& service)
+{
+    MLT.refreshConsumer();
+    if (m_currentFilter && m_mltService && service.get_service() == m_mltService->get_service()) {
+        emit undoOrRedo();
+        QMetaObject::invokeMethod(this, "setCurrentFilter", Qt::QueuedConnection, Q_ARG(int, m_currentFilterIndex), Q_ARG(bool, false));
+    }
 }
 
 void FilterController::timerEvent(QTimerEvent* event)
@@ -178,6 +187,9 @@ void FilterController::setCurrentFilter(int attachedIndex, bool isNew)
 
     emit currentFilterChanged(filter, meta, m_currentFilterIndex);
     m_currentFilter.reset(filter);
+    if (filter) {
+        filter->startUndoTracking(this);
+    }
 }
 
 void FilterController::onFadeInChanged()

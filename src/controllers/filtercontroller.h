@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2020 Meltytech, LLC
+ * Copyright (c) 2014-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,6 +40,7 @@ public:
 
     QmlMetadata* metadataForService(Mlt::Service *service);
     QmlFilter* currentFilter() const { return m_currentFilter.data(); }
+    void onUndoOrRedo(Mlt::Service& service);
 
 protected:
     void timerEvent(QTimerEvent*);
@@ -48,6 +49,7 @@ signals:
     void currentFilterChanged(QmlFilter* filter, QmlMetadata* meta, int index);
     void statusChanged(QString);
     void filterChanged(Mlt::Service*);
+    void undoOrRedo();
 
 public slots:
     void setProducer(Mlt::Producer *producer = 0);

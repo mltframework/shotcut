@@ -98,6 +98,7 @@ private:
 
     int keyframeCount(int index) const;
     void updateNeighborsMinMax(int parameterIndex, int keyframeIndex);
+    QStringList gangedProperties(int parameterIndex) const;
 };
 
 #endif // KEYFRAMESMODEL_H

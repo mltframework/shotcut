@@ -52,13 +52,11 @@ public slots:
     void onSeeked(int position);
     void onShowFrame(const SharedFrame& frame);
     void openFilterMenu() const;
+    void resetQview();
 
 protected:
     bool event(QEvent *event);
     void keyPressEvent(QKeyEvent* event);
-
-private slots:
-    void resetQview();
 
 private:
     QQuickWidget m_qview;

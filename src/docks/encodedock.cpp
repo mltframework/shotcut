@@ -1060,7 +1060,6 @@ void EncodeDock::runMelt(const QString& target, int realtime)
 class FindAnalysisFilterParser : public Mlt::Parser
 {
 private:
-    QUuid m_uuid;
     QList<Mlt::Filter> m_filters;
 
 public:
