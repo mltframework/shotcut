@@ -162,6 +162,8 @@ public slots:
     void createMarker();
     void editMarker(int markerIndex);
     void deleteMarker(int markerIndex = -1);
+    void seekNextMarker();
+    void seekPrevMarker();
 
 protected:
     void dragEnterEvent(QDragEnterEvent* event);

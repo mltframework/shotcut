@@ -421,6 +421,54 @@ int MarkersModel::markerIndexForPosition(int position)
     return -1;
 }
 
+int MarkersModel::nextMarkerIndexForPosition(int position)
+{
+    int nextIndex = -1;
+    int nextPosition = -1;
+    if (!m_producer) {
+        LOG_ERROR() << "No producer";
+        return nextIndex;
+    }
+    QScopedPointer<Mlt::Properties> markerList(m_producer->get_props(kShotcutMarkersProperty));
+    if (markerList &&  markerList->is_valid()) {
+        for (const auto i : qAsConst(m_keys)) {
+            QScopedPointer<Mlt::Properties> marker(markerList->get_props(qUtf8Printable(QString::number(i))));
+            if (marker && marker->is_valid()) {
+                int markerPosition = m_producer->time_to_frames(marker->get("start"));
+                if (markerPosition > position && (nextPosition == -1 || markerPosition < nextPosition)) {
+                    nextPosition = markerPosition;
+                    nextIndex = keyIndex(i);
+                }
+            }
+        }
+    }
+    return nextIndex;
+}
+
+int MarkersModel::prevMarkerIndexForPosition(int position)
+{
+    int prevIndex = -1;
+    int prevPosition = -1;
+    if (!m_producer) {
+        LOG_ERROR() << "No producer";
+        return prevIndex;
+    }
+    QScopedPointer<Mlt::Properties> markerList(m_producer->get_props(kShotcutMarkersProperty));
+    if (markerList &&  markerList->is_valid()) {
+        for (const auto i : qAsConst(m_keys)) {
+            QScopedPointer<Mlt::Properties> marker(markerList->get_props(qUtf8Printable(QString::number(i))));
+            if (marker && marker->is_valid()) {
+                int markerPosition = m_producer->time_to_frames(marker->get("start"));
+                if (markerPosition < position && (prevPosition == -1 || markerPosition > prevPosition)) {
+                    prevPosition = markerPosition;
+                    prevIndex = keyIndex(i);
+                }
+            }
+        }
+    }
+    return prevIndex;
+}
+
 QModelIndex MarkersModel::modelIndexForRow(int row)
 {
     return index(row, 0);

@@ -2358,6 +2358,12 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
             }
         }
         break;
+    case Qt::Key_Less:
+        m_timelineDock->seekPrevMarker();
+        break;
+    case Qt::Key_Greater:
+        m_timelineDock->seekNextMarker();
+        break;
     default:
         handled = false;
         break;

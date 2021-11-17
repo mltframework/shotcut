@@ -59,6 +59,8 @@ public:
     Markers::Marker getMarker(int markerIndex);
     int uniqueKey() const;
     int markerIndexForPosition(int position);
+    int nextMarkerIndexForPosition(int position);
+    int prevMarkerIndexForPosition(int position);
     QModelIndex modelIndexForRow(int row);
     QMap<int, QString> ranges();
     QStringList recentColors();

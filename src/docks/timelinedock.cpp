@@ -1078,6 +1078,7 @@ void TimelineDock::createOrEditMarker()
     int index = m_markersModel.markerIndexForPosition(m_position);
     if (index >= 0) {
         editMarker(index);
+        return;
     }
     createMarker();
 }
@@ -1122,6 +1123,26 @@ void TimelineDock::deleteMarker(int markerIndex)
     if (markerIndex >= 0) {
         m_markersModel.remove(markerIndex);
     }
+}
+
+void TimelineDock::seekNextMarker()
+{
+    int markerIndex = m_markersModel.nextMarkerIndexForPosition(m_position);
+    if (markerIndex < 0) {
+        return;
+    }
+    Markers::Marker marker = m_markersModel.getMarker(markerIndex);
+    setPosition(marker.start);
+}
+
+void TimelineDock::seekPrevMarker()
+{
+    int markerIndex = m_markersModel.prevMarkerIndexForPosition(m_position);
+    if (markerIndex < 0) {
+        return;
+    }
+    Markers::Marker marker = m_markersModel.getMarker(markerIndex);
+    setPosition(marker.start);
 }
 
 void TimelineDock::setTrackName(int trackIndex, const QString &value)
