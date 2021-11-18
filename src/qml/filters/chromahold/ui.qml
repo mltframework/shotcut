@@ -20,12 +20,18 @@ import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 import Shotcut.Controls 1.0 as Shotcut
 
-Item {
+Shotcut.KeyframableFilter {
     property string colorParam: 'av.color'
     property string colorDefault: '0x000000'
     property string distanceParam: 'av.similarity'
     property double distanceDefault: 10
     property var defaultParameters: [colorParam, distanceParam]
+
+    keyframableParameters: [distanceParam]
+    startValues: [1]
+    middleValues: [distanceDefault / 100]
+    endValues: [1]
+
     width: 350
     height: 50
     Component.onCompleted: {
@@ -36,12 +42,28 @@ Item {
             filter.set(distanceParam, distanceDefault / 100)
             filter.savePreset(defaultParameters)
         }
+        setControls()
+    }
+
+    function setControls() {
         colorPicker.value = filter.get(colorParam)
-        distanceSlider.value = filter.getDouble(distanceParam) * 100
+        blockUpdate = true
+        distanceSlider.value = filter.getDouble(distanceParam, getPosition()) * 100
+        distanceKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(distanceParam) > 0
+        blockUpdate = false
+        enableControls(isSimpleKeyframesActive())
+    }
+
+    function enableControls(enabled) {
+        distanceSlider.enabled = enabled
+    }
+
+    function updateSimpleKeyframes() {
+        updateFilter(distanceParam, distanceSlider.value / 100, distanceKeyframesButton, null)
     }
 
     GridLayout {
-        columns: 3
+        columns: 4
         anchors.fill: parent
         anchors.margins: 8
 
@@ -51,10 +73,13 @@ Item {
         }
         Shotcut.Preset {
             id: presetItem
-            Layout.columnSpan: 2
+            Layout.columnSpan: 3
+            onBeforePresetLoaded: {
+                filter.resetProperty(distanceParam)
+            }
             onPresetSelected: {
-                colorPicker.value = filter.get(colorParam)
-                distanceSlider.value = filter.getDouble(distanceParam) * 100
+                setControls()
+                initializeSimpleKeyframes()
             }
         }
 
@@ -75,6 +100,7 @@ Item {
         Shotcut.UndoButton {
             onClicked: colorPicker.value = colorDefault
         }
+        Item { Layout.fillWidth: true }
 
         // Row 2
         Label {
@@ -87,15 +113,35 @@ Item {
             maximumValue: 100
             decimals: 1
             suffix: ' %'
-            value: filter.getDouble(distanceParam) * 100
-            onValueChanged: filter.set(distanceParam, value / 100)
+            onValueChanged: updateFilter(distanceParam, value / 100, distanceKeyframesButton, getPosition())
         }
         Shotcut.UndoButton {
             onClicked: distanceSlider.value = distanceDefault
+        }
+        Shotcut.KeyframesButton {
+            id: distanceKeyframesButton
+            onToggled: {
+                enableControls(true)
+                toggleKeyframes(checked, distanceParam, distanceSlider.value / 100)
+            }
         }
 
         Item {
             Layout.fillHeight: true
         }
+    }
+
+    Connections {
+        target: filter
+        onInChanged: updateSimpleKeyframes()
+        onOutChanged: updateSimpleKeyframes()
+        onAnimateInChanged: updateSimpleKeyframes()
+        onAnimateOutChanged: updateSimpleKeyframes()
+        onPropertyChanged: setControls()
+    }
+
+    Connections {
+        target: producer
+        onPositionChanged: setControls()
     }
 }
