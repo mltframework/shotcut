@@ -357,6 +357,7 @@ private slots:
     void onClipboardChanged();
     void sourceUpdated();
     void resetSourceUpdated();
+    void on_actionExportChapters_triggered();
 };
 
 #define MAIN MainWindow::singleton()

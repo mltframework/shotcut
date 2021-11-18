@@ -46,6 +46,15 @@
     <property name="title">
      <string>&amp;File</string>
     </property>
+    <widget class="QMenu" name="menuExport">
+     <property name="title">
+      <string>Export</string>
+     </property>
+     <addaction name="actionExportFrame"/>
+     <addaction name="actionExportVideo"/>
+     <addaction name="actionExportChapters"/>
+     <addaction name="actionExportEDL"/>
+    </widget>
     <addaction name="actionNew"/>
     <addaction name="actionOpen"/>
     <addaction name="actionOpenOther"/>
@@ -53,10 +62,7 @@
     <addaction name="separator"/>
     <addaction name="actionSave"/>
     <addaction name="actionSave_As"/>
-    <addaction name="actionExportVideo"/>
-    <addaction name="actionExportFrame"/>
-    <addaction name="actionExportEDL"/>
-    <addaction name="separator"/>
+    <addaction name="menuExport"/>
     <addaction name="actionClose"/>
     <addaction name="separator"/>
     <addaction name="actionExit"/>
@@ -896,12 +902,24 @@
   </action>
   <action name="actionExportEDL">
    <property name="text">
-    <string>Export EDL...</string>
+    <string>EDL...</string>
+   </property>
+   <property name="iconText">
+    <string>Export EDL</string>
+   </property>
+   <property name="toolTip">
+    <string>Export EDL</string>
    </property>
   </action>
   <action name="actionExportFrame">
    <property name="text">
-    <string>Export Frame...</string>
+    <string>Frame...</string>
+   </property>
+   <property name="iconText">
+    <string>Export Frame</string>
+   </property>
+   <property name="toolTip">
+    <string>Export Frame</string>
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+Shift+E</string>
@@ -909,7 +927,13 @@
   </action>
   <action name="actionExportVideo">
    <property name="text">
-    <string>Export Video...</string>
+    <string>Video...</string>
+   </property>
+   <property name="iconText">
+    <string>Export Video</string>
+   </property>
+   <property name="toolTip">
+    <string>Export Video</string>
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+E</string>
@@ -1242,6 +1266,17 @@
   <action name="actionLayoutClip">
    <property name="text">
     <string>Clip-only Project</string>
+   </property>
+  </action>
+  <action name="actionExportChapters">
+   <property name="text">
+    <string>Markers as Chapters...</string>
+   </property>
+   <property name="iconText">
+    <string>Export Chapters</string>
+   </property>
+   <property name="toolTip">
+    <string>Export Chapters</string>
    </property>
   </action>
  </widget>
