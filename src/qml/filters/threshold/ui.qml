@@ -77,7 +77,7 @@ Shotcut.KeyframableFilter {
             parameters: [threshold, 'invert', 'use_alpha']
             Layout.columnSpan: 3
             onBeforePresetLoaded: {
-                filter.resetProperty(threshold)
+                resetSimpleKeyframes()
             }
             onPresetSelected: {
                 setControls()

@@ -77,8 +77,7 @@ Shotcut.KeyframableFilter {
             parameters: [phaseincrement, zoomrate]
             Layout.columnSpan: 3
             onBeforePresetLoaded: {
-                filter.resetProperty(phaseincrement)
-                filter.resetProperty(zoomrate)
+                resetSimpleKeyframes()
             }
             onPresetSelected: {
                 setControls()
