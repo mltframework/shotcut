@@ -99,7 +99,7 @@ QVariant KeyframesModel::data(const QModelIndex& index, int role) const
                     }
                     case MaximumFrameRole: {
                         int result = 0;
-                        if (index.row() >= rowCount(index) - 1) {
+                        if (index.row() >= rowCount(index.parent()) - 1) {
                             // Last Keyframe
                             result = m_filter->producer().get_out();
                         } else {
