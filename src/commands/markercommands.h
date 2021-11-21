@@ -24,6 +24,10 @@
 namespace Markers
 {
 
+enum {
+    UndoIdUpdate,
+};
+
 class DeleteCommand : public QUndoCommand
 {
 public:
@@ -54,6 +58,9 @@ public:
     UpdateCommand(MarkersModel& model, const Marker& newMarker, const Marker& oldMarker, int index);
     void redo();
     void undo();
+protected:
+    int id() const { return UndoIdUpdate; }
+    bool mergeWith(const QUndoCommand *other);
 private:
     MarkersModel& m_model;
     Marker m_newMarker;

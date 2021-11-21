@@ -67,7 +67,7 @@ UpdateCommand::UpdateCommand(MarkersModel& model, const Marker& newMarker, const
     , m_oldMarker(oldMarker)
     , m_index(index)
 {
-    if (m_newMarker.text == m_oldMarker.text && m_newMarker.color == m_oldMarker.color )
+    if (m_newMarker.text == m_oldMarker.text && m_newMarker.color == m_oldMarker.color)
     {
         setText(QObject::tr("Move marker: %1").arg(m_oldMarker.text));
     }
@@ -85,6 +85,29 @@ void UpdateCommand::redo()
 void UpdateCommand::undo()
 {
     m_model.doUpdate(m_index, m_oldMarker);
+}
+
+bool UpdateCommand::mergeWith(const QUndoCommand *other)
+{
+    const UpdateCommand* that = static_cast<const UpdateCommand*>(other);
+    LOG_DEBUG() << "this index" << m_index << "that index" << that->m_index;
+    if (that->id() != id() || that->m_index != m_index)
+        return false;
+    bool merge = false;
+    if (that->m_newMarker.text == m_oldMarker.text &&
+        that->m_newMarker.color == m_oldMarker.color)
+    {
+        // Only start/end change. Merge with previous move command.
+        merge = true;
+    } else if (that->m_newMarker.end == m_oldMarker.end &&
+               that->m_newMarker.start == m_oldMarker.start)
+    {
+        // Only text/color change. Merge with previous edit command.
+        merge = true;
+    }
+    if (!merge) return false;
+    m_newMarker = that->m_newMarker;
+    return true;
 }
 
 ClearCommand::ClearCommand(MarkersModel& model, QList<Marker>& clearMarkers)
