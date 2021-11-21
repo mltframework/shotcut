@@ -241,7 +241,6 @@ void MarkersDock::onRemoveRequested()
                 m_blockSelectionEvent = true;
                 m_model->remove(realIndex.row());
                 m_blockSelectionEvent = false;
-                m_treeView->clearSelection();
             }
         }
     }
