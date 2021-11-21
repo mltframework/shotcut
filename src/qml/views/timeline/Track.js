@@ -29,7 +29,7 @@ function snapClip(clip, repeater) {
         // Snap to other clips on the same track.
         for (var i = 0; i < repeater.count; i++) {
             // Do not snap to self.
-            if (i === clip.DelegateModel.itemsIndex && clip.trackIndex === repeater.itemAt(i).trackIndex)
+            if (i === clip.DelegateModel.itemsIndex && clip.originalTrackIndex === repeater.itemAt(i).originalTrackIndex)
                 continue
             var itemLeft = repeater.itemAt(i).x
             var itemRight = itemLeft + repeater.itemAt(i).width
