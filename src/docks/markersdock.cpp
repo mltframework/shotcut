@@ -44,21 +44,35 @@ class MarkerTreeView : public QTreeView
 public:
     // Make this function public
     using QTreeView::selectedIndexes;
+    void blockSelectionEvent(bool block) {
+        m_blockSelectionEvent = block;
+    }
 
 signals:
     void markerSelected(QModelIndex& index);
+    void rowsAboutToBeRemovedSignal(const QModelIndex &parent, int first, int last);
 
 protected:
     void selectionChanged(const QItemSelection& selected, const QItemSelection& deselected)
     {
-        QModelIndex signalIndex;
         QTreeView::selectionChanged(selected, deselected);
-        QModelIndexList indices = selectedIndexes();
-        if (indices.size() > 0) {
-            signalIndex = indices[0];
+        if (!m_blockSelectionEvent) {
+            QModelIndex signalIndex;
+            QModelIndexList indices = selectedIndexes();
+            if (indices.size() > 0) {
+                signalIndex = indices[0];
+            }
+            emit markerSelected(signalIndex);
         }
-        emit markerSelected(signalIndex);
     }
+    void rowsAboutToBeRemoved(const QModelIndex &parent, int first, int last)
+    {
+        emit rowsAboutToBeRemovedSignal(parent, first, last);
+        QTreeView::rowsAboutToBeRemoved(parent, first, last);
+    }
+
+private:
+    bool m_blockSelectionEvent = false;
 };
 
 // Include this so that MarkerTreeView can be declared in the source file.
@@ -68,7 +82,6 @@ MarkersDock::MarkersDock(QWidget *parent) :
     QDockWidget(parent)
   , m_model(nullptr)
   , m_proxyModel(nullptr)
-  , m_blockSelectionEvent(false)
 {
     LOG_DEBUG() << "begin";
 
@@ -187,7 +200,7 @@ MarkersDock::~MarkersDock()
 
 void MarkersDock::setModel(MarkersModel* model)
 {
-    m_blockSelectionEvent = true;
+    m_treeView->blockSelectionEvent(true);
     m_model = model;
     m_proxyModel = new QSortFilterProxyModel(this);
     m_proxyModel->setSourceModel(m_model);
@@ -202,14 +215,14 @@ void MarkersDock::setModel(MarkersModel* model)
     connect(m_model, SIGNAL(rowsInserted(const QModelIndex&, int, int)), this, SLOT(onRowsInserted(const QModelIndex&, int, int)));
     connect(m_model, SIGNAL(dataChanged(const QModelIndex&, const QModelIndex&, const QVector<int>&)), this, SLOT(onDataChanged(const QModelIndex&, const QModelIndex&, const QVector<int>&)));
     connect(m_model, SIGNAL(modelReset()), this, SLOT(onModelReset()));
+    connect(m_model, SIGNAL(rowsRemoved(const QModelIndex&, int, int)), this, SLOT(onRowsRemoved(const QModelIndex&, int, int)));
+    connect(m_treeView, SIGNAL(rowsAboutToBeRemovedSignal(const QModelIndex&, int, int)), this, SLOT(onRowsAboutToBeRemoved(const QModelIndex&, int, int)));
     connect(m_treeView->header(), SIGNAL(sortIndicatorChanged(int, Qt::SortOrder)), this, SLOT(onSortIndicatorChanged(int, Qt::SortOrder)));
-    m_blockSelectionEvent = false;
+    m_treeView->blockSelectionEvent(false);
 }
 
 void MarkersDock::onSelectionChanged(QModelIndex& index)
 {
-    if (m_blockSelectionEvent == true) return;
-
     if (m_model && m_proxyModel && MAIN.multitrack() && index.isValid()) {
         QModelIndex realIndex = m_proxyModel->mapToSource(index);
         if (realIndex.isValid()) {
@@ -238,9 +251,9 @@ void MarkersDock::onRemoveRequested()
         if (indices.size() > 0) {
             QModelIndex realIndex = m_proxyModel->mapToSource(indices[0]);
             if (realIndex.isValid()) {
-                m_blockSelectionEvent = true;
+                m_treeView->blockSelectionEvent(true);
                 m_model->remove(realIndex.row());
-                m_blockSelectionEvent = false;
+                m_treeView->blockSelectionEvent(false);
             }
         }
     }
@@ -295,6 +308,8 @@ void MarkersDock::onDurationColumnToggled(bool checked)
 
 void MarkersDock::onRowsInserted(const QModelIndex &parent, int first, int last)
 {
+    Q_UNUSED(parent);
+    Q_UNUSED(last);
     QModelIndex sourceIndex = m_model->modelIndexForRow(first);
     QModelIndex insertedIndex = m_proxyModel->mapFromSource(sourceIndex);
     m_treeView->setCurrentIndex(insertedIndex);
@@ -302,6 +317,9 @@ void MarkersDock::onRowsInserted(const QModelIndex &parent, int first, int last)
 
 void MarkersDock::onDataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight, const QVector<int> &roles)
 {
+    Q_UNUSED(topLeft);
+    Q_UNUSED(bottomRight);
+    Q_UNUSED(roles);
     if (m_model && m_proxyModel) {
         QModelIndexList indices = m_treeView->selectedIndexes();
         if (indices.size() > 0) {
@@ -344,6 +362,22 @@ void MarkersDock::onModelReset()
 void MarkersDock::onSortIndicatorChanged(int logicalIndex, Qt::SortOrder order)
 {
     Settings.setMarkerSort(logicalIndex, order);
+}
+
+void MarkersDock::onRowsAboutToBeRemoved(const QModelIndex &parent, int first, int last)
+{
+    Q_UNUSED(parent);
+    Q_UNUSED(first);
+    Q_UNUSED(last);
+    m_treeView->blockSelectionEvent(true);
+}
+
+void MarkersDock::onRowsRemoved(const QModelIndex &parent, int first, int last)
+{
+    Q_UNUSED(parent);
+    Q_UNUSED(first);
+    Q_UNUSED(last);
+    m_treeView->blockSelectionEvent(false);
 }
 
 void MarkersDock::enableButtons(bool enable)

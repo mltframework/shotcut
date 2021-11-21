@@ -58,6 +58,8 @@ private slots:
     void onValuesChanged();
     void onModelReset();
     void onSortIndicatorChanged(int logicalIndex, Qt::SortOrder order);
+    void onRowsAboutToBeRemoved(const QModelIndex &parent, int first, int last);
+    void onRowsRemoved(const QModelIndex &parent, int first, int last);
 
 private:
     void enableButtons(bool enable);
@@ -72,7 +74,6 @@ private:
     QLineEdit* m_searchField;
     QToolButton* m_clearSearchButton;
     EditMarkerWidget* m_editMarkerWidget;
-    bool m_blockSelectionEvent;
 };
 
 #endif // MARKERSDOCK_H
