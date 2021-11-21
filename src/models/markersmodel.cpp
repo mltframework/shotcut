@@ -421,13 +421,12 @@ int MarkersModel::markerIndexForPosition(int position)
     return -1;
 }
 
-int MarkersModel::nextMarkerIndexForPosition(int position)
+int MarkersModel::nextMarkerPosition(int position)
 {
-    int nextIndex = -1;
     int nextPosition = -1;
     if (!m_producer) {
         LOG_ERROR() << "No producer";
-        return nextIndex;
+        return nextPosition;
     }
     QScopedPointer<Mlt::Properties> markerList(m_producer->get_props(kShotcutMarkersProperty));
     if (markerList &&  markerList->is_valid()) {
@@ -437,21 +436,23 @@ int MarkersModel::nextMarkerIndexForPosition(int position)
                 int markerPosition = m_producer->time_to_frames(marker->get("start"));
                 if (markerPosition > position && (nextPosition == -1 || markerPosition < nextPosition)) {
                     nextPosition = markerPosition;
-                    nextIndex = keyIndex(i);
+                }
+                markerPosition = m_producer->time_to_frames(marker->get("end"));
+                if (markerPosition > position && (nextPosition == -1 || markerPosition < nextPosition)) {
+                    nextPosition = markerPosition;
                 }
             }
         }
     }
-    return nextIndex;
+    return nextPosition;
 }
 
-int MarkersModel::prevMarkerIndexForPosition(int position)
+int MarkersModel::prevMarkerPosition(int position)
 {
-    int prevIndex = -1;
     int prevPosition = -1;
     if (!m_producer) {
         LOG_ERROR() << "No producer";
-        return prevIndex;
+        return prevPosition;
     }
     QScopedPointer<Mlt::Properties> markerList(m_producer->get_props(kShotcutMarkersProperty));
     if (markerList &&  markerList->is_valid()) {
@@ -461,12 +462,15 @@ int MarkersModel::prevMarkerIndexForPosition(int position)
                 int markerPosition = m_producer->time_to_frames(marker->get("start"));
                 if (markerPosition < position && (prevPosition == -1 || markerPosition > prevPosition)) {
                     prevPosition = markerPosition;
-                    prevIndex = keyIndex(i);
+                }
+                markerPosition = m_producer->time_to_frames(marker->get("end"));
+                if (markerPosition < position && (prevPosition == -1 || markerPosition > prevPosition)) {
+                    prevPosition = markerPosition;
                 }
             }
         }
     }
-    return prevIndex;
+    return prevPosition;
 }
 
 QModelIndex MarkersModel::modelIndexForRow(int row)
