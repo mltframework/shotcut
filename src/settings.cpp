@@ -727,6 +727,22 @@ bool ShotcutSettings::markersShowColumn(const QString& column) const
     return settings.value("markers/columns/" + column, true).toBool();
 }
 
+void ShotcutSettings::setMarkerSort(int column, Qt::SortOrder order)
+{
+    settings.setValue("markers/sortColumn", column);
+    settings.setValue("markers/sortOrder", order);
+}
+
+int ShotcutSettings::getMarkerSortColumn()
+{
+    return settings.value("markers/sortColumn", -1).toInt();
+}
+
+Qt::SortOrder ShotcutSettings::getMarkerSortOrder()
+{
+    return (Qt::SortOrder)settings.value("markers/sortOrder", Qt::AscendingOrder).toInt();
+}
+
 int ShotcutSettings::drawMethod() const
 {
 #ifdef Q_OS_WIN

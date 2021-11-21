@@ -57,6 +57,7 @@ private slots:
     void onDataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight, const QVector<int> &roles = QVector<int>());
     void onValuesChanged();
     void onModelReset();
+    void onSortIndicatorChanged(int logicalIndex, Qt::SortOrder order);
 
 private:
     void enableButtons(bool enable);

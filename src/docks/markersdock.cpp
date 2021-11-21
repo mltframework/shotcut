@@ -198,9 +198,11 @@ void MarkersDock::setModel(MarkersModel* model)
     m_treeView->setColumnHidden(2, !Settings.markersShowColumn("start"));
     m_treeView->setColumnHidden(3, !Settings.markersShowColumn("end"));
     m_treeView->setColumnHidden(4, !Settings.markersShowColumn("duration"));
+    m_treeView->sortByColumn(Settings.getMarkerSortColumn(), Settings.getMarkerSortOrder());
     connect(m_model, SIGNAL(rowsInserted(const QModelIndex&, int, int)), this, SLOT(onRowsInserted(const QModelIndex&, int, int)));
     connect(m_model, SIGNAL(dataChanged(const QModelIndex&, const QModelIndex&, const QVector<int>&)), this, SLOT(onDataChanged(const QModelIndex&, const QModelIndex&, const QVector<int>&)));
     connect(m_model, SIGNAL(modelReset()), this, SLOT(onModelReset()));
+    connect(m_treeView->header(), SIGNAL(sortIndicatorChanged(int, Qt::SortOrder)), this, SLOT(onSortIndicatorChanged(int, Qt::SortOrder)));
     m_blockSelectionEvent = false;
 }
 
@@ -338,6 +340,11 @@ void MarkersDock::onModelReset()
 {
     m_treeView->clearSelection();
     m_editMarkerWidget->setVisible(false);
+}
+
+void MarkersDock::onSortIndicatorChanged(int logicalIndex, Qt::SortOrder order)
+{
+    Settings.setMarkerSort(logicalIndex, order);
 }
 
 void MarkersDock::enableButtons(bool enable)
