@@ -562,8 +562,7 @@ Rectangle {
                     var newX = mapToItem(null, x, y).x
                     var delta = Math.round((newX - startX) / timeScale)
                     if (Math.abs(delta) > 0) {
-                        if (clipDuration + originalX + delta > 0)
-                            originalX += delta
+                        originalX += delta
                         clipRoot.trimmingIn(clipRoot, delta, mouse)
                         startX = newX
                     }
