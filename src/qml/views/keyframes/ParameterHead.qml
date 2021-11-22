@@ -28,6 +28,7 @@ Rectangle {
     property bool selected: false
     property bool current: false
     property bool isCurve: false
+    property bool zoomHeight: false
     property int delegateIndex: -1
     signal clicked()
 
@@ -208,11 +209,15 @@ Rectangle {
                 focusPolicy: Qt.NoFocus
                 visible: delegateIndex >= 0 && paramHeadRoot.isCurve
                 checkable: true
+                checked: zoomHeight
                 action: Action {
                     id: zoomFitKeyframeAction
                     icon.name: 'zoom-fit-best'
                     icon.source: 'qrc:///icons/oxygen/32x32/actions/zoom-fit-best.png'
-                    onTriggered: root.paramRepeater.itemAt(delegateIndex).zoomHeight = checked
+                    onTriggered: {
+                        zoomHeight = !zoomHeight
+                        root.paramRepeater.itemAt(delegateIndex).setLowestHighest(zoomHeight)
+                    }
                 }
             }
         }

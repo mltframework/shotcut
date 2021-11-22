@@ -30,6 +30,11 @@ Item {
 
     signal clicked(var keyframe, var parameter)
 
+    function setLowestHighest(lh) {
+        minimum = lh ? model.lowest : model.minimum
+        maximum = lh ? model.highest : model.maximum
+    }
+
     function getKeyframeCount() {
         return keyframesRepeater.count
     }
