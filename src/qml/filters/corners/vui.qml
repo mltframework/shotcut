@@ -174,7 +174,7 @@ Shotcut.VuiBase {
             return x
         }
         if (video.grid !== 95 && video.grid !== 8090) {
-            var n = (video.grid > 10000) ? video.grid - 10000 : cornersControl.width / video.grid
+            var n = (video.grid > 10000) ? cornersControl.width / (profile.width / (video.grid - 10000)) : cornersControl.width / video.grid
             return snapGrid(x, n)
         } else {
             var deltas = null
@@ -201,7 +201,7 @@ Shotcut.VuiBase {
             return y
         }
         if (video.grid !== 95 && video.grid !== 8090) {
-            var n = (video.grid > 10000) ? video.grid - 10000 : cornersControl.height / video.grid
+            var n = (video.grid > 10000) ? cornersControl.height / (profile.height / (video.grid - 10000)) : cornersControl.height / video.grid
             return snapGrid(y, n)
         } else {
             var deltas = null
