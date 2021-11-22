@@ -96,6 +96,12 @@ Rectangle {
                   drag.minimumY = minDragY
                   drag.maximumY = maxDragY
                }
+            }
+        }
+        onEntered: if (isCurve) parent.anchors.verticalCenter = undefined
+        onReleased: if (isCurve) parent.anchors.verticalCenter = parameterRoot.verticalCenter
+        onPositionChanged: {
+            if (isCurve) {
                if (mouse.modifiers & Qt.ControlModifier)
                    drag.axis = Drag.YAxis
                else if (mouse.modifiers & Qt.AltModifier)
@@ -103,10 +109,6 @@ Rectangle {
                else
                    drag.axis = Drag.XAndYAxis
             }
-        }
-        onEntered: if (isCurve) parent.anchors.verticalCenter = undefined
-        onReleased: if (isCurve) parent.anchors.verticalCenter = parameterRoot.verticalCenter
-        onPositionChanged: {
             var newPosition = Math.round((parent.x + parent.width/2) / timeScale)
             var keyPosition = newPosition - (filter.in - producer.in)
             var trackValue = Math.min(Math.max(0, 1.0 - parent.y / (parameterRoot.height - parent.height)), 1.0)
