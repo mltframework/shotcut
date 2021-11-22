@@ -75,7 +75,7 @@ Rectangle {
         anchors.fill: parent
         acceptedButtons: Qt.LeftButton
         onClicked: producer.position = position
-        onDoubleClicked: removeMenuItem.trigger()
+        onDoubleClicked: removeMenuItem.triggered()
         drag {
             target: parent
             axis: isCurve? Drag.XAndYAxis : Drag.XAxis
