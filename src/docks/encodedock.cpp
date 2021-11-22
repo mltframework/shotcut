@@ -424,11 +424,14 @@ void EncodeDock::onProducerOpened()
         const auto markerStr = tr("Marker");
         auto ranges = markersModel.ranges();
         for (auto i = ranges.constBegin(); i != ranges.constEnd(); ++i) {
+            QString comboText;
             if (i.value().startsWith(markerStr)) {
-                ui->fromCombo->addItem(i.value(), QString("marker:%1").arg(i.key()));
+                comboText = i.value();
             } else {
-                ui->fromCombo->addItem(QString("%1: %2").arg(tr("Marker"), i.value()), QString("marker:%1").arg(i.key()));
+                comboText = QString("%1: %2").arg(tr("Marker"), i.value());
             }
+            comboText= ui->fromCombo->fontMetrics().elidedText(comboText, Qt::ElideRight, 400);
+            ui->fromCombo->addItem(comboText, QString("marker:%1").arg(i.key()));
         }
     }
     ui->fromCombo->blockSignals(false);

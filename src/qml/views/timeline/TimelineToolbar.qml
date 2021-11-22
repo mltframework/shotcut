@@ -108,11 +108,30 @@ ToolBar {
             Shotcut.HoverTip { text: qsTr('Split At Playhead (S)') }
             focusPolicy: Qt.NoFocus
         }
+        Button { // separator
+            enabled: false
+            implicitWidth: 2
+            implicitHeight: toolbar.height / 2
+        }
         Shotcut.ToolButton {
             implicitHeight: toolbar.height - 3
             implicitWidth: implicitHeight
             action: markerAction
             Shotcut.HoverTip { text: qsTr('Marker (M)') }
+            focusPolicy: Qt.NoFocus
+        }
+        Shotcut.ToolButton {
+            implicitHeight: toolbar.height - 3
+            implicitWidth: implicitHeight
+            action: prevMarkerAction
+            Shotcut.HoverTip { text: qsTr('Previous Marker (<)') }
+            focusPolicy: Qt.NoFocus
+        }
+        Shotcut.ToolButton {
+            implicitHeight: toolbar.height - 3
+            implicitWidth: implicitHeight
+            action: nextMarkerAction
+            Shotcut.HoverTip { text: qsTr('Next Marker (>)') }
             focusPolicy: Qt.NoFocus
         }
         Button { // separator
@@ -264,7 +283,21 @@ ToolBar {
         id: markerAction
         icon.name: 'marker'
         icon.source: 'qrc:///icons/oxygen/32x32/actions/marker.png'
-        onTriggered: timeline.createMarker()
+        onTriggered: timeline.createOrEditMarker()
+    }
+
+    Action {
+        id: prevMarkerAction
+        icon.name: 'format-indent-less'
+        icon.source: 'qrc:///icons/oxygen/32x32/actions/format-indent-less.png'
+        onTriggered: timeline.seekPrevMarker()
+    }
+
+    Action {
+        id: nextMarkerAction
+        icon.name: 'format-indent-more'
+        icon.source: 'qrc:///icons/oxygen/32x32/actions/format-indent-more.png'
+        onTriggered: timeline.seekNextMarker()
     }
 
     Action {

@@ -90,10 +90,7 @@ Shotcut.KeyframableFilter {
             parameters: [xcenter, ycenter, correctionnearcenter, correctionnearedges]
             Layout.columnSpan: 3
             onBeforePresetLoaded: {
-                filter.resetProperty(xcenter)
-                filter.resetProperty(ycenter)
-                filter.resetProperty(correctionnearcenter)
-                filter.resetProperty(correctionnearedges)
+                resetSimpleKeyframes()
             }
             onPresetSelected: {
                 setControls()

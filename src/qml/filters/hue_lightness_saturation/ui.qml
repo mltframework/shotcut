@@ -81,11 +81,7 @@ Shotcut.KeyframableFilter {
             id: presetItem
             Layout.columnSpan: 3
             parameters: keyframableParameters
-            onBeforePresetLoaded: {
-                filter.resetProperty('av.h')
-                filter.resetProperty('av.b')
-                filter.resetProperty('av.s')
-            }
+            onBeforePresetLoaded: resetSimpleKeyframes()
             onPresetSelected: {
                 setControls()
                 initializeSimpleKeyframes()

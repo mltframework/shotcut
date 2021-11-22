@@ -78,8 +78,7 @@ Shotcut.KeyframableFilter {
             parameters: [xsize, ysize]
             Layout.columnSpan: 3
             onBeforePresetLoaded: {
-                filter.resetProperty(xsize)
-                filter.resetProperty(ysize)
+                resetSimpleKeyframes()
             }
             onPresetSelected: {
                 setControls()

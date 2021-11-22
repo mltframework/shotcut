@@ -2360,6 +2360,12 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
             }
         }
         break;
+    case Qt::Key_Less:
+        m_timelineDock->seekPrevMarker();
+        break;
+    case Qt::Key_Greater:
+        m_timelineDock->seekNextMarker();
+        break;
     default:
         handled = false;
         break;
@@ -4969,4 +4975,60 @@ void MainWindow::sourceUpdated()
 void MainWindow::resetSourceUpdated()
 {
     m_sourceUpdatedAt.setSecsSinceEpoch(0);
+}
+
+void MainWindow::on_actionExportChapters_triggered()
+{
+    // Dialog to get export file name.
+    QString path = Settings.savePath();
+    QString caption = tr("Export Chapters");
+    QString saveFileName = QFileDialog::getSaveFileName(this, caption, path,
+        tr("Text (*.txt);;All Files (*)"), nullptr, Util::getFileDialogOptions());
+    if (!saveFileName.isEmpty()) {
+        QFileInfo fi(saveFileName);
+        if (fi.suffix() != "txt")
+            saveFileName += ".txt";
+
+        if (Util::warnIfNotWritable(saveFileName, this, caption))
+            return;
+
+        // Locate the JavaScript file in the filesystem.
+        QDir qmlDir = QmlUtilities::qmlDir();
+        qmlDir.cd("export-chapters");
+        QString jsFileName = qmlDir.absoluteFilePath("export-chapters.js");
+        QFile scriptFile(jsFileName);
+        if (scriptFile.open(QIODevice::ReadOnly)) {
+            // Read JavaScript into a string.
+            QTextStream stream(&scriptFile);
+            stream.setCodec("UTF-8");
+            stream.setAutoDetectUnicode(true);
+            QString contents = stream.readAll();
+            scriptFile.close();
+
+            // Evaluate JavaScript.
+            QJSEngine jsEngine;
+            QJSValue result = jsEngine.evaluate(contents, jsFileName);
+            if (!result.isError()) {
+                // Call the JavaScript main function.
+                QJSValueList args;
+                args << MLT.XML(0, true, true);
+                result = result.call(args);
+                if (!result.isError()) {
+                    // Save the result with the export file name.
+                    QFile f(saveFileName);
+                    f.open(QIODevice::WriteOnly | QIODevice::Text);
+                    f.write(result.toString().toLatin1());
+                    f.close();
+                }
+            }
+            if (result.isError()) {
+                LOG_ERROR() << "Uncaught exception at line"
+                            << result.property("lineNumber").toInt()
+                            << ":" << result.toString();
+                showStatusMessage(tr("A JavaScript error occurred during export."));
+            }
+        } else {
+            showStatusMessage(tr("Failed to open export-chapters.js"));
+        }
+    }
 }

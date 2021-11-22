@@ -1,0 +1,15 @@
+{
+  "name": "mlt2chapters",
+  "description": "A Javascript to convert MLT XML to YouTube chapters.",
+  "homepage": "https://www.shotcut.org/",
+  "main": "mlt2chapters.js",
+  "version": "0.1.0",
+  "author": {
+    "name": "Dan Dennedy",
+    "email": "dan@dennedy.org"
+  },
+  "license": "GPL-3.0",
+  "dependencies": {
+    "xmldoc": "^0.5.1"
+  }
+}

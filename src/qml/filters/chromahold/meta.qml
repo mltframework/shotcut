@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Meltytech, LLC
+ * Copyright (c) 2019-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,4 +23,19 @@ Metadata {
     name: qsTr("Chroma Hold")
     mlt_service: 'avfilter.chromahold'
     qml: 'ui.qml'
+    keyframes {
+        allowAnimateIn: true
+        allowAnimateOut: true
+        simpleProperties: ['av.similarity']
+        parameters: [
+            Parameter {
+                name: qsTr('Distance')
+                property: 'av.similarity'
+                isSimple: true
+                isCurve: true
+                minimum: 0
+                maximum: 1
+            }
+        ]
+    }
 }

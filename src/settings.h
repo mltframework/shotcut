@@ -194,6 +194,9 @@ public:
     QColor markerColor() const;
     void setMarkersShowColumn(const QString& column, bool b);
     bool markersShowColumn(const QString& column) const;
+    void setMarkerSort(int column, Qt::SortOrder order);
+    int getMarkerSortColumn();
+    Qt::SortOrder getMarkerSortOrder();
 
     // general continued
     int drawMethod() const;

@@ -421,6 +421,58 @@ int MarkersModel::markerIndexForPosition(int position)
     return -1;
 }
 
+int MarkersModel::nextMarkerPosition(int position)
+{
+    int nextPosition = -1;
+    if (!m_producer) {
+        LOG_ERROR() << "No producer";
+        return nextPosition;
+    }
+    QScopedPointer<Mlt::Properties> markerList(m_producer->get_props(kShotcutMarkersProperty));
+    if (markerList &&  markerList->is_valid()) {
+        for (const auto i : qAsConst(m_keys)) {
+            QScopedPointer<Mlt::Properties> marker(markerList->get_props(qUtf8Printable(QString::number(i))));
+            if (marker && marker->is_valid()) {
+                int markerPosition = m_producer->time_to_frames(marker->get("start"));
+                if (markerPosition > position && (nextPosition == -1 || markerPosition < nextPosition)) {
+                    nextPosition = markerPosition;
+                }
+                markerPosition = m_producer->time_to_frames(marker->get("end"));
+                if (markerPosition > position && (nextPosition == -1 || markerPosition < nextPosition)) {
+                    nextPosition = markerPosition;
+                }
+            }
+        }
+    }
+    return nextPosition;
+}
+
+int MarkersModel::prevMarkerPosition(int position)
+{
+    int prevPosition = -1;
+    if (!m_producer) {
+        LOG_ERROR() << "No producer";
+        return prevPosition;
+    }
+    QScopedPointer<Mlt::Properties> markerList(m_producer->get_props(kShotcutMarkersProperty));
+    if (markerList &&  markerList->is_valid()) {
+        for (const auto i : qAsConst(m_keys)) {
+            QScopedPointer<Mlt::Properties> marker(markerList->get_props(qUtf8Printable(QString::number(i))));
+            if (marker && marker->is_valid()) {
+                int markerPosition = m_producer->time_to_frames(marker->get("start"));
+                if (markerPosition < position && (prevPosition == -1 || markerPosition > prevPosition)) {
+                    prevPosition = markerPosition;
+                }
+                markerPosition = m_producer->time_to_frames(marker->get("end"));
+                if (markerPosition < position && (prevPosition == -1 || markerPosition > prevPosition)) {
+                    prevPosition = markerPosition;
+                }
+            }
+        }
+    }
+    return prevPosition;
+}
+
 QModelIndex MarkersModel::modelIndexForRow(int row)
 {
     return index(row, 0);

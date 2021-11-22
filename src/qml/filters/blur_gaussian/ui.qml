@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Meltytech, LLC
+ * Copyright (c) 2019-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -74,8 +74,7 @@ Shotcut.KeyframableFilter {
             parameters: [amount]
             Layout.columnSpan: 3
             onBeforePresetLoaded: {
-                filter.resetProperty(amount)
-               
+                resetSimpleKeyframes()
             }
             onPresetSelected: {
                 setControls()

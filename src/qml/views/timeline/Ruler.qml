@@ -79,13 +79,14 @@ Rectangle {
         }
         onExited: bubbleHelp.hide()
         onMouseStatusChanged: {
-            var msg = text
+            var msg = "<center>" + text
             if (start === end) {
                 msg += "<br>" + application.timecode(start)
             } else {
                 msg += "<br>" + application.timecode(start) + " - " + application.timecode(end)
-                msg += "<center>" + application.timecode(end - start + 1) + "</center>"
+                msg += "<br>" + application.timecode(end - start + 1)
             }
+            msg += "</center>"
             bubbleHelp.show(mouseX + bubbleHelp.width - 8, mouseY + 87, msg)
         }
         onSeekRequested: timeline.position = pos
