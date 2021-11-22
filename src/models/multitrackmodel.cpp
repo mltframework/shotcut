@@ -2795,44 +2795,49 @@ void MultitrackModel::insertTrackAbove(int trackIndex, TrackType type)
     }
 
     // Get the new track index.
-    Track& track = m_trackList[qBound(0, trackIndex, m_trackList.count() - 1)];
-    int i = track.mlt_index;
-    QScopedPointer<Mlt::Transition> lower;
+    Track& currentTrack = m_trackList[qBound(0, trackIndex, m_trackList.count() - 1)];
+    int currentTrackNumber = currentTrack.number;
+    int new_mlt_index = currentTrack.mlt_index;
+    QScopedPointer<Mlt::Transition> lowerVideoTransition;
     const char* videoTransitionName = Settings.playerGPU()? "movit.overlay" : "frei0r.cairoblend";
+    bool isInsertBottomVideoTrack = false;
+
     if (type == VideoTrackType) {
-        ++i;
-        lower.reset(getVideoBlendTransition(track.mlt_index));
-        if (trackIndex > 0 && track.type == AudioTrackType) {
+        ++new_mlt_index;
+        lowerVideoTransition.reset(getVideoBlendTransition(currentTrack.mlt_index));
+
+        // Handle special case of insert bottom video track.
+        if ((trackIndex > 0 && currentTrack.type == AudioTrackType) || trackIndex >= m_trackList.count()) {
             Track& upperTrack = m_trackList[qBound(0, trackIndex - 1, m_trackList.count() - 1)];
             if (upperTrack.type == VideoTrackType) {
-                // Special case of insert new V1
-                i = 1;
-                lower.reset(getVideoBlendTransition(upperTrack.mlt_index));
-                track.number = -1;
+                new_mlt_index = 1;
+                lowerVideoTransition.reset(getVideoBlendTransition(upperTrack.mlt_index));
+                isInsertBottomVideoTrack = true;
             }
         }
     }
 
+    // When requesting a  new top track.
     if (trackIndex >= m_trackList.count()) {
         if (type == AudioTrackType) {
             addAudioTrack();
             return;
         } else if (type == VideoTrackType) {
-            i = track.mlt_index;
+            new_mlt_index = currentTrack.mlt_index;
         }
     }
 
 //    foreach (Track t, m_trackList) LOG_DEBUG() << (t.type == VideoTrackType?"Video":"Audio") << "track number" << t.number << "mlt_index" << t.mlt_index;
 //    LOG_DEBUG() << "trackIndex" << trackIndex << "mlt_index" << i;
 
-    // Get the new, logical video-only index.
+    // Compute new track numbers.
     int videoTrackCount = 0;
     int last_mlt_index = 0;
     int row = 0;
     foreach (Track t, m_trackList) {
-        if (t.type == type && !(track.type == VideoTrackType && track.number == -1)) {
-            if ((t.type == VideoTrackType && t.number >= track.number) ||
-                (t.type == AudioTrackType && t.number >= track.number)) {
+        if (t.type == type) {
+            if ((t.type == VideoTrackType && (t.number > currentTrackNumber || isInsertBottomVideoTrack)) ||
+                (t.type == AudioTrackType && t.number >= currentTrackNumber)) {
                 // Rename default track names.
                 QScopedPointer<Mlt::Producer> mltTrack(m_tractor->track(t.mlt_index));
                 QString trackNameTemplate = (t.type == VideoTrackType)? QString("V%1") : QString("A%1");
@@ -2841,15 +2846,15 @@ void MultitrackModel::insertTrackAbove(int trackIndex, TrackType type)
                     trackName = trackNameTemplate.arg(t.number + 1);
                     mltTrack->set(kTrackNameProperty, trackName.toUtf8().constData());
                     QModelIndex modelIndex = index(row, 0);
-                    QVector<int> roles;
-                    roles << NameRole;
-                    emit dataChanged(modelIndex, modelIndex, roles);
+                    emit dataChanged(modelIndex, modelIndex, QVector<int>() << NameRole);
                 }
                 ++m_trackList[row].number;
             }
         }
-        if (t.mlt_index >= i)
+        // Increment the mlt_index for tracks that are moving.
+        if (t.mlt_index >= new_mlt_index)
             ++m_trackList[row].mlt_index;
+        // Count the number of video tracks and get the mlt_index of the last video track.
         if (t.type == VideoTrackType) {
             ++videoTrackCount;
             last_mlt_index = t.mlt_index;
@@ -2868,14 +2873,14 @@ void MultitrackModel::insertTrackAbove(int trackIndex, TrackType type)
         playlist.set("hide", 1);
     }
     playlist.blank(0);
-    m_tractor->insert_track(playlist, i);
+    m_tractor->insert_track(playlist, new_mlt_index);
     MLT.updateAvformatCaching(m_tractor->count());
 
     // Add the mix transition.
     Mlt::Transition mix(MLT.profile(), "mix");
     mix.set("always_active", 1);
     mix.set("sum", 1);
-    m_tractor->plant_transition(mix, 0, i);
+    m_tractor->plant_transition(mix, 0, new_mlt_index);
 
     if (type == VideoTrackType) {
         // Add the composite transition.
@@ -2888,40 +2893,40 @@ void MultitrackModel::insertTrackAbove(int trackIndex, TrackType type)
         if (warnIfInvalid(composite)) {
             return;
         }
-        if (lower && lower->is_valid()) {
-            QScopedPointer<Mlt::Service> consumer(lower->consumer());
+        if (lowerVideoTransition && lowerVideoTransition->is_valid()) {
+            QScopedPointer<Mlt::Service> consumer(lowerVideoTransition->consumer());
             if (consumer->is_valid()) {
                 // Insert the new transition.
-                if (i == 1) {
-                    // Special case of insert new V1
-                    LOG_DEBUG() << "inserting transition" << 0 << i;
-                    QScopedPointer<Mlt::Service> lowerProducer(lower->producer());
+                if (new_mlt_index == 1) {
+                    // Special case of insert new bottom video track
+                    LOG_DEBUG() << "inserting transition" << 0 << new_mlt_index;
+                    QScopedPointer<Mlt::Service> lowerProducer(lowerVideoTransition->producer());
                     if (lowerProducer->is_valid()) {
-                        composite.connect(*lowerProducer, 0, i);
+                        composite.connect(*lowerProducer, 0, new_mlt_index);
                         Mlt::Transition t((mlt_transition) lowerProducer->get_service());
-                        lower->connect(composite, i, t.get_int("b_track"));
+                        lowerVideoTransition->connect(composite, new_mlt_index, t.get_int("b_track"));
                     }
                 } else {
-                    LOG_DEBUG() << "inserting transition" << last_mlt_index << i;
-                    composite.connect(*lower, last_mlt_index, i);
+                    LOG_DEBUG() << "inserting transition" << last_mlt_index << new_mlt_index;
+                    composite.connect(*lowerVideoTransition, last_mlt_index, new_mlt_index);
                     Mlt::Transition t((mlt_transition) consumer->get_service());
                     t.connect(composite, t.get_int("a_track"), t.get_int("b_track"));
                 }
             } else {
                 // Append the new transition.
                 LOG_DEBUG() << "appending transition";
-                m_tractor->plant_transition(composite, last_mlt_index, i);
+                m_tractor->plant_transition(composite, last_mlt_index, new_mlt_index);
             }
         } else {
             // Append the new transition.
             LOG_DEBUG() << "appending transition";
-            m_tractor->plant_transition(composite, last_mlt_index, i);
+            m_tractor->plant_transition(composite, last_mlt_index, new_mlt_index);
         }
     }
 
     // Add the shotcut logical video track.
     Track t;
-    t.mlt_index = i;
+    t.mlt_index = new_mlt_index;
     t.type = type;
     t.number = 0;
     QString trackName;
