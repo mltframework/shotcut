@@ -105,17 +105,20 @@ AddCommand::AddCommand(AttachedFiltersModel& model, QmlMetadata* metadata, QUndo
 void AddCommand::redo()
 {
     LOG_DEBUG() << text() << m_row;
-    Mlt::Producer producer = m_producer;
-    if (!producer.is_valid()) {
-        producer = findProducer(m_producerUuid);
-    }
-    Q_ASSERT(producer.is_valid());
-    if (producer.is_valid()) {
-        m_row = m_model.newService(m_metadata, producer, m_index);
-    }
     if (m_producer.is_valid()) {
+        m_row = m_model.newService(m_metadata, m_producer, m_index);
         // Only hold the producer reference for the first redo and lookup by UUID thereafter.
         m_producer = Mlt::Producer();
+    } else {
+        Mlt::Producer producer = m_producer;
+        if (!producer.is_valid()) {
+            producer = findProducer(m_producerUuid);
+        }
+        Q_ASSERT(producer.is_valid());
+        Q_ASSERT(m_service.is_valid());
+        if (producer.is_valid()) {
+            m_model.restoreService(producer, m_service, m_index);
+        }
     }
 }
 
@@ -125,7 +128,7 @@ void AddCommand::undo()
     Mlt::Producer producer(findProducer(m_producerUuid));
     Q_ASSERT(producer.is_valid());
     if (producer.is_valid()) {
-        m_model.removeService(producer, m_index, m_row);
+        m_service = m_model.removeService(producer, m_index, m_row);
     }
 }
 

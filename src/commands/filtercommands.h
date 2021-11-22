@@ -51,6 +51,7 @@ private:
     int m_row;
     Mlt::Producer m_producer;
     QUuid m_producerUuid;
+    Mlt::Service m_service;
 };
 
 class RemoveCommand : public QUndoCommand
