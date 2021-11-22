@@ -35,8 +35,8 @@ Rectangle {
     property double trackValue: (0.5 - (value - minimum) / (maximum - minimum)) * (trackHeight - height - 2.0 * border.width)
     property double minDragX: activeClip.x - width/2
     property double maxDragX: activeClip.x + activeClip.width - width/2
-    property double minDragY: activeClip.y - width/2
-    property double maxDragY: activeClip.y + activeClip.height - width/2
+    property double minDragY: activeClip.y
+    property double maxDragY: activeClip.y + activeClip.height - width
     property bool inRange: position >= (filter.in - producer.in) && position <= (filter.out - producer.in)
 
     signal clicked(var keyframe)
