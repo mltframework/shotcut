@@ -105,7 +105,7 @@ public:
     double scaleFactor() const;
     void setScaleFactor(double scale);
     bool isTransition(Mlt::Playlist& playlist, int clipIndex) const;
-    void insertTrackAbove(int trackIndex, TrackType type = VideoTrackType);
+    void insertTrack(int trackIndex, TrackType type = VideoTrackType);
     void insertOrAdjustBlankAt(QList<int> tracks, int position, int length);
     bool mergeClipWithNext(int trackIndex, int clipIndex, bool dryrun);
     Mlt::ClipInfo *findClipByUuid(const QUuid& uuid, int& trackIndex, int& clipIndex);

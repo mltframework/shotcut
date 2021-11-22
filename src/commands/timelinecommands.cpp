@@ -983,7 +983,7 @@ InsertTrackCommand::InsertTrackCommand(MultitrackModel& model, int trackIndex, T
 void InsertTrackCommand::redo()
 {
     LOG_DEBUG() << "trackIndex" << m_trackIndex << "type" << (m_trackType == AudioTrackType? "audio" : "video");
-    m_model.insertTrackAbove(m_trackIndex, m_trackType);
+    m_model.insertTrack(m_trackIndex, m_trackType);
 }
 
 void InsertTrackCommand::undo()
@@ -1034,7 +1034,7 @@ void RemoveTrackCommand::redo()
 void RemoveTrackCommand::undo()
 {
     LOG_DEBUG() << "trackIndex" << m_trackIndex << "type" << (m_trackType == AudioTrackType? "audio" : "video");
-    m_model.insertTrackAbove(m_trackIndex, m_trackType);
+    m_model.insertTrack(m_trackIndex, m_trackType);
     m_model.setTrackName(m_trackIndex, m_trackName);
 
     // Restore track contents from UndoHelper.
