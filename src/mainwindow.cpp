@@ -1038,31 +1038,37 @@ bool MainWindow::isCompatibleWithGpuMode(MltXmlChecker& checker)
 bool MainWindow::saveRepairedXmlFile(MltXmlChecker& checker, QString& fileName)
 {
     QFileInfo fi(fileName);
-    QFile repaired(QString("%1/%2 - %3.%4").arg(fi.path())
-        .arg(fi.completeBaseName()).arg(tr("Repaired")).arg(fi.suffix()));
-    repaired.open(QIODevice::WriteOnly);
-    LOG_INFO() << "repaired MLT XML file name" << repaired.fileName();
-    if (checker.tempFile().exists()) {
-        checker.tempFile().open();
-        QByteArray xml = checker.tempFile().readAll();
-        checker.tempFile().close();
+    auto filename = QString("%1/%2 - %3.%4").arg(fi.path())
+        .arg(fi.completeBaseName()).arg(tr("Repaired")).arg(fi.suffix());
+    auto caption = tr("Save Repaired XML");
+    filename = QFileDialog::getSaveFileName(this, caption, filename,
+        tr("MLT XML (*.mlt)"), nullptr, Util::getFileDialogOptions());
+    if (!filename.isEmpty()) {
+        QFile repaired(filename);
+        repaired.open(QIODevice::WriteOnly);
+        LOG_INFO() << "repaired MLT XML file name" << repaired.fileName();
+        if (checker.tempFile().exists()) {
+            checker.tempFile().open();
+            QByteArray xml = checker.tempFile().readAll();
+            checker.tempFile().close();
 
-        qint64 n = repaired.write(xml);
-        while (n > 0 && n < xml.size()) {
-            qint64 x = repaired.write(xml.right(xml.size() - n));
-            if (x > 0)
-                n += x;
-            else
-                n = x;
+            qint64 n = repaired.write(xml);
+            while (n > 0 && n < xml.size()) {
+                qint64 x = repaired.write(xml.right(xml.size() - n));
+                if (x > 0)
+                    n += x;
+                else
+                    n = x;
+            }
+            repaired.close();
+            if (n == xml.size()) {
+                fileName = repaired.fileName();
+                return true;
+            }
         }
-        repaired.close();
-        if (n == xml.size()) {
-            fileName = repaired.fileName();
-            return true;
-        }
+        QMessageBox::warning(this, qApp->applicationName(), tr("Repairing the project failed."));
+        LOG_WARNING() << "repairing failed";
     }
-    QMessageBox::warning(this, qApp->applicationName(), tr("Repairing the project failed."));
-    LOG_WARNING() << "repairing failed";
     return false;
 }
 
