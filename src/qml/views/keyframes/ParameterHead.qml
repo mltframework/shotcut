@@ -216,7 +216,7 @@ Rectangle {
                     icon.source: 'qrc:///icons/oxygen/32x32/actions/zoom-fit-best.png'
                     onTriggered: {
                         zoomHeight = !zoomHeight
-                        root.paramRepeater.itemAt(delegateIndex).setLowestHighest(zoomHeight)
+                        root.paramRepeater.itemAt(delegateIndex).setMinMax(zoomHeight)
                     }
                 }
             }
