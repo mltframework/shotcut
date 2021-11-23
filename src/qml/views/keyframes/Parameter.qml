@@ -30,9 +30,9 @@ Item {
 
     signal clicked(var keyframe, var parameter)
 
-    function setLowestHighest(lh) {
-        minimum = lh ? model.lowest : model.minimum
-        maximum = lh ? model.highest : model.maximum
+    function setMinMax(zoomHeight) {
+        minimum = zoomHeight ? model.lowest : model.minimum
+        maximum = zoomHeight ? model.highest : model.maximum
     }
 
     function getKeyframeCount() {
