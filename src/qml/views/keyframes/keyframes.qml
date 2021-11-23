@@ -541,9 +541,8 @@ Rectangle {
             rootIndex: parameterDelegateModel.modelIndex(index)
             width: producer.duration * timeScale
             isCurve: model.isCurve
-            property bool zoomHeight: false
-            minimum: zoomHeight ? model.lowest : model.minimum
-            maximum: zoomHeight ? model.highest : model.maximum
+            minimum: model.minimum
+            maximum: model.maximum
             height: Logic.trackHeight(model.isCurve)
             onClicked: {
                 currentTrack = parameter.DelegateModel.itemsIndex
