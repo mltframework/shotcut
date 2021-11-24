@@ -296,7 +296,7 @@ void AttachedFiltersModel::add(QmlMetadata* meta)
     MAIN.undoStack()->push(new Filter::AddCommand(*this, meta));
 }
 
-int AttachedFiltersModel::newService(QmlMetadata* meta, Mlt::Producer& producer, int& mltIndex)
+int AttachedFiltersModel::doAddService(QmlMetadata* meta, Mlt::Producer& producer, int& mltIndex)
 {
     // Put the filter after the last filter that is less than or equal in sort order.
     int insertRow = 0;
@@ -394,7 +394,7 @@ int AttachedFiltersModel::newService(QmlMetadata* meta, Mlt::Producer& producer,
     return insertRow;
 }
 
-void AttachedFiltersModel::restoreService(Mlt::Producer& producer, Mlt::Service& service, int mltIndex)
+void AttachedFiltersModel::doRestoreService(Mlt::Producer& producer, Mlt::Service& service, int mltIndex)
 {
     if (service.type() == mlt_service_filter_type) {
         Mlt::Filter filter(service);
@@ -418,7 +418,7 @@ void AttachedFiltersModel::remove(int row)
     MAIN.undoStack()->push(new Filter::RemoveCommand(*this, name(row), mltIndex, row));
 }
 
-Mlt::Service AttachedFiltersModel::removeService(Mlt::Producer& producer, int mltIndex, int row)
+Mlt::Service AttachedFiltersModel::doRemoveService(Mlt::Producer& producer, int mltIndex, int row)
 {
     if (producer.type() == mlt_service_chain_type) {
         Mlt::Chain chain(producer);
@@ -485,7 +485,7 @@ bool AttachedFiltersModel::move(int fromRow, int toRow)
     return true;
 }
 
-bool AttachedFiltersModel::moveService(Mlt::Producer& producer, int fromIndex, int toIndex, int fromRow, int toRow)
+bool AttachedFiltersModel::doMoveService(Mlt::Producer& producer, int fromIndex, int toIndex, int fromRow, int toRow)
 {
     if (producer.get_service() == m_producer->get_service()) {
         QModelIndex parent;
@@ -515,7 +515,7 @@ bool AttachedFiltersModel::isDisabled(Mlt::Producer& producer, int mltIndex)
     return false;
 }
 
-void AttachedFiltersModel::setDisabled(Mlt::Producer& producer, int mltIndex, int row, bool disable)
+void AttachedFiltersModel::doSetDisabled(Mlt::Producer& producer, int mltIndex, int row, bool disable)
 {
     Mlt::Filter filter(producer.filter(mltIndex));
     if (filter.is_valid()) {

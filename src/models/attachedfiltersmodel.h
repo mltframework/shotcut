@@ -47,12 +47,14 @@ public:
     bool supportsLinks() const;
     Mlt::Producer* producer() const { return m_producer.data(); }
     QString name(int row) const;
-    int newService(QmlMetadata* meta, Mlt::Producer& producer, int& mltIndex);
-    void restoreService(Mlt::Producer& producer, Mlt::Service& service, int mltIndex);
-    Mlt::Service removeService(Mlt::Producer& producer, int mltIndex, int row);
-    bool moveService(Mlt::Producer& producer, int fromIndex, int toIndex, int fromRow, int toRow);
+
+    // The below are used by QUndoCommands
+    int doAddService(QmlMetadata* meta, Mlt::Producer& producer, int& mltIndex);
+    void doRestoreService(Mlt::Producer& producer, Mlt::Service& service, int mltIndex);
+    Mlt::Service doRemoveService(Mlt::Producer& producer, int mltIndex, int row);
+    bool doMoveService(Mlt::Producer& producer, int fromIndex, int toIndex, int fromRow, int toRow);
     bool isDisabled(Mlt::Producer& producer, int mltIndex);
-    void setDisabled(Mlt::Producer& producer, int mltIndex, int row, bool disable);
+    void doSetDisabled(Mlt::Producer& producer, int mltIndex, int row, bool disable);
 
     // QAbstractListModel Implementation
     int rowCount(const QModelIndex &parent = QModelIndex()) const;

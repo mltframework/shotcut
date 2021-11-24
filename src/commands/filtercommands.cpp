@@ -106,7 +106,7 @@ void AddCommand::redo()
 {
     LOG_DEBUG() << text() << m_row;
     if (m_producer.is_valid()) {
-        m_row = m_model.newService(m_metadata, m_producer, m_index);
+        m_row = m_model.doAddService(m_metadata, m_producer, m_index);
         // Only hold the producer reference for the first redo and lookup by UUID thereafter.
         m_producer = Mlt::Producer();
     } else {
@@ -117,7 +117,7 @@ void AddCommand::redo()
         Q_ASSERT(producer.is_valid());
         Q_ASSERT(m_service.is_valid());
         if (producer.is_valid()) {
-            m_model.restoreService(producer, m_service, m_index);
+            m_model.doRestoreService(producer, m_service, m_index);
         }
     }
 }
@@ -128,7 +128,7 @@ void AddCommand::undo()
     Mlt::Producer producer(findProducer(m_producerUuid));
     Q_ASSERT(producer.is_valid());
     if (producer.is_valid()) {
-        m_service = m_model.removeService(producer, m_index, m_row);
+        m_service = m_model.doRemoveService(producer, m_index, m_row);
     }
 }
 
@@ -152,7 +152,7 @@ void RemoveCommand::redo()
     }
     Q_ASSERT(producer.is_valid());
     if (producer.is_valid()) {
-        m_service = m_model.removeService(producer, m_index, m_row);
+        m_service = m_model.doRemoveService(producer, m_index, m_row);
     }
     if (m_producer.is_valid()) {
         // Only hold the producer reference for the first redo and lookup by UUID thereafter.
@@ -167,7 +167,7 @@ void RemoveCommand::undo()
     Mlt::Producer producer(findProducer(m_producerUuid));
     Q_ASSERT(producer.is_valid());
     if (producer.is_valid()) {
-        m_model.restoreService(producer, m_service, m_index);
+        m_model.doRestoreService(producer, m_service, m_index);
     }
 }
 
@@ -194,7 +194,7 @@ void MoveCommand::redo()
     }
     Q_ASSERT(producer.is_valid());
     if (producer.is_valid()) {
-        m_model.moveService(producer, m_fromIndex, m_toIndex, m_fromRow, m_toRow);
+        m_model.doMoveService(producer, m_fromIndex, m_toIndex, m_fromRow, m_toRow);
     }
     if (m_producer.is_valid()) {
         // Only hold the producer reference for the first redo and lookup by UUID thereafter.
@@ -208,7 +208,7 @@ void MoveCommand::undo()
     Mlt::Producer producer(findProducer(m_producerUuid));
     Q_ASSERT(producer.is_valid());
     if (producer.is_valid()) {
-        m_model.moveService(producer, m_toIndex, m_fromIndex, m_toRow, m_fromRow);
+        m_model.doMoveService(producer, m_toIndex, m_fromIndex, m_toRow, m_fromRow);
     }
 }
 
@@ -238,7 +238,7 @@ void DisableCommand::redo()
     }
     Q_ASSERT(producer.is_valid());
     if (producer.is_valid()) {
-        m_model.setDisabled(producer, m_index, m_row, m_isDisable);
+        m_model.doSetDisabled(producer, m_index, m_row, m_isDisable);
     }
     if (m_producer.is_valid()) {
         // Only hold the producer reference for the first redo and lookup by UUID thereafter.
@@ -252,7 +252,7 @@ void DisableCommand::undo()
     Mlt::Producer producer(findProducer(m_producerUuid));
     Q_ASSERT(producer.is_valid());
     if (producer.is_valid()) {
-        m_model.setDisabled(producer, m_index, m_row, !m_isDisable);
+        m_model.doSetDisabled(producer, m_index, m_row, !m_isDisable);
     }
 }
 
