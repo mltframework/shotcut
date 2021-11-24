@@ -62,16 +62,22 @@ MltXmlParser.prototype.createChapters = function() {
                 var marker = {};
                 m.childrenNamed('property').forEach(function (prop) {
                     if (prop.attr.name === 'start') {
-                        marker.start = self.timecode(prop.val);
+                        marker.start = prop.val;
+                        marker.timecode = self.timecode(prop.val);
                         marker.seconds = 3600 * parseInt(prop.val.substring(0, 2)) + 60 * parseInt(prop.val.substring(3, 5)) + parseInt(prop.val.substring(6, 8));
                         if (marker.start === '00:00') {
                             chaptersStr = '';
                         }
+                    } else if (prop.attr.name === 'end') {
+                        marker.end = prop.val;
                     } else if (prop.attr.name === 'text') {
                         marker.text = prop.val;
                     }
                 });
-                markers.push(marker);
+                // Only non-range markers
+                if (marker.end === marker.start) {
+                    markers.push(marker);
+                }
             });
             return;
         }
@@ -80,7 +86,7 @@ MltXmlParser.prototype.createChapters = function() {
         return (a.seconds === b.seconds)? 0 : (a.seconds < b.seconds)? -1 : 1;
     });
     markers.forEach(function (marker) {
-        chaptersStr += marker.start + ' ' + marker.text + "\n";
+        chaptersStr += marker.timecode + ' ' + marker.text + "\n";
     });
     return chaptersStr;
 };
