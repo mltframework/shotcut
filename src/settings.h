@@ -31,6 +31,7 @@ class ShotcutSettings : public QObject
     Q_PROPERTY(bool timelineShowThumbnails READ timelineShowThumbnails WRITE setTimelineShowThumbnails NOTIFY timelineShowThumbnailsChanged)
     Q_PROPERTY(bool timelineRipple READ timelineRipple WRITE setTimelineRipple NOTIFY timelineRippleChanged)
     Q_PROPERTY(bool timelineRippleAllTracks READ timelineRippleAllTracks WRITE setTimelineRippleAllTracks NOTIFY timelineRippleAllTracksChanged)
+    Q_PROPERTY(bool timelineRippleMarkers READ timelineRippleMarkers WRITE setTimelineRippleMarkers NOTIFY timelineRippleMarkersChanged)
     Q_PROPERTY(bool timelineSnap READ timelineSnap WRITE setTimelineSnap NOTIFY timelineSnapChanged)
     Q_PROPERTY(bool timelineCenterPlayhead READ timelineCenterPlayhead WRITE setTimelineCenterPlayhead NOTIFY timelineCenterPlayheadChanged)
     Q_PROPERTY(bool timelineScrollZoom READ timelineScrollZoom WRITE setTimelineScrollZoom NOTIFY timelineScrollZoomChanged)
@@ -160,6 +161,8 @@ public:
     void setTimelineRipple(bool);
     bool timelineRippleAllTracks() const;
     void setTimelineRippleAllTracks(bool);
+    bool timelineRippleMarkers() const;
+    void setTimelineRippleMarkers(bool);
     bool timelineSnap() const;
     void setTimelineSnap(bool);
     bool timelineCenterPlayhead() const;
@@ -248,6 +251,7 @@ signals:
     void timelineShowThumbnailsChanged();
     void timelineRippleChanged();
     void timelineRippleAllTracksChanged();
+    void timelineRippleMarkersChanged();
     void timelineSnapChanged();
     void timelineCenterPlayheadChanged();
     void timelineScrollZoomChanged();

@@ -684,7 +684,7 @@ void TimelineDock::remove(int trackIndex, int clipIndex)
     Mlt::Producer clip = producerForClip(trackIndex, clipIndex);
     if (clip.is_valid()) {
         MAIN.undoStack()->push(
-            new Timeline::RemoveCommand(m_model, trackIndex, clipIndex));
+            new Timeline::RemoveCommand(m_model, m_markersModel, trackIndex, clipIndex));
     }
 }
 
@@ -1235,7 +1235,7 @@ void TimelineDock::onClipMoved(int fromTrack, int toTrack, int clipIndex, int po
                 }
             }
         }
-        auto command = new Timeline::MoveClipCommand(m_model, toTrack - fromTrack, ripple);
+        auto command = new Timeline::MoveClipCommand(m_model, m_markersModel, toTrack - fromTrack, ripple);
 
         // Copy selected
         for (const auto& clip : selection()) {
@@ -1472,7 +1472,7 @@ void TimelineDock::insert(int trackIndex, int position, const QString &xml, bool
                             Mlt::Producer clip(info.producer);
                             clip.set_in_and_out(info.frame_in, info.frame_out);
                             MAIN.undoStack()->push(
-                                new Timeline::InsertCommand(m_model, trackIndex, position + info.start, MLT.XML(&clip), seek));
+                                new Timeline::InsertCommand(m_model, m_markersModel, trackIndex, position + info.start, MLT.XML(&clip), seek));
                         }
                     }
                 }
@@ -1485,7 +1485,7 @@ void TimelineDock::insert(int trackIndex, int position, const QString &xml, bool
                 addVideoTrack();
             }
             MAIN.undoStack()->push(
-                new Timeline::InsertCommand(m_model, trackIndex, position, xmlToUse, seek));
+                new Timeline::InsertCommand(m_model, m_markersModel, trackIndex, position, xmlToUse, seek));
         }
         if (m_position < 0) {
             // This happens when pasting in a new session

@@ -183,6 +183,17 @@ ToolBar {
             Shotcut.HoverTip { text: qsTr('Ripple edits across all tracks') }
             onClicked: settings.timelineRippleAllTracks = !settings.timelineRippleAllTracks
         }
+        Shotcut.ToolButton {
+            id: rippleMarkers
+            implicitHeight: toolbar.height - 3
+            implicitWidth: implicitHeight
+            checked: settings.timelineRippleMarkers
+            icon.name: 'ripple-marker'
+            icon.source: 'qrc:///icons/oxygen/32x32/actions/ripple-marker.png'
+            focusPolicy: Qt.NoFocus
+            Shotcut.HoverTip { text: qsTr('Ripple markers with edits') }
+            onClicked: settings.timelineRippleMarkers = !settings.timelineRippleMarkers
+        }
         Button { // separator
             enabled: false
             implicitWidth: 2
