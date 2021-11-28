@@ -250,8 +250,11 @@
         <file>oxygen/32x32/actions/document-new.png</file>
         <file>dark/32x32/document-new.png</file>
         <file>light/32x32/ripple-all.png</file>
+        <file>light/32x32/ripple-marker.png</file>
         <file>oxygen/32x32/actions/ripple-all.png</file>
+        <file>oxygen/32x32/actions/ripple-marker.png</file>
         <file>dark/32x32/ripple-all.png</file>
+        <file>dark/32x32/ripple-marker.png</file>
         <file>dark/32x32/show-menu.png</file>
         <file>light/32x32/show-menu.png</file>
         <file>oxygen/32x32/actions/show-menu.png</file>

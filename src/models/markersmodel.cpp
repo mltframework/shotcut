@@ -314,6 +314,43 @@ void MarkersModel::doReplace(QList<Markers::Marker>& markers)
     emit recentColorsChanged();
 }
 
+void MarkersModel::doShift(int shiftPosition, int shiftAmount)
+{
+    if (!m_producer) {
+        LOG_ERROR() << "No producer";
+        return;
+    }
+    int minIndex = -1;
+    int maxIndex = -1;
+    QScopedPointer<Mlt::Properties> markerList(m_producer->get_props(kShotcutMarkersProperty));
+    if (markerList &&  markerList->is_valid()) {
+        for (const auto i : qAsConst(m_keys)) {
+            QScopedPointer<Mlt::Properties> markerProperties(markerList->get_props(qUtf8Printable(QString::number(i))));
+            if (markerProperties && markerProperties->is_valid()) {
+                Markers::Marker marker;
+                propertiesToMarker(markerProperties.data(), marker, m_producer);
+                if (marker.start >= shiftPosition) {
+                    marker.start += shiftAmount;
+                    marker.end += shiftAmount;
+                    markerToProperties(marker, markerProperties.data(), m_producer);
+                    int markerIndex = m_keys[i];
+                    if (minIndex == -1 || markerIndex < minIndex) minIndex = markerIndex;
+                    if (maxIndex == -1 || markerIndex > maxIndex) maxIndex = markerIndex;
+                }
+
+            }
+        }
+    }
+
+    if (minIndex != -1) {
+        QModelIndex startIndex = index(minIndex, COLUMN_START);
+        QModelIndex endIndex = index(maxIndex, COLUMN_END);
+        emit dataChanged(startIndex, endIndex, QVector<int>() << Qt::DisplayRole << StartRole << EndRole);
+        emit modified();
+        emit rangesChanged();
+    }
+}
+
 void MarkersModel::move(int markerIndex, int start, int end)
 {
     Mlt::Properties* markerProperties = getMarkerProperties(markerIndex);
@@ -500,6 +537,23 @@ QMap<int, QString> MarkersModel::ranges()
 QStringList MarkersModel::recentColors()
 {
     return m_recentColors.values();
+}
+
+QList<Markers::Marker> MarkersModel::getMarkers()
+{
+    QList<Markers::Marker> markers;
+    QScopedPointer<Mlt::Properties> markerList(m_producer->get_props(kShotcutMarkersProperty));
+    if (markerList &&  markerList->is_valid()) {
+        for (const auto i : qAsConst(m_keys)) {
+            QScopedPointer<Mlt::Properties> marker(markerList->get_props(qUtf8Printable(QString::number(i))));
+            if (marker && marker->is_valid()) {
+                Markers::Marker m;
+                propertiesToMarker(marker.get(), m, m_producer);
+                markers << m;
+            }
+        }
+    }
+    return markers;
 }
 
 Mlt::Properties* MarkersModel::getMarkerProperties(int markerIndex)

@@ -77,16 +77,19 @@ void AppendCommand::undo()
     m_undoHelper.undoChanges();
 }
 
-InsertCommand::InsertCommand(MultitrackModel &model, int trackIndex,
+InsertCommand::InsertCommand(MultitrackModel &model, MarkersModel& markersModel, int trackIndex,
     int position, const QString &xml, bool seek, QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_model(model)
+    , m_markersModel(markersModel)
     , m_trackIndex(qBound(0, trackIndex, qMax(model.rowCount() - 1, 0)))
     , m_position(position)
     , m_xml(xml)
     , m_undoHelper(m_model)
     , m_seek(seek)
     , m_rippleAllTracks(Settings.timelineRippleAllTracks())
+    , m_rippleMarkers(Settings.timelineRippleMarkers())
+    , m_markersShift(0)
 {
     setText(QObject::tr("Insert into track"));
 }
@@ -94,6 +97,7 @@ InsertCommand::InsertCommand(MultitrackModel &model, int trackIndex,
 void InsertCommand::redo()
 {
     LOG_DEBUG() << "trackIndex" << m_trackIndex << "position" << m_position;
+    int shift = 0;
     m_undoHelper.recordBeforeState();
     Mlt::Producer clip(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
     if (clip.type() == mlt_service_playlist_type) {
@@ -109,18 +113,27 @@ void InsertCommand::redo()
             clip.set_in_and_out(info->frame_in, info->frame_out);
             bool lastClip = i == 0;
             m_model.insertClip(m_trackIndex, clip, m_position, m_rippleAllTracks, false, lastClip);
+            shift += clip.get_playtime();
         }
     } else {
         ProxyManager::generateIfNotExists(clip);
         m_model.insertClip(m_trackIndex, clip, m_position, m_rippleAllTracks, m_seek);
+        shift = clip.get_playtime();
     }
     m_undoHelper.recordAfterState();
+    if (m_rippleMarkers && shift > 0) {
+        m_markersShift = shift;
+        m_markersModel.doShift(m_position, m_markersShift);
+    }
 }
 
 void InsertCommand::undo()
 {
     LOG_DEBUG() << "trackIndex" << m_trackIndex << "position" << m_position;
     m_undoHelper.undoChanges();
+    if (m_rippleMarkers && m_markersShift > 0) {
+        m_markersModel.doShift(m_position + m_markersShift, -m_markersShift);
+    }
 }
 
 OverwriteCommand::OverwriteCommand(MultitrackModel &model, int trackIndex,
@@ -195,14 +208,18 @@ void LiftCommand::undo()
     m_undoHelper.undoChanges();
 }
 
-RemoveCommand::RemoveCommand(MultitrackModel &model, int trackIndex,
+RemoveCommand::RemoveCommand(MultitrackModel &model, MarkersModel& markersModel, int trackIndex,
     int clipIndex, QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_model(model)
+    , m_markersModel(markersModel)
     , m_trackIndex(qBound(0, trackIndex, qMax(model.rowCount() - 1, 0)))
     , m_clipIndex(clipIndex)
     , m_undoHelper(m_model)
     , m_rippleAllTracks(Settings.timelineRippleAllTracks())
+    , m_rippleMarkers(Settings.timelineRippleMarkers())
+    , m_markerRemoveStart(-1)
+    , m_markerRemoveEnd(-1)
 {
     setText(QObject::tr("Remove from track"));
     m_undoHelper.setHints(UndoHelper::RestoreTracks);
@@ -211,6 +228,47 @@ RemoveCommand::RemoveCommand(MultitrackModel &model, int trackIndex,
 void RemoveCommand::redo()
 {
     LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex;
+
+    if (m_rippleMarkers) {
+        // Remove and shift markers as appropriate
+        bool markersModified = false;
+        m_markers = m_markersModel.getMarkers();
+        if (m_markers.size() > 0) {
+            auto mlt_index = m_model.trackList().at(m_trackIndex).mlt_index;
+            QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(mlt_index));
+            if (track && track->is_valid()) {
+                Mlt::Playlist playlist(*track);
+                m_markerRemoveStart = playlist.clip_start(m_clipIndex);
+                m_markerRemoveEnd = m_markerRemoveStart + playlist.clip_length(m_clipIndex);
+            }
+        }
+        if (m_markers.size() > 0 && m_markerRemoveStart >= 0) {
+            QList<Markers::Marker> newMarkers = m_markers;
+            for (int i = 0; i < newMarkers.size(); i++) {
+                Markers::Marker& marker = newMarkers[i];
+                if (marker.start >= m_markerRemoveStart &&
+                    marker.start <= m_markerRemoveEnd) {
+                    // This marker is in the removed segment. Remove it
+                    newMarkers.removeAt(i);
+                    i--;
+                    markersModified = true;
+                } else if (marker.start > m_markerRemoveEnd) {
+                    // This marker is after the removed segment. Shift it left
+                    marker.start -= m_markerRemoveEnd - m_markerRemoveStart;
+                    marker.end -= m_markerRemoveEnd - m_markerRemoveStart;
+                    markersModified = true;
+                }
+            }
+            if (markersModified) {
+                m_markersModel.doReplace(newMarkers);
+            }
+        }
+        if (!markersModified) {
+            m_markerRemoveStart = -1;
+            m_markers.clear();
+        }
+    }
+
     m_undoHelper.recordBeforeState();
     m_model.removeClip(m_trackIndex, m_clipIndex, m_rippleAllTracks);
     m_undoHelper.recordAfterState();
@@ -220,8 +278,10 @@ void RemoveCommand::undo()
 {
     LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex;
     m_undoHelper.undoChanges();
+    if (m_rippleMarkers && m_markerRemoveStart > 0) {
+        m_markersModel.doReplace(m_markers);
+    }
 }
-
 
 NameTrackCommand::NameTrackCommand(MultitrackModel &model, int trackIndex,
     const QString &name, QUndoCommand *parent)
@@ -357,15 +417,19 @@ void LockTrackCommand::undo()
     m_model.setTrackLock(m_trackIndex, m_oldValue);
 }
 
-MoveClipCommand::MoveClipCommand(MultitrackModel &model, int trackDelta, bool ripple, QUndoCommand *parent)
+MoveClipCommand::MoveClipCommand(MultitrackModel &model, MarkersModel &markersModel, int trackDelta, bool ripple, QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_model(model)
+    , m_markersModel(markersModel)
     , m_trackDelta(trackDelta)
     , m_ripple(ripple)
     , m_rippleAllTracks(Settings.timelineRippleAllTracks())
+    , m_rippleMarkers(Settings.timelineRippleMarkers())
     , m_undoHelper(m_model)
     , m_redo(false)
     , m_start(-1)
+    , m_markerOldStart(-1)
+    , m_markerNewStart(-1)
 {
     m_undoHelper.setHints(UndoHelper::RestoreTracks);
     m_undoHelper.recordBeforeState();
@@ -401,6 +465,8 @@ void MoveClipCommand::redo()
                     m_start = newStart;
                     m_trackIndex = trackIndex;
                     m_clipIndex = clipIndex;
+                    m_markerOldStart = info->start;
+                    m_markerNewStart = newStart;
                 }
             }
         }
@@ -408,6 +474,7 @@ void MoveClipCommand::redo()
             // Use old behavior to push or pull clips on the same track.
             m_model.moveClip(m_trackIndex, m_trackIndex, m_clipIndex, m_start, m_ripple, m_rippleAllTracks);
             m_undoHelper.recordAfterState();
+            redoMarkers();
             m_redo = true;
             return;
         }
@@ -425,6 +492,11 @@ void MoveClipCommand::redo()
                 info->producer->set(kShotcutInProperty, info->frame_in);
                 info->producer->set(kShotcutOutProperty, info->frame_out);
                 newSelection.insert(info->cut->get_int(kPlaylistStartProperty), info->producer);
+                if (m_markerOldStart < 0 || m_markerOldStart > info->start) {
+                    // Record the left most clip position being moved
+                    m_markerOldStart = info->start;
+                    m_markerNewStart = info->cut->get_int(kPlaylistStartProperty);
+                }
             }
         } else {
             // On redo, use the recorded indices to remove them.
@@ -457,12 +529,48 @@ void MoveClipCommand::redo()
         m_redo = true;
         m_undoHelper.recordAfterState();
     }
+
+    redoMarkers();
 }
 
 void MoveClipCommand::undo()
 {
     LOG_DEBUG() << "track delta" << m_trackDelta;
     m_undoHelper.undoChanges();
+    if (m_rippleMarkers && m_markerOldStart >= 0) {
+        m_markersModel.doReplace(m_markers);
+    }
+}
+
+void MoveClipCommand::redoMarkers()
+{
+    if (m_rippleMarkers && m_markerOldStart >= 0) {
+        m_markers = m_markersModel.getMarkers();
+        QList<Markers::Marker> newMarkers = m_markers;
+        bool markersModified = false;
+        int startDelta = m_markerNewStart - m_markerOldStart;
+        for (int i = 0; i < newMarkers.size(); i++) {
+            Markers::Marker& marker = newMarkers[i];
+            if (marker.start <= m_markerOldStart &&
+                marker.start > m_markerNewStart) {
+                // This marker is in the overwritten segment. Remove it
+                newMarkers.removeAt(i);
+                i--;
+                markersModified = true;
+            } else if (marker.start >= m_markerOldStart) {
+                // This marker is after the start of the moved segment. Shift it with the move
+                marker.start += startDelta;
+                marker.end += startDelta;
+                markersModified = true;
+            }
+        }
+        if (markersModified) {
+            m_markersModel.doReplace(newMarkers);
+        } else {
+            m_markerOldStart = -1;
+            m_markers.clear();
+        }
+    }
 }
 
 TrimClipInCommand::TrimClipInCommand(MultitrackModel &model, int trackIndex, int clipIndex, int delta, bool ripple, bool redo, QUndoCommand* parent)
@@ -660,6 +768,8 @@ bool FadeOutCommand::mergeWith(const QUndoCommand *other)
 AddTransitionCommand::AddTransitionCommand(TimelineDock& timeline, int trackIndex, int clipIndex, int position, bool ripple, QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_timeline(timeline)
+    , m_model(*m_timeline.model())
+    , m_markersModel(*m_timeline.markersModel())
     , m_trackIndex(trackIndex)
     , m_clipIndex(clipIndex)
     , m_position(position)
@@ -667,6 +777,9 @@ AddTransitionCommand::AddTransitionCommand(TimelineDock& timeline, int trackInde
     , m_ripple(ripple)
     , m_undoHelper(*m_timeline.model())
     , m_rippleAllTracks(Settings.timelineRippleAllTracks())
+    , m_rippleMarkers(Settings.timelineRippleMarkers())
+    , m_markerOldStart(-1)
+    , m_markerNewStart(-1)
 {
     setText(QObject::tr("Add transition"));
 }
@@ -674,10 +787,52 @@ AddTransitionCommand::AddTransitionCommand(TimelineDock& timeline, int trackInde
 void AddTransitionCommand::redo()
 {
     LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "position" << m_position;
+
+    if (m_rippleMarkers) {
+        // Calculate the marker delta before moving anything
+        auto mlt_index = m_model.trackList().at(m_trackIndex).mlt_index;
+        QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(mlt_index));
+        if (track && track->is_valid()) {
+            Mlt::Playlist playlist(*track);
+            m_markerOldStart = playlist.clip_start(m_clipIndex);
+            m_markerNewStart = m_position;
+        }
+    }
+
     m_undoHelper.recordBeforeState();
-    m_transitionIndex = m_timeline.model()->addTransition(m_trackIndex, m_clipIndex, m_position, m_ripple, m_rippleAllTracks);
+    m_transitionIndex = m_model.addTransition(m_trackIndex, m_clipIndex, m_position, m_ripple, m_rippleAllTracks);
     LOG_DEBUG() << "m_transitionIndex" << m_transitionIndex;
     m_undoHelper.recordAfterState();
+
+    // Remove and shift markers as appropriate
+    bool markersModified = false;
+    if (m_transitionIndex >= 0 && m_rippleMarkers && m_markerOldStart >= 0) {
+        m_markers = m_markersModel.getMarkers();
+        QList<Markers::Marker> newMarkers = m_markers;
+        int startDelta = m_markerNewStart - m_markerOldStart;
+        for (int i = 0; i < newMarkers.size(); i++) {
+            Markers::Marker& marker = newMarkers[i];
+            if (marker.start <= m_markerOldStart &&
+                marker.start > m_markerNewStart) {
+                // This marker is in the overwritten segment. Remove it
+                newMarkers.removeAt(i);
+                i--;
+                markersModified = true;
+            } else if (marker.start >= m_markerOldStart) {
+                // This marker is after the start of the moved segment. Shift it with the move
+                marker.start += startDelta;
+                marker.end += startDelta;
+                markersModified = true;
+            }
+        }
+        if (markersModified) {
+            m_markersModel.doReplace(newMarkers);
+        }
+    }
+    if (!markersModified) {
+        m_markerOldStart = -1;
+        m_markers.clear();
+    }
 }
 
 void AddTransitionCommand::undo()
@@ -688,6 +843,10 @@ void AddTransitionCommand::undo()
         m_timeline.setSelection();
         m_undoHelper.undoChanges();
         m_timeline.setSelection(QList<QPoint>() << QPoint(m_clipIndex, m_trackIndex));
+
+        if (m_rippleMarkers && m_markerOldStart >= 0) {
+            m_markersModel.doReplace(m_markers);
+        }
     }
 }
 

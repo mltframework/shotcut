@@ -64,6 +64,7 @@ public:
     QModelIndex modelIndexForRow(int row);
     QMap<int, QString> ranges();
     QStringList recentColors();
+    QList<Markers::Marker> getMarkers();
 
     // These should only be called by the marker commands
     void doRemove(int markerIndex);
@@ -72,6 +73,7 @@ public:
     void doUpdate(int markerIndex,  const Markers::Marker& marker);
     void doClear();
     void doReplace(QList<Markers::Marker>& markers);
+    void doShift(int shiftPosition, int shiftAmount);
 
 signals:
     void rangesChanged();

@@ -19,6 +19,7 @@
 #define COMMANDS_H
 
 #include "models/multitrackmodel.h"
+#include "models/markersmodel.h"
 #include "docks/timelinedock.h"
 #include "undohelper.h"
 #include <QUndoCommand>
@@ -59,11 +60,12 @@ private:
 class InsertCommand : public QUndoCommand
 {
 public:
-    InsertCommand(MultitrackModel& model, int trackIndex, int position, const QString &xml, bool seek = true, QUndoCommand * parent = 0);
+    InsertCommand(MultitrackModel& model, MarkersModel& markersModel, int trackIndex, int position, const QString &xml, bool seek = true, QUndoCommand * parent = 0);
     void redo();
     void undo();
 private:
     MultitrackModel& m_model;
+    MarkersModel& m_markersModel;
     int m_trackIndex;
     int m_position;
     QString m_xml;
@@ -71,6 +73,8 @@ private:
     UndoHelper m_undoHelper;
     bool m_seek;
     bool m_rippleAllTracks;
+    bool m_rippleMarkers;
+    int m_markersShift;
 };
 
 class OverwriteCommand : public QUndoCommand
@@ -104,15 +108,20 @@ private:
 class RemoveCommand : public QUndoCommand
 {
 public:
-    RemoveCommand(MultitrackModel& model, int trackIndex, int clipIndex, QUndoCommand * parent = 0);
+    RemoveCommand(MultitrackModel& model, MarkersModel& markersModel, int trackIndex, int clipIndex, QUndoCommand * parent = 0);
     void redo();
     void undo();
 private:
     MultitrackModel& m_model;
+    MarkersModel& m_markersModel;
     int m_trackIndex;
     int m_clipIndex;
     UndoHelper m_undoHelper;
     bool m_rippleAllTracks;
+    bool m_rippleMarkers;
+    int m_markerRemoveStart;
+    int m_markerRemoveEnd;
+    QList<Markers::Marker> m_markers;
 };
 
 class NameTrackCommand : public QUndoCommand
@@ -194,22 +203,28 @@ private:
 class MoveClipCommand : public QUndoCommand
 {
 public:
-    MoveClipCommand(MultitrackModel& model, int trackDelta, bool ripple, QUndoCommand * parent = 0);
+    MoveClipCommand(MultitrackModel& model, MarkersModel& markersModel, int trackDelta, bool ripple, QUndoCommand * parent = 0);
     void redo();
     void undo();
     QMultiMap<int, Mlt::Producer>& selection() { return m_selection; }
 
 private:
+    void redoMarkers();
     MultitrackModel& m_model;
+    MarkersModel& m_markersModel;
     int m_trackDelta;
     bool m_ripple;
     bool m_rippleAllTracks;
+    bool m_rippleMarkers;
     UndoHelper m_undoHelper;
     QMultiMap<int, Mlt::Producer> m_selection; // ordered by position
     bool m_redo;
     int m_start;
     int m_trackIndex;
     int m_clipIndex;
+    int m_markerOldStart;
+    int m_markerNewStart;
+    QList<Markers::Marker> m_markers;
 };
 
 class TrimCommand : public QUndoCommand
@@ -317,6 +332,8 @@ public:
     int getTransitionIndex() const { return m_transitionIndex; }
 private:
     TimelineDock& m_timeline;
+    MultitrackModel& m_model;
+    MarkersModel& m_markersModel;
     int m_trackIndex;
     int m_clipIndex;
     int m_position;
@@ -324,6 +341,10 @@ private:
     bool m_ripple;
     UndoHelper m_undoHelper;
     bool m_rippleAllTracks;
+    bool m_rippleMarkers;
+    int m_markerOldStart;
+    int m_markerNewStart;
+    QList<Markers::Marker> m_markers;
 };
 
 class TrimTransitionInCommand : public TrimCommand

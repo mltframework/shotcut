@@ -578,6 +578,17 @@ void ShotcutSettings::setTimelineRippleAllTracks(bool b)
     emit timelineRippleAllTracksChanged();
 }
 
+bool ShotcutSettings::timelineRippleMarkers() const
+{
+    return settings.value("timeline/rippleMarkers", false).toBool();
+}
+
+void ShotcutSettings::setTimelineRippleMarkers(bool b)
+{
+    settings.setValue("timeline/rippleMarkers", b);
+    emit timelineRippleMarkersChanged();
+}
+
 bool ShotcutSettings::timelineSnap() const
 {
     return settings.value("timeline/snap", true).toBool();
