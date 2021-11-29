@@ -471,6 +471,7 @@ MainWindow::MainWindow()
     connect(ui->actionMarkers, SIGNAL(triggered()), this, SLOT(onMarkersDockTriggered()));
     connect(m_markersDock, SIGNAL(seekRequested(int)), SLOT(seekTimeline(int)));
     connect(m_markersDock, SIGNAL(addRequested()), m_timelineDock, SLOT(createMarker()));
+    connect(m_timelineDock, SIGNAL(markerSeeked(int)), m_markersDock, SLOT(onMarkerSelectionRequest(int)));
 
     addDockWidget(Qt::LeftDockWidgetArea, m_propertiesDock);
     addDockWidget(Qt::RightDockWidgetArea, m_recentDock);

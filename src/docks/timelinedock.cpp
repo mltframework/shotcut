@@ -1128,16 +1128,18 @@ void TimelineDock::deleteMarker(int markerIndex)
 void TimelineDock::seekNextMarker()
 {
     int nextPos = m_markersModel.nextMarkerPosition(m_position);
-    if (nextPos > 0) {
+    if (nextPos >= 0) {
         setPosition(nextPos);
+        markerSeeked(m_markersModel.markerIndexForPosition(nextPos));
     }
 }
 
 void TimelineDock::seekPrevMarker()
 {
     int prevPos = m_markersModel.prevMarkerPosition(m_position);
-    if (prevPos > 0) {
+    if (prevPos >= 0) {
         setPosition(prevPos);
+        markerSeeked(m_markersModel.markerIndexForPosition(prevPos));
     }
 }
 

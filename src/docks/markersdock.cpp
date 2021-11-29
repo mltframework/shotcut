@@ -232,6 +232,15 @@ void MarkersDock::setModel(MarkersModel* model)
     m_treeView->blockSelectionEvent(false);
 }
 
+void MarkersDock::onMarkerSelectionRequest(int markerIndex)
+{
+    QModelIndex sourceIndex = m_model->modelIndexForRow(markerIndex);
+    QModelIndex insertedIndex = m_proxyModel->mapFromSource(sourceIndex);
+    if (insertedIndex.isValid()) {
+        m_treeView->setCurrentIndex(insertedIndex);
+    }
+}
+
 void MarkersDock::onSelectionChanged(QModelIndex& index)
 {
     if (m_model && m_proxyModel && MAIN.multitrack() && index.isValid()) {

@@ -108,6 +108,7 @@ signals:
     void makeTracksShorter();
     void makeTracksTaller();
     void markerRangesChanged();
+    void markerSeeked(int markerIndex);
 
 public slots:
     void addAudioTrack();

@@ -41,6 +41,9 @@ signals:
     void seekRequested(int pos);
     void addRequested();
 
+public slots:
+    void onMarkerSelectionRequest(int markerIndex);
+
 private slots:
     void onSelectionChanged(QModelIndex& index);
     void onRowClicked(const QModelIndex& index);
