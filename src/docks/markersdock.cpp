@@ -30,6 +30,7 @@
 #include <QIcon>
 #include <QLineEdit>
 #include <QMenu>
+#include <QMouseEvent>
 #include <QSortFilterProxyModel>
 #include <QSpacerItem>
 #include <QTreeView>
@@ -49,6 +50,7 @@ public:
     }
 
 signals:
+    void rowClicked(const QModelIndex& index);
     void markerSelected(QModelIndex& index);
     void rowsAboutToBeRemovedSignal(const QModelIndex &parent, int first, int last);
 
@@ -69,6 +71,14 @@ protected:
     {
         emit rowsAboutToBeRemovedSignal(parent, first, last);
         QTreeView::rowsAboutToBeRemoved(parent, first, last);
+    }
+    void mouseReleaseEvent(QMouseEvent *event)
+    {
+        QTreeView::mouseReleaseEvent(event);
+        QModelIndex signalIndex = indexAt(event->pos());
+        if (signalIndex.isValid()) {
+            emit rowClicked(signalIndex);
+        }
     }
 
 private:
@@ -105,6 +115,7 @@ MarkersDock::MarkersDock(QWidget *parent) :
     m_treeView->setUniformRowHeights(true);
     m_treeView->setSortingEnabled(true);
     connect(m_treeView, SIGNAL(markerSelected(QModelIndex&)), this, SLOT(onSelectionChanged(QModelIndex&)));
+    connect(m_treeView, SIGNAL(rowClicked(const QModelIndex&)), this, SLOT(onRowClicked(const QModelIndex&)));
     vboxLayout->addWidget(m_treeView, 1);
 
     QHBoxLayout* buttonLayout = new QHBoxLayout();
@@ -227,7 +238,6 @@ void MarkersDock::onSelectionChanged(QModelIndex& index)
         QModelIndex realIndex = m_proxyModel->mapToSource(index);
         if (realIndex.isValid()) {
             Markers::Marker marker = m_model->getMarker(realIndex.row());
-            emit seekRequested(marker.start);
             enableButtons(true);
             m_editMarkerWidget->setVisible(true);
             QSignalBlocker editBlocker(m_editMarkerWidget);
@@ -237,6 +247,17 @@ void MarkersDock::onSelectionChanged(QModelIndex& index)
     }
     m_editMarkerWidget->setVisible(false);
     enableButtons(false);
+}
+
+void MarkersDock::onRowClicked(const QModelIndex& index)
+{
+    if (m_model && m_proxyModel && MAIN.multitrack() && index.isValid()) {
+        QModelIndex realIndex = m_proxyModel->mapToSource(index);
+        if (realIndex.isValid()) {
+            Markers::Marker marker = m_model->getMarker(realIndex.row());
+            emit seekRequested(marker.start);
+        }
+    }
 }
 
 void MarkersDock::onAddRequested()

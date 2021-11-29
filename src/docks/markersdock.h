@@ -43,6 +43,7 @@ signals:
 
 private slots:
     void onSelectionChanged(QModelIndex& index);
+    void onRowClicked(const QModelIndex& index);
     void onAddRequested();
     void onRemoveRequested();
     void onClearSelectionRequested();
