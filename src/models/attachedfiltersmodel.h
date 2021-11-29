@@ -84,12 +84,9 @@ public slots:
 private:
     static void producerChanged(mlt_properties owner, AttachedFiltersModel* model);
     void reset(Mlt::Producer *producer = 0);
-    int mltFilterIndex(int row) const;
-    int mltLinkIndex(int row) const;
 
     int m_dropRow;
     int m_removeRow;
-    int m_normFilterCount;
     QScopedPointer<Mlt::Producer> m_producer;
     QScopedPointer<Mlt::Event> m_event;
     typedef QList<QmlMetadata*> MetadataList;

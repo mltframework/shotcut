@@ -49,22 +49,70 @@ static int sortOrder(const QmlMetadata* meta) {
     return 2;
 }
 
+static int normalFilterCount(Mlt::Producer* producer)
+{
+    int count = 0;
+    if (producer && producer->is_valid()) {
+        for (int i = 0; i < producer->filter_count(); i++) {
+            Mlt::Filter filter = producer->filter(i);
+            if (filter.is_valid()) {
+                if (filter.get_int("_loader")) {
+                    count++;
+                }
+            }
+        }
+    }
+    return count;
+}
+
+static int mltFilterIndex(Mlt::Producer* producer, int row)
+{
+    if (row >= 0 && producer && producer->is_valid()) {
+        int linkCount = 0;
+        if (producer->type() == mlt_service_chain_type) {
+            Mlt::Chain chain(*producer);
+            linkCount = chain.link_count();
+            if (row < linkCount) {
+                // This row refers to an MLT link, not a filter
+                return -1;
+            }
+        }
+        int mltIndex = normalFilterCount(producer) + row - linkCount;
+        if (mltIndex >= 0 && mltIndex <producer->filter_count()) {
+            return mltIndex;
+        }
+    }
+    return -1;
+}
+
+static int mltLinkIndex(Mlt::Producer* producer, int row)
+{
+    if (row >= 0 && producer && producer->is_valid() && producer->type() == mlt_service_chain_type) {
+        Mlt::Chain chain(*producer);
+        if (row < chain.link_count())
+        {
+            return row;
+        }
+    }
+    return -1;
+}
+
+
 AttachedFiltersModel::AttachedFiltersModel(QObject *parent)
     : QAbstractListModel(parent)
     , m_dropRow(-1)
-    , m_normFilterCount(0)
 {
 }
 
 Mlt::Service* AttachedFiltersModel::getService(int row) const
 {
     Mlt::Service* result = nullptr;
-    int mltIndex = mltFilterIndex(row);
+    int mltIndex = mltFilterIndex(m_producer.get(), row);
     if (mltIndex >= 0) {
         // Service is a filter
         result = m_producer->filter(mltIndex);
     } else {
-        mltIndex = mltLinkIndex(row);
+        mltIndex = mltLinkIndex(m_producer.get(), row);
         if (mltIndex >= 0) {
             // Service is a link
             Mlt::Chain chain(*m_producer);
@@ -190,7 +238,7 @@ bool AttachedFiltersModel::setData(const QModelIndex& index, const QVariant& , i
     if (role != Qt::CheckStateRole || !m_producer || !m_producer->is_valid() || index.row() >= m_producer->filter_count()) {
         return false;
     }
-    int mltIndex = mltFilterIndex(index.row());
+    int mltIndex = mltFilterIndex(m_producer.get(), index.row());
     Mlt::Service service(producer()->filter(mltIndex));
     MAIN.undoStack()->push(new Filter::DisableCommand(*this, service, name(index.row()), mltIndex, index.row()));
     return true;
@@ -247,10 +295,10 @@ bool AttachedFiltersModel::moveRows(const QModelIndex & sourceParent, int source
             // Moving down: Convert to "post move" indexing
             destinationRow--;
         }
-        int mltSrcFilterIndex = mltFilterIndex(sourceRow);
-        int mltDstFilterIndex = mltFilterIndex(destinationRow);
-        int mltSrcLinkIndex = mltLinkIndex(sourceRow);
-        int mltDstLinkIndex = mltLinkIndex(destinationRow);
+        int mltSrcFilterIndex = mltFilterIndex(m_producer.get(), sourceRow);
+        int mltDstFilterIndex = mltFilterIndex(m_producer.get(), destinationRow);
+        int mltSrcLinkIndex = mltLinkIndex(m_producer.get(), sourceRow);
+        int mltDstLinkIndex = mltLinkIndex(m_producer.get(), destinationRow);
         if (mltSrcFilterIndex >=0 && mltDstFilterIndex >= 0) {
             m_event->block();
             m_producer->move_filter(mltSrcFilterIndex, mltDstFilterIndex);
@@ -321,18 +369,18 @@ int AttachedFiltersModel::doAddService(QmlMetadata* meta, Mlt::Producer& produce
         if (producer.get_service() == m_producer->get_service()) {
             // Calculate the MLT index for the new filter.
             if (m_metaList.count() == 0) {
-                mltIndex = producer.filter_count();
+                mltIndex = m_producer->filter_count();
             } else if (insertRow == 0) {
-                mltIndex = m_normFilterCount;
+                mltIndex = normalFilterCount(m_producer.get());
             } else {
-                mltIndex = mltFilterIndex(insertRow -1) + 1;
+                mltIndex = mltFilterIndex(m_producer.get(), insertRow -1) + 1;
             }
             beginInsertRows(QModelIndex(), insertRow, insertRow);
             if (MLT.isSeekable())
                 MLT.pause();
             m_event->block();
             producer.attach(filter);
-            producer.move_filter(producer.filter_count() - 1, mltIndex);
+            producer.move_filter(m_producer->filter_count() - 1, mltIndex);
             m_event->unblock();
             m_metaList.insert(insertRow, meta);
 
@@ -353,8 +401,8 @@ int AttachedFiltersModel::doAddService(QmlMetadata* meta, Mlt::Producer& produce
             return -1;
         }
         Mlt::Link link(meta->mlt_service().toUtf8().constData());
-        Mlt::Chain chain(*(m_producer.data()));
-        if (!link.is_valid() || !chain.is_valid()) {
+        Mlt::Chain chain(producer);
+        if (link.is_valid() && chain.is_valid()) {
             if (!meta->objectName().isEmpty())
                 link.set(kShotcutFilterProperty, meta->objectName().toUtf8().constData());
             link.set_in_and_out(
@@ -369,9 +417,9 @@ int AttachedFiltersModel::doAddService(QmlMetadata* meta, Mlt::Producer& produce
             if (m_metaList.count() == 0) {
                 mltIndex = chain.link_count();
             } else if (insertRow == 0) {
-                mltIndex = m_normFilterCount;
+                mltIndex = normalFilterCount(m_producer.get());
             } else {
-                mltIndex = mltFilterIndex(insertRow -1) + 1;
+                mltIndex = mltFilterIndex(m_producer.get(), insertRow -1) + 1;
             }
 
             beginInsertRows(QModelIndex(), insertRow, insertRow);
@@ -400,11 +448,17 @@ void AttachedFiltersModel::doRestoreService(Mlt::Producer& producer, Mlt::Servic
         Mlt::Filter filter(service);
         producer.attach(filter);
         producer.move_filter(producer.filter_count() - 1, mltIndex);
+        if (producer.get_service() == m_producer->get_service()) {
+            reset(m_producer.get());
+        }
     } else if (service.type() == mlt_service_link_type) {
         Mlt::Link link(service);
         Mlt::Chain chain(producer);
         chain.attach(link);
         chain.move_link(chain.link_count() - 1, mltIndex);
+        if (producer.get_service() == m_producer->get_service()) {
+            reset(m_producer.get());
+        }
     } else {
         LOG_WARNING() << "invalid service:" << producer.type();
     }
@@ -413,14 +467,16 @@ void AttachedFiltersModel::doRestoreService(Mlt::Producer& producer, Mlt::Servic
 
 void AttachedFiltersModel::remove(int row)
 {
-    int filterIndex = mltFilterIndex(row);
-    int mltIndex = (filterIndex >= 0)? filterIndex : mltLinkIndex(row);
+    int filterIndex = mltFilterIndex(m_producer.get(), row);
+    int mltIndex = (filterIndex >= 0)? filterIndex : mltLinkIndex(m_producer.get(), row);
     MAIN.undoStack()->push(new Filter::RemoveCommand(*this, name(row), mltIndex, row));
 }
 
 Mlt::Service AttachedFiltersModel::doRemoveService(Mlt::Producer& producer, int mltIndex, int row)
 {
-    if (producer.type() == mlt_service_chain_type) {
+    int filterIndex = mltFilterIndex(&producer, row);
+    int linkIndex = mltLinkIndex(&producer, row);
+    if (linkIndex >= 0 ) {
         Mlt::Chain chain(producer);
         Mlt::Link link = chain.link(mltIndex);
         if (producer.get_service() == m_producer->get_service()) {
@@ -430,13 +486,13 @@ Mlt::Service AttachedFiltersModel::doRemoveService(Mlt::Producer& producer, int 
             m_event->unblock();
             m_metaList.removeAt(row);
             endRemoveRows();
-            emit addedOrRemoved(&producer);
+            emit addedOrRemoved(m_producer.get());
         } else {
             chain.detach(link);
         }
         emit changed();
         return link;
-    } else if (producer.type() == mlt_service_producer_type) {
+    } else if (filterIndex >= 0) {
         Mlt::Filter filter = producer.filter(mltIndex);
         if (producer.get_service() == m_producer->get_service()) {
             beginRemoveRows(QModelIndex(), row, row);
@@ -445,7 +501,7 @@ Mlt::Service AttachedFiltersModel::doRemoveService(Mlt::Producer& producer, int 
             m_event->unblock();
             m_metaList.removeAt(row);
             endRemoveRows();
-            emit addedOrRemoved(&producer);
+            emit addedOrRemoved(m_producer.get());
         } else {
             producer.detach(filter);
         }
@@ -467,10 +523,10 @@ bool AttachedFiltersModel::move(int fromRow, int toRow)
         return false;
     }
 
-    int mltSrcFilterIndex = mltFilterIndex(fromRow);
-    int mltDstFilterIndex = mltFilterIndex(toRow);
-    int mltSrcLinkIndex = mltLinkIndex(fromRow);
-    int mltDstLinkIndex = mltLinkIndex(toRow);
+    int mltSrcFilterIndex = mltFilterIndex(m_producer.get(), fromRow);
+    int mltDstFilterIndex = mltFilterIndex(m_producer.get(), toRow);
+    int mltSrcLinkIndex = mltLinkIndex(m_producer.get(), fromRow);
+    int mltDstLinkIndex = mltLinkIndex(m_producer.get(), toRow);
 
     if (mltSrcFilterIndex >= 0 && mltDstFilterIndex >= 0) {
         Mlt::Service service = producer()->filter(mltSrcFilterIndex);
@@ -495,9 +551,15 @@ bool AttachedFiltersModel::doMoveService(Mlt::Producer& producer, int fromIndex,
         }
         return moveRows(parent, fromRow, 1, parent, toRow);
     }
-    if (producer.type() == mlt_service_producer_type) {
+
+    int mltSrcFilterIndex = mltFilterIndex(&producer, fromRow);
+    int mltDstFilterIndex = mltFilterIndex(&producer, toRow);
+    int mltSrcLinkIndex = mltLinkIndex(&producer, fromRow);
+    int mltDstLinkIndex = mltLinkIndex(&producer, toRow);
+
+    if (mltSrcFilterIndex >= 0 && mltDstFilterIndex >= 0) {
         return producer.move_filter(fromIndex, toIndex);
-    } else if (producer.type() == mlt_service_producer_type) {
+    } else if (mltSrcLinkIndex >= 0 && mltDstLinkIndex >= 0) {
         Mlt::Chain chain(producer);
         return chain.move_link(fromIndex, toIndex);
     } else {
@@ -540,7 +602,6 @@ void AttachedFiltersModel::reset(Mlt::Producer* producer)
     else
         m_producer.reset();
     m_metaList.clear();
-    m_normFilterCount = 0;
 
     if (m_producer && m_producer->is_valid()) {
         Mlt::Event* event = m_producer->listen("service-changed", this, (mlt_listener)AttachedFiltersModel::producerChanged);
@@ -561,13 +622,9 @@ void AttachedFiltersModel::reset(Mlt::Producer* producer)
         count = m_producer->filter_count();
         for (int i = 0; i < count; i++) {
             Mlt::Filter* filter = m_producer->filter(i);
-            if (filter && filter->is_valid()) {
-                if (filter->get_int("_loader")) {
-                    m_normFilterCount++;
-                } else {
-                    QmlMetadata* newMeta = MAIN.filterController()->metadataForService(filter);
-                    m_metaList.append(newMeta);
-                }
+            if (filter && filter->is_valid() && !filter->get_int("_loader")) {
+                QmlMetadata* newMeta = MAIN.filterController()->metadataForService(filter);
+                m_metaList.append(newMeta);
             }
             delete filter;
         }
@@ -577,38 +634,6 @@ void AttachedFiltersModel::reset(Mlt::Producer* producer)
     emit trackTitleChanged();
     emit isProducerSelectedChanged();
     emit supportsLinksChanged();
-}
-
-int AttachedFiltersModel::mltFilterIndex(int row) const
-{
-    if (row >= 0 && m_producer && m_producer->is_valid()) {
-        int linkCount = 0;
-        if (m_producer->type() == mlt_service_chain_type) {
-            Mlt::Chain chain(*m_producer);
-            linkCount = chain.link_count();
-            if (row < linkCount) {
-                // This row refers to an MLT link, not a filter
-                return -1;
-            }
-        }
-        int mltIndex = m_normFilterCount + row - linkCount;
-        if (mltIndex >= 0 && mltIndex < m_producer->filter_count()) {
-            return mltIndex;
-        }
-    }
-    return -1;
-}
-
-int AttachedFiltersModel::mltLinkIndex(int row) const
-{
-    if (row >= 0 && m_producer && m_producer->is_valid() && m_producer->type() == mlt_service_chain_type) {
-        Mlt::Chain chain(*m_producer);
-        if (row < chain.link_count())
-        {
-            return row;
-        }
-    }
-    return -1;
 }
 
 void AttachedFiltersModel::producerChanged(mlt_properties, AttachedFiltersModel* model)
