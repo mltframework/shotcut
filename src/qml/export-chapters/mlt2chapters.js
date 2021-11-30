@@ -65,7 +65,7 @@ MltXmlParser.prototype.createChapters = function() {
                         marker.start = prop.val;
                         marker.timecode = self.timecode(prop.val);
                         marker.seconds = 3600 * parseInt(prop.val.substring(0, 2)) + 60 * parseInt(prop.val.substring(3, 5)) + parseInt(prop.val.substring(6, 8));
-                        if (marker.start === '00:00') {
+                        if (marker.timecode === '00:00') {
                             chaptersStr = '';
                         }
                     } else if (prop.attr.name === 'end') {

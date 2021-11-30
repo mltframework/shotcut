@@ -1,34 +1,34 @@
 //QML Browserify - original prelude from browser-pack
 var modules = (function outer (modules, cache, entry) {
-    var previousRequire = typeof require == "function" && require;
-    function newRequire(name, jumped){
-        if(!cache[name]) {
-            if(!modules[name]) {
-                var currentRequire = typeof require == "function" && require;
+    var previousRequire = typeof require == "function" && require;
+    function newRequire(name, jumped){
+        if(!cache[name]) {
+            if(!modules[name]) {
+                var currentRequire = typeof require == "function" && require;
 
-                if (!jumped && currentRequire) return currentRequire(name, true);
+                if (!jumped && currentRequire) return currentRequire(name, true);
 
-                if (previousRequire) return previousRequire(name, true);
+                if (previousRequire) return previousRequire(name, true);
 
-                var err = new Error('Cannot find module \'' + name + '\'');
-                err.code = 'MODULE_NOT_FOUND';
-                throw err;
+                var err = new Error('Cannot find module \'' + name + '\'');
+                err.code = 'MODULE_NOT_FOUND';
+                throw err;
 
-            }
+            }
 
-            var m = cache[name] = {exports:{}};
-            modules[name][0].call(m.exports, function(x){
-                var id = modules[name][1][x];
-                return newRequire(id ? id : x);
-            },m,m.exports,outer,modules,cache,entry);
-        }
+            var m = cache[name] = {exports:{}};
+            modules[name][0].call(m.exports, function(x){
+                var id = modules[name][1][x];
+                return newRequire(id ? id : x);
+            },m,m.exports,outer,modules,cache,entry);
+        }
 
-        return cache[name].exports;
-    }
+        return cache[name].exports;
+    }
 
-    for(var i=0;i<entry.length;i++) newRequire(entry[i]);
+    for(var i=0;i<entry.length;i++) newRequire(entry[i]);
 
-    return newRequire(entry[0]);
+    return newRequire(entry[0]);
 })
 ({1:[function(require,module,exports){
 
@@ -7561,7 +7561,7 @@ MltXmlParser.prototype.createChapters = function() {
                         marker.start = prop.val;
                         marker.timecode = self.timecode(prop.val);
                         marker.seconds = 3600 * parseInt(prop.val.substring(0, 2)) + 60 * parseInt(prop.val.substring(3, 5)) + parseInt(prop.val.substring(6, 8));
-                        if (marker.start === '00:00') {
+                        if (marker.timecode === '00:00') {
                             chaptersStr = '';
                         }
                     } else if (prop.attr.name === 'end') {
