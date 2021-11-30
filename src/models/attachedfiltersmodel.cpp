@@ -366,7 +366,7 @@ int AttachedFiltersModel::doAddService(QmlMetadata* meta, Mlt::Producer& produce
         } else {
             return -1;
         }
-        if (producer.get_service() == m_producer->get_service()) {
+        if (isProducerLoaded(producer)) {
             // Calculate the MLT index for the new filter.
             if (m_metaList.count() == 0) {
                 mltIndex = m_producer->filter_count();
@@ -411,7 +411,7 @@ int AttachedFiltersModel::doAddService(QmlMetadata* meta, Mlt::Producer& produce
         } else {
             return -1;
         }
-        if (producer.get_service() == m_producer->get_service()) {
+        if (isProducerLoaded(producer)) {
             LOG_INFO() << "Add Link" << insertRow << meta->mlt_service().toUtf8().constData();
 
             if (m_metaList.count() == 0) {
@@ -448,21 +448,24 @@ void AttachedFiltersModel::doRestoreService(Mlt::Producer& producer, Mlt::Servic
         Mlt::Filter filter(service);
         producer.attach(filter);
         producer.move_filter(producer.filter_count() - 1, mltIndex);
-        if (producer.get_service() == m_producer->get_service()) {
+        if (isProducerLoaded(producer)) {
             reset(m_producer.get());
+            emit addedOrRemoved(m_producer.get());
+            emit changed();
         }
     } else if (service.type() == mlt_service_link_type) {
         Mlt::Link link(service);
         Mlt::Chain chain(producer);
         chain.attach(link);
         chain.move_link(chain.link_count() - 1, mltIndex);
-        if (producer.get_service() == m_producer->get_service()) {
+        if (isProducerLoaded(producer)) {
             reset(m_producer.get());
+            emit addedOrRemoved(m_producer.get());
+            emit changed();
         }
     } else {
         LOG_WARNING() << "invalid service:" << producer.type();
     }
-    emit changed();
 }
 
 void AttachedFiltersModel::remove(int row)
@@ -479,7 +482,7 @@ Mlt::Service AttachedFiltersModel::doRemoveService(Mlt::Producer& producer, int 
     if (linkIndex >= 0 ) {
         Mlt::Chain chain(producer);
         Mlt::Link link = chain.link(mltIndex);
-        if (producer.get_service() == m_producer->get_service()) {
+        if (isProducerLoaded(producer)) {
             beginRemoveRows(QModelIndex(), row, row);
             m_event->block();
             chain.detach(link);
@@ -494,7 +497,7 @@ Mlt::Service AttachedFiltersModel::doRemoveService(Mlt::Producer& producer, int 
         return link;
     } else if (filterIndex >= 0) {
         Mlt::Filter filter = producer.filter(mltIndex);
-        if (producer.get_service() == m_producer->get_service()) {
+        if (isProducerLoaded(producer)) {
             beginRemoveRows(QModelIndex(), row, row);
             m_event->block();
             producer.detach(filter);
@@ -543,7 +546,7 @@ bool AttachedFiltersModel::move(int fromRow, int toRow)
 
 bool AttachedFiltersModel::doMoveService(Mlt::Producer& producer, int fromIndex, int toIndex, int fromRow, int toRow)
 {
-    if (producer.get_service() == m_producer->get_service()) {
+    if (isProducerLoaded(producer)) {
         QModelIndex parent;
         if (toRow > fromRow) {
             // Moving down: put it under the destination index
@@ -583,7 +586,7 @@ void AttachedFiltersModel::doSetDisabled(Mlt::Producer& producer, int mltIndex, 
     if (filter.is_valid()) {
         filter.set("disable", disable);
         emit changed();
-        if (producer.get_service() == m_producer->get_service()) {
+        if (isProducerLoaded(producer)) {
             Q_ASSERT(row >= 0);
             QModelIndex modelIndex = createIndex(row, 0);
             emit dataChanged(modelIndex, modelIndex, QVector<int>() << Qt::CheckStateRole);
@@ -639,4 +642,8 @@ void AttachedFiltersModel::reset(Mlt::Producer* producer)
 void AttachedFiltersModel::producerChanged(mlt_properties, AttachedFiltersModel* model)
 {
     model->reset(model->m_producer.data());
+}
+
+bool AttachedFiltersModel::isProducerLoaded(Mlt::Producer& producer) const {
+    return m_producer && m_producer->get_service() == producer.get_service();
 }
