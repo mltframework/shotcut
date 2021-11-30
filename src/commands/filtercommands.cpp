@@ -45,9 +45,13 @@ public:
         return 0;
     }
     int on_end_producer(Mlt::Producer*) { return 0; }
-    int on_start_playlist(Mlt::Playlist*) { return 0; }
+    int on_start_playlist(Mlt::Playlist* playlist) {
+        return on_start_producer(playlist);
+    }
     int on_end_playlist(Mlt::Playlist*) { return 0; }
-    int on_start_tractor(Mlt::Tractor*) { return 0; }
+    int on_start_tractor(Mlt::Tractor* tractor) {
+        return on_start_producer(tractor);
+    }
     int on_end_tractor(Mlt::Tractor*) { return 0; }
     int on_start_multitrack(Mlt::Multitrack*) { return 0; }
     int on_end_multitrack(Mlt::Multitrack*) { return 0; }
