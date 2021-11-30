@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2020 Meltytech, LLC
+ * Copyright (c) 2015-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -51,7 +51,7 @@ void UndoHelper::recordBeforeState()
 
         for (int j = 0; j < playlist.count(); ++j) {
             QScopedPointer<Mlt::Producer> clip(playlist.get_clip(j));
-            QUuid uid = MLT.ensureHasUuid(*clip);
+            QUuid uid = MLT.ensureHasUuid(clip->parent());
             m_insertedOrder << uid;
             Info& info = m_state[uid];
             if (!(m_hints & SkipXML))
@@ -82,7 +82,7 @@ void UndoHelper::recordAfterState()
 
         for (int j = 0; j < playlist.count(); ++j) {
             QScopedPointer<Mlt::Producer> clip(playlist.get_clip(j));
-            QUuid uid = MLT.ensureHasUuid(*clip);
+            QUuid uid = MLT.ensureHasUuid(clip->parent());
 
             /* Clips not previously in m_state are new */
             if (!m_state.contains(uid)) {
@@ -174,7 +174,7 @@ void UndoHelper::undoChanges()
             int clipCurrentlyAt = -1;
             for (int i = 0; i < playlist.count(); ++i) {
                 QScopedPointer<Mlt::Producer> clip(playlist.get_clip(i));
-                if (MLT.uuid(*clip) == uid) {
+                if (MLT.uuid(clip->parent()) == uid) {
                     clipCurrentlyAt = i;
                     break;
                 }
@@ -200,7 +200,7 @@ void UndoHelper::undoChanges()
                 playlist.insert_blank(currentIndex, info.frame_out - info.frame_in);
                 UNDOLOG << "inserting isBlank at " << currentIndex;
             } else {
-                UNDOLOG << "inserting clip at " << currentIndex;
+                UNDOLOG << "inserting clip at " << currentIndex << uid;
                 Q_ASSERT(!(m_hints & SkipXML) && "Cannot restore clip without stored XML");
                 Q_ASSERT(!info.xml.isEmpty());
                 Mlt::Producer restoredClip(MLT.profile(), "xml-string", info.xml.toUtf8().constData());
@@ -216,7 +216,7 @@ void UndoHelper::undoChanges()
             QScopedPointer<Mlt::Producer> clip(playlist.get_clip(currentIndex));
             Q_ASSERT(currentIndex < playlist.count());
             Q_ASSERT(!clip.isNull());
-            MLT.setUuid(*clip, uid);
+            MLT.setUuid(clip->parent(), uid);
             AudioLevelsTask::start(clip->parent(), &m_model, modelIndex);
             ++indexAdjustment;
         }
@@ -258,7 +258,7 @@ void UndoHelper::undoChanges()
         Mlt::Playlist playlist(*trackProducer);
         for (int i = playlist.count() - 1; i >= 0; --i) {
             QScopedPointer<Mlt::Producer> clip(playlist.get_clip(i));
-            QUuid uid = MLT.uuid(*clip);
+            QUuid uid = MLT.uuid(clip->parent());
             if (m_clipsAdded.removeOne(uid)) {
                 UNDOLOG << "Removing clip at" << i;
                 m_model.beginRemoveRows(m_model.index(trackIndex), i, i);
@@ -300,7 +300,7 @@ void UndoHelper::debugPrintState()
             QScopedPointer<Mlt::Producer> clip(playlist.get_clip(j));
             Mlt::ClipInfo info;
             playlist.clip_info(j, &info);
-            trackStr += QString(" [ %5 %1 -> %2 (%3 frames) %4]").arg(info.frame_in).arg(info.frame_out).arg(info.frame_count).arg(clip->is_blank() ? "blank " : "").arg(MLT.uuid(*clip).toString());
+            trackStr += QString(" [ %5 %1 -> %2 (%3 frames) %4]").arg(info.frame_in).arg(info.frame_out).arg(info.frame_count).arg(clip->is_blank() ? "blank " : "").arg(MLT.uuid(clip->parent()).toString());
         }
         LOG_DEBUG() << qPrintable(trackStr);
     }
@@ -354,7 +354,7 @@ void UndoHelper::restoreAffectedTracks()
             QScopedPointer<Mlt::Producer> clip(playlist.get_clip(currentIndex));
             Q_ASSERT(currentIndex < playlist.count());
             Q_ASSERT(!clip.isNull());
-            MLT.setUuid(*clip, uid);
+            MLT.setUuid(clip->parent(), uid);
             AudioLevelsTask::start(clip->parent(), &m_model, modelIndex);
         }
     }

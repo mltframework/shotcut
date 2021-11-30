@@ -84,7 +84,6 @@
 #define kFilterOutProperty "_shotcut:filter_out"
 #define kThumbnailInProperty "_shotcut:thumbnail-in"
 #define kThumbnailOutProperty "_shotcut:thumbnail-out"
-#define kUndoIdProperty "_shotcut:undo_id"
 #define kUuidProperty "_shotcut:uuid"
 #define kMultitrackItemProperty "_shotcut:multitrack-item"
 #define kExportFromProperty "_shotcut:exportFromDefault"
