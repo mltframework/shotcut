@@ -66,7 +66,8 @@ public:
     bool insertRows(int row, int count, const QModelIndex &parent);
     bool removeRows(int row, int count, const QModelIndex &parent);
     bool moveRows(const QModelIndex & sourceParent, int sourceRow, int count, const QModelIndex & destinationParent, int destinationRow);
- 
+    bool isSourceClip() const;
+
 signals:
     void changed();
     void duplicateAddFailed(int index);

@@ -187,7 +187,7 @@ void FilterController::setCurrentFilter(int attachedIndex, bool isNew)
 
     emit currentFilterChanged(filter, meta, m_currentFilterIndex);
     m_currentFilter.reset(filter);
-    if (filter) {
+    if (filter && !m_attachedModel.isSourceClip()) {
         filter->startUndoTracking(this);
     }
 }

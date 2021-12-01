@@ -341,7 +341,12 @@ void AttachedFiltersModel::add(QmlMetadata* meta)
     if (m_producer->is_valid() && mlt_service_tractor_type != m_producer->type() && !QmlApplication::confirmOutputFilter()) {
         return;
     }
-    MAIN.undoStack()->push(new Filter::AddCommand(*this, meta));
+    if (isSourceClip()) {
+        int mltIndex = -1;
+        doAddService(meta, *m_producer, mltIndex);
+    } else {
+        MAIN.undoStack()->push(new Filter::AddCommand(*this, meta));
+    }
 }
 
 int AttachedFiltersModel::doAddService(QmlMetadata* meta, Mlt::Producer& producer, int& mltIndex)
@@ -472,7 +477,11 @@ void AttachedFiltersModel::remove(int row)
 {
     int filterIndex = mltFilterIndex(m_producer.get(), row);
     int mltIndex = (filterIndex >= 0)? filterIndex : mltLinkIndex(m_producer.get(), row);
-    MAIN.undoStack()->push(new Filter::RemoveCommand(*this, name(row), mltIndex, row));
+    if (isSourceClip()) {
+        doRemoveService(*m_producer, mltIndex, row);
+    } else {
+        MAIN.undoStack()->push(new Filter::RemoveCommand(*this, name(row), mltIndex, row));
+    }
 }
 
 Mlt::Service AttachedFiltersModel::doRemoveService(Mlt::Producer& producer, int mltIndex, int row)
@@ -532,12 +541,20 @@ bool AttachedFiltersModel::move(int fromRow, int toRow)
     int mltDstLinkIndex = mltLinkIndex(m_producer.get(), toRow);
 
     if (mltSrcFilterIndex >= 0 && mltDstFilterIndex >= 0) {
-        Mlt::Service service = producer()->filter(mltSrcFilterIndex);
-        MAIN.undoStack()->push(new Filter::MoveCommand(*this, service, name(fromRow), mltSrcFilterIndex, mltDstFilterIndex, fromRow, toRow));
+        if (isSourceClip()) {
+            doMoveService(*m_producer, mltSrcFilterIndex, mltDstFilterIndex, fromRow, toRow);
+        } else {
+            Mlt::Service service = producer()->filter(mltSrcFilterIndex);
+            MAIN.undoStack()->push(new Filter::MoveCommand(*this, service, name(fromRow), mltSrcFilterIndex, mltDstFilterIndex, fromRow, toRow));
+        }
     } else if (mltSrcLinkIndex >= 0 && mltDstLinkIndex >= 0) {
-        Mlt::Chain chain(*producer());
-        Mlt::Service service = chain.link(mltSrcLinkIndex);
-        MAIN.undoStack()->push(new Filter::MoveCommand(*this, service, name(fromRow), mltSrcLinkIndex, mltDstLinkIndex, fromRow, toRow));
+        if (isSourceClip()) {
+            doMoveService(*m_producer, mltSrcLinkIndex, mltDstLinkIndex, fromRow, toRow);
+        } else {
+            Mlt::Chain chain(*producer());
+            Mlt::Service service = chain.link(mltSrcLinkIndex);
+            MAIN.undoStack()->push(new Filter::MoveCommand(*this, service, name(fromRow), mltSrcLinkIndex, mltDstLinkIndex, fromRow, toRow));
+        }
     } else {
         LOG_WARNING() << "invalid service:" << m_producer->type();
     }
@@ -646,4 +663,9 @@ void AttachedFiltersModel::producerChanged(mlt_properties, AttachedFiltersModel*
 
 bool AttachedFiltersModel::isProducerLoaded(Mlt::Producer& producer) const {
     return m_producer && m_producer->get_service() == producer.get_service();
+}
+
+bool AttachedFiltersModel::isSourceClip() const
+{
+    return MLT.isClip() && !m_producer->get_int(kPlaylistIndexProperty);
 }
