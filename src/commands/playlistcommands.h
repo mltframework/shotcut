@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 Meltytech, LLC
+ * Copyright (c) 2013-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,12 +21,13 @@
 #include "models/playlistmodel.h"
 #include <QUndoCommand>
 #include <QString>
+#include <QUuid>
 
 namespace Playlist
 {
 
 enum {
-    UndoIdTrimClipIn,
+    UndoIdTrimClipIn = 0,
     UndoIdTrimClipOut,
     UndoIdUpdate
 };
@@ -41,6 +42,7 @@ private:
     PlaylistModel& m_model;
     QString m_xml;
     bool m_emitModified;
+    QUuid m_uuid;
 };
 
 class InsertCommand : public QUndoCommand
@@ -53,6 +55,7 @@ private:
     PlaylistModel& m_model;
     QString m_xml;
     int m_row;
+    QUuid m_uuid;
 };
 
 class UpdateCommand : public QUndoCommand
@@ -69,6 +72,7 @@ private:
     QString m_newXml;
     QString m_oldXml;
     int m_row;
+    QUuid m_uuid;
 };
 
 class RemoveCommand : public QUndoCommand
@@ -81,6 +85,7 @@ private:
     PlaylistModel& m_model;
     QString m_xml;
     int m_row;
+    QUuid m_uuid;
 };
 
 class MoveCommand : public QUndoCommand
@@ -104,6 +109,7 @@ public:
 private:
     PlaylistModel& m_model;
     QString m_xml;
+    QVector<QUuid> m_uuids;
 };
 
 class SortCommand : public QUndoCommand
@@ -117,6 +123,7 @@ private:
     int m_column;
     Qt::SortOrder m_order;
     QString m_xml;
+    QVector<QUuid> m_uuids;
 };
 
 class TrimClipInCommand : public QUndoCommand
@@ -164,6 +171,7 @@ private:
     QString m_newXml;
     QString m_oldXml;
     int m_row;
+    QUuid m_uuid;
 };
 
 }

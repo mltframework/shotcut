@@ -25,7 +25,7 @@ namespace Markers
 {
 
 enum {
-    UndoIdUpdate,
+    UndoIdUpdate = 200,
 };
 
 class DeleteCommand : public QUndoCommand

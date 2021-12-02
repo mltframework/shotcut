@@ -32,7 +32,7 @@ namespace Timeline
 {
 
 enum {
-    UndoIdTrimClipIn,
+    UndoIdTrimClipIn = 100,
     UndoIdTrimClipOut,
     UndoIdFadeIn,
     UndoIdFadeOut,

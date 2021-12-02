@@ -33,7 +33,7 @@ namespace Filter
 {
 
 enum {
-    UndoIdMove,
+    UndoIdMove = 300,
     UndoIdDisable,
     UndoIdChange
 };
