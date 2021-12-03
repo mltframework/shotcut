@@ -1030,8 +1030,7 @@ bool AvformatProducerWidget::revertToOriginalResource()
 void AvformatProducerWidget::setSyncVisibility()
 {
     ui->syncSlider->setVisible(ui->tabWidget->isTabEnabled(0) && ui->tabWidget->isTabEnabled(1) &&
-                               m_producer->get_int("video_index") != -1 &&
-                               m_producer->get_int("audio_index") != -1);
+                               m_producer->get_int("video_index") != -1);
     ui->syncLabel->setVisible(ui->syncSlider->isVisible());
     ui->syncSpinBox->setVisible(ui->syncSlider->isVisible());
 }
