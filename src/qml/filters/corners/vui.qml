@@ -360,5 +360,10 @@ Shotcut.VuiBase {
         target: producer
         onPositionChanged: setCornersControl()
     }
+    
+    Connections {
+        target: video
+        onRectChanged: setCornersControl()
+    }
 }
 
