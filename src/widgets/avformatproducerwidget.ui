@@ -792,7 +792,7 @@
             </widget>
            </item>
            <item row="2" column="0">
-            <widget class="QLabel" name="label_3">
+            <widget class="QLabel" name="syncLabel">
              <property name="text">
               <string>Sync</string>
              </property>
@@ -817,7 +817,7 @@
               </spacer>
              </item>
              <item>
-              <widget class="QSpinBox" name="spinBox">
+              <widget class="QSpinBox" name="syncSpinBox">
                <property name="suffix">
                 <string> ms</string>
                </property>
@@ -1067,7 +1067,7 @@
   <tabstop>menuButton</tabstop>
   <tabstop>audioTrackComboBox</tabstop>
   <tabstop>syncSlider</tabstop>
-  <tabstop>spinBox</tabstop>
+  <tabstop>syncSpinBox</tabstop>
   <tabstop>metadataTable</tabstop>
   <tabstop>scrollArea</tabstop>
   <tabstop>reverseButton</tabstop>
@@ -1082,7 +1082,7 @@
   <connection>
    <sender>syncSlider</sender>
    <signal>valueChanged(int)</signal>
-   <receiver>spinBox</receiver>
+   <receiver>syncSpinBox</receiver>
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1096,7 +1096,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>spinBox</sender>
+   <sender>syncSpinBox</sender>
    <signal>valueChanged(int)</signal>
    <receiver>syncSlider</receiver>
    <slot>setValue(int)</slot>

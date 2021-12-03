@@ -605,7 +605,7 @@ void AvformatProducerWidget::onFrameDecoded()
             }
         }
     }
-    ui->syncSlider->setValue(qRound(m_producer->get_double("video_delay") * 1000.0));
+    setSyncVisibility();
 
     if (Settings.showConvertClipDialog() && !m_producer->get_int(kShotcutSkipConvertProperty)) {
         auto transferItem = ui->videoTableWidget->item(5, 1);
@@ -1025,6 +1025,15 @@ bool AvformatProducerWidget::revertToOriginalResource()
         }
     }
     return false;
+}
+
+void AvformatProducerWidget::setSyncVisibility()
+{
+    ui->syncSlider->setVisible(ui->tabWidget->isTabEnabled(0) && ui->tabWidget->isTabEnabled(1) &&
+                               m_producer->get_int("video_index") != -1 &&
+                               m_producer->get_int("audio_index") != -1);
+    ui->syncLabel->setVisible(ui->syncSlider->isVisible());
+    ui->syncSpinBox->setVisible(ui->syncSlider->isVisible());
 }
 
 void AvformatProducerWidget::on_reverseButton_clicked()

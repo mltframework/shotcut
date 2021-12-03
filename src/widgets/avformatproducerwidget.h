@@ -134,6 +134,7 @@ private:
     void recreateProducer();
     void convert(TranscodeDialog& dialog);
     bool revertToOriginalResource();
+    void setSyncVisibility();
 };
 
 
