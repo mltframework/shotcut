@@ -288,7 +288,7 @@ Item {
         Shotcut.SliderSpinner {
             Layout.columnSpan: 3
             id: bandsSlider
-            minimumValue: 5
+            minimumValue: 2
             maximumValue: 100
             decimals: 0
             onValueChanged: filter.set("bands", value)
