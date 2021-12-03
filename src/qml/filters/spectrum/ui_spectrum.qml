@@ -85,6 +85,7 @@ Item {
         rectY.value = filterRect.y
         rectW.value = filterRect.width
         rectH.value = filterRect.height
+        typeCombo.currentIndex = typeCombo.valueToIndex()
         _disableUpdate = false
     }
 
