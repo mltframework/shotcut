@@ -23,7 +23,7 @@ import Shotcut.Controls 1.0 as Shotcut
 Item {
     property string rectProperty: "rect"
     property rect filterRect: filter.getRect(rectProperty)
-    property var defaultParameters: [rectProperty, 'type', 'color.1', 'color.2', 'color.3', 'color.4', 'color.5', 'color.6', 'color.7', 'color.8', 'color.9', 'color.10', 'bgcolor', 'thickness', 'fill', 'mirror', 'reverse', 'tension', 'bands', 'frequency_low', 'frequency_high', 'threshold']
+    property var defaultParameters: [rectProperty, 'type', 'color.1', 'color.2', 'color.3', 'color.4', 'color.5', 'color.6', 'color.7', 'color.8', 'color.9', 'color.10', 'bgcolor', 'thickness', 'fill', 'mirror', 'reverse', 'channels', 'segment_gap']
 
     property int _minFreqDelta: 1000
     property bool _disableUpdate: true
@@ -34,6 +34,7 @@ Item {
     Component.onCompleted: {
         if (filter.isNew) {
             filter.set(rectProperty, '0%/0%:10%x100%')
+            filter.set('type', 'bar')
             filter.set('color.1', '#ffff0000')
             filter.set('color.2', '#ffffff00')
             filter.set('color.3', '#ff00ff00')
@@ -46,6 +47,7 @@ Item {
             filter.set('mirror', '0')
             filter.set('reverse', '0')
             filter.set('channels', '2')
+            filter.set('segment_gap', '8')
             filter.savePreset(defaultParameters)
         }
         setControls()
@@ -76,10 +78,12 @@ Item {
         mirrorCheckbox.checked = filter.get('mirror') == 1
         reverseCheckbox.checked = filter.get('reverse') == 1
         channelsSlider.value = filter.getDouble('channels')
+        segmentGapSlider.value = filter.getDouble('segment_gap')
         rectX.value = filterRect.x
         rectY.value = filterRect.y
         rectW.value = filterRect.width
         rectH.value = filterRect.height
+        typeCombo.currentIndex = typeCombo.valueToIndex()
         _disableUpdate = false
     }
 
@@ -104,7 +108,26 @@ Item {
         }
 
         Label {
-            text: qsTr('Bar Color')
+            text: qsTr('Type')
+            Layout.alignment: Qt.AlignRight
+        }
+        Shotcut.ComboBox {
+            Layout.columnSpan: 4
+            id: typeCombo
+            model: [qsTr('Bar'), qsTr('Segment')]
+            property var values: ['bar', 'segment']
+            function valueToIndex() {
+                var w = filter.get('type')
+                for (var i = 0; i < values.length; ++i)
+                    if (values[i] === w) break;
+                if (i === values.length) i = 0;
+                return i;
+            }
+            onActivated: filter.set('type', values[index])
+        }
+
+        Label {
+            text: qsTr('Graph Colors')
             Layout.alignment: Qt.AlignRight
         }
         Shotcut.GradientControl {
@@ -140,9 +163,10 @@ Item {
             decimals: 0
             suffix: ' px'
             onValueChanged: filter.set("thickness", value)
+            Shotcut.HoverTip { text: 'Set the thickness of the bars (in pixels)' }
         }
         Shotcut.UndoButton {
-            onClicked: thicknessSlider.value = 1
+            onClicked: thicknessSlider.value = 15
         }
 
         Label {
@@ -214,7 +238,7 @@ Item {
         CheckBox {
             Layout.columnSpan: 4
             id: mirrorCheckbox
-            text: qsTr('Mirror the spectrum.')
+            text: qsTr('Mirror the levels.')
             onClicked: filter.set('mirror', checked ? 1 : 0)
         }
 
@@ -225,8 +249,9 @@ Item {
         CheckBox {
             Layout.columnSpan: 4
             id: reverseCheckbox
-            text: qsTr('Reverse the spectrum.')
+            text: qsTr('Reverse the levels.')
             onClicked: filter.set('reverse', checked ? 1 : 0)
+            Shotcut.HoverTip { text: 'Reverse the order of channels.' }
         }
 
         Label {
@@ -240,9 +265,27 @@ Item {
             maximumValue: 10
             decimals: 0
             onValueChanged: filter.set("channels", value)
+            Shotcut.HoverTip { text: 'The number of audio channels to show.' }
         }
         Shotcut.UndoButton {
-            onClicked: bandsSlider.value = 2
+            onClicked: channelsSlider.value = 2
+        }
+
+        Label {
+            text: qsTr('Segment Gap')
+            Layout.alignment: Qt.AlignRight
+        }
+        Shotcut.SliderSpinner {
+            Layout.columnSpan: 3
+            id: segmentGapSlider
+            minimumValue: 0
+            maximumValue: 20
+            decimals: 0
+            onValueChanged: filter.set("segment_gap", value)
+            Shotcut.HoverTip { text: 'Space between segments in the segment graph (in pixels)' }
+        }
+        Shotcut.UndoButton {
+            onClicked: segmentGapSlider.value = 8
         }
 
         Item { Layout.fillHeight: true }
