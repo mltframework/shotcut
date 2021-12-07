@@ -278,7 +278,7 @@ void RemoveCommand::undo()
 {
     LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex;
     m_undoHelper.undoChanges();
-    if (m_rippleMarkers && m_markerRemoveStart > 0) {
+    if (m_rippleMarkers && m_markerRemoveStart >= 0) {
         m_markersModel.doReplace(m_markers);
     }
 }
