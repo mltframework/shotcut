@@ -78,6 +78,7 @@ private:
     QLineEdit* m_searchField;
     QToolButton* m_clearSearchButton;
     EditMarkerWidget* m_editMarkerWidget;
+    bool m_editInProgress;
 };
 
 #endif // MARKERSDOCK_H

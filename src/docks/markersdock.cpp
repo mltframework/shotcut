@@ -92,6 +92,7 @@ MarkersDock::MarkersDock(QWidget *parent) :
     QDockWidget(parent)
   , m_model(nullptr)
   , m_proxyModel(nullptr)
+  , m_editInProgress(false)
 {
     LOG_DEBUG() << "begin";
 
@@ -350,7 +351,7 @@ void MarkersDock::onDataChanged(const QModelIndex &topLeft, const QModelIndex &b
     Q_UNUSED(topLeft);
     Q_UNUSED(bottomRight);
     Q_UNUSED(roles);
-    if (m_model && m_proxyModel) {
+    if (m_model && m_proxyModel && !m_editInProgress) {
         QModelIndexList indices = m_treeView->selectedIndexes();
         if (indices.size() > 0) {
             QModelIndex realIndex = m_proxyModel->mapToSource(indices[0]);
@@ -377,7 +378,9 @@ void MarkersDock::onValuesChanged()
                 marker.color = m_editMarkerWidget->getColor();
                 marker.start = m_editMarkerWidget->getStart();
                 marker.end = m_editMarkerWidget->getEnd();
+                m_editInProgress = true;
                 m_model->update(realIndex.row(), marker);
+                m_editInProgress = false;
             }
         }
     }
