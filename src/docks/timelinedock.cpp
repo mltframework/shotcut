@@ -874,7 +874,7 @@ void TimelineDock::copy(int trackIndex, int clipIndex)
             }
         }
         // Put XML in clipboard
-        QGuiApplication::clipboard()->setText(MLT.XML(&tractor, true));
+        QGuiApplication::clipboard()->setText(MLT.XML(&tractor));
     }
 }
 
