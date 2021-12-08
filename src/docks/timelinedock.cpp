@@ -189,7 +189,7 @@ void TimelineDock::addTrackIfNeeded(int trackIndex, Mlt::Producer* srcTrack)
     if (trackIndex >= n) {
         if (m_selection.selectedTrack != -1)
             setSelection();
-        if (srcTrack->get_int(kAudioTrackProperty) || m_model.trackList()[n - 1].type == AudioTrackType) {
+        if (srcTrack->get_int(kAudioTrackProperty) || (n > 0 && m_model.trackList()[n - 1].type == AudioTrackType)) {
             MAIN.undoStack()->push(
                 new Timeline::InsertTrackCommand(m_model, trackIndex, AudioTrackType));
         } else {
