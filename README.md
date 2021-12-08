@@ -16,7 +16,7 @@
 
 ## Install
 
-Binaries are regularly built and are available at https://www.shotcut.org, on the Download page.
+Binaries are regularly built and are available at https://www.shotcut.org/download/.
 
 ## Contributors
 
@@ -36,17 +36,17 @@ Shotcut's direct (linked or hard runtime) dependencies are:
 See https://shotcut.org/credits/ for a more complete list including indirect
 and bundled dependencies.
 
-## Licence
+## License
 
 GPLv3. See [COPYING](COPYING).
 
 ## How to build
 
-**Warning**: building shotcut should only be reserved to beta testers or contributors who know what they are doing.
+**Warning**: building Shotcut should only be reserved to beta testers or contributors who know what they are doing.
 
 ### Qt Creator
 
-The fastest way to build and try Shotcut development version is probably using [Qt Creator](https://www.qt.io/download#qt-creator).
+The fastest way to build and try Shotcut development version is through [Qt Creator](https://www.qt.io/download#qt-creator).
 
 To make this easier, we provide [SDKs](https://shotcut.org/notes/) on the web site with each release that includes
 Shotcut and all of its dependencies. These SDK pages also include setup instructions and tips on how to compile
@@ -54,7 +54,7 @@ MLT and other dependencies after updating.
 
 ### From command line
 
-First, check dependencies are satisfied and various paths correctly set to find different libraries and include files (Qt 5, MLT, frei0r and so forth).
+First, check dependencies are satisfied and various paths are correctly set to find different libraries and include files (Qt 5, MLT, frei0r and so forth).
 
 Build `Makefile`:
 
@@ -68,9 +68,9 @@ make -j8
 make install
 ```
 
-If you do not `make install` Shotcut will fail when you run it because it cannot locate its QML
-files. If you want to run `shotcut` from a build folder without installing you can
-make a symbolic link to the `qml` folder. It depends on where you build folder is, but assuming it
+If you do not `make install`, Shotcut will fail when you run it because it cannot locate its QML
+files. If you want to run `shotcut` from a build folder without installing, you can
+make a symbolic link to the `qml` folder. It depends on where your build folder is, but assuming it
 is a sibling of the source tree folder:
 ```
 cd build
