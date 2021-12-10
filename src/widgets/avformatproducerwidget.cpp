@@ -1471,6 +1471,7 @@ void AvformatProducerWidget::on_actionFFmpegVideoQuality_triggered()
 void AvformatProducerWidget::on_rotationComboBox_activated(int index)
 {
     if (m_producer) {
+        MLT.stop();
         m_producer->set("rotate", index * 90);
         recreateProducer();
     }
