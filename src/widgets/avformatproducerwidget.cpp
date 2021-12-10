@@ -902,7 +902,13 @@ void AvformatProducerWidget::convert(TranscodeDialog& dialog)
         }
         filterString = filterString + QString("scale=flags=accurate_rnd+full_chroma_inp+full_chroma_int:in_range=%1:out_range=%2").arg(range).arg(range);
         if (dialog.fpsOverride()) {
-            QString minterpFilter = QString(",minterpolate='mi_mode=%1:mc_mode=aobmc:me_mode=bidir:vsbmc=1:fps=%2'").arg(dialog.frc()).arg(dialog.fps());
+            auto fps = QString("%1").arg(dialog.fps(), 0, 'f', 6);
+            int numerator, denominator;
+            Util::normalizeFrameRate(dialog.fps(), numerator, denominator);
+            if (denominator == 1001) {
+                fps = QString("%1/%2").arg(numerator).arg(denominator);
+            }
+            QString minterpFilter = QString(",minterpolate='mi_mode=%1:mc_mode=aobmc:me_mode=bidir:vsbmc=1:fps=%2'").arg(dialog.frc()).arg(fps);
             filterString = filterString + minterpFilter;
         }
         args << filterString;
