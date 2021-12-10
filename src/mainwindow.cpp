@@ -992,25 +992,18 @@ void MainWindow::open(Mlt::Producer* producer)
 
 bool MainWindow::isCompatibleWithGpuMode(MltXmlChecker& checker)
 {
-    if (checker.needsGPU() && !Settings.playerGPU() && Settings.playerWarnGPU()) {
+    if (checker.needsGPU() && !Settings.playerGPU()) {
         LOG_INFO() << "file uses GPU but GPU not enabled";
         QMessageBox dialog(QMessageBox::Warning,
            qApp->applicationName(),
            tr("The file you opened uses GPU effects, but GPU effects are not enabled.\n\n"
-              "GPU effects are EXPERIMENTAL, UNSTABLE and UNSUPPORTED! Unsupported means do not report bugs about it.\n\n"
-              "Do you want to enable GPU effects and restart?"),
-           QMessageBox::No |
-           QMessageBox::Yes,
+              "GPU effects are EXPERIMENTAL, UNSTABLE and UNSUPPORTED! Unsupported means do not report bugs about it."),
+           QMessageBox::Ok,
            this);
         dialog.setWindowModality(QmlApplication::dialogModality());
-        dialog.setDefaultButton(QMessageBox::Yes);
-        dialog.setEscapeButton(QMessageBox::No);
-        int r = dialog.exec();
-        if (r == QMessageBox::Yes) {
-            ui->actionGPU->setChecked(true);
-            m_exitCode = EXIT_RESTART;
-            QApplication::closeAllWindows();
-        }
+        dialog.setDefaultButton(QMessageBox::Ok);
+        dialog.setEscapeButton(QMessageBox::Ok);
+        dialog.exec();
         return false;
     }
     else if (checker.needsCPU() && Settings.playerGPU()) {
@@ -1373,8 +1366,10 @@ void MainWindow::open(QString url, const Mlt::Properties* properties, bool play)
         }
         switch (checker.check(url)) {
         case QXmlStreamReader::NoError:
-            if (!isCompatibleWithGpuMode(checker))
+            if (!isCompatibleWithGpuMode(checker)) {
+                showStatusMessage(tr("Failed to open ").append(url));
                 return;
+            }
             break;
         case QXmlStreamReader::CustomError:
             showIncompatibleProjectMessage(checker.shotcutVersion());
