@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2020 Meltytech, LLC
+ * Copyright (c) 2018-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -85,8 +85,7 @@ void TextProducerWidget::on_colorButton_clicked()
         }
         ui->colorLabel->setText(colorToString(newColor));
         ui->colorLabel->setStyleSheet(QString("color: %1; background-color: %2")
-                                      .arg((dialog.currentColor().value() < 150)? "white":"black")
-                                      .arg(dialog.currentColor().name()));
+            .arg(Util::textColor(dialog.currentColor()), dialog.currentColor().name()));
         if (m_producer) {
             m_producer->set("resource", colorStringToResource(ui->colorLabel->text()).toLatin1().constData());
             m_producer->set(kShotcutCaptionProperty, ui->colorLabel->text().toLatin1().constData());
@@ -149,8 +148,7 @@ void TextProducerWidget::loadPreset(Mlt::Properties& p)
     QColor color(QFileInfo(p.get("resource")).baseName());
     ui->colorLabel->setText(colorToString(color));
     ui->colorLabel->setStyleSheet(QString("color: %1; background-color: %2")
-        .arg((color.value() < 150)? "white":"black")
-        .arg(color.name()));
+                                  .arg(Util::textColor(color), color.name()));
     if (qstrcmp("", p.get("argument")))
         ui->plainTextEdit->setPlainText(QString::fromUtf8(p.get("argument")));
     if (m_producer) {

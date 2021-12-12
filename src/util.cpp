@@ -567,3 +567,8 @@ void Util::normalizeFrameRate(double fps, int& numerator, int& denominator)
         denominator = 1000000;
     }
 }
+
+QString Util::textColor(const QColor& color)
+{
+    return (color.value() < 150)? "white" : "black";
+}

@@ -21,6 +21,7 @@
 #include "mltcontroller.h"
 #include "qmltypes/qmlapplication.h"
 #include "widgets/timespinbox.h"
+#include "util.h"
 
 #include <QColorDialog>
 #include <QDebug>
@@ -49,8 +50,7 @@ EditMarkerWidget::EditMarkerWidget(QWidget *parent, const QString& text, const Q
     grid->addWidget(m_colorButton, 1, 0, Qt::AlignRight);
     m_colorLabel = new QLabel(color.name(QColor::HexRgb));
     m_colorLabel->setStyleSheet(QString("color: %1; background-color: %2")
-            .arg((color.value() < 150)? "white":"black")
-            .arg(color.name()));
+                                .arg(Util::textColor(color), color.name()));
     grid->addWidget(m_colorLabel, 1, 1);
 
     grid->addWidget(new QLabel(tr("Start")), 2, 0, Qt::AlignRight);
@@ -110,8 +110,7 @@ void EditMarkerWidget::setValues(const QString& text, const QColor& color, int s
     m_textField->setText(text);
     m_colorLabel->setText(color.name(QColor::HexRgb));
     m_colorLabel->setStyleSheet(QString("color: %1; background-color: %2")
-            .arg((color.value() < 150)? "white":"black")
-            .arg(color.name()));
+                                .arg(Util::textColor(color), color.name()));
     m_startSpinner->setMinimum(0);
     m_startSpinner->setMaximum(end);
     m_startSpinner->setValue(start);
@@ -131,8 +130,7 @@ void EditMarkerWidget::on_colorButton_clicked()
         auto newColor = dialog.currentColor();
         m_colorLabel->setText(newColor.name(QColor::HexRgb));
         m_colorLabel->setStyleSheet(QString("color: %1; background-color: %2")
-                                      .arg((newColor.value() < 150)? "white":"black")
-                                      .arg(newColor.name()));
+                                    .arg(Util::textColor(newColor), newColor.name()));
     }
     emit valuesChanged();
 }

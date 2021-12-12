@@ -61,6 +61,7 @@ public:
     static QString removeQueryString(const QString& s);
     static int greatestCommonDivisor(int m, int n);
     static void normalizeFrameRate(double fps, int& numerator, int& denominator);
+    static QString textColor(const QColor& color);
 };
 
 #endif // UTIL_H
