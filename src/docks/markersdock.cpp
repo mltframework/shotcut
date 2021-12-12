@@ -21,6 +21,7 @@
 #include "models/markersmodel.h"
 #include "settings.h"
 #include "widgets/editmarkerwidget.h"
+#include "util.h"
 #include <Logger.h>
 
 #include <QAction>
@@ -37,6 +38,40 @@
 #include <QToolButton>
 #include <QVBoxLayout>
 #include <QtWidgets/QScrollArea>
+#include <QStyledItemDelegate>
+#include <QPainter>
+
+class ColorItemDelegate : public QStyledItemDelegate
+{
+    Q_OBJECT
+public:
+    ColorItemDelegate(QAbstractItemView* view, QWidget* parent = nullptr)
+         : QStyledItemDelegate(parent)
+         , m_view(view)
+    {
+    }
+
+    void paint(QPainter *painter,
+               const QStyleOptionViewItem &option, const QModelIndex &index) const
+    {
+        const auto color = index.data(MarkersModel::ColorRole).value<QColor>();
+        const auto textColor(Util::textColor(color));
+        painter->fillRect(option.rect, color);
+        const auto point = option.rect.topLeft() + QPoint(5 * m_view->devicePixelRatioF(), option.fontMetrics.ascent() + 2 * m_view->devicePixelRatioF());
+        painter->setPen(textColor);
+        painter->drawText(point, color.name());
+    }
+
+    QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const
+    {
+        Q_UNUSED(index);
+        return QSize(m_view->viewport()->width(), option.fontMetrics.height() + 4 * m_view->devicePixelRatioF());
+    }
+
+private:
+    QAbstractItemView* m_view;
+
+};
 
 class MarkerTreeView : public QTreeView
 {
@@ -111,6 +146,7 @@ MarkersDock::MarkersDock(QWidget *parent) :
     scrollArea->setLayout(vboxLayout);
 
     m_treeView = new MarkerTreeView();
+    m_treeView->setItemDelegateForColumn(0, new ColorItemDelegate(m_treeView));
     m_treeView->setItemsExpandable(false);
     m_treeView->setRootIsDecorated(false);
     m_treeView->setUniformRowHeights(true);
