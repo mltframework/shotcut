@@ -57,7 +57,7 @@ public:
         const auto color = index.data(MarkersModel::ColorRole).value<QColor>();
         const auto textColor(Util::textColor(color));
         painter->fillRect(option.rect, color);
-        const auto point = option.rect.topLeft() + QPoint(5 * m_view->devicePixelRatioF(), option.fontMetrics.ascent() + 2 * m_view->devicePixelRatioF());
+        const auto point = option.rect.topLeft() + QPoint(2 * m_view->devicePixelRatioF(), option.fontMetrics.ascent() + m_view->devicePixelRatioF());
         painter->setPen(textColor);
         painter->drawText(point, color.name());
     }
@@ -65,7 +65,7 @@ public:
     QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const
     {
         Q_UNUSED(index);
-        return QSize(m_view->viewport()->width(), option.fontMetrics.height() + 4 * m_view->devicePixelRatioF());
+        return QSize(m_view->viewport()->width(), option.fontMetrics.height() + 2 * m_view->devicePixelRatioF());
     }
 
 private:
