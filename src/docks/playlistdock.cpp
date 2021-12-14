@@ -892,6 +892,8 @@ void PlaylistDock::on_updateButton_clicked()
 
 void PlaylistDock::onProducerChanged(Mlt::Producer* producer)
 {
+    if (!producer || !producer->is_valid())
+        return;
     int index = producer->get_int(kPlaylistIndexProperty) - 1;
     if (index < 0 || !m_model.playlist() || !m_model.playlist()->is_valid() || index >= m_model.playlist()->count())
         return;
