@@ -144,8 +144,12 @@ void DirectShowVideoWidget::setProducer(Mlt::Producer *producer)
 {
     QString resource = producer->get("resource1") ? QString(producer->get("resource1")) : QString(producer->get("resource"));
     QString resource2 = QString(producer->get("resource2"));
+    LOG_DEBUG() << "resource" << resource;
+    LOG_DEBUG() << "resource2" << resource2;
     const char* videoDevice = "dshow:video=";
     const char* audioDevice = "dshow:audio=";
+    ui->videoCombo->setCurrentIndex(0);
+    ui->audioCombo->setCurrentIndex(0);
     if (resource.startsWith(videoDevice)) {
         QStringRef name = resource.midRef(qstrlen(videoDevice));
         for (int i = 1; i < ui->videoCombo->count(); i++) {
