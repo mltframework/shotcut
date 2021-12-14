@@ -482,7 +482,7 @@ MainWindow::MainWindow()
     addDockWidget(Qt::RightDockWidgetArea, m_historyDock);
     addDockWidget(Qt::LeftDockWidgetArea, m_encodeDock);
     addDockWidget(Qt::RightDockWidgetArea, m_jobsDock);
-    addDockWidget(Qt::RightDockWidgetArea, m_markersDock);
+    splitDockWidget(m_timelineDock, m_markersDock, Qt::Horizontal);
     tabifyDockWidget(m_propertiesDock, m_playlistDock);
     tabifyDockWidget(m_playlistDock, m_filtersDock);
     tabifyDockWidget(m_filtersDock, m_encodeDock);
