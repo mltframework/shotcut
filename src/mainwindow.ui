@@ -292,11 +292,11 @@
    <addaction name="actionPlaylist"/>
    <addaction name="actionTimeline"/>
    <addaction name="actionFilters"/>
+   <addaction name="actionMarkers"/>
    <addaction name="actionKeyframes"/>
    <addaction name="actionHistory"/>
    <addaction name="actionEncode"/>
    <addaction name="actionJobs"/>
-   <addaction name="actionMarkers"/>
    <addaction name="dummyAction"/>
    <addaction name="actionLayoutLogging"/>
    <addaction name="actionLayoutEditing"/>
