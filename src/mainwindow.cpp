@@ -2041,7 +2041,13 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         }
         break;
     case Qt::Key_R:
-        if (event->modifiers() & Qt::ControlModifier) {
+        if (event->modifiers() & Qt::AltModifier && event->modifiers() & Qt::ShiftModifier) {
+            Settings.setTimelineRippleAllTracks(!Settings.timelineRipple());
+            Settings.setTimelineRipple(!Settings.timelineRipple());
+            Settings.setTimelineRippleMarkers(!Settings.timelineRippleMarkers());
+        } else if (event->modifiers() & Qt::AltModifier && !(event->modifiers() & Qt::ControlModifier) && !(event->modifiers() & Qt::ShiftModifier)) {
+            Settings.setTimelineRippleMarkers(!Settings.timelineRippleMarkers());
+        } else if (event->modifiers() & Qt::ControlModifier) {
             if (event->modifiers() & Qt::AltModifier) {
                 Settings.setTimelineRippleAllTracks(!Settings.timelineRippleAllTracks());
             } else if (event->modifiers() & Qt::ShiftModifier) {
