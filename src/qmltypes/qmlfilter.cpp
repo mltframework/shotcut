@@ -718,8 +718,9 @@ mlt_keyframe_type QmlFilter::getKeyframeType(Mlt::Animation& animation, int posi
         if (animation.is_key(position)) {
             existingType = animation.key_get_type(keyframeIndex(animation, position));
         } else if (defaultType < 0) {
-            int previous = animation.previous_key(position);
-            if (previous >= 0)
+            int previous = 0;
+            bool error = animation.previous_key(position, previous);
+            if (!error)
                 existingType = animation.keyframe_type(previous);
         }
         if (existingType >= 0)
@@ -733,7 +734,7 @@ int QmlFilter::getNextKeyframePosition(const QString& name, int position)
     int result = -1;
     Mlt::Animation animation = getAnimation(name);
     if (animation.is_valid()) {
-        result = animation.next_key(animation.is_key(position) ? position + 1: position);
+        animation.next_key(animation.is_key(position) ? position + 1: position, result);
     }
     return result;
 }
@@ -743,7 +744,7 @@ int QmlFilter::getPrevKeyframePosition(const QString& name, int position)
     int result = -1;
     Mlt::Animation animation = getAnimation(name);
     if (animation.is_valid()) {
-        result = animation.previous_key(animation.is_key(position) ? position - 1: position);
+        animation.previous_key(animation.is_key(position) ? position - 1: position, result);
     }
     return result;
 }
