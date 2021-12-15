@@ -22,6 +22,7 @@
 #include "models/attachedfiltersmodel.h"
 #include "glwidget.h"
 #include "settings.h"
+#include "util.h"
 #include <QApplication>
 #include <QSysInfo>
 #include <QCursor>
@@ -230,4 +231,9 @@ QDir QmlApplication::dataDir()
     dir.cd("share");
 #endif
     return dir;
+}
+
+QColor QmlApplication::contrastingColor(QString color)
+{
+    return Util::textColor(color);
 }

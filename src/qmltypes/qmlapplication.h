@@ -61,6 +61,7 @@ public:
     static int maxTextureSize();
     Q_INVOKABLE static bool confirmOutputFilter();
     static QDir dataDir();
+    Q_INVOKABLE static QColor contrastingColor(QString color);
 
 signals:
     void paletteChanged();

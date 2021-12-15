@@ -99,6 +99,11 @@ Item {
                         border.width: 3
                         border.color: menuItem.highlighted ? activePalette.highlight : modelData
                     }
+                    contentItem: Text {
+                        text: modelData
+                        horizontalAlignment: Text.AlignHCenter
+                        color: application.contrastingColor(modelData)
+                    }
                     onTriggered: markers.setColor(root.index, modelData)
                 }
                 onObjectAdded: colorMenu.insertItem(index, object)
