@@ -93,19 +93,24 @@ QVariant KeyframesModel::data(const QModelIndex& index, int role) const
                     case NumericValueRole:
                         return m_filter->getDouble(name, position);
                     case MinimumFrameRole: {
-                        int result = (index.row() > 0 && position > 0) ? (animation.previous_key(position - 1) + 1) : 0;
+                        int result = 0;
+                        if (animation.previous_key(position - 1, result)) {
+                            // first Keyframe
+                            result = 0;
+                        } else {
+                            result += 1;
+                        }
+
 //                        LOG_DEBUG() << "keyframeIndex" << index.row() << "minimumFrame" << result;
                         return result;
                     }
                     case MaximumFrameRole: {
                         int result = 0;
-                        if (index.row() >= rowCount(index.parent()) - 1) {
+                        if (animation.next_key(position + 1, result)) {
                             // Last Keyframe
                             result = m_filter->producer().get_out();
                         } else {
-                            int minimum = (index.row() > 0 && position > 0) ? (animation.previous_key(position - 1) + 1) : 0;
-                            result = animation.next_key(position + 1) - 1;
-                            result = (result < minimum) ? m_filter->producer().get_out() : result;
+                            result -= 1;
                         }
 //                        LOG_DEBUG() << "keyframeIndex" << index.row() << "maximumFrame" << result;
                         return result;
@@ -299,8 +304,9 @@ int KeyframesModel::previousKeyframePosition(int parameterIndex, int currentPosi
         Mlt::Animation animation = m_filter->getAnimation(name);
         if (animation.is_valid()) {
             currentPosition -= m_filter->in();
-            result = animation.previous_key(animation.is_key(currentPosition)? currentPosition - 1: currentPosition);
-            result += m_filter->in();
+            bool error = animation.previous_key(animation.is_key(currentPosition)? currentPosition - 1: currentPosition, result);
+            if (!error)
+                result += m_filter->in();
         }
     }
     return result;
@@ -314,8 +320,9 @@ int KeyframesModel::nextKeyframePosition(int parameterIndex, int currentPosition
         Mlt::Animation animation = m_filter->getAnimation(name);
         if (animation.is_valid()) {
             currentPosition -= m_filter->in();
-            result = animation.next_key(animation.is_key(currentPosition)? currentPosition + 1: currentPosition);
-            result += m_filter->in();
+            bool error = animation.next_key(animation.is_key(currentPosition)? currentPosition + 1: currentPosition, result);
+            if (!error)
+                result += m_filter->in();
         }
     }
     return result;

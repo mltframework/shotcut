@@ -1127,7 +1127,8 @@ static void shiftKeyframes(Mlt::Service* service, QmlMetadata* meta, int delta)
             if (animation.key_get_frame(0) < delta)
             {
                 // Create a new keyframe at position that will become 0 based on interpolated value
-                int previous = animation.previous_key(delta);
+                int previous = 0;
+                animation.previous_key(delta, previous);
                 mlt_keyframe_type existingType = animation.keyframe_type(previous);
                 if (paramMeta->isRectangle()) {
                     auto value = service->anim_get_rect(qUtf8Printable(name), delta);
