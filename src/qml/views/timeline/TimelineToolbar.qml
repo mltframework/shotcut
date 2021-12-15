@@ -147,7 +147,7 @@ ToolBar {
             icon.name: 'snap'
             icon.source: 'qrc:///icons/oxygen/32x32/actions/snap.png'
             focusPolicy: Qt.NoFocus
-            Shotcut.HoverTip { text: qsTr('Toggle snapping') }
+            Shotcut.HoverTip { text: qsTr('Toggle snapping') + (application.OS === 'OS X'? '    ⌘P' : ' (Ctrl+P)') }
             onClicked: settings.timelineSnap = !settings.timelineSnap
         }
         Shotcut.ToolButton {
@@ -169,7 +169,7 @@ ToolBar {
             icon.name: 'target'
             icon.source: 'qrc:///icons/oxygen/32x32/actions/target.png'
             focusPolicy: Qt.NoFocus
-            Shotcut.HoverTip { text: qsTr('Ripple trim and drop') }
+            Shotcut.HoverTip { text: qsTr('Ripple trim and drop') + (application.OS === 'OS X'? '    ⌘R' : ' (Ctrl+R)') }
             onClicked: settings.timelineRipple = !settings.timelineRipple
         }
         Shotcut.ToolButton {
@@ -180,7 +180,7 @@ ToolBar {
             icon.name: 'ripple-all'
             icon.source: 'qrc:///icons/oxygen/32x32/actions/ripple-all.png'
             focusPolicy: Qt.NoFocus
-            Shotcut.HoverTip { text: qsTr('Ripple edits across all tracks') }
+            Shotcut.HoverTip { text: qsTr('Ripple edits across all tracks') + (application.OS === 'OS X'? '    ⌥⌘R' : ' (Ctrl+Alt+R)') }
             onClicked: settings.timelineRippleAllTracks = !settings.timelineRippleAllTracks
         }
         Shotcut.ToolButton {
@@ -191,7 +191,7 @@ ToolBar {
             icon.name: 'ripple-marker'
             icon.source: 'qrc:///icons/oxygen/32x32/actions/ripple-marker.png'
             focusPolicy: Qt.NoFocus
-            Shotcut.HoverTip { text: qsTr('Ripple markers with edits') }
+            Shotcut.HoverTip { text: qsTr('Ripple timeline markers with edits') + (application.OS === 'OS X'? '    ⌥R' : ' (Alt+R)') }
             onClicked: settings.timelineRippleMarkers = !settings.timelineRippleMarkers
         }
         Button { // separator
