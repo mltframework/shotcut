@@ -86,6 +86,7 @@ RowLayout {
     }
 
     onColorsChanged: {
+        gradientSpinner.value = colors.length
         _updateColorDisplay()
     }
 
@@ -191,7 +192,9 @@ RowLayout {
         stepSize: 1
         suffix: qsTr('colors', 'gradient control')
         onValueChanged: {
-            _setStopCount(value)
+            if (value != colors.length) {
+                _setStopCount(value)
+            }
         }
     }
 }
