@@ -46,7 +46,7 @@ Shotcut.KeyframableFilter {
     function setControls() {
         var position = getPosition()
         blockUpdate = true
-        hueDegreeSlider.value = filter.getDouble('av.h', position) * 100 / 360 + 100
+        hueDegreeSlider.value = filter.getDouble('av.h', position)
         hueKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('av.h') > 0
         lightnessSlider.value = filter.getDouble('av.b', position) * 100 / 10 + 100
         lightnessKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount('av.b') > 0
@@ -63,7 +63,7 @@ Shotcut.KeyframableFilter {
     }
 
     function updateSimpleKeyframes() {
-        updateFilter('av.h', (hueDegreeSlider.value - 100) * 360 / 100, hueKeyframesButton, null)
+        updateFilter('av.h', hueDegreeSlider.value, hueKeyframesButton, null)
         updateFilter('av.b', (lightnessSlider.value - 100) * 10 / 100, lightnessKeyframesButton, null)
         updateFilter('av.s', saturationSlider.value / 100, saturationKeyframesButton, null)
     }
@@ -94,19 +94,19 @@ Shotcut.KeyframableFilter {
         }
         Shotcut.SliderSpinner {
             id: hueDegreeSlider
-            minimumValue: 0
-            maximumValue: 200
-            suffix: ' %'
-            onValueChanged: updateFilter('av.h', (value - 100) * 360 / 100, hueKeyframesButton, getPosition())
+            minimumValue: -360
+            maximumValue: 360
+            suffix: qsTr(' °', 'degrees')
+            onValueChanged: updateFilter('av.h', value, hueKeyframesButton, getPosition())
         }
         Shotcut.UndoButton {
-            onClicked: hueDegreeSlider.value = 100
+            onClicked: hueDegreeSlider.value = 0
         }
         Shotcut.KeyframesButton {
             id: hueKeyframesButton
             onToggled: {
                 enableControls(true)
-                toggleKeyframes(checked, 'av.h', (hueDegreeSlider.value - 100) * 360 / 100)
+                toggleKeyframes(checked, 'av.h', hueDegreeSlider.value)
             }
         }
 
