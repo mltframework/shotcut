@@ -1460,9 +1460,23 @@ void AvformatProducerWidget::on_actionFFmpegVideoQuality_triggered()
         args << "-filter_complex";
         int width = m_producer->get_int("meta.media.width");
         int height = m_producer->get_int("meta.media.height");
-        args << QString("[0:v]setpts=PTS-STARTPTS[reference];[1:v]scale=%1:%2:flags=bicubic,setpts=PTS-STARTPTS[distorted];[distorted][reference]libvmaf=log_fmt=csv:log_path=/dev/stderr:psnr=true:ssim=true:model_path=%3")
+        double fps = m_producer->get_double("meta.media.frame_rate_num");
+        int frameRateNum, frameRateDen;
+        if (m_producer->get_double("meta.media.frame_rate_den") > 0) {
+            fps /= m_producer->get_double("meta.media.frame_rate_den");
+        }
+        if (m_producer->get("force_fps")) {
+            fps = m_producer->get_double("fps");
+        }
+        Util::normalizeFrameRate(fps, frameRateNum, frameRateDen);
+        auto colorRange = (ui->rangeComboBox->currentIndex() == 1)? "full" : "limited";
+
+        args << QString("[0:v]fps=%4/%5,setpts=PTS-STARTPTS[reference];[1:v]scale=%1:%2:out_range=%6:flags=bicubic,fps=%4/%5,setpts=PTS-STARTPTS[distorted];[distorted][reference]libvmaf=log_fmt=csv:log_path=/dev/stderr:psnr=true:ssim=true:shortest=true:n_threads=%7:model_path=%3")
                 .arg(width).arg(height)
-                .arg((width < 3840 && height < 2160)? dir.filePath("vmaf_v0.6.1.json") : dir.filePath("vmaf_4k_v0.6.1.json"));
+                .arg((width < 3840 && height < 2160)? dir.filePath("vmaf_v0.6.1.json") : dir.filePath("vmaf_4k_v0.6.1.json"))
+                .arg(frameRateNum).arg(frameRateDen)
+                .arg(colorRange)
+                .arg(qRound(QThread::idealThreadCount() / 2.));
         args << "-f" << "null" << "pipe:";
         JOBS.add(new FfmpegJob(resource, args));
     }
