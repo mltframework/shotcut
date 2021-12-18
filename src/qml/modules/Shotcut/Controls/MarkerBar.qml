@@ -20,6 +20,7 @@ import QtQuick 2.12
 Repeater {
     id: markerbar
     property real timeScale: 1.0
+    property var snapper
     signal editRequested(int index)
     signal deleteRequested(int index)
     signal exited()
@@ -27,6 +28,7 @@ Repeater {
     signal seekRequested(int pos)
     Marker {
         timeScale: parent.timeScale
+        snapper: markerbar.snapper
         start: model.start
         end: model.end
         markerColor: model.color

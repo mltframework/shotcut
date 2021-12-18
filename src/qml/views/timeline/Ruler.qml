@@ -69,7 +69,7 @@ Rectangle {
         anchors.top: rulerTop.top
         anchors.left: parent.left
         anchors.right: parent.right
-        timeScale: root.timeScale
+        timeScale: root.timeScale ? root.timescale : 1.0
         model: markers
         onEditRequested: {
             parent.editMarkerRequested(index)
@@ -90,6 +90,38 @@ Rectangle {
             bubbleHelp.show(mouseX + bubbleHelp.width - 8, mouseY + 87, msg)
         }
         onSeekRequested: timeline.position = pos
+        snapper: QtObject {
+            function getSnapPosition(position) {
+                if (!settings.timelineSnap) {
+                    return position
+                }
+                var SNAP = 10
+                // Snap to clips on tracks.
+                var timeline = root
+                for (var j = 0; j < timeline.trackCount; j++) {
+                    var track = timeline.trackAt(j)
+                    for (var i = 0; i < track.clipCount; i++) {
+                        var item = track.clipAt(i)
+                        if (item.isBlank)
+                            continue
+                        var itemLeft = item.x
+                        var itemRight = itemLeft + item.width
+                        if (position > itemLeft - SNAP && position < itemLeft + SNAP)
+                            return itemLeft
+                        else if (position > itemRight - SNAP && position < itemRight + SNAP)
+                            return itemRight
+                        else if (itemRight + SNAP > position)
+                            continue
+                    }
+                }
+                // Snap around cursor/playhead.
+                var cursorX = tracksFlickable.contentX + cursor.x
+                if (position > cursorX - SNAP && position < cursorX + SNAP) {
+                    return cursorX
+                }
+                return position
+            }
+        }
     }
 
     Connections {

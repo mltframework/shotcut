@@ -22,7 +22,8 @@ import Shotcut.Controls 1.0 as Shotcut
 
 Item {
     id: root
-    property real timeScale: 1.0;
+    property real timeScale: 1.0
+    property var snapper
     property var start: 0
     property var end: 0
     property var markerColor: 'black'
@@ -153,6 +154,9 @@ Item {
             }
             onPositionChanged: {
                 if (dragInProgress) {
+                    if (typeof snapper !== 'undefined') {
+                        markerStart.x = snapper.getSnapPosition(markerStart.x + width) - width
+                    }
                     if (lockWidth != -1) {
                         markerEnd.x = markerStart.x + lockWidth
                     }
@@ -211,6 +215,9 @@ Item {
             }
             onPositionChanged: {
                 if (dragInProgress) {
+                    if (typeof snapper !== 'undefined') {
+                        markerEnd.x = snapper.getSnapPosition(markerEnd.x)
+                    }
                     if (lockWidth != -1) {
                         markerStart.x = markerEnd.x - lockWidth
                     }
@@ -271,8 +278,16 @@ Item {
             onPositionChanged: {
                 if (dragInProgress) {
                     var delta = dragStartX - markerLink.x
+                    if (typeof snapper !== 'undefined') {
+                        var snapDelta = startDragStartX - (snapper.getSnapPosition(startDragStartX + 7 - delta) - 7)
+                        if (snapDelta == delta) {
+                            snapDelta = endDragStartX - snapper.getSnapPosition(endDragStartX - delta)
+                        }
+                        delta = snapDelta
+                    }
                     markerStart.x = startDragStartX - delta
                     markerEnd.x = endDragStartX - delta
+                    markerLink.x = dragStartX - delta
                 }
                 mouseStatusChanged(mouse.x + markerLink.x, mouse.y, text, (markerStart.x + 7) / timeScale, markerEnd.x / timeScale)
             }
