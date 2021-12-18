@@ -450,8 +450,10 @@ int MarkersModel::markerIndexForPosition(int position)
     if (markerList &&  markerList->is_valid()) {
         for (const auto i : qAsConst(m_keys)) {
             QScopedPointer<Mlt::Properties> marker(markerList->get_props(qUtf8Printable(QString::number(i))));
-            if (marker && marker->is_valid() && position == m_producer->time_to_frames(marker->get("start"))) {
-                return keyIndex(i);
+            if (marker && marker->is_valid()) {
+                if (position == m_producer->time_to_frames(marker->get("start")) ||
+                    position == m_producer->time_to_frames(marker->get("end")))
+                    return keyIndex(i);
             }
         }
     }
