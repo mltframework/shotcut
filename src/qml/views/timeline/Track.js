@@ -53,6 +53,29 @@ function snapClip(clip, repeater) {
             }
         }
     }
+    // Snap to markers
+    var leftFrame = Math.round(left / timeScale)
+    var prevMarkerX = Math.round(markers.prevMarkerPosition(leftFrame) * timeScale)
+    if (left < prevMarkerX + SNAP) {
+        clip.x = prevMarkerX
+        return
+    }
+    var nextMarkerX = Math.round(markers.nextMarkerPosition(leftFrame) * timeScale)
+    if (nextMarkerX > 0 && left > nextMarkerX - SNAP) {
+        clip.x = nextMarkerX
+        return
+    }
+    var rightFrame = Math.round(right / timeScale)
+    var prevMarkerX = Math.round(markers.prevMarkerPosition(rightFrame) * timeScale)
+    if (right < prevMarkerX + SNAP) {
+        clip.x = prevMarkerX - clip.width
+        return
+    }
+    var nextMarkerX = Math.round(markers.nextMarkerPosition(rightFrame) * timeScale)
+    if (nextMarkerX > 0 && right > nextMarkerX - SNAP) {
+        clip.x = nextMarkerX - clip.width
+        return
+    }
     if (!toolbar.scrub) {
         var cursorX = tracksFlickable.contentX + cursor.x
         if (left > cursorX - SNAP && left < cursorX + SNAP)
@@ -95,6 +118,16 @@ function snapTrimIn(clip, delta, timeline, trackIndex) {
                     return Math.round((itemRight - clip.x) / timeScale)
             }
         }
+    }
+    // Snap to markers
+    var frame = Math.round(x / timeScale)
+    var prevMarkerX = Math.round(markers.prevMarkerPosition(frame) * timeScale)
+    if (x < prevMarkerX + SNAP_TRIM) {
+        return Math.round((prevMarkerX - clip.x) / timeScale)
+    }
+    var nextMarkerX = Math.round(markers.nextMarkerPosition(frame) * timeScale)
+    if (nextMarkerX > 0 && x > nextMarkerX - SNAP_TRIM) {
+        return Math.round((nextMarkerX - clip.x) / timeScale)
     }
     if (x > -SNAP_TRIM && x < SNAP_TRIM) {
         // Snap around origin.
@@ -139,6 +172,16 @@ function snapTrimOut(clip, delta, timeline, trackIndex) {
                     return Math.round((rightEdge - itemRight) / timeScale)
             }
         }
+    }
+    // Snap to markers
+    var frame = Math.round(x / timeScale)
+    var prevMarkerX = Math.round(markers.prevMarkerPosition(frame) * timeScale)
+    if (x < prevMarkerX + SNAP_TRIM) {
+        return Math.round((rightEdge - prevMarkerX) / timeScale)
+    }
+    var nextMarkerX = Math.round(markers.nextMarkerPosition(frame) * timeScale)
+    if (nextMarkerX > 0 && x > nextMarkerX - SNAP_TRIM) {
+        return Math.round((rightEdge - nextMarkerX) / timeScale)
     }
     if (x > cursorX - SNAP_TRIM && x < cursorX + SNAP_TRIM) {
         // Snap around cursor/playhead.
