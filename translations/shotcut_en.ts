@@ -4247,46 +4247,46 @@ Do you want to disable GPU effects and restart Shotcut?</source>
     </message>
     <message>
         <location filename="../src/docks/markersdock.cpp" line="194"/>
-        <source>Remove all</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/docks/markersdock.cpp" line="195"/>
-        <source>Columns</source>
+        <source>Remove All Markers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/docks/markersdock.cpp" line="197"/>
+        <source>Columns</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/docks/markersdock.cpp" line="199"/>
         <source>Color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/markersdock.cpp" line="200"/>
+        <location filename="../src/docks/markersdock.cpp" line="202"/>
         <source>Text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/markersdock.cpp" line="203"/>
+        <location filename="../src/docks/markersdock.cpp" line="205"/>
         <source>Start</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/markersdock.cpp" line="206"/>
+        <location filename="../src/docks/markersdock.cpp" line="208"/>
         <source>End</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/markersdock.cpp" line="209"/>
+        <location filename="../src/docks/markersdock.cpp" line="211"/>
         <source>Duration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/markersdock.cpp" line="218"/>
+        <location filename="../src/docks/markersdock.cpp" line="219"/>
         <source>search</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/markersdock.cpp" line="226"/>
+        <location filename="../src/docks/markersdock.cpp" line="227"/>
         <source>Clear search</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6671,99 +6671,99 @@ Do you want to use %1 = %2/1001 instead?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="472"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="471"/>
         <source>Preset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="504"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="503"/>
         <source>Position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="582"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="581"/>
         <source>Size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="638"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="637"/>
         <source>Zoom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="681"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="680"/>
         <source>Size mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="686"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="685"/>
         <source>Fit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="696"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="695"/>
         <source>Fill</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="713"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="712"/>
         <source>Distort</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="732"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="731"/>
         <source>Horizontal fit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="737"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="736"/>
         <source>Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="743"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="742"/>
         <source>Center</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="749"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="748"/>
         <source>Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="762"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="761"/>
         <source>Vertical fit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="767"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="766"/>
         <source>Top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="773"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="772"/>
         <source>Middle</source>
         <comment>Size and Position video filter</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="779"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="778"/>
         <source>Bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="792"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="791"/>
         <source>Rotation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="803"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="802"/>
         <source> °</source>
         <comment>degrees</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="820"/>
+        <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="819"/>
         <source>Background color</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11085,6 +11085,12 @@ Used to correct for excessive amplitude caused by the extra dynamic range.</sour
     <message>
         <location filename="../src/qml/filters/hue_lightness_saturation/ui.qml" line="92"/>
         <source>Hue</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/filters/hue_lightness_saturation/ui.qml" line="99"/>
+        <source> °</source>
+        <comment>degrees</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>

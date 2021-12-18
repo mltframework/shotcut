@@ -191,7 +191,7 @@ MarkersDock::MarkersDock(QWidget *parent) :
     m_moreButton->setToolTip(tr("Display a menu of additional actions"));
     m_moreButton->setAutoRaise(true);
     QMenu* moreMenu = new QMenu(this);
-    moreMenu->addAction(tr("Remove all"), this, SLOT(onRemoveAllRequested()));
+    moreMenu->addAction(tr("Remove All Markers"), this, SLOT(onRemoveAllRequested()));
     moreMenu->addSeparator();
     QAction* action;
     action = moreMenu->addAction(tr("Columns"));
