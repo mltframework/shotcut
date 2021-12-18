@@ -87,7 +87,6 @@ public:
 signals:
     void rowClicked(const QModelIndex& index);
     void markerSelected(QModelIndex& index);
-    void rowsAboutToBeRemovedSignal(const QModelIndex &parent, int first, int last);
 
 protected:
     void selectionChanged(const QItemSelection& selected, const QItemSelection& deselected)
@@ -101,11 +100,6 @@ protected:
             }
             emit markerSelected(signalIndex);
         }
-    }
-    void rowsAboutToBeRemoved(const QModelIndex &parent, int first, int last)
-    {
-        emit rowsAboutToBeRemovedSignal(parent, first, last);
-        QTreeView::rowsAboutToBeRemoved(parent, first, last);
     }
     void mouseReleaseEvent(QMouseEvent *event)
     {
@@ -264,8 +258,6 @@ void MarkersDock::setModel(MarkersModel* model)
     connect(m_model, SIGNAL(rowsInserted(const QModelIndex&, int, int)), this, SLOT(onRowsInserted(const QModelIndex&, int, int)));
     connect(m_model, SIGNAL(dataChanged(const QModelIndex&, const QModelIndex&, const QVector<int>&)), this, SLOT(onDataChanged(const QModelIndex&, const QModelIndex&, const QVector<int>&)));
     connect(m_model, SIGNAL(modelReset()), this, SLOT(onModelReset()));
-    connect(m_model, SIGNAL(rowsRemoved(const QModelIndex&, int, int)), this, SLOT(onRowsRemoved(const QModelIndex&, int, int)));
-    connect(m_treeView, SIGNAL(rowsAboutToBeRemovedSignal(const QModelIndex&, int, int)), this, SLOT(onRowsAboutToBeRemoved(const QModelIndex&, int, int)));
     connect(m_treeView->header(), SIGNAL(sortIndicatorChanged(int, Qt::SortOrder)), this, SLOT(onSortIndicatorChanged(int, Qt::SortOrder)));
     m_treeView->blockSelectionEvent(false);
 }
@@ -319,9 +311,7 @@ void MarkersDock::onRemoveRequested()
         if (indices.size() > 0) {
             QModelIndex realIndex = m_proxyModel->mapToSource(indices[0]);
             if (realIndex.isValid()) {
-                m_treeView->blockSelectionEvent(true);
                 m_model->remove(realIndex.row());
-                m_treeView->blockSelectionEvent(false);
             }
         }
     }
@@ -432,22 +422,6 @@ void MarkersDock::onModelReset()
 void MarkersDock::onSortIndicatorChanged(int logicalIndex, Qt::SortOrder order)
 {
     Settings.setMarkerSort(logicalIndex, order);
-}
-
-void MarkersDock::onRowsAboutToBeRemoved(const QModelIndex &parent, int first, int last)
-{
-    Q_UNUSED(parent);
-    Q_UNUSED(first);
-    Q_UNUSED(last);
-    m_treeView->blockSelectionEvent(true);
-}
-
-void MarkersDock::onRowsRemoved(const QModelIndex &parent, int first, int last)
-{
-    Q_UNUSED(parent);
-    Q_UNUSED(first);
-    Q_UNUSED(last);
-    m_treeView->blockSelectionEvent(false);
 }
 
 void MarkersDock::enableButtons(bool enable)

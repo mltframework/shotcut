@@ -62,8 +62,6 @@ private slots:
     void onValuesChanged();
     void onModelReset();
     void onSortIndicatorChanged(int logicalIndex, Qt::SortOrder order);
-    void onRowsAboutToBeRemoved(const QModelIndex &parent, int first, int last);
-    void onRowsRemoved(const QModelIndex &parent, int first, int last);
 
 private:
     void enableButtons(bool enable);
