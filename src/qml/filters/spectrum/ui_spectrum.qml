@@ -23,7 +23,7 @@ import Shotcut.Controls 1.0 as Shotcut
 Item {
     property string rectProperty: "rect"
     property rect filterRect: filter.getRect(rectProperty)
-    property var defaultParameters: [rectProperty, 'type', 'color.1', 'color.2', 'color.3', 'color.4', 'color.5', 'color.6', 'color.7', 'color.8', 'color.9', 'color.10', 'bgcolor', 'thickness', 'fill', 'mirror', 'reverse', 'tension', 'bands', 'frequency_low', 'frequency_high', 'threshold']
+    property var defaultParameters: [rectProperty, 'type', 'color.1', 'color.2', 'color.3', 'color.4', 'color.5', 'color.6', 'color.7', 'color.8', 'color.9', 'color.10', 'bgcolor', 'thickness', 'fill', 'mirror', 'reverse', 'tension', 'bands', 'frequency_low', 'frequency_high', 'threshold', 'segment_gap']
 
     property int _minFreqDelta: 1000
     property bool _disableUpdate: true
@@ -35,7 +35,13 @@ Item {
         if (filter.isNew) {
             filter.set(rectProperty, '0/50%:50%x50%')
             filter.set('type', 'line')
-            filter.set('color.1', '#ffffffff')
+            filter.set('color.1', '#ffff0000')
+            filter.set('color.2', '#ffffff00')
+            filter.set('color.3', '#ff00ff00')
+            filter.set('color.4', '#ff00ff00')
+            filter.set('color.5', '#ff00ff00')
+            filter.set('color.6', '#ff00ff00')
+            filter.set('color.7', '#ff00ff00')
             filter.set('bgcolor', '#00ffffff')
             filter.set('thickness', '1')
             filter.set('fill', '0')
@@ -116,8 +122,8 @@ Item {
         Shotcut.ComboBox {
             Layout.columnSpan: 4
             id: typeCombo
-            model: [qsTr('Line'), qsTr('Bar')]
-            property var values: ['line', 'bar']
+            model: [qsTr('Line'), qsTr('Bar'), qsTr('Segment')]
+            property var values: ['line', 'bar', 'segment']
             function valueToIndex() {
                 var w = filter.get('type')
                 for (var i = 0; i < values.length; ++i)
@@ -279,6 +285,23 @@ Item {
         }
         Shotcut.UndoButton {
             onClicked: tensionSlider.value = 0.4
+        }
+
+        Label {
+            text: qsTr('Segment Gap')
+            Layout.alignment: Qt.AlignRight
+        }
+        Shotcut.SliderSpinner {
+            Layout.columnSpan: 3
+            id: segmentGapSlider
+            minimumValue: 0
+            maximumValue: 20
+            decimals: 0
+            onValueChanged: filter.set("segment_gap", value)
+            Shotcut.HoverTip { text: 'Space between segments in the segment graph (in pixels)' }
+        }
+        Shotcut.UndoButton {
+            onClicked: segmentGapSlider.value = 8
         }
 
         Label {
