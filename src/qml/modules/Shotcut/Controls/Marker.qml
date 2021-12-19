@@ -69,14 +69,14 @@ Item {
         id: menu
         title: qsTr('Marker Operations')
         MenuItem {
-            text: qsTr('Edit...')
+            text: qsTr('Edit...') + ' (M)'
             onTriggered: {
                 menu.dismiss()
                 root.editRequested(root.index)
             }
         }
         MenuItem {
-            text: qsTr('Delete')
+            text: qsTr('Delete') + (application.OS === 'OS X'? '    ⇧⌘M' : ' (Ctrl+Shift+M)')
             onTriggered: root.deleteRequested(root.index)
         }
         MenuItem {
