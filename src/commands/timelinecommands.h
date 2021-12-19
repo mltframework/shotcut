@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 Meltytech, LLC
+ * Copyright (c) 2013-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -538,7 +538,6 @@ private:
     int m_clipIndex;
     int m_position;
     int m_targetTrackIndex;
-    QString m_audioIndex;
     QString m_xml;
     UndoHelper m_undoHelper;
     bool m_trackAdded;
