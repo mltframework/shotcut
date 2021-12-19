@@ -17,11 +17,14 @@
 
 #include "dialogs/longuitask.h"
 #include "timelinecommands.h"
+#include "mainwindow.h"
 #include "mltcontroller.h"
 #include "shotcut_mlt_properties.h"
 #include "settings.h"
 #include "proxymanager.h"
 #include "dialogs/longuitask.h"
+#include "controllers/filtercontroller.h"
+#include "qmltypes/qmlmetadata.h"
 #include <Logger.h>
 
 
@@ -1307,22 +1310,38 @@ DetachAudioCommand::DetachAudioCommand(MultitrackModel& model, int trackIndex, i
 void DetachAudioCommand::redo()
 {
     LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "position" << m_position;
-    Mlt::Producer clip(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
-    if (clip.is_valid()) {
-        // Save the original clip's audio_index.
-        m_audioIndex = QString::fromLatin1(clip.get("audio_index"));
+    Mlt::Producer audioClip(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
+    Mlt::Producer videoClip(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
+    if (audioClip.is_valid() && videoClip.is_valid()) {
 
-        // Disable audio on the original clip.
-        int i = m_model.trackList().at(m_trackIndex).mlt_index;
-        Mlt::Producer track(m_model.tractor()->track(i));
-        if (track.is_valid()) {
-            Mlt::Playlist playlist(track);
-            Mlt::Producer originalClip(playlist.get_clip(m_clipIndex));
-            if (originalClip.is_valid()) {
-                originalClip.parent().set("audio_index", -1);
-                QModelIndex modelIndex = m_model.makeIndex(m_trackIndex, m_clipIndex);
-                emit m_model.dataChanged(modelIndex, modelIndex, QVector<int>() << MultitrackModel::AudioIndexRole);
+        // Disable audio on the video clip.
+        videoClip.set("audio_index", -1);
+        // Remove audio filters from the video clip.
+        for (int i = 0; i < videoClip.filter_count(); i++) {
+            Mlt::Filter* filter = videoClip.filter(i);
+            if (filter && filter->is_valid() && !filter->get_int("_loader")) {
+                QmlMetadata* newMeta = MAIN.filterController()->metadataForService(filter);
+                if (newMeta && newMeta->isAudio()) {
+                    videoClip.detach(*filter);
+                    i--;
+                }
             }
+            delete filter;
+        }
+
+        // Disable video on the audio clip.
+        audioClip.set("video_index", -1);
+        // Remove video filters from the audio clip.
+        for (int i = 0; i < audioClip.filter_count(); i++) {
+            Mlt::Filter* filter = audioClip.filter(i);
+            if (filter && filter->is_valid() && !filter->get_int("_loader")) {
+                QmlMetadata* newMeta = MAIN.filterController()->metadataForService(filter);
+                if (newMeta && !newMeta->isAudio()) {
+                    audioClip.detach(*filter);
+                    i--;
+                }
+            }
+            delete filter;
         }
 
         // Add an audio track if needed.
@@ -1333,7 +1352,7 @@ void DetachAudioCommand::redo()
                 continue;
             if (track.get(kAudioTrackProperty)) {
                 Mlt::Playlist playlist(track);
-                int out = clip.get_playtime() - 1;
+                int out = videoClip.get_playtime() - 1;
                 // If the audio track is blank in the target region.
                 if (playlist.is_blank_at(m_position) && playlist.is_blank_at(m_position + out)
                         && playlist.get_clip_index_at(m_position) == playlist.get_clip_index_at(m_position + out)) {
@@ -1352,8 +1371,11 @@ void DetachAudioCommand::redo()
         if (m_targetTrackIndex > -1) {
             // Add the clip to the new audio track.
             m_undoHelper.recordBeforeState();
-            m_model.overwrite(m_targetTrackIndex, clip, m_position, false);
+            m_model.overwrite(m_targetTrackIndex, audioClip, m_position, false);
+            m_model.overwrite(m_trackIndex, videoClip, m_position, false);
             m_undoHelper.recordAfterState();
+            QModelIndex modelIndex = m_model.makeIndex(m_trackIndex, m_clipIndex);
+            emit m_model.dataChanged(modelIndex, modelIndex, QVector<int>() << MultitrackModel::AudioIndexRole);
         }
     }
 }
@@ -1361,27 +1383,16 @@ void DetachAudioCommand::redo()
 void DetachAudioCommand::undo()
 {
     LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "position" << m_position;
+    m_undoHelper.undoChanges();
     if (m_trackAdded) {
         // Remove the new audio track.
         m_model.removeTrack(m_targetTrackIndex);
         m_targetTrackIndex = -1;
-    } else {
-        // Remove the clip from the audio track.
-        m_undoHelper.undoChanges();
     }
-
-    // Restore the audio stream index on the original clip.
-    int i = m_model.trackList().at(m_trackIndex).mlt_index;
-    Mlt::Producer track(m_model.tractor()->track(i));
-    if (track.is_valid()) {
-        Mlt::Playlist playlist(track);
-        Mlt::Producer clip(playlist.get_clip(m_clipIndex));
-        if (clip.is_valid()) {
-            clip.parent().set("audio_index", m_audioIndex.toLatin1().constData());
-            QModelIndex modelIndex = m_model.makeIndex(m_trackIndex, m_clipIndex);
-            emit m_model.dataChanged(modelIndex, modelIndex, QVector<int>() << MultitrackModel::AudioIndexRole << MultitrackModel::AudioLevelsRole);
-        }
-    }
+    Mlt::Producer originalClip(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
+    m_model.overwrite(m_trackIndex, originalClip, m_position, true);
+    QModelIndex modelIndex = m_model.makeIndex(m_trackIndex, m_clipIndex);
+    emit m_model.dataChanged(modelIndex, modelIndex, QVector<int>() << MultitrackModel::AudioIndexRole << MultitrackModel::AudioLevelsRole);
 }
 
 ReplaceCommand::ReplaceCommand(MultitrackModel& model, int trackIndex, int clipIndex,
