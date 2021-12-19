@@ -101,6 +101,7 @@ Rectangle {
                         onDoubleClicked: {
                             model.checkState = !model.checkState
                         }
+                        onClicked: filterClicked(model.index)
                     }
                 }
             }
@@ -133,6 +134,7 @@ Rectangle {
         anchors.fill: parent
         clip: true
         ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
+        ScrollBar.horizontal.height: 0
         ScrollBar.vertical.policy: ScrollBar.AlwaysOn
         ScrollBar.vertical.visible: contentHeight > height
         ScrollBar.vertical.width: 16

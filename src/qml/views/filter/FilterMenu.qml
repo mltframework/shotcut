@@ -205,6 +205,7 @@ Rectangle {
             Layout.preferredHeight: filterWindow.height - toolBar.height - searchBar.height - parent.anchors.margins * 2
             clip: true
             ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
+            ScrollBar.horizontal.height: 0
             ScrollBar.vertical.policy: ScrollBar.AlwaysOn
             ScrollBar.vertical.visible: contentHeight > height
             ScrollBar.vertical.width: 16
