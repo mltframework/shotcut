@@ -113,13 +113,13 @@ Item {
             currentIndex: 0
             model: ["Nearest-neighbor", "Bilinear"]
             id: interpolationComboBox
-            Layout.columnSpan: 2
             onCurrentIndexChanged: updateProperty_interpolation()
         }
         Shotcut.UndoButton {
             id: interpolationUndo
             onClicked: interpolationComboBox.currentIndex = 0
         }
+        Item { Layout.fillWidth: true }
 
         Label {
             text: qsTr('Horizontal')
@@ -132,11 +132,11 @@ Item {
             spinnerWidth: 120; suffix: ' deg'; decimals: 3; stepSize: 1;
             onValueChanged: updateProperty_hfov(getPosition())
         }
-        Shotcut.KeyframesButton { id: hfovKeyframesButton; onToggled: { var value = hfovSlider.value; if (checked) { blockUpdate = true; if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("hfov"); hfovSlider.enabled = true; } filter.clearSimpleAnimation("hfov"); blockUpdate = false; filter.set("hfov", value, getPosition()); } else { filter.resetProperty("hfov"); filter.set("hfov", value); } } }
         Shotcut.UndoButton {
             id: hfovUndo
             onClicked: hfovSlider.value = 90
         }
+        Shotcut.KeyframesButton { id: hfovKeyframesButton; onToggled: { var value = hfovSlider.value; if (checked) { blockUpdate = true; if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("hfov"); hfovSlider.enabled = true; } filter.clearSimpleAnimation("hfov"); blockUpdate = false; filter.set("hfov", value, getPosition()); } else { filter.resetProperty("hfov"); filter.set("hfov", value); } } }
 
         Label {
             text: qsTr('Vertical')
@@ -149,11 +149,11 @@ Item {
             spinnerWidth: 120; suffix: ' deg'; decimals: 3; stepSize: 1;
             onValueChanged: updateProperty_vfov(getPosition())
         }
-        Shotcut.KeyframesButton { id: vfovKeyframesButton; onToggled: { var value = vfovSlider.value; if (checked) { blockUpdate = true; if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("vfov"); vfovSlider.enabled = true; } filter.clearSimpleAnimation("vfov"); blockUpdate = false; filter.set("vfov", value, getPosition()); } else { filter.resetProperty("vfov"); filter.set("vfov", value); } } }
         Shotcut.UndoButton {
             id: vfovUndo
             onClicked: vfovSlider.value = 60
         }
+        Shotcut.KeyframesButton { id: vfovKeyframesButton; onToggled: { var value = vfovSlider.value; if (checked) { blockUpdate = true; if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("vfov"); vfovSlider.enabled = true; } filter.clearSimpleAnimation("vfov"); blockUpdate = false; filter.set("vfov", value, getPosition()); } else { filter.resetProperty("vfov"); filter.set("vfov", value); } } }
         Item {
             Layout.fillHeight: true
         }

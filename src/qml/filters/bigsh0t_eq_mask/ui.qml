@@ -143,11 +143,11 @@ Item {
             spinnerWidth: 120; suffix: ' deg'; decimals: 3; stepSize: 1;
             onValueChanged: updateProperty_hfov0(getPosition())
         }
-        Shotcut.KeyframesButton { id: hfov0KeyframesButton; onToggled: { var value = hfov0Slider.value; if (checked) { blockUpdate = true; if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("hfov0"); hfov0Slider.enabled = true; } filter.clearSimpleAnimation("hfov0"); blockUpdate = false; filter.set("hfov0", value, getPosition()); } else { filter.resetProperty("hfov0"); filter.set("hfov0", value); } } }
         Shotcut.UndoButton {
             id: hfov0Undo
             onClicked: hfov0Slider.value = 180
         }
+        Shotcut.KeyframesButton { id: hfov0KeyframesButton; onToggled: { var value = hfov0Slider.value; if (checked) { blockUpdate = true; if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("hfov0"); hfov0Slider.enabled = true; } filter.clearSimpleAnimation("hfov0"); blockUpdate = false; filter.set("hfov0", value, getPosition()); } else { filter.resetProperty("hfov0"); filter.set("hfov0", value); } } }
 
         Label {
             text: qsTr('End')
@@ -160,11 +160,11 @@ Item {
             spinnerWidth: 120; suffix: ' deg'; decimals: 3; stepSize: 1;
             onValueChanged: updateProperty_hfov1(getPosition())
         }
-        Shotcut.KeyframesButton { id: hfov1KeyframesButton; onToggled: { var value = hfov1Slider.value; if (checked) { blockUpdate = true; if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("hfov1"); hfov1Slider.enabled = true; } filter.clearSimpleAnimation("hfov1"); blockUpdate = false; filter.set("hfov1", value, getPosition()); } else { filter.resetProperty("hfov1"); filter.set("hfov1", value); } } }
         Shotcut.UndoButton {
             id: hfov1Undo
             onClicked: hfov1Slider.value = 200
         }
+        Shotcut.KeyframesButton { id: hfov1KeyframesButton; onToggled: { var value = hfov1Slider.value; if (checked) { blockUpdate = true; if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("hfov1"); hfov1Slider.enabled = true; } filter.clearSimpleAnimation("hfov1"); blockUpdate = false; filter.set("hfov1", value, getPosition()); } else { filter.resetProperty("hfov1"); filter.set("hfov1", value); } } }
 
         Label {
             text: qsTr('Vertical')
@@ -183,11 +183,11 @@ Item {
             spinnerWidth: 120; suffix: ' deg'; decimals: 3; stepSize: 1;
             onValueChanged: updateProperty_vfov0(getPosition())
         }
-        Shotcut.KeyframesButton { id: vfov0KeyframesButton; onToggled: { var value = vfov0Slider.value; if (checked) { blockUpdate = true; if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("vfov0"); vfov0Slider.enabled = true; } filter.clearSimpleAnimation("vfov0"); blockUpdate = false; filter.set("vfov0", value, getPosition()); } else { filter.resetProperty("vfov0"); filter.set("vfov0", value); } } }
         Shotcut.UndoButton {
             id: vfov0Undo
             onClicked: vfov0Slider.value = 140
         }
+        Shotcut.KeyframesButton { id: vfov0KeyframesButton; onToggled: { var value = vfov0Slider.value; if (checked) { blockUpdate = true; if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("vfov0"); vfov0Slider.enabled = true; } filter.clearSimpleAnimation("vfov0"); blockUpdate = false; filter.set("vfov0", value, getPosition()); } else { filter.resetProperty("vfov0"); filter.set("vfov0", value); } } }
 
         Label {
             text: qsTr('End')
@@ -200,11 +200,11 @@ Item {
             spinnerWidth: 120; suffix: ' deg'; decimals: 3; stepSize: 1;
             onValueChanged: updateProperty_vfov1(getPosition())
         }
-        Shotcut.KeyframesButton { id: vfov1KeyframesButton; onToggled: { var value = vfov1Slider.value; if (checked) { blockUpdate = true; if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("vfov1"); vfov1Slider.enabled = true; } filter.clearSimpleAnimation("vfov1"); blockUpdate = false; filter.set("vfov1", value, getPosition()); } else { filter.resetProperty("vfov1"); filter.set("vfov1", value); } } }
         Shotcut.UndoButton {
             id: vfov1Undo
             onClicked: vfov1Slider.value = 160
         }
+        Shotcut.KeyframesButton { id: vfov1KeyframesButton; onToggled: { var value = vfov1Slider.value; if (checked) { blockUpdate = true; if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("vfov1"); vfov1Slider.enabled = true; } filter.clearSimpleAnimation("vfov1"); blockUpdate = false; filter.set("vfov1", value, getPosition()); } else { filter.resetProperty("vfov1"); filter.set("vfov1", value); } } }
         Item {
             Layout.fillHeight: true
         }
