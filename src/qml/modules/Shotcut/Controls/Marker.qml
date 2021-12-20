@@ -69,7 +69,7 @@ Item {
         id: menu
         title: qsTr('Marker Operations')
         MenuItem {
-            text: qsTr('Edit...') + ' (M)'
+            text: qsTr('Edit...') + (application.OS === 'OS X'? '    M' : ' (M)')
             onTriggered: {
                 menu.dismiss()
                 root.editRequested(root.index)
