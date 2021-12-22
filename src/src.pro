@@ -340,7 +340,6 @@ OTHER_FILES += \
     ../.github/workflows/build-windows-unstable.yml \
     ../COPYING \
     ../README.md \
-    ../packaging/windows/shotcut.rc \
     ../scripts/build-shotcut.sh \
     ../scripts/build-shotcut-msys2.sh \
     ../packaging/macos/shotcut.icns \
@@ -375,7 +374,7 @@ LIBS += -lCuteLogger
 
 isEmpty(SHOTCUT_VERSION) {
     !win32:SHOTCUT_VERSION = $$system(date -u -d "@${SOURCE_DATE_EPOCH:-$(date +%s)}" "+%y.%m.%d" 2>/dev/null || date -u -r "${SOURCE_DATE_EPOCH:-$(date +%s)}" "+%y.%m.%d")
-     win32:SHOTCUT_VERSION = adhoc
+     win32:SHOTCUT_VERSION = $$system(echo "%date:~12,2%.%date:~4,2%.%date:~7,2%")
 }
 DEFINES += SHOTCUT_VERSION=\\\"$$SHOTCUT_VERSION\\\"
 VERSION = $$SHOTCUT_VERSION
@@ -412,7 +411,11 @@ win32 {
         INCLUDEPATH += $$PWD/../drmingw/include
         LIBS += -L$$PWD/../drmingw/x64/lib -lexchndl
     }
-    RC_FILE = ../packaging/windows/shotcut.rc
+    QMAKE_TARGET_COMPANY = Meltytech, LLC
+    QMAKE_TARGET_COPYRIGHT = Copyright @ 2011-2021 Meltytech, LLC. All rights reserved.
+    QMAKE_TARGET_DESCRIPTION = Non-linear video editor
+    QMAKE_TARGET_PRODUCT = Shotcut
+    RC_ICONS = ../packaging/windows/shotcut-logo-64.ico
     QT += winextras
     HEADERS += \
     windowstools.h
