@@ -426,7 +426,8 @@ double Controller::volume() const
 
 void Controller::onWindowResize()
 {
-    refreshConsumer();
+    bool scrub = isPaused() ? false : Settings.playerScrubAudio();
+    refreshConsumer(scrub);
 }
 
 void Controller::seek(int position)
