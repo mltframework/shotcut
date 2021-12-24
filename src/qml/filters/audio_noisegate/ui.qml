@@ -235,7 +235,7 @@ Shotcut.KeyframableFilter {
             onValueChanged: updateFilter(hold, value , holdKeyframesButton, getPosition())
         }
         Shotcut.UndoButton {
-            onClicked: holsSlider.value = holdDefault
+            onClicked: holdSlider.value = holdDefault
         }
         Shotcut.KeyframesButton {
             id: holdKeyframesButton
