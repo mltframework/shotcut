@@ -554,7 +554,7 @@ void MoveClipCommand::redoMarkers()
         int startDelta = m_markerNewStart - m_markerOldStart;
         for (int i = 0; i < newMarkers.size(); i++) {
             Markers::Marker& marker = newMarkers[i];
-            if (marker.start <= m_markerOldStart &&
+            if (marker.start < m_markerOldStart &&
                 marker.start > m_markerNewStart) {
                 // This marker is in the overwritten segment. Remove it
                 newMarkers.removeAt(i);
