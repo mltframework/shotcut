@@ -478,6 +478,7 @@ void GLWidget::paintGL()
 void GLWidget::onRefreshTimeout()
 {
     Controller::refreshConsumer(m_scrubAudio);
+    m_scrubAudio = false;
 }
 
 void GLWidget::mousePressEvent(QMouseEvent* event)
@@ -729,8 +730,9 @@ int GLWidget::reconfigure(bool isMulti)
 
 void GLWidget::refreshConsumer(bool scrubAudio)
 {
+    scrubAudio |= isPaused() ? scrubAudio : Settings.playerScrubAudio();
+    m_scrubAudio |= scrubAudio;
     m_refreshTimer.start();
-    m_scrubAudio = scrubAudio;
 }
 
 QPoint GLWidget::offset() const
