@@ -17,7 +17,7 @@ jobs:
           msystem: MINGW64
           update: true
           install: >-
-            base-devel bzip2 coreutils git gzip tar xz zip
+            autotools base-devel bzip2 coreutils git gzip tar xz zip
             mingw-w64-x86_64-toolchain
             mingw-w64-x86_64-cmake
             mingw-w64-x86_64-meson
