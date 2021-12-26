@@ -29,11 +29,11 @@ Item {
     property string paramRotation: 'filter.5'
     property string paramSoftness: 'filter.6'
     property string paramOperation: 'filter.9'
-    property var defaultParameters: [paramHorizontal, paramVertical, paramWidth, paramHeight,  paramShape, paramRotation, paramSoftness, paramOperation]
+    property var defaultParameters: [paramHorizontal, paramVertical, paramWidth, paramHeight, paramShape, paramRotation, paramSoftness, paramOperation]
     property bool blockUpdate: true
-    property var startValues: [0.5, 0.5, 0.1, 0.1, 0.5]
-    property var middleValues: [0.5, 0.5, 0.1, 0.1, 0.5]
-    property var endValues: [0.5, 0.5, 0.1, 0.1, 0.5]
+    property var startValues: [0.5, 0.5, 0.1, 0.1, 0, 0.5]
+    property var middleValues: [0.5, 0.5, 0.1, 0.1, 0, 0.5]
+    property var endValues: [0.5, 0.5, 0.1, 0.1, 0, 0.5]
 
     width: 350
     height: 300
@@ -62,12 +62,14 @@ Item {
                         filter.getDouble(paramVertical, filter.animateIn),
                         filter.getDouble(paramWidth, filter.animateIn),
                         filter.getDouble(paramHeight, filter.animateIn),
+                        0,
                         filter.getDouble(paramRotation, filter.animateIn)]
         if (filter.animateIn > 0) {
             startValues = [filter.getDouble(paramHorizontal, 0),
                            filter.getDouble(paramVertical, 0),
                            filter.getDouble(paramWidth, 0),
                            filter.getDouble(paramHeight, 0),
+                           0,
                            filter.getDouble(paramRotation, 0)]
         }
         if (filter.animateOut > 0) {
@@ -75,6 +77,7 @@ Item {
                          filter.getDouble(paramVertical, filter.duration - 1),
                          filter.getDouble(paramWidth, filter.duration - 1),
                          filter.getDouble(paramHeight, filter.duration - 1),
+                         0,
                          filter.getDouble(paramRotation, filter.duration - 1)]
         }
     }
