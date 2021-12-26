@@ -87,6 +87,7 @@ Item {
         freqLowSlider.value = filter.getDouble('frequency_low')
         freqHighSlider.value = filter.getDouble('frequency_high')
         thresholdSlider.value = filter.getDouble('threshold')
+        segmentGapSlider.value = filter.getDouble('segment_gap')
         rectX.value = filterRect.x
         rectY.value = filterRect.y
         rectW.value = filterRect.width
