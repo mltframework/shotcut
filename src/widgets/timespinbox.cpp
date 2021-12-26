@@ -65,6 +65,11 @@ QString TimeSpinBox::textFromValue(int val) const
 
 void TimeSpinBox::keyPressEvent(QKeyEvent* event)
 {
+    if (event->key() == Qt::Key_PageUp || event->key() == Qt::Key_PageDown) {
+        // Disable page up & page down (step by 10) since those keys are used for other things in Shotcut.
+        event->ignore();
+        return;
+    }
     QSpinBox::keyPressEvent(event);
     if (event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return) {
         event->accept();
