@@ -349,7 +349,7 @@
         <location filename="../src/widgets/avformatproducerwidget.ui" line="341"/>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="381"/>
         <source>Color transfer</source>
-        <translation>Transfert de couleur </translation>
+        <translation>Transfert de couleur</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="346"/>
@@ -395,12 +395,12 @@
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="597"/>
         <source>180</source>
-        <translation type="unfinished">180</translation>
+        <translation>180</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="602"/>
         <source>270</source>
-        <translation type="unfinished">270</translation>
+        <translation>270</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="610"/>
@@ -452,7 +452,7 @@
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="1037"/>
         <source>Set Equirectangular...</source>
-        <translation>Définir la projection parallélogrammatique...</translation>
+        <translation>Définir la projection parallélogrammatique…</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="1042"/>
@@ -467,7 +467,7 @@
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="931"/>
         <source>Convert...</source>
-        <translation>Convertir...</translation>
+        <translation>Convertir…</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="945"/>
@@ -528,13 +528,13 @@
         <location filename="../src/widgets/avformatproducerwidget.ui" line="921"/>
         <location filename="../src/widgets/avformatproducerwidget.cpp" line="1054"/>
         <source>Reverse...</source>
-        <translation>Inverser...</translation>
+        <translation>Inverser…</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.ui" line="999"/>
         <location filename="../src/widgets/avformatproducerwidget.cpp" line="1236"/>
         <source>Extract Sub-clip...</source>
-        <translation>Extraire sous-clip...</translation>
+        <translation>Extraire sous-clip…</translation>
     </message>
     <message>
         <location filename="../src/widgets/avformatproducerwidget.cpp" line="395"/>
@@ -1207,7 +1207,7 @@ Si oui, choisissez un format ci-dessous, puis cliquez sur OK pour choisir un nom
     <message>
         <location filename="../src/dialogs/durationdialog.ui" line="17"/>
         <source>Set Duration</source>
-        <translation>Régler la Durée</translation>
+        <translation>Régler la durée</translation>
     </message>
     <message>
         <location filename="../src/dialogs/durationdialog.ui" line="25"/>
@@ -1258,7 +1258,7 @@ Si oui, choisissez un format ci-dessous, puis cliquez sur OK pour choisir un nom
     <message>
         <location filename="../src/widgets/editmarkerwidget.cpp" line="74"/>
         <source>Duration:</source>
-        <translation>Durée:</translation>
+        <translation>Durée :</translation>
     </message>
 </context>
 <context>
@@ -1359,7 +1359,7 @@ Si oui, choisissez un format ci-dessous, puis cliquez sur OK pour choisir un nom
     <message>
         <location filename="../src/docks/encodedock.ui" line="260"/>
         <source>Configure...</source>
-        <translation>Configurer...</translation>
+        <translation>Configurer…</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="294"/>
@@ -1507,7 +1507,7 @@ pose des problèmes avec les processus multiples.</translation>
     <message>
         <location filename="../src/docks/encodedock.ui" line="895"/>
         <source>GOP = group of pictures, which is the maximum key frame interval</source>
-        <translation>GOP = Group of Pictures (Groupe d’images), qui est l’intervalle maximum entre images-clés</translation>
+        <translation>GOP = Group of Pictures (Groupe d’images), qui est l’intervalle maximum entre images clés</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="908"/>
@@ -1518,7 +1518,7 @@ pose des problèmes avec les processus multiples.</translation>
         <location filename="../src/docks/encodedock.ui" line="928"/>
         <source>A fixed GOP means that keyframes will
 not be inserted at detected scene changes.</source>
-        <translation>Un GOP fixe signifie que des images-clés 
+        <translation>Un GOP fixe signifie que des images clés 
 ne seront pas automatiquement insérées 
 si un changement de scène est détecté.</translation>
     </message>
@@ -1558,7 +1558,7 @@ si un changement de scène est détecté.</translation>
         <location filename="../src/docks/encodedock.ui" line="1157"/>
         <source>B frames are the bidirectional &quot;delta&quot; pictures
 in temporal compression</source>
-        <translation>Les Trames B sont les images intermédiaires créées lors d’une compression temporelle</translation>
+        <translation>Les trames B sont les images intermédiaires créées lors d’une compression temporelle</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1196"/>
@@ -1709,7 +1709,7 @@ in temporal compression</source>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1867"/>
         <source>Always start in Advanced mode</source>
-        <translation>Toujours démarrer en mode Avancé</translation>
+        <translation>Toujours démarrer en mode avancé</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1877"/>
@@ -1814,7 +1814,7 @@ Voulez vous lancer ces tâches d&apos;analyses maintenant ?</translation>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="1446"/>
         <source>Export Each Playlist Item</source>
-        <translation>Exporter Chaque Élément de la Liste de Lecture.</translation>
+        <translation>Exporter chaque élément de la Liste de lecture.</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="1455"/>
@@ -1848,7 +1848,7 @@ Voulez-vous continuer ?</translation>
         <location filename="../src/docks/encodedock.cpp" line="1598"/>
         <location filename="../src/docks/encodedock.cpp" line="1619"/>
         <source>Stop Stream</source>
-        <translation>Arrêter le Flux</translation>
+        <translation>Arrêter le flux</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="1611"/>
@@ -1863,7 +1863,7 @@ Voulez-vous continuer ?</translation>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="1700"/>
         <source>Delete Preset</source>
-        <translation>Supprimer une Préselection</translation>
+        <translation>Supprimer une préselection</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="1701"/>
@@ -2129,7 +2129,7 @@ Shotcut va tenter de le réparer.</translation>
     <message>
         <location filename="../src/widgets/frameratewidget.cpp" line="71"/>
         <source>Convert Frames/sec</source>
-        <translation>Convertir Images/sec</translation>
+        <translation>Convertir images/sec</translation>
     </message>
 </context>
 <context>
@@ -2508,7 +2508,7 @@ the list. This does not stop a currently running job. Right-
     <message>
         <location filename="../src/docks/jobsdock.ui" line="156"/>
         <source>Stop This Job</source>
-        <translation>Arrêter cette Tâche</translation>
+        <translation>Arrêter cette tâche</translation>
     </message>
     <message>
         <location filename="../src/docks/jobsdock.ui" line="159"/>
@@ -2557,7 +2557,7 @@ the list. This does not stop a currently running job. Right-
     <message>
         <location filename="../src/qml/views/keyframes/Keyframe.qml" line="134"/>
         <source>Keyframe Type</source>
-        <translation>Type d’image-clé</translation>
+        <translation>Type d’image clé</translation>
     </message>
     <message>
         <location filename="../src/qml/views/keyframes/Keyframe.qml" line="136"/>
@@ -2590,7 +2590,7 @@ the list. This does not stop a currently running job. Right-
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/KeyframesButton.qml" line="37"/>
         <source>Use Keyframes for this parameter</source>
-        <translation>Utiliser les images-clés pour ce paramètre</translation>
+        <translation>Utiliser les images clés pour ce paramètre</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/KeyframesButton.qml" line="56"/>
@@ -2600,12 +2600,12 @@ the list. This does not stop a currently running job. Right-
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/KeyframesButton.qml" line="70"/>
         <source>Confirm Removing Keyframes</source>
-        <translation>Confirmer la suppression d’images-clés</translation>
+        <translation>Confirmer la suppression d’images clés</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/KeyframesButton.qml" line="71"/>
         <source>This will remove all keyframes for this parameter.&lt;p&gt;Do you still want to do this?</source>
-        <translation>Ceci supprimera toutes les images-clés pour ce paramètre.&lt;p&gt; Souhaitez-vous vraiment faire cela ?</translation>
+        <translation>Ceci supprimera toutes les images clés pour ce paramètre.&lt;p&gt; Souhaitez-vous vraiment faire cela ?</translation>
     </message>
 </context>
 <context>
@@ -2613,7 +2613,7 @@ the list. This does not stop a currently running job. Right-
     <message>
         <location filename="../src/docks/keyframesdock.cpp" line="41"/>
         <source>Keyframes</source>
-        <translation>Images-clés</translation>
+        <translation>Images clés</translation>
     </message>
 </context>
 <context>
@@ -2654,27 +2654,27 @@ the list. This does not stop a currently running job. Right-
     <message>
         <location filename="../src/qml/views/keyframes/KeyframesToolbar.qml" line="79"/>
         <source>Set the first simple keyframe</source>
-        <translation>Mettre la première image-clé simple</translation>
+        <translation>Mettre la première image clé simple</translation>
     </message>
     <message>
         <location filename="../src/qml/views/keyframes/KeyframesToolbar.qml" line="91"/>
         <source>Set the second simple keyframe</source>
-        <translation>Mettre la seconde image-clé simple</translation>
+        <translation>Mettre la seconde image clé simple</translation>
     </message>
     <message>
         <location filename="../src/qml/views/keyframes/KeyframesToolbar.qml" line="108"/>
         <source>Zoom keyframes out (Alt+-)</source>
-        <translation>Zoom Images clés arrière (Alt+-)</translation>
+        <translation>Zoom images clés arrière (Alt+-)</translation>
     </message>
     <message>
         <location filename="../src/qml/views/keyframes/KeyframesToolbar.qml" line="123"/>
         <source>Zoom keyframes in (Alt++)</source>
-        <translation>Zoom Images clés avant (Alt++)</translation>
+        <translation>Zoom images clés avant (Alt++)</translation>
     </message>
     <message>
         <location filename="../src/qml/views/keyframes/KeyframesToolbar.qml" line="135"/>
         <source>Zoom keyframes to fit (Alt+0)</source>
-        <translation>Zoom Images clés ajusté (Alt+0)</translation>
+        <translation>Zoom images clés ajusté (Alt+0)</translation>
     </message>
 </context>
 <context>
@@ -2768,12 +2768,12 @@ the list. This does not stop a currently running job. Right-
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="97"/>
         <source>Diagonal Top Left</source>
-        <translation>Diagonale Haut Gauche</translation>
+        <translation>Diagonale haut-gauche</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="102"/>
         <source>Diagonal Top Right</source>
-        <translation>Diagonale Haut Droite</translation>
+        <translation>Diagonale haut-droite</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="107"/>
@@ -2828,17 +2828,17 @@ the list. This does not stop a currently running job. Right-
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="157"/>
         <source>Box Bottom Right</source>
-        <translation>Boîte Bas Droite</translation>
+        <translation>Boîte bas-droite</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="162"/>
         <source>Box Bottom Left</source>
-        <translation>Boîte bas gauche</translation>
+        <translation>Boîte bas-gauche</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="167"/>
         <source>Box Right Center</source>
-        <translation>Boîte droite centre</translation>
+        <translation>Boîte droite-centre</translation>
     </message>
     <message>
         <location filename="../src/widgets/lumamixtransition.ui" line="172"/>
@@ -2979,7 +2979,7 @@ audio du clip A (0 %) ou du clip B (100 %).</translation>
     <message>
         <location filename="../src/mainwindow.ui" line="127"/>
         <source>Audio Channels</source>
-        <translation>Canaux audio </translation>
+        <translation>Canaux audios</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="135"/>
@@ -3406,14 +3406,14 @@ audio du clip A (0 %) ou du clip B (100 %).</translation>
     <message>
         <location filename="../src/mainwindow.ui" line="1273"/>
         <source>Markers as Chapters...</source>
-        <translation type="unfinished"></translation>
+        <translation>Marqueurs comme chapitres…</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1276"/>
         <location filename="../src/mainwindow.ui" line="1279"/>
         <location filename="../src/mainwindow.cpp" line="4990"/>
         <source>Export Chapters</source>
-        <translation type="unfinished"></translation>
+        <translation>Export des chapitres</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="944"/>
@@ -3436,7 +3436,7 @@ audio du clip A (0 %) ou du clip B (100 %).</translation>
         <location filename="../src/mainwindow.ui" line="961"/>
         <location filename="../src/mainwindow.ui" line="964"/>
         <source>Keyframes</source>
-        <translation>Images-clés</translation>
+        <translation>Images clés</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="969"/>
@@ -3531,12 +3531,12 @@ audio du clip A (0 %) ou du clip B (100 %).</translation>
     <message>
         <location filename="../src/mainwindow.ui" line="1176"/>
         <source>Use Proxy</source>
-        <translation>Utiliser le Proxy</translation>
+        <translation>Utiliser le proxy</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1187"/>
         <source>Set the proxy storage folder</source>
-        <translation>Choisir le dossier de stockage des proxies</translation>
+        <translation>Choisir le dossier de stockage des proxys</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1195"/>
@@ -3551,7 +3551,7 @@ audio du clip A (0 %) ou du clip B (100 %).</translation>
     <message>
         <location filename="../src/mainwindow.ui" line="1209"/>
         <source>Store proxies in the project folder if defined</source>
-        <translation>Stocker les proxies dans le dossier du projet si défini.</translation>
+        <translation>Stocker les proxys dans le dossier du projet si défini.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1217"/>
@@ -4018,14 +4018,14 @@ Voulez-vous vraiment quitter ?</translation>
         <source>Do you want to create missing proxies for every file in this project?
 
 You must reopen your project after all proxy jobs are finished.</source>
-        <translation>Voulez-vous créer les proxies manquants pour chaques fichiers du projet?
+        <translation>Voulez-vous créer les proxys manquants pour chaques fichiers du projet ?
 
 Vous devrez rouvrir votre projet après cette opération.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="4829"/>
         <source>Proxy Folder</source>
-        <translation>Dossier du Proxy</translation>
+        <translation>Dossier du proxy</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="4844"/>
@@ -4246,12 +4246,12 @@ Voulez-vous désactiver les effets GPU et redémarrer Shotcut ?</translation>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/Marker.qml" line="59"/>
         <source>Marker Color</source>
-        <translation type="unfinished"></translation>
+        <translation>Couleur du marqueur</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/Marker.qml" line="70"/>
         <source>Marker Operations</source>
-        <translation>Gestion des Marqueurs</translation>
+        <translation>Gestion des marqueurs</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/Marker.qml" line="72"/>
@@ -4266,12 +4266,12 @@ Voulez-vous désactiver les effets GPU et redémarrer Shotcut ?</translation>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/Marker.qml" line="83"/>
         <source>Choose Color...</source>
-        <translation type="unfinished"></translation>
+        <translation>Choix de la couleur…</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/Marker.qml" line="92"/>
         <source>Choose Recent Color</source>
-        <translation type="unfinished"></translation>
+        <translation>Choix de la couleur récente</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/Marker.qml" line="115"/>
@@ -4284,22 +4284,22 @@ Voulez-vous désactiver les effets GPU et redémarrer Shotcut ?</translation>
     <message>
         <location filename="../src/docks/markersdock.cpp" line="129"/>
         <source>Markers</source>
-        <translation type="unfinished"></translation>
+        <translation>Marqueurs</translation>
     </message>
     <message>
         <location filename="../src/docks/markersdock.cpp" line="158"/>
         <source>Add a marker at the current time</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajouter un marqueur à la position actuelle</translation>
     </message>
     <message>
         <location filename="../src/docks/markersdock.cpp" line="167"/>
         <source>Remove the selected marker</source>
-        <translation type="unfinished"></translation>
+        <translation>Supprimer le marqueur sélectionné</translation>
     </message>
     <message>
         <location filename="../src/docks/markersdock.cpp" line="176"/>
         <source>Deselect the marker</source>
-        <translation type="unfinished"></translation>
+        <translation>Désélectionner le marqueur</translation>
     </message>
     <message>
         <location filename="../src/docks/markersdock.cpp" line="185"/>
@@ -4309,7 +4309,7 @@ Voulez-vous désactiver les effets GPU et redémarrer Shotcut ?</translation>
     <message>
         <location filename="../src/docks/markersdock.cpp" line="188"/>
         <source>Remove All Markers</source>
-        <translation type="unfinished"></translation>
+        <translation>Supprimer tous les marqueurs</translation>
     </message>
     <message>
         <location filename="../src/docks/markersdock.cpp" line="191"/>
@@ -4944,7 +4944,7 @@ Veuillez installer les plugins %2.</translation>
         <location filename="../src/widgets/newprojectfolder.ui" line="181"/>
         <location filename="../src/widgets/newprojectfolder.ui" line="198"/>
         <source>PushButton</source>
-        <translation>Bouton-poussoir</translation>
+        <translation>Bouton poussoir</translation>
     </message>
     <message>
         <location filename="../src/widgets/newprojectfolder.ui" line="224"/>
@@ -5007,7 +5007,7 @@ Un dossier sera créé dans ce dossier pour chaque projet.</translation>
     <message>
         <location filename="../src/widgets/newprojectfolder.ui" line="360"/>
         <source>Remove...</source>
-        <translation>Supprimer...</translation>
+        <translation>Supprimer…</translation>
     </message>
     <message>
         <location filename="../src/widgets/newprojectfolder.cpp" line="123"/>
@@ -5064,7 +5064,7 @@ Réessayez avec un dossier différent.</translation>
     <message>
         <location filename="../src/openotherdialog.ui" line="17"/>
         <source>Open Other</source>
-        <translation>Ouvrir Autre</translation>
+        <translation>Ouvrir autre</translation>
     </message>
     <message>
         <location filename="../src/openotherdialog.ui" line="55"/>
@@ -5196,7 +5196,7 @@ Réessayez avec un dossier différent.</translation>
     <message>
         <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="128"/>
         <source>Seek to previous keyframe</source>
-        <translation>Se rendre à l’image-clé précédente</translation>
+        <translation>Se rendre à l’image clé précédente</translation>
     </message>
     <message>
         <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="128"/>
@@ -5206,17 +5206,17 @@ Réessayez avec un dossier différent.</translation>
     <message>
         <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="144"/>
         <source>Add a keyframe at play head</source>
-        <translation>Ajouter une image-clé à la tête de lecture</translation>
+        <translation>Ajouter une image clé à la tête de lecture</translation>
     </message>
     <message>
         <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="167"/>
         <source>Delete the selected keyframe</source>
-        <translation>Supprimer l’image-clé sélectionnée</translation>
+        <translation>Supprimer l’image clé sélectionnée</translation>
     </message>
     <message>
         <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="191"/>
         <source>Seek to next keyframe</source>
-        <translation>Se rendre à l’image-clé suivante</translation>
+        <translation>Se rendre à l’image clé suivante</translation>
     </message>
     <message>
         <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="191"/>
@@ -5226,7 +5226,7 @@ Réessayez avec un dossier différent.</translation>
     <message>
         <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="204"/>
         <source>Unlock track</source>
-        <translation>Dévérouiller la piste</translation>
+        <translation>Déverouiller la piste</translation>
     </message>
     <message>
         <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="204"/>
@@ -5236,7 +5236,7 @@ Réessayez avec un dossier différent.</translation>
     <message>
         <location filename="../src/qml/views/keyframes/ParameterHead.qml" line="208"/>
         <source>Zoom keyframe values</source>
-        <translation>Zoom ajusté à la hauteur des images-clés</translation>
+        <translation>Zoom ajusté à la hauteur des images clés</translation>
     </message>
 </context>
 <context>
@@ -5919,7 +5919,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="85"/>
         <source>Save Preset</source>
-        <translation>Enregistrer la Préselection</translation>
+        <translation>Enregistrer la présélection</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="102"/>
@@ -5941,7 +5941,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="141"/>
         <source>Delete Preset</source>
-        <translation>Effacer une Préselection</translation>
+        <translation>Effacer une présélection</translation>
     </message>
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="150"/>
@@ -6530,7 +6530,7 @@ Voulez-vous plutôt utiliser %1 = %2/1001 ?</translation>
     <message>
         <location filename="../src/widgets/servicepresetwidget.ui" line="25"/>
         <source>Preset</source>
-        <translation>Préselection</translation>
+        <translation>Présélection</translation>
     </message>
     <message>
         <location filename="../src/widgets/servicepresetwidget.ui" line="45"/>
@@ -6550,7 +6550,7 @@ Voulez-vous plutôt utiliser %1 = %2/1001 ?</translation>
     <message>
         <location filename="../src/widgets/servicepresetwidget.cpp" line="87"/>
         <source>Save Preset</source>
-        <translation>Enregistrer la Préselection</translation>
+        <translation>Enregistrer la présélection</translation>
     </message>
     <message>
         <location filename="../src/widgets/servicepresetwidget.cpp" line="88"/>
@@ -6560,7 +6560,7 @@ Voulez-vous plutôt utiliser %1 = %2/1001 ?</translation>
     <message>
         <location filename="../src/widgets/servicepresetwidget.cpp" line="173"/>
         <source>Delete Preset</source>
-        <translation>Effacer une Préselection</translation>
+        <translation>Effacer une présélection</translation>
     </message>
     <message>
         <location filename="../src/widgets/servicepresetwidget.cpp" line="174"/>
@@ -6771,7 +6771,7 @@ Voulez-vous plutôt utiliser %1 = %2/1001 ?</translation>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="472"/>
         <source>Preset</source>
-        <translation>Préselection</translation>
+        <translation>Présélection</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/SizePositionUI.qml" line="504"/>
@@ -9038,7 +9038,7 @@ La plupart des utilisateurs n’ont pas besoin de changer cela.</translation>
     <message>
         <location filename="../src/qml/filters/bigsh0t_rect_to_eq/meta.qml" line="7"/>
         <source>360: Rectilinear to Equirectangular</source>
-        <translation>360: Rectiligne =&gt; Parallélogrammatique</translation>
+        <translation>360 : Rectiligne =&gt; parallélogrammatique</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_rect_to_eq/meta.qml" line="17"/>
@@ -9098,7 +9098,7 @@ La plupart des utilisateurs n’ont pas besoin de changer cela.</translation>
     <message>
         <location filename="../src/qml/filters/rotate/meta.qml" line="7"/>
         <source>Rotate and Scale</source>
-        <translation>Rotation et Echelle</translation>
+        <translation>Rotation et échelle</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask_alphaspot/meta.qml" line="48"/>
@@ -9139,7 +9139,7 @@ La plupart des utilisateurs n’ont pas besoin de changer cela.</translation>
     <message>
         <location filename="../src/qml/filters/spillsuppress/meta.qml" line="24"/>
         <source>Key Spill: Simple</source>
-        <translation>Nettoyage de masque : Simple</translation>
+        <translation>Nettoyage de masque : simple</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/stabilize/meta.qml" line="6"/>
@@ -9164,7 +9164,7 @@ La plupart des utilisateurs n’ont pas besoin de changer cela.</translation>
     <message>
         <location filename="../src/qml/filters/crop_circle/meta.qml" line="7"/>
         <source>Crop: Circle</source>
-        <translation>Recadrer: Cercle</translation>
+        <translation>Recadrer : cercle</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/halftone/meta.qml" line="6"/>
@@ -9174,7 +9174,7 @@ La plupart des utilisateurs n’ont pas besoin de changer cela.</translation>
     <message>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="7"/>
         <source>360: Hemispherical to Equirectangular</source>
-        <translation>360: Hémisphérique =&gt; Parallélogrammatique</translation>
+        <translation>360 : hémisphérique =&gt; parallélogrammatique</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="49"/>
@@ -9196,7 +9196,7 @@ La plupart des utilisateurs n’ont pas besoin de changer cela.</translation>
     <message>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="73"/>
         <source>Front Up</source>
-        <translation>Devant Haut</translation>
+        <translation>Devant haut</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="81"/>
@@ -9211,7 +9211,7 @@ La plupart des utilisateurs n’ont pas besoin de changer cela.</translation>
     <message>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="97"/>
         <source>Back Up</source>
-        <translation>Derrière  Haut</translation>
+        <translation>Derrière haut</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="105"/>
@@ -9221,7 +9221,7 @@ La plupart des utilisateurs n’ont pas besoin de changer cela.</translation>
     <message>
         <location filename="../src/qml/filters/bigsh0t_hemi_to_eq/meta.qml" line="113"/>
         <source>Nadir Start</source>
-        <translation>Début du Nadir</translation>
+        <translation>Début du nadir</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/halftone/meta.qml" line="24"/>
@@ -9257,12 +9257,12 @@ La plupart des utilisateurs n’ont pas besoin de changer cela.</translation>
     <message>
         <location filename="../src/qml/filters/levels/meta.qml" line="15"/>
         <source>Input Black</source>
-        <translation>Noir Entrée</translation>
+        <translation>Noir entrée</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/levels/meta.qml" line="23"/>
         <source>Input White</source>
-        <translation>Blanc Entrée</translation>
+        <translation>Blanc entrée</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/levels/meta.qml" line="31"/>
@@ -9272,17 +9272,17 @@ La plupart des utilisateurs n’ont pas besoin de changer cela.</translation>
     <message>
         <location filename="../src/qml/filters/mask_alphaspot/meta.qml" line="6"/>
         <source>Mask: Simple Shape</source>
-        <translation>Masque: Forme Simple</translation>
+        <translation>Masque : forme simple</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask_apply/meta.qml" line="6"/>
         <source>Mask: Apply</source>
-        <translation>Masque: Appliquer</translation>
+        <translation>Masque : appliquer</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/mask_shape/meta.qml" line="6"/>
         <source>Mask: From File</source>
-        <translation>Masque: A partir d&apos;un fichier </translation>
+        <translation>Masque : à partir d&apos;un fichier </translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_noisegate/meta.qml" line="7"/>
@@ -9292,12 +9292,12 @@ La plupart des utilisateurs n’ont pas besoin de changer cela.</translation>
     <message>
         <location filename="../src/qml/filters/audio_noisegate/meta.qml" line="16"/>
         <source>Key Filter: Low Frequency</source>
-        <translation>Filtre clé : Faible fréquence</translation>
+        <translation>Filtre clé : faible fréquence</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_noisegate/meta.qml" line="24"/>
         <source>Key Filter: High Frequency</source>
-        <translation>Filtre clé: Haute fréquence</translation>
+        <translation>Filtre clé : haute fréquence</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_noisegate/meta.qml" line="32"/>
@@ -9334,7 +9334,7 @@ La plupart des utilisateurs n’ont pas besoin de changer cela.</translation>
     <message>
         <location filename="../src/qml/filters/chromahold/meta.qml" line="23"/>
         <source>Chroma Hold</source>
-        <translation>Clé chromatique: Garder</translation>
+        <translation>Clé chromatique : garder</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/chromahold/meta.qml" line="32"/>
@@ -9395,7 +9395,7 @@ La plupart des utilisateurs n’ont pas besoin de changer cela.</translation>
     <message>
         <location filename="../src/qml/filters/glitch/meta.qml" line="56"/>
         <source>Color intensity</source>
-        <translation>Intensité: couleur</translation>
+        <translation>Intensité : couleur</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/rgbsplit0r/meta.qml" line="23"/>
@@ -9405,12 +9405,12 @@ La plupart des utilisateurs n’ont pas besoin de changer cela.</translation>
     <message>
         <location filename="../src/qml/filters/blur_exponential/meta.qml" line="23"/>
         <source>Blur: Exponential</source>
-        <translation>Flou: Exponentiel</translation>
+        <translation>Flou : exponentiel</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_to_stereo/meta.qml" line="7"/>
         <source>360: Equirectangular to Stereographic</source>
-        <translation>360: Équirectangulaire =&gt; Stéréographique</translation>
+        <translation>360 : équirectangulaire =&gt; stéréographique</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_to_stereo/meta.qml" line="50"/>
@@ -9424,17 +9424,17 @@ La plupart des utilisateurs n’ont pas besoin de changer cela.</translation>
     <message>
         <location filename="../src/qml/filters/blur_gaussian/meta.qml" line="23"/>
         <source>Blur: Gaussian</source>
-        <translation>Flou: Gaussien</translation>
+        <translation>Flou : gaussien</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blur_lowpass/meta.qml" line="23"/>
         <source>Blur: Low Pass</source>
-        <translation>Flou: Passe bas</translation>
+        <translation>Flou : passe bas</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/crop/meta.qml" line="6"/>
         <source>Crop: Source</source>
-        <translation>Recadrer: Source</translation>
+        <translation>Recadrer : source</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/flip/meta.qml" line="6"/>
@@ -9444,7 +9444,7 @@ La plupart des utilisateurs n’ont pas besoin de changer cela.</translation>
     <message>
         <location filename="../src/qml/filters/hqdn3d/meta.qml" line="23"/>
         <source>Reduce Noise: HQDN3D</source>
-        <translation>Bruit : Réducteur HQDN3D</translation>
+        <translation>Bruit : réducteur HQDN3D</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/hqdn3d/meta.qml" line="32"/>
@@ -9459,22 +9459,22 @@ La plupart des utilisateurs n’ont pas besoin de changer cela.</translation>
     <message>
         <location filename="../src/qml/filters/noise_fast/meta.qml" line="23"/>
         <source>Noise: Fast</source>
-        <translation>Bruit : Rapide</translation>
+        <translation>Bruit : rapide</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/noise_keyframes/meta.qml" line="23"/>
         <source>Noise: Keyframes</source>
-        <translation>Bruit : Images-clés</translation>
+        <translation>Bruit : images clés</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/smartblur/meta.qml" line="24"/>
         <source>Reduce Noise: Smart Blur</source>
-        <translation>Bruit : Réducteur flou dynamique</translation>
+        <translation>Bruit : réducteur flou dynamique</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/crop_rectangle/meta.qml" line="7"/>
         <source>Crop: Rectangle</source>
-        <translation>Recadrer: Rectangle</translation>
+        <translation>Recadrer : rectangle</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/crop_rectangle/meta.qml" line="23"/>
@@ -9595,32 +9595,32 @@ La plupart des utilisateurs n’ont pas besoin de changer cela.</translation>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_mask/meta.qml" line="7"/>
         <source>360: Equirectangular Mask</source>
-        <translation>360: Masque équirectangulaire</translation>
+        <translation>360 : masque équirectangulaire</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_mask/meta.qml" line="17"/>
         <source>Horizontal Start</source>
-        <translation>Début Horizontal</translation>
+        <translation>Début horizontal</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_mask/meta.qml" line="25"/>
         <source>Horizontal End</source>
-        <translation>Fin Horizontale</translation>
+        <translation>Fin horizontale</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_mask/meta.qml" line="33"/>
         <source>Vertical Start</source>
-        <translation>Début Verticale</translation>
+        <translation>Début verticale</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_mask/meta.qml" line="41"/>
         <source>Vertical End</source>
-        <translation>Fin Verticale</translation>
+        <translation>Fin verticale</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_to_rect/meta.qml" line="7"/>
         <source>360: Equirectangular to Rectilinear</source>
-        <translation>360: Parallélogrammatique =&gt; Rectiligne</translation>
+        <translation>360 : parallélogrammatique =&gt; rectiligne</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_eq_to_rect/meta.qml" line="18"/>
@@ -9653,7 +9653,7 @@ La plupart des utilisateurs n’ont pas besoin de changer cela.</translation>
     <message>
         <location filename="../src/qml/filters/corners/meta.qml" line="23"/>
         <source>Corner Pin</source>
-        <translation>Recadrer: Angles</translation>
+        <translation>Recadrer : angles</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/corners/meta.qml" line="33"/>
@@ -9678,27 +9678,27 @@ La plupart des utilisateurs n’ont pas besoin de changer cela.</translation>
     <message>
         <location filename="../src/qml/filters/bigsh0t_stabilize_360/meta.qml" line="7"/>
         <source>360: Stabilize</source>
-        <translation>360: Stabiliser</translation>
+        <translation>360 : stabiliser</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_transform_360/meta.qml" line="7"/>
         <source>360: Transform</source>
-        <translation>360: Transformer</translation>
+        <translation>360 : transformer</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vaguedenoiser/meta.qml" line="26"/>
         <source>Reduce Noise: Wavelet</source>
-        <translation>Bruit : Réducteur vaguelette</translation>
+        <translation>Bruit : réducteur vaguelette</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/richtext/meta.qml" line="7"/>
         <source>Text: Rich</source>
-        <translation>Texte: Riche</translation>
+        <translation>Texte : riche</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/pillar_echo/meta.qml" line="7"/>
         <source>Blur: Pad</source>
-        <translation>Flou: Remplissage</translation>
+        <translation>Flou : remplissage</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_invert/meta.qml" line="7"/>
@@ -9708,12 +9708,12 @@ La plupart des utilisateurs n’ont pas besoin de changer cela.</translation>
     <message>
         <location filename="../src/qml/filters/fspp/meta.qml" line="23"/>
         <source>Reduce Noise: Quantization</source>
-        <translation>Bruit : Réducteur Quantification</translation>
+        <translation>Bruit : réducteur quantification</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/time_remap/meta.qml" line="7"/>
         <source>Time Remap</source>
-        <translation>Remappage Temporel</translation>
+        <translation>Remappage temporel</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/time_remap/meta.qml" line="19"/>
@@ -9723,7 +9723,7 @@ La plupart des utilisateurs n’ont pas besoin de changer cela.</translation>
     <message>
         <location filename="../src/qml/filters/deband/meta.qml" line="26"/>
         <source>Deband</source>
-        <translation>Dé-postérisation</translation>
+        <translation>Dépostérisation</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/gpstext/meta.qml" line="23"/>
@@ -9738,7 +9738,7 @@ La plupart des utilisateurs n’ont pas besoin de changer cela.</translation>
     <message>
         <location filename="../src/qml/filters/mask_chromakey/meta.qml" line="23"/>
         <source>Mask: Chroma Key</source>
-        <translation>Masque: Clé Chromatique</translation>
+        <translation>Masque : clé chromatique</translation>
     </message>
 </context>
 <context>
@@ -9746,12 +9746,12 @@ La plupart des utilisateurs n’ont pas besoin de changer cela.</translation>
     <message>
         <location filename="../src/qml/filters/size_position/meta_affine.qml" line="7"/>
         <source>Size, Position &amp; Rotate</source>
-        <translation>Taille, Position &amp; Rotation</translation>
+        <translation>Taille, position &amp; rotation</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/meta_affine.qml" line="19"/>
         <source>Size &amp; Position</source>
-        <translation>Taille &amp; Position</translation>
+        <translation>Taille &amp; position</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/meta_affine.qml" line="25"/>
@@ -9764,7 +9764,7 @@ La plupart des utilisateurs n’ont pas besoin de changer cela.</translation>
     <message>
         <location filename="../src/qml/filters/blur/meta_boxblur.qml" line="6"/>
         <source>Blur: Box</source>
-        <translation>Flou: Dimensions</translation>
+        <translation>Flou : dimensions</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blur/meta_boxblur.qml" line="17"/>
@@ -9825,7 +9825,7 @@ La plupart des utilisateurs n’ont pas besoin de changer cela.</translation>
     <message>
         <location filename="../src/qml/filters/white/meta_frei0r.qml" line="6"/>
         <source>White Balance</source>
-        <translation>Balance des Blancs</translation>
+        <translation>Balance des blancs</translation>
     </message>
 </context>
 <context>
@@ -9833,7 +9833,7 @@ La plupart des utilisateurs n’ont pas besoin de changer cela.</translation>
     <message>
         <location filename="../src/qml/filters/color/meta_frei0r_coloradj.qml" line="7"/>
         <source>Color Grading</source>
-        <translation>Étalonnage des Couleurs</translation>
+        <translation>Étalonnage des couleurs</translation>
     </message>
 </context>
 <context>
@@ -9873,22 +9873,22 @@ La plupart des utilisateurs n’ont pas besoin de changer cela.</translation>
     <message>
         <location filename="../src/qml/filters/color/meta_movit.qml" line="6"/>
         <source>Color Grading</source>
-        <translation>Étalonnage des Couleurs</translation>
+        <translation>Étalonnage des couleurs</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/color/meta_movit.qml" line="14"/>
         <source>Shadows (Lift)</source>
-        <translation>Tons sombres (Niveau)</translation>
+        <translation>Tons sombres (niveau)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/color/meta_movit.qml" line="19"/>
         <source>Midtones (Gamma)</source>
-        <translation>Tons moyens (Gamma)</translation>
+        <translation>Tons moyens (gamma)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/color/meta_movit.qml" line="24"/>
         <source>Highlights (Gain)</source>
-        <translation>Tons clairs (Gain)</translation>
+        <translation>Tons clairs (gain)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/contrast/meta_movit.qml" line="6"/>
@@ -9953,7 +9953,7 @@ La plupart des utilisateurs n’ont pas besoin de changer cela.</translation>
     <message>
         <location filename="../src/qml/filters/size_position/meta_movit.qml" line="7"/>
         <source>Size and Position</source>
-        <translation>Taille et Position</translation>
+        <translation>Taille et position</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/size_position/meta_movit.qml" line="21"/>
@@ -9978,7 +9978,7 @@ La plupart des utilisateurs n’ont pas besoin de changer cela.</translation>
     <message>
         <location filename="../src/qml/filters/white/meta_movit.qml" line="6"/>
         <source>White Balance</source>
-        <translation>Balance des Blancs</translation>
+        <translation>Balance des blancs</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/flip/meta_movit.qml" line="6"/>
@@ -9988,7 +9988,7 @@ La plupart des utilisateurs n’ont pas besoin de changer cela.</translation>
     <message>
         <location filename="../src/qml/filters/crop/meta_movit.qml" line="6"/>
         <source>Crop: Source</source>
-        <translation>Recadrer: Source</translation>
+        <translation>Recadrer : source</translation>
     </message>
 </context>
 <context>
@@ -10047,7 +10047,7 @@ La plupart des utilisateurs n’ont pas besoin de changer cela.</translation>
     <message>
         <location filename="../src/qml/views/timeline/timeline.qml" line="498"/>
         <source>Track Operations</source>
-        <translation>Gestion des Pistes</translation>
+        <translation>Gestion des pistes</translation>
     </message>
     <message>
         <location filename="../src/qml/views/timeline/timeline.qml" line="500"/>
@@ -10152,12 +10152,12 @@ La plupart des utilisateurs n’ont pas besoin de changer cela.</translation>
     <message>
         <location filename="../src/qml/views/timeline/timeline.qml" line="599"/>
         <source>Center the Playhead</source>
-        <translation>Centrer la Tête de Lecture</translation>
+        <translation>Centrer la tête de lecture</translation>
     </message>
     <message>
         <location filename="../src/qml/views/timeline/timeline.qml" line="605"/>
         <source>Scroll to Playhead on Zoom</source>
-        <translation>Zoomer sur la Tête de Lecture</translation>
+        <translation>Zoomer sur la tête de Lecture</translation>
     </message>
     <message>
         <location filename="../src/qml/views/timeline/timeline.qml" line="612"/>
@@ -10406,7 +10406,7 @@ La plupart des utilisateurs n’ont pas besoin de changer cela.</translation>
         <location filename="../src/qml/filters/waveform/ui.qml" line="84"/>
         <location filename="../src/qml/filters/white/ui.qml" line="65"/>
         <source>Preset</source>
-        <translation>Préselection</translation>
+        <translation>Présélection</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_bandpass/ui.qml" line="63"/>
@@ -10547,7 +10547,7 @@ Crête est meilleur pour une compression plus lourde et rapide et pour les percu
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="138"/>
         <location filename="../src/qml/filters/audio_expander/ui.qml" line="127"/>
         <source>The point at which the compressor will start to kick in.</source>
-        <translation>Le point au delà duquel le compresseur se déclenche.</translation>
+        <translation>Le point au-delà duquel le compresseur se déclenche.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_compressor/ui.qml" line="156"/>
@@ -10897,7 +10897,7 @@ Utilisé pour corriger l&apos;amplitude excessive causée par la gamme dynamique
     <message>
         <location filename="../src/qml/filters/audio_swapchannels/ui.qml" line="59"/>
         <source>Swap</source>
-        <translation>Echanger</translation>
+        <translation>Échanger</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_swapchannels/ui.qml" line="65"/>
@@ -10922,17 +10922,17 @@ Utilisé pour corriger l&apos;amplitude excessive causée par la gamme dynamique
     <message>
         <location filename="../src/qml/filters/color/ui.qml" line="147"/>
         <source>Shadows (Lift)</source>
-        <translation>Tons sombres (Niveau)</translation>
+        <translation>Tons sombres (niveau)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/color/ui.qml" line="176"/>
-        <source>Midtones (Gamma)</source>
+        <source>Midtones (gamma)</source>
         <translation>Tons moyens (Gamma)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/color/ui.qml" line="205"/>
         <source>Highlights (Gain)</source>
-        <translation>Tons clairs (Gain)</translation>
+        <translation>Tons clairs (gain)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/crop/ui.qml" line="137"/>
@@ -11147,7 +11147,7 @@ Utilisé pour corriger l&apos;amplitude excessive causée par la gamme dynamique
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="260"/>
         <source># (Hash sign)</source>
-        <translation># (signe Dièse)</translation>
+        <translation># (signe dièse)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dynamictext/ui.qml" line="264"/>
@@ -11320,7 +11320,7 @@ Utilisé pour corriger l&apos;amplitude excessive causée par la gamme dynamique
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="59"/>
         <location filename="../src/qml/filters/gradient/ui.qml" line="398"/>
         <source>Screen</source>
-        <translation>Ecran</translation>
+        <translation>Écran</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blend_mode/ui.qml" line="60"/>
@@ -11551,7 +11551,7 @@ Cliquez sur « Ouvrir » pour charger un fichier.</translation>
     <message>
         <location filename="../src/qml/filters/lut3d/ui.qml" line="107"/>
         <source>Trilinear</source>
-        <translation>Trilineaire</translation>
+        <translation>Trilinéaire</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/lut3d/ui.qml" line="107"/>
@@ -11608,27 +11608,27 @@ Cliquez sur « Ouvrir » pour charger un fichier.</translation>
     <message>
         <location filename="../src/qml/filters/corners/ui.qml" line="615"/>
         <source>Bicubic Smooth</source>
-        <translation>Bicubique Lisse</translation>
+        <translation>Bicubique lisse</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/corners/ui.qml" line="615"/>
         <source>Bicubic Sharp</source>
-        <translation>Bicubique Net</translation>
+        <translation>Bicubique net</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/corners/ui.qml" line="615"/>
         <source>Spline 4x4</source>
-        <translation>4x4 Cannelures</translation>
+        <translation>4x4 cannelures</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/corners/ui.qml" line="615"/>
         <source>Spline 6x6</source>
-        <translation>6x6 Cannelures</translation>
+        <translation>6x6 cannelures</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/corners/ui.qml" line="628"/>
         <source>Alpha Operation</source>
-        <translation>Opération Alpha</translation>
+        <translation>Opération alpha</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/corners/ui.qml" line="634"/>
@@ -12163,12 +12163,12 @@ Cliquez sur « Ouvrir » pour charger un fichier.</translation>
     <message>
         <location filename="../src/qml/filters/levels/ui.qml" line="217"/>
         <source>Input Black</source>
-        <translation>Noir Entrée</translation>
+        <translation>Noir entrée</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/levels/ui.qml" line="236"/>
         <source>Input White</source>
-        <translation>Blanc Entrée</translation>
+        <translation>Blanc entrée</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/levels/ui.qml" line="255"/>
@@ -12178,12 +12178,12 @@ Cliquez sur « Ouvrir » pour charger un fichier.</translation>
     <message>
         <location filename="../src/qml/filters/levels/ui.qml" line="274"/>
         <source>Output Black</source>
-        <translation>Noir Sortie</translation>
+        <translation>Noir sortie</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/levels/ui.qml" line="289"/>
         <source>Output White</source>
-        <translation>Blanc Sortie</translation>
+        <translation>Blanc sortie</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/stabilize/ui.qml" line="29"/>
@@ -12229,7 +12229,7 @@ Cliquez sur « Ouvrir » pour charger un fichier.</translation>
     <message>
         <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="244"/>
         <source>Browse...</source>
-        <translation>Chercher...</translation>
+        <translation>Chercher…</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bigsh0t_stabilize_360/ui.qml" line="251"/>
@@ -12406,17 +12406,17 @@ Cliquez sur « Ouvrir » pour charger un fichier.</translation>
     <message>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="375"/>
         <source>Speed:</source>
-        <translation>Vitesse:</translation>
+        <translation>Vitesse :</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="395"/>
         <source>Input Time:</source>
-        <translation>Point d&apos;entrée:</translation>
+        <translation>Point d&apos;entrée :</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="405"/>
         <source>Output Time:</source>
-        <translation>Point de sortie:</translation>
+        <translation>Point de sortie :</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/timer/ui.qml" line="256"/>
@@ -12433,7 +12433,7 @@ Cliquez sur « Ouvrir » pour charger un fichier.</translation>
     <message>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="385"/>
         <source>Direction:</source>
-        <translation>Sens:</translation>
+        <translation>Sens :</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/time_remap/ui.qml" line="387"/>
@@ -12535,7 +12535,7 @@ Réglé sur Haut ou Up: le chronomètre comptera vers le haut à partir de la va
     <message>
         <location filename="../src/qml/filters/timer/ui.qml" line="273"/>
         <source>Timer seconds per playback second. Scales Duration but does not affect Start Delay or Offset.</source>
-        <translation>Secondes du chronomètre par seconde de lecture. Met la Durée à l&apos;échelle mais n&apos;affecte pas le Délai de Départ ou le Décalage.</translation>
+        <translation>Secondes du chronomètre par seconde de lecture. Met la durée à l&apos;échelle mais n&apos;affecte pas le délai de départ ou le décalage.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/deband/ui.qml" line="153"/>
@@ -12698,7 +12698,7 @@ Tous = 360° + Rendre aléatoire</translation>
     <message>
         <location filename="../src/qml/filters/timer/ui.qml" line="191"/>
         <source>The timer will be frozen from the beginning of the filter until the Start Delay time has elapsed.</source>
-        <translation>Le chronomètre va démarrer lorsque le Délais de Départ du filtre sera écoulé.</translation>
+        <translation>Le chronomètre va démarrer lorsque le délai de départ du filtre sera écoulé.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/timer/ui.qml" line="196"/>
@@ -12708,7 +12708,7 @@ Tous = 360° + Rendre aléatoire</translation>
     <message>
         <location filename="../src/qml/filters/timer/ui.qml" line="218"/>
         <source>The timer will be frozen after the Duration has elapsed.</source>
-        <translation>Le chronomètre s&apos;arrêtera lorsque la Durée sera atteinte.</translation>
+        <translation>Le chronomètre s&apos;arrêtera lorsque la durée sera atteinte.</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/timer/ui.qml" line="223"/>
@@ -13567,7 +13567,7 @@ Définissez à 0 pour imprimer uniquement les points réels (pas d&apos;interpol
     <message>
         <location filename="../src/qml/filters/blur/ui_boxblur.qml" line="141"/>
         <source>Preset</source>
-        <translation>Préselection</translation>
+        <translation>Présélection</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/blur/ui_boxblur.qml" line="169"/>
@@ -13585,7 +13585,7 @@ Définissez à 0 pour imprimer uniquement les points réels (pas d&apos;interpol
     <message>
         <location filename="../src/qml/filters/dance/ui_dance.qml" line="73"/>
         <source>Preset</source>
-        <translation>Préselection</translation>
+        <translation>Présélection</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/dance/ui_dance.qml" line="84"/>
@@ -13721,7 +13721,7 @@ Définissez à 0 pour imprimer uniquement les points réels (pas d&apos;interpol
         <location filename="../src/qml/filters/saturation/ui_frei0r.qml" line="102"/>
         <location filename="../src/qml/filters/sharpen/ui_frei0r.qml" line="131"/>
         <source>Preset</source>
-        <translation>Préselection</translation>
+        <translation>Présélection</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/glow/ui_frei0r.qml" line="116"/>
@@ -13759,17 +13759,17 @@ Définissez à 0 pour imprimer uniquement les points réels (pas d&apos;interpol
     <message>
         <location filename="../src/qml/filters/color/ui_frei0r_coloradj.qml" line="63"/>
         <source>Shadows (Lift)</source>
-        <translation>Tons sombres (Niveau)</translation>
+        <translation>Tons sombres (niveau)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/color/ui_frei0r_coloradj.qml" line="63"/>
         <source>Midtones (Gamma)</source>
-        <translation>Tons moyens (Gamma)</translation>
+        <translation>Tons moyens (gamma)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/color/ui_frei0r_coloradj.qml" line="63"/>
         <source>Highlights (Gain)</source>
-        <translation>Tons clairs (Gain)</translation>
+        <translation>Tons clairs (gain)</translation>
     </message>
 </context>
 <context>
@@ -13777,7 +13777,7 @@ Définissez à 0 pour imprimer uniquement les points réels (pas d&apos;interpol
     <message>
         <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="84"/>
         <source>Preset</source>
-        <translation>Préselection</translation>
+        <translation>Présélection</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/lightshow/ui_lightshow.qml" line="99"/>
@@ -13857,7 +13857,7 @@ Définissez à 0 pour imprimer uniquement les points réels (pas d&apos;interpol
         <location filename="../src/qml/filters/sharpen/ui_movit.qml" line="141"/>
         <location filename="../src/qml/filters/vignette/ui_movit.qml" line="130"/>
         <source>Preset</source>
-        <translation>Préselection</translation>
+        <translation>Présélection</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/glow/ui_movit.qml" line="173"/>
@@ -13910,7 +13910,7 @@ Définissez à 0 pour imprimer uniquement les points réels (pas d&apos;interpol
     <message>
         <location filename="../src/qml/filters/vignette/ui_oldfilm.qml" line="142"/>
         <source>Preset</source>
-        <translation>Préselection</translation>
+        <translation>Présélection</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/vignette/ui_oldfilm.qml" line="161"/>
@@ -13938,7 +13938,7 @@ Définissez à 0 pour imprimer uniquement les points réels (pas d&apos;interpol
     <message>
         <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="98"/>
         <source>Preset</source>
-        <translation>Préselection</translation>
+        <translation>Présélection</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="113"/>
@@ -14112,7 +14112,7 @@ Définissez à 0 pour imprimer uniquement les points réels (pas d&apos;interpol
     <message>
         <location filename="../src/qml/filters/richtext/vui.qml" line="452"/>
         <source>Edit</source>
-        <translation>Editier</translation>
+        <translation>Éditer</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/richtext/vui.qml" line="471"/>
@@ -14209,7 +14209,7 @@ Définissez à 0 pour imprimer uniquement les points réels (pas d&apos;interpol
         <location filename="../src/qml/filters/richtext/vui.qml" line="616"/>
         <location filename="../src/qml/filters/richtext/vui.qml" line="667"/>
         <source>Insert Table</source>
-        <translation>Insérer Tableau</translation>
+        <translation>Insérer tableau</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/richtext/vui.qml" line="621"/>
