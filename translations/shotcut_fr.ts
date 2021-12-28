@@ -1814,7 +1814,7 @@ Voulez vous lancer ces tâches d&apos;analyses maintenant ?</translation>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="1446"/>
         <source>Export Each Playlist Item</source>
-        <translation>Exporter chaque élément de la Liste de lecture.</translation>
+        <translation>Exporter chaque élément de la liste de lecture.</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.cpp" line="1455"/>
@@ -5946,7 +5946,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/qml/modules/Shotcut/Controls/Preset.qml" line="150"/>
         <source>Are you sure you want to delete %1?</source>
-        <translation>Êtes vous sûr de vouloir supprimer %1 ?</translation>
+        <translation>Êtes-vous sûr de vouloir supprimer %1 ?</translation>
     </message>
 </context>
 <context>
@@ -6050,7 +6050,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/jobs/qimagejob.cpp" line="32"/>
         <source>Make proxy for %1</source>
-        <translation>Création d&apos;un proxy pour: %1</translation>
+        <translation>Création d&apos;un proxy pour : %1</translation>
     </message>
 </context>
 <context>
@@ -6139,7 +6139,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/commands/timelinecommands.cpp" line="104"/>
         <location filename="../src/commands/timelinecommands.cpp" line="158"/>
         <source>Add Files</source>
-        <translation>Rajouter des Fichiers</translation>
+        <translation>Rajouter des fichiers</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="149"/>
@@ -6169,7 +6169,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="340"/>
         <source>Toggle track mute</source>
-        <translation>Activer / désactiver l’audio de la piste</translation>
+        <translation>Activer/désactiver l’audio de la piste</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="361"/>
@@ -6184,14 +6184,14 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="405"/>
         <source>Lock track</source>
-        <translation>Vérouiller la piste</translation>
+        <translation>Verrouiller la piste</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/commands/timelinecommands.cpp" line="446"/>
         <source>Move %n timelime clips</source>
         <translation>
-            <numerusform>Déplacer %n clip de la Timeline</numerusform>
-            <numerusform>Déplacer %n clips de la Timeline</numerusform>
+            <numerusform>Déplacer %n clip de la timeline</numerusform>
+            <numerusform>Déplacer %n clips de la timeline</numerusform>
         </translation>
     </message>
     <message>
@@ -6285,7 +6285,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="1259"/>
         <source>Change clip properties</source>
-        <translation>modifier les propriétés de la séquence</translation>
+        <translation>Modifier les propriétés de la séquence</translation>
     </message>
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="1304"/>
@@ -6295,7 +6295,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/commands/timelinecommands.cpp" line="1397"/>
         <source>Replace timeline clip</source>
-        <translation>Remplacer le clip de la Timeline</translation>
+        <translation>Remplacer le clip de la timeline</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="3532"/>
@@ -6316,7 +6316,7 @@ p, li { white-space: pre-wrap; }
 Perhaps you do not have permission.
 Try again with a different folder.</source>
         <translation>Impossible d’écrire le fichier %1
-Peut être n’avez vous pas les droits.nécessaires ?
+Peut-être n’avez vous pas les droits nécessaires ?
 Veuillez réessayer dans un dossier différent.</translation>
     </message>
     <message>
@@ -6399,32 +6399,32 @@ Voulez-vous plutôt utiliser %1 = %2/1001 ?</translation>
     <message>
         <location filename="../src/database.cpp" line="82"/>
         <source>Please wait for this one-time update to the thumbnail cache...</source>
-        <translation>Veuillez attendre pour l&apos;initialisation du cache des aperçus...</translation>
+        <translation>Veuillez attendre pour l&apos;initialisation du cache des aperçus…</translation>
     </message>
     <message>
         <location filename="../src/commands/markercommands.cpp" line="30"/>
         <source>Delete marker: %1</source>
-        <translation>Supprimer le marqueur: %1</translation>
+        <translation>Supprimer le marqueur : %1</translation>
     </message>
     <message>
         <location filename="../src/commands/markercommands.cpp" line="49"/>
         <source>Add marker: %1</source>
-        <translation>Ajout du marqueur: 1%</translation>
+        <translation>Ajout du marqueur : 1%</translation>
     </message>
     <message>
         <location filename="../src/commands/markercommands.cpp" line="72"/>
         <source>Move marker: %1</source>
-        <translation>Déplacement du marqueur: 1%</translation>
+        <translation>Déplacement du marqueur : 1%</translation>
     </message>
     <message>
         <location filename="../src/commands/markercommands.cpp" line="76"/>
         <source>Edit marker: %1</source>
-        <translation>Modification du marqueur: 1%</translation>
+        <translation>Modification du marqueur : 1%</translation>
     </message>
     <message>
         <location filename="../src/commands/markercommands.cpp" line="118"/>
         <source>Clear markers</source>
-        <translation type="unfinished"></translation>
+        <translation>Effacer les marqueurs</translation>
     </message>
 </context>
 <context>
@@ -6459,7 +6459,7 @@ Voulez-vous plutôt utiliser %1 = %2/1001 ?</translation>
     <message>
         <location filename="../src/qmltypes/qmlrichtext.cpp" line="130"/>
         <source>Cannot save: </source>
-        <translation>Sauvegarde impossible:</translation>
+        <translation>Sauvegarde impossible :</translation>
     </message>
     <message>
         <location filename="../src/qmltypes/qmlrichtext.cpp" line="159"/>
@@ -6565,7 +6565,7 @@ Voulez-vous plutôt utiliser %1 = %2/1001 ?</translation>
     <message>
         <location filename="../src/widgets/servicepresetwidget.cpp" line="174"/>
         <source>Are you sure you want to delete %1?</source>
-        <translation>Êtes vous sûr de vouloir supprimer %1 ?</translation>
+        <translation>Êtes-vous sûr de vouloir supprimer %1 ?</translation>
     </message>
 </context>
 <context>
@@ -7979,7 +7979,7 @@ Compensation du mouvement : Interpole de nouvelles images en utilisant la compen
     <message>
         <location filename="../src/dialogs/unlinkedfilesdialog.ui" line="81"/>
         <source>Search in Folder...</source>
-        <translation>Chercher dans le dossier...</translation>
+        <translation>Chercher dans le dossier…</translation>
     </message>
     <message>
         <location filename="../src/dialogs/unlinkedfilesdialog.cpp" line="42"/>
@@ -8156,8 +8156,8 @@ Compensation du mouvement : Interpole de nouvelles images en utilisant la compen
         <location filename="../src/widgets/scopes/videohistogramscopewidget.cpp" line="201"/>
         <source>Value: %1
 IRE: %2</source>
-        <translation>Valeur: %1
-IRE: %2</translation>
+        <translation>Valeur : %1
+IRE : %2</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videohistogramscopewidget.cpp" line="205"/>
@@ -8185,12 +8185,12 @@ IRE: %2</translation>
     <message>
         <location filename="../src/jobs/videoqualityjob.cpp" line="41"/>
         <source>View Report</source>
-        <translation>Voir le Rapport</translation>
+        <translation>Voir le rapport</translation>
     </message>
     <message>
         <location filename="../src/jobs/videoqualityjob.cpp" line="45"/>
         <source>Show In Folder</source>
-        <translation>Montrer dans le Dossier</translation>
+        <translation>Montrer dans le dossier</translation>
     </message>
     <message>
         <location filename="../src/jobs/videoqualityjob.cpp" line="49"/>
@@ -8200,7 +8200,7 @@ IRE: %2</translation>
     <message>
         <location filename="../src/jobs/videoqualityjob.cpp" line="88"/>
         <source>Video Quality Measurement</source>
-        <translation>Mesure de la Qualité Vidéo</translation>
+        <translation>Mesure de la qualité vidéo</translation>
     </message>
 </context>
 <context>
@@ -8264,7 +8264,7 @@ Valeur : %2</translation>
     <message>
         <location filename="../src/widgets/scopes/videorgbparadescopewidget.cpp" line="184"/>
         <source>Video RGB Parade</source>
-        <translation>Vidéo RVB Parade</translation>
+        <translation>Vidéo RVB parade</translation>
     </message>
 </context>
 <context>
@@ -8344,13 +8344,13 @@ V: %2</translation>
         <location filename="../src/widgets/scopes/videowaveformscopewidget.cpp" line="144"/>
         <source>Pixel: %1
 IRE: %2</source>
-        <translation>Pixel: %1
-IRE: %2</translation>
+        <translation>Pixel : %1
+IRE : %2</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videowaveformscopewidget.cpp" line="148"/>
         <source>IRE: %1</source>
-        <translation>IRE: %1</translation>
+        <translation>IRE : %1</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videowaveformscopewidget.cpp" line="155"/>
@@ -8408,7 +8408,7 @@ IRE: %2</translation>
     <message>
         <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="155"/>
         <source>Lock/Unlock the selected pixel</source>
-        <translation>Verrouiller/Débloquer le pixel sélectionné</translation>
+        <translation>Verrouiller/débloquer le pixel sélectionné</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/videozoomscopewidget.cpp" line="247"/>
@@ -8477,7 +8477,7 @@ IRE: %2</translation>
     <message>
         <location filename="../src/widgets/x11grabwidget.ui" line="113"/>
         <source>Follow Mouse</source>
-        <translation>Suivre la Souris</translation>
+        <translation>Suivre la souris</translation>
     </message>
     <message>
         <location filename="../src/widgets/x11grabwidget.ui" line="121"/>
@@ -8658,17 +8658,17 @@ La plupart des utilisateurs n’ont pas besoin de changer cela.</translation>
     <message>
         <location filename="../src/qml/views/keyframes/keyframes.qml" line="509"/>
         <source>Show Video Thumbnails</source>
-        <translation>Afficher les miniatures vidéo</translation>
+        <translation>Afficher les miniatures vidéos</translation>
     </message>
     <message>
         <location filename="../src/qml/views/keyframes/keyframes.qml" line="515"/>
         <source>Center the Playhead</source>
-        <translation>Centrer la Tête de Lecture</translation>
+        <translation>Centrer la tête de lecture</translation>
     </message>
     <message>
         <location filename="../src/qml/views/keyframes/keyframes.qml" line="521"/>
         <source>Scroll to Playhead on Zoom</source>
-        <translation>Zoomer sur la Tête de Lecture</translation>
+        <translation>Zoomer sur la tête de lecture</translation>
     </message>
     <message>
         <location filename="../src/qml/views/keyframes/keyframes.qml" line="528"/>
@@ -8746,7 +8746,7 @@ La plupart des utilisateurs n’ont pas besoin de changer cela.</translation>
     <message>
         <location filename="../src/main.cpp" line="186"/>
         <source>Zero or more files or folders to open</source>
-        <translation>Zero, plus de fichiers ou de dossier à ouvrir</translation>
+        <translation>Zéro, plus de fichiers ou de dossier à ouvrir</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="392"/>
@@ -8756,7 +8756,7 @@ La plupart des utilisateurs n’ont pas besoin de changer cela.</translation>
     <message>
         <location filename="../src/main.cpp" line="372"/>
         <source>Expiring cache...</source>
-        <translation>Nettoyage du cache...</translation>
+        <translation>Nettoyage du cache…</translation>
     </message>
 </context>
 <context>
@@ -8764,12 +8764,12 @@ La plupart des utilisateurs n’ont pas besoin de changer cela.</translation>
     <message>
         <location filename="../src/qml/filters/alpha_adjust/meta.qml" line="24"/>
         <source>Alpha Channel: Adjust</source>
-        <translation>Canal alpha : Ajuster</translation>
+        <translation>Canal alpha : ajuster</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/alpha_view/meta.qml" line="24"/>
         <source>Alpha Channel: View</source>
-        <translation>Canal alpha : Voir</translation>
+        <translation>Canal alpha : voir</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_balance/meta.qml" line="7"/>
@@ -8865,12 +8865,12 @@ La plupart des utilisateurs n’ont pas besoin de changer cela.</translation>
     <message>
         <location filename="../src/qml/filters/audio_normalize_1p/meta.qml" line="7"/>
         <source>Normalize: One Pass</source>
-        <translation>Normalisation : Une passe</translation>
+        <translation>Normalisation : une passe</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_normalize_2p/meta.qml" line="7"/>
         <source>Normalize: Two Pass</source>
-        <translation>Normalisation : Deux passes</translation>
+        <translation>Normalisation : deux passes</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_notch/meta.qml" line="7"/>
@@ -8890,12 +8890,12 @@ La plupart des utilisateurs n’ont pas besoin de changer cela.</translation>
     <message>
         <location filename="../src/qml/filters/audio_swapchannels/meta.qml" line="7"/>
         <source>Swap Channels</source>
-        <translation>Echanger les canaux</translation>
+        <translation>Échanger les canaux</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/bluescreen0r/meta.qml" line="24"/>
         <source>Chroma Key: Simple</source>
-        <translation>Clé chromatique : Simple</translation>
+        <translation>Clé chromatique : simple</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/brightness/meta.qml" line="6"/>
@@ -8905,22 +8905,22 @@ La plupart des utilisateurs n’ont pas besoin de changer cela.</translation>
     <message>
         <location filename="../src/qml/filters/color/meta.qml" line="6"/>
         <source>Color Grading</source>
-        <translation>Étalonnage des Couleurs</translation>
+        <translation>Étalonnage des couleurs</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/color/meta.qml" line="14"/>
         <source>Shadows (Lift)</source>
-        <translation>Tons sombres (Niveau)</translation>
+        <translation>Tons sombres (niveau)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/color/meta.qml" line="19"/>
         <source>Midtones (Gamma)</source>
-        <translation>Tons moyens (Gamma)</translation>
+        <translation>Tons moyens (gamma)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/color/meta.qml" line="24"/>
         <source>Highlights (Gain)</source>
-        <translation>Tons clairs (Gain)</translation>
+        <translation>Tons clairs (gain)</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/contrast/meta.qml" line="6"/>
@@ -8935,7 +8935,7 @@ La plupart des utilisateurs n’ont pas besoin de changer cela.</translation>
     <message>
         <location filename="../src/qml/filters/dynamictext/meta.qml" line="7"/>
         <source>Text: Simple</source>
-        <translation>Texte: Simple</translation>
+        <translation>Texte : simple</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/crop_rectangle/meta.qml" line="17"/>
@@ -8993,7 +8993,7 @@ La plupart des utilisateurs n’ont pas besoin de changer cela.</translation>
     <message>
         <location filename="../src/qml/filters/keyspillm0pup/meta.qml" line="24"/>
         <source>Key Spill: Advanced</source>
-        <translation>Nettoyage de masque : Avancé</translation>
+        <translation>Nettoyage de masque : avancé</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/lenscorrection/meta.qml" line="23"/>
@@ -9124,7 +9124,7 @@ La plupart des utilisateurs n’ont pas besoin de changer cela.</translation>
     <message>
         <location filename="../src/qml/filters/select0r/meta.qml" line="24"/>
         <source>Chroma Key: Advanced</source>
-        <translation>Clé chromatique : Avancé</translation>
+        <translation>Clé chromatique : avancé</translation>
     </message>
     <message>
         <location filename="../src/qml/filters/sepia/meta.qml" line="6"/>
