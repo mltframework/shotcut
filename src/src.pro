@@ -413,7 +413,7 @@ win32 {
     }
     QMAKE_TARGET_COMPANY = Meltytech, LLC
     QMAKE_TARGET_COPYRIGHT = Copyright @ 2011-2021 Meltytech, LLC. All rights reserved.
-    QMAKE_TARGET_DESCRIPTION = Non-linear video editor
+    QMAKE_TARGET_DESCRIPTION = Shotcut video editor
     QMAKE_TARGET_PRODUCT = Shotcut
     RC_ICONS = ../packaging/windows/shotcut-logo-64.ico
     QT += winextras
