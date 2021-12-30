@@ -179,6 +179,7 @@ public:
     bool isGpuCompatible() const { return m_isGpuCompatible; }
     void setIsGpuCompatible(bool isCompatible) { m_isGpuCompatible = isCompatible; }
     QmlKeyframesMetadata* keyframes() { return &m_keyframes; }
+    const QmlKeyframesMetadata* keyframes() const { return &m_keyframes; }
     bool isDeprecated() const { return m_isDeprecated; }
     void setIsDeprecated(bool deprecated) { m_isDeprecated = deprecated; }
     bool isMltVersion(const QString& version);
