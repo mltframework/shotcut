@@ -51,19 +51,25 @@ ToolButton {
     onClicked: {
         if (!checked) {
            checked = true
-           confirmDialog.visible = true
+           confirmRemoveAdvancedDialog.visible = true
         } else {
-            application.showStatusMessage(qsTr('Hold %1 to drag a keyframe vertical only or %2 to drag horizontal only')
-                .arg(application.OS === 'OS X'? '⌘' : 'Ctrl')
-                .arg(application.OS === 'OS X'? '⌥' : 'Alt'))
-            keyframes.show()
-            keyframes.raise()
-            toggled()
+            if (parameters.simpleKeyframesInUse()) {
+                checked = false
+                confirmRemoveSimpleDialog.visible = true
+            }
+            if (checked) {
+                application.showStatusMessage(qsTr('Hold %1 to drag a keyframe vertical only or %2 to drag horizontal only')
+                    .arg(application.OS === 'OS X'? '⌘' : 'Ctrl')
+                    .arg(application.OS === 'OS X'? '⌥' : 'Alt'))
+                keyframes.show()
+                keyframes.raise()
+                toggled()
+            }
         }
     }
 
     MessageDialog {
-        id: confirmDialog
+        id: confirmRemoveAdvancedDialog
         visible: false
         modality: application.dialogModality
         icon: StandardIcon.Question
@@ -77,6 +83,24 @@ ToolButton {
         }
         onNo: {
             checkbox.checked = true
+        }
+    }
+
+    MessageDialog {
+        id: confirmRemoveSimpleDialog
+        visible: false
+        modality: application.dialogModality
+        icon: StandardIcon.Question
+        title: qsTr("Confirm Removing Simple Keyframes")
+        text: qsTr('This will remove all simple keyframes for all parameters.<p>Simple keyframes will be converted to advanced keyframes.<p>Do you still want to do this?')
+        standardButtons: StandardButton.Yes | StandardButton.No
+        onYes: {
+            checkbox.checked = true
+            parameters.removeSimpleKeyframes()
+            parameters.reload()
+        }
+        onNo: {
+            checkbox.checked = false
         }
     }
 }

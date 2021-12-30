@@ -55,6 +55,7 @@ Shotcut.KeyframableFilter {
     }
 
     function updateSimpleKeyframes() {
+        setControls()
         updateFilter(levels, levelsSlider.value / levelsSlider.maximumValue, levelKeyframesButton, null)
     }
 
@@ -111,6 +112,7 @@ Shotcut.KeyframableFilter {
 
     Connections {
         target: filter
+        onChanged: setControls()
         onInChanged: updateSimpleKeyframes()
         onOutChanged: updateSimpleKeyframes()
         onAnimateInChanged: updateSimpleKeyframes()

@@ -70,6 +70,7 @@ Shotcut.KeyframableFilter {
     }
 
     function updateSimpleKeyframes() {
+        setControls()
         updateFilter(glitchFreq, glitchFreqSlider.value / glitchFreqSlider.maximumValue, glitchKeyframesButton, null)
         updateFilter(blockH, blockHSlider.value / blockHSlider.maximumValue, blockKeyframesButton, null)
         updateFilter(shiftInt, shiftIntSlider.value / shiftIntSlider.maximumValue, shiftKeyframesButton, null)
@@ -201,6 +202,7 @@ Shotcut.KeyframableFilter {
 
     Connections {
         target: filter
+        onChanged: setControls()
         onInChanged: updateSimpleKeyframes()
         onOutChanged: updateSimpleKeyframes()
         onAnimateInChanged: updateSimpleKeyframes()

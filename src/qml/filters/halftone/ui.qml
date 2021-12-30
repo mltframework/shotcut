@@ -70,6 +70,7 @@ Shotcut.KeyframableFilter {
     }
 
     function updateSimpleKeyframes() {
+        setControls()
         updateFilter(dotradius, dotradiusSlider.value / dotradiusSlider.maximumValue, dotKeyframesButton, null)
         updateFilter(cyanangle, cyanangleSlider.value / cyanangleSlider.maximumValue, cyanKeyframesButton, null)
         updateFilter(magentaangle, magentaangleSlider.value / magentaangleSlider.maximumValue, magentaKeyframesButton, null)
@@ -204,6 +205,7 @@ Shotcut.KeyframableFilter {
 
     Connections {
         target: filter
+        onChanged: setControls()
         onInChanged: updateSimpleKeyframes()
         onOutChanged: updateSimpleKeyframes()
         onAnimateInChanged: updateSimpleKeyframes()

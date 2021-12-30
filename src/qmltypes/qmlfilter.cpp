@@ -549,6 +549,24 @@ void QmlFilter::setAnimateOut(int value)
     }
 }
 
+void QmlFilter::clearAnimateInOut()
+{
+    bool inChanged = false;
+    bool outChanged = false;
+    if (0 != m_service.time_to_frames(m_service.get(kShotcutAnimInProperty))) {
+        m_service.set(kShotcutAnimInProperty, m_service.frames_to_time(0, mlt_time_clock));
+        inChanged = true;
+    }
+    if (0 != m_service.time_to_frames(m_service.get(kShotcutAnimOutProperty))) {
+        m_service.set(kShotcutAnimOutProperty, m_service.frames_to_time(0, mlt_time_clock));
+        outChanged = true;
+    }
+    if (inChanged)
+        emit animateInChanged();
+    if (outChanged)
+        emit animateOutChanged();
+}
+
 int QmlFilter::duration()
 {
     return out() - in() + 1;

@@ -223,6 +223,7 @@ Item {
 
     Connections {
         target: filter
+        onChanged: setControls()
         onInChanged: updateSimpleAnimation()
         onOutChanged: updateSimpleAnimation()
         onAnimateInChanged: updateSimpleAnimation()

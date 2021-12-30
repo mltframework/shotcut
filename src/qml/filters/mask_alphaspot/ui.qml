@@ -360,6 +360,7 @@ Item {
     }
 
     function updatedSimpleAnimation() {
+        setControls()
         updateFilter(paramHorizontal, horizontalSlider.value/100, null, horizontalKeyframesButton)
         updateFilter(paramVertical,   verticalSlider.value/100,   null, verticalKeyframesButton)
         updateFilter(paramWidth,      widthSlider.value/100,      null, widthKeyframesButton)
@@ -369,6 +370,7 @@ Item {
 
     Connections {
         target: filter
+        onChanged: setControls()
         onInChanged: updatedSimpleAnimation()
         onOutChanged: updatedSimpleAnimation()
         onAnimateInChanged: updatedSimpleAnimation()

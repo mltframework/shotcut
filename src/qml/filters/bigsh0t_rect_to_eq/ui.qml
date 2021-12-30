@@ -16,17 +16,7 @@ Item {
     property int interpolationValue : 0;
 
     function updateSimpleKeyframes() {
-        if (filter.animateIn <= 0 && filter.animateOut <= 0) {
-            // When disabling simple keyframes. Clear out the keyframes before proceeding.
-            filter.blockSignals = true
-            if (!hfovKeyframesButton.checked && filter.keyframeCount("hfov") > 0) {
-                filter.resetProperty("hfov")
-            }
-            if (!vfovKeyframesButton.checked && filter.keyframeCount("vfov") > 0) {
-                filter.resetProperty("vfov")
-            }
-            filter.blockSignals = false
-        } else if (filter.animateIn > 0 || filter.animateOut > 0) {
+        if (filter.animateIn > 0 || filter.animateOut > 0) {
             // When enabling simple keyframes, initialize the keyframes with the current value
             if (filter.keyframeCount("hfov") <= 0) {
                 hfovStart = hfovMiddle = hfovEnd = filter.getDouble("hfov")
@@ -35,6 +25,7 @@ Item {
                 vfovStart = vfovMiddle = vfovEnd = filter.getDouble("vfov")
             }
         }
+        setControls()
         updateProperty_hfov(null)
         updateProperty_vfov(null)
         updateProperty_interpolation()

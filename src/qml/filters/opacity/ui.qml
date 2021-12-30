@@ -168,10 +168,11 @@ Item {
 
     Connections {
         target: filter
-        onInChanged: updateFilter(null)
-        onOutChanged: updateFilter(null)
-        onAnimateInChanged: updateFilter(null)
-        onAnimateOutChanged: updateFilter(null)
+        onChanged: setControls()
+        onInChanged: { setControls(); updateFilter(null) }
+        onOutChanged: { setControls(); updateFilter(null) }
+        onAnimateInChanged: { setControls(); updateFilter(null) }
+        onAnimateOutChanged: { setControls(); updateFilter(null) }
         onPropertyChanged: setControls()
     }
 

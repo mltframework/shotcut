@@ -842,17 +842,6 @@ Item {
     }
 
     function updateSimpleKeyframes() {
-        if (filter.animateIn <= 0 && filter.animateOut <= 0) {
-            // When disabling simple keyframes. Clear out the keyframes before proceeding.
-            filter.blockSignals = true
-            if (!positionKeyframesButton.checked && filter.keyframeCount(rectProperty) > 0) {
-                filter.resetProperty(rectProperty)
-            }
-            if (!rotationKeyframesButton.checked && filter.keyframeCount(rotationProperty) > 0) {
-                filter.resetProperty(rotationProperty)
-            }
-            filter.blockSignals = false
-        }
         if (rotationProperty) {
             updateRotation()
         }

@@ -306,6 +306,7 @@ Item {
     }
 
     function updateSimpleAnimation() {
+        setKeyframedControls()
         updateFilter(inputBlackParam, inputBlackSlider.value / inputBlackSlider.maximumValue, null, inputBlackKeyframesButton)
         updateFilter(inputWhiteParam, inputWhiteSlider.value / inputWhiteSlider.maximumValue, null, inputWhiteKeyframesButton)
         updateFilter(gammaParam, gammaSlider.value / gammaSlider.maximumValue, null, gammaKeyframesButton)
@@ -313,6 +314,7 @@ Item {
 
     Connections {
         target: filter
+        onChanged: setKeyframedControls()
         onInChanged: updateSimpleAnimation()
         onOutChanged: updateSimpleAnimation()
         onAnimateInChanged: updateSimpleAnimation()

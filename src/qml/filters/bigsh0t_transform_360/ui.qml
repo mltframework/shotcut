@@ -18,20 +18,7 @@ Item {
     property bool gridValue: false
 
     function updateSimpleKeyframes() {
-        if (filter.animateIn <= 0 && filter.animateOut <= 0) {
-            // When disabling simple keyframes. Clear out the keyframes before proceeding.
-            filter.blockSignals = true
-            if (!yawKeyframesButton.checked && filter.keyframeCount("yaw") > 0) {
-                filter.resetProperty("yaw")
-            }
-            if (!pitchKeyframesButton.checked && filter.keyframeCount("pitch") > 0) {
-                filter.resetProperty("pitch")
-            }
-            if (!rollKeyframesButton.checked && filter.keyframeCount("roll") > 0) {
-                filter.resetProperty("roll")
-            }
-            filter.blockSignals = false
-        } else if (filter.animateIn > 0 || filter.animateOut > 0) {
+        if (filter.animateIn > 0 || filter.animateOut > 0) {
             // When enabling simple keyframes, initialize the keyframes with the current value
             if (filter.keyframeCount("yaw") <= 0) {
                 yawStart = yawMiddle = yawEnd = filter.getDouble("yaw")
@@ -43,6 +30,7 @@ Item {
                 rollStart = rollMiddle = rollEnd = filter.getDouble("roll")
             }
         }
+        setControls()
         updateProperty_yaw (null)
         updateProperty_pitch (null)
         updateProperty_roll (null)

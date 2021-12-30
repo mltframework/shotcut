@@ -59,6 +59,7 @@ Shotcut.KeyframableFilter {
     }
 
     function updateSimpleKeyframes() {
+        setControls()
         updateFilter(phaseincrement, phaseincrementSlider.value / phaseincrementSlider.maximumValue, phaseKeyframesButton, null)
         updateFilter(zoomrate, zoomrateSlider.value / zoomrateSlider.maximumValue, zoomKeyframesButton, null)
     }
@@ -140,6 +141,7 @@ Shotcut.KeyframableFilter {
 
     Connections {
         target: filter
+        onChanged: setControls()
         onInChanged: updateSimpleKeyframes()
         onOutChanged: updateSimpleKeyframes()
         onAnimateInChanged: updateSimpleKeyframes()

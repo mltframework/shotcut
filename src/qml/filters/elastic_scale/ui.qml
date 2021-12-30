@@ -71,6 +71,7 @@ Shotcut.KeyframableFilter {
     }
 
     function updateSimpleKeyframes() {
+        setControls()
         updateFilter(center, centerSlider.value / centerSlider.maximumValue, centerKeyframesButton, null)
         updateFilter(linearwidth, linearwidthSlider.value / linearwidthSlider.maximumValue, linwKeyframesButton, null)
         updateFilter(linearscalefactor, linearscalefactorSlider.value / linearscalefactorSlider.maximumValue, lsfKeyframesButton, null)
@@ -206,6 +207,7 @@ Shotcut.KeyframableFilter {
 
     Connections {
         target: filter
+        onChanged: setControls()
         onInChanged: updateSimpleKeyframes()
         onOutChanged: updateSimpleKeyframes()
         onAnimateInChanged: updateSimpleKeyframes()

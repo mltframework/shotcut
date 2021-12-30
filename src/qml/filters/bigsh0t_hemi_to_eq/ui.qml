@@ -33,53 +33,7 @@ Item {
     property int projectionValue : 0;
 
     function updateSimpleKeyframes() {
-        if (filter.animateIn <= 0 && filter.animateOut <= 0) {
-            // When disabling simple keyframes. Clear out the keyframes before proceeding.
-            filter.blockSignals = true
-            if (!yawKeyframesButton.checked && filter.keyframeCount("yaw") > 0) {
-                filter.resetProperty("yaw")
-            }
-            if (!pitchKeyframesButton.checked && filter.keyframeCount("pitch") > 0) {
-                filter.resetProperty("pitch")
-            }
-            if (!rollKeyframesButton.checked && filter.keyframeCount("roll") > 0) {
-                filter.resetProperty("roll")
-            }
-            if (!frontXKeyframesButton.checked && filter.keyframeCount("frontX") > 0) {
-                filter.resetProperty("frontX")
-            }
-            if (!frontYKeyframesButton.checked && filter.keyframeCount("frontY") > 0) {
-                filter.resetProperty("frontY")
-            }
-            if (!frontUpKeyframesButton.checked && filter.keyframeCount("frontUp") > 0) {
-                filter.resetProperty("frontUp")
-            }
-            if (!backXKeyframesButton.checked && filter.keyframeCount("backX") > 0) {
-                filter.resetProperty("backX")
-            }
-            if (!backYKeyframesButton.checked && filter.keyframeCount("backY") > 0) {
-                filter.resetProperty("backY")
-            }
-            if (!backUpKeyframesButton.checked && filter.keyframeCount("backUp") > 0) {
-                filter.resetProperty("backUp")
-            }
-            if (!fovKeyframesButton.checked && filter.keyframeCount("fov") > 0) {
-                filter.resetProperty("fov")
-            }
-            if (!radiusKeyframesButton.checked && filter.keyframeCount("radius") > 0) {
-                filter.resetProperty("radius")
-            }
-            if (!radiusKeyframesButton.checked && filter.keyframeCount("radius") > 0) {
-                filter.resetProperty("radius")
-            }
-            if (!nadirRadiusKeyframesButton.checked && filter.keyframeCount("nadirRadius") > 0) {
-                filter.resetProperty("nadirRadius")
-            }
-            if (!nadirCorrectionStartKeyframesButton.checked && filter.keyframeCount("nadirCorrectionStart") > 0) {
-                filter.resetProperty("nadirCorrectionStart")
-            }
-            filter.blockSignals = false
-        } else if (filter.animateIn > 0 || filter.animateOut > 0) {
+        if (filter.animateIn > 0 || filter.animateOut > 0) {
             // When enabling simple keyframes, initialize the keyframes with the current value
             if (filter.keyframeCount("yaw") <= 0) {
                 yawStart = yawMiddle = yawEnd = filter.getDouble("yaw")
@@ -121,6 +75,7 @@ Item {
                 nadirCorrectionStartStart = nadirCorrectionStartMiddle = nadirCorrectionStartEnd = filter.getDouble("nadirCorrectionStart")
             }
         }
+        setControls()
         updateProperty_yaw(null)
         updateProperty_pitch(null)
         updateProperty_roll(null)

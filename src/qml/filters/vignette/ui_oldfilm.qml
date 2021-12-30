@@ -233,6 +233,7 @@ Item {
     }
 
     function updateSimpleAnimation() {
+        setKeyframedControls()
         updateFilter('radius', radiusSlider.value / 100.0, null, radiusKeyframesButton)
         updateFilter('smooth', smoothSlider.value / 100.0, null, smoothKeyframesButton)
         updateFilter('opacity', 1.0 - opacitySlider.value / 100.0, null, opacityKeyframesButton)
@@ -240,6 +241,7 @@ Item {
 
     Connections {
         target: filter
+        onChanged: setKeyframedControls()
         onInChanged: updateSimpleAnimation()
         onOutChanged: updateSimpleAnimation()
         onAnimateInChanged: updateSimpleAnimation()

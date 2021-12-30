@@ -55,8 +55,8 @@ Shotcut.KeyframableFilter {
     }
 
     function updateSimpleKeyframes() {
+        setControls()
         updateFilter(noise, noiseSlider.value / noiseSlider.maximumValue, noiseKeyframesButton, null)
-        
     }
 
     GridLayout {
@@ -113,6 +113,7 @@ Shotcut.KeyframableFilter {
 
     Connections {
         target: filter
+        onChanged: setControls()
         onInChanged: updateSimpleKeyframes()
         onOutChanged: updateSimpleKeyframes()
         onAnimateInChanged: updateSimpleKeyframes()

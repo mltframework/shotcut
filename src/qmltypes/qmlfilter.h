@@ -104,6 +104,7 @@ public:
     void setAnimateIn(int value);
     int animateOut();
     void setAnimateOut(int value);
+    void clearAnimateInOut();
     int duration();
     Q_INVOKABLE void resetProperty(const QString& name);
     Q_INVOKABLE void clearSimpleAnimation(const QString& name);
@@ -130,6 +131,7 @@ signals:
     void outChanged(int delta);
     void animateInChanged();
     void animateOutChanged();
+    void animateInOutChanged();
     void durationChanged();
     void propertyChanged(QString name); // Use to let QML know when a specific property has changed
 

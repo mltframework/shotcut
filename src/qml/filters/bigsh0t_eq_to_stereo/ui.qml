@@ -19,26 +19,7 @@ Item {
     property int interpolationValue : 0;
 
     function updateSimpleKeyframes() {
-        if (filter.animateIn <= 0 && filter.animateOut <= 0) {
-            // When disabling simple keyframes. Clear out the keyframes before proceeding.
-            filter.blockSignals = true
-            if (!yawKeyframesButton.checked && filter.keyframeCount("yaw") > 0) {
-                filter.resetProperty("yaw")
-            }
-            if (!pitchKeyframesButton.checked && filter.keyframeCount("pitch") > 0) {
-                filter.resetProperty("pitch")
-            }
-            if (!rollKeyframesButton.checked && filter.keyframeCount("roll") > 0) {
-                filter.resetProperty("roll")
-            }
-            if (!fovKeyframesButton.checked && filter.keyframeCount("fov") > 0) {
-                filter.resetProperty("fov")
-            }
-            if (!amountKeyframesButton.checked && filter.keyframeCount("amount") > 0) {
-                filter.resetProperty("amount")
-            }
-            filter.blockSignals = false
-        } else if (filter.animateIn > 0 || filter.animateOut > 0) {
+        if (filter.animateIn > 0 || filter.animateOut > 0) {
             // When enabling simple keyframes, initialize the keyframes with the current value
             if (filter.keyframeCount("yaw") <= 0) {
                 yawStart = yawMiddle = yawEnd = filter.getDouble("yaw")
@@ -56,6 +37,7 @@ Item {
                 amountStart = amountMiddle = amountEnd = filter.getDouble("amount")
             }
         }
+        setControls()
         updateProperty_yaw (null)
         updateProperty_pitch (null)
         updateProperty_roll (null)

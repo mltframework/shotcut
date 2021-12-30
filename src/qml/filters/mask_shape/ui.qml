@@ -360,11 +360,13 @@ Item {
     }
 
     function updatedSimpleAnimation() {
+        setControls()
         updateFilter('filter.mix', thresholdSlider.value, null, thresholdKeyframesButton)
     }
 
     Connections {
         target: filter
+        onChanged: setControls()
         onInChanged: updatedSimpleAnimation()
         onOutChanged: updatedSimpleAnimation()
         onAnimateInChanged: updatedSimpleAnimation()

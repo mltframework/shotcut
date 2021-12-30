@@ -31,7 +31,6 @@ Metadata {
             Parameter {
                 name: qsTr('Distance')
                 property: 'av.similarity'
-                isSimple: true
                 isCurve: true
                 minimum: 0
                 maximum: 1
