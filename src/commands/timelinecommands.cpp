@@ -95,6 +95,7 @@ InsertCommand::InsertCommand(MultitrackModel &model, MarkersModel& markersModel,
     , m_markersShift(0)
 {
     setText(QObject::tr("Insert into track"));
+    m_undoHelper.setHints(UndoHelper::RestoreTracks);
 }
 
 void InsertCommand::redo()
@@ -150,6 +151,7 @@ OverwriteCommand::OverwriteCommand(MultitrackModel &model, int trackIndex,
     , m_seek(seek)
 {
     setText(QObject::tr("Overwrite onto track"));
+    m_undoHelper.setHints(UndoHelper::RestoreTracks);
 }
 
 void OverwriteCommand::redo()
