@@ -2955,7 +2955,7 @@ void MultitrackModel::insertOrAdjustBlankAt(QList<int> tracks, int position, int
 
         if (otherTrack) {
             Mlt::Playlist trackPlaylist(*otherTrack);
-            int idx = trackPlaylist.get_clip_index_at(position);
+            int idx = trackPlaylist.get_clip_index_at(position-1);
 
             if (trackPlaylist.is_blank(idx)) {
                 trackPlaylist.resize_clip(idx, 0, trackPlaylist.clip_length(idx) + length - 1);
