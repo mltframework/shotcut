@@ -292,6 +292,7 @@ Rectangle {
                 }
             }
             onDoubleClicked: filter.animateIn = (filter.animateIn > 0) ? 0 : Math.round(profile.fps)
+            onExited: animateInControl.scale = 1.0
         }
         SequentialAnimation on scale {
             loops: Animation.Infinite
@@ -372,6 +373,7 @@ Rectangle {
                 }
             }
             onDoubleClicked: filter.animateOut = (filter.animateOut > 0) ?  0 : Math.round(profile.fps)
+            onExited: animateOutControl.scale = 1.0
         }
         SequentialAnimation on scale {
             loops: Animation.Infinite
