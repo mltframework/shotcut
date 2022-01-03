@@ -143,7 +143,7 @@
     <message>
         <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="91"/>
         <source>Audio Peak Meter</source>
-        <translation>Crête-mètre audio</translation>
+        <translation>VU-mètre</translation>
     </message>
     <message>
         <location filename="../src/widgets/scopes/audiopeakmeterscopewidget.cpp" line="108"/>
@@ -3153,7 +3153,7 @@ audio du clip A (0 %) ou du clip B (100 %).</translation>
     <message>
         <location filename="../src/mainwindow.ui" line="458"/>
         <source>Show or hide the audio peak meter</source>
-        <translation>Afficher ou masquer le crête-mètre audio</translation>
+        <translation>Afficher ou masquer le VU-mètre</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="467"/>
