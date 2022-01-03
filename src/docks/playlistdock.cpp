@@ -678,14 +678,19 @@ void PlaylistDock::onDropped(const QMimeData *data, int row)
         for (const auto& path : fileNames) {
             if (MAIN.isSourceClipMyProject(path)) continue;
             longTask.reportProgress(Util::baseName(path), i++, count);
-            Mlt::Producer p(MLT.profile(), path.toUtf8().constData());
-            if (p.is_valid()) {
-                // Convert MLT XML to a virtual clip.
-                if (!qstrcmp(p.get("mlt_service"), "xml")) {
+            Mlt::Producer p;
+            if (path.endsWith(".mlt") || path.endsWith(".xml")) {
+                p = Mlt::Producer(MLT.profile(), "xml", path.toUtf8().constData());
+                if (p.is_valid()) {
+                    // Convert MLT XML to a virtual clip.
                     p.set(kShotcutVirtualClip, 1);
                     p.set("resource", path.toUtf8().constData());
                     first = false;
                 }
+            } else {
+                p = Mlt::Producer(MLT.profile(), path.toUtf8().constData());
+            }
+            if (p.is_valid()) {
                 Mlt::Producer* producer = &p;
                 if (first) {
                     first = false;
@@ -698,7 +703,7 @@ void PlaylistDock::onDropped(const QMimeData *data, int row)
                     }
                 }
                 producer = MLT.setupNewProducer(producer);
-                if (MLT.isSeekable(producer)) {
+                if (MLT.isSeekable(producer) || producer->get_int(kShotcutVirtualClip)) {
                     ProxyManager::generateIfNotExists(*producer);
                     if (row == -1)
                         MAIN.undoStack()->push(new Playlist::AppendCommand(m_model, MLT.XML(producer)));
