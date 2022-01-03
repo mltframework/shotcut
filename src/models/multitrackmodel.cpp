@@ -1205,10 +1205,6 @@ void MultitrackModel::splitClip(int trackIndex, int clipIndex, int position)
     if (track) {
         Mlt::Playlist playlist(*track);
         QScopedPointer<Mlt::ClipInfo> info(playlist.clip_info(clipIndex));
-
-        // Make copy of clip.
-        Mlt::Producer producer(MLT.profile(), "xml-string",
-            MLT.XML(info->producer).toUtf8().constData());
         int in = info->frame_in;
         int out = info->frame_out;
         int filterIn = MLT.filterIn(playlist, clipIndex);
@@ -1216,48 +1212,53 @@ void MultitrackModel::splitClip(int trackIndex, int clipIndex, int position)
         int duration = position - playlist.clip_start(clipIndex);
         int delta = info->frame_count - duration;
 
-        // Connect a transition on the left to the new producer.
-        if (isTransition(playlist, clipIndex - 1) && !playlist.is_blank(clipIndex)) {
-            QScopedPointer<Mlt::Producer> p(playlist.get_clip(clipIndex - 1));
-            Mlt::Tractor tractor(p->parent());
-            if (tractor.is_valid()) {
-                QScopedPointer<Mlt::Producer> track_b(tractor.track(1));
-                track_b.reset(producer.cut(track_b->get_in(), track_b->get_out()));
-                tractor.set_track(*track_b, 1);
-            }
-        }
-
-        // Remove fades that are usually not desired after split.
-        QScopedPointer<Mlt::Filter> filter(getFilter("fadeOutVolume", &producer));
-        if (filter && filter->is_valid())
-            producer.detach(*filter);
-        filter.reset(getFilter("fadeOutBrightness", &producer));
-        if (filter && filter->is_valid())
-            producer.detach(*filter);
-        filter.reset(getFilter("fadeOutMovit", &producer));
-        if (filter && filter->is_valid())
-            producer.detach(*filter);
-        filter.reset(getFilter("fadeInVolume", info->producer));
-        if (filter && filter->is_valid())
-            info->producer->detach(*filter);
-        filter.reset(getFilter("fadeInBrightness", info->producer));
-        if (filter && filter->is_valid())
-            info->producer->detach(*filter);
-        filter.reset(getFilter("fadeInMovit", info->producer));
-        if (filter && filter->is_valid())
-            info->producer->detach(*filter);
-
-        beginInsertRows(index(trackIndex), clipIndex, clipIndex);
         if (playlist.is_blank(clipIndex)) {
+            beginInsertRows(index(trackIndex), clipIndex, clipIndex);
             playlist.insert_blank(clipIndex, duration - 1);
+            endInsertRows();
         } else {
+            // Make copy of clip.
+            Mlt::Producer producer(MLT.profile(), "xml-string",
+                MLT.XML(info->producer).toUtf8().constData());
+
+            // Connect a transition on the left to the new producer.
+            if (isTransition(playlist, clipIndex - 1) && !playlist.is_blank(clipIndex)) {
+                QScopedPointer<Mlt::Producer> p(playlist.get_clip(clipIndex - 1));
+                Mlt::Tractor tractor(p->parent());
+                if (tractor.is_valid()) {
+                    QScopedPointer<Mlt::Producer> track_b(tractor.track(1));
+                    track_b.reset(producer.cut(track_b->get_in(), track_b->get_out()));
+                    tractor.set_track(*track_b, 1);
+                }
+            }
+
+            // Remove fades that are usually not desired after split.
+            QScopedPointer<Mlt::Filter> filter(getFilter("fadeOutVolume", &producer));
+            if (filter && filter->is_valid())
+                producer.detach(*filter);
+            filter.reset(getFilter("fadeOutBrightness", &producer));
+            if (filter && filter->is_valid())
+                producer.detach(*filter);
+            filter.reset(getFilter("fadeOutMovit", &producer));
+            if (filter && filter->is_valid())
+                producer.detach(*filter);
+            filter.reset(getFilter("fadeInVolume", info->producer));
+            if (filter && filter->is_valid())
+                info->producer->detach(*filter);
+            filter.reset(getFilter("fadeInBrightness", info->producer));
+            if (filter && filter->is_valid())
+                info->producer->detach(*filter);
+            filter.reset(getFilter("fadeInMovit", info->producer));
+            if (filter && filter->is_valid())
+                info->producer->detach(*filter);
+
+            beginInsertRows(index(trackIndex), clipIndex, clipIndex);
             playlist.insert(producer, clipIndex, in, in + duration - 1);
+            endInsertRows();
             QModelIndex modelIndex = createIndex(clipIndex, 0, trackIndex);
             AudioLevelsTask::start(producer.parent(), this, modelIndex);
+            MLT.adjustClipFilters(producer, filterIn, out, 0, delta);
         }
-        endInsertRows();
-
-        MLT.adjustClipFilters(producer, filterIn, out, 0, delta);
 
         playlist.resize_clip(clipIndex + 1, in + duration, out);
         QModelIndex modelIndex = createIndex(clipIndex + 1, 0, trackIndex);
@@ -1266,10 +1267,11 @@ void MultitrackModel::splitClip(int trackIndex, int clipIndex, int position)
         roles << InPointRole;
         roles << FadeInRole;
         emit dataChanged(modelIndex, modelIndex, roles);
-        AudioLevelsTask::start(*info->producer, this, modelIndex);
 
-        delta = duration;
-        MLT.adjustClipFilters(*info->producer, in, filterOut, delta, 0);
+        if (!playlist.is_blank(clipIndex + 1)) {
+            AudioLevelsTask::start(*info->producer, this, modelIndex);
+            MLT.adjustClipFilters(*info->producer, in, filterOut, duration, 0);
+        }
 
         emit modified();
     }
