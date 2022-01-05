@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2021 Meltytech, LLC
+ * Copyright (c) 2017-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@ import Shotcut.Controls 1.0 as Shotcut
 Item {
     property string rectProperty: "rect"
     property rect filterRect: filter.getRect(rectProperty)
-    property var defaultParameters: [rectProperty, 'type', 'color.1', 'color.2', 'color.3', 'color.4', 'color.5', 'color.6', 'color.7', 'color.8', 'color.9', 'color.10', 'bgcolor', 'thickness', 'fill', 'mirror', 'reverse', 'tension', 'bands', 'frequency_low', 'frequency_high', 'threshold', 'segment_gap']
+    property var defaultParameters: [rectProperty, 'type', 'color.1', 'color.2', 'color.3', 'color.4', 'color.5', 'color.6', 'color.7', 'color.8', 'color.9', 'color.10', 'bgcolor', 'thickness', 'fill', 'mirror', 'reverse', 'tension', 'bands', 'frequency_low', 'frequency_high', 'threshold', 'segments', 'segment_gap']
 
     property int _minFreqDelta: 1000
     property bool _disableUpdate: true
@@ -52,6 +52,8 @@ Item {
             filter.set('frequency_low', '20')
             filter.set('frequency_high', '20000')
             filter.set('threshold', '-60')
+            filter.set('segments', '7')
+            filter.set('segment_gap', '8')
             filter.savePreset(defaultParameters)
         }
         setControls()
@@ -87,6 +89,7 @@ Item {
         freqLowSlider.value = filter.getDouble('frequency_low')
         freqHighSlider.value = filter.getDouble('frequency_high')
         thresholdSlider.value = filter.getDouble('threshold')
+        segmentsSlider.value = filter.getDouble('segments')
         segmentGapSlider.value = filter.getDouble('segment_gap')
         rectX.value = filterRect.x
         rectY.value = filterRect.y
@@ -168,7 +171,7 @@ Item {
             Layout.columnSpan: 3
             id: thicknessSlider
             minimumValue: 0
-            maximumValue: 20
+            maximumValue: 100
             decimals: 0
             suffix: ' px'
             onValueChanged: filter.set("thickness", value)
@@ -240,7 +243,6 @@ Item {
         }
 
         Label {
-            text: qsTr('Fill')
             Layout.alignment: Qt.AlignRight
         }
         CheckBox {
@@ -251,7 +253,6 @@ Item {
         }
 
         Label {
-            text: qsTr('Mirror')
             Layout.alignment: Qt.AlignRight
         }
         CheckBox {
@@ -262,7 +263,6 @@ Item {
         }
 
         Label {
-            text: qsTr('Reverse')
             Layout.alignment: Qt.AlignRight
         }
         CheckBox {
@@ -289,6 +289,23 @@ Item {
         }
 
         Label {
+            text: qsTr('Segments')
+            Layout.alignment: Qt.AlignRight
+        }
+        Shotcut.SliderSpinner {
+            Layout.columnSpan: 3
+            id: segmentsSlider
+            minimumValue: 2
+            maximumValue: 100
+            decimals: 0
+            onValueChanged: filter.set("segments", value)
+            Shotcut.HoverTip { text: 'The number of segments in the segment graph' }
+        }
+        Shotcut.UndoButton {
+            onClicked: segmentGapSlider.value = 8
+        }
+
+        Label {
             text: qsTr('Segment Gap')
             Layout.alignment: Qt.AlignRight
         }
@@ -296,7 +313,7 @@ Item {
             Layout.columnSpan: 3
             id: segmentGapSlider
             minimumValue: 0
-            maximumValue: 20
+            maximumValue: 100
             decimals: 0
             onValueChanged: filter.set("segment_gap", value)
             Shotcut.HoverTip { text: 'Space between segments in the segment graph (in pixels)' }
