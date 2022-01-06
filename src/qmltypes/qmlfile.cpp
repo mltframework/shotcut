@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2021 Meltytech, LLC
+ * Copyright (c) 2014-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,7 +29,13 @@ QmlFile::QmlFile(QObject* parent)
 
 QString QmlFile::getUrl()
 {
-    return QUrl::fromPercentEncoding(m_url.toString().toUtf8());
+    auto s = QUrl::fromPercentEncoding(m_url.toString().toUtf8());
+#ifdef Q_OS_WIN
+    if (s.size() > 2 && s[1]  == ':' && s[2]  == '/') {
+        s[0] = s[0].toUpper();
+    }
+#endif
+    return s;
 }
 
 void QmlFile::setUrl(QString text)
@@ -82,12 +88,12 @@ QString QmlFile::getFileName()
 
 QString QmlFile::getPath()
 {
-    return QDir::toNativeSeparators(QFileInfo(m_url.toString()).path());
+    return QDir::toNativeSeparators(QFileInfo(getUrl()).path());
 }
 
 QString QmlFile::getFilePath()
 {
-    return QDir::toNativeSeparators(m_url.toString());
+    return QDir::toNativeSeparators(getUrl());
 }
 
 void QmlFile::copyFromFile(QString source)

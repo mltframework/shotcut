@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2021 Meltytech, LLC
+ * Copyright (c) 2011-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -470,7 +470,8 @@ bool Controller::saveXML(const QString& filename, Service* service, bool withRel
     Consumer c(profile(), "xml", proxy? filename.toUtf8().constData() : kMltXmlPropertyName);
     Service s(service? service->get_service() : m_producer->get_service());
     if (s.is_valid()) {
-        QString root = withRelativePaths? fi.absolutePath() : "";
+        // The Shotcut rule for paths in MLT XML is forward slashes as created by QFileDialog and QmlFile.
+        QString root = withRelativePaths? QDir::fromNativeSeparators(fi.absolutePath()) : "";
         s.set(kShotcutProjectAudioChannels, m_audioChannels);
         s.set(kShotcutProjectFolder, m_projectFolder.isEmpty()? 0 : 1);
         int ignore = s.get_int("ignore_points");
