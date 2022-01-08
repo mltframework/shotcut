@@ -22,7 +22,7 @@ import Shotcut.Controls 1.0 as Shotcut
 
 Shotcut.KeyframableFilter {
     keyframableParameters: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14']
-    property var defaultValues: [0, 100, 0.5, 0, 100, 1, 0, 700, 1, 0, 5000, 1, 0, 15000, 0.5]
+    property var defaultValues: [0, 50, 0.5, 0, 100, 1, 0, 700, 1, 0, 5000, 1, 0, 15000, 0.5]
     startValues: [0, 100, 0.5, 0, 100, 1, 0, 700, 1, 0, 5000, 1, 0, 15000, 0.5]
     middleValues: [0, 100, 0.5, 0, 100, 1, 0, 700, 1, 0, 5000, 1, 0, 15000, 0.5]
     endValues: [0, 100, 0.5, 0, 100, 1, 0, 700, 1, 0, 5000, 1, 0, 15000, 0.5]
@@ -42,7 +42,7 @@ Shotcut.KeyframableFilter {
             filter.set('7', defaultValues[7])
             filter.set('8', defaultValues[8])
             filter.set('9', defaultValues[9])
-            filter.set('0', defaultValues[10])
+            filter.set('10', defaultValues[10])
             filter.set('11', defaultValues[11])
             filter.set('12', defaultValues[12])
             filter.set('13', defaultValues[13])
@@ -169,23 +169,6 @@ Shotcut.KeyframableFilter {
         }
 
         Label {
-            text: qsTr('Gain')
-            Layout.alignment: Qt.AlignRight
-        }
-        Shotcut.SliderSpinner {
-            id: slider0
-            minimumValue: -30
-            maximumValue: 30
-            stepSize: 0.1
-            decimals: 1
-            suffix: ' dB'
-            onValueChanged: updateSimpleKeyframes(getPosition())
-        }
-        Shotcut.UndoButton {
-            onClicked: slider0.value = defaultValues[0]
-        }
-
-        Label {
             text: qsTr('Frequency')
             Layout.alignment: Qt.AlignRight
         }
@@ -200,6 +183,25 @@ Shotcut.KeyframableFilter {
         }
         Shotcut.UndoButton {
             onClicked: slider1.value = defaultValues[1]
+        }
+
+        Label {
+            text: qsTr('Gain')
+            Layout.alignment: Qt.AlignRight
+        }
+        Shotcut.SliderSpinner {
+            id: slider0
+            minimumValue: -30
+            maximumValue: 30
+            stepSize: 0.1
+            decimals: 1
+            suffix: ' dB'
+            onValueChanged: {
+                updateSimpleKeyframes(getPosition())
+            }
+        }
+        Shotcut.UndoButton {
+            onClicked: slider0.value = defaultValues[0]
         }
 
         Label {
@@ -225,23 +227,6 @@ Shotcut.KeyframableFilter {
         }
 
         Label {
-            text: qsTr('Gain')
-            Layout.alignment: Qt.AlignRight
-        }
-        Shotcut.SliderSpinner {
-            id: slider3
-            minimumValue: -30
-            maximumValue: 30
-            stepSize: 0.1
-            decimals: 1
-            suffix: ' dB'
-            onValueChanged: updateSimpleKeyframes(getPosition())
-        }
-        Shotcut.UndoButton {
-            onClicked: slider3.value = defaultValues[3]
-        }
-
-        Label {
             text: qsTr('Frequency')
             Layout.alignment: Qt.AlignRight
         }
@@ -256,6 +241,23 @@ Shotcut.KeyframableFilter {
         }
         Shotcut.UndoButton {
             onClicked: slider4.value = defaultValues[4]
+        }
+
+        Label {
+            text: qsTr('Gain')
+            Layout.alignment: Qt.AlignRight
+        }
+        Shotcut.SliderSpinner {
+            id: slider3
+            minimumValue: -30
+            maximumValue: 30
+            stepSize: 0.1
+            decimals: 1
+            suffix: ' dB'
+            onValueChanged: updateSimpleKeyframes(getPosition())
+        }
+        Shotcut.UndoButton {
+            onClicked: slider3.value = defaultValues[3]
         }
 
         Label {
@@ -281,23 +283,6 @@ Shotcut.KeyframableFilter {
         }
 
         Label {
-            text: qsTr('Gain')
-            Layout.alignment: Qt.AlignRight
-        }
-        Shotcut.SliderSpinner {
-            id: slider6
-            minimumValue: -30
-            maximumValue: 30
-            stepSize: 0.1
-            decimals: 1
-            suffix: ' dB'
-            onValueChanged: updateSimpleKeyframes(getPosition())
-        }
-        Shotcut.UndoButton {
-            onClicked: slider6.value = defaultValues[6]
-        }
-
-        Label {
             text: qsTr('Frequency')
             Layout.alignment: Qt.AlignRight
         }
@@ -312,6 +297,23 @@ Shotcut.KeyframableFilter {
         }
         Shotcut.UndoButton {
             onClicked: slider7.value = defaultValues[7]
+        }
+
+        Label {
+            text: qsTr('Gain')
+            Layout.alignment: Qt.AlignRight
+        }
+        Shotcut.SliderSpinner {
+            id: slider6
+            minimumValue: -30
+            maximumValue: 30
+            stepSize: 0.1
+            decimals: 1
+            suffix: ' dB'
+            onValueChanged: updateSimpleKeyframes(getPosition())
+        }
+        Shotcut.UndoButton {
+            onClicked: slider6.value = defaultValues[6]
         }
 
         Label {
@@ -337,23 +339,6 @@ Shotcut.KeyframableFilter {
         }
 
         Label {
-            text: qsTr('Gain')
-            Layout.alignment: Qt.AlignRight
-        }
-        Shotcut.SliderSpinner {
-            id: slider9
-            minimumValue: -30
-            maximumValue: 30
-            stepSize: 0.1
-            decimals: 1
-            suffix: ' dB'
-            onValueChanged: updateSimpleKeyframes(getPosition())
-        }
-        Shotcut.UndoButton {
-            onClicked: slider9.value = defaultValues[9]
-        }
-
-        Label {
             text: qsTr('Frequency')
             Layout.alignment: Qt.AlignRight
         }
@@ -368,6 +353,23 @@ Shotcut.KeyframableFilter {
         }
         Shotcut.UndoButton {
             onClicked: slider10.value = defaultValues[10]
+        }
+
+        Label {
+            text: qsTr('Gain')
+            Layout.alignment: Qt.AlignRight
+        }
+        Shotcut.SliderSpinner {
+            id: slider9
+            minimumValue: -30
+            maximumValue: 30
+            stepSize: 0.1
+            decimals: 1
+            suffix: ' dB'
+            onValueChanged: updateSimpleKeyframes(getPosition())
+        }
+        Shotcut.UndoButton {
+            onClicked: slider9.value = defaultValues[9]
         }
 
         Label {
@@ -393,23 +395,6 @@ Shotcut.KeyframableFilter {
         }
 
         Label {
-            text: qsTr('Gain')
-            Layout.alignment: Qt.AlignRight
-        }
-        Shotcut.SliderSpinner {
-            id: slider12
-            minimumValue: -30
-            maximumValue: 30
-            stepSize: 0.1
-            decimals: 1
-            suffix: ' dB'
-            onValueChanged: updateSimpleKeyframes(getPosition())
-        }
-        Shotcut.UndoButton {
-            onClicked: slider12.value = defaultValues[12]
-        }
-
-        Label {
             text: qsTr('Frequency')
             Layout.alignment: Qt.AlignRight
         }
@@ -424,6 +409,23 @@ Shotcut.KeyframableFilter {
         }
         Shotcut.UndoButton {
             onClicked: slider13.value = defaultValues[13]
+        }
+
+        Label {
+            text: qsTr('Gain')
+            Layout.alignment: Qt.AlignRight
+        }
+        Shotcut.SliderSpinner {
+            id: slider12
+            minimumValue: -30
+            maximumValue: 30
+            stepSize: 0.1
+            decimals: 1
+            suffix: ' dB'
+            onValueChanged: updateSimpleKeyframes(getPosition())
+        }
+        Shotcut.UndoButton {
+            onClicked: slider12.value = defaultValues[12]
         }
 
         Label {

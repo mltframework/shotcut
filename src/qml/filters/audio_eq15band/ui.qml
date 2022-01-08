@@ -41,7 +41,7 @@ Shotcut.KeyframableFilter {
             filter.set('7', 0)
             filter.set('8', 0)
             filter.set('9', 0)
-            filter.set('0', 0)
+            filter.set('10', 0)
             filter.set('11', 0)
             filter.set('12', 0)
             filter.set('13', 0)
@@ -123,13 +123,13 @@ Shotcut.KeyframableFilter {
         }
 
         Label {
-            text: qsTr('50Hz')
+            text: qsTr('50 Hz')
             Layout.alignment: Qt.AlignRight
         }
         Shotcut.SliderSpinner {
             id: slider0
-            minimumValue: -12
-            maximumValue: 12
+            minimumValue: -20
+            maximumValue: 20
             stepSize: 0.1
             decimals: 1
             suffix: ' dB'
@@ -179,13 +179,13 @@ Shotcut.KeyframableFilter {
         }
 
         Label {
-            text: qsTr('100Hz')
+            text: qsTr('100 Hz')
             Layout.alignment: Qt.AlignRight
         }
         Shotcut.SliderSpinner {
             id: slider1
-            minimumValue: -12
-            maximumValue: 12
+            minimumValue: -20
+            maximumValue: 20
             stepSize: 0.1
             decimals: 1
             suffix: ' dB'
@@ -196,13 +196,13 @@ Shotcut.KeyframableFilter {
         }
 
         Label {
-            text: qsTr('156Hz')
+            text: qsTr('156 Hz')
             Layout.alignment: Qt.AlignRight
         }
         Shotcut.SliderSpinner {
             id: slider2
-            minimumValue: -12
-            maximumValue: 12
+            minimumValue: -20
+            maximumValue: 20
             stepSize: 0.1
             decimals: 1
             suffix: ' dB'
@@ -213,13 +213,13 @@ Shotcut.KeyframableFilter {
         }
 
         Label {
-            text: qsTr('220Hz')
+            text: qsTr('220 Hz')
             Layout.alignment: Qt.AlignRight
         }
         Shotcut.SliderSpinner {
             id: slider3
-            minimumValue: -12
-            maximumValue: 12
+            minimumValue: -20
+            maximumValue: 20
             stepSize: 0.1
             decimals: 1
             suffix: ' dB'
@@ -230,13 +230,13 @@ Shotcut.KeyframableFilter {
         }
 
         Label {
-            text: qsTr('311Hz')
+            text: qsTr('311 Hz')
             Layout.alignment: Qt.AlignRight
         }
         Shotcut.SliderSpinner {
             id: slider4
-            minimumValue: -12
-            maximumValue: 12
+            minimumValue: -20
+            maximumValue: 20
             stepSize: 0.1
             decimals: 1
             suffix: ' dB'
@@ -247,13 +247,13 @@ Shotcut.KeyframableFilter {
         }
 
         Label {
-            text: qsTr('440Hz')
+            text: qsTr('440 Hz')
             Layout.alignment: Qt.AlignRight
         }
         Shotcut.SliderSpinner {
             id: slider5
-            minimumValue: -12
-            maximumValue: 12
+            minimumValue: -20
+            maximumValue: 20
             stepSize: 0.1
             decimals: 1
             suffix: ' dB'
@@ -264,13 +264,13 @@ Shotcut.KeyframableFilter {
         }
 
         Label {
-            text: qsTr('622Hz')
+            text: qsTr('622 Hz')
             Layout.alignment: Qt.AlignRight
         }
         Shotcut.SliderSpinner {
             id: slider6
-            minimumValue: -12
-            maximumValue: 12
+            minimumValue: -20
+            maximumValue: 20
             stepSize: 0.1
             decimals: 1
             suffix: ' dB'
@@ -281,13 +281,13 @@ Shotcut.KeyframableFilter {
         }
 
         Label {
-            text: qsTr('880Hz')
+            text: qsTr('880 Hz')
             Layout.alignment: Qt.AlignRight
         }
         Shotcut.SliderSpinner {
             id: slider7
-            minimumValue: -12
-            maximumValue: 12
+            minimumValue: -20
+            maximumValue: 20
             stepSize: 0.1
             decimals: 1
             suffix: ' dB'
@@ -298,13 +298,13 @@ Shotcut.KeyframableFilter {
         }
 
         Label {
-            text: qsTr('1250Hz')
+            text: qsTr('1250 Hz')
             Layout.alignment: Qt.AlignRight
         }
         Shotcut.SliderSpinner {
             id: slider8
-            minimumValue: -12
-            maximumValue: 12
+            minimumValue: -20
+            maximumValue: 20
             stepSize: 0.1
             decimals: 1
             suffix: ' dB'
@@ -315,13 +315,13 @@ Shotcut.KeyframableFilter {
         }
 
         Label {
-            text: qsTr('1750Hz')
+            text: qsTr('1750 Hz')
             Layout.alignment: Qt.AlignRight
         }
         Shotcut.SliderSpinner {
             id: slider9
-            minimumValue: -12
-            maximumValue: 12
+            minimumValue: -20
+            maximumValue: 20
             stepSize: 0.1
             decimals: 1
             suffix: ' dB'
@@ -332,13 +332,13 @@ Shotcut.KeyframableFilter {
         }
 
         Label {
-            text: qsTr('2500Hz')
+            text: qsTr('2500 Hz')
             Layout.alignment: Qt.AlignRight
         }
         Shotcut.SliderSpinner {
             id: slider10
-            minimumValue: -12
-            maximumValue: 12
+            minimumValue: -20
+            maximumValue: 20
             stepSize: 0.1
             decimals: 1
             suffix: ' dB'
@@ -349,13 +349,13 @@ Shotcut.KeyframableFilter {
         }
 
         Label {
-            text: qsTr('3500Hz')
+            text: qsTr('3500 Hz')
             Layout.alignment: Qt.AlignRight
         }
         Shotcut.SliderSpinner {
             id: slider11
-            minimumValue: -12
-            maximumValue: 12
+            minimumValue: -20
+            maximumValue: 20
             stepSize: 0.1
             decimals: 1
             suffix: ' dB'
@@ -366,13 +366,13 @@ Shotcut.KeyframableFilter {
         }
 
         Label {
-            text: qsTr('5000Hz')
+            text: qsTr('5000 Hz')
             Layout.alignment: Qt.AlignRight
         }
         Shotcut.SliderSpinner {
             id: slider12
-            minimumValue: -12
-            maximumValue: 12
+            minimumValue: -20
+            maximumValue: 20
             stepSize: 0.1
             decimals: 1
             suffix: ' dB'
@@ -383,13 +383,13 @@ Shotcut.KeyframableFilter {
         }
 
         Label {
-            text: qsTr('10kHz')
+            text: qsTr('10000 Hz')
             Layout.alignment: Qt.AlignRight
         }
         Shotcut.SliderSpinner {
             id: slider13
-            minimumValue: -12
-            maximumValue: 12
+            minimumValue: -20
+            maximumValue: 20
             stepSize: 0.1
             decimals: 1
             suffix: ' dB'
@@ -400,13 +400,13 @@ Shotcut.KeyframableFilter {
         }
 
         Label {
-            text: qsTr('20kHz')
+            text: qsTr('20000 Hz')
             Layout.alignment: Qt.AlignRight
         }
         Shotcut.SliderSpinner {
             id: slider14
-            minimumValue: -12
-            maximumValue: 12
+            minimumValue: -20
+            maximumValue: 20
             stepSize: 0.1
             decimals: 1
             suffix: ' dB'
