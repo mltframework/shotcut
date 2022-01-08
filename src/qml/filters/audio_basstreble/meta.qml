@@ -4,6 +4,7 @@ import org.shotcut.qml 1.0
 Metadata {
     type: Metadata.Filter
     isAudio: true
+    hidden: true
     name: qsTr("Bass & Treble")
     mlt_service: 'ladspa.1901'
     qml: 'ui.qml'
