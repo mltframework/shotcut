@@ -17,7 +17,6 @@ Metadata {
                 name: qsTr('Equalizer')
                 property: '0'
                 gangedProperties: ['6', '12']
-                isSimple: true
                 isCurve: false
             }
         ]
