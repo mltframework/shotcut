@@ -440,6 +440,7 @@ void AvformatProducerWidget::onFrameDecoded()
                     case 1: trcString = "ITU-R BT.709"; break;
                     case 6: trcString = "ITU-R BT.601"; break;
                     case 7: trcString = "SMPTE ST240"; break;
+                    case 11: trcString = "IEC 61966-2-4"; break;
                     case 14: trcString = "ITU-R BT.2020"; break;
                     case 15: trcString = "ITU-R BT.2020"; break;
                     case 16: trcString = "SMPTE ST2084 (PQ)"; break;
@@ -609,8 +610,8 @@ void AvformatProducerWidget::onFrameDecoded()
 
     if (Settings.showConvertClipDialog() && !m_producer->get_int(kShotcutSkipConvertProperty)) {
         auto transferItem = ui->videoTableWidget->item(5, 1);
-        if (transferItem && transferItem->data(Qt::UserRole).toInt() > 7) {
-            // Transfer characteristics > SMPTE240M Probably need conversion
+        if (transferItem && transferItem->data(Qt::UserRole).toInt() > 7 && transferItem->data(Qt::UserRole).toInt() != 11 ) {
+            // Transfer characteristics > SMPTE240M Probably need conversion except IEC61966-2-4 is OK
             QString trcString = ui->videoTableWidget->item(5, 1)->text();
             LOG_INFO() << resource << "Probable HDR" << trcString;
             offerConvert(tr("This file uses color transfer characteristics %1, which may result in incorrect colors or brightness in Shotcut.").arg(trcString), true);
