@@ -539,8 +539,10 @@ void QmlFilter::setAnimateIn(int value)
                 if (anim.is_valid() && anim.key_count() > 0) {
                     QString value;
                     if (anim.key_count() > 1) {
+                        // The second keyframe should be the "middle" simple keyframe.
                         value = m_service.anim_get(qUtf8Printable(name), 1);
                     } else {
+                        // Failsafe. This should not happen
                         value = m_service.anim_get(qUtf8Printable(name), 0);
                     }
                     m_service.clear(qUtf8Printable(name));
@@ -569,11 +571,8 @@ void QmlFilter::setAnimateOut(int value)
                 Mlt::Animation anim = getAnimation(name);
                 if (anim.is_valid() && anim.key_count() > 0) {
                     QString value;
-                    if (anim.key_count() > 1) {
-                        value = m_service.anim_get(qUtf8Printable(name), 1);
-                    } else {
-                        value = m_service.anim_get(qUtf8Printable(name), 0);
-                    }
+                    // The first keyframe value should be the "middle" simple keyframe
+                    value = m_service.anim_get(qUtf8Printable(name), 0);
                     m_service.clear(qUtf8Printable(name));
                     m_service.set(qUtf8Printable(name), qUtf8Printable(value));
                 }

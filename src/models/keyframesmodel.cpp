@@ -610,9 +610,7 @@ void KeyframesModel::removeAdvancedKeyframes()
 
 bool KeyframesModel::simpleKeyframesInUse()
 {
-    if (m_filter && m_metadata && (m_filter->animateIn() > 0 || m_filter->animateOut() > 0))
-        return true;
-    return false;
+    return m_filter && m_metadata && (m_filter->animateIn() > 0 || m_filter->animateOut() > 0);
 }
 
 void KeyframesModel::removeSimpleKeyframes()
