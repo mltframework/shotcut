@@ -613,7 +613,7 @@ int MultitrackModel::trimClipOut(int trackIndex, int clipIndex, int delta, bool 
         }
 
         Q_ASSERT(otherTracksPosition == -1);
-        otherTracksPosition = info->start + info->frame_count - delta;
+        otherTracksPosition = info->start + info->frame_count;
 
         if ((info->frame_out - delta) >= info->length)
              // clamp to clip duration
@@ -665,7 +665,7 @@ int MultitrackModel::trimClipOut(int trackIndex, int clipIndex, int delta, bool 
     if (delta > 0) {
         foreach (int idx, otherTracksToRipple) {
             Q_ASSERT(otherTracksPosition != -1);
-            removeRegion(idx, otherTracksPosition, delta);
+            removeRegion(idx, otherTracksPosition - delta, delta);
         }
     } else {
         insertOrAdjustBlankAt(otherTracksToRipple, otherTracksPosition, -delta);
@@ -2957,8 +2957,17 @@ void MultitrackModel::insertOrAdjustBlankAt(QList<int> tracks, int position, int
 
         if (otherTrack) {
             Mlt::Playlist trackPlaylist(*otherTrack);
+            // Check if frame before position is blank
             int idx = trackPlaylist.get_clip_index_at(position-1);
+            if (trackPlaylist.is_blank(idx)) {
+                trackPlaylist.resize_clip(idx, 0, trackPlaylist.clip_length(idx) + length - 1);
+                QModelIndex modelIndex = createIndex(idx, 0, trackIndex);
+                emit dataChanged(modelIndex, modelIndex, QVector<int>() << DurationRole);
+                continue;
+            }
 
+            // Check if frame as position is blank
+            idx = trackPlaylist.get_clip_index_at(position);
             if (trackPlaylist.is_blank(idx)) {
                 trackPlaylist.resize_clip(idx, 0, trackPlaylist.clip_length(idx) + length - 1);
                 QModelIndex modelIndex = createIndex(idx, 0, trackIndex);
