@@ -59,6 +59,7 @@ Shotcut.KeyframableFilter {
     }
 
     function updateSimpleKeyframes() {
+        setControls()
         updateFilter(verSplit, verSplitSlider.value / verSplitSlider.maximumValue, verKeyframesButton, null)
         updateFilter(horSplit, horSplitSlider.value / horSplitSlider.maximumValue, horKeyframesButton, null)
     }
@@ -138,6 +139,7 @@ Shotcut.KeyframableFilter {
 
     Connections {
         target: filter
+        onChanged: setControls()
         onInChanged: updateSimpleKeyframes()
         onOutChanged: updateSimpleKeyframes()
         onAnimateInChanged: updateSimpleKeyframes()

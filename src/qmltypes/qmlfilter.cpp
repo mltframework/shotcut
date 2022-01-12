@@ -531,6 +531,25 @@ void QmlFilter::setAnimateIn(int value)
     value = qBound(0, value, duration());
     if (value != m_service.time_to_frames(m_service.get(kShotcutAnimInProperty))) {
         m_service.set(kShotcutAnimInProperty, m_service.frames_to_time(value, mlt_time_clock));
+        if (value == 0 && m_service.time_to_frames(m_service.get(kShotcutAnimOutProperty)) == 0) {
+            // Clear simple keyframes
+            for (int i = 0; i < m_metadata->keyframes()->parameterCount(); i++) {
+                QString name = m_metadata->keyframes()->parameter(i)->property();
+                Mlt::Animation anim = getAnimation(name);
+                if (anim.is_valid() && anim.key_count() > 0) {
+                    QString value;
+                    if (anim.key_count() > 1) {
+                        // The second keyframe should be the "middle" simple keyframe.
+                        value = m_service.anim_get(qUtf8Printable(name), 1);
+                    } else {
+                        // Failsafe. This should not happen
+                        value = m_service.anim_get(qUtf8Printable(name), 0);
+                    }
+                    m_service.clear(qUtf8Printable(name));
+                    m_service.set(qUtf8Printable(name), qUtf8Printable(value));
+                }
+            }
+        }
         emit animateInChanged();
     }
 }
@@ -545,8 +564,40 @@ void QmlFilter::setAnimateOut(int value)
     value = qBound(0, value, duration());
     if (value != m_service.time_to_frames(m_service.get(kShotcutAnimOutProperty))) {
         m_service.set(kShotcutAnimOutProperty, m_service.frames_to_time(value, mlt_time_clock));
+        if (value == 0 && m_service.time_to_frames(m_service.get(kShotcutAnimInProperty)) == 0) {
+            // Clear simple keyframes
+            for (int i = 0; i < m_metadata->keyframes()->parameterCount(); i++) {
+                QString name = m_metadata->keyframes()->parameter(i)->property();
+                Mlt::Animation anim = getAnimation(name);
+                if (anim.is_valid() && anim.key_count() > 0) {
+                    QString value;
+                    // The first keyframe value should be the "middle" simple keyframe
+                    value = m_service.anim_get(qUtf8Printable(name), 0);
+                    m_service.clear(qUtf8Printable(name));
+                    m_service.set(qUtf8Printable(name), qUtf8Printable(value));
+                }
+            }
+        }
         emit animateOutChanged();
     }
+}
+
+void QmlFilter::clearAnimateInOut()
+{
+    bool inChanged = false;
+    bool outChanged = false;
+    if (0 != m_service.time_to_frames(m_service.get(kShotcutAnimInProperty))) {
+        m_service.set(kShotcutAnimInProperty, m_service.frames_to_time(0, mlt_time_clock));
+        inChanged = true;
+    }
+    if (0 != m_service.time_to_frames(m_service.get(kShotcutAnimOutProperty))) {
+        m_service.set(kShotcutAnimOutProperty, m_service.frames_to_time(0, mlt_time_clock));
+        outChanged = true;
+    }
+    if (inChanged)
+        emit animateInChanged();
+    if (outChanged)
+        emit animateOutChanged();
 }
 
 int QmlFilter::duration()

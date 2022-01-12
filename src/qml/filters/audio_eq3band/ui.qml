@@ -25,6 +25,7 @@ Shotcut.KeyframableFilter {
     startValues: [0, 0, 0]
     middleValues: [0, 0, 0]
     endValues: [0, 0, 0]
+    property bool blockControls: false
 
     width: 200
     height: 230
@@ -62,6 +63,7 @@ Shotcut.KeyframableFilter {
     }
 
     function setControls() {
+        if (blockControls) return
         var position = getPosition()
         blockUpdate = true
         lowSlider.value = filter.getDouble('0', position)
@@ -78,6 +80,7 @@ Shotcut.KeyframableFilter {
 
     function updateSimpleKeyframes(position) {
         if (blockUpdate) return
+        setControls()
         updateFilter('0', lowSlider.value, keyframesButton, position)
         updateFilter('6', midSlider.value, keyframesButton, position)
         updateFilter('12', highSlider.value, keyframesButton, position)
@@ -116,7 +119,11 @@ Shotcut.KeyframableFilter {
             stepSize: 0.1
             decimals: 1
             suffix: ' dB'
-            onValueChanged: updateSimpleKeyframes(getPosition())
+            onValueChanged: {
+                blockControls = true
+                updateSimpleKeyframes(getPosition())
+                blockControls = false
+            }
         }
         Shotcut.UndoButton {
             onClicked: lowSlider.value = 0
@@ -160,7 +167,11 @@ Shotcut.KeyframableFilter {
             stepSize: 0.1
             decimals: 1
             suffix: ' dB'
-            onValueChanged: updateSimpleKeyframes(getPosition())
+            onValueChanged: {
+                blockControls = true
+                updateSimpleKeyframes(getPosition())
+                blockControls = false
+            }
         }
         Shotcut.UndoButton {
             onClicked: midSlider.value = 0
@@ -177,7 +188,11 @@ Shotcut.KeyframableFilter {
             stepSize: 0.1
             decimals: 1
             suffix: ' dB'
-            onValueChanged: updateSimpleKeyframes(getPosition())
+            onValueChanged: {
+                blockControls = true
+                updateSimpleKeyframes(getPosition())
+                blockControls = false
+            }
         }
         Shotcut.UndoButton {
             onClicked: highSlider.value = 0
@@ -190,6 +205,7 @@ Shotcut.KeyframableFilter {
 
     Connections {
         target: filter
+        onChanged: setControls()
         onInChanged: updateSimpleKeyframes(null)
         onOutChanged: updateSimpleKeyframes(null)
         onAnimateInChanged: updateSimpleKeyframes(null)

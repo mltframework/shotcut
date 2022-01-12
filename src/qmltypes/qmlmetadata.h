@@ -32,8 +32,6 @@ class QmlKeyframesParameter : public QObject
     Q_PROPERTY(QString name MEMBER m_name NOTIFY changed)
     Q_PROPERTY(QString property MEMBER m_property NOTIFY changed)
     Q_PROPERTY(QStringList gangedProperties MEMBER m_gangedProperties NOTIFY changed)
-    /// If isSimple this parameter cannot use full keyframes while simple is in use.
-    Q_PROPERTY(bool isSimple MEMBER m_isSimple NOTIFY changed)
     Q_PROPERTY(bool isCurve MEMBER m_isCurve NOTIFY changed)
     Q_PROPERTY(double minimum MEMBER m_minimum NOTIFY changed)
     Q_PROPERTY(double maximum MEMBER m_maximum NOTIFY changed)
@@ -50,7 +48,6 @@ public:
     QString name() const { return m_name; }
     QString property() const { return m_property; }
     QStringList gangedProperties() const { return m_gangedProperties; }
-    bool isSimple() const { return m_isSimple; }
     bool isCurve() const { return m_isCurve; }
     double minimum() const { return m_minimum; }
     double maximum() const { return m_maximum; }
@@ -65,7 +62,6 @@ private:
     QString m_name;
     QString m_property;
     QStringList m_gangedProperties;
-    bool m_isSimple;
     bool m_isCurve;
     double m_minimum;
     double m_maximum;
@@ -183,6 +179,7 @@ public:
     bool isGpuCompatible() const { return m_isGpuCompatible; }
     void setIsGpuCompatible(bool isCompatible) { m_isGpuCompatible = isCompatible; }
     QmlKeyframesMetadata* keyframes() { return &m_keyframes; }
+    const QmlKeyframesMetadata* keyframes() const { return &m_keyframes; }
     bool isDeprecated() const { return m_isDeprecated; }
     void setIsDeprecated(bool deprecated) { m_isDeprecated = deprecated; }
     bool isMltVersion(const QString& version);

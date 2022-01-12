@@ -32,7 +32,6 @@ Metadata {
             Parameter {
                 name: qsTr('Amount')
                 property: '0'
-                isSimple: true
                 isCurve: true
                 minimum: 0
                 maximum: 1

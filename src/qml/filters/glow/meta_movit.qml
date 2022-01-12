@@ -15,7 +15,6 @@ Metadata {
             Parameter {
                 name: qsTr('Radius')
                 property: 'radius'
-                isSimple: true
                 isCurve: true
                 minimum: 0
                 maximum: 100
@@ -23,7 +22,6 @@ Metadata {
             Parameter {
                 name: qsTr('Highlight blurriness')
                 property: 'blur_mix'
-                isSimple: true
                 isCurve: true
                 minimum: 0
                 maximum: 1
@@ -31,7 +29,6 @@ Metadata {
             Parameter {
                 name: qsTr('Highlight cutoff')
                 property: 'highlight_cutoff'
-                isSimple: true
                 isCurve: true
                 minimum: 0.1
                 maximum: 1.0

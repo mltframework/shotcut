@@ -59,6 +59,7 @@ Item {
 
     function updateFilter(position) {
         if (blockUpdate) return
+        setControls()
         var value = slider.value
 
         if (position !== null) {

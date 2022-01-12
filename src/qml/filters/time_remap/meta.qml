@@ -18,7 +18,6 @@ Metadata {
             Parameter {
                 name: qsTr('Time')
                 property: 'map'
-                isSimple: false
                 isCurve: true
                 rangeType: Parameter.ClipLength
                 units: 's'

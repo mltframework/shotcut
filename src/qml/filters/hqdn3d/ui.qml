@@ -59,6 +59,7 @@ Shotcut.KeyframableFilter {
     }
 
     function updateSimpleKeyframes() {
+        setControls()
         updateFilter(spatial, spatialSlider.value / spatialSlider.maximumValue, spatialKeyframesButton, null)
         updateFilter(temporal, temporalSlider.value / temporalSlider.maximumValue, temporalKeyframesButton, null)
     }
@@ -140,6 +141,7 @@ Shotcut.KeyframableFilter {
 
     Connections {
         target: filter
+        onChanged: setControls()
         onInChanged: updateSimpleKeyframes()
         onOutChanged: updateSimpleKeyframes()
         onAnimateInChanged: updateSimpleKeyframes()

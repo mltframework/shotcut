@@ -45,6 +45,7 @@ Item {
 
     Connections {
         target: filter
+        onChanged: setControls()
         onInChanged: updateFilter(null)
         onOutChanged: updateFilter(null)
         onAnimateInChanged: updateFilter(null)

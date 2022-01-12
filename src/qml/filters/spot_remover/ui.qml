@@ -245,10 +245,10 @@ Item {
     Connections {
         target: filter
         onChanged: setKeyframedControls()
-        onInChanged: setFilter(null)
-        onOutChanged: setFilter(null)
-        onAnimateInChanged: setFilter(null)
-        onAnimateOutChanged: setFilter(null)
+        onInChanged: { setKeyframedControls(); setFilter(null) }
+        onOutChanged: { setKeyframedControls(); setFilter(null) }
+        onAnimateInChanged: { setKeyframedControls(); setFilter(null) }
+        onAnimateOutChanged: { setKeyframedControls(); setFilter(null) }
     }
 
     Connections {

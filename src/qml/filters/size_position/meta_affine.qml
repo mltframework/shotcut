@@ -18,13 +18,11 @@ Metadata {
             Parameter {
                 name: qsTr('Size & Position')
                 property: 'transition.rect'
-                isSimple: true
                 isRectangle: true
             },
             Parameter {
                 name: qsTr('Rotation')
                 property: 'transition.fix_rotate_x'
-                isSimple: true
                 isCurve: true
                 minimum: -360
                 maximum: 360

@@ -17,23 +17,7 @@ Item {
     property double vfov1Start : 0.0; property double vfov1Middle : 0.0; property double vfov1End : 0.0;
 
     function updateSimpleKeyframes() {
-        if (filter.animateIn <= 0 && filter.animateOut <= 0) {
-            // When disabling simple keyframes. Clear out the keyframes before proceeding.
-            filter.blockSignals = true
-            if (!hfov0KeyframesButton.checked && filter.keyframeCount("hfov0") > 0) {
-                filter.resetProperty("hfov0")
-            }
-            if (!hfov1KeyframesButton.checked && filter.keyframeCount("hfov1") > 0) {
-                filter.resetProperty("hfov1")
-            }
-            if (!vfov0KeyframesButton.checked && filter.keyframeCount("vfov0") > 0) {
-                filter.resetProperty("vfov0")
-            }
-            if (!vfov1KeyframesButton.checked && filter.keyframeCount("vfov1") > 0) {
-                filter.resetProperty("vfov1")
-            }
-            filter.blockSignals = false
-        } else if (filter.animateIn > 0 || filter.animateOut > 0) {
+        if (filter.animateIn > 0 || filter.animateOut > 0) {
             // When enabling simple keyframes, initialize the keyframes with the current value
             if (filter.keyframeCount("hfov0") <= 0) {
                 hfov0Start = hfov0Middle = hfov0End = filter.getDouble("hfov0")
@@ -48,6 +32,7 @@ Item {
                 vfov1Start = vfov1Middle = vfov1End = filter.getDouble("vfov1")
             }
         }
+        setControls()
         updateProperty_hfov0(null)
         updateProperty_hfov1(null)
         updateProperty_vfov0(null)
@@ -212,6 +197,7 @@ Item {
 
     Connections {
         target: filter
+        onChanged: setControls()
         onPropertyChanged: setControls()
     }
 

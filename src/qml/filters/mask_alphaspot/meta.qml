@@ -15,7 +15,6 @@ Metadata {
             Parameter {
                 name: qsTr('Horizontal')
                 property: 'filter.1'
-                isSimple: true
                 isCurve: true
                 minimum: -1
                 maximum: 1
@@ -23,7 +22,6 @@ Metadata {
             Parameter {
                 name: qsTr('Vertical')
                 property: 'filter.2'
-                isSimple: true
                 isCurve: true
                 minimum: -1
                 maximum: 1
@@ -31,7 +29,6 @@ Metadata {
             Parameter {
                 name: qsTr('Width')
                 property: 'filter.3'
-                isSimple: true
                 isCurve: true
                 minimum: 0
                 maximum: 1
@@ -39,7 +36,6 @@ Metadata {
             Parameter {
                 name: qsTr('Height')
                 property: 'filter.4'
-                isSimple: true
                 isCurve: true
                 minimum: 0
                 maximum: 1
@@ -47,7 +43,6 @@ Metadata {
             Parameter {
                 name: qsTr('Rotation')
                 property: 'filter.5'
-                isSimple: true
                 isCurve: true
                 minimum: 0.5 - 179.9 / 360
                 maximum: 0.5 + 179.9 / 360

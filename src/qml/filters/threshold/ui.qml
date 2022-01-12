@@ -60,6 +60,7 @@ Shotcut.KeyframableFilter {
     }
 
     function updateSimpleKeyframes() {
+        setKeyframableControls()
         updateFilter(threshold, thresholdSlider.value / thresholdSlider.maximumValue * 255, thresholdKeyframesButton, null)
     }
 
@@ -138,6 +139,7 @@ Shotcut.KeyframableFilter {
 
     Connections {
         target: filter
+        onChanged: setKeyframableControls()
         onInChanged: updateSimpleKeyframes()
         onOutChanged: updateSimpleKeyframes()
         onAnimateInChanged: updateSimpleKeyframes()

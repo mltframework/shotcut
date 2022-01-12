@@ -15,7 +15,6 @@ Metadata {
             Parameter {
                 name: qsTr('Level')
                 property: 'saturation'
-                isSimple: true
                 isCurve: true
                 minimum: 0
                 maximum: 3

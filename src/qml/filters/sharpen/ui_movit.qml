@@ -242,6 +242,7 @@ Item {
     }
 
     function updateSimpleAnimation() {
+        setControls()
         updateFilter('circle_radius', circleSlider.value, null, circleKeyframesButton)
         updateFilter('gaussian_radius', gaussianSlider.value, null, gaussianKeyframesButton)
         updateFilter('correlation', correlationSlider.value, null, correlationKeyframesButton)
@@ -250,6 +251,7 @@ Item {
 
     Connections {
         target: filter
+        onPropertyChanged: setControls()
         onInChanged: updateSimpleAnimation()
         onOutChanged: updateSimpleAnimation()
         onAnimateInChanged: updateSimpleAnimation()

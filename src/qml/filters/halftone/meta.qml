@@ -15,7 +15,6 @@ Metadata {
             Parameter {
                 name: qsTr('Radius')
                 property: '0'
-                isSimple: true
                 isCurve: true
                 minimum: 0
                 maximum: 1
@@ -23,7 +22,6 @@ Metadata {
             Parameter {
                 name: qsTr('Cyan')
                 property: '1'
-                isSimple: true
                 isCurve: true
                 minimum: 0
                 maximum: 1
@@ -31,7 +29,6 @@ Metadata {
             Parameter {
                 name: qsTr('Magenta')
                 property: '2'
-                isSimple: true
                 isCurve: true
                 minimum: 0
                 maximum: 1
@@ -39,7 +36,6 @@ Metadata {
             Parameter {
                 name: qsTr('Yellow')
                 property: '3'
-                isSimple: true
                 isCurve: true
                 minimum: 0
                 maximum: 1

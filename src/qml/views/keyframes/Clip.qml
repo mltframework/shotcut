@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2020 Meltytech, LLC
+ * Copyright (c) 2016-2021 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,6 +17,7 @@
 
 import QtQuick 2.12
 import QtQuick.Controls 2.12
+import QtQuick.Dialogs 1.3
 import Shotcut.Controls 1.0 as Shotcut
 
 Rectangle {
@@ -241,6 +242,20 @@ Rectangle {
         anchors.margins: parent.border.width
         opacity: 0.5
     }
+
+    MessageDialog {
+        id: confirmRemoveAdvancedDialog
+        visible: false
+        modality: application.dialogModality
+        icon: StandardIcon.Question
+        title: qsTr("Confirm Removing Advanced Keyframes")
+        text: qsTr('This will remove all advanced keyframes to enable simple keyframes.<p>Do you still want to do this?')
+        standardButtons: StandardButton.Yes | StandardButton.No
+        onYes: {
+            parameters.removeAdvancedKeyframes()
+        }
+    }
+
     Rectangle {
         id: animateInControl
         visible: metadata !== null && metadata.keyframes.allowAnimateIn
@@ -258,6 +273,7 @@ Rectangle {
         border.color: 'white'
         opacity: enabled? 0.7 : 0
         Drag.active: animateInMouseArea.drag.active
+
         MouseArea {
             id: animateInMouseArea
             anchors.fill: parent
@@ -269,19 +285,31 @@ Rectangle {
             drag.maximumX: clipRoot.width
             property int startX
             property int startFadeIn
+            property bool dragBlocked: false
             onPressed: {
-                root.stopScrolling = true
-                startX = parent.x
-                startFadeIn = animateIn
-                parent.anchors.left = undefined
+                if (parameters.advancedKeyframesInUse()) {
+                    dragBlocked = true
+                    cursorShape = Qt.ForbiddenCursor
+                } else {
+                    dragBlocked = false
+                    root.stopScrolling = true
+                    startX = parent.x
+                    startFadeIn = animateIn
+                    parent.anchors.left = undefined
+                }
             }
             onReleased: {
-                root.stopScrolling = false
-                parent.anchors.left = animateInTriangle.right
-                bubbleHelp.hide()
+                cursorShape = Qt.PointingHandCursor
+                if (dragBlocked) {
+                    confirmRemoveAdvancedDialog.open()
+                } else {
+                    root.stopScrolling = false
+                    parent.anchors.left = animateInTriangle.right
+                    bubbleHelp.hide()
+                }
             }
             onPositionChanged: {
-                if (mouse.buttons === Qt.LeftButton) {
+                if (!dragBlocked && mouse.buttons === Qt.LeftButton) {
                     var delta = Math.round((parent.x - startX) / timeScale)
                     var duration = Math.min(Math.max(0, startFadeIn + delta), clipDuration)
                     filter.animateIn = duration
@@ -350,19 +378,31 @@ Rectangle {
             drag.maximumX: clipRoot.width
             property int startX
             property int startFadeOut
+            property bool dragBlocked: false
             onPressed: {
-                root.stopScrolling = true
-                startX = parent.x
-                startFadeOut = animateOut
-                parent.anchors.right = undefined
+                if (parameters.advancedKeyframesInUse()) {
+                    dragBlocked = true
+                    cursorShape = Qt.ForbiddenCursor
+                } else {
+                    dragBlocked = false
+                    root.stopScrolling = true
+                    startX = parent.x
+                    startFadeOut = animateOut
+                    parent.anchors.right = undefined
+                }
             }
             onReleased: {
-                root.stopScrolling = false
-                parent.anchors.right = animateOutTriangle.left
-                bubbleHelp.hide()
+                cursorShape = Qt.PointingHandCursor
+                if (dragBlocked) {
+                    confirmRemoveAdvancedDialog.open()
+                } else {
+                    root.stopScrolling = false
+                    parent.anchors.right = animateOutTriangle.left
+                    bubbleHelp.hide()
+                }
             }
             onPositionChanged: {
-                if (mouse.buttons === Qt.LeftButton) {
+                if (!dragBlocked && mouse.buttons === Qt.LeftButton) {
                     var delta = Math.round((startX - parent.x) / timeScale)
                     var duration = Math.min(Math.max(0, startFadeOut + delta), clipDuration)
                     filter.animateOut = duration

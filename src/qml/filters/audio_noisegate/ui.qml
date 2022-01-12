@@ -88,6 +88,7 @@ Shotcut.KeyframableFilter {
     }
 
     function updateSimpleKeyframes() {
+        setControls()
         updateFilter(lfkey, lfkeySlider.value, lfkeyKeyframesButton, null)
         updateFilter(hfkey, hfkeySlider.value, hfkeyKeyframesButton, null)
         updateFilter(threshold, thresholdSlider.value, thresholdKeyframesButton, null)
@@ -299,6 +300,7 @@ Shotcut.KeyframableFilter {
 
     Connections {
         target: filter
+        onChanged: setControls()
         onInChanged: updateSimpleKeyframes()
         onOutChanged: updateSimpleKeyframes()
         onAnimateInChanged: updateSimpleKeyframes()

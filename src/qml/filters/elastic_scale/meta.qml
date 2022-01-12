@@ -32,7 +32,6 @@ Metadata {
             Parameter {
                 name: qsTr('Center')
                 property: '0'
-                isSimple: true
                 isCurve: true
                 minimum: 0
                 maximum: 1
@@ -40,7 +39,6 @@ Metadata {
             Parameter {
                 name: qsTr('Linear width')
                 property: '1'
-                isSimple: true
                 isCurve: true
                 minimum: 0
                 maximum: 1
@@ -48,7 +46,6 @@ Metadata {
             Parameter {
                 name: qsTr('Linear scale factor')
                 property: '2'
-                isSimple: true
                 isCurve: true
                 minimum: 0
                 maximum: 1
@@ -56,7 +53,6 @@ Metadata {
             Parameter {
                 name: qsTr('Non-Linear scale factor')
                 property: '3'
-                isSimple: true
                 isCurve: true
                 minimum: 0
                 maximum: 1

@@ -16,7 +16,6 @@ Metadata {
             Parameter {
                 name: qsTr('Position')
                 property: 'split'
-                isSimple: true
                 isCurve: true
                 minimum: 0
                 maximum: 1

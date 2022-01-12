@@ -188,12 +188,14 @@ Item {
     }
 
     function updateSimpleAnimation() {
+        setControls()
         updateFilter('radius', radiusSlider.value / 100.0, null, radiusKeyframesButton)
         updateFilter('inner_radius', innerSlider.value / 100.0, null, innerKeyframesButton)
     }
 
     Connections {
         target: filter
+        onChanged: setControls()
         onInChanged: updateSimpleAnimation()
         onOutChanged: updateSimpleAnimation()
         onAnimateInChanged: updateSimpleAnimation()

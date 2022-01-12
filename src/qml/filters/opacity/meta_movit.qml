@@ -16,7 +16,6 @@ Metadata {
             Parameter {
                 name: qsTr('Level')
                 property: 'opacity'
-                isSimple: true
                 isCurve: true
                 minimum: 0
                 maximum: 1

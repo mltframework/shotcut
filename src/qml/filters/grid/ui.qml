@@ -239,10 +239,11 @@ Item {
 
     Connections {
         target: filter
-        onInChanged: { updateFilterWidth(null); updateFilterHeight(null) }
-        onOutChanged: { updateFilterWidth(null); updateFilterHeight(null) }
-        onAnimateInChanged: { updateFilterWidth(null); updateFilterHeight(null) }
-        onAnimateOutChanged: { updateFilterWidth(null); updateFilterHeight(null) }
+        onChanged: setControls()
+        onInChanged: { setControls(); updateFilterWidth(null); updateFilterHeight(null) }
+        onOutChanged: { setControls(); updateFilterWidth(null); updateFilterHeight(null) }
+        onAnimateInChanged: { setControls(); updateFilterWidth(null); updateFilterHeight(null) }
+        onAnimateOutChanged: { setControls(); updateFilterWidth(null); updateFilterHeight(null) }
         onPropertyChanged: setControls()
     }
 

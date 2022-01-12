@@ -118,7 +118,7 @@ Item {
         }
         Shotcut.Preset {
             id: preset
-            parameters: textFilterUi.parameters.concat(['format', 'direction','start','duration'])
+            parameters: textFilterUi.parameterList.concat(['format', 'direction','start','duration'])
             onBeforePresetLoaded: {
                 filter.resetProperty(textFilterUi.rectProperty)
             }

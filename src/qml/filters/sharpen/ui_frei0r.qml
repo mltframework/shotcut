@@ -190,12 +190,14 @@ Item {
     }
 
     function updateSimpleAnimation() {
+        setControls()
         updateFilter(paramAmount, amountSlider.value / 100.0, null, amountKeyframesButton)
         updateFilter(paramSize, sizeSlider.value / 100.0, null, sizeKeyframesButton)
     }
 
     Connections {
         target: filter
+        onChanged: setControls()
         onInChanged: updateSimpleAnimation()
         onOutChanged: updateSimpleAnimation()
         onAnimateInChanged: updateSimpleAnimation()

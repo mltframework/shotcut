@@ -63,6 +63,7 @@ Shotcut.KeyframableFilter {
     }
 
     function updateSimpleKeyframes() {
+        setControls()
         updateFilter('av.h', hueDegreeSlider.value, hueKeyframesButton, null)
         updateFilter('av.b', (lightnessSlider.value - 100) * 10 / 100, lightnessKeyframesButton, null)
         updateFilter('av.s', saturationSlider.value / 100, saturationKeyframesButton, null)
@@ -159,6 +160,7 @@ Shotcut.KeyframableFilter {
 
     Connections {
         target: filter
+        onChanged: setControls()
         onInChanged: updateSimpleKeyframes()
         onOutChanged: updateSimpleKeyframes()
         onAnimateInChanged: updateSimpleKeyframes()

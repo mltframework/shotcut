@@ -178,30 +178,7 @@ Shotcut.KeyframableFilter {
     }
 
     function updateSimpleKeyframes() {
-        if (filter.animateIn <= 0 && filter.animateOut <= 0) {
-            // When disabling simple keyframes. Clear out the keyframes before proceeding.
-            filter.blockSignals = true
-            if (!corner1KeyframesButton.checked && filter.keyframeCount(corner1xProperty) > 0) {
-                filter.resetProperty(corner1xProperty)
-                filter.resetProperty(corner1yProperty)
-                filter.resetProperty(corner2xProperty)
-                filter.resetProperty(corner2yProperty)
-                filter.resetProperty(corner3xProperty)
-                filter.resetProperty(corner3yProperty)
-                filter.resetProperty(corner4xProperty)
-                filter.resetProperty(corner4yProperty)
-            }
-            if (!stretchxKeyframesButton.checked && filter.keyframeCount(stretchxProperty) > 0) {
-                filter.resetProperty(stretchxProperty)
-            }
-            if (!stretchyKeyframesButton.checked && filter.keyframeCount(stretchyProperty) > 0) {
-                filter.resetProperty(stretchyProperty)
-            }
-            if (!featheralphaKeyframesButton.checked && filter.keyframeCount(featherProperty) > 0) {
-                filter.resetProperty(featherProperty)
-            }
-            filter.blockSignals = false
-        }
+        setControls()
         updateFilter(corner1xProperty, sliderValue(corner1xSlider), corner1KeyframesButton, null)
         updateFilter(corner1yProperty, sliderValue(corner1ySlider), corner1KeyframesButton, null)
         updateFilter(corner2xProperty, sliderValue(corner2xSlider), corner1KeyframesButton, null)

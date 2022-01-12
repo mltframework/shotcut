@@ -16,7 +16,6 @@ Metadata {
             Parameter {
                 name: qsTr('Pitch')
                 property: 'octaveshift'
-                isSimple: true
                 isCurve: true
                 minimum: -2.0
                 maximum: 2.0

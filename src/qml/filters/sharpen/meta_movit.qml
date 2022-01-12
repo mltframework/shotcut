@@ -15,7 +15,6 @@ Metadata {
             Parameter {
                 name: qsTr('Circle radius')
                 property: 'circle_radius'
-                isSimple: true
                 isCurve: true
                 minimum: 0
                 maximum: 99.99
@@ -23,7 +22,6 @@ Metadata {
             Parameter {
                 name: qsTr('Gaussian radius')
                 property: 'gaussian_radius'
-                isSimple: true
                 isCurve: true
                 minimum: 0
                 maximum: 99.99
@@ -31,7 +29,6 @@ Metadata {
             Parameter {
                 name: qsTr('Correlation')
                 property: 'correlation'
-                isSimple: true
                 isCurve: true
                 minimum: 0
                 maximum: 1
@@ -39,7 +36,6 @@ Metadata {
             Parameter {
                 name: qsTr('Noise')
                 property: 'noise'
-                isSimple: true
                 isCurve: true
                 minimum: 0
                 maximum: 1

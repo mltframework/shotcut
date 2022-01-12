@@ -522,7 +522,7 @@ Item {
         }
         Shotcut.Preset {
             id: preset
-            parameters: textFilterUi.parameters.concat(['argument'])
+            parameters: textFilterUi.parameterList.concat(['argument'])
             onBeforePresetLoaded: {
                 filter.resetProperty(textFilterUi.rectProperty)
             }

@@ -14,7 +14,6 @@ Metadata {
             Parameter {
                 name: qsTr('Level')
                 property: 'midpoint'
-                isSimple: true
                 isCurve: true
                 minimum: 0
                 maximum: 255

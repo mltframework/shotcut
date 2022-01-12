@@ -14,7 +14,6 @@ Metadata {
             Parameter {
                 name: qsTr('Input Black')
                 property: '1'
-                isSimple: true
                 isCurve: true
                 minimum: 0
                 maximum: 1
@@ -22,7 +21,6 @@ Metadata {
             Parameter {
                 name: qsTr('Input White')
                 property: '2'
-                isSimple: true
                 isCurve: true
                 minimum: 0
                 maximum: 1
@@ -30,7 +28,6 @@ Metadata {
             Parameter {
                 name: qsTr('Gamma')
                 property: '3'
-                isSimple: true
                 isCurve: true
                 minimum: 0
                 maximum: 1

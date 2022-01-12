@@ -25,6 +25,7 @@ Shotcut.KeyframableFilter {
     startValues: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     middleValues: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     endValues: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    property bool blockControls: false
 
     width: 200
     height: 430
@@ -52,6 +53,7 @@ Shotcut.KeyframableFilter {
     }
 
     function setControls() {
+        if (blockControls) return
         var position = getPosition()
         blockUpdate = true
         slider0.value = filter.getDouble('0', position)
@@ -83,6 +85,7 @@ Shotcut.KeyframableFilter {
 
     function updateSimpleKeyframes(position) {
         if (blockUpdate) return
+        setControls()
         updateFilter('0', slider0.value, keyframesButton, position)
         updateFilter('1', slider1.value, keyframesButton, position)
         updateFilter('2', slider2.value, keyframesButton, position)
@@ -133,7 +136,11 @@ Shotcut.KeyframableFilter {
             stepSize: 0.1
             decimals: 1
             suffix: ' dB'
-            onValueChanged: updateSimpleKeyframes(getPosition())
+            onValueChanged: {
+                blockControls = true
+                updateSimpleKeyframes(getPosition())
+                blockControls = false
+            }
         }
         Shotcut.UndoButton {
             onClicked: slider0.value = 0
@@ -189,7 +196,11 @@ Shotcut.KeyframableFilter {
             stepSize: 0.1
             decimals: 1
             suffix: ' dB'
-            onValueChanged: updateSimpleKeyframes(getPosition())
+            onValueChanged: {
+                blockControls = true
+                updateSimpleKeyframes(getPosition())
+                blockControls = false
+            }
         }
         Shotcut.UndoButton {
             onClicked: slider1.value = 0
@@ -206,7 +217,11 @@ Shotcut.KeyframableFilter {
             stepSize: 0.1
             decimals: 1
             suffix: ' dB'
-            onValueChanged: updateSimpleKeyframes(getPosition())
+            onValueChanged: {
+                blockControls = true
+                updateSimpleKeyframes(getPosition())
+                blockControls = false
+            }
         }
         Shotcut.UndoButton {
             onClicked: slider2.value = 0
@@ -223,7 +238,11 @@ Shotcut.KeyframableFilter {
             stepSize: 0.1
             decimals: 1
             suffix: ' dB'
-            onValueChanged: updateSimpleKeyframes(getPosition())
+            onValueChanged: {
+                blockControls = true
+                updateSimpleKeyframes(getPosition())
+                blockControls = false
+            }
         }
         Shotcut.UndoButton {
             onClicked: slider3.value = 0
@@ -240,7 +259,11 @@ Shotcut.KeyframableFilter {
             stepSize: 0.1
             decimals: 1
             suffix: ' dB'
-            onValueChanged: updateSimpleKeyframes(getPosition())
+            onValueChanged: {
+                blockControls = true
+                updateSimpleKeyframes(getPosition())
+                blockControls = false
+            }
         }
         Shotcut.UndoButton {
             onClicked: slider4.value = 0
@@ -257,7 +280,11 @@ Shotcut.KeyframableFilter {
             stepSize: 0.1
             decimals: 1
             suffix: ' dB'
-            onValueChanged: updateSimpleKeyframes(getPosition())
+            onValueChanged: {
+                blockControls = true
+                updateSimpleKeyframes(getPosition())
+                blockControls = false
+            }
         }
         Shotcut.UndoButton {
             onClicked: slider5.value = 0
@@ -274,7 +301,11 @@ Shotcut.KeyframableFilter {
             stepSize: 0.1
             decimals: 1
             suffix: ' dB'
-            onValueChanged: updateSimpleKeyframes(getPosition())
+            onValueChanged: {
+                blockControls = true
+                updateSimpleKeyframes(getPosition())
+                blockControls = false
+            }
         }
         Shotcut.UndoButton {
             onClicked: slider6.value = 0
@@ -291,7 +322,11 @@ Shotcut.KeyframableFilter {
             stepSize: 0.1
             decimals: 1
             suffix: ' dB'
-            onValueChanged: updateSimpleKeyframes(getPosition())
+            onValueChanged: {
+                blockControls = true
+                updateSimpleKeyframes(getPosition())
+                blockControls = false
+            }
         }
         Shotcut.UndoButton {
             onClicked: slider7.value = 0
@@ -308,7 +343,11 @@ Shotcut.KeyframableFilter {
             stepSize: 0.1
             decimals: 1
             suffix: ' dB'
-            onValueChanged: updateSimpleKeyframes(getPosition())
+            onValueChanged: {
+                blockControls = true
+                updateSimpleKeyframes(getPosition())
+                blockControls = false
+            }
         }
         Shotcut.UndoButton {
             onClicked: slider8.value = 0
@@ -325,7 +364,11 @@ Shotcut.KeyframableFilter {
             stepSize: 0.1
             decimals: 1
             suffix: ' dB'
-            onValueChanged: updateSimpleKeyframes(getPosition())
+            onValueChanged: {
+                blockControls = true
+                updateSimpleKeyframes(getPosition())
+                blockControls = false
+            }
         }
         Shotcut.UndoButton {
             onClicked: slider9.value = 0
@@ -342,7 +385,11 @@ Shotcut.KeyframableFilter {
             stepSize: 0.1
             decimals: 1
             suffix: ' dB'
-            onValueChanged: updateSimpleKeyframes(getPosition())
+            onValueChanged: {
+                blockControls = true
+                updateSimpleKeyframes(getPosition())
+                blockControls = false
+            }
         }
         Shotcut.UndoButton {
             onClicked: slider10.value = 0
@@ -359,7 +406,11 @@ Shotcut.KeyframableFilter {
             stepSize: 0.1
             decimals: 1
             suffix: ' dB'
-            onValueChanged: updateSimpleKeyframes(getPosition())
+            onValueChanged: {
+                blockControls = true
+                updateSimpleKeyframes(getPosition())
+                blockControls = false
+            }
         }
         Shotcut.UndoButton {
             onClicked: slider11.value = 0
@@ -376,7 +427,11 @@ Shotcut.KeyframableFilter {
             stepSize: 0.1
             decimals: 1
             suffix: ' dB'
-            onValueChanged: updateSimpleKeyframes(getPosition())
+            onValueChanged: {
+                blockControls = true
+                updateSimpleKeyframes(getPosition())
+                blockControls = false
+            }
         }
         Shotcut.UndoButton {
             onClicked: slider12.value = 0
@@ -393,7 +448,11 @@ Shotcut.KeyframableFilter {
             stepSize: 0.1
             decimals: 1
             suffix: ' dB'
-            onValueChanged: updateSimpleKeyframes(getPosition())
+            onValueChanged: {
+                blockControls = true
+                updateSimpleKeyframes(getPosition())
+                blockControls = false
+            }
         }
         Shotcut.UndoButton {
             onClicked: slider13.value = 0
@@ -410,7 +469,11 @@ Shotcut.KeyframableFilter {
             stepSize: 0.1
             decimals: 1
             suffix: ' dB'
-            onValueChanged: updateSimpleKeyframes(getPosition())
+            onValueChanged: {
+                blockControls = true
+                updateSimpleKeyframes(getPosition())
+                blockControls = false
+            }
         }
         Shotcut.UndoButton {
             onClicked: slider14.value = 0
@@ -423,6 +486,7 @@ Shotcut.KeyframableFilter {
 
     Connections {
         target: filter
+        onChanged: setControls()
         onInChanged: updateSimpleKeyframes(null)
         onOutChanged: updateSimpleKeyframes(null)
         onAnimateInChanged: updateSimpleKeyframes(null)

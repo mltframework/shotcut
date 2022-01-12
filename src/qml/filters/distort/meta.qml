@@ -31,7 +31,6 @@ Metadata {
             Parameter {
                 name: qsTr('Amplitude')
                 property: '0'
-                isSimple: true
                 isCurve: true
                 minimum: 0
                 maximum: 1
@@ -39,7 +38,6 @@ Metadata {
             Parameter {
                 name: qsTr('Frequency')
                 property: '1'
-                isSimple: true
                 isCurve: true
                 minimum: 0
                 maximum: 1
@@ -47,7 +45,6 @@ Metadata {
             Parameter {
                 name: qsTr('Velocity')
                 property: '3'
-                isSimple: true
                 isCurve: true
                 minimum: 0
                 maximum: 1

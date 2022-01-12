@@ -33,12 +33,10 @@ Metadata {
                 name: qsTr('Corners')
                 property: 'shotcut:corner1'
                 gangedProperties: ['0', '1', '2', '3', '4', '5', '6', '7', 'shotcut:corner2', 'shotcut:corner3', 'shotcut:corner4']
-                isSimple: true
             },
             Parameter {
                 name: qsTr('Stretch X')
                 property: '9'
-                isSimple: true
                 isCurve: true
                 minimum: 0
                 maximum: 1
@@ -46,7 +44,6 @@ Metadata {
              Parameter {
                 name: qsTr('Stretch Y')
                 property: '10'
-                isSimple: true
                 isCurve: true
                 minimum: 0
                 maximum: 1
@@ -54,7 +51,6 @@ Metadata {
              Parameter {
                 name: qsTr('Feathering')
                 property: '13'
-                isSimple: true
                 isCurve: true
                 minimum: 0
                 maximum: 1

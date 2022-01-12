@@ -237,15 +237,13 @@ void KeyframesModel::load(QmlFilter* filter, QmlMetadata* meta)
     m_metadataIndex.clear();
     m_filter = filter;
     m_metadata = meta;
-    if (m_filter && m_metadata)
+    if (m_filter && m_metadata && m_filter->animateIn() <= 0 && m_filter->animateOut() <= 0)
     for (int i = 0; i < m_metadata->keyframes()->parameterCount(); i++) {
-        if (!m_metadata->keyframes()->parameter(i)->isSimple() || (m_filter->animateIn() <= 0 && m_filter->animateOut() <= 0)) {
-            if (m_filter->keyframeCount(m_metadata->keyframes()->parameter(i)->property()) > 0) {
-                m_propertyNames << m_metadata->keyframes()->parameter(i)->property();
-                m_keyframeCounts << keyframeCount(m_propertyNames.count() - 1);
-                m_metadataIndex << i;
-//            LOG_DEBUG() << m_propertyNames.last() << m_filter->get(m_propertyNames.last()) << keyframeCount(i);
-            }
+        if (m_filter->keyframeCount(m_metadata->keyframes()->parameter(i)->property()) > 0) {
+            m_propertyNames << m_metadata->keyframes()->parameter(i)->property();
+            m_keyframeCounts << keyframeCount(m_propertyNames.count() - 1);
+            m_metadataIndex << i;
+//        LOG_DEBUG() << m_propertyNames.last() << m_filter->get(m_propertyNames.last()) << keyframeCount(i);
         }
     }
     endResetModel();
@@ -583,20 +581,100 @@ bool KeyframesModel::isKeyframe(int parameterIndex, int position)
     return false;
 }
 
+bool KeyframesModel::advancedKeyframesInUse()
+{
+    if (m_filter && m_metadata && m_filter->animateIn() <= 0 && m_filter->animateOut() <= 0)
+    for (int i = 0; i < m_metadata->keyframes()->parameterCount(); i++) {
+        if (m_filter->keyframeCount(m_metadata->keyframes()->parameter(i)->property()) > 0) {
+            return true;
+        }
+    }
+    return false;
+}
+
+void KeyframesModel::removeAdvancedKeyframes()
+{
+    if (m_filter && m_metadata && m_filter->animateIn() <= 0 && m_filter->animateOut() <= 0) {
+        for (int i = 0; i < m_metadata->keyframes()->parameterCount(); i++) {
+            QString name = m_metadata->keyframes()->parameter(i)->property();
+            if (m_filter->keyframeCount(name) > 0) {
+                m_filter->set(name, m_filter->get(name, 0));
+                for (auto& key : m_metadata->keyframes()->parameter(i)->gangedProperties()) {
+                    m_filter->set(key, m_filter->get(key, 0));
+                }
+            }
+        }
+        reload();
+    }
+}
+
+bool KeyframesModel::simpleKeyframesInUse()
+{
+    return m_filter && m_metadata && (m_filter->animateIn() > 0 || m_filter->animateOut() > 0);
+}
+
+void KeyframesModel::removeSimpleKeyframes()
+{
+    if (simpleKeyframesInUse()) {
+        for (int i = 0; i < m_metadata->keyframes()->parameterCount(); i++) {
+            QString name = m_metadata->keyframes()->parameter(i)->property();
+            auto parameter = m_metadata->keyframes()->parameter(i);
+            bool clearKeyframes = true;
+            // Find out if all keyframe values are the same. If they are all the same,
+            // then clear keyframes and set the parameter to a single value.
+            if (parameter->isRectangle()) {
+                auto firstValue = m_filter->getRect(name, 0);
+                Mlt::Animation anim = m_filter->getAnimation(name);
+                if (anim.is_valid()) {
+                    for (int k = 1; k < anim.key_count(); k++) {
+                        auto value = m_filter->getRect(name, anim.key_get_frame(k));
+                        if (value != firstValue) {
+                            clearKeyframes = false;
+                            break;
+                        }
+                    }
+                }
+                if (clearKeyframes) {
+                    m_filter->set(name, firstValue);
+                }
+            } else {
+                double firstValue = m_filter->getDouble(name, 0);
+                Mlt::Animation anim = m_filter->getAnimation(name);
+                if (anim.is_valid()) {
+                    for (int k = 1; k < anim.key_count(); k++) {
+                        auto value = m_filter->getDouble(name, anim.key_get_frame(k));
+                        if (value != firstValue) {
+                            clearKeyframes = false;
+                            break;
+                        }
+                    }
+                }
+                if (clearKeyframes) {
+                    m_filter->set(name, firstValue);
+                    m_filter->blockSignals(true);
+                    for (auto& key : parameter->gangedProperties()) {
+                        m_filter->set(key, m_filter->getDouble(key, 0));
+                    }
+                    m_filter->blockSignals(false);
+                }
+            }
+        }
+        m_filter->clearAnimateInOut();
+    }
+}
+
 void KeyframesModel::reload()
 {
     beginResetModel();
     m_propertyNames.clear();
     m_keyframeCounts.clear();
     m_metadataIndex.clear();
-    if (m_filter)
+    if (m_filter && m_metadata && m_filter->animateIn() <= 0 && m_filter->animateOut() <= 0)
     for (int i = 0; i < m_metadata->keyframes()->parameterCount(); i++) {
-        if (!m_metadata->keyframes()->parameter(i)->isSimple() || (m_filter->animateIn() <= 0 && m_filter->animateOut() <= 0)) {
-            if (m_filter->keyframeCount(m_metadata->keyframes()->parameter(i)->property()) > 0) {
-                m_propertyNames << m_metadata->keyframes()->parameter(i)->property();
-                m_keyframeCounts << keyframeCount(m_propertyNames.count() - 1);
-                m_metadataIndex << i;
-            }
+        if (m_filter->keyframeCount(m_metadata->keyframes()->parameter(i)->property()) > 0) {
+            m_propertyNames << m_metadata->keyframes()->parameter(i)->property();
+            m_keyframeCounts << keyframeCount(m_propertyNames.count() - 1);
+            m_metadataIndex << i;
         }
     }
     endResetModel();
@@ -653,7 +731,7 @@ void KeyframesModel::onFilterChanged(const QString& property)
     }
 }
 
-void KeyframesModel::onFilterInChanged(int delta)
+void KeyframesModel::onFilterInChanged(int /*delta*/)
 {
     QTimer::singleShot(0, this, SLOT(reload()));
 }
