@@ -922,7 +922,7 @@ MeltJob* EncodeDock::createMeltJob(Mlt::Producer* service, const QString& target
 
     // Fix in/out points of filters on clip-only project.
     QScopedPointer<Mlt::Producer> tempProducer;
-    if (MLT.isSeekable(service))
+    if (MLT.isSeekable(service) && service->type() != mlt_service_chain_type)
     if (ui->fromCombo->currentData().toString() == "clip" || ui->fromCombo->currentData().toString() == "batch") {
         QString xml = MLT.XML(service);
         tempProducer.reset(new Mlt::Producer(MLT.profile(), "xml-string", xml.toUtf8().constData()));
