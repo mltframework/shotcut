@@ -258,7 +258,7 @@
      <item>
       <widget class="QPushButton" name="menuButton">
        <property name="toolTip">
-        <string>Display a menu of additional actions</string>
+        <string>Properties Menu</string>
        </property>
        <property name="text">
         <string/>

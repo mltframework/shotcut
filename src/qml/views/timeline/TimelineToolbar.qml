@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2021 Meltytech, LLC
+ * Copyright (c) 2013-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -39,7 +39,7 @@ ToolBar {
             implicitHeight: toolbar.height - 3
             implicitWidth: implicitHeight
             action: menuAction
-            Shotcut.HoverTip { text: qsTr('Display a menu of additional actions') }
+            Shotcut.HoverTip { text: qsTr('Timeline Menu') }
             focusPolicy: Qt.NoFocus
         }
         Button { // separator

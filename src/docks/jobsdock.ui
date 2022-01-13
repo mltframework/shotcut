@@ -126,7 +126,7 @@ the list. This does not stop a currently running job. Right-
       <item>
        <widget class="QPushButton" name="menuButton">
         <property name="toolTip">
-         <string>Display a menu of additional actions</string>
+         <string>Jobs Menu</string>
         </property>
         <property name="icon">
          <iconset theme="show-menu" resource="../../icons/resources.qrc">

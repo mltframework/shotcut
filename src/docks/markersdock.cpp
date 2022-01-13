@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Meltytech, LLC
+ * Copyright (c) 2021-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -182,7 +182,7 @@ MarkersDock::MarkersDock(QWidget *parent) :
     m_moreButton = new QToolButton(this);
     m_moreButton->setIcon(QIcon::fromTheme("show-menu", QIcon(":/icons/oxygen/32x32/actions/show-menu.png")));
     m_moreButton->setMaximumSize(22,22);
-    m_moreButton->setToolTip(tr("Display a menu of additional actions"));
+    m_moreButton->setToolTip(tr("Markers Menu"));
     m_moreButton->setAutoRaise(true);
     QMenu* moreMenu = new QMenu(this);
     moreMenu->addAction(tr("Remove All Markers"), this, SLOT(onRemoveAllRequested()));

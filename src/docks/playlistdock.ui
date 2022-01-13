@@ -249,7 +249,7 @@ p, li { white-space: pre-wrap; }
       <item>
        <widget class="QPushButton" name="menuButton">
         <property name="toolTip">
-         <string>Display a menu of additional actions</string>
+         <string>Playlist Menu</string>
         </property>
         <property name="text">
          <string/>

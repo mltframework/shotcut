@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2021 Meltytech, LLC
+ * Copyright (c) 2016-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,7 +35,7 @@ ToolBar {
         Shotcut.ToolButton {
             implicitHeight: toolbar.height - 3
             implicitWidth: implicitHeight
-            Shotcut.HoverTip { text: qsTr('Display a menu of additional actions') }
+            Shotcut.HoverTip { text: qsTr('Keyframes Menu') }
             focusPolicy: Qt.NoFocus
             action: Action {
                 id: menuAction
