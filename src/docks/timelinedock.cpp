@@ -1235,15 +1235,16 @@ void TimelineDock::onClipMoved(int fromTrack, int toTrack, int clipIndex, int po
                 }
             }
         }
-        auto command = new Timeline::MoveClipCommand(m_model, m_markersModel, toTrack - fromTrack, ripple);
+        auto command = new Timeline::MoveClipCommand(m_model, m_markersModel, toTrack - fromTrack, position, ripple);
 
         // Copy selected
         for (const auto& clip : selection()) {
-            QScopedPointer<Mlt::ClipInfo> info(getClipInfo(clip.y(), clip.x()));
+            Mlt::ClipInfo* info(getClipInfo(clip.y(), clip.x()));
             if (info && info->cut) {
                 LOG_DEBUG() << "moving clip at" << clip << "start" << info->start << "+" << position << "=" << info->start + position;
-                info->cut->set(kPlaylistStartProperty, info->start + position);
-                command->selection().insert(info->start, *info->cut);
+                command->addClip(clip.y(), clip.x(), info);
+            } else {
+                delete info;
             }
         }
         setSelection();

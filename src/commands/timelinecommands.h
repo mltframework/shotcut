@@ -203,25 +203,28 @@ private:
 class MoveClipCommand : public QUndoCommand
 {
 public:
-    MoveClipCommand(MultitrackModel& model, MarkersModel& markersModel, int trackDelta, bool ripple, QUndoCommand * parent = 0);
+    MoveClipCommand(MultitrackModel& model, MarkersModel& markersModel, int trackDelta, int positionDelta, bool ripple, QUndoCommand * parent = 0);
+    void addClip(int trackIndex, int clipIndex, Mlt::ClipInfo* info);
     void redo();
     void undo();
-    QMultiMap<int, Mlt::Producer>& selection() { return m_selection; }
 
 private:
     void redoMarkers();
     MultitrackModel& m_model;
     MarkersModel& m_markersModel;
     int m_trackDelta;
+    int m_positionDelta;
     bool m_ripple;
     bool m_rippleAllTracks;
     bool m_rippleMarkers;
     UndoHelper m_undoHelper;
-    QMultiMap<int, Mlt::Producer> m_selection; // ordered by position
+    struct ClipData {
+        QSharedPointer<Mlt::ClipInfo> info;
+        int trackIndex;
+        int clipIndex;
+    };
+    QList<ClipData> m_clips;
     bool m_redo;
-    int m_start;
-    int m_trackIndex;
-    int m_clipIndex;
     int m_markerOldStart;
     int m_markerNewStart;
     QList<Markers::Marker> m_markers;
