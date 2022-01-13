@@ -147,8 +147,13 @@ void QmlProducer::seek(int position)
 {
     if (m_producer.is_valid() && m_position != position) {
         m_position = position;
-        emit positionChanged(m_position);
+        emit positionChanged(qBound(0, position, duration()));
     }
+}
+
+Q_INVOKABLE bool QmlProducer::outOfBounds()
+{
+    return m_position < 0 || m_position > duration();
 }
 
 void QmlProducer::audioLevelsReady(const QModelIndex& index)

@@ -71,6 +71,7 @@ public:
     Q_INVOKABLE QString get(QString name, int position = -1);
     Q_INVOKABLE double getDouble(QString name, int position = -1);
     Q_INVOKABLE QRectF getRect(QString name, int position = -1);
+    Q_INVOKABLE bool outOfBounds();
 
 signals:
     void producerChanged();

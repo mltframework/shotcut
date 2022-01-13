@@ -62,6 +62,7 @@ Shotcut.VuiBase {
             rectangle.setHandles(filterRect)
         }
         rectangle.enabled = position <= 0 || (position >= (filter.animateIn - 1) && position <= (filter.duration - filter.animateOut)) || position >= (filter.duration - 1)
+        textArea.visible = !producer.outOfBounds()
     }
 
     function updateFilter(position) {
