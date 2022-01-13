@@ -52,7 +52,7 @@ ToolBar {
         Shotcut.ToolButton {
             implicitHeight: toolbar.height - 3
             implicitWidth: implicitHeight
-            Shotcut.HoverTip { text: qsTr('Set the filter start') }
+            Shotcut.HoverTip { text: qsTr('Set the filter start') + ' ([)' }
             enabled: metadata !== null && metadata.keyframes.allowTrim
             focusPolicy: Qt.NoFocus
             action: Action {
@@ -64,7 +64,7 @@ ToolBar {
         Shotcut.ToolButton {
             implicitHeight: toolbar.height - 3
             implicitWidth: implicitHeight
-            Shotcut.HoverTip { text: qsTr('Set the filter end') }
+            Shotcut.HoverTip { text: qsTr('Set the filter end') + ' (])' }
             enabled: metadata !== null && metadata.keyframes.allowTrim
             focusPolicy: Qt.NoFocus
             action: Action {
@@ -76,7 +76,7 @@ ToolBar {
         Shotcut.ToolButton {
             implicitHeight: toolbar.height - 3
             implicitWidth: implicitHeight
-            Shotcut.HoverTip { text: qsTr('Set the first simple keyframe') }
+            Shotcut.HoverTip { text: qsTr('Set the first simple keyframe' + ' ({)') }
             enabled: metadata !== null && metadata.keyframes.allowAnimateIn
             focusPolicy: Qt.NoFocus
             action: Action {
@@ -88,7 +88,7 @@ ToolBar {
         Shotcut.ToolButton {
             implicitHeight: toolbar.height - 3
             implicitWidth: implicitHeight
-            Shotcut.HoverTip { text: qsTr('Set the second simple keyframe') }
+            Shotcut.HoverTip { text: qsTr('Set the second simple keyframe') + ' (})' }
             enabled: metadata !== null && metadata.keyframes.allowAnimateOut
             focusPolicy: Qt.NoFocus
             action: Action {
@@ -105,7 +105,7 @@ ToolBar {
         Shotcut.ToolButton {
             implicitHeight: toolbar.height - 3
             implicitWidth: implicitHeight
-            Shotcut.HoverTip { text: qsTr('Zoom keyframes out (Alt+-)') }
+            Shotcut.HoverTip { text: qsTr('Zoom Keyframes out') + (application.OS === 'OS X'? '    ⌥-' : ' (Alt+-)') }
             focusPolicy: Qt.NoFocus
             action: Action {
                 id: zoomOutAction
@@ -120,7 +120,7 @@ ToolBar {
         Shotcut.ToolButton {
             implicitHeight: toolbar.height - 3
             implicitWidth: implicitHeight
-            Shotcut.HoverTip { text: qsTr('Zoom keyframes in (Alt++)') }
+            Shotcut.HoverTip { text: qsTr('Zoom Keyframes in') + (application.OS === 'OS X'? '    ⌥+' : ' (Alt++)') }
             focusPolicy: Qt.NoFocus
             action: Action {
                 id: zoomInAction
@@ -132,7 +132,7 @@ ToolBar {
         Shotcut.ToolButton {
             implicitHeight: toolbar.height - 3
             implicitWidth: implicitHeight
-            Shotcut.HoverTip { text: qsTr('Zoom keyframes to fit (Alt+0)') }
+            Shotcut.HoverTip { text: qsTr('Zoom Keyframes to fit') + (application.OS === 'OS X'? '    ⌥0' : ' (Alt+0)') }
             focusPolicy: Qt.NoFocus
             action: Action {
                 id: zoomFitAction

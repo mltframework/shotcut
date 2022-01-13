@@ -51,21 +51,21 @@ ToolBar {
             implicitHeight: toolbar.height - 3
             implicitWidth: implicitHeight
             action: cutAction
-            Shotcut.HoverTip { text: qsTr('Cut - Copy the current clip to the Source\nplayer and ripple delete it') }
+            Shotcut.HoverTip { text: qsTr('Cut') + (application.OS === 'OS X'? '    ⌘X' : ' (Ctrl+X)') }
             focusPolicy: Qt.NoFocus
         }
         Shotcut.ToolButton {
             implicitHeight: toolbar.height - 3
             implicitWidth: implicitHeight
             action: copyAction
-            Shotcut.HoverTip { text: qsTr('Copy - Copy the current clip to the Source player (C)') }
+            Shotcut.HoverTip { text: qsTr('Copy') + ' (C)' }
             focusPolicy: Qt.NoFocus
         }
         Shotcut.ToolButton {
             implicitHeight: toolbar.height - 3
             implicitWidth: implicitHeight
             action: insertAction
-            Shotcut.HoverTip { text: qsTr('Paste - Insert clip into the current track\nshifting following clips to the right (V)') }
+            Shotcut.HoverTip { text: qsTr('Paste') + ' (V)' }
             focusPolicy: Qt.NoFocus
         }
         Button { // separator
@@ -77,35 +77,35 @@ ToolBar {
             implicitHeight: toolbar.height - 3
             implicitWidth: implicitHeight
             action: appendAction
-            Shotcut.HoverTip { text: qsTr('Append to the current track (A)') }
+            Shotcut.HoverTip { text: qsTr('Append') + ' (A)' }
             focusPolicy: Qt.NoFocus
         }
         Shotcut.ToolButton {
             implicitHeight: toolbar.height - 3
             implicitWidth: implicitHeight
             action: deleteAction
-            Shotcut.HoverTip { text: qsTr('Ripple Delete - Remove current clip\nshifting following clips to the left (X)') }
+            Shotcut.HoverTip { text: qsTr('Ripple Delete') + ' (X)' }
             focusPolicy: Qt.NoFocus
         }
         Shotcut.ToolButton {
             implicitHeight: toolbar.height - 3
             implicitWidth: implicitHeight
             action: liftAction
-            Shotcut.HoverTip { text: qsTr('Lift - Remove current clip without\naffecting position of other clips (Z)') }
+            Shotcut.HoverTip { text: qsTr('Lift') + ' (Z)' }
             focusPolicy: Qt.NoFocus
         }
         Shotcut.ToolButton {
             implicitHeight: toolbar.height - 3
             implicitWidth: implicitHeight
             action: overwriteAction
-            Shotcut.HoverTip { text: qsTr('Overwrite clip onto the current track (B)') }
+            Shotcut.HoverTip { text: qsTr('Overwrite') + ' (B)' }
             focusPolicy: Qt.NoFocus
         }
         Shotcut.ToolButton {
             implicitHeight: toolbar.height - 3
             implicitWidth: implicitHeight
             action: splitAction
-            Shotcut.HoverTip { text: qsTr('Split At Playhead (S)') }
+            Shotcut.HoverTip { text: qsTr('Split At Playhead') + ' (S)' }
             focusPolicy: Qt.NoFocus
         }
         Button { // separator
@@ -117,21 +117,21 @@ ToolBar {
             implicitHeight: toolbar.height - 3
             implicitWidth: implicitHeight
             action: markerAction
-            Shotcut.HoverTip { text: qsTr('Marker (M)') }
+            Shotcut.HoverTip { text: qsTr('Marker') + ' (M)' }
             focusPolicy: Qt.NoFocus
         }
         Shotcut.ToolButton {
             implicitHeight: toolbar.height - 3
             implicitWidth: implicitHeight
             action: prevMarkerAction
-            Shotcut.HoverTip { text: qsTr('Previous Marker (<)') }
+            Shotcut.HoverTip { text: qsTr('Previous Marker') + ' (<)' }
             focusPolicy: Qt.NoFocus
         }
         Shotcut.ToolButton {
             implicitHeight: toolbar.height - 3
             implicitWidth: implicitHeight
             action: nextMarkerAction
-            Shotcut.HoverTip { text: qsTr('Next Marker (>)') }
+            Shotcut.HoverTip { text: qsTr('Next Marker') + ' (>)' }
             focusPolicy: Qt.NoFocus
         }
         Button { // separator
@@ -147,7 +147,7 @@ ToolBar {
             icon.name: 'snap'
             icon.source: 'qrc:///icons/oxygen/32x32/actions/snap.png'
             focusPolicy: Qt.NoFocus
-            Shotcut.HoverTip { text: qsTr('Toggle snapping') + (application.OS === 'OS X'? '    ⌘P' : ' (Ctrl+P)') }
+            Shotcut.HoverTip { text: qsTr('Snapping') + (application.OS === 'OS X'? '    ⌘P' : ' (Ctrl+P)') }
             onClicked: settings.timelineSnap = !settings.timelineSnap
         }
         Shotcut.ToolButton {
@@ -169,7 +169,7 @@ ToolBar {
             icon.name: 'target'
             icon.source: 'qrc:///icons/oxygen/32x32/actions/target.png'
             focusPolicy: Qt.NoFocus
-            Shotcut.HoverTip { text: qsTr('Ripple trim and drop') + (application.OS === 'OS X'? '    ⌘R' : ' (Ctrl+R)') }
+            Shotcut.HoverTip { text: qsTr('Ripple') + (application.OS === 'OS X'? '    ⌘R' : ' (Ctrl+R)') }
             onClicked: settings.timelineRipple = !settings.timelineRipple
         }
         Shotcut.ToolButton {
@@ -180,7 +180,7 @@ ToolBar {
             icon.name: 'ripple-all'
             icon.source: 'qrc:///icons/oxygen/32x32/actions/ripple-all.png'
             focusPolicy: Qt.NoFocus
-            Shotcut.HoverTip { text: qsTr('Ripple edits across all tracks') + (application.OS === 'OS X'? '    ⌥⌘R' : ' (Ctrl+Alt+R)') }
+            Shotcut.HoverTip { text: qsTr('Ripple All Tracks') + (application.OS === 'OS X'? '    ⌥⌘R' : ' (Ctrl+Alt+R)') }
             onClicked: settings.timelineRippleAllTracks = !settings.timelineRippleAllTracks
         }
         Shotcut.ToolButton {
@@ -191,7 +191,7 @@ ToolBar {
             icon.name: 'ripple-marker'
             icon.source: 'qrc:///icons/oxygen/32x32/actions/ripple-marker.png'
             focusPolicy: Qt.NoFocus
-            Shotcut.HoverTip { text: qsTr('Ripple timeline markers with edits') + (application.OS === 'OS X'? '    ⌥R' : ' (Alt+R)') }
+            Shotcut.HoverTip { text: qsTr('Ripple Markers') + (application.OS === 'OS X'? '    ⌥R' : ' (Alt+R)') }
             onClicked: settings.timelineRippleMarkers = !settings.timelineRippleMarkers
         }
         Button { // separator
@@ -203,7 +203,7 @@ ToolBar {
             implicitHeight: toolbar.height - 3
             implicitWidth: implicitHeight
             action: zoomOutAction
-            Shotcut.HoverTip { text: qsTr("Zoom timeline out (-)") }
+            Shotcut.HoverTip { text: qsTr("Zoom Timeline out (-)") }
             focusPolicy: Qt.NoFocus
         }
         ZoomSlider {
@@ -213,14 +213,14 @@ ToolBar {
             implicitHeight: toolbar.height - 3
             implicitWidth: implicitHeight
             action: zoomInAction
-            Shotcut.HoverTip { text: qsTr("Zoom timeline in (+)") }
+            Shotcut.HoverTip { text: qsTr("Zoom Timeline in (+)") }
             focusPolicy: Qt.NoFocus
         }
         Shotcut.ToolButton {
             implicitHeight: toolbar.height - 3
             implicitWidth: implicitHeight
             action: zoomFitAction
-            Shotcut.HoverTip { text: qsTr('Zoom timeline to fit (0)') }
+            Shotcut.HoverTip { text: qsTr('Zoom Timeline to fit (0)') }
             focusPolicy: Qt.NoFocus
         }
     }

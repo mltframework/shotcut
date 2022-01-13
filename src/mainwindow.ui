@@ -315,7 +315,7 @@
     <string>&amp;Open File...</string>
    </property>
    <property name="toolTip">
-    <string>Open a video, audio or image file</string>
+    <string>Open a video, audio, image, or project file</string>
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+O</string>
@@ -403,7 +403,7 @@
     <string>Export</string>
    </property>
    <property name="toolTip">
-    <string>Show the Export panel</string>
+    <string>Export</string>
    </property>
   </action>
   <action name="actionUndo">
@@ -455,7 +455,7 @@
     <string>Peak Meter</string>
    </property>
    <property name="toolTip">
-    <string>Show or hide the audio peak meter</string>
+    <string>Audio Peak Meter</string>
    </property>
   </action>
   <action name="actionProperties">
@@ -663,7 +663,7 @@
     <string>Filters</string>
    </property>
    <property name="toolTip">
-    <string>Modify the video image or audio</string>
+    <string>Filters</string>
    </property>
   </action>
   <action name="actionAddCustomProfile">
