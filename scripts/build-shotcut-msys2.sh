@@ -493,7 +493,7 @@ function set_globals {
     CONFIG[0]="${CONFIG[0]} --enable-libzimg"
   fi
   if [ "$ENABLE_VMAF" = "1" ]; then
-    CONFIG[0]="${CONFIG[0]} --enable-libvmaf"
+    CONFIG[0]="${CONFIG[0]} --enable-libvmaf --disable-w32threads"
   fi
   CONFIG[0]="${CONFIG[0]} $FFMPEG_ADDITIONAL_OPTIONS"
   CFLAGS_[0]="-I$FINAL_INSTALL_DIR/include $CFLAGS"
