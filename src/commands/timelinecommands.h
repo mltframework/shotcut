@@ -488,6 +488,18 @@ private:
     QScopedPointer<Mlt::Producer> m_filtersProducer;
 };
 
+class MoveTrackCommand : public QUndoCommand
+{
+public:
+    MoveTrackCommand(MultitrackModel& model, int fromTrackIndex, int toTrackIndex, QUndoCommand* parent = 0);
+    void redo();
+    void undo();
+private:
+    MultitrackModel& m_model;
+    int m_fromTrackIndex;
+    int m_toTrackIndex;
+};
+
 class ChangeBlendModeCommand : public QObject, public QUndoCommand
 {
     Q_OBJECT

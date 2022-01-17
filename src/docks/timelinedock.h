@@ -148,6 +148,8 @@ public slots:
     void insertAudioTrack();
     void insertVideoTrack();
     void removeTrack();
+    void moveTrackUp();
+    void moveTrackDown();
     void onProducerChanged(Mlt::Producer*);
     void emitSelectedFromSelection();
     void remakeAudioLevels(int trackIndex, int clipIndex, bool force = true);

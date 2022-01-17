@@ -494,6 +494,64 @@ void TimelineDock::removeTrack()
     }
 }
 
+void TimelineDock::moveTrackUp()
+{
+    int trackIndex = currentTrack();
+    const TrackList& trackList = m_model.trackList();
+    if (trackIndex >= trackList.size()) {
+        LOG_DEBUG() << "Track Index out of bounds" << trackIndex;
+        return;
+    }
+    if (trackList[trackIndex].type == VideoTrackType) {
+        bool topVideo = true;
+        foreach (const Track& t, trackList) {
+            if (t.type == VideoTrackType && t.number > trackList[trackIndex].number) {
+                topVideo = false;
+                break;
+            }
+        }
+        if (topVideo) {
+            LOG_DEBUG() << "Can not move top video track up" << trackIndex;
+            return;
+        }
+    }
+    if (trackList[trackIndex].number == 0 && trackList[trackIndex].type == AudioTrackType) {
+        LOG_DEBUG() << "Can not move top audio track up" << trackIndex;
+        return;
+    }
+    MAIN.undoStack()->push(new Timeline::MoveTrackCommand(m_model, trackIndex, trackIndex - 1));
+    setCurrentTrack(trackIndex - 1);
+}
+
+void TimelineDock::moveTrackDown()
+{
+    int trackIndex = currentTrack();
+    const TrackList& trackList = m_model.trackList();
+    if (trackIndex >= trackList.size()) {
+        LOG_DEBUG() << "Track Index out of bounds" << trackIndex;
+        return;
+    }
+    if (trackList[trackIndex].number == 0 && trackList[trackIndex].type == VideoTrackType) {
+        LOG_DEBUG() << "Can not move bottom video track down" << trackIndex;
+        return;
+    }
+    if (trackList[trackIndex].type == AudioTrackType) {
+        bool bottomAudio = true;
+        foreach (const Track& t, trackList) {
+            if (t.type == AudioTrackType && t.number > trackList[trackIndex].number) {
+                bottomAudio = false;
+                break;
+            }
+        }
+        if (bottomAudio) {
+            LOG_DEBUG() << "Can not move bottom audio track down" << trackIndex;
+            return;
+        }
+    }
+    MAIN.undoStack()->push(new Timeline::MoveTrackCommand(m_model, trackIndex, trackIndex + 1));
+    setCurrentTrack(trackIndex + 1);
+}
+
 bool TimelineDock::mergeClipWithNext(int trackIndex, int clipIndex, bool dryrun)
 {
     if (dryrun)

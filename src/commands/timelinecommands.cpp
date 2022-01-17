@@ -1215,6 +1215,30 @@ void RemoveTrackCommand::undo()
     }
 }
 
+MoveTrackCommand::MoveTrackCommand(MultitrackModel& model, int fromTrackIndex, int toTrackIndex, QUndoCommand* parent)
+    : QUndoCommand(parent)
+    , m_model(model)
+    , m_fromTrackIndex(qBound(0, fromTrackIndex, qMax(model.rowCount() - 1, 0)))
+    , m_toTrackIndex(qBound(0, toTrackIndex, qMax(model.rowCount() - 1, 0)))
+{
+    if (m_toTrackIndex < m_fromTrackIndex)
+        setText(QObject::tr("Move track down"));
+    else
+        setText(QObject::tr("Move track up"));
+}
+
+void MoveTrackCommand::redo()
+{
+    LOG_DEBUG() << "fromTrackIndex" << m_fromTrackIndex << "toTrackIndex" << m_toTrackIndex;
+    m_model.moveTrack(m_fromTrackIndex, m_toTrackIndex);
+}
+
+void MoveTrackCommand::undo()
+{
+    LOG_DEBUG() << "fromTrackIndex" << m_fromTrackIndex << "toTrackIndex" << m_toTrackIndex;
+    m_model.moveTrack(m_toTrackIndex, m_fromTrackIndex);
+}
+
 ChangeBlendModeCommand::ChangeBlendModeCommand(Mlt::Transition& transition, const QString& propertyName, const QString& mode, QUndoCommand* parent)
     : QUndoCommand(parent)
     , m_transition(transition)
