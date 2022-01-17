@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2021 Meltytech, LLC
+ * Copyright (c) 2017-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -493,16 +493,6 @@ Rectangle {
                     } else {
                         settings.timelineShowWaveforms = checked
                     }
-                }
-            }
-            MenuItem {
-                text: qsTr('Use Higher Performance Waveforms')
-                checkable: true
-                checked: settings.timelineFramebufferWaveform
-                onTriggered: {
-                    settings.timelineFramebufferWaveform = checked
-                    if (settings.timelineShowWaveforms)
-                        multitrack.reload()
                 }
             }
             MenuItem {
