@@ -203,7 +203,7 @@ ToolBar {
             implicitHeight: toolbar.height - 3
             implicitWidth: implicitHeight
             action: zoomOutAction
-            Shotcut.HoverTip { text: qsTr("Zoom Timeline out (-)") }
+            Shotcut.HoverTip { text: qsTr('Zoom Timeline out') + ' (-)' }
             focusPolicy: Qt.NoFocus
         }
         ZoomSlider {
@@ -213,14 +213,14 @@ ToolBar {
             implicitHeight: toolbar.height - 3
             implicitWidth: implicitHeight
             action: zoomInAction
-            Shotcut.HoverTip { text: qsTr("Zoom Timeline in (+)") }
+            Shotcut.HoverTip { text: qsTr('Zoom Timeline in') + ' (+)' }
             focusPolicy: Qt.NoFocus
         }
         Shotcut.ToolButton {
             implicitHeight: toolbar.height - 3
             implicitWidth: implicitHeight
             action: zoomFitAction
-            Shotcut.HoverTip { text: qsTr('Zoom Timeline to fit (0)') }
+            Shotcut.HoverTip { text: qsTr('Zoom Timeline to fit') + ' (0)' }
             focusPolicy: Qt.NoFocus
         }
     }
