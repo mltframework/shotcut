@@ -227,8 +227,26 @@ QVariant MultitrackModel::data(const QModelIndex &index, int role) const
             }
             case IsFilteredRole:
                 return isFiltered(track.data());
+            case IsTopVideoRole:
+                if (m_trackList[index.row()].type == AudioTrackType) return false;
+                foreach (const Track& t, m_trackList) {
+                    if (t.type == VideoTrackType && t.number > m_trackList[index.row()].number) {
+                        return false;
+                    }
+                }
+                return true;
             case IsBottomVideoRole:
                 return m_trackList[index.row()].number == 0 && m_trackList[index.row()].type == VideoTrackType;
+            case IsTopAudioRole:
+                return m_trackList[index.row()].number == 0 && m_trackList[index.row()].type == AudioTrackType;
+            case IsBottomAudioRole:
+                if (m_trackList[index.row()].type == VideoTrackType) return false;
+                foreach (const Track& t, m_trackList) {
+                    if (t.type == AudioTrackType && t.number > m_trackList[index.row()].number) {
+                        return false;
+                    }
+                }
+                return true;
             default:
                 break;
             }
@@ -295,7 +313,10 @@ QHash<int, QByteArray> MultitrackModel::roleNames() const
     roles[FileHashRole] = "hash";
     roles[SpeedRole] = "speed";
     roles[IsFilteredRole] = "filtered";
+    roles[IsTopVideoRole] = "isTopVideo";
     roles[IsBottomVideoRole] = "isBottomVideo";
+    roles[IsTopAudioRole] = "isTopAudio";
+    roles[IsBottomAudioRole] = "isBottomAudio";
     roles[AudioIndexRole] = "audioIndex";
     return roles;
 }
@@ -2947,6 +2968,117 @@ void MultitrackModel::insertTrack(int trackIndex, TrackType type)
     endInsertRows();
     emit modified();
 //    foreach (Track t, m_trackList) LOG_DEBUG() << (t.type == VideoTrackType?"Video":"Audio") << "track number" << t.number << "mlt_index" << t.mlt_index;
+}
+
+void MultitrackModel::moveTrack(int fromTrackIndex, int toTrackIndex)
+{
+    LOG_DEBUG() << "From: " << fromTrackIndex << "To: " << toTrackIndex;
+    if (fromTrackIndex >= m_trackList.count() || fromTrackIndex < 0 || toTrackIndex >= m_trackList.count() || toTrackIndex < 0) {
+        LOG_DEBUG() << "Invalid track index" << fromTrackIndex << toTrackIndex;
+        return;
+    }
+    if (fromTrackIndex == toTrackIndex) {
+        LOG_DEBUG() << "Do not move track to itself" << fromTrackIndex;
+        return;
+    }
+
+    int fromMltIndex = m_trackList.at(fromTrackIndex).mlt_index;
+    int toMltIndex = m_trackList.at(toTrackIndex).mlt_index;
+
+    // Take a copy of the track
+    QScopedPointer<Mlt::Producer> producer(m_tractor->multitrack()->track(fromMltIndex));
+
+    // Save the transition b tracks and calculate the new mix mode indices to be reapplied later.
+    QVector<int> bTracks;
+    QMap<int, QString> modes;
+    QScopedPointer<Mlt::Service> service(m_tractor->producer());
+    while (service && service->is_valid()) {
+        if (service->type() == mlt_service_transition_type) {
+            Mlt::Transition t((mlt_transition) service->get_service());
+            bTracks.push_back(t.get_b_track());
+            if (service->get("mlt_service") != QString("mix") ) {
+                // Figure out how the blend modes will be moved to match the track move
+                int newBTrack = t.get_b_track();
+                if (newBTrack == fromMltIndex) {
+                    newBTrack = toMltIndex;
+                } else {
+                    if (newBTrack > fromMltIndex) {
+                        newBTrack--;
+                    }
+                    if (newBTrack >= toMltIndex) {
+                        newBTrack++;
+                    }
+                }
+                modes[newBTrack] = t.get("1");
+            }
+        }
+        service.reset(service->producer());
+    }
+
+    if (toTrackIndex > fromTrackIndex) {
+        beginMoveRows(QModelIndex(), fromTrackIndex, fromTrackIndex, QModelIndex(), toTrackIndex+1);
+    } else {
+        beginMoveRows(QModelIndex(), fromTrackIndex, fromTrackIndex, QModelIndex(), toTrackIndex);
+    }
+
+    // Clear all default track names (will regenerate later)
+    foreach (const Track& t, m_trackList) {
+        QScopedPointer<Mlt::Producer> mltTrack(m_tractor->track(t.mlt_index));
+        QString trackNameTemplate = (t.type == VideoTrackType)? QString("V%1") : QString("A%1");
+        QString trackName = trackNameTemplate.arg(t.number + 1);
+        if (mltTrack && mltTrack->get(kTrackNameProperty) == trackName) {
+            mltTrack->Mlt::Properties::clear(kTrackNameProperty);
+        }
+    }
+
+    m_tractor->remove_track(fromMltIndex);
+    m_tractor->insert_track(*producer, toMltIndex);
+
+    // remove_track() and insert_track() modify a & b tracks on the transitions.
+    // Here we will restore them to the right values
+    // Also move around the blend mode settings to follow the tracks that moved.
+    service.reset(m_tractor->producer());
+    while (service && service->is_valid()) {
+        if (service->type() == mlt_service_transition_type) {
+            Mlt::Transition t((mlt_transition) service->get_service());
+            int aTrack = 0;
+            int bTrack = bTracks.front();
+            bTracks.pop_front();
+            if (service->get("mlt_service") != QString("mix") ) {
+
+                if (bTrack == 1) {
+                    t.set("disable", 1);
+                } else {
+                    // video transitions mix with track 1
+                    // (except track 1 which mixes with track 0)
+                    aTrack = 1;
+                    t.set("disable", 0);
+                }
+                // Transfer the blend mode to this video transition
+                if (!modes[bTrack].isEmpty()) {
+                    t.set("1", modes[bTrack].toUtf8().constData());
+                } else {
+                    t.clear("1");
+                }
+            }
+            t.set_tracks(aTrack, bTrack);
+        }
+        service.reset(service->producer());
+    }
+
+    // Rename unnamed tracks
+    foreach (const Track& t, m_trackList) {
+        QScopedPointer<Mlt::Producer> mltTrack(m_tractor->track(t.mlt_index));
+        if (mltTrack && !mltTrack->property_exists(kTrackNameProperty)) {
+            QString trackNameTemplate = (t.type == VideoTrackType) ? QString("V%1") : QString("A%1");
+            QString trackName = trackNameTemplate.arg(t.number + 1);
+            mltTrack->set(kTrackNameProperty, trackName.toUtf8().constData());
+        }
+    }
+
+    endMoveRows();
+    emit dataChanged(index(0), index(m_trackList.size()-1), QVector<int>() << IsTopVideoRole << IsBottomVideoRole << IsTopAudioRole << IsBottomAudioRole << IsCompositeRole << NameRole);
+    emit modified();
 }
 
 void MultitrackModel::insertOrAdjustBlankAt(QList<int> tracks, int position, int length)

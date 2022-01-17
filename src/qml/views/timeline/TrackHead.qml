@@ -29,7 +29,10 @@ Rectangle {
     property bool isLocked
     property bool isVideo
     property bool isFiltered
+    property bool isTopVideo
     property bool isBottomVideo
+    property bool isTopAudio
+    property bool isBottomAudio
     property bool selected: false
     property bool current: false
     signal clicked()

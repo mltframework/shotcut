@@ -71,8 +71,11 @@ public:
         FileHashRole,    /// clip only
         SpeedRole,       /// clip only
         IsFilteredRole,
+        IsTopVideoRole,   /// track only
         IsBottomVideoRole,/// track only
-        AudioIndexRole   /// clip only
+        IsTopAudioRole,   /// track only
+        IsBottomAudioRole,/// track only
+        AudioIndexRole    /// clip only
     };
 
     explicit MultitrackModel(QObject *parent = 0);
@@ -106,6 +109,7 @@ public:
     void setScaleFactor(double scale);
     bool isTransition(Mlt::Playlist& playlist, int clipIndex) const;
     void insertTrack(int trackIndex, TrackType type = VideoTrackType);
+    void moveTrack(int fromTrackIndex, int toTrackIndex);
     void insertOrAdjustBlankAt(QList<int> tracks, int position, int length);
     bool mergeClipWithNext(int trackIndex, int clipIndex, bool dryrun);
     Mlt::ClipInfo *findClipByUuid(const QUuid& uuid, int& trackIndex, int& clipIndex);

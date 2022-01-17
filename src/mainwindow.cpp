@@ -3076,6 +3076,7 @@ void MainWindow::onMultitrackModified()
             }
         }
     }
+    MLT.refreshConsumer();
 }
 
 void MainWindow::onMultitrackDurationChanged()

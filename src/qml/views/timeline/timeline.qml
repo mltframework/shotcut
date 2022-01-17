@@ -220,7 +220,10 @@ Rectangle {
                             isLocked: model.locked
                             isVideo: !model.audio
                             isFiltered: model.filtered
+                            isTopVideo: model.isTopVideo
                             isBottomVideo: model.isBottomVideo
+                            isTopAudio: model.isTopAudio
+                            isBottomAudio: model.isBottomAudio
                             width: headerWidth
                             height: Logic.trackHeight(model.audio)
                             current: index === currentTrack
@@ -517,6 +520,16 @@ Rectangle {
             MenuItem {
                 text: qsTr('Remove Track') + (application.OS === 'OS X'? '    ⌥⌘U' : ' (Ctrl+Alt+U)')
                 onTriggered: timeline.removeTrack()
+            }
+            MenuItem {
+                text: qsTr('Move Track Up')
+                enabled: !trackHeaderRepeater.itemAt(currentTrack).isTopVideo && !trackHeaderRepeater.itemAt(currentTrack).isTopAudio
+                onTriggered: timeline.moveTrackUp()
+            }
+            MenuItem {
+                text: qsTr('Move Track Down')
+                enabled: !trackHeaderRepeater.itemAt(currentTrack).isBottomVideo && !trackHeaderRepeater.itemAt(currentTrack).isBottomAudio
+                onTriggered: timeline.moveTrackDown()
             }
         }
         Menu {
