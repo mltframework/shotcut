@@ -85,6 +85,7 @@ Item {
         rectW.value = filterRect.width
         rectH.value = filterRect.height
         typeCombo.currentIndex = typeCombo.valueToIndex()
+        segmentsSlider.enabled = segmentGapSlider.enabled = (typeCombo.currentIndex == 1)
         _disableUpdate = false
     }
 
@@ -124,7 +125,10 @@ Item {
                 if (i === values.length) i = 0;
                 return i;
             }
-            onActivated: filter.set('type', values[index])
+            onActivated: {
+                filter.set('type', values[index])
+                segmentsSlider.enabled = segmentGapSlider.enabled = (typeCombo.currentIndex == 1)
+            }
         }
 
         Label {
