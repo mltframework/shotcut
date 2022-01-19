@@ -9640,7 +9640,7 @@ Most users do not need to change this.</source>
     </message>
     <message>
         <location filename="../src/qml/filters/audio_eq15band/meta.qml" line="7"/>
-        <source>Equalizer: 15-band</source>
+        <source>Equalizer: 15-Band</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -10259,7 +10259,7 @@ Most users do not need to change this.</source>
         <location filename="../src/qml/filters/audio_pan/ui.qml" line="105"/>
         <location filename="../src/qml/filters/audio_pitch/ui.qml" line="121"/>
         <location filename="../src/qml/filters/audio_reverb/ui.qml" line="106"/>
-        <location filename="../src/qml/filters/audiolevelgraph/ui.qml" line="97"/>
+        <location filename="../src/qml/filters/audiolevelgraph/ui.qml" line="98"/>
         <location filename="../src/qml/filters/bigsh0t_eq_mask/ui.qml" line="92"/>
         <location filename="../src/qml/filters/bigsh0t_eq_to_rect/ui.qml" line="106"/>
         <location filename="../src/qml/filters/bigsh0t_eq_to_stereo/ui.qml" line="105"/>
@@ -10869,7 +10869,7 @@ Used to correct for excessive amplitude caused by the extra dynamic range.</sour
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audiolevelgraph/ui.qml" line="205"/>
+        <location filename="../src/qml/filters/audiolevelgraph/ui.qml" line="209"/>
         <location filename="../src/qml/filters/crop_rectangle/ui.qml" line="265"/>
         <location filename="../src/qml/filters/dust/ui.qml" line="59"/>
         <location filename="../src/qml/filters/gradient/ui.qml" line="346"/>
@@ -11089,28 +11089,28 @@ Used to correct for excessive amplitude caused by the extra dynamic range.</sour
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audiolevelgraph/ui.qml" line="118"/>
+        <location filename="../src/qml/filters/audiolevelgraph/ui.qml" line="119"/>
         <source>Bar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audiolevelgraph/ui.qml" line="118"/>
+        <location filename="../src/qml/filters/audiolevelgraph/ui.qml" line="119"/>
         <source>Segment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audiolevelgraph/ui.qml" line="131"/>
+        <location filename="../src/qml/filters/audiolevelgraph/ui.qml" line="135"/>
         <source>Graph Colors</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audiolevelgraph/ui.qml" line="156"/>
+        <location filename="../src/qml/filters/audiolevelgraph/ui.qml" line="160"/>
         <location filename="../src/qml/filters/waveform/ui.qml" line="124"/>
         <source>Thickness</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audiolevelgraph/ui.qml" line="174"/>
+        <location filename="../src/qml/filters/audiolevelgraph/ui.qml" line="178"/>
         <location filename="../src/qml/filters/crop_rectangle/ui.qml" line="208"/>
         <location filename="../src/qml/filters/gradient/ui.qml" line="303"/>
         <location filename="../src/qml/filters/pillar_echo/ui.qml" line="158"/>
@@ -11121,27 +11121,27 @@ Used to correct for excessive amplitude caused by the extra dynamic range.</sour
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audiolevelgraph/ui.qml" line="241"/>
+        <location filename="../src/qml/filters/audiolevelgraph/ui.qml" line="245"/>
         <source>Mirror the levels.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audiolevelgraph/ui.qml" line="251"/>
+        <location filename="../src/qml/filters/audiolevelgraph/ui.qml" line="255"/>
         <source>Reverse the levels.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audiolevelgraph/ui.qml" line="257"/>
+        <location filename="../src/qml/filters/audiolevelgraph/ui.qml" line="261"/>
         <source>Channels</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audiolevelgraph/ui.qml" line="274"/>
+        <location filename="../src/qml/filters/audiolevelgraph/ui.qml" line="278"/>
         <source>Segments</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audiolevelgraph/ui.qml" line="291"/>
+        <location filename="../src/qml/filters/audiolevelgraph/ui.qml" line="295"/>
         <source>Segment Gap</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11741,7 +11741,7 @@ Click &quot;Open&quot; to load a file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audiolevelgraph/ui.qml" line="112"/>
+        <location filename="../src/qml/filters/audiolevelgraph/ui.qml" line="113"/>
         <location filename="../src/qml/filters/gradient/ui.qml" line="224"/>
         <source>Type</source>
         <translation type="unfinished"></translation>
@@ -12867,7 +12867,7 @@ All = 360° + Randomize</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/audiolevelgraph/ui.qml" line="144"/>
+        <location filename="../src/qml/filters/audiolevelgraph/ui.qml" line="148"/>
         <location filename="../src/qml/filters/waveform/ui.qml" line="112"/>
         <source>Background Color</source>
         <translation type="unfinished"></translation>
@@ -13999,112 +13999,112 @@ Set to 0 to only print real points (no interpolation).</source>
 <context>
     <name>ui_spectrum</name>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="108"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="109"/>
         <source>Preset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="123"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="124"/>
         <source>Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="129"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="130"/>
         <source>Line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="129"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="130"/>
         <source>Bar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="129"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="130"/>
         <source>Segment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="142"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="146"/>
         <source>Spectrum Color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="155"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="159"/>
         <source>Background Color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="167"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="171"/>
         <source>Thickness</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="184"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="188"/>
         <source>Position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="215"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="219"/>
         <source>Size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="251"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="255"/>
         <source>Fill the area under the spectrum.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="261"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="265"/>
         <source>Mirror the spectrum.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="271"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="275"/>
         <source>Reverse the spectrum.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="276"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="280"/>
         <source>Tension</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="292"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="296"/>
         <source>Segments</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="309"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="313"/>
         <source>Segment Gap</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="326"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="330"/>
         <source>Bands</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="342"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="346"/>
         <source>Low Frequency</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="344"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="348"/>
         <source>The low end of the frequency range of the spectrum.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="365"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="369"/>
         <source>High Frequency</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="367"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="371"/>
         <source>The high end of the frequency range of the spectrum.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="388"/>
+        <location filename="../src/qml/filters/spectrum/ui_spectrum.qml" line="392"/>
         <source>Threshold</source>
         <translation type="unfinished"></translation>
     </message>
