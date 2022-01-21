@@ -334,27 +334,10 @@ Shotcut.KeyframableFilter {
                     toggleKeyframes(checked, corner3yProperty, corners[2].y)
                     toggleKeyframes(checked, corner4xProperty, corners[3].x)
                     toggleKeyframes(checked, corner4yProperty, corners[3].y)
-                    for (var i in corners) {
-                        if (checked) {
-                            blockUpdate = true
-                            if (filter.animateIn > 0 || filter.animateOut > 0) {
-                                // Reset all of the simple keyframes.
-                                resetSimpleKeyframes()
-                                filter.animateIn = 0
-                                blockUpdate = false
-                                filter.animateOut = 0
-                            } else {
-                                filter.clearSimpleAnimation(cornerProperties[i])
-                                blockUpdate = false
-                            }
-                            // Set this keyframe value.
-                            filter.set(cornerProperties[i], corners[i], 1.0, getPosition())
-                        } else {
-                            // Remove keyframes and set the parameter.
-                            filter.resetProperty(cornerProperties[i])
-                            filter.set(cornerProperties[i], corners[i])
-                        }
-                    }
+                    toggleKeyframes(checked, cornerProperties[0], corners[0])
+                    toggleKeyframes(checked, cornerProperties[1], corners[1])
+                    toggleKeyframes(checked, cornerProperties[2], corners[2])
+                    toggleKeyframes(checked, cornerProperties[3], corners[3])
                     setControls()
                 }
             }

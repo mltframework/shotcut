@@ -619,6 +619,11 @@ void KeyframesModel::removeSimpleKeyframes()
         for (int i = 0; i < m_metadata->keyframes()->parameterCount(); i++) {
             QString name = m_metadata->keyframes()->parameter(i)->property();
             auto parameter = m_metadata->keyframes()->parameter(i);
+            if (parameter->gangedProperties().count() > 0) {
+                // Do not attempt to detect all matching keyframes for ganged properties.
+                // Always convert to advanced.
+                continue;
+            }
             bool clearKeyframes = true;
             // Find out if all keyframe values are the same. If they are all the same,
             // then clear keyframes and set the parameter to a single value.
