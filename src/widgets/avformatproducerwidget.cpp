@@ -1479,7 +1479,9 @@ void AvformatProducerWidget::on_actionFFmpegVideoQuality_triggered()
                 .arg(colorRange)
                 .arg(qRound(QThread::idealThreadCount() / 2.));
         args << "-f" << "null" << "pipe:";
-        JOBS.add(new FfmpegJob(resource, args));
+        FfmpegJob* job = new FfmpegJob(resource, args);
+        job->setLabel(tr("Measure %1").arg(Util::baseName(filePath)));
+        JOBS.add(job);
     }
 }
 

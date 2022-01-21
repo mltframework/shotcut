@@ -657,6 +657,11 @@ If yes, choose a format below and then click OK to choose a file name. After cho
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../src/widgets/avformatproducerwidget.cpp" line="1483"/>
+        <source>Measure %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/widgets/avformatproducerwidget.cpp" line="954"/>
         <location filename="../src/widgets/avformatproducerwidget.cpp" line="1236"/>
         <source>Sub-clip</source>
