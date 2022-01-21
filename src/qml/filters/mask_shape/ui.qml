@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2021 Meltytech, LLC
+ * Copyright (c) 2018-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,6 +30,7 @@ Item {
     property double endValue: 50
     property url settingsOpenPath: 'file:///' + settings.openPath
     property int previousResourceComboIndex
+    property string reverseProperty: filter.isAtLeastVersion(3)? 'filter.invert_mask' : 'filter.reverse'
 
     width: 350
     height: 275
@@ -81,11 +82,11 @@ Item {
     
     function setControls() {
         setKeyframedControls()
-        var resource = filter.get('filter.resource')
-        if (resource.substring(0,5) === '%luma') {
+        shapeFile.url = filter.get('filter.resource')
+        if (shapeFile.fileName.substring(0,5) === '%luma') {
             for (var i = 1; i < resourceCombo.model.length; ++i) {
                 var s = (i < 10) ? '%luma0%1.pgm' : '%luma%1.pgm'
-                if (s.arg(i) === resource) {
+                if (s.arg(i) === shapeFile.fileName) {
                     resourceCombo.currentIndex = (i === 1)? 0 : i
                     break
                 }
@@ -93,7 +94,6 @@ Item {
             alphaRadioButton.enabled = false
         } else {
             resourceCombo.currentIndex = 1
-            shapeFile.url = resource
             fileLabel.text = shapeFile.fileName
             fileLabelTip.text = shapeFile.filePath
             alphaRadioButton.enabled = true
@@ -101,7 +101,7 @@ Item {
         previousResourceComboIndex = resourceCombo.currentIndex
         thresholdCheckBox.checked = filter.getDouble('filter.use_mix') === 1
         invertCheckBox.checked = filter.getDouble('filter.invert') === 1
-        reverseCheckBox.checked = filter.getDouble('filter.reverse') === 1
+        reverseCheckBox.checked = filter.getDouble(reverseProperty) === 1
         if (filter.getDouble('filter.use_luminance') === 1)
             brightnessRadioButton.checked = true
         else
@@ -197,7 +197,7 @@ Item {
         Shotcut.Preset {
             id: preset
             Layout.columnSpan: 3
-            parameters: ['filter.mix', 'filter.softness', 'filter.use_luminance', 'filter.invert', 'filter.resource', 'filter.use_mix']
+            parameters: ['filter.mix', 'filter.softness', 'filter.use_luminance', 'filter.invert', 'filter.resource', 'filter.use_mix', reverseProperty]
             onBeforePresetLoaded: {
                 filter.resetProperty('filter.mix')
             }
@@ -268,18 +268,34 @@ Item {
                 onClicked: filter.set('filter.invert', checked)
             }
             Shotcut.UndoButton {
-                onClicked: invertCheckBox.checked = false
+                onClicked: {
+                    invertCheckBox.checked = false
+                    filter.set('filter.invert', 0)
+                }
             }
             Item { width: 1 }
             CheckBox {
                 id: reverseCheckBox
                 text: qsTr('Reverse')
-                visible: filter.isAtLeastVersion('2')
-                onClicked: filter.set('filter.reverse', checked)
+                visible: filter.isAtLeastVersion(2)
+                onClicked: {
+                    filter.set(reverseProperty, checked)
+                    if (filter.isAtLeastVersion(3)) {
+                        // reset the old reverse
+                        filter.set('filter.reverse', 0)
+                    }
+                }
             }
             Shotcut.UndoButton {
                 visible: reverseCheckBox.visible
-                onClicked: reverseCheckBox.checked = false
+                onClicked: {
+                    reverseCheckBox.checked = false
+                    filter.set(reverseProperty, checked)
+                    if (filter.isAtLeastVersion(3)) {
+                        // reset the old reverse
+                        filter.set('filter.reverse', 0)
+                    }
+                }
             }
             Item { width: 1 }
         }

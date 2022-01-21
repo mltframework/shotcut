@@ -83,7 +83,7 @@ void QmlFile::setUrl(QString text)
 
 QString QmlFile::getFileName()
 {
-    return QFileInfo(m_url.toString()).fileName();
+    return QFileInfo(getUrl()).fileName();
 }
 
 QString QmlFile::getPath()
