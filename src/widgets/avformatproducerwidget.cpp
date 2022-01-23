@@ -1122,11 +1122,12 @@ void AvformatProducerWidget::on_reverseButton_clicked()
         if (m_producer->get_int("video_index") == -1)
             meltArgs << "vn=1" << "video_off=1";
 
+        ffmpegArgs << "-f" << "mov" << "-codec:a" << "alac";
+
         switch (dialog.format()) {
         case 0:
             path.append("/%1 - %2.mp4");
             nameFilter = tr("MP4 (*.mp4);;All Files (*)");
-            ffmpegArgs << "-f" << "mov" << "-codec:a" << "alac";
             if (ui->scanComboBox->currentIndex()) { // progressive
                 ffmpegArgs << "-codec:v" << "dnxhd" << "-profile:v" << "dnxhr_hq" << "-pix_fmt" << "yuv422p";
             } else { // interlaced
@@ -1137,7 +1138,6 @@ void AvformatProducerWidget::on_reverseButton_clicked()
             meltArgs << "vpreset=medium" << "g=1" << "crf=11";
             break;
         case 1:
-            ffmpegArgs << "-f" << "mov" << "-codec:a" << "alac";
             meltArgs << "acodec=alac";
             if (ui->scanComboBox->currentIndex()) { // progressive
                 ffmpegArgs << "-codec:v" << "dnxhd" << "-profile:v" << "dnxhr_hq" << "-pix_fmt" << "yuv422p";
@@ -1151,9 +1151,7 @@ void AvformatProducerWidget::on_reverseButton_clicked()
             nameFilter = tr("MOV (*.mov);;All Files (*)");
             break;
         case 2:
-            ffmpegSuffix = "mkv";
-            ffmpegArgs << "-f" << "matroska" << "-codec:a" << "pcm_s32le" << "-codec:v" << "utvideo";
-            ffmpegArgs << "-pix_fmt" << "yuv422p";
+            ffmpegArgs << "-codec:v" << "utvideo" << "-pix_fmt" << "yuv422p";
             if (!ui->scanComboBox->currentIndex()) { // interlaced
                 meltArgs << "field_order=" + QString::fromLatin1(ui->fieldOrderComboBox->currentIndex()? "tt" : "bb");
             }
