@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Meltytech, LLC
+ * Copyright (c) 2021-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -42,7 +42,7 @@ EditMarkerWidget::EditMarkerWidget(QWidget *parent, const QString& text, const Q
 
     m_textField = new QLineEdit(text);
     connect(m_textField, SIGNAL(editingFinished()), SIGNAL(valuesChanged()));
-    m_textField->setToolTip(tr("Set the text for this marker."));
+    m_textField->setToolTip(tr("Set the name for this marker."));
     grid->addWidget(m_textField, 0, 0, 1, 2);
 
     m_colorButton = new QPushButton(tr("Color..."));
