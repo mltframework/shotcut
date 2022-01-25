@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Meltytech, LLC
+ * Copyright (c) 2021-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@
 
 enum Columns {
     COLUMN_COLOR = 0,
-    COLUMN_TEXT,
+    COLUMN_NAME,
     COLUMN_START,
     COLUMN_END,
     COLUMN_DURATION,
@@ -651,7 +651,7 @@ QVariant MarkersModel::data(const QModelIndex& index, int role) const
                 case COLUMN_COLOR:
                     result = marker.color;
                     break;
-                case COLUMN_TEXT:
+                case COLUMN_NAME:
                     result = marker.text;
                     break;
                 case COLUMN_START:
@@ -711,8 +711,8 @@ QVariant MarkersModel::headerData(int section, Qt::Orientation orientation, int 
         switch (section) {
         case COLUMN_COLOR:
             return tr("Color");
-        case COLUMN_TEXT:
-            return tr("Marker");
+        case COLUMN_NAME:
+            return tr("Name");
         case COLUMN_START:
             return tr("Start");
         case COLUMN_END:

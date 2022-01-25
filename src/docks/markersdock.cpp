@@ -193,7 +193,7 @@ MarkersDock::MarkersDock(QWidget *parent) :
     action = moreMenu->addAction(tr("Color"), this, SLOT(onColorColumnToggled(bool)));
     action->setCheckable(true);
     action->setChecked(Settings.markersShowColumn("color"));
-    action = moreMenu->addAction(tr("Text"), this, SLOT(onTextColumnToggled(bool)));
+    action = moreMenu->addAction(tr("Name"), this, SLOT(onTextColumnToggled(bool)));
     action->setCheckable(true);
     action->setChecked(Settings.markersShowColumn("text"));
     action = moreMenu->addAction(tr("Start"), this, SLOT(onStartColumnToggled(bool)));
