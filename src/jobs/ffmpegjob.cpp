@@ -83,20 +83,21 @@ void FfmpegJob::onReadyRead()
     QString msg;
     do {
         msg = readLine();
+        if (!msg.startsWith("frame=") && (!msg.trimmed().isEmpty())) {
+            appendToLog(msg);
+        }
         if (msg.contains("Duration:")) {
             m_duration = msg.mid(msg.indexOf("Duration:") + 9);
             m_duration = m_duration.left(m_duration.indexOf(','));
             emit progressUpdated(m_item, 0);
-            appendToLog(msg);
         }
         else if (!m_outputMsgRead) {
             // Wait for the "Output" then read the output fps to calculate number of frames.
             if (msg.contains("Output ")) {
                 m_outputMsgRead = true;
             }
-            appendToLog(msg);
         }
-        else if (!m_totalFrames && msg.contains(" fps")) {
+        if (!m_totalFrames && msg.contains(" fps")) {
             Mlt::Profile profile;
             QRegularExpression re("(\\d+|\\d+.\\d+) fps");
             QRegularExpressionMatch match = re.match(msg);
@@ -109,7 +110,6 @@ void FfmpegJob::onReadyRead()
             Mlt::Properties props;
             props.set("_profile", profile.get_profile(), 0);
             m_totalFrames = props.time_to_frames(m_duration.toLatin1().constData());
-            appendToLog(msg);
         }
         else if (msg.startsWith("frame=") && m_totalFrames > 0) {
             msg = msg.mid(msg.indexOf("frame=") + 6);
@@ -120,10 +120,6 @@ void FfmpegJob::onReadyRead()
                 emit progressUpdated(m_item, percent);
                 m_previousPercent = percent;
             }
-        }
-        else {
-            if (!msg.trimmed().isEmpty())
-                appendToLog(msg);
         }
     } while (!msg.isEmpty());
 }
