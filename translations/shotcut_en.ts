@@ -1245,7 +1245,7 @@ If yes, choose a format below and then click OK to choose a file name. After cho
     <name>EditMarkerWidget</name>
     <message>
         <location filename="../src/widgets/editmarkerwidget.cpp" line="45"/>
-        <source>Set the text for this marker.</source>
+        <source>Set the name for this marker.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4289,7 +4289,7 @@ Do you want to disable GPU effects and restart Shotcut?</source>
     </message>
     <message>
         <location filename="../src/docks/markersdock.cpp" line="196"/>
-        <source>Text</source>
+        <source>Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4327,7 +4327,7 @@ Do you want to disable GPU effects and restart Shotcut?</source>
     </message>
     <message>
         <location filename="../src/models/markersmodel.cpp" line="715"/>
-        <source>Marker</source>
+        <source>Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
