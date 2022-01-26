@@ -68,6 +68,8 @@ public:
     void setRecent(const QStringList&);
     QString theme() const;
     void setTheme(const QString&);
+    QString jobPriority() const;
+    void setJobPriority(const QString&);
     bool showTitleBars() const;
     void setShowTitleBars(bool);
     bool showToolBar() const;

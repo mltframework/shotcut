@@ -134,6 +134,16 @@ void ShotcutSettings::setTheme(const QString& s)
     settings.setValue("theme", s);
 }
 
+QString ShotcutSettings::jobPriority() const
+{
+    return settings.value("jobPriority", "low").toString();
+}
+
+void ShotcutSettings::setJobPriority(const QString& s)
+{
+    settings.setValue("jobPriority", s);
+}
+
 bool ShotcutSettings::showTitleBars() const
 {
     return settings.value("titleBars", true).toBool();

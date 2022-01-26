@@ -17,6 +17,7 @@
 
 #include "abstractjob.h"
 #include "postjobaction.h"
+#include "settings.h"
 #include <QApplication>
 #include <QTimer>
 #include <Logger.h>
@@ -100,6 +101,22 @@ void AbstractJob::setPostJobAction(PostJobAction* action)
     m_postJobAction.reset(action);
 }
 
+void AbstractJob::start(const QString &program, const QStringList &arguments)
+{
+    QString prog = program;
+    QStringList args = arguments;
+#ifndef Q_OS_WIN
+    if (Settings.jobPriority() == "low") {
+        args.prepend(program);
+        args.prepend("3");
+        args.prepend("-n");
+        prog = "nice";
+    }
+#endif
+    QProcess::start(prog, args);
+    AbstractJob::start();
+}
+
 void AbstractJob::stop()
 {
     closeWriteChannel();
@@ -149,7 +166,11 @@ void AbstractJob::onStarted()
     HANDLE processHandle = OpenProcess(PROCESS_SET_INFORMATION, FALSE, processId);
     if(processHandle)
     {
-        SetPriorityClass(processHandle, BELOW_NORMAL_PRIORITY_CLASS);
+        if (Settings.jobPriority() == "low") {
+            SetPriorityClass(processHandle, BELOW_NORMAL_PRIORITY_CLASS);
+        } else {
+            SetPriorityClass(processHandle, NORMAL_PRIORITY_CLASS);
+        }
         CloseHandle(processHandle);
     }
 #endif
