@@ -55,15 +55,7 @@ void FfmpegJob::start()
     QFileInfo ffmpegPath(shotcutPath, "ffmpeg");
     setReadChannel(QProcess::StandardError);
     LOG_DEBUG() << ffmpegPath.absoluteFilePath() + " " + m_args.join(' ');
-#ifdef Q_OS_WIN
-    QProcess::start(ffmpegPath.absoluteFilePath(), m_args);
-#else
-    m_args.prepend(ffmpegPath.absoluteFilePath());
-    m_args.prepend("3");
-    m_args.prepend("-n");
-    QProcess::start("nice", m_args);
-#endif
-    AbstractJob::start();
+    AbstractJob::start(ffmpegPath.absoluteFilePath(), m_args);
 }
 
 void FfmpegJob::onOpenTriggered()

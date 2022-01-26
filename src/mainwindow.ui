@@ -189,6 +189,13 @@
      <addaction name="actionDrawingDirectX"/>
      <addaction name="actionDrawingSoftware"/>
     </widget>
+    <widget class="QMenu" name="menuJobPriority">
+     <property name="title">
+      <string>Job Priority</string>
+     </property>
+     <addaction name="actionJobPriorityLow"/>
+     <addaction name="actionJobPriorityNormal"/>
+    </widget>
     <widget class="QMenu" name="menuData_Directory">
      <property name="title">
       <string>App Data Directory</string>
@@ -245,6 +252,7 @@
     <addaction name="menuLanguage"/>
     <addaction name="menuTheme"/>
     <addaction name="menuDrawingMethod"/>
+    <addaction name="menuJobPriority"/>
     <addaction name="menuData_Directory"/>
     <addaction name="actionClearRecentOnExit"/>
    </widget>
@@ -809,6 +817,22 @@
    </property>
    <property name="text">
     <string extracomment="Do not translate &quot;Mesa&quot;">Software (Mesa)</string>
+   </property>
+  </action>
+  <action name="actionJobPriorityLow">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Low</string>
+   </property>
+  </action>
+  <action name="actionJobPriorityNormal">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Normal</string>
    </property>
   </action>
   <action name="actionApplicationLog">

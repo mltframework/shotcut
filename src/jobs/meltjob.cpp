@@ -129,14 +129,8 @@ void MeltJob::start()
 #endif
 #ifdef Q_OS_WIN
     if (m_isStreaming) args << "-getc";
-    QProcess::start(meltPath.absoluteFilePath(), args);
-#else
-    args.prepend(meltPath.absoluteFilePath());
-    args.prepend("3");
-    args.prepend("-n");
-    QProcess::start("nice", args);
 #endif
-    AbstractJob::start();
+    AbstractJob::start(meltPath.absoluteFilePath(), args);
 }
 
 QString MeltJob::xml()

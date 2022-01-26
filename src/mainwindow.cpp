@@ -879,6 +879,15 @@ void MainWindow::setupSettingsMenu()
     ui->menuDrawingMethod = 0;
 #endif
 
+    // Setup the job priority actions
+    group = new QActionGroup(this);
+    group->addAction(ui->actionJobPriorityLow);
+    group->addAction(ui->actionJobPriorityNormal);
+    if (Settings.jobPriority() == "low")
+        ui->actionJobPriorityLow->setChecked(true);
+    else
+        ui->actionJobPriorityNormal->setChecked(true);
+
     // Add custom layouts to View > Layout submenu.
     m_layoutGroup = new QActionGroup(this);
     connect(m_layoutGroup, SIGNAL(triggered(QAction*)), SLOT(onLayoutTriggered(QAction*)));
@@ -3791,6 +3800,16 @@ void MainWindow::on_actionFusionLight_triggered()
 {
     Settings.setTheme("light");
     restartAfterChangeTheme();
+}
+
+void MainWindow::on_actionJobPriorityLow_triggered()
+{
+    Settings.setJobPriority("low");
+}
+
+void MainWindow::on_actionJobPriorityNormal_triggered()
+{
+    Settings.setJobPriority("normal");
 }
 
 void MainWindow::on_actionTutorials_triggered()

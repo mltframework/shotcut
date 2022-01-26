@@ -49,6 +49,7 @@ public:
     void setPostJobAction(PostJobAction* action);
 
 public slots:
+    void start(const QString &program, const QStringList &arguments);
     virtual void start();
     virtual void stop();
 

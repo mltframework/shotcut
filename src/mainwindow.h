@@ -281,6 +281,8 @@ private slots:
     void onLanguageTriggered(QAction*);
     void on_actionSystemTheme_triggered();
     void on_actionFusionDark_triggered();
+    void on_actionJobPriorityLow_triggered();
+    void on_actionJobPriorityNormal_triggered();
     void on_actionFusionLight_triggered();
     void on_actionTutorials_triggered();
     void on_actionRestoreLayout_triggered();

@@ -44,8 +44,7 @@ void FfprobeJob::start()
     QFileInfo ffprobePath(shotcutPath, "ffprobe");
     setReadChannel(QProcess::StandardOutput);
     LOG_DEBUG() << ffprobePath.absoluteFilePath()  + " " + m_args.join(' ');
-    QProcess::start(ffprobePath.absoluteFilePath(), m_args);
-    AbstractJob::start();
+    AbstractJob::start(ffprobePath.absoluteFilePath(), m_args);
 }
 
 void FfprobeJob::onFinished(int exitCode, QProcess::ExitStatus exitStatus)
