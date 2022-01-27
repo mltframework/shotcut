@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2021 Meltytech, LLC
+ * Copyright (c) 2012-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -808,7 +808,6 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime, bool includeProfile
                     setIfNotSet(p, "pix_fmt", "nv12");
                 } else if (vcodec.endsWith("_vaapi")) {
                     setIfNotSet(p, "vprofile", "main");
-                    setIfNotSet(p, "connection_type", "x11");
                 }
             }
             if (includeProfile || ui->widthSpinner->value() != MLT.profile().width()) {
@@ -2070,7 +2069,7 @@ bool EncodeDock::detectHardwareEncoders()
         QStringList args;
         args << "-hide_banner" << "-f" << "lavfi" << "-i" << "color=s=640x360" << "-frames" << "1" << "-an";
         if (codec.endsWith("_vaapi"))
-            args << "-init_hw_device" << "vaapi=vaapi0:,connection_type=x11" << "-filter_hw_device" << "vaapi0" << "-vf" << "format=nv12,hwupload";
+            args << "-init_hw_device" << "vaapi=vaapi0:" << "-filter_hw_device" << "vaapi0" << "-vf" << "format=nv12,hwupload";
         else if (codec == "hevc_qsv")
             args << "-load_plugin" << "hevc_hw";
         args << "-c:v" << codec << "-f" << "rawvideo" << "pipe:";
