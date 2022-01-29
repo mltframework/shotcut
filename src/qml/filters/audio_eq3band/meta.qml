@@ -4,7 +4,7 @@ import org.shotcut.qml 1.0
 Metadata {
     type: Metadata.Filter
     isAudio: true
-    name: qsTr("Equalizer: 3-Band")
+    name: qsTr("Equalizer: 3-Band (Bass & Treble)")
     mlt_service: 'ladspa.1204'
     objectName: '3BandEq'
     qml: 'ui.qml'
