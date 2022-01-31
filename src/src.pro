@@ -131,6 +131,7 @@ SOURCES += main.cpp\
     dialogs/transcodedialog.cpp \
     docks/keyframesdock.cpp \
     docks/markersdock.cpp \
+    docks/notesdock.cpp \
     qmltypes/qmlproducer.cpp \
     models/keyframesmodel.cpp \
     models/markersmodel.cpp \
@@ -272,6 +273,7 @@ HEADERS  += mainwindow.h \
     dialogs/transcodedialog.h \
     docks/keyframesdock.h \
     docks/markersdock.h \
+    docks/notesdock.h \
     qmltypes/qmlproducer.h \
     models/keyframesmodel.h \
     models/markersmodel.h \
