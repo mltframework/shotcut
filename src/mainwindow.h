@@ -49,6 +49,7 @@ class AutoSaveFile;
 class QNetworkReply;
 class KeyframesDock;
 class MarkersDock;
+class NotesDock;
 
 class MainWindow : public QMainWindow
 {
@@ -188,6 +189,7 @@ private:
     QDateTime m_clipboardUpdatedAt;
     QDateTime m_sourceUpdatedAt;
     MarkersDock* m_markersDock;
+    NotesDock* m_notesDock;
 
 #ifdef WITH_LIBLEAP
     LeapListener m_leapListener;
@@ -238,6 +240,7 @@ private slots:
     void onFiltersDockTriggered(bool checked = true);
     void onKeyframesDockTriggered(bool checked = true);
     void onMarkersDockTriggered(bool = true);
+    void onNotesDockTriggered(bool = true);
     void onPlaylistCreated();
     void onPlaylistLoaded();
     void onPlaylistCleared();
@@ -247,6 +250,7 @@ private slots:
     void onMultitrackClosed();
     void onMultitrackModified();
     void onMultitrackDurationChanged();
+    void onNoteModified();
     void onCutModified();
     void onProducerModified();
     void onFilterModelChanged();

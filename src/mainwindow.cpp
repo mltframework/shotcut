@@ -72,6 +72,7 @@
 #include "dialogs/unlinkedfilesdialog.h"
 #include "docks/keyframesdock.h"
 #include "docks/markersdock.h"
+#include "docks/notesdock.h"
 #include "util.h"
 #include "models/keyframesmodel.h"
 #include "dialogs/listselectiondialog.h"
@@ -473,6 +474,14 @@ MainWindow::MainWindow()
     connect(m_jobsDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onJobsDockTriggered(bool)));
     connect(ui->actionJobs, SIGNAL(triggered()), this, SLOT(onJobsDockTriggered()));
 
+    m_notesDock = new NotesDock(this);
+    m_notesDock->hide();
+    m_notesDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_0));
+    ui->menuView->addAction(m_notesDock->toggleViewAction());
+    connect(m_notesDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onNotesDockTriggered(bool)));
+    connect(ui->actionNotes, SIGNAL(triggered()), this, SLOT(onNotesDockTriggered()));
+    connect(m_notesDock, SIGNAL(modified()), this, SLOT(onNoteModified()));
+
     addDockWidget(Qt::LeftDockWidgetArea, m_propertiesDock);
     addDockWidget(Qt::RightDockWidgetArea, m_recentDock);
     addDockWidget(Qt::LeftDockWidgetArea, m_playlistDock);
@@ -482,10 +491,12 @@ MainWindow::MainWindow()
     addDockWidget(Qt::RightDockWidgetArea, m_historyDock);
     addDockWidget(Qt::LeftDockWidgetArea, m_encodeDock);
     addDockWidget(Qt::RightDockWidgetArea, m_jobsDock);
+    addDockWidget(Qt::LeftDockWidgetArea, m_notesDock);
     splitDockWidget(m_timelineDock, m_markersDock, Qt::Horizontal);
     tabifyDockWidget(m_propertiesDock, m_playlistDock);
     tabifyDockWidget(m_playlistDock, m_filtersDock);
     tabifyDockWidget(m_filtersDock, m_encodeDock);
+    tabifyDockWidget(m_encodeDock, m_notesDock);
     splitDockWidget(m_recentDock, findChild<QDockWidget*>("AudioWaveformDock"), Qt::Vertical);
     splitDockWidget(audioMeterDock, m_recentDock, Qt::Horizontal);
     tabifyDockWidget(m_recentDock, m_historyDock);
@@ -1445,6 +1456,7 @@ void MainWindow::open(QString url, const Mlt::Properties* properties, bool play)
         setAudioChannels(MLT.audioChannels());
         if (url.endsWith(".mlt") || url.endsWith(".xml")) {
             setVideoModeMenu();
+            m_notesDock->setText(MLT.producer()->get(kShotcutProjectNote));
         }
 
         open(MLT.producer());
@@ -2971,6 +2983,14 @@ void MainWindow::onMarkersDockTriggered(bool checked)
     }
 }
 
+void MainWindow::onNotesDockTriggered(bool checked)
+{
+    if (checked) {
+        m_notesDock->show();
+        m_notesDock->raise();
+    }
+}
+
 void MainWindow::onPlaylistCreated()
 {
     if (!playlist() || playlist()->count() == 0) return;
@@ -3085,6 +3105,11 @@ void MainWindow::onMultitrackDurationChanged()
         m_player->onDurationChanged();
 }
 
+void MainWindow::onNoteModified()
+{
+    setWindowModified(true);
+}
+
 void MainWindow::onCutModified()
 {
     if (!playlist() && !multitrack()) {
@@ -3152,20 +3177,21 @@ void MainWindow::on_actionForum_triggered()
 bool MainWindow::saveXML(const QString &filename, bool withRelativePaths)
 {
     bool result;
+    QString notes = m_notesDock->getText();
     if (m_timelineDock->model()->rowCount() > 0) {
-        result = MLT.saveXML(filename, multitrack(), withRelativePaths);
+        result = MLT.saveXML(filename, multitrack(), withRelativePaths, nullptr, false, notes);
     } else if (m_playlistDock->model()->rowCount() > 0) {
         int in = MLT.producer()->get_in();
         int out = MLT.producer()->get_out();
         MLT.producer()->set_in_and_out(0, MLT.producer()->get_length() - 1);
-        result = MLT.saveXML(filename, playlist(), withRelativePaths);
+        result = MLT.saveXML(filename, playlist(), withRelativePaths, nullptr, false, notes);
         MLT.producer()->set_in_and_out(in, out);
     } else if (MLT.producer()) {
-        result = MLT.saveXML(filename, (MLT.isMultitrack() || MLT.isPlaylist())? MLT.savedProducer() : 0, withRelativePaths);
+        result = MLT.saveXML(filename, (MLT.isMultitrack() || MLT.isPlaylist())? MLT.savedProducer() : 0, withRelativePaths, nullptr, false, notes);
     } else {
         // Save an empty playlist, which is accepted by both MLT and Shotcut.
         Mlt::Playlist playlist(MLT.profile());
-        result = MLT.saveXML(filename, &playlist, withRelativePaths);
+        result = MLT.saveXML(filename, &playlist, withRelativePaths, nullptr, false, notes);
     }
     return result;
 }
@@ -4063,6 +4089,7 @@ void MainWindow::on_actionClose_triggered()
             m_playlistDock->model()->close();
         else
             onMultitrackClosed();
+        m_notesDock->setText("");
         m_player->enableTab(Player::SourceTabIndex, false);
         MLT.purgeMemoryPool();
         MLT.resetLocale();

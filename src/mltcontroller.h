@@ -85,7 +85,7 @@ public:
     virtual void seek(int position);
     virtual void refreshConsumer(bool scrubAudio = false);
     bool saveXML(const QString& filename, Service* service = nullptr, bool withRelativePaths = true,
-                 QTemporaryFile* tempFile = nullptr, bool proxy = false);
+                 QTemporaryFile* tempFile = nullptr, bool proxy = false, QString projectNote = QString());
     QString XML(Service* service = nullptr, bool withProfile = false, bool withMetadata = false);
     int consumerChanged();
     void setProfile(const QString& profile_name);
