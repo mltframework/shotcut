@@ -65,17 +65,27 @@ QString TimeSpinBox::textFromValue(int val) const
 
 void TimeSpinBox::keyPressEvent(QKeyEvent* event)
 {
-    if (event->key() == Qt::Key_PageUp || event->key() == Qt::Key_PageDown) {
-        // Disable page up & page down (step by 10) since those keys are used for other things in Shotcut.
+    // Only accept up, down, left, right, enter,  tab, ;, :, 0-9
+    // Pass everything else back to Shotcut to process as shortcuts
+    // This allows the user to perform certain actions (like split) while the control has focus.
+    QRegExp re("[;:0-9]");
+    if (re.exactMatch(event->text()) ||
+        event->key() == Qt::Key_Up ||
+        event->key() == Qt::Key_Down ||
+        event->key() == Qt::Key_Left ||
+        event->key() == Qt::Key_Right ||
+        event->key() == Qt::Key_Enter ||
+        event->key() == Qt::Key_Return ||
+        event->key() == Qt::Key_Tab)
+    {
+        QSpinBox::keyPressEvent(event);
+        if (event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return) {
+            event->accept();
+        }
+    } else {
         event->ignore();
-        return;
-    }
-    QSpinBox::keyPressEvent(event);
-    if (event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return) {
-        event->accept();
     }
 }
-
 
 TimeSpinBoxLineEdit::TimeSpinBoxLineEdit(QWidget *parent)
     : QLineEdit(parent)
