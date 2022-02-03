@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2021 Meltytech, LLC
+ * Copyright (c) 2011-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -2701,7 +2701,16 @@ void MainWindow::on_actionOpenOther_triggered()
         dialog.load(MLT.producer());
     if (dialog.exec() == QDialog::Accepted) {
         closeProducer();
-        open(dialog.newProducer(MLT.profile()));
+        auto& profile = MLT.profile();
+        auto producer = dialog.newProducer(profile);
+        if (!profile.is_explicit()) {
+            profile.from_producer(*producer);
+            profile.set_width(Util::coerceMultiple(profile.width()));
+            profile.set_height(Util::coerceMultiple(profile.height()));
+        }
+        MLT.updatePreviewProfile();
+        setPreviewScale(Settings.playerPreviewScale());
+        open(producer);
     }
 }
 
@@ -4544,7 +4553,17 @@ void MainWindow::onOpenOtherTriggered(QWidget* widget)
     connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
     QString name = widget->objectName();
     if (name == "NoiseWidget" || dialog.exec() == QDialog::Accepted) {
-        open(dynamic_cast<AbstractProducerWidget*>(widget)->newProducer(MLT.profile()));
+        closeProducer();
+        auto& profile = MLT.profile();
+        auto producer = dynamic_cast<AbstractProducerWidget*>(widget)->newProducer(profile);
+        if (!profile.is_explicit()) {
+            profile.from_producer(*producer);
+            profile.set_width(Util::coerceMultiple(profile.width()));
+            profile.set_height(Util::coerceMultiple(profile.height()));
+        }
+        MLT.updatePreviewProfile();
+        setPreviewScale(Settings.playerPreviewScale());
+        open(producer);
         if (name == "TextProducerWidget") {
             m_filtersDock->show();
             m_filtersDock->raise();
