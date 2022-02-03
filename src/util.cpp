@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2021 Meltytech, LLC
+ * Copyright (c) 2014-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,6 +32,7 @@
 #include <QApplication>
 #include <QCryptographicHash>
 #include <QtGlobal>
+#include <QCameraInfo>
 
 #include <MltChain.h>
 #include <MltProducer.h>
@@ -571,4 +572,38 @@ void Util::normalizeFrameRate(double fps, int& numerator, int& denominator)
 QString Util::textColor(const QColor& color)
 {
     return (color.value() < 150)? "white" : "black";
+}
+
+void Util::cameraFrameRateSize(const QByteArray &deviceName, qreal& frameRate, QSize& size)
+{
+    std::unique_ptr<QCamera> camera(new QCamera(deviceName));
+    if (camera) {
+        camera->load();
+        QCameraViewfinderSettings viewfinderSettings;
+        auto resolutions = camera->supportedViewfinderResolutions(viewfinderSettings);
+        if (resolutions.size() > 0) {
+            LOG_INFO() << "resolutions:" << resolutions;
+            // Get the highest resolution
+            viewfinderSettings.setResolution(resolutions.first());
+            for (const auto& resolution : resolutions) {
+                if (resolution.width() > viewfinderSettings.resolution().width() && resolution.height() > viewfinderSettings.resolution().height()) {
+                    viewfinderSettings.setResolution(resolution);
+                }
+            }
+            auto frameRates = camera->supportedViewfinderFrameRateRanges(viewfinderSettings);
+            if (frameRates.size() > 0) {
+                // Get the highest frame rate for the chosen resolution
+                viewfinderSettings.setMaximumFrameRate(frameRates.first().maximumFrameRate);
+                for (const auto& frameRate : frameRates) {
+                    LOG_INFO() << "frame rate:" << frameRate.maximumFrameRate;
+                    if (frameRate.maximumFrameRate > viewfinderSettings.maximumFrameRate()) {
+                        viewfinderSettings.setMaximumFrameRate(frameRate.maximumFrameRate);
+                    }
+                }
+            }
+        }
+        camera->unload();
+        frameRate = viewfinderSettings.maximumFrameRate();
+        size = viewfinderSettings.resolution();
+    }
 }

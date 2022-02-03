@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2015-2018 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2015-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,6 +19,7 @@
 #include "ui_avfoundationproducerwidget.h"
 #include "mltcontroller.h"
 #include "util.h"
+#include <QCameraInfo>
 #include <QCamera>
 #include <QString>
 #include <QAudioDeviceInfo>
@@ -37,8 +37,9 @@ AvfoundationProducerWidget::AvfoundationProducerWidget(QWidget *parent) :
     Util::setColorsToHighlight(ui->label);
 
 #ifdef Q_OS_MAC
-    foreach (const QByteArray &deviceName, QCamera::availableDevices())
-        ui->videoCombo->addItem(QCamera::deviceDescription(deviceName));
+    for (const auto& cameraInfo: QCameraInfo::availableCameras()) {
+        ui->videoCombo->addItem(cameraInfo.description(), cameraInfo.deviceName().toLocal8Bit());
+    }
 #if ENABLE_SCREEN_CAPTURE
     for (int i = 0; i < QApplication::desktop()->screenCount(); i++)
         ui->videoCombo->addItem(QString("Capture screen %1").arg(i));
@@ -59,9 +60,13 @@ AvfoundationProducerWidget::~AvfoundationProducerWidget()
 
 Mlt::Producer *AvfoundationProducerWidget::newProducer(Mlt::Profile& profile)
 {
-    QString resource = QString("avfoundation:%1:%2?pixel_format=yuyv422&framerate=30&video_size=1280x720")
+    qreal frameRate = 30.0;
+    QSize size {1280, 720};
+    Util::cameraFrameRateSize(ui->videoCombo->currentData().toByteArray(), frameRate, size);
+    QString resource = QString("avfoundation:%1:%2?pixel_format=yuyv422&framerate=%3&video_size=%4x%5")
             .arg(ui->videoCombo->currentText().replace(tr("None"), "none"))
-            .arg(ui->audioCombo->currentText().replace(tr("None"), "none"));
+            .arg(ui->audioCombo->currentText().replace(tr("None"), "none"))
+            .arg(frameRate).arg(size.width()).arg(size.height());
     LOG_DEBUG() << resource;
     Mlt::Producer* p = new Mlt::Producer(profile, resource.toUtf8().constData());
     if (!p || !p->is_valid()) {
