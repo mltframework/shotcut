@@ -585,7 +585,7 @@ void Util::cameraFrameRateSize(const QByteArray &deviceName, qreal& frameRate, Q
             LOG_INFO() << "resolutions:" << resolutions;
             // Get the highest resolution
             viewfinderSettings.setResolution(resolutions.first());
-            for (const auto& resolution : resolutions) {
+            for (auto& resolution : resolutions) {
                 if (resolution.width() > viewfinderSettings.resolution().width() && resolution.height() > viewfinderSettings.resolution().height()) {
                     viewfinderSettings.setResolution(resolution);
                 }
@@ -594,7 +594,7 @@ void Util::cameraFrameRateSize(const QByteArray &deviceName, qreal& frameRate, Q
             if (frameRates.size() > 0) {
                 // Get the highest frame rate for the chosen resolution
                 viewfinderSettings.setMaximumFrameRate(frameRates.first().maximumFrameRate);
-                for (const auto& frameRate : frameRates) {
+                for (auto& frameRate : frameRates) {
                     LOG_INFO() << "frame rate:" << frameRate.maximumFrameRate;
                     if (frameRate.maximumFrameRate > viewfinderSettings.maximumFrameRate()) {
                         viewfinderSettings.setMaximumFrameRate(frameRate.maximumFrameRate);
