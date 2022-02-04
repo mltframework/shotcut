@@ -40,6 +40,7 @@
 #include "shotcut_mlt_properties.h"
 #include "qmltypes/qmlapplication.h"
 #include "proxymanager.h"
+#include <memory>
 
 #ifdef Q_OS_WIN
 #include <windows.h>
