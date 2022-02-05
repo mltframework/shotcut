@@ -499,6 +499,7 @@ Rectangle {
         id: menu
         Menu {
             title: qsTr('Track Operations')
+            width: 230
             MenuItem {
                 text: qsTr('Add Audio Track') + (application.OS === 'OS X'? '    ⌘U' : ' (Ctrl+U)')
                 onTriggered: timeline.addAudioTrack();
@@ -522,12 +523,12 @@ Rectangle {
                 onTriggered: timeline.removeTrack()
             }
             MenuItem {
-                text: qsTr('Move Track Up')
+                text: qsTr('Move Track Up') + (application.OS === 'OS X'? '    ⌥⇧↑' : ' (Alt+Shift+↑)')
                 enabled: !trackHeaderRepeater.itemAt(currentTrack).isTopVideo && !trackHeaderRepeater.itemAt(currentTrack).isTopAudio
                 onTriggered: timeline.moveTrackUp()
             }
             MenuItem {
-                text: qsTr('Move Track Down')
+                text: qsTr('Move Track Down') + (application.OS === 'OS X'? '    ⌥⇧↓' : ' (Alt+Shift+↓)')
                 enabled: !trackHeaderRepeater.itemAt(currentTrack).isBottomVideo && !trackHeaderRepeater.itemAt(currentTrack).isBottomAudio
                 onTriggered: timeline.moveTrackDown()
             }
