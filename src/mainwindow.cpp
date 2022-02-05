@@ -2146,7 +2146,9 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         }
         break;
     case Qt::Key_Up:
-        if (m_playlistDock->isVisible() && event->modifiers() & Qt::AltModifier && m_playlistDock->model()->rowCount() > 0) {
+        if (isMultitrackValid() && (event->modifiers() & Qt::AltModifier) && (event->modifiers() & Qt::AltModifier) && m_timelineDock->isVisible()) {
+            m_timelineDock->moveTrackUp();
+        } else if (m_playlistDock->isVisible() && event->modifiers() & Qt::AltModifier && m_playlistDock->model()->rowCount() > 0) {
             m_playlistDock->raise();
             m_playlistDock->decrementIndex();
             m_playlistDock->on_actionOpen_triggered();
@@ -2176,7 +2178,9 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         }
         break;
     case Qt::Key_Down:
-        if (m_playlistDock->isVisible() && event->modifiers() & Qt::AltModifier && m_playlistDock->model()->rowCount() > 0) {
+        if (isMultitrackValid() && (event->modifiers() & Qt::AltModifier) && (event->modifiers() & Qt::ShiftModifier) && m_timelineDock->isVisible()) {
+            m_timelineDock->moveTrackDown();
+        } else if (m_playlistDock->isVisible() && event->modifiers() & Qt::AltModifier && m_playlistDock->model()->rowCount() > 0) {
             m_playlistDock->raise();
             m_playlistDock->incrementIndex();
             m_playlistDock->on_actionOpen_triggered();
