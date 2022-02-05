@@ -281,7 +281,7 @@ Shotcut.KeyframableFilter {
         }
 
         Label {
-            text: qsTr('Q', 'Parametric equalizer bandwidth')
+            text: qsTr('Bandwidth', 'Parametric equalizer bandwidth')
             Layout.alignment: Qt.AlignRight
         }
         Shotcut.SliderSpinner {
@@ -290,6 +290,7 @@ Shotcut.KeyframableFilter {
             maximumValue: 4
             stepSize: 0.1
             decimals: 1
+            suffix: ' octaves'
             onValueChanged: {
                 blockControls = true
                 updateSimpleKeyframes(getPosition())
@@ -349,7 +350,7 @@ Shotcut.KeyframableFilter {
         }
 
         Label {
-            text: qsTr('Q', 'Parametric equalizer bandwidth')
+            text: qsTr('Bandwidth', 'Parametric equalizer bandwidth')
             Layout.alignment: Qt.AlignRight
         }
         Shotcut.SliderSpinner {
@@ -358,6 +359,7 @@ Shotcut.KeyframableFilter {
             maximumValue: 4
             stepSize: 0.1
             decimals: 1
+            suffix: ' octaves'
             onValueChanged: {
                 blockControls = true
                 updateSimpleKeyframes(getPosition())
@@ -417,7 +419,7 @@ Shotcut.KeyframableFilter {
         }
 
         Label {
-            text: qsTr('Q', 'Parametric equalizer bandwidth')
+            text: qsTr('Bandwidth', 'Parametric equalizer bandwidth')
             Layout.alignment: Qt.AlignRight
         }
         Shotcut.SliderSpinner {
@@ -426,6 +428,7 @@ Shotcut.KeyframableFilter {
             maximumValue: 4
             stepSize: 0.1
             decimals: 1
+            suffix: ' octaves'
             onValueChanged: {
                 blockControls = true
                 updateSimpleKeyframes(getPosition())
