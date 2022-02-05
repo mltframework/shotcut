@@ -145,7 +145,7 @@ Item {
         Shotcut.KeyframesButton { id: yawKeyframesButton; onToggled: { var value = yawSlider.value; if (checked) { blockUpdate = true; if (filter.animateIn > 0 || filter.animateOut > 0) { filter.resetProperty("yaw"); yawSlider.enabled = true; } filter.clearSimpleAnimation("yaw"); blockUpdate = false; filter.set("yaw", value, getPosition()); } else { filter.resetProperty("yaw"); filter.set("yaw", value); } } }
 
         Label {
-            text: qsTr('Pitch')
+            text: qsTr('Pitch', 'rotation around the side-to-side axis (roll, pitch, yaw)')
             Layout.alignment: Qt.AlignRight
         }
         Shotcut.SliderSpinner {

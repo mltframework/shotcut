@@ -21,7 +21,7 @@ Metadata {
                 maximum: 360
             },
             Parameter {
-                name: qsTr('Pitch')
+                name: qsTr('Pitch', 'rotation around the side-to-side axis (roll, pitch, yaw)')
                 property: 'pitch'
                 isCurve: true
                 minimum: -180

@@ -428,7 +428,7 @@ Item {
         }
 
         Label {
-            text: qsTr('Pitch')
+            text: qsTr('Pitch', 'rotation around the side-to-side axis (roll, pitch, yaw)')
             Layout.alignment: Qt.AlignLeft
             Layout.columnSpan: 4
         }

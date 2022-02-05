@@ -4,7 +4,7 @@ import org.shotcut.qml 1.0
 Metadata {
     type: Metadata.Filter
     isAudio: true
-    name: qsTr("Pitch")
+    name: qsTr("Pitch", 'audio pitch or tone')
     mlt_service: "rbpitch"
     qml: "ui.qml"
     isFavorite: false
@@ -14,7 +14,7 @@ Metadata {
         simpleProperties: ['octaveshift']
         parameters: [
             Parameter {
-                name: qsTr('Pitch')
+                name: qsTr('Pitch', 'audio pitch or tone')
                 property: 'octaveshift'
                 isCurve: true
                 minimum: -2.0
