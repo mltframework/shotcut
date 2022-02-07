@@ -616,10 +616,6 @@ Rectangle {
             title: qsTr('Other')
             width: 270
             MenuItem {
-                text: qsTr('Copy Timeline to Source') + (application.OS === 'OS X'? '    ⌥⌘C' : ' (Ctrl+Alt+C)')
-                onTriggered: timeline.copyToSource()
-            }
-            MenuItem {
                 text: qsTr('Reload') + (application.OS === 'OS X'? '    F5' : ' (F5)')
                 onTriggered: multitrack.reload()
             }

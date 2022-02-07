@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2021 Meltytech, LLC
+ * Copyright (c) 2013-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -415,22 +415,6 @@ void TimelineDock::trimClipAtPlayhead(TrimLocation location, bool ripple)
 bool TimelineDock::isRipple() const
 {
     return m_quickView.rootObject()->property("ripple").toBool();
-}
-
-void TimelineDock::copyToSource()
-{
-    if (model()->tractor() && model()->tractor()->is_valid()) {
-        if (!MAIN.isWindowModified() || MAIN.on_actionSave_triggered()) {
-            if (!MLT.openXML(MAIN.fileName())) {
-                MLT.producer()->set(kExportFromProperty, 1);
-                MAIN.open(MLT.producer());
-            } else {
-                emit showStatusMessage(tr("Failed to open ") + MAIN.fileName());
-            }
-        } else {
-            emit showStatusMessage(tr("You must save to Copy Timeline to Source."));
-        }
-    }
 }
 
 void TimelineDock::openProperties()

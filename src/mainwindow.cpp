@@ -1924,10 +1924,6 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
             m_playlistDock->show();
             m_playlistDock->raise();
             m_playlistDock->on_actionCopy_triggered();
-        } else if ((event->modifiers() & Qt::ControlModifier) && (event->modifiers() & Qt::AltModifier)) {
-            m_timelineDock->show();
-            m_timelineDock->raise();
-            m_timelineDock->copyToSource();
         } else if (isMultitrackValid()) {
             m_timelineDock->show();
             m_timelineDock->raise();

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2021 Meltytech, LLC
+ * Copyright (c) 2013-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -77,7 +77,6 @@ public:
     Q_INVOKABLE bool isMultitrackSelected() const { return m_selection.isMultitrackSelected; }
     Q_INVOKABLE int selectedTrack() const { return m_selection.selectedTrack; }
     Q_INVOKABLE bool isFloating() const { return QDockWidget::isFloating(); }
-    Q_INVOKABLE void copyToSource();
     Q_INVOKABLE static void openProperties();
     void emitSelectedChanged(const QVector<int> &roles);
     void replaceClipsWithHash(const QString& hash, Mlt::Producer& producer);
