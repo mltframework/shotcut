@@ -721,11 +721,11 @@ function set_globals {
     CFLAGS_[0]="${CFLAGS_[0]} -I$FINAL_INSTALL_DIR/include/SDL2"
     LDFLAGS_[0]="$LDFLAGS"
   elif test "$TARGET_OS" != "Darwin" -o "$TARGET_ARCH" != "arm64"; then
-    REVISIONS[0]=="origin/release/4.4"
     CONFIG[0]="${CONFIG[0]} --enable-libjack"
     LDFLAGS_[0]="-L$FINAL_INSTALL_DIR/lib $LDFLAGS"
   fi
   if test "$TARGET_OS" = "Darwin"; then
+    [ "$TARGET_ARCH" != "arm64" ] && REVISIONS[0]="origin/release/4.4"
     CFLAGS_[0]="${CFLAGS_[0]} -I/opt/local/include"
     LDFLAGS_[0]="${LDFLAGS_[0]} -L/opt/local/lib"
   elif test "$TARGET_OS" = "Linux" ; then
