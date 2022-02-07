@@ -72,13 +72,11 @@ jobs:
             put packaging/linux/out/*.AppImage s3://builds.us.meltytech/shotcut/
 
       - name: Install Snapcraft
-        if: ${{ false }}
         uses: samuelmeuli/action-snapcraft@v1.2.0
         with:
           snapcraft_token: ${{ secrets.SNAPCRAFT_TOKEN }}
           use_lxd: true
       - name: Package snap
-        if: ${{ false }}
         run: |
           VERSION=$(cat VERSION)
           mv scripts/shotcut-linux-x86_64-*.txz packaging/linux
