@@ -20,32 +20,26 @@
 
 #include <QDockWidget>
 #include <QObject>
-#include <QQuickView>
-#include <QQuickWidget>
+
+class QTextEdit;
 
 class NotesDock : public QDockWidget
 {
     Q_OBJECT
-    
+
 public:
     explicit NotesDock(QWidget *parent = 0);
     QString getText();
     void setText(const QString& text);
 
-protected:
-    bool event(QEvent *event);
-    void keyPressEvent(QKeyEvent* event);
-
 signals:
     void modified();
 
 private slots:
-    void resetQview();
-    void onTextChanged(QString);
-    void onMinimumWidthChanged();
+    void onTextChanged();
 
 private:
-    QQuickWidget m_qview;
+    QTextEdit* m_textEdit;
     bool m_blockUpdate;
 };
 
