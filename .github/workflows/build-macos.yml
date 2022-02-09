@@ -15,7 +15,7 @@ jobs:
           VERSION=$(date +"%y%m%d")
           echo VERSION=$VERSION
           sudo apt install -yqq s3cmd
-          s3cmd --access_key=${{ secrets.AWS_ACCESS_KEY }} --secret_key=${{ secrets.AWS_SECRET_KEY }} --stop-on-error get s3://builds.us.meltytech/shotcut-build-macos.txt
+          s3cmd --access_key=${{ secrets.AWS_ACCESS_KEY }} --secret_key=${{ secrets.AWS_SECRET_KEY }} --stop-on-error get s3://builds.us.meltytech/shotcut-build-macos.txt.xz
           s3cmd --access_key=${{ secrets.AWS_ACCESS_KEY }} --secret_key=${{ secrets.AWS_SECRET_KEY }} --stop-on-error get s3://builds.us.meltytech/shotcut/shotcut-macos-unsigned-$VERSION.dmg
 
       - name: Upload artifacts
@@ -26,4 +26,4 @@ jobs:
             *.dmg
 
       - name: Dump log
-        run: cat shotcut-build-macos.txt
+        run: xzcat shotcut-build-macos.txt.xz
