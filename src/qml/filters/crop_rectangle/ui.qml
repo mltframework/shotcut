@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020-2021 Meltytech, LLC
+ * Copyright (c) 2020-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -130,7 +130,6 @@ Item {
 
     function updateFilterRect(position) {
         var rect
-        setRectControls()
         if (position !== null) {
             filter.blockSignals = true
             if (position <= 0 && filter.animateIn > 0) {
