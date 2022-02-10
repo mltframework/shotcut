@@ -169,7 +169,7 @@ void AudioMeterWidget::drawDbLabels(QPainter& p)
             int value = m_dbLabels[i];
             QString label = QString::asprintf("%d", value);
             x = m_graphRect.left() - fontMetrics().width(label) - TEXT_PAD;
-            y = m_graphRect.bottom() - IEC_ScaleMax(value, m_maxDb) * m_graphRect.height() + textHeight / 2;
+            y = m_graphRect.bottom() - qRound(IEC_ScaleMax(value, m_maxDb) * (double)m_graphRect.height() + (double)textHeight / 2.0);
             if (y - textHeight < 0) {
                 y = textHeight;
             }
@@ -257,7 +257,7 @@ void AudioMeterWidget::drawBars(QPainter& p)
             bar.setLeft(m_graphRect.left() + i * m_barSize.width() + 1);
             bar.setRight(bar.left() + m_barSize.width() - 1);
             bar.setBottom(m_graphRect.bottom());
-            bar.setTop(bar.bottom() - m_barSize.height() * level);
+            bar.setTop(bar.bottom() - qRound((double)m_barSize.height() * level));
             p.drawRoundedRect(bar, 3, 3);
         }
     }
