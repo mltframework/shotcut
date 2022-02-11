@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 Meltytech, LLC
+ * Copyright (c) 2013-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@
 #include <QSettings>
 #include <QStringList>
 #include <QByteArray>
+#include <QThread>
 
 class ShotcutSettings : public QObject
 {
@@ -68,7 +69,7 @@ public:
     void setRecent(const QStringList&);
     QString theme() const;
     void setTheme(const QString&);
-    QString jobPriority() const;
+    QThread::Priority jobPriority() const;
     void setJobPriority(const QString&);
     bool showTitleBars() const;
     void setShowTitleBars(bool);

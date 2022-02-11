@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 Meltytech, LLC
+ * Copyright (c) 2013-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -134,9 +134,13 @@ void ShotcutSettings::setTheme(const QString& s)
     settings.setValue("theme", s);
 }
 
-QString ShotcutSettings::jobPriority() const
+QThread::Priority ShotcutSettings::jobPriority() const
 {
-    return settings.value("jobPriority", "low").toString();
+    const auto priority = settings.value("jobPriority", "low").toString();
+    if (priority == "low") {
+        return QThread::LowPriority;
+    }
+    return QThread::NormalPriority;
 }
 
 void ShotcutSettings::setJobPriority(const QString& s)

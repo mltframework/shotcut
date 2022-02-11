@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2020 Meltytech, LLC
+ * Copyright (c) 2012-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,12 +19,13 @@
 #define ENCODEJOB_H
 
 #include "meltjob.h"
+#include <QThread>
 
 class EncodeJob : public MeltJob
 {
     Q_OBJECT
 public:
-    EncodeJob(const QString& name, const QString& xml, int frameRateNum, int frameRateDen);
+    EncodeJob(const QString& name, const QString& xml, int frameRateNum, int frameRateDen, const QThread::Priority priority);
 
 private slots:
     void onVideoQualityTriggered();

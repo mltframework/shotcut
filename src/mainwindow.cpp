@@ -894,7 +894,7 @@ void MainWindow::setupSettingsMenu()
     group = new QActionGroup(this);
     group->addAction(ui->actionJobPriorityLow);
     group->addAction(ui->actionJobPriorityNormal);
-    if (Settings.jobPriority() == "low")
+    if (Settings.jobPriority() == QThread::LowPriority)
         ui->actionJobPriorityLow->setChecked(true);
     else
         ui->actionJobPriorityNormal->setChecked(true);

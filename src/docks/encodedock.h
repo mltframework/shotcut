@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2021 Meltytech, LLC
+ * Copyright (c) 2012-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,6 +17,8 @@
 
 #ifndef ENCODEDOCK_H
 #define ENCODEDOCK_H
+
+#include "settings.h"
 
 #include <QDockWidget>
 #include <QDomElement>
@@ -152,7 +154,7 @@ private:
     void loadPresets();
     Mlt::Properties* collectProperties(int realtime, bool includeProfile = false);
     void collectProperties(QDomElement& node, int realtime);
-    MeltJob* createMeltJob(Mlt::Producer* service, const QString& target, int realtime, int pass = 0);
+    MeltJob* createMeltJob(Mlt::Producer* service, const QString& target, int realtime, int pass = 0, const QThread::Priority priority = Settings.jobPriority());
     void runMelt(const QString& target, int realtime = -1);
     void enqueueAnalysis();
     void enqueueMelt(const QStringList& targets, int realtime);

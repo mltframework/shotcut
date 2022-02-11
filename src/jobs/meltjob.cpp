@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2021 Meltytech, LLC
+ * Copyright (c) 2012-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,8 +30,8 @@
 #include "dialogs/textviewerdialog.h"
 #include "util.h"
 
-MeltJob::MeltJob(const QString& name, const QString& xml, int frameRateNum, int frameRateDen)
-    : AbstractJob(name)
+MeltJob::MeltJob(const QString& name, const QString& xml, int frameRateNum, int frameRateDen, QThread::Priority priority)
+    : AbstractJob(name, priority)
     , m_isStreaming(false)
     , m_previousPercent(0)
     , m_currentFrame(0)

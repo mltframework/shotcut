@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2021 Meltytech, LLC
+ * Copyright (c) 2012-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,7 +17,7 @@
 
 #include "abstractjob.h"
 #include "postjobaction.h"
-#include "settings.h"
+
 #include <QApplication>
 #include <QTimer>
 #include <Logger.h>
@@ -25,13 +25,14 @@
 #include <windows.h>
 #endif
 
-AbstractJob::AbstractJob(const QString& name)
+AbstractJob::AbstractJob(const QString& name, QThread::Priority priority)
     : QProcess(0)
     , m_item(0)
     , m_ran(false)
     , m_killed(false)
     , m_label(name)
     , m_startingPercent(0)
+    , m_priority(priority)
 {
     setObjectName(name);
     connect(this, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(onFinished(int, QProcess::ExitStatus)));
@@ -106,9 +107,9 @@ void AbstractJob::start(const QString &program, const QStringList &arguments)
     QString prog = program;
     QStringList args = arguments;
 #ifndef Q_OS_WIN
-    if (Settings.jobPriority() == "low") {
+    if (m_priority == QThread::LowPriority || m_priority == QThread::HighPriority) {
         args.prepend(program);
-        args.prepend("3");
+        args.prepend(m_priority == QThread::LowPriority? "3" : "-3");
         args.prepend("-n");
         prog = "nice";
     }
@@ -164,11 +165,16 @@ void AbstractJob::onStarted()
 #ifdef Q_OS_WIN
     qint64 processId = QProcess::processId();
     HANDLE processHandle = OpenProcess(PROCESS_SET_INFORMATION, FALSE, processId);
-    if(processHandle)
+    if (processHandle)
     {
-        if (Settings.jobPriority() == "low") {
+        switch (m_priority) {
+        case QThread::LowPriority:
             SetPriorityClass(processHandle, BELOW_NORMAL_PRIORITY_CLASS);
-        } else {
+            break;
+        case QThread::HighPriority:
+            SetPriorityClass(processHandle, ABOVE_NORMAL_PRIORITY_CLASS);
+            break;
+        default:
             SetPriorityClass(processHandle, NORMAL_PRIORITY_CLASS);
         }
         CloseHandle(processHandle);

@@ -902,7 +902,7 @@ void EncodeDock::collectProperties(QDomElement& node, int realtime)
     delete p;
 }
 
-MeltJob* EncodeDock::createMeltJob(Mlt::Producer* service, const QString& target, int realtime, int pass)
+MeltJob* EncodeDock::createMeltJob(Mlt::Producer* service, const QString& target, int realtime, int pass, const QThread::Priority priority)
 {
     QString caption = tr("Export File");
     if (Util::warnIfNotWritable(target, this, caption))
@@ -1004,7 +1004,7 @@ MeltJob* EncodeDock::createMeltJob(Mlt::Producer* service, const QString& target
 
     int frameRateNum = consumerNode.hasAttribute("frame_rate_num")? consumerNode.attribute("frame_rate_num").toInt() : MLT.profile().frame_rate_num();
     int frameRateDen = consumerNode.hasAttribute("frame_rate_den")? consumerNode.attribute("frame_rate_den").toInt() : MLT.profile().frame_rate_den();
-    MeltJob* job = new EncodeJob(QDir::toNativeSeparators(target), dom.toString(2), frameRateNum, frameRateDen);
+    MeltJob* job = new EncodeJob(QDir::toNativeSeparators(target), dom.toString(2), frameRateNum, frameRateDen, priority);
     job->setUseMultiConsumer(
             ui->widthSpinner->value() != MLT.profile().width() ||
             ui->heightSpinner->value() != MLT.profile().height() ||

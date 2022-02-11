@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2018 Meltytech, LLC
+ * Copyright (c) 2012-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,10 +19,13 @@
 #define ABSTRACTJOB_H
 
 #include "postjobaction.h"
+#include "settings.h"
+
 #include <QProcess>
 #include <QModelIndex>
 #include <QList>
 #include <QTime>
+#include <QThread>
 
 class QAction;
 class QStandardItem;
@@ -31,7 +34,7 @@ class AbstractJob : public QProcess
 {
     Q_OBJECT
 public:
-    explicit AbstractJob(const QString& name);
+    explicit AbstractJob(const QString& name, QThread::Priority priority = Settings.jobPriority());
     virtual ~AbstractJob() {}
 
     void setStandardItem(QStandardItem* item);
@@ -79,6 +82,7 @@ private:
     int m_startingPercent;
     QTime m_totalTime;
     QScopedPointer<PostJobAction> m_postJobAction;
+    QThread::Priority m_priority;
 };
 
 #endif // ABSTRACTJOB_H
