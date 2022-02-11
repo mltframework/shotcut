@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020-2021 Meltytech, LLC
+ * Copyright (c) 2020-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,7 +34,7 @@ Item {
                                        Math.round(profile.height * 0.8))
 
     width: 350
-    height: 200
+    height: 230
 
     Component.onCompleted: {
         filter.blockSignals = true
