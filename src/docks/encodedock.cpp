@@ -1512,7 +1512,7 @@ void EncodeDock::on_encodeButton_clicked()
     else if (MLT.producer()->get_int(kBackgroundCaptureProperty)) {
         // Capture in background
         ui->dualPassCheckbox->setChecked(false);
-        m_immediateJob.reset(createMeltJob(fromProducer(), m_outputFilenames[0], -1));
+        m_immediateJob.reset(createMeltJob(fromProducer(), m_outputFilenames[0], -1, QThread::HighPriority));
         if (m_immediateJob) {
             // Close the player's producer to prevent resource contention.
             MAIN.hideProducer();
