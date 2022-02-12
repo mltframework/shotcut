@@ -594,6 +594,16 @@ Rectangle {
                 }
             }
             MenuItem {
+                text: qsTr('Use Higher Performance Waveforms')
+                checkable: true
+                checked: settings.timelineFramebufferWaveform
+                onTriggered: {
+                    settings.timelineFramebufferWaveform = checked
+                    if (settings.timelineShowWaveforms)
+                        multitrack.reload()
+                }
+            }
+            MenuItem {
                 text: qsTr('Show Video Thumbnails')
                 checkable: true
                 checked: settings.timelineShowThumbnails
