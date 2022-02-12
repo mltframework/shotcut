@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2015-2017 Meltytech, LLC
- * Author: Brian Matherly <code@brianmatherly.com>
+ * Copyright (c) 2015-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +22,6 @@
 #include <QMutex>
 #include <QImage>
 #include <QVector>
-#include <MltFilter.h>
 
 class AudioMeterWidget;
 
@@ -33,16 +31,12 @@ class AudioPeakMeterScopeWidget Q_DECL_FINAL : public ScopeWidget
     
 public:
     explicit AudioPeakMeterScopeWidget();
-    ~AudioPeakMeterScopeWidget();
     QString getTitle() Q_DECL_OVERRIDE;
     void setOrientation(Qt::Orientation orientation) Q_DECL_OVERRIDE;
 
 private:
     // Functions run in scope thread.
     void refreshScope(const QSize& size, bool full) Q_DECL_OVERRIDE;
-
-    // Members accessed by scope thread.
-    Mlt::Filter* m_filter;
 
     // Members accessed by GUI thread.
     AudioMeterWidget* m_audioMeter;

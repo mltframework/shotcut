@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2015-2016 Meltytech, LLC
- * Author: Brian Matherly <code@brianmatherly.com>
+ * Copyright (c) 2015-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,38 +19,28 @@
 #include "settings.h"
 #include <Logger.h>
 #include <QVBoxLayout>
-#include <MltProfile.h>
 #include "widgets/audiometerwidget.h"
 #include "mltcontroller.h"
 #include <cmath> // log10()
 
 AudioPeakMeterScopeWidget::AudioPeakMeterScopeWidget()
   : ScopeWidget("AudioPeakMeter")
-  , m_filter(0)
   , m_audioMeter(0)
   , m_orientation((Qt::Orientation)-1)
   , m_channels( Settings.playerAudioChannels() )
 {
     LOG_DEBUG() << "begin";
-    m_filter = new Mlt::Filter(MLT.profile(), "audiolevel");
-    m_filter->set("iec_scale", 0);
     qRegisterMetaType< QVector<double> >("QVector<double>");
     setAutoFillBackground(true);
-
     QVBoxLayout *vlayout = new QVBoxLayout(this);
     vlayout->setContentsMargins(4, 4, 4, 4);
     m_audioMeter = new AudioMeterWidget(this);
     m_audioMeter->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
     QVector<int> dbscale;
-    dbscale << -50 << -40 << -35 << -30 << -25 << -20 << -15 << -10 << -5 << 0 << 3;
+    dbscale << -50 << -40 << -35 << -30 << -25 << -20 << -15 << -10 << -5 << 0;
     m_audioMeter->setDbLabels(dbscale);
     vlayout->addWidget(m_audioMeter);
     LOG_DEBUG() << "end";
-}
-
-AudioPeakMeterScopeWidget::~AudioPeakMeterScopeWidget()
-{
-    delete m_filter;
 }
 
 void AudioPeakMeterScopeWidget::refreshScope(const QSize& /*size*/, bool /*full*/)
@@ -60,21 +49,22 @@ void AudioPeakMeterScopeWidget::refreshScope(const QSize& /*size*/, bool /*full*
     while (m_queue.count() > 0) {
         sFrame = m_queue.pop();
         if (sFrame.is_valid() && sFrame.get_audio_samples() > 0) {
-            mlt_audio_format format = mlt_audio_s16;
             int channels = sFrame.get_audio_channels();
-            int frequency = sFrame.get_audio_frequency();
             int samples = sFrame.get_audio_samples();
-            Mlt::Frame mFrame = sFrame.clone(true, false, false);
-            m_filter->process(mFrame);
-            mFrame.get_audio( format, frequency, channels, samples );
             QVector<double> levels;
-            for (int i = 0; i < channels; i++) {
-                QString s = QString("meta.media.audio_level.%1").arg(i);
-                double audioLevel = mFrame.get_double(s.toLatin1().constData());
-                if (audioLevel == 0.0) {
+            const int16_t* audio = sFrame.get_audio();
+            for ( int c = 0; c < channels; c++ ) {
+                int16_t peak = 0;
+                const int16_t* p = audio + c;
+                for ( int s = 0; s < samples; s++ ) {
+                    int16_t sample = abs( *p );
+                    if (sample > peak) peak = sample;
+                    p += channels;
+                }
+                if (peak == 0) {
                     levels << -100.0;
                 } else {
-                    levels << 20 * log10(audioLevel);
+                    levels << 20 * log10((double)peak / (double)std::numeric_limits<int16_t>::max());
                 }
             }
             QMetaObject::invokeMethod(m_audioMeter, "showAudio", Qt::QueuedConnection, Q_ARG(const QVector<double>&, levels));

@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2015 Meltytech, LLC
- * Author: Brian Matherly <code@brianmatherly.com>
+ * Copyright (c) 2015-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -169,7 +168,7 @@ void AudioMeterWidget::drawDbLabels(QPainter& p)
             int value = m_dbLabels[i];
             QString label = QString::asprintf("%d", value);
             x = m_graphRect.left() - fontMetrics().width(label) - TEXT_PAD;
-            y = m_graphRect.bottom() - qRound(IEC_ScaleMax(value, m_maxDb) * (double)m_graphRect.height() + (double)textHeight / 2.0);
+            y = m_graphRect.bottom() - qRound(IEC_ScaleMax(value, m_maxDb) * (double)m_graphRect.height() - (double)textHeight / 2.0);
             if (y - textHeight < 0) {
                 y = textHeight;
             }
