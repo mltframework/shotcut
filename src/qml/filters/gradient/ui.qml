@@ -149,13 +149,13 @@ Item {
             radialRadioButton.checked = true
         offsetSlider.value = filter.getDouble(offsetProperty) * 100
         var colors = []
-        var alpha = (filter.getDouble(endOpacityProperty) * 255).toString(16)
+        var alpha = Math.round(filter.getDouble(endOpacityProperty) * 255).toString(16)
         if (alpha.length < 2)
             alpha = '0' + alpha
         colors[0] = filter.get(endColorProperty)
         colors[0] = colors[0].substring(colors[0].length - 6)
         colors[0] = '#' + alpha + colors[0]
-        alpha = (filter.getDouble(startOpacityProperty) * 255).toString(16)
+        alpha = Math.round(filter.getDouble(startOpacityProperty) * 255).toString(16)
         if (alpha.length < 2)
             alpha = '0' + alpha
         colors[1] = filter.get(startColorProperty)
