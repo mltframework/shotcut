@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2021 Meltytech, LLC
+ * Copyright (c) 2011-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -173,6 +173,7 @@ public:
     static bool isMltXml(const QString& s) {
         return s.contains("<mlt ");
     }
+    static bool isTrackProducer(Mlt::Producer& producer);
     bool blockRefresh(bool block);
 
     class RefreshBlocker

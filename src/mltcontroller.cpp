@@ -986,6 +986,22 @@ void Controller::copyFilters(Producer& fromProducer, Producer& toProducer, bool 
         QScopedPointer<Mlt::Filter> fromFilter(fromProducer.filter(i));
         if (fromFilter && fromFilter->is_valid() && !fromFilter->get_int("_loader") && fromFilter->get("mlt_service")
             && (includeDisabled || !fromFilter->get_int("disable"))) {
+
+            // Determine if filter can be added
+            auto metadata = MAIN.filterController()->metadataForService(fromFilter.data());
+            if (metadata) {
+                if (metadata->isClipOnly() && MLT.isTrackProducer(toProducer)) {
+                    continue;
+                }
+                if (!metadata->allowMultiple()) {
+                    std::unique_ptr<Mlt::Filter> existing(getFilter(metadata->objectName(), &toProducer));
+                    if (existing) {
+                        continue;
+                    }
+                }
+            }
+
+            // Add the filter to the target producer
             Mlt::Filter toFilter(MLT.profile(), fromFilter->get("mlt_service"));
             if (toFilter.is_valid()) {
                 toFilter.inherit(*fromFilter);
@@ -1430,6 +1446,13 @@ bool Controller::fullRange(Producer& producer)
         }
     }
     return full;
+}
+
+bool Controller::isTrackProducer(Producer &producer)
+{
+    mlt_service_type service_type = producer.type();
+    return service_type == mlt_service_playlist_type ||
+            (service_type == mlt_service_tractor_type && producer.get_int(kShotcutXmlProperty));
 }
 
 bool Controller::blockRefresh(bool block)

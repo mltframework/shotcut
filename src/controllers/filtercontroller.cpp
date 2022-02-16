@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2021 Meltytech, LLC
+ * Copyright (c) 2014-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -141,10 +141,8 @@ void FilterController::setProducer(Mlt::Producer *producer)
 {
     m_attachedModel.setProducer(producer);
     if (producer && producer->is_valid()) {
-        mlt_service_type service_type = producer->type();
-        m_metadataModel.setIsClipProducer(service_type != mlt_service_playlist_type &&
-            (service_type != mlt_service_tractor_type || !producer->get_int(kShotcutXmlProperty)));
-        m_metadataModel.setIsChainProducer(service_type == mlt_service_chain_type);
+        m_metadataModel.setIsClipProducer(!MLT.isTrackProducer(*producer));
+        m_metadataModel.setIsChainProducer(producer->type() == mlt_service_chain_type);
     }
 }
 
