@@ -85,7 +85,7 @@ AOM_REVISION="v3.2.0"
 VMAF_HEAD=0
 VMAF_REVISION="v2.3.0"
 QT_VERSION_DEFAULT=5.15.2
-QT_VERSION_DARWIN=5.12.10
+QT_VERSION_DARWIN=5.15.2
 
 # QT_INCLUDE_DIR="$(pkg-config --variable=prefix QtCore)/include"
 QT_INCLUDE_DIR=${QTDIR:+${QTDIR}/include}
@@ -725,7 +725,6 @@ function set_globals {
     LDFLAGS_[0]="-L$FINAL_INSTALL_DIR/lib $LDFLAGS"
   fi
   if test "$TARGET_OS" = "Darwin"; then
-    [ "$TARGET_ARCH" != "arm64" ] && REVISIONS[0]="origin/release/4.4"
     CFLAGS_[0]="${CFLAGS_[0]} -I/opt/local/include"
     LDFLAGS_[0]="${LDFLAGS_[0]} -L/opt/local/lib"
   elif test "$TARGET_OS" = "Linux" ; then

@@ -25,8 +25,8 @@
 	<key>NSHighResolutionCapable</key>
 	<true/>
 	<key>LSMinimumSystemVersion</key>
-	<string>10.10.0</string>
-	<key>CFBundleDocumentTypes</key>
+    <string>10.14.0</string>
+    <key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
 			<key>CFBundleTypeExtensions</key>
