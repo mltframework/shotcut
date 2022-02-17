@@ -621,6 +621,9 @@ void AvformatProducerWidget::onFrameDecoded()
         } else if (QFile::exists(resource) && !MLT.isSeekable(m_producer.data())) {
             LOG_INFO() << resource << "is not seekable";
             offerConvert(tr("This file does not support seeking and cannot be used for editing."));
+        } else if (QFile::exists(resource) && resource.endsWith(".m2t")) {
+            LOG_INFO() << resource << "is HDV";
+            offerConvert(tr("This file format (HDV) is not reliable for editing."));
         }
     }
 }
