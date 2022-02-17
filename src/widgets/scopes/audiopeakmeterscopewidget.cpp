@@ -50,7 +50,7 @@ void AudioPeakMeterScopeWidget::refreshScope(const QSize& /*size*/, bool /*full*
         sFrame = m_queue.pop();
         if (sFrame.is_valid() && sFrame.get_audio_samples() > 0) {
             int channels = sFrame.get_audio_channels();
-            int samples = sFrame.get_audio_samples();
+            int samples = qMin(200, sFrame.get_audio_samples());
             QVector<double> levels;
             const int16_t* audio = sFrame.get_audio();
             for ( int c = 0; c < channels; c++ ) {
