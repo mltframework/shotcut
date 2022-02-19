@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2020 Meltytech, LLC
+ * Copyright (c) 2014-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,7 +20,8 @@
 #include "mltcontroller.h"
 #include "util.h"
 #include "shotcut_mlt_properties.h"
-#include "Logger.h"
+#include "settings.h"
+#include <Logger.h>
 #include <QString>
 #include <QDir>
 #include <QFileInfo>
@@ -53,6 +54,8 @@ DirectShowVideoWidget::DirectShowVideoWidget(QWidget *parent) :
     bool isVideo = true;
     QString description;
     QString name;
+    auto currentVideo = 1;
+    auto currentAudio = 1;
     if (started && finished && proc.exitStatus() == QProcess::NormalExit) {
         QString output = proc.readAll();
         foreach (const QString& line, output.split(QRegularExpression("[\r\n]"), QString::SkipEmptyParts)) {
@@ -68,8 +71,14 @@ DirectShowVideoWidget::DirectShowVideoWidget(QWidget *parent) :
                     name = line.mid(i + s.size()).replace('\"', "");
                     LOG_DEBUG() << (isVideo? "video" : "audio") << description << name;
                     if (isVideo) {
+                        if (Settings.videoInput() == name) {
+                            currentVideo = ui->videoCombo->count();
+                        }
                         ui->videoCombo->addItem(description, name);
                     } else {
+                        if (Settings.audioInput() == name) {
+                            currentAudio = ui->audioCombo->count();
+                        }
                         ui->audioCombo->addItem(description, name);
                     }
                 }
@@ -78,9 +87,9 @@ DirectShowVideoWidget::DirectShowVideoWidget(QWidget *parent) :
     }
 
     if (ui->videoCombo->count() > 1)
-        ui->videoCombo->setCurrentIndex(1);
+        ui->videoCombo->setCurrentIndex(currentVideo);
     if (ui->audioCombo->count() > 1)
-        ui->audioCombo->setCurrentIndex(1);
+        ui->audioCombo->setCurrentIndex(currentAudio);
 #endif
 }
 
@@ -137,6 +146,12 @@ Mlt::Producer *DirectShowVideoWidget::newProducer(Mlt::Profile& profile)
     p->set("force_seekable", 0);
     p->set(kBackgroundCaptureProperty, 1);
     p->set(kShotcutCaptionProperty, tr("Audio/Video Device").toUtf8().constData());
+    if (ui->audioCombo->currentIndex() > 0) {
+        Settings.setAudioInput(ui->audioCombo->currentData().toString());
+    }
+    if (ui->videoCombo->currentIndex() > 0) {
+        Settings.setVideoInput(ui->videoCombo->currentData().toString());
+    }
     return p;
 }
 

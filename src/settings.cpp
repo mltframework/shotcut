@@ -21,6 +21,7 @@
 #include <QStandardPaths>
 #include <QFile>
 #include <QDir>
+#include <QAudioDeviceInfo>
 #include <Logger.h>
 
 static const QString APP_DATA_DIR_KEY("appdatadir");
@@ -934,6 +935,32 @@ QString ShotcutSettings::projectsFolder() const
 void ShotcutSettings::setProjectsFolder(const QString &path)
 {
     settings.setValue("projectsFolder", path);
+}
+
+QString ShotcutSettings::audioInput() const
+{
+    QString defaultValue  = "default";
+#if defined(Q_OS_MAC) || defined(Q_OS_WIN)
+    for (const auto& deviceInfo : QAudioDeviceInfo::availableDevices(QAudio::AudioInput)) {
+        defaultValue = deviceInfo.deviceName();
+    }
+#endif
+    return settings.value("audioInput", defaultValue).toString();
+}
+
+void ShotcutSettings::setAudioInput(const QString& name)
+{
+    settings.setValue("audioInput", name);
+}
+
+QString ShotcutSettings::videoInput() const
+{
+    return settings.value("videoInput").toString();
+}
+
+void ShotcutSettings::setVideoInput(const QString& name)
+{
+    settings.setValue("videoInput", name);
 }
 
 bool ShotcutSettings::proxyEnabled() const

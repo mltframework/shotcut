@@ -41,6 +41,7 @@
 
 static const char* kFileUrlProtocol = "file://";
 static const char* kFilesUrlDelimiter = ",file://";
+static const int kRecordingTimerIntervalMs = 1000;
 
 TimelineDock::TimelineDock(QWidget *parent) :
     QDockWidget(parent),
@@ -1545,6 +1546,7 @@ void TimelineDock::selectClip(int trackIndex, int clipIndex)
 
 void TimelineDock::onMultitrackClosed()
 {
+    stopRecording();
     m_position = -1;
     m_ignoreNextPositionChange = false;
     m_trimDelta = 0;
@@ -1956,4 +1958,135 @@ void TimelineDock::replaceClipsWithHash(const QString& hash, Mlt::Producer& prod
     }
     if (n > 1)
         MAIN.undoStack()->endMacro();
+}
+
+void TimelineDock::recordAudio()
+{
+    // Get the file name.
+    auto filename = QmlApplication::getNextProjectFile("voiceover.opus");
+    if (filename.isEmpty()) {
+        QString path = Settings.savePath();
+        path.append("/%1.opus");
+        path = path.arg(tr("voiceover"));
+        auto nameFilter = tr("Opus (*.opus);;All Files (*)");
+        filename = QFileDialog::getSaveFileName(this, tr("Record Audio"), path, nameFilter,
+            nullptr, Util::getFileDialogOptions());
+    }
+    if (filename.isEmpty()) {
+        return;
+    }
+    if (!filename.endsWith(".opus")) {
+        filename += ".opus";
+    }
+    auto info = QFileInfo(filename);
+    Settings.setSavePath(info.path());
+    MAIN.undoStack()->beginMacro(tr("Record Audio: %1").arg(info.fileName()));
+
+    // See if current track is audio track with no clips at playhead and beyond.
+    auto trackIndex = currentTrack();
+    bool addTrack = false;
+    if (trackIndex >= 0 && trackIndex < m_model.trackList().size() &&
+            m_model.trackList().at(trackIndex).type == AudioTrackType) {
+        auto clipIndex = clipIndexAtPosition(trackIndex, position());
+        addTrack = clipIndex != -1 &&
+            (!isBlank(trackIndex, clipIndex) || clipIndex < clipCount(trackIndex) - 1);
+    } else {
+        addTrack = true;
+    }
+    // Add audio track if needed.
+    if (addTrack) {
+        addAudioTrack();
+        trackIndex = m_model.trackList().size() - 1;
+        setCurrentTrack(trackIndex);
+    }
+
+    // Add renamed color clip to audio track.
+    auto clip = Mlt::Producer(MLT.profile(), "color:");
+    clip.set(kShotcutCaptionProperty, info.fileName().toUtf8().constData());
+    clip.set(kShotcutDetailProperty, filename.toUtf8().constData());
+    clip.set(kBackgroundCaptureProperty, 1);
+    clip.set("length", std::numeric_limits<int>::max());
+    clip.set_in_and_out(0, 0);
+    overwrite(trackIndex, -1, MLT.XML(&clip), false);
+    m_recordingTrackIndex = trackIndex;
+    m_recordingClipIndex = clipIndexAtPosition(trackIndex, position());
+
+    // Start ffmpeg background job.
+    auto priority = QThread::HighPriority;
+#if defined(Q_OS_MAC)
+    QStringList args {"-f", "avfoundation", "-i", "none:" + Settings.audioInput()};
+    priority = QThread::NormalPriority;
+#elif defined(Q_OS_WIN)
+    QStringList args {"-f", "dshow", "-i", "audio=" + Settings.audioInput()};
+#else
+    QStringList args {"-f", "pulse", "-name", "Shotuct", "-i", Settings.audioInput()};
+#endif
+    args << "-flush_packets" << "1" << "-y" << filename;
+    m_recordJob.reset(new FfmpegJob("vo", args, false, priority));
+    connect(m_recordJob.data(), SIGNAL(started()), SLOT(onRecordStarted()));
+    m_recordJob->start();
+    m_isRecording = true;
+    emit isRecordingChanged(m_isRecording);
+}
+
+void TimelineDock::onRecordStarted()
+{
+    // Use a timer to increase length of color clip.
+    m_recordingTimer.setInterval(kRecordingTimerIntervalMs);
+    connect(&m_recordingTimer, SIGNAL(timeout()), this, SLOT(updateRecording()));
+    m_recordingTime = QDateTime::currentDateTime();
+    m_recordingTimer.start();
+
+    // Start playback.
+    MLT.play();
+}
+
+void TimelineDock::updateRecording()
+{
+    int out = qRound(MLT.profile().fps() * m_recordingTime.secsTo(QDateTime::currentDateTime()));
+    std::unique_ptr<Mlt::ClipInfo> info(getClipInfo(m_recordingTrackIndex, m_recordingClipIndex));
+    if (info) {
+        auto delta = info->frame_out - out;
+        if (delta < 0) {
+            m_model.trimClipOut(m_recordingTrackIndex, m_recordingClipIndex, delta, false, false);
+        }
+    }
+}
+
+void TimelineDock::stopRecording()
+{
+    m_recordingTimer.stop();
+
+    if (m_isRecording) {
+        m_isRecording = false;
+        emit isRecordingChanged(m_isRecording);
+
+        // Stop ffmpeg job.
+        if (m_recordJob && m_recordJob->state() != QProcess::NotRunning) {
+            m_recordJob->stop();
+
+            // Stop playback.
+            MLT.pause();
+
+            // Wait for ffmpeg to flush the recording.
+            LongUiTask longTask(tr("Record Audio"));
+            longTask.setMinimumDuration(500);
+            QFuture<int> future = QtConcurrent::run([]() {
+                QThread::msleep(3000);
+                return 0;
+            });
+            longTask.wait<int>(tr("Saving audio recording..."), future);
+        }
+
+        // Replace color clip.
+        std::unique_ptr<Mlt::ClipInfo> info(getClipInfo(m_recordingTrackIndex, m_recordingClipIndex));
+        if (info && info->producer && info->producer->is_valid()) {
+            Mlt::Producer clip(MLT.profile(), info->producer->get(kShotcutDetailProperty));
+            lift(m_recordingTrackIndex, m_recordingClipIndex);
+            if (clip.is_valid()) {
+                overwrite(m_recordingTrackIndex, info->start, MLT.XML(&clip), false);
+            }
+        }
+        MAIN.undoStack()->endMacro();
+    }
 }

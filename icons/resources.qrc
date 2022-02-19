@@ -279,5 +279,8 @@
         <file>oxygen/32x32/actions/marker.png</file>
         <file>light/32x32/marker.png</file>
         <file>dark/32x32/marker.png</file>
+        <file>oxygen/32x32/devices/audio-input-microphone.png</file>
+        <file>light/32x32/audio-input-microphone.png</file>
+        <file>dark/32x32/audio-input-microphone.png</file>
     </qresource>
 </RCC>

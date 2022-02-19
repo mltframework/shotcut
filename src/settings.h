@@ -233,6 +233,10 @@ public:
     void setClearRecent(bool);
     QString projectsFolder() const;
     void setProjectsFolder(const QString& path);
+    QString audioInput() const;
+    void setAudioInput(const QString& name);
+    QString videoInput() const;
+    void setVideoInput(const QString& name);
 
     // proxy
     bool proxyEnabled() const;

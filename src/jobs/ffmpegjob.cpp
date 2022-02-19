@@ -28,8 +28,8 @@
 #include <QRegularExpression>
 #include <Logger.h>
 
-FfmpegJob::FfmpegJob(const QString& name, const QStringList& args, bool isOpenLog)
-    : AbstractJob(name)
+FfmpegJob::FfmpegJob(const QString& name, const QStringList& args, bool isOpenLog, QThread::Priority priority)
+    : AbstractJob(name, priority)
     , m_outputMsgRead(false)
     , m_totalFrames(0)
     , m_previousPercent(0)
@@ -56,6 +56,12 @@ void FfmpegJob::start()
     setReadChannel(QProcess::StandardError);
     LOG_DEBUG() << ffmpegPath.absoluteFilePath() + " " + m_args.join(' ');
     AbstractJob::start(ffmpegPath.absoluteFilePath(), m_args);
+}
+
+void FfmpegJob::stop()
+{
+    write("q");
+    QTimer::singleShot(3000, this, [this](){ AbstractJob::stop(); });
 }
 
 void FfmpegJob::onOpenTriggered()

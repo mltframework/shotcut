@@ -365,6 +365,7 @@ MainWindow::MainWindow()
     connect(m_playlistDock, SIGNAL(addAllTimeline(Mlt::Playlist*, bool)), SLOT(onAddAllToTimeline(Mlt::Playlist*, bool)));
     connect(m_player, SIGNAL(previousSought()), m_timelineDock, SLOT(seekPreviousEdit()));
     connect(m_player, SIGNAL(nextSought()), m_timelineDock, SLOT(seekNextEdit()));
+    connect(m_timelineDock, SIGNAL(isRecordingChanged(bool)), m_player, SLOT(onMuteButtonToggled(bool)));
 
     m_filterController = new FilterController(this);
     m_filtersDock = new FiltersDock(m_filterController->metadataModel(), m_filterController->attachedModel(), this);
@@ -2631,6 +2632,7 @@ void MainWindow::dropEvent(QDropEvent *event)
 
 void MainWindow::closeEvent(QCloseEvent* event)
 {
+    m_timelineDock->stopRecording();
     if (continueJobsRunning() && continueModified()) {
         LOG_DEBUG() << "begin";
         JOBS.cleanup();
@@ -2788,6 +2790,7 @@ void MainWindow::onProducerChanged()
 
 bool MainWindow::on_actionSave_triggered()
 {
+    m_timelineDock->stopRecording();
     if (m_currentFile.isEmpty()) {
         return on_actionSave_As_triggered();
     } else {
@@ -4073,6 +4076,7 @@ void MainWindow::on_actionApplicationLog_triggered()
 
 void MainWindow::on_actionClose_triggered()
 {
+    m_timelineDock->stopRecording();
     if (continueModified()) {
         LOG_DEBUG() << "";
         QMutexLocker locker(&m_autosaveMutex);

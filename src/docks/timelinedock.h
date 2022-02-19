@@ -21,9 +21,12 @@
 #include <QDockWidget>
 #include <QQuickWidget>
 #include <QApplication>
+#include <QTimer>
+#include <QDateTime>
 #include "models/markersmodel.h"
 #include "models/multitrackmodel.h"
 #include "sharedframe.h"
+#include "jobs/ffmpegjob.h"
 
 namespace Ui {
 class TimelineDock;
@@ -40,6 +43,7 @@ class TimelineDock : public QDockWidget
     Q_PROPERTY(int position READ position WRITE setPosition NOTIFY positionChanged)
     Q_PROPERTY(int currentTrack READ currentTrack WRITE setCurrentTrack NOTIFY currentTrackChanged)
     Q_PROPERTY(QVariantList selection READ selectionForJS WRITE setSelectionFromJS NOTIFY selectionChanged)
+    Q_PROPERTY(bool isRecording READ isRecording NOTIFY isRecordingChanged)
 
 public:
     explicit TimelineDock(QWidget *parent = 0);
@@ -80,6 +84,9 @@ public:
     Q_INVOKABLE static void openProperties();
     void emitSelectedChanged(const QVector<int> &roles);
     void replaceClipsWithHash(const QString& hash, Mlt::Producer& producer);
+    Q_INVOKABLE void recordAudio();
+    Q_INVOKABLE void stopRecording();
+    bool isRecording() const { return m_isRecording; }
 
 signals:
     void currentTrackChanged();
@@ -108,6 +115,7 @@ signals:
     void makeTracksTaller();
     void markerRangesChanged();
     void markerSeeked(int markerIndex);
+    void isRecordingChanged(bool);
 
 public slots:
     void addAudioTrack();
@@ -201,6 +209,12 @@ private:
     int m_trimDelta;
     int m_transitionDelta;
     bool m_blockSetSelection;
+    bool m_isRecording {false};
+    QScopedPointer<AbstractJob> m_recordJob;
+    QTimer m_recordingTimer;
+    QDateTime m_recordingTime;
+    int m_recordingTrackIndex;
+    int m_recordingClipIndex;
 
 private slots:
     void load(bool force = false);
@@ -209,6 +223,8 @@ private slots:
     void selectClip(int trackIndex, int clipIndex);
     void onMultitrackClosed();
     void reloadTimelineMarkers();
+    void onRecordStarted();
+    void updateRecording();
 };
 
 class TimelineSelectionBlocker

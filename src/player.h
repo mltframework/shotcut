@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2020 Meltytech, LLC
+ * Copyright (c) 2012-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -110,6 +110,7 @@ public slots:
     void setStatusLabel(const QString& text, int timeoutSeconds, QAction* action, QPalette::ColorRole role = QPalette::ToolTipBase);
     void showIdleStatus();
     void focusPositionSpinner() const;
+    void onMuteButtonToggled(bool checked);
 
 protected:
     void resizeEvent(QResizeEvent* event) override;
@@ -177,7 +178,6 @@ private slots:
     void on_actionSkipNext_triggered();
     void on_actionSkipPrevious_triggered();
     void on_actionVolume_triggered();
-    void onMuteButtonToggled(bool checked);
     void setZoom(float factor, const QIcon &icon);
     void onZoomTriggered();
     void toggleZoom(bool checked);

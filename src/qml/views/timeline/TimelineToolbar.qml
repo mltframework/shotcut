@@ -223,6 +223,19 @@ ToolBar {
             Shotcut.HoverTip { text: qsTr('Zoom Timeline to fit') + ' (0)' }
             focusPolicy: Qt.NoFocus
         }
+        Button { // separator
+            enabled: false
+            implicitWidth: 2
+            implicitHeight: toolbar.height / 2
+        }
+        Shotcut.ToolButton {
+            implicitHeight: toolbar.height - 3
+            implicitWidth: implicitHeight
+            action: recordAudioAction
+            Shotcut.HoverTip { text: qsTr('Record Audio') }
+            focusPolicy: Qt.NoFocus
+            checked: timeline.isRecording
+        }
     }
 
     Action {
@@ -330,5 +343,17 @@ ToolBar {
         icon.name: 'zoom-fit-best'
         icon.source: 'qrc:///icons/oxygen/32x32/actions/zoom-fit-best.png'
         onTriggered: root.zoomToFit()
+    }
+
+    Action {
+        id: recordAudioAction
+        icon.name: 'audio-input-microphone'
+        icon.source: 'qrc:///icons/oxygen/32x32/devices/audio-input-microphone.png'
+        onTriggered: {
+            if (timeline.isRecording)
+                timeline.stopRecording()
+            else
+                timeline.recordAudio()
+        }
     }
 }

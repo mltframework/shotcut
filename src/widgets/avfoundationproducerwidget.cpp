@@ -19,6 +19,7 @@
 #include "ui_avfoundationproducerwidget.h"
 #include "mltcontroller.h"
 #include "util.h"
+#include "settings.h"
 #include <QCameraInfo>
 #include <QCamera>
 #include <QString>
@@ -37,19 +38,29 @@ AvfoundationProducerWidget::AvfoundationProducerWidget(QWidget *parent) :
     Util::setColorsToHighlight(ui->label);
 
 #ifdef Q_OS_MAC
-    for (const auto& cameraInfo: QCameraInfo::availableCameras()) {
+    auto currentVideo = 1;
+    for (const auto& cameraInfo : QCameraInfo::availableCameras()) {
+        if (Settings.videoInput() == cameraInfo.deviceName()) {
+            currentVideo = ui->videoCombo->count();
+        }
         ui->videoCombo->addItem(cameraInfo.description(), cameraInfo.deviceName().toLocal8Bit());
     }
 #if ENABLE_SCREEN_CAPTURE
     for (int i = 0; i < QApplication::desktop()->screenCount(); i++)
         ui->videoCombo->addItem(QString("Capture screen %1").arg(i));
 #endif
-    foreach (const QAudioDeviceInfo &deviceInfo, QAudioDeviceInfo::availableDevices(QAudio::AudioInput))
+    auto currentAudio = 1;
+    for (const auto& deviceInfo : QAudioDeviceInfo::availableDevices(QAudio::AudioInput)) {
+        if (Settings.audioInput() == deviceInfo.deviceName()) {
+            currentAudio = ui->audioCombo->count();
+        }
         ui->audioCombo->addItem(deviceInfo.deviceName());
+    }
     if (ui->videoCombo->count() > 1)
-        ui->videoCombo->setCurrentIndex(1);
-    if (ui->audioCombo->count() > 1)
-        ui->audioCombo->setCurrentIndex(1);
+        ui->videoCombo->setCurrentIndex(currentVideo);
+    if (ui->audioCombo->count() > 1) {
+        ui->audioCombo->setCurrentIndex(currentAudio);
+    }
 #endif
 }
 
@@ -73,7 +84,7 @@ Mlt::Producer *AvfoundationProducerWidget::newProducer(Mlt::Profile& profile)
         delete p;
         p = new Mlt::Producer(profile, "color:");
         p->set("resource", QString("avfoundation:%1:%2")
-               .arg(ui->videoCombo->currentText())
+               .arg(ui->videoCombo->currentText().replace(tr("None"), "none"))
                .arg(ui->audioCombo->currentText())
                .toUtf8().constData());
         p->set("error", 1);
@@ -81,6 +92,12 @@ Mlt::Producer *AvfoundationProducerWidget::newProducer(Mlt::Profile& profile)
     p->set("force_seekable", 0);
     p->set(kBackgroundCaptureProperty, 1);
     p->set(kShotcutCaptionProperty, tr("Audio/Video Device").toUtf8().constData());
+    if (ui->audioCombo->currentIndex() > 0) {
+        Settings.setAudioInput(ui->audioCombo->currentText());
+    }
+    if (ui->videoCombo->currentIndex() > 0) {
+        Settings.setVideoInput(ui->videoCombo->currentText());
+    }
     return p;
 }
 
