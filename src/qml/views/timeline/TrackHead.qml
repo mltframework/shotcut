@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2021 Meltytech, LLC
+ * Copyright (c) 2013-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -100,7 +100,10 @@ Rectangle {
         anchors {
             top: parent.top
             left: parent.left
-            margins: (trackHeadRoot.height < 50)? 0 : 4
+            leftMargin: 8
+            rightMargin: (trackHeadRoot.height < 50)? 0 : 4
+            topMargin: (trackHeadRoot.height < 50)? 0 : 4
+            bottomMargin: (trackHeadRoot.height < 50)? 0 : 4
         }
 
         Rectangle {

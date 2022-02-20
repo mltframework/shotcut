@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2021 Meltytech, LLC
+ * Copyright (c) 2013-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@
 import QtQuick 2.12
 import QtQml.Models 2.12
 import QtQuick.Controls 2.12
+import QtQuick.Dialogs 1.3
 import QtGraphicalEffects 1.12
 import QtQuick.Window 2.12
 import QtQuick.Layouts 1.12
@@ -213,6 +214,8 @@ Rectangle {
                         id: trackHeaderRepeater
                         model: multitrack
                         TrackHead {
+                            id: trackHead
+                            property var trackIndex: index
                             trackName: model.name
                             isMute: model.mute
                             isHidden: model.hidden
@@ -232,6 +235,113 @@ Rectangle {
                                 currentTrack = index
                                 timeline.selectTrackHead(currentTrack)
                             }
+                            MouseArea {
+                                id: dragMouseArea
+                                anchors.top: parent.top
+                                anchors.bottom: parent.bottom
+                                anchors.left: parent.left
+                                hoverEnabled: true
+                                cursorShape: Qt.DragMoveCursor
+                                drag.target: dragItem
+                                drag.axis: Drag.YAxis
+                                drag.maximumY: trackHeaders.height - y - height / 2
+                                drag.minimumY : -y - height / 2
+                                width: containsMouse | drag.active ? Math.max(parent.width, dragItemText.contentWidth + 20) : 8
+                                Behavior on width { PropertyAnimation {easing.type: Easing.InOutCubic} }
+                                onReleased: {
+                                    if (drag.active) {
+                                        dragItem.Drag.drop()
+                                    }
+                                }
+                                Rectangle {
+                                    id: dragItem
+                                    property var trackHead: trackHead
+                                    anchors.left: dragMouseArea.left
+                                    anchors.top: dragMouseArea.top
+                                    anchors.bottom: dragMouseArea.bottom
+                                    width: dragMouseArea.width
+                                    color: 'white'
+                                    Drag.active: dragMouseArea.drag.active
+                                    Drag.hotSpot.y: height / 2
+                                    Drag.keys: ["trackHeader"]
+                                    opacity: dragMouseArea.containsMouse | dragMouseArea.drag.active ? 0.7 : 0
+                                    Behavior on opacity { NumberAnimation {} }
+                                    Text {
+                                        id: dragItemText
+                                        anchors.fill: parent
+                                        text: qsTr("Move %1").arg(trackHead.trackName)
+                                        style: Text.Outline
+                                        styleColor: 'white'
+                                        font.pixelSize: Math.min(Math.max(parent.height * 0.7, 15), 30)
+                                        verticalAlignment: Text.AlignVCenter
+                                        leftPadding: 10
+                                    }
+                                    states: [
+                                        State {
+                                            when: dragMouseArea.drag.active | dragMouseArea.containsMouse
+                                            ParentChange { target: dragItem; parent: trackHeaders.parent }
+                                        },
+                                        State {
+                                            when: !dragMouseArea.drag.active & !dragMouseArea.containsMouse
+                                            ParentChange { target: dragItem; parent: trackHead }
+                                        }
+                                    ]
+                                }
+                            }
+
+                            DropArea {
+                                id: dropArea
+                                property var trackHead: trackHead
+                                anchors.fill: parent
+                                keys: ["trackHeader"]
+                                property bool containsValidDrag: false
+                                MessageDialog {
+                                    id: movePrompt
+                                    property var fromTrack
+                                    title: qsTr("Move track %1").arg(fromTrack.trackName)
+                                    icon: StandardIcon.Question
+                                    text: qsTr("Are you sure you want to move track %1?").arg(fromTrack.trackName)
+                                    standardButtons: StandardButton.Yes | StandardButton.No
+                                    onYes: {
+                                        timeline.moveTrack(fromTrack.trackIndex, trackHead.trackIndex)
+                                    }
+                                }
+                                onEntered: {
+                                    if (trackHead.isVideo == drag.source.trackHead.isVideo) {
+                                        containsValidDrag = true
+                                        currentTrack = trackHead.trackIndex
+                                    } else {
+                                        containsValidDrag = false
+                                    }
+                                }
+                                onExited: {
+                                    containsValidDrag = false
+                                }
+                                onDropped: {
+                                    if (drop.proposedAction == Qt.MoveAction) {
+                                        if (trackHead.isVideo && !drop.source.trackHead.isVideo) {
+                                            application.showStatusMessage(qsTr('Can not move audio track above video track'))
+                                        } else if (!trackHead.isVideo && drop.source.trackHead.isVideo) {
+                                            application.showStatusMessage(qsTr('Can not move video track below audio track'))
+                                        } else if (trackHead.trackIndex == drop.source.trackHead.trackIndex) {
+                                            application.showStatusMessage(qsTr('Track %1 was not moved').arg(drop.source.trackHead.trackName))
+                                        } else {
+                                            drop.acceptProposedAction()
+                                            movePrompt.fromTrack = drop.source.trackHead
+                                            movePrompt.visible = true
+                                        }
+                                    }
+                                    containsValidDrag = false
+                                }
+                                Rectangle {
+                                    anchors.fill: parent
+                                    color: "transparent"
+                                    border.color: "green"
+                                    border.width: 3
+                                    visible: dropArea.containsValidDrag
+                                }
+                            }
+
                         }
                     }
                 }
