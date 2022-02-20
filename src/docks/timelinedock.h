@@ -155,6 +155,7 @@ public slots:
     void insertAudioTrack();
     void insertVideoTrack();
     void removeTrack();
+    void moveTrack(int fromTrackIndex, int toTrackIndex);
     void moveTrackUp();
     void moveTrackDown();
     void onProducerChanged(Mlt::Producer*);

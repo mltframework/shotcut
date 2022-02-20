@@ -479,6 +479,25 @@ void TimelineDock::removeTrack()
     }
 }
 
+void TimelineDock::moveTrack(int fromTrackIndex, int toTrackIndex)
+{
+    const TrackList& trackList = m_model.trackList();
+    if (fromTrackIndex >= trackList.size()) {
+        LOG_DEBUG() << "From track index out of bounds" << fromTrackIndex;
+        return;
+    }
+    if (toTrackIndex >= trackList.size()) {
+        LOG_DEBUG() << "To track index out of bounds" << toTrackIndex;
+        return;
+    }
+    if (trackList[fromTrackIndex].type != trackList[toTrackIndex].type) {
+        LOG_DEBUG() << "From/To track types do not match";
+        return;
+    }
+    MAIN.undoStack()->push(new Timeline::MoveTrackCommand(m_model, fromTrackIndex, toTrackIndex));
+    setCurrentTrack(toTrackIndex);
+}
+
 void TimelineDock::moveTrackUp()
 {
     int trackIndex = currentTrack();
