@@ -2024,6 +2024,7 @@ void TimelineDock::recordAudio()
     args << "-flush_packets" << "1" << "-y" << filename;
     m_recordJob.reset(new FfmpegJob("vo", args, false, priority));
     connect(m_recordJob.data(), SIGNAL(started()), SLOT(onRecordStarted()));
+    connect(m_recordJob.data(), SIGNAL(finished(AbstractJob*,bool)), SLOT(onRecordFinished(AbstractJob*,bool)));
     m_recordJob->start();
     m_isRecording = true;
     emit isRecordingChanged(m_isRecording);
@@ -2050,6 +2051,19 @@ void TimelineDock::updateRecording()
         if (delta < 0) {
             m_model.trimClipOut(m_recordingTrackIndex, m_recordingClipIndex, delta, false, false);
         }
+    }
+}
+
+void TimelineDock::onRecordFinished(AbstractJob*, bool success)
+{
+    if (!success) {
+        stopRecording();
+        Settings.setAudioInput(QString()); // saved input likely no longer valid
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
+        emit showStatusMessage(tr("Record Audio error: check PulseAudio settings"));
+#else
+        emit showStatusMessage(tr("Record Audio error: choose File > Open Other > Audio/Video Device"));
+#endif
     }
 }
 

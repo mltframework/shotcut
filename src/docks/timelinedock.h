@@ -225,6 +225,7 @@ private slots:
     void reloadTimelineMarkers();
     void onRecordStarted();
     void updateRecording();
+    void onRecordFinished(AbstractJob*, bool);
 };
 
 class TimelineSelectionBlocker
