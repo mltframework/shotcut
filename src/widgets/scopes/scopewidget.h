@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2015-2016 Meltytech, LLC
- * Author: Brian Matherly <code@brianmatherly.com>
+ * Copyright (c) 2015-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,8 +21,8 @@
 #include <QWidget>
 #include <QString>
 #include <Logger.h>
+#include <QSemaphore>
 #include <QThread>
-#include <QFuture>
 #include <QMutex>
 #include "sharedframe.h"
 #include "dataqueue.h"
@@ -115,10 +114,9 @@ protected:
     void changeEvent(QEvent*) Q_DECL_OVERRIDE;
 
 private:
-    Q_INVOKABLE virtual void onRefreshThreadComplete() Q_DECL_FINAL;
     virtual void refreshInThread() Q_DECL_FINAL;
-    QFuture<void> m_future;
-    bool m_refreshPending;
+    QThread* m_thread;
+    QSemaphore m_refreshSempaphore;
 
     // Members accessed in multiple threads (mutex protected).
     QMutex m_mutex;

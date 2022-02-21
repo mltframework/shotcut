@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2015-2016 Meltytech, LLC
- * Author: Brian Matherly <code@brianmatherly.com>
+ * Copyright (c) 2015-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,19 +22,24 @@
 ScopeWidget::ScopeWidget(const QString& name)
   : QWidget()
   , m_queue(3, DataQueue<SharedFrame>::OverflowModeDiscardOldest)
-  , m_future()
-  , m_refreshPending(false)
+  , m_thread(nullptr)
   , m_mutex(QMutex::NonRecursive)
   , m_forceRefresh(false)
   , m_size(0, 0)
 {
-    LOG_DEBUG() << "begin" << m_future.isFinished();
+    LOG_DEBUG() << "begin";
     setObjectName(name);
+    m_thread = QThread::create([&]{ refreshInThread(); });
+    m_thread->start(QThread::LowPriority);
     LOG_DEBUG() << "end";
 }
 
 ScopeWidget::~ScopeWidget()
 {
+    m_thread->requestInterruption();
+    m_refreshSempaphore.release();
+    m_thread->wait(1000);
+    delete m_thread;
 }
 
 void ScopeWidget::onNewFrame(const SharedFrame& frame)
@@ -46,37 +50,35 @@ void ScopeWidget::onNewFrame(const SharedFrame& frame)
 
 void ScopeWidget::requestRefresh()
 {
-    if (m_future.isFinished()) {
-        m_future = QtConcurrent::run(this, &ScopeWidget::refreshInThread);
-    } else {
-        m_refreshPending = true;
+    if (!m_refreshSempaphore.available()) {
+        m_refreshSempaphore.release();
     }
 }
 
 void ScopeWidget::refreshInThread()
 {
-    if (m_size.isEmpty()) {
-        return;
+    while (true) {
+        m_refreshSempaphore.acquire();
+
+        if (m_thread->isInterruptionRequested()) {
+            break;
+        }
+
+        m_mutex.lock();
+        if (m_size.isEmpty()) {
+            m_mutex.unlock();
+            continue;
+        }
+        QSize size = m_size;
+        bool full = m_forceRefresh;
+        m_forceRefresh = false;
+        m_mutex.unlock();
+
+        refreshScope(size, full);
+        // Tell the GUI thread that the refresh is complete.
+        QMetaObject::invokeMethod(this, "update", Qt::QueuedConnection);
     }
-
-    m_mutex.lock();
-    QSize size = m_size;
-    bool full = m_forceRefresh;
-    m_forceRefresh = false;
-    m_mutex.unlock();
-
-    m_refreshPending = false;
-    refreshScope(size, full);
-    // Tell the GUI thread that the refresh is complete.
-    QMetaObject::invokeMethod(this, "onRefreshThreadComplete", Qt::QueuedConnection);
-}
-
-void ScopeWidget::onRefreshThreadComplete()
-{
-    update();
-    if (m_refreshPending) {
-        requestRefresh();
-    }
+    m_thread->quit();
 }
 
 void ScopeWidget::resizeEvent(QResizeEvent*)
