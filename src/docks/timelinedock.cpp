@@ -1098,7 +1098,7 @@ bool TimelineDock::blockSelection(bool block)
 void TimelineDock::onProducerModified()
 {
     // The clip name may have changed.
-    emitSelectedChanged(QVector<int>() << MultitrackModel::NameRole);
+    emitSelectedChanged(QVector<int>() << MultitrackModel::NameRole << MultitrackModel::CommentRole);
 }
 
 void TimelineDock::replace(int trackIndex, int clipIndex, const QString& xml)

@@ -117,6 +117,13 @@ QVariant MultitrackModel::data(const QModelIndex &index, int role) const
                 }
                 return result;
             }
+            case CommentRole: {
+                QString result;
+                if (info->producer && info->producer->is_valid()) {
+                    result = info->producer->get(kCommentProperty);
+                }
+                return result;
+            }
             case ResourceRole:
             case Qt::DisplayRole: {
                 QString result = QString::fromUtf8(info->resource);
@@ -293,6 +300,7 @@ QHash<int, QByteArray> MultitrackModel::roleNames() const
 {
     QHash<int, QByteArray> roles;
     roles[NameRole] = "name";
+    roles[CommentRole] = "comment";
     roles[ResourceRole] = "resource";
     roles[ServiceRole] = "mlt_service";
     roles[IsBlankRole] = "blank";

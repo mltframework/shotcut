@@ -67,6 +67,7 @@ Rectangle {
         id: trackModel
         Clip {
             clipName: model.name
+            clipComment: model.comment
             clipResource: model.resource
             clipDuration: model.duration
             mltService: model.mlt_service

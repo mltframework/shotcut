@@ -22,6 +22,7 @@ import Shotcut.Controls 1.0 as Shotcut
 Rectangle {
     id: clipRoot
     property string clipName: ''
+    property string clipComment: ''
     property string clipResource: ''
     property string mltService: ''
     property int inPoint: 0
@@ -275,6 +276,31 @@ Rectangle {
             }
         }
     ]
+
+    Shotcut.HoverTip {
+        text: clipName + "\n" + clipComment
+        enabled: !isBlank && !mouseArea.drag.active
+        onEntered: {
+            text = clipName
+            if (clipComment != '') {
+                // Limit comments to 3 lines and 45 characters per line
+                var commentLines = clipComment.split('\n')
+                var lines = 0
+                for (var i = 0; i < commentLines.length && lines < 3; i++) {
+                    var commentLine = commentLines[i]
+                    if (commentLine.length == 0) {
+                        continue
+                    }
+                    if (commentLine.length > 50) {
+                        commentLine = commentLine.substring(0, 50) + "...";
+                    }
+                    text += "\n" + commentLine
+                    lines++
+                }
+            }
+            text += "\n"  + application.timecode(clipDuration)
+        }
+    }
 
     MouseArea {
         anchors.fill: parent

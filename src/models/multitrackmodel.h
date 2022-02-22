@@ -51,6 +51,7 @@ public:
     /// Two level model: tracks and clips on track
     enum {
         NameRole = Qt::UserRole + 1,
+        CommentRole,     /// clip only
         ResourceRole,    /// clip only
         ServiceRole,     /// clip only
         IsBlankRole,     /// clip only
