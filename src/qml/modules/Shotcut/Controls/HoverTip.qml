@@ -26,7 +26,7 @@ MouseArea {
 
     ToolTip {
         id: tip
-        visible: text ? parent.containsMouse : false
+        visible: text ? parent.containsMouse & parent.enabled : false
         delay: 1000
         timeout: 5000
         Component.onCompleted: parent.hoverEnabled = true
