@@ -515,12 +515,12 @@ void TimelineDock::moveTrackUp()
             }
         }
         if (topVideo) {
-            LOG_DEBUG() << "Can not move top video track up" << trackIndex;
+            MAIN.showStatusMessage(tr("Track %1 was not moved").arg(m_model.getTrackName(trackIndex)));
             return;
         }
     }
     if (trackList[trackIndex].number == 0 && trackList[trackIndex].type == AudioTrackType) {
-        LOG_DEBUG() << "Can not move top audio track up" << trackIndex;
+        MAIN.showStatusMessage(tr("Can not move audio track above video track"));
         return;
     }
     MAIN.undoStack()->push(new Timeline::MoveTrackCommand(m_model, trackIndex, trackIndex - 1));
@@ -536,7 +536,7 @@ void TimelineDock::moveTrackDown()
         return;
     }
     if (trackList[trackIndex].number == 0 && trackList[trackIndex].type == VideoTrackType) {
-        LOG_DEBUG() << "Can not move bottom video track down" << trackIndex;
+        MAIN.showStatusMessage(tr("Can not move video track below audio track"));
         return;
     }
     if (trackList[trackIndex].type == AudioTrackType) {
@@ -548,7 +548,7 @@ void TimelineDock::moveTrackDown()
             }
         }
         if (bottomAudio) {
-            LOG_DEBUG() << "Can not move bottom audio track down" << trackIndex;
+            MAIN.showStatusMessage(tr("Track %1 was not moved").arg(m_model.getTrackName(trackIndex)));
             return;
         }
     }

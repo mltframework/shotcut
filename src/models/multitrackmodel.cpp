@@ -2557,6 +2557,17 @@ Mlt::ClipInfo* MultitrackModel::findClipByUuid(const QUuid &uuid, int &trackInde
     return nullptr;
 }
 
+QString MultitrackModel::getTrackName(int trackIndex)
+{
+    QString name;
+    if (trackIndex < m_trackList.size()) {
+        QScopedPointer<Mlt::Producer> track(m_tractor->track(m_trackList.at(trackIndex).mlt_index));
+        if (track)
+            name = track->get(kTrackNameProperty);
+    }
+    return name;
+}
+
 int MultitrackModel::addAudioTrack()
 {
     if (!m_tractor) {
