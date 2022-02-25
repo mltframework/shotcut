@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2021 Meltytech, LLC
+ * Copyright (c) 2012-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -301,7 +301,7 @@ void AvformatProducerWidget::recreateProducer()
 {
     Mlt::Producer* p = newProducer(MLT.profile());
     p->pass_list(*m_producer, "audio_index, video_index, force_aspect_ratio,"
-                 "video_delay, force_progressive, force_tff, set.force_full_luma, color_range, warp_pitch, rotate,"
+                 "video_delay, force_progressive, force_tff, force_full_range, color_range, warp_pitch, rotate,"
                  kAspectRatioNumerator ","
                  kAspectRatioDenominator ","
                  kShotcutHashProperty ","
@@ -590,8 +590,8 @@ void AvformatProducerWidget::onFrameDecoded()
     ui->fieldOrderComboBox->setEnabled(!progressive);
     if (m_producer->get("color_range"))
         color_range = m_producer->get_int("color_range") == 2;
-    else if (m_producer->get("set.force_full_luma"))
-        color_range = m_producer->get_int("set.force_full_luma");
+    else if (m_producer->get("force_full_range"))
+        color_range = m_producer->get_int("force_full_range");
     ui->rangeComboBox->setCurrentIndex(color_range);
 
     if (populateTrackCombos) {

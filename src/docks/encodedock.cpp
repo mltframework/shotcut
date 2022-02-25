@@ -351,6 +351,9 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties& preset)
             else if (name == "hyper" || name == "lanczos")
                 ui->interpolationCombo->setCurrentIndex(3);
         }
+        else if (name == "color_range" && (value == "pc" || value == "jpeg")) {
+            ui->rangeComboBox->setCurrentIndex(1);
+        }
         else if (name != "an" && name != "vn" && name != "threads"
                  && !(name == "frame_rate_den" && preset.property_exists("frame_rate_num"))
                  && !name.startsWith('_') && !name.startsWith("meta.preset.")) {
@@ -866,6 +869,9 @@ Mlt::Properties* EncodeDock::collectProperties(int realtime, bool includeProfile
                 p->set("frame_rate_num", numerator);
                 p->set("frame_rate_den", denominator);
             }
+            if (ui->rangeComboBox->currentIndex()) {
+                setIfNotSet(p, "color_range", "pc");
+            }
             if (ui->formatCombo->currentText() == "image2")
                 setIfNotSet(p, "threads", 1);
             else if (ui->videoCodecThreadsSpinner->value() == 0
@@ -1223,6 +1229,7 @@ void EncodeDock::resetOptions()
     on_scanModeCombo_currentIndexChanged(ui->scanModeCombo->currentIndex());
     ui->deinterlacerCombo->setCurrentIndex(3);
     ui->interpolationCombo->setCurrentIndex(1);
+    ui->rangeComboBox->setCurrentIndex(0);
 
     ui->videoRateControlCombo->setCurrentIndex(RateControlQuality);
     ui->videoBitrateCombo->lineEdit()->setText("12M");
