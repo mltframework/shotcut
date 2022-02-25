@@ -295,17 +295,6 @@ Rectangle {
                                 anchors.fill: parent
                                 keys: ["trackHeader"]
                                 property bool containsValidDrag: false
-                                MessageDialog {
-                                    id: movePrompt
-                                    property var fromTrack
-                                    title: qsTr("Move track %1").arg(fromTrack.trackName)
-                                    icon: StandardIcon.Question
-                                    text: qsTr("Are you sure you want to move track %1?").arg(fromTrack.trackName)
-                                    standardButtons: StandardButton.Yes | StandardButton.No
-                                    onYes: {
-                                        timeline.moveTrack(fromTrack.trackIndex, trackHead.trackIndex)
-                                    }
-                                }
                                 onEntered: {
                                     if (trackHead.isVideo == drag.source.trackHead.isVideo) {
                                         containsValidDrag = true
@@ -327,8 +316,7 @@ Rectangle {
                                             application.showStatusMessage(qsTr('Track %1 was not moved').arg(drop.source.trackHead.trackName))
                                         } else {
                                             drop.acceptProposedAction()
-                                            movePrompt.fromTrack = drop.source.trackHead
-                                            movePrompt.visible = true
+                                            timeline.moveTrack(drop.source.trackHead.trackIndex, trackHead.trackIndex)
                                         }
                                     }
                                     containsValidDrag = false
