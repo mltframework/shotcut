@@ -809,6 +809,8 @@ void GLWidget::setZoom(float zoom)
 {
     m_zoom = zoom;
     emit zoomChanged();
+    // Reset the VUI control
+    setSource(source());
     quickWindow()->update();
 }
 
