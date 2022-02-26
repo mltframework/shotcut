@@ -278,19 +278,19 @@ Rectangle {
     ]
 
     Shotcut.HoverTip {
+        id: clipHoverTip
         text: clipName + "\n" + clipComment
         enabled: !isBlank && !mouseArea.drag.active
         function stripLine(line) {
+            // Limit all lines to 325 pixels
             line = line.trim()
-            if (line.length > 50) {
-                line = line.substring(0, 50) + "...";
-            }
+            line = clipHoverTip.metrics.elidedText(line, Qt.ElideRight, 325)
             return line
         }
         onEntered: {
             text = stripLine(clipName)
             if (clipComment != '') {
-                // Limit comments to 3 lines and 50 characters per line
+                // Limit comments to 3 lines
                 var commentLines = clipComment.split('\n')
                 var lines = 0
                 for (var i = 0; i < commentLines.length && lines < 3; i++) {

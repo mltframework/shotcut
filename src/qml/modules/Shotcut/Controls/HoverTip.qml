@@ -15,12 +15,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.2
+import QtQuick 2.12
 import QtQuick.Controls 2.12
 
 MouseArea {
     anchors.fill: parent
     property alias text: tip.text
+    property alias metrics: fontMetrics
     propagateComposedEvents: true
     acceptedButtons: Qt.NoButton
 
@@ -30,5 +31,9 @@ MouseArea {
         delay: 1000
         timeout: 5000
         Component.onCompleted: parent.hoverEnabled = true
+        FontMetrics {
+            id: fontMetrics
+            font: tip.font
+        }
     }
 }
