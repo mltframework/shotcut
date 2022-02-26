@@ -280,22 +280,25 @@ Rectangle {
     Shotcut.HoverTip {
         text: clipName + "\n" + clipComment
         enabled: !isBlank && !mouseArea.drag.active
+        function stripLine(line) {
+            line = line.trim()
+            if (line.length > 50) {
+                line = line.substring(0, 50) + "...";
+            }
+            return line
+        }
         onEntered: {
-            text = clipName
+            text = stripLine(clipName)
             if (clipComment != '') {
-                // Limit comments to 3 lines and 45 characters per line
+                // Limit comments to 3 lines and 50 characters per line
                 var commentLines = clipComment.split('\n')
                 var lines = 0
                 for (var i = 0; i < commentLines.length && lines < 3; i++) {
-                    var commentLine = commentLines[i]
-                    if (commentLine.length == 0) {
-                        continue
+                    var commentLine = stripLine(commentLines[i])
+                    if (commentLine.length > 0) {
+                        text += "\n" + commentLine
+                        lines++
                     }
-                    if (commentLine.length > 50) {
-                        commentLine = commentLine.substring(0, 50) + "...";
-                    }
-                    text += "\n" + commentLine
-                    lines++
                 }
             }
             text += "\n"  + application.timecode(clipDuration)
