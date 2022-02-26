@@ -153,20 +153,29 @@ Item {
                 }
             }
             onPositionChanged: {
+                var newStart = root.start
+                var newEnd = root.end
                 if (dragInProgress) {
                     if (typeof snapper !== 'undefined') {
                         markerStart.x = snapper.getSnapPosition(markerStart.x + width) - width
                     }
+                    newStart = Math.round((markerStart.x + 7) / timeScale)
                     if (lockWidth != -1) {
                         markerEnd.x = markerStart.x + lockWidth
+                        newEnd += newStart - root.start
                     }
                 }
-                mouseStatusChanged(mouse.x + markerStart.x, mouse.y, text, (markerStart.x + 7) / timeScale, markerEnd.x / timeScale)
+                mouseStatusChanged(mouse.x + markerStart.x, mouse.y, text, newStart, newEnd)
             }
             onReleased: {
                 dragInProgress = false
                 if (mouse.button == Qt.LeftButton && markerStart.x != dragStartX) {
-                    markers.move(index, Math.round((markerStart.x + 7) / timeScale), Math.round(markerEnd.x / timeScale))
+                    var newStart = Math.round((markerStart.x + 7) / timeScale)
+                    var newEnd = root.end
+                     if (lockWidth != -1) {
+                        newEnd += newStart - root.start
+                    }
+                    markers.move(index, newStart, newEnd)
                 }
             }
             onClicked: {
@@ -214,20 +223,29 @@ Item {
                 }
             }
             onPositionChanged: {
+                var newStart = root.start
+                var newEnd = root.end
                 if (dragInProgress) {
                     if (typeof snapper !== 'undefined') {
                         markerEnd.x = snapper.getSnapPosition(markerEnd.x)
                     }
+                    newEnd = Math.round(markerEnd.x / timeScale)
                     if (lockWidth != -1) {
                         markerStart.x = markerEnd.x - lockWidth
+                        newStart += newEnd - root.end
                     }
                 }
-                mouseStatusChanged(mouse.x + markerEnd.x, mouse.y, text, (markerStart.x + 7) / timeScale, markerEnd.x / timeScale)
+                mouseStatusChanged(mouse.x + markerEnd.x, mouse.y, text, newStart, newEnd)
             }
             onReleased: {
                 dragInProgress = false
                 if (mouse.button == Qt.LeftButton && markerEnd.x != dragStartX) {
-                    markers.move(index, Math.round((markerStart.x + 7) / timeScale), Math.round(markerEnd.x / timeScale))
+                    var newEnd = Math.round(markerEnd.x / timeScale)
+                    var newStart = root.start
+                     if (lockWidth != -1) {
+                        newStart += newEnd - root.end
+                    }
+                    markers.move(index, newStart, newEnd)
                 }
             }
             onClicked: {
@@ -276,6 +294,8 @@ Item {
                 }
             }
             onPositionChanged: {
+                var newStart = root.start
+                var newEnd = root.end
                 if (dragInProgress) {
                     var delta = dragStartX - markerLink.x
                     if (typeof snapper !== 'undefined') {
@@ -288,8 +308,10 @@ Item {
                     markerStart.x = startDragStartX - delta
                     markerEnd.x = endDragStartX - delta
                     markerLink.x = dragStartX - delta
+                    newStart = Math.round((markerStart.x + 7) / timeScale)
+                    newEnd += newStart - root.start
                 }
-                mouseStatusChanged(mouse.x + markerLink.x, mouse.y, text, (markerStart.x + 7) / timeScale, markerEnd.x / timeScale)
+                mouseStatusChanged(mouse.x + markerLink.x, mouse.y, text, newStart, newEnd)
             }
             onReleased: {
                 dragInProgress = false
@@ -297,7 +319,8 @@ Item {
                     markerLink.anchors.left = markerStart.right
                     markerLink.anchors.right = markerEnd.left
                     if (dragStartX != markerLink.x) {
-                        markers.move(index, (markerStart.x + 7) / timeScale, markerEnd.x / timeScale)
+                        var newStart = Math.round((markerStart.x + 7) / timeScale)
+                        markers.move(index, newStart, root.end + newStart - root.start)
                     }
                 }
             }
