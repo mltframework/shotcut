@@ -1,4 +1,5 @@
 module Shotcut.Controls
+AutoSizeMenu 1.0 AutoSizeMenu.qml
 Button 1.0 Button.qml
 ColorPicker 1.0 ColorPicker.qml
 DoubleSpinBox 1.0 DoubleSpinBox.qml

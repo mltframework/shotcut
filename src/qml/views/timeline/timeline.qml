@@ -595,9 +595,8 @@ Rectangle {
 
     Menu {
         id: menu
-        Menu {
+        Shotcut.AutoSizeMenu {
             title: qsTr('Track Operations')
-            width: 230
             MenuItem {
                 text: qsTr('Add Audio Track') + (application.OS === 'OS X'? '    ⌘U' : ' (Ctrl+U)')
                 onTriggered: timeline.addAudioTrack();
@@ -631,9 +630,8 @@ Rectangle {
                 onTriggered: timeline.moveTrackDown()
             }
         }
-        Menu {
+        Shotcut.AutoSizeMenu {
             title: qsTr('Track Height')
-            width: 210
             MenuItem {
                 enabled: multitrack.trackHeight > 10
                 text: qsTr('Make Tracks Shorter') + (application.OS === 'OS X'? '    ⌘-' : ' (Ctrl+-)')
@@ -648,7 +646,7 @@ Rectangle {
                 onTriggered: multitrack.trackHeight = 50
             }
         }
-        Menu {
+        Shotcut.AutoSizeMenu {
             title: qsTr('Selection')
             MenuItem {
                 text: qsTr('Select All') + (application.OS === 'OS X'? '    ⌘A' : ' (Ctrl+A)')
@@ -662,9 +660,8 @@ Rectangle {
                 }
             }
         }
-        Menu {
+        Shotcut.AutoSizeMenu {
             title: qsTr('Options')
-            width: 310
             MenuItem {
                 text: qsTr("Ripple All Tracks") + (application.OS === 'OS X'? '    ⌥⌘R' : ' (Ctrl+Alt+R)')
                 checkable: true
@@ -720,9 +717,8 @@ Rectangle {
                 onTriggered: settings.timelineScrollZoom = checked
             }
         }
-        Menu {
+        Shotcut.AutoSizeMenu {
             title: qsTr('Other')
-            width: 270
             MenuItem {
                 text: qsTr('Reload') + (application.OS === 'OS X'? '    F5' : ' (F5)')
                 onTriggered: multitrack.reload()
