@@ -277,31 +277,37 @@ Rectangle {
         }
     ]
 
-    Shotcut.HoverTip {
-        id: clipHoverTip
-        text: clipName + "\n" + clipComment
-        enabled: !isBlank && !mouseArea.drag.active
-        function stripLine(line) {
-            // Limit all lines to 325 pixels
-            line = line.trim()
-            line = clipHoverTip.metrics.elidedText(line, Qt.ElideRight, 325)
-            return line
+    MouseArea {
+        id: clipNameHover
+        anchors.fill: parent
+        enabled: !isBlank && !mouseArea.drag.active && !trimInMouseArea.drag.active && !trimOutMouseArea.drag.active && !fadeInMouseArea.drag.active && !fadeOutMouseArea.drag.active
+        propagateComposedEvents: true
+        acceptedButtons: Qt.NoButton
+        hoverEnabled: true
+        FontMetrics {
+            id: fontMetrics
         }
-        onEntered: {
-            text = stripLine(clipName)
-            if (clipComment != '') {
-                // Limit comments to 3 lines
-                var commentLines = clipComment.split('\n')
-                var lines = 0
-                for (var i = 0; i < commentLines.length && lines < 3; i++) {
-                    var commentLine = stripLine(commentLines[i])
-                    if (commentLine.length > 0) {
-                        text += "\n" + commentLine
-                        lines++
-                    }
+        Timer {
+            id: nameHoverTimer
+            interval: 1000
+            onTriggered: {
+                // Limit text to 325 pixels
+                var text = fontMetrics.elidedText(clipName.trim(), Qt.ElideRight, 325)
+                if (text.length > 0) {
+                    bubbleHelp.show(clipRoot.x + clipNameHover.mouseX, trackRoot.y + clipRoot.height, text)
                 }
             }
-            text += "\n"  + application.timecode(clipDuration)
+        }
+        onEntered: {
+            nameHoverTimer.start()
+        }
+        onPositionChanged: {
+            bubbleHelp.hide()
+            nameHoverTimer.restart()
+        }
+        onExited: {
+            nameHoverTimer.stop()
+            bubbleHelp.hide()
         }
     }
 
