@@ -130,7 +130,7 @@ Item {
             anchors.fill: parent
             acceptedButtons: Qt.LeftButton | Qt.RightButton
             hoverEnabled: true
-            cursorShape: Qt.PointingHandCursor
+            cursorShape: pressed ? Qt.SizeHorCursor : Qt.PointingHandCursor
             property int lockWidth: 0
             property var dragStartX: 0
             property bool dragInProgress: false
@@ -201,7 +201,7 @@ Item {
             anchors.fill: parent
             acceptedButtons: Qt.LeftButton | Qt.RightButton
             hoverEnabled: true
-            cursorShape: Qt.PointingHandCursor
+            cursorShape: pressed ? Qt.SizeHorCursor : Qt.PointingHandCursor
             property int lockWidth: 0
             property var dragStartX: 0
             property bool dragInProgress: false
@@ -271,7 +271,7 @@ Item {
             anchors.fill: parent
             acceptedButtons: Qt.LeftButton | Qt.RightButton
             hoverEnabled: true
-            cursorShape: Qt.PointingHandCursor
+            cursorShape: pressed ? Qt.SizeHorCursor : Qt.PointingHandCursor
             property var dragStartX
             property int startDragStartX
             property int endDragStartX
