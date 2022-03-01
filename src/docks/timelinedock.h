@@ -170,6 +170,7 @@ public slots:
     void onProducerModified();
     void replace(int trackIndex, int clipIndex, const QString& xml = QString());
     void createOrEditMarker();
+    void createOrEditClipMarker();
     void createMarker();
     void editMarker(int markerIndex);
     void deleteMarker(int markerIndex = -1);

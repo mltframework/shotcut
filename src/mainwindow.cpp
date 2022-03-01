@@ -2028,6 +2028,8 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
             }
         } else if (event->modifiers() == Qt::NoModifier && isMultitrackValid()) {
             m_timelineDock->createOrEditMarker();
+        } else if (event->modifiers() == Qt::AltModifier && isMultitrackValid()) {
+            m_timelineDock->createOrEditClipMarker();
         }
         break;
     case Qt::Key_I:

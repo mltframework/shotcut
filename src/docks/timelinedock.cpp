@@ -1145,6 +1145,32 @@ void TimelineDock::createOrEditMarker()
     createMarker();
 }
 
+void TimelineDock::createOrEditClipMarker()
+{
+    auto selected = selection();
+    if (!m_model.trackList().count() || MLT.producer()->get_length() <= 1 || selected.isEmpty()) {
+        emit showStatusMessage(tr("Select a clip in the timeline to create a marker around it"));
+        return;
+    }
+    QScopedPointer<Mlt::ClipInfo> info(getClipInfo(selected.first().y(), selected.first().x()));
+    if (info) {
+        int index = m_markersModel.markerIndexForPosition(info->start);
+        if (index >= 0) {
+            editMarker(index);
+            return;
+        } else {
+            Markers::Marker marker;
+            marker.text = QString("Marker %1").arg(m_markersModel.uniqueKey() + 1);
+            marker.color = Settings.markerColor();
+            marker.start = info->start;
+            marker.end = info->start + info->frame_count;
+            m_markersModel.append(marker);
+            emit showStatusMessage(tr("Added marker: \"%1\".").arg(marker.text));
+            return;
+        }
+    }
+}
+
 void TimelineDock::createMarker()
 {
     if (!m_model.trackList().count() || MLT.producer()->get_length() <= 1)
