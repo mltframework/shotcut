@@ -101,6 +101,15 @@ Section "Create Start Menu Shortcut"
 
 SectionEnd
 
+; Optional section (can be disabled by the user)
+Section "Associate *.mlt files with Shotcut" 
+
+ ;register file extensions
+ WriteRegStr HKCR ".mlt" ""  "Shotcut"
+ WriteRegStr HKCR "Shotcut\shell\open\command" "" "$\"$INSTDIR\shotcut.exe$\" $\"%1$\""
+  
+SectionEnd
+
 ; Opt in section (can be enabled by the user)
 Section /o "Create Desktop Shortcut (Icon)"
 
@@ -132,6 +141,8 @@ Section "Uninstall"
   ; Remove registry keys
   DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Shotcut"
   DeleteRegKey HKLM SOFTWARE\Shotcut
+  DeleteRegStr HKCR ".mlt"
+  DeleteRegStr HKCR "Shotcut\shell\open\command"
 
   ; Remove shortcuts, if any
   SetShellVarContext all
