@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Meltytech, LLC
+ * Copyright (c) 2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,20 +21,21 @@ import org.shotcut.qml 1.0
 Metadata {
     type: Metadata.Filter
     name: qsTr("Blur: Gaussian")
-    objectName: 'blur_gaussian'
-    mlt_service: "frei0r.IIRblur"
-    qml: "ui.qml"
+    objectName: 'blur_gaussian_av'
+    mlt_service: "avfilter.gblur"
+    qml: "ui_av.qml"
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true
-        simpleProperties: ['0']
+        simpleProperties: ['av.sigma', 'av.sigmaV']
         parameters: [
             Parameter {
                 name: qsTr('Amount')
-                property: '0'
+                property: 'av.sigma'
+                gangedProperties: ['av.sigmaV']
                 isCurve: true
                 minimum: 0
-                maximum: 1
+                maximum: 50
             }
         ]
     }
