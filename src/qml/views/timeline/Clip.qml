@@ -291,9 +291,17 @@ Rectangle {
             id: nameHoverTimer
             interval: 1000
             onTriggered: {
-                // Limit text to 325 pixels
-                var text = fontMetrics.elidedText(clipName.trim(), Qt.ElideRight, 325)
+                // Limit text to 200 pixels
+                var text = fontMetrics.elidedText(clipName.trim(), Qt.ElideRight, 200)
                 if (text.length > 0) {
+                    var commentLines = clipComment.split('\n')
+                    if (commentLines.length > 0) {
+                        var comment = fontMetrics.elidedText(commentLines[0].trim(), Qt.ElideRight, 200)
+                        if (comment.length > 0) {
+                            text += '<br>' + comment
+                        }
+                    }
+                    text += '<br>' + application.timecode(clipDuration)
                     bubbleHelp.show(clipRoot.x + clipNameHover.mouseX, trackRoot.y + clipRoot.height, text)
                 }
             }
