@@ -1145,16 +1145,31 @@ void TimelineDock::createOrEditMarker()
     createMarker();
 }
 
-void TimelineDock::createOrEditClipMarker()
+void TimelineDock::createOrEditSelectionMarker()
 {
     auto selected = selection();
     if (!m_model.trackList().count() || MLT.producer()->get_length() <= 1 || selected.isEmpty()) {
         emit showStatusMessage(tr("Select a clip in the timeline to create a marker around it"));
         return;
     }
-    QScopedPointer<Mlt::ClipInfo> info(getClipInfo(selected.first().y(), selected.first().x()));
-    if (info) {
-        int index = m_markersModel.markerIndexForPosition(info->start);
+
+    // Find the earliest start and the latest end in the selection
+    int start = std::numeric_limits<int>::max();
+    int end = std::numeric_limits<int>::min();
+    for (const auto& clip : selected) {
+        QScopedPointer<Mlt::ClipInfo> info(getClipInfo(clip.y(), clip.x()));
+        if (info) {
+            if (info->start < start) {
+                start = info->start;
+            }
+            if ((info->start + info->frame_count) > end) {
+                end = info->start + info->frame_count;
+            }
+        }
+    }
+
+    if (start != std::numeric_limits<int>::max()) {
+        int index = m_markersModel.markerIndexForPosition(start);
         if (index >= 0) {
             editMarker(index);
             return;
@@ -1162,8 +1177,8 @@ void TimelineDock::createOrEditClipMarker()
             Markers::Marker marker;
             marker.text = QString("Marker %1").arg(m_markersModel.uniqueKey() + 1);
             marker.color = Settings.markerColor();
-            marker.start = info->start;
-            marker.end = info->start + info->frame_count;
+            marker.start = start;
+            marker.end = end;
             m_markersModel.append(marker);
             emit showStatusMessage(tr("Added marker: \"%1\".").arg(marker.text));
             return;

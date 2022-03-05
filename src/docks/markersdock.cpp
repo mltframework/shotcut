@@ -185,9 +185,11 @@ MarkersDock::MarkersDock(QWidget *parent) :
     m_moreButton->setToolTip(tr("Markers Menu"));
     m_moreButton->setAutoRaise(true);
     QMenu* moreMenu = new QMenu(this);
-    moreMenu->addAction(tr("Remove All Markers"), this, SLOT(onRemoveAllRequested()));
-    moreMenu->addSeparator();
     QAction* action;
+    moreMenu->addAction(tr("Remove All Markers"), this, SLOT(onRemoveAllRequested()));
+    action = moreMenu->addAction(tr("Add Marker Around Selected Clips"), this, SIGNAL(addAroundSelectionRequested()));
+    action->setShortcut(QKeySequence(Qt::ALT + Qt::Key_M));
+    moreMenu->addSeparator();
     action = moreMenu->addAction(tr("Columns"));
     action->setEnabled(false);
     action = moreMenu->addAction(tr("Color"), this, SLOT(onColorColumnToggled(bool)));

@@ -40,6 +40,7 @@ public:
 signals:
     void seekRequested(int pos);
     void addRequested();
+    void addAroundSelectionRequested();
 
 public slots:
     void onMarkerSelectionRequest(int markerIndex);

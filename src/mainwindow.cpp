@@ -411,6 +411,7 @@ MainWindow::MainWindow()
     connect(ui->actionMarkers, SIGNAL(triggered()), this, SLOT(onMarkersDockTriggered()));
     connect(m_markersDock, SIGNAL(seekRequested(int)), SLOT(seekTimeline(int)));
     connect(m_markersDock, SIGNAL(addRequested()), m_timelineDock, SLOT(createMarker()));
+    connect(m_markersDock, SIGNAL(addAroundSelectionRequested()), m_timelineDock, SLOT(createOrEditSelectionMarker()));
     connect(m_timelineDock, SIGNAL(markerSeeked(int)), m_markersDock, SLOT(onMarkerSelectionRequest(int)));
 
     m_keyframesDock = new KeyframesDock(m_filtersDock->qmlProducer(), this);
@@ -2032,7 +2033,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         } else if (event->modifiers() == Qt::NoModifier && isMultitrackValid()) {
             m_timelineDock->createOrEditMarker();
         } else if (event->modifiers() == Qt::AltModifier && isMultitrackValid()) {
-            m_timelineDock->createOrEditClipMarker();
+            m_timelineDock->createOrEditSelectionMarker();
         }
         break;
     case Qt::Key_I:
