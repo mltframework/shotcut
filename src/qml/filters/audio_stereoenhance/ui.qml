@@ -108,7 +108,7 @@ Shotcut.KeyframableFilter {
         }
 
         Label {
-            text: qsTr('Left Delay')
+            text: qsTr('Left delay')
             Layout.alignment: Qt.AlignRight
         }
         Shotcut.SliderSpinner {
@@ -130,7 +130,7 @@ Shotcut.KeyframableFilter {
         }
 
         Label {
-            text: qsTr('Left Delay Gain')
+            text: qsTr('Left delay gain')
             Layout.alignment: Qt.AlignRight
         }
         Shotcut.SliderSpinner {
@@ -152,7 +152,7 @@ Shotcut.KeyframableFilter {
         }
 
         Label {
-            text: qsTr('Right Delay')
+            text: qsTr('Right delay')
             Layout.alignment: Qt.AlignRight
         }
         Shotcut.SliderSpinner {
@@ -174,7 +174,7 @@ Shotcut.KeyframableFilter {
         }
 
         Label {
-            text: qsTr('Right Delay Gain')
+            text: qsTr('Right delay gain')
             Layout.alignment: Qt.AlignRight
         }
         Shotcut.SliderSpinner {
@@ -196,7 +196,7 @@ Shotcut.KeyframableFilter {
         }
 
         Label {
-            text: qsTr('Output Gain')
+            text: qsTr('Output gain')
             Layout.alignment: Qt.AlignRight
         }
         Shotcut.SliderSpinner {

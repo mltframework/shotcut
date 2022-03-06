@@ -290,7 +290,7 @@ Shotcut.KeyframableFilter {
             maximumValue: 4
             stepSize: 0.1
             decimals: 1
-            suffix: ' octaves'
+            suffix: qsTr(' octaves')
             onValueChanged: {
                 blockControls = true
                 updateSimpleKeyframes(getPosition())
@@ -359,7 +359,7 @@ Shotcut.KeyframableFilter {
             maximumValue: 4
             stepSize: 0.1
             decimals: 1
-            suffix: ' octaves'
+            suffix: qsTr(' octaves')
             onValueChanged: {
                 blockControls = true
                 updateSimpleKeyframes(getPosition())
@@ -428,7 +428,7 @@ Shotcut.KeyframableFilter {
             maximumValue: 4
             stepSize: 0.1
             decimals: 1
-            suffix: ' octaves'
+            suffix: qsTr(' octaves')
             onValueChanged: {
                 blockControls = true
                 updateSimpleKeyframes(getPosition())
