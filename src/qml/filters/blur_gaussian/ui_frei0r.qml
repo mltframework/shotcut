@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2021 Meltytech, LLC
+ * Copyright (c) 2019-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -92,7 +92,7 @@ Shotcut.KeyframableFilter {
             maximumValue: 100.0
             stepSize: .1
             decimals: 1
-            suffix: ' '
+            suffix: ' %'
             onValueChanged: updateFilter(amount, amountSlider.value / amountSlider.maximumValue, amountKeyframesButton, getPosition())
         }
         Shotcut.UndoButton {
