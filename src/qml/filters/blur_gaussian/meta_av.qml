@@ -35,7 +35,7 @@ Metadata {
                 gangedProperties: ['av.sigmaV']
                 isCurve: true
                 minimum: 0
-                maximum: 50
+                maximum: 100
             }
         ]
     }

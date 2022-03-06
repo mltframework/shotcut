@@ -24,7 +24,7 @@ Shotcut.KeyframableFilter {
     property string amountH: 'av.sigma'
     property string amountV: 'av.sigmaV'
     property double amountSliderMin: 0
-    property double amountSliderMax: 50
+    property double amountSliderMax: 100
     property double amountSliderDefault: 4
 
     keyframableParameters: [amountH, amountV]
@@ -94,7 +94,7 @@ Shotcut.KeyframableFilter {
             maximumValue: amountSliderMax
             stepSize: .1
             decimals: 1
-            suffix: ' '
+            suffix: ' %'
             onValueChanged: {
                 updateFilter(amountH, amountSlider.value, amountKeyframesButton, getPosition())
                 updateFilter(amountV, amountSlider.value, amountKeyframesButton, getPosition())
