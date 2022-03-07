@@ -604,7 +604,11 @@ void Util::cameraFrameRateSize(const QByteArray &deviceName, qreal& frameRate, Q
             }
         }
         camera->unload();
-        frameRate = viewfinderSettings.maximumFrameRate();
-        size = viewfinderSettings.resolution();
+        if (viewfinderSettings.maximumFrameRate() > 0) {
+            frameRate = viewfinderSettings.maximumFrameRate();
+        }
+        if (viewfinderSettings.resolution().width() > 0) {
+            size = viewfinderSettings.resolution();
+        }
     }
 }

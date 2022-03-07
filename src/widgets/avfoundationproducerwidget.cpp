@@ -71,13 +71,18 @@ AvfoundationProducerWidget::~AvfoundationProducerWidget()
 
 Mlt::Producer *AvfoundationProducerWidget::newProducer(Mlt::Profile& profile)
 {
+    QString resource;
     qreal frameRate = 30.0;
     QSize size {1280, 720};
     Util::cameraFrameRateSize(ui->videoCombo->currentData().toByteArray(), frameRate, size);
-    QString resource = QString("avfoundation:%1:%2?pixel_format=yuyv422&framerate=%3&video_size=%4x%5")
+    if (ui->videoCombo->currentIndex()) {
+        resource = QString("avfoundation:%1:%2?pixel_format=yuyv422&framerate=%3&video_size=%4x%5")
             .arg(ui->videoCombo->currentText().replace(tr("None"), "none"))
             .arg(ui->audioCombo->currentText().replace(tr("None"), "none"))
             .arg(frameRate).arg(size.width()).arg(size.height());
+    } else {
+        resource = QString("avfoundation:none:%1").arg(ui->audioCombo->currentText().replace(tr("None"), "none"));
+    }
     LOG_DEBUG() << resource;
     Mlt::Producer* p = new Mlt::Producer(profile, resource.toUtf8().constData());
     if (!p || !p->is_valid()) {
