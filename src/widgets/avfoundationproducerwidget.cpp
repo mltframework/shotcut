@@ -40,7 +40,7 @@ AvfoundationProducerWidget::AvfoundationProducerWidget(QWidget *parent) :
 #ifdef Q_OS_MAC
     auto currentVideo = 1;
     for (const auto& cameraInfo : QCameraInfo::availableCameras()) {
-        if (Settings.videoInput() == cameraInfo.deviceName()) {
+        if (Settings.videoInput() == cameraInfo.description()) {
             currentVideo = ui->videoCombo->count();
         }
         ui->videoCombo->addItem(cameraInfo.description(), cameraInfo.deviceName().toLocal8Bit());
