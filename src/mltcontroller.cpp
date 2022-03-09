@@ -476,6 +476,8 @@ bool Controller::saveXML(const QString& filename, Service* service, bool withRel
         s.set(kShotcutProjectFolder, m_projectFolder.isEmpty()? 0 : 1);
         if (!projectNote.isEmpty()) {
             s.set(kShotcutProjectNote, projectNote.toUtf8().constData());
+        } else {
+            s.clear(kShotcutProjectNote);
         }
         int ignore = s.get_int("ignore_points");
         if (ignore)
