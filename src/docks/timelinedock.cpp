@@ -84,7 +84,10 @@ TimelineDock::TimelineDock(QWidget *parent) :
     connect(&m_model, &MultitrackModel::inserted, this, &TimelineDock::selectClip, Qt::QueuedConnection);
     connect(&m_model, &MultitrackModel::overWritten, this, &TimelineDock::selectClip, Qt::QueuedConnection);
     connect(&m_model, SIGNAL(rowsInserted(QModelIndex,int,int)), SLOT(onRowsInserted(QModelIndex,int,int)));
+    connect(&m_model, SIGNAL(rowsAboutToBeRemoved(QModelIndex,int,int)), SLOT(onRowsAboutToBeRemoved(QModelIndex,int,int)));
     connect(&m_model, SIGNAL(rowsRemoved(QModelIndex,int,int)), SLOT(onRowsRemoved(QModelIndex,int,int)));
+    connect(&m_model, SIGNAL(rowsAboutToBeMoved(const QModelIndex&, int, int, const QModelIndex&, int)), SLOT(onRowsAboutToBeMoved(const QModelIndex&, int, int, const QModelIndex&, int)));
+    connect(&m_model, SIGNAL(rowsMoved(const QModelIndex&, int, int, const QModelIndex&, int)), SLOT(onRowsMoved(const QModelIndex&, int, int, const QModelIndex&, int)));
     connect(&m_model, SIGNAL(closed()), SLOT(onMultitrackClosed()));
     connect(&m_model, SIGNAL(created()), SLOT(reloadTimelineMarkers()));
     connect(&m_model, SIGNAL(loaded()), SLOT(reloadTimelineMarkers()));
@@ -329,7 +332,9 @@ const QVector<QUuid> TimelineDock::selectionUuids()
 
 void TimelineDock::saveAndClearSelection()
 {
-    m_savedSelection = m_selection;
+    m_savedSelectedTrack = m_selection.selectedTrack;
+    m_savedIsMultitrackSelected = m_selection.isMultitrackSelected;
+    m_savedSelectionUuids = selectionUuids();
     m_selection.selectedClips = QList<QPoint>();
     m_selection.selectedTrack = -1;
     m_selection.isMultitrackSelected = false;
@@ -338,7 +343,16 @@ void TimelineDock::saveAndClearSelection()
 
 void TimelineDock::restoreSelection()
 {
-    m_selection = m_savedSelection;
+    m_selection.selectedClips = QList<QPoint>();
+    m_selection.selectedTrack = m_savedSelectedTrack;
+    m_selection.isMultitrackSelected = m_savedIsMultitrackSelected;
+    for (const auto& uuid : m_savedSelectionUuids) {
+        int trackIndex, clipIndex;
+        QScopedPointer<Mlt::ClipInfo> info(m_model.findClipByUuid(uuid, trackIndex, clipIndex));
+        if (info) {
+            m_selection.selectedClips << QPoint(clipIndex, trackIndex);
+        }
+    }
     emit selectionChanged();
     emitSelectedFromSelection();
 }
@@ -1087,6 +1101,26 @@ void TimelineDock::onRowsRemoved(const QModelIndex& parent, int first, int last)
         if (!parent.isValid())
             model()->reload(true);
     }
+}
+
+void TimelineDock::onRowsAboutToBeMoved(const QModelIndex &sourceParent, int sourceStart, int sourceEnd, const QModelIndex &destinationParent, int destinationRow)
+{
+    Q_UNUSED(sourceParent)
+    Q_UNUSED(sourceStart)
+    Q_UNUSED(sourceEnd)
+    Q_UNUSED(destinationParent)
+    Q_UNUSED(destinationRow)
+    saveAndClearSelection();
+}
+
+void TimelineDock::onRowsMoved(const QModelIndex &parent, int start, int end, const QModelIndex &destination, int row)
+{
+    Q_UNUSED(parent)
+    Q_UNUSED(start)
+    Q_UNUSED(end)
+    Q_UNUSED(destination)
+    Q_UNUSED(row)
+    restoreSelection();
 }
 
 void TimelineDock::detachAudio(int trackIndex, int clipIndex)

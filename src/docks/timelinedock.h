@@ -164,6 +164,8 @@ public slots:
     void commitTrimCommand();
     void onRowsInserted(const QModelIndex& parent, int first, int last);
     void onRowsRemoved(const QModelIndex& parent, int first, int last);
+    void onRowsAboutToBeMoved(const QModelIndex &sourceParent, int sourceStart, int sourceEnd, const QModelIndex &destinationParent, int destinationRow);
+    void onRowsMoved(const QModelIndex &parent, int start, int end, const QModelIndex &destination, int row);
     void detachAudio(int trackIndex, int clipIndex);
     void selectAll();
     bool blockSelection(bool block);
@@ -205,7 +207,9 @@ private:
         bool isMultitrackSelected;
     };
     Selection m_selection;
-    Selection m_savedSelection;
+    int m_savedSelectedTrack;
+    bool m_savedIsMultitrackSelected;
+    QVector<QUuid> m_savedSelectionUuids;
     QScopedPointer<Timeline::TrimCommand> m_trimCommand;
     QScopedPointer<UndoHelper> m_undoHelper;
     int m_trimDelta;
