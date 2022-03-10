@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2020 Meltytech, LLC
+ * Copyright (c) 2015-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -375,6 +375,9 @@ void UndoHelper::restoreAffectedTracks()
 
 void UndoHelper::fixTransitions(Mlt::Playlist playlist, int clipIndex, Mlt::Producer clip)
 {
+    if (clip.is_blank()) {
+        return;
+    }
     int transitionIndex = 0;
     for (auto currentIndex : {clipIndex + 1, clipIndex - 1}) {
         // Connect a transition on the right/left to the new producer.
