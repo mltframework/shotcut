@@ -310,7 +310,7 @@ void UndoHelper::debugPrintState()
 void UndoHelper::restoreAffectedTracks()
 {
     // Remove everything in the affected tracks.
-    for (const auto& trackIndex : m_affectedTracks) {
+    for (const auto& trackIndex : qAsConst(m_affectedTracks)) {
         if (trackIndex >= 0 && trackIndex < m_model.trackList().size()) {
             auto mlt_index = m_model.trackList().at(trackIndex).mlt_index;
             Mlt::Producer producer = m_model.tractor()->multitrack()->track(mlt_index);
@@ -324,7 +324,7 @@ void UndoHelper::restoreAffectedTracks()
         }
     }
 
-    for (const auto& uid : m_insertedOrder) {
+    for (const auto& uid : qAsConst(m_insertedOrder)) {
         const Info& info = m_state[uid];
         if (m_affectedTracks.contains(info.oldTrackIndex)) {
             UNDOLOG << "Handling uid" << uid << "on track" << info.oldTrackIndex << "index" << info.oldClipIndex;
@@ -358,7 +358,7 @@ void UndoHelper::restoreAffectedTracks()
             AudioLevelsTask::start(clip->parent(), &m_model, modelIndex);
         }
     }
-    for (const auto& trackIndex : m_affectedTracks) {
+    for (const auto& trackIndex : qAsConst(m_affectedTracks)) {
         if (trackIndex >= 0 && trackIndex < m_model.trackList().size()) {
             auto mlt_index = m_model.trackList().at(trackIndex).mlt_index;
             Mlt::Producer producer = m_model.tractor()->multitrack()->track(mlt_index);
