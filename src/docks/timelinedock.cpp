@@ -1120,7 +1120,8 @@ void TimelineDock::onRowsMoved(const QModelIndex &parent, int start, int end, co
     Q_UNUSED(end)
     Q_UNUSED(destination)
     Q_UNUSED(row)
-    restoreSelection();
+    QMetaObject::invokeMethod( this, "load", Qt::QueuedConnection, Q_ARG( bool, true ) );
+    QMetaObject::invokeMethod( this, "restoreSelection", Qt::QueuedConnection );
 }
 
 void TimelineDock::detachAudio(int trackIndex, int clipIndex)
@@ -1968,6 +1969,9 @@ void TimelineDock::keyReleaseEvent(QKeyEvent* event)
 void TimelineDock::load(bool force)
 {
     if (m_quickView.source().isEmpty() || force) {
+        int saveCurrentTrack = -1;
+        if (!m_quickView.source().isEmpty())
+            saveCurrentTrack = currentTrack();
         QDir sourcePath = QmlUtilities::qmlDir();
         sourcePath.cd("views");
         sourcePath.cd("timeline");
@@ -1979,6 +1983,8 @@ void TimelineDock::load(bool force)
                 this, SIGNAL(clipClicked()));
         if (force && Settings.timelineShowWaveforms())
             m_model.reload();
+        if (saveCurrentTrack != -1)
+            setCurrentTrack(saveCurrentTrack);
     } else if (Settings.timelineShowWaveforms()) {
         m_model.reload();
     }

@@ -72,7 +72,7 @@ public:
     const QList<QPoint> selection() const;
     const QVector<QUuid> selectionUuids();
     void saveAndClearSelection();
-    void restoreSelection();
+    Q_INVOKABLE void restoreSelection();
     void selectClipUnderPlayhead();
     int centerOfClip(int trackIndex, int clipIndex);
     bool isTrackLocked(int trackIndex) const;
