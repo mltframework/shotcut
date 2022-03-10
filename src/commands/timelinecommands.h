@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2021 Meltytech, LLC
+ * Copyright (c) 2013-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -521,7 +521,7 @@ class UpdateCommand : public QUndoCommand
 public:
     UpdateCommand(TimelineDock& timeline, int trackIndex, int clipIndex, int position,
         QUndoCommand * parent = 0);
-    void setXmlAfter(const QString& xml) { m_xmlAfter = xml; }
+    void setXmlAfter(const QString& xml);
     void setPosition(int trackIndex, int clipIndex, int position);
     int trackIndex() const {return m_trackIndex;}
     int clipIndex() const {return m_clipIndex;}
@@ -536,6 +536,7 @@ private:
     QString m_xmlAfter;
     bool m_isFirstRedo;
     UndoHelper m_undoHelper;
+    bool m_ripple;
 };
 
 class DetachAudioCommand: public QUndoCommand

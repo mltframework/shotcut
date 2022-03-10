@@ -592,6 +592,14 @@ void TimelineDock::onProducerChanged(Mlt::Producer* after)
             int length = qRound(info->length * speedRatio);
             int in = qMin(qRound(info->frame_in * speedRatio), length - 1);
             int out = qMin(qRound(info->frame_out * speedRatio), length - 1);
+            if (!Settings.timelineRipple() && (clipIndex + 1) < playlist.count()) {
+                // limit the out point to what fits before the next clip
+                if (playlist.is_blank(clipIndex + 1)) {
+                    out = qMin(out, in + info->frame_count - 1 + playlist.clip_length(clipIndex + 1));
+                } else {
+                    out = qMin(out, in + info->frame_count - 1);
+                }
+            }
             after->set_in_and_out(in, out);
 
             // Adjust filters.
@@ -603,6 +611,28 @@ void TimelineDock::onProducerChanged(Mlt::Producer* after)
                     out = qMin(qRound(filter->get_out() * speedRatio), length - 1);
                     filter->set_in_and_out(in, out);
                     //TODO: keyframes
+                }
+            }
+
+            if (speedRatio != 1.0 && Settings.timelineRipple() && Settings.timelineRippleAllTracks() && (clipIndex + 1) < playlist.count()) {
+                auto position = info->start + qRound(info->frame_count * speedRatio);
+                QScopedPointer<Mlt::ClipInfo> nextInfo(playlist.clip_info(clipIndex + 1));
+                if (playlist.is_blank(clipIndex + 1)) {
+                    position += nextInfo->frame_count;
+                    nextInfo.reset(playlist.clip_info(clipIndex + 2));
+                }
+                if (nextInfo && nextInfo->cut) {
+                    MAIN.undoStack()->beginMacro(tr("Change clip properties"));
+                    MAIN.undoStack()->push(
+                        new Timeline::LiftCommand(m_model, trackIndex, clipIndex));
+                    auto moveCommand = new Timeline::MoveClipCommand(m_model, m_markersModel, 0, true);
+                    nextInfo->cut->set(kPlaylistStartProperty, position);
+                    moveCommand->selection().insert(nextInfo->start, *nextInfo->cut);
+                    MAIN.undoStack()->push(moveCommand);
+                    MAIN.undoStack()->push(
+                        new Timeline::OverwriteCommand(m_model, trackIndex, info->start, MLT.XML(after), false));
+                    MAIN.undoStack()->endMacro();
+                    return;
                 }
             }
         }

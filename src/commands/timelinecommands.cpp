@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2021 Meltytech, LLC
+ * Copyright (c) 2013-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -455,23 +455,25 @@ void MoveClipCommand::redo()
     if (m_ripple && !m_trackDelta && m_selection.size() == 1) {
         if (m_start == -1) {
             QScopedPointer<Mlt::ClipInfo> info(m_model.findClipByUuid(MLT.uuid(m_selection.first()), trackIndex, clipIndex));
-            auto newStart = info->cut->get_int(kPlaylistStartProperty);
-            auto mlt_index = m_model.trackList().at(trackIndex).mlt_index;
-            QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(mlt_index));
-            if (track) {
-                Mlt::Playlist playlist(*track);
-                auto targetIndex = playlist.get_clip_index_at(newStart);
-                auto length = playlist.clip_length(clipIndex);
-                auto targetIndexEnd = playlist.get_clip_index_at(newStart + length - 1);
-                if (targetIndex >= clipIndex || // pushing clips on same track
-                        // pulling clips on same track
-                        ((playlist.is_blank_at(newStart) || targetIndex == clipIndex) &&
-                         (playlist.is_blank_at(newStart + length - 1) || targetIndexEnd == clipIndex))) {
-                    m_start = newStart;
-                    m_trackIndex = trackIndex;
-                    m_clipIndex = clipIndex;
-                    m_markerOldStart = info->start;
-                    m_markerNewStart = newStart;
+            if (info && info->cut) {
+                auto newStart = info->cut->get_int(kPlaylistStartProperty);
+                auto mlt_index = m_model.trackList().at(trackIndex).mlt_index;
+                QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(mlt_index));
+                if (track) {
+                    Mlt::Playlist playlist(*track);
+                    auto targetIndex = playlist.get_clip_index_at(newStart);
+                    auto length = playlist.clip_length(clipIndex);
+                    auto targetIndexEnd = playlist.get_clip_index_at(newStart + length - 1);
+                    if (targetIndex >= clipIndex || // pushing clips on same track
+                            // pulling clips on same track
+                            ((playlist.is_blank_at(newStart) || targetIndex == clipIndex) &&
+                             (playlist.is_blank_at(newStart + length - 1) || targetIndexEnd == clipIndex))) {
+                        m_start = newStart;
+                        m_trackIndex = trackIndex;
+                        m_clipIndex = clipIndex;
+                        m_markerOldStart = info->start;
+                        m_markerNewStart = newStart;
+                    }
                 }
             }
         }
@@ -489,7 +491,7 @@ void MoveClipCommand::redo()
         if (!m_redo) {
             // On the initial pass, remove clips while recording info about them.
             QScopedPointer<Mlt::ClipInfo> info(m_model.findClipByUuid(MLT.uuid(clip), trackIndex, clipIndex));
-            if (info && info->producer && info->producer->is_valid()) {
+            if (info && info->producer && info->producer->is_valid() && info->cut) {
                 info->producer->set(kNewTrackIndexProperty, qBound(0, trackIndex + m_trackDelta, m_model.trackList().size() - 1));
                 info->producer->pass_property(*info->cut, kPlaylistStartProperty);
                 info->producer->set(kTrackIndexProperty, trackIndex);
@@ -1284,9 +1286,16 @@ UpdateCommand::UpdateCommand(TimelineDock& timeline, int trackIndex, int clipInd
     , m_position(position)
     , m_isFirstRedo(true)
     , m_undoHelper(*timeline.model())
+    , m_ripple(Settings.timelineRipple())
 {
     setText(QObject::tr("Change clip properties"));
     m_undoHelper.recordBeforeState();
+}
+
+void UpdateCommand::setXmlAfter(const QString &xml)
+{
+    m_xmlAfter = xml;
+    m_ripple = Settings.timelineRipple();
 }
 
 void UpdateCommand::setPosition(int trackIndex, int clipIndex, int position)
@@ -1306,8 +1315,13 @@ void UpdateCommand::redo()
     if (!m_isFirstRedo)
         m_undoHelper.recordBeforeState();
     Mlt::Producer clip(MLT.profile(), "xml-string", m_xmlAfter.toUtf8().constData());
-    m_timeline.model()->liftClip(m_trackIndex, m_clipIndex);
-    m_timeline.model()->overwrite(m_trackIndex, clip, m_position, false);
+    if (m_ripple) {
+        m_timeline.model()->removeClip(m_trackIndex, m_clipIndex, false);
+        m_timeline.model()->insertClip(m_trackIndex, clip, m_position, false, false);
+    } else {
+        m_timeline.model()->liftClip(m_trackIndex, m_clipIndex);
+        m_timeline.model()->overwrite(m_trackIndex, clip, m_position, false);
+    }
     m_undoHelper.recordAfterState();
 }
 
