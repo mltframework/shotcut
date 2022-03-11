@@ -331,7 +331,6 @@ const QVector<QUuid> TimelineDock::selectionUuids()
 
 void TimelineDock::saveAndClearSelection()
 {
-qDebug();
     m_savedSelectedTrack = m_selection.selectedTrack;
     m_savedIsMultitrackSelected = m_selection.isMultitrackSelected;
     m_savedSelectionUuids = selectionUuids();
@@ -343,7 +342,6 @@ qDebug();
 
 void TimelineDock::restoreSelection()
 {
-qDebug();
     m_selection.selectedClips = QList<QPoint>();
     m_selection.selectedTrack = m_savedSelectedTrack;
     m_selection.isMultitrackSelected = m_savedIsMultitrackSelected;
@@ -1106,7 +1104,6 @@ void TimelineDock::onRowsRemoved(const QModelIndex& parent, int first, int last)
 
 void TimelineDock::onRowsAboutToBeMoved(const QModelIndex &sourceParent, int sourceStart, int sourceEnd, const QModelIndex &destinationParent, int destinationRow)
 {
-qDebug();
     Q_UNUSED(sourceParent)
     Q_UNUSED(sourceStart)
     Q_UNUSED(sourceEnd)
@@ -1117,7 +1114,6 @@ qDebug();
 
 void TimelineDock::onRowsMoved(const QModelIndex &parent, int start, int end, const QModelIndex &destination, int row)
 {
-qDebug();
     Q_UNUSED(parent)
     Q_UNUSED(start)
     Q_UNUSED(end)
