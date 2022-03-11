@@ -3040,7 +3040,7 @@ void MultitrackModel::moveTrack(int fromTrackIndex, int toTrackIndex)
         beginMoveRows(QModelIndex(), fromTrackIndex, fromTrackIndex, QModelIndex(), toTrackIndex);
     }
 
-    // Clear all default track names (will regenerate later)
+    // Clear all default track names (will regenerate in refreshTrackList)
     foreach (const Track& t, m_trackList) {
         QScopedPointer<Mlt::Producer> mltTrack(m_tractor->track(t.mlt_index));
         QString trackNameTemplate = (t.type == VideoTrackType)? QString("V%1") : QString("A%1");
@@ -3085,15 +3085,8 @@ void MultitrackModel::moveTrack(int fromTrackIndex, int toTrackIndex)
         service.reset(service->producer());
     }
 
-    // Rename unnamed tracks
-    foreach (const Track& t, m_trackList) {
-        QScopedPointer<Mlt::Producer> mltTrack(m_tractor->track(t.mlt_index));
-        if (mltTrack && !mltTrack->property_exists(kTrackNameProperty)) {
-            QString trackNameTemplate = (t.type == VideoTrackType) ? QString("V%1") : QString("A%1");
-            QString trackName = trackNameTemplate.arg(t.number + 1);
-            mltTrack->set(kTrackNameProperty, trackName.toUtf8().constData());
-        }
-    }
+    m_trackList.clear();
+    refreshTrackList();
 
     endMoveRows();
     emit dataChanged(index(0), index(m_trackList.size()-1), QVector<int>() << IsTopVideoRole << IsBottomVideoRole << IsTopAudioRole << IsBottomAudioRole << IsCompositeRole << NameRole);
