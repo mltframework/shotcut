@@ -831,6 +831,8 @@ Rectangle {
         onResetZoom: resetZoom()
         onMakeTracksShorter: makeTracksShorter()
         onMakeTracksTaller: makeTracksTaller()
+        onWarnTrackLocked: pulseLockButtonOnTrack(trackIndex)
+        onMultitrackSelected: selectMultitrack()
     }
 
     Connections {

@@ -98,6 +98,7 @@ TimelineDock::TimelineDock(QWidget *parent) :
     connect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame&)), this, SLOT(onShowFrame(const SharedFrame&)));
     connect(this, SIGNAL(visibilityChanged(bool)), this, SLOT(load()));
     connect(this, SIGNAL(topLevelChanged(bool)), this, SLOT(onTopLevelChanged(bool)));
+    connect(this, SIGNAL(warnTrackLocked(int)), SLOT(onWarnTrackLocked()));
     connect(&m_markersModel, SIGNAL(rangesChanged()), this, SIGNAL(markerRangesChanged()));
     LOG_DEBUG() << "end";
 }
@@ -173,10 +174,8 @@ bool TimelineDock::isBlank(int trackIndex, int clipIndex)
         .data(MultitrackModel::IsBlankRole).toBool();
 }
 
-void TimelineDock::pulseLockButtonOnTrack(int trackIndex)
+void TimelineDock::onWarnTrackLocked()
 {
-    QMetaObject::invokeMethod(m_quickView.rootObject(), "pulseLockButtonOnTrack",
-            Qt::DirectConnection, Q_ARG(QVariant, trackIndex));
     emit showStatusMessage(tr("This track is locked"));
 }
 
@@ -361,7 +360,7 @@ void TimelineDock::selectClipUnderPlayhead()
     chooseClipAtPosition(m_position, track, clip);
     if (clip == -1) {
         if (isTrackLocked(currentTrack())) {
-            pulseLockButtonOnTrack(currentTrack());
+            emit warnTrackLocked(currentTrack());
             return;
         }
         int idx = clipIndexAtPlayhead(-1);
@@ -423,11 +422,6 @@ void TimelineDock::trimClipAtPlayhead(TrimLocation location, bool ripple)
         if (m_updateCommand && m_updateCommand->trackIndex() == trackIndex && m_updateCommand->clipIndex() == clipIndex)
             m_updateCommand->setPosition(trackIndex, clipIndex,-1);
     }
-}
-
-bool TimelineDock::isRipple() const
-{
-    return m_quickView.rootObject()->property("ripple").toBool();
 }
 
 void TimelineDock::openProperties()
@@ -585,7 +579,7 @@ void TimelineDock::onProducerChanged(Mlt::Producer* after)
     if (trackIndex < 0 || selection().isEmpty() || !m_updateCommand || !after || !after->is_valid())
         return;
     if (isTrackLocked(trackIndex)) {
-        pulseLockButtonOnTrack(trackIndex);
+        emit warnTrackLocked(trackIndex);
         return;
     }
     int i = m_model.trackList().at(trackIndex).mlt_index;
@@ -700,7 +694,7 @@ void TimelineDock::append(int trackIndex)
     if (trackIndex < 0)
         trackIndex = currentTrack();
     if (isTrackLocked(trackIndex)) {
-        pulseLockButtonOnTrack(trackIndex);
+        emit warnTrackLocked(trackIndex);
         return;
     }
     if (MAIN.isSourceClipMyProject()) return;
@@ -781,7 +775,7 @@ void TimelineDock::remove(int trackIndex, int clipIndex)
     if (!m_model.trackList().count())
         return;
     if (isTrackLocked(trackIndex)) {
-        pulseLockButtonOnTrack(trackIndex);
+        emit warnTrackLocked(trackIndex);
         return;
     }
     Q_ASSERT(trackIndex >= 0 && clipIndex >= 0);
@@ -797,7 +791,7 @@ void TimelineDock::lift(int trackIndex, int clipIndex)
     if (!m_model.trackList().count())
         return;
     if (isTrackLocked(trackIndex)) {
-        pulseLockButtonOnTrack(trackIndex);
+        emit warnTrackLocked(trackIndex);
         return;
     }
     if (trackIndex < 0 || clipIndex < 0) return;
@@ -814,7 +808,7 @@ void TimelineDock::lift(int trackIndex, int clipIndex)
 void TimelineDock::removeSelection(bool withCopy)
 {
     if (isTrackLocked(currentTrack())) {
-        pulseLockButtonOnTrack(currentTrack());
+        emit warnTrackLocked(currentTrack());
         return;
     }
     if (selection().isEmpty())
@@ -852,7 +846,7 @@ void TimelineDock::removeSelection(bool withCopy)
 void TimelineDock::liftSelection()
 {
     if (isTrackLocked(currentTrack())) {
-        pulseLockButtonOnTrack(currentTrack());
+        emit warnTrackLocked(currentTrack());
         return;
     }
     if (selection().isEmpty())
@@ -896,7 +890,7 @@ void TimelineDock::selectTrackHead(int trackIndex)
 void TimelineDock::selectMultitrack()
 {
     setSelection(QList<QPoint>(), -1, true);
-    QMetaObject::invokeMethod(m_quickView.rootObject(), "selectMultitrack");
+    emit multitrackSelected();
     emit selected(m_model.tractor());
 }
 
@@ -1168,7 +1162,7 @@ void TimelineDock::replace(int trackIndex, int clipIndex, const QString& xml)
     if (trackIndex < 0)
         trackIndex = currentTrack();
     if (isTrackLocked(trackIndex)) {
-        pulseLockButtonOnTrack(trackIndex);
+        emit warnTrackLocked(trackIndex);
         return;
     }
     if (clipIndex < 0)
@@ -1362,11 +1356,11 @@ bool TimelineDock::moveClip(int fromTrack, int toTrack, int clipIndex, int posit
         for (const auto& clip : selection()) {
             auto trackIndex = clip.y() + trackDelta;
             if (isTrackLocked(clip.y())) {
-                pulseLockButtonOnTrack(clip.y());
+                emit warnTrackLocked(clip.y());
                 return false;
             }
             if (isTrackLocked(trackIndex)) {
-                pulseLockButtonOnTrack(trackIndex);
+                emit warnTrackLocked(trackIndex);
                 return false;
             }
         }
@@ -1563,7 +1557,7 @@ void TimelineDock::insert(int trackIndex, int position, const QString &xml, bool
     if (trackIndex < 0)
         trackIndex = currentTrack();
     if (isTrackLocked(trackIndex)) {
-        pulseLockButtonOnTrack(trackIndex);
+        emit warnTrackLocked(trackIndex);
         return;
     }
     if (xml.contains(MAIN.fileName()) && MAIN.isSourceClipMyProject()) return;
@@ -1683,7 +1677,7 @@ void TimelineDock::overwrite(int trackIndex, int position, const QString &xml, b
     if (trackIndex < 0)
         trackIndex = currentTrack();
     if (isTrackLocked(trackIndex)) {
-        pulseLockButtonOnTrack(trackIndex);
+        emit warnTrackLocked(trackIndex);
         return;
     }
     if (xml.contains(MAIN.fileName()) && MAIN.isSourceClipMyProject()) return;
@@ -1776,7 +1770,7 @@ void TimelineDock::appendFromPlaylist(Mlt::Playlist *playlist, bool skipProxy)
 {
     int trackIndex = currentTrack();
     if (isTrackLocked(trackIndex)) {
-        pulseLockButtonOnTrack(trackIndex);
+        emit warnTrackLocked(trackIndex);
         return;
     }
     // Workaround a bug with first slide of slideshow animation not working.
@@ -1822,7 +1816,7 @@ void TimelineDock::splitClip(int trackIndex, int clipIndex)
 void TimelineDock::fadeIn(int trackIndex, int clipIndex, int duration)
 {
     if (isTrackLocked(trackIndex)) {
-        pulseLockButtonOnTrack(trackIndex);
+        emit warnTrackLocked(trackIndex);
         return;
     }
     if (duration < 0) return;
@@ -1835,7 +1829,7 @@ void TimelineDock::fadeIn(int trackIndex, int clipIndex, int duration)
 void TimelineDock::fadeOut(int trackIndex, int clipIndex, int duration)
 {
     if (isTrackLocked(trackIndex)) {
-        pulseLockButtonOnTrack(trackIndex);
+        emit warnTrackLocked(trackIndex);
         return;
     }
     if (duration < 0) return;

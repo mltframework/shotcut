@@ -77,7 +77,6 @@ public:
     int centerOfClip(int trackIndex, int clipIndex);
     bool isTrackLocked(int trackIndex) const;
     void trimClipAtPlayhead(TrimLocation location, bool ripple);
-    bool isRipple() const;
     Q_INVOKABLE bool isMultitrackSelected() const { return m_selection.isMultitrackSelected; }
     Q_INVOKABLE int selectedTrack() const { return m_selection.selectedTrack; }
     Q_INVOKABLE bool isFloating() const { return QDockWidget::isFloating(); }
@@ -116,6 +115,8 @@ signals:
     void markerRangesChanged();
     void markerSeeked(int markerIndex);
     void isRecordingChanged(bool);
+    void multitrackSelected();
+    void warnTrackLocked(int trackIndex);
 
 public slots:
     void addAudioTrack();
@@ -189,7 +190,6 @@ protected:
 
 private:
     bool isBlank(int trackIndex, int clipIndex);
-    void pulseLockButtonOnTrack(int trackIndex);
     void emitNonSeekableWarning();
     void addTrackIfNeeded(int mltTrackIndex, Mlt::Producer* srcTrack);
 
@@ -231,6 +231,7 @@ private slots:
     void onRecordStarted();
     void updateRecording();
     void onRecordFinished(AbstractJob*, bool);
+    void onWarnTrackLocked();
 };
 
 class TimelineSelectionBlocker
