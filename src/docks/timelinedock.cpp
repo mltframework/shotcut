@@ -84,10 +84,9 @@ TimelineDock::TimelineDock(QWidget *parent) :
     connect(&m_model, &MultitrackModel::inserted, this, &TimelineDock::selectClip, Qt::QueuedConnection);
     connect(&m_model, &MultitrackModel::overWritten, this, &TimelineDock::selectClip, Qt::QueuedConnection);
     connect(&m_model, SIGNAL(rowsInserted(QModelIndex,int,int)), SLOT(onRowsInserted(QModelIndex,int,int)));
-    connect(&m_model, SIGNAL(rowsAboutToBeRemoved(QModelIndex,int,int)), SLOT(onRowsAboutToBeRemoved(QModelIndex,int,int)));
     connect(&m_model, SIGNAL(rowsRemoved(QModelIndex,int,int)), SLOT(onRowsRemoved(QModelIndex,int,int)));
     connect(&m_model, SIGNAL(rowsAboutToBeMoved(const QModelIndex&, int, int, const QModelIndex&, int)), SLOT(onRowsAboutToBeMoved(const QModelIndex&, int, int, const QModelIndex&, int)));
-    connect(&m_model, SIGNAL(rowsMoved(const QModelIndex&, int, int, const QModelIndex&, int)), SLOT(onRowsMoved(const QModelIndex&, int, int, const QModelIndex&, int)));
+    connect(&m_model, SIGNAL(rowsMoved(const QModelIndex&, int, int, const QModelIndex&, int)), SLOT(onRowsMoved(const QModelIndex&, int, int, const QModelIndex&, int)), Qt::QueuedConnection);
     connect(&m_model, SIGNAL(closed()), SLOT(onMultitrackClosed()));
     connect(&m_model, SIGNAL(created()), SLOT(reloadTimelineMarkers()));
     connect(&m_model, SIGNAL(loaded()), SLOT(reloadTimelineMarkers()));
@@ -332,6 +331,7 @@ const QVector<QUuid> TimelineDock::selectionUuids()
 
 void TimelineDock::saveAndClearSelection()
 {
+qDebug();
     m_savedSelectedTrack = m_selection.selectedTrack;
     m_savedIsMultitrackSelected = m_selection.isMultitrackSelected;
     m_savedSelectionUuids = selectionUuids();
@@ -343,6 +343,7 @@ void TimelineDock::saveAndClearSelection()
 
 void TimelineDock::restoreSelection()
 {
+qDebug();
     m_selection.selectedClips = QList<QPoint>();
     m_selection.selectedTrack = m_savedSelectedTrack;
     m_selection.isMultitrackSelected = m_savedIsMultitrackSelected;
@@ -1105,6 +1106,7 @@ void TimelineDock::onRowsRemoved(const QModelIndex& parent, int first, int last)
 
 void TimelineDock::onRowsAboutToBeMoved(const QModelIndex &sourceParent, int sourceStart, int sourceEnd, const QModelIndex &destinationParent, int destinationRow)
 {
+qDebug();
     Q_UNUSED(sourceParent)
     Q_UNUSED(sourceStart)
     Q_UNUSED(sourceEnd)
@@ -1115,13 +1117,14 @@ void TimelineDock::onRowsAboutToBeMoved(const QModelIndex &sourceParent, int sou
 
 void TimelineDock::onRowsMoved(const QModelIndex &parent, int start, int end, const QModelIndex &destination, int row)
 {
+qDebug();
     Q_UNUSED(parent)
     Q_UNUSED(start)
     Q_UNUSED(end)
     Q_UNUSED(destination)
     Q_UNUSED(row)
-    QMetaObject::invokeMethod( this, "load", Qt::QueuedConnection, Q_ARG( bool, true ) );
-    QMetaObject::invokeMethod( this, "restoreSelection", Qt::QueuedConnection );
+    load();
+    restoreSelection();
 }
 
 void TimelineDock::detachAudio(int trackIndex, int clipIndex)
