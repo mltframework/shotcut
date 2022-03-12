@@ -85,8 +85,7 @@ TimelineDock::TimelineDock(QWidget *parent) :
     connect(&m_model, &MultitrackModel::overWritten, this, &TimelineDock::selectClip, Qt::QueuedConnection);
     connect(&m_model, SIGNAL(rowsInserted(QModelIndex,int,int)), SLOT(onRowsInserted(QModelIndex,int,int)));
     connect(&m_model, SIGNAL(rowsRemoved(QModelIndex,int,int)), SLOT(onRowsRemoved(QModelIndex,int,int)));
-    connect(&m_model, SIGNAL(rowsAboutToBeMoved(const QModelIndex&, int, int, const QModelIndex&, int)), SLOT(onRowsAboutToBeMoved(const QModelIndex&, int, int, const QModelIndex&, int)));
-    connect(&m_model, SIGNAL(rowsMoved(const QModelIndex&, int, int, const QModelIndex&, int)), SLOT(onRowsMoved(const QModelIndex&, int, int, const QModelIndex&, int)), Qt::QueuedConnection);
+    connect(&m_model, SIGNAL(rowsMoved(const QModelIndex&, int, int, const QModelIndex&, int)), SLOT(onRowsMoved(const QModelIndex&, int, int, const QModelIndex&, int)));
     connect(&m_model, SIGNAL(closed()), SLOT(onMultitrackClosed()));
     connect(&m_model, SIGNAL(created()), SLOT(reloadTimelineMarkers()));
     connect(&m_model, SIGNAL(loaded()), SLOT(reloadTimelineMarkers()));
@@ -1102,16 +1101,6 @@ void TimelineDock::onRowsRemoved(const QModelIndex& parent, int first, int last)
     }
 }
 
-void TimelineDock::onRowsAboutToBeMoved(const QModelIndex &sourceParent, int sourceStart, int sourceEnd, const QModelIndex &destinationParent, int destinationRow)
-{
-    Q_UNUSED(sourceParent)
-    Q_UNUSED(sourceStart)
-    Q_UNUSED(sourceEnd)
-    Q_UNUSED(destinationParent)
-    Q_UNUSED(destinationRow)
-    saveAndClearSelection();
-}
-
 void TimelineDock::onRowsMoved(const QModelIndex &parent, int start, int end, const QModelIndex &destination, int row)
 {
     Q_UNUSED(parent)
@@ -1119,8 +1108,11 @@ void TimelineDock::onRowsMoved(const QModelIndex &parent, int start, int end, co
     Q_UNUSED(end)
     Q_UNUSED(destination)
     Q_UNUSED(row)
-    load();
-    restoreSelection();
+    // Workaround issue in timeline qml that clip selection becomes inconsistent with the model
+    // Clear the selection and reload the model to trigger reset of the selected clips in the UI
+    QList<QPoint> newSelection;
+    setSelection(newSelection);
+    model()->reload(true);
 }
 
 void TimelineDock::detachAudio(int trackIndex, int clipIndex)
