@@ -675,7 +675,7 @@ Rectangle {
                 if (!trackRoot.isLocked) {
                     timeline.removeSelection(true)
                 } else {
-                    root.pulseLockButtonOnTrack(currentTrack)
+                    root.pulseLockButtonOnTrack(timeline.currentTrack)
                 }
             }
         }

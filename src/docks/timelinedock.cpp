@@ -259,16 +259,15 @@ int TimelineDock::clipCount(int trackIndex) const
 
 void TimelineDock::setCurrentTrack(int currentTrack)
 {
-    if (!m_quickView.rootObject())
-        return;
-    m_quickView.rootObject()->setProperty("currentTrack", qBound(0, currentTrack, m_model.trackList().size() - 1));
+    if (currentTrack != m_currentTrack) {
+        m_currentTrack = currentTrack;
+        emit currentTrackChanged();
+    }
 }
 
 int TimelineDock::currentTrack() const
 {
-    if (!m_quickView.rootObject())
-        return 0;
-    return m_quickView.rootObject()->property("currentTrack").toInt();
+    return m_currentTrack;
 }
 
 void TimelineDock::setSelectionFromJS(const QVariantList& list)
@@ -1962,8 +1961,6 @@ void TimelineDock::load(bool force)
         sourcePath.cd("timeline");
         m_quickView.setFocusPolicy(isFloating()? Qt::NoFocus : Qt::StrongFocus);
         m_quickView.setSource(QUrl::fromLocalFile(sourcePath.filePath("timeline.qml")));
-        connect(m_quickView.rootObject(), SIGNAL(currentTrackChanged()),
-                this, SIGNAL(currentTrackChanged()));
         connect(m_quickView.rootObject(), SIGNAL(clipClicked()),
                 this, SIGNAL(clipClicked()));
         if (force && Settings.timelineShowWaveforms())

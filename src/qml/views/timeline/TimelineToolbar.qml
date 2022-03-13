@@ -265,14 +265,14 @@ ToolBar {
         id: insertAction
         icon.name: 'edit-paste'
         icon.source: 'qrc:///icons/oxygen/32x32/actions/edit-paste.png'
-        onTriggered: timeline.insert(currentTrack)
+        onTriggered: timeline.insert(timeline.currentTrack)
     }
 
     Action {
         id: appendAction
         icon.name: 'list-add'
         icon.source: 'qrc:///icons/oxygen/32x32/actions/list-add.png'
-        onTriggered: timeline.append(currentTrack)
+        onTriggered: timeline.append(timeline.currentTrack)
     }
 
     Action {
@@ -293,14 +293,14 @@ ToolBar {
         id: overwriteAction
         icon.name: 'overwrite'
         icon.source: 'qrc:///icons/oxygen/32x32/actions/overwrite.png'
-        onTriggered: timeline.overwrite(currentTrack)
+        onTriggered: timeline.overwrite(timeline.currentTrack)
     }
 
     Action {
         id: splitAction
         icon.name: 'slice'
         icon.source: 'qrc:///icons/oxygen/32x32/actions/slice.png'
-        onTriggered: timeline.splitClip(currentTrack)
+        onTriggered: timeline.splitClip(timeline.currentTrack)
     }
 
     Action {

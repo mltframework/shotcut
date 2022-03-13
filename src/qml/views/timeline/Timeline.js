@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2021 Meltytech, LLC
+ * Copyright (c) 2013-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -45,7 +45,7 @@ function dragging(pos, duration) {
             var trackY = tracksRepeater.itemAt(i).y + headerHeight - tracksFlickable.contentY
             var trackH = tracksRepeater.itemAt(i).height
             if (pos.y >= trackY && pos.y < trackY + trackH) {
-                currentTrack = i
+                timeline.currentTrack = i
                 if (pos.x > headerWidth) {
                     dropTarget.height = trackH
                     dropTarget.y = trackY
@@ -88,7 +88,7 @@ function dragging(pos, duration) {
                 tracksRepeater.itemAt(i).snapDrop(pos)
         }
     } else {
-        currentTrack = 0
+        timeline.currentTrack = 0
     }
 }
 
@@ -100,9 +100,9 @@ function dropped() {
 function acceptDrop(xml) {
     var position = Math.round((dropTarget.x + tracksFlickable.contentX - headerWidth) / multitrack.scaleFactor)
     if (settings.timelineRipple)
-        timeline.insert(currentTrack, position, xml, false)
+        timeline.insert(timeline.currentTrack, position, xml, false)
     else
-        timeline.overwrite(currentTrack, position, xml, false)
+        timeline.overwrite(timeline.currentTrack, position, xml, false)
 }
 
 function trackHeight(isAudio) {

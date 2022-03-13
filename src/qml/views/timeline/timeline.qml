@@ -105,7 +105,6 @@ Rectangle {
     }
 
     property int headerWidth: 140
-    property int currentTrack: 0
     property color selectedTrackColor: Qt.rgba(0.8, 0.8, 0, 0.3);
     property alias trackCount: tracksRepeater.count
     property bool stopScrolling: false
@@ -131,7 +130,7 @@ Rectangle {
         }
         onDropped: {
             if (drop.formats.indexOf('application/vnd.mlt+xml') >= 0) {
-                if (currentTrack >= 0) {
+                if (timeline.currentTrack >= 0) {
                     Logic.acceptDrop(drop.getDataAsString('application/vnd.mlt+xml'))
                     drop.acceptProposedAction()
                 }
@@ -229,11 +228,11 @@ Rectangle {
                             isBottomAudio: model.isBottomAudio
                             width: headerWidth
                             height: Logic.trackHeight(model.audio)
-                            current: index === currentTrack
+                            current: index === timeline.currentTrack
                             onIsLockedChanged: tracksRepeater.itemAt(index).isLocked = isLocked
                             onClicked: {
-                                currentTrack = index
-                                timeline.selectTrackHead(currentTrack)
+                                timeline.currentTrack = index
+                                timeline.selectTrackHead(timeline.currentTrack)
                             }
                             MouseArea {
                                 id: dragMouseArea
@@ -298,7 +297,7 @@ Rectangle {
                                 onEntered: {
                                     if (trackHead.isVideo == drag.source.trackHead.isVideo) {
                                         containsValidDrag = true
-                                        currentTrack = trackHead.trackIndex
+                                        timeline.currentTrack = trackHead.trackIndex
                                     } else {
                                         containsValidDrag = false
                                     }
@@ -454,7 +453,7 @@ Rectangle {
                                 model: multitrack
                                 delegate: Rectangle {
                                     width: tracksContainer.width
-                                    color: (index === currentTrack)? selectedTrackColor : (index % 2)? activePalette.alternateBase : activePalette.base
+                                    color: (index === timeline.currentTrack)? selectedTrackColor : (index % 2)? activePalette.alternateBase : activePalette.base
                                     height: Logic.trackHeight(audio)
                                 }
                             }
@@ -488,14 +487,14 @@ Rectangle {
             }
 
             CornerSelectionShadow {
-                y: tracksRepeater.count ? tracksRepeater.itemAt(currentTrack).y + ruler.height - tracksFlickable.contentY : 0
+                y: tracksRepeater.count ? tracksRepeater.itemAt(timeline.currentTrack).y + ruler.height - tracksFlickable.contentY : 0
                 clip: timeline.selection.length ?
                         tracksRepeater.itemAt(timeline.selection[0].y).clipAt(timeline.selection[0].x) : null
                 opacity: clip && clip.x + clip.width < tracksFlickable.contentX ? 1 : 0
             }
 
             CornerSelectionShadow {
-                y: tracksRepeater.count ? tracksRepeater.itemAt(currentTrack).y + ruler.height - tracksFlickable.contentY : 0
+                y: tracksRepeater.count ? tracksRepeater.itemAt(timeline.currentTrack).y + ruler.height - tracksFlickable.contentY : 0
                 clip: timeline.selection.length ?
                         tracksRepeater.itemAt(timeline.selection[timeline.selection.length - 1].y).clipAt(timeline.selection[timeline.selection.length - 1].x) : null
                 opacity: clip && clip.x > tracksFlickable.contentX + tracksFlickable.width ? 1 : 0
@@ -608,7 +607,7 @@ Rectangle {
             MenuItem {
                 text: qsTr('Insert Track') + (application.OS === 'OS X'? '    ⌥⌘I' : ' (Ctrl+Alt+I)')
                 onTriggered: {
-                    if (currentTrack > 0 && trackHeaderRepeater.itemAt(currentTrack - 1).isBottomVideo) {
+                    if (timeline.currentTrack > 0 && trackHeaderRepeater.itemAt(timeline.currentTrack - 1).isBottomVideo) {
                         trackTypeDialog.show()
                     } else {
                         timeline.insertTrack()
@@ -621,12 +620,12 @@ Rectangle {
             }
             MenuItem {
                 text: qsTr('Move Track Up') + (application.OS === 'OS X'? '    ⌥⇧↑' : ' (Alt+Shift+↑)')
-                enabled: !trackHeaderRepeater.itemAt(currentTrack).isTopVideo && !trackHeaderRepeater.itemAt(currentTrack).isTopAudio
+                enabled: !trackHeaderRepeater.itemAt(timeline.currentTrack).isTopVideo && !trackHeaderRepeater.itemAt(timeline.currentTrack).isTopAudio
                 onTriggered: timeline.moveTrackUp()
             }
             MenuItem {
                 text: qsTr('Move Track Down') + (application.OS === 'OS X'? '    ⌥⇧↓' : ' (Alt+Shift+↓)')
-                enabled: !trackHeaderRepeater.itemAt(currentTrack).isBottomVideo && !trackHeaderRepeater.itemAt(currentTrack).isBottomAudio
+                enabled: !trackHeaderRepeater.itemAt(timeline.currentTrack).isBottomVideo && !trackHeaderRepeater.itemAt(timeline.currentTrack).isBottomAudio
                 onTriggered: timeline.moveTrackDown()
             }
         }
@@ -745,12 +744,12 @@ Rectangle {
             height: Logic.trackHeight(audio)
             isAudio: audio
             isMute: mute
-            isCurrentTrack: currentTrack === index
+            isCurrentTrack: timeline.currentTrack === index
             timeScale: multitrack.scaleFactor
             onClipClicked: {
                 var trackIndex = track.DelegateModel.itemsIndex
                 var clipIndex = clip.DelegateModel.itemsIndex
-                currentTrack = trackIndex
+                timeline.currentTrack = trackIndex
                 if (mouse && mouse.modifiers & Qt.ControlModifier)
                     timeline.selection = Logic.toggleSelection(trackIndex, clipIndex)
                 else if (mouse && mouse.modifiers & Qt.ShiftModifier)

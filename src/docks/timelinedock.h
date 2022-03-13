@@ -220,6 +220,7 @@ private:
     QDateTime m_recordingTime;
     int m_recordingTrackIndex;
     int m_recordingClipIndex;
+    int m_currentTrack {0};
 
 private slots:
     void load(bool force = false);
