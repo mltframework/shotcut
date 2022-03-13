@@ -57,6 +57,7 @@ Shotcut.KeyframableFilter {
             filter.set('12', 0)    // gain      - adjustable
             filter.set('13', 5000) // frequency - fixed
             filter.set('14', 0.5)  // slope     - fixed
+            filter.set('.dummy', '')
             filter.savePreset(preset.parameters)
         }
         setControls()
@@ -97,7 +98,7 @@ Shotcut.KeyframableFilter {
         }
         Shotcut.Preset {
             id: preset
-            parameters: keyframableParameters
+            parameters: keyframableParameters.concat('.dummy')
             Layout.columnSpan: 3
             onBeforePresetLoaded: {
                 resetSimpleKeyframes()
