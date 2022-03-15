@@ -610,7 +610,8 @@ void AvformatProducerWidget::onFrameDecoded()
 
     if (Settings.showConvertClipDialog() && !m_producer->get_int(kShotcutSkipConvertProperty)) {
         auto transferItem = ui->videoTableWidget->item(5, 1);
-        if (transferItem && transferItem->data(Qt::UserRole).toInt() > 7 && transferItem->data(Qt::UserRole).toInt() != 11 ) {
+        if (transferItem) LOG_INFO() << "color transfer" << transferItem->data(Qt::UserRole).toInt() << "=" << transferItem->text();
+        if (transferItem && transferItem->data(Qt::UserRole).toInt() > 7 && transferItem->data(Qt::UserRole).toInt() != 11 && transferItem->data(Qt::UserRole).toInt() != 18) {
             // Transfer characteristics > SMPTE240M Probably need conversion except IEC61966-2-4 is OK
             QString trcString = ui->videoTableWidget->item(5, 1)->text();
             LOG_INFO() << resource << "Probable HDR" << trcString;
