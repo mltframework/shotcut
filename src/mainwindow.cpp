@@ -1435,9 +1435,6 @@ void MainWindow::open(QString url, const Mlt::Properties* properties, bool play)
     if (!playlist() && !multitrack()) {
         if (!modified && !continueModified())
             return;
-        QMutexLocker locker(&m_autosaveMutex);
-        m_autosaveFile.reset();
-        locker.unlock();
         setCurrentFile("");
         setWindowModified(modified);
         sourceUpdated();
