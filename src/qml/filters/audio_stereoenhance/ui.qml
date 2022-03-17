@@ -148,7 +148,7 @@ Shotcut.KeyframableFilter {
             }
         }
         Shotcut.UndoButton {
-            onClicked: sliderLeftLevel.value = toDb(1)
+            onClicked: sliderLeftLevel.value = 0
         }
 
         Label {
@@ -192,7 +192,7 @@ Shotcut.KeyframableFilter {
             }
         }
         Shotcut.UndoButton {
-            onClicked: sliderRightLevel.value = toDb(1)
+            onClicked: sliderRightLevel.value = 0
         }
 
         Label {
@@ -214,7 +214,7 @@ Shotcut.KeyframableFilter {
             }
         }
         Shotcut.UndoButton {
-            onClicked: sliderOutputLevel.value = toDb(-3)
+            onClicked: sliderOutputLevel.value = -3
         }
 
         Item {
