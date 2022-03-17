@@ -1225,7 +1225,7 @@ void TimelineDock::createOrEditSelectionMarker()
     }
 
     if (start != std::numeric_limits<int>::max()) {
-        int index = m_markersModel.markerIndexForPosition(start);
+        int index = m_markersModel.markerIndexForRange(start, end);
         if (index >= 0) {
             editMarker(index);
             return;
