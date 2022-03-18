@@ -34,7 +34,8 @@ NotesDock::NotesDock(QWidget *parent) :
     setWindowIcon(filterIcon);
     toggleViewAction()->setIcon(windowIcon());
 
-    m_textEdit->setTabChangesFocus(true);
+    m_textEdit->setTabChangesFocus(false);
+    m_textEdit->setTabStopDistance(m_textEdit->fontMetrics().width("    ")); // Tabstop = 4 spaces
     m_textEdit->setAcceptRichText(false);
     QObject::connect(m_textEdit, SIGNAL(textChanged()), SLOT(onTextChanged()));
     QDockWidget::setWidget(m_textEdit);
