@@ -251,7 +251,8 @@ Item {
         if (filter.get(fillProperty) === '1' && filter.get(distortProperty) === '0') {
             aspectRatio = producer.displayAspectRatio
         } else {
-            aspectRatio = filterRect.width / Math.max(filterRect.height, 1)
+            var rect = filter.getRect(rectProperty, getPosition())
+            aspectRatio = rect.width / Math.max(rect.height, 1)
         }
     }
 
