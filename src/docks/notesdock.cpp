@@ -22,6 +22,7 @@
 #include <QAction>
 #include <QIcon>
 #include <QTextEdit>
+#include <QApplication>
 
 NotesDock::NotesDock(QWidget *parent) :
     QDockWidget(tr("Notes"), parent),
@@ -35,8 +36,9 @@ NotesDock::NotesDock(QWidget *parent) :
     toggleViewAction()->setIcon(windowIcon());
 
     m_textEdit->setTabChangesFocus(false);
-    m_textEdit->setTabStopDistance(m_textEdit->fontMetrics().width("    ")); // Tabstop = 4 spaces
+    m_textEdit->setTabStopDistance(m_textEdit->fontMetrics().horizontalAdvance("XXXX")); // Tabstop = 4 spaces
     m_textEdit->setAcceptRichText(false);
+    m_textEdit->setFontPointSize(QApplication::font("QMenu").pointSize());
     QObject::connect(m_textEdit, SIGNAL(textChanged()), SLOT(onTextChanged()));
     QDockWidget::setWidget(m_textEdit);
 
