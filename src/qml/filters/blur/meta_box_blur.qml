@@ -5,7 +5,7 @@ Metadata {
     type: Metadata.Filter
     name: qsTr("Blur: Box")
     mlt_service: "box_blur"
-    qml: "ui_box_blur_2.qml"
+    qml: "ui_box_blur.qml"
     gpuAlt: "movit.blur"
     keyframes {
         minimumVersion: '3'
@@ -14,14 +14,14 @@ Metadata {
         simpleProperties: ['hradius', 'vradius']
         parameters: [
             Parameter {
-                name: qsTr('Horizontal')
+                name: qsTr('Width')
                 property: 'hradius'
                 isCurve: true
                 minimum: 0
                 maximum: 100
             },
             Parameter {
-                name: qsTr('Vertical')
+                name: qsTr('Height')
                 property: 'vradius'
                 isCurve: true
                 minimum: 0

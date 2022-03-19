@@ -82,7 +82,7 @@ Shotcut.KeyframableFilter {
         }
 
         Label {
-            text: qsTr('Horizontal Radius')
+            text: qsTr('Width')
             Layout.alignment: Qt.AlignRight
         }
         Shotcut.SliderSpinner {
@@ -106,7 +106,7 @@ Shotcut.KeyframableFilter {
         }
 
         Label {
-            text: qsTr('Vertical Radius')
+            text: qsTr('Height')
             Layout.alignment: Qt.AlignRight
         }
         Shotcut.SliderSpinner {
