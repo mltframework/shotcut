@@ -478,8 +478,8 @@ MainWindow::MainWindow()
 
     m_notesDock = new NotesDock(this);
     m_notesDock->hide();
-    m_notesDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_0));
-    ui->menuView->addAction(m_notesDock->toggleViewAction());
+    m_notesDock->toggleViewAction()->setShortcut(QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_3));
+    ui->menuView->insertAction(m_playlistDock->toggleViewAction(), m_notesDock->toggleViewAction());
     connect(m_notesDock->toggleViewAction(), SIGNAL(triggered(bool)), this, SLOT(onNotesDockTriggered(bool)));
     connect(ui->actionNotes, SIGNAL(triggered()), this, SLOT(onNotesDockTriggered()));
     connect(m_notesDock, SIGNAL(modified()), this, SLOT(onNoteModified()));

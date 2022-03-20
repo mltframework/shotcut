@@ -297,6 +297,7 @@
    <addaction name="actionAudioMeter"/>
    <addaction name="actionProperties"/>
    <addaction name="actionRecent"/>
+   <addaction name="actionNotes"/>
    <addaction name="actionPlaylist"/>
    <addaction name="actionTimeline"/>
    <addaction name="actionFilters"/>
@@ -305,7 +306,6 @@
    <addaction name="actionHistory"/>
    <addaction name="actionEncode"/>
    <addaction name="actionJobs"/>
-   <addaction name="actionNotes"/>
    <addaction name="dummyAction"/>
    <addaction name="actionLayoutLogging"/>
    <addaction name="actionLayoutEditing"/>
