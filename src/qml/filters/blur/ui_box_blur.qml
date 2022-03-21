@@ -95,7 +95,7 @@ Shotcut.KeyframableFilter {
             onValueChanged: updateFilter('hradius', wslider.value, widthKeyframesButton, getPosition())
         }
         Shotcut.UndoButton {
-            onClicked: wslider.value = 1
+            onClicked: wslider.value = 5
         }
         Shotcut.KeyframesButton {
             id: widthKeyframesButton
