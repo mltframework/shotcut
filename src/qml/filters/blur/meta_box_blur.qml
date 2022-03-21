@@ -8,7 +8,6 @@ Metadata {
     qml: "ui_box_blur.qml"
     gpuAlt: "movit.blur"
     keyframes {
-        minimumVersion: '3'
         allowAnimateIn: true
         allowAnimateOut: true
         simpleProperties: ['hradius', 'vradius']
