@@ -606,6 +606,7 @@ void AvformatProducerWidget::onFrameDecoded()
             }
         }
     }
+    ui->syncSlider->setValue(qRound(m_producer->get_double("video_delay") * 1000.0));
     setSyncVisibility();
 
     if (Settings.showConvertClipDialog() && !m_producer->get_int(kShotcutSkipConvertProperty)) {
