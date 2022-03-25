@@ -59,13 +59,15 @@ DirectShowVideoWidget::DirectShowVideoWidget(QWidget *parent) :
     if (started && finished && proc.exitStatus() == QProcess::NormalExit) {
         QString output = proc.readAll();
         foreach (const QString& line, output.split(QRegularExpression("[\r\n]"), QString::SkipEmptyParts)) {
-            if (line.contains("DirectShow audio devices"))
-                isVideo = false;
-            auto i = line.indexOf("]  \"");
+            auto i = line.indexOf("] \"");
             if (i > -1) {
-                description = line.mid(i + 4).replace('\"', "");
+                auto j = line.indexOf("\" (");
+                if (j > -1) {
+                    description = line.mid(i + 3, j - i - 3);
+                    isVideo = line.mid(j + 3).startsWith("video");
+                }
             } else {
-                QString s("]     Alternative name \"");
+                QString s("]   Alternative name \"");
                 i = line.indexOf(s);
                 if (i > -1) {
                     name = line.mid(i + s.size()).replace('\"', "");
