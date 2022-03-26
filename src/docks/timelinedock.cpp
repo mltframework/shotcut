@@ -620,7 +620,7 @@ void TimelineDock::onProducerChanged(Mlt::Producer* after)
             }
 
             if (speedRatio != 1.0 && Settings.timelineRipple() && Settings.timelineRippleAllTracks() && (clipIndex + 1) < playlist.count()) {
-                auto position = info->start + qRound(info->frame_count * speedRatio);
+                auto position = info->start + out - in + 1;
                 QScopedPointer<Mlt::ClipInfo> nextInfo(playlist.clip_info(clipIndex + 1));
                 if (playlist.is_blank(clipIndex + 1)) {
                     position += nextInfo->frame_count;
