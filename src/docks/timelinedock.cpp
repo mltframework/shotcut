@@ -29,6 +29,7 @@
 #include "settings.h"
 #include "util.h"
 #include "proxymanager.h"
+#include "dialogs/alignaudiodialog.h"
 #include "dialogs/editmarkerdialog.h"
 #include "dialogs/longuitask.h"
 
@@ -662,6 +663,15 @@ void TimelineDock::addVideoTrack()
         setSelection();
     MAIN.undoStack()->push(
         new Timeline::AddTrackCommand(m_model, true));
+}
+
+void TimelineDock::alignSelectedClips()
+{
+    auto selection = selectionUuids();
+    saveAndClearSelection();
+    AlignAudioDialog dialog(tr("Align clips to audio reference"), &m_model, selection, this);
+    dialog.exec();
+    restoreSelection();
 }
 
 void TimelineDock::onShowFrame(const SharedFrame& frame)

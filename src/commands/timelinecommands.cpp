@@ -1466,6 +1466,67 @@ void ReplaceCommand::undo()
     m_isFirstRedo = false;
 }
 
+AlignCLipsCommand::AlignCLipsCommand(MultitrackModel &model, QUndoCommand *parent)
+    : QUndoCommand(parent)
+    , m_model(model)
+    , m_undoHelper(m_model)
+    , m_redo(false)
+{
+    m_undoHelper.setHints(UndoHelper::RestoreTracks);
+    m_undoHelper.recordBeforeState();
+    setText(QObject::tr("Align clips to reference track"));
+}
+
+void AlignCLipsCommand::addAlignment(QUuid uuid, int offset, double speedCompensation)
+{
+    Alignment alignment;
+    alignment.uuid = uuid;
+    alignment.offset = offset;
+    alignment.speedCompensation = speedCompensation;
+    m_alignments.append(alignment);
+}
+
+void AlignCLipsCommand::redo()
+{
+    struct ClipItem {
+        Mlt::Producer* clip;
+        int track;
+        int start;
+    };
+    QVector<ClipItem> clipMemory;
+
+    // Remove all the clips and remember them.
+    for (auto& alignment : m_alignments) {
+        int trackIndex, clipIndex;
+        QScopedPointer<Mlt::ClipInfo> info(m_model.findClipByUuid(alignment.uuid, trackIndex, clipIndex));
+        if (!info || !info->cut || !info->cut->is_valid()) {
+            continue;
+        }
+        ClipItem item;
+        item.clip = new Mlt::Producer(info->cut);
+        item.track = trackIndex;
+        item.start = alignment.offset;
+        clipMemory.append(item);
+        m_model.liftClip(trackIndex, clipIndex);
+    }
+
+    // Place all the clips back in the new spot.
+    for (auto& item : clipMemory) {
+        m_model.overwrite(item.track, *item.clip, item.start, false, false);
+        delete item.clip;
+    }
+
+    if (!m_redo) {
+        m_redo = true;
+        m_undoHelper.recordAfterState();
+    }
+}
+
+void AlignCLipsCommand::undo()
+{
+    m_undoHelper.undoChanges();
+}
+
 } // namespace
 
 #include "moc_timelinecommands.cpp"

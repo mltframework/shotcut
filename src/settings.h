@@ -176,6 +176,8 @@ public:
     void setTimelineScrollZoom(bool);
     bool timelineFramebufferWaveform() const;
     void setTimelineFramebufferWaveform(bool);
+    int audioReferenceTrack() const;
+    void setAudioReferenceTrack(int);
 
     // filter
     QString filterFavorite(const QString& filterName);

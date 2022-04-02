@@ -571,6 +571,28 @@ private:
     UndoHelper m_undoHelper;
 };
 
+
+class AlignCLipsCommand : public QUndoCommand
+{
+public:
+    AlignCLipsCommand(MultitrackModel& model, QUndoCommand * parent = 0);
+    void addAlignment(QUuid uuid, int offset, double speedCompensation);
+    void redo();
+    void undo();
+
+private:
+    MultitrackModel& m_model;
+    UndoHelper m_undoHelper;
+    bool m_redo;
+    struct Alignment {
+        QUuid uuid;
+        int offset;
+        double speedCompensation;
+    };
+    QVector<Alignment> m_alignments;
+};
+
+
 } // namespace Timeline
 
 #endif

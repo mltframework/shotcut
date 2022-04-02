@@ -739,6 +739,13 @@ Rectangle {
         }
         MenuItem {
             enabled: !isBlank
+            text: qsTr('Align To Reference Track')
+            onTriggered: {
+                timeline.alignSelectedClips()
+            }
+        }
+        MenuItem {
+            enabled: !isBlank
             text: qsTr('Properties')
             onTriggered: {
                 clipRoot.forceActiveFocus()
