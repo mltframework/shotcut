@@ -996,7 +996,7 @@ void Controller::copyFilters(Producer& fromProducer, Producer& toProducer, bool 
                     continue;
                 }
                 if (!metadata->allowMultiple()) {
-                    std::unique_ptr<Mlt::Filter> existing(getFilter(metadata->objectName(), &toProducer));
+                    std::unique_ptr<Mlt::Filter> existing(getFilter(metadata->uniqueId(), &toProducer));
                     if (existing) {
                         continue;
                     }
@@ -1324,7 +1324,11 @@ Filter* Controller::getFilter(const QString& name, Service* service)
     for (int i = 0; i < service->filter_count(); i++) {
         Mlt::Filter* filter = service->filter(i);
         if (filter) {
-            if (name == filter->get(kShotcutFilterProperty))
+            auto filterName = QString::fromUtf8(filter->get(kShotcutFilterProperty));
+            if (filterName.isEmpty()) {
+                filterName = QString::fromUtf8(filter->get("mlt_service"));
+            }
+            if (name == filterName)
                 return filter;
             delete filter;
         }

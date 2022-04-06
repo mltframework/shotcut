@@ -7,6 +7,7 @@ Metadata {
     mlt_service: "vidstab"
     qml: "ui.qml"
     isClipOnly: true
+    allowMultiple: false
     isGpuCompatible: false
     keyframes {
         allowTrim: false
