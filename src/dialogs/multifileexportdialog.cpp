@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Meltytech, LLC
+ * Copyright (c) 2021-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -119,7 +119,7 @@ MultiFileExportDialog::MultiFileExportDialog(QString title, Mlt::Playlist* playl
     connect(m_buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
     connect(m_buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
 
-    glayout->setColumnMinimumWidth(1, fontMetrics().width(m_dir->text()) + browseButton->width());
+    glayout->setColumnMinimumWidth(1, fontMetrics().horizontalAdvance(m_dir->text()) + browseButton->width());
 
     this->setLayout (glayout);
     this->setModal(true);

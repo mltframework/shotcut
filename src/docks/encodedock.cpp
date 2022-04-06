@@ -954,10 +954,9 @@ MeltJob* EncodeDock::createMeltJob(Mlt::Producer* service, const QString& target
     // parse xml
     QFile f1(fileName);
     f1.open(QIODevice::ReadOnly);
-    QXmlSimpleReader xmlReader;
-    QXmlInputSource xmlSource(&f1);
+    QXmlStreamReader xmlReader(&f1);
     QDomDocument dom(fileName);
-    dom.setContent(&xmlSource, &xmlReader);
+    dom.setContent(&xmlReader, false);
     f1.close();
 
     // Check if the target file is a member of the project.
@@ -2100,7 +2099,7 @@ bool EncodeDock::detectHardwareEncoders()
             hwlist << codec;
         } else {
             QString output = proc.readAll();
-            foreach (const QString& line, output.split(QRegularExpression("[\r\n]"), QString::SkipEmptyParts))
+            foreach (const QString& line, output.split(QRegularExpression("[\r\n]"), Qt::SkipEmptyParts))
                 LOG_DEBUG() << line;
         }
     }

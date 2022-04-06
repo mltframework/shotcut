@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2021 Meltytech, LLC
+ * Copyright (c) 2012-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -975,8 +975,8 @@ void Player::moveVideoToScreen(int screen)
                 screen = i;
         }
         m_videoScrollWidget->showNormal();
-        m_videoScrollWidget->setParent(QApplication::desktop()->screen(screen));
-        m_videoScrollWidget->move(QApplication::desktop()->screenGeometry(screen).topLeft());
+        m_videoScrollWidget->setParent(nullptr);
+        m_videoScrollWidget->move(QGuiApplication::screens().at(screen)->geometry().topLeft());
         m_videoScrollWidget->showFullScreen();
     }
     m_monitorScreen = screen;

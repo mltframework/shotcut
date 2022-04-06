@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2021 Meltytech, LLC
+ * Copyright (c) 2013-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -2771,9 +2771,9 @@ void MultitrackModel::loadPlaylist()
         if (playlist.is_valid() && playlist.type() == mlt_service_playlist_type) {
             MAIN.playlistDock()->model()->setPlaylist(playlist);
         } else {
-            playlist = (mlt_playlist) retainList.get_data(kLegacyPlaylistTrackId);
-            if (playlist.is_valid() && playlist.type() == mlt_service_playlist_type)
-                MAIN.playlistDock()->model()->setPlaylist(playlist);
+            Mlt::Playlist legacyPlaylist((mlt_playlist) retainList.get_data(kLegacyPlaylistTrackId));
+            if (legacyPlaylist.is_valid() && legacyPlaylist.type() == mlt_service_playlist_type)
+                MAIN.playlistDock()->model()->setPlaylist(legacyPlaylist);
         }
     }
     retainPlaylist();

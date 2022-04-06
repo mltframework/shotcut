@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2020 Meltytech, LLC
+ * Copyright (c) 2013-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -46,10 +46,10 @@ void QmlUtilities::registerCommonTypes()
     qmlRegisterType<QmlFile>("org.shotcut.qml", 1, 0, "File");
     qmlRegisterType<QmlFilter>("org.shotcut.qml", 1, 0, "Filter");
     qmlRegisterType<QmlMetadata>("org.shotcut.qml", 1, 0, "Metadata");
-    qmlRegisterType<QmlKeyframesMetadata>();
-    qmlRegisterType<QmlKeyframesParameter>("org.shotcut.qml", 1,0, "Parameter");
+    qmlRegisterAnonymousType<QmlKeyframesMetadata>("org.shotcut.qml", 1);
+    qmlRegisterType<QmlKeyframesParameter>("org.shotcut.qml", 1, 0, "Parameter");
     qmlRegisterType<QmlRichText>("org.shotcut.qml", 1, 0, "RichText");
-    qmlRegisterType<KeyframesModel>("org.shotcut.qml", 1,0, "KeyframesModel");
+    qmlRegisterType<KeyframesModel>("org.shotcut.qml", 1, 0, "KeyframesModel");
     qmlRegisterType<QmlUtilities>("org.shotcut.qml", 1, 0, "Utilities");
     // MetadataModel is registered to access its MetadataFilter enum.
     qmlRegisterUncreatableType<MetadataModel>("org.shotcut.qml", 1, 0, "MetadataModel",

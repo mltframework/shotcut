@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2020 Meltytech, LLC
+ * Copyright (c) 2015-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@ GDIgrabWidget::GDIgrabWidget(QWidget *parent) :
     ui->setupUi(this);
     Util::setColorsToHighlight(ui->label_9);
     ui->applyButton->hide();
-    const QRect& r = QApplication::desktop()->screenGeometry();
+    const QRect& r = QGuiApplication::screens().at(QApplication::desktop()->screenNumber(this))->geometry();
     ui->widthSpinBox->setValue(r.size().width());
     ui->heightSpinBox->setValue(r.size().height());
     ui->preset->saveDefaultPreset(getPreset());

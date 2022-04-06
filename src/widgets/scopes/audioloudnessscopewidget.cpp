@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2021 Meltytech, LLC
+ * Copyright (c) 2016-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -117,7 +117,7 @@ AudioLoudnessScopeWidget::AudioLoudnessScopeWidget()
     // Add time label
     m_timeLabel->setToolTip(tr("Time Since Reset"));
     m_timeLabel->setText("00:00:00:00");
-    m_timeLabel->setFixedSize(this->fontMetrics().width("HH:MM:SS:MM"), this->fontMetrics().height());
+    m_timeLabel->setFixedSize(this->fontMetrics().horizontalAdvance("HH:MM:SS:MM"), this->fontMetrics().height());
     hlayout->addWidget(m_timeLabel);
 
     hlayout->addStretch();

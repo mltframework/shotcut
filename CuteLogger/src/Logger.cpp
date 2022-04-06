@@ -636,8 +636,8 @@ Logger::~Logger()
 
   // Cleanup appenders
   QMutexLocker appendersLocker(&d->loggerMutex);
-  QSet<AbstractAppender*> deleteList(QSet<AbstractAppender*>::fromList(d->appenders));
-  deleteList.unite(QSet<AbstractAppender*>::fromList(d->categoryAppenders.values()));
+  QSet<AbstractAppender*> deleteList(QSet<AbstractAppender*>(d->appenders.begin(), d->appenders.end()));
+  deleteList.unite(QSet<AbstractAppender*>(d->categoryAppenders.values().begin(), d->categoryAppenders.values().end()));
   qDeleteAll(deleteList);
 
   // Cleanup device
@@ -1085,7 +1085,7 @@ void LoggerTimingHelper::start(const char* msg, ...)
 {
   va_list va;
   va_start(va, msg);
-  m_block = QString().vsprintf(msg, va);
+  m_block = QString().vasprintf(msg, va);
   va_end(va);
 
   m_time.start();
@@ -1129,7 +1129,7 @@ void CuteMessageLogger::write(const char* msg, ...) const
 {
   va_list va;
   va_start(va, msg);
-  m_l->write(m_level, m_file, m_line, m_function, m_category, QString().vsprintf(msg, va));
+  m_l->write(m_level, m_file, m_line, m_function, m_category, QString().vasprintf(msg, va));
   va_end(va);
 }
 

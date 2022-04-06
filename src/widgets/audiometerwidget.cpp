@@ -90,7 +90,7 @@ void AudioMeterWidget::calcGraphRect()
         // Find the widest channel label
         int chanLabelWidth = 0;
         for (int i = 0; i < chanLabelCount; i++) {
-            int width = fontMetrics().width(m_chanLabels[i]) + TEXT_PAD;
+            int width = fontMetrics().horizontalAdvance(m_chanLabels[i]) + TEXT_PAD;
             chanLabelWidth = width > chanLabelWidth ? width : chanLabelWidth;
         }
         int chanHeight = (height() - dbLabelHeight) / chanCount;
@@ -109,7 +109,7 @@ void AudioMeterWidget::calcGraphRect()
         int dbLabelWidth = 0;
         for (int i = 0; i < dbLabelCount; i++) {
             QString label = QString::asprintf("%d", m_dbLabels[i]);
-            int size = fontMetrics().width(label) + TEXT_PAD;
+            int size = fontMetrics().horizontalAdvance(label) + TEXT_PAD;
             dbLabelWidth = size > dbLabelWidth ? size : dbLabelWidth;
         }
         int chanWidth = (width() - dbLabelWidth) / chanCount;
@@ -151,7 +151,7 @@ void AudioMeterWidget::drawDbLabels(QPainter& p)
         for (int i = 0; i < dbLabelCount; i++) {
             int value = m_dbLabels[i];
             QString label = QString::asprintf("%d", value);
-            int labelWidth = fontMetrics().width(label);
+            int labelWidth = fontMetrics().horizontalAdvance(label);
             x = m_graphRect.left() + IEC_ScaleMax(value, m_maxDb) * m_graphRect.width() - labelWidth / 2;
             if (x + labelWidth > width()) {
                 x = width() - labelWidth;
@@ -167,7 +167,7 @@ void AudioMeterWidget::drawDbLabels(QPainter& p)
         for (int i = 0; i < dbLabelCount; i++) {
             int value = m_dbLabels[i];
             QString label = QString::asprintf("%d", value);
-            x = m_graphRect.left() - fontMetrics().width(label) - TEXT_PAD;
+            x = m_graphRect.left() - fontMetrics().horizontalAdvance(label) - TEXT_PAD;
             y = m_graphRect.bottom() - qRound(IEC_ScaleMax(value, m_maxDb) * (double)m_graphRect.height() - (double)textHeight / 2.0);
             if (y - textHeight < 0) {
                 y = textHeight;
@@ -203,7 +203,7 @@ void AudioMeterWidget::drawChanLabels(QPainter& p)
         for (int i = 0; i < chanLabelCount; i += stride) {
             const QString& label = m_chanLabels[i];
             y = m_graphRect.bottom() - (chanLabelCount - 1 - i) * m_barSize.height() - m_barSize.height() / 2 + textHeight / 2;
-            x = m_graphRect.left() - fontMetrics().width(label) - TEXT_PAD;
+            x = m_graphRect.left() - fontMetrics().horizontalAdvance(label) - TEXT_PAD;
             if ( y - prevY >= TEXT_PAD) {
                 p.drawText(x, y, label);
                 prevY = y - textHeight;
@@ -215,7 +215,7 @@ void AudioMeterWidget::drawChanLabels(QPainter& p)
         // Find the widest channel label
         int chanLabelWidth = 0;
         for (int i = 0; i < chanLabelCount; i++) {
-            int width = fontMetrics().width(m_chanLabels[i]) + TEXT_PAD;
+            int width = fontMetrics().horizontalAdvance(m_chanLabels[i]) + TEXT_PAD;
             chanLabelWidth = width > chanLabelWidth ? width : chanLabelWidth;
         }
 
@@ -227,10 +227,10 @@ void AudioMeterWidget::drawChanLabels(QPainter& p)
         y = m_graphRect.bottom() + textHeight + TEXT_PAD;
         for (int i = 0; i < chanLabelCount; i += stride) {
             QString label = m_chanLabels[i];
-            x = m_graphRect.left() + i * m_barSize.width() + m_barSize.width() / 2 - fontMetrics().width(label) / 2;
+            x = m_graphRect.left() + i * m_barSize.width() + m_barSize.width() / 2 - fontMetrics().horizontalAdvance(label) / 2;
             if (x > prevX) {
                 p.drawText(x, y, label);
-                prevX = x + fontMetrics().width(label);
+                prevX = x + fontMetrics().horizontalAdvance(label);
             }
         }
     }

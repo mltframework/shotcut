@@ -24,7 +24,7 @@
 #include <QProcess>
 #include <QModelIndex>
 #include <QList>
-#include <QTime>
+#include <QElapsedTimer>
 #include <QThread>
 
 class QAction;
@@ -48,7 +48,7 @@ public:
     QList<QAction*> standardActions() const { return m_standardActions; }
     QList<QAction*> successActions() const { return m_successActions; }
     QTime estimateRemaining(int percent);
-    QTime time() const { return m_totalTime; }
+    QElapsedTimer time() const { return m_totalTime; }
     void setPostJobAction(PostJobAction* action);
 
 public slots:
@@ -78,9 +78,9 @@ private:
     bool m_killed;
     QString m_log;
     QString m_label;
-    QTime m_estimateTime;
+    QElapsedTimer m_estimateTime;
     int m_startingPercent;
-    QTime m_totalTime;
+    QElapsedTimer m_totalTime;
     QScopedPointer<PostJobAction> m_postJobAction;
     QThread::Priority m_priority;
 };

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2021 Meltytech, LLC
+ * Copyright (c) 2013-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -91,7 +91,7 @@ public:
     bool allowAnimateOut() const { return m_allowAnimateOut; }
     QList<QString> simpleProperties() const { return m_simpleProperties; }
 
-    QQmlListProperty<QmlKeyframesParameter> parameters() { return QQmlListProperty<QmlKeyframesParameter>(this, m_parameters); }
+    QQmlListProperty<QmlKeyframesParameter> parameters() { return QQmlListProperty<QmlKeyframesParameter>(this, &m_parameters); }
     int parameterCount() const { return m_parameters.count(); }
     QmlKeyframesParameter *parameter(int index) const { return m_parameters[index]; }
     void checkVersion(const QString& version);

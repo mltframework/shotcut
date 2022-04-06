@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2020 Meltytech, LLC
+ * Copyright (c) 2019-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -90,7 +90,6 @@ void FileDateDialog::dateSelected(int index)
 void FileDateDialog::populateDateOptions(Mlt::Producer* producer)
 {
     QDateTime dateTime;
-    QString description;
 
     // Add current value
     int64_t milliseconds = producer->get_creation_time();
@@ -107,7 +106,7 @@ void FileDateDialog::populateDateOptions(Mlt::Producer* producer)
     QFileInfo fileInfo(resource);
     if (fileInfo.exists()) {
         addDateToCombo(m_dtCombo, tr("System - Modified"), fileInfo.lastModified());
-        addDateToCombo(m_dtCombo, tr("System - Created"), fileInfo.created());
+        addDateToCombo(m_dtCombo, tr("System - Created"), fileInfo.birthTime());
     }
 
     // Add metadata dates
