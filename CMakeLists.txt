@@ -19,7 +19,7 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-find_package(Qt5 5.9 REQUIRED
+find_package(Qt5 5.15 REQUIRED
   COMPONENTS
   Widgets
   Network
@@ -33,7 +33,7 @@ find_package(Qt5 5.9 REQUIRED
 )
 
 find_package(PkgConfig REQUIRED)
-pkg_check_modules(mlt++ REQUIRED IMPORTED_TARGET mlt++)
+pkg_check_modules(mlt++ REQUIRED IMPORTED_TARGET mlt++-7)
 
 add_subdirectory(CuteLogger)
 add_subdirectory(src)

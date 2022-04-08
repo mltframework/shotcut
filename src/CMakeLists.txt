@@ -14,6 +14,7 @@ add_executable(shotcut
   spatialmedia/mpeg4_container.cpp
   spatialmedia/sa3d.cpp
   spatialmedia/spatialmedia.cpp
+  widgets/exportpresetstreeview.cpp
   widgets/plasmawidget.cpp
   widgets/lissajouswidget.cpp
   widgets/isingwidget.cpp
@@ -23,6 +24,7 @@ add_executable(shotcut
   widgets/networkproducerwidget.cpp
   widgets/colorbarswidget.cpp
   widgets/countproducerwidget.cpp
+  widgets/frameratewidget.cpp
   widgets/noisewidget.cpp
   widgets/producerpreviewwidget.cpp
   widgets/pulseaudiowidget.cpp
@@ -46,6 +48,9 @@ add_executable(shotcut
   dialogs/filedatedialog.cpp
   jobqueue.cpp
   docks/jobsdock.cpp
+  dialogs/multifileexportdialog.cpp
+  dialogs/saveimagedialog.cpp
+  dialogs/editmarkerdialog.cpp
   dialogs/slideshowgeneratordialog.cpp
   dialogs/textviewerdialog.cpp
   models/playlistmodel.cpp
@@ -74,6 +79,7 @@ add_executable(shotcut
   qmltypes/qmlutilities.cpp
   qmltypes/qmlview.cpp
   qmltypes/thumbnailprovider.cpp
+  commands/markercommands.cpp
   commands/timelinecommands.cpp
   util.cpp
   widgets/lumamixtransition.cpp
@@ -115,8 +121,12 @@ add_executable(shotcut
   dialogs/unlinkedfilesdialog.cpp
   dialogs/transcodedialog.cpp
   docks/keyframesdock.cpp
+  docks/markersdock.cpp
+  docks/notesdock.cpp
   qmltypes/qmlproducer.cpp
   models/keyframesmodel.cpp
+  models/markersmodel.cpp
+  widgets/editmarkerwidget.cpp
   widgets/slideshowgeneratorwidget.cpp
   widgets/textproducerwidget.cpp
   dialogs/listselectiondialog.cpp
@@ -124,6 +134,7 @@ add_executable(shotcut
   widgets/newprojectfolder.cpp
   widgets/playlistlistview.cpp
   # header only
+  shotcut_mlt_properties.h
   transportcontrol.h
   # UI
   mainwindow.ui
@@ -175,9 +186,13 @@ add_executable(shotcut
 add_custom_target(OTHER_FILES
   SOURCES
   ../.github/workflows/build-linux.yml
+  ../.github/workflows/build-linux-unstable.yml
   ../.github/workflows/build-macos.yml
+  ../.github/workflows/build-macos-unstable.yml
   ../.github/workflows/build-sdk-windows.yml
+  ../.github/workflows/build-sdk-windows-unstable.yml
   ../.github/workflows/build-windows.yml
+  ../.github/workflows/build-windows-unstable.yml
   ../COPYING
   ../README.md
   ../packaging/windows/shotcut.rc
@@ -217,10 +232,12 @@ target_link_libraries(shotcut
 )
 
 target_include_directories(shotcut PRIVATE ${CMAKE_SOURCE_DIR}/CuteLogger/include)
-target_compile_definitions(shotcut PRIVATE SHOTCUT_VERSION="${PROJECT_VERSION}")
+target_compile_definitions(shotcut PRIVATE SHOTCUT_VERSION="${SHOTCUT_VERSION}")
 
 if(WIN32)
-  target_sources(shotcut windowstools.cpp ../packaging/windows/shotcut.rc)
+  string(REPLACE . , PRODUCT_VERSION ${PROJECT_VERSION})
+  configure_file(${CMAKE_SOURCE_DIR}/packaging/windows/shotcut.rc ${CMAKE_CURRENT_BINARY_DIR}/packaging/windows/shotcut.rc)
+  target_sources(shotcut windowstools.cpp ${CMAKE_CURRENT_BINARY_DIR}/packaging/windows/shotcut.rc)
   target_include_directories(shotcut PRIVATE ${CMAKE_SOURCE_DIR}/drmingw/include)
   target_link_directories(shotcut PRIVATE ${CMAKE_SOURCE_DIR}/drmingw/x64/lib)
   target_link_libraries(shotcut PRIVATE exchndl)
