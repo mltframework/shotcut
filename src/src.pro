@@ -1,6 +1,6 @@
 CONFIG   += link_prl
 
-QT       += widgets opengl xml network printsupport qml quick sql
+QT       += widgets opengl xml network qml quick sql
 QT       += multimedia websockets quickwidgets quickcontrols2
 
 TARGET = shotcut
