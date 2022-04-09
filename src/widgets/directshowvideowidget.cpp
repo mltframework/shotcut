@@ -58,13 +58,13 @@ DirectShowVideoWidget::DirectShowVideoWidget(QWidget *parent) :
     auto currentAudio = 1;
     if (started && finished && proc.exitStatus() == QProcess::NormalExit) {
         QString output = proc.readAll();
-        foreach (const QString& line, output.split(QRegularExpression("[\r\n]"), QString::SkipEmptyParts)) {
+        foreach (const QString& line, output.split(QRegularExpression("[\r\n]"), Qt::SkipEmptyParts)) {
             auto i = line.indexOf("] \"");
             if (i > -1) {
                 auto j = line.indexOf("\" (");
                 if (j > -1) {
                     description = line.mid(i + 3, j - i - 3);
-                    isVideo = line.mid(j + 3).startsWith("video");
+                    isVideo = line.midRef(j + 3).startsWith("video");
                 }
             } else {
                 QString s("]   Alternative name \"");
