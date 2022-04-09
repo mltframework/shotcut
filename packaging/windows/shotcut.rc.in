@@ -22,7 +22,7 @@ VS_VERSION_INFO VERSIONINFO
 				VALUE "CompanyName", "Meltytech, LLC\0"
 				VALUE "FileDescription", "Shotcut video editor\0"
                 VALUE "FileVersion", "${SHOTCUT_VERSION}\0"
-                VALUE "LegalCopyright", "Copyright @ 2011-2022 Meltytech, LLC. All rights reserved.\0"
+                VALUE "LegalCopyright", "Copyright (C) 2011-2022 Meltytech, LLC. All rights reserved.\0"
 				VALUE "OriginalFilename", "shotcut.exe\0"
 				VALUE "ProductName", "Shotcut\0"
                 VALUE "ProductVersion", "${SHOTCUT_VERSION}\0"

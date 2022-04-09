@@ -235,20 +235,35 @@ target_include_directories(shotcut PRIVATE ${CMAKE_SOURCE_DIR}/CuteLogger/includ
 target_compile_definitions(shotcut PRIVATE SHOTCUT_VERSION="${SHOTCUT_VERSION}")
 
 if(WIN32)
+  # Windows resource
   string(REPLACE . , PRODUCT_VERSION ${PROJECT_VERSION})
-  configure_file(${CMAKE_SOURCE_DIR}/packaging/windows/shotcut.rc ${CMAKE_CURRENT_BINARY_DIR}/packaging/windows/shotcut.rc)
-  target_sources(shotcut windowstools.cpp ${CMAKE_CURRENT_BINARY_DIR}/packaging/windows/shotcut.rc)
+  configure_file(${CMAKE_SOURCE_DIR}/packaging/windows/shotcut.rc.in ${CMAKE_SOURCE_DIR}/packaging/windows/shotcut.rc)
+  target_sources(shotcut PRIVATE ${CMAKE_SOURCE_DIR}/packaging/windows/shotcut.rc)
+
+  # Windows integration features
+  find_package(Qt5 5.15 REQUIRED COMPONENTS WinExtras)
+  target_sources(shotcut PRIVATE windowstools.cpp)
+  target_link_libraries(shotcut PRIVATE Qt5::WinExtras)
+
+  # Runtime exception handler for debug only
   target_include_directories(shotcut PRIVATE ${CMAKE_SOURCE_DIR}/drmingw/include)
   target_link_directories(shotcut PRIVATE ${CMAKE_SOURCE_DIR}/drmingw/x64/lib)
-  target_link_libraries(shotcut PRIVATE exchndl)
+  target_link_libraries(shotcut PRIVATE debug exchndl)
+
+  install(TARGETS shotcut RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX})
+  install(DIRECTORY qml/ DESTINATION ${CMAKE_INSTALL_PREFIX}/share/shotcut/qml)
 endif()
 
 if(APPLE)
   target_sources(shotcut macos.mm)
   set_target_properties(shotcut PROPERTIES OUTPUT_NAME "Shotcut")
+  install(TARGETS shotcut RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+  install(DIRECTORY qml/ DESTINATION ${CMAKE_INSTALL_DATADIR}/shotcut/qml)
 endif()
 
 if(UNIX AND NOT APPLE)
   file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/share/shotcut)
   file(CREATE_LINK ${CMAKE_SOURCE_DIR}/src/qml ${CMAKE_BINARY_DIR}/share/shotcut/qml SYMBOLIC)
+  install(TARGETS shotcut RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+  install(DIRECTORY qml/ DESTINATION ${CMAKE_INSTALL_DATADIR}/shotcut/qml)
 endif()
