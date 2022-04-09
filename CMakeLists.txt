@@ -1,4 +1,5 @@
 cmake_minimum_required(VERSION 3.13)
+cmake_policy(SET CMP0115 NEW)
 
 string(TIMESTAMP SHOTCUT_VERSION "%y.%m.%d")
 
