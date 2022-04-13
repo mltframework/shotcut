@@ -26,6 +26,10 @@
 	<true/>
 	<key>LSMinimumSystemVersion</key>
     <string>10.14.0</string>
+    <key>NSCameraUsageDescription</key>
+    <string>Shotcut can show and record video</key>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>Shotcut can monitor and record audio</key>
     <key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
