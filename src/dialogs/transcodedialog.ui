@@ -220,7 +220,7 @@ only the currently selected one.</string>
         <item row="2" column="1">
          <widget class="QCheckBox" name="deinterlaceCheckBox">
           <property name="toolTip">
-           <string>If the source is progressive, each interlaced field will be converted to a progressive frame resulting in double frame rate.</string>
+           <string>If the source is interlaced, each interlaced field will be converted to a progressive frame resulting in double frame rate.</string>
           </property>
           <property name="text">
            <string>Deinterlace</string>
