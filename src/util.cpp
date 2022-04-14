@@ -469,7 +469,7 @@ bool Util::isMemoryLow()
     return availableKB < kLowMemoryThresholdKB;
 #elif defined(Q_OS_MAC)
     QProcess p;
-    p.start("memory_pressure");
+    p.start("memory_pressure", QStringList());
     p.waitForFinished();
     auto lines = p.readAllStandardOutput();
     p.close();
