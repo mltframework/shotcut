@@ -9,7 +9,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>NSHumanReadableCopyright</key>
-    <string>Copyright © 2011-2022 Meltytech, LLC</string>
+	<string>Copyright © 2011-2022 Meltytech, LLC</string>
 	<key>CFBundleSignature</key>
 	<string>scut</string>
 	<key>CFBundleExecutable</key>
@@ -25,12 +25,12 @@
 	<key>NSHighResolutionCapable</key>
 	<true/>
 	<key>LSMinimumSystemVersion</key>
-    <string>10.14.0</string>
-    <key>NSCameraUsageDescription</key>
-    <string>Shotcut can show and record video</key>
-    <key>NSMicrophoneUsageDescription</key>
-    <string>Shotcut can monitor and record audio</key>
-    <key>CFBundleDocumentTypes</key>
+	<string>10.14.0</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Shotcut can show and record video</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Shotcut can monitor and record audio</string>
+	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
 			<key>CFBundleTypeExtensions</key>
