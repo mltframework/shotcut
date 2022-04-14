@@ -206,14 +206,17 @@ const QStringList Util::sortedFileList(const QList<QUrl>& urls)
         }
     }
     // Next, sort the GoPro files.
-    foreach (QString goproNumber, goproFiles.keys())
+    auto keys = goproFiles.keys();
+    for (auto& goproNumber : keys) {
         goproFiles[goproNumber].sort(Qt::CaseSensitive);
+    }
     // Finally, build the list of all files.
     // Add all the GoPro files first.
-    foreach (QStringList paths, goproFiles)
+    for (auto& paths : goproFiles) {
         result << paths;
+    }
     // Add all the non-GoPro files.
-    foreach (QUrl url, urls) {
+    for (auto url : urls) {
         QFileInfo fi(removeFileScheme(url));
         if (fi.baseName().size() == 8 && isValidGoProSuffix(fi) &&
                 (isValidGoProFirstFilePrefix(fi) || isValidGoProPrefix(fi))) {
@@ -473,9 +476,9 @@ bool Util::isMemoryLow()
     p.waitForFinished();
     auto lines = p.readAllStandardOutput();
     p.close();
-    for (const auto& line : lines.split('\n')) {
+    for (auto& line : lines.split('\n')) {
         if (line.startsWith("System-wide memory free")) {
-            auto fields = line.split(':');
+            const auto fields = line.split(':');
             for (auto s : fields) {
                 bool ok = false;
                 auto percentage = s.replace('%', "").toUInt(&ok);
