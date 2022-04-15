@@ -208,7 +208,7 @@ Shotcut.KeyframableFilter {
 
     function setFilterCorners(corners, position) {
         for (var i in cornerProperties)
-            filter.set(cornerProperties[i], corners[i], 1.0, position)
+            filter.set(cornerProperties[i], corners[i], position)
         filter.set(corner1xProperty, corners[0].x, position)
         filter.set(corner1yProperty, corners[0].y, position)
         filter.set(corner2xProperty, corners[1].x, position)
@@ -247,7 +247,7 @@ Shotcut.KeyframableFilter {
                 setFilterCorners([filter.getRect(cornerMiddleValues[0]),filter.getRect(cornerMiddleValues[1]),filter.getRect(cornerMiddleValues[2]),filter.getRect(cornerMiddleValues[3])], filter.duration - filter.animateOut)
                 setFilterCorners([filter.getRect(cornerEndValues[0]),filter.getRect(cornerEndValues[1]),filter.getRect(cornerEndValues[2]),filter.getRect(cornerEndValues[3])], filter.duration - 1)
             }
-        } else if (filter.keyframeCount(corner1xProperty) <= 0) {
+        } else if (!corner1KeyframesButton.checked) {
             resetFilter()
             setFilterCorners([filter.getRect(cornerMiddleValues[0]),filter.getRect(cornerMiddleValues[1]),filter.getRect(cornerMiddleValues[2]),filter.getRect(cornerMiddleValues[3])], -1)
         } else if (position !== null) {

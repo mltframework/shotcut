@@ -449,7 +449,7 @@ void KeyframesModel::addKeyframe(int parameterIndex, int position)
             if (anim.is_valid() && !anim.is_key(position)) {
                 mlt_keyframe_type keyframeType = m_filter->getKeyframeType(anim, position, mlt_keyframe_type(-1));
                 m_filter->blockSignals(true);
-                m_filter->set(name, value, 1.0, position, keyframeType);
+                m_filter->set(name, value, position, keyframeType);
                 m_filter->blockSignals(false);
             }
         } else if (parameter->isCurve()) {
@@ -469,8 +469,10 @@ void KeyframesModel::addKeyframe(int parameterIndex, int position)
                 // because it did not receive a "consumer-frame-show" event for it.
                 m_filter->blockSignals(true);
                 m_filter->set(name, value, position, keyframeType);
-                for (auto& key : parameter->gangedProperties())
+                for (auto& key : parameter->gangedProperties()) {
+                    value = m_filter->getDouble(key, position);
                     m_filter->set(key, value, position, keyframeType);
+                }
                 m_filter->blockSignals(false);
             }
         } else {
@@ -699,13 +701,6 @@ void KeyframesModel::onFilterChanged(const QString& property)
         if (m_metadata->keyframes()->parameter(p)->property() == property) {
             isKeyframeProperty = true;
             break;
-        }
-        QString name;
-        foreach (name, m_metadata->keyframes()->parameter(p)->gangedProperties()) {
-            if (name == property) {
-                isKeyframeProperty = true;
-                break;
-            }
         }
     }
     if (!isKeyframeProperty) {

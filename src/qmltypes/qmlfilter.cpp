@@ -253,6 +253,10 @@ void QmlFilter::set(QString name, double x, double y, double width, double heigh
         Mlt::Animation animation(m_service.get_animation(qUtf8Printable(name)));
         if (!animation.is_valid() || !animation.is_key(position)
                 || x != rect.x || y != rect.y || width != rect.w || height != rect.h || opacity != rect.o) {
+            if (animation.key_count() < 1) {
+                // Clear the string value when setting animation for the first time
+                m_service.clear(qUtf8Printable(name));
+            }
             rect.x = x;
             rect.y = y;
             rect.w = width;
@@ -278,9 +282,9 @@ void QmlFilter::setGradient(QString name, const QStringList& gradient)
     emit changed();
 }
 
-void QmlFilter::set(QString name, const QRectF& rect, double opacity, int position, mlt_keyframe_type keyframeType)
+void QmlFilter::set(QString name, const QRectF& rect, int position, mlt_keyframe_type keyframeType)
 {
-    set(name, rect.x(), rect.y(), rect.width(), rect.height(), opacity, position, keyframeType);
+    set(name, rect.x(), rect.y(), rect.width(), rect.height(), 1.0, position, keyframeType);
 }
 
 void QmlFilter::loadPresets()

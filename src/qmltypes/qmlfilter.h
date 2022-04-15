@@ -83,7 +83,7 @@ public:
                          int position = -1, mlt_keyframe_type keyframeType = mlt_keyframe_type(-1));
     Q_INVOKABLE void set(QString name, double x, double y, double width, double height, double opacity = 1.0,
                          int position = -1, mlt_keyframe_type keyframeType = mlt_keyframe_type(-1));
-    Q_INVOKABLE void set(QString name, const QRectF& rect, double opacity = 1.0,
+    Q_INVOKABLE void set(QString name, const QRectF& rect,
                          int position = -1, mlt_keyframe_type keyframeType = mlt_keyframe_type(-1));
     Q_INVOKABLE void setGradient(QString name, const QStringList& gradient);
     QString path() const { return m_path; }
