@@ -135,6 +135,8 @@ private:
     void setupAndConnectPlayerWidget();
     void setupLayoutSwitcher();
     void centerLayoutInRemainingToolbarSpace();
+    void setupAndConnectDocks();
+    void setupMenuView();
     void setupSettingsMenu();
     void setupOpenOtherMenu();
     QAction *addProfile(QActionGroup* actionGroup, const QString& desc, const QString& name);
