@@ -182,9 +182,7 @@ MainWindow::MainWindow()
     // Accept drag-n-drop of files.
     this->setAcceptDrops(true);
 
-    setupUndoStack();
-    connect(m_undoStack, SIGNAL(canUndoChanged(bool)), ui->actionUndo, SLOT(setEnabled(bool)));
-    connect(m_undoStack, SIGNAL(canRedoChanged(bool)), ui->actionRedo, SLOT(setEnabled(bool)));
+    setupAndConnectUndoStack();
 
     // Add the player widget.
     m_player = new Player;
@@ -540,7 +538,7 @@ void MainWindow::connectUISignals()
     ui->actionSave->setEnabled(false);
 }
 
-void MainWindow::setupUndoStack()
+void MainWindow::setupAndConnectUndoStack()
 {
     m_undoStack = new QUndoStack(this);
     m_undoStack->setUndoLimit(Settings.undoLimit());
@@ -561,6 +559,8 @@ void MainWindow::setupUndoStack()
     ui->actionRedo->setIcon(redoAction->icon());
     ui->actionUndo->setToolTip(undoAction->toolTip());
     ui->actionRedo->setToolTip(redoAction->toolTip());
+    connect(m_undoStack, SIGNAL(canUndoChanged(bool)), ui->actionUndo, SLOT(setEnabled(bool)));
+    connect(m_undoStack, SIGNAL(canRedoChanged(bool)), ui->actionRedo, SLOT(setEnabled(bool)));
 }
 
 void MainWindow::onFocusWindowChanged(QWindow *) const

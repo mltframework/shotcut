@@ -131,7 +131,7 @@ private:
     void connectFocusSignals();
     void registerDebugCallback();
     void connectUISignals();
-    void setupUndoStack();
+    void setupAndConnectUndoStack();
     void setupSettingsMenu();
     void setupOpenOtherMenu();
     QAction *addProfile(QActionGroup* actionGroup, const QString& desc, const QString& name);
