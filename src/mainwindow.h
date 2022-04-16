@@ -137,6 +137,7 @@ private:
     void centerLayoutInRemainingToolbarSpace();
     void setupAndConnectDocks();
     void setupMenuView();
+    void connectVideoWidgetSignals();
     void setupSettingsMenu();
     void setupOpenOtherMenu();
     QAction *addProfile(QActionGroup* actionGroup, const QString& desc, const QString& name);

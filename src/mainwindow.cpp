@@ -204,14 +204,7 @@ MainWindow::MainWindow()
 
     setupMenuView();
 
-    // connect video widget signals
-    Mlt::GLWidget* videoWidget = (Mlt::GLWidget*) &(MLT);
-    connect(videoWidget, SIGNAL(dragStarted()), m_playlistDock, SLOT(onPlayerDragStarted()));
-    connect(videoWidget, SIGNAL(seekTo(int)), m_player, SLOT(seek(int)));
-    connect(videoWidget, SIGNAL(gpuNotSupported()), this, SLOT(onGpuNotSupported()));
-    connect(videoWidget->quickWindow(), SIGNAL(sceneGraphInitialized()), SLOT(onSceneGraphInitialized()), Qt::QueuedConnection);
-    connect(videoWidget, SIGNAL(frameDisplayed(const SharedFrame&)), m_scopeController, SIGNAL(newFrame(const SharedFrame&)));
-    connect(m_filterController, SIGNAL(currentFilterChanged(QmlFilter*, QmlMetadata*, int)), videoWidget, SLOT(setCurrentFilter(QmlFilter*, QmlMetadata*)));
+    connectVideoWidgetSignals();
 
     readWindowSettings();
 
@@ -578,6 +571,16 @@ void MainWindow::setupMenuView(){
     ui->menuView->addSeparator();
     ui->menuView->addAction(ui->actionApplicationLog);
  }
+
+void MainWindow::connectVideoWidgetSignals(){
+    Mlt::GLWidget* videoWidget = (Mlt::GLWidget*) &(MLT);
+    connect(videoWidget, SIGNAL(dragStarted()), m_playlistDock, SLOT(onPlayerDragStarted()));
+    connect(videoWidget, SIGNAL(seekTo(int)), m_player, SLOT(seek(int)));
+    connect(videoWidget, SIGNAL(gpuNotSupported()), this, SLOT(onGpuNotSupported()));
+    connect(videoWidget->quickWindow(), SIGNAL(sceneGraphInitialized()), SLOT(onSceneGraphInitialized()), Qt::QueuedConnection);
+    connect(videoWidget, SIGNAL(frameDisplayed(const SharedFrame&)), m_scopeController, SIGNAL(newFrame(const SharedFrame&)));
+    connect(m_filterController, SIGNAL(currentFilterChanged(QmlFilter*, QmlMetadata*, int)), videoWidget, SLOT(setCurrentFilter(QmlFilter*, QmlMetadata*)));
+}
 
 void MainWindow::onFocusWindowChanged(QWindow *) const
 {
