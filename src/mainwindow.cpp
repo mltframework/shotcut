@@ -211,12 +211,7 @@ MainWindow::MainWindow()
     setFocus();
     setCurrentFile("");
 
-    LeapNetworkListener* leap = new LeapNetworkListener(this);
-    connect(leap, SIGNAL(shuttle(float)), SLOT(onShuttle(float)));
-    connect(leap, SIGNAL(jogRightFrame()), SLOT(stepRightOneFrame()));
-    connect(leap, SIGNAL(jogRightSecond()), SLOT(stepRightOneSecond()));
-    connect(leap, SIGNAL(jogLeftFrame()), SLOT(stepLeftOneFrame()));
-    connect(leap, SIGNAL(jogLeftSecond()), SLOT(stepLeftOneSecond()));
+    setupAndConnectLeapNetworkListener();
 
     connect(&m_network, SIGNAL(finished(QNetworkReply*)), SLOT(onUpgradeCheckFinished(QNetworkReply*)));
     resetSourceUpdated();
@@ -580,6 +575,15 @@ void MainWindow::connectVideoWidgetSignals(){
     connect(videoWidget->quickWindow(), SIGNAL(sceneGraphInitialized()), SLOT(onSceneGraphInitialized()), Qt::QueuedConnection);
     connect(videoWidget, SIGNAL(frameDisplayed(const SharedFrame&)), m_scopeController, SIGNAL(newFrame(const SharedFrame&)));
     connect(m_filterController, SIGNAL(currentFilterChanged(QmlFilter*, QmlMetadata*, int)), videoWidget, SLOT(setCurrentFilter(QmlFilter*, QmlMetadata*)));
+}
+
+void MainWindow::setupAndConnectLeapNetworkListener(){
+    LeapNetworkListener* leap = new LeapNetworkListener(this);
+    connect(leap, SIGNAL(shuttle(float)), SLOT(onShuttle(float)));
+    connect(leap, SIGNAL(jogRightFrame()), SLOT(stepRightOneFrame()));
+    connect(leap, SIGNAL(jogRightSecond()), SLOT(stepRightOneSecond()));
+    connect(leap, SIGNAL(jogLeftFrame()), SLOT(stepLeftOneFrame()));
+    connect(leap, SIGNAL(jogLeftSecond()), SLOT(stepLeftOneSecond()));
 }
 
 void MainWindow::onFocusWindowChanged(QWindow *) const
