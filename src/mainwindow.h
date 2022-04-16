@@ -130,6 +130,8 @@ protected:
 private:
     void connectFocusSignals();
     void registerDebugCallback();
+    void connectUISignals();
+    void setupUndoStack();
     void setupSettingsMenu();
     void setupOpenOtherMenu();
     QAction *addProfile(QActionGroup* actionGroup, const QString& desc, const QString& name);
@@ -196,8 +198,6 @@ private:
 #ifdef WITH_LIBLEAP
     LeapListener m_leapListener;
 #endif
-
-    void connectUISignals();
 
 public slots:
     bool isCompatibleWithGpuMode(MltXmlChecker& checker);

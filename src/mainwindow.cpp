@@ -119,15 +119,6 @@ static const int AUTOSAVE_TIMEOUT_MS = 60000;
 static const char* kReservedLayoutPrefix = "__%1";
 static const char* kLayoutSwitcherName("layoutSwitcherGrid");
 
-void MainWindow::connectUISignals()
-{
-    connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(openVideo()));
-    connect(ui->actionAbout_Qt, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
-    connect(this, &MainWindow::producerOpened, this, &MainWindow::onProducerOpened);
-    connect(ui->mainToolBar, SIGNAL(visibilityChanged(bool)), SLOT(onToolbarVisibilityChanged(bool)));
-    ui->actionSave->setEnabled(false);
-}
-
 MainWindow::MainWindow()
     : QMainWindow(0)
     , ui(new Ui::MainWindow)
@@ -186,32 +177,12 @@ MainWindow::MainWindow()
     setDockNestingEnabled(true);
     ui->statusBar->hide();
 
-    // Connect UI signals.
     connectUISignals();
 
     // Accept drag-n-drop of files.
     this->setAcceptDrops(true);
 
-    // Setup the undo stack.
-    m_undoStack = new QUndoStack(this);
-    m_undoStack->setUndoLimit(Settings.undoLimit());
-    QAction *undoAction = m_undoStack->createUndoAction(this);
-    QAction *redoAction = m_undoStack->createRedoAction(this);
-    undoAction->setIcon(QIcon::fromTheme("edit-undo", QIcon(":/icons/oxygen/32x32/actions/edit-undo.png")));
-    redoAction->setIcon(QIcon::fromTheme("edit-redo", QIcon(":/icons/oxygen/32x32/actions/edit-redo.png")));
-    undoAction->setShortcut(QString::fromLatin1("Ctrl+Z"));
-#ifdef Q_OS_WIN
-    redoAction->setShortcut(QString::fromLatin1("Ctrl+Y"));
-#else
-    redoAction->setShortcut(QString::fromLatin1("Ctrl+Shift+Z"));
-#endif
-    ui->menuEdit->insertAction(ui->actionCut, undoAction);
-    ui->menuEdit->insertAction(ui->actionCut, redoAction);
-    ui->menuEdit->insertSeparator(ui->actionCut);
-    ui->actionUndo->setIcon(undoAction->icon());
-    ui->actionRedo->setIcon(redoAction->icon());
-    ui->actionUndo->setToolTip(undoAction->toolTip());
-    ui->actionRedo->setToolTip(redoAction->toolTip());
+    setupUndoStack();
     connect(m_undoStack, SIGNAL(canUndoChanged(bool)), ui->actionUndo, SLOT(setEnabled(bool)));
     connect(m_undoStack, SIGNAL(canRedoChanged(bool)), ui->actionRedo, SLOT(setEnabled(bool)));
 
@@ -558,6 +529,38 @@ void MainWindow::registerDebugCallback()
 {
     if (!qgetenv("EVENT_DEBUG").isEmpty())
         QInternal::registerCallback(QInternal::EventNotifyCallback, eventDebugCallback);
+}
+
+void MainWindow::connectUISignals()
+{
+    connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(openVideo()));
+    connect(ui->actionAbout_Qt, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
+    connect(this, &MainWindow::producerOpened, this, &MainWindow::onProducerOpened);
+    connect(ui->mainToolBar, SIGNAL(visibilityChanged(bool)), SLOT(onToolbarVisibilityChanged(bool)));
+    ui->actionSave->setEnabled(false);
+}
+
+void MainWindow::setupUndoStack()
+{
+    m_undoStack = new QUndoStack(this);
+    m_undoStack->setUndoLimit(Settings.undoLimit());
+    QAction *undoAction = m_undoStack->createUndoAction(this);
+    QAction *redoAction = m_undoStack->createRedoAction(this);
+    undoAction->setIcon(QIcon::fromTheme("edit-undo", QIcon(":/icons/oxygen/32x32/actions/edit-undo.png")));
+    redoAction->setIcon(QIcon::fromTheme("edit-redo", QIcon(":/icons/oxygen/32x32/actions/edit-redo.png")));
+    undoAction->setShortcut(QString::fromLatin1("Ctrl+Z"));
+#ifdef Q_OS_WIN
+    redoAction->setShortcut(QString::fromLatin1("Ctrl+Y"));
+#else
+    redoAction->setShortcut(QString::fromLatin1("Ctrl+Shift+Z"));
+#endif
+    ui->menuEdit->insertAction(ui->actionCut, undoAction);
+    ui->menuEdit->insertAction(ui->actionCut, redoAction);
+    ui->menuEdit->insertSeparator(ui->actionCut);
+    ui->actionUndo->setIcon(undoAction->icon());
+    ui->actionRedo->setIcon(redoAction->icon());
+    ui->actionUndo->setToolTip(undoAction->toolTip());
+    ui->actionRedo->setToolTip(redoAction->toolTip());
 }
 
 void MainWindow::onFocusWindowChanged(QWindow *) const
