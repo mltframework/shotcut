@@ -151,14 +151,7 @@ MainWindow::MainWindow()
     }
 #endif
 
-    if (!qgetenv("OBSERVE_FOCUS").isEmpty()) {
-        connect(qApp, &QApplication::focusChanged,
-                this, &MainWindow::onFocusChanged);
-        connect(qApp, &QGuiApplication::focusObjectChanged,
-                this, &MainWindow::onFocusObjectChanged);
-        connect(qApp, &QGuiApplication::focusWindowChanged,
-                this, &MainWindow::onFocusWindowChanged);
-    }
+    connectFocusSignals();
 
     if (!qgetenv("EVENT_DEBUG").isEmpty())
         QInternal::registerCallback(QInternal::EventNotifyCallback, eventDebugCallback);
@@ -543,6 +536,18 @@ MainWindow::MainWindow()
     ProxyManager::removePending();
 
     LOG_DEBUG() << "end";
+}
+
+void MainWindow::connectFocusSignals()
+{
+    if (!qgetenv("OBSERVE_FOCUS").isEmpty()) {
+        connect(qApp, &QApplication::focusChanged,
+                this, &MainWindow::onFocusChanged);
+        connect(qApp, &QGuiApplication::focusObjectChanged,
+                this, &MainWindow::onFocusObjectChanged);
+        connect(qApp, &QGuiApplication::focusWindowChanged,
+                this, &MainWindow::onFocusWindowChanged);
+    }
 }
 
 void MainWindow::onFocusWindowChanged(QWindow *) const

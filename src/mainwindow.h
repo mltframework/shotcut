@@ -128,6 +128,7 @@ protected:
     void hideEvent(QHideEvent* event);
 
 private:
+    void connectFocusSignals();
     void setupSettingsMenu();
     void setupOpenOtherMenu();
     QAction *addProfile(QActionGroup* actionGroup, const QString& desc, const QString& name);
