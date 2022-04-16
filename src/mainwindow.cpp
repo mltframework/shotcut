@@ -153,8 +153,7 @@ MainWindow::MainWindow()
 
     connectFocusSignals();
 
-    if (!qgetenv("EVENT_DEBUG").isEmpty())
-        QInternal::registerCallback(QInternal::EventNotifyCallback, eventDebugCallback);
+    registerDebugCallback();
 
     LOG_DEBUG() << "begin";
     LOG_INFO() << "device pixel ratio =" << devicePixelRatioF();
@@ -548,6 +547,12 @@ void MainWindow::connectFocusSignals()
         connect(qApp, &QGuiApplication::focusWindowChanged,
                 this, &MainWindow::onFocusWindowChanged);
     }
+}
+
+void MainWindow::registerDebugCallback()
+{
+    if (!qgetenv("EVENT_DEBUG").isEmpty())
+        QInternal::registerCallback(QInternal::EventNotifyCallback, eventDebugCallback);
 }
 
 void MainWindow::onFocusWindowChanged(QWindow *) const

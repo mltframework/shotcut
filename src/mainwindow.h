@@ -129,6 +129,7 @@ protected:
 
 private:
     void connectFocusSignals();
+    void registerDebugCallback();
     void setupSettingsMenu();
     void setupOpenOtherMenu();
     QAction *addProfile(QActionGroup* actionGroup, const QString& desc, const QString& name);
