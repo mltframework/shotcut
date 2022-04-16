@@ -119,6 +119,22 @@ static const int AUTOSAVE_TIMEOUT_MS = 60000;
 static const char* kReservedLayoutPrefix = "__%1";
 static const char* kLayoutSwitcherName("layoutSwitcherGrid");
 
+void MainWindow::setupAndConnectPlayerWidget()
+{
+    m_player = new Player;
+    MLT.videoWidget()->installEventFilter(this);
+    ui->centralWidget->layout()->addWidget(m_player);
+    connect(this, &MainWindow::producerOpened, m_player, &Player::onProducerOpened);
+    connect(m_player, SIGNAL(showStatusMessage(QString)), this, SLOT(showStatusMessage(QString)));
+    connect(m_player, SIGNAL(inChanged(int)), this, SLOT(onCutModified()));
+    connect(m_player, SIGNAL(outChanged(int)), this, SLOT(onCutModified()));
+    connect(m_player, SIGNAL(tabIndexChanged(int)), SLOT(onPlayerTabIndexChanged(int)));
+    connect(MLT.videoWidget(), SIGNAL(started()), SLOT(processMultipleFiles()));
+    connect(MLT.videoWidget(), SIGNAL(paused()), m_player, SLOT(showPaused()));
+    connect(MLT.videoWidget(), SIGNAL(playing()), m_player, SLOT(showPlaying()));
+    connect(MLT.videoWidget(), SIGNAL(toggleZoom(bool)), m_player, SLOT(toggleZoom(bool)));
+}
+
 MainWindow::MainWindow()
     : QMainWindow(0)
     , ui(new Ui::MainWindow)
@@ -185,18 +201,7 @@ MainWindow::MainWindow()
     setupAndConnectUndoStack();
 
     // Add the player widget.
-    m_player = new Player;
-    MLT.videoWidget()->installEventFilter(this);
-    ui->centralWidget->layout()->addWidget(m_player);
-    connect(this, &MainWindow::producerOpened, m_player, &Player::onProducerOpened);
-    connect(m_player, SIGNAL(showStatusMessage(QString)), this, SLOT(showStatusMessage(QString)));
-    connect(m_player, SIGNAL(inChanged(int)), this, SLOT(onCutModified()));
-    connect(m_player, SIGNAL(outChanged(int)), this, SLOT(onCutModified()));
-    connect(m_player, SIGNAL(tabIndexChanged(int)), SLOT(onPlayerTabIndexChanged(int)));
-    connect(MLT.videoWidget(), SIGNAL(started()), SLOT(processMultipleFiles()));
-    connect(MLT.videoWidget(), SIGNAL(paused()), m_player, SLOT(showPaused()));
-    connect(MLT.videoWidget(), SIGNAL(playing()), m_player, SLOT(showPlaying()));
-    connect(MLT.videoWidget(), SIGNAL(toggleZoom(bool)), m_player, SLOT(toggleZoom(bool)));
+    setupAndConnectPlayerWidget();
 
     setupSettingsMenu();
     setupOpenOtherMenu();
