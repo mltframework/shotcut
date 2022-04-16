@@ -119,22 +119,6 @@ static const int AUTOSAVE_TIMEOUT_MS = 60000;
 static const char* kReservedLayoutPrefix = "__%1";
 static const char* kLayoutSwitcherName("layoutSwitcherGrid");
 
-void MainWindow::setupAndConnectPlayerWidget()
-{
-    m_player = new Player;
-    MLT.videoWidget()->installEventFilter(this);
-    ui->centralWidget->layout()->addWidget(m_player);
-    connect(this, &MainWindow::producerOpened, m_player, &Player::onProducerOpened);
-    connect(m_player, SIGNAL(showStatusMessage(QString)), this, SLOT(showStatusMessage(QString)));
-    connect(m_player, SIGNAL(inChanged(int)), this, SLOT(onCutModified()));
-    connect(m_player, SIGNAL(outChanged(int)), this, SLOT(onCutModified()));
-    connect(m_player, SIGNAL(tabIndexChanged(int)), SLOT(onPlayerTabIndexChanged(int)));
-    connect(MLT.videoWidget(), SIGNAL(started()), SLOT(processMultipleFiles()));
-    connect(MLT.videoWidget(), SIGNAL(paused()), m_player, SLOT(showPaused()));
-    connect(MLT.videoWidget(), SIGNAL(playing()), m_player, SLOT(showPlaying()));
-    connect(MLT.videoWidget(), SIGNAL(toggleZoom(bool)), m_player, SLOT(toggleZoom(bool)));
-}
-
 MainWindow::MainWindow()
     : QMainWindow(0)
     , ui(new Ui::MainWindow)
@@ -208,39 +192,7 @@ MainWindow::MainWindow()
     readPlayerSettings();
     configureVideoWidget();
 
-    // setup the layout switcher
-    auto group = new QActionGroup(this);
-    group->addAction(ui->actionLayoutLogging);
-    group->addAction(ui->actionLayoutEditing);
-    group->addAction(ui->actionLayoutEffects);
-    group->addAction(ui->actionLayoutAudio);
-    group->addAction(ui->actionLayoutColor);
-    group->addAction(ui->actionLayoutPlayer);
-    switch (Settings.layoutMode()) {
-    case LayoutMode::Custom:
-        break;
-    case LayoutMode::Logging:
-        ui->actionLayoutLogging->setChecked(true);
-        break;
-    case LayoutMode::Editing:
-        ui->actionLayoutEditing->setChecked(true);
-        break;
-    case LayoutMode::Effects:
-        ui->actionLayoutEffects->setChecked(true);
-        break;
-    case LayoutMode::Color:
-        ui->actionLayoutColor->setChecked(true);
-        break;
-    case LayoutMode::Audio:
-        ui->actionLayoutAudio->setChecked(true);
-        break;
-    case LayoutMode::PlayerOnly:
-        ui->actionLayoutPlayer->setChecked(true);
-        break;
-    default:
-        ui->actionLayoutEditing->setChecked(true);
-        break;
-    }
+    setupLayoutSwitcher();
     // Center the layout actions in the remaining toolbar space.
     auto spacer = new QWidget;
     spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
@@ -566,6 +518,57 @@ void MainWindow::setupAndConnectUndoStack()
     ui->actionRedo->setToolTip(redoAction->toolTip());
     connect(m_undoStack, SIGNAL(canUndoChanged(bool)), ui->actionUndo, SLOT(setEnabled(bool)));
     connect(m_undoStack, SIGNAL(canRedoChanged(bool)), ui->actionRedo, SLOT(setEnabled(bool)));
+}
+
+void MainWindow::setupAndConnectPlayerWidget()
+{
+    m_player = new Player;
+    MLT.videoWidget()->installEventFilter(this);
+    ui->centralWidget->layout()->addWidget(m_player);
+    connect(this, &MainWindow::producerOpened, m_player, &Player::onProducerOpened);
+    connect(m_player, SIGNAL(showStatusMessage(QString)), this, SLOT(showStatusMessage(QString)));
+    connect(m_player, SIGNAL(inChanged(int)), this, SLOT(onCutModified()));
+    connect(m_player, SIGNAL(outChanged(int)), this, SLOT(onCutModified()));
+    connect(m_player, SIGNAL(tabIndexChanged(int)), SLOT(onPlayerTabIndexChanged(int)));
+    connect(MLT.videoWidget(), SIGNAL(started()), SLOT(processMultipleFiles()));
+    connect(MLT.videoWidget(), SIGNAL(paused()), m_player, SLOT(showPaused()));
+    connect(MLT.videoWidget(), SIGNAL(playing()), m_player, SLOT(showPlaying()));
+    connect(MLT.videoWidget(), SIGNAL(toggleZoom(bool)), m_player, SLOT(toggleZoom(bool)));
+}
+
+void MainWindow::setupLayoutSwitcher(){
+    auto group = new QActionGroup(this);
+    group->addAction(ui->actionLayoutLogging);
+    group->addAction(ui->actionLayoutEditing);
+    group->addAction(ui->actionLayoutEffects);
+    group->addAction(ui->actionLayoutAudio);
+    group->addAction(ui->actionLayoutColor);
+    group->addAction(ui->actionLayoutPlayer);
+    switch (Settings.layoutMode()) {
+    case LayoutMode::Custom:
+        break;
+    case LayoutMode::Logging:
+        ui->actionLayoutLogging->setChecked(true);
+        break;
+    case LayoutMode::Editing:
+        ui->actionLayoutEditing->setChecked(true);
+        break;
+    case LayoutMode::Effects:
+        ui->actionLayoutEffects->setChecked(true);
+        break;
+    case LayoutMode::Color:
+        ui->actionLayoutColor->setChecked(true);
+        break;
+    case LayoutMode::Audio:
+        ui->actionLayoutAudio->setChecked(true);
+        break;
+    case LayoutMode::PlayerOnly:
+        ui->actionLayoutPlayer->setChecked(true);
+        break;
+    default:
+        ui->actionLayoutEditing->setChecked(true);
+        break;
+    }
 }
 
 void MainWindow::onFocusWindowChanged(QWindow *) const

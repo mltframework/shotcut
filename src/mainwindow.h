@@ -132,6 +132,8 @@ private:
     void registerDebugCallback();
     void connectUISignals();
     void setupAndConnectUndoStack();
+    void setupAndConnectPlayerWidget();
+    void setupLayoutSwitcher();
     void setupSettingsMenu();
     void setupOpenOtherMenu();
     QAction *addProfile(QActionGroup* actionGroup, const QString& desc, const QString& name);
@@ -198,8 +200,6 @@ private:
 #ifdef WITH_LIBLEAP
     LeapListener m_leapListener;
 #endif
-
-    void setupAndConnectPlayerWidget();
 
 public slots:
     bool isCompatibleWithGpuMode(MltXmlChecker& checker);
