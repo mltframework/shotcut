@@ -128,6 +128,17 @@ protected:
     void hideEvent(QHideEvent* event);
 
 private:
+    void connectFocusSignals();
+    void registerDebugCallback();
+    void connectUISignals();
+    void setupAndConnectUndoStack();
+    void setupAndConnectPlayerWidget();
+    void setupLayoutSwitcher();
+    void centerLayoutInRemainingToolbarSpace();
+    void setupAndConnectDocks();
+    void setupMenuView();
+    void connectVideoWidgetSignals();
+    void setupAndConnectLeapNetworkListener();
     void setupSettingsMenu();
     void setupOpenOtherMenu();
     QAction *addProfile(QActionGroup* actionGroup, const QString& desc, const QString& name);

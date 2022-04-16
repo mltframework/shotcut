@@ -151,17 +151,9 @@ MainWindow::MainWindow()
     }
 #endif
 
-    if (!qgetenv("OBSERVE_FOCUS").isEmpty()) {
-        connect(qApp, &QApplication::focusChanged,
-                this, &MainWindow::onFocusChanged);
-        connect(qApp, &QGuiApplication::focusObjectChanged,
-                this, &MainWindow::onFocusObjectChanged);
-        connect(qApp, &QGuiApplication::focusWindowChanged,
-                this, &MainWindow::onFocusWindowChanged);
-    }
+    connectFocusSignals();
 
-    if (!qgetenv("EVENT_DEBUG").isEmpty())
-        QInternal::registerCallback(QInternal::EventNotifyCallback, eventDebugCallback);
+    registerDebugCallback();
 
     LOG_DEBUG() << "begin";
     LOG_INFO() << "device pixel ratio =" << devicePixelRatioF();
@@ -185,17 +177,84 @@ MainWindow::MainWindow()
     setDockNestingEnabled(true);
     ui->statusBar->hide();
 
-    // Connect UI signals.
+    connectUISignals();
+
+    // Accept drag-n-drop of files.
+    this->setAcceptDrops(true);
+
+    setupAndConnectUndoStack();
+
+    // Add the player widget.
+    setupAndConnectPlayerWidget();
+
+    setupSettingsMenu();
+    setupOpenOtherMenu();
+    readPlayerSettings();
+    configureVideoWidget();
+
+    setupLayoutSwitcher();
+    centerLayoutInRemainingToolbarSpace();
+
+#ifndef SHOTCUT_NOUPGRADE
+    if (Settings.noUpgrade() || qApp->property("noupgrade").toBool())
+#endif
+        delete ui->actionUpgrade;
+
+    setupAndConnectDocks();
+
+    setupMenuView();
+
+    connectVideoWidgetSignals();
+
+    readWindowSettings();
+
+    setFocus();
+    setCurrentFile("");
+
+    setupAndConnectLeapNetworkListener();
+
+    connect(&m_network, SIGNAL(finished(QNetworkReply*)), SLOT(onUpgradeCheckFinished(QNetworkReply*)));
+    resetSourceUpdated();
+    m_clipboardUpdatedAt.setSecsSinceEpoch(0);
+    onClipboardChanged();
+    connect(QGuiApplication::clipboard(), SIGNAL(dataChanged()), this, SLOT(onClipboardChanged()));
+
+    QThreadPool::globalInstance()->setMaxThreadCount(qMin(4, QThreadPool::globalInstance()->maxThreadCount()));
+
+    ProxyManager::removePending();
+
+    LOG_DEBUG() << "end";
+}
+
+void MainWindow::connectFocusSignals()
+{
+    if (!qgetenv("OBSERVE_FOCUS").isEmpty()) {
+        connect(qApp, &QApplication::focusChanged,
+                this, &MainWindow::onFocusChanged);
+        connect(qApp, &QGuiApplication::focusObjectChanged,
+                this, &MainWindow::onFocusObjectChanged);
+        connect(qApp, &QGuiApplication::focusWindowChanged,
+                this, &MainWindow::onFocusWindowChanged);
+    }
+}
+
+void MainWindow::registerDebugCallback()
+{
+    if (!qgetenv("EVENT_DEBUG").isEmpty())
+        QInternal::registerCallback(QInternal::EventNotifyCallback, eventDebugCallback);
+}
+
+void MainWindow::connectUISignals()
+{
     connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(openVideo()));
     connect(ui->actionAbout_Qt, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
     connect(this, &MainWindow::producerOpened, this, &MainWindow::onProducerOpened);
     connect(ui->mainToolBar, SIGNAL(visibilityChanged(bool)), SLOT(onToolbarVisibilityChanged(bool)));
     ui->actionSave->setEnabled(false);
+}
 
-    // Accept drag-n-drop of files.
-    this->setAcceptDrops(true);
-
-    // Setup the undo stack.
+void MainWindow::setupAndConnectUndoStack()
+{
     m_undoStack = new QUndoStack(this);
     m_undoStack->setUndoLimit(Settings.undoLimit());
     QAction *undoAction = m_undoStack->createUndoAction(this);
@@ -217,8 +276,10 @@ MainWindow::MainWindow()
     ui->actionRedo->setToolTip(redoAction->toolTip());
     connect(m_undoStack, SIGNAL(canUndoChanged(bool)), ui->actionUndo, SLOT(setEnabled(bool)));
     connect(m_undoStack, SIGNAL(canRedoChanged(bool)), ui->actionRedo, SLOT(setEnabled(bool)));
+}
 
-    // Add the player widget.
+void MainWindow::setupAndConnectPlayerWidget()
+{
     m_player = new Player;
     MLT.videoWidget()->installEventFilter(this);
     ui->centralWidget->layout()->addWidget(m_player);
@@ -231,13 +292,9 @@ MainWindow::MainWindow()
     connect(MLT.videoWidget(), SIGNAL(paused()), m_player, SLOT(showPaused()));
     connect(MLT.videoWidget(), SIGNAL(playing()), m_player, SLOT(showPlaying()));
     connect(MLT.videoWidget(), SIGNAL(toggleZoom(bool)), m_player, SLOT(toggleZoom(bool)));
+}
 
-    setupSettingsMenu();
-    setupOpenOtherMenu();
-    readPlayerSettings();
-    configureVideoWidget();
-
-    // setup the layout switcher
+void MainWindow::setupLayoutSwitcher(){
     auto group = new QActionGroup(this);
     group->addAction(ui->actionLayoutLogging);
     group->addAction(ui->actionLayoutEditing);
@@ -270,7 +327,9 @@ MainWindow::MainWindow()
         ui->actionLayoutEditing->setChecked(true);
         break;
     }
-    // Center the layout actions in the remaining toolbar space.
+}
+
+void MainWindow::centerLayoutInRemainingToolbarSpace(){
     auto spacer = new QWidget;
     spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     ui->mainToolBar->insertWidget(ui->dummyAction, spacer);
@@ -278,13 +337,8 @@ MainWindow::MainWindow()
     spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     ui->mainToolBar->addWidget(spacer);
     updateLayoutSwitcher();
-
-#ifndef SHOTCUT_NOUPGRADE
-    if (Settings.noUpgrade() || qApp->property("noupgrade").toBool())
-#endif
-        delete ui->actionUpgrade;
-
-    // Add the docks.
+}
+void MainWindow::setupAndConnectDocks(){
     m_scopeController = new ScopeController(this, ui->menuView);
     QDockWidget* audioMeterDock = findChild<QDockWidget*>("AudioPeakMeterDock");
     if (audioMeterDock) {
@@ -506,12 +560,14 @@ MainWindow::MainWindow()
     tabifyDockWidget(m_keyframesDock, m_timelineDock);
     m_recentDock->raise();
     resetDockCorners();
+}
 
-    // Configure the View menu.
+void MainWindow::setupMenuView(){
     ui->menuView->addSeparator();
     ui->menuView->addAction(ui->actionApplicationLog);
+ }
 
-    // connect video widget signals
+void MainWindow::connectVideoWidgetSignals(){
     Mlt::GLWidget* videoWidget = (Mlt::GLWidget*) &(MLT);
     connect(videoWidget, SIGNAL(dragStarted()), m_playlistDock, SLOT(onPlayerDragStarted()));
     connect(videoWidget, SIGNAL(seekTo(int)), m_player, SLOT(seek(int)));
@@ -519,30 +575,15 @@ MainWindow::MainWindow()
     connect(videoWidget->quickWindow(), SIGNAL(sceneGraphInitialized()), SLOT(onSceneGraphInitialized()), Qt::QueuedConnection);
     connect(videoWidget, SIGNAL(frameDisplayed(const SharedFrame&)), m_scopeController, SIGNAL(newFrame(const SharedFrame&)));
     connect(m_filterController, SIGNAL(currentFilterChanged(QmlFilter*, QmlMetadata*, int)), videoWidget, SLOT(setCurrentFilter(QmlFilter*, QmlMetadata*)));
+}
 
-    readWindowSettings();
-
-    setFocus();
-    setCurrentFile("");
-
+void MainWindow::setupAndConnectLeapNetworkListener(){
     LeapNetworkListener* leap = new LeapNetworkListener(this);
     connect(leap, SIGNAL(shuttle(float)), SLOT(onShuttle(float)));
     connect(leap, SIGNAL(jogRightFrame()), SLOT(stepRightOneFrame()));
     connect(leap, SIGNAL(jogRightSecond()), SLOT(stepRightOneSecond()));
     connect(leap, SIGNAL(jogLeftFrame()), SLOT(stepLeftOneFrame()));
     connect(leap, SIGNAL(jogLeftSecond()), SLOT(stepLeftOneSecond()));
-
-    connect(&m_network, SIGNAL(finished(QNetworkReply*)), SLOT(onUpgradeCheckFinished(QNetworkReply*)));
-    resetSourceUpdated();
-    m_clipboardUpdatedAt.setSecsSinceEpoch(0);
-    onClipboardChanged();
-    connect(QGuiApplication::clipboard(), SIGNAL(dataChanged()), this, SLOT(onClipboardChanged()));
-
-    QThreadPool::globalInstance()->setMaxThreadCount(qMin(4, QThreadPool::globalInstance()->maxThreadCount()));
-
-    ProxyManager::removePending();
-
-    LOG_DEBUG() << "end";
 }
 
 void MainWindow::onFocusWindowChanged(QWindow *) const
