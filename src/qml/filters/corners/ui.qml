@@ -654,4 +654,13 @@ Shotcut.KeyframableFilter {
         target: producer
         onPositionChanged: setControls()
     }
+
+    Connections {
+        target: parameters
+        onKeyframeAdded: {
+            if (parameter == cornerProperties[0]) {
+                updateFilterCorners(getPosition())
+            }
+        }
+    }
 }
