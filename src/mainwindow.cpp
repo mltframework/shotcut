@@ -119,6 +119,15 @@ static const int AUTOSAVE_TIMEOUT_MS = 60000;
 static const char* kReservedLayoutPrefix = "__%1";
 static const char* kLayoutSwitcherName("layoutSwitcherGrid");
 
+void MainWindow::connectUISignals()
+{
+    connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(openVideo()));
+    connect(ui->actionAbout_Qt, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
+    connect(this, &MainWindow::producerOpened, this, &MainWindow::onProducerOpened);
+    connect(ui->mainToolBar, SIGNAL(visibilityChanged(bool)), SLOT(onToolbarVisibilityChanged(bool)));
+    ui->actionSave->setEnabled(false);
+}
+
 MainWindow::MainWindow()
     : QMainWindow(0)
     , ui(new Ui::MainWindow)
@@ -178,11 +187,7 @@ MainWindow::MainWindow()
     ui->statusBar->hide();
 
     // Connect UI signals.
-    connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(openVideo()));
-    connect(ui->actionAbout_Qt, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
-    connect(this, &MainWindow::producerOpened, this, &MainWindow::onProducerOpened);
-    connect(ui->mainToolBar, SIGNAL(visibilityChanged(bool)), SLOT(onToolbarVisibilityChanged(bool)));
-    ui->actionSave->setEnabled(false);
+    connectUISignals();
 
     // Accept drag-n-drop of files.
     this->setAcceptDrops(true);

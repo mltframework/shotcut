@@ -197,6 +197,8 @@ private:
     LeapListener m_leapListener;
 #endif
 
+    void connectUISignals();
+
 public slots:
     bool isCompatibleWithGpuMode(MltXmlChecker& checker);
     bool isXmlRepaired(MltXmlChecker& checker, QString& fileName);
