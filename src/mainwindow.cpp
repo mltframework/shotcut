@@ -193,14 +193,7 @@ MainWindow::MainWindow()
     configureVideoWidget();
 
     setupLayoutSwitcher();
-    // Center the layout actions in the remaining toolbar space.
-    auto spacer = new QWidget;
-    spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    ui->mainToolBar->insertWidget(ui->dummyAction, spacer);
-    spacer = new QWidget;
-    spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    ui->mainToolBar->addWidget(spacer);
-    updateLayoutSwitcher();
+    centerLayoutInRemainingToolbarSpace();
 
 #ifndef SHOTCUT_NOUPGRADE
     if (Settings.noUpgrade() || qApp->property("noupgrade").toBool())
@@ -569,6 +562,16 @@ void MainWindow::setupLayoutSwitcher(){
         ui->actionLayoutEditing->setChecked(true);
         break;
     }
+}
+
+void MainWindow::centerLayoutInRemainingToolbarSpace(){
+    auto spacer = new QWidget;
+    spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    ui->mainToolBar->insertWidget(ui->dummyAction, spacer);
+    spacer = new QWidget;
+    spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    ui->mainToolBar->addWidget(spacer);
+    updateLayoutSwitcher();
 }
 
 void MainWindow::onFocusWindowChanged(QWindow *) const
