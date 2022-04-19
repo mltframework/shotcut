@@ -164,6 +164,7 @@ private:
     static void filterX265Params(QStringList& other);
     void onVideoCodecComboChanged(int index, bool ignorePreset = false);
     bool checkForMissingFiles();
+    QString& defaultFormatExtension();
 };
 
 #endif // ENCODEDOCK_H

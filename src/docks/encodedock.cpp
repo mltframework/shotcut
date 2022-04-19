@@ -390,6 +390,9 @@ void EncodeDock::loadPresetFromProperties(Mlt::Properties& preset)
     onVideoCodecComboChanged(ui->videoCodecCombo->currentIndex(), true);
     on_audioRateControlCombo_activated(ui->audioRateControlCombo->currentIndex());
     on_videoRateControlCombo_activated(ui->videoRateControlCombo->currentIndex());
+    if (m_extension.isEmpty()) {
+        defaultFormatExtension();
+    }
 }
 
 bool EncodeDock::isExportInProgress() const
@@ -1880,6 +1883,7 @@ void EncodeDock::on_formatCombo_currentIndexChanged(int index)
 {
     Q_UNUSED(index);
     m_extension.clear();
+    defaultFormatExtension();
 }
 
 void EncodeDock::on_videoBufferDurationChanged()
@@ -2115,6 +2119,41 @@ bool EncodeDock::detectHardwareEncoders()
         Settings.setEncodeHardware(hwlist);
     }
     return !hwlist.isEmpty();
+}
+
+QString& EncodeDock::defaultFormatExtension()
+{
+    auto format = ui->formatCombo->currentText();
+    QFileInfo ffmpegPath(qApp->applicationDirPath(), "ffmpeg");
+    QProcess proc;
+    QStringList args;
+    args << "-hide_banner" << "-h" << format.prepend("muxer=");
+    LOG_DEBUG() << ffmpegPath.absoluteFilePath() << args.join(' ');
+    proc.setStandardErrorFile(QProcess::nullDevice());
+    proc.setReadChannel(QProcess::StandardOutput);
+    proc.start(ffmpegPath.absoluteFilePath(), args, QIODevice::ReadOnly);
+    bool started = proc.waitForStarted(2000);
+    bool finished = false;
+    QCoreApplication::processEvents();
+    if (started) {
+        finished = proc.waitForFinished(4000);
+        QCoreApplication::processEvents();
+    }
+    if (started && finished && proc.exitStatus() == QProcess::NormalExit && !proc.exitCode()) {
+        QString output = proc.readAll();
+        for (auto& line : output.split(QRegularExpression("[\r\n]"), Qt::SkipEmptyParts)) {
+            LOG_DEBUG() << line;
+            if (line.startsWith("    Common extensions:")) {
+                auto parts = line.split(':').last().split(',');
+                m_extension = parts.first().replace('.', "").trimmed();
+                LOG_DEBUG() << "extension =" << m_extension;
+                break;
+            }
+        }
+    } else {
+        LOG_ERROR() << "ffmpeg failed with" << proc.exitCode();
+    }
+    return m_extension;
 }
 
 bool EncodeDock::checkForMissingFiles()
