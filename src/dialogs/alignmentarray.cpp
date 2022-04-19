@@ -19,14 +19,14 @@
 
 #include "alignmentarray.h"
 
-#include <QMutex>
+#include <QDebug>
 #include <QMutexLocker>
 
-#include <iostream>
 #include <algorithm>
 #include <cstring>
 #include <cmath>
-#include <cassert>
+#include <iostream>
+#include <numeric>
 
 // FFTW plan functions are not threadsafe
 static QMutex s_fftwPlanningMutex;
@@ -52,45 +52,35 @@ AlignmentArray::~AlignmentArray()
 void AlignmentArray::init(size_t minimumSize)
 {
     m_minimumSize = minimumSize;
-    // Pad zeros to the nearest power of 2
-    m_actualComplexSize = 1;
-    while(minimumSize > m_actualComplexSize)
-    {
-        m_actualComplexSize *= 2;
-    }
-    QMutexLocker locker(&s_fftwPlanningMutex);
-    fftw_complex* buf = fftw_alloc_complex(m_actualComplexSize);
-    m_buffer = reinterpret_cast<std::complex<double>*>(buf);
-    m_plan = fftw_plan_dft_1d(m_actualComplexSize, buf, buf, FFTW_FORWARD, FFTW_ESTIMATE);
-    std::fill( m_buffer, m_buffer + m_actualComplexSize, std::complex<double>(0) );
+    m_actualComplexSize = (minimumSize * 2) - 1;
 }
 
-void AlignmentArray::setValue(size_t index, double value)
+void AlignmentArray::setValues(const std::vector<double>& values)
 {
-    if (index < m_actualComplexSize) {
-        m_buffer[index] = value;
-    }
+    m_values = values;
 }
 
 double AlignmentArray::calculateOffset(AlignmentArray &from, int* offset)
 {
     // Create a destination for the correlation values
     s_fftwPlanningMutex.lock();
-    std::complex<double>* correlationBuf = reinterpret_cast<std::complex<double>*>(fftw_alloc_complex(m_actualComplexSize));
-    fftw_plan correlationPlan = fftw_plan_dft_1d(m_actualComplexSize, reinterpret_cast<fftw_complex*>(correlationBuf), reinterpret_cast<fftw_complex*>(correlationBuf), FFTW_BACKWARD, FFTW_ESTIMATE);
+    fftw_complex* buf = fftw_alloc_complex(m_actualComplexSize);
+    std::complex<double>* correlationBuf = reinterpret_cast<std::complex<double>*>(buf);
+    fftw_plan correlationPlan = fftw_plan_dft_1d(m_actualComplexSize, buf, buf, FFTW_BACKWARD, FFTW_ESTIMATE);
     s_fftwPlanningMutex.unlock();
     // Ensure the two sequences are transformed
     transform();
     from.transform();
 
-    // Calculate the correlation
+    // Calculate the cross-correlation signal
     for(size_t i = 0; i < m_actualComplexSize; ++i)
     {
         correlationBuf[i] = m_buffer[i] * std::conj(from.m_buffer[i]);
     }
+    // Convert to time series
     fftw_execute(correlationPlan);
 
-    // Find the maximum correlation
+    // Find the maximum correlation offset
     double max = 0;
     for (size_t i = 0; i < m_actualComplexSize; ++i)
     {
@@ -111,7 +101,8 @@ double AlignmentArray::calculateOffset(AlignmentArray &from, int* offset)
     fftw_destroy_plan(correlationPlan);
     s_fftwPlanningMutex.unlock();
 
-    return max;
+    // Normalize the best score by dividing by the cube of the size of the sequence
+    return max / pow(m_actualComplexSize, 3);
 }
 
 double AlignmentArray::calculateOffsetAndDrift(AlignmentArray& from, int precision, double drift_range, double* drift, int* offset)
@@ -156,12 +147,30 @@ double AlignmentArray::calculateOffsetAndDrift(AlignmentArray& from, int precisi
 
 void AlignmentArray::transform()
 {
-    s_fftwPlanningMutex.lock();
+    QMutexLocker locker(&m_transformMutex);
     if (!m_isTransformed)
     {
-        m_isTransformed = true;
+        // Create the plan while the global planning mutex is locked
+        s_fftwPlanningMutex.lock();
+        fftw_complex* buf = fftw_alloc_complex(m_actualComplexSize);
+        m_buffer = reinterpret_cast<std::complex<double>*>(buf);
+        m_plan = fftw_plan_dft_1d(m_actualComplexSize, buf, buf, FFTW_FORWARD, FFTW_ESTIMATE);
+        std::fill(m_buffer, m_buffer + m_actualComplexSize, std::complex<double>(0));
         s_fftwPlanningMutex.unlock();
+
+        // Calculate a normalization factor.
+        // This uses a simplified standard deviation calculation that assumes the mean is 0.
+        double accum = 0.0;
+        std::for_each (m_values.begin(), m_values.end(), [&](const double d) {
+            accum += d * d;
+        });
+        double factor = sqrt(accum / (m_values.size() - 1));
+        // Fill the transform array applying the normalization factor
+        for( size_t i = 0; i < m_values.size(); i++ ) {
+            m_buffer[i] = m_values[i] / factor;
+        }
+        // Perform the forward DFT
         fftw_execute(m_plan);
+        m_isTransformed = true;
     }
-    s_fftwPlanningMutex.unlock();
 }

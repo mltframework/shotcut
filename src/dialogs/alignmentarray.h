@@ -20,8 +20,11 @@
 #ifndef ALIGNMENTARRAY_H
 #define ALIGNMENTARRAY_H
 
+#include <QMutex>
+
 #include <complex.h>
 #include <fftw3.h>
+#include <vector>
 
 class AlignmentArray
 {
@@ -31,7 +34,7 @@ public:
     virtual ~AlignmentArray();
 
     void init(size_t minimum_size);
-    void setValue(size_t index, double value);
+    void setValues(const std::vector<double>& values);
     double calculateOffset(AlignmentArray &from, int* offset);
     double calculateOffsetAndDrift(AlignmentArray& from, int precision, double drift_range, double* drift_about, int* offset);
 
@@ -39,9 +42,11 @@ private:
     void transform();
     fftw_plan m_plan;
     std::complex<double>* m_buffer;
+    std::vector<double> m_values;
     size_t m_minimumSize;
     size_t m_actualComplexSize;
     bool m_isTransformed = false;
+    QMutex m_transformMutex;
 };
 
 #endif

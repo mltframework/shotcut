@@ -69,7 +69,7 @@ int AlignClipsModel::getProgress(int row) const
     return m_clips[row].progress;
 }
 
-void AlignClipsModel::updateOffsetAndDrift(int row, int offset, double drift)
+void AlignClipsModel::updateOffsetAndDrift(int row, int offset, double drift, const QString& error)
 {
     if (row < 0 || row >= m_clips.size()) {
         LOG_ERROR() << "Invalid Row: " << row;
@@ -77,7 +77,8 @@ void AlignClipsModel::updateOffsetAndDrift(int row, int offset, double drift)
     }
     m_clips[row].offset = offset;
     m_clips[row].drift = drift;
-    emit dataChanged(index(row, COLUMN_OFFSET), index(row, COLUMN_DRIFT));
+    m_clips[row].error = error;
+    emit dataChanged(index(row, COLUMN_ERROR), index(row, COLUMN_COUNT - 1));
 }
 
 int AlignClipsModel::getOffset(int row)
@@ -145,13 +146,19 @@ QVariant AlignClipsModel::data(const QModelIndex& index, int role) const
                     result = clip.name;
                     break;
                 case COLUMN_OFFSET:
-                    if (clip.offset >= 0 && MLT.producer() && MLT.producer()->is_valid())
-                        result = MLT.producer()->frames_to_time(clip.offset, mlt_time_smpte_df);
+                    if (clip.progress != 0 && clip.offset != INVALID_OFFSET && MLT.producer() && MLT.producer()->is_valid())
+                        if (clip.offset >= 0) {
+                            result = MLT.producer()->frames_to_time(clip.offset, mlt_time_smpte_df);
+                        } else {
+                            result = QString("-") + MLT.producer()->frames_to_time(-clip.offset, mlt_time_smpte_df);
+                        }
                     break;
+/*
                 case COLUMN_DRIFT:
                     if (clip.drift >= 0)
                         result = QLocale().toString(clip.drift * 100.0, 'g', 4);
                     break;
+*/
                 default:
                     LOG_ERROR() << "Invalid Column" << index.row() << index.column() << roleNames()[role] << role;
                     break;
@@ -166,7 +173,7 @@ QVariant AlignClipsModel::data(const QModelIndex& index, int role) const
                     break;
                 case COLUMN_ERROR:
                 case COLUMN_OFFSET:
-                case COLUMN_DRIFT:
+//                case COLUMN_DRIFT:
                     result = Qt::AlignCenter;
                     break;
                 default:
@@ -192,8 +199,8 @@ QVariant AlignClipsModel::headerData(int section, Qt::Orientation orientation, i
             return tr("Clip");
         case COLUMN_OFFSET:
             return tr("Offset");
-        case COLUMN_DRIFT:
-            return tr("Drift");
+//        case COLUMN_DRIFT:
+//            return tr("Drift");
         default:
             break;
         }

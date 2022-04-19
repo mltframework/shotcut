@@ -49,7 +49,7 @@ private slots:
     void processAndApply();
     void updateReferenceProgress(int percent);
     void updateClipProgress(int index, int percent);
-    void clipFinished(int index, int offset, double drift);
+    void clipFinished(int index, int offset, double drift, double quality);
 
 private:
     AlignTableDelegate* m_delegate;

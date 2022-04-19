@@ -20,6 +20,8 @@
 
 #include <QAbstractItemModel>
 
+#include <limits>
+
 class AlignClipsModel : public QAbstractItemModel
 {
     Q_OBJECT
@@ -30,9 +32,10 @@ public:
         COLUMN_ERROR = 0,
         COLUMN_NAME,
         COLUMN_OFFSET,
+//        COLUMN_DRIFT, // Future use
         COLUMN_COUNT,
-        COLUMN_DRIFT, // Future use
     };
+    static const int INVALID_OFFSET = std::numeric_limits<int>::max();
 
     explicit AlignClipsModel(QObject* parent = 0);
     virtual ~AlignClipsModel();
@@ -40,7 +43,7 @@ public:
     void addClip(const QString& name, int offset, int drift, const QString& error);
     void updateProgress(int row, int percent);
     int getProgress(int row) const;
-    void updateOffsetAndDrift(int row, int offset, double drift);
+    void updateOffsetAndDrift(int row, int offset, double drift, const QString& error);
     int getOffset(int row);
     double getDrift(int row);
 
