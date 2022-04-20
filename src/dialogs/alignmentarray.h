@@ -40,9 +40,10 @@ public:
 
 private:
     void transform();
-    fftw_plan m_plan;
-    std::complex<double>* m_buffer;
     std::vector<double> m_values;
+    fftw_plan m_forwardPlan;
+    std::complex<double>* m_forwardBuf;
+    double m_autocorrelationMax;
     size_t m_minimumSize;
     size_t m_actualComplexSize;
     bool m_isTransformed = false;

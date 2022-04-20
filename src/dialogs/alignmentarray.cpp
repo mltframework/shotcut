@@ -32,7 +32,8 @@
 static QMutex s_fftwPlanningMutex;
 
 AlignmentArray::AlignmentArray()
-    : m_isTransformed(false)
+    : m_autocorrelationMax(std::numeric_limits<double>::min())
+    , m_isTransformed(false)
 {
 }
 
@@ -45,8 +46,8 @@ AlignmentArray::AlignmentArray(size_t minimum_size)
 AlignmentArray::~AlignmentArray()
 {
     QMutexLocker locker(&s_fftwPlanningMutex);
-    fftw_free(reinterpret_cast<fftw_complex*>(m_buffer));
-    fftw_destroy_plan(m_plan);
+    fftw_free(reinterpret_cast<fftw_complex*>(m_forwardBuf));
+    fftw_destroy_plan(m_forwardPlan);
 }
 
 void AlignmentArray::init(size_t minimumSize)
@@ -67,7 +68,9 @@ double AlignmentArray::calculateOffset(AlignmentArray &from, int* offset)
     fftw_complex* buf = fftw_alloc_complex(m_actualComplexSize);
     std::complex<double>* correlationBuf = reinterpret_cast<std::complex<double>*>(buf);
     fftw_plan correlationPlan = fftw_plan_dft_1d(m_actualComplexSize, buf, buf, FFTW_BACKWARD, FFTW_ESTIMATE);
+    std::fill(correlationBuf, correlationBuf + m_actualComplexSize, std::complex<double>(0));
     s_fftwPlanningMutex.unlock();
+
     // Ensure the two sequences are transformed
     transform();
     from.transform();
@@ -75,7 +78,7 @@ double AlignmentArray::calculateOffset(AlignmentArray &from, int* offset)
     // Calculate the cross-correlation signal
     for(size_t i = 0; i < m_actualComplexSize; ++i)
     {
-        correlationBuf[i] = m_buffer[i] * std::conj(from.m_buffer[i]);
+        correlationBuf[i] = m_forwardBuf[i] * std::conj(from.m_forwardBuf[i]);
     }
     // Convert to time series
     fftw_execute(correlationPlan);
@@ -101,8 +104,10 @@ double AlignmentArray::calculateOffset(AlignmentArray &from, int* offset)
     fftw_destroy_plan(correlationPlan);
     s_fftwPlanningMutex.unlock();
 
-    // Normalize the best score by dividing by the cube of the size of the sequence
-    return max / pow(m_actualComplexSize, 3);
+    // Normalize the best score by dividing by the max autocorrelation of the two signals
+    // (Pearson's correlation coefficient)
+    double correlationCoefficient = sqrt(m_autocorrelationMax) * sqrt(from.m_autocorrelationMax);
+    return max / correlationCoefficient;
 }
 
 double AlignmentArray::calculateOffsetAndDrift(AlignmentArray& from, int precision, double drift_range, double* drift, int* offset)
@@ -123,11 +128,11 @@ double AlignmentArray::calculateOffsetAndDrift(AlignmentArray& from, int precisi
             int newShift = std::round(factor * i) - i;
             while(newShift > shift)
             {
-                drifted.m_buffer[i + shift] = from.m_buffer[i];
+                drifted.m_forwardBuf[i + shift] = from.m_forwardBuf[i];
                 ++shift;
             }
             shift = newShift;
-            drifted.m_buffer[i + shift] = from.m_buffer[i];
+            drifted.m_forwardBuf[i + shift] = from.m_forwardBuf[i];
         }
         double score = calculateOffset(drifted, offset);
         if(score > max_score)
@@ -150,15 +155,22 @@ void AlignmentArray::transform()
     QMutexLocker locker(&m_transformMutex);
     if (!m_isTransformed)
     {
-        // Create the plan while the global planning mutex is locked
+        // Create the plans while the global planning mutex is locked
         s_fftwPlanningMutex.lock();
-        fftw_complex* buf = fftw_alloc_complex(m_actualComplexSize);
-        m_buffer = reinterpret_cast<std::complex<double>*>(buf);
-        m_plan = fftw_plan_dft_1d(m_actualComplexSize, buf, buf, FFTW_FORWARD, FFTW_ESTIMATE);
-        std::fill(m_buffer, m_buffer + m_actualComplexSize, std::complex<double>(0));
+        fftw_complex* buf = nullptr;
+        // Allocate the forward buffer and plan
+        buf = fftw_alloc_complex(m_actualComplexSize);
+        m_forwardBuf = reinterpret_cast<std::complex<double>*>(buf);
+        m_forwardPlan = fftw_plan_dft_1d(m_actualComplexSize, buf, buf, FFTW_FORWARD, FFTW_ESTIMATE);
+        std::fill(m_forwardBuf, m_forwardBuf + m_actualComplexSize, std::complex<double>(0));
+        // Allocate the backward buffer and plan
+        buf = fftw_alloc_complex(m_actualComplexSize);
+        std::complex<double>* backwardBuf = reinterpret_cast<std::complex<double>*>(buf);
+        fftw_plan backwardPlan = fftw_plan_dft_1d(m_actualComplexSize, buf, buf, FFTW_BACKWARD, FFTW_ESTIMATE);
+        std::fill(backwardBuf, backwardBuf + m_actualComplexSize, std::complex<double>(0));
         s_fftwPlanningMutex.unlock();
 
-        // Calculate a normalization factor.
+        // Calculate a normalization factor for the initial values.
         // This uses a simplified standard deviation calculation that assumes the mean is 0.
         double accum = 0.0;
         std::for_each (m_values.begin(), m_values.end(), [&](const double d) {
@@ -167,10 +179,31 @@ void AlignmentArray::transform()
         double factor = sqrt(accum / (m_values.size() - 1));
         // Fill the transform array applying the normalization factor
         for( size_t i = 0; i < m_values.size(); i++ ) {
-            m_buffer[i] = m_values[i] / factor;
+            m_forwardBuf[i] = m_values[i] / factor;
         }
         // Perform the forward DFT
-        fftw_execute(m_plan);
+        fftw_execute(m_forwardPlan);
+
+        // Perform autocorrelation to calculate the maximum correlation value
+        for(size_t i = 0; i < m_actualComplexSize; i++)
+        {
+            backwardBuf[i] = m_forwardBuf[i] * std::conj(m_forwardBuf[i]);
+        }
+        // Convert back to time series
+        fftw_execute(backwardPlan);
+        // Find the maximum autocorrelation value
+        for (size_t i = 0; i < m_actualComplexSize; i++)
+        {
+            double norm = std::norm(backwardBuf[i]);
+            if (norm > m_autocorrelationMax)
+                m_autocorrelationMax = norm;
+        }
+
+        s_fftwPlanningMutex.lock();
+        fftw_free(backwardBuf);
+        fftw_destroy_plan(backwardPlan);
+        s_fftwPlanningMutex.unlock();
+
         m_isTransformed = true;
     }
 }

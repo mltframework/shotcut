@@ -427,14 +427,12 @@ void AlignAudioDialog::updateClipProgress(int index, int percent)
 void AlignAudioDialog::clipFinished(int index, int offset, double drift, double quality)
 {
     QString error;
-/*
-    if (quality < 50) {
+    LOG_INFO() << "Clip" << index << "Offset:" << offset << "Quality:" << quality;
+    if (quality < 0.01) {
         error = tr("Alignment not found.");
         offset = AlignClipsModel::INVALID_OFFSET;
         drift = AlignClipsModel::INVALID_OFFSET;
     }
-*/
-    LOG_INFO() << "Clip" << index << "Alignment. Offset:" << offset << "Quality:" << quality << "|" << error;
     m_alignClipsModel.updateOffsetAndDrift(index, offset, drift, error);
     m_alignClipsModel.updateProgress(index, 100);
 }
