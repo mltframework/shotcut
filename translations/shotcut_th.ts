@@ -1723,9 +1723,9 @@ in temporal compression</source>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1878"/>
-        <location filename="../src/docks/encodedock.cpp" line="913"/>
-        <location filename="../src/docks/encodedock.cpp" line="1449"/>
-        <location filename="../src/docks/encodedock.cpp" line="1902"/>
+        <location filename="../src/docks/encodedock.cpp" line="916"/>
+        <location filename="../src/docks/encodedock.cpp" line="1454"/>
+        <location filename="../src/docks/encodedock.cpp" line="1908"/>
         <source>Export File</source>
         <translation>ไฟล์ส่งออก</translation>
     </message>
@@ -1751,17 +1751,17 @@ in temporal compression</source>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1918"/>
-        <location filename="../src/docks/encodedock.cpp" line="1614"/>
-        <location filename="../src/docks/encodedock.cpp" line="1621"/>
-        <location filename="../src/docks/encodedock.cpp" line="1734"/>
+        <location filename="../src/docks/encodedock.cpp" line="1619"/>
+        <location filename="../src/docks/encodedock.cpp" line="1626"/>
+        <location filename="../src/docks/encodedock.cpp" line="1739"/>
         <source>Stream</source>
         <translation>กระแสไหลเวียน</translation>
     </message>
     <message>
         <location filename="../src/docks/encodedock.ui" line="1945"/>
-        <location filename="../src/docks/encodedock.cpp" line="1424"/>
-        <location filename="../src/docks/encodedock.cpp" line="1538"/>
-        <location filename="../src/docks/encodedock.cpp" line="1552"/>
+        <location filename="../src/docks/encodedock.cpp" line="1429"/>
+        <location filename="../src/docks/encodedock.cpp" line="1543"/>
+        <location filename="../src/docks/encodedock.cpp" line="1557"/>
         <source>Stop Capture</source>
         <translation>หยุดการจับ</translation>
     </message>
@@ -1777,168 +1777,168 @@ in temporal compression</source>
         <translation>รูปแบบเริ่มต้น</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="411"/>
+        <location filename="../src/docks/encodedock.cpp" line="409"/>
         <source>Timeline</source>
         <translation>ไทม์ไลน์</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="413"/>
+        <location filename="../src/docks/encodedock.cpp" line="411"/>
         <source>Playlist</source>
         <translation>รายการเพลย์ลิส</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="414"/>
+        <location filename="../src/docks/encodedock.cpp" line="412"/>
         <source>Each Playlist Item</source>
         <translation>แต่ละรายการเพลง</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="417"/>
-        <location filename="../src/docks/encodedock.cpp" line="422"/>
+        <location filename="../src/docks/encodedock.cpp" line="415"/>
+        <location filename="../src/docks/encodedock.cpp" line="420"/>
         <source>Source</source>
         <translation>แหล่งกำเนิดต้นตอ</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="427"/>
-        <location filename="../src/docks/encodedock.cpp" line="434"/>
+        <location filename="../src/docks/encodedock.cpp" line="425"/>
+        <location filename="../src/docks/encodedock.cpp" line="432"/>
         <source>Marker</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="445"/>
+        <location filename="../src/docks/encodedock.cpp" line="443"/>
         <source>You must enter numeric values using &apos;%1&apos; as the decimal point.</source>
         <translation>คุณต้องป้อนค่าตัวเลข &apos;%1&apos; โดยใช้เป็นจุดทศนิยม</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="453"/>
-        <location filename="../src/docks/encodedock.cpp" line="1371"/>
-        <location filename="../src/docks/encodedock.cpp" line="1372"/>
+        <location filename="../src/docks/encodedock.cpp" line="451"/>
+        <location filename="../src/docks/encodedock.cpp" line="1376"/>
+        <location filename="../src/docks/encodedock.cpp" line="1377"/>
         <source>Custom</source>
         <translation>กำหนดเอง</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="489"/>
+        <location filename="../src/docks/encodedock.cpp" line="487"/>
         <source>Stock</source>
         <translation>ที่สะสมไว้</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="492"/>
+        <location filename="../src/docks/encodedock.cpp" line="490"/>
         <source>Default</source>
         <translation>ค่าเริ่มต้น</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="967"/>
+        <location filename="../src/docks/encodedock.cpp" line="969"/>
         <source>You cannot write to a file that is in your project.
 Try again with a different folder or file name.</source>
         <translation>คุณไม่สามารถเขียนข้อมูลไปยังไฟล์ที่อยู่ในโครงการของคุณ  ลองอีกครั้งด้วยชื่ออื่นหรือไฟล์อื่น</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1133"/>
+        <location filename="../src/docks/encodedock.cpp" line="1135"/>
         <source>Shotcut found filters that require analysis jobs that have not run.
 Do you want to run the analysis jobs now?</source>
         <translation>Shotcut พบตัวกรองที่ต้องการงานการวิคราะห์ที่ไม่ได้ทำงาน  คูณต้องการที่จะเริ่มงานการวิเคราะห์ทันทีหรือไม่?</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1449"/>
-        <location filename="../src/docks/encodedock.cpp" line="1904"/>
+        <location filename="../src/docks/encodedock.cpp" line="1454"/>
+        <location filename="../src/docks/encodedock.cpp" line="1910"/>
         <source>Capture File</source>
         <translation>การรวบตัว ไฟล์</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1451"/>
+        <location filename="../src/docks/encodedock.cpp" line="1456"/>
         <source>Export Files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1452"/>
+        <location filename="../src/docks/encodedock.cpp" line="1457"/>
         <source>Export Each Playlist Item</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1461"/>
+        <location filename="../src/docks/encodedock.cpp" line="1466"/>
         <source>%1 (*.%2);;All Files (*)</source>
         <translation>%1 (*.%2);;แฟ้มข้อมูลทั้งหมด (*)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1463"/>
+        <location filename="../src/docks/encodedock.cpp" line="1468"/>
         <source>Determined by Export (*)</source>
         <translation>กำหนดโดยการส่งออก</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1490"/>
+        <location filename="../src/docks/encodedock.cpp" line="1495"/>
         <source>The drive you chose only has %1 MiB of free space.
 Do you still want to continue?</source>
         <translation>ไดร์ที่คุณเลือกมีพื้นที่ว่าง %1 MiB เท่านั้น
 คุณยังต้องการดำเนินการต่อหรือไม่</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1497"/>
+        <location filename="../src/docks/encodedock.cpp" line="1502"/>
         <source>Do not show this anymore.</source>
         <comment>Export free disk space warning dialog</comment>
         <translation>ไม่ต้องแสดงสิ่งนี้อีกต่อไป</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1502"/>
+        <location filename="../src/docks/encodedock.cpp" line="1507"/>
         <source>Export canceled.</source>
         <translation>การส่งออกถูกยกเลิก</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1609"/>
-        <location filename="../src/docks/encodedock.cpp" line="1630"/>
+        <location filename="../src/docks/encodedock.cpp" line="1614"/>
+        <location filename="../src/docks/encodedock.cpp" line="1635"/>
         <source>Stop Stream</source>
         <translation>หยุดสตรีม</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1622"/>
+        <location filename="../src/docks/encodedock.cpp" line="1627"/>
         <source>Enter the network protocol scheme, address, port, and parameters as an URL:</source>
         <translation>เข้าสู่โครงร่างรูปแบบโปรโตคอล, ที่อยู่, ช่อง และ พารามิเตอร์เป็น  URL;</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1667"/>
+        <location filename="../src/docks/encodedock.cpp" line="1672"/>
         <source>Add Export Preset</source>
         <translation>เพิ่มการส่งออกที่ตั้งไว้ล่วงหน้า</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1711"/>
+        <location filename="../src/docks/encodedock.cpp" line="1716"/>
         <source>Delete Preset</source>
         <translation>ลบที่ตั้งไว้ล่วงหน้า</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1712"/>
+        <location filename="../src/docks/encodedock.cpp" line="1717"/>
         <source>Are you sure you want to delete %1?</source>
         <translation>คุณแน่ใจหรือว่าต้องการลบ %1?</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1839"/>
+        <location filename="../src/docks/encodedock.cpp" line="1844"/>
         <source>None</source>
         <translation>ไม่มี</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1888"/>
+        <location filename="../src/docks/encodedock.cpp" line="1894"/>
         <source>KiB (%1s)</source>
         <translation>KiB (%1s)</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1986"/>
+        <location filename="../src/docks/encodedock.cpp" line="1992"/>
         <source>Detect</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2075"/>
+        <location filename="../src/docks/encodedock.cpp" line="2083"/>
         <source>Detecting hardware encoders...</source>
         <translation>ตรวจจับตัวเข้ารหัสฮาร์ดแวร์</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2108"/>
+        <location filename="../src/docks/encodedock.cpp" line="2116"/>
         <source>Nothing found</source>
         <translation>ไม่พบอะไรเลย</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2110"/>
+        <location filename="../src/docks/encodedock.cpp" line="2118"/>
         <source>Found %1</source>
         <translation>ตรวจพบ %1</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2145"/>
+        <location filename="../src/docks/encodedock.cpp" line="2188"/>
         <source>Your project is missing some files.
 
 Save your project, close it, and reopen it.
@@ -1946,12 +1946,12 @@ Shotcut will attempt to repair your project.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="1984"/>
+        <location filename="../src/docks/encodedock.cpp" line="1990"/>
         <source>Configure Hardware Encoding</source>
         <translation>กำหนดค่าการเข้ารหัสฮาร์ดแวร์</translation>
     </message>
     <message>
-        <location filename="../src/docks/encodedock.cpp" line="2008"/>
+        <location filename="../src/docks/encodedock.cpp" line="2014"/>
         <source>Export Frames/sec</source>
         <translation>ส่งออก เฟรม/วินาที</translation>
     </message>
@@ -2049,32 +2049,32 @@ Shotcut will attempt to repair your project.</source>
         <translation>%1 วันที่ของไฟล์</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/filedatedialog.cpp" line="99"/>
+        <location filename="../src/dialogs/filedatedialog.cpp" line="98"/>
         <source>Current Value</source>
         <translation>มูลค่าปัจจุบัน</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/filedatedialog.cpp" line="103"/>
+        <location filename="../src/dialogs/filedatedialog.cpp" line="102"/>
         <source>Now</source>
         <translation>ตอนนี้</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/filedatedialog.cpp" line="109"/>
+        <location filename="../src/dialogs/filedatedialog.cpp" line="108"/>
         <source>System - Modified</source>
         <translation>ระบบ - แก้ไข</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/filedatedialog.cpp" line="110"/>
+        <location filename="../src/dialogs/filedatedialog.cpp" line="109"/>
         <source>System - Created</source>
         <translation>ระบบ - สร้าง</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/filedatedialog.cpp" line="119"/>
+        <location filename="../src/dialogs/filedatedialog.cpp" line="118"/>
         <source>Metadata - Creation Time</source>
         <translation>ข้อมูลเมตา - เวลาสร้าง</translation>
     </message>
     <message>
-        <location filename="../src/dialogs/filedatedialog.cpp" line="124"/>
+        <location filename="../src/dialogs/filedatedialog.cpp" line="123"/>
         <source>Metadata - QuickTime date</source>
         <translation>ข้อมูลเมตา - วันที่ QuickTime</translation>
     </message>
@@ -3180,8 +3180,8 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="452"/>
-        <location filename="../src/mainwindow.cpp" line="1743"/>
-        <location filename="../src/mainwindow.cpp" line="3386"/>
+        <location filename="../src/mainwindow.cpp" line="1784"/>
+        <location filename="../src/mainwindow.cpp" line="3427"/>
         <source>Enter Full Screen</source>
         <translation>เข้าสู่โหมดเต็มหน้าจอ</translation>
     </message>
@@ -3192,7 +3192,7 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="476"/>
-        <location filename="../src/mainwindow.cpp" line="295"/>
+        <location filename="../src/mainwindow.cpp" line="349"/>
         <source>Properties</source>
         <translation>คุณสมบัติ</translation>
     </message>
@@ -3208,7 +3208,7 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="503"/>
-        <location filename="../src/mainwindow.cpp" line="426"/>
+        <location filename="../src/mainwindow.cpp" line="480"/>
         <source>History</source>
         <translation>ประวัติการ</translation>
     </message>
@@ -3457,7 +3457,7 @@ audio (0%) or clip B&apos;s audio (100%).</source>
     <message>
         <location filename="../src/mainwindow.ui" line="1310"/>
         <location filename="../src/mainwindow.ui" line="1313"/>
-        <location filename="../src/mainwindow.cpp" line="5063"/>
+        <location filename="../src/mainwindow.cpp" line="5104"/>
         <source>Export Chapters</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3740,148 +3740,148 @@ Please install it using your package manager. It may be named libsdl2-2.0-0, SDL
 กรุณาติดตั้งโดยใช้ผู้จัดการแพคเกจของคุณ มันอาจจะชื่อ  libsdl2-2.0-0, SDL2,หรือคล้ายกัน</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="653"/>
+        <location filename="../src/mainwindow.cpp" line="694"/>
         <source>Screen %1 (%2 x %3 @ %4 Hz)</source>
         <translation>จอภาพ %1 (%2 x %3 @ %4 Hz)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="677"/>
+        <location filename="../src/mainwindow.cpp" line="718"/>
         <source>Off</source>
         <translation>ปิด</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="680"/>
+        <location filename="../src/mainwindow.cpp" line="721"/>
         <source>Internal</source>
         <translation>ภายใน</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="683"/>
+        <location filename="../src/mainwindow.cpp" line="724"/>
         <source>External</source>
         <translation>ภายนอก</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="697"/>
+        <location filename="../src/mainwindow.cpp" line="738"/>
         <source>DeckLink Keyer</source>
         <translation>DeckLink Keyer</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="1264"/>
-        <location filename="../src/mainwindow.cpp" line="941"/>
+        <location filename="../src/mainwindow.cpp" line="982"/>
         <source>Color</source>
         <translation>สี</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="943"/>
+        <location filename="../src/mainwindow.cpp" line="984"/>
         <source>Text</source>
         <translation>ข้อความ</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="946"/>
+        <location filename="../src/mainwindow.cpp" line="987"/>
         <source>Noise</source>
         <translation>สัณญาณรบกวน</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="948"/>
+        <location filename="../src/mainwindow.cpp" line="989"/>
         <source>Ising</source>
         <translation>Ising</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="950"/>
+        <location filename="../src/mainwindow.cpp" line="991"/>
         <source>Lissajous</source>
         <translation>Lissajous</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="952"/>
+        <location filename="../src/mainwindow.cpp" line="993"/>
         <source>Plasma</source>
         <translation>พลาสมา</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="954"/>
+        <location filename="../src/mainwindow.cpp" line="995"/>
         <source>Color Bars</source>
         <translation>แถบสี</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="956"/>
+        <location filename="../src/mainwindow.cpp" line="997"/>
         <source>Audio Tone</source>
         <translation>เสียง</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="958"/>
+        <location filename="../src/mainwindow.cpp" line="999"/>
         <source>Count</source>
         <translation>การนับ</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="960"/>
+        <location filename="../src/mainwindow.cpp" line="1001"/>
         <source>Blip Flash</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="963"/>
+        <location filename="../src/mainwindow.cpp" line="1004"/>
         <source>Video4Linux</source>
         <translation>Video4Linux</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="964"/>
+        <location filename="../src/mainwindow.cpp" line="1005"/>
         <source>PulseAudio</source>
         <translation>ชีพจรเสียง</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="965"/>
+        <location filename="../src/mainwindow.cpp" line="1006"/>
         <source>JACK Audio</source>
         <translation>แจ็คเสียง</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="966"/>
+        <location filename="../src/mainwindow.cpp" line="1007"/>
         <source>ALSA Audio</source>
         <translation>ALSA เสียง</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="968"/>
+        <location filename="../src/mainwindow.cpp" line="1009"/>
         <source>Audio/Video Device</source>
         <translation>อุปกรณืเสียง/วีดีโอ</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="971"/>
+        <location filename="../src/mainwindow.cpp" line="1012"/>
         <source>SDI/HDMI</source>
         <translation>SDI/HDMI</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="993"/>
-        <location filename="../src/mainwindow.cpp" line="995"/>
-        <location filename="../src/mainwindow.cpp" line="1392"/>
-        <location filename="../src/mainwindow.cpp" line="1400"/>
-        <location filename="../src/mainwindow.cpp" line="1421"/>
-        <location filename="../src/mainwindow.cpp" line="1477"/>
-        <location filename="../src/mainwindow.cpp" line="3999"/>
-        <location filename="../src/mainwindow.cpp" line="4013"/>
-        <location filename="../src/mainwindow.cpp" line="4885"/>
+        <location filename="../src/mainwindow.cpp" line="1034"/>
+        <location filename="../src/mainwindow.cpp" line="1036"/>
+        <location filename="../src/mainwindow.cpp" line="1433"/>
+        <location filename="../src/mainwindow.cpp" line="1441"/>
+        <location filename="../src/mainwindow.cpp" line="1462"/>
+        <location filename="../src/mainwindow.cpp" line="1518"/>
+        <location filename="../src/mainwindow.cpp" line="4040"/>
+        <location filename="../src/mainwindow.cpp" line="4054"/>
+        <location filename="../src/mainwindow.cpp" line="4926"/>
         <source>Failed to open </source>
         <translation>ไม่สามารถเปิดได้</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1035"/>
+        <location filename="../src/mainwindow.cpp" line="1076"/>
         <source>The file you opened uses CPU effects that are incompatible with GPU effects, but GPU effects are enabled.
 Do you want to disable GPU effects and restart?</source>
         <translation>ไฟล์ที่คุณเปิดใช้เอฟเฟกต์ CPU เข้ากันไม่ได้กับ เอฟเฟกต์ GPU แต่เอฟเฟกต์ GPU ใช้งานได้
 คุณต้องการปิดใช้งานเอฟเฟกต์ GPUและรีสตาร์ทหรือไม่?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1058"/>
+        <location filename="../src/mainwindow.cpp" line="1099"/>
         <source>Repaired</source>
         <translation>การซ่อมแซม</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1059"/>
+        <location filename="../src/mainwindow.cpp" line="1100"/>
         <source>Save Repaired XML</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1085"/>
+        <location filename="../src/mainwindow.cpp" line="1126"/>
         <source>Repairing the project failed.</source>
         <translation>การซ่อมแซมโครงการล้มเหลว</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1098"/>
+        <location filename="../src/mainwindow.cpp" line="1139"/>
         <source>Shotcut noticed some problems in your project.
 Do you want Shotcut to try to repair it?
 
@@ -3894,29 +3894,29 @@ with &quot;- Repaired&quot; in the file name and open it.</source>
 ด้วย &quot;การซ่อมแซม&quot; ในชื่อไฟล์และเปิดมัน</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1134"/>
+        <location filename="../src/mainwindow.cpp" line="1175"/>
         <source>Auto-saved files exist. Do you want to recover them now?</source>
         <translation>ไฟล์ที่บันทึกอัตโนมัติมีอยู่ คุณต้องการกู้คืนทันทีหรือไม่?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1212"/>
+        <location filename="../src/mainwindow.cpp" line="1253"/>
         <source>You cannot add a project to itself!</source>
         <translation>คุณไม่สามารถเพิ่มโครงการให้กับตัวเอง</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1248"/>
+        <location filename="../src/mainwindow.cpp" line="1289"/>
         <source>There was an error saving. Please try again.</source>
         <translation>เกิดข้อผิดพลาดในการบันทึก กรุณาลองอีกครั้ง</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1325"/>
+        <location filename="../src/mainwindow.cpp" line="1366"/>
         <source>This project file requires a newer version!
 
 It was made with version </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1350"/>
+        <location filename="../src/mainwindow.cpp" line="1391"/>
         <source>You are running low on available memory!
 
 Please close other applications or web browser tabs and retry.
@@ -3924,212 +3924,212 @@ Or save and restart Shotcut.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1386"/>
+        <location filename="../src/mainwindow.cpp" line="1427"/>
         <source>Opening %1</source>
         <translation>การเปิด %1</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1512"/>
-        <location filename="../src/mainwindow.cpp" line="3969"/>
+        <location filename="../src/mainwindow.cpp" line="1553"/>
+        <location filename="../src/mainwindow.cpp" line="4010"/>
         <source>Open File</source>
         <translation>เปิดไฟล์</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1513"/>
+        <location filename="../src/mainwindow.cpp" line="1554"/>
         <source>All Files (*);;MLT XML (*.mlt)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1805"/>
+        <location filename="../src/mainwindow.cpp" line="1846"/>
         <source>Untitled</source>
         <translation>ไม่ได้ตั้งชื่อ</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1824"/>
+        <location filename="../src/mainwindow.cpp" line="1865"/>
         <source>About %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1825"/>
+        <location filename="../src/mainwindow.cpp" line="1866"/>
         <source>&lt;h1&gt;Shotcut version %2&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;%3&quot;&gt;%1&lt;/a&gt; is a free, open source, cross platform video editor.&lt;/p&gt;&lt;small&gt;&lt;p&gt;%4&lt;/p&gt;&lt;p&gt;Licensed under the %5&lt;/p&gt;&lt;p&gt;This program proudly uses the following projects:&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://www.qt.io/&quot;&gt;Qt&lt;/a&gt; application and UI framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mltframework.org/&quot;&gt;MLT&lt;/a&gt; multimedia authoring framework&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.ffmpeg.org/&quot;&gt;FFmpeg&lt;/a&gt; multimedia format and codec libraries&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.videolan.org/developers/x264.html&quot;&gt;x264&lt;/a&gt; H.264 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.webmproject.org/&quot;&gt;WebM&lt;/a&gt; VP8 and VP9 encoders&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://lame.sourceforge.net/&quot;&gt;LAME&lt;/a&gt; MP3 encoder&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.dyne.org/software/frei0r/&quot;&gt;Frei0r&lt;/a&gt; video plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.ladspa.org/&quot;&gt;LADSPA&lt;/a&gt; audio plugins&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.defaulticon.com/&quot;&gt;DefaultIcon&lt;/a&gt; icon collection by &lt;a href=&quot;http://www.interactivemania.com/&quot;&gt;interactivemania&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt;Oxygen&lt;/a&gt; icon collection&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;&lt;p&gt;The source code used to build this program can be downloaded from &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt;.&lt;/p&gt;This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.&lt;/small&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2461"/>
+        <location filename="../src/mainwindow.cpp" line="2502"/>
         <source>Non-Broadcast</source>
         <translation>ไม่ใช่การออกอากาศ</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2466"/>
+        <location filename="../src/mainwindow.cpp" line="2507"/>
         <source>DVD Widescreen NTSC</source>
         <translation>DVD Widescreen NTSC</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2467"/>
+        <location filename="../src/mainwindow.cpp" line="2508"/>
         <source>DVD Widescreen PAL</source>
         <translation>DVD Widescreen PAL</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2478"/>
+        <location filename="../src/mainwindow.cpp" line="2519"/>
         <source>Square 1080p 30 fps</source>
         <translation>สี่เหลี่ยมจัตุรัส 1080p 30 fps</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2479"/>
+        <location filename="../src/mainwindow.cpp" line="2520"/>
         <source>Square 1080p 60 fps</source>
         <translation>สี่เหลี่ยมจัตุรัส 1080p 60 fps</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2480"/>
+        <location filename="../src/mainwindow.cpp" line="2521"/>
         <source>Vertical HD 30 fps</source>
         <translation>แนวตั้ง HD 30 fps</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2481"/>
+        <location filename="../src/mainwindow.cpp" line="2522"/>
         <source>Vertical HD 60 fps</source>
         <translation>แนวตั้ง HD 60 fps</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2482"/>
+        <location filename="../src/mainwindow.cpp" line="2523"/>
         <source>Custom</source>
         <translation>กำหนดเอง</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2513"/>
-        <location filename="../src/mainwindow.cpp" line="2808"/>
+        <location filename="../src/mainwindow.cpp" line="2554"/>
+        <location filename="../src/mainwindow.cpp" line="2849"/>
         <source>Saved %1</source>
         <translation>บันทึก %1แล้ว</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2800"/>
-        <location filename="../src/mainwindow.cpp" line="2822"/>
+        <location filename="../src/mainwindow.cpp" line="2841"/>
+        <location filename="../src/mainwindow.cpp" line="2863"/>
         <source>Save XML</source>
         <translation>บันทึก XML</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5065"/>
+        <location filename="../src/mainwindow.cpp" line="5106"/>
         <source>Text (*.txt);;All Files (*)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="5110"/>
+        <location filename="../src/mainwindow.cpp" line="5151"/>
         <source>Failed to open export-chapters.js</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1061"/>
-        <location filename="../src/mainwindow.cpp" line="2824"/>
+        <location filename="../src/mainwindow.cpp" line="1102"/>
+        <location filename="../src/mainwindow.cpp" line="2865"/>
         <source>MLT XML (*.mlt)</source>
         <translation>MLT XML (*.mlt)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2843"/>
+        <location filename="../src/mainwindow.cpp" line="2884"/>
         <source>The project has been modified.
 Do you want to save your changes?</source>
         <translation>โครงการได้รับการแก้ไข 
 คุณต้องการบันทึกการเปลี่ยนแปลงของคุณหรือไม่?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2872"/>
+        <location filename="../src/mainwindow.cpp" line="2913"/>
         <source>There are incomplete jobs.
 Do you want to still want to exit?</source>
         <translation>มีงานที่ยังไม่สมบูรณ์
 คุณยังต้องการที่จะออกหรือไม่?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="2885"/>
+        <location filename="../src/mainwindow.cpp" line="2926"/>
         <source>An export is in progress.
 Do you want to still want to exit?</source>
         <translation>การส่งออกอยู่ในระหว่างดำเนินการ 
 คุณยังต้องการที่จะออกหรือไม่?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1741"/>
-        <location filename="../src/mainwindow.cpp" line="3393"/>
+        <location filename="../src/mainwindow.cpp" line="1782"/>
+        <location filename="../src/mainwindow.cpp" line="3434"/>
         <source>Exit Full Screen</source>
         <translation>ออกจากหน้าจอเต็ม</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4849"/>
+        <location filename="../src/mainwindow.cpp" line="4890"/>
         <source>Turn Proxy On</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4849"/>
+        <location filename="../src/mainwindow.cpp" line="4890"/>
         <source>Turn Proxy Off</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4853"/>
+        <location filename="../src/mainwindow.cpp" line="4894"/>
         <source>Converting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4867"/>
+        <location filename="../src/mainwindow.cpp" line="4908"/>
         <source>Do you want to create missing proxies for every file in this project?
 
 You must reopen your project after all proxy jobs are finished.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4902"/>
+        <location filename="../src/mainwindow.cpp" line="4943"/>
         <source>Proxy Folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4917"/>
+        <location filename="../src/mainwindow.cpp" line="4958"/>
         <source>Do you want to move all files from the old folder to the new folder?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4924"/>
+        <location filename="../src/mainwindow.cpp" line="4965"/>
         <source>Moving Files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3406"/>
+        <location filename="../src/mainwindow.cpp" line="3447"/>
         <source>GPU effects are not supported</source>
         <translation>ไม่รองรับเอฟเฟกต์ GPU</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1021"/>
+        <location filename="../src/mainwindow.cpp" line="1062"/>
         <source>The file you opened uses GPU effects, but GPU effects are not enabled.
 
 GPU effects are EXPERIMENTAL, UNSTABLE and UNSUPPORTED! Unsupported means do not report bugs about it.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3468"/>
+        <location filename="../src/mainwindow.cpp" line="3509"/>
         <source>Click here to check for a new version of Shotcut.</source>
         <translation>คลิกที่นี่เพื่อตรวจสอบ shotcut รุ่นใหม่</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3573"/>
+        <location filename="../src/mainwindow.cpp" line="3614"/>
         <source>Open Files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3607"/>
+        <location filename="../src/mainwindow.cpp" line="3648"/>
         <source>You must restart Shotcut to switch to the new language.
 Do you want to restart now?</source>
         <translation>คุณต้องรีสตาร์ท shotcut เพื่อเปลี่ยนเป็นภาษาใหม่
 คุณต้องการเริ่มต้นการตั้งค่าใหม่ตอนนี้หรือไม่?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3648"/>
+        <location filename="../src/mainwindow.cpp" line="3689"/>
         <source>Failed to connect to JACK.
 Please verify that JACK is installed and running.</source>
         <translation>ไม่สามารถเชื่อมต่อกับแจ็ค โปรดตรวจสอบว่าแจ็คติดตั้งและทำงานอยู่</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3657"/>
+        <location filename="../src/mainwindow.cpp" line="3698"/>
         <source>GPU effects are experimental and may cause instability on some systems. Some CPU effects are incompatible with GPU effects and will be disabled. A project created with GPU effects can not be converted to a CPU only project later.
 
 Do you want to enable GPU effects and restart Shotcut?</source>
         <translation>ผลของ GPU เป็นการทดลองและอาจทำให้เกิดความไม่แน่นอนในบางระบบ เอฟเฟกต์ของCPU บางอย่างเข้ากันไม่ได้กับเอฟเฟกต์ GPU และจะถูกปิดการใช้งาน โครงการที่สร้างด้วยเอฟเฟกต์ GPU ไม่สามารถแปลงเป็นโครงการ CPU ได้ในภายหลังเท่านั้น</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3679"/>
+        <location filename="../src/mainwindow.cpp" line="3720"/>
         <source>Shotcut must restart to disable GPU effects.
 
 Disable GPU effects and restart?</source>
@@ -4138,29 +4138,29 @@ Disable GPU effects and restart?</source>
 ปิดใช้งานเอฟเฟกต์GPU แล้วรีสตาร์ท?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3816"/>
+        <location filename="../src/mainwindow.cpp" line="3857"/>
         <source>You must restart %1 to switch to the new theme.
 Do you want to restart now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3947"/>
+        <location filename="../src/mainwindow.cpp" line="3988"/>
         <source>Do you want to automatically check for updates in the future?</source>
         <translation>คุณต้องการตรวจสอบการอัปเดตโดยอัตโนมัติในอนาคตหรือไม่?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3954"/>
+        <location filename="../src/mainwindow.cpp" line="3995"/>
         <source>Do not show this anymore.</source>
         <comment>Automatic upgrade check dialog</comment>
         <translation>ไม่ต้องแสดงสิ่งนี้อีกต่อไป</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3970"/>
+        <location filename="../src/mainwindow.cpp" line="4011"/>
         <source>MLT XML (*.mlt);;All Files (*)</source>
         <translation>MLT XML (*.mlt);;แฟ้มข้อมูลทั้งหมด (*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3987"/>
+        <location filename="../src/mainwindow.cpp" line="4028"/>
         <source>The decimal point of the MLT XML file
 you want to open is incompatible.
 
@@ -4171,62 +4171,62 @@ Do you want to continue to open this MLT XML file?</source>
 คุณต้องการเปิดไฟล์ MLT XML ต่อไปหรือไม่?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4054"/>
+        <location filename="../src/mainwindow.cpp" line="4095"/>
         <source>You must restart Shotcut to change the display method.
 Do you want to restart now?</source>
         <translation>คุณต้องรีสตาร์ท shotcut เพื่อเปลี่ยนวิธีการแสดง
 คุณต้องการเริ่มต้นใหม่ตอนนี้หรือไม่?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4076"/>
+        <location filename="../src/mainwindow.cpp" line="4117"/>
         <source>Application Log</source>
         <translation>แอปพลิเคชันบันทึก</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4125"/>
+        <location filename="../src/mainwindow.cpp" line="4166"/>
         <source>Shotcut version %1 is available! Click here to get it.</source>
         <translation>มี shotcut  เวอร์ชั่น %1 แล้ว!  คลิกที่นี่พื่อรับมัน</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4131"/>
+        <location filename="../src/mainwindow.cpp" line="4172"/>
         <source>You are running the latest version of Shotcut.</source>
         <translation>คุณกำลังเรียกใช้ shotcut รุ่นล่าสุด</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4141"/>
+        <location filename="../src/mainwindow.cpp" line="4182"/>
         <source>Failed to read version.json when checking. Click here to go to the Web site.</source>
         <translation>ไม่สามารถอ่าน เวอร์ชัน.json เมื่อตรวจสอบ  คลิกที่นี่เพื่อไปที่เว็ปไซต์</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="933"/>
         <location filename="../src/mainwindow.ui" line="936"/>
-        <location filename="../src/mainwindow.cpp" line="4190"/>
+        <location filename="../src/mainwindow.cpp" line="4231"/>
         <source>Export EDL</source>
         <translation>ส่งออก EDL</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4192"/>
+        <location filename="../src/mainwindow.cpp" line="4233"/>
         <source>EDL (*.edl);;All Files (*)</source>
         <translation>EDL (*.edl);;แฟ้มข้อมูลทั้งหมด (*)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4238"/>
-        <location filename="../src/mainwindow.cpp" line="5107"/>
+        <location filename="../src/mainwindow.cpp" line="4279"/>
+        <location filename="../src/mainwindow.cpp" line="5148"/>
         <source>A JavaScript error occurred during export.</source>
         <translation>เกิดข้อผิดพลาดกับ Javascript ระหว่างการส่งออก</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4241"/>
+        <location filename="../src/mainwindow.cpp" line="4282"/>
         <source>Failed to open export-edl.js</source>
         <translation>ไม่สามารถเปิด export-eel.js</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4270"/>
+        <location filename="../src/mainwindow.cpp" line="4311"/>
         <source>Export frame from proxy?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4271"/>
+        <location filename="../src/mainwindow.cpp" line="4312"/>
         <source>This frame may be from a lower resolution proxy instead of the original source.
 
 Do you still want to continue?</source>
@@ -4235,49 +4235,49 @@ Do you still want to continue?</source>
     <message>
         <location filename="../src/mainwindow.ui" line="944"/>
         <location filename="../src/mainwindow.ui" line="947"/>
-        <location filename="../src/mainwindow.cpp" line="4283"/>
+        <location filename="../src/mainwindow.cpp" line="4324"/>
         <source>Export Frame</source>
         <translation>กรอบการส่งออก</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4290"/>
+        <location filename="../src/mainwindow.cpp" line="4331"/>
         <source>Unable to export frame.</source>
         <translation>ไม่สามรถส่งออกเฟรม</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4298"/>
+        <location filename="../src/mainwindow.cpp" line="4339"/>
         <source>You must restart Shotcut to change the data directory.
 Do you want to continue?</source>
         <translation>คุณต้องรีสตาร์ท Shotcut เพื่อเปลี่ยนไดเรกทอรีข้อมูล
 คุณต้องการที่จะดำเนินการต่อไปหรือไม่?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4307"/>
+        <location filename="../src/mainwindow.cpp" line="4348"/>
         <source>Data Directory</source>
         <translation>ไดเรกทอรีข้อมูล</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4484"/>
+        <location filename="../src/mainwindow.cpp" line="4525"/>
         <source>Add Custom Layout</source>
         <translation>เพิ่มเลย์เอาต์ที่กำหนดเอง</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4485"/>
+        <location filename="../src/mainwindow.cpp" line="4526"/>
         <source>Name</source>
         <translation>ชื่อ</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4522"/>
+        <location filename="../src/mainwindow.cpp" line="4563"/>
         <source>Remove Video Mode</source>
         <translation>ลบโหมดวีดีโอ</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4536"/>
+        <location filename="../src/mainwindow.cpp" line="4577"/>
         <source>Remove Layout</source>
         <translation>ลบโครงการ</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="4666"/>
+        <location filename="../src/mainwindow.cpp" line="4707"/>
         <source>GPU effects are EXPERIMENTAL, UNSTABLE and UNSUPPORTED! Unsupported means do not report bugs about it.
 
 Do you want to disable GPU effects and restart Shotcut?</source>
@@ -6334,7 +6334,7 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="3583"/>
+        <location filename="../src/mainwindow.cpp" line="3624"/>
         <source>You cannot add a project to itself!</source>
         <translation>คุณไม่สามารถเพิ่มโครงการให้กับตัวเอง</translation>
     </message>
@@ -6371,7 +6371,7 @@ Try again with a different folder.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/util.cpp" line="308"/>
+        <location filename="../src/util.cpp" line="311"/>
         <source>The value you entered is very similar to the common,
 more standard %1 = %2/1001.
 
@@ -6481,12 +6481,12 @@ Do you want to use %1 = %2/1001 instead?</source>
 <context>
     <name>QmlFilter</name>
     <message>
-        <location filename="../src/qmltypes/qmlfilter.cpp" line="325"/>
+        <location filename="../src/qmltypes/qmlfilter.cpp" line="329"/>
         <source>(defaults)</source>
         <translation>(ค่าเริ่มต้น)</translation>
     </message>
     <message>
-        <location filename="../src/qmltypes/qmlfilter.cpp" line="425"/>
+        <location filename="../src/qmltypes/qmlfilter.cpp" line="429"/>
         <source>Analyze %1</source>
         <translation>วิเคราะห์ %1</translation>
     </message>
@@ -7952,7 +7952,7 @@ only the currently selected one.</source>
     </message>
     <message>
         <location filename="../src/dialogs/transcodedialog.ui" line="223"/>
-        <source>If the source is progressive, each interlaced field will be converted to a progressive frame resulting in double frame rate.</source>
+        <source>If the source is interlaced, each interlaced field will be converted to a progressive frame resulting in double frame rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
