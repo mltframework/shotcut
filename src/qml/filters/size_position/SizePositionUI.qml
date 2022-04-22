@@ -844,7 +844,7 @@ Item {
 
     function updateSimpleKeyframes() {
         if (rotationProperty) {
-            updateRotation()
+            updateRotation(null)
         }
         setFilter(null)
     }
