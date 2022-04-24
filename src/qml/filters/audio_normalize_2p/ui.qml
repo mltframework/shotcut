@@ -24,17 +24,31 @@ import Shotcut.Controls 1.0 as Shotcut
 Item {
     width: 350
     height: 50
-    
+
+    Component.onCompleted: {
+        setStatus(false)
+    }
+
     function setStatus( inProgress ) {
         if (inProgress) {
             status.text = qsTr('Analyzing...')
+            results.text = '--'
+            normalizationGain.text = '--'
         }
         else if (filter.get("results").length > 0 ) {
             status.text = qsTr('Analysis complete.')
+            var loudnessValue = filter.get("results").split('\t')[0].split('L:')[1]
+            loudnessValue = Math.round(loudnessValue * 100) / 100
+            results.text = qsTr('%1 LUFS').arg(loudnessValue)
+            var gainValue = programSlider.value - loudnessValue
+            gainValue = Math.round(gainValue * 100) / 100
+            normalizationGain.text = qsTr('%1 dB').arg(gainValue)
         }
         else
         {
             status.text = qsTr('Click "Analyze" to use this filter.')
+            results.text = '--'
+            normalizationGain.text = '--'
         }
     }
 
@@ -46,42 +60,79 @@ Item {
         }
     }
 
-    ColumnLayout {
+    GridLayout {
         anchors.fill: parent
         anchors.margins: 8
+        columns: 3
 
-        RowLayout {
-            Label { text: qsTr('Target Loudness') }
-            Shotcut.SliderSpinner {
-                id: programSlider
-                minimumValue: -50.0
-                maximumValue: -10.0
-                decimals: 1
-                suffix: ' LUFS'
-                spinnerWidth: 100
-                value: filter.getDouble('program')
-                onValueChanged: filter.set('program', value)
-            }
-            Shotcut.UndoButton {
-                onClicked: programSlider.value = -23.0
+        Label {
+            Layout.alignment: Qt.AlignRight
+            text: qsTr('Target Loudness')
+        }
+        Shotcut.SliderSpinner {
+            id: programSlider
+            minimumValue: -50.0
+            maximumValue: -10.0
+            decimals: 1
+            suffix: ' LUFS'
+            spinnerWidth: 100
+            value: filter.getDouble('program')
+            onValueChanged: filter.set('program', value)
+        }
+        Shotcut.UndoButton {
+            onClicked: programSlider.value = -23.0
+        }
+
+        Label {
+        }
+        Shotcut.Button {
+            Layout.columnSpan: 2
+            id: button
+            text: qsTr('Analyze')
+            onClicked: {
+                button.enabled = false
+                setStatus(true)
+                filter.analyze(true);
             }
         }
 
-        RowLayout {
-            Shotcut.Button {
-                id: button
-                text: qsTr('Analyze')
-                onClicked: {
-                    button.enabled = false
-                    filter.analyze(true);
-                }
+        Rectangle {
+            Layout.columnSpan: 3
+            Layout.fillWidth: true
+            Layout.minimumHeight: 12
+            color: 'transparent'
+            Rectangle {
+                anchors.verticalCenter: parent.verticalCenter
+                width: parent.width
+                height: 2
+                radius: 2
+                color: activePalette.text
             }
-            Label {
-                id: status
-                Component.onCompleted: {
-                    setStatus(false)
-                }
-            }
+        }
+
+        Label {
+            Layout.columnSpan: 3
+            id: status
+        }
+
+        Label {
+            text: qsTr('Detected Loudness:')
+            Layout.alignment: Qt.AlignRight
+            Shotcut.HoverTip {text: qsTr('The loudness calculated by the analysis.')}
+        }
+        Label {
+            Layout.columnSpan: 2
+            id: results
+        }
+
+        Label {
+            text: qsTr('Normalization Gain:')
+            Layout.alignment: Qt.AlignRight
+            Shotcut.HoverTip {text: qsTr('The gain applied to normalize to the Target Loudness.')}
+        }
+        Label {
+            Layout.columnSpan: 2
+            id: normalizationGain
         }
 
         Item {
