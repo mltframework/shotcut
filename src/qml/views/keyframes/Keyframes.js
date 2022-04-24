@@ -16,7 +16,7 @@
  */
 
 function trackHeight(isCurves) {
-    return isCurves? (multitrack.trackHeight * 2) : (multitrack.trackHeight < 30)? 20 : 36
+    return isCurves? (multitrack.trackHeight * 2) : (multitrack.trackHeight < 30)? 20 : 48
 }
 
 function scrollIfNeeded(center) {
