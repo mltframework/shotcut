@@ -63,7 +63,7 @@ Shotcut.VuiBase {
     function updateFilterRect(rect, position) {
         if (position === null)
             position = -1
-        filter.set(rectProperty, rect, 1.0, position)
+        filter.set(rectProperty, rect, position)
         if (filter.get(patternProperty) === 'gradient_linear') {
             filter.set(startXProperty, rect.x / profile.width, position)
             filter.set(startYProperty, rect.y / profile.height, position)

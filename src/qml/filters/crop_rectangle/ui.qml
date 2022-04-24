@@ -147,22 +147,22 @@ Item {
             positionKeyframesButton.checked = false
             if (filter.animateIn > 0) {
                 rect = filter.getRect(startValueRect)
-                filter.set(rectProperty, rect, 1.0, 0)
+                filter.set(rectProperty, rect, 0)
                 rect = filter.getRect(middleValueRect)
-                filter.set(rectProperty, rect, 1.0, filter.animateIn - 1)
+                filter.set(rectProperty, rect, filter.animateIn - 1)
             }
             if (filter.animateOut > 0) {
                 rect = filter.getRect(middleValueRect)
-                filter.set(rectProperty, rect, 1.0, filter.duration - filter.animateOut)
+                filter.set(rectProperty, rect, filter.duration - filter.animateOut)
                 rect = filter.getRect(endValueRect)
-                filter.set(rectProperty, rect, 1.0, filter.duration - 1)
+                filter.set(rectProperty, rect, filter.duration - 1)
             }
         } else if (!positionKeyframesButton.checked) {
             filter.resetProperty(rectProperty)
             rect = filter.getRect(middleValueRect)
             filter.set(rectProperty, rect)
         } else if (position !== null) {
-            filter.set(rectProperty, filterRect, 1.0, position)
+            filter.set(rectProperty, filterRect, position)
         }
     }
 
@@ -251,7 +251,7 @@ Item {
                     filter.blockSignals = true
                     filter.clearSimpleAnimation(rectProperty)
                     filter.blockSignals = false
-                    filter.set(rectProperty, filterRect, 1.0, getPosition())
+                    filter.set(rectProperty, filterRect, getPosition())
                 } else {
                     filter.resetProperty(rectProperty)
                     filter.set(rectProperty, filterRect)
