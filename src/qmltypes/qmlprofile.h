@@ -27,6 +27,7 @@ class QmlProfile : public QObject
     Q_PROPERTY(int height READ height CONSTANT)
     Q_PROPERTY(double aspectRatio READ aspectRatio CONSTANT)
     Q_PROPERTY(double fps READ fps CONSTANT)
+    Q_PROPERTY(double sar READ sar CONSTANT)
 
 public:
     static QmlProfile& singleton();
@@ -35,6 +36,7 @@ public:
     int height() const;
     double aspectRatio() const;
     double fps() const;
+    double sar() const;
 
 signals:
     void profileChanged();

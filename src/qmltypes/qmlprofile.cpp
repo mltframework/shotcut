@@ -49,3 +49,8 @@ double QmlProfile::fps() const
 {
     return MLT.profile().fps();
 }
+
+double QmlProfile::sar() const
+{
+    return MLT.profile().sar();
+}

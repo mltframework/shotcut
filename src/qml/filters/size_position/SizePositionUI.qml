@@ -56,10 +56,10 @@ Item {
         // Enforce the aspect ratio for fill mode
         if (producer.displayAspectRatio > profile.aspectRatio) {
             defaultRect.width = profile.width
-            defaultRect.height = defaultRect.width / producer.displayAspectRatio
+            defaultRect.height = defaultRect.width * profile.sar / producer.displayAspectRatio
         } else {
             defaultRect.height = profile.height
-            defaultRect.width = defaultRect.height * producer.displayAspectRatio
+            defaultRect.width = defaultRect.height / profile.sar * producer.displayAspectRatio
         }
         defaultRect.x = Math.round((profile.width - defaultRect.width) / 2)
         defaultRect.y = Math.round((profile.height - defaultRect.height) / 2)
@@ -367,9 +367,9 @@ Item {
             if (isFillMode()) {
                 // enforce the aspect ratio
                 if (producer.displayAspectRatio > profile.aspectRatio) {
-                    newValue.height = newValue.width / producer.displayAspectRatio
+                    newValue.height = newValue.width * profile.sar / producer.displayAspectRatio
                 } else {
-                    newValue.width = newValue.height * producer.displayAspectRatio
+                    newValue.width = newValue.height / profile.sar * producer.displayAspectRatio
                 }
             }
             filterRect = newValue
