@@ -77,7 +77,7 @@ Shotcut.VuiBase {
 
     function setFilterCorners(corners, position) {
         for (var i in cornerProperties)
-            filter.set(cornerProperties[i], corners[i], 1.0, position)
+            filter.set(cornerProperties[i], corners[i], position)
         filter.set(corner1xProperty, corners[0].x, position)
         filter.set(corner1yProperty, corners[0].y, position)
         filter.set(corner2xProperty, corners[1].x, position)
