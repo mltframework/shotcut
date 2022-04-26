@@ -1258,6 +1258,11 @@ void EncodeDock::resetOptions()
     preset.set("f", "mp4");
     preset.set("movflags", "+faststart");
     preset.set("vcodec", "libx264");
+#if defined(Q_OS_MAC) && defined(Q_PROCESSOR_ARM)
+    if (ui->hwencodeCheckBox->isChecked())
+        preset.set("crf", "55");
+    else
+#endif
     preset.set("crf", "23");
     preset.set("preset", "fast");
     preset.set("acodec", "aac");
