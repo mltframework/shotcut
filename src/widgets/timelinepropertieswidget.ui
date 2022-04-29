@@ -33,23 +33,6 @@
    <item>
     <widget class="QWidget" name="widget" native="true">
      <layout class="QGridLayout" name="gridLayout">
-      <item row="2" column="0">
-       <widget class="QLabel" name="label_10">
-        <property name="text">
-         <string>Frame rate</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="1">
-       <widget class="QLabel" name="label_4">
-        <property name="text">
-         <string>:</string>
-        </property>
-       </widget>
-      </item>
       <item row="0" column="0">
        <widget class="QLabel" name="label_22">
         <property name="text">
@@ -60,17 +43,89 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="3">
-       <layout class="QHBoxLayout" name="horizontalLayout_7">
+      <item row="1" column="3">
+       <layout class="QHBoxLayout" name="horizontalLayout_8">
         <item>
-         <widget class="QLabel" name="resolutionLabel">
+         <widget class="QLabel" name="aspectRatioLabel">
           <property name="text">
-           <string notr="true">1920 x 1080</string>
+           <string notr="true">16 : 9</string>
           </property>
          </widget>
         </item>
         <item>
-         <spacer name="horizontalSpacer_7">
+         <spacer name="horizontalSpacer_8">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+      <item row="3" column="1">
+       <widget class="QLabel" name="label_5">
+        <property name="text">
+         <string>:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="3">
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <item>
+         <widget class="QLabel" name="colorspaceLabel">
+          <property name="text">
+           <string notr="true">ITU-R BT.709</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="label_10">
+        <property name="text">
+         <string>Frame rate</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QLabel" name="label_3">
+        <property name="text">
+         <string>:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="3">
+       <layout class="QHBoxLayout" name="horizontalLayout_9">
+        <item>
+         <widget class="QLabel" name="scanModeLabel">
+          <property name="text">
+           <string notr="true">Progressive</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_9">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
@@ -108,54 +163,6 @@
         </item>
        </layout>
       </item>
-      <item row="1" column="3">
-       <layout class="QHBoxLayout" name="horizontalLayout_8">
-        <item>
-         <widget class="QLabel" name="aspectRatioLabel">
-          <property name="text">
-           <string notr="true">16 : 9</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <spacer name="horizontalSpacer_8">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-       </layout>
-      </item>
-      <item row="0" column="1">
-       <widget class="QLabel" name="label">
-        <property name="text">
-         <string>:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="0">
-       <widget class="QLabel" name="label_14">
-        <property name="text">
-         <string>Scan mode</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QLabel" name="label_3">
-        <property name="text">
-         <string>:</string>
-        </property>
-       </widget>
-      </item>
       <item row="1" column="0">
        <widget class="QLabel" name="label_13">
         <property name="text">
@@ -166,36 +173,19 @@
         </property>
        </widget>
       </item>
-      <item row="3" column="1">
-       <widget class="QLabel" name="label_5">
+      <item row="4" column="1">
+       <widget class="QLabel" name="label_6">
         <property name="text">
          <string>:</string>
         </property>
        </widget>
       </item>
-      <item row="3" column="3">
-       <layout class="QHBoxLayout" name="horizontalLayout_9">
-        <item>
-         <widget class="QLabel" name="scanModeLabel">
-          <property name="text">
-           <string notr="true">Progressive</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <spacer name="horizontalSpacer_9">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-       </layout>
+      <item row="2" column="1">
+       <widget class="QLabel" name="label_4">
+        <property name="text">
+         <string>:</string>
+        </property>
+       </widget>
       </item>
       <item row="4" column="0">
        <widget class="QLabel" name="label_2">
@@ -207,17 +197,17 @@
         </property>
        </widget>
       </item>
-      <item row="4" column="3">
-       <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item row="0" column="3">
+       <layout class="QHBoxLayout" name="horizontalLayout_7">
         <item>
-         <widget class="QLabel" name="colorspaceLabel">
+         <widget class="QLabel" name="resolutionLabel">
           <property name="text">
-           <string notr="true">ITU-R BT.709</string>
+           <string notr="true">1920 x 1080</string>
           </property>
          </widget>
         </item>
         <item>
-         <spacer name="horizontalSpacer">
+         <spacer name="horizontalSpacer_7">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
@@ -231,12 +221,46 @@
         </item>
        </layout>
       </item>
-      <item row="4" column="1">
-       <widget class="QLabel" name="label_6">
+      <item row="3" column="0">
+       <widget class="QLabel" name="label_14">
+        <property name="text">
+         <string>Scan mode</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLabel" name="label">
         <property name="text">
          <string>:</string>
         </property>
        </widget>
+      </item>
+      <item row="5" column="3">
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <widget class="QPushButton" name="editButton">
+          <property name="text">
+           <string>Edit...</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
       </item>
      </layout>
     </widget>

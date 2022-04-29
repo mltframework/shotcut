@@ -3380,6 +3380,7 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer* producer)
     } else if (mlt_service_tractor_type == producer->type()) {
         w = new TimelinePropertiesWidget(*producer, this);
         scrollArea->setWidget(w);
+        connect(w, SIGNAL(editProfile()), SLOT(on_actionAddCustomProfile_triggered()));
         return w;
     }
     if (w) {

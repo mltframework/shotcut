@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2015 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2015-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,6 +32,9 @@ class TimelinePropertiesWidget : public QWidget
 public:
     explicit TimelinePropertiesWidget(Mlt::Service& service, QWidget *parent = 0);
     ~TimelinePropertiesWidget();
+
+signals:
+    void editProfile();
 
 private:
     Ui::TimelinePropertiesWidget *ui;

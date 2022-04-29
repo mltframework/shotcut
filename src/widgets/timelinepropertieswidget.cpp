@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2020 Meltytech, LLC
+ * Copyright (c) 2015-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,6 +26,7 @@ TimelinePropertiesWidget::TimelinePropertiesWidget(Mlt::Service &service, QWidge
     m_service(service)
 {
     ui->setupUi(this);
+    connect(ui->editButton, &QAbstractButton::clicked, this, &TimelinePropertiesWidget::editProfile);
     Util::setColorsToHighlight(ui->nameLabel);
     if (m_service.is_valid()) {
         Mlt::Profile& profile = MLT.profile();
@@ -49,3 +50,4 @@ TimelinePropertiesWidget::~TimelinePropertiesWidget()
 {
     delete ui;
 }
+
