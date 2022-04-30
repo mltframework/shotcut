@@ -716,6 +716,13 @@ Rectangle {
                 onTriggered: timeline.detachAudio(trackIndex, index)
             }
             MenuItem {
+                enabled: !isBlank
+                text: qsTr('Align To Reference Track')
+                onTriggered: {
+                    timeline.alignSelectedClips()
+                }
+            }
+            MenuItem {
                 enabled: !isBlank && !isTransition && settings.timelineShowThumbnails && !isAudio
                 text: qsTr('Update Thumbnails')
                 onTriggered: {
@@ -735,13 +742,6 @@ Rectangle {
                 enabled: !isBlank && !isTransition && settings.timelineShowWaveforms
                 text: qsTr('Rebuild Audio Waveform')
                 onTriggered: timeline.remakeAudioLevels(trackIndex, index)
-            }
-        }
-        MenuItem {
-            enabled: !isBlank
-            text: qsTr('Align To Reference Track')
-            onTriggered: {
-                timeline.alignSelectedClips()
             }
         }
         MenuItem {
