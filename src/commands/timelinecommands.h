@@ -572,10 +572,10 @@ private:
 };
 
 
-class AlignCLipsCommand : public QUndoCommand
+class AlignClipsCommand : public QUndoCommand
 {
 public:
-    AlignCLipsCommand(MultitrackModel& model, QUndoCommand * parent = 0);
+    AlignClipsCommand(MultitrackModel& model, QUndoCommand * parent = 0);
     void addAlignment(QUuid uuid, int offset, double speedCompensation);
     void redo();
     void undo();

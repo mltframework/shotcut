@@ -120,14 +120,14 @@ QVariant AlignClipsModel::data(const QModelIndex& index, int role) const
     QVariant result;
 
     switch (role) {
-        case Qt::StatusTipRole:
-        case Qt::FontRole:
-        case Qt::SizeHintRole:
-        case Qt::DecorationRole:
-        case Qt::CheckStateRole:
-        case Qt::BackgroundRole:
-        case Qt::ForegroundRole:
-            return result;
+    case Qt::StatusTipRole:
+    case Qt::FontRole:
+    case Qt::SizeHintRole:
+    case Qt::DecorationRole:
+    case Qt::CheckStateRole:
+    case Qt::BackgroundRole:
+    case Qt::ForegroundRole:
+        return result;
     }
 
     if (!index.isValid() || index.column() < 0 || index.column() >= COLUMN_COUNT || index.row() < 0 || index.row() >= m_clips.size()) {
@@ -137,61 +137,60 @@ QVariant AlignClipsModel::data(const QModelIndex& index, int role) const
 
     const ClipAlignment& clip = m_clips[index.row()];
     switch (role) {
-        case Qt::DisplayRole:
-            switch (index.column()) {
-                case COLUMN_ERROR:
-                    result = clip.error;
-                    break;
-                case COLUMN_NAME:
-                    result = clip.name;
-                    break;
-                case COLUMN_OFFSET:
-                    if (clip.progress != 0 && clip.offset != INVALID_OFFSET && MLT.producer() && MLT.producer()->is_valid())
-                        if (clip.offset >= 0) {
-                            result = MLT.producer()->frames_to_time(clip.offset, mlt_time_smpte_df);
-                        } else {
-                            result = QString("-") + MLT.producer()->frames_to_time(-clip.offset, mlt_time_smpte_df);
-                        }
-                    break;
-/*
-                case COLUMN_DRIFT:
-                    if (clip.drift >= 0)
-                        result = QLocale().toString(clip.drift * 100.0, 'g', 4);
-                    break;
-*/
-                default:
-                    LOG_ERROR() << "Invalid Column" << index.row() << index.column() << roleNames()[role] << role;
-                    break;
-            }
+    case Qt::DisplayRole:
+        switch (index.column()) {
+        case COLUMN_ERROR:
+            result = clip.error;
             break;
-        case Qt::ToolTipRole:
-            return clip.error;
-        case Qt::TextAlignmentRole:
-            switch (index.column()) {
-                case COLUMN_NAME:
-                    result = Qt::AlignLeft;
-                    break;
-                case COLUMN_ERROR:
-                case COLUMN_OFFSET:
+        case COLUMN_NAME:
+            result = clip.name;
+            break;
+        case COLUMN_OFFSET:
+            if (clip.progress != 0 && clip.offset != INVALID_OFFSET && MLT.producer() && MLT.producer()->is_valid())
+                if (clip.offset >= 0) {
+                    result = MLT.producer()->frames_to_time(clip.offset, mlt_time_smpte_df);
+                } else {
+                    result = QString("-") + MLT.producer()->frames_to_time(-clip.offset, mlt_time_smpte_df);
+                }
+            break;
+        /*
+                        case COLUMN_DRIFT:
+                            if (clip.drift >= 0)
+                                result = QLocale().toString(clip.drift * 100.0, 'g', 4);
+                            break;
+        */
+        default:
+            LOG_ERROR() << "Invalid Column" << index.row() << index.column() << roleNames()[role] << role;
+            break;
+        }
+        break;
+    case Qt::ToolTipRole:
+        return clip.error;
+    case Qt::TextAlignmentRole:
+        switch (index.column()) {
+        case COLUMN_NAME:
+            result = Qt::AlignLeft;
+            break;
+        case COLUMN_ERROR:
+        case COLUMN_OFFSET:
 //                case COLUMN_DRIFT:
-                    result = Qt::AlignCenter;
-                    break;
-                default:
-                    LOG_ERROR() << "Invalid Column" << index.row() << index.column() << roleNames()[role] << role;
-                    break;
-            }
+            result = Qt::AlignCenter;
             break;
         default:
-            LOG_ERROR() << "Invalid Role" << index.row() << index.column() << roleNames()[role] << role;
+            LOG_ERROR() << "Invalid Column" << index.row() << index.column() << roleNames()[role] << role;
             break;
+        }
+        break;
+    default:
+        LOG_ERROR() << "Invalid Role" << index.row() << index.column() << roleNames()[role] << role;
+        break;
     }
     return result;
 }
 
 QVariant AlignClipsModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
-    if (role == Qt::DisplayRole && orientation == Qt::Horizontal)
-    {
+    if (role == Qt::DisplayRole && orientation == Qt::Horizontal) {
         switch (section) {
         case COLUMN_ERROR:
             return QVariant();

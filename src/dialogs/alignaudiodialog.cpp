@@ -48,11 +48,11 @@ class AudioReader : public QObject
     Q_OBJECT
 public:
     AudioReader(QString producerXml, AlignmentArray* array, int in = -1, int out = -1)
-      : QObject()
-      , m_producerXml(producerXml)
-      , m_array(array)
-      , m_in(in)
-      , m_out(out)
+        : QObject()
+        , m_producerXml(producerXml)
+        , m_array(array)
+        , m_in(in)
+        , m_out(out)
     {
     }
 
@@ -70,8 +70,7 @@ public:
         size_t frameCount = producer->get_playtime();
         std::vector<double> values(frameCount);
         int progress = 0;
-        for (size_t i = 0; i < frameCount; ++i)
-        {
+        for (size_t i = 0; i < frameCount; ++i) {
             int frequency = 48000;
             int channels = 1;
             mlt_audio_format format = mlt_audio_s16;
@@ -81,8 +80,7 @@ public:
             int16_t* data = static_cast<int16_t*>(frame->get_audio(format, frequency, channels, samples));
             double sampleTotal = 0;
             // Add all values from the frame
-            for(int k = 0; k < samples; ++k)
-            {
+            for (int k = 0; k < samples; ++k) {
                 sampleTotal += data[k];
             }
             // Average the sample values
@@ -111,11 +109,11 @@ class ClipAudioReader : public QObject
     Q_OBJECT
 public:
     ClipAudioReader(QString producerXml, AlignmentArray& referenceArray, int index, int in, int out)
-      : QObject()
-      , m_referenceArray(referenceArray)
-      , m_reader(producerXml, &m_clipArray, in, out)
-      , m_index(index)
-      , m_calculateDrift(false)
+        : QObject()
+        , m_referenceArray(referenceArray)
+        , m_reader(producerXml, &m_clipArray, in, out)
+        , m_index(index)
+        , m_calculateDrift(false)
     {
         connect(&m_reader, SIGNAL(progressUpdate(int)), this, SLOT(onReaderProgressUpdate(int)));
     }
@@ -130,7 +128,10 @@ public:
         m_future = QtConcurrent::run(this, &ClipAudioReader::process);
     }
 
-    bool isFinished() { return m_future.isFinished();}
+    bool isFinished()
+    {
+        return m_future.isFinished();
+    }
 
     void process()
     {
@@ -176,38 +177,36 @@ public:
     {
         const AlignClipsModel* model = dynamic_cast<const AlignClipsModel*>(index.model());
         switch (index.column()) {
-            case AlignClipsModel::COLUMN_ERROR:
-            {
-                QIcon icon;
-                if (!index.data().toString().isEmpty()) {
-                    icon = QIcon(":/icons/oxygen/32x32/status/task-reject.png");
-                } else if (model->getProgress(index.row()) == 100) {
-                    icon = QIcon(":/icons/oxygen/32x32/status/task-complete.png");
-                }
-                icon.paint(painter, option.rect, Qt::AlignCenter);
-                break;
+        case AlignClipsModel::COLUMN_ERROR: {
+            QIcon icon;
+            if (!index.data().toString().isEmpty()) {
+                icon = QIcon(":/icons/oxygen/32x32/status/task-reject.png");
+            } else if (model->getProgress(index.row()) == 100) {
+                icon = QIcon(":/icons/oxygen/32x32/status/task-complete.png");
             }
-            case AlignClipsModel::COLUMN_NAME:
-            {
-                int progress = model->getProgress(index.row());
-                if (progress > 0 ) {
-                    QStyleOptionProgressBar progressBarOption;
-                    progressBarOption.rect = option.rect;
-                    progressBarOption.minimum = 0;
-                    progressBarOption.maximum = 100;
-                    progressBarOption.progress = progress;
-                    QApplication::style()->drawControl(QStyle::CE_ProgressBar, &progressBarOption, painter);
-                }
-                painter->drawText(option.rect, Qt::AlignLeft | Qt::AlignVCenter, index.data().toString() );
-                break;
+            icon.paint(painter, option.rect, Qt::AlignCenter);
+            break;
+        }
+        case AlignClipsModel::COLUMN_NAME: {
+            int progress = model->getProgress(index.row());
+            if (progress > 0 ) {
+                QStyleOptionProgressBar progressBarOption;
+                progressBarOption.rect = option.rect;
+                progressBarOption.minimum = 0;
+                progressBarOption.maximum = 100;
+                progressBarOption.progress = progress;
+                QApplication::style()->drawControl(QStyle::CE_ProgressBar, &progressBarOption, painter);
             }
-            case AlignClipsModel::COLUMN_OFFSET:
+            painter->drawText(option.rect, Qt::AlignLeft | Qt::AlignVCenter, index.data().toString() );
+            break;
+        }
+        case AlignClipsModel::COLUMN_OFFSET:
 //            case AlignClipsModel::COLUMN_DRIFT:
-                QStyledItemDelegate::paint(painter, option, index);
-                break;
-            default:
-                LOG_ERROR() << "Invalid Column" << index.row() << index.column();
-                break;
+            QStyledItemDelegate::paint(painter, option, index);
+            break;
+        default:
+            LOG_ERROR() << "Invalid Column" << index.row() << index.column();
+            break;
         }
     }
 };
@@ -229,7 +228,7 @@ AlignAudioDialog::AlignAudioDialog(QString title, MultitrackModel* model, const 
     glayout->setHorizontalSpacing(4);
     glayout->setVerticalSpacing(2);
     // Track Combo
-    glayout->addWidget(new QLabel(tr("Reference Audio Track")), col, 0, Qt::AlignRight);
+    glayout->addWidget(new QLabel(tr("Reference audio track")), col, 0, Qt::AlignRight);
     m_trackCombo = new QComboBox();
     int trackCount = m_model->trackList().size();
     for (int i = 0; i < trackCount; i++) {
@@ -240,7 +239,7 @@ AlignAudioDialog::AlignAudioDialog(QString title, MultitrackModel* model, const 
         m_trackCombo->setCurrentIndex(defaultTrack);
     }
     if (!connect(m_trackCombo, QOverload<int>::of(&QComboBox::activated), this, &AlignAudioDialog::rebuildClipList))
-         connect(m_trackCombo, SIGNAL(activated(const QString&)), SLOT(rebuildClipList()));
+        connect(m_trackCombo, SIGNAL(activated(const QString&)), SLOT(rebuildClipList()));
     glayout->addWidget(m_trackCombo, col++, 1, Qt::AlignLeft);
     // List
     m_table = new QTreeView();
@@ -375,7 +374,7 @@ void AlignAudioDialog::process()
 
 void AlignAudioDialog::apply()
 {
-    Timeline::AlignCLipsCommand* command = new Timeline::AlignCLipsCommand(*m_model);
+    Timeline::AlignClipsCommand* command = new Timeline::AlignClipsCommand(*m_model);
     int referenceTrackIndex = m_trackCombo->currentData().toInt();
     int alignmentCount = 0;
     int modelIndex = 0;

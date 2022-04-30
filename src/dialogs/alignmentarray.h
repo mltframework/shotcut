@@ -46,7 +46,7 @@ private:
     double m_autocorrelationMax;
     size_t m_minimumSize;
     size_t m_actualComplexSize;
-    bool m_isTransformed = false;
+    bool m_isTransformed;
     QMutex m_transformMutex;
 };
 

@@ -669,7 +669,7 @@ void TimelineDock::alignSelectedClips()
 {
     auto selection = selectionUuids();
     saveAndClearSelection();
-    AlignAudioDialog dialog(tr("Align clips to audio reference"), &m_model, selection, this);
+    AlignAudioDialog dialog(tr("Align To Reference Track"), &m_model, selection, this);
     dialog.exec();
     restoreSelection();
 }

@@ -76,8 +76,7 @@ double AlignmentArray::calculateOffset(AlignmentArray &from, int* offset)
     from.transform();
 
     // Calculate the cross-correlation signal
-    for(size_t i = 0; i < m_actualComplexSize; ++i)
-    {
+    for (size_t i = 0; i < m_actualComplexSize; ++i) {
         correlationBuf[i] = m_forwardBuf[i] * std::conj(from.m_forwardBuf[i]);
     }
     // Convert to time series
@@ -85,8 +84,7 @@ double AlignmentArray::calculateOffset(AlignmentArray &from, int* offset)
 
     // Find the maximum correlation offset
     double max = 0;
-    for (size_t i = 0; i < m_actualComplexSize; ++i)
-    {
+    for (size_t i = 0; i < m_actualComplexSize; ++i) {
         double norm = std::norm(correlationBuf[i]);
         if (max < norm) {
             *offset = i;
@@ -94,8 +92,7 @@ double AlignmentArray::calculateOffset(AlignmentArray &from, int* offset)
         }
     }
 
-    if ( 2 * *offset > (int)m_actualComplexSize )
-    {
+    if ( 2 * *offset > (int)m_actualComplexSize ) {
         *offset -= ((int)m_actualComplexSize);
     }
 
@@ -117,17 +114,14 @@ double AlignmentArray::calculateOffsetAndDrift(AlignmentArray& from, int precisi
     double max_score = *drift;
     double best_drift = 1.0;
 
-    for(double d = *drift - drift_range; d <= *drift + drift_range; d += drift_step)
-    {
+    for (double d = *drift - drift_range; d <= *drift + drift_range; d += drift_step) {
         // Copy the "from" sequence with a shift
         AlignmentArray drifted(m_actualComplexSize);
         double factor = 1.0 / d;
         int shift = 0;
-        for(size_t i = 0; i < m_minimumSize; ++i)
-        {
+        for (size_t i = 0; i < m_minimumSize; ++i) {
             int newShift = std::round(factor * i) - i;
-            while(newShift > shift)
-            {
+            while (newShift > shift) {
                 drifted.m_forwardBuf[i + shift] = from.m_forwardBuf[i];
                 ++shift;
             }
@@ -135,16 +129,14 @@ double AlignmentArray::calculateOffsetAndDrift(AlignmentArray& from, int precisi
             drifted.m_forwardBuf[i + shift] = from.m_forwardBuf[i];
         }
         double score = calculateOffset(drifted, offset);
-        if(score > max_score)
-        {
+        if (score > max_score) {
             max_score = score;
             best_drift = d;
         }
     }
     *drift = best_drift;
 
-    if(precision < FINAL_PRECISION)
-    {
+    if (precision < FINAL_PRECISION) {
         max_score = calculateOffsetAndDrift(from, precision + 1, drift_range / 10, drift, offset);
     }
     return max_score;
@@ -153,8 +145,7 @@ double AlignmentArray::calculateOffsetAndDrift(AlignmentArray& from, int precisi
 void AlignmentArray::transform()
 {
     QMutexLocker locker(&m_transformMutex);
-    if (!m_isTransformed)
-    {
+    if (!m_isTransformed) {
         // Create the plans while the global planning mutex is locked
         s_fftwPlanningMutex.lock();
         fftw_complex* buf = nullptr;
@@ -178,22 +169,20 @@ void AlignmentArray::transform()
         });
         double factor = sqrt(accum / (m_values.size() - 1));
         // Fill the transform array applying the normalization factor
-        for( size_t i = 0; i < m_values.size(); i++ ) {
+        for ( size_t i = 0; i < m_values.size(); i++ ) {
             m_forwardBuf[i] = m_values[i] / factor;
         }
         // Perform the forward DFT
         fftw_execute(m_forwardPlan);
 
         // Perform autocorrelation to calculate the maximum correlation value
-        for(size_t i = 0; i < m_actualComplexSize; i++)
-        {
+        for (size_t i = 0; i < m_actualComplexSize; i++) {
             backwardBuf[i] = m_forwardBuf[i] * std::conj(m_forwardBuf[i]);
         }
         // Convert back to time series
         fftw_execute(backwardPlan);
         // Find the maximum autocorrelation value
-        for (size_t i = 0; i < m_actualComplexSize; i++)
-        {
+        for (size_t i = 0; i < m_actualComplexSize; i++) {
             double norm = std::norm(backwardBuf[i]);
             if (norm > m_autocorrelationMax)
                 m_autocorrelationMax = norm;

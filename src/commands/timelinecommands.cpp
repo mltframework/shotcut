@@ -1466,7 +1466,7 @@ void ReplaceCommand::undo()
     m_isFirstRedo = false;
 }
 
-AlignCLipsCommand::AlignCLipsCommand(MultitrackModel &model, QUndoCommand *parent)
+AlignClipsCommand::AlignClipsCommand(MultitrackModel &model, QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_model(model)
     , m_undoHelper(m_model)
@@ -1477,7 +1477,7 @@ AlignCLipsCommand::AlignCLipsCommand(MultitrackModel &model, QUndoCommand *paren
     setText(QObject::tr("Align clips to reference track"));
 }
 
-void AlignCLipsCommand::addAlignment(QUuid uuid, int offset, double speedCompensation)
+void AlignClipsCommand::addAlignment(QUuid uuid, int offset, double speedCompensation)
 {
     Alignment alignment;
     alignment.uuid = uuid;
@@ -1486,7 +1486,7 @@ void AlignCLipsCommand::addAlignment(QUuid uuid, int offset, double speedCompens
     m_alignments.append(alignment);
 }
 
-void AlignCLipsCommand::redo()
+void AlignClipsCommand::redo()
 {
     struct ClipItem {
         Mlt::Producer* clip;
@@ -1522,7 +1522,7 @@ void AlignCLipsCommand::redo()
     }
 }
 
-void AlignCLipsCommand::undo()
+void AlignClipsCommand::undo()
 {
     m_undoHelper.undoChanges();
 }
