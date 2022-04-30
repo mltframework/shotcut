@@ -658,6 +658,15 @@ void ShotcutSettings::setTimelineFramebufferWaveform(bool b)
     emit timelineFramebufferWaveformChanged();
 }
 
+int ShotcutSettings::audioReferenceTrack() const
+{
+    return settings.value("timeline/audioReferenceTrack", 0).toInt();
+}
+void ShotcutSettings::setAudioReferenceTrack(int track)
+{
+    settings.setValue("timeline/audioReferenceTrack", track);
+}
+
 QString ShotcutSettings::filterFavorite(const QString& filterName)
 {
     return settings.value("filter/favorite/" + filterName, "").toString();

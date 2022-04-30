@@ -53,6 +53,8 @@ SOURCES += main.cpp\
     docks/recentdock.cpp \
     docks/encodedock.cpp \
     dialogs/addencodepresetdialog.cpp \
+    dialogs/alignaudiodialog.cpp \
+    dialogs/alignmentarray.cpp \
     dialogs/filedatedialog.cpp \
     jobqueue.cpp \
     docks/jobsdock.cpp \
@@ -65,6 +67,7 @@ SOURCES += main.cpp\
     docks/playlistdock.cpp \
     dialogs/durationdialog.cpp \
     widgets/colorwheel.cpp \
+    models/alignclipsmodel.cpp \
     models/attachedfiltersmodel.cpp \
     models/metadatamodel.cpp \
     docks/filtersdock.cpp \
@@ -192,6 +195,8 @@ HEADERS  += mainwindow.h \
     docks/recentdock.h \
     docks/encodedock.h \
     dialogs/addencodepresetdialog.h \
+    dialogs/alignaudiodialog.h \
+    dialogs/alignmentarray.h \
     dialogs/filedatedialog.h \
     jobqueue.h \
     docks/jobsdock.h \
@@ -205,6 +210,7 @@ HEADERS  += mainwindow.h \
     dialogs/durationdialog.h \
     transportcontrol.h \
     widgets/colorwheel.h \
+    models/alignclipsmodel.h \
     models/attachedfiltersmodel.h \
     models/metadatamodel.h \
     docks/filtersdock.h \
@@ -373,6 +379,8 @@ debug_and_release {
     LIBS += -L../CuteLogger
 }
 LIBS += -lCuteLogger
+
+LIBS += -lfftw3
 
 isEmpty(SHOTCUT_VERSION) {
     !win32:SHOTCUT_VERSION = $$system(date -u -d "@${SOURCE_DATE_EPOCH:-$(date +%s)}" "+%y.%m.%d" 2>/dev/null || date -u -r "${SOURCE_DATE_EPOCH:-$(date +%s)}" "+%y.%m.%d")

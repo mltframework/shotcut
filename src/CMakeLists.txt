@@ -45,6 +45,8 @@ add_executable(shotcut
   docks/recentdock.cpp
   docks/encodedock.cpp
   dialogs/addencodepresetdialog.cpp
+  dialogs/alignaudiodialog.cpp
+  dialogs/alignmentarray.cpp
   dialogs/filedatedialog.cpp
   jobqueue.cpp
   docks/jobsdock.cpp
@@ -57,6 +59,7 @@ add_executable(shotcut
   docks/playlistdock.cpp
   dialogs/durationdialog.cpp
   widgets/colorwheel.cpp
+  models/alignclipsmodel.cpp
   models/attachedfiltersmodel.cpp
   models/metadatamodel.cpp
   docks/filtersdock.cpp
