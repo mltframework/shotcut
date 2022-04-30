@@ -66,8 +66,8 @@ VIDSTAB_REVISION=
 MLT_HEAD=1
 MLT_REVISION=
 LOG_COLORS=0
-SHOTCUT_HEAD=1
-SHOTCUT_REVISION=
+SHOTCUT_HEAD=0
+SHOTCUT_REVISION="origin/ci_ninja"
 SHOTCUT_VERSION=$(date '+%y.%m.%d')
 ENABLE_RUBBERBAND=1
 RUBBERBAND_HEAD=0
@@ -797,17 +797,14 @@ function set_globals {
 
   #####
   # shotcut
-  if [ "$TARGET_OS" = "Darwin" ]; then
-    CONFIG[7]="$QTDIR/bin/qmake -r MLT_PREFIX=$FINAL_INSTALL_DIR SHOTCUT_VERSION=$SHOTCUT_VERSION $QMAKE_DEBUG_FLAG $QMAKE_ASAN_FLAGS"
-  elif [ "$TARGET_OS" = "Win32" -o "$TARGET_OS" = "Win64" ]; then
-    # DEFINES+=QT_STATIC is for QWebSockets
-    CONFIG[7]="$QMAKE -r -spec mkspecs/mingw CONFIG+=link_pkgconfig PKGCONFIG+=mlt++ LIBS+=-L${QTDIR}/lib SHOTCUT_VERSION=$SHOTCUT_VERSION DEFINES+=QT_STATIC QMAKE_CXXFLAGS+=-std=c++11 $QMAKE_DEBUG_FLAG $QMAKE_ASAN_FLAGS"
+  CONFIG[7]="cmake -G Ninja -DCMAKE_PREFIX_PATH=$QTDIR -D SHOTCUT_VERSION=$SHOTCUT_VERSION $CMAKE_DEBUG_FLAG"
+  if test "$TARGET_OS" = "Darwin" ; then
+    CONFIG[7]="${CONFIG[7]} -D CMAKE_INSTALL_PREFIX=."
   else
-    CONFIG[7]="$QTDIR/bin/qmake -r PREFIX=$FINAL_INSTALL_DIR SHOTCUT_VERSION=$SHOTCUT_VERSION $QMAKE_DEBUG_FLAG $QMAKE_ASAN_FLAGS"
-    LD_LIBRARY_PATH_[7]="/usr/local/lib"
+    CONFIG[7]="${CONFIG[7]} -D CMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR"
   fi
-  CFLAGS_[7]=$CFLAGS
-  LDFLAGS_[7]=$LDFLAGS
+  CFLAGS_[7]="$ASAN_CFLAGS $CFLAGS"
+  LDFLAGS_[7]="$ASAN_LDFLAGS $LDFLAGS"
 
   #####
   # swh-plugins
@@ -1449,11 +1446,6 @@ function configure_compile_install_subproject {
     export CXXFLAGS="$CFLAGS -std=c++11"
   fi
 
-  # Special hack for shotcut
-  if test "shotcut" = "$1" -a \( "$TARGET_OS" = "Win32" -o "$TARGET_OS" = "Win64" \) ; then
-    sed 's/QMAKE_LIBS_OPENGL = -lGL//' -i /root/Qt/$QT_VERSION_DEFAULT/gcc_64/mkspecs/modules/qt_lib_gui_private.pri
-  fi
-
   # Special hack for movit
   if test "movit" = "$1"; then
     export CXXFLAGS="$CFLAGS"
@@ -1540,7 +1532,7 @@ function configure_compile_install_subproject {
     cmd make -j$MAKEJ RANLIB="$RANLIB" libmovit.la || die "Unable to build $1"
   elif test "dav1d" = "$1" -o "rubberband" = "$1" ; then
     cmd ninja -C builddir -j $MAKEJ || die "Unable to build $1"
-  elif test "aom" = "$1" -o "mlt" = "$1"; then
+  elif test "aom" = "$1" -o "mlt" = "$1" -o "shotcut" = "$1" ; then
     cmd ninja -j $MAKEJ || die "Unable to build $1"
   elif test "x265" = "$1" ; then
     cmd ninja -j $MAKEJ || die "Unable to build $1"
@@ -1564,22 +1556,8 @@ EOF
   export LD_LIBRARY_PATH=`lookup LD_LIBRARY_PATH_ $1`
   log "LD_LIBRARY_PATH=$LD_LIBRARY_PATH"
     if test "shotcut" = "$1" ; then
-      if test "$TARGET_OS" = "Win32" -o "$TARGET_OS" = "Win64" ; then
-        cmd make install
-        cmd install -c -m 755 src/shotcut.exe "$FINAL_INSTALL_DIR"
-        cmd install -c COPYING "$FINAL_INSTALL_DIR"
-        cmd install -c packaging/windows/shotcut.nsi "$FINAL_INSTALL_DIR"/..
-        cmd sed -i "s/YY.MM.DD/$SHOTCUT_VERSION/" "$FINAL_INSTALL_DIR"/../shotcut.nsi
-        if [ "$TARGET_OS" = "Win64" ]; then
-          cmd sed -i 's/PROGRAMFILES/PROGRAMFILES64/' "$FINAL_INSTALL_DIR"/../shotcut.nsi
-        fi
-        cmd install -d "$FINAL_INSTALL_DIR"/share/translations
-        cmd install -p -c translations/*.qm "$FINAL_INSTALL_DIR"/share/translations
-        cmd install -d "$FINAL_INSTALL_DIR"/share/shotcut
-        cmd cp -a src/qml "$FINAL_INSTALL_DIR"/share/shotcut
-
-      elif test "$TARGET_OS" != "Darwin"; then
-        cmd make install
+      if test "$TARGET_OS" != "Darwin"; then
+        cmd ninja install
         cmd install -p -c COPYING "$FINAL_INSTALL_DIR"
         cmd install -p -c "$QTDIR"/translations/qt_*.qm "$FINAL_INSTALL_DIR"/share/shotcut/translations
         cmd install -p -c "$QTDIR"/translations/qtbase_*.qm "$FINAL_INSTALL_DIR"/share/shotcut/translations
@@ -1592,6 +1570,8 @@ EOF
 #        cmd curl -o "$FINAL_INSTALL_DIR"/lib/qml/QtQuick/Controls.2/Fusion/ComboBox.qml "https://s3.amazonaws.com/misc.meltymedia/shotcut-build/ComboBox.qml"
         cmd install -d "$FINAL_INSTALL_DIR"/lib/va
         cmd install -p -c /usr/lib/x86_64-linux-gnu/dri/*_drv_video.so "$FINAL_INSTALL_DIR"/lib/va
+      else
+        cmd ninja install
       fi
     elif test "bigsh0t" = "$1" ; then
       if test "$TARGET_OS" = "Win32" -o "$TARGET_OS" = "Win64" ; then
@@ -1844,7 +1824,7 @@ function deploy_mac
   log Changing directory to shotcut
   cmd cd shotcut || die "Unable to change to directory shotcut"
 
-  BUILD_DIR="src/Shotcut.app/Contents"
+  BUILD_DIR="./Shotcut.app/Contents"
 
   # copy Qt translations
   cmd mkdir "$BUILD_DIR/Resources/translations"
@@ -1859,10 +1839,6 @@ function deploy_mac
   fi
   # copy Shotcut translations
   cmd cp translations/*.qm "$BUILD_DIR/Resources/translations/"
-
-  # copy Shotcut QML
-  cmd mkdir -p "$BUILD_DIR"/Resources/shotcut 2>/dev/null
-  cmd cp -a src/qml "$BUILD_DIR"/Resources/shotcut
 
   # This little guy helps Qt 5 apps find the Qt plugins!
   printf "[Paths]\nPlugins=PlugIns/qt\nQml2Imports=Resources/qml\n" > "$BUILD_DIR/Resources/qt.conf"
@@ -1881,6 +1857,7 @@ function deploy_mac
     cmd install_name_tool -add_rpath "@executable_path/../Frameworks" "$exe"
   done
   cmd cp -p "$FINAL_INSTALL_DIR"/lib/libaom.2.dylib Frameworks
+  cmd cp -p ../../lib/libCuteLogger.dylib Frameworks
 
   # MLT plugins
   log Copying MLT plugins

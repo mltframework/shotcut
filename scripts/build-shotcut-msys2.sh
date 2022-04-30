@@ -38,8 +38,8 @@ FFMPEG_ADDITIONAL_OPTIONS=
 MLT_HEAD=1
 MLT_REVISION=
 LOG_COLORS=0
-SHOTCUT_HEAD=1
-SHOTCUT_REVISION=
+SHOTCUT_HEAD=0
+SHOTCUT_REVISION="origin/ci_ninja"
 SHOTCUT_VERSION=$(date '+%y.%m.%d')
 ENABLE_BIGSH0T=1
 BIGSH0T_HEAD=0
@@ -369,11 +369,9 @@ function set_globals {
   if [ "$ASAN_BUILD" = "1" ]; then
     ASAN_CFLAGS="-fsanitize=address -fno-omit-frame-pointer"
     ASAN_LDFLAGS="-lasan -fsanitize=address"
-    QMAKE_ASAN_FLAGS="QMAKE_CXXFLAGS+=-fsanitize=address QMAKE_CXXFLAGS+=-fno-omit-frame-pointer QMAKE_LFLAGS+=-fsanitize=address"
   else
     ASAN_CFLAGS=
     ASAN_LDFLAGS=
-    QMAKE_ASAN_FLAGS=
   fi
 
   debug "SUBDIRS = $SUBDIRS"
@@ -502,12 +500,12 @@ function set_globals {
   # mlt
   CONFIG[1]="cmake -GNinja -DCMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -DCMAKE_PREFIX_PATH=$QTDIR -DGPL=ON -DGPL3=ON -DMOD_GDK=OFF -DMOD_SDL1=OFF $CMAKE_DEBUG_FLAG"
   CFLAGS_[1]="-I$FINAL_INSTALL_DIR/include $ASAN_CFLAGS $CFLAGS"
-  LDFLAGS_[1]="${LDFLAGS_[1]} -L$FINAL_INSTALL_DIR/lib $ASAN_LDFLAGS $LDFLAGS"
+  LDFLAGS_[1]="-L$FINAL_INSTALL_DIR/lib $ASAN_LDFLAGS $LDFLAGS"
 
   ####
   # frei0r
   CONFIG[2]="cmake -DCMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -DWITHOUT_GAVL=1 -DWITHOUT_OPENCV=1 -GNinja $CMAKE_DEBUG_FLAG"
-  CFLAGS_[2]="$CFLAGS -O2"
+  CFLAGS_[2]="$CFLAGS"
   LDFLAGS_[2]=$LDFLAGS
 
   #####
@@ -520,9 +518,9 @@ function set_globals {
 
   #####
   # shotcut
-  CONFIG[4]="$QTDIR/bin/qmake -r MLT_PATH=$FINAL_INSTALL_DIR PREFIX=$FINAL_INSTALL_DIR SHOTCUT_VERSION=$SHOTCUT_VERSION $QMAKE_DEBUG_FLAG $QMAKE_ASAN_FLAGS"
-  CFLAGS_[4]=$CFLAGS
-  LDFLAGS_[4]=$LDFLAGS
+  CONFIG[4]="cmake -G Ninja -D CMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -DCMAKE_PREFIX_PATH=$QTDIR -D SHOTCUT_VERSION=$SHOTCUT_VERSION $CMAKE_DEBUG_FLAG"
+  CFLAGS_[4]="$ASAN_CFLAGS $CFLAGS"
+  LDFLAGS_[4]="$ASAN_LDFLAGS $LDFLAGS"
 
   #####
   # swh-plugins
@@ -898,7 +896,7 @@ function configure_compile_install_subproject {
   feedback_status Building $1 - this could take some time
   if test "movit" = "$1" ; then
     cmd make -j$MAKEJ libmovit.la || die "Unable to build $1"
-  elif test "frei0r" = "$1" -o "bigsh0t" = "$1" -o "aom" = "$1" -o "mlt" = "$1"; then
+  elif test "frei0r" = "$1" -o "bigsh0t" = "$1" -o "aom" = "$1" -o "mlt" = "$1" -o "shotcut" = "$1"; then
     cmd ninja -j $MAKEJ || die "Unable to build $1"
   elif test "dav1d" = "$1"; then
     cmd ninja -C builddir -j $MAKEJ || die "Unable to build $1"
@@ -914,15 +912,12 @@ function configure_compile_install_subproject {
   export LD_LIBRARY_PATH=`lookup LD_LIBRARY_PATH_ $1`
   log "LD_LIBRARY_PATH=$LD_LIBRARY_PATH"
   if test "shotcut" = "$1" ; then
-    cmd make install
-    cmd install -c -m 755 src/shotcut.exe "$FINAL_INSTALL_DIR"
+    cmd ninja install
     cmd install -c COPYING "$FINAL_INSTALL_DIR"
     cmd install -c packaging/windows/shotcut.nsi "$FINAL_INSTALL_DIR"/..
     cmd sed -i "s/YY.MM.DD/$SHOTCUT_VERSION/" "$FINAL_INSTALL_DIR"/../shotcut.nsi
     cmd install -d "$FINAL_INSTALL_DIR"/share/translations
     cmd install -p -c translations/*.qm "$FINAL_INSTALL_DIR"/share/translations
-    cmd install -d "$FINAL_INSTALL_DIR"/share/shotcut
-    cmd cp -a src/qml "$FINAL_INSTALL_DIR"/share/shotcut
   elif test "frei0r" = "$1" -o "aom" = "$1" -o "mlt" = "$1"; then
     cmd ninja install || die "Unable to install $1"
   elif test "bigsh0t" = "$1" ; then
@@ -1054,6 +1049,7 @@ function deploy
   log Reorganizing installed files
   cmd mv bin/*.dll .
   cmd mv lib/libaom.dll .
+  cmd mv lib/libCuteLogger.dll .
   if [ "$SDK" = "1" ]; then
     cmd mv bin/*.exe .
   else

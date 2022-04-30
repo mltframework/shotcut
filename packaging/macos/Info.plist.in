@@ -17,7 +17,7 @@
 	<key>CFBundleIdentifier</key>
 	<string>com.Meltytech.Shotcut</string>
 	<key>CFBundleVersion</key>
-	<string>@FULL_VERSION@</string>
+	<string>@SHOTCUT_VERSION@</string>
 	<key>CFBundleShortVersionString</key>
 	<string>@SHORT_VERSION@</string>
 	<key>NSPrincipalClass</key>

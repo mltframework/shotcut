@@ -348,11 +348,11 @@ OTHER_FILES += \
     ../.github/workflows/build-windows-unstable.yml \
     ../COPYING \
     ../README.md \
+    ../packaging/macos/Info.plist.in \
     ../scripts/build-shotcut.sh \
     ../scripts/build-shotcut-msys2.sh \
     ../packaging/macos/shotcut.icns \
     ../packaging/windows/shotcut.nsi \
-    ../packaging/macos/Info.plist \
     ../icons/dark/index.theme \
     ../icons/light/index.theme \
     ../packaging/linux/Makefile \
@@ -392,7 +392,8 @@ VERSION = $$SHOTCUT_VERSION
 mac {
     TARGET = Shotcut
     ICON = ../packaging/macos/shotcut.icns
-    QMAKE_INFO_PLIST = ../packaging/macos/Info.plist
+    QMAKE_INFO_PLIST = \
+    ../packaging/macos/Info.plist.in
     INCLUDEPATH += $$[QT_INSTALL_HEADERS]
     LIBS += -framework Foundation -framework Cocoa
 

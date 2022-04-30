@@ -1,219 +1,216 @@
-add_executable(shotcut
-  main.cpp
-  dialogs/systemsyncdialog.cpp
-  jobs/qimagejob.cpp
-  mainwindow.cpp
-  mltcontroller.cpp
-  proxymanager.cpp
-  qmltypes/qmlrichtext.cpp
-  scrubbar.cpp
-  openotherdialog.cpp
-  controllers/filtercontroller.cpp
-  spatialmedia/box.cpp
-  spatialmedia/container.cpp
-  spatialmedia/mpeg4_container.cpp
-  spatialmedia/sa3d.cpp
-  spatialmedia/spatialmedia.cpp
-  widgets/exportpresetstreeview.cpp
-  widgets/plasmawidget.cpp
-  widgets/lissajouswidget.cpp
-  widgets/isingwidget.cpp
-  widgets/video4linuxwidget.cpp
-  widgets/colorproducerwidget.cpp
-  widgets/decklinkproducerwidget.cpp
-  widgets/networkproducerwidget.cpp
-  widgets/colorbarswidget.cpp
-  widgets/countproducerwidget.cpp
-  widgets/frameratewidget.cpp
-  widgets/noisewidget.cpp
-  widgets/producerpreviewwidget.cpp
-  widgets/pulseaudiowidget.cpp
-  widgets/screenselector.cpp
-  widgets/jackproducerwidget.cpp
-  widgets/toneproducerwidget.cpp
-  widgets/alsawidget.cpp
-  widgets/x11grabwidget.cpp
-  widgets/blipproducerwidget.cpp
-  player.cpp
-  glwidget.cpp
-  widgets/servicepresetwidget.cpp
-  abstractproducerwidget.cpp
-  widgets/avformatproducerwidget.cpp
-  widgets/imageproducerwidget.cpp
-  widgets/timespinbox.cpp
-  widgets/audiometerwidget.cpp
-  docks/recentdock.cpp
-  docks/encodedock.cpp
-  dialogs/addencodepresetdialog.cpp
-  dialogs/alignaudiodialog.cpp
-  dialogs/alignmentarray.cpp
-  dialogs/filedatedialog.cpp
-  jobqueue.cpp
-  docks/jobsdock.cpp
-  dialogs/multifileexportdialog.cpp
-  dialogs/saveimagedialog.cpp
-  dialogs/editmarkerdialog.cpp
-  dialogs/slideshowgeneratordialog.cpp
-  dialogs/textviewerdialog.cpp
-  models/playlistmodel.cpp
-  docks/playlistdock.cpp
-  dialogs/durationdialog.cpp
-  widgets/colorwheel.cpp
-  models/alignclipsmodel.cpp
-  models/attachedfiltersmodel.cpp
-  models/metadatamodel.cpp
-  docks/filtersdock.cpp
-  dialogs/customprofiledialog.cpp
-  qmltypes/colorpickeritem.cpp
-  qmltypes/colorwheelitem.cpp
-  qmltypes/qmlapplication.cpp
-  qmltypes/qmlfile.cpp
-  qmltypes/qmlfilter.cpp
-  qmltypes/qmlmetadata.cpp
-  qmltypes/timelineitems.cpp
-  qmltypes/qmlprofile.cpp
-  settings.cpp
-  widgets/lineeditclear.cpp
-  leapnetworklistener.cpp
-  database.cpp
-  widgets/gltestwidget.cpp
-  models/multitrackmodel.cpp
-  docks/timelinedock.cpp
-  qmltypes/qmlutilities.cpp
-  qmltypes/qmlview.cpp
-  qmltypes/thumbnailprovider.cpp
-  commands/markercommands.cpp
-  commands/timelinecommands.cpp
-  util.cpp
-  widgets/lumamixtransition.cpp
-  autosavefile.cpp
-  widgets/directshowvideowidget.cpp
-  jobs/abstractjob.cpp
-  jobs/meltjob.cpp
-  jobs/encodejob.cpp
-  jobs/postjobaction.cpp
-  jobs/videoqualityjob.cpp
-  commands/playlistcommands.cpp
-  docks/scopedock.cpp
-  controllers/scopecontroller.cpp
-  widgets/scopes/scopewidget.cpp
-  widgets/scopes/audioloudnessscopewidget.cpp
-  widgets/scopes/audiopeakmeterscopewidget.cpp
-  widgets/scopes/audiospectrumscopewidget.cpp
-  widgets/scopes/audiowaveformscopewidget.cpp
-  widgets/scopes/videohistogramscopewidget.cpp
-  widgets/scopes/videorgbparadescopewidget.cpp
-  widgets/scopes/videorgbwaveformscopewidget.cpp
-  widgets/scopes/videovectorscopewidget.cpp
-  widgets/scopes/videowaveformscopewidget.cpp
-  widgets/scopes/videozoomscopewidget.cpp
-  widgets/scopes/videozoomwidget.cpp
-  sharedframe.cpp
-  widgets/audioscale.cpp
-  widgets/playlisttable.cpp
-  widgets/playlisticonview.cpp
-  commands/undohelper.cpp
-  models/audiolevelstask.cpp
-  mltxmlchecker.cpp
-  widgets/avfoundationproducerwidget.cpp
-  widgets/gdigrabwidget.cpp
-  widgets/trackpropertieswidget.cpp
-  widgets/timelinepropertieswidget.cpp
-  jobs/ffprobejob.cpp
-  jobs/ffmpegjob.cpp
-  dialogs/unlinkedfilesdialog.cpp
-  dialogs/transcodedialog.cpp
-  docks/keyframesdock.cpp
-  docks/markersdock.cpp
-  docks/notesdock.cpp
-  qmltypes/qmlproducer.cpp
-  models/keyframesmodel.cpp
-  models/markersmodel.cpp
-  widgets/editmarkerwidget.cpp
-  widgets/slideshowgeneratorwidget.cpp
-  widgets/textproducerwidget.cpp
-  dialogs/listselectiondialog.cpp
-  dialogs/longuitask.cpp
-  widgets/newprojectfolder.cpp
-  widgets/playlistlistview.cpp
-  # header only
-  shotcut_mlt_properties.h
-  transportcontrol.h
-  # UI
-  mainwindow.ui
-  dialogs/systemsyncdialog.ui
-  openotherdialog.ui
-  widgets/plasmawidget.ui
-  widgets/lissajouswidget.ui
-  widgets/isingwidget.ui
-  widgets/video4linuxwidget.ui
-  widgets/colorproducerwidget.ui
-  widgets/decklinkproducerwidget.ui
-  widgets/networkproducerwidget.ui
-  widgets/colorbarswidget.ui
-  widgets/countproducerwidget.ui
-  widgets/noisewidget.ui
-  widgets/pulseaudiowidget.ui
-  widgets/jackproducerwidget.ui
-  widgets/toneproducerwidget.ui
-  widgets/alsawidget.ui
-  widgets/x11grabwidget.ui
-  widgets/servicepresetwidget.ui
-  widgets/avformatproducerwidget.ui
-  widgets/imageproducerwidget.ui
-  widgets/blipproducerwidget.ui
-  docks/recentdock.ui
-  docks/encodedock.ui
+add_executable(shotcut WIN32 MACOSX_BUNDLE
+  abstractproducerwidget.cpp abstractproducerwidget.h
+  autosavefile.cpp autosavefile.h
+  commands/markercommands.cpp commands/markercommands.h
+  commands/playlistcommands.cpp commands/playlistcommands.h
+  commands/timelinecommands.cpp commands/timelinecommands.h
+  commands/undohelper.cpp commands/undohelper.h
+  controllers/filtercontroller.cpp controllers/filtercontroller.h
+  controllers/scopecontroller.cpp controllers/scopecontroller.h
+  database.cpp database.h
+  dialogs/addencodepresetdialog.cpp dialogs/addencodepresetdialog.h
   dialogs/addencodepresetdialog.ui
-  docks/jobsdock.ui
-  dialogs/textviewerdialog.ui
-  docks/playlistdock.ui
-  dialogs/durationdialog.ui
+  dialogs/alignaudiodialog.cpp dialogs/alignaudiodialog.h
+  dialogs/alignmentarray.cpp dialogs/alignmentarray.h
+  dialogs/customprofiledialog.cpp dialogs/customprofiledialog.h
   dialogs/customprofiledialog.ui
-  docks/timelinedock.ui
-  widgets/lumamixtransition.ui
-  widgets/directshowvideowidget.ui
-  widgets/avfoundationproducerwidget.ui
-  widgets/gdigrabwidget.ui
-  widgets/trackpropertieswidget.ui
-  widgets/timelinepropertieswidget.ui
-  dialogs/unlinkedfilesdialog.ui
-  dialogs/transcodedialog.ui
-  widgets/textproducerwidget.ui
+  dialogs/durationdialog.cpp dialogs/durationdialog.h
+  dialogs/durationdialog.ui
+  dialogs/editmarkerdialog.cpp dialogs/editmarkerdialog.h
+  dialogs/filedatedialog.cpp dialogs/filedatedialog.h
+  dialogs/listselectiondialog.cpp dialogs/listselectiondialog.h
   dialogs/listselectiondialog.ui
+  dialogs/longuitask.cpp dialogs/longuitask.h
+  dialogs/multifileexportdialog.cpp dialogs/multifileexportdialog.h
+  dialogs/saveimagedialog.cpp dialogs/saveimagedialog.h
+  dialogs/slideshowgeneratordialog.cpp dialogs/slideshowgeneratordialog.h
+  dialogs/systemsyncdialog.cpp dialogs/systemsyncdialog.h
+  dialogs/systemsyncdialog.ui
+  dialogs/textviewerdialog.cpp dialogs/textviewerdialog.h
+  dialogs/textviewerdialog.ui
+  dialogs/transcodedialog.cpp dialogs/transcodedialog.h
+  dialogs/transcodedialog.ui
+  dialogs/unlinkedfilesdialog.cpp dialogs/unlinkedfilesdialog.h
+  dialogs/unlinkedfilesdialog.ui
+  docks/encodedock.cpp docks/encodedock.h
+  docks/encodedock.ui
+  docks/filtersdock.cpp docks/filtersdock.h
+  docks/jobsdock.cpp docks/jobsdock.h
+  docks/jobsdock.ui
+  docks/keyframesdock.cpp docks/keyframesdock.h
+  docks/markersdock.cpp docks/markersdock.h
+  docks/notesdock.cpp docks/notesdock.h
+  docks/playlistdock.cpp docks/playlistdock.h
+  docks/playlistdock.ui
+  docks/recentdock.cpp docks/recentdock.h
+  docks/recentdock.ui
+  docks/scopedock.cpp docks/scopedock.h
+  docks/timelinedock.cpp docks/timelinedock.h
+  docks/timelinedock.ui
+  glwidget.cpp glwidget.h
+  jobqueue.cpp jobqueue.h
+  jobs/abstractjob.cpp jobs/abstractjob.h
+  jobs/encodejob.cpp jobs/encodejob.h
+  jobs/ffmpegjob.cpp jobs/ffmpegjob.h
+  jobs/ffprobejob.cpp jobs/ffprobejob.h
+  jobs/meltjob.cpp jobs/meltjob.h
+  jobs/postjobaction.cpp jobs/postjobaction.h
+  jobs/qimagejob.cpp jobs/qimagejob.h
+  jobs/videoqualityjob.cpp jobs/videoqualityjob.h
+  leapnetworklistener.cpp leapnetworklistener.h
+  main.cpp
+  mainwindow.cpp mainwindow.h
+  mainwindow.ui
+  mltcontroller.cpp mltcontroller.h
+  mltxmlchecker.cpp mltxmlchecker.h
+  models/alignclipsmodel.cpp models/alignclipsmodel.h
+  models/attachedfiltersmodel.cpp models/attachedfiltersmodel.h
+  models/audiolevelstask.cpp models/audiolevelstask.h
+  models/keyframesmodel.cpp models/keyframesmodel.h
+  models/markersmodel.cpp models/markersmodel.h
+  models/metadatamodel.cpp models/metadatamodel.h
+  models/multitrackmodel.cpp models/multitrackmodel.h
+  models/playlistmodel.cpp models/playlistmodel.h
+  openotherdialog.cpp openotherdialog.h
+  openotherdialog.ui
+  player.cpp player.h
+  proxymanager.cpp proxymanager.h
+  qmltypes/colorpickeritem.cpp qmltypes/colorpickeritem.h
+  qmltypes/colorwheelitem.cpp qmltypes/colorwheelitem.h
+  qmltypes/qmlapplication.cpp qmltypes/qmlapplication.h
+  qmltypes/qmlfile.cpp qmltypes/qmlfile.h
+  qmltypes/qmlfilter.cpp qmltypes/qmlfilter.h
+  qmltypes/qmlmetadata.cpp qmltypes/qmlmetadata.h
+  qmltypes/qmlproducer.cpp qmltypes/qmlproducer.h
+  qmltypes/qmlprofile.cpp qmltypes/qmlprofile.h
+  qmltypes/qmlrichtext.cpp qmltypes/qmlrichtext.h
+  qmltypes/qmlutilities.cpp qmltypes/qmlutilities.h
+  qmltypes/qmlview.cpp qmltypes/qmlview.h
+  qmltypes/thumbnailprovider.cpp qmltypes/thumbnailprovider.h
+  qmltypes/timelineitems.cpp qmltypes/timelineitems.h
+  scrubbar.cpp scrubbar.h
+  settings.cpp settings.h
+  sharedframe.cpp sharedframe.h
+  shotcut_mlt_properties.h
+  spatialmedia/box.cpp spatialmedia/box.h
+  spatialmedia/container.cpp spatialmedia/container.h
+  spatialmedia/mpeg4_container.cpp spatialmedia/mpeg4_container.h
+  spatialmedia/sa3d.cpp spatialmedia/sa3d.h
+  spatialmedia/spatialmedia.cpp spatialmedia/spatialmedia.h
+  transportcontrol.h
+  util.cpp util.h
+  widgets/alsawidget.cpp widgets/alsawidget.h
+  widgets/alsawidget.ui
+  widgets/audiometerwidget.cpp widgets/audiometerwidget.h
+  widgets/audioscale.cpp widgets/audioscale.h
+  widgets/avformatproducerwidget.cpp widgets/avformatproducerwidget.h
+  widgets/avformatproducerwidget.ui
+  widgets/avfoundationproducerwidget.cpp widgets/avfoundationproducerwidget.h
+  widgets/avfoundationproducerwidget.ui
+  widgets/blipproducerwidget.cpp widgets/blipproducerwidget.h
+  widgets/blipproducerwidget.ui
+  widgets/colorbarswidget.cpp widgets/colorbarswidget.h
+  widgets/colorbarswidget.ui
+  widgets/colorproducerwidget.cpp widgets/colorproducerwidget.h
+  widgets/colorproducerwidget.ui
+  widgets/colorwheel.cpp widgets/colorwheel.h
+  widgets/countproducerwidget.cpp widgets/countproducerwidget.h
+  widgets/countproducerwidget.ui
+  widgets/decklinkproducerwidget.cpp widgets/decklinkproducerwidget.h
+  widgets/decklinkproducerwidget.ui
+  widgets/directshowvideowidget.cpp widgets/directshowvideowidget.h
+  widgets/directshowvideowidget.ui
+  widgets/editmarkerwidget.cpp widgets/editmarkerwidget.h
+  widgets/exportpresetstreeview.cpp widgets/exportpresetstreeview.h
+  widgets/frameratewidget.cpp widgets/frameratewidget.h
+  widgets/gdigrabwidget.cpp widgets/gdigrabwidget.h
+  widgets/gdigrabwidget.ui
+  widgets/gltestwidget.cpp widgets/gltestwidget.h
+  widgets/imageproducerwidget.cpp widgets/imageproducerwidget.h
+  widgets/imageproducerwidget.ui
+  widgets/isingwidget.cpp widgets/isingwidget.h
+  widgets/isingwidget.ui
+  widgets/jackproducerwidget.cpp widgets/jackproducerwidget.h
+  widgets/jackproducerwidget.ui
+  widgets/lineeditclear.cpp widgets/lineeditclear.h
+  widgets/lissajouswidget.cpp widgets/lissajouswidget.h
+  widgets/lissajouswidget.ui
+  widgets/lumamixtransition.cpp widgets/lumamixtransition.h
+  widgets/lumamixtransition.ui
+  widgets/networkproducerwidget.cpp widgets/networkproducerwidget.h
+  widgets/networkproducerwidget.ui
+  widgets/newprojectfolder.cpp widgets/newprojectfolder.h
   widgets/newprojectfolder.ui
-  # QRC
+  widgets/noisewidget.cpp widgets/noisewidget.h
+  widgets/noisewidget.ui
+  widgets/plasmawidget.cpp widgets/plasmawidget.h
+  widgets/plasmawidget.ui
+  widgets/playlisticonview.cpp widgets/playlisticonview.h
+  widgets/playlistlistview.cpp widgets/playlistlistview.h
+  widgets/playlisttable.cpp widgets/playlisttable.h
+  widgets/producerpreviewwidget.cpp widgets/producerpreviewwidget.h
+  widgets/pulseaudiowidget.cpp widgets/pulseaudiowidget.h
+  widgets/pulseaudiowidget.ui
+  widgets/scopes/audioloudnessscopewidget.cpp widgets/scopes/audioloudnessscopewidget.h
+  widgets/scopes/audiopeakmeterscopewidget.cpp widgets/scopes/audiopeakmeterscopewidget.h
+  widgets/scopes/audiospectrumscopewidget.cpp widgets/scopes/audiospectrumscopewidget.h
+  widgets/scopes/audiowaveformscopewidget.cpp widgets/scopes/audiowaveformscopewidget.h
+  widgets/scopes/scopewidget.cpp widgets/scopes/scopewidget.h
+  widgets/scopes/videohistogramscopewidget.cpp widgets/scopes/videohistogramscopewidget.h
+  widgets/scopes/videorgbparadescopewidget.cpp widgets/scopes/videorgbparadescopewidget.h
+  widgets/scopes/videorgbwaveformscopewidget.cpp widgets/scopes/videorgbwaveformscopewidget.h
+  widgets/scopes/videovectorscopewidget.cpp widgets/scopes/videovectorscopewidget.h
+  widgets/scopes/videowaveformscopewidget.cpp widgets/scopes/videowaveformscopewidget.h
+  widgets/scopes/videozoomscopewidget.cpp widgets/scopes/videozoomscopewidget.h
+  widgets/scopes/videozoomwidget.cpp widgets/scopes/videozoomwidget.h
+  widgets/screenselector.cpp widgets/screenselector.h
+  widgets/servicepresetwidget.cpp widgets/servicepresetwidget.h
+  widgets/servicepresetwidget.ui
+  widgets/slideshowgeneratorwidget.cpp widgets/slideshowgeneratorwidget.h
+  widgets/textproducerwidget.cpp widgets/textproducerwidget.h
+  widgets/textproducerwidget.ui
+  widgets/timelinepropertieswidget.cpp widgets/timelinepropertieswidget.h
+  widgets/timelinepropertieswidget.ui
+  widgets/timespinbox.cpp widgets/timespinbox.h
+  widgets/toneproducerwidget.cpp widgets/toneproducerwidget.h
+  widgets/toneproducerwidget.ui
+  widgets/trackpropertieswidget.cpp widgets/trackpropertieswidget.h
+  widgets/trackpropertieswidget.ui
+  widgets/video4linuxwidget.cpp widgets/video4linuxwidget.h
+  widgets/video4linuxwidget.ui
+  widgets/x11grabwidget.cpp widgets/x11grabwidget.h
+  widgets/x11grabwidget.ui
   ../icons/resources.qrc
 )
 
 add_custom_target(OTHER_FILES
   SOURCES
-  ../.github/workflows/build-linux.yml
+  ../.github/ISSUE_TEMPLATE.md
   ../.github/workflows/build-linux-unstable.yml
-  ../.github/workflows/build-macos.yml
+  ../.github/workflows/build-linux.yml
   ../.github/workflows/build-macos-unstable.yml
-  ../.github/workflows/build-sdk-windows.yml
+  ../.github/workflows/build-macos.yml
   ../.github/workflows/build-sdk-windows-unstable.yml
-  ../.github/workflows/build-windows.yml
+  ../.github/workflows/build-sdk-windows.yml
   ../.github/workflows/build-windows-unstable.yml
+  ../.github/workflows/build-windows.yml
   ../COPYING
-  ../README.md
-  ../packaging/windows/shotcut.rc
-  ../scripts/build-shotcut.sh
-  ../scripts/build-shotcut-msys2.sh
-  ../packaging/macos/shotcut.icns
-  ../packaging/windows/shotcut.nsi
-  ../packaging/macos/Info.plist
   ../icons/dark/index.theme
   ../icons/light/index.theme
-  ../packaging/linux/Makefile
   ../packaging/linux/appimage/appimage.yml
-  ../packaging/linux/snapcraft.yaml.in
-  ../packaging/linux/org.shotcut.Shotcut.metainfo.xml
+  ../packaging/linux/Makefile
   ../packaging/linux/org.shotcut.Shotcut.desktop
+  ../packaging/linux/org.shotcut.Shotcut.metainfo.xml.in
   ../packaging/linux/org.shotcut.Shotcut.xml
   ../packaging/linux/shotcut.1
-  ../.github/ISSUE_TEMPLATE.md
+  ../packaging/linux/snapcraft.yaml.in
+  ../packaging/macos/Info.plist.in
+  ../packaging/macos/shotcut.icns
+  ../packaging/windows/shotcut.nsi
+  ../packaging/windows/shotcut.rc.in
+  ../README.md
+  ../scripts/build-shotcut-msys2.sh
+  ../scripts/build-shotcut.sh
   ../scripts/codesign_and_notarize.sh
   ../scripts/notarize.sh
   ../scripts/staple.sh
@@ -221,18 +218,22 @@ add_custom_target(OTHER_FILES
 
 target_link_libraries(shotcut
   PRIVATE
-  Qt5::Widgets
+  CuteLogger
+  PkgConfig::mlt++
+  PkgConfig::FFTW
+  Qt5::Multimedia
   Qt5::Network
+  Qt5::OpenGL
   Qt5::QuickControls2
   Qt5::QuickWidgets
-  Qt5::Xml
-  Qt5::WebSockets
-  Qt5::OpenGL
   Qt5::Sql
-  Qt5::Multimedia
-  PkgConfig::mlt++
-  CuteLogger
+  Qt5::WebSockets
+  Qt5::Widgets
+  Qt5::Xml
 )
+
+file(GLOB_RECURSE QML_SRC "qml/*")
+target_sources(shotcut PRIVATE ${QML_SRC})
 
 target_include_directories(shotcut PRIVATE ${CMAKE_SOURCE_DIR}/CuteLogger/include)
 target_compile_definitions(shotcut PRIVATE SHOTCUT_VERSION="${SHOTCUT_VERSION}")
@@ -245,7 +246,7 @@ if(WIN32)
 
   # Windows integration features
   find_package(Qt5 5.15 REQUIRED COMPONENTS WinExtras)
-  target_sources(shotcut PRIVATE windowstools.cpp)
+  target_sources(shotcut PRIVATE windowstools.cpp windowstools.h)
   target_link_libraries(shotcut PRIVATE Qt5::WinExtras)
 
   # Runtime exception handler for debug only
@@ -254,22 +255,47 @@ if(WIN32)
   target_link_libraries(shotcut PRIVATE debug exchndl)
 
   install(TARGETS shotcut RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX})
-  install(DIRECTORY qml/ DESTINATION ${CMAKE_INSTALL_PREFIX}/share/shotcut/qml)
+  install(DIRECTORY qml DESTINATION ${CMAKE_INSTALL_PREFIX}/share/shotcut/)
 endif()
 
 if(APPLE)
-  target_sources(shotcut PRIVATE macos.mm)
-  set_target_properties(shotcut PROPERTIES OUTPUT_NAME "Shotcut")
+  target_sources(shotcut PRIVATE macos.mm macos.h)
+  string(SUBSTRING ${SHOTCUT_VERSION} 0, 5, SHORT_VERSION)
+  set_target_properties(shotcut PROPERTIES
+    OUTPUT_NAME "Shotcut"
+    MACOSX_BUNDLE_INFO_PLIST ${CMAKE_SOURCE_DIR}/packaging/macos/Info.plist.in)
   find_library(FOUNDATION Foundation)
   find_library(COCOA Cocoa)
   target_link_libraries(shotcut PRIVATE ${FOUNDATION} ${COCOA})
+  set(APP_ICON ${CMAKE_SOURCE_DIR}/packaging/macos/shotcut.icns)
+  target_sources(shotcut PRIVATE ${APP_ICON})
+  set_source_files_properties(${APP_ICON} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
 
-  install(TARGETS shotcut RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/Contents/MacOS)
-  install(DIRECTORY qml/ DESTINATION ${CMAKE_INSTALL_PREFIX}/Contents/Resources/shotcut/qml)
+  install(TARGETS shotcut BUNDLE DESTINATION ${CMAKE_INSTALL_PREFIX})
+  install(DIRECTORY qml DESTINATION ${CMAKE_INSTALL_PREFIX}/Shotcut.app/Contents/Resources/shotcut/)
 endif()
 
 if(UNIX AND NOT APPLE)
   file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/share/shotcut)
   file(CREATE_LINK ${CMAKE_SOURCE_DIR}/src/qml ${CMAKE_BINARY_DIR}/share/shotcut/qml SYMBOLIC)
+  include(GNUInstallDirs)
   install(TARGETS shotcut RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+  install(DIRECTORY qml DESTINATION ${CMAKE_INSTALL_DATADIR}/shotcut/)
+
+  string(REPLACE . - SHOTCUT_DATE  ${SHOTCUT_VERSION})
+  string(PREPEND SHOTCUT_DATE "20")
+  configure_file(${CMAKE_SOURCE_DIR}/packaging/linux/org.shotcut.Shotcut.metainfo.xml.in
+    ${CMAKE_BINARY_DIR}/packaging/linux/org.shotcut.Shotcut.metainfo.xml)
+  install(FILES ${CMAKE_BINARY_DIR}/packaging/linux/org.shotcut.Shotcut.metainfo.xml
+    DESTINATION ${CMAKE_INSTALL_DATADIR}/metainfo/)
+  install(FILES ${CMAKE_SOURCE_DIR}/packaging/linux/org.shotcut.Shotcut.desktop
+    DESTINATION ${CMAKE_INSTALL_DATADIR}/applications/)
+  install(FILES ${CMAKE_SOURCE_DIR}/packaging/linux/org.shotcut.Shotcut.xml
+    DESTINATION ${CMAKE_INSTALL_DATADIR}/mime/packages/)
+  install(FILES ${CMAKE_SOURCE_DIR}/packaging/linux/icons/64x64/org.shotcut.Shotcut.png
+    DESTINATION ${CMAKE_INSTALL_DATADIR}/icons/hicolor/64x64/apps/)
+  install(FILES ${CMAKE_SOURCE_DIR}/packaging/linux/icons/128x128/org.shotcut.Shotcut.png
+    DESTINATION ${CMAKE_INSTALL_DATADIR}/icons/hicolor/128x128/apps/)
+  install(FILES ${CMAKE_SOURCE_DIR}/packaging/linux/shotcut.1
+    DESTINATION ${CMAKE_INSTALL_DATADIR}/man/man1/)
 endif()

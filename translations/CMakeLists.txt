@@ -1,0 +1,65 @@
+find_package(Qt5LinguistTools)
+
+# Translation howto:
+# - Translations are mentioned in the LANGUAGES variable below
+# - To update the .ts files, cd into translations and run 'ninja translations'
+# - The .qm files are created as part of a regular make command
+
+set(LANGUAGES
+    ar
+    ca
+    cs
+    da
+    de
+    el
+    en
+    en_GB
+    es
+    et
+    fi
+    fr
+    gd
+    gl
+    hu
+    it
+    ko
+    ja
+    nb
+    nn
+    ne
+    nl
+    oc
+    pl
+    pt_BR
+    pt_PT
+    ro
+    ru
+    sk
+    sl
+    sv
+    th
+    tr
+    uk
+    zh_CN
+    zh_TW
+)
+
+list(TRANSFORM LANGUAGES PREPEND "shotcut_" OUTPUT_VARIABLE TS_FILES)
+list(TRANSFORM TS_FILES APPEND ".qm" OUTPUT_VARIABLE QM_FILES)
+list(TRANSFORM TS_FILES PREPEND ${CMAKE_CURRENT_SOURCE_DIR}/)
+list(TRANSFORM TS_FILES APPEND ".ts")
+
+# lupdate ts files
+add_custom_target(translations COMMAND
+  ${Qt5_LUPDATE_EXECUTABLE} -locations absolute -no-obsolete -recursive
+  ${CMAKE_SOURCE_DIR}/src -ts ${TS_FILES})
+
+# generate qm files with lrelease
+qt5_add_translation(QM_FILES ${TS_FILES})
+add_custom_target(qm ALL DEPENDS ${QM_FILES})
+
+if(UNIX AND NOT APPLE)
+  include(GNUInstallDirs)
+  install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/ DESTINATION ${CMAKE_INSTALL_DATADIR}/shotcut/translations
+    FILES_MATCHING PATTERN "*.qm" PATTERN CMakeFiles EXCLUDE)
+endif()

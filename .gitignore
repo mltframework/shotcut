@@ -27,3 +27,4 @@ build/
 *.Debug
 *.Release
 *.exe
+packaging/windows/shotcut.rc
