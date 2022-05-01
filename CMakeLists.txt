@@ -57,3 +57,7 @@ add_custom_target(codespell COMMAND
   -S export-edl.js,CuteLogger,drmingw,node_modules,moc_*,index.theme,*.ts,three.min.js,three.js,jquery.js,rangy-*.js,Makefile,shotcut.pro,*.desktop
 )
 
+add_custom_target(astyle COMMAND
+  astyle --project=.astylerc --recursive "./*.cpp,*.h"
+)
+
