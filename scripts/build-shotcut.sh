@@ -1943,7 +1943,7 @@ function deploy_mac
   if [ "$SDK" = "1" ]; then
     # Prepare src for archiving
     cmd rm -rf "$INSTALL_DIR"/Shotcut
-    cmd mv shotcut/src/Shotcut.app "$INSTALL_DIR"/Shotcut
+    cmd mv shotcut/Shotcut.app "$INSTALL_DIR"/Shotcut
     clean_dirs
     pushd "$INSTALL_DIR"
     log Copying src
@@ -1973,7 +1973,7 @@ function deploy_mac
       log Staging disk image
       cmd rm -rf staging 2>/dev/null
       cmd mkdir staging
-      cmd mv shotcut/src/Shotcut.app staging
+      cmd mv shotcut/Shotcut.app staging
       cmd ln -s /Applications staging
       cmd cp shotcut/COPYING staging
 
