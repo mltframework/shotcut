@@ -1849,6 +1849,7 @@ function deploy_mac
   cmd mkdir -p MacOS 2>/dev/null
   cmd cp -a "$FINAL_INSTALL_DIR"/bin/{melt,ffmpeg,ffplay,ffprobe} MacOS
   cmd mkdir -p Frameworks 2>/dev/null
+  cmd cp -p ../../lib/libCuteLogger.dylib Frameworks
   for exe in MacOS/Shotcut MacOS/melt MacOS/ffmpeg MacOS/ffplay MacOS/ffprobe; do
     fixlibs "$exe"
     log fixing rpath of executable "$exe"
@@ -1857,7 +1858,6 @@ function deploy_mac
     cmd install_name_tool -add_rpath "@executable_path/../Frameworks" "$exe"
   done
   cmd cp -p "$FINAL_INSTALL_DIR"/lib/libaom.2.dylib Frameworks
-  cmd cp -p ../../lib/libCuteLogger.dylib Frameworks
 
   # MLT plugins
   log Copying MLT plugins
