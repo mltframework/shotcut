@@ -28,3 +28,13 @@ build/
 *.Release
 *.exe
 packaging/windows/shotcut.rc
+*cmake_install.cmake
+.ninja_*
+build.ninja
+rules.ninja
+CMakeCache.txt
+*CMakeFiles/
+CuteLogger/CuteLogger_autogen/
+install_manifest.txt
+share/
+src/shotcut_autogen/
