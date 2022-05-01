@@ -32,11 +32,11 @@
 #include <QMainWindow>
 #include <QMenu>
 
-ScopeController::ScopeController(QMainWindow* mainWindow, QMenu* menu)
-  : QObject(mainWindow)
+ScopeController::ScopeController(QMainWindow *mainWindow, QMenu *menu)
+    : QObject(mainWindow)
 {
     LOG_DEBUG() << "begin";
-    QMenu* scopeMenu = menu->addMenu(tr("Scopes"));
+    QMenu *scopeMenu = menu->addMenu(tr("Scopes"));
     createScopeDock<AudioLoudnessScopeWidget>(mainWindow, scopeMenu);
     createScopeDock<AudioPeakMeterScopeWidget>(mainWindow, scopeMenu);
     createScopeDock<AudioSpectrumScopeWidget>(mainWindow, scopeMenu);
@@ -52,10 +52,11 @@ ScopeController::ScopeController(QMainWindow* mainWindow, QMenu* menu)
     LOG_DEBUG() << "end";
 }
 
-template<typename ScopeTYPE> void ScopeController::createScopeDock(QMainWindow* mainWindow, QMenu* menu)
+template<typename ScopeTYPE> void ScopeController::createScopeDock(QMainWindow *mainWindow,
+                                                                   QMenu *menu)
 {
-    ScopeWidget* scopeWidget = new ScopeTYPE();
-    ScopeDock* scopeDock = new ScopeDock(this, scopeWidget);
+    ScopeWidget *scopeWidget = new ScopeTYPE();
+    ScopeDock *scopeDock = new ScopeDock(this, scopeWidget);
     scopeDock->hide();
     menu->addAction(scopeDock->toggleViewAction());
     mainWindow->addDockWidget(Qt::RightDockWidgetArea, scopeDock);

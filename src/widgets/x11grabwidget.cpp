@@ -64,7 +64,7 @@ void X11grabWidget::on_audioComboBox_activated(int index)
         ui->audioLayout->addWidget(m_audioWidget);
 }
 
-QString X11grabWidget::URL(Mlt::Profile& profile) const
+QString X11grabWidget::URL(Mlt::Profile &profile) const
 {
     if (!profile.is_explicit()) {
         profile.set_width(ui->widthSpinBox->value());
@@ -74,30 +74,30 @@ QString X11grabWidget::URL(Mlt::Profile& profile) const
         profile.set_colorspace(709);
         profile.set_frame_rate(25, 1);
     }
-    QString s = QString("x11grab:%1+%2,%3?width=%4&height=%5&framerate=%6&show_region=%7&draw_mouse=%8&follow_mouse=%9")
-            .arg(ui->lineEdit->text())
-            .arg(ui->xSpinBox->value())
-            .arg(ui->ySpinBox->value())
-            .arg(ui->widthSpinBox->value())
-            .arg(ui->heightSpinBox->value())
-            .arg(profile.fps())
-            .arg(ui->showRegionCheckBox->isChecked()? 1: 0)
-            .arg(ui->drawMouseCheckBox->isChecked()? 1 : 0)
-            .arg(ui->positionComboBox->currentIndex() - 1);
+    QString s =
+        QString("x11grab:%1+%2,%3?width=%4&height=%5&framerate=%6&show_region=%7&draw_mouse=%8&follow_mouse=%9")
+        .arg(ui->lineEdit->text())
+        .arg(ui->xSpinBox->value())
+        .arg(ui->ySpinBox->value())
+        .arg(ui->widthSpinBox->value())
+        .arg(ui->heightSpinBox->value())
+        .arg(profile.fps())
+        .arg(ui->showRegionCheckBox->isChecked() ? 1 : 0)
+        .arg(ui->drawMouseCheckBox->isChecked() ? 1 : 0)
+        .arg(ui->positionComboBox->currentIndex() - 1);
     return s;
 }
 
-Mlt::Producer* X11grabWidget::newProducer(Mlt::Profile& profile)
+Mlt::Producer *X11grabWidget::newProducer(Mlt::Profile &profile)
 {
-    Mlt::Producer* p = new Mlt::Producer(profile, URL(profile).toLatin1().constData());
+    Mlt::Producer *p = new Mlt::Producer(profile, URL(profile).toLatin1().constData());
     if (!p->is_valid()) {
         delete p;
         p = new Mlt::Producer(profile, "color:");
         p->set("error", 1);
-    }
-    else if (m_audioWidget) {
-        Mlt::Producer* audio = dynamic_cast<AbstractProducerWidget*>(m_audioWidget)->newProducer(profile);
-        Mlt::Tractor* tractor = new Mlt::Tractor;
+    } else if (m_audioWidget) {
+        Mlt::Producer *audio = dynamic_cast<AbstractProducerWidget *>(m_audioWidget)->newProducer(profile);
+        Mlt::Tractor *tractor = new Mlt::Tractor;
         tractor->set("_profile", profile.get_profile(), 0);
         tractor->set_track(*p, 0);
         delete p;
@@ -111,8 +111,8 @@ Mlt::Producer* X11grabWidget::newProducer(Mlt::Profile& profile)
     p->set("ypos", ui->ySpinBox->value());
     p->set("width", ui->widthSpinBox->value());
     p->set("height", ui->heightSpinBox->value());
-    p->set("show_region", ui->showRegionCheckBox->isChecked()? 1: 0);
-    p->set("draw_mouse", ui->drawMouseCheckBox->isChecked()? 1: 0);
+    p->set("show_region", ui->showRegionCheckBox->isChecked() ? 1 : 0);
+    p->set("draw_mouse", ui->drawMouseCheckBox->isChecked() ? 1 : 0);
     p->set("follow_mouse", ui->positionComboBox->currentIndex() - 1);
     p->set("audio_ix", ui->audioComboBox->currentIndex());
     p->set(kBackgroundCaptureProperty, 1);
@@ -128,15 +128,15 @@ Mlt::Properties X11grabWidget::getPreset() const
     p.set("ypos", ui->ySpinBox->value());
     p.set("width", ui->widthSpinBox->value());
     p.set("height", ui->heightSpinBox->value());
-    p.set("show_region", ui->showRegionCheckBox->isChecked()? 1: 0);
-    p.set("draw_mouse", ui->drawMouseCheckBox->isChecked()? 1: 0);
+    p.set("show_region", ui->showRegionCheckBox->isChecked() ? 1 : 0);
+    p.set("draw_mouse", ui->drawMouseCheckBox->isChecked() ? 1 : 0);
     p.set("follow_mouse", ui->positionComboBox->currentIndex() - 1);
     p.set("audio_ix", ui->audioComboBox->currentIndex());
     p.set(kBackgroundCaptureProperty, 1);
     return p;
 }
 
-void X11grabWidget::loadPreset(Mlt::Properties& p)
+void X11grabWidget::loadPreset(Mlt::Properties &p)
 {
     ui->lineEdit->setText(p.get("display"));
     ui->xSpinBox->setValue(p.get_int("xpos"));
@@ -150,9 +150,9 @@ void X11grabWidget::loadPreset(Mlt::Properties& p)
     on_audioComboBox_activated(p.get_int("audio_ix"));
 }
 
-void X11grabWidget::on_preset_selected(void* p)
+void X11grabWidget::on_preset_selected(void *p)
 {
-    Mlt::Properties* properties = (Mlt::Properties*) p;
+    Mlt::Properties *properties = (Mlt::Properties *) p;
     loadPreset(*properties);
     delete properties;
 }
@@ -162,7 +162,7 @@ void X11grabWidget::on_preset_saveClicked()
     ui->preset->savePreset(getPreset());
 }
 
-void X11grabWidget::setProducer(Mlt::Producer* producer)
+void X11grabWidget::setProducer(Mlt::Producer *producer)
 {
     ui->applyButton->show();
     if (producer)
@@ -176,7 +176,7 @@ void X11grabWidget::on_applyButton_clicked()
     emit producerChanged(0);
     QCoreApplication::processEvents();
 
-    Mlt::Producer* p = newProducer(MLT.profile());
+    Mlt::Producer *p = newProducer(MLT.profile());
     AbstractProducerWidget::setProducer(p);
     MLT.setProducer(p);
     MLT.play();

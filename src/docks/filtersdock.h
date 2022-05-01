@@ -34,11 +34,15 @@ class AttachedFiltersModel;
 class FiltersDock : public QDockWidget
 {
     Q_OBJECT
-    
-public:
-    explicit FiltersDock(MetadataModel* metadataModel, AttachedFiltersModel* attachedModel, QWidget *parent = 0);
 
-    QmlProducer* qmlProducer() { return &m_producer; }
+public:
+    explicit FiltersDock(MetadataModel *metadataModel, AttachedFiltersModel *attachedModel,
+                         QWidget *parent = 0);
+
+    QmlProducer *qmlProducer()
+    {
+        return &m_producer;
+    }
 
 signals:
     void currentFilterRequested(int attachedIndex);
@@ -48,14 +52,14 @@ signals:
     void producerOutChanged(int delta);
 
 public slots:
-    void setCurrentFilter(QmlFilter* filter, QmlMetadata* meta, int index);
+    void setCurrentFilter(QmlFilter *filter, QmlMetadata *meta, int index);
     void onSeeked(int position);
-    void onShowFrame(const SharedFrame& frame);
+    void onShowFrame(const SharedFrame &frame);
     void openFilterMenu() const;
 
 protected:
     bool event(QEvent *event);
-    void keyPressEvent(QKeyEvent* event);
+    void keyPressEvent(QKeyEvent *event);
 
 private slots:
     void resetQview();

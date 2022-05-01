@@ -24,9 +24,9 @@
 #include <Mlt.h>
 #include <QScopedPointer>
 
-static const char* BLEND_PROPERTY_CAIROBLEND = "1";
+static const char *BLEND_PROPERTY_CAIROBLEND = "1";
 
-TrackPropertiesWidget::TrackPropertiesWidget(Mlt::Producer& track, QWidget *parent) :
+TrackPropertiesWidget::TrackPropertiesWidget(Mlt::Producer &track, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::TrackPropertiesWidget),
     m_track(track)
@@ -77,7 +77,7 @@ TrackPropertiesWidget::TrackPropertiesWidget(Mlt::Producer& track, QWidget *pare
             ui->blendModeCombo->blockSignals(false);
             ui->blendModeLabel->show();
             ui->blendModeCombo->show();
-            QString blendMode = transition->get_int("disable")? QString() : "over";
+            QString blendMode = transition->get_int("disable") ? QString() : "over";
             onModeChanged(blendMode);
         }
     }
@@ -88,7 +88,7 @@ TrackPropertiesWidget::~TrackPropertiesWidget()
     delete ui;
 }
 
-Mlt::Transition* TrackPropertiesWidget::getTransition(const QString& name)
+Mlt::Transition *TrackPropertiesWidget::getTransition(const QString &name)
 {
     // track.consumer() is the multitrack
     QScopedPointer<Mlt::Service> service(m_track.consumer());
@@ -123,15 +123,15 @@ void TrackPropertiesWidget::on_blendModeCombo_currentIndexChanged(int index)
         if (!transition)
             transition.reset(getTransition("movit.overlay"));
         if (transition && transition->is_valid()) {
-            Timeline::ChangeBlendModeCommand* command = new Timeline::ChangeBlendModeCommand(
+            Timeline::ChangeBlendModeCommand *command = new Timeline::ChangeBlendModeCommand(
                 *transition, BLEND_PROPERTY_CAIROBLEND, ui->blendModeCombo->itemData(index).toString());
-            connect(command, SIGNAL(modeChanged(QString&)), SLOT(onModeChanged(QString&)));
+            connect(command, SIGNAL(modeChanged(QString &)), SLOT(onModeChanged(QString &)));
             MAIN.undoStack()->push(command);
         }
     }
 }
 
-void TrackPropertiesWidget::onModeChanged(QString& mode)
+void TrackPropertiesWidget::onModeChanged(QString &mode)
 {
     for (int i = 0; i < ui->blendModeCombo->count(); ++i) {
         if (ui->blendModeCombo->itemData(i).toString() == mode) {

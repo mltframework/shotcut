@@ -54,28 +54,30 @@ public:
         MaximumFrameRole  /// keyframe only
     };
 
-    explicit KeyframesModel(QObject* parent = 0);
+    explicit KeyframesModel(QObject *parent = 0);
     virtual ~KeyframesModel();
 
-    int rowCount(const QModelIndex& parent) const;
-    int columnCount(const QModelIndex& parent) const;
-    QVariant data(const QModelIndex& index, int role) const;
+    int rowCount(const QModelIndex &parent) const;
+    int columnCount(const QModelIndex &parent) const;
+    QVariant data(const QModelIndex &index, int role) const;
     QModelIndex index(int row, int column = 0,
-                      const QModelIndex& parent = QModelIndex()) const;
-    QModelIndex parent(const QModelIndex& index) const;
+                      const QModelIndex &parent = QModelIndex()) const;
+    QModelIndex parent(const QModelIndex &index) const;
     QHash<int, QByteArray> roleNames() const;
-    void load(QmlFilter*, QmlMetadata*);
+    void load(QmlFilter *, QmlMetadata *);
     Q_INVOKABLE bool remove(int parameterIndex, int keyframeIndex);
     int previousKeyframePosition(int parameterIndex, int currentPosition);
     int nextKeyframePosition(int parameterIndex, int currentPosition);
     Q_INVOKABLE int keyframeIndex(int parameterIndex, int currentPosition);
-    Q_INVOKABLE int parameterIndex(const QString& propertyName) const;
+    Q_INVOKABLE int parameterIndex(const QString &propertyName) const;
     Q_INVOKABLE bool setInterpolation(int parameterIndex, int keyframeIndex, InterpolationType type);
     Q_INVOKABLE void setKeyframePosition(int parameterIndex, int keyframeIndex, int position);
-    Q_INVOKABLE void addKeyframe(int parameterIndex, double value, int position, InterpolationType type);
+    Q_INVOKABLE void addKeyframe(int parameterIndex, double value, int position,
+                                 InterpolationType type);
     Q_INVOKABLE void addKeyframe(int parameterIndex, int position);
     Q_INVOKABLE void setKeyframeValue(int parameterIndex, int keyframeIndex, double value);
-    Q_INVOKABLE void setKeyframeValuePosition(int parameterIndex, int keyframeIndex, double value, int position);
+    Q_INVOKABLE void setKeyframeValuePosition(int parameterIndex, int keyframeIndex, double value,
+                                              int position);
     Q_INVOKABLE bool isKeyframe(int parameterIndex, int position);
     Q_INVOKABLE bool advancedKeyframesInUse();
     Q_INVOKABLE void removeAdvancedKeyframes();
@@ -88,15 +90,15 @@ signals:
 
 public slots:
     void reload();
-    void onFilterChanged(const QString& property);
+    void onFilterChanged(const QString &property);
     void onFilterInChanged(int delta);
     void trimFilterIn(int in);
     void trimFilterOut(int out);
 
 private:
     QList<QString> m_propertyNames;
-    QmlMetadata* m_metadata;
-    QmlFilter* m_filter;
+    QmlMetadata *m_metadata;
+    QmlFilter *m_filter;
     QList<int> m_keyframeCounts;
     QList<int> m_metadataIndex;
 

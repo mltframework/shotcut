@@ -28,7 +28,8 @@ const int MIN_ZOOM = 2;
 const int MAX_ZOOM = 20;
 const int DEFAULT_ZOOM = 10;
 
-QColor getHighContrastColor(const QColor& color) {
+QColor getHighContrastColor(const QColor &color)
+{
     if (color.value() > 128 ) {
         return QColor(Qt::black);
     }
@@ -36,13 +37,13 @@ QColor getHighContrastColor(const QColor& color) {
 }
 
 VideoZoomWidget::VideoZoomWidget()
-  : m_locked(false)
-  , m_zoom(DEFAULT_ZOOM)
-  , m_imageOffset(0, 0)
-  , m_mouseGrabPixel(0, 0)
-  , m_selectedPixel(-1, -1)
-  , m_mutex(QMutex::NonRecursive)
-  , m_frame()
+    : m_locked(false)
+    , m_zoom(DEFAULT_ZOOM)
+    , m_imageOffset(0, 0)
+    , m_mouseGrabPixel(0, 0)
+    , m_selectedPixel(-1, -1)
+    , m_mutex(QMutex::NonRecursive)
+    , m_frame()
 {
     LOG_DEBUG() << "begin";
     setMouseTracking(true);
@@ -93,7 +94,7 @@ int VideoZoomWidget::getZoom()
     return m_zoom;
 }
 
-VideoZoomWidget::PixelValues VideoZoomWidget::getPixelValues(const QPoint& pixel)
+VideoZoomWidget::PixelValues VideoZoomWidget::getPixelValues(const QPoint &pixel)
 {
     QMutexLocker locker(&m_mutex);
     return pixelToValues(pixel);
@@ -118,10 +119,10 @@ void VideoZoomWidget::lock(bool locked)
 
 QSize VideoZoomWidget::sizeHint() const
 {
-    return QSize(400,400);
+    return QSize(400, 400);
 }
 
-void VideoZoomWidget::paintEvent(QPaintEvent*)
+void VideoZoomWidget::paintEvent(QPaintEvent *)
 {
     if (!isVisible()) return;
 
@@ -132,7 +133,7 @@ void VideoZoomWidget::paintEvent(QPaintEvent*)
     QPainter p(this);
     p.setRenderHint(QPainter::Antialiasing, true);
 
-    const uint8_t* pImg = m_frame.get_image(mlt_image_rgb);
+    const uint8_t *pImg = m_frame.get_image(mlt_image_rgb);
     int iWidth = m_frame.get_image_width();
     int iHeight = m_frame.get_image_height();
     int wWidth = width() - (width() % m_zoom);
@@ -142,7 +143,7 @@ void VideoZoomWidget::paintEvent(QPaintEvent*)
 
     // draw the pixels
     for (int y = 0; y < wHeight && iy < iHeight; y += m_zoom) {
-        const uint8_t* pPixel = pImg + ((iy * iWidth) + ix) * 3;
+        const uint8_t *pPixel = pImg + ((iy * iWidth) + ix) * 3;
         for (int x = 0; x < wWidth; x += m_zoom) {
             p.fillRect(x, y, m_zoom, m_zoom, QColor(pPixel[0], pPixel[1], pPixel[2], 255 ));
             pPixel += 3;
@@ -152,10 +153,10 @@ void VideoZoomWidget::paintEvent(QPaintEvent*)
 
     // Outline the selected pixel
     if (m_selectedPixel.x() >= 0 &&
-        m_selectedPixel.y() >= 0 &&
-        m_selectedPixel.x() < iWidth &&
-        m_selectedPixel.y() < iHeight) {
-        const uint8_t* pPixel = pImg + ((m_selectedPixel.y() * iWidth) + m_selectedPixel.x()) * 3;
+            m_selectedPixel.y() >= 0 &&
+            m_selectedPixel.x() < iWidth &&
+            m_selectedPixel.y() < iHeight) {
+        const uint8_t *pPixel = pImg + ((m_selectedPixel.y() * iWidth) + m_selectedPixel.x()) * 3;
         int posX = (m_selectedPixel.x() - m_imageOffset.x()) * m_zoom;
         int posY = (m_selectedPixel.y() - m_imageOffset.y()) * m_zoom;
         QColor pixelcolor(pPixel[0], pPixel[1], pPixel[2]);
@@ -198,28 +199,27 @@ void VideoZoomWidget::mouseMoveEvent(QMouseEvent *event)
         emit pixelSelected(m_selectedPixel);
     }
 
-/*
-    // Create a tool tip to display pixel information
-    PixelValues values = pixelToValues(currMousePixel);
-    QString text =  QString(tr("Zoom: %1x\nPixel: %2,%3\nRGB: %4 %5 %6\nYUV: %7 %8 %9")).arg(
-                        QString::number(m_zoom)).arg(
-                        QString::number(currMousePixel.x() + 1)).arg(
-                        QString::number(currMousePixel.y() + 1)).arg(
-                        QString::number(values.r)).arg(
-                        QString::number(values.g)).arg(
-                        QString::number(values.b)).arg(
-                        QString::number(values.y)).arg(
-                        QString::number(values.u)).arg(
-                        QString::number(values.v));
-    QToolTip::showText(event->globalPos(), text);
-*/
+    /*
+        // Create a tool tip to display pixel information
+        PixelValues values = pixelToValues(currMousePixel);
+        QString text =  QString(tr("Zoom: %1x\nPixel: %2,%3\nRGB: %4 %5 %6\nYUV: %7 %8 %9")).arg(
+                            QString::number(m_zoom)).arg(
+                            QString::number(currMousePixel.x() + 1)).arg(
+                            QString::number(currMousePixel.y() + 1)).arg(
+                            QString::number(values.r)).arg(
+                            QString::number(values.g)).arg(
+                            QString::number(values.b)).arg(
+                            QString::number(values.y)).arg(
+                            QString::number(values.u)).arg(
+                            QString::number(values.v));
+        QToolTip::showText(event->globalPos(), text);
+    */
     update();
 }
 
 void VideoZoomWidget::mousePressEvent(QMouseEvent *event)
 {
-    if(event->buttons() & Qt::LeftButton)
-    {
+    if (event->buttons() & Qt::LeftButton) {
         QMutexLocker locker(&m_mutex);
         if (!m_frame.is_valid()) return;
         QPoint currMousePixel = posToPixel(event->pos());
@@ -262,31 +262,32 @@ void VideoZoomWidget::wheelEvent(QWheelEvent *event)
     event->accept();
 }
 
-QPoint VideoZoomWidget::pixelToPos(const QPoint& pixel)
+QPoint VideoZoomWidget::pixelToPos(const QPoint &pixel)
 {
     int x = ((int)pixel.x() - (int)m_imageOffset.x()) * m_zoom;
     int y = ((int)pixel.y() - (int)m_imageOffset.y()) * m_zoom;
     return QPoint(x, y);
 }
 
-QPoint VideoZoomWidget::posToPixel(const QPoint& pos)
+QPoint VideoZoomWidget::posToPixel(const QPoint &pos)
 {
     int x = ((int)pos.x() / m_zoom) + (int)m_imageOffset.x();
     int y = ((int)pos.y() / m_zoom) + (int)m_imageOffset.y();
     return QPoint(x, y);
 }
 
-VideoZoomWidget::PixelValues VideoZoomWidget::pixelToValues(const QPoint& pixel)
+VideoZoomWidget::PixelValues VideoZoomWidget::pixelToValues(const QPoint &pixel)
 {
     PixelValues values;
     int iWidth = m_frame.get_image_width();
     int iHeight = m_frame.get_image_height();
     int imageOffset = iWidth * pixel.y() + pixel.x();
-    const uint8_t* pRgb = m_frame.get_image(mlt_image_rgb) + imageOffset * 3;
-    const uint8_t* pYuv = m_frame.get_image(mlt_image_yuv420p);
-    const uint8_t* pY = pYuv + imageOffset;
-    const uint8_t* pU = pYuv + (iWidth * iHeight) + (iWidth / 2 * (pixel.y() / 2)) + (pixel.x() / 2);
-    const uint8_t* pV = pYuv + (iWidth * iHeight * 5 / 4) + (iWidth / 2 * (pixel.y() / 2)) + (pixel.x() / 2);
+    const uint8_t *pRgb = m_frame.get_image(mlt_image_rgb) + imageOffset * 3;
+    const uint8_t *pYuv = m_frame.get_image(mlt_image_yuv420p);
+    const uint8_t *pY = pYuv + imageOffset;
+    const uint8_t *pU = pYuv + (iWidth * iHeight) + (iWidth / 2 * (pixel.y() / 2)) + (pixel.x() / 2);
+    const uint8_t *pV = pYuv + (iWidth * iHeight * 5 / 4) + (iWidth / 2 * (pixel.y() / 2)) +
+                        (pixel.x() / 2);
     values.y = *pY;
     values.u = *pU;
     values.v = *pV;

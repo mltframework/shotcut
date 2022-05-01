@@ -29,20 +29,20 @@
 #include <QVBoxLayout>
 
 ProducerPreviewWidget::ProducerPreviewWidget(double dar)
-  : QWidget()
-  , m_previewSize(320, 320)
-  , m_seekTo(-1)
-  , m_timerId(0)
-  , m_producer(nullptr)
-  , m_queue(10, DataQueue<QueueItem>::OverflowModeWait)
-  , m_generateFrames(false)
+    : QWidget()
+    , m_previewSize(320, 320)
+    , m_seekTo(-1)
+    , m_timerId(0)
+    , m_producer(nullptr)
+    , m_queue(10, DataQueue<QueueItem>::OverflowModeWait)
+    , m_generateFrames(false)
 {
     LOG_DEBUG() << "begin";
     int height = lrint((double)320 / dar);
-    height -= height %2;
+    height -= height % 2;
     m_previewSize.setHeight( height );
 
-    QVBoxLayout* layout = new QVBoxLayout();
+    QVBoxLayout *layout = new QVBoxLayout();
     layout->setContentsMargins(0, 0, 0, 0);
     layout->setSpacing(0);
     setLayout(layout);
@@ -72,17 +72,16 @@ ProducerPreviewWidget::~ProducerPreviewWidget()
     stop();
 }
 
-void ProducerPreviewWidget::start(Mlt::Producer* producer)
+void ProducerPreviewWidget::start(Mlt::Producer *producer)
 {
     m_producer = producer;
 
-    if( m_producer )
-    {
+    if ( m_producer ) {
         // Set up the preview display and timer
         m_scrubber->setFramerate(MLT.profile().fps());
         m_scrubber->setScale(m_producer->get_length());
         // Display preview at half frame rate.
-        int miliseconds = 2* 1000.0 / MLT.profile().fps();
+        int miliseconds = 2 * 1000.0 / MLT.profile().fps();
         m_timerId = startTimer(miliseconds);
         // Set up the producer frame generator
         m_seekTo = 0;
@@ -93,24 +92,20 @@ void ProducerPreviewWidget::start(Mlt::Producer* producer)
 
 void ProducerPreviewWidget::ProducerPreviewWidget::stop()
 {
-    if( m_timerId )
-    {
+    if ( m_timerId ) {
         killTimer(m_timerId);
         m_timerId = 0;
     }
     m_generateFrames = false;
-    while( m_queue.count() > 0 )
-    {
+    while ( m_queue.count() > 0 ) {
         m_queue.pop();
     }
     m_future.waitForFinished();
-    if(m_producer)
-    {
+    if (m_producer) {
         delete m_producer;
         m_producer = nullptr;
     }
-    while( m_queue.count() > 0 )
-    {
+    while ( m_queue.count() > 0 ) {
         m_queue.pop();
     }
     m_seekTo = 0;
@@ -129,10 +124,9 @@ void ProducerPreviewWidget::seeked(int position)
     m_seekTo = position;
 }
 
-void ProducerPreviewWidget::timerEvent(QTimerEvent*)
+void ProducerPreviewWidget::timerEvent(QTimerEvent *)
 {
-    if( m_queue.count() > 0 )
-    {
+    if ( m_queue.count() > 0 ) {
         QueueItem item = m_queue.pop();
         m_imageLabel->setPixmap(item.pixmap);
         m_scrubber->onSeek(item.position);
@@ -142,15 +136,12 @@ void ProducerPreviewWidget::timerEvent(QTimerEvent*)
 
 void ProducerPreviewWidget::frameGeneratorThread()
 {
-    while( m_generateFrames && m_producer )
-    {
+    while ( m_generateFrames && m_producer ) {
         // Check for seek
-        if(m_seekTo != -1)
-        {
+        if (m_seekTo != -1) {
             m_producer->seek(m_seekTo);
             m_seekTo = -1;
-            while( m_queue.count() > 1 )
-            {
+            while ( m_queue.count() > 1 ) {
                 m_queue.pop();
             }
         }
@@ -160,25 +151,23 @@ void ProducerPreviewWidget::frameGeneratorThread()
         int width = m_previewSize.width();
         int height = m_previewSize.height();
         mlt_image_format format = mlt_image_rgb;
-        Mlt::Frame* frame = m_producer->get_frame();
+        Mlt::Frame *frame = m_producer->get_frame();
         frame->set( "rescale.interp", "bilinear" );
-        uint8_t* mltImage = frame->get_image( format, width, height, 0 );
+        uint8_t *mltImage = frame->get_image( format, width, height, 0 );
         QImage image( mltImage, width, height, QImage::Format_RGB888 );
 
         // Send the image and status in the queue
         QueueItem item;
         item.pixmap.convertFromImage(image);
         item.position = position;
-        item.positionText = QString::fromLatin1(m_producer->frame_time()) + QString(" / ") + QString::fromLatin1(m_producer->get_length_time());
+        item.positionText = QString::fromLatin1(m_producer->frame_time()) + QString(" / ") +
+                            QString::fromLatin1(m_producer->get_length_time());
         m_queue.push(item);
 
         // Seek to the next frame (every other frame with repeat)
-        if(position + 2 >= length)
-        {
+        if (position + 2 >= length) {
             m_producer->seek(0);
-        }
-        else
-        {
+        } else {
             m_producer->seek(position + 2);
         }
         delete frame;

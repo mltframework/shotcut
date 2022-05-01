@@ -53,7 +53,7 @@ static ClientWaitSync_fp ClientWaitSync = 0;
 using namespace Mlt;
 
 GLWidget::GLWidget(QObject *parent)
-    : QQuickWidget(QmlUtilities::sharedEngine(), (QWidget*) parent)
+    : QQuickWidget(QmlUtilities::sharedEngine(), (QWidget *) parent)
     , Controller()
     , m_grid(0)
     , m_shader(0)
@@ -94,7 +94,8 @@ GLWidget::GLWidget(QObject *parent)
     }
 
     connect(quickWindow(), SIGNAL(sceneGraphInitialized()), SLOT(initializeGL()), Qt::DirectConnection);
-    connect(quickWindow(), SIGNAL(sceneGraphInitialized()), SLOT(setBlankScene()), Qt::QueuedConnection);
+    connect(quickWindow(), SIGNAL(sceneGraphInitialized()), SLOT(setBlankScene()),
+            Qt::QueuedConnection);
     connect(quickWindow(), SIGNAL(beforeRendering()), SLOT(paintGL()), Qt::DirectConnection);
     connect(&m_refreshTimer, SIGNAL(timeout()), SLOT(onRefreshTimeout()));
     connect(this, SIGNAL(rectChanged()), SIGNAL(zoomChanged()));
@@ -132,8 +133,8 @@ void GLWidget::initializeGL()
     Q_ASSERT(m_offscreenSurface.isValid());
 
     initializeOpenGLFunctions();
-    LOG_INFO() << "OpenGL vendor" << QString::fromUtf8((const char*) glGetString(GL_VENDOR));
-    LOG_INFO() << "OpenGL renderer" << QString::fromUtf8((const char*) glGetString(GL_RENDERER));
+    LOG_INFO() << "OpenGL vendor" << QString::fromUtf8((const char *) glGetString(GL_VENDOR));
+    LOG_INFO() << "OpenGL renderer" << QString::fromUtf8((const char *) glGetString(GL_RENDERER));
     LOG_INFO() << "OpenGL threaded?" << quickWindow()->openglContext()->supportsThreadedOpenGL();
     LOG_INFO() << "OpenGL ES?" << quickWindow()->openglContext()->isOpenGLES();
     glGetIntegerv(GL_MAX_TEXTURE_SIZE, &m_maxTextureSize);
@@ -156,7 +157,8 @@ void GLWidget::initializeGL()
     // getProcAddress is not working for me on Windows.
     if (Settings.playerGPU()) {
         if (m_glslManager && quickWindow()->openglContext()->hasExtension("GL_ARB_sync")) {
-            ClientWaitSync = (ClientWaitSync_fp) quickWindow()->openglContext()->getProcAddress("glClientWaitSync");
+            ClientWaitSync = (ClientWaitSync_fp)
+                             quickWindow()->openglContext()->getProcAddress("glClientWaitSync");
         }
         if (!ClientWaitSync) {
             emit gpuNotSupported();
@@ -180,9 +182,12 @@ void GLWidget::initializeGL()
     m_frameRenderer = new FrameRenderer(quickWindow()->openglContext(), &m_offscreenSurface);
     quickWindow()->openglContext()->makeCurrent(quickWindow());
 
-    connect(m_frameRenderer, SIGNAL(frameDisplayed(const SharedFrame&)), SLOT(onFrameDisplayed(const SharedFrame&)), Qt::QueuedConnection);
-    connect(m_frameRenderer, SIGNAL(frameDisplayed(const SharedFrame&)), SIGNAL(frameDisplayed(const SharedFrame&)), Qt::QueuedConnection);
-    connect(m_frameRenderer, SIGNAL(textureReady(GLuint,GLuint,GLuint)), SLOT(updateTexture(GLuint,GLuint,GLuint)), Qt::DirectConnection);
+    connect(m_frameRenderer, SIGNAL(frameDisplayed(const SharedFrame &)),
+            SLOT(onFrameDisplayed(const SharedFrame &)), Qt::QueuedConnection);
+    connect(m_frameRenderer, SIGNAL(frameDisplayed(const SharedFrame &)),
+            SIGNAL(frameDisplayed(const SharedFrame &)), Qt::QueuedConnection);
+    connect(m_frameRenderer, SIGNAL(textureReady(GLuint, GLuint, GLuint)), SLOT(updateTexture(GLuint,
+                                                                                              GLuint, GLuint)), Qt::DirectConnection);
     connect(m_frameRenderer, SIGNAL(imageReady()), SIGNAL(imageReady()));
 
     m_initSem.release();
@@ -204,19 +209,15 @@ void GLWidget::resizeGL(int width, int height)
 
     // Special case optimisation to negate odd effect of sample aspect ratio
     // not corresponding exactly with image resolution.
-    if ((int) (this_aspect * 1000) == (int) (video_aspect * 1000))
-    {
+    if ((int) (this_aspect * 1000) == (int) (video_aspect * 1000)) {
         w = width;
         h = height;
     }
     // Use OpenGL to normalise sample aspect ratio
-    else if (height * video_aspect > width)
-    {
+    else if (height * video_aspect > width) {
         w = width;
         h = width / video_aspect;
-    }
-    else
-    {
+    } else {
         w = height * video_aspect;
         h = height;
     }
@@ -226,7 +227,7 @@ void GLWidget::resizeGL(int width, int height)
     emit rectChanged();
 }
 
-void GLWidget::resizeEvent(QResizeEvent* event)
+void GLWidget::resizeEvent(QResizeEvent *event)
 {
     QQuickWidget::resizeEvent(event);
     resizeGL(event->size().width(), event->size().height());
@@ -236,15 +237,15 @@ void GLWidget::createShader()
 {
     m_shader = new QOpenGLShaderProgram;
     m_shader->addShaderFromSourceCode(QOpenGLShader::Vertex,
-                                     "uniform highp mat4 projection;"
-                                     "uniform highp mat4 modelView;"
-                                     "attribute highp vec4 vertex;"
-                                     "attribute highp vec2 texCoord;"
-                                     "varying highp vec2 coordinates;"
-                                     "void main(void) {"
-                                     "  gl_Position = projection * modelView * vertex;"
-                                     "  coordinates = texCoord;"
-                                     "}");
+                                      "uniform highp mat4 projection;"
+                                      "uniform highp mat4 modelView;"
+                                      "attribute highp vec4 vertex;"
+                                      "attribute highp vec2 texCoord;"
+                                      "varying highp vec2 coordinates;"
+                                      "void main(void) {"
+                                      "  gl_Position = projection * modelView * vertex;"
+                                      "  coordinates = texCoord;"
+                                      "}");
     if (m_glslManager) {
         m_shader->addShaderFromSourceCode(QOpenGLShader::Fragment,
                                           "uniform sampler2D tex;"
@@ -290,12 +291,12 @@ void GLWidget::createShader()
     m_texCoordLocation = m_shader->attributeLocation("texCoord");
 }
 
-static void uploadTextures(QOpenGLContext* context, SharedFrame& frame, GLuint texture[])
+static void uploadTextures(QOpenGLContext *context, SharedFrame &frame, GLuint texture[])
 {
     int width = frame.get_image_width();
     int height = frame.get_image_height();
-    const uint8_t* image = frame.get_image(mlt_image_yuv420p);
-    QOpenGLFunctions* f = context->functions();
+    const uint8_t *image = frame.get_image(mlt_image_yuv420p);
+    QOpenGLFunctions *f = context->functions();
 
     // The planes of pixel data may not be a multiple of the default 4 bytes.
     f->glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
@@ -318,7 +319,7 @@ static void uploadTextures(QOpenGLContext* context, SharedFrame& frame, GLuint t
     f->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
     check_error(f);
     f->glTexImage2D   (GL_TEXTURE_2D, 0, GL_LUMINANCE, width, height, 0,
-                    GL_LUMINANCE, GL_UNSIGNED_BYTE, image);
+                       GL_LUMINANCE, GL_UNSIGNED_BYTE, image);
     check_error(f);
 
     f->glBindTexture  (GL_TEXTURE_2D, texture[1]);
@@ -331,8 +332,8 @@ static void uploadTextures(QOpenGLContext* context, SharedFrame& frame, GLuint t
     check_error(f);
     f->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
     check_error(f);
-    f->glTexImage2D   (GL_TEXTURE_2D, 0, GL_LUMINANCE, width/2, height/2, 0,
-                    GL_LUMINANCE, GL_UNSIGNED_BYTE, image + width * height);
+    f->glTexImage2D   (GL_TEXTURE_2D, 0, GL_LUMINANCE, width / 2, height / 2, 0,
+                       GL_LUMINANCE, GL_UNSIGNED_BYTE, image + width * height);
     check_error(f);
 
     f->glBindTexture  (GL_TEXTURE_2D, texture[2]);
@@ -345,15 +346,15 @@ static void uploadTextures(QOpenGLContext* context, SharedFrame& frame, GLuint t
     check_error(f);
     f->glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
     check_error(f);
-    f->glTexImage2D   (GL_TEXTURE_2D, 0, GL_LUMINANCE, width/2, height/2, 0,
-                    GL_LUMINANCE, GL_UNSIGNED_BYTE, image + width * height + width/2 * height/2);
+    f->glTexImage2D   (GL_TEXTURE_2D, 0, GL_LUMINANCE, width / 2, height / 2, 0,
+                       GL_LUMINANCE, GL_UNSIGNED_BYTE, image + width * height + width / 2 * height / 2);
     check_error(f);
 }
 
 void GLWidget::paintGL()
 {
 #ifndef QT_NO_DEBUG
-    QOpenGLFunctions* f = quickWindow()->openglContext()->functions();
+    QOpenGLFunctions *f = quickWindow()->openglContext()->functions();
 #endif
     float width = this->width() * devicePixelRatioF();
     float height = this->height() * devicePixelRatioF();
@@ -379,7 +380,7 @@ void GLWidget::paintGL()
     } else if (m_glslManager) {
         m_mutex.lock();
         if (m_sharedFrame.is_valid()) {
-            m_texture[0] = *((GLuint*) m_sharedFrame.get_image(mlt_image_opengl_texture));
+            m_texture[0] = *((GLuint *) m_sharedFrame.get_image(mlt_image_opengl_texture));
         }
     }
 
@@ -421,7 +422,7 @@ void GLWidget::paintGL()
     if (m_zoom > 0.0) {
         if (offset().x() || offset().y())
             modelView.translate(-offset().x() * devicePixelRatioF(),
-                                 offset().y() * devicePixelRatioF());
+                                offset().y() * devicePixelRatioF());
         modelView.scale(zoom(), zoom());
     }
     m_shader->setUniformValue(m_modelViewLocation, modelView);
@@ -431,10 +432,10 @@ void GLWidget::paintGL()
     QVector<QVector2D> vertices;
     width = m_rect.width() * devicePixelRatioF();
     height = m_rect.height() * devicePixelRatioF();
-    vertices << QVector2D(-width/2.0f, -height/2.0f);
-    vertices << QVector2D(-width/2.0f, height/2.0f);
-    vertices << QVector2D(width/2.0f, -height/2.0f);
-    vertices << QVector2D(width/2.0f, height/2.0f);
+    vertices << QVector2D(-width / 2.0f, -height / 2.0f);
+    vertices << QVector2D(-width / 2.0f, height / 2.0f);
+    vertices << QVector2D(width / 2.0f, -height / 2.0f);
+    vertices << QVector2D(width / 2.0f, height / 2.0f);
     m_shader->enableAttributeArray(m_vertexLocation);
     check_error(f);
     m_shader->setAttributeArray(m_vertexLocation, vertices.constData());
@@ -470,7 +471,8 @@ void GLWidget::paintGL()
     check_error(f);
 
     if (m_glslManager) {
-        glFinish(); check_error(f);
+        glFinish();
+        check_error(f);
         m_mutex.unlock();
     }
 }
@@ -481,7 +483,7 @@ void GLWidget::onRefreshTimeout()
     m_scrubAudio = false;
 }
 
-void GLWidget::mousePressEvent(QMouseEvent* event)
+void GLWidget::mousePressEvent(QMouseEvent *event)
 {
     QQuickWidget::mousePressEvent(event);
     if (event->isAccepted()) return;
@@ -491,7 +493,7 @@ void GLWidget::mousePressEvent(QMouseEvent* event)
         emit dragStarted();
 }
 
-void GLWidget::mouseMoveEvent(QMouseEvent* event)
+void GLWidget::mouseMoveEvent(QMouseEvent *event)
 {
     QQuickWidget::mouseMoveEvent(event);
     if (event->isAccepted()) return;
@@ -532,14 +534,14 @@ void GLWidget::mouseMoveEvent(QMouseEvent* event)
     drag->exec(Qt::LinkAction);
 }
 
-void GLWidget::keyPressEvent(QKeyEvent* event)
+void GLWidget::keyPressEvent(QKeyEvent *event)
 {
     QQuickWidget::keyPressEvent(event);
     if (event->isAccepted()) return;
     MAIN.keyPressEvent(event);
 }
 
-bool GLWidget::event(QEvent* event)
+bool GLWidget::event(QEvent *event)
 {
     bool result = QQuickWidget::event(event);
     if (event->type() == QEvent::PaletteChange && m_sharedFrame.is_valid())
@@ -562,23 +564,23 @@ void GLWidget::createThread(RenderThread **thread, thread_function_t function, v
     (*thread)->start();
 }
 
-static void onThreadCreate(mlt_properties owner, GLWidget* self, mlt_event_data data)
+static void onThreadCreate(mlt_properties owner, GLWidget *self, mlt_event_data data)
 {
     Q_UNUSED(owner)
-    auto threadData = (mlt_event_data_thread*) Mlt::EventData(data).to_object();
+    auto threadData = (mlt_event_data_thread *) Mlt::EventData(data).to_object();
     if (threadData) {
-        auto renderThread = (RenderThread*) threadData->thread;
+        auto renderThread = (RenderThread *) threadData->thread;
         self->createThread(&renderThread, threadData->function, threadData->data);
     }
 }
 
-static void onThreadJoin(mlt_properties owner, GLWidget* self, mlt_event_data data)
+static void onThreadJoin(mlt_properties owner, GLWidget *self, mlt_event_data data)
 {
     Q_UNUSED(owner)
     Q_UNUSED(self)
-    auto threadData = (mlt_event_data_thread*) Mlt::EventData(data).to_object();
+    auto threadData = (mlt_event_data_thread *) Mlt::EventData(data).to_object();
     if (threadData) {
-        auto renderThread = (RenderThread*) threadData->thread;
+        auto renderThread = (RenderThread *) threadData->thread;
         if (renderThread) {
             renderThread->quit();
             renderThread->wait();
@@ -597,14 +599,13 @@ void GLWidget::startGlsl()
             // Need to destroy MLT global reference to prevent filters from trying to use GPU.
             mlt_properties_set_data(mlt_global_properties(), "glslManager", NULL, 0, NULL, NULL);
             emit gpuNotSupported();
-        }
-        else {
+        } else {
             emit started();
         }
     }
 }
 
-static void onThreadStarted(mlt_properties owner, GLWidget* self)
+static void onThreadStarted(mlt_properties owner, GLWidget *self)
 {
     Q_UNUSED(owner)
     self->startGlsl();
@@ -620,13 +621,13 @@ void GLWidget::stopGlsl()
     m_texture[0] = 0;
 }
 
-static void onThreadStopped(mlt_properties owner, GLWidget* self)
+static void onThreadStopped(mlt_properties owner, GLWidget *self)
 {
     Q_UNUSED(owner)
     self->stopGlsl();
 }
 
-int GLWidget::setProducer(Mlt::Producer* producer, bool isMulti)
+int GLWidget::setProducer(Mlt::Producer *producer, bool isMulti)
 {
     int error = Controller::setProducer(producer, isMulti);
 
@@ -668,7 +669,8 @@ int GLWidget::reconfigure(bool isMulti)
         delete m_threadCreateEvent;
         delete m_threadJoinEvent;
         if (m_glslManager) {
-            m_threadCreateEvent = m_consumer->listen("consumer-thread-create", this, (mlt_listener) onThreadCreate);
+            m_threadCreateEvent = m_consumer->listen("consumer-thread-create", this,
+                                                     (mlt_listener) onThreadCreate);
             m_threadJoinEvent = m_consumer->listen("consumer-thread-join", this, (mlt_listener) onThreadJoin);
         }
     }
@@ -688,19 +690,20 @@ int GLWidget::reconfigure(bool isMulti)
             if (!profile().progressive())
                 m_consumer->set("0.progressive", property("progressive").toBool());
             m_consumer->set("0.rescale", property("rescale").toString().toLatin1().constData());
-            m_consumer->set("0.deinterlace_method", property("deinterlace_method").toString().toLatin1().constData());
+            m_consumer->set("0.deinterlace_method",
+                            property("deinterlace_method").toString().toLatin1().constData());
             m_consumer->set("0.buffer", qMax(25, qRound(profile().fps())));
             m_consumer->set("0.prefill", qMax(1, qRound(profile().fps() / 25.0)));
             m_consumer->set("0.drop_max", qRound(profile().fps() / 4.0));
             if (property("keyer").isValid())
                 m_consumer->set("0.keyer", property("keyer").toInt());
             m_consumer->set("0.video_delay", Settings.playerVideoDelayMs());
-        }
-        else {
+        } else {
             if (!profile().progressive())
                 m_consumer->set("progressive", property("progressive").toBool());
             m_consumer->set("rescale", property("rescale").toString().toLatin1().constData());
-            m_consumer->set("deinterlace_method", property("deinterlace_method").toString().toLatin1().constData());
+            m_consumer->set("deinterlace_method",
+                            property("deinterlace_method").toString().toLatin1().constData());
             m_consumer->set("buffer", qMax(25, qRound(profile().fps())));
             m_consumer->set("prefill", qMax(1, qRound(profile().fps() / 25.0)));
             m_consumer->set("drop_max", qRound(profile().fps() / 4.0));
@@ -710,16 +713,17 @@ int GLWidget::reconfigure(bool isMulti)
         }
         if (m_glslManager) {
             if (!m_threadStartEvent)
-                m_threadStartEvent = m_consumer->listen("consumer-thread-started", this, (mlt_listener) onThreadStarted);
+                m_threadStartEvent = m_consumer->listen("consumer-thread-started", this,
+                                                        (mlt_listener) onThreadStarted);
             if (!m_threadStopEvent)
-                m_threadStopEvent = m_consumer->listen("consumer-thread-stopped", this, (mlt_listener) onThreadStopped);
+                m_threadStopEvent = m_consumer->listen("consumer-thread-stopped", this,
+                                                       (mlt_listener) onThreadStopped);
             if (!serviceName.startsWith("decklink") && !isMulti)
                 m_consumer->set("mlt_image_format", "glsl");
         } else {
             emit started();
         }
-    }
-    else {
+    } else {
         // Cleanup on error
         error = 2;
         Controller::closeConsumer();
@@ -738,7 +742,7 @@ void GLWidget::refreshConsumer(bool scrubAudio)
 QPoint GLWidget::offset() const
 {
     if (m_zoom == 0.0) {
-        return QPoint(0,0);
+        return QPoint(0, 0);
     } else {
         return QPoint(m_offset.x() - (MLT.profile().width()  * m_zoom -  width()) / 2,
                       m_offset.y() - (MLT.profile().height() * m_zoom - height()) / 2);
@@ -752,7 +756,7 @@ QImage GLWidget::image() const
     }
     SharedFrame frame = m_frameRenderer->getDisplayFrame();
     if (frame.is_valid()) {
-        const uint8_t* image = frame.get_image(mlt_image_rgba);
+        const uint8_t *image = frame.get_image(mlt_image_rgba);
         if (image) {
             int width = frame.get_image_width();
             int height = frame.get_image_height();
@@ -768,9 +772,8 @@ bool GLWidget::imageIsProxy() const
     bool isProxy = false;
     SharedFrame frame = m_frameRenderer->getDisplayFrame();
     if (frame.is_valid()) {
-        Mlt::Producer* frameProducer = frame.get_original_producer();
-        if (frameProducer && frameProducer->is_valid() && frameProducer->get_int(kIsProxyProperty))
-        {
+        Mlt::Producer *frameProducer = frame.get_original_producer();
+        if (frameProducer && frameProducer->is_valid() && frameProducer->get_int(kIsProxyProperty)) {
             isProxy = true;
         }
         delete frameProducer;
@@ -828,9 +831,10 @@ void GLWidget::setOffsetY(int y)
     quickWindow()->update();
 }
 
-void GLWidget::setCurrentFilter(QmlFilter* filter, QmlMetadata* meta)
+void GLWidget::setCurrentFilter(QmlFilter *filter, QmlMetadata *meta)
 {
-    if (meta && meta->type() == QmlMetadata::Filter && QFile::exists(meta->vuiFilePath().toLocalFile())) {
+    if (meta && meta->type() == QmlMetadata::Filter
+            && QFile::exists(meta->vuiFilePath().toLocalFile())) {
         filter->producer().set(kShotcutVuiMetaProperty, 1);
         rootContext()->setContextProperty("filter", filter);
         setSource(meta->vuiFilePath());
@@ -854,20 +858,22 @@ void GLWidget::updateTexture(GLuint yName, GLuint uName, GLuint vName)
 }
 
 // MLT consumer-frame-show event handler
-void GLWidget::on_frame_show(mlt_consumer, GLWidget* widget, mlt_event_data data)
+void GLWidget::on_frame_show(mlt_consumer, GLWidget *widget, mlt_event_data data)
 {
     auto frame = Mlt::EventData(data).to_frame();
     if (frame.is_valid() && frame.get_int("rendered")) {
-        int timeout = (widget->consumer()->get_int("real_time") > 0)? 0: 1000;
+        int timeout = (widget->consumer()->get_int("real_time") > 0) ? 0 : 1000;
         if (widget->m_frameRenderer && widget->m_frameRenderer->semaphore()->tryAcquire(1, timeout)) {
-            QMetaObject::invokeMethod(widget->m_frameRenderer, "showFrame", Qt::QueuedConnection, Q_ARG(Mlt::Frame, frame));
+            QMetaObject::invokeMethod(widget->m_frameRenderer, "showFrame", Qt::QueuedConnection,
+                                      Q_ARG(Mlt::Frame, frame));
         } else if (!Settings.playerRealtime()) {
             LOG_WARNING() << "GLWidget dropped frame" << frame.get_position();
         }
     }
 }
 
-RenderThread::RenderThread(thread_function_t function, void *data, QOpenGLContext *context, QSurface* surface)
+RenderThread::RenderThread(thread_function_t function, void *data, QOpenGLContext *context,
+                           QSurface *surface)
     : QThread(0)
     , m_function(function)
     , m_data(data)
@@ -895,14 +901,14 @@ void RenderThread::run()
     }
 }
 
-FrameRenderer::FrameRenderer(QOpenGLContext* shareContext, QSurface* surface)
-     : QThread(0)
-     , m_semaphore(3)
-     , m_context(0)
-     , m_surface(surface)
-     , m_previousMSecs(QDateTime::currentMSecsSinceEpoch())
-     , m_imageRequested(false)
-     , m_gl32(0)
+FrameRenderer::FrameRenderer(QOpenGLContext *shareContext, QSurface *surface)
+    : QThread(0)
+    , m_semaphore(3)
+    , m_context(0)
+    , m_surface(surface)
+    , m_previousMSecs(QDateTime::currentMSecsSinceEpoch())
+    , m_imageRequested(false)
+    , m_gl32(0)
 {
     Q_ASSERT(shareContext);
     m_renderTexture[0] = m_renderTexture[1] = m_renderTexture[2] = 0;
@@ -939,7 +945,7 @@ void FrameRenderer::showFrame(Mlt::Frame frame)
             int height = 0;
             frame.set("movit.convert.use_texture", 1);
             mlt_image_format format = mlt_image_opengl_texture;
-            const GLuint* textureId = (GLuint*) frame.get_image(format, width, height);
+            const GLuint *textureId = (GLuint *) frame.get_image(format, width, height);
 
             m_context->makeCurrent(m_surface);
 #ifdef USE_GL_SYNC
@@ -970,8 +976,8 @@ void FrameRenderer::showFrame(Mlt::Frame frame)
             if (m_imageRequested) {
                 m_imageRequested = false;
                 int imageSizeBytes = width * height * 4;
-                uchar* image = (uchar*) mlt_pool_alloc(imageSizeBytes);
-                QOpenGLFunctions_1_1* f = m_context->versionFunctions<QOpenGLFunctions_1_1>();
+                uchar *image = (uchar *) mlt_pool_alloc(imageSizeBytes);
+                QOpenGLFunctions_1_1 *f = m_context->versionFunctions<QOpenGLFunctions_1_1>();
 
                 f->glBindTexture(GL_TEXTURE_2D, *textureId);
                 check_error(f);
@@ -984,16 +990,15 @@ void FrameRenderer::showFrame(Mlt::Frame frame)
                 mlt_pool_release(image);
                 emit imageReady();
             }
-            
+
             m_context->doneCurrent();
 
             // Save this frame for future use and to keep a reference to the GL Texture.
             m_displayFrame = SharedFrame(frame);
-        }
-        else {
+        } else {
             // Using a threaded OpenGL to upload textures.
             m_context->makeCurrent(m_surface);
-            QOpenGLFunctions* f = m_context->functions();
+            QOpenGLFunctions *f = m_context->functions();
 
             uploadTextures(m_context, m_displayFrame, m_renderTexture);
             f->glBindTexture(GL_TEXTURE_2D, 0);

@@ -40,30 +40,30 @@ public:
 private slots:
     void onScreenSelectStarted();
     void onLockToggled(bool enabled);
-    void onScreenRectSelected(const QRect& rect);
-    void onScreenPointSelected(const QPoint& point);
-    void onPixelSelected(const QPoint& pixel);
+    void onScreenRectSelected(const QRect &rect);
+    void onScreenPointSelected(const QPoint &point);
+    void onPixelSelected(const QPoint &pixel);
     void onZoomChanged(int zoom);
 
 private:
     // Called from the scope thread
-    void refreshScope(const QSize& size, bool full) Q_DECL_OVERRIDE;
+    void refreshScope(const QSize &size, bool full) Q_DECL_OVERRIDE;
 
     // Called from UI thread
     Q_INVOKABLE void updateLabels();
 
-    VideoZoomWidget* m_zoomWidget;
+    VideoZoomWidget *m_zoomWidget;
     ScreenSelector m_selector;
-    QLabel* m_zoomLabel;
-    QLabel* m_pixelXLabel;
-    QLabel* m_pixelYLabel;
-    QLabel* m_rLabel;
-    QLabel* m_gLabel;
-    QLabel* m_bLabel;
-    QLabel* m_yLabel;
-    QLabel* m_uLabel;
-    QLabel* m_vLabel;
-    QToolButton* m_lockButton;
+    QLabel *m_zoomLabel;
+    QLabel *m_pixelXLabel;
+    QLabel *m_pixelYLabel;
+    QLabel *m_rLabel;
+    QLabel *m_gLabel;
+    QLabel *m_bLabel;
+    QLabel *m_yLabel;
+    QLabel *m_uLabel;
+    QLabel *m_vLabel;
+    QToolButton *m_lockButton;
 };
 
 #endif // VIDEOZOOMSCOPEWIDGET_H

@@ -23,7 +23,7 @@
 #include <QSortFilterProxyModel>
 
 namespace Ui {
-    class RecentDock;
+class RecentDock;
 }
 
 class RecentDock : public QDockWidget
@@ -35,16 +35,16 @@ public:
     ~RecentDock();
 
 signals:
-    void itemActivated(const QString& url);
-    void deleted(const QString& url);
+    void itemActivated(const QString &url);
+    void deleted(const QString &url);
 
 public slots:
-    void add(const QString&);
-    QString remove(const QString& s);
+    void add(const QString &);
+    QString remove(const QString &s);
     void find();
 
 protected:
-    void keyPressEvent(QKeyEvent* event);
+    void keyPressEvent(QKeyEvent *event);
 
 private:
     Ui::RecentDock *ui;
@@ -53,10 +53,10 @@ private:
     QSortFilterProxyModel m_proxyModel;
 
 private slots:
-    void on_listWidget_activated(const QModelIndex& i);
-    void on_lineEdit_textChanged(const QString& search);
+    void on_listWidget_activated(const QModelIndex &i);
+    void on_lineEdit_textChanged(const QString &search);
     void on_actionDelete_triggered();
-    void on_listWidget_customContextMenuRequested(const QPoint& pos);
+    void on_listWidget_customContextMenuRequested(const QPoint &pos);
 };
 
 #endif // RECENTDOCK_H

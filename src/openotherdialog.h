@@ -22,12 +22,12 @@
 #include <QTreeWidgetItem>
 
 namespace Ui {
-    class OpenOtherDialog;
+class OpenOtherDialog;
 }
 namespace Mlt {
-    class Properties;
-    class Producer;
-    class Profile;
+class Properties;
+class Producer;
+class Profile;
 }
 
 class OpenOtherDialog : public QDialog
@@ -37,19 +37,19 @@ class OpenOtherDialog : public QDialog
 public:
     explicit OpenOtherDialog(QWidget *parent = 0);
     ~OpenOtherDialog();
-    
-    Mlt::Producer* newProducer(Mlt::Profile&) const;
-    void load(Mlt::Producer*);
+
+    Mlt::Producer *newProducer(Mlt::Profile &) const;
+    void load(Mlt::Producer *);
 
 private slots:
     void on_treeWidget_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
 
 private:
     Ui::OpenOtherDialog *ui;
-    QObject* m_current;
+    QObject *m_current;
 
-    Mlt::Producer* newProducer(Mlt::Profile&, QObject* widget) const;
-    void selectTreeWidget(const QString& s);
+    Mlt::Producer *newProducer(Mlt::Profile &, QObject *widget) const;
+    void selectTreeWidget(const QString &s);
 };
 
 #endif // OPENOTHERDIALOG_H

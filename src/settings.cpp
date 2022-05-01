@@ -36,7 +36,7 @@ ShotcutSettings &ShotcutSettings::singleton()
         if (appDataForSession.isEmpty()) {
             instance.reset(new ShotcutSettings);
             if (instance->settings.value(APP_DATA_DIR_KEY).isValid()
-                && QFile::exists(instance->settings.value(APP_DATA_DIR_KEY).toString() + SHOTCUT_INI_FILENAME) )
+                    && QFile::exists(instance->settings.value(APP_DATA_DIR_KEY).toString() + SHOTCUT_INI_FILENAME) )
                 instance.reset(new ShotcutSettings(instance->settings.value(APP_DATA_DIR_KEY).toString()));
         } else {
             instance.reset(new ShotcutSettings(appDataForSession));
@@ -45,7 +45,7 @@ ShotcutSettings &ShotcutSettings::singleton()
     return *instance;
 }
 
-ShotcutSettings::ShotcutSettings(const QString& appDataLocation)
+ShotcutSettings::ShotcutSettings(const QString &appDataLocation)
     : QObject()
     , settings(appDataLocation + SHOTCUT_INI_FILENAME, QSettings::IniFormat)
     , m_appDataLocation(appDataLocation)
@@ -75,7 +75,7 @@ QString ShotcutSettings::language() const
     return language;
 }
 
-void ShotcutSettings::setLanguage(const QString& s)
+void ShotcutSettings::setLanguage(const QString &s)
 {
     settings.setValue("language", s);
 }
@@ -92,10 +92,11 @@ void ShotcutSettings::setImageDuration(double d)
 
 QString ShotcutSettings::openPath() const
 {
-    return settings.value("openPath", QStandardPaths::standardLocations(QStandardPaths::MoviesLocation)).toString();
+    return settings.value("openPath",
+                          QStandardPaths::standardLocations(QStandardPaths::MoviesLocation)).toString();
 }
 
-void ShotcutSettings::setOpenPath(const QString& s)
+void ShotcutSettings::setOpenPath(const QString &s)
 {
     settings.setValue("openPath", s);
     emit savePathChanged();
@@ -103,10 +104,11 @@ void ShotcutSettings::setOpenPath(const QString& s)
 
 QString ShotcutSettings::savePath() const
 {
-    return settings.value("savePath", QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation)).toString();
+    return settings.value("savePath",
+                          QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation)).toString();
 }
 
-void ShotcutSettings::setSavePath(const QString& s)
+void ShotcutSettings::setSavePath(const QString &s)
 {
     settings.setValue("savePath", s);
     emit savePathChanged();
@@ -117,7 +119,7 @@ QStringList ShotcutSettings::recent() const
     return settings.value("recent").toStringList();
 }
 
-void ShotcutSettings::setRecent(const QStringList& ls)
+void ShotcutSettings::setRecent(const QStringList &ls)
 {
     if (ls.isEmpty())
         settings.remove("recent");
@@ -130,7 +132,7 @@ QString ShotcutSettings::theme() const
     return settings.value("theme", "dark").toString();
 }
 
-void ShotcutSettings::setTheme(const QString& s)
+void ShotcutSettings::setTheme(const QString &s)
 {
     settings.setValue("theme", s);
 }
@@ -144,7 +146,7 @@ QThread::Priority ShotcutSettings::jobPriority() const
     return QThread::NormalPriority;
 }
 
-void ShotcutSettings::setJobPriority(const QString& s)
+void ShotcutSettings::setJobPriority(const QString &s)
 {
     settings.setValue("jobPriority", s);
 }
@@ -195,7 +197,7 @@ QByteArray ShotcutSettings::windowGeometry() const
     return settings.value("geometry").toByteArray();
 }
 
-void ShotcutSettings::setWindowGeometry(const QByteArray& a)
+void ShotcutSettings::setWindowGeometry(const QByteArray &a)
 {
     settings.setValue("geometry", a);
 }
@@ -205,7 +207,7 @@ QByteArray ShotcutSettings::windowGeometryDefault() const
     return settings.value("geometryDefault").toByteArray();
 }
 
-void ShotcutSettings::setWindowGeometryDefault(const QByteArray& a)
+void ShotcutSettings::setWindowGeometryDefault(const QByteArray &a)
 {
     settings.setValue("geometryDefault", a);
 }
@@ -215,7 +217,7 @@ QByteArray ShotcutSettings::windowState() const
     return settings.value("windowState").toByteArray();
 }
 
-void ShotcutSettings::setWindowState(const QByteArray& a)
+void ShotcutSettings::setWindowState(const QByteArray &a)
 {
     settings.setValue("windowState", a);
 }
@@ -225,7 +227,7 @@ QByteArray ShotcutSettings::windowStateDefault() const
     return settings.value("windowStateDefault").toByteArray();
 }
 
-void ShotcutSettings::setWindowStateDefault(const QByteArray& a)
+void ShotcutSettings::setWindowStateDefault(const QByteArray &a)
 {
     settings.setValue("windowStateDefault", a);
 }
@@ -235,7 +237,7 @@ QString ShotcutSettings::viewMode() const
     return settings.value("playlist/viewMode").toString();
 }
 
-void ShotcutSettings::setViewMode(const QString& viewMode)
+void ShotcutSettings::setViewMode(const QString &viewMode)
 {
     settings.setValue("playlist/viewMode", viewMode);
     emit viewModeChanged();
@@ -246,17 +248,18 @@ QString ShotcutSettings::exportFrameSuffix() const
     return settings.value("exportFrameSuffix", ".png").toString();
 }
 
-void ShotcutSettings::setExportFrameSuffix(const QString& exportFrameSuffix)
+void ShotcutSettings::setExportFrameSuffix(const QString &exportFrameSuffix)
 {
     settings.setValue("exportFrameSuffix", exportFrameSuffix);
 }
 
 QString ShotcutSettings::encodePath() const
 {
-    return settings.value("encode/path", QStandardPaths::standardLocations(QStandardPaths::MoviesLocation)).toString();
+    return settings.value("encode/path",
+                          QStandardPaths::standardLocations(QStandardPaths::MoviesLocation)).toString();
 }
 
-void ShotcutSettings::setEncodePath(const QString& s)
+void ShotcutSettings::setEncodePath(const QString &s)
 {
     settings.setValue("encode/path", s);
 }
@@ -286,7 +289,7 @@ QStringList ShotcutSettings::encodeHardware() const
     return settings.value("encode/hardware").toStringList();
 }
 
-void ShotcutSettings::setEncodeHardware(const QStringList& ls)
+void ShotcutSettings::setEncodeHardware(const QStringList &ls)
 {
     if (ls.isEmpty())
         settings.remove("encode/hardware");
@@ -354,7 +357,7 @@ QString ShotcutSettings::playerDeinterlacer() const
     return result;
 }
 
-void ShotcutSettings::setPlayerDeinterlacer(const QString& s)
+void ShotcutSettings::setPlayerDeinterlacer(const QString &s)
 {
     settings.setValue("player/deinterlacer", s);
 }
@@ -363,10 +366,10 @@ QString ShotcutSettings::playerExternal() const
 {
     auto result = settings.value("player/external", "").toString();
     // "sdi" is no longer supported DVEO VidPort
-    return result == "sdi"? "" : result;
+    return result == "sdi" ? "" : result;
 }
 
-void ShotcutSettings::setPlayerExternal(const QString& s)
+void ShotcutSettings::setPlayerExternal(const QString &s)
 {
     settings.setValue("player/external", s);
 }
@@ -376,7 +379,7 @@ QString ShotcutSettings::playerGamma() const
     return settings.value("player/gamma", "bt709").toString();
 }
 
-void ShotcutSettings::setPlayerGamma(const QString& s)
+void ShotcutSettings::setPlayerGamma(const QString &s)
 {
     settings.setValue("player/gamma", s);
 }
@@ -397,7 +400,7 @@ QString ShotcutSettings::playerInterpolation() const
     return settings.value("player/interpolation", "bilinear").toString();
 }
 
-void ShotcutSettings::setPlayerInterpolation(const QString& s)
+void ShotcutSettings::setPlayerInterpolation(const QString &s)
 {
     settings.setValue("player/interpolation", s);
 }
@@ -442,7 +445,7 @@ QString ShotcutSettings::playerProfile() const
     return settings.value("player/profile", "").toString();
 }
 
-void ShotcutSettings::setPlayerProfile(const QString& s)
+void ShotcutSettings::setPlayerProfile(const QString &s)
 {
     settings.setValue("player/profile", s);
 }
@@ -522,7 +525,7 @@ QString ShotcutSettings::playlistThumbnails() const
     return settings.value("playlist/thumbnails", "small").toString();
 }
 
-void ShotcutSettings::setPlaylistThumbnails(const QString& s)
+void ShotcutSettings::setPlaylistThumbnails(const QString &s)
 {
     settings.setValue("playlist/thumbnails", s);
     emit playlistThumbnailsChanged();
@@ -667,11 +670,11 @@ void ShotcutSettings::setAudioReferenceTrack(int track)
     settings.setValue("timeline/audioReferenceTrack", track);
 }
 
-QString ShotcutSettings::filterFavorite(const QString& filterName)
+QString ShotcutSettings::filterFavorite(const QString &filterName)
 {
     return settings.value("filter/favorite/" + filterName, "").toString();
 }
-void ShotcutSettings::setFilterFavorite(const QString& filterName, const QString& value)
+void ShotcutSettings::setFilterFavorite(const QString &filterName, const QString &value)
 {
     settings.setValue("filter/favorite/" + filterName, value);
 }
@@ -732,17 +735,17 @@ void ShotcutSettings::setAskOutputFilter(bool b)
     emit askOutputFilterChanged();
 }
 
-bool ShotcutSettings::loudnessScopeShowMeter(const QString& meter) const
+bool ShotcutSettings::loudnessScopeShowMeter(const QString &meter) const
 {
     return settings.value("scope/loudness/" + meter, true).toBool();
 }
 
-void ShotcutSettings::setLoudnessScopeShowMeter(const QString& meter, bool b)
+void ShotcutSettings::setLoudnessScopeShowMeter(const QString &meter, bool b)
 {
     settings.setValue("scope/loudness/" + meter, b);
 }
 
-void ShotcutSettings::setMarkerColor(const QColor& color)
+void ShotcutSettings::setMarkerColor(const QColor &color)
 {
     settings.setValue("markers/color", color.name());
 }
@@ -752,12 +755,12 @@ QColor ShotcutSettings::markerColor() const
     return QColor(settings.value("markers/color", "green").toString());
 }
 
-void ShotcutSettings::setMarkersShowColumn(const QString& column, bool b)
+void ShotcutSettings::setMarkersShowColumn(const QString &column, bool b)
 {
     settings.setValue("markers/columns/" + column, b);
 }
 
-bool ShotcutSettings::markersShowColumn(const QString& column) const
+bool ShotcutSettings::markersShowColumn(const QString &column) const
 {
     return settings.value("markers/columns/" + column, true).toBool();
 }
@@ -835,7 +838,7 @@ QString ShotcutSettings::appDataLocation() const
         return QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
 }
 
-void ShotcutSettings::setAppDataForSession(const QString& location)
+void ShotcutSettings::setAppDataForSession(const QString &location)
 {
     // This is intended to be called when using a command line option
     // to set the AppData location.
@@ -844,7 +847,7 @@ void ShotcutSettings::setAppDataForSession(const QString& location)
         instance.reset(new ShotcutSettings(location));
 }
 
-void ShotcutSettings::setAppDataLocally(const QString& location)
+void ShotcutSettings::setAppDataLocally(const QString &location)
 {
     // This is intended to be called when using a GUI action to set the
     // the new AppData location.
@@ -852,7 +855,7 @@ void ShotcutSettings::setAppDataLocally(const QString& location)
     // Copy the existing settings if they exist.
     if (!QFile::exists(location + SHOTCUT_INI_FILENAME)) {
         QSettings newSettings(location + SHOTCUT_INI_FILENAME, QSettings::IniFormat);
-        foreach (const QString& key, settings.allKeys())
+        foreach (const QString &key, settings.allKeys())
             newSettings.setValue(key, settings.value(key));
         newSettings.sync();
     }
@@ -866,14 +869,15 @@ void ShotcutSettings::setAppDataLocally(const QString& location)
 QStringList ShotcutSettings::layouts() const
 {
     QStringList result;
-    for (const auto& s : settings.value("layout/layouts").toStringList()) {
+    for (const auto &s : settings.value("layout/layouts").toStringList()) {
         if (!s.startsWith("__"))
             result << s;
     }
     return result;
 }
 
-bool ShotcutSettings::setLayout(const QString& name, const QByteArray& geometry, const QByteArray& state)
+bool ShotcutSettings::setLayout(const QString &name, const QByteArray &geometry,
+                                const QByteArray &state)
 {
     bool isNew = false;
     QStringList layouts = Settings.layouts();
@@ -887,19 +891,19 @@ bool ShotcutSettings::setLayout(const QString& name, const QByteArray& geometry,
     return isNew;
 }
 
-QByteArray ShotcutSettings::layoutGeometry(const QString& name)
+QByteArray ShotcutSettings::layoutGeometry(const QString &name)
 {
     QString key = QString("layout/%1_geometry").arg(name);
     return settings.value(key).toByteArray();
 }
 
-QByteArray ShotcutSettings::layoutState(const QString& name)
+QByteArray ShotcutSettings::layoutState(const QString &name)
 {
     QString key = QString("layout/%1_state").arg(name);
     return settings.value(key).toByteArray();
 }
 
-bool ShotcutSettings::removeLayout(const QString& name)
+bool ShotcutSettings::removeLayout(const QString &name)
 {
     QStringList list = layouts();
     int index = list.indexOf(name);
@@ -938,7 +942,8 @@ void ShotcutSettings::setClearRecent(bool b)
 
 QString ShotcutSettings::projectsFolder() const
 {
-    return settings.value("projectsFolder", QStandardPaths::standardLocations(QStandardPaths::MoviesLocation)).toString();
+    return settings.value("projectsFolder",
+                          QStandardPaths::standardLocations(QStandardPaths::MoviesLocation)).toString();
 }
 
 void ShotcutSettings::setProjectsFolder(const QString &path)
@@ -950,14 +955,14 @@ QString ShotcutSettings::audioInput() const
 {
     QString defaultValue  = "default";
 #if defined(Q_OS_MAC) || defined(Q_OS_WIN)
-    for (const auto& deviceInfo : QAudioDeviceInfo::availableDevices(QAudio::AudioInput)) {
+    for (const auto &deviceInfo : QAudioDeviceInfo::availableDevices(QAudio::AudioInput)) {
         defaultValue = deviceInfo.deviceName();
     }
 #endif
     return settings.value("audioInput", defaultValue).toString();
 }
 
-void ShotcutSettings::setAudioInput(const QString& name)
+void ShotcutSettings::setAudioInput(const QString &name)
 {
     settings.setValue("audioInput", name);
 }
@@ -967,7 +972,7 @@ QString ShotcutSettings::videoInput() const
     return settings.value("videoInput").toString();
 }
 
-void ShotcutSettings::setVideoInput(const QString& name)
+void ShotcutSettings::setVideoInput(const QString &name)
 {
     settings.setValue("videoInput", name);
 }
@@ -985,7 +990,7 @@ void ShotcutSettings::setProxyEnabled(bool b)
 QString ShotcutSettings::proxyFolder() const
 {
     QDir dir(appDataLocation());
-    const char* subfolder = "proxies";
+    const char *subfolder = "proxies";
     if (!dir.cd(subfolder)) {
         if (dir.mkdir(subfolder))
             dir.cd(subfolder);
@@ -993,7 +998,7 @@ QString ShotcutSettings::proxyFolder() const
     return settings.value("proxy/folder", dir.path()).toString();
 }
 
-void ShotcutSettings::setProxyFolder(const QString& path)
+void ShotcutSettings::setProxyFolder(const QString &path)
 {
     settings.setValue("proxy/folder", path);
 }

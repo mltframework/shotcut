@@ -20,14 +20,14 @@
 #include <Logger.h>
 #include <QtConcurrent/QtConcurrent>
 
-ScopeWidget::ScopeWidget(const QString& name)
-  : QWidget()
-  , m_queue(3, DataQueue<SharedFrame>::OverflowModeDiscardOldest)
-  , m_future()
-  , m_refreshPending(false)
-  , m_mutex(QMutex::NonRecursive)
-  , m_forceRefresh(false)
-  , m_size(0, 0)
+ScopeWidget::ScopeWidget(const QString &name)
+    : QWidget()
+    , m_queue(3, DataQueue<SharedFrame>::OverflowModeDiscardOldest)
+    , m_future()
+    , m_refreshPending(false)
+    , m_mutex(QMutex::NonRecursive)
+    , m_forceRefresh(false)
+    , m_size(0, 0)
 {
     LOG_DEBUG() << "begin" << m_future.isFinished();
     setObjectName(name);
@@ -38,7 +38,7 @@ ScopeWidget::~ScopeWidget()
 {
 }
 
-void ScopeWidget::onNewFrame(const SharedFrame& frame)
+void ScopeWidget::onNewFrame(const SharedFrame &frame)
 {
     m_queue.push(frame);
     requestRefresh();
@@ -79,7 +79,7 @@ void ScopeWidget::onRefreshThreadComplete()
     }
 }
 
-void ScopeWidget::resizeEvent(QResizeEvent*)
+void ScopeWidget::resizeEvent(QResizeEvent *)
 {
     m_mutex.lock();
     m_size = size();
@@ -89,7 +89,7 @@ void ScopeWidget::resizeEvent(QResizeEvent*)
     }
 }
 
-void ScopeWidget::changeEvent(QEvent*)
+void ScopeWidget::changeEvent(QEvent *)
 {
     m_mutex.lock();
     m_forceRefresh = true;

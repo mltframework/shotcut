@@ -22,7 +22,7 @@
 #include "abstractproducerwidget.h"
 
 namespace Ui {
-    class X11grabWidget;
+class X11grabWidget;
 }
 
 class X11grabWidget : public QWidget, public AbstractProducerWidget
@@ -34,25 +34,25 @@ public:
     ~X11grabWidget();
 
     // AbstractProducerWidget overrides
-    Mlt::Producer* newProducer(Mlt::Profile&);
+    Mlt::Producer *newProducer(Mlt::Profile &);
     Mlt::Properties getPreset() const;
-    void loadPreset(Mlt::Properties&);
-    void setProducer(Mlt::Producer*);
+    void loadPreset(Mlt::Properties &);
+    void setProducer(Mlt::Producer *);
 
 signals:
-    void producerChanged(Mlt::Producer*);
+    void producerChanged(Mlt::Producer *);
 
 private slots:
     void on_positionComboBox_activated(int index);
     void on_audioComboBox_activated(int index);
-    void on_preset_selected(void* p);
+    void on_preset_selected(void *p);
     void on_preset_saveClicked();
     void on_applyButton_clicked();
 
 private:
     Ui::X11grabWidget *ui;
-    QWidget* m_audioWidget;
-    QString URL(Mlt::Profile&) const;
+    QWidget *m_audioWidget;
+    QString URL(Mlt::Profile &) const;
 };
 
 #endif // X11GRABWIDGET_H

@@ -70,12 +70,18 @@ public:
     Qt::ItemFlags flags(const QModelIndex &index) const;
 
     // Direct access to QmlMetadata
-    void add(QmlMetadata* data);
-    Q_INVOKABLE QmlMetadata* get(int index) const;
-    MetadataFilter filter() const { return m_filter; }
+    void add(QmlMetadata *data);
+    Q_INVOKABLE QmlMetadata *get(int index) const;
+    MetadataFilter filter() const
+    {
+        return m_filter;
+    }
     void setFilter(MetadataFilter);
-    QString search() const { return m_search; }
-    void setSearch(const QString& search);
+    QString search() const
+    {
+        return m_search;
+    }
+    void setSearch(const QString &search);
     Q_INVOKABLE bool isVisible(int row) const;
     void setIsClipProducer(bool isClipProducer);
     void setIsChainProducer(bool isChainProducer);
@@ -85,7 +91,7 @@ signals:
     void searchChanged();
 
 private:
-    typedef QList<QmlMetadata*> MetadataList;
+    typedef QList<QmlMetadata *> MetadataList;
     MetadataList m_list;
     MetadataFilter m_filter;
     bool m_isClipProducer;
@@ -93,7 +99,7 @@ private:
     QString m_search;
     unsigned m_filterMask;
 
-    unsigned computeFilterMask(const QmlMetadata* meta);
+    unsigned computeFilterMask(const QmlMetadata *meta);
 };
 
 #endif // METADATAMODEL_H

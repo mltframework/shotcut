@@ -22,8 +22,8 @@
 #include "mltcontroller.h"
 #include <MltProfile.h>
 
-static const char* kParamType = "0";
-static const char* kParamAspect = "1";
+static const char *kParamType = "0";
+static const char *kParamAspect = "1";
 
 enum {
     ASPECT_SQUARE = 0,
@@ -31,7 +31,7 @@ enum {
     ASPECT_PAL_WIDE,
     ASPECT_NTSC,
     ASPECT_NTSC_WIDE,
-    ASPECT_HDV 
+    ASPECT_HDV
 };
 
 ColorBarsWidget::ColorBarsWidget(QWidget *parent) :
@@ -50,12 +50,12 @@ ColorBarsWidget::~ColorBarsWidget()
 
 static double map_value_backward(double v, double min, double max)
 {
-    return (v-min)/(max-min);
+    return (v - min) / (max - min);
 }
 
-Mlt::Producer* ColorBarsWidget::newProducer(Mlt::Profile& profile)
+Mlt::Producer *ColorBarsWidget::newProducer(Mlt::Profile &profile)
 {
-    Mlt::Producer* p = new Mlt::Producer(profile, "frei0r.test_pat_B");
+    Mlt::Producer *p = new Mlt::Producer(profile, "frei0r.test_pat_B");
     p->set(kParamType, ui->comboBox->currentIndex());
     if (profile.sample_aspect_num() == 16 && profile.sample_aspect_den() == 15)
         p->set(kParamAspect, map_value_backward(ASPECT_PAL, 0, 6.9999));
@@ -80,7 +80,7 @@ Mlt::Properties ColorBarsWidget::getPreset() const
     return p;
 }
 
-void ColorBarsWidget::loadPreset(Mlt::Properties& p)
+void ColorBarsWidget::loadPreset(Mlt::Properties &p)
 {
     ui->comboBox->setCurrentIndex(p.get_int(kParamType));
 }

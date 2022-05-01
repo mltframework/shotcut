@@ -29,19 +29,19 @@ class QDialogButtonBox;
 class ListSelectionDialog : public QDialog
 {
     Q_OBJECT
-    
+
 public:
-    explicit ListSelectionDialog(const QStringList& list, QWidget *parent = 0);
+    explicit ListSelectionDialog(const QStringList &list, QWidget *parent = 0);
     ~ListSelectionDialog();
-    void setSelection(const QStringList& selection);
+    void setSelection(const QStringList &selection);
     QStringList selection() const;
-    QDialogButtonBox* buttonBox() const;
-    
+    QDialogButtonBox *buttonBox() const;
+
 private:
     Ui::ListSelectionDialog *ui;
 
 private slots:
-    void onItemActivated(QListWidgetItem* item);
+    void onItemActivated(QListWidgetItem *item);
 };
 
 #endif // LISTSELECTIONDIALOG_H

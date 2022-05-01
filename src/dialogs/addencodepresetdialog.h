@@ -22,7 +22,7 @@
 #include <QDialog>
 
 namespace Ui {
-    class AddEncodePresetDialog;
+class AddEncodePresetDialog;
 }
 
 class AddEncodePresetDialog : public QDialog
@@ -32,7 +32,7 @@ class AddEncodePresetDialog : public QDialog
 public:
     explicit AddEncodePresetDialog(QWidget *parent = 0);
     ~AddEncodePresetDialog();
-    void setProperties(const QString&);
+    void setProperties(const QString &);
     QString presetName() const;
     QString properties() const;
 

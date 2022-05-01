@@ -31,18 +31,18 @@ class UnlinkedFilesDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit UnlinkedFilesDialog(QWidget* parent = 0);
+    explicit UnlinkedFilesDialog(QWidget *parent = 0);
     ~UnlinkedFilesDialog();
 
-    void setModel(QStandardItemModel& model);
+    void setModel(QStandardItemModel &model);
 
 private slots:
-    void on_tableView_doubleClicked(const QModelIndex& index);
+    void on_tableView_doubleClicked(const QModelIndex &index);
 
     void on_searchFolderButton_clicked();
 
 private:
-    bool lookInDir(const QDir& dir, bool recurse = false);
+    bool lookInDir(const QDir &dir, bool recurse = false);
 
     Ui::UnlinkedFilesDialog *ui;
 };

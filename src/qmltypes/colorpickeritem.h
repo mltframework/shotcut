@@ -27,7 +27,7 @@ class ColorPickerItem : public QObject
 {
     Q_OBJECT
 public:
-    explicit ColorPickerItem(QObject* parent = 0);
+    explicit ColorPickerItem(QObject *parent = 0);
 
 signals:
     void pickColor();
@@ -35,7 +35,7 @@ signals:
     void cancelled();
 
 private slots:
-    void screenSelected(const QRect& rect);
+    void screenSelected(const QRect &rect);
     void grabColor();
 
 private:

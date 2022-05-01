@@ -35,10 +35,10 @@ public:
     explicit QmlUtilities(QObject *parent = 0);
 
     static void registerCommonTypes();
-    static void setCommonProperties(QQmlContext* context);
+    static void setCommonProperties(QQmlContext *context);
     static QDir qmlDir();
     static QUrl blankVui();
-    static QQmlEngine * sharedEngine();
+    static QQmlEngine *sharedEngine();
 };
 
 #endif // QMLUTILITIES_H

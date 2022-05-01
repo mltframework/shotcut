@@ -18,10 +18,9 @@
 #include "markercommands.h"
 #include <Logger.h>
 
-namespace Markers
-{
+namespace Markers {
 
-DeleteCommand::DeleteCommand(MarkersModel& model, const Marker& delMarker, int index)
+DeleteCommand::DeleteCommand(MarkersModel &model, const Marker &delMarker, int index)
     : QUndoCommand(0)
     , m_model(model)
     , m_delMarker(delMarker)
@@ -40,7 +39,7 @@ void DeleteCommand::undo()
     m_model.doInsert(m_index, m_delMarker);
 }
 
-AppendCommand::AppendCommand(MarkersModel& model, const Marker& newMarker, int index)
+AppendCommand::AppendCommand(MarkersModel &model, const Marker &newMarker, int index)
     : QUndoCommand(0)
     , m_model(model)
     , m_newMarker(newMarker)
@@ -60,19 +59,17 @@ void AppendCommand::undo()
 }
 
 
-UpdateCommand::UpdateCommand(MarkersModel& model, const Marker& newMarker, const Marker& oldMarker, int index)
+UpdateCommand::UpdateCommand(MarkersModel &model, const Marker &newMarker, const Marker &oldMarker,
+                             int index)
     : QUndoCommand(0)
     , m_model(model)
     , m_newMarker(newMarker)
     , m_oldMarker(oldMarker)
     , m_index(index)
 {
-    if (m_newMarker.text == m_oldMarker.text && m_newMarker.color == m_oldMarker.color)
-    {
+    if (m_newMarker.text == m_oldMarker.text && m_newMarker.color == m_oldMarker.color) {
         setText(QObject::tr("Move marker: %1").arg(m_oldMarker.text));
-    }
-    else
-    {
+    } else {
         setText(QObject::tr("Edit marker: %1").arg(m_oldMarker.text));
     }
 }
@@ -89,19 +86,17 @@ void UpdateCommand::undo()
 
 bool UpdateCommand::mergeWith(const QUndoCommand *other)
 {
-    const UpdateCommand* that = static_cast<const UpdateCommand*>(other);
+    const UpdateCommand *that = static_cast<const UpdateCommand *>(other);
     LOG_DEBUG() << "this index" << m_index << "that index" << that->m_index;
     if (that->id() != id() || that->m_index != m_index)
         return false;
     bool merge = false;
     if (that->m_newMarker.text == m_oldMarker.text &&
-        that->m_newMarker.color == m_oldMarker.color)
-    {
+            that->m_newMarker.color == m_oldMarker.color) {
         // Only start/end change. Merge with previous move command.
         merge = true;
     } else if (that->m_newMarker.end == m_oldMarker.end &&
-               that->m_newMarker.start == m_oldMarker.start)
-    {
+               that->m_newMarker.start == m_oldMarker.start) {
         // Only text/color change. Merge with previous edit command.
         merge = true;
     }
@@ -110,7 +105,7 @@ bool UpdateCommand::mergeWith(const QUndoCommand *other)
     return true;
 }
 
-ClearCommand::ClearCommand(MarkersModel& model, QList<Marker>& clearMarkers)
+ClearCommand::ClearCommand(MarkersModel &model, QList<Marker> &clearMarkers)
     : QUndoCommand(0)
     , m_model(model)
     , m_clearMarkers(clearMarkers)

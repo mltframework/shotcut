@@ -37,7 +37,7 @@ AlsaWidget::~AlsaWidget()
     delete ui;
 }
 
-Mlt::Producer* AlsaWidget::newProducer(Mlt::Profile& profile)
+Mlt::Producer *AlsaWidget::newProducer(Mlt::Profile &profile)
 {
     QString s("alsa:%1");
     if (ui->lineEdit->text().isEmpty())
@@ -46,7 +46,7 @@ Mlt::Producer* AlsaWidget::newProducer(Mlt::Profile& profile)
         s = s.arg(ui->lineEdit->text());
     if (ui->alsaChannelsSpinBox->value() > 0)
         s += QString("?channels=%1").arg(ui->alsaChannelsSpinBox->value());
-    Mlt::Producer* p = new Mlt::Producer(profile, s.toUtf8().constData());
+    Mlt::Producer *p = new Mlt::Producer(profile, s.toUtf8().constData());
     p->set(kBackgroundCaptureProperty, 1);
     p->set(kShotcutCaptionProperty, "ALSA");
     return p;
@@ -65,7 +65,7 @@ Mlt::Properties AlsaWidget::getPreset() const
     return p;
 }
 
-void AlsaWidget::loadPreset(Mlt::Properties& p)
+void AlsaWidget::loadPreset(Mlt::Properties &p)
 {
     QString s(p.get("resource"));
     int i = s.indexOf(':');
@@ -75,9 +75,9 @@ void AlsaWidget::loadPreset(Mlt::Properties& p)
         ui->alsaChannelsSpinBox->setValue(p.get_int("channels"));
 }
 
-void AlsaWidget::on_preset_selected(void* p)
+void AlsaWidget::on_preset_selected(void *p)
 {
-    Mlt::Properties* properties = (Mlt::Properties*) p;
+    Mlt::Properties *properties = (Mlt::Properties *) p;
     loadPreset(*properties);
     delete properties;
 }
@@ -87,7 +87,7 @@ void AlsaWidget::on_preset_saveClicked()
     ui->preset->savePreset(getPreset());
 }
 
-void AlsaWidget::setProducer(Mlt::Producer* producer)
+void AlsaWidget::setProducer(Mlt::Producer *producer)
 {
     ui->applyButton->show();
     if (producer)

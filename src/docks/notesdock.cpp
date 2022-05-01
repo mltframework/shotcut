@@ -31,12 +31,14 @@ NotesDock::NotesDock(QWidget *parent) :
 {
     LOG_DEBUG() << "begin";
     setObjectName("NotesDock");
-    QIcon filterIcon = QIcon::fromTheme("document-edit", QIcon(":/icons/oxygen/32x32/actions/document-edit.png"));
+    QIcon filterIcon = QIcon::fromTheme("document-edit",
+                                        QIcon(":/icons/oxygen/32x32/actions/document-edit.png"));
     setWindowIcon(filterIcon);
     toggleViewAction()->setIcon(windowIcon());
 
     m_textEdit->setTabChangesFocus(false);
-    m_textEdit->setTabStopDistance(m_textEdit->fontMetrics().horizontalAdvance("XXXX")); // Tabstop = 4 spaces
+    m_textEdit->setTabStopDistance(
+        m_textEdit->fontMetrics().horizontalAdvance("XXXX")); // Tabstop = 4 spaces
     m_textEdit->setAcceptRichText(false);
     m_textEdit->setFontPointSize(QApplication::font("QMenu").pointSize());
     QObject::connect(m_textEdit, SIGNAL(textChanged()), SLOT(onTextChanged()));
@@ -50,7 +52,7 @@ QString NotesDock::getText()
     return m_textEdit->toPlainText();
 }
 
-void NotesDock::setText(const QString& text)
+void NotesDock::setText(const QString &text)
 {
     m_blockUpdate = true;
     m_textEdit->setPlainText(text);

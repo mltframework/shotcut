@@ -29,13 +29,13 @@
 class QTreeWidgetItem;
 class QStringList;
 namespace Ui {
-    class EncodeDock;
+class EncodeDock;
 }
 class AbstractJob;
 class MeltJob;
 namespace Mlt {
-    class Service;
-    class Producer;
+class Service;
+class Producer;
 }
 
 class PresetsProxyModel : public QSortFilterProxyModel
@@ -52,7 +52,7 @@ public:
     explicit EncodeDock(QWidget *parent = 0);
     ~EncodeDock();
 
-    void loadPresetFromProperties(Mlt::Properties&);
+    void loadPresetFromProperties(Mlt::Properties &);
     bool isExportInProgress() const;
 
 signals:
@@ -77,7 +77,7 @@ private slots:
 
     void on_removePresetButton_clicked();
 
-    void onFinished(AbstractJob*, bool isSuccess);
+    void onFinished(AbstractJob *, bool isSuccess);
 
     void on_stopCaptureButton_clicked();
 
@@ -152,19 +152,20 @@ private:
     double m_fps;
 
     void loadPresets();
-    Mlt::Properties* collectProperties(int realtime, bool includeProfile = false);
-    void collectProperties(QDomElement& node, int realtime);
-    MeltJob* createMeltJob(Mlt::Producer* service, const QString& target, int realtime, int pass = 0, const QThread::Priority priority = Settings.jobPriority());
-    void runMelt(const QString& target, int realtime = -1);
+    Mlt::Properties *collectProperties(int realtime, bool includeProfile = false);
+    void collectProperties(QDomElement &node, int realtime);
+    MeltJob *createMeltJob(Mlt::Producer *service, const QString &target, int realtime, int pass = 0,
+                           const QThread::Priority priority = Settings.jobPriority());
+    void runMelt(const QString &target, int realtime = -1);
     void enqueueAnalysis();
-    void enqueueMelt(const QStringList& targets, int realtime);
-    void encode(const QString& target);
+    void enqueueMelt(const QStringList &targets, int realtime);
+    void encode(const QString &target);
     void resetOptions();
-    Mlt::Producer* fromProducer() const;
-    static void filterX265Params(QStringList& other);
+    Mlt::Producer *fromProducer() const;
+    static void filterX265Params(QStringList &other);
     void onVideoCodecComboChanged(int index, bool ignorePreset = false);
     bool checkForMissingFiles();
-    QString& defaultFormatExtension();
+    QString &defaultFormatExtension();
 };
 
 #endif // ENCODEDOCK_H

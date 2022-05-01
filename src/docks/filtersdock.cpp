@@ -33,13 +33,15 @@
 #include "models/attachedfiltersmodel.h"
 #include "mltcontroller.h"
 
-FiltersDock::FiltersDock(MetadataModel* metadataModel, AttachedFiltersModel* attachedModel, QWidget *parent) :
+FiltersDock::FiltersDock(MetadataModel *metadataModel, AttachedFiltersModel *attachedModel,
+                         QWidget *parent) :
     QDockWidget(tr("Filters"), parent),
     m_qview(QmlUtilities::sharedEngine(), this)
 {
     LOG_DEBUG() << "begin";
     setObjectName("FiltersDock");
-    QIcon filterIcon = QIcon::fromTheme("view-filter", QIcon(":/icons/oxygen/32x32/actions/view-filter.png"));
+    QIcon filterIcon = QIcon::fromTheme("view-filter",
+                                        QIcon(":/icons/oxygen/32x32/actions/view-filter.png"));
     setWindowIcon(filterIcon);
     toggleViewAction()->setIcon(windowIcon());
     m_qview.setFocusPolicy(Qt::StrongFocus);
@@ -65,7 +67,7 @@ FiltersDock::FiltersDock(MetadataModel* metadataModel, AttachedFiltersModel* att
     LOG_DEBUG() << "end";
 }
 
-void FiltersDock::setCurrentFilter(QmlFilter* filter, QmlMetadata* meta, int index)
+void FiltersDock::setCurrentFilter(QmlFilter *filter, QmlMetadata *meta, int index)
 {
     if (filter && filter->producer().is_valid()) {
         m_producer.setProducer(filter->producer());
@@ -79,7 +81,8 @@ void FiltersDock::setCurrentFilter(QmlFilter* filter, QmlMetadata* meta, int ind
         connect(filter, SIGNAL(changed()), SIGNAL(changed()));
     else
         disconnect(this, SIGNAL(changed()));
-    QMetaObject::invokeMethod(m_qview.rootObject(), "setCurrentFilter", Q_ARG(QVariant, QVariant(index)));
+    QMetaObject::invokeMethod(m_qview.rootObject(), "setCurrentFilter", Q_ARG(QVariant,
+                                                                              QVariant(index)));
 }
 
 bool FiltersDock::event(QEvent *event)
@@ -115,7 +118,7 @@ void FiltersDock::onSeeked(int position)
     }
 }
 
-void FiltersDock::onShowFrame(const SharedFrame& frame)
+void FiltersDock::onShowFrame(const SharedFrame &frame)
 {
     if (m_producer.producer().is_valid()) {
         int position = frame.get_position();
@@ -132,7 +135,7 @@ void FiltersDock::resetQview()
 {
     LOG_DEBUG() << "begin";
     if (m_qview.status() != QQuickWidget::Null) {
-        QObject* root = m_qview.rootObject();
+        QObject *root = m_qview.rootObject();
         QObject::disconnect(root, SIGNAL(currentFilterRequested(int)),
                             this, SIGNAL(currentFilterRequested(int)));
 
@@ -154,6 +157,6 @@ void FiltersDock::resetQview()
     m_qview.setSource(source);
 
     QObject::connect(m_qview.rootObject(), SIGNAL(currentFilterRequested(int)),
-        SIGNAL(currentFilterRequested(int)));
+                     SIGNAL(currentFilterRequested(int)));
     emit currentFilterRequested(QmlFilter::NoCurrentFilter);
 }

@@ -26,12 +26,18 @@ class AbstractProducerWidget
 public:
     AbstractProducerWidget();
     virtual ~AbstractProducerWidget();
-    virtual Mlt::Producer* newProducer(Mlt::Profile&) = 0;
-    virtual void setProducer(Mlt::Producer*);
+    virtual Mlt::Producer *newProducer(Mlt::Profile &) = 0;
+    virtual void setProducer(Mlt::Producer *);
     virtual Mlt::Properties getPreset() const
-        { Mlt::Properties p; return p; }
-    virtual void loadPreset(Mlt::Properties&) {}
-    Mlt::Producer* producer() const { return m_producer.data(); }
+    {
+        Mlt::Properties p;
+        return p;
+    }
+    virtual void loadPreset(Mlt::Properties &) {}
+    Mlt::Producer *producer() const
+    {
+        return m_producer.data();
+    }
 
 protected:
     QScopedPointer<Mlt::Producer> m_producer;

@@ -30,9 +30,9 @@ public:
     QImage requestImage(const QString &id, QSize *size, const QSize &requestedSize);
 
 private:
-    QString cacheKey(Mlt::Properties& properties, const QString& service,
-                     const QString& resource, const QString& hash, int frameNumber);
-    QImage makeThumbnail(Mlt::Producer&, int frameNumber, const QSize& requestedSize);
+    QString cacheKey(Mlt::Properties &properties, const QString &service,
+                     const QString &resource, const QString &hash, int frameNumber);
+    QImage makeThumbnail(Mlt::Producer &, int frameNumber, const QSize &requestedSize);
     Mlt::Profile m_profile;
 };
 

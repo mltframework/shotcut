@@ -19,7 +19,7 @@
 #include "qmlprofile.h"
 #include "mltcontroller.h"
 
-QmlProfile& QmlProfile::singleton()
+QmlProfile &QmlProfile::singleton()
 {
     static QmlProfile instance;
     return instance;

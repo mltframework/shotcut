@@ -48,14 +48,14 @@ ImageProducerWidget::~ImageProducerWidget()
     delete ui;
 }
 
-Mlt::Producer* ImageProducerWidget::newProducer(Mlt::Profile& profile)
+Mlt::Producer *ImageProducerWidget::newProducer(Mlt::Profile &profile)
 {
     QString resource = QString::fromUtf8(m_producer->get("resource"));
     if (!resource.contains("?begin=") && m_producer->get("begin")) {
         resource.append(QString("?begin=%1").arg(m_producer->get("begin")));
     }
     LOG_DEBUG() << resource;
-    Mlt::Producer* p = new Mlt::Producer(profile, resource.toUtf8().constData());
+    Mlt::Producer *p = new Mlt::Producer(profile, resource.toUtf8().constData());
     if (p->is_valid()) {
         if (ui->durationSpinBox->value() > p->get_length())
             p->set("length", p->frames_to_time(ui->durationSpinBox->value(), mlt_time_clock));
@@ -64,7 +64,7 @@ Mlt::Producer* ImageProducerWidget::newProducer(Mlt::Profile& profile)
     return p;
 }
 
-void ImageProducerWidget::setProducer(Mlt::Producer* p)
+void ImageProducerWidget::setProducer(Mlt::Producer *p)
 {
     AbstractProducerWidget::setProducer(p);
     if (m_defaultDuration == -1)
@@ -84,19 +84,20 @@ void ImageProducerWidget::setProducer(Mlt::Producer* p)
         caption = name;
         m_producer->set(kShotcutCaptionProperty, caption.toUtf8().constData());
     }
-    ui->filenameLabel->setText(ui->filenameLabel->fontMetrics().elidedText(caption, Qt::ElideLeft, width() - 30));
+    ui->filenameLabel->setText(ui->filenameLabel->fontMetrics().elidedText(caption, Qt::ElideLeft,
+                                                                           width() - 30));
     updateDuration();
     resource = QDir::toNativeSeparators(resource);
     ui->filenameLabel->setToolTip(resource);
     bool isProxy = m_producer->get_int(kIsProxyProperty) && m_producer->get(kOriginalResourceProperty);
-    ui->resolutionLabel->setText(QString("%1x%2 %3").arg(p->get("meta.media.width")).arg(p->get("meta.media.height"))
-                                 .arg(isProxy? tr("(PROXY)") : ""));
+    ui->resolutionLabel->setText(QString("%1x%2 %3").arg(p->get("meta.media.width")).arg(
+                                     p->get("meta.media.height"))
+                                 .arg(isProxy ? tr("(PROXY)") : ""));
     ui->aspectNumSpinBox->blockSignals(true);
     if (p->get(kAspectRatioNumerator) && p->get(kAspectRatioDenominator)) {
         ui->aspectNumSpinBox->setValue(p->get_int(kAspectRatioNumerator));
         ui->aspectDenSpinBox->setValue(p->get_int(kAspectRatioDenominator));
-    }
-    else {
+    } else {
         double sar = m_producer->get_double("aspect_ratio");
         if (m_producer->get("force_aspect_ratio"))
             sar = m_producer->get_double("force_aspect_ratio");
@@ -120,7 +121,8 @@ void ImageProducerWidget::setProducer(Mlt::Producer* p)
 void ImageProducerWidget::updateDuration()
 {
     if (m_producer->get(kFilterOutProperty))
-        ui->durationSpinBox->setValue(m_producer->get_int(kFilterOutProperty) - m_producer->get_int(kFilterInProperty) + 1);
+        ui->durationSpinBox->setValue(m_producer->get_int(kFilterOutProperty) - m_producer->get_int(
+                                          kFilterInProperty) + 1);
     else
         ui->durationSpinBox->setValue(m_producer->get_playtime());
 }
@@ -131,7 +133,7 @@ void ImageProducerWidget::rename()
     ui->filenameLabel->selectAll();
 }
 
-void ImageProducerWidget::reopen(Mlt::Producer* p)
+void ImageProducerWidget::reopen(Mlt::Producer *p)
 {
     int position = m_producer->position();
     if (position > p->get_out())
@@ -167,10 +169,11 @@ void ImageProducerWidget::recreateProducer()
             m_producer->set("resource", resource.toUtf8().constData());
         }
     }
-    Mlt::Producer* p = newProducer(MLT.profile());
+    Mlt::Producer *p = newProducer(MLT.profile());
     p->pass_list(*m_producer, "force_aspect_ratio," kAspectRatioNumerator "," kAspectRatioDenominator
-        ", begin, ttl," kShotcutResourceProperty ", autolength, length," kShotcutSequenceProperty ", " kPlaylistIndexProperty
-        ", " kCommentProperty "," kOriginalResourceProperty "," kDisableProxyProperty "," kIsProxyProperty);
+                 ", begin, ttl," kShotcutResourceProperty ", autolength, length," kShotcutSequenceProperty ", "
+                 kPlaylistIndexProperty
+                 ", " kCommentProperty "," kOriginalResourceProperty "," kDisableProxyProperty "," kIsProxyProperty);
     Mlt::Controller::copyFilters(*m_producer, *p);
     if (m_producer->get(kMultitrackItemProperty)) {
         emit producerChanged(p);
@@ -189,10 +192,10 @@ void ImageProducerWidget::on_resetButton_clicked()
     if (!s)
         s = m_producer->get(kOriginalResourceProperty);
     if (!s)
-       s = m_producer->get("resource");
+        s = m_producer->get("resource");
     if (!s)
         return;
-    Mlt::Producer* p = new Mlt::Producer(MLT.profile(), s);
+    Mlt::Producer *p = new Mlt::Producer(MLT.profile(), s);
     Mlt::Controller::copyFilters(*m_producer, *p);
     if (m_producer->get(kMultitrackItemProperty)) {
         emit producerChanged(p);
@@ -206,7 +209,7 @@ void ImageProducerWidget::on_aspectNumSpinBox_valueChanged(int)
 {
     if (m_producer) {
         double new_sar = double(ui->aspectNumSpinBox->value()) /
-            double(ui->aspectDenSpinBox->value());
+                         double(ui->aspectDenSpinBox->value());
         double sar = m_producer->get_double("aspect_ratio");
         if (m_producer->get("force_aspect_ratio") || new_sar != sar) {
             m_producer->set("force_aspect_ratio", QString::number(new_sar).toLatin1().constData());
@@ -234,7 +237,8 @@ void ImageProducerWidget::on_durationSpinBox_editingFinished()
 void ImageProducerWidget::on_sequenceCheckBox_clicked(bool checked)
 {
     QString resource = m_producer->get("resource");
-    if (checked && m_producer->get_int(kIsProxyProperty) && m_producer->get(kOriginalResourceProperty)) {
+    if (checked && m_producer->get_int(kIsProxyProperty)
+            && m_producer->get(kOriginalResourceProperty)) {
         // proxy is not currently supported for image sequence, disable it
         resource = m_producer->get(kOriginalResourceProperty);
         m_producer->set(kDisableProxyProperty, 1);
@@ -289,17 +293,18 @@ void ImageProducerWidget::on_sequenceCheckBox_clicked(bool checked)
                 if (i % 100 == 0)
                     QCoreApplication::processEvents();
             }
-            m_producer->set("length", m_producer->frames_to_time(imageCount * m_producer->get_int("ttl"), mlt_time_clock));
+            m_producer->set("length", m_producer->frames_to_time(imageCount * m_producer->get_int("ttl"),
+                                                                 mlt_time_clock));
             ui->durationSpinBox->setValue(imageCount);
             MAIN.showStatusMessage(tr("Reloading image sequence..."));
             QCoreApplication::processEvents();
         }
-    }
-    else {
+    } else {
         m_producer->Mlt::Properties::clear(kDisableProxyProperty);
         m_producer->Mlt::Properties::clear("begin");
         m_producer->set("resource", m_producer->get(kShotcutResourceProperty));
-        m_producer->set("length", m_producer->frames_to_time(qRound(MLT.profile().fps() * Mlt::kMaxImageDurationSecs), mlt_time_clock));
+        m_producer->set("length", m_producer->frames_to_time(qRound(MLT.profile().fps() *
+                                                                    Mlt::kMaxImageDurationSecs), mlt_time_clock));
         ui->durationSpinBox->setValue(qRound(MLT.profile().fps() * Settings.imageDuration()));
     }
     recreateProducer();
@@ -338,7 +343,7 @@ void ImageProducerWidget::on_menuButton_clicked()
     menu.exec(ui->menuButton->mapToGlobal(QPoint(0, 0)));
 }
 
-static QString GetFilenameFromProducer(Mlt::Producer* producer, bool useOriginal = true)
+static QString GetFilenameFromProducer(Mlt::Producer *producer, bool useOriginal = true)
 {
     QString resource;
     if (useOriginal && producer->get(kOriginalResourceProperty)) {

@@ -23,7 +23,7 @@
 #include <QRunnable>
 #include <QtConcurrent/QtConcurrent>
 
-QImageJob::QImageJob(const QString& destFilePath, const QString& srcFilePath, const int height)
+QImageJob::QImageJob(const QString &destFilePath, const QString &srcFilePath, const int height)
     : AbstractJob(srcFilePath)
     , m_srcFilePath(srcFilePath)
     , m_destFilePath(destFilePath)
@@ -34,7 +34,7 @@ QImageJob::QImageJob(const QString& destFilePath, const QString& srcFilePath, co
 
 QImageJob::~QImageJob()
 {
-    if (m_destFilePath.contains("proxies") && m_destFilePath.contains(".pending.")){
+    if (m_destFilePath.contains("proxies") && m_destFilePath.contains(".pending.")) {
         QFile::remove(m_destFilePath);
     }
 }
@@ -42,7 +42,7 @@ QImageJob::~QImageJob()
 void QImageJob::start()
 {
     AbstractJob::start();
-    QtConcurrent::run([=]() {
+    QtConcurrent::run([ = ]() {
         appendToLog(QString("Reading source image \"%1\"\n").arg(m_srcFilePath));
         QImageReader reader;
         reader.setAutoTransform(true);

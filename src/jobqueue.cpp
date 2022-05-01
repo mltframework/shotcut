@@ -29,9 +29,9 @@ JobQueue::JobQueue(QObject *parent) :
 {
 }
 
-JobQueue& JobQueue::singleton(QObject* parent)
+JobQueue &JobQueue::singleton(QObject *parent)
 {
-    static JobQueue* instance = 0;
+    static JobQueue *instance = 0;
     if (!instance)
         instance = new JobQueue(parent);
     return *instance;
@@ -40,7 +40,7 @@ JobQueue& JobQueue::singleton(QObject* parent)
 void JobQueue::cleanup()
 {
     QMutexLocker locker(&m_mutex);
-    foreach (AbstractJob* job, m_jobs) {
+    foreach (AbstractJob *job, m_jobs) {
         if (job->state() == QProcess::Running) {
             job->stop();
             break;
@@ -49,12 +49,12 @@ void JobQueue::cleanup()
     qDeleteAll(m_jobs);
 }
 
-AbstractJob* JobQueue::add(AbstractJob* job)
+AbstractJob *JobQueue::add(AbstractJob *job)
 {
-    QList<QStandardItem*> items;
+    QList<QStandardItem *> items;
     QIcon icon = QIcon::fromTheme("run-build", QIcon(":/icons/oxygen/32x32/actions/run-build.png"));
     items << new QStandardItem(icon, "");
-    QStandardItem* item = new QStandardItem(job->label());
+    QStandardItem *item = new QStandardItem(job->label());
     items << item;
     item = new QStandardItem(tr("pending"));
 #ifdef Q_OS_MAC
@@ -67,8 +67,10 @@ AbstractJob* JobQueue::add(AbstractJob* job)
     appendRow(items);
     job->setParent(this);
     job->setStandardItem(item);
-    connect(job, SIGNAL(progressUpdated(QStandardItem*, int)), SLOT(onProgressUpdated(QStandardItem*, int)));
-    connect(job, SIGNAL(finished(AbstractJob*, bool, QString)), SLOT(onFinished(AbstractJob*, bool, QString)));
+    connect(job, SIGNAL(progressUpdated(QStandardItem *, int)), SLOT(onProgressUpdated(QStandardItem *,
+                                                                                       int)));
+    connect(job, SIGNAL(finished(AbstractJob *, bool, QString)), SLOT(onFinished(AbstractJob *, bool,
+                                                                                 QString)));
     m_mutex.lock();
     m_jobs.append(job);
     m_mutex.unlock();
@@ -78,10 +80,10 @@ AbstractJob* JobQueue::add(AbstractJob* job)
     return job;
 }
 
-void JobQueue::onProgressUpdated(QStandardItem* standardItem, int percent)
+void JobQueue::onProgressUpdated(QStandardItem *standardItem, int percent)
 {
     if (standardItem) {
-        AbstractJob* job = m_jobs.at(standardItem->row());
+        AbstractJob *job = m_jobs.at(standardItem->row());
         if (job) {
             QString remaining = "--:--:--";
             if (percent > 2)
@@ -94,13 +96,13 @@ void JobQueue::onProgressUpdated(QStandardItem* standardItem, int percent)
 #endif
 }
 
-void JobQueue::onFinished(AbstractJob* job, bool isSuccess, QString time)
+void JobQueue::onFinished(AbstractJob *job, bool isSuccess, QString time)
 {
-    QStandardItem* item = job->standardItem();
+    QStandardItem *item = job->standardItem();
     if (item) {
         QIcon icon;
         if (isSuccess) {
-            const QTime& time = QTime::fromMSecsSinceStartOfDay(job->time().elapsed());
+            const QTime &time = QTime::fromMSecsSinceStartOfDay(job->time().elapsed());
             item->setText(time.toString());
             item->setToolTip(tr("Elapsed Hours:Minutes:Seconds"));
             icon = QIcon(":/icons/oxygen/32x32/status/task-complete.png");
@@ -114,9 +116,9 @@ void JobQueue::onFinished(AbstractJob* job, bool isSuccess, QString time)
 
         // Remove any touched or incomplete pending proxy files
         if (job->stopped() || !isSuccess)
-        if (job->objectName().contains("proxies") && job->objectName().contains(".pending")) {
-            QFile::remove(job->objectName());
-        }
+            if (job->objectName().contains("proxies") && job->objectName().contains(".pending")) {
+                QFile::remove(job->objectName());
+            }
 
         item = JOBS.item(item->row(), JobQueue::COLUMN_ICON);
         if (item)
@@ -134,7 +136,7 @@ void JobQueue::startNextJob()
     if (m_paused) return;
     QMutexLocker locker(&m_mutex);
     if (!m_jobs.isEmpty()) {
-        foreach(AbstractJob* job, m_jobs) {
+        foreach (AbstractJob *job, m_jobs) {
             // if there is already a job started or running, then exit
             if (job->ran() && job->state() != QProcess::NotRunning)
                 break;
@@ -147,7 +149,7 @@ void JobQueue::startNextJob()
     }
 }
 
-AbstractJob* JobQueue::jobFromIndex(const QModelIndex& index) const
+AbstractJob *JobQueue::jobFromIndex(const QModelIndex &index) const
 {
     return m_jobs.at(index.row());
 }
@@ -170,20 +172,20 @@ bool JobQueue::isPaused() const
 
 bool JobQueue::hasIncomplete() const
 {
-    foreach (AbstractJob* job, m_jobs) {
+    foreach (AbstractJob *job, m_jobs) {
         if (!job->ran() || job->state() == QProcess::Running)
             return true;
     }
     return false;
 }
 
-void JobQueue::remove(const QModelIndex& index)
+void JobQueue::remove(const QModelIndex &index)
 {
     int row = index.row();
     removeRow(index.row());
     m_mutex.lock();
 
-    AbstractJob* job = m_jobs.at(row);
+    AbstractJob *job = m_jobs.at(row);
     m_jobs.removeOne(job);
     delete job;
 
@@ -194,7 +196,7 @@ void JobQueue::removeFinished()
 {
     QMutexLocker locker(&m_mutex);
     auto row = 0;
-    foreach (AbstractJob* job, m_jobs) {
+    foreach (AbstractJob *job, m_jobs) {
         if (job->ran() && job->state() != QProcess::Running) {
             removeRow(row);
             m_jobs.removeOne(job);

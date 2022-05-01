@@ -25,7 +25,7 @@
 #include <QRect>
 
 namespace Mlt {
-    class Producer;
+class Producer;
 }
 
 class QmlApplication : public QObject
@@ -42,7 +42,7 @@ class QmlApplication : public QObject
     Q_PROPERTY(int maxTextureSize READ maxTextureSize CONSTANT)
 
 public:
-    static QmlApplication& singleton();
+    static QmlApplication &singleton();
     static Qt::WindowModality dialogModality();
     static QPoint mousePos();
     static QColor toolTipBaseColor();
@@ -54,10 +54,10 @@ public:
     Q_INVOKABLE static void pasteFilters();
     Q_INVOKABLE static QString timecode(int frames);
     Q_INVOKABLE static int audioChannels();
-    Q_INVOKABLE static QString getNextProjectFile(const QString& filename);
+    Q_INVOKABLE static QString getNextProjectFile(const QString &filename);
     Q_INVOKABLE static bool isProjectFolder();
     static qreal devicePixelRatio();
-    Q_INVOKABLE void showStatusMessage(const QString& message, int timeoutSeconds = 15);
+    Q_INVOKABLE void showStatusMessage(const QString &message, int timeoutSeconds = 15);
     static int maxTextureSize();
     Q_INVOKABLE static bool confirmOutputFilter();
     static QDir dataDir();
@@ -66,12 +66,12 @@ public:
 signals:
     void paletteChanged();
     void filtersCopied();
-    void filtersPasted(Mlt::Producer*);
+    void filtersPasted(Mlt::Producer *);
 
 private:
     explicit QmlApplication();
-    QmlApplication(QmlApplication const&);
-    void operator=(QmlApplication const&);
+    QmlApplication(QmlApplication const &);
+    void operator=(QmlApplication const &);
 };
 
 #endif // QMLAPPLICATION_H

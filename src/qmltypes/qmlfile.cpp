@@ -21,7 +21,7 @@
 #include <QDir>
 #include <Logger.h>
 
-QmlFile::QmlFile(QObject* parent)
+QmlFile::QmlFile(QObject *parent)
     : QObject(parent)
     , m_url()
 {
@@ -42,17 +42,17 @@ void QmlFile::setUrl(QString text)
 {
     QUrl url = text.replace('\\', "/");
     QUrl::FormattingOptions options =
-            QUrl::RemoveScheme |
-            QUrl::RemovePassword |
-            QUrl::RemoveUserInfo |
-            QUrl::RemovePort |
-            QUrl::RemoveAuthority |
-            QUrl::RemoveQuery;
+        QUrl::RemoveScheme |
+        QUrl::RemovePassword |
+        QUrl::RemoveUserInfo |
+        QUrl::RemovePort |
+        QUrl::RemoveAuthority |
+        QUrl::RemoveQuery;
 #ifdef Q_OS_WIN
     // If the scheme is a drive letter, do not remove it.
     if (url.scheme().size() == 1) {
         options ^= QUrl::RemoveScheme;
-    // QUrl removes the host from a UNC path when removing the scheme.
+        // QUrl removes the host from a UNC path when removing the scheme.
     } else if (text.startsWith("file://") && text.size() > 9 && text[9] != ':') {
         options ^= QUrl::RemoveScheme;
         options ^= QUrl::RemoveAuthority;
@@ -75,7 +75,7 @@ void QmlFile::setUrl(QString text)
     QUrl adj = url.adjusted(options);
 #endif
 
-    if(m_url != adj) {
+    if (m_url != adj) {
         m_url = adj;
         emit urlChanged(m_url);
     }
@@ -98,8 +98,7 @@ QString QmlFile::getFilePath()
 
 void QmlFile::copyFromFile(QString source)
 {
-    if (QFile::exists(m_url.toString()))
-    {
+    if (QFile::exists(m_url.toString())) {
         QFile::remove(m_url.toString());
     }
 

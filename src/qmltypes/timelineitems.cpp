@@ -46,7 +46,7 @@ public:
         gradient.setColorAt(1, m_colorB);
 
         QPainterPath path;
-        path.moveTo(0,0);
+        path.moveTo(0, 0);
         path.lineTo(width(), height());
         path.lineTo(width(), 0);
         path.lineTo(0, height());
@@ -130,8 +130,7 @@ public:
         QPainterPath path;
         path.moveTo(-1, height());
         int i = 0;
-        for (; i < width(); ++i)
-        {
+        for (; i < width(); ++i) {
             int idx = inPoint + int(i * indicesPrPixel);
             if ((idx < 0) || (idx + 2 >= data.length()))
                 break;

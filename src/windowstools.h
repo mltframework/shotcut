@@ -22,14 +22,14 @@
 class WindowsTaskbarButton
 {
 public:
-    static WindowsTaskbarButton& getInstance();
+    static WindowsTaskbarButton &getInstance();
 
-    void setParentWindow(QWidget* parent);
+    void setParentWindow(QWidget *parent);
     void setProgress(int progress);
     void resetProgress();
 private:
     WindowsTaskbarButton();
 
-    QWinTaskbarButton* m_taskbarButton;
-    QWinTaskbarProgress* m_taskbarProgress;
+    QWinTaskbarButton *m_taskbarButton;
+    QWinTaskbarProgress *m_taskbarProgress;
 };

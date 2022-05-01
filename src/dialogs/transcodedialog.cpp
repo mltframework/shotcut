@@ -22,7 +22,7 @@
 
 #include <QPushButton>
 
-TranscodeDialog::TranscodeDialog(const QString& message, bool isProgressive, QWidget *parent) :
+TranscodeDialog::TranscodeDialog(const QString &message, bool isProgressive, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::TranscodeDialog),
     m_format(0),
@@ -52,7 +52,7 @@ TranscodeDialog::TranscodeDialog(const QString& message, bool isProgressive, QWi
     ui->frcComboBox->addItem(tr("Motion Compensation (slow)"), QVariant("mci"));
     ui->frcComboBox->setCurrentIndex(0);
 
-    QPushButton* advancedButton = new QPushButton(tr("Advanced"));
+    QPushButton *advancedButton = new QPushButton(tr("Advanced"));
     advancedButton->setCheckable(true);
     connect(advancedButton, SIGNAL(toggled(bool)), ui->advancedWidget, SLOT(setVisible(bool)));
     if (!Settings.convertAdvanced()) {
@@ -128,7 +128,8 @@ void TranscodeDialog::on_horizontalSlider_valueChanged(int position)
         ui->formatLabel->setText(tr("Lossy: I-frame–only %1").arg("H.264/AC-3 MP4"));
         break;
     case 1:
-        ui->formatLabel->setText(tr("Intermediate: %1").arg(m_isProgressive? "DNxHR/ALAC MOV" : "ProRes/ALAC MOV"));
+        ui->formatLabel->setText(tr("Intermediate: %1").arg(m_isProgressive ? "DNxHR/ALAC MOV" :
+                                                            "ProRes/ALAC MOV"));
         break;
     case 2:
         ui->formatLabel->setText(tr("Lossless: %1").arg("Ut Video/PCM MKV"));

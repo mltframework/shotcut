@@ -30,7 +30,7 @@ class TimelinePropertiesWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit TimelinePropertiesWidget(Mlt::Service& service, QWidget *parent = 0);
+    explicit TimelinePropertiesWidget(Mlt::Service &service, QWidget *parent = 0);
     ~TimelinePropertiesWidget();
 
 signals:

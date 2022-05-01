@@ -27,17 +27,15 @@
 
 static const int WINDOW_SIZE = 8000; // 6 Hz FFT bins at 48kHz
 
-struct band
-{
+struct band {
     float low;    // Low frequency
     float center; // Center frequency
     float high;   // High frequency
-    const char* label;
+    const char *label;
 };
 
 // Preferred frequencies from ISO R 266-1997 / ANSI S1.6-1984
-static const band BAND_TAB[] =
-{
+static const band BAND_TAB[] = {
 //     Low      Preferred  High                Band
 //     Freq      Center    Freq     Label       Num
     {     1.12,     1.25,     1.41, "1.25"  }, //  1
@@ -90,8 +88,8 @@ static const int LAST_AUDIBLE_BAND_INDEX = 42;
 static const int AUDIBLE_BAND_COUNT = LAST_AUDIBLE_BAND_INDEX - FIRST_AUDIBLE_BAND_INDEX + 1;
 
 AudioSpectrumScopeWidget::AudioSpectrumScopeWidget()
-  : ScopeWidget("AudioSpectrum")
-  , m_audioMeter(0)
+    : ScopeWidget("AudioSpectrum")
+    , m_audioMeter(0)
 {
     LOG_DEBUG() << "begin";
 
@@ -137,7 +135,7 @@ AudioSpectrumScopeWidget::~AudioSpectrumScopeWidget()
 void AudioSpectrumScopeWidget::processSpectrum()
 {
     QVector<double> bands(AUDIBLE_BAND_COUNT);
-    float* bins = (float*)m_filter->get_data("bins");
+    float *bins = (float *)m_filter->get_data("bins");
     int bin_count = m_filter->get_int("bin_count");
     double bin_width = m_filter->get_double("bin_width");
 
@@ -180,10 +178,11 @@ void AudioSpectrumScopeWidget::processSpectrum()
     }
 
     // Update the audio signal widget
-    QMetaObject::invokeMethod(m_audioMeter, "showAudio", Qt::QueuedConnection, Q_ARG(const QVector<double>&, bands));
+    QMetaObject::invokeMethod(m_audioMeter, "showAudio", Qt::QueuedConnection,
+                              Q_ARG(const QVector<double> &, bands));
 }
 
-void AudioSpectrumScopeWidget::refreshScope(const QSize& /*size*/, bool /*full*/)
+void AudioSpectrumScopeWidget::refreshScope(const QSize & /*size*/, bool /*full*/)
 {
     bool refresh = false;
     SharedFrame sFrame;
@@ -209,5 +208,5 @@ void AudioSpectrumScopeWidget::refreshScope(const QSize& /*size*/, bool /*full*/
 
 QString AudioSpectrumScopeWidget::getTitle()
 {
-   return tr("Audio Spectrum");
+    return tr("Audio Spectrum");
 }

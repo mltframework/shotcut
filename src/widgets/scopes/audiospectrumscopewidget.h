@@ -28,7 +28,7 @@ class AudioMeterWidget;
 class AudioSpectrumScopeWidget Q_DECL_FINAL : public ScopeWidget
 {
     Q_OBJECT
-    
+
 public:
     explicit AudioSpectrumScopeWidget();
     ~AudioSpectrumScopeWidget();
@@ -36,14 +36,14 @@ public:
 
 private:
     // Functions run in scope thread.
-    void refreshScope(const QSize& size, bool full) Q_DECL_OVERRIDE;
+    void refreshScope(const QSize &size, bool full) Q_DECL_OVERRIDE;
     void processSpectrum();
 
     // Members accessed by scope thread.
-    Mlt::Filter* m_filter;
+    Mlt::Filter *m_filter;
 
     // Members accessed only in the GUI thread
-    AudioMeterWidget* m_audioMeter;
+    AudioMeterWidget *m_audioMeter;
 };
 
 #endif // AUDIOSPECTRUMSCOPEWIDGET_H

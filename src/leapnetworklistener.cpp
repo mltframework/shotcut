@@ -34,8 +34,9 @@ void LeapNetworkListener::start()
     QUrl url("ws://localhost:6437/v2.json");
     connect(&m_socket, SIGNAL(connected()), SLOT(onConnected()));
     connect(&m_socket, SIGNAL(disconnected()), SLOT(onDisconnected()));
-    connect(&m_socket, SIGNAL(textFrameReceived(QString,bool)), SLOT(onMessage(QString)));
-    connect(&m_socket, SIGNAL(error(QAbstractSocket::SocketError)), SLOT(onError(QAbstractSocket::SocketError)));
+    connect(&m_socket, SIGNAL(textFrameReceived(QString, bool)), SLOT(onMessage(QString)));
+    connect(&m_socket, SIGNAL(error(QAbstractSocket::SocketError)),
+            SLOT(onError(QAbstractSocket::SocketError)));
     connect(&m_timer, SIGNAL(timeout()), this, SLOT(heartbeat()));
     m_socket.open(url);
 }
@@ -81,8 +82,7 @@ void LeapNetworkListener::onMessage(const QString &s)
                     }
                 }
             }
-        }
-        else if (frame["hands"].isArray() && frame["hands"].toArray().count() > 0) {
+        } else if (frame["hands"].isArray() && frame["hands"].toArray().count() > 0) {
             QJsonObject hand = frame["hands"].toArray().first().toObject();
             if (frame["pointables"].toArray().count() > 1) {
                 if (hand["palmPosition"].isArray() && frame["interactionBox"].isObject()) {
@@ -99,8 +99,7 @@ void LeapNetworkListener::onMessage(const QString &s)
             } else {
                 emit shuttle(0);
             }
-        }
-        else if (!frame["version"].isNull() && frame["version"].toDouble() >= 2.0) {
+        } else if (!frame["version"].isNull() && frame["version"].toDouble() >= 2.0) {
             m_timer.start(90);
         }
     }

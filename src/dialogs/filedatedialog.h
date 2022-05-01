@@ -31,18 +31,18 @@ class FileDateDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit FileDateDialog(QString title, Mlt::Producer* producer, QWidget *parent = 0);
+    explicit FileDateDialog(QString title, Mlt::Producer *producer, QWidget *parent = 0);
 
 private slots:
     void accept();
     void dateSelected(int index);
 
 private:
-    void populateDateOptions(Mlt::Producer* producer);
+    void populateDateOptions(Mlt::Producer *producer);
 
-    Mlt::Producer* m_producer;
-    QComboBox* m_dtCombo;
-    QDateTimeEdit* m_dtEdit;
+    Mlt::Producer *m_producer;
+    QComboBox *m_dtCombo;
+    QDateTimeEdit *m_dtEdit;
 };
 
 #endif // FILEDATEDIALOG_H

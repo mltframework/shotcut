@@ -22,7 +22,7 @@
 #include "abstractproducerwidget.h"
 
 namespace Ui {
-    class ToneProducerWidget;
+class ToneProducerWidget;
 }
 
 class ToneProducerWidget : public QWidget, public AbstractProducerWidget
@@ -34,9 +34,9 @@ public:
     ~ToneProducerWidget();
 
     // AbstractProducerWidget overrides
-    Mlt::Producer* newProducer(Mlt::Profile&);
+    Mlt::Producer *newProducer(Mlt::Profile &);
     Mlt::Properties getPreset() const;
-    void loadPreset(Mlt::Properties&);
+    void loadPreset(Mlt::Properties &);
 
 signals:
     void modified();
@@ -44,7 +44,7 @@ signals:
 private slots:
     void on_frequencySpinBox_valueChanged(int);
     void on_levelSpinBox_valueChanged(int);
-    void on_preset_selected(void* p);
+    void on_preset_selected(void *p);
     void on_preset_saveClicked();
 
 private:

@@ -51,20 +51,38 @@ public:
     int in();
     int out();
     double aspectRatio();
-    int duration() { return m_producer.is_valid()? out() - in() + 1 : 0; }
-    int length() { return m_producer.is_valid()? m_producer.get_length() : 0; }
+    int duration()
+    {
+        return m_producer.is_valid() ? out() - in() + 1 : 0;
+    }
+    int length()
+    {
+        return m_producer.is_valid() ? m_producer.get_length() : 0;
+    }
     QString resource();
-    QString mlt_service() { return m_producer.is_valid()? m_producer.get("mlt_service") : QString(); }
-    QString hash() { return m_producer.is_valid()? m_producer.get(kShotcutHashProperty) : QString(); }
+    QString mlt_service()
+    {
+        return m_producer.is_valid() ? m_producer.get("mlt_service") : QString();
+    }
+    QString hash()
+    {
+        return m_producer.is_valid() ? m_producer.get(kShotcutHashProperty) : QString();
+    }
     QString name();
     QVariant audioLevels();
     int fadeIn();
     int fadeOut();
     double speed();
-    int position() const { return m_position; }
+    int position() const
+    {
+        return m_position;
+    }
     void setPosition(int position);
     void seek(int position);
-    Mlt::Producer& producer() { return m_producer; }
+    Mlt::Producer &producer()
+    {
+        return m_producer;
+    }
     Q_INVOKABLE void audioLevelsReady(const QModelIndex &index);
     Q_INVOKABLE void remakeAudioLevels();
     double displayAspectRatio();
@@ -84,7 +102,7 @@ signals:
     void lengthChanged();
 
 public slots:
-    void setProducer(Mlt::Producer& producer);
+    void setProducer(Mlt::Producer &producer);
     void remakeAudioLevels(bool isKeyframesVisible);
 
 private:

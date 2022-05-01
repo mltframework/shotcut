@@ -35,11 +35,11 @@ public:
     ~AvfoundationProducerWidget();
 
     // AbstractProducerWidget overrides
-    Mlt::Producer* newProducer(Mlt::Profile& profile);
-    void setProducer(Mlt::Producer* producer);
+    Mlt::Producer *newProducer(Mlt::Profile &profile);
+    void setProducer(Mlt::Producer *producer);
 
 signals:
-    void producerChanged(Mlt::Producer*);
+    void producerChanged(Mlt::Producer *);
 
 private slots:
     void on_videoCombo_activated(int index);

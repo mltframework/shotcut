@@ -28,10 +28,10 @@ class Database : public QObject
     explicit Database(QObject *parent = 0);
 
 public:
-    static Database& singleton(QObject *parent = 0);
+    static Database &singleton(QObject *parent = 0);
 
-    bool putThumbnail(const QString& hash, const QImage& image);
-    QImage getThumbnail(const QString& hash);
+    bool putThumbnail(const QString &hash, const QImage &image);
+    QImage getThumbnail(const QString &hash);
 
 private:
     QDir thumbnailsDir();

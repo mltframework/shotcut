@@ -25,7 +25,7 @@
 #include "dialogs/transcodedialog.h"
 
 namespace Ui {
-    class AvformatProducerWidget;
+class AvformatProducerWidget;
 }
 
 class AvformatProducerWidget : public QWidget, public AbstractProducerWidget
@@ -37,8 +37,8 @@ public:
     ~AvformatProducerWidget();
 
     // AbstractProducerWidget overrides
-    Mlt::Producer* newProducer(Mlt::Profile&);
-    void setProducer(Mlt::Producer*);
+    Mlt::Producer *newProducer(Mlt::Profile &);
+    void setProducer(Mlt::Producer *);
 
 public slots:
     void updateDuration();
@@ -46,7 +46,7 @@ public slots:
     void offerConvert(QString message, bool set709Convert = false, bool setSubClip = false);
 
 signals:
-    void producerChanged(Mlt::Producer*);
+    void producerChanged(Mlt::Producer *);
     void producerReopened(bool play);
     void modified();
 
@@ -54,9 +54,9 @@ protected:
     void keyPressEvent(QKeyEvent *event);
 
 private slots:
-    void onFrameDisplayed(const SharedFrame&);
+    void onFrameDisplayed(const SharedFrame &);
 
-    void onProducerChanged(Mlt::Producer*);
+    void onProducerChanged(Mlt::Producer *);
 
     void onFrameDecoded();
 
@@ -130,9 +130,9 @@ private:
     bool m_recalcDuration;
     bool m_askToConvert;
 
-    void reopen(Mlt::Producer* p);
+    void reopen(Mlt::Producer *p);
     void recreateProducer();
-    void convert(TranscodeDialog& dialog);
+    void convert(TranscodeDialog &dialog);
     bool revertToOriginalResource();
     void setSyncVisibility();
 };
@@ -143,7 +143,7 @@ class DecodeTask : public QObject, public QRunnable
     Q_OBJECT
 
 public:
-    explicit DecodeTask(AvformatProducerWidget* widget);
+    explicit DecodeTask(AvformatProducerWidget *widget);
     void run();
 
 signals:

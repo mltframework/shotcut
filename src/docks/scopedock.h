@@ -27,22 +27,22 @@ class ScopeController;
 
 class ScopeDock Q_DECL_FINAL : public QDockWidget
 {
-   Q_OBJECT
+    Q_OBJECT
 
 public:
-   explicit ScopeDock(ScopeController* scopeController, ScopeWidget* scopeWidget);
+    explicit ScopeDock(ScopeController *scopeController, ScopeWidget *scopeWidget);
 
 protected:
-   void resizeEvent(QResizeEvent*) Q_DECL_OVERRIDE;
+    void resizeEvent(QResizeEvent *) Q_DECL_OVERRIDE;
 
 private:
-   ScopeController* m_scopeController;
-   ScopeWidget* m_scopeWidget;
+    ScopeController *m_scopeController;
+    ScopeWidget *m_scopeWidget;
 
-   void setWidget(QWidget * widget); // Private to disallow use
+    void setWidget(QWidget *widget);  // Private to disallow use
 
 private slots:
-   void onActionToggled(bool checked);
+    void onActionToggled(bool checked);
 };
 
 #endif // SCOPEDOCK_H

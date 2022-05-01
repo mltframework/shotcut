@@ -32,10 +32,11 @@
 #include <QPushButton>
 #include <QSignalBlocker>
 
-EditMarkerWidget::EditMarkerWidget(QWidget *parent, const QString& text, const QColor& color, int start, int end, int maxEnd)
+EditMarkerWidget::EditMarkerWidget(QWidget *parent, const QString &text, const QColor &color,
+                                   int start, int end, int maxEnd)
     : QWidget(parent)
 {
-    QGridLayout* grid = new QGridLayout();
+    QGridLayout *grid = new QGridLayout();
     setLayout(grid);
     grid->setColumnMinimumWidth(0, 125);
     grid->setColumnMinimumWidth(1, 125);
@@ -101,7 +102,8 @@ int EditMarkerWidget::getEnd()
     return m_endSpinner->value();
 }
 
-void EditMarkerWidget::setValues(const QString& text, const QColor& color, int start, int end, int maxEnd)
+void EditMarkerWidget::setValues(const QString &text, const QColor &color, int start, int end,
+                                 int maxEnd)
 {
     QSignalBlocker textBlocker(m_textField);
     QSignalBlocker colorBlocker(m_colorLabel);

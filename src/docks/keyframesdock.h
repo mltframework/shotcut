@@ -36,11 +36,14 @@ class QmlProducer;
 class KeyframesDock : public QDockWidget
 {
     Q_OBJECT
-    
-public:
-    explicit KeyframesDock(QmlProducer* qmlProducer, QWidget *parent = 0);
 
-    KeyframesModel& model() { return m_model; }
+public:
+    explicit KeyframesDock(QmlProducer *qmlProducer, QWidget *parent = 0);
+
+    KeyframesModel &model()
+    {
+        return m_model;
+    }
     Q_INVOKABLE int seekPrevious();
     Q_INVOKABLE int seekNext();
     int currentParameter() const;
@@ -55,14 +58,14 @@ signals:
     void seekNextSimple();
 
 public slots:
-    void setCurrentFilter(QmlFilter* filter, QmlMetadata* meta);
+    void setCurrentFilter(QmlFilter *filter, QmlMetadata *meta);
     void load(bool force = false);
     void onProducerModified();
 
 protected:
     bool event(QEvent *event);
-    void keyPressEvent(QKeyEvent* event);
-    void keyReleaseEvent(QKeyEvent* event);
+    void keyPressEvent(QKeyEvent *event);
+    void keyReleaseEvent(QKeyEvent *event);
 
 private slots:
     void onVisibilityChanged(bool visible);
@@ -72,7 +75,7 @@ private:
     QmlMetadata m_emptyQmlMetadata;
     QmlFilter m_emptyQmlFilter;
     KeyframesModel m_model;
-    QmlProducer* m_qmlProducer;
+    QmlProducer *m_qmlProducer;
 };
 
 #endif // KEYFRAMESDOCK_H

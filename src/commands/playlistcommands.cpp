@@ -20,10 +20,10 @@
 #include "mainwindow.h"
 #include <Logger.h>
 
-namespace Playlist
-{
+namespace Playlist {
 
-AppendCommand::AppendCommand(PlaylistModel& model, const QString& xml, bool emitModified, QUndoCommand *parent)
+AppendCommand::AppendCommand(PlaylistModel &model, const QString &xml, bool emitModified,
+                             QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_model(model)
     , m_xml(xml)
@@ -45,7 +45,8 @@ void AppendCommand::undo()
     m_model.remove(m_model.rowCount() - 1);
 }
 
-InsertCommand::InsertCommand(PlaylistModel& model, const QString& xml, int row, QUndoCommand *parent)
+InsertCommand::InsertCommand(PlaylistModel &model, const QString &xml, int row,
+                             QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_model(model)
     , m_xml(xml)
@@ -67,7 +68,8 @@ void InsertCommand::undo()
     m_model.remove(m_row);
 }
 
-UpdateCommand::UpdateCommand(PlaylistModel& model, const QString& xml, int row, QUndoCommand *parent)
+UpdateCommand::UpdateCommand(PlaylistModel &model, const QString &xml, int row,
+                             QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_model(model)
     , m_newXml(xml)
@@ -95,7 +97,7 @@ void UpdateCommand::undo()
 
 bool UpdateCommand::mergeWith(const QUndoCommand *other)
 {
-    const UpdateCommand* that = static_cast<const UpdateCommand*>(other);
+    const UpdateCommand *that = static_cast<const UpdateCommand *>(other);
     LOG_DEBUG() << "this row" << m_row << "that row" << that->m_row;
     if (that->id() != id() || that->m_row != m_row)
         return false;
@@ -103,7 +105,7 @@ bool UpdateCommand::mergeWith(const QUndoCommand *other)
     return true;
 }
 
-RemoveCommand::RemoveCommand(PlaylistModel& model, int row, QUndoCommand *parent)
+RemoveCommand::RemoveCommand(PlaylistModel &model, int row, QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_model(model)
     , m_row(row)
@@ -127,7 +129,7 @@ void RemoveCommand::undo()
     m_model.insert(producer, m_row);
 }
 
-ClearCommand::ClearCommand(PlaylistModel& model, QUndoCommand *parent)
+ClearCommand::ClearCommand(PlaylistModel &model, QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_model(model)
 {
@@ -144,7 +146,8 @@ void ClearCommand::redo()
 void ClearCommand::undo()
 {
     LOG_DEBUG() << "";
-    Mlt::Producer* producer = new Mlt::Producer(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
+    Mlt::Producer *producer = new Mlt::Producer(MLT.profile(), "xml-string",
+                                                m_xml.toUtf8().constData());
     if (producer->is_valid()) {
         producer->set("resource", "<playlist>");
         if (!MLT.setProducer(producer)) {
@@ -178,7 +181,8 @@ void MoveCommand::undo()
     m_model.move(m_to, m_from);
 }
 
-SortCommand::SortCommand(PlaylistModel& model, int column, Qt::SortOrder order, QUndoCommand *parent)
+SortCommand::SortCommand(PlaylistModel &model, int column, Qt::SortOrder order,
+                         QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_model(model)
     , m_column(column)
@@ -198,7 +202,8 @@ void SortCommand::redo()
 void SortCommand::undo()
 {
     LOG_DEBUG() << "";
-    Mlt::Producer* producer = new Mlt::Producer(MLT.profile(), "xml-string", m_xml.toUtf8().constData());
+    Mlt::Producer *producer = new Mlt::Producer(MLT.profile(), "xml-string",
+                                                m_xml.toUtf8().constData());
     if (producer->is_valid()) {
         producer->set("resource", "<playlist>");
         if (!MLT.setProducer(producer)) {
@@ -211,7 +216,7 @@ void SortCommand::undo()
     }
 }
 
-TrimClipInCommand::TrimClipInCommand(PlaylistModel& model, int row, int in, QUndoCommand *parent)
+TrimClipInCommand::TrimClipInCommand(PlaylistModel &model, int row, int in, QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_model(model)
     , m_row(row)
@@ -241,7 +246,7 @@ void TrimClipInCommand::undo()
 
 bool TrimClipInCommand::mergeWith(const QUndoCommand *other)
 {
-    const TrimClipInCommand* that = static_cast<const TrimClipInCommand*>(other);
+    const TrimClipInCommand *that = static_cast<const TrimClipInCommand *>(other);
     LOG_DEBUG() << "this row" << m_row << "that row" << that->m_row;
     if (that->id() != id() || that->m_row != m_row)
         return false;
@@ -249,7 +254,7 @@ bool TrimClipInCommand::mergeWith(const QUndoCommand *other)
     return true;
 }
 
-TrimClipOutCommand::TrimClipOutCommand(PlaylistModel& model, int row, int out, QUndoCommand *parent)
+TrimClipOutCommand::TrimClipOutCommand(PlaylistModel &model, int row, int out, QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_model(model)
     , m_row(row)
@@ -279,7 +284,7 @@ void TrimClipOutCommand::undo()
 
 bool TrimClipOutCommand::mergeWith(const QUndoCommand *other)
 {
-    const TrimClipOutCommand* that = static_cast<const TrimClipOutCommand*>(other);
+    const TrimClipOutCommand *that = static_cast<const TrimClipOutCommand *>(other);
     LOG_DEBUG() << "this row" << m_row << "that row" << that->m_row;
     if (that->id() != id() || that->m_row != m_row)
         return false;
@@ -287,7 +292,8 @@ bool TrimClipOutCommand::mergeWith(const QUndoCommand *other)
     return true;
 }
 
-ReplaceCommand::ReplaceCommand(PlaylistModel& model, const QString& xml, int row, QUndoCommand* parent)
+ReplaceCommand::ReplaceCommand(PlaylistModel &model, const QString &xml, int row,
+                               QUndoCommand *parent)
     : QUndoCommand(parent)
     , m_model(model)
     , m_newXml(xml)

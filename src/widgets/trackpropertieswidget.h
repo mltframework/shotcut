@@ -34,15 +34,15 @@ class TrackPropertiesWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit TrackPropertiesWidget(Mlt::Producer& track, QWidget *parent = 0);
+    explicit TrackPropertiesWidget(Mlt::Producer &track, QWidget *parent = 0);
     ~TrackPropertiesWidget();
 
 private slots:
     void on_blendModeCombo_currentIndexChanged(int index);
-    void onModeChanged(QString& mode);
+    void onModeChanged(QString &mode);
 
 private:
-    Mlt::Transition* getTransition(const QString& name);
+    Mlt::Transition *getTransition(const QString &name);
 
     Ui::TrackPropertiesWidget *ui;
     Mlt::Producer m_track;

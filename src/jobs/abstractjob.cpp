@@ -25,7 +25,7 @@
 #include <windows.h>
 #endif
 
-AbstractJob::AbstractJob(const QString& name, QThread::Priority priority)
+AbstractJob::AbstractJob(const QString &name, QThread::Priority priority)
     : QProcess(0)
     , m_item(0)
     , m_ran(false)
@@ -35,10 +35,12 @@ AbstractJob::AbstractJob(const QString& name, QThread::Priority priority)
     , m_priority(priority)
 {
     setObjectName(name);
-    connect(this, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(onFinished(int, QProcess::ExitStatus)));
+    connect(this, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(onFinished(int,
+                                                                                     QProcess::ExitStatus)));
     connect(this, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
     connect(this, SIGNAL(started()), this, SLOT(onStarted()));
-    connect(this, SIGNAL(progressUpdated(QStandardItem*, int)), SLOT(onProgressUpdated(QStandardItem*, int)));
+    connect(this, SIGNAL(progressUpdated(QStandardItem *, int)), SLOT(onProgressUpdated(QStandardItem *,
+                                                                                        int)));
 }
 
 void AbstractJob::start()
@@ -50,12 +52,12 @@ void AbstractJob::start()
     emit progressUpdated(m_item, 0);
 }
 
-void AbstractJob::setStandardItem(QStandardItem* item)
+void AbstractJob::setStandardItem(QStandardItem *item)
 {
     m_item = item;
 }
 
-QStandardItem* AbstractJob::standardItem()
+QStandardItem *AbstractJob::standardItem()
 {
     return m_item;
 }
@@ -70,9 +72,9 @@ bool AbstractJob::stopped() const
     return m_killed;
 }
 
-void AbstractJob::appendToLog(const QString& s)
+void AbstractJob::appendToLog(const QString &s)
 {
-    if (m_log.size() < 100*1024*1024 /* MiB */) {
+    if (m_log.size() < 100 * 1024 * 1024 /* MiB */) {
         m_log.append(s);
     }
 }
@@ -97,7 +99,7 @@ QTime AbstractJob::estimateRemaining(int percent)
     return result;
 }
 
-void AbstractJob::setPostJobAction(PostJobAction* action)
+void AbstractJob::setPostJobAction(PostJobAction *action)
 {
     m_postJobAction.reset(action);
 }
@@ -109,7 +111,7 @@ void AbstractJob::start(const QString &program, const QStringList &arguments)
 #ifndef Q_OS_WIN
     if (m_priority == QThread::LowPriority || m_priority == QThread::HighPriority) {
         args.prepend(program);
-        args.prepend(m_priority == QThread::LowPriority? "3" : "-3");
+        args.prepend(m_priority == QThread::LowPriority ? "3" : "-3");
         args.prepend("-n");
         prog = "nice";
     }
@@ -128,7 +130,7 @@ void AbstractJob::stop()
 
 void AbstractJob::onFinished(int exitCode, QProcess::ExitStatus exitStatus)
 {
-    const QTime& time = QTime::fromMSecsSinceStartOfDay(m_totalTime.elapsed());
+    const QTime &time = QTime::fromMSecsSinceStartOfDay(m_totalTime.elapsed());
     if (isOpen()) {
         m_log.append(readAll());
     }
@@ -165,8 +167,7 @@ void AbstractJob::onStarted()
 #ifdef Q_OS_WIN
     qint64 processId = QProcess::processId();
     HANDLE processHandle = OpenProcess(PROCESS_SET_INFORMATION, FALSE, processId);
-    if (processHandle)
-    {
+    if (processHandle) {
         switch (m_priority) {
         case QThread::LowPriority:
             SetPriorityClass(processHandle, BELOW_NORMAL_PRIORITY_CLASS);
@@ -182,7 +183,7 @@ void AbstractJob::onStarted()
 #endif
 }
 
-void AbstractJob::onProgressUpdated(QStandardItem*, int percent)
+void AbstractJob::onProgressUpdated(QStandardItem *, int percent)
 {
     // Start timer on first reported percentage > 0.
     if (percent == 1) {

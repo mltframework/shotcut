@@ -44,7 +44,8 @@ enum {
     NAME_FIELD_HASH,
 };
 
-MultiFileExportDialog::MultiFileExportDialog(QString title, Mlt::Playlist* playlist, const QString& directory, const QString& prefix, const QString& extension, QWidget* parent)
+MultiFileExportDialog::MultiFileExportDialog(QString title, Mlt::Playlist *playlist,
+                                             const QString &directory, const QString &prefix, const QString &extension, QWidget *parent)
     : QDialog(parent)
     , m_playlist(playlist)
 {
@@ -52,54 +53,58 @@ MultiFileExportDialog::MultiFileExportDialog(QString title, Mlt::Playlist* playl
     setWindowTitle(title);
     setWindowModality(QmlApplication::dialogModality());
 
-    QGridLayout* glayout = new QGridLayout();
+    QGridLayout *glayout = new QGridLayout();
     glayout->setHorizontalSpacing(4);
     glayout->setVerticalSpacing(2);
     // Directory
     glayout->addWidget(new QLabel(tr("Directory")), col, 0, Qt::AlignRight);
-    QHBoxLayout* dirHbox = new QHBoxLayout();
+    QHBoxLayout *dirHbox = new QHBoxLayout();
     m_dir = new QLineEdit(QDir::toNativeSeparators(directory));
     m_dir->setReadOnly(true);
-    QPushButton* browseButton = new QPushButton(this);
-    browseButton->setIcon(QIcon::fromTheme("document-open", QIcon(":/icons/oxygen/32x32/actions/document-open.png")));
+    QPushButton *browseButton = new QPushButton(this);
+    browseButton->setIcon(QIcon::fromTheme("document-open",
+                                           QIcon(":/icons/oxygen/32x32/actions/document-open.png")));
     if (!connect(browseButton, &QAbstractButton::clicked, this, &MultiFileExportDialog::browse))
-         connect(browseButton, SIGNAL(clicked()), SLOT(browse()));
+        connect(browseButton, SIGNAL(clicked()), SLOT(browse()));
     dirHbox->addWidget(m_dir);
     dirHbox->addWidget(browseButton);
     glayout->addLayout(dirHbox, col++, 1, Qt::AlignLeft);
     // Prefix
     glayout->addWidget(new QLabel(tr("Prefix")), col, 0, Qt::AlignRight);
-    m_prefix = new QLineEdit(prefix.isEmpty()? tr("export") : prefix);
+    m_prefix = new QLineEdit(prefix.isEmpty() ? tr("export") : prefix);
     if (!connect(m_prefix, &QLineEdit::textChanged, this, &MultiFileExportDialog::rebuildList))
-         connect(m_prefix, SIGNAL(textChanged(const QString&)), SLOT(rebuildList()));
+        connect(m_prefix, SIGNAL(textChanged(const QString &)), SLOT(rebuildList()));
     glayout->addWidget(m_prefix, col++, 1, Qt::AlignLeft);
     // Field 1
     glayout->addWidget(new QLabel(tr("Field 1")), col, 0, Qt::AlignRight);
     m_field1 = new QComboBox();
     fillCombo(m_field1);
-    if (!connect(m_field1, QOverload<int>::of(&QComboBox::activated), this, &MultiFileExportDialog::rebuildList))
-         connect(m_field1, SIGNAL(activated(const QString&)), SLOT(rebuildList()));
+    if (!connect(m_field1, QOverload<int>::of(&QComboBox::activated), this,
+                 &MultiFileExportDialog::rebuildList))
+        connect(m_field1, SIGNAL(activated(const QString &)), SLOT(rebuildList()));
     glayout->addWidget(m_field1, col++, 1, Qt::AlignLeft);
     // Field 2
     glayout->addWidget(new QLabel(tr("Field 2")), col, 0, Qt::AlignRight);
     m_field2 = new QComboBox();
     fillCombo(m_field2);
-    if (!connect(m_field2, QOverload<int>::of(&QComboBox::activated), this, &MultiFileExportDialog::rebuildList))
-         connect(m_field2, SIGNAL(activated(const QString&)), SLOT(rebuildList()));
+    if (!connect(m_field2, QOverload<int>::of(&QComboBox::activated), this,
+                 &MultiFileExportDialog::rebuildList))
+        connect(m_field2, SIGNAL(activated(const QString &)), SLOT(rebuildList()));
     glayout->addWidget(m_field2, col++, 1, Qt::AlignLeft);
     // Field 3
     glayout->addWidget(new QLabel(tr("Field 3")), col, 0, Qt::AlignRight);
     m_field3 = new QComboBox();
     fillCombo(m_field3);
     m_field3->setCurrentIndex(NAME_FIELD_INDEX);
-   if (!connect(m_field3, QOverload<int>::of(&QComboBox::activated), this, &MultiFileExportDialog::rebuildList))
-        connect(m_field3, SIGNAL(activated(const QString&)), SLOT(rebuildList()));
+    if (!connect(m_field3, QOverload<int>::of(&QComboBox::activated), this,
+                 &MultiFileExportDialog::rebuildList))
+        connect(m_field3, SIGNAL(activated(const QString &)), SLOT(rebuildList()));
     glayout->addWidget(m_field3, col++, 1, Qt::AlignLeft);
     // Extension
     glayout->addWidget(new QLabel(tr("Extension")), col, 0, Qt::AlignRight);
     m_ext = new QLineEdit(extension);
     if (!connect(m_ext, &QLineEdit::textChanged, this, &MultiFileExportDialog::rebuildList))
-         connect(m_ext, SIGNAL(textChanged(const QString &)), SLOT(rebuildList()));
+        connect(m_ext, SIGNAL(textChanged(const QString &)), SLOT(rebuildList()));
     glayout->addWidget(m_ext, col++, 1, Qt::AlignLeft);
     // Error
     m_errorIcon = new QLabel();
@@ -119,7 +124,8 @@ MultiFileExportDialog::MultiFileExportDialog(QString title, Mlt::Playlist* playl
     connect(m_buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
     connect(m_buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
 
-    glayout->setColumnMinimumWidth(1, fontMetrics().horizontalAdvance(m_dir->text()) + browseButton->width());
+    glayout->setColumnMinimumWidth(1,
+                                   fontMetrics().horizontalAdvance(m_dir->text()) + browseButton->width());
 
     this->setLayout (glayout);
     this->setModal(true);
@@ -134,51 +140,47 @@ QStringList MultiFileExportDialog::getExportFiles()
     return m_stringList;
 }
 
-QString MultiFileExportDialog::appendField(QString text, QComboBox* combo, int clipIndex)
+QString MultiFileExportDialog::appendField(QString text, QComboBox *combo, int clipIndex)
 {
     QString field;
     switch (combo->currentData().toInt()) {
-        default:
-        case NAME_FIELD_NONE:
-            break;
-        case NAME_FIELD_NAME:
-        {
-            QScopedPointer<Mlt::ClipInfo> info(MAIN.playlist()->clip_info(clipIndex));
-            if (info && info->producer && info->producer->is_valid()) {
-                field = info->producer->get(kShotcutCaptionProperty);
-                if (field.isEmpty()) {
-                    field = ProxyManager::resource(*info->producer);
-                    field = QFileInfo(field).completeBaseName();
-                }
-                if (field == "<producer>") {
-                    field = QString::fromUtf8(info->producer->get("mlt_service"));
-                }
+    default:
+    case NAME_FIELD_NONE:
+        break;
+    case NAME_FIELD_NAME: {
+        QScopedPointer<Mlt::ClipInfo> info(MAIN.playlist()->clip_info(clipIndex));
+        if (info && info->producer && info->producer->is_valid()) {
+            field = info->producer->get(kShotcutCaptionProperty);
+            if (field.isEmpty()) {
+                field = ProxyManager::resource(*info->producer);
+                field = QFileInfo(field).completeBaseName();
             }
-            break;
-        }
-        case NAME_FIELD_INDEX:
-        {
-            int digits = QString::number(m_playlist->count()).size();
-            field = QString("%1").arg(clipIndex + 1, digits, 10, QChar('0'));
-            break;
-        }
-        case NAME_FIELD_DATE:
-        {
-            QScopedPointer<Mlt::ClipInfo> info(MAIN.playlist()->clip_info(clipIndex));
-            if (info && info->producer && info->producer->is_valid()) {
-                int64_t ms = info->producer->get_creation_time();
-                if (ms) {
-                    field = QDateTime::fromMSecsSinceEpoch(ms).toString("yyyyMMdd-HHmmss");
-                }
+            if (field == "<producer>") {
+                field = QString::fromUtf8(info->producer->get("mlt_service"));
             }
-            break;
         }
-        case NAME_FIELD_HASH:
-        {
-            QScopedPointer<Mlt::ClipInfo> info(MAIN.playlist()->clip_info(clipIndex));
-            field = Util::getHash(*info->producer);
-            break;
+        break;
+    }
+    case NAME_FIELD_INDEX: {
+        int digits = QString::number(m_playlist->count()).size();
+        field = QString("%1").arg(clipIndex + 1, digits, 10, QChar('0'));
+        break;
+    }
+    case NAME_FIELD_DATE: {
+        QScopedPointer<Mlt::ClipInfo> info(MAIN.playlist()->clip_info(clipIndex));
+        if (info && info->producer && info->producer->is_valid()) {
+            int64_t ms = info->producer->get_creation_time();
+            if (ms) {
+                field = QDateTime::fromMSecsSinceEpoch(ms).toString("yyyyMMdd-HHmmss");
+            }
         }
+        break;
+    }
+    case NAME_FIELD_HASH: {
+        QScopedPointer<Mlt::ClipInfo> info(MAIN.playlist()->clip_info(clipIndex));
+        field = Util::getHash(*info->producer);
+        break;
+    }
     }
 
     if (text.isEmpty()) {
@@ -190,7 +192,7 @@ QString MultiFileExportDialog::appendField(QString text, QComboBox* combo, int c
     }
 }
 
-void MultiFileExportDialog::fillCombo(QComboBox* combo)
+void MultiFileExportDialog::fillCombo(QComboBox *combo)
 {
     combo->addItem(tr("None"), QVariant(NAME_FIELD_NONE));
     combo->addItem(tr("Name"), QVariant(NAME_FIELD_NAME));
@@ -239,7 +241,7 @@ void MultiFileExportDialog::rebuildList()
                 }
             }
 
-            QListWidgetItem* item = m_list->item(i);
+            QListWidgetItem *item = m_list->item(i);
             if (errorString.isEmpty()) {
                 item->setIcon(QIcon(":/icons/oxygen/32x32/status/task-complete.png"));
             } else {
@@ -264,7 +266,8 @@ void MultiFileExportDialog::rebuildList()
 
 void MultiFileExportDialog::browse()
 {
-    QString directory = QDir::toNativeSeparators(QFileDialog::getExistingDirectory(this, tr("Export Directory"), m_dir->text(), Util::getFileDialogOptions()));
+    QString directory = QDir::toNativeSeparators(QFileDialog::getExistingDirectory(this,
+                                                                                   tr("Export Directory"), m_dir->text(), Util::getFileDialogOptions()));
     if (!directory.isEmpty()) {
         m_dir->setText(directory);
         rebuildList();

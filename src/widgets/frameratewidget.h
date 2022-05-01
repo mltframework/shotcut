@@ -26,9 +26,9 @@ class QComboBox;
 class FrameRateWidget : public QWidget
 {
     Q_OBJECT
-    
+
 public:
-    explicit FrameRateWidget(QWidget* parent = nullptr);
+    explicit FrameRateWidget(QWidget *parent = nullptr);
     double fps();
 
 public slots:
@@ -42,8 +42,8 @@ private slots:
     void on_fpsComboBox_activated(const QString &arg1);
 
 private:
-    QDoubleSpinBox* m_fpsSpinner;
-    QComboBox* m_fpsComboBox;
+    QDoubleSpinBox *m_fpsSpinner;
+    QComboBox *m_fpsComboBox;
     double m_fps;
 };
 

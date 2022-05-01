@@ -31,15 +31,15 @@ class SlideshowGeneratorDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit SlideshowGeneratorDialog(QWidget *parent, Mlt::Playlist& clips);
-    Mlt::Playlist* getSlideshow();
+    explicit SlideshowGeneratorDialog(QWidget *parent, Mlt::Playlist &clips);
+    Mlt::Playlist *getSlideshow();
 
 private slots:
-    void clicked(QAbstractButton* button);
+    void clicked(QAbstractButton *button);
 
 private:
-    SlideshowGeneratorWidget* m_sWidget;
-    QDialogButtonBox* m_buttonBox;
+    SlideshowGeneratorWidget *m_sWidget;
+    QDialogButtonBox *m_buttonBox;
 };
 
 #endif // SLIDESHOWGENERATORDIALOG_H

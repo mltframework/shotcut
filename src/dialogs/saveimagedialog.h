@@ -27,15 +27,18 @@ class SaveImageDialog : public QFileDialog
     Q_OBJECT
 
 public:
-    explicit SaveImageDialog(QWidget *parent, const QString& caption, QImage& image);
-    QString saveFile() { return m_saveFile; };
+    explicit SaveImageDialog(QWidget *parent, const QString &caption, QImage &image);
+    QString saveFile()
+    {
+        return m_saveFile;
+    };
 
 private slots:
-    void onFilterSelected(const QString& filter);
-    void onFileSelected(const QString& file);
+    void onFilterSelected(const QString &filter);
+    void onFileSelected(const QString &file);
 
 private:
-    QImage& m_image;
+    QImage &m_image;
     QString m_saveFile;
 };
 

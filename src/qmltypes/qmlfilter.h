@@ -47,8 +47,7 @@ class QmlFilter : public QObject
     Q_PROPERTY(bool blockSignals READ signalsBlocked WRITE blockSignals)
 
 public:
-    enum TimeFormat
-    {
+    enum TimeFormat {
         TIME_FRAMES,
         TIME_CLOCK,
         TIME_TIMECODE_DF,
@@ -63,11 +62,18 @@ public:
     Q_ENUM(CurrentFilterIndex)
 
     explicit QmlFilter();
-    explicit QmlFilter(Mlt::Service& mltService, const QmlMetadata* metadata, QObject *parent = nullptr);
+    explicit QmlFilter(Mlt::Service &mltService, const QmlMetadata *metadata,
+                       QObject *parent = nullptr);
     ~QmlFilter();
 
-    bool isNew() const { return m_isNew; }
-    void setIsNew(bool isNew) { m_isNew = isNew; }
+    bool isNew() const
+    {
+        return m_isNew;
+    }
+    void setIsNew(bool isNew)
+    {
+        m_isNew = isNew;
+    }
 
     Q_INVOKABLE QString get(QString name, int position = -1);
     Q_INVOKABLE double getDouble(QString name, int position = -1);
@@ -81,46 +87,60 @@ public:
                          int position = -1, mlt_keyframe_type keyframeType = mlt_keyframe_type(-1));
     Q_INVOKABLE void set(QString name, bool value,
                          int position = -1, mlt_keyframe_type keyframeType = mlt_keyframe_type(-1));
-    Q_INVOKABLE void set(QString name, double x, double y, double width, double height, double opacity = 1.0,
+    Q_INVOKABLE void set(QString name, double x, double y, double width, double height,
+                         double opacity = 1.0,
                          int position = -1, mlt_keyframe_type keyframeType = mlt_keyframe_type(-1));
-    Q_INVOKABLE void set(QString name, const QRectF& rect,
+    Q_INVOKABLE void set(QString name, const QRectF &rect,
                          int position = -1, mlt_keyframe_type keyframeType = mlt_keyframe_type(-1));
-    Q_INVOKABLE void setGradient(QString name, const QStringList& gradient);
-    QString path() const { return m_path; }
+    Q_INVOKABLE void setGradient(QString name, const QStringList &gradient);
+    QString path() const
+    {
+        return m_path;
+    }
     Q_INVOKABLE void loadPresets();
-    QStringList presets() const { return m_presets; }
+    QStringList presets() const
+    {
+        return m_presets;
+    }
     /// returns the index of the new preset
-    Q_INVOKABLE int  savePreset(const QStringList& propertyNames, const QString& name = QString());
-    Q_INVOKABLE void deletePreset(const QString& name);
+    Q_INVOKABLE int  savePreset(const QStringList &propertyNames, const QString &name = QString());
+    Q_INVOKABLE void deletePreset(const QString &name);
     Q_INVOKABLE void analyze(bool isAudio = false);
-    Q_INVOKABLE static int framesFromTime(const QString& time);
+    Q_INVOKABLE static int framesFromTime(const QString &time);
     Q_INVOKABLE static QString timeFromFrames(int frames, TimeFormat format = TIME_TIMECODE_DF);
     Q_INVOKABLE void getHash();
-    Mlt::Producer& producer() { return m_producer; }
+    Mlt::Producer &producer()
+    {
+        return m_producer;
+    }
     int in();
     int out();
-    Mlt::Service& service() { return m_service; }
+    Mlt::Service &service()
+    {
+        return m_service;
+    }
     int animateIn();
     void setAnimateIn(int value);
     int animateOut();
     void setAnimateOut(int value);
     void clearAnimateInOut();
     int duration();
-    Q_INVOKABLE void resetProperty(const QString& name);
-    Q_INVOKABLE void clearSimpleAnimation(const QString& name);
-    Mlt::Animation getAnimation(const QString& name);
-    Q_INVOKABLE int keyframeCount(const QString& name);
-    mlt_keyframe_type getKeyframeType(Mlt::Animation& animation, int position, mlt_keyframe_type defaultType);
-    Q_INVOKABLE int getNextKeyframePosition(const QString& name, int position);
-    Q_INVOKABLE int getPrevKeyframePosition(const QString& name, int position);
-    Q_INVOKABLE bool isAtLeastVersion(const QString& version);
+    Q_INVOKABLE void resetProperty(const QString &name);
+    Q_INVOKABLE void clearSimpleAnimation(const QString &name);
+    Mlt::Animation getAnimation(const QString &name);
+    Q_INVOKABLE int keyframeCount(const QString &name);
+    mlt_keyframe_type getKeyframeType(Mlt::Animation &animation, int position,
+                                      mlt_keyframe_type defaultType);
+    Q_INVOKABLE int getNextKeyframePosition(const QString &name, int position);
+    Q_INVOKABLE int getPrevKeyframePosition(const QString &name, int position);
+    Q_INVOKABLE bool isAtLeastVersion(const QString &version);
     Q_INVOKABLE static void deselect();
     bool allowTrim() const;
     bool allowAnimateIn() const;
     bool allowAnimateOut() const;
 
 public slots:
-    void preset(const QString& name);
+    void preset(const QString &name);
 
 signals:
     void presetsChanged();
@@ -136,30 +156,30 @@ signals:
     void propertyChanged(QString name); // Use to let QML know when a specific property has changed
 
 private:
-    const QmlMetadata* m_metadata;
+    const QmlMetadata *m_metadata;
     Mlt::Service m_service;
     Mlt::Producer m_producer;
     QString m_path;
     bool m_isNew;
     QStringList m_presets;
-    
+
     QString objectNameOrService();
-    int keyframeIndex(Mlt::Animation& animation, int position);
+    int keyframeIndex(Mlt::Animation &animation, int position);
 };
 
 class AnalyzeDelegate : public QObject
 {
     Q_OBJECT
 public:
-    explicit AnalyzeDelegate(Mlt::Filter& filter);
+    explicit AnalyzeDelegate(Mlt::Filter &filter);
 
 public slots:
     void onAnalyzeFinished(AbstractJob *job, bool isSuccess);
 
 private:
-    QString resultsFromXml(const QString& fileName, const QString& serviceName);
-    void updateFilter(Mlt::Filter& filter, const QString& results);
-    void updateJob(EncodeJob* job, const QString& results);
+    QString resultsFromXml(const QString &fileName, const QString &serviceName);
+    void updateFilter(Mlt::Filter &filter, const QString &results);
+    void updateJob(EncodeJob *job, const QString &results);
 
     QUuid m_uuid;
     QString m_serviceName;

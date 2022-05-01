@@ -18,12 +18,12 @@
 #include "playlistlistview.h"
 #include <QDropEvent>
 
-PlaylistListView::PlaylistListView(QWidget* parent)
+PlaylistListView::PlaylistListView(QWidget *parent)
     : QListView(parent)
 {
 }
 
-void PlaylistListView::dropEvent(QDropEvent* event)
+void PlaylistListView::dropEvent(QDropEvent *event)
 {
     QModelIndex index = indexAt(event->pos());
     if (event->dropAction() == Qt::MoveAction && index.row() == -1) {
@@ -34,7 +34,7 @@ void PlaylistListView::dropEvent(QDropEvent* event)
     }
 }
 
-void PlaylistListView::keyPressEvent(QKeyEvent* event)
+void PlaylistListView::keyPressEvent(QKeyEvent *event)
 {
     // Ignore select all
     if (event->key() == Qt::Key_A && event->modifiers() == Qt::ControlModifier) {

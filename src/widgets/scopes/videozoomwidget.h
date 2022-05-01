@@ -46,11 +46,11 @@ public:
     void setSelectedPixel(QPoint pixel);
     QRect getPixelRect();
     int getZoom();
-    PixelValues getPixelValues(const QPoint& pixel);
+    PixelValues getPixelValues(const QPoint &pixel);
     void setOffset(QPoint offset);
 
 signals:
-    void pixelSelected(const QPoint&);
+    void pixelSelected(const QPoint &);
     void zoomChanged(int zoom);
 
 public slots:
@@ -59,14 +59,14 @@ public slots:
 private:
     virtual QSize sizeHint() const Q_DECL_OVERRIDE;
 
-    void paintEvent(QPaintEvent*) Q_DECL_OVERRIDE;
+    void paintEvent(QPaintEvent *) Q_DECL_OVERRIDE;
     void mouseMoveEvent(QMouseEvent *event)Q_DECL_OVERRIDE;
     void mousePressEvent(QMouseEvent *event)Q_DECL_OVERRIDE;
     void wheelEvent(QWheelEvent *event)Q_DECL_OVERRIDE;
 
-    QPoint pixelToPos(const QPoint& pixel);
-    QPoint posToPixel(const QPoint& pos);
-    PixelValues pixelToValues(const QPoint& pixel);
+    QPoint pixelToPos(const QPoint &pixel);
+    QPoint posToPixel(const QPoint &pos);
+    PixelValues pixelToValues(const QPoint &pixel);
 
     bool m_locked;
     bool m_selectionInProgress;

@@ -22,7 +22,7 @@
 #include "abstractproducerwidget.h"
 
 namespace Ui {
-    class GDIgrabWidget;
+class GDIgrabWidget;
 }
 
 class GDIgrabWidget : public QWidget, public AbstractProducerWidget
@@ -34,19 +34,19 @@ public:
     ~GDIgrabWidget();
 
     // AbstractProducerWidget overrides
-    Mlt::Producer* newProducer(Mlt::Profile&);
+    Mlt::Producer *newProducer(Mlt::Profile &);
     Mlt::Properties getPreset() const;
-    void loadPreset(Mlt::Properties&);
-    void setProducer(Mlt::Producer*);
+    void loadPreset(Mlt::Properties &);
+    void setProducer(Mlt::Producer *);
 
 private slots:
-    void on_preset_selected(void* p);
+    void on_preset_selected(void *p);
     void on_preset_saveClicked();
     void on_applyButton_clicked();
 
 private:
     Ui::GDIgrabWidget *ui;
-    QString URL(Mlt::Profile&) const;
+    QString URL(Mlt::Profile &) const;
 };
 
 #endif // GDIGRABWIDGET_H

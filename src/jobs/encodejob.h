@@ -25,7 +25,8 @@ class EncodeJob : public MeltJob
 {
     Q_OBJECT
 public:
-    EncodeJob(const QString& name, const QString& xml, int frameRateNum, int frameRateDen, const QThread::Priority priority);
+    EncodeJob(const QString &name, const QString &xml, int frameRateNum, int frameRateDen,
+              const QThread::Priority priority);
 
 private slots:
     void onVideoQualityTriggered();

@@ -36,9 +36,9 @@ NetworkProducerWidget::~NetworkProducerWidget()
     delete ui;
 }
 
-Mlt::Producer* NetworkProducerWidget::newProducer(Mlt::Profile& profile)
+Mlt::Producer *NetworkProducerWidget::newProducer(Mlt::Profile &profile)
 {
-    Mlt::Producer* p = new Mlt::Producer(profile, ui->urlLineEdit->text().toUtf8().constData());
+    Mlt::Producer *p = new Mlt::Producer(profile, ui->urlLineEdit->text().toUtf8().constData());
     return p;
 }
 
@@ -49,16 +49,16 @@ Mlt::Properties NetworkProducerWidget::getPreset() const
     return p;
 }
 
-void NetworkProducerWidget::loadPreset(Mlt::Properties& p)
+void NetworkProducerWidget::loadPreset(Mlt::Properties &p)
 {
     const char *resource = p.get("resource");
     if (qstrcmp(resource, "<tractor>") && qstrcmp(resource, "<playlist>"))
         ui->urlLineEdit->setText(resource);
 }
 
-void NetworkProducerWidget::on_preset_selected(void* p)
+void NetworkProducerWidget::on_preset_selected(void *p)
 {
-    Mlt::Properties* properties = (Mlt::Properties*) p;
+    Mlt::Properties *properties = (Mlt::Properties *) p;
     loadPreset(*properties);
     delete properties;
 }
@@ -68,7 +68,7 @@ void NetworkProducerWidget::on_preset_saveClicked()
     ui->preset->savePreset(getPreset());
 }
 
-void NetworkProducerWidget::setProducer(Mlt::Producer* producer)
+void NetworkProducerWidget::setProducer(Mlt::Producer *producer)
 {
     ui->applyButton->show();
     if (producer)

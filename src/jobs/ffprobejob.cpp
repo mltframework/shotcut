@@ -27,7 +27,7 @@
 #include <QDir>
 #include <Logger.h>
 
-FfprobeJob::FfprobeJob(const QString& name, const QStringList& args)
+FfprobeJob::FfprobeJob(const QString &name, const QStringList &args)
     : AbstractJob(name)
 {
     m_args.append(args);

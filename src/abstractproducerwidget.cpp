@@ -26,7 +26,7 @@ AbstractProducerWidget::~AbstractProducerWidget()
 {
 }
 
-void AbstractProducerWidget::setProducer(Mlt::Producer* producer)
+void AbstractProducerWidget::setProducer(Mlt::Producer *producer)
 {
     if (producer) {
         loadPreset(*producer);

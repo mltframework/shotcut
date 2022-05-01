@@ -25,10 +25,10 @@
 #include <QtWidgets/QScrollArea>
 #include <QAction>
 
-ScopeDock::ScopeDock(ScopeController* scopeController, ScopeWidget* scopeWidget) :
+ScopeDock::ScopeDock(ScopeController *scopeController, ScopeWidget *scopeWidget) :
     QDockWidget()
-  , m_scopeController(scopeController)
-  , m_scopeWidget(scopeWidget)
+    , m_scopeController(scopeController)
+    , m_scopeWidget(scopeWidget)
 {
     LOG_DEBUG() << "begin";
     setObjectName(m_scopeWidget->objectName() + "Dock");
@@ -43,7 +43,7 @@ ScopeDock::ScopeDock(ScopeController* scopeController, ScopeWidget* scopeWidget)
     LOG_DEBUG() << "end";
 }
 
-void ScopeDock::resizeEvent(QResizeEvent* e)
+void ScopeDock::resizeEvent(QResizeEvent *e)
 {
     if (width() > height()) {
         m_scopeWidget->setOrientation(Qt::Horizontal);
@@ -55,10 +55,12 @@ void ScopeDock::resizeEvent(QResizeEvent* e)
 
 void ScopeDock::onActionToggled(bool checked)
 {
-    if(checked) {
-        connect(m_scopeController, SIGNAL(newFrame(const SharedFrame&)), m_scopeWidget, SLOT(onNewFrame(const SharedFrame&)));
+    if (checked) {
+        connect(m_scopeController, SIGNAL(newFrame(const SharedFrame &)), m_scopeWidget,
+                SLOT(onNewFrame(const SharedFrame &)));
         MLT.refreshConsumer();
     } else {
-        disconnect(m_scopeController, SIGNAL(newFrame(const SharedFrame&)), m_scopeWidget, SLOT(onNewFrame(const SharedFrame&)));
+        disconnect(m_scopeController, SIGNAL(newFrame(const SharedFrame &)), m_scopeWidget,
+                   SLOT(onNewFrame(const SharedFrame &)));
     }
 }

@@ -35,7 +35,7 @@ class MarkersDock : public QDockWidget
 public:
     explicit MarkersDock(QWidget *parent = 0);
     ~MarkersDock();
-    void setModel(MarkersModel* model);
+    void setModel(MarkersModel *model);
 
 signals:
     void seekRequested(int pos);
@@ -46,8 +46,8 @@ public slots:
     void onMarkerSelectionRequest(int markerIndex);
 
 private slots:
-    void onSelectionChanged(QModelIndex& index);
-    void onRowClicked(const QModelIndex& index);
+    void onSelectionChanged(QModelIndex &index);
+    void onRowClicked(const QModelIndex &index);
     void onAddRequested();
     void onRemoveRequested();
     void onClearSelectionRequested();
@@ -59,7 +59,8 @@ private slots:
     void onEndColumnToggled(bool checked);
     void onDurationColumnToggled(bool checked);
     void onRowsInserted(const QModelIndex &parent, int first, int last);
-    void onDataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight, const QVector<int> &roles = QVector<int>());
+    void onDataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight,
+                       const QVector<int> &roles = QVector<int>());
     void onValuesChanged();
     void onModelReset();
     void onSortIndicatorChanged(int logicalIndex, Qt::SortOrder order);
@@ -67,16 +68,16 @@ private slots:
 private:
     void enableButtons(bool enable);
 
-    MarkersModel* m_model;
-    QSortFilterProxyModel* m_proxyModel;
-    MarkerTreeView* m_treeView;
-    QToolButton* m_addButton;
-    QToolButton* m_removeButton;
-    QToolButton* m_clearButton;
-    QToolButton* m_moreButton;
-    QLineEdit* m_searchField;
-    QToolButton* m_clearSearchButton;
-    EditMarkerWidget* m_editMarkerWidget;
+    MarkersModel *m_model;
+    QSortFilterProxyModel *m_proxyModel;
+    MarkerTreeView *m_treeView;
+    QToolButton *m_addButton;
+    QToolButton *m_removeButton;
+    QToolButton *m_clearButton;
+    QToolButton *m_moreButton;
+    QLineEdit *m_searchField;
+    QToolButton *m_clearSearchButton;
+    EditMarkerWidget *m_editMarkerWidget;
     bool m_editInProgress;
 };
 

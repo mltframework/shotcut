@@ -27,50 +27,65 @@
 class ShotcutSettings : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(bool timelineDragScrub READ timelineDragScrub WRITE setTimelineDragScrub NOTIFY timelineDragScrubChanged)
-    Q_PROPERTY(bool timelineShowWaveforms READ timelineShowWaveforms WRITE setTimelineShowWaveforms NOTIFY timelineShowWaveformsChanged)
-    Q_PROPERTY(bool timelineShowThumbnails READ timelineShowThumbnails WRITE setTimelineShowThumbnails NOTIFY timelineShowThumbnailsChanged)
-    Q_PROPERTY(bool timelineRipple READ timelineRipple WRITE setTimelineRipple NOTIFY timelineRippleChanged)
-    Q_PROPERTY(bool timelineRippleAllTracks READ timelineRippleAllTracks WRITE setTimelineRippleAllTracks NOTIFY timelineRippleAllTracksChanged)
-    Q_PROPERTY(bool timelineRippleMarkers READ timelineRippleMarkers WRITE setTimelineRippleMarkers NOTIFY timelineRippleMarkersChanged)
+    Q_PROPERTY(bool timelineDragScrub READ timelineDragScrub WRITE setTimelineDragScrub NOTIFY
+               timelineDragScrubChanged)
+    Q_PROPERTY(bool timelineShowWaveforms READ timelineShowWaveforms WRITE setTimelineShowWaveforms
+               NOTIFY timelineShowWaveformsChanged)
+    Q_PROPERTY(bool timelineShowThumbnails READ timelineShowThumbnails WRITE setTimelineShowThumbnails
+               NOTIFY timelineShowThumbnailsChanged)
+    Q_PROPERTY(bool timelineRipple READ timelineRipple WRITE setTimelineRipple NOTIFY
+               timelineRippleChanged)
+    Q_PROPERTY(bool timelineRippleAllTracks READ timelineRippleAllTracks WRITE
+               setTimelineRippleAllTracks NOTIFY timelineRippleAllTracksChanged)
+    Q_PROPERTY(bool timelineRippleMarkers READ timelineRippleMarkers WRITE setTimelineRippleMarkers
+               NOTIFY timelineRippleMarkersChanged)
     Q_PROPERTY(bool timelineSnap READ timelineSnap WRITE setTimelineSnap NOTIFY timelineSnapChanged)
-    Q_PROPERTY(bool timelineCenterPlayhead READ timelineCenterPlayhead WRITE setTimelineCenterPlayhead NOTIFY timelineCenterPlayheadChanged)
-    Q_PROPERTY(bool timelineScrollZoom READ timelineScrollZoom WRITE setTimelineScrollZoom NOTIFY timelineScrollZoomChanged)
-    Q_PROPERTY(bool timelineFramebufferWaveform READ timelineFramebufferWaveform WRITE setTimelineFramebufferWaveform NOTIFY timelineFramebufferWaveformChanged)
+    Q_PROPERTY(bool timelineCenterPlayhead READ timelineCenterPlayhead WRITE setTimelineCenterPlayhead
+               NOTIFY timelineCenterPlayheadChanged)
+    Q_PROPERTY(bool timelineScrollZoom READ timelineScrollZoom WRITE setTimelineScrollZoom NOTIFY
+               timelineScrollZoomChanged)
+    Q_PROPERTY(bool timelineFramebufferWaveform READ timelineFramebufferWaveform WRITE
+               setTimelineFramebufferWaveform NOTIFY timelineFramebufferWaveformChanged)
     Q_PROPERTY(QString openPath READ openPath WRITE setOpenPath NOTIFY openPathChanged)
     Q_PROPERTY(QString savePath READ savePath WRITE setSavePath NOTIFY savePathChanged)
-    Q_PROPERTY(QString playlistThumbnails READ playlistThumbnails WRITE setPlaylistThumbnails NOTIFY playlistThumbnailsChanged)
+    Q_PROPERTY(QString playlistThumbnails READ playlistThumbnails WRITE setPlaylistThumbnails NOTIFY
+               playlistThumbnailsChanged)
     Q_PROPERTY(QString viewMode READ viewMode WRITE setViewMode NOTIFY viewModeChanged)
     Q_PROPERTY(int playerAudioChannels READ playerAudioChannels NOTIFY playerAudioChannelsChanged)
     Q_PROPERTY(bool playerGPU READ playerGPU NOTIFY playerGpuChanged)
-    Q_PROPERTY(double audioInDuration READ audioInDuration WRITE setAudioInDuration NOTIFY audioInDurationChanged)
-    Q_PROPERTY(double audioOutDuration READ audioOutDuration WRITE setAudioOutDuration NOTIFY audioOutDurationChanged)
-    Q_PROPERTY(double videoInDuration READ videoInDuration WRITE setVideoInDuration NOTIFY videoInDurationChanged)
-    Q_PROPERTY(double videoOutDuration READ videoOutDuration WRITE setVideoOutDuration NOTIFY videoOutDurationChanged)
+    Q_PROPERTY(double audioInDuration READ audioInDuration WRITE setAudioInDuration NOTIFY
+               audioInDurationChanged)
+    Q_PROPERTY(double audioOutDuration READ audioOutDuration WRITE setAudioOutDuration NOTIFY
+               audioOutDurationChanged)
+    Q_PROPERTY(double videoInDuration READ videoInDuration WRITE setVideoInDuration NOTIFY
+               videoInDurationChanged)
+    Q_PROPERTY(double videoOutDuration READ videoOutDuration WRITE setVideoOutDuration NOTIFY
+               videoOutDurationChanged)
     Q_PROPERTY(bool smallIcons READ smallIcons WRITE setSmallIcons NOTIFY smallIconsChanged)
-    Q_PROPERTY(bool askOutputFilter READ askOutputFilter WRITE setAskOutputFilter NOTIFY askOutputFilterChanged)
+    Q_PROPERTY(bool askOutputFilter READ askOutputFilter WRITE setAskOutputFilter NOTIFY
+               askOutputFilterChanged)
 
 public:
-    static ShotcutSettings& singleton();
+    static ShotcutSettings &singleton();
     explicit ShotcutSettings() : QObject() {}
-    explicit ShotcutSettings(const QString& appDataLocation);
+    explicit ShotcutSettings(const QString &appDataLocation);
     void log();
 
     // general
     QString language() const;
-    void setLanguage(const QString&);
+    void setLanguage(const QString &);
     double imageDuration() const;
     void setImageDuration(double);
     QString openPath() const;
-    void setOpenPath(const QString&);
+    void setOpenPath(const QString &);
     QString savePath() const;
-    void setSavePath(const QString&);
+    void setSavePath(const QString &);
     QStringList recent() const;
-    void setRecent(const QStringList&);
+    void setRecent(const QStringList &);
     QString theme() const;
-    void setTheme(const QString&);
+    void setTheme(const QString &);
     QThread::Priority jobPriority() const;
-    void setJobPriority(const QString&);
+    void setJobPriority(const QString &);
     bool showTitleBars() const;
     void setShowTitleBars(bool);
     bool showToolBar() const;
@@ -80,29 +95,29 @@ public:
     bool smallIcons() const;
     void setSmallIcons(bool);
     QByteArray windowGeometry() const;
-    void setWindowGeometry(const QByteArray&);
+    void setWindowGeometry(const QByteArray &);
     QByteArray windowGeometryDefault() const;
-    void setWindowGeometryDefault(const QByteArray&);
+    void setWindowGeometryDefault(const QByteArray &);
     QByteArray windowState() const;
-    void setWindowState(const QByteArray&);
+    void setWindowState(const QByteArray &);
     QByteArray windowStateDefault() const;
-    void setWindowStateDefault(const QByteArray&);
+    void setWindowStateDefault(const QByteArray &);
     QString viewMode() const;
-    void setViewMode(const QString& viewMode);
+    void setViewMode(const QString &viewMode);
     QString exportFrameSuffix() const;
-    void setExportFrameSuffix(const QString& suffix);
+    void setExportFrameSuffix(const QString &suffix);
     bool convertAdvanced() const;
     void setConvertAdvanced(bool);
 
     // encode
     QString encodePath() const;
-    void setEncodePath(const QString&);
+    void setEncodePath(const QString &);
     bool encodeFreeSpaceCheck() const;
     void setEncodeFreeSpaceCheck(bool);
     bool encodeUseHardware() const;
     void setEncodeUseHardware(bool);
     QStringList encodeHardware() const;
-    void setEncodeHardware(const QStringList&);
+    void setEncodeHardware(const QStringList &);
     bool encodeAdvanced() const;
     void setEncodeAdvanced(bool);
     bool showConvertClipDialog() const;
@@ -114,16 +129,16 @@ public:
     int playerAudioChannels() const;
     void setPlayerAudioChannels(int);
     QString playerDeinterlacer() const;
-    void setPlayerDeinterlacer(const QString&);
+    void setPlayerDeinterlacer(const QString &);
     QString playerExternal() const;
-    void setPlayerExternal(const QString&);
+    void setPlayerExternal(const QString &);
     QString playerGamma() const;
-    void setPlayerGamma(const QString&);
+    void setPlayerGamma(const QString &);
     bool playerGPU() const;
     void setPlayerGPU(bool);
     bool playerWarnGPU() const;
     QString playerInterpolation() const;
-    void setPlayerInterpolation(const QString&);
+    void setPlayerInterpolation(const QString &);
     bool playerJACK() const;
     void setPlayerJACK(bool);
     int playerKeyerMode() const;
@@ -131,7 +146,7 @@ public:
     bool playerMuted() const;
     void setPlayerMuted(bool);
     QString playerProfile() const;
-    void setPlayerProfile(const QString&);
+    void setPlayerProfile(const QString &);
     bool playerProgressive() const;
     void setPlayerProgressive(bool);
     bool playerRealtime() const;
@@ -149,7 +164,7 @@ public:
 
     // playlist
     QString playlistThumbnails() const;
-    void setPlaylistThumbnails(const QString&);
+    void setPlaylistThumbnails(const QString &);
     bool playlistAutoplay() const;
     void setPlaylistAutoplay(bool);
 
@@ -180,8 +195,8 @@ public:
     void setAudioReferenceTrack(int);
 
     // filter
-    QString filterFavorite(const QString& filterName);
-    void setFilterFavorite(const QString& filterName, const QString& value);
+    QString filterFavorite(const QString &filterName);
+    void setFilterFavorite(const QString &filterName, const QString &value);
     double audioInDuration() const;
     void setAudioInDuration(double);
     double audioOutDuration() const;
@@ -194,14 +209,14 @@ public:
     void setAskOutputFilter(bool);
 
     // scope
-    bool loudnessScopeShowMeter(const QString& meter) const;
-    void setLoudnessScopeShowMeter(const QString& meter, bool b);
+    bool loudnessScopeShowMeter(const QString &meter) const;
+    void setLoudnessScopeShowMeter(const QString &meter, bool b);
 
     // Markers
-    void setMarkerColor(const QColor& color);
+    void setMarkerColor(const QColor &color);
     QColor markerColor() const;
-    void setMarkersShowColumn(const QString& column, bool b);
-    bool markersShowColumn(const QString& column) const;
+    void setMarkersShowColumn(const QString &column, bool b);
+    bool markersShowColumn(const QString &column) const;
     void setMarkerSort(int column, Qt::SortOrder order);
     int getMarkerSortColumn();
     Qt::SortOrder getMarkerSortOrder();
@@ -218,15 +233,15 @@ public:
 
     void sync();
     QString appDataLocation() const;
-    static void setAppDataForSession(const QString& location);
-    void setAppDataLocally(const QString& location);
+    static void setAppDataForSession(const QString &location);
+    void setAppDataLocally(const QString &location);
 
     // layout
     QStringList layouts() const;
-    bool setLayout(const QString& name, const QByteArray& geometry, const QByteArray& state);
-    QByteArray layoutGeometry(const QString& name);
-    QByteArray layoutState(const QString& name);
-    bool removeLayout(const QString& name);
+    bool setLayout(const QString &name, const QByteArray &geometry, const QByteArray &state);
+    QByteArray layoutGeometry(const QString &name);
+    QByteArray layoutState(const QString &name);
+    bool removeLayout(const QString &name);
     int layoutMode() const;
     void setLayoutMode(int mode = 0);
 
@@ -234,17 +249,17 @@ public:
     bool clearRecent() const;
     void setClearRecent(bool);
     QString projectsFolder() const;
-    void setProjectsFolder(const QString& path);
+    void setProjectsFolder(const QString &path);
     QString audioInput() const;
-    void setAudioInput(const QString& name);
+    void setAudioInput(const QString &name);
     QString videoInput() const;
-    void setVideoInput(const QString& name);
+    void setVideoInput(const QString &name);
 
     // proxy
     bool proxyEnabled() const;
     void setProxyEnabled(bool);
     QString proxyFolder() const;
-    void setProxyFolder(const QString& path);
+    void setProxyFolder(const QString &path);
     bool proxyUseProjectFolder() const;
     void setProxyUseProjectFolder(bool);
     bool proxyUseHardware() const;

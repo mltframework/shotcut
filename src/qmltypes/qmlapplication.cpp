@@ -39,7 +39,7 @@
 #endif
 #include <limits>
 
-QmlApplication& QmlApplication::singleton()
+QmlApplication &QmlApplication::singleton()
 {
     static QmlApplication instance;
     return instance;
@@ -109,7 +109,8 @@ bool QmlApplication::hasFiltersOnClipboard()
 
 void QmlApplication::copyFilters()
 {
-    QScopedPointer<Mlt::Producer> producer(new Mlt::Producer(MAIN.filterController()->attachedModel()->producer()));
+    QScopedPointer<Mlt::Producer> producer(new Mlt::Producer(
+                                               MAIN.filterController()->attachedModel()->producer()));
     MLT.copyFilters(producer.data());
     QGuiApplication::clipboard()->setText(MLT.filtersClipboardXML());
     emit QmlApplication::singleton().filtersCopied();
@@ -117,13 +118,15 @@ void QmlApplication::copyFilters()
 
 void QmlApplication::pasteFilters()
 {
-    QScopedPointer<Mlt::Producer> producer(new Mlt::Producer(MAIN.filterController()->attachedModel()->producer()));
+    QScopedPointer<Mlt::Producer> producer(new Mlt::Producer(
+                                               MAIN.filterController()->attachedModel()->producer()));
     if (confirmOutputFilter()) {
         QString s = QGuiApplication::clipboard()->text();
         if (MLT.isMltXml(s)) {
             Mlt::Profile profile(kDefaultMltProfile);
             Mlt::Producer filtersProducer(profile, "xml-string", s.toUtf8().constData());
-            if (filtersProducer.is_valid() && filtersProducer.filter_count() > 0 && filtersProducer.get_int(kShotcutFiltersClipboard)) {
+            if (filtersProducer.is_valid() && filtersProducer.filter_count() > 0
+                    && filtersProducer.get_int(kShotcutFiltersClipboard)) {
                 MLT.pasteFilters(producer.get(), &filtersProducer);
             } else {
                 MLT.pasteFilters(producer.data());
@@ -131,7 +134,8 @@ void QmlApplication::pasteFilters()
         } else {
             MLT.pasteFilters(producer.data());
         }
-        emit QmlApplication::singleton().filtersPasted(MAIN.filterController()->attachedModel()->producer());
+        emit QmlApplication::singleton().filtersPasted(
+            MAIN.filterController()->attachedModel()->producer());
     }
 }
 
@@ -148,7 +152,7 @@ int QmlApplication::audioChannels()
     return MLT.audioChannels();
 }
 
-QString QmlApplication::getNextProjectFile(const QString& filename)
+QString QmlApplication::getNextProjectFile(const QString &filename)
 {
     QDir dir(MLT.projectFolder());
     if (!MLT.projectFolder().isEmpty() && dir.exists()) {
@@ -179,33 +183,34 @@ qreal QmlApplication::devicePixelRatio()
     return MAIN.devicePixelRatioF();
 }
 
-void QmlApplication::showStatusMessage(const QString& message, int timeoutSeconds)
+void QmlApplication::showStatusMessage(const QString &message, int timeoutSeconds)
 {
     MAIN.showStatusMessage(message, timeoutSeconds);
 }
 
 int QmlApplication::maxTextureSize()
 {
-    Mlt::GLWidget* glw = qobject_cast<Mlt::GLWidget*>(MLT.videoWidget());
-    return glw? glw->maxTextureSize() : 0;
+    Mlt::GLWidget *glw = qobject_cast<Mlt::GLWidget *>(MLT.videoWidget());
+    return glw ? glw->maxTextureSize() : 0;
 }
 
 bool QmlApplication::confirmOutputFilter()
 {
     bool result = true;
-    QScopedPointer<Mlt::Producer> producer(new Mlt::Producer(MAIN.filterController()->attachedModel()->producer()));
+    QScopedPointer<Mlt::Producer> producer(new Mlt::Producer(
+                                               MAIN.filterController()->attachedModel()->producer()));
     if (producer->is_valid()
             && mlt_service_tractor_type == producer->type()
             && !producer->get(kShotcutTransitionProperty)
             && MAIN.filterController()->attachedModel()->rowCount() == 0
             && Settings.askOutputFilter()) {
         QMessageBox dialog(QMessageBox::Warning,
-           qApp->applicationName(),
-           tr("<p>Do you really want to add filters to <b>Output</b>?</p>"
-              "<p><b>Timeline > Output</b> is currently selected. "
-              "Adding filters to <b>Output</b> affects ALL clips in the "
-              "timeline including new ones that will be added.</p>"),
-           QMessageBox::No | QMessageBox::Yes, &MAIN);
+                           qApp->applicationName(),
+                           tr("<p>Do you really want to add filters to <b>Output</b>?</p>"
+                              "<p><b>Timeline > Output</b> is currently selected. "
+                              "Adding filters to <b>Output</b> affects ALL clips in the "
+                              "timeline including new ones that will be added.</p>"),
+                           QMessageBox::No | QMessageBox::Yes, &MAIN);
         dialog.setWindowModality(dialogModality());
         dialog.setDefaultButton(QMessageBox::No);
         dialog.setEscapeButton(QMessageBox::Yes);
@@ -225,9 +230,9 @@ QDir QmlApplication::dataDir()
     dir.cdUp();
     dir.cd("Resources");
 #else
-    #if defined(Q_OS_UNIX)
+#if defined(Q_OS_UNIX)
     dir.cdUp();
-    #endif
+#endif
     dir.cd("share");
 #endif
     return dir;

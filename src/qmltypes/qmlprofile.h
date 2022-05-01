@@ -30,7 +30,7 @@ class QmlProfile : public QObject
     Q_PROPERTY(double sar READ sar CONSTANT)
 
 public:
-    static QmlProfile& singleton();
+    static QmlProfile &singleton();
 
     int width() const;
     int height() const;
@@ -43,8 +43,8 @@ signals:
 
 private:
     explicit QmlProfile();
-    QmlProfile(QmlProfile const&);
-    void operator=(QmlProfile const&);
+    QmlProfile(QmlProfile const &);
+    void operator=(QmlProfile const &);
 };
 
 #endif // PROFILE_H

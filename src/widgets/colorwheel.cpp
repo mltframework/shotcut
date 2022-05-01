@@ -23,7 +23,7 @@
 
 ColorWheel::ColorWheel(QWidget *parent)
     : QWidget(parent)
-    , m_initialSize(300,300)
+    , m_initialSize(300, 300)
     , m_isMouseDown(false)
     , m_margin(5)
     , m_sliderWidth(30)
@@ -42,7 +42,7 @@ QColor ColorWheel::color()
     return m_color;
 }
 
-void ColorWheel::setColor(const QColor& color)
+void ColorWheel::setColor(const QColor &color)
 {
     m_color = color;
 }
@@ -78,7 +78,7 @@ QColor ColorWheel::colorForPoint(const QPoint &point)
 
 QSize ColorWheel::sizeHint () const
 {
-    return QSize(height(),height());
+    return QSize(height(), height());
 }
 QSize ColorWheel::minimumSizeHint () const
 {
@@ -109,7 +109,7 @@ void ColorWheel::mouseMoveEvent(QMouseEvent *event)
     if (m_wheelRegion.contains(m_lastPoint) && m_isInWheel) {
         QColor color = colorForPoint(m_lastPoint);
         changeColor(color);
-    } else if(m_sliderRegion.contains(m_lastPoint) && m_isInSquare) {
+    } else if (m_sliderRegion.contains(m_lastPoint) && m_isInSquare) {
         QColor color = colorForPoint(m_lastPoint);
         changeColor(color);
     }
@@ -155,14 +155,14 @@ void ColorWheel::drawWheel()
 
     QConicalGradient conicalGradient;
     conicalGradient.setColorAt(        0.0, Qt::red);
-    conicalGradient.setColorAt( 60.0/360.0, Qt::yellow);
-    conicalGradient.setColorAt(135.0/360.0, Qt::green);
-    conicalGradient.setColorAt(180.0/360.0, Qt::cyan);
-    conicalGradient.setColorAt(240.0/360.0, Qt::blue);
-    conicalGradient.setColorAt(315.0/360.0, Qt::magenta);
+    conicalGradient.setColorAt( 60.0 / 360.0, Qt::yellow);
+    conicalGradient.setColorAt(135.0 / 360.0, Qt::green);
+    conicalGradient.setColorAt(180.0 / 360.0, Qt::cyan);
+    conicalGradient.setColorAt(240.0 / 360.0, Qt::blue);
+    conicalGradient.setColorAt(315.0 / 360.0, Qt::magenta);
     conicalGradient.setColorAt(        1.0, Qt::red);
 
-    QRadialGradient radialGradient(0.0, 0.0, r/2);
+    QRadialGradient radialGradient(0.0, 0.0, r / 2);
     radialGradient.setColorAt(0.0, Qt::white);
     radialGradient.setColorAt(1.0, Qt::transparent);
 
@@ -172,14 +172,14 @@ void ColorWheel::drawWheel()
     QBrush hueBrush(conicalGradient);
     painter.setPen(Qt::NoPen);
     painter.setBrush(hueBrush);
-    painter.drawEllipse(QPoint(0, 0), r/2-m_margin, r/2-m_margin);
+    painter.drawEllipse(QPoint(0, 0), r / 2 - m_margin, r / 2 - m_margin);
 
     QBrush saturationBrush(radialGradient);
     painter.setBrush(saturationBrush);
-    painter.drawEllipse(QPoint(0, 0), r/2-m_margin, r/2-m_margin);
+    painter.drawEllipse(QPoint(0, 0), r / 2 - m_margin, r / 2 - m_margin);
 
-    m_wheelRegion = QRegion(r/2, r/2, r-2*m_margin, r-2*m_margin, QRegion::Ellipse);
-    m_wheelRegion.translate(-(r-2*m_margin)/2, -(r-2*m_margin)/2);
+    m_wheelRegion = QRegion(r / 2, r / 2, r - 2 * m_margin, r - 2 * m_margin, QRegion::Ellipse);
+    m_wheelRegion.translate(-(r - 2 * m_margin) / 2, -(r - 2 * m_margin) / 2);
 }
 
 void ColorWheel::drawSlider()
@@ -201,7 +201,7 @@ void ColorWheel::drawSlider()
     m_sliderRegion = QRegion(ws, m_margin, w, h);
 }
 
-void ColorWheel::drawWheelDot(QPainter& painter)
+void ColorWheel::drawWheelDot(QPainter &painter)
 {
     int r = wheelSize() / 2;
     QPen pen(Qt::white);
