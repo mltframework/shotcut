@@ -34,22 +34,34 @@ class AbstractJob : public QProcess
 {
     Q_OBJECT
 public:
-    explicit AbstractJob(const QString& name, QThread::Priority priority = Settings.jobPriority());
+    explicit AbstractJob(const QString &name, QThread::Priority priority = Settings.jobPriority());
     virtual ~AbstractJob() {}
 
-    void setStandardItem(QStandardItem* item);
-    QStandardItem* standardItem();
+    void setStandardItem(QStandardItem *item);
+    QStandardItem *standardItem();
     bool ran() const;
     bool stopped() const;
-    void appendToLog(const QString&);
+    void appendToLog(const QString &);
     QString log() const;
-    QString label() const { return m_label; }
-    void setLabel(const QString& label);
-    QList<QAction*> standardActions() const { return m_standardActions; }
-    QList<QAction*> successActions() const { return m_successActions; }
+    QString label() const
+    {
+        return m_label;
+    }
+    void setLabel(const QString &label);
+    QList<QAction *> standardActions() const
+    {
+        return m_standardActions;
+    }
+    QList<QAction *> successActions() const
+    {
+        return m_successActions;
+    }
     QTime estimateRemaining(int percent);
-    QElapsedTimer time() const { return m_totalTime; }
-    void setPostJobAction(PostJobAction* action);
+    QElapsedTimer time() const
+    {
+        return m_totalTime;
+    }
+    void setPostJobAction(PostJobAction *action);
 
 public slots:
     void start(const QString &program, const QStringList &arguments);
@@ -57,13 +69,13 @@ public slots:
     virtual void stop();
 
 signals:
-    void progressUpdated(QStandardItem* item, int percent);
-    void finished(AbstractJob* job, bool isSuccess, QString failureTime = QString());
+    void progressUpdated(QStandardItem *item, int percent);
+    void finished(AbstractJob *job, bool isSuccess, QString failureTime = QString());
 
 protected:
-    QList<QAction*> m_standardActions;
-    QList<QAction*> m_successActions;
-    QStandardItem*  m_item;
+    QList<QAction *> m_standardActions;
+    QList<QAction *> m_successActions;
+    QStandardItem  *m_item;
 
 protected slots:
     virtual void onFinished(int exitCode, QProcess::ExitStatus exitStatus = QProcess::NormalExit);
@@ -71,7 +83,7 @@ protected slots:
     virtual void onStarted();
 
 private slots:
-    void onProgressUpdated(QStandardItem*, int percent);
+    void onProgressUpdated(QStandardItem *, int percent);
 
 private:
     bool m_ran;

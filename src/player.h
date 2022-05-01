@@ -54,13 +54,19 @@ public:
     } TabIndex;
 
     explicit Player(QWidget *parent = 0);
-    void connectTransport(const TransportControllable*);
+    void connectTransport(const TransportControllable *);
     void setIn(int);
     void setOut(int);
-    void setMarkers(const QList<int>&);
+    void setMarkers(const QList<int> &);
     QSize videoSize() const;
-    int position() const { return m_position; }
-    NewProjectFolder* projectWidget() const { return m_projectWidget; }
+    int position() const
+    {
+        return m_position;
+    }
+    NewProjectFolder *projectWidget() const
+    {
+        return m_projectWidget;
+    }
     void moveVideoToScreen(int screen = -1);
     void setPauseAfterOpen(bool pause);
     TabIndex tabIndex() const;
@@ -97,7 +103,7 @@ public slots:
     void postProducerOpened();
     void onMeltedUnitOpened();
     void onDurationChanged();
-    void onFrameDisplayed(const SharedFrame& frame);
+    void onFrameDisplayed(const SharedFrame &frame);
     void onVolumeChanged(int);
     void onCaptureStateChanged(bool);
     void rewind(bool forceChangeDirection = true);
@@ -107,19 +113,20 @@ public slots:
     void switchToTab(TabIndex index);
     void enableTab(TabIndex index, bool enabled = true);
     void onTabBarClicked(int index);
-    void setStatusLabel(const QString& text, int timeoutSeconds, QAction* action, QPalette::ColorRole role = QPalette::ToolTipBase);
+    void setStatusLabel(const QString &text, int timeoutSeconds, QAction *action,
+                        QPalette::ColorRole role = QPalette::ToolTipBase);
     void showIdleStatus();
     void focusPositionSpinner() const;
     void onMuteButtonToggled(bool checked);
 
 protected:
-    void resizeEvent(QResizeEvent* event) override;
-    bool event(QEvent* event) override;
-    void keyPressEvent(QKeyEvent* event) override;
+    void resizeEvent(QResizeEvent *event) override;
+    bool event(QEvent *event) override;
+    void keyPressEvent(QKeyEvent *event) override;
 
 private:
-    void setupActions(QWidget* widget);
-    void retranslateUi(QWidget* widget);
+    void setupActions(QWidget *widget);
+    void retranslateUi(QWidget *widget);
     void adjustScrollBars(float horizontal, float vertical);
     double setVolume(int volume);
 
@@ -131,45 +138,45 @@ private:
     QAction *actionFastForward;
     QAction *actionVolume;
 
-    ScrubBar* m_scrubber;
-    TimeSpinBox* m_positionSpinner;
-    QLabel* m_durationLabel;
-    QLabel* m_inPointLabel;
-    QLabel* m_selectedLabel;
+    ScrubBar *m_scrubber;
+    TimeSpinBox *m_positionSpinner;
+    QLabel *m_durationLabel;
+    QLabel *m_inPointLabel;
+    QLabel *m_selectedLabel;
     int m_position;
     int m_playPosition;
     QIcon m_playIcon;
     QIcon m_pauseIcon;
-    QFrame* m_volumePopup;
-    QSlider* m_volumeSlider;
-    QWidget* m_volumeWidget;
-    QPushButton* m_muteButton;
+    QFrame *m_volumePopup;
+    QSlider *m_volumeSlider;
+    QWidget *m_volumeWidget;
+    QPushButton *m_muteButton;
     int m_previousIn;
     int m_previousOut;
     double m_savedVolume;
     int m_duration;
     bool m_isSeekable;
     int m_isMeltedPlaying;
-    QScrollBar* m_horizontalScroll;
-    QScrollBar* m_verticalScroll;
-    QToolButton* m_zoomButton;
-    QToolButton* m_gridButton;
-    QActionGroup* m_gridActionGroup;
-    QAction* m_gridDefaultAction;
+    QScrollBar *m_horizontalScroll;
+    QScrollBar *m_verticalScroll;
+    QToolButton *m_zoomButton;
+    QToolButton *m_gridButton;
+    QActionGroup *m_gridActionGroup;
+    QAction *m_gridDefaultAction;
     float m_zoomToggleFactor;
-    QTabBar* m_tabs;
+    QTabBar *m_tabs;
     bool m_pauseAfterOpen;
     int m_monitorScreen;
-    QWidget* m_videoWidget;
-    QHBoxLayout* m_videoLayout;
-    QWidget* m_videoScrollWidget;
-    const TransportControllable* m_currentTransport;
-    QPushButton * m_statusLabel;
-    QPropertyAnimation* m_statusFadeIn;
-    QPropertyAnimation* m_statusFadeOut;
+    QWidget *m_videoWidget;
+    QHBoxLayout *m_videoLayout;
+    QWidget *m_videoScrollWidget;
+    const TransportControllable *m_currentTransport;
+    QPushButton *m_statusLabel;
+    QPropertyAnimation *m_statusFadeIn;
+    QPropertyAnimation *m_statusFadeOut;
     QTimer m_statusTimer;
-    QMenu* m_zoomMenu;
-    NewProjectFolder* m_projectWidget;
+    QMenu *m_zoomMenu;
+    NewProjectFolder *m_projectWidget;
 
 private slots:
     void updateSelection();

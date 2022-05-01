@@ -43,17 +43,44 @@ public:
         MinMax,
         ClipLength,
     };
-    explicit QmlKeyframesParameter(QObject* parent = 0);
+    explicit QmlKeyframesParameter(QObject *parent = 0);
 
-    QString name() const { return m_name; }
-    QString property() const { return m_property; }
-    QStringList gangedProperties() const { return m_gangedProperties; }
-    bool isCurve() const { return m_isCurve; }
-    double minimum() const { return m_minimum; }
-    double maximum() const { return m_maximum; }
-    QString units() const { return m_units; }
-    bool isRectangle() const { return m_isRectangle; }
-    RangeType rangeType() const { return m_rangeType; }
+    QString name() const
+    {
+        return m_name;
+    }
+    QString property() const
+    {
+        return m_property;
+    }
+    QStringList gangedProperties() const
+    {
+        return m_gangedProperties;
+    }
+    bool isCurve() const
+    {
+        return m_isCurve;
+    }
+    double minimum() const
+    {
+        return m_minimum;
+    }
+    double maximum() const
+    {
+        return m_maximum;
+    }
+    QString units() const
+    {
+        return m_units;
+    }
+    bool isRectangle() const
+    {
+        return m_isRectangle;
+    }
+    RangeType rangeType() const
+    {
+        return m_rangeType;
+    }
 
 signals:
     void changed();
@@ -86,15 +113,36 @@ class QmlKeyframesMetadata : public QObject
 public:
     explicit QmlKeyframesMetadata(QObject *parent = 0);
 
-    bool allowTrim() const { return m_allowTrim; }
-    bool allowAnimateIn() const { return m_allowAnimateIn; }
-    bool allowAnimateOut() const { return m_allowAnimateOut; }
-    QList<QString> simpleProperties() const { return m_simpleProperties; }
+    bool allowTrim() const
+    {
+        return m_allowTrim;
+    }
+    bool allowAnimateIn() const
+    {
+        return m_allowAnimateIn;
+    }
+    bool allowAnimateOut() const
+    {
+        return m_allowAnimateOut;
+    }
+    QList<QString> simpleProperties() const
+    {
+        return m_simpleProperties;
+    }
 
-    QQmlListProperty<QmlKeyframesParameter> parameters() { return QQmlListProperty<QmlKeyframesParameter>(this, &m_parameters); }
-    int parameterCount() const { return m_parameters.count(); }
-    QmlKeyframesParameter *parameter(int index) const { return m_parameters[index]; }
-    void checkVersion(const QString& version);
+    QQmlListProperty<QmlKeyframesParameter> parameters()
+    {
+        return QQmlListProperty<QmlKeyframesParameter>(this, &m_parameters);
+    }
+    int parameterCount() const
+    {
+        return m_parameters.count();
+    }
+    QmlKeyframesParameter *parameter(int index) const
+    {
+        return m_parameters[index];
+    }
+    void checkVersion(const QString &version);
     void setDisabled();
 
 signals:
@@ -131,7 +179,7 @@ class QmlMetadata : public QObject
     Q_PROPERTY(bool allowMultiple READ allowMultiple WRITE setAllowMultiple)
     Q_PROPERTY(bool isClipOnly READ isClipOnly WRITE setIsClipOnly)
     Q_PROPERTY(bool isGpuCompatible READ isGpuCompatible() WRITE setIsGpuCompatible)
-    Q_PROPERTY(QmlKeyframesMetadata* keyframes READ keyframes NOTIFY changed)
+    Q_PROPERTY(QmlKeyframesMetadata *keyframes READ keyframes NOTIFY changed)
     Q_PROPERTY(bool isDeprecated READ isDeprecated WRITE setIsDeprecated)
     Q_PROPERTY(QString minimumVersion MEMBER m_minimumVersion NOTIFY changed)
 
@@ -147,42 +195,99 @@ public:
     explicit QmlMetadata(QObject *parent = 0);
     void loadSettings();
 
-    PluginType type() const { return m_type; }
+    PluginType type() const
+    {
+        return m_type;
+    }
     void setType(PluginType);
-    QString name() const { return m_name; }
-    void setName(const QString&);
-    QString mlt_service() const { return m_mlt_service; }
-    void set_mlt_service(const QString&);
+    QString name() const
+    {
+        return m_name;
+    }
+    void setName(const QString &);
+    QString mlt_service() const
+    {
+        return m_mlt_service;
+    }
+    void set_mlt_service(const QString &);
     QString uniqueId() const;
-    bool needsGPU() const { return m_needsGPU; }
+    bool needsGPU() const
+    {
+        return m_needsGPU;
+    }
     void setNeedsGPU(bool);
-    QString qmlFileName() const { return m_qmlFileName; }
-    void setQmlFileName(const QString&);
-    QString vuiFileName() const { return m_vuiFileName; }
-    void setVuiFileName(const QString&);
-    QDir path() const { return m_path; }
-    void setPath(const QDir& path);
+    QString qmlFileName() const
+    {
+        return m_qmlFileName;
+    }
+    void setQmlFileName(const QString &);
+    QString vuiFileName() const
+    {
+        return m_vuiFileName;
+    }
+    void setVuiFileName(const QString &);
+    QDir path() const
+    {
+        return m_path;
+    }
+    void setPath(const QDir &path);
     QUrl qmlFilePath() const;
     QUrl vuiFilePath() const;
-    bool isAudio() const { return m_isAudio; }
+    bool isAudio() const
+    {
+        return m_isAudio;
+    }
     void setIsAudio(bool isAudio);
-    bool isHidden() const { return m_isHidden; }
+    bool isHidden() const
+    {
+        return m_isHidden;
+    }
     void setIsHidden(bool isHidden);
-    bool isFavorite() const { return m_isFavorite; }
+    bool isFavorite() const
+    {
+        return m_isFavorite;
+    }
     void setIsFavorite(bool isFavorite);
-    QString gpuAlt() const { return m_gpuAlt; }
-    void setGpuAlt(const QString&);
-    bool allowMultiple() const { return m_allowMultiple; }
+    QString gpuAlt() const
+    {
+        return m_gpuAlt;
+    }
+    void setGpuAlt(const QString &);
+    bool allowMultiple() const
+    {
+        return m_allowMultiple;
+    }
     void setAllowMultiple(bool allowMultiple);
-    bool isClipOnly() const { return m_isClipOnly; }
+    bool isClipOnly() const
+    {
+        return m_isClipOnly;
+    }
     void setIsClipOnly(bool isClipOnly);
-    bool isGpuCompatible() const { return m_isGpuCompatible; }
-    void setIsGpuCompatible(bool isCompatible) { m_isGpuCompatible = isCompatible; }
-    QmlKeyframesMetadata* keyframes() { return &m_keyframes; }
-    const QmlKeyframesMetadata* keyframes() const { return &m_keyframes; }
-    bool isDeprecated() const { return m_isDeprecated; }
-    void setIsDeprecated(bool deprecated) { m_isDeprecated = deprecated; }
-    bool isMltVersion(const QString& version);
+    bool isGpuCompatible() const
+    {
+        return m_isGpuCompatible;
+    }
+    void setIsGpuCompatible(bool isCompatible)
+    {
+        m_isGpuCompatible = isCompatible;
+    }
+    QmlKeyframesMetadata *keyframes()
+    {
+        return &m_keyframes;
+    }
+    const QmlKeyframesMetadata *keyframes() const
+    {
+        return &m_keyframes;
+    }
+    bool isDeprecated() const
+    {
+        return m_isDeprecated;
+    }
+    void setIsDeprecated(bool deprecated)
+    {
+        m_isDeprecated = deprecated;
+    }
+    bool isMltVersion(const QString &version);
 
 signals:
     void changed();

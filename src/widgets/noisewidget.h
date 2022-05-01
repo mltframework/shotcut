@@ -23,7 +23,7 @@
 #include "abstractproducerwidget.h"
 
 namespace Ui {
-    class NoiseWidget;
+class NoiseWidget;
 }
 
 class NoiseWidget : public QWidget, public AbstractProducerWidget
@@ -35,7 +35,7 @@ public:
     ~NoiseWidget();
 
     // AbstractProducerWidget overrides
-    Mlt::Producer* newProducer(Mlt::Profile&);
+    Mlt::Producer *newProducer(Mlt::Profile &);
 
 private:
     Ui::NoiseWidget *ui;

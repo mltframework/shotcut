@@ -22,7 +22,7 @@
 #include "abstractproducerwidget.h"
 
 namespace Ui {
-    class CountProducerWidget;
+class CountProducerWidget;
 }
 
 class CountProducerWidget : public QWidget, public AbstractProducerWidget
@@ -34,12 +34,12 @@ public:
     ~CountProducerWidget();
 
     // AbstractProducerWidget overrides
-    Mlt::Producer* newProducer(Mlt::Profile&);
+    Mlt::Producer *newProducer(Mlt::Profile &);
     Mlt::Properties getPreset() const;
-    void loadPreset(Mlt::Properties&);
+    void loadPreset(Mlt::Properties &);
 
 signals:
-    void producerChanged(Mlt::Producer*);
+    void producerChanged(Mlt::Producer *);
     void producerReopened(bool play);
 
 private slots:
@@ -49,7 +49,7 @@ private slots:
     void on_backgroundCombo_activated(int index);
     void on_dropCheckBox_clicked(bool checked);
     void on_durationSpinBox_editingFinished();
-    void on_preset_selected(void* p);
+    void on_preset_selected(void *p);
     void on_preset_saveClicked();
 
 private:

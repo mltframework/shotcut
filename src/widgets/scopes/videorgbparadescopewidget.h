@@ -25,14 +25,14 @@
 class VideoRgbParadeScopeWidget Q_DECL_FINAL : public ScopeWidget
 {
     Q_OBJECT
-    
+
 public:
     explicit VideoRgbParadeScopeWidget();
     QString getTitle() Q_DECL_OVERRIDE;
 
 private:
-    void refreshScope(const QSize& size, bool full) Q_DECL_OVERRIDE;
-    void paintEvent(QPaintEvent*) Q_DECL_OVERRIDE;
+    void refreshScope(const QSize &size, bool full) Q_DECL_OVERRIDE;
+    void paintEvent(QPaintEvent *) Q_DECL_OVERRIDE;
     void mouseMoveEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
 
     SharedFrame m_frame;

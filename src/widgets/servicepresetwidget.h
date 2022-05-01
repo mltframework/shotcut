@@ -22,7 +22,7 @@
 #include <MltProperties.h>
 
 namespace Ui {
-    class ServicePresetWidget;
+class ServicePresetWidget;
 }
 
 class ServicePresetWidget : public QWidget
@@ -34,12 +34,12 @@ public:
     ~ServicePresetWidget();
 
     void loadPresets();
-    void saveDefaultPreset(const Mlt::Properties&);
-    void savePreset(const Mlt::Properties&);
-    void savePreset(const Mlt::Properties& properties, QString name);
+    void saveDefaultPreset(const Mlt::Properties &);
+    void savePreset(const Mlt::Properties &);
+    void savePreset(const Mlt::Properties &properties, QString name);
 
 signals:
-    void selected(void* properties);
+    void selected(void *properties);
     void saveClicked();
 
 private slots:

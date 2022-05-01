@@ -32,7 +32,7 @@ class QTimer;
 class AudioLoudnessScopeWidget Q_DECL_FINAL : public ScopeWidget
 {
     Q_OBJECT
-    
+
 public:
     explicit AudioLoudnessScopeWidget();
     ~AudioLoudnessScopeWidget();
@@ -56,19 +56,19 @@ private slots:
 
 private:
     // Functions run in scope thread.
-    void refreshScope(const QSize& size, bool full) Q_DECL_OVERRIDE;
+    void refreshScope(const QSize &size, bool full) Q_DECL_OVERRIDE;
 
     // Members accessed by scope thread.
-    Mlt::Filter* m_loudnessFilter;
+    Mlt::Filter *m_loudnessFilter;
     double m_peak;
     double m_true_peak;
     bool m_newData;
 
     // Members accessed by GUI thread.
     Qt::Orientation m_orientation;
-    QQuickWidget* m_qview;
-    QLabel* m_timeLabel;
-    QTimer* m_timer;
+    QQuickWidget *m_qview;
+    QLabel *m_timeLabel;
+    QTimer *m_timer;
 };
 
 #endif // AUDIOLOUDNESSSCOPEWIDGET_H

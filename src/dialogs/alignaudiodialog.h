@@ -39,7 +39,8 @@ class AlignAudioDialog : public QDialog
 {
     Q_OBJECT
 public:
-    explicit AlignAudioDialog(QString title, MultitrackModel* model, const QVector<QUuid>& uuids, QWidget *parent = 0);
+    explicit AlignAudioDialog(QString title, MultitrackModel *model, const QVector<QUuid> &uuids,
+                              QWidget *parent = 0);
     virtual ~AlignAudioDialog();
 
 private slots:
@@ -52,15 +53,15 @@ private slots:
     void clipFinished(int index, int offset, double drift, double quality);
 
 private:
-    AlignTableDelegate* m_delegate;
-    MultitrackModel* m_model;
+    AlignTableDelegate *m_delegate;
+    MultitrackModel *m_model;
     AlignClipsModel m_alignClipsModel;
     QVector<QUuid> m_uuids;
-    QComboBox* m_trackCombo;
-    QTreeView* m_table;
-    QDialogButtonBox* m_buttonBox;
-    QPushButton* m_processAndApplyButton;
-    LongUiTask* m_uiTask;
+    QComboBox *m_trackCombo;
+    QTreeView *m_table;
+    QDialogButtonBox *m_buttonBox;
+    QPushButton *m_processAndApplyButton;
+    LongUiTask *m_uiTask;
 };
 
 #endif // ALIGNAUDIODIALOG_H

@@ -22,7 +22,7 @@
 #include <QDialog>
 
 namespace Ui {
-    class TextViewerDialog;
+class TextViewerDialog;
 }
 
 class TextViewerDialog : public QDialog
@@ -32,7 +32,7 @@ class TextViewerDialog : public QDialog
 public:
     explicit TextViewerDialog(QWidget *parent = 0);
     ~TextViewerDialog();
-    void setText(const QString& s);
+    void setText(const QString &s);
 
 private slots:
     void on_buttonBox_accepted();

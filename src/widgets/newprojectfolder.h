@@ -36,13 +36,13 @@ class NewProjectFolder : public QWidget
     Q_OBJECT
 
 public:
-    explicit NewProjectFolder(QWidget* parent = 0);
+    explicit NewProjectFolder(QWidget *parent = 0);
     ~NewProjectFolder();
 
 protected:
-    void showEvent(QShowEvent*);
-    void hideEvent(QHideEvent*);
-    bool event(QEvent* event);
+    void showEvent(QShowEvent *);
+    void hideEvent(QHideEvent *);
+    bool event(QEvent *event);
 
 public slots:
     void updateRecentProjects();
@@ -52,7 +52,7 @@ private slots:
 
     void on_videoModeButton_clicked();
 
-    void onProfileTriggered(QAction* action);
+    void onProfileTriggered(QAction *action);
 
     void on_actionAddCustomProfile_triggered();
 
@@ -60,20 +60,20 @@ private slots:
 
     void on_startButton_clicked();
 
-    void on_projectNameLineEdit_textChanged(const QString& arg1);
+    void on_projectNameLineEdit_textChanged(const QString &arg1);
 
-    void on_recentListView_clicked(const QModelIndex& index);
+    void on_recentListView_clicked(const QModelIndex &index);
 
-    void on_recentListView_doubleClicked(const QModelIndex& index);
-    
+    void on_recentListView_doubleClicked(const QModelIndex &index);
+
 private:
     void setColors();
-    void setProjectFolderButtonText(const QString& text);
+    void setProjectFolderButtonText(const QString &text);
 
     Ui::NewProjectFolder *ui;
-    QActionGroup* m_profileGroup;
+    QActionGroup *m_profileGroup;
     QMenu m_videoModeMenu;
-    QMenu* m_customProfileMenu;
+    QMenu *m_customProfileMenu;
     QString m_profile;
     QStandardItemModel m_model;
     QString m_projectName;

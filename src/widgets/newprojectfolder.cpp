@@ -31,7 +31,7 @@
 #include <QMessageBox>
 #include <QListWidgetItem>
 
-NewProjectFolder::NewProjectFolder(QWidget* parent) :
+NewProjectFolder::NewProjectFolder(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::NewProjectFolder),
     m_isOpening(false)
@@ -41,7 +41,7 @@ NewProjectFolder::NewProjectFolder(QWidget* parent) :
     ui->actionProfileAutomatic->setData(QString());
     ui->recentListView->setModel(&m_model);
     m_profileGroup = new QActionGroup(this);
-    connect(m_profileGroup, SIGNAL(triggered(QAction*)), SLOT(onProfileTriggered(QAction*)));
+    connect(m_profileGroup, SIGNAL(triggered(QAction *)), SLOT(onProfileTriggered(QAction *)));
     ui->label->setToolTip(ui->projectsFolderButton->toolTip());
     ui->label_2->setToolTip(ui->projectNameLineEdit->toolTip());
 }
@@ -51,7 +51,7 @@ NewProjectFolder::~NewProjectFolder()
     delete ui;
 }
 
-void NewProjectFolder::showEvent(QShowEvent*)
+void NewProjectFolder::showEvent(QShowEvent *)
 {
     QString external = Settings.playerExternal();
     bool ok = false;
@@ -62,7 +62,7 @@ void NewProjectFolder::showEvent(QShowEvent*)
     if (!external.isEmpty() && !ok && m_profile.isEmpty())
         m_profile = "atsc_720p_50";
     bool found = false;
-    foreach (QAction* a, MAIN.profileGroup()->actions()) {
+    foreach (QAction *a, MAIN.profileGroup()->actions()) {
         if (a->data().toString() == m_profile) {
             ui->videoModeButton->setText(a->text());
             found = true;
@@ -78,10 +78,11 @@ void NewProjectFolder::showEvent(QShowEvent*)
         m_profileGroup->addAction(ui->actionProfileAutomatic);
         m_videoModeMenu.addAction(ui->actionProfileAutomatic);
     }
-    MAIN.buildVideoModeMenu(&m_videoModeMenu, m_customProfileMenu, m_profileGroup, ui->actionAddCustomProfile, ui->actionProfileRemove);
+    MAIN.buildVideoModeMenu(&m_videoModeMenu, m_customProfileMenu, m_profileGroup,
+                            ui->actionAddCustomProfile, ui->actionProfileRemove);
 
     // Check the current menu item.
-    foreach (QAction* a, m_profileGroup->actions()) {
+    foreach (QAction *a, m_profileGroup->actions()) {
         if (a->data().toString() == m_profile) {
             LOG_DEBUG() << "m_profile" << m_profile << "action.data" << a->data().toString();
             a->setChecked(true);
@@ -93,12 +94,12 @@ void NewProjectFolder::showEvent(QShowEvent*)
     setProjectFolderButtonText(Settings.projectsFolder());
 }
 
-void NewProjectFolder::hideEvent(QHideEvent*)
+void NewProjectFolder::hideEvent(QHideEvent *)
 {
     ui->projectNameLineEdit->setText(QString());
 }
 
-bool NewProjectFolder::event(QEvent* event)
+bool NewProjectFolder::event(QEvent *event)
 {
     bool result = QWidget::event(event);
     if (event->type() == QEvent::PaletteChange)
@@ -111,7 +112,7 @@ void NewProjectFolder::updateRecentProjects()
     m_model.clear();
     foreach (QString s, Settings.recent()) {
         if (s.endsWith(".mlt")) {
-            QStandardItem* item = new QStandardItem(Util::baseName(s));
+            QStandardItem *item = new QStandardItem(Util::baseName(s));
             item->setToolTip(QDir::toNativeSeparators(s));
             m_model.appendRow(item);
         }
@@ -120,8 +121,9 @@ void NewProjectFolder::updateRecentProjects()
 
 void NewProjectFolder::on_projectsFolderButton_clicked()
 {
-    QString dirName = QFileDialog::getExistingDirectory(this, tr("Projects Folder"), Settings.projectsFolder(),
-        Util::getFileDialogOptions());
+    QString dirName = QFileDialog::getExistingDirectory(this, tr("Projects Folder"),
+                                                        Settings.projectsFolder(),
+                                                        Util::getFileDialogOptions());
     if (!dirName.isEmpty()) {
         setProjectFolderButtonText(dirName);
         Settings.setProjectsFolder(dirName);
@@ -148,7 +150,8 @@ void NewProjectFolder::on_actionAddCustomProfile_triggered()
         if (!name.isEmpty()) {
             ui->videoModeButton->setText(name);
             MAIN.addCustomProfile(name, m_customProfileMenu, ui->actionProfileRemove, m_profileGroup);
-            MAIN.addCustomProfile(name, MAIN.customProfileMenu(), MAIN.actionProfileRemove(), MAIN.profileGroup());
+            MAIN.addCustomProfile(name, MAIN.customProfileMenu(), MAIN.actionProfileRemove(),
+                                  MAIN.profileGroup());
         } else if (m_profileGroup->checkedAction()) {
             ui->videoModeButton->setText(tr("Custom"));
             m_profileGroup->checkedAction()->setChecked(false);
@@ -172,7 +175,8 @@ void NewProjectFolder::on_actionProfileRemove_triggered()
         // Show the dialog.
         if (dialog.exec() == QDialog::Accepted) {
             MAIN.removeCustomProfiles(dialog.selection(), dir, m_customProfileMenu, ui->actionProfileRemove);
-            MAIN.removeCustomProfiles(dialog.selection(), dir, MAIN.customProfileMenu(), MAIN.actionProfileRemove());
+            MAIN.removeCustomProfiles(dialog.selection(), dir, MAIN.customProfileMenu(),
+                                      MAIN.actionProfileRemove());
             if (dialog.selection().indexOf(ui->videoModeButton->text()) >= 0) {
                 ui->actionProfileAutomatic->setChecked(true);
                 ui->videoModeButton->setText(ui->actionProfileAutomatic->text());
@@ -188,7 +192,8 @@ void NewProjectFolder::on_startButton_clicked()
     QString fileName = projectName;
 
     if (projectName.contains('/') || projectName.contains('\\')) {
-        QMessageBox::warning(this, ui->newProjectLabel->text(), tr("The project name cannot include a slash."));
+        QMessageBox::warning(this, ui->newProjectLabel->text(),
+                             tr("The project name cannot include a slash."));
         ui->startButton->setDisabled(true);
         return;
     }
@@ -229,7 +234,7 @@ void NewProjectFolder::on_startButton_clicked()
     if (m_profileGroup->checkedAction()) {
         Settings.setPlayerProfile(m_profile);
         MAIN.setProfile(m_profile);
-        foreach (QAction* a, MAIN.profileGroup()->actions()) {
+        foreach (QAction *a, MAIN.profileGroup()->actions()) {
             if (a->data().toString() == m_profile) {
                 a->setChecked(true);
                 break;
@@ -239,13 +244,13 @@ void NewProjectFolder::on_startButton_clicked()
     hide();
 }
 
-void NewProjectFolder::on_projectNameLineEdit_textChanged(const QString& arg1)
+void NewProjectFolder::on_projectNameLineEdit_textChanged(const QString &arg1)
 {
     m_projectName = arg1.trimmed();
     ui->startButton->setDisabled(arg1.isEmpty());
 }
 
-void NewProjectFolder::on_recentListView_clicked(const QModelIndex& index)
+void NewProjectFolder::on_recentListView_clicked(const QModelIndex &index)
 {
     if (!m_isOpening) {
         m_isOpening = true;
@@ -271,10 +276,11 @@ void NewProjectFolder::setColors()
     Util::setColorsToHighlight(ui->newProjectLabel_2);
 }
 
-void NewProjectFolder::setProjectFolderButtonText(const QString& text)
+void NewProjectFolder::setProjectFolderButtonText(const QString &text)
 {
     auto path = QDir::toNativeSeparators(text);
-    QString elidedText = ui->projectsFolderButton->fontMetrics().elidedText(path, Qt::ElideLeft, ui->recentListView->width() / 1.5);
+    QString elidedText = ui->projectsFolderButton->fontMetrics().elidedText(path, Qt::ElideLeft,
+                                                                            ui->recentListView->width() / 1.5);
     ui->projectsFolderButton->setText(elidedText);
     if (path != elidedText)
         ui->projectsFolderButton->setToolTip(path);
@@ -282,7 +288,7 @@ void NewProjectFolder::setProjectFolderButtonText(const QString& text)
         ui->projectsFolderButton->setToolTip(ui->label->toolTip());
 }
 
-void NewProjectFolder::on_recentListView_doubleClicked(const QModelIndex& index)
+void NewProjectFolder::on_recentListView_doubleClicked(const QModelIndex &index)
 {
     on_recentListView_clicked(index);
 }

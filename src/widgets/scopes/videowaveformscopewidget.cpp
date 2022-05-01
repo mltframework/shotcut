@@ -27,11 +27,11 @@ static const QColor TEXT_COLOR = {255, 255, 255, 127};
 
 
 VideoWaveformScopeWidget::VideoWaveformScopeWidget()
-  : ScopeWidget("VideoWaveform")
-  , m_frame()
-  , m_renderImg()
-  , m_mutex(QMutex::NonRecursive)
-  , m_displayImg()
+    : ScopeWidget("VideoWaveform")
+    , m_frame()
+    , m_renderImg()
+    , m_mutex(QMutex::NonRecursive)
+    , m_displayImg()
 {
     LOG_DEBUG() << "begin";
     setMouseTracking(true);
@@ -39,7 +39,7 @@ VideoWaveformScopeWidget::VideoWaveformScopeWidget()
 }
 
 
-void VideoWaveformScopeWidget::refreshScope(const QSize& size, bool full)
+void VideoWaveformScopeWidget::refreshScope(const QSize &size, bool full)
 {
     Q_UNUSED(size)
     Q_UNUSED(full)
@@ -56,11 +56,11 @@ void VideoWaveformScopeWidget::refreshScope(const QSize& size, bool full)
             m_renderImg = QImage(width, 256, QImage::Format_RGBX8888);
         }
 
-        QColor bgColor( 0, 0, 0 ,0xff );
+        QColor bgColor( 0, 0, 0, 0xff );
         m_renderImg.fill(bgColor);
 
-        const uint8_t* src = m_frame.get_image(mlt_image_yuv420p);
-        uint8_t* dst = m_renderImg.scanLine(0);
+        const uint8_t *src = m_frame.get_image(mlt_image_yuv420p);
+        uint8_t *dst = m_renderImg.scanLine(0);
 
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
@@ -75,7 +75,8 @@ void VideoWaveformScopeWidget::refreshScope(const QSize& size, bool full)
             }
         }
 
-        QImage scaledImage = m_renderImg.scaled(size, Qt::IgnoreAspectRatio, Qt::SmoothTransformation).convertToFormat(QImage::Format_RGB32);
+        QImage scaledImage = m_renderImg.scaled(size, Qt::IgnoreAspectRatio,
+                                                Qt::SmoothTransformation).convertToFormat(QImage::Format_RGB32);
 
         m_mutex.lock();
         m_displayImg.swap(scaledImage);
@@ -83,7 +84,7 @@ void VideoWaveformScopeWidget::refreshScope(const QSize& size, bool full)
     }
 }
 
-void VideoWaveformScopeWidget::paintEvent(QPaintEvent*)
+void VideoWaveformScopeWidget::paintEvent(QPaintEvent *)
 {
     if (!isVisible())
         return;
@@ -92,7 +93,7 @@ void VideoWaveformScopeWidget::paintEvent(QPaintEvent*)
     QPainter p(this);
     p.setRenderHint(QPainter::Antialiasing, true);
     QFont font = QWidget::font();
-    int fontSize = font.pointSize() - (font.pointSize() > 10? 2 : (font.pointSize() > 8? 1 : 0));
+    int fontSize = font.pointSize() - (font.pointSize() > 10 ? 2 : (font.pointSize() > 8 ? 1 : 0));
     font.setPointSize(fontSize);
     QFontMetrics fm(font);
     QPen pen;
@@ -103,10 +104,9 @@ void VideoWaveformScopeWidget::paintEvent(QPaintEvent*)
 
     // draw the waveform data
     m_mutex.lock();
-    if(!m_displayImg.isNull()) {
+    if (!m_displayImg.isNull()) {
         p.drawImage(rect(), m_displayImg, m_displayImg.rect());
-    } else
-    {
+    } else {
         p.fillRect(rect(), QBrush(Qt::black, Qt::SolidPattern));
     }
     m_mutex.unlock();
@@ -138,13 +138,10 @@ void VideoWaveformScopeWidget::mouseMoveEvent(QMouseEvent *event)
     int frameWidth = m_displayImg.width();
     m_mutex.unlock();
 
-    if(frameWidth != 0)
-    {
+    if (frameWidth != 0) {
         int pixel = frameWidth * event->pos().x() / width();
         text =  QString(tr("Pixel: %1\nIRE: %2")).arg(QString::number(pixel), QString::number(ire));
-    }
-    else
-    {
+    } else {
         text =  QString(tr("IRE: %1")).arg(QString::number(ire));
     }
     QToolTip::showText(event->globalPos(), text);
@@ -152,5 +149,5 @@ void VideoWaveformScopeWidget::mouseMoveEvent(QMouseEvent *event)
 
 QString VideoWaveformScopeWidget::getTitle()
 {
-   return tr("Video Waveform");
+    return tr("Video Waveform");
 }

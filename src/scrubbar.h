@@ -35,19 +35,23 @@ class ScrubBar : public QWidget
 public:
     explicit ScrubBar(QWidget *parent = 0);
 
-    virtual void mousePressEvent(QMouseEvent * event);
-    virtual void mouseReleaseEvent(QMouseEvent * event);
-    virtual void mouseMoveEvent(QMouseEvent * event);
+    virtual void mousePressEvent(QMouseEvent *event);
+    virtual void mouseReleaseEvent(QMouseEvent *event);
+    virtual void mouseMoveEvent(QMouseEvent *event);
     void setScale(int maximum);
     void setFramerate(double fps);
     int position() const;
     void setInPoint(int in);
     void setOutPoint(int out);
-    void setMarkers(const QList<int>&);
-    QList<int> markers() const {
+    void setMarkers(const QList<int> &);
+    QList<int> markers() const
+    {
         return m_markers;
     }
-    void setMargin(int margin) { m_margin = margin; }
+    void setMargin(int margin)
+    {
+        m_margin = margin;
+    }
 
 signals:
     void seeked(int);

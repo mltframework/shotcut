@@ -29,9 +29,10 @@ TimelinePropertiesWidget::TimelinePropertiesWidget(Mlt::Service &service, QWidge
     connect(ui->editButton, &QAbstractButton::clicked, this, &TimelinePropertiesWidget::editProfile);
     Util::setColorsToHighlight(ui->nameLabel);
     if (m_service.is_valid()) {
-        Mlt::Profile& profile = MLT.profile();
+        Mlt::Profile &profile = MLT.profile();
         ui->resolutionLabel->setText(QString("%1 x %2").arg(profile.width()).arg(profile.height()));
-        ui->aspectRatioLabel->setText(QString("%1 : %2").arg(profile.display_aspect_num()).arg(profile.display_aspect_den()));
+        ui->aspectRatioLabel->setText(QString("%1 : %2").arg(profile.display_aspect_num()).arg(
+                                          profile.display_aspect_den()));
         ui->frameRateLabel->setText(tr("%L1 fps").arg(profile.fps(), 0, 'f', 6));
         if (profile.progressive())
             ui->scanModeLabel->setText(tr("Progressive"));

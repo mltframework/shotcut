@@ -34,10 +34,11 @@
 
 #include <Logger.h>
 
-EncodeJob::EncodeJob(const QString &name, const QString &xml, int frameRateNum, int frameRateDen, QThread::Priority priority)
+EncodeJob::EncodeJob(const QString &name, const QString &xml, int frameRateNum, int frameRateDen,
+                     QThread::Priority priority)
     : MeltJob(name, xml, frameRateNum, frameRateDen, priority)
 {
-    QAction* action = new QAction(tr("Open"), this);
+    QAction *action = new QAction(tr("Open"), this);
     action->setToolTip(tr("Open the output file in the Shotcut player"));
     connect(action, SIGNAL(triggered()), this, SLOT(onOpenTiggered()));
     m_successActions << action;
@@ -62,8 +63,8 @@ void EncodeJob::onVideoQualityTriggered()
     QString directory = Settings.encodePath();
     QString caption = tr("Video Quality Report");
     QString nameFilter = tr("Text Documents (*.txt);;All Files (*)");
-    QString reportPath= QFileDialog::getSaveFileName(&MAIN, caption, directory, nameFilter,
-        nullptr, Util::getFileDialogOptions());
+    QString reportPath = QFileDialog::getSaveFileName(&MAIN, caption, directory, nameFilter,
+                                                      nullptr, Util::getFileDialogOptions());
     if (!reportPath.isEmpty()) {
         QFileInfo fi(reportPath);
         if (fi.suffix().isEmpty())
@@ -108,7 +109,7 @@ void EncodeJob::onVideoQualityTriggered()
 
             // Create job and add it to the queue.
             JOBS.add(new VideoQualityJob(objectName(), dom.toString(2), reportPath,
-                     MLT.profile().frame_rate_num(), MLT.profile().frame_rate_den()));
+                                         MLT.profile().frame_rate_num(), MLT.profile().frame_rate_den()));
         }
     }
 }
@@ -119,11 +120,11 @@ void EncodeJob::onSpatialMediaTriggered()
     QString caption = tr("Set Equirectangular Projection");
     QFileInfo info(objectName());
     QString directory = QString("%1/%2 - ERP.%3")
-            .arg(Settings.encodePath())
-            .arg(info.completeBaseName())
-            .arg(info.suffix());
+                        .arg(Settings.encodePath())
+                        .arg(info.completeBaseName())
+                        .arg(info.suffix());
     QString filePath = QFileDialog::getSaveFileName(&MAIN, caption, directory, QString(),
-        nullptr, Util::getFileDialogOptions());
+                                                    nullptr, Util::getFileDialogOptions());
     if (!filePath.isEmpty()) {
         if (SpatialMedia::injectSpherical(objectName().toStdString(), filePath.toStdString())) {
             MAIN.showStatusMessage(tr("Successfully wrote %1").arg(QFileInfo(filePath).fileName()));

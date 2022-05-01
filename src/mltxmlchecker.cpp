@@ -31,9 +31,9 @@
 #include <clocale>
 #include <utime.h>
 
-static QString getPrefix(const QString& name, const QString& value);
+static QString getPrefix(const QString &name, const QString &value);
 
-static bool isMltClass(const QStringRef& name)
+static bool isMltClass(const QStringRef &name)
 {
     return name == "profile" || name == "producer" ||
            name == "filter" || name == "playlist" ||
@@ -42,7 +42,7 @@ static bool isMltClass(const QStringRef& name)
            name == "chain" || name == "link";
 }
 
-static bool isNetworkResource(const QString& string)
+static bool isNetworkResource(const QString &string)
 {
     // Check if it looks like a qualified URL. Try parsing it and see.
     QRegExp schemaTest(QLatin1String("^[a-zA-Z]{2,}\\:.*"));
@@ -50,7 +50,7 @@ static bool isNetworkResource(const QString& string)
     return (schemaTest.exactMatch(string) && QUrl(string).isValid() && !string.startsWith("plain:"));
 }
 
-static bool isNumericProperty(const QString& name)
+static bool isNumericProperty(const QString &name)
 {
     return  name == "length" || name == "geometry" ||
             name == "rect" || name == "warp_speed";
@@ -69,13 +69,13 @@ MltXmlChecker::MltXmlChecker()
     m_unlinkedFilesModel.setColumnCount(ColumnCount);
 }
 
-QXmlStreamReader::Error MltXmlChecker::check(const QString& fileName)
+QXmlStreamReader::Error MltXmlChecker::check(const QString &fileName)
 {
     LOG_DEBUG() << "begin";
 
     QFile file(fileName);
     m_tempFile.reset(new QTemporaryFile(
-        QFileInfo(fileName).dir().filePath("shotcut-XXXXXX.mlt")));
+                         QFileInfo(fileName).dir().filePath("shotcut-XXXXXX.mlt")));
     if (file.open(QIODevice::ReadOnly | QIODevice::Text) && m_tempFile->open()) {
         m_tempFile->resize(0);
         m_fileInfo = QFileInfo(fileName);
@@ -95,7 +95,7 @@ QXmlStreamReader::Error MltXmlChecker::check(const QString& fileName)
                         m_usesLocale = (value != "" && value != "C" && value != "POSIX" && QLocale().decimalPoint() != '.');
                         // Upon correcting the document to conform to current system,
                         // update the declared LC_NUMERIC.
-                        m_newXml.writeAttribute("LC_NUMERIC", m_usesLocale? QLocale().name() : "C");
+                        m_newXml.writeAttribute("LC_NUMERIC", m_usesLocale ? QLocale().name() : "C");
                     } else if (a.name().toString().toLower() == "version") {
                         m_mltVersion = QVersionNumber::fromString(a.value());
                     } else if (a.name().toString().toLower() == "title") {
@@ -191,7 +191,8 @@ void MltXmlChecker::readMlt()
             m_newXml.writeEntityReference(m_xml.name().toString());
             break;
         case QXmlStreamReader::ProcessingInstruction:
-            m_newXml.writeProcessingInstruction(m_xml.processingInstructionTarget().toString(), m_xml.processingInstructionData().toString());
+            m_newXml.writeProcessingInstruction(m_xml.processingInstructionTarget().toString(),
+                                                m_xml.processingInstructionData().toString());
             break;
         case QXmlStreamReader::StartDocument:
             m_newXml.writeStartDocument(m_xml.documentVersion().toString(), m_xml.isStandaloneDocument());
@@ -327,7 +328,7 @@ void MltXmlChecker::checkInAndOutPoints()
     }
 }
 
-bool MltXmlChecker::checkNumericString(QString& value)
+bool MltXmlChecker::checkNumericString(QString &value)
 {
     // Determine if there is a decimal point inconsistent with locale.
     if (!value.contains(m_decimalPoint) &&
@@ -340,7 +341,7 @@ bool MltXmlChecker::checkNumericString(QString& value)
     return false;
 }
 
-bool MltXmlChecker::fixWebVfxPath(QString& resource)
+bool MltXmlChecker::fixWebVfxPath(QString &resource)
 {
     // The path, if absolute, should start with the Shotcut executable path.
     QFileInfo fi(resource);
@@ -371,7 +372,7 @@ bool MltXmlChecker::fixWebVfxPath(QString& resource)
     return false;
 }
 
-static QString getPrefix(const QString& name, const QString& value)
+static QString getPrefix(const QString &name, const QString &value)
 {
     int length = 0;
 
@@ -398,7 +399,7 @@ static QString getPrefix(const QString& name, const QString& value)
     return QString();
 }
 
-static QString getSuffix(const QString& name, const QString& value)
+static QString getSuffix(const QString &name, const QString &value)
 {
     // avformat is only using "resource"
     if (name == "resource") {
@@ -412,29 +413,29 @@ static QString getSuffix(const QString& name, const QString& value)
     return QString();
 }
 
-bool MltXmlChecker::readResourceProperty(const QString& name, QString& value)
+bool MltXmlChecker::readResourceProperty(const QString &name, QString &value)
 {
     if (mlt_class == "filter" || mlt_class == "transition" || mlt_class == "producer"
             || mlt_class == "chain" || mlt_class == "link")
-    if (name == "resource" || name == "src" || name == "filename"
-            || name == "luma" || name == "luma.resource" || name == "composite.luma"
-            || name == "producer.resource" || name == "av.file" || name == "warp_resource") {
+        if (name == "resource" || name == "src" || name == "filename"
+                || name == "luma" || name == "luma.resource" || name == "composite.luma"
+                || name == "producer.resource" || name == "av.file" || name == "warp_resource") {
 
-        // Handle special prefix such as "plain:" or speed.
-        m_resource.prefix = getPrefix(name, value);
-        m_resource.suffix = getSuffix(name, value);
-        auto filePath = value.mid(m_resource.prefix.size());
-        filePath = filePath.left(filePath.size() - m_resource.suffix.size());
-        // Save the resource name (minus prefix) for later check for unlinked files.
-        m_resource.info.setFile(filePath);
-        if (!isNetworkResource(value) && m_resource.info.isRelative() && !Util::hasDriveLetter(value))
-            m_resource.info.setFile(m_fileInfo.canonicalPath(), m_resource.info.filePath());
-        return true;
-    }
+            // Handle special prefix such as "plain:" or speed.
+            m_resource.prefix = getPrefix(name, value);
+            m_resource.suffix = getSuffix(name, value);
+            auto filePath = value.mid(m_resource.prefix.size());
+            filePath = filePath.left(filePath.size() - m_resource.suffix.size());
+            // Save the resource name (minus prefix) for later check for unlinked files.
+            m_resource.info.setFile(filePath);
+            if (!isNetworkResource(value) && m_resource.info.isRelative() && !Util::hasDriveLetter(value))
+                m_resource.info.setFile(m_fileInfo.canonicalPath(), m_resource.info.filePath());
+            return true;
+        }
     return false;
 }
 
-void MltXmlChecker::checkGpuEffects(const QString& mlt_service)
+void MltXmlChecker::checkGpuEffects(const QString &mlt_service)
 {
     // Check for GPU effects.
     if (!MLT.isAudioFilter(mlt_service))
@@ -443,54 +444,55 @@ void MltXmlChecker::checkGpuEffects(const QString& mlt_service)
         m_needsGPU = true;
 }
 
-void MltXmlChecker::checkCpuEffects(const QString& mlt_service)
+void MltXmlChecker::checkCpuEffects(const QString &mlt_service)
 {
     if (mlt_service.startsWith("dynamictext") || mlt_service.startsWith("vidstab"))
         m_needsCPU = true;
 }
 
-void MltXmlChecker::checkUnlinkedFile(const QString& mlt_service)
+void MltXmlChecker::checkUnlinkedFile(const QString &mlt_service)
 {
     // Check for an unlinked file.
     const QString fileName = m_resource.info.fileName();
     const QString filePath = QDir::toNativeSeparators(m_resource.info.filePath());
     // not the color producer
     if (!mlt_service.isEmpty() && mlt_service != "color" && mlt_service != "colour")
-    // not a builtin luma wipe file
-    if ((mlt_service != "luma" && mlt_service != "movit.luma_mix") || !fileName.startsWith('%'))
-    // not a Stabilize filter without Analyze results
-    if (fileName != "vidstab.trf")
-    // not the generic <producer> resource
-    if (fileName != "<producer>")
-    // not an invalid <tractor>
-    if (fileName != "<tractor>")
-    // not an invalid blank
-    if (mlt_service != "blank" || fileName != "blank")
-    // not a URL
-    if (!m_resource.info.filePath().isEmpty() && !isNetworkResource(m_resource.info.filePath()))
-    // not an image sequence
-    if ((mlt_service != "pixbuf" && mlt_service != "qimage") || fileName.indexOf('%') == -1)
-    // file does not exist
-    if (!m_resource.info.exists())
-    // not already in the model
-    if (m_unlinkedFilesModel.findItems(filePath,
-            Qt::MatchFixedString | Qt::MatchCaseSensitive).isEmpty()) {
-        LOG_ERROR() << "file not found: " << m_resource.info.filePath();
-        QIcon icon(":/icons/oxygen/32x32/status/task-reject.png");
-        QStandardItem* item = new QStandardItem(icon, filePath);
-        item->setToolTip(item->text());
-        item->setData(m_resource.hash, ShotcutHashRole);
-        m_unlinkedFilesModel.appendRow(item);
-    }
+        // not a builtin luma wipe file
+        if ((mlt_service != "luma" && mlt_service != "movit.luma_mix") || !fileName.startsWith('%'))
+            // not a Stabilize filter without Analyze results
+            if (fileName != "vidstab.trf")
+                // not the generic <producer> resource
+                if (fileName != "<producer>")
+                    // not an invalid <tractor>
+                    if (fileName != "<tractor>")
+                        // not an invalid blank
+                        if (mlt_service != "blank" || fileName != "blank")
+                            // not a URL
+                            if (!m_resource.info.filePath().isEmpty() && !isNetworkResource(m_resource.info.filePath()))
+                                // not an image sequence
+                                if ((mlt_service != "pixbuf" && mlt_service != "qimage") || fileName.indexOf('%') == -1)
+                                    // file does not exist
+                                    if (!m_resource.info.exists())
+                                        // not already in the model
+                                        if (m_unlinkedFilesModel.findItems(filePath,
+                                                                           Qt::MatchFixedString | Qt::MatchCaseSensitive).isEmpty()) {
+                                            LOG_ERROR() << "file not found: " << m_resource.info.filePath();
+                                            QIcon icon(":/icons/oxygen/32x32/status/task-reject.png");
+                                            QStandardItem *item = new QStandardItem(icon, filePath);
+                                            item->setToolTip(item->text());
+                                            item->setData(m_resource.hash, ShotcutHashRole);
+                                            m_unlinkedFilesModel.appendRow(item);
+                                        }
 }
 
-bool MltXmlChecker::fixUnlinkedFile(QString& value)
+bool MltXmlChecker::fixUnlinkedFile(QString &value)
 {
     // Replace unlinked files if model is populated with replacements.
     for (int row = 0; row < m_unlinkedFilesModel.rowCount(); ++row) {
-        const QStandardItem* replacement = m_unlinkedFilesModel.item(row, ReplacementColumn);
+        const QStandardItem *replacement = m_unlinkedFilesModel.item(row, ReplacementColumn);
         if (replacement && !replacement->text().isEmpty() &&
-                m_unlinkedFilesModel.item(row, MissingColumn)->text() == QDir::toNativeSeparators(m_resource.info.filePath())) {
+                m_unlinkedFilesModel.item(row,
+                                          MissingColumn)->text() == QDir::toNativeSeparators(m_resource.info.filePath())) {
             m_resource.info.setFile(replacement->text());
             m_resource.newDetail = replacement->text();
             m_resource.newHash = replacement->data(ShotcutHashRole).toString();
@@ -514,11 +516,11 @@ bool MltXmlChecker::fixUnlinkedFile(QString& value)
     return false;
 }
 
-void MltXmlChecker::fixStreamIndex(MltProperty& property)
+void MltXmlChecker::fixStreamIndex(MltProperty &property)
 {
     // Remove a stream index property if re-linked file is different.
     if (!m_resource.hash.isEmpty() && !m_resource.newHash.isEmpty()
-        && m_resource.hash != m_resource.newHash) {
+            && m_resource.hash != m_resource.newHash) {
         if (property.first == "audio_index") {
             property.second = QString::number(m_resource.audio_index);
         } else if (property.first == "video_index") {
@@ -527,7 +529,7 @@ void MltXmlChecker::fixStreamIndex(MltProperty& property)
     }
 }
 
-bool MltXmlChecker::fixVersion1701WindowsPathBug(QString& value)
+bool MltXmlChecker::fixVersion1701WindowsPathBug(QString &value)
 {
     if (value.size() >= 3 && value[0] == '/' && value[2] == ':') {
         value.remove(0, 1);
@@ -537,11 +539,11 @@ bool MltXmlChecker::fixVersion1701WindowsPathBug(QString& value)
     return false;
 }
 
-void MltXmlChecker::checkIncludesSelf(QVector<MltProperty>& properties)
+void MltXmlChecker::checkIncludesSelf(QVector<MltProperty> &properties)
 {
     if (m_resource.info.canonicalFilePath() == m_fileInfo.canonicalFilePath()) {
         LOG_WARNING() << "This project tries to include itself; breaking that!";
-        for (auto& p : properties) {
+        for (auto &p : properties) {
             if (p.first == "mlt_service")
                 p.second.clear();
             else if (p.first == "resource")
@@ -552,11 +554,12 @@ void MltXmlChecker::checkIncludesSelf(QVector<MltProperty>& properties)
     }
 }
 
-void MltXmlChecker::checkLumaAlphaOver(const QString& mlt_service, QVector<MltXmlChecker::MltProperty>& properties)
+void MltXmlChecker::checkLumaAlphaOver(const QString &mlt_service,
+                                       QVector<MltXmlChecker::MltProperty> &properties)
 {
     if (mlt_service == "luma") {
         bool found = false;
-        for (auto& p : properties) {
+        for (auto &p : properties) {
             if (p.first == "alpha_over") {
                 found = true;
             }
@@ -568,11 +571,12 @@ void MltXmlChecker::checkLumaAlphaOver(const QString& mlt_service, QVector<MltXm
     }
 }
 
-void MltXmlChecker::replaceWebVfxCropFilters(QString& mlt_service, QVector<MltXmlChecker::MltProperty>& properties)
+void MltXmlChecker::replaceWebVfxCropFilters(QString &mlt_service,
+                                             QVector<MltXmlChecker::MltProperty> &properties)
 {
     if (mlt_service == "webvfx") {
         auto isCrop = false;
-        for (auto& p : properties) {
+        for (auto &p : properties) {
             if (p.first == "shotcut:filter" && p.second == "webvfxCircularFrame") {
                 p.second = "cropCircle";
                 properties << MltProperty("circle", "1");
@@ -587,13 +591,13 @@ void MltXmlChecker::replaceWebVfxCropFilters(QString& mlt_service, QVector<MltXm
         }
         if (isCrop) {
             mlt_service = "qtcrop";
-            for (auto& p : properties) {
+            for (auto &p : properties) {
                 if (p.first == "resource") {
                     properties.removeOne(p);
                     break;
                 }
             }
-            for (auto& p : properties) {
+            for (auto &p : properties) {
                 if (p.first == "mlt_service") {
                     p.second = "qtcrop";
                     break;
@@ -603,12 +607,13 @@ void MltXmlChecker::replaceWebVfxCropFilters(QString& mlt_service, QVector<MltXm
     }
 }
 
-void MltXmlChecker::replaceWebVfxChoppyFilter(QString& mlt_service, QVector<MltXmlChecker::MltProperty>& properties)
+void MltXmlChecker::replaceWebVfxChoppyFilter(QString &mlt_service,
+                                              QVector<MltXmlChecker::MltProperty> &properties)
 {
     if (mlt_service == "webvfx") {
         auto isChoppy = false;
         QString shotcutFilter;
-        for (auto& p : properties) {
+        for (auto &p : properties) {
             if (p.first == "shotcut:filter") {
                 shotcutFilter = p.second;
                 if (p.second == "webvfxChoppy") {
@@ -620,13 +625,13 @@ void MltXmlChecker::replaceWebVfxChoppyFilter(QString& mlt_service, QVector<MltX
         }
         if (isChoppy) {
             mlt_service = "choppy";
-            for (auto& p : properties) {
+            for (auto &p : properties) {
                 if (p.first == "resource") {
                     properties.removeOne(p);
                     break;
                 }
             }
-            for (auto& p : properties) {
+            for (auto &p : properties) {
                 if (p.first == "mlt_service") {
                     p.second = "choppy";
                     break;
@@ -635,7 +640,7 @@ void MltXmlChecker::replaceWebVfxChoppyFilter(QString& mlt_service, QVector<MltX
         } else if (shotcutFilter.isEmpty()) {
             mlt_service = "qtext";
             m_isUpdated = true;
-            for (auto& p : properties) {
+            for (auto &p : properties) {
                 if (p.first == "resource") {
                     auto pathName = p.second;
                     auto plain = QLatin1String("plain:");
@@ -654,7 +659,7 @@ void MltXmlChecker::replaceWebVfxChoppyFilter(QString& mlt_service, QVector<MltX
                     break;
                 }
             }
-            for (auto& p : properties) {
+            for (auto &p : properties) {
                 if (p.first == "mlt_service") {
                     p.second = "qtext";
                     break;
@@ -665,14 +670,15 @@ void MltXmlChecker::replaceWebVfxChoppyFilter(QString& mlt_service, QVector<MltX
     }
 }
 
-void MltXmlChecker::checkForProxy(const QString& mlt_service, QVector<MltXmlChecker::MltProperty>& properties)
+void MltXmlChecker::checkForProxy(const QString &mlt_service,
+                                  QVector<MltXmlChecker::MltProperty> &properties)
 {
     bool isTimewarp = mlt_service == "timewarp";
     if (mlt_service.startsWith("avformat") || isTimewarp) {
         QString resource;
         QString hash;
         QString speed = "1";
-        for (auto& p : properties) {
+        for (auto &p : properties) {
             if ((!isTimewarp && p.first == "resource") || p.first == "warp_resource") {
                 QFileInfo info(p.second);
                 if (info.isRelative())
@@ -689,7 +695,7 @@ void MltXmlChecker::checkForProxy(const QString& mlt_service, QVector<MltXmlChec
 
         // Use GoPro LRV if available
         if (QFile::exists(ProxyManager::GoProProxyFilePath(resource))) {
-            for (auto& p : properties) {
+            for (auto &p : properties) {
                 if (p.first == "resource") {
                     p.second = ProxyManager::GoProProxyFilePath(resource);
                     if (isTimewarp) {
@@ -710,7 +716,7 @@ void MltXmlChecker::checkForProxy(const QString& mlt_service, QVector<MltXmlChec
         if (proxyDir.exists(fileName) || projectDir.exists(fileName)) {
             ::utime(proxyDir.filePath(fileName).toUtf8().constData(), nullptr);
             ::utime(projectDir.filePath(fileName).toUtf8().constData(), nullptr);
-            for (auto& p : properties) {
+            for (auto &p : properties) {
                 if (p.first == "resource") {
                     if (projectDir.exists(fileName)) {
                         p.second = projectDir.filePath(fileName);
@@ -727,10 +733,11 @@ void MltXmlChecker::checkForProxy(const QString& mlt_service, QVector<MltXmlChec
             properties << MltProperty(kOriginalResourceProperty, resource);
             m_isUpdated = true;
         }
-    } else if ((mlt_service == "qimage" || mlt_service == "pixbuf") && !properties.contains(MltProperty(kShotcutSequenceProperty, "1"))) {
+    } else if ((mlt_service == "qimage" || mlt_service == "pixbuf")
+               && !properties.contains(MltProperty(kShotcutSequenceProperty, "1"))) {
         QString resource;
         QString hash;
-        for (auto& p : properties) {
+        for (auto &p : properties) {
             if (p.first == "resource") {
                 QFileInfo info(p.second);
                 if (info.isRelative())
@@ -749,7 +756,7 @@ void MltXmlChecker::checkForProxy(const QString& mlt_service, QVector<MltXmlChec
         if (proxyDir.exists(fileName) || projectDir.exists(fileName)) {
             ::utime(proxyDir.filePath(fileName).toUtf8().constData(), nullptr);
             ::utime(projectDir.filePath(fileName).toUtf8().constData(), nullptr);
-            for (auto& p : properties) {
+            for (auto &p : properties) {
                 if (p.first == "resource") {
                     if (projectDir.exists(fileName)) {
                         p.second = projectDir.filePath(fileName);

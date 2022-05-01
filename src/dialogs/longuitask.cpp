@@ -19,7 +19,7 @@
 #include "mainwindow.h"
 
 static QMutex g_mutex;
-static LongUiTask* g_instance = nullptr;
+static LongUiTask *g_instance = nullptr;
 
 LongUiTask::LongUiTask(QString title)
     : QProgressDialog(title, QString(), 0, 0, &MAIN)

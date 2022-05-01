@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
- 
+
 #ifndef AUTOSAVEFILE_H
 #define AUTOSAVEFILE_H
 
@@ -31,11 +31,14 @@ public:
     explicit AutoSaveFile(const QString &filename, QObject *parent = 0);
     ~AutoSaveFile();
 
-    QString managedFileName() const { return m_managedFile; }
+    QString managedFileName() const
+    {
+        return m_managedFile;
+    }
     void changeManagedFile(const QString &filename);
 
     virtual bool open(OpenMode openmode);
-    static AutoSaveFile* getFile(const QString &filename);
+    static AutoSaveFile *getFile(const QString &filename);
     static QString path();
 
 private:

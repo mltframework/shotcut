@@ -59,7 +59,7 @@ void QmlUtilities::registerCommonTypes()
     registerTimelineItems();
 }
 
-void QmlUtilities::setCommonProperties(QQmlContext* context)
+void QmlUtilities::setCommonProperties(QQmlContext *context)
 {
     context->setContextProperty("settings", &ShotcutSettings::singleton());
     context->setContextProperty("application", &QmlApplication::singleton());
@@ -74,9 +74,9 @@ QDir QmlUtilities::qmlDir()
     return dir;
 }
 
-QQmlEngine * QmlUtilities::sharedEngine()
+QQmlEngine *QmlUtilities::sharedEngine()
 {
-    static QQmlEngine * s_engine = 0;
+    static QQmlEngine *s_engine = 0;
     if (!s_engine)
         s_engine = new QQmlEngine;
     return s_engine;

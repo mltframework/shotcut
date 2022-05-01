@@ -23,8 +23,8 @@
 #include <QPoint>
 
 namespace Mlt {
-    class Producer;
-    class Service;
+class Producer;
+class Service;
 }
 
 class ProxyManager
@@ -41,24 +41,24 @@ public:
     };
 
     static QDir dir();
-    static QString resource(Mlt::Service& producer);
-    static void generateVideoProxy(Mlt::Producer& producer, bool fullRange,
-        ScanMode scanMode = Automatic, const QPoint& aspectRatio = QPoint(), bool replace = true);
-    static void generateImageProxy(Mlt::Producer& producer, bool replace = true);
-    static bool filterXML(QString& xml, QString root);
-    static bool fileExists(Mlt::Producer& producer);
-    static bool filePending(Mlt::Producer& producer);
-    static bool isValidImage(Mlt::Producer& producer);
+    static QString resource(Mlt::Service &producer);
+    static void generateVideoProxy(Mlt::Producer &producer, bool fullRange,
+                                   ScanMode scanMode = Automatic, const QPoint &aspectRatio = QPoint(), bool replace = true);
+    static void generateImageProxy(Mlt::Producer &producer, bool replace = true);
+    static bool filterXML(QString &xml, QString root);
+    static bool fileExists(Mlt::Producer &producer);
+    static bool filePending(Mlt::Producer &producer);
+    static bool isValidImage(Mlt::Producer &producer);
     static bool isValidVideo(Mlt::Producer producer);
-    static bool generateIfNotExists(Mlt::Producer& producer, bool replace = true);
-    static const char* videoFilenameExtension();
-    static const char* pendingVideoExtension();
-    static const char* imageFilenameExtension();
-    static const char* pendingImageExtension();
+    static bool generateIfNotExists(Mlt::Producer &producer, bool replace = true);
+    static const char *videoFilenameExtension();
+    static const char *pendingVideoExtension();
+    static const char *imageFilenameExtension();
+    static const char *pendingImageExtension();
     static int resolution();
-    static void generateIfNotExistsAll(Mlt::Producer& producer);
+    static void generateIfNotExistsAll(Mlt::Producer &producer);
     static bool removePending();
-    static QString GoProProxyFilePath(const QString& resource);
+    static QString GoProProxyFilePath(const QString &resource);
 };
 
 #endif // PROXYMANAGER_H

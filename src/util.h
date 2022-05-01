@@ -29,7 +29,7 @@ class QDoubleSpinBox;
 class QTemporaryFile;
 
 namespace Mlt {
-    class Producer;
+class Producer;
 }
 
 class Util
@@ -38,31 +38,34 @@ private:
     Util() {}
 public:
     static QString baseName(const QString &filePath, bool trimQuery = false);
-    static void setColorsToHighlight(QWidget* widget, QPalette::ColorRole role = QPalette::Window);
+    static void setColorsToHighlight(QWidget *widget, QPalette::ColorRole role = QPalette::Window);
     static void showInFolder(const QString &path);
-    static bool warnIfNotWritable(const QString& filePath, QWidget* parent, const QString& caption);
-    static QString producerTitle(const Mlt::Producer& producer);
+    static bool warnIfNotWritable(const QString &filePath, QWidget *parent, const QString &caption);
+    static QString producerTitle(const Mlt::Producer &producer);
     static QString removeFileScheme(QUrl &url);
-    static const QStringList sortedFileList(const QList<QUrl>& urls);
+    static const QStringList sortedFileList(const QList<QUrl> &urls);
     static int coerceMultiple(int value, int multiple = 2);
-    static QList<QUrl> expandDirectories(const QList<QUrl>& urls);
+    static QList<QUrl> expandDirectories(const QList<QUrl> &urls);
     static bool isDecimalPoint(QChar ch);
-    static bool isNumeric(QString& str);
-    static bool convertNumericString(QString& str, QChar decimalPoint);
-    static bool convertDecimalPoints(QString& str, QChar decimalPoint);
-    static void showFrameRateDialog(const QString& caption, int numerator, QDoubleSpinBox* spinner, QWidget* parent = Q_NULLPTR);
-    static QTemporaryFile* writableTemporaryFile(const QString& filePath = QString(), const QString& templateName = QString());
-    static void applyCustomProperties(Mlt::Producer& destination, Mlt::Producer& source, int in, int out);
-    static QString getFileHash(const QString& path);
-    static QString getHash(Mlt::Properties& properties);
-    static bool hasDriveLetter(const QString& path);
+    static bool isNumeric(QString &str);
+    static bool convertNumericString(QString &str, QChar decimalPoint);
+    static bool convertDecimalPoints(QString &str, QChar decimalPoint);
+    static void showFrameRateDialog(const QString &caption, int numerator, QDoubleSpinBox *spinner,
+                                    QWidget *parent = Q_NULLPTR);
+    static QTemporaryFile *writableTemporaryFile(const QString &filePath = QString(),
+                                                 const QString &templateName = QString());
+    static void applyCustomProperties(Mlt::Producer &destination, Mlt::Producer &source, int in,
+                                      int out);
+    static QString getFileHash(const QString &path);
+    static QString getHash(Mlt::Properties &properties);
+    static bool hasDriveLetter(const QString &path);
     static QFileDialog::Options getFileDialogOptions();
     static bool isMemoryLow();
-    static QString removeQueryString(const QString& s);
+    static QString removeQueryString(const QString &s);
     static int greatestCommonDivisor(int m, int n);
-    static void normalizeFrameRate(double fps, int& numerator, int& denominator);
-    static QString textColor(const QColor& color);
-    static void cameraFrameRateSize(const QByteArray& deviceName, qreal& frameRate, QSize& size);
+    static void normalizeFrameRate(double fps, int &numerator, int &denominator);
+    static QString textColor(const QColor &color);
+    static void cameraFrameRateSize(const QByteArray &deviceName, qreal &frameRate, QSize &size);
 };
 
 #endif // UTIL_H

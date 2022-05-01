@@ -37,7 +37,7 @@
 #include "controllers/filtercontroller.h"
 #include "qmltypes/qmlproducer.h"
 
-KeyframesDock::KeyframesDock(QmlProducer* qmlProducer, QWidget *parent)
+KeyframesDock::KeyframesDock(QmlProducer *qmlProducer, QWidget *parent)
     : QDockWidget(tr("Keyframes"), parent)
     , m_qview(QmlUtilities::sharedEngine(), this)
     , m_qmlProducer(qmlProducer)
@@ -68,10 +68,12 @@ KeyframesDock::KeyframesDock(QmlProducer* qmlProducer, QWidget *parent)
 int KeyframesDock::seekPrevious()
 {
     if (m_qmlProducer) {
-        int position = m_model.previousKeyframePosition(currentParameter(), m_qmlProducer->position() + m_qmlProducer->in());
+        int position = m_model.previousKeyframePosition(currentParameter(),
+                                                        m_qmlProducer->position() + m_qmlProducer->in());
         position -= m_qmlProducer->in();
         m_qmlProducer->setPosition(position);
-        return m_model.keyframeIndex(currentParameter(), position + m_qmlProducer->in() - MAIN.filterController()->currentFilter()->in());
+        return m_model.keyframeIndex(currentParameter(),
+                                     position + m_qmlProducer->in() - MAIN.filterController()->currentFilter()->in());
     }
     return 0;
 }
@@ -79,18 +81,20 @@ int KeyframesDock::seekPrevious()
 int KeyframesDock::seekNext()
 {
     if (m_qmlProducer) {
-        int position = m_model.nextKeyframePosition(currentParameter(), m_qmlProducer->position() + m_qmlProducer->in());
+        int position = m_model.nextKeyframePosition(currentParameter(),
+                                                    m_qmlProducer->position() + m_qmlProducer->in());
         position -= m_qmlProducer->in();
         if (position > m_qmlProducer->position())
             m_qmlProducer->setPosition(position);
         else
             position = m_qmlProducer->position();
-        return m_model.keyframeIndex(currentParameter(), position + m_qmlProducer->in() - MAIN.filterController()->currentFilter()->in());
+        return m_model.keyframeIndex(currentParameter(),
+                                     position + m_qmlProducer->in() - MAIN.filterController()->currentFilter()->in());
     }
     return 0;
 }
 
-void KeyframesDock::setCurrentFilter(QmlFilter* filter, QmlMetadata* meta)
+void KeyframesDock::setCurrentFilter(QmlFilter *filter, QmlMetadata *meta)
 {
     if (!filter || !filter->producer().is_valid()) {
         filter = &m_emptyQmlFilter;
@@ -114,14 +118,14 @@ bool KeyframesDock::event(QEvent *event)
     return result;
 }
 
-void KeyframesDock::keyPressEvent(QKeyEvent* event)
+void KeyframesDock::keyPressEvent(QKeyEvent *event)
 {
     QDockWidget::keyPressEvent(event);
     if (!event->isAccepted())
         MAIN.keyPressEvent(event);
 }
 
-void KeyframesDock::keyReleaseEvent(QKeyEvent* event)
+void KeyframesDock::keyReleaseEvent(QKeyEvent *event)
 {
     QDockWidget::keyReleaseEvent(event);
     if (!event->isAccepted())

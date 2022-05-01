@@ -24,8 +24,9 @@
 AudioScale::AudioScale(QWidget *parent) :
     QWidget(parent)
 {
-    const QFont& font = QWidget::font();
-    const int fontSize = font.pointSize() - (font.pointSize() > 10? 2 : (font.pointSize() > 8? 1 : 0));
+    const QFont &font = QWidget::font();
+    const int fontSize = font.pointSize() - (font.pointSize() > 10 ? 2 : (font.pointSize() > 8 ? 1 :
+                                                                          0));
     setFont(QFont(font.family(), fontSize));
     setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
     setMinimumWidth(fontMetrics().horizontalAdvance("-60"));
@@ -33,7 +34,7 @@ AudioScale::AudioScale(QWidget *parent) :
     dbscale << 5 << 0 << -5 << -10 << -15 << -20 << -25 << -30 << -35 << -40 << -50;
 }
 
-void AudioScale::paintEvent(QPaintEvent*)
+void AudioScale::paintEvent(QPaintEvent *)
 {
     QPainter p(this);
     const int h = IEC_Scale(-dbscale[0]) * height() - 2;
@@ -46,7 +47,7 @@ void AudioScale::paintEvent(QPaintEvent*)
             }
         } else {
             double xf = IEC_Scale(i) * (double) width();
-            p.drawText(xf * 40.0/42.0 - 10, height() - 2, QString::asprintf("%d", i));
+            p.drawText(xf * 40.0 / 42.0 - 10, height() - 2, QString::asprintf("%d", i));
         }
     }
     p.end();

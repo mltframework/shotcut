@@ -42,7 +42,7 @@ RecentDock::RecentDock(QWidget *parent) :
     QStringList newList;
     bool isRepaired = false;
     foreach (QString s, m_recent) {
-        if (s.size() >=3 && s[0] == '/' && s[2] == ':') {
+        if (s.size() >= 3 && s[0] == '/' && s[2] == ':') {
             s.remove(0, 1);
             isRepaired = true;
         }
@@ -58,7 +58,7 @@ RecentDock::RecentDock(QWidget *parent) :
     ui->listWidget->setDragEnabled(true);
     ui->listWidget->setDragDropMode(QAbstractItemView::DragOnly);
     foreach (QString s, m_recent) {
-        QStandardItem* item = new QStandardItem(Util::baseName(s));
+        QStandardItem *item = new QStandardItem(Util::baseName(s));
         item->setToolTip(QDir::toNativeSeparators(s));
         m_model.appendRow(item);
     }
@@ -78,7 +78,7 @@ void RecentDock::add(const QString &s)
     QString filePath = QDir::fromNativeSeparators(s);
     if (filePath.startsWith(QDir::tempPath())) return;
     QString name = remove(s);
-    QStandardItem* item = new QStandardItem(name);
+    QStandardItem *item = new QStandardItem(name);
     item->setToolTip(QDir::toNativeSeparators(s));
     m_model.insertRow(0, item);
     m_recent.prepend(filePath);
@@ -87,7 +87,7 @@ void RecentDock::add(const QString &s)
     Settings.setRecent(m_recent);
 }
 
-void RecentDock::on_listWidget_activated(const QModelIndex& i)
+void RecentDock::on_listWidget_activated(const QModelIndex &i)
 {
     ui->listWidget->setCurrentIndex(QModelIndex());
     emit itemActivated(m_proxyModel.itemData(i)[Qt::ToolTipRole].toString());
@@ -100,7 +100,7 @@ QString RecentDock::remove(const QString &s)
     Settings.setRecent(m_recent);
 
     QString name = Util::baseName(filePath);
-    QList<QStandardItem*> items = m_model.findItems(name);
+    QList<QStandardItem *> items = m_model.findItems(name);
     if (items.count() > 0)
         m_model.removeRow(items.first()->row());
     return name;
@@ -121,7 +121,7 @@ void RecentDock::keyPressEvent(QKeyEvent *event)
     }
 }
 
-void RecentDock::on_lineEdit_textChanged(const QString& search)
+void RecentDock::on_lineEdit_textChanged(const QString &search)
 {
     m_proxyModel.setFilterFixedString(search);
 }
@@ -138,7 +138,7 @@ void RecentDock::on_actionDelete_triggered()
     }
 }
 
-void RecentDock::on_listWidget_customContextMenuRequested(const QPoint& pos)
+void RecentDock::on_listWidget_customContextMenuRequested(const QPoint &pos)
 {
     if (ui->listWidget->currentIndex().isValid()) {
         QMenu menu(this);

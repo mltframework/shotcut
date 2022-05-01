@@ -39,7 +39,7 @@ AvfoundationProducerWidget::AvfoundationProducerWidget(QWidget *parent) :
 
 #ifdef Q_OS_MAC
     auto currentVideo = 1;
-    for (const auto& cameraInfo : QCameraInfo::availableCameras()) {
+    for (const auto &cameraInfo : QCameraInfo::availableCameras()) {
         if (Settings.videoInput() == cameraInfo.description()) {
             currentVideo = ui->videoCombo->count();
         }
@@ -50,7 +50,7 @@ AvfoundationProducerWidget::AvfoundationProducerWidget(QWidget *parent) :
         ui->videoCombo->addItem(QString("Capture screen %1").arg(i));
 #endif
     auto currentAudio = 1;
-    for (const auto& deviceInfo : QAudioDeviceInfo::availableDevices(QAudio::AudioInput)) {
+    for (const auto &deviceInfo : QAudioDeviceInfo::availableDevices(QAudio::AudioInput)) {
         if (Settings.audioInput() == deviceInfo.deviceName()) {
             currentAudio = ui->audioCombo->count();
         }
@@ -69,7 +69,7 @@ AvfoundationProducerWidget::~AvfoundationProducerWidget()
     delete ui;
 }
 
-Mlt::Producer *AvfoundationProducerWidget::newProducer(Mlt::Profile& profile)
+Mlt::Producer *AvfoundationProducerWidget::newProducer(Mlt::Profile &profile)
 {
     QString resource;
     qreal frameRate = 30.0;
@@ -77,14 +77,15 @@ Mlt::Producer *AvfoundationProducerWidget::newProducer(Mlt::Profile& profile)
     Util::cameraFrameRateSize(ui->videoCombo->currentData().toByteArray(), frameRate, size);
     if (ui->videoCombo->currentIndex()) {
         resource = QString("avfoundation:%1:%2?pixel_format=yuyv422&framerate=%3&video_size=%4x%5")
-            .arg(ui->videoCombo->currentText().replace(tr("None"), "none"))
-            .arg(ui->audioCombo->currentText().replace(tr("None"), "none"))
-            .arg(frameRate).arg(size.width()).arg(size.height());
+                   .arg(ui->videoCombo->currentText().replace(tr("None"), "none"))
+                   .arg(ui->audioCombo->currentText().replace(tr("None"), "none"))
+                   .arg(frameRate).arg(size.width()).arg(size.height());
     } else {
-        resource = QString("avfoundation:none:%1").arg(ui->audioCombo->currentText().replace(tr("None"), "none"));
+        resource = QString("avfoundation:none:%1").arg(ui->audioCombo->currentText().replace(tr("None"),
+                                                                                             "none"));
     }
     LOG_DEBUG() << resource;
-    Mlt::Producer* p = new Mlt::Producer(profile, resource.toUtf8().constData());
+    Mlt::Producer *p = new Mlt::Producer(profile, resource.toUtf8().constData());
     if (!p || !p->is_valid()) {
         delete p;
         p = new Mlt::Producer(profile, "color:");
@@ -138,7 +139,7 @@ void AvfoundationProducerWidget::on_videoCombo_activated(int index)
         emit producerChanged(0);
         QCoreApplication::processEvents();
 
-        Mlt::Producer* p = newProducer(MLT.profile());
+        Mlt::Producer *p = newProducer(MLT.profile());
         AbstractProducerWidget::setProducer(p);
         MLT.setProducer(p);
         MLT.play();

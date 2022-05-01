@@ -21,15 +21,15 @@ WindowsTaskbarButton::WindowsTaskbarButton()
 {
 }
 
-WindowsTaskbarButton& WindowsTaskbarButton::getInstance()
+WindowsTaskbarButton &WindowsTaskbarButton::getInstance()
 {
-    static WindowsTaskbarButton* instance = 0;
+    static WindowsTaskbarButton *instance = 0;
     if (!instance)
         instance = new WindowsTaskbarButton();
     return *instance;
 }
 
-void WindowsTaskbarButton::setParentWindow(QWidget* parent)
+void WindowsTaskbarButton::setParentWindow(QWidget *parent)
 {
     m_taskbarButton = new QWinTaskbarButton(parent);
     m_taskbarButton->setWindow(parent->windowHandle());
@@ -38,8 +38,7 @@ void WindowsTaskbarButton::setParentWindow(QWidget* parent)
 
 void WindowsTaskbarButton::setProgress(int progress)
 {
-    if (m_taskbarProgress != NULL)
-    {
+    if (m_taskbarProgress != NULL) {
         m_taskbarProgress->setVisible(true);
         m_taskbarProgress->setValue(progress);
     }
@@ -47,8 +46,7 @@ void WindowsTaskbarButton::setProgress(int progress)
 
 void WindowsTaskbarButton::resetProgress()
 {
-    if (m_taskbarProgress != NULL)
-    {
+    if (m_taskbarProgress != NULL) {
         m_taskbarProgress->setVisible(false);
         m_taskbarProgress->reset();
     }

@@ -60,10 +60,10 @@ void ServicePresetWidget::loadPresets()
     }
 }
 
-static void saveProperties(const Mlt::Properties& properties, const QString& filePath)
+static void saveProperties(const Mlt::Properties &properties, const QString &filePath)
 {
     // Save properties as YAML to file.
-    char* yamlStr = const_cast<Mlt::Properties&>(properties).serialise_yaml();
+    char *yamlStr = const_cast<Mlt::Properties &>(properties).serialise_yaml();
     QString yaml = yamlStr;
     free(yamlStr);
     QFile yamlFile(filePath);
@@ -75,12 +75,12 @@ static void saveProperties(const Mlt::Properties& properties, const QString& fil
     }
 }
 
-void ServicePresetWidget::saveDefaultPreset(const Mlt::Properties& properties)
+void ServicePresetWidget::saveDefaultPreset(const Mlt::Properties &properties)
 {
     savePreset(properties, tr("(defaults)"));
 }
 
-void ServicePresetWidget::savePreset(const Mlt::Properties& properties)
+void ServicePresetWidget::savePreset(const Mlt::Properties &properties)
 {
     QInputDialog dialog(this);
     dialog.setInputMode(QInputDialog::TextInput);
@@ -115,7 +115,7 @@ void ServicePresetWidget::savePreset(const Mlt::Properties& properties)
     }
 }
 
-void ServicePresetWidget::savePreset(const Mlt::Properties& properties, QString name)
+void ServicePresetWidget::savePreset(const Mlt::Properties &properties, QString name)
 {
     QDir dir(Settings.appDataLocation());
 
@@ -136,7 +136,7 @@ void ServicePresetWidget::on_presetCombo_activated(int index)
 {
     QString preset = ui->presetCombo->itemText(index);
     QDir dir(Settings.appDataLocation());
-    Mlt::Properties* properties;
+    Mlt::Properties *properties;
 
     if (!dir.cd("presets") || !dir.cd(m_widgetName))
         return;

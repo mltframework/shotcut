@@ -23,7 +23,7 @@
 #include "abstractproducerwidget.h"
 
 namespace Ui {
-    class PulseAudioWidget;
+class PulseAudioWidget;
 }
 
 class PulseAudioWidget : public QWidget, public AbstractProducerWidget
@@ -35,7 +35,7 @@ public:
     ~PulseAudioWidget();
 
     // AbstractProducerWidget overrides
-    Mlt::Producer* newProducer(Mlt::Profile& profile);
+    Mlt::Producer *newProducer(Mlt::Profile &profile);
 
 private:
     Ui::PulseAudioWidget *ui;

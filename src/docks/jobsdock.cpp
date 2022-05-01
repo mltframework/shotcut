@@ -30,7 +30,7 @@ JobsDock::JobsDock(QWidget *parent) :
     ui->setupUi(this);
     toggleViewAction()->setIcon(windowIcon());
     ui->treeView->setModel(&JOBS);
-    QHeaderView* header = ui->treeView->header();
+    QHeaderView *header = ui->treeView->header();
     header->setStretchLastSection(false);
     header->setSectionResizeMode(JobQueue::COLUMN_ICON, QHeaderView::Fixed);
     ui->treeView->setColumnWidth(JobQueue::COLUMN_ICON, 24);
@@ -56,30 +56,31 @@ AbstractJob *JobsDock::currentJob() const
 void JobsDock::onJobAdded()
 {
     QModelIndex index = JOBS.index(JOBS.rowCount() - 1, JobQueue::COLUMN_OUTPUT);
-    QProgressBar* progressBar = new QProgressBar;
+    QProgressBar *progressBar = new QProgressBar;
     progressBar->setMinimum(0);
     progressBar->setMaximum(100);
     progressBar->setAutoFillBackground(true);
     progressBar->setTextVisible(false);
-    QHBoxLayout* layout = new QHBoxLayout(progressBar);
-    QLabel* label = new QLabel;
+    QHBoxLayout *layout = new QHBoxLayout(progressBar);
+    QLabel *label = new QLabel;
     layout->addWidget(label);
     layout->setContentsMargins(0, 0, 0, 0);
     ui->treeView->setIndexWidget(index, progressBar);
     ui->treeView->resizeColumnToContents(JobQueue::COLUMN_STATUS);
     label->setToolTip(JOBS.data(index).toString());
     label->setText(label->fontMetrics().elidedText(
-        JOBS.data(index).toString(), Qt::ElideMiddle, ui->treeView->columnWidth(JobQueue::COLUMN_OUTPUT)));
-    connect(JOBS.jobFromIndex(index), SIGNAL(progressUpdated(QStandardItem*, int)), SLOT(onProgressUpdated(QStandardItem*, int)));
+                       JOBS.data(index).toString(), Qt::ElideMiddle, ui->treeView->columnWidth(JobQueue::COLUMN_OUTPUT)));
+    connect(JOBS.jobFromIndex(index), SIGNAL(progressUpdated(QStandardItem *, int)),
+            SLOT(onProgressUpdated(QStandardItem *, int)));
     show();
     raise();
 }
 
-void JobsDock::onProgressUpdated(QStandardItem* item, int percent)
+void JobsDock::onProgressUpdated(QStandardItem *item, int percent)
 {
     if (item) {
         QModelIndex index = JOBS.index(item->row(), JobQueue::COLUMN_OUTPUT);
-        QProgressBar* progressBar = qobject_cast<QProgressBar*>(ui->treeView->indexWidget(index));
+        QProgressBar *progressBar = qobject_cast<QProgressBar *>(ui->treeView->indexWidget(index));
         if (progressBar)
             progressBar->setValue(percent);
     }
@@ -88,20 +89,21 @@ void JobsDock::onProgressUpdated(QStandardItem* item, int percent)
 void JobsDock::resizeEvent(QResizeEvent *event)
 {
     QDockWidget::resizeEvent(event);
-    foreach (QLabel* label, ui->treeView->findChildren<QLabel*>()) {
+    foreach (QLabel *label, ui->treeView->findChildren<QLabel *>()) {
         label->setText(label->fontMetrics().elidedText(
-            label->toolTip(), Qt::ElideMiddle, ui->treeView->columnWidth(JobQueue::COLUMN_OUTPUT)));
+                           label->toolTip(), Qt::ElideMiddle, ui->treeView->columnWidth(JobQueue::COLUMN_OUTPUT)));
     }
-    
+
 }
 
 void JobsDock::on_treeView_customContextMenuRequested(const QPoint &pos)
 {
     QModelIndex index = ui->treeView->currentIndex();
     QMenu menu(this);
-    AbstractJob* job = index.isValid()? JOBS.jobFromIndex(index) : nullptr;
+    AbstractJob *job = index.isValid() ? JOBS.jobFromIndex(index) : nullptr;
     if (job) {
-        if (job->ran() && job->state() == QProcess::NotRunning && job->exitStatus() == QProcess::NormalExit) {
+        if (job->ran() && job->state() == QProcess::NotRunning
+                && job->exitStatus() == QProcess::NormalExit) {
             menu.addActions(job->successActions());
         }
         if (job->stopped() || (JOBS.isPaused() && !job->ran()))
@@ -127,7 +129,7 @@ void JobsDock::on_actionStopJob_triggered()
 {
     QModelIndex index = ui->treeView->currentIndex();
     if (!index.isValid()) return;
-    AbstractJob* job = JOBS.jobFromIndex(index);
+    AbstractJob *job = JOBS.jobFromIndex(index);
     if (job) job->stop();
 }
 
@@ -135,7 +137,7 @@ void JobsDock::on_actionViewLog_triggered()
 {
     QModelIndex index = ui->treeView->currentIndex();
     if (!index.isValid()) return;
-    AbstractJob* job = JOBS.jobFromIndex(index);
+    AbstractJob *job = JOBS.jobFromIndex(index);
     if (job) {
         TextViewerDialog dialog(this);
         dialog.setWindowTitle(tr("Job Log"));
@@ -156,7 +158,7 @@ void JobsDock::on_actionRun_triggered()
 {
     QModelIndex index = ui->treeView->currentIndex();
     if (!index.isValid()) return;
-    AbstractJob* job = JOBS.jobFromIndex(index);
+    AbstractJob *job = JOBS.jobFromIndex(index);
     if (job) job->start();
 }
 
@@ -167,9 +169,10 @@ void JobsDock::on_menuButton_clicked()
 
 void JobsDock::on_treeView_doubleClicked(const QModelIndex &index)
 {
-    AbstractJob* job = JOBS.jobFromIndex(index);
-    if (job && job->ran() && job->state() == QProcess::NotRunning && job->exitStatus() == QProcess::NormalExit) {
-        foreach (QAction* action, job->successActions()) {
+    AbstractJob *job = JOBS.jobFromIndex(index);
+    if (job && job->ran() && job->state() == QProcess::NotRunning
+            && job->exitStatus() == QProcess::NormalExit) {
+        foreach (QAction *action, job->successActions()) {
             if (action->text() == "Open") {
                 action->trigger();
                 break;
@@ -193,7 +196,7 @@ void JobsDock::on_actionRemoveFinished_triggered()
 void JobsDock::on_JobsDock_visibilityChanged(bool visible)
 {
     if (visible) {
-        foreach (QLabel* label, ui->treeView->findChildren<QLabel*>()) {
+        foreach (QLabel *label, ui->treeView->findChildren<QLabel *>()) {
             label->setText(label->fontMetrics().elidedText(
                                label->toolTip(), Qt::ElideMiddle, ui->treeView->columnWidth(JobQueue::COLUMN_OUTPUT)));
         }

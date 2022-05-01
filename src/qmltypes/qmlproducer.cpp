@@ -21,10 +21,10 @@
 #include "models/audiolevelstask.h"
 #include "mainwindow.h"
 
-static const char* kWidthProperty = "meta.media.width";
-static const char* kHeightProperty = "meta.media.height";
-static const char* kAspectNumProperty = "meta.media.sample_aspect_num";
-static const char* kAspectDenProperty = "meta.media.sample_aspect_den";
+static const char *kWidthProperty = "meta.media.width";
+static const char *kHeightProperty = "meta.media.height";
+static const char *kAspectNumProperty = "meta.media.sample_aspect_num";
+static const char *kAspectDenProperty = "meta.media.sample_aspect_den";
 
 
 QmlProducer::QmlProducer(QObject *parent)
@@ -90,7 +90,7 @@ QVariant QmlProducer::audioLevels()
 {
     if (!m_producer.is_valid()) return QVariant();
     if (m_producer.get_data(kAudioLevelsProperty))
-        return QVariant::fromValue(*((QVariantList*) m_producer.get_data(kAudioLevelsProperty)));
+        return QVariant::fromValue(*((QVariantList *) m_producer.get_data(kAudioLevelsProperty)));
     else
         return QVariant();
 }
@@ -103,7 +103,7 @@ int QmlProducer::fadeIn()
         filter.reset(MLT.getFilter("fadeInBrightness", &m_producer));
     if (!filter || !filter->is_valid())
         filter.reset(MLT.getFilter("fadeInMovit", &m_producer));
-    return (filter && filter->is_valid())? filter->get_length() : 0;
+    return (filter && filter->is_valid()) ? filter->get_length() : 0;
 }
 
 int QmlProducer::fadeOut()
@@ -114,7 +114,7 @@ int QmlProducer::fadeOut()
         filter.reset(MLT.getFilter("fadeOutBrightness", &m_producer));
     if (!filter || !filter->is_valid())
         filter.reset(MLT.getFilter("fadeOutMovit", &m_producer));
-    return (filter && filter->is_valid())? filter->get_length() : 0;
+    return (filter && filter->is_valid()) ? filter->get_length() : 0;
 }
 
 double QmlProducer::speed()
@@ -156,7 +156,7 @@ Q_INVOKABLE bool QmlProducer::outOfBounds()
     return m_position < 0 || m_position > duration();
 }
 
-void QmlProducer::audioLevelsReady(const QModelIndex& index)
+void QmlProducer::audioLevelsReady(const QModelIndex &index)
 {
     Q_UNUSED(index)
     emit audioLevelsChanged();
@@ -234,7 +234,7 @@ QRectF QmlProducer::getRect(QString name, int position)
     }
 }
 
-void QmlProducer::setProducer(Mlt::Producer& producer)
+void QmlProducer::setProducer(Mlt::Producer &producer)
 {
     m_producer = producer;
     if (m_producer.is_valid())

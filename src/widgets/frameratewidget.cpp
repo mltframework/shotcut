@@ -23,11 +23,11 @@
 #include <QDoubleSpinBox>
 #include <QHBoxLayout>
 
-FrameRateWidget::FrameRateWidget(QWidget* parent)
-  : QWidget(parent)
-  , m_fps(0.0)
+FrameRateWidget::FrameRateWidget(QWidget *parent)
+    : QWidget(parent)
+    , m_fps(0.0)
 {
-    QHBoxLayout* layout = new QHBoxLayout(this);
+    QHBoxLayout *layout = new QHBoxLayout(this);
     layout->setContentsMargins(0, 0, 0, 0);
     layout->setSpacing(0);
 
@@ -51,7 +51,8 @@ FrameRateWidget::FrameRateWidget(QWidget* parent)
     m_fpsComboBox->addItem("50");
     m_fpsComboBox->addItem("59.940060");
     m_fpsComboBox->addItem("60");
-    connect(m_fpsComboBox, SIGNAL(currentTextChanged(const QString&)), this, SLOT(on_fpsComboBox_activated(const QString&)));
+    connect(m_fpsComboBox, SIGNAL(currentTextChanged(const QString &)), this,
+            SLOT(on_fpsComboBox_activated(const QString &)));
     layout->addWidget(m_fpsComboBox);
 }
 

@@ -25,7 +25,7 @@
 class AudioWaveformScopeWidget Q_DECL_FINAL : public ScopeWidget
 {
     Q_OBJECT
-    
+
 public:
     explicit AudioWaveformScopeWidget();
     ~AudioWaveformScopeWidget();
@@ -33,11 +33,11 @@ public:
 
 private:
     // Functions run in scope thread.
-    void refreshScope(const QSize& size, bool full) Q_DECL_OVERRIDE;
-    void createGrid(const QSize& size);
-    
+    void refreshScope(const QSize &size, bool full) Q_DECL_OVERRIDE;
+    void createGrid(const QSize &size);
+
     // Functions run in GUI thread.
-    void paintEvent(QPaintEvent*) Q_DECL_OVERRIDE;
+    void paintEvent(QPaintEvent *) Q_DECL_OVERRIDE;
     void mouseMoveEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
     void leaveEvent(QEvent *event) Q_DECL_OVERRIDE;
 

@@ -39,41 +39,45 @@ public:
 
     explicit AttachedFiltersModel(QObject *parent = 0);
 
-    Mlt::Service* getService(int row) const;
-    QmlMetadata* getMetadata(int row) const;
-    void setProducer(Mlt::Producer* producer = 0);
+    Mlt::Service *getService(int row) const;
+    QmlMetadata *getMetadata(int row) const;
+    void setProducer(Mlt::Producer *producer = 0);
     QString producerTitle() const;
     bool isProducerSelected() const;
     bool supportsLinks() const;
-    Mlt::Producer* producer() const { return m_producer.data(); }
+    Mlt::Producer *producer() const
+    {
+        return m_producer.data();
+    }
 
     // QAbstractListModel Implementation
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
     Qt::ItemFlags flags(const QModelIndex &index) const;
     QVariant data(const QModelIndex &index, int role) const;
-    bool setData(const QModelIndex& index, const QVariant& value, int role = Qt::EditRole);
+    bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole);
     QHash<int, QByteArray> roleNames() const;
     Qt::DropActions supportedDropActions() const;
     bool insertRows(int row, int count, const QModelIndex &parent);
     bool removeRows(int row, int count, const QModelIndex &parent);
-    bool moveRows(const QModelIndex & sourceParent, int sourceRow, int count, const QModelIndex & destinationParent, int destinationRow);
- 
+    bool moveRows(const QModelIndex &sourceParent, int sourceRow, int count,
+                  const QModelIndex &destinationParent, int destinationRow);
+
 signals:
     void changed();
     void duplicateAddFailed(int index);
     void trackTitleChanged();
     void isProducerSelectedChanged();
     void supportsLinksChanged();
-    void addedOrRemoved(Mlt::Producer*);
+    void addedOrRemoved(Mlt::Producer *);
     void requestConvert(QString, bool set709Convert, bool withSubClip);
 
 public slots:
-    void add(QmlMetadata* meta);
+    void add(QmlMetadata *meta);
     void remove(int row);
     bool move(int fromRow, int toRow);
 
 private:
-    static void producerChanged(mlt_properties owner, AttachedFiltersModel* model);
+    static void producerChanged(mlt_properties owner, AttachedFiltersModel *model);
     void reset(Mlt::Producer *producer = 0);
     int mltFilterIndex(int row) const;
     int mltLinkIndex(int row) const;
@@ -83,7 +87,7 @@ private:
     int m_normFilterCount;
     QScopedPointer<Mlt::Producer> m_producer;
     QScopedPointer<Mlt::Event> m_event;
-    typedef QList<QmlMetadata*> MetadataList;
+    typedef QList<QmlMetadata *> MetadataList;
     MetadataList m_metaList;
 };
 

@@ -22,7 +22,7 @@
 #include "mltcontroller.h"
 #include <MltProfile.h>
 
-void setLength(Mlt::Properties* p, int length)
+void setLength(Mlt::Properties *p, int length)
 {
     p->set("length", p->frames_to_time(length, mlt_time_clock));
     p->set("out", length - 1);
@@ -89,9 +89,9 @@ QString CountProducerWidget::currentBackground() const
     return ui->backgroundCombo->itemData(ui->backgroundCombo->currentIndex()).toString();
 }
 
-Mlt::Producer* CountProducerWidget::newProducer(Mlt::Profile& profile)
+Mlt::Producer *CountProducerWidget::newProducer(Mlt::Profile &profile)
 {
-    Mlt::Producer* p = new Mlt::Producer(profile, "count:");
+    Mlt::Producer *p = new Mlt::Producer(profile, "count:");
     p->set("direction", currentDirection().toLatin1().constData());
     p->set("style", currentStyle().toLatin1().constData());
     p->set("sound", currentSound().toLatin1().constData());
@@ -115,7 +115,7 @@ Mlt::Properties CountProducerWidget::getPreset() const
     return p;
 }
 
-void CountProducerWidget::loadPreset(Mlt::Properties& p)
+void CountProducerWidget::loadPreset(Mlt::Properties &p)
 {
     if (!p.get("direction") || !p.get("style")) return;
     int index = -1;
@@ -205,9 +205,9 @@ void CountProducerWidget::on_durationSpinBox_editingFinished()
     }
 }
 
-void CountProducerWidget::on_preset_selected(void* p)
+void CountProducerWidget::on_preset_selected(void *p)
 {
-    Mlt::Properties* properties = (Mlt::Properties*) p;
+    Mlt::Properties *properties = (Mlt::Properties *) p;
     loadPreset(*properties);
     delete properties;
 }
@@ -219,5 +219,6 @@ void CountProducerWidget::on_preset_saveClicked()
 
 QString CountProducerWidget::detail() const
 {
-    return QString(tr("Count: %1 %2")).arg(ui->directionCombo->currentText()).arg(ui->styleCombo->currentText());
+    return QString(tr("Count: %1 %2")).arg(ui->directionCombo->currentText()).arg(
+               ui->styleCombo->currentText());
 }

@@ -26,7 +26,8 @@
 #include <Logger.h>
 
 ThumbnailProvider::ThumbnailProvider()
-    : QQuickImageProvider(QQmlImageProviderBase::Image, QQmlImageProviderBase::ForceAsynchronousImageLoading)
+    : QQuickImageProvider(QQmlImageProviderBase::Image,
+                          QQmlImageProviderBase::ForceAsynchronousImageLoading)
     , m_profile("atsc_720p_60")
 {
 }
@@ -80,8 +81,8 @@ QImage ThumbnailProvider::requestImage(const QString &id, QSize *size, const QSi
     return result;
 }
 
-QString ThumbnailProvider::cacheKey(Mlt::Properties& properties, const QString& service,
-                                    const QString& resource, const QString& hash, int frameNumber)
+QString ThumbnailProvider::cacheKey(Mlt::Properties &properties, const QString &service,
+                                    const QString &resource, const QString &hash, int frameNumber)
 {
     QString time = properties.frames_to_time(frameNumber, mlt_time_clock);
     // Reduce the precision to centiseconds to increase chance for cache hit
@@ -90,9 +91,9 @@ QString ThumbnailProvider::cacheKey(Mlt::Properties& properties, const QString& 
     QString key;
     if (hash.isEmpty()) {
         key = QString("%1 %2 %3")
-                .arg(service)
-                .arg(resource)
-                .arg(time);
+              .arg(service)
+              .arg(resource)
+              .arg(time);
         QCryptographicHash hash(QCryptographicHash::Sha1);
         hash.addData(key.toUtf8());
         key = hash.result().toHex();
@@ -102,7 +103,8 @@ QString ThumbnailProvider::cacheKey(Mlt::Properties& properties, const QString& 
     return key;
 }
 
-QImage ThumbnailProvider::makeThumbnail(Mlt::Producer &producer, int frameNumber, const QSize& requestedSize)
+QImage ThumbnailProvider::makeThumbnail(Mlt::Producer &producer, int frameNumber,
+                                        const QSize &requestedSize)
 {
     Mlt::Filter scaler(m_profile, "swscale");
     Mlt::Filter padder(m_profile, "resize");

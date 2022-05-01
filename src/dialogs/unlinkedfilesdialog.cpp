@@ -24,7 +24,7 @@
 #include <QFileDialog>
 #include <QStringList>
 
-UnlinkedFilesDialog::UnlinkedFilesDialog(QWidget* parent) :
+UnlinkedFilesDialog::UnlinkedFilesDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::UnlinkedFilesDialog)
 {
@@ -36,7 +36,7 @@ UnlinkedFilesDialog::~UnlinkedFilesDialog()
     delete ui;
 }
 
-void UnlinkedFilesDialog::setModel(QStandardItemModel& model)
+void UnlinkedFilesDialog::setModel(QStandardItemModel &model)
 {
     QStringList headers;
     headers << tr("Missing");
@@ -46,7 +46,7 @@ void UnlinkedFilesDialog::setModel(QStandardItemModel& model)
     ui->tableView->resizeColumnsToContents();
 }
 
-void UnlinkedFilesDialog::on_tableView_doubleClicked(const QModelIndex& index)
+void UnlinkedFilesDialog::on_tableView_doubleClicked(const QModelIndex &index)
 {
     // Use File Open dialog to choose a replacement.
     QString path = Settings.openPath();
@@ -54,9 +54,9 @@ void UnlinkedFilesDialog::on_tableView_doubleClicked(const QModelIndex& index)
     path.append("/*");
 #endif
     QStringList filenames = QFileDialog::getOpenFileNames(this, tr("Open File"), path,
-        QString(), nullptr, Util::getFileDialogOptions());
+                                                          QString(), nullptr, Util::getFileDialogOptions());
     if (filenames.length() > 0) {
-        QAbstractItemModel* model = ui->tableView->model();
+        QAbstractItemModel *model = ui->tableView->model();
 
         QModelIndex firstColIndex = model->index(index.row(), MltXmlChecker::MissingColumn);
         QModelIndex secondColIndex = model->index(index.row(), MltXmlChecker::ReplacementColumn);
@@ -83,49 +83,51 @@ void UnlinkedFilesDialog::on_tableView_doubleClicked(const QModelIndex& index)
     }
 }
 
-bool UnlinkedFilesDialog::lookInDir(const QDir& dir, bool recurse)
+bool UnlinkedFilesDialog::lookInDir(const QDir &dir, bool recurse)
 {
     LOG_DEBUG() << dir.canonicalPath();
     // returns true if outstanding is > 0
     unsigned outstanding = 0;
-    QAbstractItemModel* model = ui->tableView->model();
+    QAbstractItemModel *model = ui->tableView->model();
     for (int row = 0; row < model->rowCount(); row++) {
         QModelIndex replacementIndex = model->index(row, MltXmlChecker::ReplacementColumn);
         if (model->data(replacementIndex, MltXmlChecker::ShotcutHashRole).isNull())
             ++outstanding;
     }
     if (outstanding)
-    foreach (const QString& fileName, dir.entryList(QDir::Files | QDir::Readable | QDir::NoDotAndDotDot)) {
-        QString hash = Util::getFileHash(dir.absoluteFilePath(fileName));
-        for (int row = 0; row < model->rowCount(); row++) {
-            QModelIndex replacementIndex = model->index(row, MltXmlChecker::ReplacementColumn);
-            if (model->data(replacementIndex, MltXmlChecker::ShotcutHashRole).isNull()) {
-                QModelIndex missingIndex = model->index(row, MltXmlChecker::MissingColumn);
-                QFileInfo missingInfo(model->data(missingIndex).toString());
-                QString missingHash = model->data(missingIndex, MltXmlChecker::ShotcutHashRole).toString();
-                if (hash == missingHash || fileName == missingInfo.fileName()) {
-                    if (hash == missingHash) {
-                        QIcon icon(":/icons/oxygen/32x32/status/task-complete.png");
-                        model->setData(missingIndex, icon, Qt::DecorationRole);
-                    } else {
-                        QIcon icon(":/icons/oxygen/32x32/status/task-attempt.png");
-                        model->setData(missingIndex, icon, Qt::DecorationRole);
+        foreach (const QString &fileName,
+                 dir.entryList(QDir::Files | QDir::Readable | QDir::NoDotAndDotDot)) {
+            QString hash = Util::getFileHash(dir.absoluteFilePath(fileName));
+            for (int row = 0; row < model->rowCount(); row++) {
+                QModelIndex replacementIndex = model->index(row, MltXmlChecker::ReplacementColumn);
+                if (model->data(replacementIndex, MltXmlChecker::ShotcutHashRole).isNull()) {
+                    QModelIndex missingIndex = model->index(row, MltXmlChecker::MissingColumn);
+                    QFileInfo missingInfo(model->data(missingIndex).toString());
+                    QString missingHash = model->data(missingIndex, MltXmlChecker::ShotcutHashRole).toString();
+                    if (hash == missingHash || fileName == missingInfo.fileName()) {
+                        if (hash == missingHash) {
+                            QIcon icon(":/icons/oxygen/32x32/status/task-complete.png");
+                            model->setData(missingIndex, icon, Qt::DecorationRole);
+                        } else {
+                            QIcon icon(":/icons/oxygen/32x32/status/task-attempt.png");
+                            model->setData(missingIndex, icon, Qt::DecorationRole);
+                        }
+                        QString filePath = QDir::toNativeSeparators(dir.absoluteFilePath(fileName));
+                        model->setData(replacementIndex, filePath);
+                        model->setData(replacementIndex, filePath, Qt::ToolTipRole);
+                        model->setData(replacementIndex, hash, MltXmlChecker::ShotcutHashRole);
+                        QCoreApplication::processEvents();
+                        if (--outstanding)
+                            break;
+                        else
+                            return false;
                     }
-                    QString filePath = QDir::toNativeSeparators(dir.absoluteFilePath(fileName));
-                    model->setData(replacementIndex, filePath);
-                    model->setData(replacementIndex, filePath, Qt::ToolTipRole);
-                    model->setData(replacementIndex, hash, MltXmlChecker::ShotcutHashRole);
-                    QCoreApplication::processEvents();
-                    if (--outstanding)
-                        break;
-                    else
-                        return false;
                 }
             }
         }
-    }
     if (outstanding && recurse) {
-        foreach (const QString& dirName, dir.entryList(QDir::Dirs | QDir::Executable | QDir::NoDotAndDotDot)) {
+        foreach (const QString &dirName,
+                 dir.entryList(QDir::Dirs | QDir::Executable | QDir::NoDotAndDotDot)) {
             if (!lookInDir(dir.absoluteFilePath(dirName), true))
                 break;
         }
@@ -136,7 +138,7 @@ bool UnlinkedFilesDialog::lookInDir(const QDir& dir, bool recurse)
 void UnlinkedFilesDialog::on_searchFolderButton_clicked()
 {
     QString dirName = QFileDialog::getExistingDirectory(this, windowTitle(), Settings.openPath(),
-        Util::getFileDialogOptions());
+                                                        Util::getFileDialogOptions());
     if (!dirName.isEmpty()) {
         lookInDir(dirName);
     }

@@ -37,7 +37,7 @@ protected:
     void keyPressEvent(QKeyEvent *event);
 
 private:
-    QRegExpValidator* m_validator;
+    QRegExpValidator *m_validator;
 };
 
 class TimeSpinBoxLineEdit : public QLineEdit

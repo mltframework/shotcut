@@ -27,18 +27,18 @@
 class QLabel;
 class ScrubBar;
 namespace Mlt {
-    class Producer;
+class Producer;
 }
 
 class ProducerPreviewWidget : public QWidget
 {
     Q_OBJECT
-    
+
 public:
     explicit ProducerPreviewWidget(double dar);
     virtual ~ProducerPreviewWidget();
 
-    void start(Mlt::Producer* producer);
+    void start(Mlt::Producer *producer);
     void stop();
     void showText(QString text);
 
@@ -46,18 +46,17 @@ private slots:
     void seeked(int);
 
 private:
-    void timerEvent(QTimerEvent*) override;
+    void timerEvent(QTimerEvent *) override;
     void frameGeneratorThread();
 
     QSize m_previewSize;
-    QLabel* m_imageLabel;
-    ScrubBar* m_scrubber;
-    QLabel* m_posLabel;
+    QLabel *m_imageLabel;
+    ScrubBar *m_scrubber;
+    QLabel *m_posLabel;
     int m_seekTo;
     int m_timerId;
-    Mlt::Producer* m_producer;
-    struct QueueItem
-    {
+    Mlt::Producer *m_producer;
+    struct QueueItem {
         QPixmap pixmap;
         int position;
         QString positionText;

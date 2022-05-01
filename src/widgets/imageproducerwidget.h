@@ -23,7 +23,7 @@
 #include "mltcontroller.h"
 
 namespace Ui {
-    class ImageProducerWidget;
+class ImageProducerWidget;
 }
 
 class ImageProducerWidget : public QWidget, public AbstractProducerWidget
@@ -35,11 +35,11 @@ public:
     ~ImageProducerWidget();
 
     // AbstractProducerWidget overrides
-    Mlt::Producer* newProducer(Mlt::Profile&);
-    virtual void setProducer(Mlt::Producer*);
+    Mlt::Producer *newProducer(Mlt::Profile &);
+    virtual void setProducer(Mlt::Producer *);
 
 signals:
-    void producerChanged(Mlt::Producer*);
+    void producerChanged(Mlt::Producer *);
     void producerReopened(bool play);
     void modified();
 
@@ -73,7 +73,7 @@ private slots:
     void on_actionSetFileDate_triggered();
 
     void on_filenameLabel_editingFinished();
-    
+
     void on_actionDisableProxy_triggered(bool checked);
 
     void on_actionMakeProxy_triggered();
@@ -88,7 +88,7 @@ private:
     Ui::ImageProducerWidget *ui;
     int m_defaultDuration;
 
-    void reopen(Mlt::Producer* p);
+    void reopen(Mlt::Producer *p);
     void recreateProducer();
 };
 

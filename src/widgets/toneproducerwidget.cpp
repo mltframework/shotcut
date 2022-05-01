@@ -36,9 +36,9 @@ ToneProducerWidget::~ToneProducerWidget()
     delete ui;
 }
 
-Mlt::Producer* ToneProducerWidget::newProducer(Mlt::Profile& profile)
+Mlt::Producer *ToneProducerWidget::newProducer(Mlt::Profile &profile)
 {
-    Mlt::Producer* p = new Mlt::Producer(profile, "tone:");
+    Mlt::Producer *p = new Mlt::Producer(profile, "tone:");
     p->set("frequency", ui->frequencySpinBox->value());
     p->set("level", ui->levelSpinBox->value());
     p->set(kShotcutCaptionProperty, ui->nameLabel->text().toUtf8().constData());
@@ -54,7 +54,7 @@ Mlt::Properties ToneProducerWidget::getPreset() const
     return p;
 }
 
-void ToneProducerWidget::loadPreset(Mlt::Properties& p)
+void ToneProducerWidget::loadPreset(Mlt::Properties &p)
 {
     ui->frequencySpinBox->setValue(p.get_int("frequency"));
     ui->levelSpinBox->setValue(p.get_int("level"));
@@ -79,9 +79,9 @@ void ToneProducerWidget::on_levelSpinBox_valueChanged(int value)
     }
 }
 
-void ToneProducerWidget::on_preset_selected(void* p)
+void ToneProducerWidget::on_preset_selected(void *p)
 {
-    Mlt::Properties* properties = (Mlt::Properties*) p;
+    Mlt::Properties *properties = (Mlt::Properties *) p;
     loadPreset(*properties);
     delete properties;
 }
@@ -93,5 +93,6 @@ void ToneProducerWidget::on_preset_saveClicked()
 
 QString ToneProducerWidget::detail() const
 {
-    return QString(tr("Tone: %1Hz %2dB")).arg(ui->frequencySpinBox->value()).arg(ui->levelSpinBox->value());
+    return QString(tr("Tone: %1Hz %2dB")).arg(ui->frequencySpinBox->value()).arg(
+               ui->levelSpinBox->value());
 }

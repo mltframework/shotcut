@@ -24,7 +24,7 @@ class AbstractJob;
 class QStandardItem;
 
 namespace Ui {
-    class JobsDock;
+class JobsDock;
 }
 
 class JobsDock : public QDockWidget
@@ -34,11 +34,11 @@ class JobsDock : public QDockWidget
 public:
     explicit JobsDock(QWidget *parent = 0);
     ~JobsDock();
-    AbstractJob* currentJob() const;
+    AbstractJob *currentJob() const;
 
 public slots:
     void onJobAdded();
-    void onProgressUpdated(QStandardItem* item, int percent);
+    void onProgressUpdated(QStandardItem *item, int percent);
 
 protected:
     void resizeEvent(QResizeEvent *event);

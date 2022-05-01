@@ -24,7 +24,7 @@
 #include "models/playlistmodel.h"
 
 namespace Ui {
-    class PlaylistDock;
+class PlaylistDock;
 }
 
 class QAbstractItemView;
@@ -37,17 +37,18 @@ class PlaylistDock : public QDockWidget
 public:
     explicit PlaylistDock(QWidget *parent = 0);
     ~PlaylistDock();
-    PlaylistModel* model() {
+    PlaylistModel *model()
+    {
         return &m_model;
     }
     int position();
-    void replaceClipsWithHash(const QString& hash, Mlt::Producer& producer);
+    void replaceClipsWithHash(const QString &hash, Mlt::Producer &producer);
 
 signals:
-    void clipOpened(Mlt::Producer* producer, bool play = false);
+    void clipOpened(Mlt::Producer *producer, bool play = false);
     void itemActivated(int start);
     void showStatusMessage(QString);
-    void addAllTimeline(Mlt::Playlist*, bool skipProxy = false);
+    void addAllTimeline(Mlt::Playlist *, bool skipProxy = false);
 
 public slots:
     void incrementIndex();
@@ -67,7 +68,7 @@ public slots:
     void on_actionCopy_triggered();
     void on_actionSelectAll_triggered();
     void on_actionSelectNone_triggered();
-    void onProducerChanged(Mlt::Producer* producer);
+    void onProducerChanged(Mlt::Producer *producer);
     void on_actionGoto_triggered();
 
 private slots:
@@ -146,14 +147,14 @@ private slots:
     void on_addFilesButton_clicked();
 
 protected:
-    void keyPressEvent(QKeyEvent* event);
-    void keyReleaseEvent(QKeyEvent* event);
+    void keyPressEvent(QKeyEvent *event);
+    void keyReleaseEvent(QKeyEvent *event);
 
 private:
     void setViewMode(PlaylistModel::ViewMode mode);
     void resetPlaylistIndex();
     void emitDataChanged(const QVector<int> &roles);
-    void setPlaylistIndex(Mlt::Producer* producer, int row);
+    void setPlaylistIndex(Mlt::Producer *producer, int row);
 
     Ui::PlaylistDock *ui;
     QAbstractItemView *m_view;

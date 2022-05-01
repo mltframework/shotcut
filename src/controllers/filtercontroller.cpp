@@ -30,21 +30,26 @@
 
 #include <MltLink.h>
 
-FilterController::FilterController(QObject* parent) : QObject(parent),
- m_mltService(0),
- m_metadataModel(this),
- m_attachedModel(this),
- m_currentFilterIndex(QmlFilter::NoCurrentFilter)
+FilterController::FilterController(QObject *parent) : QObject(parent),
+    m_mltService(0),
+    m_metadataModel(this),
+    m_attachedModel(this),
+    m_currentFilterIndex(QmlFilter::NoCurrentFilter)
 {
     startTimer(0);
     connect(&m_attachedModel, SIGNAL(changed()), this, SLOT(handleAttachedModelChange()));
-    connect(&m_attachedModel, SIGNAL(modelAboutToBeReset()), this, SLOT(handleAttachedModelAboutToReset()));
-    connect(&m_attachedModel, SIGNAL(rowsRemoved(const QModelIndex&,int,int)), this, SLOT(handleAttachedRowsRemoved(const QModelIndex&,int,int)));
-    connect(&m_attachedModel, SIGNAL(rowsInserted(const QModelIndex&,int,int)), this, SLOT(handleAttachedRowsInserted(const QModelIndex&,int,int)));
-    connect(&m_attachedModel, SIGNAL(duplicateAddFailed(int)), this, SLOT(handleAttachDuplicateFailed(int)));
+    connect(&m_attachedModel, SIGNAL(modelAboutToBeReset()), this,
+            SLOT(handleAttachedModelAboutToReset()));
+    connect(&m_attachedModel, SIGNAL(rowsRemoved(const QModelIndex &, int, int)), this,
+            SLOT(handleAttachedRowsRemoved(const QModelIndex &, int, int)));
+    connect(&m_attachedModel, SIGNAL(rowsInserted(const QModelIndex &, int, int)), this,
+            SLOT(handleAttachedRowsInserted(const QModelIndex &, int, int)));
+    connect(&m_attachedModel, SIGNAL(duplicateAddFailed(int)), this,
+            SLOT(handleAttachDuplicateFailed(int)));
 }
 
-void FilterController::loadFilterMetadata() {
+void FilterController::loadFilterMetadata()
+{
     QScopedPointer<Mlt::Properties> mltFilters(MLT.repository()->filters());
     QScopedPointer<Mlt::Properties> mltLinks(MLT.repository()->links());
     QDir dir = QmlUtilities::qmlDir();
@@ -57,9 +62,10 @@ void FilterController::loadFilterMetadata() {
         foreach (QString fileName, subdir.entryList()) {
             LOG_DEBUG() << "reading filter metadata" << dirName << fileName;
             QQmlComponent component(QmlUtilities::sharedEngine(), subdir.absoluteFilePath(fileName));
-            QmlMetadata *meta = qobject_cast<QmlMetadata*>(component.create());
+            QmlMetadata *meta = qobject_cast<QmlMetadata *>(component.create());
             if (meta) {
-                QScopedPointer<Mlt::Properties> mltMetadata(MLT.repository()->metadata(mlt_service_filter_type, meta->mlt_service().toLatin1().constData()));
+                QScopedPointer<Mlt::Properties> mltMetadata(MLT.repository()->metadata(mlt_service_filter_type,
+                                                                                       meta->mlt_service().toLatin1().constData()));
                 QString version;
                 if (mltMetadata && mltMetadata->is_valid() && mltMetadata->get("version")) {
                     version = QString::fromLatin1(mltMetadata->get("version"));
@@ -67,7 +73,7 @@ void FilterController::loadFilterMetadata() {
                         version.remove(0, 5);
                 }
 
-                    // Check if mlt_service is available.
+                // Check if mlt_service is available.
                 if (mltFilters->get_data(meta->mlt_service().toLatin1().constData()) &&
                         (version.isEmpty() || meta->isMltVersion(version))) {
                     LOG_DEBUG() << "added filter" << meta->name();
@@ -81,8 +87,8 @@ void FilterController::loadFilterMetadata() {
                         meta->setProperty("version", version);
                         meta->keyframes()->checkVersion(version);
                     }
-                }
-                else if (meta->type() == QmlMetadata::Link && mltLinks->get_data(meta->mlt_service().toLatin1().constData())) {
+                } else if (meta->type() == QmlMetadata::Link
+                           && mltLinks->get_data(meta->mlt_service().toLatin1().constData())) {
                     LOG_DEBUG() << "added link" << meta->name();
                     meta->loadSettings();
                     meta->setPath(subdir);
@@ -101,7 +107,7 @@ void FilterController::loadFilterMetadata() {
 
 QmlMetadata *FilterController::metadataForService(Mlt::Service *service)
 {
-    QmlMetadata* meta = 0;
+    QmlMetadata *meta = 0;
     int rowCount = m_metadataModel.rowCount();
     QString uniqueId = service->get(kShotcutFilterProperty);
 
@@ -111,7 +117,7 @@ QmlMetadata *FilterController::metadataForService(Mlt::Service *service)
     }
 
     for (int i = 0; i < rowCount; i++) {
-        QmlMetadata* tmpMeta = m_metadataModel.get(i);
+        QmlMetadata *tmpMeta = m_metadataModel.get(i);
         if (tmpMeta->uniqueId() == uniqueId) {
             meta = tmpMeta;
             break;
@@ -121,18 +127,18 @@ QmlMetadata *FilterController::metadataForService(Mlt::Service *service)
     return meta;
 }
 
-void FilterController::timerEvent(QTimerEvent* event)
+void FilterController::timerEvent(QTimerEvent *event)
 {
     loadFilterMetadata();
     killTimer(event->timerId());
 }
 
-MetadataModel* FilterController::metadataModel()
+MetadataModel *FilterController::metadataModel()
 {
     return &m_metadataModel;
 }
 
-AttachedFiltersModel* FilterController::attachedModel()
+AttachedFiltersModel *FilterController::attachedModel()
 {
     return &m_attachedModel;
 }
@@ -162,8 +168,8 @@ void FilterController::setCurrentFilter(int attachedIndex, bool isNew)
         }
     }
 
-    QmlMetadata* meta = m_attachedModel.getMetadata(m_currentFilterIndex);
-    QmlFilter* filter = 0;
+    QmlMetadata *meta = m_attachedModel.getMetadata(m_currentFilterIndex);
+    QmlFilter *filter = 0;
     if (meta) {
         emit currentFilterChanged(nullptr, nullptr, QmlFilter::NoCurrentFilter);
         m_mltService = m_attachedModel.getService(m_currentFilterIndex);
@@ -171,7 +177,7 @@ void FilterController::setCurrentFilter(int attachedIndex, bool isNew)
         filter = new QmlFilter(*m_mltService, meta);
         filter->setIsNew(isNew);
         connect(filter, SIGNAL(changed()), SLOT(onQmlFilterChanged()));
-        connect(filter, SIGNAL(changed(QString)), SLOT(onQmlFilterChanged(const QString&)));
+        connect(filter, SIGNAL(changed(QString)), SLOT(onQmlFilterChanged(const QString &)));
     }
 
     emit currentFilterChanged(filter, meta, m_currentFilterIndex);
@@ -194,16 +200,18 @@ void FilterController::onFadeOutChanged()
     }
 }
 
-void FilterController::onServiceInChanged(int delta, Mlt::Service* service)
+void FilterController::onServiceInChanged(int delta, Mlt::Service *service)
 {
-    if (delta && m_currentFilter && (!service || m_currentFilter->service().get_service() == service->get_service())) {
+    if (delta && m_currentFilter && (!service
+                                     || m_currentFilter->service().get_service() == service->get_service())) {
         emit m_currentFilter->inChanged(delta);
     }
 }
 
-void FilterController::onServiceOutChanged(int delta, Mlt::Service* service)
+void FilterController::onServiceOutChanged(int delta, Mlt::Service *service)
 {
-    if (delta && m_currentFilter && (!service || m_currentFilter->service().get_service() == service->get_service())) {
+    if (delta && m_currentFilter && (!service
+                                     || m_currentFilter->service().get_service() == service->get_service())) {
         emit m_currentFilter->outChanged(delta);
     }
 }
@@ -220,13 +228,13 @@ void FilterController::handleAttachedModelAboutToReset()
     setCurrentFilter(QmlFilter::NoCurrentFilter);
 }
 
-void FilterController::handleAttachedRowsRemoved(const QModelIndex&, int first, int)
+void FilterController::handleAttachedRowsRemoved(const QModelIndex &, int first, int)
 {
     m_currentFilterIndex = QmlFilter::DeselectCurrentFilter; // Force update
     setCurrentFilter(qBound(0, first, m_attachedModel.rowCount() - 1));
 }
 
-void FilterController::handleAttachedRowsInserted(const QModelIndex&, int first, int)
+void FilterController::handleAttachedRowsInserted(const QModelIndex &, int first, int)
 {
     m_currentFilterIndex = QmlFilter::DeselectCurrentFilter; // Force update
     setCurrentFilter(qBound(0, first, m_attachedModel.rowCount() - 1), true);
@@ -234,7 +242,7 @@ void FilterController::handleAttachedRowsInserted(const QModelIndex&, int first,
 
 void FilterController::handleAttachDuplicateFailed(int index)
 {
-    const QmlMetadata* meta = m_attachedModel.getMetadata(index);
+    const QmlMetadata *meta = m_attachedModel.getMetadata(index);
     emit statusChanged(tr("Only one %1 filter is allowed.").arg(meta->name()));
     setCurrentFilter(index);
 }
@@ -263,7 +271,7 @@ void FilterController::onProducerChanged()
     emit m_attachedModel.trackTitleChanged();
 }
 
-void FilterController::addMetadata(QmlMetadata* meta)
+void FilterController::addMetadata(QmlMetadata *meta)
 {
     m_metadataModel.add(meta);
 }

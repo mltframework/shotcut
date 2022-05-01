@@ -22,11 +22,11 @@
 #include "abstractproducerwidget.h"
 
 namespace Mlt {
-    class Producer;
+class Producer;
 }
 
 namespace Ui {
-    class LissajousWidget;
+class LissajousWidget;
 }
 
 class LissajousWidget : public QWidget, public AbstractProducerWidget
@@ -38,19 +38,19 @@ public:
     ~LissajousWidget();
 
     // AbstractProducerWidget overrides
-    Mlt::Producer* newProducer(Mlt::Profile&);
+    Mlt::Producer *newProducer(Mlt::Profile &);
     Mlt::Properties getPreset() const;
-    void loadPreset(Mlt::Properties&);
+    void loadPreset(Mlt::Properties &);
 
 signals:
-    void producerChanged(Mlt::Producer*);
+    void producerChanged(Mlt::Producer *);
 
 private slots:
     void on_xratioDial_valueChanged(int value);
     void on_xratioSpinner_valueChanged(double arg1);
     void on_yratioDial_valueChanged(int value);
     void on_yratioSpinner_valueChanged(double arg1);
-    void on_preset_selected(void* p);
+    void on_preset_selected(void *p);
     void on_preset_saveClicked();
 
 private:

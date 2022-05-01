@@ -64,32 +64,32 @@ QString Util::baseName(const QString &filePath, bool trimQuery)
     return s;
 }
 
-void Util::setColorsToHighlight(QWidget* widget, QPalette::ColorRole role)
+void Util::setColorsToHighlight(QWidget *widget, QPalette::ColorRole role)
 {
     if (role == QPalette::Base) {
         widget->setStyleSheet(
-                    "QLineEdit {"
-                        "font-weight: bold;"
-                        "background-color: palette(highlight);"
-                        "color: palette(highlighted-text);"
-                        "selection-background-color: palette(alternate-base);"
-                        "selection-color: palette(text);"
-                    "}"
-                    "QLineEdit:hover {"
-                        "border: 2px solid palette(button-text);"
-                    "}"
+            "QLineEdit {"
+            "font-weight: bold;"
+            "background-color: palette(highlight);"
+            "color: palette(highlighted-text);"
+            "selection-background-color: palette(alternate-base);"
+            "selection-color: palette(text);"
+            "}"
+            "QLineEdit:hover {"
+            "border: 2px solid palette(button-text);"
+            "}"
         );
     } else {
         QPalette palette = QApplication::palette();
         palette.setColor(role, palette.color(palette.Highlight));
         palette.setColor(role == QPalette::Button ? QPalette::ButtonText : QPalette::WindowText,
-            palette.color(palette.HighlightedText));
+                         palette.color(palette.HighlightedText));
         widget->setPalette(palette);
         widget->setAutoFillBackground(true);
     }
 }
 
-void Util::showInFolder(const QString& path)
+void Util::showInFolder(const QString &path)
 {
     QFileInfo info(removeQueryString(path));
 #if defined(Q_OS_WIN)
@@ -116,10 +116,10 @@ void Util::showInFolder(const QString& path)
     if (!QProcess::execute("/usr/bin/osascript", args))
         return;
 #endif
-    QDesktopServices::openUrl(QUrl::fromLocalFile(info.isDir()? path : info.path()));
+    QDesktopServices::openUrl(QUrl::fromLocalFile(info.isDir() ? path : info.path()));
 }
 
-bool Util::warnIfNotWritable(const QString& filePath, QWidget* parent, const QString& caption)
+bool Util::warnIfNotWritable(const QString &filePath, QWidget *parent, const QString &caption)
 {
     // Returns true if not writable.
     if (!filePath.isEmpty() && !filePath.contains("://")) {
@@ -131,8 +131,8 @@ bool Util::warnIfNotWritable(const QString& filePath, QWidget* parent, const QSt
             info = QFileInfo(filePath);
             QMessageBox::warning(parent, caption,
                                  QObject::tr("Unable to write file %1\n"
-                                    "Perhaps you do not have permission.\n"
-                                    "Try again with a different folder.")
+                                             "Perhaps you do not have permission.\n"
+                                             "Try again with a different folder.")
                                  .arg(info.fileName()));
             return true;
         }
@@ -140,10 +140,10 @@ bool Util::warnIfNotWritable(const QString& filePath, QWidget* parent, const QSt
     return false;
 }
 
-QString Util::producerTitle(const Mlt::Producer& producer)
+QString Util::producerTitle(const Mlt::Producer &producer)
 {
     QString result;
-    Mlt::Producer& p = const_cast<Mlt::Producer&>(producer);
+    Mlt::Producer &p = const_cast<Mlt::Producer &>(producer);
     if (!p.is_valid() || p.is_blank()) return result;
     if (p.get(kShotcutTransitionProperty))
         return QObject::tr("Transition");
@@ -156,7 +156,7 @@ QString Util::producerTitle(const Mlt::Producer& producer)
     return Util::baseName(ProxyManager::resource(p));
 }
 
-QString Util::removeFileScheme(QUrl& url)
+QString Util::removeFileScheme(QUrl &url)
 {
     QString path = url.url();
     if (url.scheme() == "file")
@@ -164,25 +164,25 @@ QString Util::removeFileScheme(QUrl& url)
     return QUrl::fromPercentEncoding(path.toUtf8());
 }
 
-static inline bool isValidGoProFirstFilePrefix(const QFileInfo& info)
+static inline bool isValidGoProFirstFilePrefix(const QFileInfo &info)
 {
     QStringList list {"GOPR", "GH01", "GL01", "GM01", "GS01", "GX01"};
     return list.contains(info.baseName().left(4).toUpper());
 }
 
-static inline bool isValidGoProPrefix(const QFileInfo& info)
+static inline bool isValidGoProPrefix(const QFileInfo &info)
 {
     QStringList list {"GP", "GH", "GL", "GM", "GS", "GX"};
     return list.contains(info.baseName().left(2).toUpper());
 }
 
-static inline bool isValidGoProSuffix(const QFileInfo& info)
+static inline bool isValidGoProSuffix(const QFileInfo &info)
 {
     QStringList list {"MP4", "LRV", "360", "WAV"};
     return list.contains(info.suffix().toUpper());
 }
 
-const QStringList Util::sortedFileList(const QList<QUrl>& urls)
+const QStringList Util::sortedFileList(const QList<QUrl> &urls)
 {
     QStringList result;
     QMap<QString, QStringList> goproFiles;
@@ -197,7 +197,8 @@ const QStringList Util::sortedFileList(const QList<QUrl>& urls)
     // Then, look for GoPro split files.
     foreach (QUrl url, urls) {
         QFileInfo fi(removeFileScheme(url));
-        if (fi.baseName().size() == 8 && isValidGoProSuffix(fi) && isValidGoProPrefix(fi) && !isValidGoProFirstFilePrefix(fi)) {
+        if (fi.baseName().size() == 8 && isValidGoProSuffix(fi) && isValidGoProPrefix(fi)
+                && !isValidGoProFirstFilePrefix(fi)) {
             QString goproNumber = fi.baseName().mid(4);
             // Only if there is a matching main GoPro file.
             if (goproFiles.contains(goproNumber) && goproFiles[goproNumber].size()) {
@@ -207,12 +208,12 @@ const QStringList Util::sortedFileList(const QList<QUrl>& urls)
     }
     // Next, sort the GoPro files.
     auto keys = goproFiles.keys();
-    for (auto& goproNumber : keys) {
+    for (auto &goproNumber : keys) {
         goproFiles[goproNumber].sort(Qt::CaseSensitive);
     }
     // Finally, build the list of all files.
     // Add all the GoPro files first.
-    for (auto& paths : goproFiles) {
+    for (auto &paths : goproFiles) {
         result << paths;
     }
     // Add all the non-GoPro files.
@@ -234,7 +235,7 @@ int Util::coerceMultiple(int value, int multiple)
     return (value + multiple - 1) / multiple * multiple;
 }
 
-QList<QUrl> Util::expandDirectories(const QList<QUrl>& urls)
+QList<QUrl> Util::expandDirectories(const QList<QUrl> &urls)
 {
     QList<QUrl> result;
     foreach (QUrl url, urls) {
@@ -255,23 +256,23 @@ bool Util::isDecimalPoint(QChar ch)
 {
     // See https://en.wikipedia.org/wiki/Decimal_separator#Unicode_characters
     return ch == '.' || ch == ',' || ch == '\'' || ch == ' '
-        || ch == QChar(0x00B7) || ch == QChar(0x2009) || ch == QChar(0x202F)
-        || ch == QChar(0x02D9) || ch == QChar(0x066B) || ch == QChar(0x066C)
-        || ch == QChar(0x2396);
+           || ch == QChar(0x00B7) || ch == QChar(0x2009) || ch == QChar(0x202F)
+           || ch == QChar(0x02D9) || ch == QChar(0x066B) || ch == QChar(0x066C)
+           || ch == QChar(0x2396);
 }
 
-bool Util::isNumeric(QString& str)
+bool Util::isNumeric(QString &str)
 {
     for (int i = 0; i < str.size(); ++i) {
         QCharRef ch = str[i];
         if (ch != '+' && ch != '-' && ch.toLower() != 'e'
-            && !isDecimalPoint(ch) && !ch.isDigit())
+                && !isDecimalPoint(ch) && !ch.isDigit())
             return false;
     }
     return true;
 }
 
-bool Util::convertNumericString(QString& str, QChar decimalPoint)
+bool Util::convertNumericString(QString &str, QChar decimalPoint)
 {
     // Returns true if the string was changed.
     bool result = false;
@@ -287,7 +288,7 @@ bool Util::convertNumericString(QString& str, QChar decimalPoint)
     return result;
 }
 
-bool Util::convertDecimalPoints(QString& str, QChar decimalPoint)
+bool Util::convertDecimalPoints(QString &str, QChar decimalPoint)
 {
     // Returns true if the string was changed.
     bool result = false;
@@ -304,14 +305,15 @@ bool Util::convertDecimalPoints(QString& str, QChar decimalPoint)
     return result;
 }
 
-void Util::showFrameRateDialog(const QString& caption, int numerator, QDoubleSpinBox* spinner, QWidget *parent)
+void Util::showFrameRateDialog(const QString &caption, int numerator, QDoubleSpinBox *spinner,
+                               QWidget *parent)
 {
     double fps = numerator / 1001.0;
     QMessageBox dialog(QMessageBox::Question, caption,
                        QObject::tr("The value you entered is very similar to the common,\n"
-                          "more standard %1 = %2/1001.\n\n"
-                          "Do you want to use %1 = %2/1001 instead?")
-                          .arg(fps, 0, 'f', 6).arg(numerator),
+                                   "more standard %1 = %2/1001.\n\n"
+                                   "Do you want to use %1 = %2/1001 instead?")
+                       .arg(fps, 0, 'f', 6).arg(numerator),
                        QMessageBox::No | QMessageBox::Yes,
                        parent);
     dialog.setDefaultButton(QMessageBox::Yes);
@@ -322,12 +324,12 @@ void Util::showFrameRateDialog(const QString& caption, int numerator, QDoubleSpi
     }
 }
 
-QTemporaryFile* Util::writableTemporaryFile(const QString& filePath, const QString& templateName)
+QTemporaryFile *Util::writableTemporaryFile(const QString &filePath, const QString &templateName)
 {
     // filePath should already be checked writable.
     QFileInfo info(filePath);
-    QString templateFileName = templateName.isEmpty()?
-        QString("%1.XXXXXX").arg(QCoreApplication::applicationName()) : templateName;
+    QString templateFileName = templateName.isEmpty() ?
+                               QString("%1.XXXXXX").arg(QCoreApplication::applicationName()) : templateName;
 
     // First, try the system temp dir.
     QString templateFilePath = QDir(QDir::tempPath()).filePath(templateFileName);
@@ -341,7 +343,7 @@ QTemporaryFile* Util::writableTemporaryFile(const QString& filePath, const QStri
     }
 }
 
-void Util::applyCustomProperties(Mlt::Producer& destination, Mlt::Producer& source, int in, int out)
+void Util::applyCustomProperties(Mlt::Producer &destination, Mlt::Producer &source, int in, int out)
 {
     Mlt::Properties p(destination);
     p.clear("force_progressive");
@@ -363,16 +365,16 @@ void Util::applyCustomProperties(Mlt::Producer& destination, Mlt::Producer& sour
     if (!p.get_int(kIsProxyProperty))
         p.clear(kOriginalResourceProperty);
     destination.pass_list(source, "mlt_service, audio_index, video_index, force_progressive, force_tff,"
-                       "force_aspect_ratio, video_delay, color_range, warp_speed, warp_pitch, rotate,"
-                       kAspectRatioNumerator ","
-                       kAspectRatioDenominator ","
-                       kCommentProperty ","
-                       kShotcutProducerProperty ","
-                       kDefaultAudioIndexProperty ","
-                       kOriginalInProperty ","
-                       kOriginalOutProperty ","
-                       kOriginalResourceProperty ","
-                       kDisableProxyProperty);
+                          "force_aspect_ratio, video_delay, color_range, warp_speed, warp_pitch, rotate,"
+                          kAspectRatioNumerator ","
+                          kAspectRatioDenominator ","
+                          kCommentProperty ","
+                          kShotcutProducerProperty ","
+                          kDefaultAudioIndexProperty ","
+                          kOriginalInProperty ","
+                          kOriginalOutProperty ","
+                          kOriginalResourceProperty ","
+                          kDisableProxyProperty);
     if (!destination.get("_shotcut:resource")) {
         destination.set("_shotcut:resource", destination.get("resource"));
         destination.set("_shotcut:length", destination.get("length"));
@@ -401,15 +403,15 @@ void Util::applyCustomProperties(Mlt::Producer& destination, Mlt::Producer& sour
     destination.set_in_and_out(in, out);
 }
 
-QString Util::getFileHash(const QString& path)
+QString Util::getFileHash(const QString &path)
 {
     // This routine is intentionally copied from Kdenlive.
     QFile file(removeQueryString(path));
     if (file.open(QIODevice::ReadOnly)) {
         QByteArray fileData;
-         // 1 MB = 1 second per 450 files (or faster)
-         // 10 MB = 9 seconds per 450 files (or faster)
-        if (file.size() > 1000000*2) {
+        // 1 MB = 1 second per 450 files (or faster)
+        // 10 MB = 9 seconds per 450 files (or faster)
+        if (file.size() > 1000000 * 2) {
             fileData = file.read(1000000);
             if (file.seek(file.size() - 1000000))
                 fileData.append(file.readAll());
@@ -422,7 +424,7 @@ QString Util::getFileHash(const QString& path)
     return QString();
 }
 
-QString Util::getHash(Mlt::Properties& properties)
+QString Util::getHash(Mlt::Properties &properties)
 {
     QString hash = properties.get(kShotcutHashProperty);
     if (hash.isEmpty()) {
@@ -442,7 +444,7 @@ QString Util::getHash(Mlt::Properties& properties)
     return hash;
 }
 
-bool Util::hasDriveLetter(const QString& path)
+bool Util::hasDriveLetter(const QString &path)
 {
     auto driveSeparators = path.midRef(1, 2);
     return driveSeparators == ":/" || driveSeparators == ":\\";
@@ -476,7 +478,7 @@ bool Util::isMemoryLow()
     p.waitForFinished();
     auto lines = p.readAllStandardOutput();
     p.close();
-    for (auto& line : lines.split('\n')) {
+    for (auto &line : lines.split('\n')) {
         if (line.startsWith("System-wide memory free")) {
             const auto fields = line.split(':');
             for (auto s : fields) {
@@ -499,7 +501,7 @@ bool Util::isMemoryLow()
     bool ok = false;
     auto availableKB = lines.toUInt(&ok);
     if (ok) {
-	    return availableKB < kLowMemoryThresholdKB;
+        return availableKB < kLowMemoryThresholdKB;
     }
 
     return false;
@@ -507,10 +509,11 @@ bool Util::isMemoryLow()
     unsigned int availableKB = UINT_MAX;
     QFile meminfo("/proc/meminfo");
     if (meminfo.open(QIODevice::ReadOnly)) {
-        for (auto line = meminfo.readLine(1024); availableKB == UINT_MAX && !line.isEmpty(); line = meminfo.readLine(1024)) {
+        for (auto line = meminfo.readLine(1024); availableKB == UINT_MAX
+                && !line.isEmpty(); line = meminfo.readLine(1024)) {
             if (line.startsWith("MemAvailable")) {
-                const auto& fields = line.split(' ');
-                for (const auto& s : fields) {
+                const auto &fields = line.split(' ');
+                for (const auto &s : fields) {
                     bool ok = false;
                     auto kB = s.toUInt(&ok);
                     if (ok) {
@@ -527,7 +530,7 @@ bool Util::isMemoryLow()
 #endif
 }
 
-QString Util::removeQueryString(const QString& s)
+QString Util::removeQueryString(const QString &s)
 {
     auto i = s.lastIndexOf("\\?");
     if (i < 0) {
@@ -551,7 +554,7 @@ int Util::greatestCommonDivisor(int m, int n)
     return gcd;
 }
 
-void Util::normalizeFrameRate(double fps, int& numerator, int& denominator)
+void Util::normalizeFrameRate(double fps, int &numerator, int &denominator)
 {
     // Convert some common non-integer frame rates to fractions.
     if (qRound(fps * 1000000.0) == 23976024) {
@@ -562,7 +565,7 @@ void Util::normalizeFrameRate(double fps, int& numerator, int& denominator)
         denominator = 1001;
     } else if (qRound(fps * 1000000.0) == 47952048) {
         numerator = 48000;
-         denominator = 1001;
+        denominator = 1001;
     } else if (qRound(fps * 100000.0) == 5994006) {
         numerator = 60000;
         denominator = 1001;
@@ -573,12 +576,12 @@ void Util::normalizeFrameRate(double fps, int& numerator, int& denominator)
     }
 }
 
-QString Util::textColor(const QColor& color)
+QString Util::textColor(const QColor &color)
 {
-    return (color.value() < 150)? "white" : "black";
+    return (color.value() < 150) ? "white" : "black";
 }
 
-void Util::cameraFrameRateSize(const QByteArray &deviceName, qreal& frameRate, QSize& size)
+void Util::cameraFrameRateSize(const QByteArray &deviceName, qreal &frameRate, QSize &size)
 {
     std::unique_ptr<QCamera> camera(new QCamera(deviceName));
     if (camera) {
@@ -589,8 +592,9 @@ void Util::cameraFrameRateSize(const QByteArray &deviceName, qreal& frameRate, Q
             LOG_INFO() << "resolutions:" << resolutions;
             // Get the highest resolution
             viewfinderSettings.setResolution(resolutions.first());
-            for (auto& resolution : resolutions) {
-                if (resolution.width() > viewfinderSettings.resolution().width() && resolution.height() > viewfinderSettings.resolution().height()) {
+            for (auto &resolution : resolutions) {
+                if (resolution.width() > viewfinderSettings.resolution().width()
+                        && resolution.height() > viewfinderSettings.resolution().height()) {
                     viewfinderSettings.setResolution(resolution);
                 }
             }
@@ -598,7 +602,7 @@ void Util::cameraFrameRateSize(const QByteArray &deviceName, qreal& frameRate, Q
             if (frameRates.size() > 0) {
                 // Get the highest frame rate for the chosen resolution
                 viewfinderSettings.setMaximumFrameRate(frameRates.first().maximumFrameRate);
-                for (auto& frameRate : frameRates) {
+                for (auto &frameRate : frameRates) {
                     LOG_INFO() << "frame rate:" << frameRate.maximumFrameRate;
                     if (frameRate.maximumFrameRate > viewfinderSettings.maximumFrameRate()) {
                         viewfinderSettings.setMaximumFrameRate(frameRate.maximumFrameRate);

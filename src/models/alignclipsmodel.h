@@ -37,24 +37,24 @@ public:
     };
     static const int INVALID_OFFSET = std::numeric_limits<int>::max();
 
-    explicit AlignClipsModel(QObject* parent = 0);
+    explicit AlignClipsModel(QObject *parent = 0);
     virtual ~AlignClipsModel();
     void clear();
-    void addClip(const QString& name, int offset, int drift, const QString& error);
+    void addClip(const QString &name, int offset, int drift, const QString &error);
     void updateProgress(int row, int percent);
     int getProgress(int row) const;
-    void updateOffsetAndDrift(int row, int offset, double drift, const QString& error);
+    void updateOffsetAndDrift(int row, int offset, double drift, const QString &error);
     int getOffset(int row);
     double getDrift(int row);
 
 protected:
     // Implement QAbstractItemModel
-    int rowCount(const QModelIndex& parent) const;
-    int columnCount(const QModelIndex& parent) const;
-    QVariant data(const QModelIndex& index, int role) const;
+    int rowCount(const QModelIndex &parent) const;
+    int columnCount(const QModelIndex &parent) const;
+    QVariant data(const QModelIndex &index, int role) const;
     QVariant headerData(int section, Qt::Orientation orientation, int role) const;
-    QModelIndex index(int row, int column = 0, const QModelIndex& parent = QModelIndex()) const;
-    QModelIndex parent(const QModelIndex& index) const;
+    QModelIndex index(int row, int column = 0, const QModelIndex &parent = QModelIndex()) const;
+    QModelIndex parent(const QModelIndex &index) const;
 
 private:
     typedef struct {

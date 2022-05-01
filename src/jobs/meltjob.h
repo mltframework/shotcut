@@ -26,11 +26,15 @@ class MeltJob : public AbstractJob
 {
     Q_OBJECT
 public:
-    MeltJob(const QString& name, const QString& xml, int frameRateNum, int frameRateDen, QThread::Priority priority = Settings.jobPriority());
-    MeltJob(const QString& name, const QStringList& args, int frameRateNum, int frameRateDen);
+    MeltJob(const QString &name, const QString &xml, int frameRateNum, int frameRateDen,
+            QThread::Priority priority = Settings.jobPriority());
+    MeltJob(const QString &name, const QStringList &args, int frameRateNum, int frameRateDen);
     virtual ~MeltJob();
     QString xml();
-    QString xmlPath() const { return m_xml->fileName(); }
+    QString xmlPath() const
+    {
+        return m_xml->fileName();
+    }
     void setIsStreaming(bool streaming);
     void setUseMultiConsumer(bool multi = true);
     void setInAndOut(int in, int out);

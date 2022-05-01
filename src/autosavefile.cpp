@@ -29,7 +29,8 @@ static const QLatin1String extension(".mlt");
 
 static QString hashName(const QString &name)
 {
-    return QString::fromLatin1(QCryptographicHash::hash(name.toUtf8(), QCryptographicHash::Md5).toHex());
+    return QString::fromLatin1(QCryptographicHash::hash(name.toUtf8(),
+                                                        QCryptographicHash::Md5).toHex());
 }
 
 AutoSaveFile::AutoSaveFile(const QString &filename, QObject *parent)
@@ -72,9 +73,9 @@ bool AutoSaveFile::open(OpenMode openmode)
     return QFile::open(openmode);
 }
 
-AutoSaveFile* AutoSaveFile::getFile(const QString &filename)
+AutoSaveFile *AutoSaveFile::getFile(const QString &filename)
 {
-    AutoSaveFile* result = 0;
+    AutoSaveFile *result = 0;
     QDir appDir(path());
     QFileInfo info(appDir.absolutePath(), hashName(filename) + extension);
 

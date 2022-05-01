@@ -54,14 +54,15 @@ void CustomProfileDialog::on_buttonBox_accepted()
     MLT.profile().set_width(ui->widthSpinner->value());
     MLT.profile().set_height(ui->heightSpinner->value());
     MLT.profile().set_display_aspect(ui->aspectNumSpinner->value(), ui->aspectDenSpinner->value());
-    QSize sar(ui->aspectNumSpinner->value() * ui->heightSpinner->value(), ui->aspectDenSpinner->value() * ui->widthSpinner->value());
+    QSize sar(ui->aspectNumSpinner->value() * ui->heightSpinner->value(),
+              ui->aspectDenSpinner->value() * ui->widthSpinner->value());
     auto gcd = Util::greatestCommonDivisor(sar.width(), sar.height());
     MLT.profile().set_sample_aspect(sar.width() / gcd, sar.height() / gcd);
     int numerator, denominator;
     Util::normalizeFrameRate(ui->fpsSpinner->value(), numerator, denominator);
     MLT.profile().set_frame_rate(numerator, denominator);
     MLT.profile().set_progressive(ui->scanModeCombo->currentIndex());
-    MLT.profile().set_colorspace((ui->colorspaceCombo->currentIndex() == 1)? 709 : 601);
+    MLT.profile().set_colorspace((ui->colorspaceCombo->currentIndex() == 1) ? 709 : 601);
     MLT.updatePreviewProfile();
     MLT.setPreviewScale(Settings.playerPreviewScale());
 

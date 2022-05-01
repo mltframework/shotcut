@@ -30,7 +30,7 @@ AddEncodePresetDialog::~AddEncodePresetDialog()
     delete ui;
 }
 
-void AddEncodePresetDialog::setProperties(const QString& properties)
+void AddEncodePresetDialog::setProperties(const QString &properties)
 {
     ui->propertiesEdit->setPlainText(properties);
 }
@@ -42,7 +42,7 @@ QString AddEncodePresetDialog::presetName() const
 
 QString AddEncodePresetDialog::properties() const
 {
-    const auto& extension = ui->extensionEdit->text();
+    const auto &extension = ui->extensionEdit->text();
     if (!extension.isEmpty()) {
         return ui->propertiesEdit->toPlainText() + "\nmeta.preset.extension=" + extension;
     }

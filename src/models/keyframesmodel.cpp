@@ -26,7 +26,7 @@
 
 static const quintptr NO_PARENT_ID = quintptr(-1);
 
-KeyframesModel::KeyframesModel(QObject* parent)
+KeyframesModel::KeyframesModel(QObject *parent)
     : QAbstractItemModel(parent)
 {
 
@@ -37,7 +37,7 @@ KeyframesModel::~KeyframesModel()
 
 }
 
-int KeyframesModel::rowCount(const QModelIndex& parent) const
+int KeyframesModel::rowCount(const QModelIndex &parent) const
 {
     if (parent.isValid()) {
         // keyframes
@@ -49,13 +49,13 @@ int KeyframesModel::rowCount(const QModelIndex& parent) const
     return m_propertyNames.count();
 }
 
-int KeyframesModel::columnCount(const QModelIndex& parent) const
+int KeyframesModel::columnCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent)
     return 1;
 }
 
-QVariant KeyframesModel::data(const QModelIndex& index, int role) const
+QVariant KeyframesModel::data(const QModelIndex &index, int role) const
 {
     if (!m_metadata || !index.isValid())
         return QVariant();
@@ -66,13 +66,13 @@ QVariant KeyframesModel::data(const QModelIndex& index, int role) const
             QString name = m_propertyNames[index.internalId()];
             Mlt::Animation animation = m_filter->getAnimation(name);
             if (animation.is_valid()) {
-                int position = const_cast<Mlt::Animation&>(animation).key_get_frame(index.row());
+                int position = const_cast<Mlt::Animation &>(animation).key_get_frame(index.row());
                 if (position >= 0) {
                     switch (role) {
                     case Qt::DisplayRole:
                     case NameRole: {
                         QString type = tr("Hold");
-                        switch (const_cast<Mlt::Animation&>(animation).key_get_type(index.row())) {
+                        switch (const_cast<Mlt::Animation &>(animation).key_get_type(index.row())) {
                         case mlt_keyframe_linear:
                             type = tr("Linear");
                             break;
@@ -84,12 +84,13 @@ QVariant KeyframesModel::data(const QModelIndex& index, int role) const
                         }
                         double value = m_filter->getDouble(name, position);
                         QString units = m_metadata->keyframes()->parameter(m_metadataIndex[index.internalId()])->units();
-                        return QString("%1 - %2\n%3%4").arg(m_filter->timeFromFrames(position)).arg(type).arg(value).arg(units);
+                        return QString("%1 - %2\n%3%4").arg(m_filter->timeFromFrames(position)).arg(type).arg(value).arg(
+                                   units);
                     }
                     case FrameNumberRole:
                         return position;
                     case KeyframeTypeRole:
-                        return const_cast<Mlt::Animation&>(animation).key_get_type(index.row());
+                        return const_cast<Mlt::Animation &>(animation).key_get_type(index.row());
                     case NumericValueRole:
                         return m_filter->getDouble(name, position);
                     case MinimumFrameRole: {
@@ -132,9 +133,8 @@ QVariant KeyframesModel::data(const QModelIndex& index, int role) const
             return m_metadata->keyframes()->parameter(m_metadataIndex[index.row()])->property();
         case IsCurveRole:
             return m_metadata->keyframes()->parameter(m_metadataIndex[index.row()])->isCurve();
-        case MinimumValueRole:
-        {
-            QmlKeyframesParameter* param = m_metadata->keyframes()->parameter(m_metadataIndex[index.row()]);
+        case MinimumValueRole: {
+            QmlKeyframesParameter *param = m_metadata->keyframes()->parameter(m_metadataIndex[index.row()]);
             if (param->rangeType() == QmlKeyframesParameter::MinMax) {
                 return m_metadata->keyframes()->parameter(m_metadataIndex[index.row()])->minimum();
             } else if (param->rangeType() == QmlKeyframesParameter::ClipLength) {
@@ -142,9 +142,8 @@ QVariant KeyframesModel::data(const QModelIndex& index, int role) const
             }
             return 0.0;
         }
-        case MaximumValueRole:
-        {
-            QmlKeyframesParameter* param = m_metadata->keyframes()->parameter(m_metadataIndex[index.row()]);
+        case MaximumValueRole: {
+            QmlKeyframesParameter *param = m_metadata->keyframes()->parameter(m_metadataIndex[index.row()]);
             if (param->rangeType() == QmlKeyframesParameter::MinMax) {
                 return m_metadata->keyframes()->parameter(m_metadataIndex[index.row()])->maximum();
             } else if (param->rangeType() == QmlKeyframesParameter::ClipLength) {
@@ -153,9 +152,8 @@ QVariant KeyframesModel::data(const QModelIndex& index, int role) const
             }
             return 0.0;
         }
-        case LowestValueRole:
-        {
-            QmlKeyframesParameter* param = m_metadata->keyframes()->parameter(m_metadataIndex[index.row()]);
+        case LowestValueRole: {
+            QmlKeyframesParameter *param = m_metadata->keyframes()->parameter(m_metadataIndex[index.row()]);
             Mlt::Animation animation = m_filter->getAnimation(param->property());
             double min = std::numeric_limits<double>::max();
             if (animation.is_valid()) {
@@ -170,9 +168,8 @@ QVariant KeyframesModel::data(const QModelIndex& index, int role) const
             if (min == std::numeric_limits<double>::max()) min = 0;
             return min;
         }
-        case HighestValueRole:
-        {
-            QmlKeyframesParameter* param = m_metadata->keyframes()->parameter(m_metadataIndex[index.row()]);
+        case HighestValueRole: {
+            QmlKeyframesParameter *param = m_metadata->keyframes()->parameter(m_metadataIndex[index.row()]);
             Mlt::Animation animation = m_filter->getAnimation(param->property());
             double max = std::numeric_limits<double>::lowest();
             if (animation.is_valid()) {
@@ -194,7 +191,7 @@ QVariant KeyframesModel::data(const QModelIndex& index, int role) const
     return QVariant();
 }
 
-QModelIndex KeyframesModel::index(int row, int column, const QModelIndex& parent) const
+QModelIndex KeyframesModel::index(int row, int column, const QModelIndex &parent) const
 {
     if (column > 0)
         return QModelIndex();
@@ -208,7 +205,7 @@ QModelIndex KeyframesModel::index(int row, int column, const QModelIndex& parent
     return result;
 }
 
-QModelIndex KeyframesModel::parent(const QModelIndex& index) const
+QModelIndex KeyframesModel::parent(const QModelIndex &index) const
 {
     if (!index.isValid() || index.internalId() == NO_PARENT_ID)
         return QModelIndex();
@@ -234,7 +231,7 @@ QHash<int, QByteArray> KeyframesModel::roleNames() const
     return roles;
 }
 
-void KeyframesModel::load(QmlFilter* filter, QmlMetadata* meta)
+void KeyframesModel::load(QmlFilter *filter, QmlMetadata *meta)
 {
     beginResetModel();
     m_propertyNames.clear();
@@ -243,14 +240,14 @@ void KeyframesModel::load(QmlFilter* filter, QmlMetadata* meta)
     m_filter = filter;
     m_metadata = meta;
     if (m_filter && m_metadata && m_filter->animateIn() <= 0 && m_filter->animateOut() <= 0)
-    for (int i = 0; i < m_metadata->keyframes()->parameterCount(); i++) {
-        if (m_filter->keyframeCount(m_metadata->keyframes()->parameter(i)->property()) > 0) {
-            m_propertyNames << m_metadata->keyframes()->parameter(i)->property();
-            m_keyframeCounts << keyframeCount(m_propertyNames.count() - 1);
-            m_metadataIndex << i;
+        for (int i = 0; i < m_metadata->keyframes()->parameterCount(); i++) {
+            if (m_filter->keyframeCount(m_metadata->keyframes()->parameter(i)->property()) > 0) {
+                m_propertyNames << m_metadata->keyframes()->parameter(i)->property();
+                m_keyframeCounts << keyframeCount(m_propertyNames.count() - 1);
+                m_metadataIndex << i;
 //        LOG_DEBUG() << m_propertyNames.last() << m_filter->get(m_propertyNames.last()) << keyframeCount(i);
+            }
         }
-    }
     endResetModel();
     emit loaded();
 }
@@ -271,7 +268,8 @@ bool KeyframesModel::remove(int parameterIndex, int keyframeIndex)
                 beginRemoveRows(index(parameterIndex), keyframeIndex, keyframeIndex);
                 m_keyframeCounts[parameterIndex] -= 1;
                 endRemoveRows();
-                foreach (name, m_metadata->keyframes()->parameter(m_metadataIndex[parameterIndex])->gangedProperties()) {
+                foreach (name, m_metadata->keyframes()->parameter(
+                             m_metadataIndex[parameterIndex])->gangedProperties()) {
                     Mlt::Animation animation = m_filter->getAnimation(name);
                     if (animation.is_valid() && !animation.remove(frame_num))
                         animation.interpolate();
@@ -286,7 +284,8 @@ bool KeyframesModel::remove(int parameterIndex, int keyframeIndex)
                     modelIndex = index(keyframeIndex, 0, index(parameterIndex));
                     emit dataChanged(modelIndex, modelIndex, QVector<int>() << MinimumFrameRole);
                 }
-                emit dataChanged(index(parameterIndex), index(parameterIndex), QVector<int>() << LowestValueRole << HighestValueRole);
+                emit dataChanged(index(parameterIndex), index(parameterIndex),
+                                 QVector<int>() << LowestValueRole << HighestValueRole);
                 emit m_filter->changed();
             }
         }
@@ -302,7 +301,8 @@ int KeyframesModel::previousKeyframePosition(int parameterIndex, int currentPosi
         Mlt::Animation animation = m_filter->getAnimation(name);
         if (animation.is_valid()) {
             currentPosition -= m_filter->in();
-            bool error = animation.previous_key(animation.is_key(currentPosition)? currentPosition - 1: currentPosition, result);
+            bool error = animation.previous_key(animation.is_key(currentPosition) ? currentPosition - 1 :
+                                                currentPosition, result);
             if (!error)
                 result += m_filter->in();
         }
@@ -318,7 +318,8 @@ int KeyframesModel::nextKeyframePosition(int parameterIndex, int currentPosition
         Mlt::Animation animation = m_filter->getAnimation(name);
         if (animation.is_valid()) {
             currentPosition -= m_filter->in();
-            bool error = animation.next_key(animation.is_key(currentPosition)? currentPosition + 1: currentPosition, result);
+            bool error = animation.next_key(animation.is_key(currentPosition) ? currentPosition + 1 :
+                                            currentPosition, result);
             if (!error)
                 result += m_filter->in();
         }
@@ -345,7 +346,7 @@ int KeyframesModel::keyframeIndex(int parameterIndex, int currentPosition)
     return result;
 }
 
-int KeyframesModel::parameterIndex(const QString& propertyName) const
+int KeyframesModel::parameterIndex(const QString &propertyName) const
 {
     return m_propertyNames.indexOf(propertyName);
 }
@@ -359,7 +360,8 @@ bool KeyframesModel::setInterpolation(int parameterIndex, int keyframeIndex, Int
         if (animation.is_valid()) {
             if (!animation.key_set_type(keyframeIndex, mlt_keyframe_type(type))) {
 //                LOG_DEBUG() << "keyframe index" << keyframeIndex << "keyframe type" << type;
-                foreach (name, m_metadata->keyframes()->parameter(m_metadataIndex[parameterIndex])->gangedProperties()) {
+                foreach (name, m_metadata->keyframes()->parameter(
+                             m_metadataIndex[parameterIndex])->gangedProperties()) {
                     Mlt::Animation animation = m_filter->getAnimation(name);
                     animation.key_set_type(keyframeIndex, mlt_keyframe_type(type));
                 }
@@ -372,7 +374,8 @@ bool KeyframesModel::setInterpolation(int parameterIndex, int keyframeIndex, Int
         }
     }
     if (error)
-        LOG_ERROR() << "failed to set keyframe" << "at parameter index" << parameterIndex << "keyframeIndex" << keyframeIndex << "to type" << type;
+        LOG_ERROR() << "failed to set keyframe" << "at parameter index" << parameterIndex << "keyframeIndex"
+                    << keyframeIndex << "to type" << type;
     return error;
 }
 
@@ -416,7 +419,8 @@ void KeyframesModel::setKeyframePosition(int parameterIndex, int keyframeIndex, 
         return;
     }
 
-    foreach (name, m_metadata->keyframes()->parameter(m_metadataIndex[parameterIndex])->gangedProperties()) {
+    foreach (name, m_metadata->keyframes()->parameter(
+                 m_metadataIndex[parameterIndex])->gangedProperties()) {
         Mlt::Animation animation = m_filter->getAnimation(name);
         if (animation.is_valid())
             animation.key_set_frame(keyframeIndex, position);
@@ -428,12 +432,14 @@ void KeyframesModel::setKeyframePosition(int parameterIndex, int keyframeIndex, 
     emit m_filter->propertyChanged(name.toUtf8().constData());
 }
 
-void KeyframesModel::addKeyframe(int parameterIndex, double value, int position, KeyframesModel::InterpolationType type)
+void KeyframesModel::addKeyframe(int parameterIndex, double value, int position,
+                                 KeyframesModel::InterpolationType type)
 {
     if (m_filter && parameterIndex < m_propertyNames.count()) {
         QString name = m_propertyNames[parameterIndex];
         m_filter->set(name, value, position,  mlt_keyframe_type(type));
-        foreach (name, m_metadata->keyframes()->parameter(m_metadataIndex[parameterIndex])->gangedProperties())
+        foreach (name, m_metadata->keyframes()->parameter(
+                     m_metadataIndex[parameterIndex])->gangedProperties())
             m_filter->set(name, value, position,  mlt_keyframe_type(type));
     }
 }
@@ -469,7 +475,7 @@ void KeyframesModel::addKeyframe(int parameterIndex, int position)
                 // because it did not receive a "consumer-frame-show" event for it.
                 m_filter->blockSignals(true);
                 m_filter->set(name, value, position, keyframeType);
-                for (auto& key : parameter->gangedProperties()) {
+                for (auto &key : parameter->gangedProperties()) {
                     value = m_filter->getDouble(key, position);
                     m_filter->set(key, value, position, keyframeType);
                 }
@@ -513,17 +519,22 @@ void KeyframesModel::setKeyframeValue(int parameterIndex, int keyframeIndex, dou
     }
 
     mlt_keyframe_type type = animation.key_get_type(keyframeIndex);
-    m_filter->service().anim_set(name.toUtf8().constData(), value, position, m_filter->duration(), type);
-    foreach (name, m_metadata->keyframes()->parameter(m_metadataIndex[parameterIndex])->gangedProperties())
-        m_filter->service().anim_set(name.toUtf8().constData(), value, position, m_filter->duration(), type);
+    m_filter->service().anim_set(name.toUtf8().constData(), value, position, m_filter->duration(),
+                                 type);
+    foreach (name, m_metadata->keyframes()->parameter(
+                 m_metadataIndex[parameterIndex])->gangedProperties())
+        m_filter->service().anim_set(name.toUtf8().constData(), value, position, m_filter->duration(),
+                                     type);
     emit m_filter->changed();
     emit m_filter->propertyChanged(name.toUtf8().constData());
     QModelIndex modelIndex = index(keyframeIndex, 0, index(parameterIndex));
     emit dataChanged(modelIndex, modelIndex, QVector<int>() << NumericValueRole << NameRole);
-    emit dataChanged(index(parameterIndex), index(parameterIndex), QVector<int>() << LowestValueRole << HighestValueRole);
+    emit dataChanged(index(parameterIndex), index(parameterIndex),
+                     QVector<int>() << LowestValueRole << HighestValueRole);
 }
 
-void KeyframesModel::setKeyframeValuePosition(int parameterIndex, int keyframeIndex, double value, int position)
+void KeyframesModel::setKeyframeValuePosition(int parameterIndex, int keyframeIndex, double value,
+                                              int position)
 {
     if (!m_filter) {
         LOG_ERROR() << "Invalid Filter" << parameterIndex;
@@ -559,7 +570,8 @@ void KeyframesModel::setKeyframeValuePosition(int parameterIndex, int keyframeIn
             LOG_ERROR() << "Failed to set position" << parameterIndex << keyframeIndex << position;
             return;
         }
-        foreach (name, m_metadata->keyframes()->parameter(m_metadataIndex[parameterIndex])->gangedProperties()) {
+        foreach (name, m_metadata->keyframes()->parameter(
+                     m_metadataIndex[parameterIndex])->gangedProperties()) {
             Mlt::Animation animation = m_filter->getAnimation(name);
             if (animation.is_valid())
                 animation.key_set_frame(keyframeIndex, position);
@@ -569,15 +581,19 @@ void KeyframesModel::setKeyframeValuePosition(int parameterIndex, int keyframeIn
     }
 
     mlt_keyframe_type type = animation.key_get_type(keyframeIndex);
-    m_filter->service().anim_set(name.toUtf8().constData(), value, position, m_filter->duration(), type);
-    foreach (name, m_metadata->keyframes()->parameter(m_metadataIndex[parameterIndex])->gangedProperties())
-        m_filter->service().anim_set(name.toUtf8().constData(), value, position, m_filter->duration(), type);
+    m_filter->service().anim_set(name.toUtf8().constData(), value, position, m_filter->duration(),
+                                 type);
+    foreach (name, m_metadata->keyframes()->parameter(
+                 m_metadataIndex[parameterIndex])->gangedProperties())
+        m_filter->service().anim_set(name.toUtf8().constData(), value, position, m_filter->duration(),
+                                     type);
     emit m_filter->changed();
     emit m_filter->propertyChanged(name.toUtf8().constData());
     roles << NumericValueRole << NameRole;
     QModelIndex modelIndex = index(keyframeIndex, 0, index(parameterIndex));
     emit dataChanged(modelIndex, modelIndex, roles);
-    emit dataChanged(index(parameterIndex), index(parameterIndex), QVector<int>() << LowestValueRole << HighestValueRole);
+    emit dataChanged(index(parameterIndex), index(parameterIndex),
+                     QVector<int>() << LowestValueRole << HighestValueRole);
 }
 
 bool KeyframesModel::isKeyframe(int parameterIndex, int position)
@@ -593,11 +609,11 @@ bool KeyframesModel::isKeyframe(int parameterIndex, int position)
 bool KeyframesModel::advancedKeyframesInUse()
 {
     if (m_filter && m_metadata && m_filter->animateIn() <= 0 && m_filter->animateOut() <= 0)
-    for (int i = 0; i < m_metadata->keyframes()->parameterCount(); i++) {
-        if (m_filter->keyframeCount(m_metadata->keyframes()->parameter(i)->property()) > 0) {
-            return true;
+        for (int i = 0; i < m_metadata->keyframes()->parameterCount(); i++) {
+            if (m_filter->keyframeCount(m_metadata->keyframes()->parameter(i)->property()) > 0) {
+                return true;
+            }
         }
-    }
     return false;
 }
 
@@ -608,7 +624,7 @@ void KeyframesModel::removeAdvancedKeyframes()
             QString name = m_metadata->keyframes()->parameter(i)->property();
             if (m_filter->keyframeCount(name) > 0) {
                 m_filter->set(name, m_filter->get(name, 0));
-                for (auto& key : m_metadata->keyframes()->parameter(i)->gangedProperties()) {
+                for (auto &key : m_metadata->keyframes()->parameter(i)->gangedProperties()) {
                     m_filter->set(key, m_filter->get(key, 0));
                 }
             }
@@ -666,7 +682,7 @@ void KeyframesModel::removeSimpleKeyframes()
                 if (clearKeyframes) {
                     m_filter->set(name, firstValue);
                     m_filter->blockSignals(true);
-                    for (auto& key : parameter->gangedProperties()) {
+                    for (auto &key : parameter->gangedProperties()) {
                         m_filter->set(key, m_filter->getDouble(key, 0));
                     }
                     m_filter->blockSignals(false);
@@ -684,17 +700,17 @@ void KeyframesModel::reload()
     m_keyframeCounts.clear();
     m_metadataIndex.clear();
     if (m_filter && m_metadata && m_filter->animateIn() <= 0 && m_filter->animateOut() <= 0)
-    for (int i = 0; i < m_metadata->keyframes()->parameterCount(); i++) {
-        if (m_filter->keyframeCount(m_metadata->keyframes()->parameter(i)->property()) > 0) {
-            m_propertyNames << m_metadata->keyframes()->parameter(i)->property();
-            m_keyframeCounts << keyframeCount(m_propertyNames.count() - 1);
-            m_metadataIndex << i;
+        for (int i = 0; i < m_metadata->keyframes()->parameterCount(); i++) {
+            if (m_filter->keyframeCount(m_metadata->keyframes()->parameter(i)->property()) > 0) {
+                m_propertyNames << m_metadata->keyframes()->parameter(i)->property();
+                m_keyframeCounts << keyframeCount(m_propertyNames.count() - 1);
+                m_metadataIndex << i;
+            }
         }
-    }
     endResetModel();
 }
 
-void KeyframesModel::onFilterChanged(const QString& property)
+void KeyframesModel::onFilterChanged(const QString &property)
 {
     bool isKeyframeProperty = false;
     for (int p = 0; p < m_metadata->keyframes()->parameterCount() && isKeyframeProperty == false; p++) {
@@ -720,8 +736,7 @@ void KeyframesModel::onFilterChanged(const QString& property)
     if (m_keyframeCounts[i] == 0) {
         // All keyframes removed. Reset model to remove this parameter.
         reload();
-    }
-    else if (prevCount != m_keyframeCounts[i]) {
+    } else if (prevCount != m_keyframeCounts[i]) {
         // Keyframe count changed. Remove all old and insert all new.
         if (prevCount > 0) {
             beginRemoveRows(index(i), 0, prevCount - 1);
@@ -730,11 +745,11 @@ void KeyframesModel::onFilterChanged(const QString& property)
         beginInsertRows(index(i), 0, m_keyframeCounts[i] - 1);
         endInsertRows();
         emit dataChanged(index(i), index(i), QVector<int>() << LowestValueRole << HighestValueRole);
-    }
-    else {
+    } else {
         // Keyframe count is unchanged. A value must have changed.
         emit dataChanged(index(i), index(i), QVector<int>() << LowestValueRole << HighestValueRole);
-        emit dataChanged(index(0, 0, index(i)), index(m_keyframeCounts[i] - 1, 0, index(i)), QVector<int>() << NumericValueRole);
+        emit dataChanged(index(0, 0, index(i)), index(m_keyframeCounts[i] - 1, 0, index(i)),
+                         QVector<int>() << NumericValueRole);
     }
 }
 
@@ -746,7 +761,7 @@ void KeyframesModel::onFilterInChanged(int /*delta*/)
 
 void KeyframesModel::trimFilterIn(int in)
 {
-    Mlt::Service& service = m_filter->service();
+    Mlt::Service &service = m_filter->service();
     if (service.is_valid() && service.type() == mlt_service_filter_type) {
         Mlt::Filter filter = service;
         MLT.adjustFilter(&filter, filter.get_in(), filter.get_out(), in - filter.get_in(), 0);
@@ -755,7 +770,7 @@ void KeyframesModel::trimFilterIn(int in)
 
 void KeyframesModel::trimFilterOut(int out)
 {
-    Mlt::Service& service = m_filter->service();
+    Mlt::Service &service = m_filter->service();
     if (service.is_valid() && service.type() == mlt_service_filter_type) {
         Mlt::Filter filter = service;
         MLT.adjustFilter(&filter, filter.get_in(), filter.get_out(), 0, filter.get_out() - out);
@@ -765,7 +780,7 @@ void KeyframesModel::trimFilterOut(int out)
 int KeyframesModel::keyframeCount(int index) const
 {
     if (index < m_propertyNames.count())
-        return qMax(const_cast<QmlFilter*>(m_filter)->keyframeCount(m_propertyNames[index]), 0);
+        return qMax(const_cast<QmlFilter *>(m_filter)->keyframeCount(m_propertyNames[index]), 0);
     else
         return 0;
 }

@@ -29,12 +29,12 @@
 static const QColor LINE_COLOR = {255, 255, 255, 127};
 
 VideoVectorScopeWidget::VideoVectorScopeWidget()
-  : ScopeWidget("VideoVector")
-  , m_frame()
-  , m_renderImg()
-  , m_mutex(QMutex::NonRecursive)
-  , m_displayImg()
-  , m_profileChanged(false)
+    : ScopeWidget("VideoVector")
+    , m_frame()
+    , m_renderImg()
+    , m_mutex(QMutex::NonRecursive)
+    , m_displayImg()
+    , m_profileChanged(false)
 {
     LOG_DEBUG() << "begin";
     setMouseTracking(true);
@@ -50,10 +50,10 @@ VideoVectorScopeWidget::~VideoVectorScopeWidget()
 
 QString VideoVectorScopeWidget::getTitle()
 {
-   return tr("Video Vector");
+    return tr("Video Vector");
 }
 
-void VideoVectorScopeWidget::refreshScope(const QSize& size, bool full)
+void VideoVectorScopeWidget::refreshScope(const QSize &size, bool full)
 {
     Q_UNUSED(full)
 
@@ -110,10 +110,10 @@ void VideoVectorScopeWidget::refreshScope(const QSize& size, bool full)
         }
         m_renderImg.fill(0);
 
-        const uint8_t* src = m_frame.get_image(mlt_image_yuv420p);
-        const uint8_t* uSrc = src + (width * height);
-        const uint8_t* vSrc = uSrc + (width * height / 4);
-        uint8_t* dst = m_renderImg.scanLine(0);
+        const uint8_t *src = m_frame.get_image(mlt_image_yuv420p);
+        const uint8_t *uSrc = src + (width * height);
+        const uint8_t *vSrc = uSrc + (width * height / 4);
+        uint8_t *dst = m_renderImg.scanLine(0);
         int cHeight = height / 2;
         int cWidth = width / 2;
 
@@ -151,7 +151,7 @@ void VideoVectorScopeWidget::refreshScope(const QSize& size, bool full)
     }
 }
 
-void VideoVectorScopeWidget::drawGraticuleLines(QPainter& p, qreal lineWidth)
+void VideoVectorScopeWidget::drawGraticuleLines(QPainter &p, qreal lineWidth)
 {
     QRadialGradient radialGradient(128.0, 128.0, 128.0);
     radialGradient.setColorAt(0.0, Qt::transparent);
@@ -169,10 +169,11 @@ void VideoVectorScopeWidget::drawGraticuleLines(QPainter& p, qreal lineWidth)
     p.drawLine(m_points[GREEN_100], m_points[MAGENTA_100]);
 }
 
-void VideoVectorScopeWidget::drawSkinToneLine(QPainter& p, qreal lineWidth)
+void VideoVectorScopeWidget::drawSkinToneLine(QPainter &p, qreal lineWidth)
 {
     // Draw a skin tone line 33 degrees counter clockwise from the red vector
-    qreal angle = qRadiansToDegrees(qAtan((qreal)(m_points[RED_100].x() - 128) / (qreal)(m_points[RED_100].y() - 128)));
+    qreal angle = qRadiansToDegrees(qAtan((qreal)(m_points[RED_100].x() - 128) / (qreal)(
+                                              m_points[RED_100].y() - 128)));
     angle += 270;
     angle -= 33;
 
@@ -184,13 +185,14 @@ void VideoVectorScopeWidget::drawSkinToneLine(QPainter& p, qreal lineWidth)
     p.setBrush(graticuleBrush);
     p.setPen(QPen(graticuleBrush, lineWidth, Qt::DotLine));
     QLineF skinToneLine;
-    skinToneLine.setP1(QPoint(128,128));
+    skinToneLine.setP1(QPoint(128, 128));
     skinToneLine.setLength(120);
     skinToneLine.setAngle(angle);
     p.drawLine(skinToneLine);
 }
 
-void VideoVectorScopeWidget::drawGraticuleMark(QPainter& p, const QPoint& point, QColor color, qreal lineWidth, qreal LineLength)
+void VideoVectorScopeWidget::drawGraticuleMark(QPainter &p, const QPoint &point, QColor color,
+                                               qreal lineWidth, qreal LineLength)
 {
     color = color.darker(100);
     p.setBrush(color);
@@ -206,7 +208,7 @@ void VideoVectorScopeWidget::drawGraticuleMark(QPainter& p, const QPoint& point,
     p.drawLine(angleline);
 }
 
-void VideoVectorScopeWidget::paintEvent(QPaintEvent*)
+void VideoVectorScopeWidget::paintEvent(QPaintEvent *)
 {
     if (!isVisible())
         return;
@@ -220,7 +222,7 @@ void VideoVectorScopeWidget::paintEvent(QPaintEvent*)
 
     // draw the vector image
     m_mutex.lock();
-    if(!m_displayImg.isNull()) {
+    if (!m_displayImg.isNull()) {
         p.drawImage(squareRect, m_displayImg, m_displayImg.rect());
     } else {
         p.fillRect(squareRect, QBrush(Qt::black, Qt::SolidPattern));
@@ -239,7 +241,8 @@ void VideoVectorScopeWidget::mouseMoveEvent(QMouseEvent *event)
     qreal realY = (qreal)event->pos().y() - ((qreal)height() - squareRect.height()) / 2;
     qreal u = realX * 255.0 / squareRect.width();
     qreal v = (squareRect.height() - realY) * 255.0 / squareRect.height();
-    QString text =  QString(tr("U: %1\nV: %2")).arg(QString::number(qRound(u)), QString::number(qRound(v)));
+    QString text =  QString(tr("U: %1\nV: %2")).arg(QString::number(qRound(u)),
+                                                    QString::number(qRound(v)));
     QToolTip::showText(event->globalPos(), text);
 }
 
@@ -261,8 +264,7 @@ void VideoVectorScopeWidget::profileChanged()
 {
     LOG_DEBUG() << MLT.profile().colorspace();
     m_mutex.lock();
-    switch (MLT.profile().colorspace())
-    {
+    switch (MLT.profile().colorspace()) {
     case 601:
         m_points[BLUE_75]     = QPoint(212, 114);
         m_points[CYAN_75]     = QPoint(156, 44);

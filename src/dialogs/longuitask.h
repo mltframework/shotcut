@@ -29,7 +29,7 @@ public:
     ~LongUiTask();
 
     template <class Ret>
-    Ret wait(QString text, const QFuture<Ret>& future)
+    Ret wait(QString text, const QFuture<Ret> &future)
     {
         setLabelText(text);
         setRange(0, 0);
@@ -42,7 +42,7 @@ public:
     }
 
     template <class Ret, class Func, class Arg>
-    Ret runAsync(QString text, Func&& f, Arg&& arg)
+    Ret runAsync(QString text, Func &&f, Arg &&arg)
     {
         QFuture<Ret> future = QtConcurrent::run(f, arg);
         return wait<Ret>(text, future);

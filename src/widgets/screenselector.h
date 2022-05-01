@@ -24,17 +24,17 @@ class ScreenSelector : public QFrame
 {
     Q_OBJECT
 public:
-    ScreenSelector(QWidget* parent = 0);
-    void setFixedSize(const QSize& size);
-    void setBoundingRect(const QRect& rect);
-    void setSelectedRect(const QRect& rect);
+    ScreenSelector(QWidget *parent = 0);
+    void setFixedSize(const QSize &size);
+    void setBoundingRect(const QRect &rect);
+    void setSelectedRect(const QRect &rect);
 
 public slots:
-    void startSelection(QPoint initialPos = QPoint(-1,-1));
+    void startSelection(QPoint initialPos = QPoint(-1, -1));
 
 signals:
-    void screenSelected(const QRect&);
-    void pointSelected(const QPoint&);
+    void screenSelected(const QRect &);
+    void pointSelected(const QPoint &);
     void cancelled();
 
 public:
@@ -47,7 +47,7 @@ protected:
     bool eventFilter(QObject *, QEvent *event);
 
 private:
-    void lockGeometry(const QRect& rect);
+    void lockGeometry(const QRect &rect);
     void release();
 
     bool m_selectionInProgress;

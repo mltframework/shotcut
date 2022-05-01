@@ -25,7 +25,7 @@ class QImageJob : public AbstractJob
 {
     Q_OBJECT
 public:
-    QImageJob(const QString& destFilePath, const QString& srcFilePath, const int height);
+    QImageJob(const QString &destFilePath, const QString &srcFilePath, const int height);
     virtual ~QImageJob();
     void start();
     void execute();

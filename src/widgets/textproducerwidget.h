@@ -22,7 +22,7 @@
 #include "abstractproducerwidget.h"
 
 namespace Ui {
-    class TextProducerWidget;
+class TextProducerWidget;
 }
 
 class TextProducerWidget : public QWidget, public AbstractProducerWidget
@@ -34,16 +34,16 @@ public:
     ~TextProducerWidget();
 
     // AbstractProducerWidget overrides
-    Mlt::Producer* newProducer(Mlt::Profile&);
+    Mlt::Producer *newProducer(Mlt::Profile &);
     Mlt::Properties getPreset() const;
-    void loadPreset(Mlt::Properties&);
+    void loadPreset(Mlt::Properties &);
 
 signals:
-    void producerChanged(Mlt::Producer*);
+    void producerChanged(Mlt::Producer *);
 
 private slots:
     void on_colorButton_clicked();
-    void on_preset_selected(void* p);
+    void on_preset_selected(void *p);
     void on_preset_saveClicked();
 
 private:

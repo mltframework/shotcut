@@ -28,15 +28,16 @@
 #include <QScreen>
 #include <QTimer>
 
-ColorPickerItem::ColorPickerItem(QObject* parent)
+ColorPickerItem::ColorPickerItem(QObject *parent)
     : QObject(parent)
 {
     connect(this, SIGNAL(pickColor()), &m_selector, SLOT(startSelection()));
-    connect(&m_selector, SIGNAL(screenSelected(const QRect&)), this, SLOT(screenSelected(const QRect&)));
+    connect(&m_selector, SIGNAL(screenSelected(const QRect &)), this,
+            SLOT(screenSelected(const QRect &)));
     connect(&m_selector, SIGNAL(cancelled()), SIGNAL(cancelled()));
 }
 
-void ColorPickerItem::screenSelected(const QRect& rect)
+void ColorPickerItem::screenSelected(const QRect &rect)
 {
     m_selectedRect = rect;
     // Give the frame buffer time to clear the selector window before
@@ -46,11 +47,11 @@ void ColorPickerItem::screenSelected(const QRect& rect)
 
 void ColorPickerItem::grabColor()
 {
-    QDesktopWidget* desktop = QApplication::desktop();
+    QDesktopWidget *desktop = QApplication::desktop();
 
-    QScreen* screen = QGuiApplication::screenAt(m_selectedRect.topLeft());
+    QScreen *screen = QGuiApplication::screenAt(m_selectedRect.topLeft());
     QPixmap screenGrab = screen->grabWindow(desktop->winId(),
-        m_selectedRect.x(), m_selectedRect.y(), m_selectedRect.width(), m_selectedRect.height());
+                                            m_selectedRect.x(), m_selectedRect.y(), m_selectedRect.width(), m_selectedRect.height());
     QImage image = screenGrab.toImage();
     int numPixel = image.width() * image.height();
     int sumR = 0;

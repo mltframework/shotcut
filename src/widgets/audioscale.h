@@ -28,7 +28,7 @@ public:
     explicit AudioScale(QWidget *parent = 0);
 
 protected:
-    void paintEvent(QPaintEvent*);
+    void paintEvent(QPaintEvent *);
 
 private:
     QVector<int> dbscale;

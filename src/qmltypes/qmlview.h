@@ -28,11 +28,11 @@ class QmlView : public QObject
     Q_OBJECT
 
 public:
-    explicit QmlView(QWidget* qview);
+    explicit QmlView(QWidget *qview);
     Q_INVOKABLE QPoint pos();
 
 private:
-    QWidget* m_qview;
+    QWidget *m_qview;
 };
 
 #endif // QMLVIEW_H

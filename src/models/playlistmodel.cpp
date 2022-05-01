@@ -36,24 +36,25 @@
 #include "mainwindow.h"
 #include "proxymanager.h"
 
-static void deleteQImage(QImage* image)
+static void deleteQImage(QImage *image)
 {
     delete image;
 }
 
 class UpdateThumbnailTask : public QRunnable
 {
-    PlaylistModel* m_model;
+    PlaylistModel *m_model;
     Mlt::Producer m_producer;
     Mlt::Profile m_profile;
-    Mlt::Producer* m_tempProducer;
+    Mlt::Producer *m_tempProducer;
     int m_in;
     int m_out;
     int m_row;
     bool m_force;
 
 public:
-    UpdateThumbnailTask(PlaylistModel* model, Mlt::Producer& producer, int in, int out, int row, bool force = false)
+    UpdateThumbnailTask(PlaylistModel *model, Mlt::Producer &producer, int in, int out, int row,
+                        bool force = false)
         : QRunnable()
         , m_model(model)
         , m_producer(producer)
@@ -70,7 +71,7 @@ public:
         delete m_tempProducer;
     }
 
-    Mlt::Producer* tempProducer()
+    Mlt::Producer *tempProducer()
     {
         if (!m_tempProducer) {
             QString service = m_producer.get("mlt_service");
@@ -78,7 +79,8 @@ public:
                 service = "avformat";
             else if (service.startsWith("xml"))
                 service = "xml-nogl";
-            m_tempProducer = new Mlt::Producer(m_profile, service.toUtf8().constData(), m_producer.get("resource"));
+            m_tempProducer = new Mlt::Producer(m_profile, service.toUtf8().constData(),
+                                               m_producer.get("resource"));
             if (m_tempProducer->is_valid()) {
                 Mlt::Filter scaler(m_profile, "swscale");
                 Mlt::Filter padder(m_profile, "resize");
@@ -101,9 +103,9 @@ public:
         QString resource = m_producer.get(kShotcutHashProperty);
         if (resource.isEmpty()) {
             key = QString("%1 %2 %3")
-                    .arg(m_producer.get("mlt_service"))
-                    .arg(m_producer.get("resource"))
-                    .arg(time);
+                  .arg(m_producer.get("mlt_service"))
+                  .arg(m_producer.get("resource"))
+                  .arg(time);
             QCryptographicHash hash(QCryptographicHash::Sha1);
             hash.addData(key.toUtf8());
             key = hash.result().toHex();
@@ -177,20 +179,20 @@ PlaylistModel::~PlaylistModel()
     m_playlist = 0;
 }
 
-int PlaylistModel::rowCount(const QModelIndex& /*parent*/) const
+int PlaylistModel::rowCount(const QModelIndex & /*parent*/) const
 {
-    return m_playlist? m_playlist->count() : 0;
+    return m_playlist ? m_playlist->count() : 0;
 }
 
-int PlaylistModel::columnCount(const QModelIndex& /*parent*/) const
+int PlaylistModel::columnCount(const QModelIndex & /*parent*/) const
 {
     switch (m_mode) {
-        case Detailed:
-            return COLUMN_COUNT;
-        case Tiled:
-        case Icons:
-        case Invalid:
-            return 1;
+    case Detailed:
+        return COLUMN_COUNT;
+    case Tiled:
+    case Icons:
+    case Invalid:
+        return 1;
     }
     return 0;
 }
@@ -210,98 +212,94 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
                 field = FIELD_RESOURCE;
         } else if (role == Qt::ToolTipRole) {
             field = FIELD_RESOURCE;
-        }
-        else if (role == Qt::DecorationRole) {
+        } else if (role == Qt::DecorationRole) {
             if (m_mode == Detailed && index.column() != COLUMN_THUMBNAIL)
                 return QVariant();
             field = FIELD_THUMBNAIL;
-        }
-        else
+        } else
             return QVariant();
     }
 
     QScopedPointer<Mlt::ClipInfo> info(m_playlist->clip_info(index.row()));
     if (info)
-    switch (field) {
-    case FIELD_INDEX:
-        return QString::number(index.row() + 1);
-    case FIELD_RESOURCE:
-        {
-        QString result;
-        if (role == Qt::DisplayRole) {
-            // Prefer caption for display
-            if (info->producer && info->producer->is_valid()) {
-                result = info->producer->get(kShotcutCaptionProperty);
-                if (result.isEmpty()) {
-                    result = Util::baseName(ProxyManager::resource(*info->producer));
-                    if (!::qstrcmp(info->producer->get("mlt_service"), "timewarp")) {
-                        double speed = ::qAbs(info->producer->get_double("warp_speed"));
-                        result = QString("%1 (%2x)").arg(result).arg(speed);
-                    }
-                }
-                if (result == "<producer>") {
-                    result = QString::fromUtf8(info->producer->get("mlt_service"));
-                }
-                if (info->producer->get_int(kIsProxyProperty)) {
-                    result.append("\n" + tr("(PROXY)"));
-                }
-            }
-        } else {
-            // Prefer detail or full path for tooltip
-            if (info->producer && info->producer->is_valid()) {
-                result = info->producer->get(kShotcutDetailProperty);
-                if (result.isEmpty()) {
-                    result = ProxyManager::resource(*info->producer);
-                    if (!result.isEmpty() && QFileInfo(result).isRelative()) {
-                        QString basePath = QFileInfo(MAIN.fileName()).canonicalPath();
-                        result = QFileInfo(basePath, result).filePath();
-                    }
-                    result = QDir::toNativeSeparators(result);
-                }
-                if ((result.isEmpty() || Util::baseName(result) == "<producer>")) {
+        switch (field) {
+        case FIELD_INDEX:
+            return QString::number(index.row() + 1);
+        case FIELD_RESOURCE: {
+            QString result;
+            if (role == Qt::DisplayRole) {
+                // Prefer caption for display
+                if (info->producer && info->producer->is_valid()) {
                     result = info->producer->get(kShotcutCaptionProperty);
+                    if (result.isEmpty()) {
+                        result = Util::baseName(ProxyManager::resource(*info->producer));
+                        if (!::qstrcmp(info->producer->get("mlt_service"), "timewarp")) {
+                            double speed = ::qAbs(info->producer->get_double("warp_speed"));
+                            result = QString("%1 (%2x)").arg(result).arg(speed);
+                        }
+                    }
+                    if (result == "<producer>") {
+                        result = QString::fromUtf8(info->producer->get("mlt_service"));
+                    }
+                    if (info->producer->get_int(kIsProxyProperty)) {
+                        result.append("\n" + tr("(PROXY)"));
+                    }
                 }
-                if (result.isEmpty()) {
-                    result = QString::fromUtf8(info->producer->get("mlt_service"));
-                }
-            }
-        }
-        if (!info->producer->get(kShotcutHashProperty)) {
-            Util::getHash(*info->producer);
-        }
-        return result;
-    }
-    case FIELD_IN:
-        if (info->producer && info->producer->is_valid()) {
-            return info->producer->frames_to_time(info->frame_in);
-        } else {
-            return "";
-        }
-    case FIELD_DURATION:
-        if (info->producer && info->producer->is_valid()) {
-            return info->producer->frames_to_time(info->frame_count);
-        } else {
-            return "";
-        }
-    case FIELD_START:
-        if (info->producer && info->producer->is_valid()) {
-            return info->producer->frames_to_time(info->start);
-        } else {
-            return "";
-        }
-    case FIELD_DATE:
-        if (info->producer && info->producer->is_valid()) {
-            int64_t ms = info->producer->get_creation_time();
-            if (!ms) {
-                return "";
             } else {
-               return QDateTime::fromMSecsSinceEpoch(ms).toString("yyyy-MM-dd HH:mm:ss");
+                // Prefer detail or full path for tooltip
+                if (info->producer && info->producer->is_valid()) {
+                    result = info->producer->get(kShotcutDetailProperty);
+                    if (result.isEmpty()) {
+                        result = ProxyManager::resource(*info->producer);
+                        if (!result.isEmpty() && QFileInfo(result).isRelative()) {
+                            QString basePath = QFileInfo(MAIN.fileName()).canonicalPath();
+                            result = QFileInfo(basePath, result).filePath();
+                        }
+                        result = QDir::toNativeSeparators(result);
+                    }
+                    if ((result.isEmpty() || Util::baseName(result) == "<producer>")) {
+                        result = info->producer->get(kShotcutCaptionProperty);
+                    }
+                    if (result.isEmpty()) {
+                        result = QString::fromUtf8(info->producer->get("mlt_service"));
+                    }
+                }
             }
-        } else {
-            return "";
+            if (!info->producer->get(kShotcutHashProperty)) {
+                Util::getHash(*info->producer);
+            }
+            return result;
         }
-    case FIELD_THUMBNAIL:
-        {
+        case FIELD_IN:
+            if (info->producer && info->producer->is_valid()) {
+                return info->producer->frames_to_time(info->frame_in);
+            } else {
+                return "";
+            }
+        case FIELD_DURATION:
+            if (info->producer && info->producer->is_valid()) {
+                return info->producer->frames_to_time(info->frame_count);
+            } else {
+                return "";
+            }
+        case FIELD_START:
+            if (info->producer && info->producer->is_valid()) {
+                return info->producer->frames_to_time(info->start);
+            } else {
+                return "";
+            }
+        case FIELD_DATE:
+            if (info->producer && info->producer->is_valid()) {
+                int64_t ms = info->producer->get_creation_time();
+                if (!ms) {
+                    return "";
+                } else {
+                    return QDateTime::fromMSecsSinceEpoch(ms).toString("yyyy-MM-dd HH:mm:ss");
+                }
+            } else {
+                return "";
+            }
+        case FIELD_THUMBNAIL: {
             QString setting = Settings.playlistThumbnails();
             if (setting == "hidden")
                 return QImage();
@@ -325,7 +323,7 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
                 image.fill(QApplication::palette().base().color().rgb());
 
                 // draw the in thumbnail
-                QImage* thumb = (QImage*) parent.get_data(kThumbnailInProperty);
+                QImage *thumb = (QImage *) parent.get_data(kThumbnailInProperty);
                 QRect rect = thumb->rect();
                 if (setting != "large") {
                     rect.setWidth(width);
@@ -335,12 +333,11 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
 
                 if ((setting == "wide" || setting == "tall") && parent.get_data(kThumbnailOutProperty)) {
                     // draw the out thumbnail
-                    thumb = (QImage*) parent.get_data(kThumbnailOutProperty);
+                    thumb = (QImage *) parent.get_data(kThumbnailOutProperty);
                     if (setting == "wide") {
                         rect.setWidth(width * 2);
                         rect.setLeft(width);
-                    }
-                    else if (setting == "tall") {
+                    } else if (setting == "tall") {
                         rect.setHeight(THUMBNAIL_HEIGHT * 2);
                         rect.setTop(THUMBNAIL_HEIGHT);
                     }
@@ -357,13 +354,12 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
                     painter.drawRect(rect);
                 }
                 painter.end();
-            }
-            else {
+            } else {
                 image.fill(QApplication::palette().base().color().rgb());
             }
             return image;
         }
-    }
+        }
     return QVariant();
 }
 
@@ -384,8 +380,7 @@ void PlaylistModel::setViewMode(ViewMode mode)
 
 QVariant PlaylistModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
-    if (role == Qt::DisplayRole && orientation == Qt::Horizontal)
-    {
+    if (role == Qt::DisplayRole && orientation == Qt::Horizontal) {
         switch (section) {
         case COLUMN_INDEX:
             return tr("#");
@@ -413,7 +408,7 @@ Qt::DropActions PlaylistModel::supportedDropActions() const
     return Qt::CopyAction | Qt::MoveAction | Qt::LinkAction;
 }
 
-bool PlaylistModel::insertRows(int row, int count, const QModelIndex& parent)
+bool PlaylistModel::insertRows(int row, int count, const QModelIndex &parent)
 {
     Q_UNUSED(count)
     Q_UNUSED(parent)
@@ -423,7 +418,7 @@ bool PlaylistModel::insertRows(int row, int count, const QModelIndex& parent)
     return true;
 }
 
-bool PlaylistModel::removeRows(int row, int count, const QModelIndex& parent)
+bool PlaylistModel::removeRows(int row, int count, const QModelIndex &parent)
 {
     Q_UNUSED(count)
     Q_UNUSED(parent)
@@ -453,7 +448,8 @@ bool PlaylistModel::removeRows(int row, int count, const QModelIndex& parent)
     return true;
 }
 
-bool PlaylistModel::moveRows(const QModelIndex &, int sourceRow, int count, const QModelIndex &, int destinationChild)
+bool PlaylistModel::moveRows(const QModelIndex &, int sourceRow, int count, const QModelIndex &,
+                             int destinationChild)
 {
     Q_ASSERT(count == 1);
     move(sourceRow, destinationChild);
@@ -527,7 +523,8 @@ QMimeData *PlaylistModel::mimeData(const QModelIndexList &indexes) const
     return mimeData;
 }
 
-bool PlaylistModel::dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent)
+bool PlaylistModel::dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column,
+                                 const QModelIndex &parent)
 {
     Q_UNUSED(column)
     Q_UNUSED(parent)
@@ -573,7 +570,7 @@ Qt::ItemFlags PlaylistModel::flags(const QModelIndex &index) const
         return Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled | defaults;
 }
 
-QModelIndex PlaylistModel::incrementIndex(const QModelIndex& index) const
+QModelIndex PlaylistModel::incrementIndex(const QModelIndex &index) const
 {
     if (index.row() + 1 < rowCount())
         return createIndex(index.row() + 1, index.column());
@@ -581,10 +578,10 @@ QModelIndex PlaylistModel::incrementIndex(const QModelIndex& index) const
         return QModelIndex();
 }
 
-QModelIndex PlaylistModel::decrementIndex(const QModelIndex& index) const
+QModelIndex PlaylistModel::decrementIndex(const QModelIndex &index) const
 {
     if (index.row() > 0)
-        return createIndex(index.row() -1, index.column());
+        return createIndex(index.row() - 1, index.column());
     else
         return QModelIndex();
 }
@@ -636,7 +633,7 @@ void PlaylistModel::load()
     emit loaded();
 }
 
-void PlaylistModel::append(Mlt::Producer& producer, bool emitModified)
+void PlaylistModel::append(Mlt::Producer &producer, bool emitModified)
 {
     createIfNeeded();
     int count = m_playlist->count();
@@ -652,7 +649,7 @@ void PlaylistModel::append(Mlt::Producer& producer, bool emitModified)
         emit modified();
 }
 
-void PlaylistModel::insert(Mlt::Producer& producer, int row)
+void PlaylistModel::insert(Mlt::Producer &producer, int row)
 {
     createIfNeeded();
     int in = producer.get_in();
@@ -678,7 +675,7 @@ void PlaylistModel::remove(int row)
         emit modified();
 }
 
-void PlaylistModel::update(int row, Mlt::Producer& producer, bool copyFilters)
+void PlaylistModel::update(int row, Mlt::Producer &producer, bool copyFilters)
 {
     if (!m_playlist) return;
     int in = producer.get_in();
@@ -704,7 +701,8 @@ void PlaylistModel::updateThumbnails(int row)
     QScopedPointer<Mlt::ClipInfo> info(m_playlist->clip_info(row));
     if (!info || !info->producer->is_valid()) return;
     QThreadPool::globalInstance()->start(
-        new UpdateThumbnailTask(this, *info->producer, info->frame_in, info->frame_out, row, true /* force */), 1);
+        new UpdateThumbnailTask(this, *info->producer, info->frame_in, info->frame_out, row,
+                                true /* force */), 1);
 }
 
 void PlaylistModel::appendBlank(int frames)
@@ -763,7 +761,7 @@ void PlaylistModel::refreshThumbnails()
 {
     if (m_playlist && m_playlist->is_valid()) {
         for (int i = 0; i < m_playlist->count(); i++) {
-            Mlt::ClipInfo* info = m_playlist->clip_info(i);
+            Mlt::ClipInfo *info = m_playlist->clip_info(i);
             if (info && info->producer && info->producer->is_valid()) {
                 QThreadPool::globalInstance()->start(
                     new UpdateThumbnailTask(this, *info->producer, info->frame_in, info->frame_out, i), 1);
@@ -773,7 +771,7 @@ void PlaylistModel::refreshThumbnails()
     }
 }
 
-void PlaylistModel::setPlaylist(Mlt::Playlist& playlist)
+void PlaylistModel::setPlaylist(Mlt::Playlist &playlist)
 {
     if (playlist.is_valid()) {
         if (m_playlist) {

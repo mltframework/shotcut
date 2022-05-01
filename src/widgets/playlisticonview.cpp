@@ -44,7 +44,7 @@ QRect PlaylistIconView::visualRect(const QModelIndex &index) const
     int row = index.row() / m_itemsPerRow;
     int col = index.row() % m_itemsPerRow;
     return QRect(col * m_gridSize.width(), row * m_gridSize.height(),
-            m_gridSize.width(), m_gridSize.height());
+                 m_gridSize.width(), m_gridSize.height());
 }
 
 void PlaylistIconView::rowsInserted(const QModelIndex &parent, int start, int end)
@@ -61,14 +61,16 @@ void PlaylistIconView::rowsAboutToBeRemoved(const QModelIndex &parent, int start
     viewport()->update();
 }
 
-void PlaylistIconView::dataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight, const QVector<int> &roles)
+void PlaylistIconView::dataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight,
+                                   const QVector<int> &roles)
 {
     QAbstractItemView::dataChanged(topLeft, bottomRight, roles);
     updateSizes();
     viewport()->update();
 }
 
-void PlaylistIconView::selectionChanged(const QItemSelection& selected, const QItemSelection& deselected)
+void PlaylistIconView::selectionChanged(const QItemSelection &selected,
+                                        const QItemSelection &deselected)
 {
     QAbstractItemView::selectionChanged(selected, deselected);
     viewport()->update();
@@ -149,7 +151,7 @@ void PlaylistIconView::currentChanged(const QModelIndex &current, const QModelIn
     QAbstractItemView::currentChanged(current, previous);
 }
 
-void PlaylistIconView::paintEvent(QPaintEvent*)
+void PlaylistIconView::paintEvent(QPaintEvent *)
 {
     QPainter painter(viewport());
     QPalette pal(palette());
@@ -162,7 +164,7 @@ void PlaylistIconView::paintEvent(QPaintEvent*)
     if (!model())
         return;
 
-    QAbstractItemModel * m = model();
+    QAbstractItemModel *m = model();
     QRect dragIndicator;
 
     for (int row = 0; row <= m->rowCount() / m_itemsPerRow; row++) {
@@ -174,7 +176,7 @@ void PlaylistIconView::paintEvent(QPaintEvent*)
                 break;
 
             QRect itemRect(col * m_gridSize.width(), row * m_gridSize.height() - verticalScrollBar()->value(),
-                    m_gridSize.width(), m_gridSize.height());
+                           m_gridSize.width(), m_gridSize.height());
 
             if (itemRect.bottom() < 0 || itemRect.top() > this->height())
                 continue;
@@ -222,7 +224,7 @@ void PlaylistIconView::paintEvent(QPaintEvent*)
             }
             painter.setPen(pal.color(QPalette::WindowText));
             painter.drawText(textRect, Qt::AlignCenter,
-                    painter.fontMetrics().elidedText(nameParts.first(), Qt::ElideMiddle, textRect.width()));
+                             painter.fontMetrics().elidedText(nameParts.first(), Qt::ElideMiddle, textRect.width()));
 
             if (!m_draggingOverPos.isNull() && itemRect.contains(m_draggingOverPos)) {
                 QAbstractItemView::DropIndicatorPosition dropPos =
@@ -292,14 +294,14 @@ void PlaylistIconView::resizeEvent(QResizeEvent *event)
     QAbstractItemView::resizeEvent(event);
 }
 
-void PlaylistIconView::setModel(QAbstractItemModel* model)
+void PlaylistIconView::setModel(QAbstractItemModel *model)
 {
     QAbstractItemView::setModel(model);
     updateSizes();
     viewport()->update();
 }
 
-void PlaylistIconView::keyPressEvent(QKeyEvent* event)
+void PlaylistIconView::keyPressEvent(QKeyEvent *event)
 {
     QAbstractItemView::keyPressEvent(event);
     event->ignore();
@@ -314,7 +316,8 @@ void PlaylistIconView::keyReleaseEvent(QKeyEvent *event)
     resetMultiSelect();
 }
 
-QAbstractItemView::DropIndicatorPosition PlaylistIconView::position(const QPoint &pos, const QRect &rect, const QModelIndex &index) const
+QAbstractItemView::DropIndicatorPosition PlaylistIconView::position(const QPoint &pos,
+                                                                    const QRect &rect, const QModelIndex &index) const
 {
     Q_UNUSED(index);
     if (pos.x() < rect.center().x())
@@ -325,8 +328,7 @@ QAbstractItemView::DropIndicatorPosition PlaylistIconView::position(const QPoint
 
 void PlaylistIconView::updateSizes()
 {
-    if (!model() || !model()->rowCount())
-    {
+    if (!model() || !model()->rowCount()) {
         verticalScrollBar()->setRange(0, 0);
         return;
     }
@@ -349,7 +351,8 @@ void PlaylistIconView::updateSizes()
     if (!verticalScrollBar())
         return;
 
-    verticalScrollBar()->setRange(0, m_gridSize.height() * model()->rowCount() / m_itemsPerRow - height() + m_gridSize.height());
+    verticalScrollBar()->setRange(0,
+                                  m_gridSize.height() * model()->rowCount() / m_itemsPerRow - height() + m_gridSize.height());
     viewport()->update();
 }
 

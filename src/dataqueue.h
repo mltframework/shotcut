@@ -72,7 +72,7 @@ public:
       If the queue is full and overflow mode is OverflowModeWait then this
       function will block until pop() is called.
     */
-    void push(const T& item);
+    void push(const T &item);
 
     /*!
       Pops an item from the queue.
@@ -96,12 +96,12 @@ private:
 
 template <class T>
 DataQueue<T>::DataQueue(int maxSize, OverflowMode mode)
-  : m_queue()
-  , m_maxSize(maxSize)
-  , m_mode(mode)
-  , m_mutex(QMutex::NonRecursive)
-  , m_notEmptyCondition()
-  , m_notFullCondition()
+    : m_queue()
+    , m_maxSize(maxSize)
+    , m_mode(mode)
+    , m_mutex(QMutex::NonRecursive)
+    , m_notEmptyCondition()
+    , m_notFullCondition()
 {
 }
 
@@ -111,22 +111,22 @@ DataQueue<T>::~DataQueue()
 }
 
 template <class T>
-void DataQueue<T>::push(const T& item)
+void DataQueue<T>::push(const T &item)
 {
     m_mutex.lock();
     if (m_queue.size() == m_maxSize) {
-        switch(m_mode) {
-            case OverflowModeDiscardOldest:
-                m_queue.pop_front();
-                m_queue.push_back(item);
-                break;
-            case OverflowModeDiscardNewest:
-                // This item is the newest so discard it and exit
-                break;
-            case OverflowModeWait:
-                m_notFullCondition.wait(&m_mutex);
-                m_queue.push_back(item);
-                break;
+        switch (m_mode) {
+        case OverflowModeDiscardOldest:
+            m_queue.pop_front();
+            m_queue.push_back(item);
+            break;
+        case OverflowModeDiscardNewest:
+            // This item is the newest so discard it and exit
+            break;
+        case OverflowModeWait:
+            m_notFullCondition.wait(&m_mutex);
+            m_queue.push_back(item);
+            break;
         }
     } else {
         m_queue.push_back(item);

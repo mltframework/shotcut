@@ -23,7 +23,7 @@
 #include <abstractproducerwidget.h>
 
 namespace Ui {
-    class PlasmaWidget;
+class PlasmaWidget;
 }
 
 class PlasmaWidget : public QWidget, public AbstractProducerWidget
@@ -35,12 +35,12 @@ public:
     ~PlasmaWidget();
 
     // AbstractProducerWidget overrides
-    Mlt::Producer* newProducer(Mlt::Profile&);
+    Mlt::Producer *newProducer(Mlt::Profile &);
     Mlt::Properties getPreset() const;
-    void loadPreset(Mlt::Properties&);
+    void loadPreset(Mlt::Properties &);
 
 signals:
-    void producerChanged(Mlt::Producer*);
+    void producerChanged(Mlt::Producer *);
 
 private slots:
     void on_speed1Dial_valueChanged(int value);
@@ -55,7 +55,7 @@ private slots:
     void on_move1Spinner_valueChanged(double arg1);
     void on_move2Dial_valueChanged(int value);
     void on_move2Spinner_valueChanged(double arg1);
-    void on_preset_selected(void* p);
+    void on_preset_selected(void *p);
     void on_preset_saveClicked();
 
 private:

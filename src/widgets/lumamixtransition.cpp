@@ -87,7 +87,7 @@ void LumaMixTransition::on_invertCheckBox_clicked(bool checked)
     }
 }
 
-static void setColor(Mlt::Transition* transition, int value)
+static void setColor(Mlt::Transition *transition, int value)
 {
     qreal r = qreal(value) / 100.0;
     QColor color = QColor::fromRgbF(r, r, r);
@@ -193,7 +193,7 @@ void LumaMixTransition::on_lumaCombo_activated(int index)
             path.append("/*");
 #endif
             QString filename = QFileDialog::getOpenFileName(this, tr("Open File"), path,
-                    QString(), nullptr, Util::getFileDialogOptions());
+                                                            QString(), nullptr, Util::getFileDialogOptions());
             activateWindow();
             if (!filename.isEmpty()) {
                 transition->set("resource", filename.toUtf8().constData());
@@ -202,7 +202,8 @@ void LumaMixTransition::on_lumaCombo_activated(int index)
             }
         } else {
             ui->softnessLabel->setText(tr("Softness"));
-            transition->set("resource", QString("%luma%1.pgm").arg(index - 1, 2, 10, QChar('0')).toLatin1().constData());
+            transition->set("resource", QString("%luma%1.pgm").arg(index - 1, 2, 10,
+                                                                   QChar('0')).toLatin1().constData());
         }
         if (qstrcmp(transition->get("resource"), "")) {
             transition->set("progressive", 1);

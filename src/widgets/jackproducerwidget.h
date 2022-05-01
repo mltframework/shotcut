@@ -23,7 +23,7 @@
 #include "abstractproducerwidget.h"
 
 namespace Ui {
-    class JackProducerWidget;
+class JackProducerWidget;
 }
 
 class JackProducerWidget : public QWidget, public AbstractProducerWidget
@@ -35,7 +35,7 @@ public:
     ~JackProducerWidget();
 
     // AbstractProducerWidget overrides
-    Mlt::Producer* newProducer(Mlt::Profile& profile);
+    Mlt::Producer *newProducer(Mlt::Profile &profile);
 
 private:
     Ui::JackProducerWidget *ui;

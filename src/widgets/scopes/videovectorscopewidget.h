@@ -32,8 +32,7 @@ public:
     QString getTitle() Q_DECL_OVERRIDE;
 
 private:
-    enum
-    {
+    enum {
         BLUE_75 = 0,
         CYAN_75,
         GREEN_75,
@@ -50,13 +49,14 @@ private:
     };
 
     // Called in scope thread
-    void refreshScope(const QSize& size, bool full) Q_DECL_OVERRIDE;
-    void drawGraticuleLines(QPainter& p, qreal lineWidth);
-    void drawSkinToneLine(QPainter& p, qreal lineWidth);
-    void drawGraticuleMark(QPainter& p, const QPoint& point, QColor color, qreal lineWidth, qreal LineLength);
+    void refreshScope(const QSize &size, bool full) Q_DECL_OVERRIDE;
+    void drawGraticuleLines(QPainter &p, qreal lineWidth);
+    void drawSkinToneLine(QPainter &p, qreal lineWidth);
+    void drawGraticuleMark(QPainter &p, const QPoint &point, QColor color, qreal lineWidth,
+                           qreal LineLength);
 
     // Called in UI thread
-    void paintEvent(QPaintEvent*) Q_DECL_OVERRIDE;
+    void paintEvent(QPaintEvent *) Q_DECL_OVERRIDE;
     void mouseMoveEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
     QRect getCenteredSquare();
 

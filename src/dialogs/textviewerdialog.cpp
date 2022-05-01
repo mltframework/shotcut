@@ -45,7 +45,7 @@ void TextViewerDialog::on_buttonBox_accepted()
     QString caption = tr("Save Text");
     QString nameFilter = tr("Text Documents (*.txt);;All Files (*)");
     QString filename = QFileDialog::getSaveFileName(this, caption, path, nameFilter,
-        nullptr, Util::getFileDialogOptions());
+                                                    nullptr, Util::getFileDialogOptions());
     if (!filename.isEmpty()) {
         if (Util::warnIfNotWritable(filename, this, caption))
             return;

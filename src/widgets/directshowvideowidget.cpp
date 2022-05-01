@@ -58,7 +58,7 @@ DirectShowVideoWidget::DirectShowVideoWidget(QWidget *parent) :
     auto currentAudio = 1;
     if (started && finished && proc.exitStatus() == QProcess::NormalExit) {
         QString output = proc.readAll();
-        foreach (const QString& line, output.split(QRegularExpression("[\r\n]"), Qt::SkipEmptyParts)) {
+        foreach (const QString &line, output.split(QRegularExpression("[\r\n]"), Qt::SkipEmptyParts)) {
             auto i = line.indexOf("] \"");
             if (i > -1) {
                 auto j = line.indexOf("\" (");
@@ -71,7 +71,7 @@ DirectShowVideoWidget::DirectShowVideoWidget(QWidget *parent) :
                 i = line.indexOf(s);
                 if (i > -1) {
                     name = line.mid(i + s.size()).replace('\"', "");
-                    LOG_DEBUG() << (isVideo? "video" : "audio") << description << name;
+                    LOG_DEBUG() << (isVideo ? "video" : "audio") << description << name;
                     if (isVideo) {
                         if (Settings.videoInput() == name) {
                             currentVideo = ui->videoCombo->count();
@@ -100,21 +100,21 @@ DirectShowVideoWidget::~DirectShowVideoWidget()
     delete ui;
 }
 
-Mlt::Producer *DirectShowVideoWidget::newProducer(Mlt::Profile& profile)
+Mlt::Producer *DirectShowVideoWidget::newProducer(Mlt::Profile &profile)
 {
-    Mlt::Producer* p = 0;
+    Mlt::Producer *p = 0;
     if (ui->videoCombo->currentIndex() > 0) {
         LOG_DEBUG() << ui->videoCombo->currentData().toString();
         p = new Mlt::Producer(profile, QString("dshow:video=%1")
-                          .arg(ui->videoCombo->currentData().toString())
-                          .toUtf8().constData());
+                              .arg(ui->videoCombo->currentData().toString())
+                              .toUtf8().constData());
     }
     if (ui->audioCombo->currentIndex() > 0) {
-        Mlt::Producer* audio = new Mlt::Producer(profile,
-            QString("dshow:audio=%1").arg(ui->audioCombo->currentData().toString())
-                                     .toLatin1().constData());
+        Mlt::Producer *audio = new Mlt::Producer(profile,
+                                                 QString("dshow:audio=%1").arg(ui->audioCombo->currentData().toString())
+                                                 .toLatin1().constData());
         if (p && p->is_valid() && audio->is_valid()) {
-            Mlt::Tractor* tractor = new Mlt::Tractor;
+            Mlt::Tractor *tractor = new Mlt::Tractor;
             tractor->set("_profile", profile.get_profile(), 0);
             tractor->set("resource1", p->get("resource"));
             tractor->set("resource2", audio->get("resource"));
@@ -159,12 +159,13 @@ Mlt::Producer *DirectShowVideoWidget::newProducer(Mlt::Profile& profile)
 
 void DirectShowVideoWidget::setProducer(Mlt::Producer *producer)
 {
-    QString resource = producer->get("resource1") ? QString(producer->get("resource1")) : QString(producer->get("resource"));
+    QString resource = producer->get("resource1") ? QString(producer->get("resource1")) : QString(
+                           producer->get("resource"));
     QString resource2 = QString(producer->get("resource2"));
     LOG_DEBUG() << "resource" << resource;
     LOG_DEBUG() << "resource2" << resource2;
-    const char* videoDevice = "dshow:video=";
-    const char* audioDevice = "dshow:audio=";
+    const char *videoDevice = "dshow:video=";
+    const char *audioDevice = "dshow:audio=";
     ui->videoCombo->setCurrentIndex(0);
     ui->audioCombo->setCurrentIndex(0);
     if (resource.startsWith(videoDevice)) {
@@ -205,7 +206,7 @@ void DirectShowVideoWidget::on_videoCombo_activated(int index)
         emit producerChanged(0);
         QCoreApplication::processEvents();
 
-        Mlt::Producer* p = newProducer(MLT.profile());
+        Mlt::Producer *p = newProducer(MLT.profile());
         AbstractProducerWidget::setProducer(p);
         MLT.setProducer(p);
         MLT.play();

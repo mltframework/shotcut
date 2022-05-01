@@ -28,12 +28,12 @@
 #include "dialogs/textviewerdialog.h"
 #include "util.h"
 
-VideoQualityJob::VideoQualityJob(const QString& name, const QString& xml,
-                                 const QString& reportPath, int frameRateNum, int frameRateDen)
+VideoQualityJob::VideoQualityJob(const QString &name, const QString &xml,
+                                 const QString &reportPath, int frameRateNum, int frameRateDen)
     : MeltJob(name, xml, frameRateNum, frameRateDen)
     , m_reportPath(reportPath)
 {
-    QAction* action = new QAction(tr("Open"), this);
+    QAction *action = new QAction(tr("Open"), this);
     action->setToolTip(tr("Open original and encoded side-by-side in the Shotcut player"));
     connect(action, SIGNAL(triggered()), this, SLOT(onOpenTiggered()));
     m_successActions << action;

@@ -43,7 +43,7 @@ private slots:
     void onConnected();
     void onDisconnected();
     void heartbeat();
-    void onMessage(const QString& s);
+    void onMessage(const QString &s);
     void onError(QAbstractSocket::SocketError error);
 
 private:

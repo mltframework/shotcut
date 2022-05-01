@@ -65,7 +65,7 @@ void ReplaceOnePostJobAction::doAction()
     }
     Mlt::Producer newProducer(MLT.profile(), m_dstFile.toUtf8().constData());
     if (newProducer.is_valid()) {
-        Mlt::Producer* producer = MLT.setupNewProducer(&newProducer);
+        Mlt::Producer *producer = MLT.setupNewProducer(&newProducer);
         producer->set_in_and_out(m_in, -1);
         MAIN.replaceInTimeline(m_uuid, *producer);
         delete producer;
@@ -77,7 +77,7 @@ void ReplaceAllPostJobAction::doAction()
     FilePropertiesPostJobAction::doAction();
     Mlt::Producer newProducer(MLT.profile(), m_dstFile.toUtf8().constData());
     if (newProducer.is_valid()) {
-        Mlt::Producer* producer = MLT.setupNewProducer(&newProducer);
+        Mlt::Producer *producer = MLT.setupNewProducer(&newProducer);
         MAIN.replaceAllByHash(m_hash, *producer);
         delete producer;
     }
@@ -91,7 +91,7 @@ void ProxyReplacePostJobAction::doAction()
     if (QFile::rename(m_dstFile, newFileName)) {
         Mlt::Producer newProducer(MLT.profile(), newFileName.toUtf8().constData());
         if (newProducer.is_valid()) {
-            Mlt::Producer* producer = MLT.setupNewProducer(&newProducer);
+            Mlt::Producer *producer = MLT.setupNewProducer(&newProducer);
             producer->set(kIsProxyProperty, 1);
             producer->set(kOriginalResourceProperty, m_srcFile.toUtf8().constData());
             MAIN.replaceAllByHash(m_hash, *producer, true);

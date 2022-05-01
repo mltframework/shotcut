@@ -29,21 +29,22 @@
 class AudioLevelsTask : public QRunnable
 {
 public:
-    AudioLevelsTask(Mlt::Producer& producer, QObject* object, const QModelIndex& index);
+    AudioLevelsTask(Mlt::Producer &producer, QObject *object, const QModelIndex &index);
     virtual ~AudioLevelsTask();
-    static void start(Mlt::Producer& producer, QObject* object, const QModelIndex& index, bool force = false);
+    static void start(Mlt::Producer &producer, QObject *object, const QModelIndex &index,
+                      bool force = false);
     static void closeAll();
-    bool operator==(AudioLevelsTask& b);
+    bool operator==(AudioLevelsTask &b);
 
 protected:
     void run();
 
 private:
-    Mlt::Producer* tempProducer();
+    Mlt::Producer *tempProducer();
     QString cacheKey();
 
-    QObject* m_object;
-    typedef QPair<Mlt::Producer*, QPersistentModelIndex> ProducerAndIndex;
+    QObject *m_object;
+    typedef QPair<Mlt::Producer *, QPersistentModelIndex> ProducerAndIndex;
     QList<ProducerAndIndex> m_producers;
     QScopedPointer<Mlt::Producer> m_tempProducer;
     bool m_isCanceled;

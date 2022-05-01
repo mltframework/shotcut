@@ -23,11 +23,11 @@
 static const QColor TEXT_COLOR = {255, 255, 255, 127};
 
 VideoRgbParadeScopeWidget::VideoRgbParadeScopeWidget()
-  : ScopeWidget("RgbParade")
-  , m_frame()
-  , m_renderImg()
-  , m_mutex(QMutex::NonRecursive)
-  , m_displayImg()
+    : ScopeWidget("RgbParade")
+    , m_frame()
+    , m_renderImg()
+    , m_mutex(QMutex::NonRecursive)
+    , m_displayImg()
 {
     LOG_DEBUG() << "begin";
     setMouseTracking(true);
@@ -35,7 +35,7 @@ VideoRgbParadeScopeWidget::VideoRgbParadeScopeWidget()
 }
 
 
-void VideoRgbParadeScopeWidget::refreshScope(const QSize& size, bool full)
+void VideoRgbParadeScopeWidget::refreshScope(const QSize &size, bool full)
 {
     Q_UNUSED(size)
     Q_UNUSED(full)
@@ -53,11 +53,11 @@ void VideoRgbParadeScopeWidget::refreshScope(const QSize& size, bool full)
             m_renderImg = QImage(imgWidth, 256, QImage::QImage::Format_RGBX8888);
         }
 
-        QColor bgColor( 0, 0, 0 ,0xff );
+        QColor bgColor( 0, 0, 0, 0xff );
         m_renderImg.fill(bgColor);
 
-        const uint8_t* src = m_frame.get_image(mlt_image_rgb);
-        uint8_t* dst = m_renderImg.scanLine(0);
+        const uint8_t *src = m_frame.get_image(mlt_image_rgb);
+        uint8_t *dst = m_renderImg.scanLine(0);
         size_t rOffset = 0;
         size_t gOffset = rOffset + width;
         size_t bOffset = gOffset + width;
@@ -85,7 +85,8 @@ void VideoRgbParadeScopeWidget::refreshScope(const QSize& size, bool full)
             }
         }
 
-        QImage scaledImage = m_renderImg.scaled(size, Qt::IgnoreAspectRatio, Qt::SmoothTransformation).convertToFormat(QImage::Format_RGB32);
+        QImage scaledImage = m_renderImg.scaled(size, Qt::IgnoreAspectRatio,
+                                                Qt::SmoothTransformation).convertToFormat(QImage::Format_RGB32);
 
         m_mutex.lock();
         m_displayImg.swap(m_renderImg);
@@ -93,7 +94,7 @@ void VideoRgbParadeScopeWidget::refreshScope(const QSize& size, bool full)
     }
 }
 
-void VideoRgbParadeScopeWidget::paintEvent(QPaintEvent*)
+void VideoRgbParadeScopeWidget::paintEvent(QPaintEvent *)
 {
     if (!isVisible())
         return;
@@ -102,7 +103,7 @@ void VideoRgbParadeScopeWidget::paintEvent(QPaintEvent*)
     QPainter p(this);
     p.setRenderHint(QPainter::Antialiasing, true);
     QFont font = QWidget::font();
-    int fontSize = font.pointSize() - (font.pointSize() > 10? 2 : (font.pointSize() > 8? 1 : 0));
+    int fontSize = font.pointSize() - (font.pointSize() > 10 ? 2 : (font.pointSize() > 8 ? 1 : 0));
     font.setPointSize(fontSize);
     QFontMetrics fm(font);
     QPen pen;
@@ -113,10 +114,9 @@ void VideoRgbParadeScopeWidget::paintEvent(QPaintEvent*)
 
     // draw the waveform data
     m_mutex.lock();
-    if(!m_displayImg.isNull()) {
+    if (!m_displayImg.isNull()) {
         p.drawImage(rect(), m_displayImg, m_displayImg.rect());
-    } else
-    {
+    } else {
         p.fillRect(rect(), QBrush(Qt::black, Qt::SolidPattern));
     }
     m_mutex.unlock();
@@ -167,13 +167,11 @@ void VideoRgbParadeScopeWidget::mouseMoveEvent(QMouseEvent *event)
 
     int value = 255 - (255 * event->pos().y() / height());
 
-    if(frameWidth != 0)
-    {
+    if (frameWidth != 0) {
         int pixel = frameWidth * channelX / channelWidth;
-        text =  QString(tr("Channel: %1\nPixel: %2\nValue: %3")).arg(channelLabel).arg(QString::number(pixel)).arg(QString::number(value));
-    }
-    else
-    {
+        text =  QString(tr("Channel: %1\nPixel: %2\nValue: %3")).arg(channelLabel).arg(QString::number(
+                                                                                           pixel)).arg(QString::number(value));
+    } else {
         text =  QString(tr("Channel: %1\nValue: %2")).arg(channelLabel).arg(QString::number(value));
     }
     QToolTip::showText(event->globalPos(), text);
@@ -181,5 +179,5 @@ void VideoRgbParadeScopeWidget::mouseMoveEvent(QMouseEvent *event)
 
 QString VideoRgbParadeScopeWidget::getTitle()
 {
-   return tr("Video RGB Parade");
+    return tr("Video RGB Parade");
 }

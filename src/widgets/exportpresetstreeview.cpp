@@ -17,13 +17,13 @@
 
 #include "exportpresetstreeview.h"
 
-ExportPresetsTreeView::ExportPresetsTreeView(QWidget* parent)
+ExportPresetsTreeView::ExportPresetsTreeView(QWidget *parent)
     : QTreeView(parent)
 {
 
 }
 
-void ExportPresetsTreeView::currentChanged(const QModelIndex& current, const QModelIndex& previous)
+void ExportPresetsTreeView::currentChanged(const QModelIndex &current, const QModelIndex &previous)
 {
     Q_UNUSED(previous)
     emit activated(current);

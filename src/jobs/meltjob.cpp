@@ -30,7 +30,8 @@
 #include "dialogs/textviewerdialog.h"
 #include "util.h"
 
-MeltJob::MeltJob(const QString& name, const QString& xml, int frameRateNum, int frameRateDen, QThread::Priority priority)
+MeltJob::MeltJob(const QString &name, const QString &xml, int frameRateNum, int frameRateDen,
+                 QThread::Priority priority)
     : AbstractJob(name, priority)
     , m_isStreaming(false)
     , m_previousPercent(0)
@@ -38,7 +39,7 @@ MeltJob::MeltJob(const QString& name, const QString& xml, int frameRateNum, int 
     , m_useMultiConsumer(false)
 {
     if (!xml.isEmpty()) {
-        QAction* action = new QAction(tr("View XML"), this);
+        QAction *action = new QAction(tr("View XML"), this);
         action->setToolTip(tr("View the MLT XML for this job"));
         connect(action, SIGNAL(triggered()), this, SLOT(onViewXmlTriggered()));
         m_standardActions << action;
@@ -48,11 +49,11 @@ MeltJob::MeltJob(const QString& name, const QString& xml, int frameRateNum, int 
         m_xml->close();
     } else {
         // Not an EncodeJob
-        QAction* action = new QAction(tr("Open"), this);
+        QAction *action = new QAction(tr("Open"), this);
         action->setToolTip(tr("Open the output file in the Shotcut player"));
         connect(action, SIGNAL(triggered()), this, SLOT(onOpenTiggered()));
         m_successActions << action;
-    
+
         action = new QAction(tr("Show In Folder"), this);
         action->setToolTip(tr("Show In Folder"));
         connect(action, SIGNAL(triggered()), this, SLOT(onShowFolderTriggered()));
@@ -72,7 +73,7 @@ void MeltJob::onShowFolderTriggered()
     Util::showInFolder(objectName());
 }
 
-MeltJob::MeltJob(const QString& name, const QStringList& args, int frameRateNum, int frameRateDen)
+MeltJob::MeltJob(const QString &name, const QStringList &args, int frameRateNum, int frameRateDen)
     : MeltJob(name, QString(), frameRateNum, frameRateDen)
 {
     m_args = args;
@@ -89,7 +90,7 @@ void MeltJob::start()
         AbstractJob::start();
         LOG_ERROR() << "the job XML is empty!";
         appendToLog("Error: the job XML is empty!\n");
-        QTimer::singleShot(0, this, [=]() {
+        QTimer::singleShot(0, this, [ = ]() {
             emit finished(this, false);
         });
         return;
@@ -184,8 +185,7 @@ void MeltJob::onReadyRead()
                 QCoreApplication::processEvents();
                 m_previousPercent = percent;
             }
-        }
-        else {
+        } else {
             appendToLog(msg);
         }
     } while (!msg.isEmpty());

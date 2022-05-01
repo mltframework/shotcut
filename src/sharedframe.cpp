@@ -19,16 +19,16 @@
 
 #include <mutex>
 
-void destroyFrame(void* p)
+void destroyFrame(void *p)
 {
-    delete static_cast<Mlt::Frame*>(p);
+    delete static_cast<Mlt::Frame *>(p);
 }
 
 class FrameData : public QSharedData
 {
 public:
     FrameData() : f((mlt_frame)0) {};
-    FrameData(Mlt::Frame& frame) : f(frame) {};
+    FrameData(Mlt::Frame &frame) : f(frame) {};
     ~FrameData() {};
 
     Mlt::Frame f;
@@ -38,17 +38,17 @@ private:
 };
 
 SharedFrame::SharedFrame()
-  : d(new FrameData())
+    : d(new FrameData())
 {
 }
 
-SharedFrame::SharedFrame(Mlt::Frame& frame)
-  : d(new FrameData(frame))
+SharedFrame::SharedFrame(Mlt::Frame &frame)
+    : d(new FrameData(frame))
 {
 }
 
-SharedFrame::SharedFrame(const SharedFrame& other)
-  : d(other.d)
+SharedFrame::SharedFrame(const SharedFrame &other)
+    : d(other.d)
 {
 }
 
@@ -56,10 +56,10 @@ SharedFrame::~SharedFrame()
 {
 }
 
-SharedFrame& SharedFrame::operator=(const SharedFrame& other)
+SharedFrame &SharedFrame::operator=(const SharedFrame &other)
 {
-   d = other.d;
-   return *this;
+    d = other.d;
+    return *this;
 }
 
 bool SharedFrame::is_valid() const
@@ -73,8 +73,8 @@ Mlt::Frame SharedFrame::clone(bool audio, bool image, bool alpha) const
     // It could be added to mlt_frame as an alternative to:
     //     mlt_frame mlt_frame_clone( mlt_frame self, int is_deep );
     // It could also be added to Mlt::Frame as a const function.
-    void* data = 0;
-    void* copy = 0;
+    void *data = 0;
+    void *copy = 0;
     int size = 0;
     Mlt::Frame cloneFrame(mlt_frame_init( NULL ));
     cloneFrame.inherit(d->f);
@@ -102,8 +102,7 @@ Mlt::Frame SharedFrame::clone(bool audio, bool image, bool alpha) const
     }
 
     data = d->f.get_data("image", size );
-    if (image && data)
-    {
+    if (image && data) {
         if (!size) {
             size = mlt_image_format_size(get_image_format(),
                                          get_image_width(),
@@ -121,8 +120,7 @@ Mlt::Frame SharedFrame::clone(bool audio, bool image, bool alpha) const
     }
 
     data = d->f.get_data("alpha", size );
-    if (alpha && data)
-    {
+    if (alpha && data) {
         if (!size) {
             size = get_image_width() * get_image_height();
         }
@@ -174,12 +172,12 @@ int SharedFrame::get_image_height() const
     return d->f.get_int( "height" );
 }
 
-const uint8_t* SharedFrame::get_image(mlt_image_format format) const
+const uint8_t *SharedFrame::get_image(mlt_image_format format) const
 {
     mlt_image_format native_format = get_image_format();
     int width = get_image_width();
     int height = get_image_height();
-    uint8_t* image = nullptr;
+    uint8_t *image = nullptr;
 
     if (format == mlt_image_none) {
         format = native_format;
@@ -187,17 +185,17 @@ const uint8_t* SharedFrame::get_image(mlt_image_format format) const
 
     if (format == native_format) {
         // Native format is requested. Return frame image.
-        image = (uint8_t*)d->f.get_image(format, width, height, 0);
+        image = (uint8_t *)d->f.get_image(format, width, height, 0);
     } else {
         // Non-native format is requested. Return a cached converted image.
-        const char* formatName = mlt_image_format_name( format );
+        const char *formatName = mlt_image_format_name( format );
         // Convert to non-const so that the cache can be accessed/modified while
         // under lock.
-        FrameData* nonConstData = const_cast<FrameData*>(d.data());
+        FrameData *nonConstData = const_cast<FrameData *>(d.data());
 
         nonConstData->m.lock();
 
-        Mlt::Frame* cacheFrame = static_cast<Mlt::Frame*>(nonConstData->f.get_data(formatName));
+        Mlt::Frame *cacheFrame = static_cast<Mlt::Frame *>(nonConstData->f.get_data(formatName));
         if (cacheFrame == nullptr) {
             // A cached image does not exist, create one.
             // Make a non-deep clone of the frame (including convert function)
@@ -210,14 +208,14 @@ const uint8_t* SharedFrame::get_image(mlt_image_format format) const
             mlt_frame_close( cloneFrame );
             // Save the cache frame as a property under the name of the image
             // format for later use.
-            nonConstData->f.set(formatName, static_cast<void*>(cacheFrame), 0, destroyFrame);
+            nonConstData->f.set(formatName, static_cast<void *>(cacheFrame), 0, destroyFrame);
             // Break a circular reference
             cacheFrame->clear("_cloned_frame");
         }
 
         // Get the image from the cache frame.
         // This will cause a conversion if it was just created.
-        image = (uint8_t*)cacheFrame->get_image(format, width, height, 0);
+        image = (uint8_t *)cacheFrame->get_image(format, width, height, 0);
 
         nonConstData->m.unlock();
     }
@@ -244,16 +242,16 @@ int SharedFrame::get_audio_samples() const
     return d->f.get_int( "audio_samples" );
 }
 
-const int16_t* SharedFrame::get_audio() const
+const int16_t *SharedFrame::get_audio() const
 {
     mlt_audio_format format = get_audio_format();
     int frequency = get_audio_frequency();
     int channels = get_audio_channels();
     int samples = get_audio_samples();
-    return (int16_t*)d->f.get_audio(format, frequency, channels, samples);
+    return (int16_t *)d->f.get_audio(format, frequency, channels, samples);
 }
 
-Mlt::Producer* SharedFrame::get_original_producer()
+Mlt::Producer *SharedFrame::get_original_producer()
 {
     return d->f.get_original_producer();
 }

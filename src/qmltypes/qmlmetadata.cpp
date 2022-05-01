@@ -139,7 +139,7 @@ void QmlMetadata::setIsFavorite(bool isFavorite)
     emit changed();
 }
 
-void QmlMetadata::setGpuAlt(const QString& gpuAlt)
+void QmlMetadata::setGpuAlt(const QString &gpuAlt)
 {
     m_gpuAlt = gpuAlt;
     emit changed();
@@ -165,7 +165,7 @@ bool QmlMetadata::isMltVersion(const QString &version)
     return true;
 }
 
-QmlKeyframesMetadata::QmlKeyframesMetadata(QObject* parent)
+QmlKeyframesMetadata::QmlKeyframesMetadata(QObject *parent)
     : QObject(parent)
     , m_allowTrim(true)
     , m_allowAnimateIn(false)
@@ -175,7 +175,7 @@ QmlKeyframesMetadata::QmlKeyframesMetadata(QObject* parent)
 {
 }
 
-void QmlKeyframesMetadata::checkVersion(const QString& version)
+void QmlKeyframesMetadata::checkVersion(const QString &version)
 {
     if (!m_minimumVersion.isEmpty()) {
         LOG_DEBUG() << "MLT version:" << version << "Shotcut minimumVersion:" << m_minimumVersion;
@@ -189,7 +189,7 @@ void QmlKeyframesMetadata::setDisabled()
     m_enabled = m_allowAnimateIn = m_allowAnimateOut = false;
 }
 
-QmlKeyframesParameter::QmlKeyframesParameter(QObject* parent)
+QmlKeyframesParameter::QmlKeyframesParameter(QObject *parent)
     : QObject(parent)
     , m_isCurve(false)
     , m_minimum(0.0)

@@ -63,7 +63,7 @@ QString TimeSpinBox::textFromValue(int val) const
     return QString();
 }
 
-void TimeSpinBox::keyPressEvent(QKeyEvent* event)
+void TimeSpinBox::keyPressEvent(QKeyEvent *event)
 {
     if (event->key() == Qt::Key_PageUp || event->key() == Qt::Key_PageDown) {
         // Disable page up & page down (step by 10) since those keys are used for other things in Shotcut.
@@ -90,7 +90,7 @@ void TimeSpinBoxLineEdit::focusInEvent(QFocusEvent *event)
     m_selectOnMousePress = true;
 }
 
-void TimeSpinBoxLineEdit::focusOutEvent(QFocusEvent* event)
+void TimeSpinBoxLineEdit::focusOutEvent(QFocusEvent *event)
 {
     // QLineEdit::focusOutEvent() calls deselect() on OtherFocusReason,
     // which prevents using the clipboard actions with the text.

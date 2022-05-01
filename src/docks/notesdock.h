@@ -30,7 +30,7 @@ class NotesDock : public QDockWidget
 public:
     explicit NotesDock(QWidget *parent = 0);
     QString getText();
-    void setText(const QString& text);
+    void setText(const QString &text);
 
 signals:
     void modified();
@@ -39,7 +39,7 @@ private slots:
     void onTextChanged();
 
 private:
-    QTextEdit* m_textEdit;
+    QTextEdit *m_textEdit;
     bool m_blockUpdate;
 };
 

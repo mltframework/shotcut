@@ -47,7 +47,7 @@ class AudioReader : public QObject
 {
     Q_OBJECT
 public:
-    AudioReader(QString producerXml, AlignmentArray* array, int in = -1, int out = -1)
+    AudioReader(QString producerXml, AlignmentArray *array, int in = -1, int out = -1)
         : QObject()
         , m_producerXml(producerXml)
         , m_array(array)
@@ -63,8 +63,9 @@ public:
 
     void process()
     {
-        QScopedPointer<Mlt::Producer> producer(new Mlt::Producer(MLT.profile(), "xml-string", m_producerXml.toUtf8().constData()));
-        if (m_in >=0) {
+        QScopedPointer<Mlt::Producer> producer(new Mlt::Producer(MLT.profile(), "xml-string",
+                                                                 m_producerXml.toUtf8().constData()));
+        if (m_in >= 0) {
             producer->set_in_and_out(m_in, m_out);
         }
         size_t frameCount = producer->get_playtime();
@@ -77,7 +78,7 @@ public:
             std::unique_ptr<Mlt::Frame> frame(producer->get_frame(i));
             mlt_position position = mlt_frame_get_position(frame->get_frame());
             int samples = mlt_audio_calculate_frame_samples(float(producer->get_fps()), frequency, position);
-            int16_t* data = static_cast<int16_t*>(frame->get_audio(format, frequency, channels, samples));
+            int16_t *data = static_cast<int16_t *>(frame->get_audio(format, frequency, channels, samples));
             double sampleTotal = 0;
             // Add all values from the frame
             for (int k = 0; k < samples; ++k) {
@@ -99,7 +100,7 @@ signals:
 
 private:
     QString m_producerXml;
-    AlignmentArray* m_array;
+    AlignmentArray *m_array;
     int m_in;
     int m_out;
 };
@@ -108,7 +109,7 @@ class ClipAudioReader : public QObject
 {
     Q_OBJECT
 public:
-    ClipAudioReader(QString producerXml, AlignmentArray& referenceArray, int index, int in, int out)
+    ClipAudioReader(QString producerXml, AlignmentArray &referenceArray, int index, int in, int out)
         : QObject()
         , m_referenceArray(referenceArray)
         , m_reader(producerXml, &m_clipArray, in, out)
@@ -162,7 +163,7 @@ signals:
 
 private:
     AlignmentArray m_clipArray;
-    AlignmentArray& m_referenceArray;
+    AlignmentArray &m_referenceArray;
     AudioReader m_reader;
     int m_index;
     QFuture<void> m_future;
@@ -175,7 +176,7 @@ class AlignTableDelegate : public QStyledItemDelegate
 public:
     void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
     {
-        const AlignClipsModel* model = dynamic_cast<const AlignClipsModel*>(index.model());
+        const AlignClipsModel *model = dynamic_cast<const AlignClipsModel *>(index.model());
         switch (index.column()) {
         case AlignClipsModel::COLUMN_ERROR: {
             QIcon icon;
@@ -214,7 +215,8 @@ public:
 // Include this so that AlignTableDelegate can be declared in the source file.
 #include "alignaudiodialog.moc"
 
-AlignAudioDialog::AlignAudioDialog(QString title, MultitrackModel* model, const QVector<QUuid>& uuids, QWidget* parent)
+AlignAudioDialog::AlignAudioDialog(QString title, MultitrackModel *model,
+                                   const QVector<QUuid> &uuids, QWidget *parent)
     : QDialog(parent)
     , m_model(model)
     , m_uuids(uuids)
@@ -224,7 +226,7 @@ AlignAudioDialog::AlignAudioDialog(QString title, MultitrackModel* model, const 
     setWindowTitle(title);
     setWindowModality(QmlApplication::dialogModality());
 
-    QGridLayout* glayout = new QGridLayout();
+    QGridLayout *glayout = new QGridLayout();
     glayout->setHorizontalSpacing(4);
     glayout->setVerticalSpacing(2);
     // Track Combo
@@ -238,8 +240,9 @@ AlignAudioDialog::AlignAudioDialog(QString title, MultitrackModel* model, const 
     if (defaultTrack < trackCount) {
         m_trackCombo->setCurrentIndex(defaultTrack);
     }
-    if (!connect(m_trackCombo, QOverload<int>::of(&QComboBox::activated), this, &AlignAudioDialog::rebuildClipList))
-        connect(m_trackCombo, SIGNAL(activated(const QString&)), SLOT(rebuildClipList()));
+    if (!connect(m_trackCombo, QOverload<int>::of(&QComboBox::activated), this,
+                 &AlignAudioDialog::rebuildClipList))
+        connect(m_trackCombo, SIGNAL(activated(const QString &)), SLOT(rebuildClipList()));
     glayout->addWidget(m_trackCombo, col++, 1, Qt::AlignLeft);
     // List
     m_table = new QTreeView();
@@ -259,7 +262,8 @@ AlignAudioDialog::AlignAudioDialog(QString title, MultitrackModel* model, const 
     m_table->setColumnWidth(AlignClipsModel::COLUMN_ERROR, rowHeight);
     m_table->header()->setSectionResizeMode(AlignClipsModel::COLUMN_NAME, QHeaderView::Stretch);
     m_table->header()->setSectionResizeMode(AlignClipsModel::COLUMN_OFFSET, QHeaderView::Fixed);
-    m_table->setColumnWidth(AlignClipsModel::COLUMN_OFFSET, fontMetrics().horizontalAdvance("-00:00:00:00") * devicePixelRatioF() + 8);
+    m_table->setColumnWidth(AlignClipsModel::COLUMN_OFFSET,
+                            fontMetrics().horizontalAdvance("-00:00:00:00") * devicePixelRatioF() + 8);
 //    m_table->header()->setSectionResizeMode(AlignClipsModel::COLUMN_DRIFT, QHeaderView::ResizeToContents);
     glayout->addWidget(m_table, col++, 0, 1, 2);
     // Button Box + cancel
@@ -267,13 +271,14 @@ AlignAudioDialog::AlignAudioDialog(QString title, MultitrackModel* model, const 
     connect(m_buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
     glayout->addWidget(m_buttonBox, col++, 0, 1, 2);
     // Process button
-    QPushButton* processButton = m_buttonBox->addButton(tr("Process"), QDialogButtonBox::ActionRole);
+    QPushButton *processButton = m_buttonBox->addButton(tr("Process"), QDialogButtonBox::ActionRole);
     connect(processButton, SIGNAL(pressed()), this, SLOT(process()));
     // Apply button
-    QPushButton* applyButton = m_buttonBox->addButton(tr("Apply"), QDialogButtonBox::ApplyRole);
+    QPushButton *applyButton = m_buttonBox->addButton(tr("Apply"), QDialogButtonBox::ApplyRole);
     connect(applyButton, SIGNAL(pressed()), this, SLOT(apply()));
     // Process and apply button
-    m_processAndApplyButton = m_buttonBox->addButton(tr("Process + Apply"), QDialogButtonBox::AcceptRole);
+    m_processAndApplyButton = m_buttonBox->addButton(tr("Process + Apply"),
+                                                     QDialogButtonBox::AcceptRole);
     connect(m_processAndApplyButton, SIGNAL(pressed()), this, SLOT(processAndApply()));
 
     this->setLayout (glayout);
@@ -297,7 +302,7 @@ void AlignAudioDialog::rebuildClipList()
     int referenceIndex = m_trackCombo->currentData().toInt();
     Settings.setAudioReferenceTrack(referenceIndex);
 
-    for (const auto& uuid : m_uuids) {
+    for (const auto &uuid : m_uuids) {
         int trackIndex, clipIndex;
         QScopedPointer<Mlt::ClipInfo> info(m_model->findClipByUuid(uuid, trackIndex, clipIndex));
         if (info && info->cut && info->cut->is_valid()) {
@@ -312,7 +317,8 @@ void AlignAudioDialog::rebuildClipList()
             if (trackIndex == referenceIndex) {
                 error = tr("This clip will be skipped because it is on the reference track.");
             }
-            m_alignClipsModel.addClip(clipName, AlignClipsModel::INVALID_OFFSET, AlignClipsModel::INVALID_OFFSET, error);
+            m_alignClipsModel.addClip(clipName, AlignClipsModel::INVALID_OFFSET,
+                                      AlignClipsModel::INVALID_OFFSET, error);
         }
     }
 }
@@ -330,8 +336,8 @@ void AlignAudioDialog::process()
     AudioReader trackReader(MLT.XML(track.data()), &trackArray);
     connect(&trackReader, SIGNAL(progressUpdate(int)), this, SLOT(updateReferenceProgress(int)));
 
-    QList<ClipAudioReader*> m_clipReaders;
-    for (const auto& uuid : m_uuids) {
+    QList<ClipAudioReader *> m_clipReaders;
+    for (const auto &uuid : m_uuids) {
         int trackIndex, clipIndex;
         QScopedPointer<Mlt::ClipInfo> info(m_model->findClipByUuid(uuid, trackIndex, clipIndex));
         if (!info || !info->cut || !info->cut->is_valid()) {
@@ -341,25 +347,27 @@ void AlignAudioDialog::process()
             m_clipReaders.append(nullptr);
         } else {
             QString xml = MLT.XML(info->cut);
-            ClipAudioReader* clipReader = new ClipAudioReader(xml, trackArray, m_clipReaders.size(), info->frame_in, info->frame_out);
+            ClipAudioReader *clipReader = new ClipAudioReader(xml, trackArray, m_clipReaders.size(),
+                                                              info->frame_in, info->frame_out);
             connect(clipReader, SIGNAL(progressUpdate(int, int)), this, SLOT(updateClipProgress(int, int)));
-            connect(clipReader, SIGNAL(finished(int, int, double, double)), this, SLOT(clipFinished(int, int, double, double)));
+            connect(clipReader, SIGNAL(finished(int, int, double, double)), this, SLOT(clipFinished(int, int,
+                                                                                                    double, double)));
             m_clipReaders.append(clipReader);
             maxLength = qMax(maxLength, info->frame_count);
         }
     }
 
     trackReader.init(maxLength);
-    for (const auto& clipReader : m_clipReaders) {
+    for (const auto &clipReader : m_clipReaders) {
         if (clipReader) clipReader->init(maxLength);
     }
 
     trackReader.process();
-    for (const auto& clipReader : m_clipReaders) {
+    for (const auto &clipReader : m_clipReaders) {
         if (clipReader) clipReader->start();
     }
 
-    for (const auto& clipReader : m_clipReaders) {
+    for (const auto &clipReader : m_clipReaders) {
         if (clipReader) {
             while (!clipReader->isFinished()) {
                 QThread::msleep(10);
@@ -374,11 +382,11 @@ void AlignAudioDialog::process()
 
 void AlignAudioDialog::apply()
 {
-    Timeline::AlignClipsCommand* command = new Timeline::AlignClipsCommand(*m_model);
+    Timeline::AlignClipsCommand *command = new Timeline::AlignClipsCommand(*m_model);
     int referenceTrackIndex = m_trackCombo->currentData().toInt();
     int alignmentCount = 0;
     int modelIndex = 0;
-    for (const auto& uuid : m_uuids) {
+    for (const auto &uuid : m_uuids) {
         int trackIndex, clipIndex;
         QScopedPointer<Mlt::ClipInfo> info(m_model->findClipByUuid(uuid, trackIndex, clipIndex));
         if (!info || !info->cut || !info->cut->is_valid()) {

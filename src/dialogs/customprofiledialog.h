@@ -27,15 +27,15 @@ class CustomProfileDialog;
 class CustomProfileDialog : public QDialog
 {
     Q_OBJECT
-    
+
 public:
     explicit CustomProfileDialog(QWidget *parent = 0);
     ~CustomProfileDialog();
     QString profileName() const;
-    
+
 private slots:
     void on_buttonBox_accepted();
-    
+
     void on_widthSpinner_editingFinished();
 
     void on_heightSpinner_editingFinished();

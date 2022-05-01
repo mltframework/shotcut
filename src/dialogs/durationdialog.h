@@ -22,7 +22,7 @@
 #include <QDialog>
 
 namespace Ui {
-    class DurationDialog;
+class DurationDialog;
 }
 
 class DurationDialog : public QDialog

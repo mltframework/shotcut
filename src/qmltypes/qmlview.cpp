@@ -20,7 +20,7 @@
 #include <QWidget>
 #include <Logger.h>
 
-QmlView::QmlView(QWidget* qview)
+QmlView::QmlView(QWidget *qview)
     : QObject(qview)
     , m_qview(qview)
 {

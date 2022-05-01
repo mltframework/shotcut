@@ -26,7 +26,7 @@ class FfprobeJob : public AbstractJob
 {
     Q_OBJECT
 public:
-    FfprobeJob(const QString& name, const QStringList& args);
+    FfprobeJob(const QString &name, const QStringList &args);
     virtual ~FfprobeJob();
     void start();
 

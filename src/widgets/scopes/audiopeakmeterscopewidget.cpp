@@ -24,10 +24,10 @@
 #include <cmath> // log10()
 
 AudioPeakMeterScopeWidget::AudioPeakMeterScopeWidget()
-  : ScopeWidget("AudioPeakMeter")
-  , m_audioMeter(0)
-  , m_orientation((Qt::Orientation)-1)
-  , m_channels( Settings.playerAudioChannels() )
+    : ScopeWidget("AudioPeakMeter")
+    , m_audioMeter(0)
+    , m_orientation((Qt::Orientation) - 1)
+    , m_channels( Settings.playerAudioChannels() )
 {
     LOG_DEBUG() << "begin";
     qRegisterMetaType< QVector<double> >("QVector<double>");
@@ -43,7 +43,7 @@ AudioPeakMeterScopeWidget::AudioPeakMeterScopeWidget()
     LOG_DEBUG() << "end";
 }
 
-void AudioPeakMeterScopeWidget::refreshScope(const QSize& /*size*/, bool /*full*/)
+void AudioPeakMeterScopeWidget::refreshScope(const QSize & /*size*/, bool /*full*/)
 {
     SharedFrame sFrame;
     while (m_queue.count() > 0) {
@@ -52,10 +52,10 @@ void AudioPeakMeterScopeWidget::refreshScope(const QSize& /*size*/, bool /*full*
             int channels = sFrame.get_audio_channels();
             int samples = sFrame.get_audio_samples();
             QVector<double> levels;
-            const int16_t* audio = sFrame.get_audio();
+            const int16_t *audio = sFrame.get_audio();
             for ( int c = 0; c < channels; c++ ) {
                 int16_t peak = 0;
-                const int16_t* p = audio + c;
+                const int16_t *p = audio + c;
                 for ( int s = 0; s < samples; s++ ) {
                     int16_t sample = abs( *p );
                     if (sample > peak) peak = sample;
@@ -67,7 +67,8 @@ void AudioPeakMeterScopeWidget::refreshScope(const QSize& /*size*/, bool /*full*
                     levels << 20 * log10((double)peak / (double)std::numeric_limits<int16_t>::max());
                 }
             }
-            QMetaObject::invokeMethod(m_audioMeter, "showAudio", Qt::QueuedConnection, Q_ARG(const QVector<double>&, levels));
+            QMetaObject::invokeMethod(m_audioMeter, "showAudio", Qt::QueuedConnection,
+                                      Q_ARG(const QVector<double> &, levels));
             if (m_channels != channels) {
                 m_channels = channels;
                 QMetaObject::invokeMethod(this, "reconfigureMeter", Qt::QueuedConnection);
@@ -78,7 +79,7 @@ void AudioPeakMeterScopeWidget::refreshScope(const QSize& /*size*/, bool /*full*
 
 QString AudioPeakMeterScopeWidget::getTitle()
 {
-   return tr("Audio Peak Meter");
+    return tr("Audio Peak Meter");
 }
 
 void AudioPeakMeterScopeWidget::setOrientation(Qt::Orientation orientation)

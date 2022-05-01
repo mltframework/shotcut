@@ -21,8 +21,7 @@
 #include "models/markersmodel.h"
 #include <QUndoCommand>
 
-namespace Markers
-{
+namespace Markers {
 
 enum {
     UndoIdUpdate,
@@ -31,11 +30,11 @@ enum {
 class DeleteCommand : public QUndoCommand
 {
 public:
-    DeleteCommand(MarkersModel& model, const Marker& delMarker, int index);
+    DeleteCommand(MarkersModel &model, const Marker &delMarker, int index);
     void redo();
     void undo();
 private:
-    MarkersModel& m_model;
+    MarkersModel &m_model;
     Marker m_delMarker;
     int m_index;
 };
@@ -43,11 +42,11 @@ private:
 class AppendCommand : public QUndoCommand
 {
 public:
-    AppendCommand(MarkersModel& model, const Marker& newMarker, int index);
+    AppendCommand(MarkersModel &model, const Marker &newMarker, int index);
     void redo();
     void undo();
 private:
-    MarkersModel& m_model;
+    MarkersModel &m_model;
     Marker m_newMarker;
     int m_index;
 };
@@ -55,14 +54,17 @@ private:
 class UpdateCommand : public QUndoCommand
 {
 public:
-    UpdateCommand(MarkersModel& model, const Marker& newMarker, const Marker& oldMarker, int index);
+    UpdateCommand(MarkersModel &model, const Marker &newMarker, const Marker &oldMarker, int index);
     void redo();
     void undo();
 protected:
-    int id() const { return UndoIdUpdate; }
+    int id() const
+    {
+        return UndoIdUpdate;
+    }
     bool mergeWith(const QUndoCommand *other);
 private:
-    MarkersModel& m_model;
+    MarkersModel &m_model;
     Marker m_newMarker;
     Marker m_oldMarker;
     int m_index;
@@ -71,11 +73,11 @@ private:
 class ClearCommand : public QUndoCommand
 {
 public:
-    ClearCommand(MarkersModel& model, QList<Marker>& clearMarkers);
+    ClearCommand(MarkersModel &model, QList<Marker> &clearMarkers);
     void redo();
     void undo();
 private:
-    MarkersModel& m_model;
+    MarkersModel &m_model;
     QList<Marker> m_clearMarkers;
 };
 

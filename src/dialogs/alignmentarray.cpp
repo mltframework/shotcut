@@ -46,7 +46,7 @@ AlignmentArray::AlignmentArray(size_t minimum_size)
 AlignmentArray::~AlignmentArray()
 {
     QMutexLocker locker(&s_fftwPlanningMutex);
-    fftw_free(reinterpret_cast<fftw_complex*>(m_forwardBuf));
+    fftw_free(reinterpret_cast<fftw_complex *>(m_forwardBuf));
     fftw_destroy_plan(m_forwardPlan);
 }
 
@@ -56,18 +56,19 @@ void AlignmentArray::init(size_t minimumSize)
     m_actualComplexSize = (minimumSize * 2) - 1;
 }
 
-void AlignmentArray::setValues(const std::vector<double>& values)
+void AlignmentArray::setValues(const std::vector<double> &values)
 {
     m_values = values;
 }
 
-double AlignmentArray::calculateOffset(AlignmentArray &from, int* offset)
+double AlignmentArray::calculateOffset(AlignmentArray &from, int *offset)
 {
     // Create a destination for the correlation values
     s_fftwPlanningMutex.lock();
-    fftw_complex* buf = fftw_alloc_complex(m_actualComplexSize);
-    std::complex<double>* correlationBuf = reinterpret_cast<std::complex<double>*>(buf);
-    fftw_plan correlationPlan = fftw_plan_dft_1d(m_actualComplexSize, buf, buf, FFTW_BACKWARD, FFTW_ESTIMATE);
+    fftw_complex *buf = fftw_alloc_complex(m_actualComplexSize);
+    std::complex<double> *correlationBuf = reinterpret_cast<std::complex<double>*>(buf);
+    fftw_plan correlationPlan = fftw_plan_dft_1d(m_actualComplexSize, buf, buf, FFTW_BACKWARD,
+                                                 FFTW_ESTIMATE);
     std::fill(correlationBuf, correlationBuf + m_actualComplexSize, std::complex<double>(0));
     s_fftwPlanningMutex.unlock();
 
@@ -107,7 +108,8 @@ double AlignmentArray::calculateOffset(AlignmentArray &from, int* offset)
     return max / correlationCoefficient;
 }
 
-double AlignmentArray::calculateOffsetAndDrift(AlignmentArray& from, int precision, double drift_range, double* drift, int* offset)
+double AlignmentArray::calculateOffsetAndDrift(AlignmentArray &from, int precision,
+                                               double drift_range, double *drift, int *offset)
 {
     static const int FINAL_PRECISION = 9;
     double drift_step = std::pow(10.0, -precision);
@@ -148,7 +150,7 @@ void AlignmentArray::transform()
     if (!m_isTransformed) {
         // Create the plans while the global planning mutex is locked
         s_fftwPlanningMutex.lock();
-        fftw_complex* buf = nullptr;
+        fftw_complex *buf = nullptr;
         // Allocate the forward buffer and plan
         buf = fftw_alloc_complex(m_actualComplexSize);
         m_forwardBuf = reinterpret_cast<std::complex<double>*>(buf);
@@ -156,8 +158,9 @@ void AlignmentArray::transform()
         std::fill(m_forwardBuf, m_forwardBuf + m_actualComplexSize, std::complex<double>(0));
         // Allocate the backward buffer and plan
         buf = fftw_alloc_complex(m_actualComplexSize);
-        std::complex<double>* backwardBuf = reinterpret_cast<std::complex<double>*>(buf);
-        fftw_plan backwardPlan = fftw_plan_dft_1d(m_actualComplexSize, buf, buf, FFTW_BACKWARD, FFTW_ESTIMATE);
+        std::complex<double> *backwardBuf = reinterpret_cast<std::complex<double>*>(buf);
+        fftw_plan backwardPlan = fftw_plan_dft_1d(m_actualComplexSize, buf, buf, FFTW_BACKWARD,
+                                                  FFTW_ESTIMATE);
         std::fill(backwardBuf, backwardBuf + m_actualComplexSize, std::complex<double>(0));
         s_fftwPlanningMutex.unlock();
 

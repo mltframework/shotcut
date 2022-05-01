@@ -22,7 +22,7 @@
 #include "abstractproducerwidget.h"
 
 namespace Ui {
-    class DecklinkProducerWidget;
+class DecklinkProducerWidget;
 }
 
 class DecklinkProducerWidget : public QWidget, public AbstractProducerWidget
@@ -34,12 +34,12 @@ public:
     ~DecklinkProducerWidget();
 
     // AbstractProducerWidget overrides
-    Mlt::Producer* newProducer(Mlt::Profile&);
+    Mlt::Producer *newProducer(Mlt::Profile &);
     Mlt::Properties getPreset() const;
-    void loadPreset(Mlt::Properties&);
+    void loadPreset(Mlt::Properties &);
 
 signals:
-    void producerChanged(Mlt::Producer*);
+    void producerChanged(Mlt::Producer *);
 
 private slots:
     void on_deviceCombo_activated(int index);

@@ -24,19 +24,20 @@
 #include <QDialogButtonBox>
 #include <QVBoxLayout>
 
-EditMarkerDialog::EditMarkerDialog(QWidget *parent, const QString& text, const QColor& color, int start, int end, int maxEnd)
+EditMarkerDialog::EditMarkerDialog(QWidget *parent, const QString &text, const QColor &color,
+                                   int start, int end, int maxEnd)
     : QDialog(parent)
 {
     setWindowTitle(tr("Edit Marker"));
 
-    QVBoxLayout* VLayout = new QVBoxLayout(this);
+    QVBoxLayout *VLayout = new QVBoxLayout(this);
 
     m_sWidget = new EditMarkerWidget(this, text, color, start, end, maxEnd);
     VLayout->addWidget(m_sWidget);
 
     m_buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
     VLayout->addWidget(m_buttonBox);
-    connect(m_buttonBox, SIGNAL(clicked(QAbstractButton*)), this, SLOT(clicked(QAbstractButton*)));
+    connect(m_buttonBox, SIGNAL(clicked(QAbstractButton *)), this, SLOT(clicked(QAbstractButton *)));
 
     setLayout(VLayout);
     setModal(true);
@@ -63,19 +64,14 @@ int EditMarkerDialog::getEnd()
     return m_sWidget->getEnd();
 }
 
-void EditMarkerDialog::clicked(QAbstractButton* button)
+void EditMarkerDialog::clicked(QAbstractButton *button)
 {
     QDialogButtonBox::ButtonRole role = m_buttonBox->buttonRole(button);
-    if (role == QDialogButtonBox::AcceptRole)
-    {
+    if (role == QDialogButtonBox::AcceptRole) {
         accept();
-    }
-    else if (role == QDialogButtonBox::RejectRole)
-    {
+    } else if (role == QDialogButtonBox::RejectRole) {
         reject();
-    }
-    else
-    {
+    } else {
         LOG_DEBUG() << "Unknown role" << role;
     }
 }

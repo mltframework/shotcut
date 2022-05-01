@@ -32,13 +32,13 @@ class ScopeController Q_DECL_FINAL : public QObject
     Q_OBJECT
 
 public:
-    ScopeController(QMainWindow* mainWindow, QMenu* menu);
+    ScopeController(QMainWindow *mainWindow, QMenu *menu);
 
 signals:
-    void newFrame(const SharedFrame& frame);
+    void newFrame(const SharedFrame &frame);
 
 private:
-    template<typename ScopeTYPE> void createScopeDock(QMainWindow* mainWindow, QMenu* menu);
+    template<typename ScopeTYPE> void createScopeDock(QMainWindow *mainWindow, QMenu *menu);
 
 };
 

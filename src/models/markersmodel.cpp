@@ -33,16 +33,19 @@ enum Columns {
     COLUMN_COUNT
 };
 
-static void markerToProperties(const Markers::Marker& marker, Mlt::Properties* properties, Mlt::Producer* producer)
+static void markerToProperties(const Markers::Marker &marker, Mlt::Properties *properties,
+                               Mlt::Producer *producer)
 {
     properties->set("text", qUtf8Printable(marker.text));
     properties->set("start", producer->frames_to_time(marker.start, mlt_time_clock));
     properties->set("end", producer->frames_to_time(marker.end, mlt_time_clock));
-    auto s = QString::asprintf("#%02X%02X%02X", marker.color.red(), marker.color.green(), marker.color.blue());
+    auto s = QString::asprintf("#%02X%02X%02X", marker.color.red(), marker.color.green(),
+                               marker.color.blue());
     properties->set("color", s.toLatin1().constData());
 }
 
-static void propertiesToMarker(Mlt::Properties* properties, Markers::Marker& marker, Mlt::Producer* producer)
+static void propertiesToMarker(Mlt::Properties *properties, Markers::Marker &marker,
+                               Mlt::Producer *producer)
 {
     marker.text = QString::fromUtf8(properties->get("text"));
     marker.start = producer->time_to_frames(properties->get("start"));
@@ -51,7 +54,7 @@ static void propertiesToMarker(Mlt::Properties* properties, Markers::Marker& mar
     marker.color = QColor::fromRgb(color.r, color.g, color.b, 0xFF);
 }
 
-MarkersModel::MarkersModel(QObject* parent)
+MarkersModel::MarkersModel(QObject *parent)
     : QAbstractItemModel(parent)
     , m_producer(nullptr)
 {
@@ -61,19 +64,19 @@ MarkersModel::~MarkersModel()
 {
 }
 
-void MarkersModel::load(Mlt::Producer* producer)
+void MarkersModel::load(Mlt::Producer *producer)
 {
     beginResetModel();
     m_producer = producer;
     m_keys.clear();
     if (m_producer) {
-        Mlt::Properties* markerList = m_producer->get_props(kShotcutMarkersProperty);
+        Mlt::Properties *markerList = m_producer->get_props(kShotcutMarkersProperty);
         if (markerList &&  markerList->is_valid()) {
             int count = markerList->count();
             for (int i = 0; i < count; i++) {
-                Mlt::Properties* markerProperties = markerList->get_props_at(i);
+                Mlt::Properties *markerProperties = markerList->get_props_at(i);
                 if (markerProperties && markerProperties->is_valid()) {
-                    char* key = markerList->get_name(i);
+                    char *key = markerList->get_name(i);
                     int intKey = QString(key).toInt();
                     m_keys << intKey;
                     Markers::Marker marker;
@@ -91,7 +94,7 @@ void MarkersModel::load(Mlt::Producer* producer)
 Markers::Marker MarkersModel::getMarker(int markerIndex)
 {
     Markers::Marker retMarker;
-    Mlt::Properties* markerProperties = getMarkerProperties(markerIndex);
+    Mlt::Properties *markerProperties = getMarkerProperties(markerIndex);
     if (!markerProperties || !markerProperties->is_valid()) {
         LOG_ERROR() << "Marker does not exist" << markerIndex;
         delete markerProperties;
@@ -103,7 +106,7 @@ Markers::Marker MarkersModel::getMarker(int markerIndex)
 
 void MarkersModel::remove(int markerIndex)
 {
-    Mlt::Properties* markerProperties = getMarkerProperties(markerIndex);
+    Mlt::Properties *markerProperties = getMarkerProperties(markerIndex);
     if (!markerProperties || !markerProperties->is_valid()) {
         LOG_ERROR() << "Marker does not exist" << markerIndex;
         delete markerProperties;
@@ -111,7 +114,7 @@ void MarkersModel::remove(int markerIndex)
     }
     Markers::Marker oldMarker;
     propertiesToMarker(markerProperties, oldMarker, m_producer);
-    Markers::DeleteCommand* command = new Markers::DeleteCommand(*this, oldMarker, markerIndex);
+    Markers::DeleteCommand *command = new Markers::DeleteCommand(*this, oldMarker, markerIndex);
     MAIN.undoStack()->push(command);
     delete markerProperties;
 }
@@ -131,7 +134,7 @@ void MarkersModel::doRemove(int markerIndex)
         LOG_ERROR() << "Index out of bounds: " << modelIndex.row() << m_keys.count();
         return;
     }
-    Mlt::Properties* markersListProperties = m_producer->get_props(kShotcutMarkersProperty);
+    Mlt::Properties *markersListProperties = m_producer->get_props(kShotcutMarkersProperty);
     if (!markersListProperties || !markersListProperties->is_valid()) {
         LOG_ERROR() << "No Markers";
         delete markersListProperties;
@@ -148,7 +151,7 @@ void MarkersModel::doRemove(int markerIndex)
     emit modified();
 }
 
-void MarkersModel::doInsert(int markerIndex,  const Markers::Marker& marker )
+void MarkersModel::doInsert(int markerIndex,  const Markers::Marker &marker )
 {
     if (!m_producer) {
         LOG_ERROR() << "No producer";
@@ -166,7 +169,7 @@ void MarkersModel::doInsert(int markerIndex,  const Markers::Marker& marker )
         return;
     }
 
-    Mlt::Properties* markersListProperties = m_producer->get_props(kShotcutMarkersProperty);
+    Mlt::Properties *markersListProperties = m_producer->get_props(kShotcutMarkersProperty);
     if (!markersListProperties || !markersListProperties->is_valid()) {
         delete markersListProperties;
         markersListProperties = new Mlt::Properties;
@@ -188,24 +191,24 @@ void MarkersModel::doInsert(int markerIndex,  const Markers::Marker& marker )
     emit modified();
 }
 
-void MarkersModel::append( const Markers::Marker& marker )
+void MarkersModel::append( const Markers::Marker &marker )
 {
     if (!m_producer) {
         LOG_ERROR() << "No producer";
         return;
     }
-    Markers::AppendCommand* command = new Markers::AppendCommand(*this, marker, markerCount());
+    Markers::AppendCommand *command = new Markers::AppendCommand(*this, marker, markerCount());
     MAIN.undoStack()->push(command);
 }
 
-void MarkersModel::doAppend( const Markers::Marker& marker )
+void MarkersModel::doAppend( const Markers::Marker &marker )
 {
     if (!m_producer) {
         LOG_ERROR() << "No producer";
         return;
     }
 
-    Mlt::Properties* markersListProperties = m_producer->get_props(kShotcutMarkersProperty);
+    Mlt::Properties *markersListProperties = m_producer->get_props(kShotcutMarkersProperty);
     if (!markersListProperties || !markersListProperties->is_valid()) {
         delete markersListProperties;
         markersListProperties = new Mlt::Properties;
@@ -228,9 +231,9 @@ void MarkersModel::doAppend( const Markers::Marker& marker )
     emit modified();
 }
 
-void MarkersModel::update(int markerIndex,  const Markers::Marker& marker)
+void MarkersModel::update(int markerIndex,  const Markers::Marker &marker)
 {
-    Mlt::Properties* markerProperties = getMarkerProperties(markerIndex);
+    Mlt::Properties *markerProperties = getMarkerProperties(markerIndex);
     if (!markerProperties || !markerProperties->is_valid()) {
         LOG_ERROR() << "Marker does not exist" << markerIndex;
         delete markerProperties;
@@ -239,12 +242,12 @@ void MarkersModel::update(int markerIndex,  const Markers::Marker& marker)
     Markers::Marker oldMarker;
     propertiesToMarker(markerProperties, oldMarker, m_producer);
 
-    Markers::UpdateCommand* command = new Markers::UpdateCommand(*this, marker, oldMarker, markerIndex);
+    Markers::UpdateCommand *command = new Markers::UpdateCommand(*this, marker, oldMarker, markerIndex);
     MAIN.undoStack()->push(command);
     delete markerProperties;
 }
 
-void MarkersModel::doUpdate(int markerIndex,  const Markers::Marker& marker)
+void MarkersModel::doUpdate(int markerIndex,  const Markers::Marker &marker)
 {
     QModelIndex startIndex = index(markerIndex, 0);
     QModelIndex endIndex = index(markerIndex, COLUMN_COUNT - 1);
@@ -252,7 +255,7 @@ void MarkersModel::doUpdate(int markerIndex,  const Markers::Marker& marker)
         LOG_ERROR() << "Invalid Index: " << startIndex << endIndex;
         return;
     }
-    Mlt::Properties* markerProperties = getMarkerProperties(markerIndex);
+    Mlt::Properties *markerProperties = getMarkerProperties(markerIndex);
     if (!markerProperties || !markerProperties->is_valid()) {
         LOG_ERROR() << "Marker does not exist" << markerIndex;
         delete markerProperties;
@@ -265,10 +268,11 @@ void MarkersModel::doUpdate(int markerIndex,  const Markers::Marker& marker)
     delete markerProperties;
     updateRecentColors(marker.color);
 
-    emit dataChanged(startIndex, endIndex, QVector<int>() << Qt::DisplayRole << TextRole << StartRole << EndRole << ColorRole);
+    emit dataChanged(startIndex, endIndex,
+                     QVector<int>() << Qt::DisplayRole << TextRole << StartRole << EndRole << ColorRole);
     if ((markerBefore.end == markerBefore.start && marker.end > marker.start) ||
-        (markerBefore.end != markerBefore.start && marker.end == marker.start) ||
-        (markerBefore.text != marker.text)) {
+            (markerBefore.end != markerBefore.start && marker.end == marker.start) ||
+            (markerBefore.text != marker.text)) {
         emit rangesChanged();
     }
     emit modified();
@@ -283,13 +287,13 @@ void MarkersModel::doClear()
 
     beginResetModel();
     m_keys.clear();
-    static_cast<Mlt::Properties*>(m_producer)->clear(kShotcutMarkersProperty);
+    static_cast<Mlt::Properties *>(m_producer)->clear(kShotcutMarkersProperty);
     endResetModel();
     emit modified();
     emit rangesChanged();
 }
 
-void MarkersModel::doReplace(QList<Markers::Marker>& markers)
+void MarkersModel::doReplace(QList<Markers::Marker> &markers)
 {
     if (!m_producer) {
         LOG_ERROR() << "No producer";
@@ -298,7 +302,7 @@ void MarkersModel::doReplace(QList<Markers::Marker>& markers)
 
     beginResetModel();
     m_keys.clear();
-    Mlt::Properties* markersListProperties = new Mlt::Properties;
+    Mlt::Properties *markersListProperties = new Mlt::Properties;
     m_producer->set(kShotcutMarkersProperty, *markersListProperties);
     for (int i = 0; i < markers.size(); i++) {
         Mlt::Properties markerProperties;
@@ -325,7 +329,8 @@ void MarkersModel::doShift(int shiftPosition, int shiftAmount)
     QScopedPointer<Mlt::Properties> markerList(m_producer->get_props(kShotcutMarkersProperty));
     if (markerList &&  markerList->is_valid()) {
         for (const auto i : qAsConst(m_keys)) {
-            QScopedPointer<Mlt::Properties> markerProperties(markerList->get_props(qUtf8Printable(QString::number(i))));
+            QScopedPointer<Mlt::Properties> markerProperties(markerList->get_props(qUtf8Printable(
+                                                                                       QString::number(i))));
             if (markerProperties && markerProperties->is_valid()) {
                 Markers::Marker marker;
                 propertiesToMarker(markerProperties.data(), marker, m_producer);
@@ -353,7 +358,7 @@ void MarkersModel::doShift(int shiftPosition, int shiftAmount)
 
 void MarkersModel::move(int markerIndex, int start, int end)
 {
-    Mlt::Properties* markerProperties = getMarkerProperties(markerIndex);
+    Mlt::Properties *markerProperties = getMarkerProperties(markerIndex);
     if (!markerProperties || !markerProperties->is_valid()) {
         LOG_ERROR() << "Marker does not exist" << markerIndex;
         delete markerProperties;
@@ -365,13 +370,14 @@ void MarkersModel::move(int markerIndex, int start, int end)
     newMarker.start = start;
     newMarker.end = end;
 
-    Markers::UpdateCommand* command = new Markers::UpdateCommand(*this, newMarker, oldMarker, markerIndex);
+    Markers::UpdateCommand *command = new Markers::UpdateCommand(*this, newMarker, oldMarker,
+                                                                 markerIndex);
     MAIN.undoStack()->push(command);
 }
 
-void MarkersModel::setColor(int markerIndex, const QColor& color)
+void MarkersModel::setColor(int markerIndex, const QColor &color)
 {
-    Mlt::Properties* markerProperties = getMarkerProperties(markerIndex);
+    Mlt::Properties *markerProperties = getMarkerProperties(markerIndex);
     if (!markerProperties || !markerProperties->is_valid()) {
         LOG_ERROR() << "Marker does not exist" << markerIndex;
         delete markerProperties;
@@ -382,7 +388,8 @@ void MarkersModel::setColor(int markerIndex, const QColor& color)
     Markers::Marker newMarker = oldMarker;
     newMarker.color = color;
 
-    Markers::UpdateCommand* command = new Markers::UpdateCommand(*this, newMarker, oldMarker, markerIndex);
+    Markers::UpdateCommand *command = new Markers::UpdateCommand(*this, newMarker, oldMarker,
+                                                                 markerIndex);
     MAIN.undoStack()->push(command);
 }
 
@@ -393,7 +400,7 @@ void MarkersModel::clear()
         return;
     }
 
-    Mlt::Properties* markersListProperties = m_producer->get_props(kShotcutMarkersProperty);
+    Mlt::Properties *markersListProperties = m_producer->get_props(kShotcutMarkersProperty);
     if (!markersListProperties || !markersListProperties->is_valid()) {
         delete markersListProperties;
         return;
@@ -401,7 +408,7 @@ void MarkersModel::clear()
         int count = markersListProperties->count();
         QList<Markers::Marker> markerList;
         for (int i = 0; i < count; i++) {
-            Mlt::Properties* markerProperties = markersListProperties->get_props_at(i);
+            Mlt::Properties *markerProperties = markersListProperties->get_props_at(i);
             if (markerProperties && markerProperties->is_valid()) {
                 Markers::Marker marker;
                 propertiesToMarker(markerProperties, marker, m_producer);
@@ -409,7 +416,7 @@ void MarkersModel::clear()
             }
             delete markerProperties;
         }
-        Markers::ClearCommand* command = new Markers::ClearCommand(*this, markerList);
+        Markers::ClearCommand *command = new Markers::ClearCommand(*this, markerList);
         MAIN.undoStack()->push(command);
     }
     delete markersListProperties;
@@ -452,7 +459,7 @@ int MarkersModel::markerIndexForPosition(int position)
             QScopedPointer<Mlt::Properties> marker(markerList->get_props(qUtf8Printable(QString::number(i))));
             if (marker && marker->is_valid()) {
                 if (position == m_producer->time_to_frames(marker->get("start")) ||
-                    position == m_producer->time_to_frames(marker->get("end")))
+                        position == m_producer->time_to_frames(marker->get("end")))
                     return keyIndex(i);
             }
         }
@@ -468,7 +475,7 @@ int MarkersModel::markerIndexForRange(int start, int end)
             QScopedPointer<Mlt::Properties> marker(markerList->get_props(qUtf8Printable(QString::number(i))));
             if (marker && marker->is_valid()) {
                 if (start == m_producer->time_to_frames(marker->get("start")) &&
-                    end == m_producer->time_to_frames(marker->get("end")))
+                        end == m_producer->time_to_frames(marker->get("end")))
                     return keyIndex(i);
             }
         }
@@ -574,9 +581,9 @@ QList<Markers::Marker> MarkersModel::getMarkers()
     return markers;
 }
 
-Mlt::Properties* MarkersModel::getMarkerProperties(int markerIndex)
+Mlt::Properties *MarkersModel::getMarkerProperties(int markerIndex)
 {
-    Mlt::Properties* markerProperties = nullptr;
+    Mlt::Properties *markerProperties = nullptr;
     if (!m_producer) {
         LOG_ERROR() << "No producer";
         return markerProperties;
@@ -586,13 +593,12 @@ Mlt::Properties* MarkersModel::getMarkerProperties(int markerIndex)
         LOG_ERROR() << "Invalid Index: " << markerIndex;
         return markerProperties;
     }
-    Mlt::Properties* markersListProperties = m_producer->get_props(kShotcutMarkersProperty);
+    Mlt::Properties *markersListProperties = m_producer->get_props(kShotcutMarkersProperty);
     if (!markersListProperties || !markersListProperties->is_valid()) {
         LOG_ERROR() << "No Markers";
-    }
-    else
-    {
-        markerProperties = markersListProperties->get_props(qUtf8Printable(QString::number(m_keys[modelIndex.row()])));
+    } else {
+        markerProperties = markersListProperties->get_props(qUtf8Printable(QString::number(
+                                                                               m_keys[modelIndex.row()])));
         if (!markerProperties || !markerProperties->is_valid()) {
             LOG_ERROR() << "Marker does not exist" << modelIndex.row();
             delete markerProperties;
@@ -603,57 +609,60 @@ Mlt::Properties* MarkersModel::getMarkerProperties(int markerIndex)
     return markerProperties;
 }
 
-void MarkersModel::updateRecentColors(const QColor& color)
+void MarkersModel::updateRecentColors(const QColor &color)
 {
     m_recentColors.insert(color.rgb(), color.name());
     Settings.setMarkerColor(color);
     emit recentColorsChanged();
 }
 
-int MarkersModel::rowCount(const QModelIndex& parent) const
+int MarkersModel::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent)
     return markerCount();
 }
 
-int MarkersModel::columnCount(const QModelIndex& parent) const
+int MarkersModel::columnCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent)
     return COLUMN_COUNT;
 }
 
-QVariant MarkersModel::data(const QModelIndex& index, int role) const
+QVariant MarkersModel::data(const QModelIndex &index, int role) const
 {
     QVariant result;
 
     switch (role) {
-        case Qt::ToolTipRole:
-        case Qt::StatusTipRole:
-        case Qt::DecorationRole:
-        case Qt::FontRole:
-        case Qt::TextAlignmentRole:
-        case Qt::CheckStateRole:
-        case Qt::SizeHintRole:
-            return result;
+    case Qt::ToolTipRole:
+    case Qt::StatusTipRole:
+    case Qt::DecorationRole:
+    case Qt::FontRole:
+    case Qt::TextAlignmentRole:
+    case Qt::CheckStateRole:
+    case Qt::SizeHintRole:
+        return result;
     }
 
     if (!m_producer) {
         LOG_DEBUG() << "No Producer: " << index.row() << index.column() << role;
         return result;
     }
-    if (!index.isValid() || index.column() < 0 || index.column() >= COLUMN_COUNT || index.row() < 0 || index.row() >= markerCount()) {
+    if (!index.isValid() || index.column() < 0 || index.column() >= COLUMN_COUNT || index.row() < 0
+            || index.row() >= markerCount()) {
         LOG_ERROR() << "Invalid Index: " << index.row() << index.column() << role;
         return result;
     }
-    Mlt::Properties* markersListProperties = m_producer->get_props(kShotcutMarkersProperty);
+    Mlt::Properties *markersListProperties = m_producer->get_props(kShotcutMarkersProperty);
     if (!markersListProperties || !markersListProperties->is_valid()) {
         LOG_DEBUG() << "No Markers: " << index.row() << index.column() << role;
         delete markersListProperties;
         return result;
     }
-    Mlt::Properties* markerProperties = markersListProperties->get_props(qUtf8Printable(QString::number(m_keys[index.row()])));
+    Mlt::Properties *markerProperties = markersListProperties->get_props(qUtf8Printable(QString::number(
+                                                                                            m_keys[index.row()])));
     if (!markerProperties || !markerProperties->is_valid()) {
-        LOG_DEBUG() << "Marker does not exist: " << index.row() << index.column() << role << m_keys[index.row()];
+        LOG_DEBUG() << "Marker does not exist: " << index.row() << index.column() << role <<
+                    m_keys[index.row()];
         delete markerProperties;
         delete markersListProperties;
         return result;
@@ -662,58 +671,58 @@ QVariant MarkersModel::data(const QModelIndex& index, int role) const
     Markers::Marker marker;
     propertiesToMarker(markerProperties, marker, m_producer);
     switch (role) {
-        case Qt::DisplayRole:
-            switch (index.column()) {
-                case COLUMN_COLOR:
-                    result = marker.color;
-                    break;
-                case COLUMN_NAME:
-                    result = marker.text;
-                    break;
-                case COLUMN_START:
-                    result = QString(m_producer->frames_to_time(marker.start, mlt_time_smpte_df));
-                    break;
-                case COLUMN_END:
-                    result = QString(m_producer->frames_to_time(marker.end, mlt_time_smpte_df));
-                    break;
-                case COLUMN_DURATION:
-                    result = QString(m_producer->frames_to_time(marker.end - marker.start + 1, mlt_time_smpte_df));
-                    break;
-                default:
-                    LOG_ERROR() << "Invalid Column" << index.column() << role;
-                    break;
-            }
-            break;
-        case Qt::BackgroundRole:
-            if (index.column() == COLUMN_COLOR) {
-                result = marker.color;
-            }
-            break;
-        case Qt::ForegroundRole:
-            if (index.column() == COLUMN_COLOR) {
-                // Pick a contrasting color
-                if (marker.color.value() < 127) {
-                    result = QColor(Qt::white);
-                } else {
-                    result = QColor(Qt::black);
-                }
-            }
-            break;
-        case TextRole:
-            result = marker.text;
-            break;
-        case StartRole:
-            result = marker.start;
-            break;
-        case EndRole:
-            result = marker.end;
-            break;
-        case ColorRole:
+    case Qt::DisplayRole:
+        switch (index.column()) {
+        case COLUMN_COLOR:
             result = marker.color;
             break;
-        default:
-            LOG_ERROR() << "Invalid Role" << index.row() << index.column() << roleNames()[role] << role;
+        case COLUMN_NAME:
+            result = marker.text;
             break;
+        case COLUMN_START:
+            result = QString(m_producer->frames_to_time(marker.start, mlt_time_smpte_df));
+            break;
+        case COLUMN_END:
+            result = QString(m_producer->frames_to_time(marker.end, mlt_time_smpte_df));
+            break;
+        case COLUMN_DURATION:
+            result = QString(m_producer->frames_to_time(marker.end - marker.start + 1, mlt_time_smpte_df));
+            break;
+        default:
+            LOG_ERROR() << "Invalid Column" << index.column() << role;
+            break;
+        }
+        break;
+    case Qt::BackgroundRole:
+        if (index.column() == COLUMN_COLOR) {
+            result = marker.color;
+        }
+        break;
+    case Qt::ForegroundRole:
+        if (index.column() == COLUMN_COLOR) {
+            // Pick a contrasting color
+            if (marker.color.value() < 127) {
+                result = QColor(Qt::white);
+            } else {
+                result = QColor(Qt::black);
+            }
+        }
+        break;
+    case TextRole:
+        result = marker.text;
+        break;
+    case StartRole:
+        result = marker.start;
+        break;
+    case EndRole:
+        result = marker.end;
+        break;
+    case ColorRole:
+        result = marker.color;
+        break;
+    default:
+        LOG_ERROR() << "Invalid Role" << index.row() << index.column() << roleNames()[role] << role;
+        break;
     }
     delete markersListProperties;
     delete markerProperties;
@@ -722,8 +731,7 @@ QVariant MarkersModel::data(const QModelIndex& index, int role) const
 
 QVariant MarkersModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
-    if (role == Qt::DisplayRole && orientation == Qt::Horizontal)
-    {
+    if (role == Qt::DisplayRole && orientation == Qt::Horizontal) {
         switch (section) {
         case COLUMN_COLOR:
             return tr("Color");
@@ -742,7 +750,7 @@ QVariant MarkersModel::headerData(int section, Qt::Orientation orientation, int 
     return QVariant();
 }
 
-QModelIndex MarkersModel::index(int row, int column, const QModelIndex& parent) const
+QModelIndex MarkersModel::index(int row, int column, const QModelIndex &parent) const
 {
     Q_UNUSED(parent)
     if (column < 0 || column >= COLUMN_COUNT || row < 0 || row >= markerCount())
@@ -750,7 +758,7 @@ QModelIndex MarkersModel::index(int row, int column, const QModelIndex& parent) 
     return createIndex(row, column, (int)0);
 }
 
-QModelIndex MarkersModel::parent(const QModelIndex& index) const
+QModelIndex MarkersModel::parent(const QModelIndex &index) const
 {
     Q_UNUSED(index)
     return QModelIndex();

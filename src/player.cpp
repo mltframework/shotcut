@@ -44,7 +44,7 @@ Player::Player(QWidget *parent)
     , m_duration(0)
     , m_isSeekable(false)
     , m_isMeltedPlaying(-1)
-    , m_zoomToggleFactor(Settings.playerZoom() == 0.0f? 1.0f : Settings.playerZoom())
+    , m_zoomToggleFactor(Settings.playerZoom() == 0.0f ? 1.0f : Settings.playerZoom())
     , m_pauseAfterOpen(false)
     , m_monitorScreen(-1)
     , m_currentTransport(nullptr)
@@ -69,7 +69,7 @@ Player::Player(QWidget *parent)
     m_tabs->addTab(tr("Project"));
     m_tabs->setTabEnabled(SourceTabIndex, false);
     m_tabs->setTabEnabled(ProjectTabIndex, false);
-    QHBoxLayout* tabLayout = new QHBoxLayout;
+    QHBoxLayout *tabLayout = new QHBoxLayout;
     tabLayout->setSpacing(8);
     tabLayout->addWidget(m_tabs);
     connect(m_tabs, SIGNAL(tabBarClicked(int)), SLOT(onTabBarClicked(int)));
@@ -110,12 +110,12 @@ Player::Player(QWidget *parent)
     m_videoScrollWidget = new QWidget;
     m_videoLayout->addWidget(m_videoScrollWidget, 10);
     m_videoLayout->addStretch();
-    QGridLayout* glayout = new QGridLayout(m_videoScrollWidget);
+    QGridLayout *glayout = new QGridLayout(m_videoScrollWidget);
     glayout->setSpacing(0);
     glayout->setContentsMargins(0, 0, 0, 0);
 
     // Add the video widgets.
-    m_videoWidget = qobject_cast<QWidget*>(MLT.videoWidget());
+    m_videoWidget = qobject_cast<QWidget *>(MLT.videoWidget());
     Q_ASSERT(m_videoWidget);
     m_videoWidget->setMinimumSize(QSize(1, 1));
     glayout->addWidget(m_videoWidget, 0, 0);
@@ -160,7 +160,7 @@ Player::Player(QWidget *parent)
         volumeLayoutH = new QVBoxLayout;
     else
 #endif
-    volumeLayoutH = new QHBoxLayout;
+        volumeLayoutH = new QHBoxLayout;
     volumeLayoutH->setContentsMargins(0, 0, 0, 0);
     volumeLayoutH->setSpacing(0);
     volumeLayoutV->addLayout(volumeLayoutH);
@@ -169,7 +169,8 @@ Player::Player(QWidget *parent)
     m_muteButton = new QPushButton(this);
     m_muteButton->setFocusPolicy(Qt::NoFocus);
     m_muteButton->setObjectName(QString::fromUtf8("muteButton"));
-    m_muteButton->setIcon(QIcon::fromTheme("audio-volume-muted", QIcon(":/icons/oxygen/32x32/status/audio-volume-muted.png")));
+    m_muteButton->setIcon(QIcon::fromTheme("audio-volume-muted",
+                                           QIcon(":/icons/oxygen/32x32/status/audio-volume-muted.png")));
     m_muteButton->setToolTip(tr("Silence the audio"));
     m_muteButton->setCheckable(true);
     m_muteButton->setChecked(Settings.playerMuted());
@@ -185,7 +186,7 @@ Player::Player(QWidget *parent)
     vlayout->addWidget(m_scrubber);
 
     // Add toolbar for transport controls.
-    QToolBar* toolbar = new QToolBar(tr("Transport Controls"), this);
+    QToolBar *toolbar = new QToolBar(tr("Transport Controls"), this);
     int s = style()->pixelMetric(QStyle::PM_SmallIconSize);
     toolbar->setIconSize(QSize(s, s));
     toolbar->setContentsMargins(0, 0, 0, 0);
@@ -262,9 +263,9 @@ Player::Player(QWidget *parent)
 
     // Add grid display button to toolbar.
     m_gridButton = new QToolButton;
-    QMenu* gridMenu = new QMenu(this);
+    QMenu *gridMenu = new QMenu(this);
     m_gridActionGroup = new QActionGroup(this);
-    QAction* action = gridMenu->addAction(tr("2x2 Grid"), this, SLOT(onGridToggled()));
+    QAction *action = gridMenu->addAction(tr("2x2 Grid"), this, SLOT(onGridToggled()));
     action->setCheckable(true);
     action->setData(2);
     m_gridDefaultAction = action;
@@ -304,7 +305,8 @@ Player::Player(QWidget *parent)
     connect(action, SIGNAL(toggled(bool)), MLT.videoWidget(), SLOT(setSnapToGrid(bool)));
     connect(m_gridButton, SIGNAL(toggled(bool)), SLOT(toggleGrid(bool)));
     m_gridButton->setMenu(gridMenu);
-    m_gridButton->setIcon(QIcon::fromTheme("view-grid", QIcon(":/icons/oxygen/32x32/actions/view-grid")));
+    m_gridButton->setIcon(QIcon::fromTheme("view-grid",
+                                           QIcon(":/icons/oxygen/32x32/actions/view-grid")));
     m_gridButton->setPopupMode(QToolButton::MenuButtonPopup);
     m_gridButton->setCheckable(true);
     m_gridButton->setToolTip(tr("Toggle grid display on the player"));
@@ -323,7 +325,8 @@ Player::Player(QWidget *parent)
     vlayout->addWidget(toolbar);
     vlayout->addLayout(tabLayout);
 
-    connect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame&)), this, SLOT(onFrameDisplayed(const SharedFrame&)));
+    connect(MLT.videoWidget(), SIGNAL(frameDisplayed(const SharedFrame &)), this,
+            SLOT(onFrameDisplayed(const SharedFrame &)));
     connect(actionPlay, SIGNAL(triggered()), this, SLOT(togglePlayPaused()));
     connect(actionPause, SIGNAL(triggered()), this, SLOT(pause()));
     connect(actionFastForward, SIGNAL(triggered()), this, SLOT(fastForward()));
@@ -340,7 +343,7 @@ Player::Player(QWidget *parent)
     setFocusPolicy(Qt::StrongFocus);
 }
 
-void Player::connectTransport(const TransportControllable* receiver)
+void Player::connectTransport(const TransportControllable *receiver)
 {
     if (receiver == m_currentTransport) return;
     if (m_currentTransport)
@@ -356,40 +359,47 @@ void Player::connectTransport(const TransportControllable* receiver)
     connect(this, SIGNAL(nextSought(int)), receiver, SLOT(next(int)));
 }
 
-void Player::setupActions(QWidget* widget)
+void Player::setupActions(QWidget *widget)
 {
     actionPlay = new QAction(widget);
     actionPlay->setObjectName(QString::fromUtf8("actionPlay"));
-    actionPlay->setIcon(QIcon::fromTheme("media-playback-start", QIcon(":/icons/oxygen/32x32/actions/media-playback-start.png")));
+    actionPlay->setIcon(QIcon::fromTheme("media-playback-start",
+                                         QIcon(":/icons/oxygen/32x32/actions/media-playback-start.png")));
     actionPlay->setDisabled(true);
     actionPause = new QAction(widget);
     actionPause->setObjectName(QString::fromUtf8("actionPause"));
-    actionPause->setIcon(QIcon::fromTheme("media-playback-pause", QIcon(":/icons/oxygen/32x32/actions/media-playback-pause.png")));
+    actionPause->setIcon(QIcon::fromTheme("media-playback-pause",
+                                          QIcon(":/icons/oxygen/32x32/actions/media-playback-pause.png")));
     actionPause->setDisabled(true);
     actionSkipNext = new QAction(widget);
     actionSkipNext->setObjectName(QString::fromUtf8("actionSkipNext"));
-    actionSkipNext->setIcon(QIcon::fromTheme("media-skip-forward", QIcon(":/icons/oxygen/32x32/actions/media-skip-forward.png")));
+    actionSkipNext->setIcon(QIcon::fromTheme("media-skip-forward",
+                                             QIcon(":/icons/oxygen/32x32/actions/media-skip-forward.png")));
     actionSkipNext->setDisabled(true);
     actionSkipPrevious = new QAction(widget);
     actionSkipPrevious->setObjectName(QString::fromUtf8("actionSkipPrevious"));
-    actionSkipPrevious->setIcon(QIcon::fromTheme("media-skip-backward", QIcon(":/icons/oxygen/32x32/actions/media-skip-backward.png")));
+    actionSkipPrevious->setIcon(QIcon::fromTheme("media-skip-backward",
+                                                 QIcon(":/icons/oxygen/32x32/actions/media-skip-backward.png")));
     actionSkipPrevious->setDisabled(true);
     actionRewind = new QAction(widget);
     actionRewind->setObjectName(QString::fromUtf8("actionRewind"));
-    actionRewind->setIcon(QIcon::fromTheme("media-seek-backward", QIcon(":/icons/oxygen/32x32/actions/media-seek-backward.png")));
+    actionRewind->setIcon(QIcon::fromTheme("media-seek-backward",
+                                           QIcon(":/icons/oxygen/32x32/actions/media-seek-backward.png")));
     actionRewind->setDisabled(true);
     actionFastForward = new QAction(widget);
     actionFastForward->setObjectName(QString::fromUtf8("actionFastForward"));
-    actionFastForward->setIcon(QIcon::fromTheme("media-seek-forward", QIcon(":/icons/oxygen/32x32/actions/media-seek-forward.png")));
+    actionFastForward->setIcon(QIcon::fromTheme("media-seek-forward",
+                                                QIcon(":/icons/oxygen/32x32/actions/media-seek-forward.png")));
     actionFastForward->setDisabled(true);
     actionVolume = new QAction(widget);
     actionVolume->setObjectName(QString::fromUtf8("actionVolume"));
-    actionVolume->setIcon(QIcon::fromTheme("player-volume", QIcon(":/icons/oxygen/32x32/actions/player-volume.png")));
+    actionVolume->setIcon(QIcon::fromTheme("player-volume",
+                                           QIcon(":/icons/oxygen/32x32/actions/player-volume.png")));
     retranslateUi(widget);
     QMetaObject::connectSlotsByName(widget);
 }
 
-void Player::retranslateUi(QWidget* widget)
+void Player::retranslateUi(QWidget *widget)
 {
     Q_UNUSED(widget)
     actionPlay->setText(tr("Play"));
@@ -457,7 +467,7 @@ QSize Player::videoSize() const
     return m_videoWidget->size();
 }
 
-void Player::resizeEvent(QResizeEvent*)
+void Player::resizeEvent(QResizeEvent *)
 {
     MLT.onWindowResize();
     if (Settings.playerZoom() > 0.0f) {
@@ -470,7 +480,7 @@ void Player::resizeEvent(QResizeEvent*)
     }
 }
 
-bool Player::event(QEvent* event)
+bool Player::event(QEvent *event)
 {
     bool result = QWidget::event(event);
     if (event->type() == QEvent::PaletteChange) {
@@ -480,7 +490,7 @@ bool Player::event(QEvent* event)
     return result;
 }
 
-void Player::keyPressEvent(QKeyEvent* event)
+void Player::keyPressEvent(QKeyEvent *event)
 {
     QWidget::keyPressEvent(event);
     if (!event->isAccepted())
@@ -499,9 +509,9 @@ void Player::play(double speed)
         actionPlay->setIcon(m_pauseIcon);
         actionPlay->setText(tr("Pause"));
         actionPlay->setToolTip(tr("Pause playback (K)"));
-    }
-    else {
-        actionPlay->setIcon(QIcon::fromTheme("media-playback-stop", QIcon(":/icons/oxygen/32x32/actions/media-playback-stop.png")));
+    } else {
+        actionPlay->setIcon(QIcon::fromTheme("media-playback-stop",
+                                             QIcon(":/icons/oxygen/32x32/actions/media-playback-stop.png")));
         actionPlay->setText(tr("Stop"));
         actionPlay->setToolTip(tr("Stop playback (K)"));
     }
@@ -536,7 +546,7 @@ void Player::seek(int position)
 {
     if (m_isSeekable) {
         if (position >= 0) {
-            emit seeked(qMin(position, MLT.isMultitrack()? m_duration : m_duration - 1));
+            emit seeked(qMin(position, MLT.isMultitrack() ? m_duration : m_duration - 1));
         }
     }
     // Seek implies pause.
@@ -582,13 +592,12 @@ void Player::onProducerOpened(bool play)
     if (m_isSeekable) {
         m_durationLabel->setText(QString(MLT.producer()->get_length_time()).prepend(" / "));
         MLT.producer()->get_length_time(mlt_time_clock);
-        m_previousIn = MLT.isClip()? MLT.producer()->get_in() : -1;
+        m_previousIn = MLT.isClip() ? MLT.producer()->get_in() : -1;
         m_scrubber->setEnabled(true);
         m_scrubber->setInPoint(m_previousIn);
-        m_previousOut = MLT.isClip()? MLT.producer()->get_out() : -1;
+        m_previousOut = MLT.isClip() ? MLT.producer()->get_out() : -1;
         m_scrubber->setOutPoint(m_previousOut);
-    }
-    else {
+    } else {
         m_durationLabel->setText(tr("Not Seekable").prepend(" / "));
         m_scrubber->setDisabled(true);
         // cause scrubber redraw
@@ -683,7 +692,7 @@ void Player::onDurationChanged()
         seek(m_duration - 1);
 }
 
-void Player::onFrameDisplayed(const SharedFrame& frame)
+void Player::onFrameDisplayed(const SharedFrame &frame)
 {
     if (MLT.producer() && MLT.producer()->get_length() != m_duration) {
         // This can happen if the profile changes. Reload the properties from the producer.
@@ -752,8 +761,7 @@ void Player::on_actionSkipNext_triggered()
             }
         }
         emit seeked(m_duration - 1);
-    }
-    else {
+    } else {
         emit nextSought(m_position);
         emit nextSought();
     }
@@ -771,8 +779,7 @@ void Player::on_actionSkipPrevious_triggered()
             }
         }
         emit seeked(0);
-    }
-    else {
+    } else {
         emit previousSought(m_position);
         emit previousSought();
     }
@@ -828,7 +835,7 @@ void Player::onTabBarClicked(int index)
     switch (index) {
     case SourceTabIndex:
         if (MLT.savedProducer() && MLT.savedProducer()->is_valid() && MLT.producer()
-            && MLT.producer()->get_producer() != MLT.savedProducer()->get_producer()) {
+                && MLT.producer()->get_producer() != MLT.savedProducer()->get_producer()) {
             m_pauseAfterOpen = true;
             MAIN.open(new Mlt::Producer(MLT.savedProducer()));
         }
@@ -845,11 +852,12 @@ void Player::onTabBarClicked(int index)
     }
 }
 
-void Player::setStatusLabel(const QString &text, int timeoutSeconds, QAction* action, QPalette::ColorRole role)
+void Player::setStatusLabel(const QString &text, int timeoutSeconds, QAction *action,
+                            QPalette::ColorRole role)
 {
     QString s = QString("  %1  ").arg(
-                m_statusLabel->fontMetrics().elidedText(text, Qt::ElideRight,
-                    m_scrubber->width() - m_tabs->width() - 30));
+                    m_statusLabel->fontMetrics().elidedText(text, Qt::ElideRight,
+                                                            m_scrubber->width() - m_tabs->width() - 30));
     m_statusLabel->setText(s);
     m_statusLabel->setToolTip(text);
     auto palette = QApplication::palette();
@@ -945,11 +953,14 @@ double Player::setVolume(int volume)
 void Player::showIdleStatus()
 {
     if (Settings.proxyEnabled() && Settings.playerPreviewScale() > 0) {
-        setStatusLabel(tr("Proxy and preview scaling are ON at %1p").arg(ProxyManager::resolution()), -1, nullptr, QPalette::AlternateBase);
+        setStatusLabel(tr("Proxy and preview scaling are ON at %1p").arg(ProxyManager::resolution()), -1,
+                       nullptr, QPalette::AlternateBase);
     } else if (Settings.proxyEnabled()) {
-        setStatusLabel(tr("Proxy is ON at %1p").arg(ProxyManager::resolution()), -1, nullptr, QPalette::AlternateBase);
+        setStatusLabel(tr("Proxy is ON at %1p").arg(ProxyManager::resolution()), -1, nullptr,
+                       QPalette::AlternateBase);
     } else if (Settings.playerPreviewScale() > 0) {
-        setStatusLabel(tr("Preview scaling is ON at %1p").arg(Settings.playerPreviewScale()), -1, nullptr, QPalette::AlternateBase);
+        setStatusLabel(tr("Preview scaling is ON at %1p").arg(Settings.playerPreviewScale()), -1, nullptr,
+                       QPalette::AlternateBase);
     } else {
         setStatusLabel("", -1, nullptr);
     }
@@ -1000,17 +1011,17 @@ static inline float IEC_dB ( float fScale )
 {
     float dB = 0.0f;
 
-    if (fScale < 0.025f)	    // IEC_Scale(-60.0f)
+    if (fScale < 0.025f)        // IEC_Scale(-60.0f)
         dB = (fScale / 0.0025f) - 70.0f;
-    else if (fScale < 0.075f)	// IEC_Scale(-50.0f)
+    else if (fScale < 0.075f)   // IEC_Scale(-50.0f)
         dB = (fScale - 0.025f) / 0.005f - 60.0f;
-    else if (fScale < 0.15f)	// IEC_Scale(-40.0f)
+    else if (fScale < 0.15f)    // IEC_Scale(-40.0f)
         dB = (fScale - 0.075f) / 0.0075f - 50.0f;
-    else if (fScale < 0.3f)		// IEC_Scale(-30.0f)
+    else if (fScale < 0.3f)     // IEC_Scale(-30.0f)
         dB = (fScale - 0.15f) / 0.015f - 40.0f;
-    else if (fScale < 0.5f)		// IEC_Scale(-20.0f)
+    else if (fScale < 0.5f)     // IEC_Scale(-20.0f)
         dB = (fScale - 0.3f) / 0.02f - 30.0f;
-    else /* if (fScale < 1.0f)	// IED_Scale(0.0f)) */
+    else /* if (fScale < 1.0f)  // IED_Scale(0.0f)) */
         dB = (fScale - 0.5f) / 0.025f - 20.0f;
 
     return (dB > -0.001f && dB < 0.001f ? 0.0f : dB);
@@ -1023,8 +1034,10 @@ void Player::onVolumeChanged(int volume)
     Settings.setPlayerVolume(volume);
     Settings.setPlayerMuted(false);
     m_muteButton->setChecked(false);
-    actionVolume->setIcon(QIcon::fromTheme("player-volume", QIcon(":/icons/oxygen/32x32/actions/player-volume.png")));
-    m_muteButton->setIcon(QIcon::fromTheme("audio-volume-muted", QIcon(":/icons/oxygen/32x32/status/audio-volume-muted.png")));
+    actionVolume->setIcon(QIcon::fromTheme("player-volume",
+                                           QIcon(":/icons/oxygen/32x32/actions/player-volume.png")));
+    m_muteButton->setIcon(QIcon::fromTheme("audio-volume-muted",
+                                           QIcon(":/icons/oxygen/32x32/status/audio-volume-muted.png")));
     m_muteButton->setToolTip(tr("Mute"));
 }
 
@@ -1050,20 +1063,24 @@ void Player::onMuteButtonToggled(bool checked)
     if (checked) {
         m_savedVolume = MLT.volume();
         MLT.setVolume(0);
-        actionVolume->setIcon(QIcon::fromTheme("audio-volume-muted", QIcon(":/icons/oxygen/32x32/status/audio-volume-muted.png")));
-        m_muteButton->setIcon(QIcon::fromTheme("audio-volume-high", QIcon(":/icons/oxygen/32x32/status/audio-volume-high.png")));
+        actionVolume->setIcon(QIcon::fromTheme("audio-volume-muted",
+                                               QIcon(":/icons/oxygen/32x32/status/audio-volume-muted.png")));
+        m_muteButton->setIcon(QIcon::fromTheme("audio-volume-high",
+                                               QIcon(":/icons/oxygen/32x32/status/audio-volume-high.png")));
         m_muteButton->setToolTip(tr("Unmute"));
     } else {
         MLT.setVolume(m_savedVolume);
-        actionVolume->setIcon(QIcon::fromTheme("player-volume", QIcon(":/icons/oxygen/32x32/actions/player-volume.png")));
-        m_muteButton->setIcon(QIcon::fromTheme("audio-volume-muted", QIcon(":/icons/oxygen/32x32/status/audio-volume-muted.png")));
+        actionVolume->setIcon(QIcon::fromTheme("player-volume",
+                                               QIcon(":/icons/oxygen/32x32/actions/player-volume.png")));
+        m_muteButton->setIcon(QIcon::fromTheme("audio-volume-muted",
+                                               QIcon(":/icons/oxygen/32x32/status/audio-volume-muted.png")));
         m_muteButton->setToolTip(tr("Mute"));
     }
     Settings.setPlayerMuted(checked);
     m_volumePopup->hide();
 }
 
-void Player::setZoom(float factor, const QIcon& icon)
+void Player::setZoom(float factor, const QIcon &icon)
 {
     emit zoomChanged(factor);
     Settings.setPlayerZoom(factor);
@@ -1082,13 +1099,13 @@ void Player::setZoom(float factor, const QIcon& icon)
 
 void Player::onZoomTriggered()
 {
-    QAction* action = qobject_cast<QAction*>(sender());
+    QAction *action = qobject_cast<QAction *>(sender());
     setZoom(action->data().toFloat(), action->icon());
 }
 
 void Player::toggleZoom(bool checked)
 {
-    foreach (QAction* a, m_zoomMenu->actions()) {
+    foreach (QAction *a, m_zoomMenu->actions()) {
         if ((!checked || m_zoomToggleFactor == 0.0f) && a->data().toFloat() == 0.0f) {
             setZoom(0.0f, a->icon());
             break;
@@ -1102,19 +1119,19 @@ void Player::toggleZoom(bool checked)
 void Player::onGridToggled()
 {
     m_gridButton->setChecked(true);
-    m_gridDefaultAction = qobject_cast<QAction*>(sender());
+    m_gridDefaultAction = qobject_cast<QAction *>(sender());
     emit gridChanged(m_gridDefaultAction->data().toInt());
 }
 
 void Player::toggleGrid(bool checked)
 {
-    QAction* action = m_gridActionGroup->checkedAction();
-    if(!checked) {
-        if(action)
+    QAction *action = m_gridActionGroup->checkedAction();
+    if (!checked) {
+        if (action)
             action->setChecked(false);
         emit gridChanged(0);
     } else {
-        if(!action)
+        if (!action)
             m_gridDefaultAction->trigger();
     }
 }

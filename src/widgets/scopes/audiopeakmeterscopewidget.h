@@ -28,7 +28,7 @@ class AudioMeterWidget;
 class AudioPeakMeterScopeWidget Q_DECL_FINAL : public ScopeWidget
 {
     Q_OBJECT
-    
+
 public:
     explicit AudioPeakMeterScopeWidget();
     QString getTitle() Q_DECL_OVERRIDE;
@@ -36,10 +36,10 @@ public:
 
 private:
     // Functions run in scope thread.
-    void refreshScope(const QSize& size, bool full) Q_DECL_OVERRIDE;
+    void refreshScope(const QSize &size, bool full) Q_DECL_OVERRIDE;
 
     // Members accessed by GUI thread.
-    AudioMeterWidget* m_audioMeter;
+    AudioMeterWidget *m_audioMeter;
     Qt::Orientation m_orientation;
     int m_channels;
 
