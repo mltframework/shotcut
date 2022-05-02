@@ -1,0 +1,115 @@
+{
+    "animation": {
+        "__type__": "MainComposition",
+        "animation": {
+            "__type__": "AnimationContainer",
+            "first_frame": 0,
+            "last_frame": 180
+        },
+        "fps": 60,
+        "group_color": "#00000000",
+        "height": 1080,
+        "locked": false,
+        "name": "FHD",
+        "shapes": [
+            {
+                "__type__": "Layer",
+                "animation": {
+                    "__type__": "AnimationContainer",
+                    "first_frame": 0,
+                    "last_frame": 180
+                },
+                "group_color": "#00000000",
+                "locked": false,
+                "mask": {
+                    "__type__": "MaskSettings",
+                    "mask": false
+                },
+                "name": "Layer",
+                "opacity": {
+                    "value": 1
+                },
+                "parent": null,
+                "render": true,
+                "shapes": [
+                ],
+                "transform": {
+                    "__type__": "Transform",
+                    "anchor_point": {
+                        "value": {
+                            "x": 960,
+                            "y": 540
+                        }
+                    },
+                    "position": {
+                        "value": {
+                            "x": 960,
+                            "y": 540
+                        }
+                    },
+                    "rotation": {
+                        "value": 0
+                    },
+                    "scale": {
+                        "value": {
+                            "x": 1,
+                            "y": 1
+                        }
+                    }
+                },
+                "uuid": "86cecbdb-5208-4524-996d-4e97b73cf4b0",
+                "visible": true
+            }
+        ],
+        "uuid": "a1707288-5426-48ab-b148-b3a6089377c2",
+        "visible": true,
+        "width": 1920
+    },
+    "assets": {
+        "__type__": "Assets",
+        "colors": {
+            "__type__": "NamedColorList",
+            "name": "",
+            "uuid": "5b0b6c5e-5d3f-4d8f-b17c-d5ad306f4303",
+            "values": [
+            ]
+        },
+        "gradient_colors": {
+            "__type__": "GradientColorsList",
+            "name": "",
+            "uuid": "6f4baf7a-8ba0-4e9b-b705-039614059593",
+            "values": [
+            ]
+        },
+        "gradients": {
+            "__type__": "GradientList",
+            "name": "",
+            "uuid": "dab347b8-d711-41e1-8a43-4f0aa7fa5569",
+            "values": [
+            ]
+        },
+        "images": {
+            "__type__": "BitmapList",
+            "name": "",
+            "uuid": "507e47f5-387b-4fa8-b9b4-473991bb5186",
+            "values": [
+            ]
+        },
+        "name": "",
+        "precompositions": {
+            "__type__": "PrecompositionList",
+            "name": "",
+            "uuid": "a49bc4d7-ea88-4d22-a69a-de7ce2b9e0e7",
+            "values": [
+            ]
+        },
+        "uuid": "e003de29-5b3e-4e37-b4ae-062805bbede5"
+    },
+    "format": {
+        "format_version": 3,
+        "generator": "Glaxnimate",
+        "generator_version": "0.4.3-23-g6234cd9"
+    },
+    "metadata": {
+    }
+}

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2021 Meltytech, LLC
+ * Copyright (c) 2013-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -61,7 +61,7 @@ void AudioLevelsTask::start(Mlt::Producer &producer, QObject *object, const QMod
 
         QString serviceName = producer.get("mlt_service");
         if (serviceName == "pixbuf" || serviceName == "qimage" || serviceName == "webvfx" ||
-                serviceName == "color"  || serviceName.startsWith("frei0r") ||
+                serviceName == "color"  || serviceName.startsWith("frei0r") || serviceName == "glaxnimate" ||
                 (serviceName.startsWith("avformat") && producer.get_int("audio_index") == -1)) {
             return;
         }

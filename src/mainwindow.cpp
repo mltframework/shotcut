@@ -27,6 +27,7 @@
 #include "widgets/countproducerwidget.h"
 #include "widgets/decklinkproducerwidget.h"
 #include "widgets/directshowvideowidget.h"
+#include "widgets/glaxnimateproducerwidget.h"
 #include "widgets/isingwidget.h"
 #include "widgets/jackproducerwidget.h"
 #include "widgets/toneproducerwidget.h"
@@ -1033,6 +1034,8 @@ void MainWindow::setupOpenOtherMenu()
         if (!Settings.playerGPU() && mltProducers->get_data("qtext") && mltFilters->get_data("dynamictext"))
             otherMenu->addAction(tr("Text"), this, SLOT(onOpenOtherTriggered()))->setObjectName("text");
     }
+    if (mltProducers->get_data("glaxnimate"))
+        otherMenu->addAction(tr("Animation"), this, SLOT(onOpenOtherTriggered()))->setObjectName("glaxnimate");
     if (mltProducers->get_data("noise"))
         otherMenu->addAction(tr("Noise"), this, SLOT(onOpenOtherTriggered()))->setObjectName("noise");
     if (mltProducers->get_data("frei0r.ising0r"))
@@ -3423,6 +3426,8 @@ QWidget *MainWindow::loadProducerWidget(Mlt::Producer *producer)
         w = new DecklinkProducerWidget(this);
     else if (service == "color")
         w = new ColorProducerWidget(this);
+    else if (service == "glaxnimate")
+        w = new GlaxnimateProducerWidget(this);
     else if (service == "noise")
         w = new NoiseWidget(this);
     else if (service == "frei0r.ising0r")
@@ -4748,6 +4753,8 @@ void MainWindow::onOpenOtherTriggered()
         onOpenOtherTriggered(new ColorProducerWidget(this));
     else if (sender()->objectName() == "text")
         onOpenOtherTriggered(new TextProducerWidget(this));
+    else if (sender()->objectName() == "glaxnimate")
+        onOpenOtherTriggered(new GlaxnimateProducerWidget(this));
     else if (sender()->objectName() == "noise")
         onOpenOtherTriggered(new NoiseWidget(this));
     else if (sender()->objectName() == "ising0r")

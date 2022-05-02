@@ -88,6 +88,7 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   qmltypes/qmlview.cpp qmltypes/qmlview.h
   qmltypes/thumbnailprovider.cpp qmltypes/thumbnailprovider.h
   qmltypes/timelineitems.cpp qmltypes/timelineitems.h
+  resources.qrc
   scrubbar.cpp scrubbar.h
   settings.cpp settings.h
   sharedframe.cpp sharedframe.h
@@ -125,6 +126,8 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   widgets/frameratewidget.cpp widgets/frameratewidget.h
   widgets/gdigrabwidget.cpp widgets/gdigrabwidget.h
   widgets/gdigrabwidget.ui
+  widgets/glaxnimateproducerwidget.cpp widgets/glaxnimateproducerwidget.h
+  widgets/glaxnimateproducerwidget.ui
   widgets/gltestwidget.cpp widgets/gltestwidget.h
   widgets/imageproducerwidget.cpp widgets/imageproducerwidget.h
   widgets/imageproducerwidget.ui

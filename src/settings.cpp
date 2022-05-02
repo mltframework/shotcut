@@ -977,6 +977,16 @@ void ShotcutSettings::setVideoInput(const QString &name)
     settings.setValue("videoInput", name);
 }
 
+QString ShotcutSettings::glaxnimatePath() const
+{
+    return settings.value("glaxnimatePath", "glaxnimate").toString();
+}
+
+void ShotcutSettings::setGlaxnimatePath(const QString &path)
+{
+    settings.setValue("glaxnimatePath", path);
+}
+
 bool ShotcutSettings::proxyEnabled() const
 {
     return settings.value("proxy/enabled", false).toBool();

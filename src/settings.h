@@ -254,6 +254,8 @@ public:
     void setAudioInput(const QString &name);
     QString videoInput() const;
     void setVideoInput(const QString &name);
+    QString glaxnimatePath() const;
+    void setGlaxnimatePath(const QString &path);
 
     // proxy
     bool proxyEnabled() const;

@@ -680,6 +680,7 @@ bool Controller::isFileProducer(Service *service) const
         QString serviceName = service->get("mlt_service");
         return (serviceName == "pixbuf" ||
                 serviceName == "qimage" ||
+                serviceName == "glaxnimate" ||
                 serviceName.startsWith("avformat") ||
                 serviceName.startsWith("timewarp"));
     }
