@@ -106,17 +106,6 @@ DEBUG=0
 # We need to set LANG to C to avoid e.g. svn from getting to funky
 export LANG=C
 
-# User CFLAGS and LDFLAGS sometimes prevent more recent local headers.
-# Also, you can adjust some flags here.
-if [ "$DEBUG_BUILD" = "1" ]; then
-    export CFLAGS=
-    export CXXFLAGS=
-else
-    export CFLAGS=-DNDEBUG
-    export CXXFLAGS=-DNDEBUG
-fi
-export LDFLAGS=
-
 ################################################################################
 # FUNCTION SECTION
 ################################################################################
@@ -379,6 +368,17 @@ function read_configuration {
 # This is where the configuration options for each subproject is assembled
 function set_globals {
   trace "Entering set_globals @ = $@"
+
+  # Set debug flags
+  if [ "$DEBUG_BUILD" = "1" ]; then
+    export CFLAGS=
+    export CXXFLAGS=
+  else
+    export CFLAGS=-DNDEBUG
+    export CXXFLAGS=-DNDEBUG
+  fi
+  export LDFLAGS=
+
   # Set convenience variables.
   test "$TARGET_OS" = "" && TARGET_OS="$(uname -s)"
   test "$TARGET_ARCH" = "" && TARGET_ARCH="$(uname -m)"
