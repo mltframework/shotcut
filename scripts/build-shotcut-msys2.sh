@@ -853,7 +853,7 @@ function configure_compile_install_subproject {
 
   # Special hack for mlt
   if test "mlt" = "$1"; then
-    export CXXFLAGS="$CFLAGS -std=c++11"
+    export CXXFLAGS="$CFLAGS -std=c++11 -D_XOPEN_SOURCE=700"
   fi
 
   # Special hack for movit
