@@ -108,6 +108,13 @@
         </item>
        </layout>
       </widget>
+      <widget class="QWidget" name="glaxnimateTab">
+       <layout class="QVBoxLayout" name="verticalLayout_21">
+        <item>
+         <widget class="GlaxnimateProducerWidget" name="glaxnimateWidget" native="true"/>
+        </item>
+       </layout>
+      </widget>
       <widget class="QWidget" name="noiseTab">
        <layout class="QVBoxLayout" name="verticalLayout_7">
         <item>
@@ -346,6 +353,12 @@
    <class>BlipProducerWidget</class>
    <extends>QWidget</extends>
    <header>widgets/blipproducerwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>GlaxnimateProducerWidget</class>
+   <extends>QWidget</extends>
+   <header>widgets/glaxnimateproducerwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

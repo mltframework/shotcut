@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2018 Meltytech, LLC
+ * Copyright (c) 2012-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -79,6 +79,10 @@ OpenOtherDialog::OpenOtherDialog(QWidget *parent) :
             item->setData(0, Qt::UserRole, ui->textTab->objectName());
         }
     }
+    if (mltProducers->get_data("glaxnimate")) {
+        QTreeWidgetItem *item = new QTreeWidgetItem(group, QStringList(tr("Animation")));
+        item->setData(0, Qt::UserRole, ui->glaxnimateTab->objectName());
+    }
     if (mltProducers->get_data("noise")) {
         QTreeWidgetItem *item = new QTreeWidgetItem(group, QStringList(tr("Noise")));
         item->setData(0, Qt::UserRole, ui->noiseTab->objectName());
@@ -153,6 +157,8 @@ void OpenOtherDialog::load(Mlt::Producer *producer)
             selectTreeWidget(tr("SDI/HDMI"));
         else if (service == "color")
             selectTreeWidget(tr("Color"));
+        else if (service == "glaxnimate")
+            selectTreeWidget(tr("Animation"));
         else if (service == "noise")
             selectTreeWidget(tr("Noise"));
         else if (service == "frei0r.ising0r")
@@ -205,6 +211,8 @@ void OpenOtherDialog::on_treeWidget_currentItemChanged(QTreeWidgetItem *current,
                     m_current = ui->colorWidget;
                 else if (w == ui->textTab)
                     m_current = ui->textWidget;
+                else if (w == ui->glaxnimateTab)
+                    m_current = ui->glaxnimateWidget;
                 else if (w == ui->noiseTab)
                     m_current = ui->noiseWidget;
                 else if (w == ui->isingTab)
