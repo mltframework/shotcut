@@ -7,11 +7,11 @@ on:
     - cron: '0 8 * * *'
 
 env:
-  IMAGE_NAME: mltframework/shotcut-build:qt5.15.2-ubuntu18.04
+  IMAGE_NAME: mltframework/shotcut-build:qt5.15.3-ubuntu20.04
 
 jobs:
   build:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
 
     steps:
       - uses: actions/checkout@v2
