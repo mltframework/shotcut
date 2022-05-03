@@ -52,9 +52,10 @@ add_subdirectory(translations)
 feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES FATAL_ON_MISSING_REQUIRED_PACKAGES)
 
 add_custom_target(codespell COMMAND
+  cd "${CMAKE_SOURCE_DIR}" &&
   codespell -w -q 3
-  -L shotcut,uint,seeked
-  -S export-edl.js,CuteLogger,drmingw,node_modules,moc_*,index.theme,*.ts,three.min.js,three.js,jquery.js,rangy-*.js,Makefile,shotcut.pro,*.desktop
+  -L shotcut,uint,seeked,really,prevent
+  -S export-chapters.js,export-edl.js,CuteLogger,drmingw,node_modules,moc_*,index.theme,*.ts,three.min.js,three.js,jquery.js,rangy-*.js,Makefile,shotcut.pro,*.desktop
 )
 
 add_custom_target(astyle COMMAND
