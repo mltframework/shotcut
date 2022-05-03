@@ -35,7 +35,7 @@
 
 static const QString kTransparent = QObject::tr("transparent", "Open Other > Animation");
 
-static QString colorToString(const QColor& color)
+static QString colorToString(const QColor &color)
 {
     return (color == QColor(0, 0, 0, 0)) ? kTransparent
            : QString::asprintf("#%02X%02X%02X%02X",
@@ -45,7 +45,7 @@ static QString colorToString(const QColor& color)
                                qBlue(color.rgba()));
 }
 
-static QString colorStringToResource(const QString& s)
+static QString colorStringToResource(const QString &s)
 {
     return (s == kTransparent) ? "#00000000" : s;
 }
@@ -105,7 +105,7 @@ void GlaxnimateProducerWidget::on_colorButton_clicked()
     }
 }
 
-static void modifyJsonValue(QJsonValue& destValue, const QString& path, const QJsonValue& newValue)
+static void modifyJsonValue(QJsonValue &destValue, const QString &path, const QJsonValue &newValue)
 {
     const int indexOfDot = path.indexOf('.');
     const QString dotPropertyName = path.left(indexOfDot);
@@ -114,10 +114,13 @@ static void modifyJsonValue(QJsonValue& destValue, const QString& path, const QJ
     const int indexOfSquareBracketOpen = path.indexOf('[');
     const int indexOfSquareBracketClose = path.indexOf(']');
 
-    const int arrayIndex = path.midRef(indexOfSquareBracketOpen + 1, indexOfSquareBracketClose - indexOfSquareBracketOpen - 1).toInt();
+    const int arrayIndex = path.midRef(indexOfSquareBracketOpen + 1,
+                                       indexOfSquareBracketClose - indexOfSquareBracketOpen - 1).toInt();
 
     const QString squareBracketPropertyName = path.left(indexOfSquareBracketOpen);
-    const QString squareBracketSubPath = indexOfSquareBracketClose > 0 ? (path.mid(indexOfSquareBracketClose + 1)[0] == '.' ? path.mid(indexOfSquareBracketClose + 2) : path.mid(indexOfSquareBracketClose + 1)) : QString();
+    const QString squareBracketSubPath = indexOfSquareBracketClose > 0 ? (path.mid(
+                                                                              indexOfSquareBracketClose + 1)[0] == '.' ? path.mid(indexOfSquareBracketClose + 2) : path.mid(
+                                                                              indexOfSquareBracketClose + 1)) : QString();
 
     // determine what is first in path. dot or bracket
     bool useDot = true;
@@ -155,11 +158,11 @@ static void modifyJsonValue(QJsonValue& destValue, const QString& path, const QJ
         if (subValue.isArray()) {
             QJsonArray arr = subValue.toArray();
             QJsonValue arrEntry = arr[arrayIndex];
-            modifyJsonValue(arrEntry,usedSubPath,newValue);
+            modifyJsonValue(arrEntry, usedSubPath, newValue);
             arr[arrayIndex] = arrEntry;
             subValue = arr;
         } else if (subValue.isObject()) {
-            modifyJsonValue(subValue,usedSubPath,newValue);
+            modifyJsonValue(subValue, usedSubPath, newValue);
         } else {
             subValue = newValue;
         }
@@ -179,7 +182,7 @@ static void modifyJsonValue(QJsonValue& destValue, const QString& path, const QJ
 }
 
 
-Mlt::Producer* GlaxnimateProducerWidget::newProducer(Mlt::Profile& profile)
+Mlt::Producer *GlaxnimateProducerWidget::newProducer(Mlt::Profile &profile)
 {
     // Get the file name.
     auto filename = QmlApplication::getNextProjectFile("anim.rawr");
@@ -221,7 +224,7 @@ Mlt::Producer* GlaxnimateProducerWidget::newProducer(Mlt::Profile& profile)
     rawr.write(QJsonDocument(json).toJson());
     rawr.close();
 
-    Mlt::Producer* p = new Mlt::Producer(profile,
+    Mlt::Producer *p = new Mlt::Producer(profile,
                                          QString("glaxnimate:").append(rawr.fileName()).toUtf8().constData());
     p->set("background", colorStringToResource(ui->colorLabel->text()).toLatin1().constData());
 
@@ -230,13 +233,14 @@ Mlt::Producer* GlaxnimateProducerWidget::newProducer(Mlt::Profile& profile)
     p->set(kShotcutDetailProperty, filename.toUtf8().constData());
 
     m_watcher.reset(new QFileSystemWatcher({filename}));
-    connect(m_watcher.get(), &QFileSystemWatcher::fileChanged, this, &GlaxnimateProducerWidget::onFileChanged);
+    connect(m_watcher.get(), &QFileSystemWatcher::fileChanged, this,
+            &GlaxnimateProducerWidget::onFileChanged);
     launchGlaxnimate(filename);
 
     return p;
 }
 
-void GlaxnimateProducerWidget::setProducer(Mlt::Producer* p)
+void GlaxnimateProducerWidget::setProducer(Mlt::Producer *p)
 {
     AbstractProducerWidget::setProducer(p);
     ui->notesLabel->setVisible(true);
@@ -254,7 +258,8 @@ void GlaxnimateProducerWidget::setProducer(Mlt::Producer* p)
     ui->durationSpinBox->setValue(p->get_length());
 
     m_watcher.reset(new QFileSystemWatcher({filename}));
-    connect(m_watcher.get(), &QFileSystemWatcher::fileChanged, this, &GlaxnimateProducerWidget::onFileChanged);
+    connect(m_watcher.get(), &QFileSystemWatcher::fileChanged, this,
+            &GlaxnimateProducerWidget::onFileChanged);
 }
 
 Mlt::Properties GlaxnimateProducerWidget::getPreset() const
@@ -265,7 +270,7 @@ Mlt::Properties GlaxnimateProducerWidget::getPreset() const
     return p;
 }
 
-void GlaxnimateProducerWidget::loadPreset(Mlt::Properties& p)
+void GlaxnimateProducerWidget::loadPreset(Mlt::Properties &p)
 {
     QColor color(QFileInfo(p.get("background")).baseName());
     ui->colorLabel->setText(colorToString(color));
@@ -283,9 +288,9 @@ void GlaxnimateProducerWidget::rename()
     ui->lineEdit->selectAll();
 }
 
-void GlaxnimateProducerWidget::on_preset_selected(void* p)
+void GlaxnimateProducerWidget::on_preset_selected(void *p)
 {
-    Mlt::Properties* properties = (Mlt::Properties*) p;
+    Mlt::Properties *properties = (Mlt::Properties *) p;
     loadPreset(*properties);
     delete properties;
 }
@@ -375,7 +380,7 @@ void GlaxnimateProducerWidget::launchGlaxnimate(const QString &filename)
         dialog.setWindowModality(QmlApplication::dialogModality());
         if (dialog.exec() == QMessageBox::Ok) {
             auto path = QFileDialog::getOpenFileName(this, tr("Find Glaxnimate"), QString(), QString(),
-                        nullptr, Util::getFileDialogOptions());
+                                                     nullptr, Util::getFileDialogOptions());
             if (!path.isEmpty()) {
                 if (QProcess::startDetached(path, {filename})) {
                     Settings.setGlaxnimatePath(path);

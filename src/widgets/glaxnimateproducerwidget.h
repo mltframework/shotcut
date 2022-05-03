@@ -35,13 +35,13 @@ public:
     ~GlaxnimateProducerWidget();
 
     // AbstractProducerWidget overrides
-    Mlt::Producer* newProducer(Mlt::Profile&);
-    virtual void setProducer(Mlt::Producer*);
+    Mlt::Producer *newProducer(Mlt::Profile &);
+    virtual void setProducer(Mlt::Producer *);
     Mlt::Properties getPreset() const;
-    void loadPreset(Mlt::Properties&);
+    void loadPreset(Mlt::Properties &);
 
 signals:
-    void producerChanged(Mlt::Producer*);
+    void producerChanged(Mlt::Producer *);
     void modified();
 
 public slots:
@@ -49,7 +49,7 @@ public slots:
 
 private slots:
     void on_colorButton_clicked();
-    void on_preset_selected(void* p);
+    void on_preset_selected(void *p);
     void on_preset_saveClicked();
     void on_lineEdit_editingFinished();
     void on_notesTextEdit_textChanged();
