@@ -20,9 +20,20 @@ import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 import Shotcut.Controls 1.0 as Shotcut
 
-Item {
+Shotcut.KeyframableFilter {
+    property string roomProperty: '0'
+    property string timeProperty: '1'
+    property string dampProperty: '2'
+    property string inputProperty: '3'
+    property string dryProperty: '4'
+    property string reflectionProperty: '5'
+    property string tailProperty: '6'
     width: 350
     height: 250
+    keyframableParameters: preset.parameters
+    startValues: [1, .1, 0, 0, -70, -70, -70]
+    middleValues: [30, 7.5, 0.5, 0.75, 0, -10, -17.5]
+    endValues: [1, .1, 0, 0, -70, -70, -70]
     Component.onCompleted: {
         filter.blockSignals = true
         if (filter.isNew) {
@@ -88,19 +99,45 @@ Item {
     }
 
     function setControls() {
-        sliderRoom.value = filter.getDouble('0')
-        sliderTime.value = filter.getDouble('1')
-        sliderDamp.value = filter.getDouble('2') * sliderDamp.maximumValue
-        sliderInput.value = filter.getDouble('3') * sliderInput.maximumValue
-        sliderDry.value = filter.getDouble('4')
-        sliderReflection.value = filter.getDouble('5')
-        sliderTail.value = filter.getDouble('6')
+        var position = getPosition()
+        blockUpdate = true
+        sliderRoom.value = filter.getDouble(roomProperty, position)
+        roomKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(roomProperty) > 0
+        sliderTime.value = filter.getDouble(timeProperty, position)
+        timeKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(timeProperty) > 0
+        sliderDamp.value = filter.getDouble(dampProperty, position) * sliderDamp.maximumValue
+        dampKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(dampProperty) > 0
+        sliderInput.value = filter.getDouble(inputProperty, position) * sliderInput.maximumValue
+        inputKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(inputProperty) > 0
+        sliderDry.value = filter.getDouble(dryProperty, position)
+        dryKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(dryProperty) > 0
+        sliderReflection.value = filter.getDouble(reflectionProperty, position)
+        reflectionKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(reflectionProperty) > 0
+        sliderTail.value = filter.getDouble(tailProperty, position)
+        tailKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount(tailProperty) > 0
+        blockUpdate = false
+        enableControls(isSimpleKeyframesActive())
+    }
+
+    function enableControls(enabled) {
+        sliderRoom.enabled = sliderTime.enabled = sliderDamp.enabled = sliderInput.enabled = sliderDry.enabled =
+                sliderReflection.enabled = sliderTail.enabled = enabled
+    }
+
+    function updateSimpleKeyframes() {
+        updateFilter(roomProperty, sliderRoom.value, roomKeyframesButton, null)
+        updateFilter(timeProperty, sliderTime.value, timeKeyframesButton, null)
+        updateFilter(dampProperty, sliderDamp.value / sliderDamp.maximumValue, dampKeyframesButton, null)
+        updateFilter(inputProperty, sliderInput.value / sliderInput.maximumValue, inputKeyframesButton, null)
+        updateFilter(dryProperty, sliderDry.value, dryKeyframesButton, null)
+        updateFilter(reflectionProperty, sliderReflection.value, reflectionKeyframesButton, null)
+        updateFilter(tailProperty, sliderTail.value, tailKeyframesButton, null)
     }
 
     GridLayout {
         anchors.fill: parent
         anchors.margins: 8
-        columns: 3
+        columns: 4
 
         Label {
             text: qsTr('Preset')
@@ -109,8 +146,14 @@ Item {
         Shotcut.Preset {
             id: preset
             parameters: ['0', '1', '2', '3', '4', '5', '6']
-            Layout.columnSpan: 2
-            onPresetSelected: setControls()
+            Layout.columnSpan: parent.columns-1
+            onBeforePresetLoaded: {
+                resetSimpleKeyframes()
+            }
+            onPresetSelected: {
+                setControls()
+                initializeSimpleKeyframes()
+            }
         }
 
         Label {
@@ -123,13 +166,17 @@ Item {
             minimumValue: 1
             maximumValue: 300
             suffix: ' m'
-            value: filter.getDouble('0')
-            onValueChanged: {
-                filter.set('0', value)
-            }
+            onValueChanged: updateFilter(roomProperty, value, roomKeyframesButton, getPosition())
         }
         Shotcut.UndoButton {
             onClicked: sliderRoom.value = 30
+        }
+        Shotcut.KeyframesButton {
+            id: roomKeyframesButton
+            onToggled: {
+                enableControls(true)
+                toggleKeyframes(checked, roomProperty, sliderRoom.value)
+            }
         }
 
         Label {
@@ -142,13 +189,17 @@ Item {
             maximumValue: 30
             decimals: 1
             suffix: ' s'
-            value: filter.getDouble('1')
-            onValueChanged: {
-                filter.set('1', value)
-            }
+            onValueChanged: updateFilter(timeProperty, value, timeKeyframesButton, getPosition())
         }
         Shotcut.UndoButton {
             onClicked: sliderTime.value = 7.5
+        }
+        Shotcut.KeyframesButton {
+            id: timeKeyframesButton
+            onToggled: {
+                enableControls(true)
+                toggleKeyframes(checked, timeProperty, sliderTime.value)
+            }
         }
 
         Label {
@@ -162,13 +213,17 @@ Item {
             maximumValue: 100
             decimals: 1
             suffix: ' %'
-            value: filter.getDouble('2') * maximumValue
-            onValueChanged: {
-                filter.set('2', value / maximumValue)
-            }
+            onValueChanged: updateFilter(dampProperty, value / maximumValue, dampKeyframesButton, getPosition())
         }
         Shotcut.UndoButton {
             onClicked: sliderDamp.value = 0.5 * sliderDamp.maximumValue
+        }
+        Shotcut.KeyframesButton {
+            id: dampKeyframesButton
+            onToggled: {
+                enableControls(true)
+                toggleKeyframes(checked, dampProperty, sliderDamp.value / sliderDamp.maximumValue)
+            }
         }
 
         Label {
@@ -182,13 +237,17 @@ Item {
             maximumValue: 100
             decimals: 1
             suffix: ' %'
-            value: filter.getDouble('3') * maximumValue
-            onValueChanged: {
-                filter.set('3', value / maximumValue)
-            }
+            onValueChanged: updateFilter(inputProperty, value / maximumValue, inputKeyframesButton, getPosition())
         }
         Shotcut.UndoButton {
             onClicked: sliderInput.value = 0.75 * sliderInput.maximumValue
+        }
+        Shotcut.KeyframesButton {
+            id: inputKeyframesButton
+            onToggled: {
+                enableControls(true)
+                toggleKeyframes(checked, inputProperty, sliderInput.value / sliderInput.maximumValue)
+            }
         }
 
         Label {
@@ -202,13 +261,17 @@ Item {
             maximumValue: 0
             suffix: ' dB'
             decimals: 1
-            value: filter.getDouble('4')
-            onValueChanged: {
-                filter.set('4', value)
-            }
+            onValueChanged: updateFilter(dryProperty, value, dryKeyframesButton, getPosition())
         }
         Shotcut.UndoButton {
             onClicked: sliderDry.value = 0
+        }
+        Shotcut.KeyframesButton {
+            id: dryKeyframesButton
+            onToggled: {
+                enableControls(true)
+                toggleKeyframes(checked, dryProperty, sliderDry.value)
+            }
         }
 
         Label {
@@ -221,15 +284,20 @@ Item {
             minimumValue: -70
             maximumValue: 0
             suffix: ' dB'
-            value: filter.getDouble('5')
-            onValueChanged: {
-                filter.set('5', value)
-            }
+            onValueChanged: updateFilter(reflectionProperty, value, reflectionKeyframesButton, getPosition())
         }
 
         Shotcut.UndoButton {
             onClicked: sliderReflection.value = -10
         }
+        Shotcut.KeyframesButton {
+            id: reflectionKeyframesButton
+            onToggled: {
+                enableControls(true)
+                toggleKeyframes(checked, reflectionProperty, sliderReflection.value)
+            }
+        }
+
         Label {
             text: qsTr('Tail level')
             Layout.alignment: Qt.AlignRight
@@ -241,17 +309,21 @@ Item {
             maximumValue: 0
             decimals: 1
             suffix: ' dB'
-            value: filter.getDouble('6')
-            onValueChanged: {
-                filter.set('6', value)
-            }
+            onValueChanged: updateFilter(tailProperty, value, tailKeyframesButton, getPosition())
         }
         Shotcut.UndoButton {
             onClicked: sliderTail.value = -17.5
         }
+        Shotcut.KeyframesButton {
+            id: tailKeyframesButton
+            onToggled: {
+                enableControls(true)
+                toggleKeyframes(checked, tailProperty, sliderTail.value)
+            }
+        }
 
         Label {
-            Layout.columnSpan: 3
+            Layout.columnSpan: parent.columns
             text: qsTr('About reverb')
             font.underline: true
             MouseArea {
@@ -263,5 +335,20 @@ Item {
         Item {
             Layout.fillHeight: true;
         }
+    }
+
+    Connections {
+        target: filter
+        onChanged: setControls()
+        onInChanged: updateSimpleKeyframes()
+        onOutChanged: updateSimpleKeyframes()
+        onAnimateInChanged: updateSimpleKeyframes()
+        onAnimateOutChanged: updateSimpleKeyframes()
+        onPropertyChanged: setControls()
+    }
+
+    Connections {
+        target: producer
+        onPositionChanged: setControls()
     }
 }
