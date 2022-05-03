@@ -81,8 +81,8 @@ void ProducerPreviewWidget::start(Mlt::Producer *producer)
         m_scrubber->setFramerate(MLT.profile().fps());
         m_scrubber->setScale(m_producer->get_length());
         // Display preview at half frame rate.
-        int miliseconds = 2 * 1000.0 / MLT.profile().fps();
-        m_timerId = startTimer(miliseconds);
+        int milliseconds = 2 * 1000.0 / MLT.profile().fps();
+        m_timerId = startTimer(milliseconds);
         // Set up the producer frame generator
         m_seekTo = 0;
         m_generateFrames = true;

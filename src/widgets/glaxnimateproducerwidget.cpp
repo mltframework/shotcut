@@ -137,7 +137,7 @@ static void modifyJsonValue(QJsonValue &destValue, const QString &path, const QJ
         if (indexOfSquareBracketOpen >= 0)
             useDot = false;
         else
-            useDot = true; // acutally, id doesn't matter, both dot and square bracket don't exist
+            useDot = true; // actually, id doesn't matter, both dot and square bracket don't exist
     }
 
     QString usedPropertyName = useDot ? dotPropertyName : squareBracketPropertyName;
