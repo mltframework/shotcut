@@ -23,7 +23,6 @@
 namespace Ui {
 class TranscodeDialog;
 }
-class QCheckBox;
 
 class TranscodeDialog : public QDialog
 {
