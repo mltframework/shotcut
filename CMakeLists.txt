@@ -59,6 +59,6 @@ add_custom_target(codespell COMMAND
 )
 
 add_custom_target(astyle COMMAND
-  astyle --project=.astylerc --recursive "${CMAKE_SOURCE_DIR}/*.cpp,*.h"
+  astyle --project=.astylerc --ignore-exclude-errors --recursive "${CMAKE_SOURCE_DIR}/src/*.cpp,*.h"
 )
 

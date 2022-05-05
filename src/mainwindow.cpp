@@ -5280,7 +5280,7 @@ void MainWindow::on_actionAudioVideoDevice_triggered()
     if (dialog.exec() == QDialog::Accepted) {
         Mlt::Profile profile;
         profile.set_explicit(1);
-        delete dynamic_cast<AbstractProducerWidget*>(widget)->newProducer(profile);
+        delete dynamic_cast<AbstractProducerWidget *>(widget)->newProducer(profile);
     }
 }
 
