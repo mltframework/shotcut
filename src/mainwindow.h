@@ -393,6 +393,7 @@ private slots:
     void sourceUpdated();
     void resetSourceUpdated();
     void on_actionExportChapters_triggered();
+    void on_actionAudioVideoDevice_triggered();
 };
 
 #define MAIN MainWindow::singleton()

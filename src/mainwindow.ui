@@ -254,6 +254,7 @@
     <addaction name="menuDrawingMethod"/>
     <addaction name="menuJobPriority"/>
     <addaction name="menuData_Directory"/>
+    <addaction name="actionAudioVideoDevice"/>
     <addaction name="actionClearRecentOnExit"/>
    </widget>
    <addaction name="menuFile"/>
@@ -1311,6 +1312,11 @@
    </property>
    <property name="toolTip">
     <string>Export Chapters</string>
+   </property>
+  </action>
+  <action name="actionAudioVideoDevice">
+   <property name="text">
+    <string>Audio/Video Device...</string>
    </property>
   </action>
  </widget>

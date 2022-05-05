@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2020 Meltytech, LLC
+ * Copyright (c) 2012-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,6 +36,7 @@ Video4LinuxWidget::Video4LinuxWidget(QWidget *parent) :
     ui->applyButton->hide();
     ui->preset->saveDefaultPreset(getPreset());
     ui->preset->loadPresets();
+    ui->v4lLineEdit->setText(Settings.videoInput());
 }
 
 Video4LinuxWidget::~Video4LinuxWidget()
@@ -117,6 +118,7 @@ Mlt::Producer *Video4LinuxWidget::newProducer(Mlt::Profile &profile)
     p->set("force_seekable", 0);
     p->set(kBackgroundCaptureProperty, 1);
     p->set(kShotcutCaptionProperty, "Video4Linux");
+    Settings.setVideoInput(ui->v4lLineEdit->text());
     return p;
 }
 

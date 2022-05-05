@@ -5254,3 +5254,33 @@ void MainWindow::on_actionExportChapters_triggered()
         }
     }
 }
+
+void MainWindow::on_actionAudioVideoDevice_triggered()
+{
+    QDialog dialog(this);
+    dialog.setWindowModality(QmlApplication::dialogModality());
+    dialog.resize(500, 400);
+    dialog.setSizeGripEnabled(true);
+    auto layout = new QVBoxLayout(&dialog);
+    QWidget *widget = nullptr;
+
+#if defined(Q_OS_LINUX)
+    widget = new Video4LinuxWidget;
+#elif defined(Q_OS_MAC)
+    widget = new AvfoundationProducerWidget;
+#elif defined(Q_OS_WIN)
+    widget = new DirectShowVideoWidget;
+#endif
+
+    layout->addWidget(widget);
+    auto buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+    connect(buttonBox, &QDialogButtonBox::accepted, &dialog, &QDialog::accept);
+    connect(buttonBox, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
+    layout->addWidget(buttonBox);
+    if (dialog.exec() == QDialog::Accepted) {
+        Mlt::Profile profile;
+        profile.set_explicit(1);
+        delete dynamic_cast<AbstractProducerWidget*>(widget)->newProducer(profile);
+    }
+}
+

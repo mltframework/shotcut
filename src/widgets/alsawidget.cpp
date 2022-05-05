@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2018 Meltytech, LLC
+ * Copyright (c) 2012-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@
 #include "mltcontroller.h"
 #include "util.h"
 #include "shotcut_mlt_properties.h"
+#include "settings.h"
 
 AlsaWidget::AlsaWidget(QWidget *parent) :
     QWidget(parent),
@@ -30,6 +31,7 @@ AlsaWidget::AlsaWidget(QWidget *parent) :
     ui->applyButton->hide();
     ui->preset->saveDefaultPreset(getPreset());
     ui->preset->loadPresets();
+    ui->lineEdit->setText(Settings.audioInput());
 }
 
 AlsaWidget::~AlsaWidget()
@@ -49,6 +51,7 @@ Mlt::Producer *AlsaWidget::newProducer(Mlt::Profile &profile)
     Mlt::Producer *p = new Mlt::Producer(profile, s.toUtf8().constData());
     p->set(kBackgroundCaptureProperty, 1);
     p->set(kShotcutCaptionProperty, "ALSA");
+    Settings.setAudioInput(ui->lineEdit->text());
     return p;
 }
 
