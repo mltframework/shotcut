@@ -5259,17 +5259,19 @@ void MainWindow::on_actionAudioVideoDevice_triggered()
 {
     QDialog dialog(this);
     dialog.setWindowModality(QmlApplication::dialogModality());
-    dialog.resize(500, 400);
-    dialog.setSizeGripEnabled(true);
     auto layout = new QVBoxLayout(&dialog);
     QWidget *widget = nullptr;
 
 #if defined(Q_OS_LINUX)
     widget = new Video4LinuxWidget;
+    dialog.resize(500, 400);
+    dialog.setSizeGripEnabled(true);
 #elif defined(Q_OS_MAC)
     widget = new AvfoundationProducerWidget;
+    dialog.resize(1, 1);
 #elif defined(Q_OS_WIN)
     widget = new DirectShowVideoWidget;
+    dialog.resize(1, 1);
 #endif
 
     layout->addWidget(widget);
@@ -5283,4 +5285,3 @@ void MainWindow::on_actionAudioVideoDevice_triggered()
         delete dynamic_cast<AbstractProducerWidget *>(widget)->newProducer(profile);
     }
 }
-
