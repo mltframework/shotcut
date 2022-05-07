@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015-2019 Meltytech, LLC
+ * Copyright (c) 2015-2022 Meltytech, LLC
  * Author: Brian Matherly <code@brianmatherly.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -114,13 +114,13 @@ Mlt::Frame SharedFrame::clone(bool audio, bool image, bool alpha) const
         cloneFrame.set("image", copy, size, mlt_pool_release);
     } else {
         cloneFrame.set("image", 0);
-        cloneFrame.set("image_format", mlt_image_none);
+        cloneFrame.set("format", mlt_image_none);
         cloneFrame.set("width", 0);
         cloneFrame.set("height", 0);
     }
 
     data = d->f.get_data("alpha", size );
-    if (alpha && data) {
+    if (alpha && data && d->f.get_int("format") != mlt_image_rgba) {
         if (!size) {
             size = get_image_width() * get_image_height();
         }
