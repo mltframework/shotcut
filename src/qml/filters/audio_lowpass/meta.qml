@@ -10,7 +10,7 @@ Metadata {
     keyframes {
         allowAnimateIn: true
         allowAnimateOut: true
-        simpleProperties: ['wetness']
+        simpleProperties: ['0', '1', 'wetness']
         parameters: [
             Parameter {
                 name: qsTr('Cutoff')
