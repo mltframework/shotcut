@@ -469,12 +469,9 @@ void MoveClipCommand::redo()
                 if (track) {
                     Mlt::Playlist playlist(*track);
                     auto targetIndex = playlist.get_clip_index_at(newStart);
-                    auto length = playlist.clip_length(clipIndex);
-                    auto targetIndexEnd = playlist.get_clip_index_at(newStart + length - 1);
                     if (targetIndex >= clipIndex || // pushing clips on same track
                             // pulling clips on same track
-                            ((playlist.is_blank_at(newStart) || targetIndex == clipIndex) &&
-                             (playlist.is_blank_at(newStart + length - 1) || targetIndexEnd == clipIndex))) {
+                            (playlist.is_blank_at(newStart) && targetIndex == clipIndex - 1)) {
                         m_start = newStart;
                         m_trackIndex = trackIndex;
                         m_clipIndex = clipIndex;
