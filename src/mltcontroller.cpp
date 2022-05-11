@@ -806,9 +806,9 @@ QImage Controller::image(Mlt::Frame *frame, int width, int height)
     QImage result;
     if (frame && frame->is_valid()) {
         if (width > 0 && height > 0) {
-            frame->set("rescale.interp", "bilinear");
-            frame->set("deinterlace_method", "onefield");
-            frame->set("top_field_first", -1);
+            frame->set("consumer.rescale", "bilinear");
+            frame->set("consumer.deinterlacer", "onefield");
+            frame->set("consumer.top_field_first", -1);
         }
         mlt_image_format format = mlt_image_rgba;
         const uchar *image = frame->get_image(format, width, height);
