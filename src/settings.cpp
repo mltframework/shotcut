@@ -670,6 +670,15 @@ void ShotcutSettings::setAudioReferenceTrack(int track)
     settings.setValue("timeline/audioReferenceTrack", track);
 }
 
+bool ShotcutSettings::audioReferenceCalcSpeed() const
+{
+    return settings.value("timeline/audioReferenceCalcSpeed", false).toBool();
+}
+void ShotcutSettings::setAudioReferenceCalcSpeed(bool enable)
+{
+    settings.setValue("timeline/audioReferenceCalcSpeed", enable);
+}
+
 QString ShotcutSettings::filterFavorite(const QString &filterName)
 {
     return settings.value("filter/favorite/" + filterName, "").toString();

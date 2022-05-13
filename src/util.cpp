@@ -37,9 +37,11 @@
 #include <MltChain.h>
 #include <MltProducer.h>
 #include <Logger.h>
+#include "mainwindow.h"
 #include "shotcut_mlt_properties.h"
 #include "qmltypes/qmlapplication.h"
 #include "proxymanager.h"
+#include <math.h>
 #include <memory>
 
 #ifdef Q_OS_WIN
@@ -618,4 +620,77 @@ void Util::cameraFrameRateSize(const QByteArray &deviceName, qreal &frameRate, Q
             size = viewfinderSettings.resolution();
         }
     }
+}
+
+bool Util::ProducerIsTimewarp(Mlt::Producer *producer)
+{
+    return QString::fromUtf8(producer->get("mlt_service")) == "timewarp";
+}
+
+QString Util::GetFilenameFromProducer(Mlt::Producer *producer, bool useOriginal)
+{
+    QString resource;
+    if (useOriginal && producer->get(kOriginalResourceProperty)) {
+        resource = QString::fromUtf8(producer->get(kOriginalResourceProperty));
+    } else if (ProducerIsTimewarp(producer)) {
+        resource = QString::fromUtf8(producer->get("resource"));
+        auto i = resource.indexOf(':');
+        if (producer->get_int(kIsProxyProperty) && i > 0) {
+            resource = resource.mid(i + 1);
+        } else {
+            resource = QString::fromUtf8(producer->get("warp_resource"));
+        }
+    } else {
+        resource = QString::fromUtf8(producer->get("resource"));
+    }
+    if (QFileInfo(resource).isRelative()) {
+        QString basePath = QFileInfo(MAIN.fileName()).canonicalPath();
+        QFileInfo fi(basePath, resource);
+        resource = fi.filePath();
+    }
+    return resource;
+}
+
+double Util::GetSpeedFromProducer(Mlt::Producer *producer)
+{
+    double speed = 1.0;
+    if (ProducerIsTimewarp(producer)) {
+        speed = fabs(producer->get_double("warp_speed"));
+    }
+    return speed;
+}
+
+QString Util::updateCaption(Mlt::Producer *producer)
+{
+    double warpSpeed = GetSpeedFromProducer(producer);
+    QString resource = GetFilenameFromProducer(producer);
+    QString name = Util::baseName(resource, true);
+    QString caption = producer->get(kShotcutCaptionProperty);
+    if (caption.isEmpty() || caption.startsWith(name)) {
+        // compute the caption
+        if (warpSpeed != 1.0)
+            caption = QString("%1 (%2x)").arg(name).arg(warpSpeed);
+        else
+            caption = name;
+        producer->set(kShotcutCaptionProperty, caption.toUtf8().constData());
+    }
+    return caption;
+}
+
+void Util::passProducerProperties(Mlt::Producer *src, Mlt::Producer *dst)
+{
+    dst->pass_list(*src, "audio_index, video_index, force_aspect_ratio,"
+                   "video_delay, force_progressive, force_tff, force_full_range, color_range, warp_pitch, rotate,"
+                   kAspectRatioNumerator ","
+                   kAspectRatioDenominator ","
+                   kShotcutHashProperty ","
+                   kPlaylistIndexProperty ","
+                   kShotcutSkipConvertProperty ","
+                   kCommentProperty ","
+                   kDefaultAudioIndexProperty ","
+                   kShotcutCaptionProperty ","
+                   kOriginalResourceProperty ","
+                   kDisableProxyProperty ","
+                   kIsProxyProperty ","
+                   kShotcutProducerProperty);
 }

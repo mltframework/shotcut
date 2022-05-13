@@ -25,6 +25,7 @@
 #include "dialogs/longuitask.h"
 #include "controllers/filtercontroller.h"
 #include "qmltypes/qmlmetadata.h"
+#include "util.h"
 #include <Logger.h>
 
 
@@ -1510,17 +1511,18 @@ AlignClipsCommand::AlignClipsCommand(MultitrackModel &model, QUndoCommand *paren
     setText(QObject::tr("Align clips to reference track"));
 }
 
-void AlignClipsCommand::addAlignment(QUuid uuid, int offset, double speedCompensation)
+void AlignClipsCommand::addAlignment(QUuid uuid, int offset, double speed)
 {
     Alignment alignment;
     alignment.uuid = uuid;
     alignment.offset = offset;
-    alignment.speedCompensation = speedCompensation;
+    alignment.speed = speed;
     m_alignments.append(alignment);
 }
 
 void AlignClipsCommand::redo()
 {
+    LOG_DEBUG() << "Alignment Clips:" << m_alignments.size();
     struct ClipItem {
         Mlt::Producer *clip;
         int track;
@@ -1536,7 +1538,26 @@ void AlignClipsCommand::redo()
             continue;
         }
         ClipItem item;
-        item.clip = new Mlt::Producer(info->cut);
+        if (alignment.speed != 1.0) {
+            double warpspeed = Util::GetSpeedFromProducer(info->producer) * alignment.speed;
+            QString filename = Util::GetFilenameFromProducer(info->producer, false);
+            QString s = QString("%1:%2:%3").arg("timewarp").arg(warpspeed).arg(filename);
+            item.clip = new Mlt::Producer(MLT.profile(), s.toUtf8().constData());
+            if (!item.clip || !item.clip->is_valid()) {
+                delete item.clip;
+                continue;
+            }
+            Util::passProducerProperties(info->producer, item.clip);
+            Util::updateCaption(item.clip);
+            int length = qRound(info->producer->get_length() / alignment.speed);
+            int in = qRound(info->cut->get_in() / alignment.speed);
+            int out = qRound(info->cut->get_out() / alignment.speed);
+            item.clip->set("length", item.clip->frames_to_time(length, mlt_time_clock));
+            item.clip->set_in_and_out(in, out);
+            MLT.copyFilters(*info->producer, *item.clip);
+        } else {
+            item.clip = new Mlt::Producer(info->cut);
+        }
         item.track = trackIndex;
         item.start = alignment.offset;
         clipMemory.append(item);

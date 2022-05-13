@@ -31,6 +31,7 @@
 #include <Logger.h>
 
 #include <QApplication>
+#include <QCheckBox>
 #include <QComboBox>
 #include <QDialogButtonBox>
 #include <QGridLayout>
@@ -109,12 +110,13 @@ class ClipAudioReader : public QObject
 {
     Q_OBJECT
 public:
-    ClipAudioReader(QString producerXml, AlignmentArray &referenceArray, int index, int in, int out)
+    ClipAudioReader(QString producerXml, AlignmentArray &referenceArray, int index, int in, int out,
+                    bool calculateSpeed)
         : QObject()
         , m_referenceArray(referenceArray)
         , m_reader(producerXml, &m_clipArray, in, out)
         , m_index(index)
-        , m_calculateDrift(false)
+        , m_calculateSpeed(calculateSpeed)
     {
         connect(&m_reader, SIGNAL(progressUpdate(int)), this, SLOT(onReaderProgressUpdate(int)));
     }
@@ -138,16 +140,16 @@ public:
     {
         onReaderProgressUpdate(0);
         m_reader.process();
-        double drift = 1.0;
+        double speed = 1.0;
         int offset = 0;
         double quality;
-        if (m_calculateDrift) {
-            quality = m_referenceArray.calculateOffsetAndDrift(m_clipArray, 4, 0.1, &drift, &offset);
+        if (m_calculateSpeed) {
+            quality = m_referenceArray.calculateOffsetAndSpeed(m_clipArray, &speed, &offset);
         } else {
             quality = m_referenceArray.calculateOffset(m_clipArray, &offset);
         }
         onReaderProgressUpdate(100);
-        emit finished(m_index, offset, drift, quality);
+        emit finished(m_index, offset, speed, quality);
     }
 
 public slots:
@@ -159,7 +161,7 @@ public slots:
 
 signals:
     void progressUpdate(int index, int percent);
-    void finished(int index, int offset, double drift, double quality);
+    void finished(int index, int offset, double speed, double quality);
 
 private:
     AlignmentArray m_clipArray;
@@ -167,7 +169,7 @@ private:
     AudioReader m_reader;
     int m_index;
     QFuture<void> m_future;
-    bool m_calculateDrift;
+    bool m_calculateSpeed;
 };
 
 class AlignTableDelegate : public QStyledItemDelegate
@@ -202,7 +204,7 @@ public:
             break;
         }
         case AlignClipsModel::COLUMN_OFFSET:
-//            case AlignClipsModel::COLUMN_DRIFT:
+        case AlignClipsModel::COLUMN_SPEED:
             QStyledItemDelegate::paint(painter, option, index);
             break;
         default:
@@ -222,7 +224,7 @@ AlignAudioDialog::AlignAudioDialog(QString title, MultitrackModel *model,
     , m_uuids(uuids)
     , m_uiTask(nullptr)
 {
-    int col = 0;
+    int row = 0;
     setWindowTitle(title);
     setWindowModality(QmlApplication::dialogModality());
 
@@ -230,7 +232,7 @@ AlignAudioDialog::AlignAudioDialog(QString title, MultitrackModel *model,
     glayout->setHorizontalSpacing(4);
     glayout->setVerticalSpacing(2);
     // Track Combo
-    glayout->addWidget(new QLabel(tr("Reference audio track")), col, 0, Qt::AlignRight);
+    glayout->addWidget(new QLabel(tr("Reference audio track")), row, 0, Qt::AlignRight);
     m_trackCombo = new QComboBox();
     int trackCount = m_model->trackList().size();
     for (int i = 0; i < trackCount; i++) {
@@ -243,7 +245,7 @@ AlignAudioDialog::AlignAudioDialog(QString title, MultitrackModel *model,
     if (!connect(m_trackCombo, QOverload<int>::of(&QComboBox::activated), this,
                  &AlignAudioDialog::rebuildClipList))
         connect(m_trackCombo, SIGNAL(activated(const QString &)), SLOT(rebuildClipList()));
-    glayout->addWidget(m_trackCombo, col++, 1, Qt::AlignLeft);
+    glayout->addWidget(m_trackCombo, row++, 1, Qt::AlignLeft);
     // List
     m_table = new QTreeView();
     m_table->setSelectionMode(QAbstractItemView::NoSelection);
@@ -264,18 +266,24 @@ AlignAudioDialog::AlignAudioDialog(QString title, MultitrackModel *model,
     m_table->header()->setSectionResizeMode(AlignClipsModel::COLUMN_OFFSET, QHeaderView::Fixed);
     m_table->setColumnWidth(AlignClipsModel::COLUMN_OFFSET,
                             fontMetrics().horizontalAdvance("-00:00:00:00") * devicePixelRatioF() + 8);
-//    m_table->header()->setSectionResizeMode(AlignClipsModel::COLUMN_DRIFT, QHeaderView::ResizeToContents);
-    glayout->addWidget(m_table, col++, 0, 1, 2);
+    m_table->header()->setSectionResizeMode(AlignClipsModel::COLUMN_SPEED,
+                                            QHeaderView::ResizeToContents);
+    glayout->addWidget(m_table, row++, 0, 1, 2);
+    // Speed check box
+    m_speedCheckBox = new QCheckBox(tr("Calculate speed adjustment"), this);
+    m_speedCheckBox->setChecked(Settings.audioReferenceCalcSpeed());
+    connect(m_speedCheckBox, SIGNAL(stateChanged(int)), SLOT(rebuildClipList()));
+    glayout->addWidget(m_speedCheckBox, row++, 0, 1, 2);
     // Button Box + cancel
     m_buttonBox = new QDialogButtonBox(QDialogButtonBox::Cancel);
     connect(m_buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
-    glayout->addWidget(m_buttonBox, col++, 0, 1, 2);
+    glayout->addWidget(m_buttonBox, row++, 0, 1, 2);
     // Process button
     QPushButton *processButton = m_buttonBox->addButton(tr("Process"), QDialogButtonBox::ActionRole);
     connect(processButton, SIGNAL(pressed()), this, SLOT(process()));
     // Apply button
-    QPushButton *applyButton = m_buttonBox->addButton(tr("Apply"), QDialogButtonBox::ApplyRole);
-    connect(applyButton, SIGNAL(pressed()), this, SLOT(apply()));
+    m_applyButton = m_buttonBox->addButton(tr("Apply"), QDialogButtonBox::ApplyRole);
+    connect(m_applyButton, SIGNAL(pressed()), this, SLOT(apply()));
     // Process and apply button
     m_processAndApplyButton = m_buttonBox->addButton(tr("Process + Apply"),
                                                      QDialogButtonBox::AcceptRole);
@@ -301,6 +309,8 @@ void AlignAudioDialog::rebuildClipList()
     m_alignClipsModel.clear();
     int referenceIndex = m_trackCombo->currentData().toInt();
     Settings.setAudioReferenceTrack(referenceIndex);
+    Settings.setAudioReferenceCalcSpeed(m_speedCheckBox->isChecked());
+    m_applyButton->setEnabled(false);
 
     for (const auto &uuid : m_uuids) {
         int trackIndex, clipIndex;
@@ -331,6 +341,7 @@ void AlignAudioDialog::process()
     auto mlt_index = m_model->trackList().at(referenceTrackIndex).mlt_index;
     QScopedPointer<Mlt::Producer> track(m_model->tractor()->track(mlt_index));
     int maxLength = track->get_playtime();
+    bool validClip = false;
     QString xml = MLT.XML(track.data());
     AlignmentArray trackArray;
     AudioReader trackReader(MLT.XML(track.data()), &trackArray);
@@ -348,13 +359,20 @@ void AlignAudioDialog::process()
         } else {
             QString xml = MLT.XML(info->cut);
             ClipAudioReader *clipReader = new ClipAudioReader(xml, trackArray, m_clipReaders.size(),
-                                                              info->frame_in, info->frame_out);
+                                                              info->frame_in, info->frame_out, m_speedCheckBox->isChecked());
             connect(clipReader, SIGNAL(progressUpdate(int, int)), this, SLOT(updateClipProgress(int, int)));
             connect(clipReader, SIGNAL(finished(int, int, double, double)), this, SLOT(clipFinished(int, int,
                                                                                                     double, double)));
             m_clipReaders.append(clipReader);
             maxLength = qMax(maxLength, info->frame_count);
+            validClip = true;
         }
+    }
+
+    if (!validClip) {
+        m_uiTask->deleteLater();
+        m_uiTask = nullptr;
+        return;
     }
 
     trackReader.init(maxLength);
@@ -378,6 +396,7 @@ void AlignAudioDialog::process()
     }
     m_uiTask->deleteLater();
     m_uiTask = nullptr;
+    m_applyButton->setEnabled(true);
 }
 
 void AlignAudioDialog::apply()
@@ -395,7 +414,7 @@ void AlignAudioDialog::apply()
         if (trackIndex != referenceTrackIndex) {
             int offset = m_alignClipsModel.getOffset(modelIndex);
             if (offset != AlignClipsModel::INVALID_OFFSET) {
-                double speedCompensation = m_alignClipsModel.getDrift(modelIndex) * 100.0;
+                double speedCompensation = m_alignClipsModel.getSpeed(modelIndex);
                 command->addAlignment(uuid, offset, speedCompensation);
                 alignmentCount++;
             }
@@ -431,15 +450,15 @@ void AlignAudioDialog::updateClipProgress(int index, int percent)
     }
 }
 
-void AlignAudioDialog::clipFinished(int index, int offset, double drift, double quality)
+void AlignAudioDialog::clipFinished(int index, int offset, double speed, double quality)
 {
     QString error;
-    LOG_INFO() << "Clip" << index << "Offset:" << offset << "Quality:" << quality;
+    LOG_INFO() << "Clip" << index << "Offset:" << offset << "Speed:" << speed << "Quality:" << quality;
     if (quality < 0.01) {
         error = tr("Alignment not found.");
         offset = AlignClipsModel::INVALID_OFFSET;
-        drift = AlignClipsModel::INVALID_OFFSET;
+        speed = AlignClipsModel::INVALID_OFFSET;
     }
-    m_alignClipsModel.updateOffsetAndDrift(index, offset, drift, error);
+    m_alignClipsModel.updateOffsetAndSpeed(index, offset, speed, error);
     m_alignClipsModel.updateProgress(index, 100);
 }

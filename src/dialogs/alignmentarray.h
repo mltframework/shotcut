@@ -36,14 +36,15 @@ public:
     void init(size_t minimum_size);
     void setValues(const std::vector<double> &values);
     double calculateOffset(AlignmentArray &from, int *offset);
-    double calculateOffsetAndDrift(AlignmentArray &from, int precision, double drift_range,
-                                   double *drift_about, int *offset);
+    double calculateOffsetAndSpeed(AlignmentArray &from, double *speed_about, int *offset);
 
 private:
     void transform();
     std::vector<double> m_values;
     fftw_plan m_forwardPlan;
     std::complex<double> *m_forwardBuf;
+    fftw_plan m_backwardPlan;
+    std::complex<double> *m_backwardBuf;
     double m_autocorrelationMax;
     size_t m_minimumSize;
     size_t m_actualComplexSize;

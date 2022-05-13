@@ -66,6 +66,11 @@ public:
     static void normalizeFrameRate(double fps, int &numerator, int &denominator);
     static QString textColor(const QColor &color);
     static void cameraFrameRateSize(const QByteArray &deviceName, qreal &frameRate, QSize &size);
+    static bool ProducerIsTimewarp(Mlt::Producer *producer);
+    static QString GetFilenameFromProducer(Mlt::Producer *producer, bool useOriginal = true);
+    static double GetSpeedFromProducer(Mlt::Producer *producer);
+    static QString updateCaption(Mlt::Producer *producer);
+    static void passProducerProperties(Mlt::Producer *src, Mlt::Producer *dst);
 };
 
 #endif // UTIL_H

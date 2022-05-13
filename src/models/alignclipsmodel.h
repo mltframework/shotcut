@@ -32,7 +32,7 @@ public:
         COLUMN_ERROR = 0,
         COLUMN_NAME,
         COLUMN_OFFSET,
-//        COLUMN_DRIFT, // Future use
+        COLUMN_SPEED,
         COLUMN_COUNT,
     };
     static const int INVALID_OFFSET = std::numeric_limits<int>::max();
@@ -40,12 +40,12 @@ public:
     explicit AlignClipsModel(QObject *parent = 0);
     virtual ~AlignClipsModel();
     void clear();
-    void addClip(const QString &name, int offset, int drift, const QString &error);
+    void addClip(const QString &name, int offset, int speed, const QString &error);
     void updateProgress(int row, int percent);
     int getProgress(int row) const;
-    void updateOffsetAndDrift(int row, int offset, double drift, const QString &error);
+    void updateOffsetAndSpeed(int row, int offset, double speed, const QString &error);
     int getOffset(int row);
-    double getDrift(int row);
+    double getSpeed(int row);
 
 protected:
     // Implement QAbstractItemModel
@@ -60,7 +60,7 @@ private:
     typedef struct {
         QString name;
         int offset;
-        double drift;
+        double speed;
         QString error;
         int progress;
     } ClipAlignment;

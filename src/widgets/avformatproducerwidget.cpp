@@ -38,61 +38,6 @@
 
 static const auto kHandleSeconds = 15.0;
 
-static bool ProducerIsTimewarp( Mlt::Producer *producer )
-{
-    return QString::fromUtf8(producer->get("mlt_service")) == "timewarp";
-}
-
-static QString GetFilenameFromProducer(Mlt::Producer *producer, bool useOriginal = true)
-{
-    QString resource;
-    if (useOriginal && producer->get(kOriginalResourceProperty)) {
-        resource = QString::fromUtf8(producer->get(kOriginalResourceProperty));
-    } else if (ProducerIsTimewarp(producer)) {
-        resource = QString::fromUtf8(producer->get("resource"));
-        auto i = resource.indexOf(':');
-        if (producer->get_int(kIsProxyProperty) && i > 0) {
-            resource = resource.mid(i + 1);
-        } else {
-            resource = QString::fromUtf8(producer->get("warp_resource"));
-        }
-    } else {
-        resource = QString::fromUtf8(producer->get("resource"));
-    }
-    if (QFileInfo(resource).isRelative()) {
-        QString basePath = QFileInfo(MAIN.fileName()).canonicalPath();
-        QFileInfo fi(basePath, resource);
-        resource = fi.filePath();
-    }
-    return resource;
-}
-
-static double GetSpeedFromProducer( Mlt::Producer *producer )
-{
-    double speed = 1.0;
-    if (ProducerIsTimewarp(producer)) {
-        speed = fabs(producer->get_double("warp_speed"));
-    }
-    return speed;
-}
-
-static QString updateCaption(Mlt::Producer *producer)
-{
-    double warpSpeed = GetSpeedFromProducer(producer);
-    QString resource = GetFilenameFromProducer(producer);
-    QString name = Util::baseName(resource, true);
-    QString caption = producer->get(kShotcutCaptionProperty);
-    if (caption.isEmpty() || caption.startsWith(name)) {
-        // compute the caption
-        if (warpSpeed != 1.0)
-            caption = QString("%1 (%2x)").arg(name).arg(warpSpeed);
-        else
-            caption = name;
-        producer->set(kShotcutCaptionProperty, caption.toUtf8().constData());
-    }
-    return caption;
-}
-
 DecodeTask::DecodeTask(AvformatProducerWidget *widget)
     : QObject(0)
     , QRunnable()
@@ -137,7 +82,7 @@ Mlt::Producer *AvformatProducerWidget::newProducer(Mlt::Profile &profile)
 {
     Mlt::Producer *p = 0;
     if ( ui->speedSpinBox->value() == 1.0 ) {
-        p = new Mlt::Chain(profile, GetFilenameFromProducer(producer(), false).toUtf8().constData());
+        p = new Mlt::Chain(profile, Util::GetFilenameFromProducer(producer(), false).toUtf8().constData());
     } else {
         // If the system language's numeric format and region's numeric format differ, then MLT
         // uses the language's numeric format while Qt is using the region's. Thus, to
@@ -147,7 +92,7 @@ Mlt::Producer *AvformatProducerWidget::newProducer(Mlt::Profile &profile)
         tempProps.set("speed", ui->speedSpinBox->value());
         QString warpspeed = QString::fromLatin1(tempProps.get("speed"));
 
-        QString filename = GetFilenameFromProducer(producer(), false);
+        QString filename = Util::GetFilenameFromProducer(producer(), false);
         QString s = QString("%1:%2:%3").arg("timewarp").arg(warpspeed).arg(filename);
         p = new Mlt::Producer(profile, s.toUtf8().constData());
         p->set(kShotcutProducerProperty, "avformat");
@@ -250,7 +195,7 @@ void AvformatProducerWidget::reopen(Mlt::Producer *p)
     double speed = m_producer->get_speed();
 
     if ( m_recalcDuration ) {
-        double oldSpeed = GetSpeedFromProducer(producer());
+        double oldSpeed = Util::GetSpeedFromProducer(producer());
         double newSpeed = ui->speedSpinBox->value();
         double speedRatio = oldSpeed / newSpeed;
         int in = m_producer->get_in();
@@ -300,26 +245,14 @@ void AvformatProducerWidget::reopen(Mlt::Producer *p)
 void AvformatProducerWidget::recreateProducer()
 {
     Mlt::Producer *p = newProducer(MLT.profile());
-    p->pass_list(*m_producer, "audio_index, video_index, force_aspect_ratio,"
-                 "video_delay, force_progressive, force_tff, force_full_range, color_range, warp_pitch, rotate,"
-                 kAspectRatioNumerator ","
-                 kAspectRatioDenominator ","
-                 kShotcutHashProperty ","
-                 kPlaylistIndexProperty ","
-                 kShotcutSkipConvertProperty ","
-                 kCommentProperty ","
-                 kDefaultAudioIndexProperty ","
-                 kShotcutCaptionProperty ","
-                 kOriginalResourceProperty ","
-                 kDisableProxyProperty ","
-                 kIsProxyProperty);
-    updateCaption(p);
+    Util::passProducerProperties(m_producer.data(), p);
+    Util::updateCaption(p);
     Mlt::Controller::copyFilters(*m_producer, *p);
     if (m_producer->get(kMultitrackItemProperty)) {
         int length = ui->durationSpinBox->value();
         int in = m_producer->get_in();
         int out = m_producer->get_out();
-        double oldSpeed = GetSpeedFromProducer(producer());
+        double oldSpeed = Util::GetSpeedFromProducer(producer());
         double newSpeed = ui->speedSpinBox->value();
         double speedRatio = oldSpeed / newSpeed;
         length = qRound(length * speedRatio);
@@ -343,9 +276,9 @@ void AvformatProducerWidget::onFrameDecoded()
     if (m_defaultDuration == -1)
         m_defaultDuration = m_producer->get_length();
 
-    double warpSpeed = GetSpeedFromProducer(producer());
-    QString resource = GetFilenameFromProducer(producer());
-    QString caption = updateCaption(m_producer.data());
+    double warpSpeed = Util::GetSpeedFromProducer(producer());
+    QString resource = Util::GetFilenameFromProducer(producer());
+    QString caption = Util::updateCaption(m_producer.data());
     ui->filenameLabel->setText(caption);
     ui->filenameLabel->setCursorPosition(caption.length());
     ui->filenameLabel->setToolTip(resource);
@@ -742,7 +675,7 @@ void AvformatProducerWidget::on_speedSpinBox_editingFinished()
 {
     if (!m_producer)
         return;
-    if (ui->speedSpinBox->value() == GetSpeedFromProducer(producer()))
+    if (ui->speedSpinBox->value() == Util::GetSpeedFromProducer(producer()))
         return;
     if (ui->speedSpinBox->value() == 1.0) {
         ui->pitchCheckBox->setEnabled(false);
@@ -776,7 +709,7 @@ void AvformatProducerWidget::on_syncSlider_valueChanged(int value)
 
 void AvformatProducerWidget::on_actionOpenFolder_triggered()
 {
-    Util::showInFolder(GetFilenameFromProducer(producer()));
+    Util::showInFolder(Util::GetFilenameFromProducer(producer()));
 }
 
 void AvformatProducerWidget::on_menuButton_clicked()
@@ -791,7 +724,7 @@ void AvformatProducerWidget::on_menuButton_clicked()
     menu.addAction(ui->actionFFmpegConvert);
     menu.addAction(ui->actionExtractSubclip);
     menu.addAction(ui->actionSetFileDate);
-    if (GetFilenameFromProducer(producer()).toLower().endsWith(".mp4")) {
+    if (Util::GetFilenameFromProducer(producer()).toLower().endsWith(".mp4")) {
         menu.addAction(ui->actionSetEquirectangular);
     }
     menu.addAction(ui->actionFFmpegVideoQuality);
@@ -800,7 +733,7 @@ void AvformatProducerWidget::on_menuButton_clicked()
 
 void AvformatProducerWidget::on_actionCopyFullFilePath_triggered()
 {
-    qApp->clipboard()->setText(GetFilenameFromProducer(producer()));
+    qApp->clipboard()->setText(Util::GetFilenameFromProducer(producer()));
 }
 
 void AvformatProducerWidget::on_notesTextEdit_textChanged()
@@ -819,14 +752,14 @@ void AvformatProducerWidget::on_actionFFmpegInfo_triggered()
     args << "-print_format" << "ini";
     args << "-pretty";
     args << "-show_format" << "-show_programs" << "-show_streams" << "-find_stream_info";
-    args << GetFilenameFromProducer(producer());
+    args << Util::GetFilenameFromProducer(producer());
     AbstractJob *job = new FfprobeJob(args.last(), args);
     job->start();
 }
 
 void AvformatProducerWidget::on_actionFFmpegIntegrityCheck_triggered()
 {
-    QString resource = GetFilenameFromProducer(producer());
+    QString resource = Util::GetFilenameFromProducer(producer());
     QStringList args;
     args << "-xerror";
     args << "-err_detect" << "+explode";
@@ -874,7 +807,7 @@ void AvformatProducerWidget::convert(TranscodeDialog &dialog)
         Settings.setShowConvertClipDialog(false);
     }
     if (result == QDialog::Accepted) {
-        QString resource = GetFilenameFromProducer(producer());
+        QString resource = Util::GetFilenameFromProducer(producer());
         QString path = Settings.savePath();
         QStringList args;
         QString nameFilter;
@@ -1103,7 +1036,7 @@ void AvformatProducerWidget::on_reverseButton_clicked()
         Settings.setShowConvertClipDialog(false);
     }
     if (result == QDialog::Accepted) {
-        QString resource = GetFilenameFromProducer(producer());
+        QString resource = Util::GetFilenameFromProducer(producer());
         QString path = Settings.savePath();
         QStringList meltArgs;
         QStringList ffmpegArgs;
@@ -1282,7 +1215,7 @@ void AvformatProducerWidget::on_reverseButton_clicked()
 
 void AvformatProducerWidget::on_actionExtractSubclip_triggered()
 {
-    QString resource = GetFilenameFromProducer(producer());
+    QString resource = Util::GetFilenameFromProducer(producer());
     QString path = Settings.savePath();
     QFileInfo fi(resource);
 
@@ -1341,7 +1274,7 @@ void AvformatProducerWidget::on_actionExtractSubclip_triggered()
 
 void AvformatProducerWidget::on_actionSetFileDate_triggered()
 {
-    QString resource = GetFilenameFromProducer(producer());
+    QString resource = Util::GetFilenameFromProducer(producer());
     FileDateDialog dialog(resource, producer(), this);
     dialog.setModal(QmlApplication::dialogModality());
     dialog.exec();
@@ -1360,8 +1293,8 @@ void AvformatProducerWidget::on_filenameLabel_editingFinished()
     if (m_producer) {
         const auto caption = ui->filenameLabel->text();
         if (caption.isEmpty()) {
-            double warpSpeed = GetSpeedFromProducer(producer());
-            QString resource = GetFilenameFromProducer(producer());
+            double warpSpeed = Util::GetSpeedFromProducer(producer());
+            QString resource = Util::GetFilenameFromProducer(producer());
             QString caption = Util::baseName(resource, true);
             if (warpSpeed != 1.0)
                 caption = QString("%1 (%2x)").arg(caption).arg(warpSpeed);
@@ -1485,7 +1418,7 @@ void AvformatProducerWidget::on_actionSetEquirectangular_triggered()
 {
     // Get the location and file name for the report.
     QString caption = tr("Set Equirectangular Projection");
-    QFileInfo info(GetFilenameFromProducer(producer()));
+    QFileInfo info(Util::GetFilenameFromProducer(producer()));
     QString directory = QString("%1/%2 - ERP.%3")
                         .arg(info.path())
                         .arg(info.completeBaseName())
@@ -1504,13 +1437,13 @@ void AvformatProducerWidget::on_actionSetEquirectangular_triggered()
 void AvformatProducerWidget::on_actionFFmpegVideoQuality_triggered()
 {
     QString caption = tr("Choose the Other Video");
-    QFileInfo info(GetFilenameFromProducer(producer()));
+    QFileInfo info(Util::GetFilenameFromProducer(producer()));
     QString directory = QString("%1/%2 - ERP.%3").arg(info.path(), info.completeBaseName(),
                                                       info.suffix());
     QString filePath = QFileDialog::getOpenFileName(&MAIN, caption, directory, QString(),
                                                     nullptr, Util::getFileDialogOptions());
     if (!filePath.isEmpty()) {
-        QString resource = GetFilenameFromProducer(producer());
+        QString resource = Util::GetFilenameFromProducer(producer());
         QDir dir = QmlApplication::dataDir();
         dir.cd("vmaf");
         QStringList args;

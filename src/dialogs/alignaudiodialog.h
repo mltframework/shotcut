@@ -23,6 +23,7 @@
 #include <QDialog>
 #include <QUuid>
 
+class QCheckBox;
 class QComboBox;
 class QDialogButtonBox;
 class QLabel;
@@ -50,7 +51,7 @@ private slots:
     void processAndApply();
     void updateReferenceProgress(int percent);
     void updateClipProgress(int index, int percent);
-    void clipFinished(int index, int offset, double drift, double quality);
+    void clipFinished(int index, int offset, double speed, double quality);
 
 private:
     AlignTableDelegate *m_delegate;
@@ -58,8 +59,10 @@ private:
     AlignClipsModel m_alignClipsModel;
     QVector<QUuid> m_uuids;
     QComboBox *m_trackCombo;
+    QCheckBox *m_speedCheckBox;
     QTreeView *m_table;
     QDialogButtonBox *m_buttonBox;
+    QPushButton *m_applyButton;
     QPushButton *m_processAndApplyButton;
     LongUiTask *m_uiTask;
 };

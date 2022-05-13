@@ -32,7 +32,9 @@
 static QMutex s_fftwPlanningMutex;
 
 AlignmentArray::AlignmentArray()
-    : m_autocorrelationMax(std::numeric_limits<double>::min())
+    : m_forwardBuf(nullptr)
+    , m_backwardBuf(nullptr)
+    , m_autocorrelationMax(std::numeric_limits<double>::min())
     , m_isTransformed(false)
 {
 }
@@ -46,19 +48,35 @@ AlignmentArray::AlignmentArray(size_t minimum_size)
 AlignmentArray::~AlignmentArray()
 {
     QMutexLocker locker(&s_fftwPlanningMutex);
-    fftw_free(reinterpret_cast<fftw_complex *>(m_forwardBuf));
-    fftw_destroy_plan(m_forwardPlan);
+    if (m_forwardBuf) {
+        fftw_free(reinterpret_cast<fftw_complex *>(m_forwardBuf));
+        fftw_destroy_plan(m_forwardPlan);
+        fftw_free(reinterpret_cast<fftw_complex *>(m_backwardBuf));
+        fftw_destroy_plan(m_backwardPlan);
+    }
 }
 
 void AlignmentArray::init(size_t minimumSize)
 {
+    QMutexLocker locker(&m_transformMutex);
     m_minimumSize = minimumSize;
     m_actualComplexSize = (minimumSize * 2) - 1;
+    if (m_forwardBuf) {
+        QMutexLocker locker(&s_fftwPlanningMutex);
+        fftw_free(reinterpret_cast<fftw_complex *>(m_forwardBuf));
+        m_forwardBuf = nullptr;
+        fftw_destroy_plan(m_forwardPlan);
+        fftw_free(reinterpret_cast<fftw_complex *>(m_backwardBuf));
+        m_backwardBuf = nullptr;
+        fftw_destroy_plan(m_backwardPlan);
+    }
 }
 
 void AlignmentArray::setValues(const std::vector<double> &values)
 {
+    QMutexLocker locker(&m_transformMutex);
     m_values = values;
+    m_isTransformed = false;
 }
 
 double AlignmentArray::calculateOffset(AlignmentArray &from, int *offset)
@@ -108,62 +126,70 @@ double AlignmentArray::calculateOffset(AlignmentArray &from, int *offset)
     return max / correlationCoefficient;
 }
 
-double AlignmentArray::calculateOffsetAndDrift(AlignmentArray &from, int precision,
-                                               double drift_range, double *drift, int *offset)
+double AlignmentArray::calculateOffsetAndSpeed(AlignmentArray &from, double *speed, int *offset)
 {
-    static const int FINAL_PRECISION = 9;
-    double drift_step = std::pow(10.0, -precision);
-    double max_score = *drift;
-    double best_drift = 1.0;
+    // The minimum speed step results in one frame of stretch.
+    // Do not try to compensate for more than 1 frame of speed difference.
+    double minimumSpeedStep = 1.0 / (double)from.m_values.size();
+    double speedStep = 0.0005;
+    double bestSpeed = 1.0;
+    int bestOffset = 0;
+    double bestScore = calculateOffset(from, &bestOffset);
+    AlignmentArray stretched(m_minimumSize);
+    double speedMin = bestSpeed - 0.005;
+    double speedMax = bestSpeed + 0.005;
 
-    for (double d = *drift - drift_range; d <= *drift + drift_range; d += drift_step) {
-        // Copy the "from" sequence with a shift
-        AlignmentArray drifted(m_actualComplexSize);
-        double factor = 1.0 / d;
-        int shift = 0;
-        for (size_t i = 0; i < m_minimumSize; ++i) {
-            int newShift = std::round(factor * i) - i;
-            while (newShift > shift) {
-                drifted.m_forwardBuf[i + shift] = from.m_forwardBuf[i];
-                ++shift;
+    while (speedStep > (minimumSpeedStep / 10)) {
+        for (double s = speedMin; s <= speedMax; s += speedStep) {
+            if (s == bestSpeed) {
+                continue;
             }
-            shift = newShift;
-            drifted.m_forwardBuf[i + shift] = from.m_forwardBuf[i];
+            // Stretch the original values to simulate a speed compensation
+            double factor = 1.0 / s;
+            size_t stretchedSize = std::floor((double)from.m_values.size() * factor);
+            std::vector<double> strechedValues(stretchedSize);
+            // Nearest neighbor interpolation
+            for (size_t i = 0; i < stretchedSize; i++) {
+                size_t srcIndex = std::round(s * i);
+                strechedValues[i] = from.m_values[srcIndex];
+            }
+            stretched.setValues(strechedValues);
+            double score = calculateOffset(stretched, offset);
+            if (score > bestScore) {
+                bestScore = score;
+                bestSpeed = s;
+                bestOffset = *offset;
+            }
         }
-        double score = calculateOffset(drifted, offset);
-        if (score > max_score) {
-            max_score = score;
-            best_drift = d;
-        }
+        speedStep /= 10;
+        speedMin = bestSpeed - (speedStep * 5);
+        speedMax = bestSpeed + (speedStep * 5);
     }
-    *drift = best_drift;
-
-    if (precision < FINAL_PRECISION) {
-        max_score = calculateOffsetAndDrift(from, precision + 1, drift_range / 10, drift, offset);
-    }
-    return max_score;
+    *speed = bestSpeed;
+    *offset = bestOffset;
+    return bestScore;
 }
 
 void AlignmentArray::transform()
 {
     QMutexLocker locker(&m_transformMutex);
     if (!m_isTransformed) {
-        // Create the plans while the global planning mutex is locked
-        s_fftwPlanningMutex.lock();
-        fftw_complex *buf = nullptr;
-        // Allocate the forward buffer and plan
-        buf = fftw_alloc_complex(m_actualComplexSize);
-        m_forwardBuf = reinterpret_cast<std::complex<double>*>(buf);
-        m_forwardPlan = fftw_plan_dft_1d(m_actualComplexSize, buf, buf, FFTW_FORWARD, FFTW_ESTIMATE);
+        if (!m_forwardBuf) {
+            // Create the plans while the global planning mutex is locked
+            s_fftwPlanningMutex.lock();
+            fftw_complex *buf = nullptr;
+            // Allocate the forward buffer and plan
+            buf = fftw_alloc_complex(m_actualComplexSize);
+            m_forwardBuf = reinterpret_cast<std::complex<double>*>(buf);
+            m_forwardPlan = fftw_plan_dft_1d(m_actualComplexSize, buf, buf, FFTW_FORWARD, FFTW_ESTIMATE);
+            // Allocate the backward buffer and plan
+            buf = fftw_alloc_complex(m_actualComplexSize);
+            m_backwardBuf = reinterpret_cast<std::complex<double>*>(buf);
+            m_backwardPlan = fftw_plan_dft_1d(m_actualComplexSize, buf, buf, FFTW_BACKWARD, FFTW_ESTIMATE);
+            s_fftwPlanningMutex.unlock();
+        }
         std::fill(m_forwardBuf, m_forwardBuf + m_actualComplexSize, std::complex<double>(0));
-        // Allocate the backward buffer and plan
-        buf = fftw_alloc_complex(m_actualComplexSize);
-        std::complex<double> *backwardBuf = reinterpret_cast<std::complex<double>*>(buf);
-        fftw_plan backwardPlan = fftw_plan_dft_1d(m_actualComplexSize, buf, buf, FFTW_BACKWARD,
-                                                  FFTW_ESTIMATE);
-        std::fill(backwardBuf, backwardBuf + m_actualComplexSize, std::complex<double>(0));
-        s_fftwPlanningMutex.unlock();
-
+        std::fill(m_backwardBuf, m_backwardBuf + m_actualComplexSize, std::complex<double>(0));
         // Calculate a normalization factor for the initial values.
         // This uses a simplified standard deviation calculation that assumes the mean is 0.
         double accum = 0.0;
@@ -177,25 +203,18 @@ void AlignmentArray::transform()
         }
         // Perform the forward DFT
         fftw_execute(m_forwardPlan);
-
         // Perform autocorrelation to calculate the maximum correlation value
         for (size_t i = 0; i < m_actualComplexSize; i++) {
-            backwardBuf[i] = m_forwardBuf[i] * std::conj(m_forwardBuf[i]);
+            m_backwardBuf[i] = m_forwardBuf[i] * std::conj(m_forwardBuf[i]);
         }
         // Convert back to time series
-        fftw_execute(backwardPlan);
+        fftw_execute(m_backwardPlan);
         // Find the maximum autocorrelation value
         for (size_t i = 0; i < m_actualComplexSize; i++) {
-            double norm = std::norm(backwardBuf[i]);
+            double norm = std::norm(m_backwardBuf[i]);
             if (norm > m_autocorrelationMax)
                 m_autocorrelationMax = norm;
         }
-
-        s_fftwPlanningMutex.lock();
-        fftw_free(backwardBuf);
-        fftw_destroy_plan(backwardPlan);
-        s_fftwPlanningMutex.unlock();
-
         m_isTransformed = true;
     }
 }

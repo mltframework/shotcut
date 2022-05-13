@@ -36,13 +36,13 @@ void AlignClipsModel::clear()
     endResetModel();
 }
 
-void AlignClipsModel::addClip(const QString &name, int offset, int drift, const QString &error)
+void AlignClipsModel::addClip(const QString &name, int offset, int speed, const QString &error)
 {
     beginInsertRows(QModelIndex(), m_clips.size(), m_clips.size());
     ClipAlignment newClip;
     newClip.name = name;
     newClip.offset = offset;
-    newClip.drift = drift;
+    newClip.speed = speed;
     newClip.error = error;
     newClip.progress = 0;
     m_clips.append(newClip);
@@ -70,14 +70,14 @@ int AlignClipsModel::getProgress(int row) const
     return m_clips[row].progress;
 }
 
-void AlignClipsModel::updateOffsetAndDrift(int row, int offset, double drift, const QString &error)
+void AlignClipsModel::updateOffsetAndSpeed(int row, int offset, double speed, const QString &error)
 {
     if (row < 0 || row >= m_clips.size()) {
         LOG_ERROR() << "Invalid Row: " << row;
         return;
     }
     m_clips[row].offset = offset;
-    m_clips[row].drift = drift;
+    m_clips[row].speed = speed;
     m_clips[row].error = error;
     emit dataChanged(index(row, COLUMN_ERROR), index(row, COLUMN_COUNT - 1));
 }
@@ -93,15 +93,15 @@ int AlignClipsModel::getOffset(int row)
     return offset;
 }
 
-double AlignClipsModel::getDrift(int row)
+double AlignClipsModel::getSpeed(int row)
 {
-    int drift = 0;
+    double speed = 1.0;
     if (row < 0 || row >= m_clips.size()) {
         LOG_ERROR() << "Invalid Row: " << row;
     } else {
-        drift = m_clips[row].drift;
+        speed = m_clips[row].speed;
     }
-    return drift;
+    return speed;
 }
 
 int AlignClipsModel::rowCount(const QModelIndex &parent) const
@@ -157,12 +157,10 @@ QVariant AlignClipsModel::data(const QModelIndex &index, int role) const
                 }
             }
             break;
-        /*
-                        case COLUMN_DRIFT:
-                            if (clip.drift >= 0)
-                                result = QLocale().toString(clip.drift * 100.0, 'g', 4);
-                            break;
-        */
+        case COLUMN_SPEED:
+            if (clip.speed != INVALID_OFFSET)
+                result = QLocale().toString(clip.speed * 100.0, 'g', 4);
+            break;
         default:
             LOG_ERROR() << "Invalid Column" << index.row() << index.column() << roleNames()[role] << role;
             break;
@@ -177,7 +175,7 @@ QVariant AlignClipsModel::data(const QModelIndex &index, int role) const
             break;
         case COLUMN_ERROR:
         case COLUMN_OFFSET:
-//                case COLUMN_DRIFT:
+        case COLUMN_SPEED:
             result = Qt::AlignCenter;
             break;
         default:
@@ -202,8 +200,8 @@ QVariant AlignClipsModel::headerData(int section, Qt::Orientation orientation, i
             return tr("Clip");
         case COLUMN_OFFSET:
             return tr("Offset");
-//        case COLUMN_DRIFT:
-//            return tr("Drift");
+        case COLUMN_SPEED:
+            return tr("Speed");
         default:
             break;
         }

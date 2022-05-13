@@ -651,7 +651,7 @@ private:
     struct Alignment {
         QUuid uuid;
         int offset;
-        double speedCompensation;
+        double speed;
     };
     QVector<Alignment> m_alignments;
 };
