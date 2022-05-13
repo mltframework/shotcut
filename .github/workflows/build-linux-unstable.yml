@@ -44,6 +44,7 @@ jobs:
             scripts/shotcut-linux-x86_64-*.txz
 
       - name: Upload portable and source archives to S3
+        if: ${{ github.repository_owner == 'mltframework' }}
         uses: mltframework/s3cmd-action@v0
         with:
           args: >-
@@ -66,6 +67,7 @@ jobs:
           chmod +x out/shotcut-linux-x86_64-$FILENAME_VERSION.AppImage
 
       - name: Upload AppImage to S3
+        if: ${{ github.repository_owner == 'mltframework' }}
         uses: mltframework/s3cmd-action@v0
         with:
           args: >-
@@ -76,6 +78,7 @@ jobs:
             put packaging/linux/out/*.AppImage s3://builds.us.meltytech/shotcut/
 
       - name: Install Snapcraft
+        if: ${{ github.repository_owner == 'mltframework' }}
         uses: samuelmeuli/action-snapcraft@v1.2.0
         with:
           snapcraft_token: ${{ secrets.SNAPCRAFT_TOKEN }}

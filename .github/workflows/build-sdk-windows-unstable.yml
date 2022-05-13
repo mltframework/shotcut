@@ -91,6 +91,7 @@ jobs:
           path: ./build/shotcut-win64-sdk-*.zip
 
       - name: Upload packages to S3
+        if: ${{ github.repository_owner == 'mltframework' }}
         shell: msys2 {0}
         run: |
           echo Installing awscli
