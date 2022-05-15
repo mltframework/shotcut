@@ -190,16 +190,21 @@ void AlignmentArray::transform()
         }
         std::fill(m_forwardBuf, m_forwardBuf + m_actualComplexSize, std::complex<double>(0));
         std::fill(m_backwardBuf, m_backwardBuf + m_actualComplexSize, std::complex<double>(0));
-        // Calculate a normalization factor for the initial values.
-        // This uses a simplified standard deviation calculation that assumes the mean is 0.
+        // Calculate the mean and standard deviation to be used to normalize the values.
         double accum = 0.0;
         std::for_each (m_values.begin(), m_values.end(), [&](const double d) {
-            accum += d * d;
+            accum += d;
         });
-        double factor = sqrt(accum / (m_values.size() - 1));
-        // Fill the transform array applying the normalization factor
+        double mean = accum / m_values.size();
+        accum = 0;
+        std::for_each (m_values.begin(), m_values.end(), [&](const double d) {
+            accum += (d - mean) * (d - mean);
+        });
+        double stddev = sqrt(accum / (m_values.size() - 1));
+        // Fill the transform array
+        // Normalize the input values: Subtract the mean and divide by the standard deviation.
         for ( size_t i = 0; i < m_values.size(); i++ ) {
-            m_forwardBuf[i] = m_values[i] / factor;
+            m_forwardBuf[i] = (m_values[i] - mean) / stddev;
         }
         // Perform the forward DFT
         fftw_execute(m_forwardPlan);

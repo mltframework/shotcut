@@ -83,7 +83,7 @@ public:
             double sampleTotal = 0;
             // Add all values from the frame
             for (int k = 0; k < samples; ++k) {
-                sampleTotal += data[k];
+                sampleTotal += std::abs(data[k]);
             }
             // Average the sample values
             values[i] = sampleTotal / samples;
