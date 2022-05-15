@@ -31,7 +31,7 @@ public:
     QString saveFile()
     {
         return m_saveFile;
-    };
+    }
 
 private slots:
     void onFilterSelected(const QString &filter);
