@@ -316,16 +316,20 @@ void AlignAudioDialog::rebuildClipList()
         int trackIndex, clipIndex;
         QScopedPointer<Mlt::ClipInfo> info(m_model->findClipByUuid(uuid, trackIndex, clipIndex));
         if (info && info->cut && info->cut->is_valid()) {
-            QString clipName = info->cut->get(kShotcutCaptionProperty);
             QString error;
-            if (clipName.isNull()) {
+            QString clipName = info->producer->get(kShotcutCaptionProperty);
+            if (clipName.isNull() || clipName.isEmpty())
                 clipName = Util::baseName(ProxyManager::resource(*info->producer));
-                if (clipName == "<producer>") {
-                    clipName = QString::fromUtf8(info->cut->get("mlt_service"));
-                }
-            }
+            if (clipName == "<producer>" || clipName.isNull() || clipName.isEmpty())
+                clipName = QString::fromUtf8(info->producer->get("mlt_service"));
             if (trackIndex == referenceIndex) {
                 error = tr("This clip will be skipped because it is on the reference track.");
+            } else {
+                // Only support avformat clips
+                QString shotcutProducer(info->producer->get(kShotcutProducerProperty));
+                QString service(info->producer->get("mlt_service"));
+                if (!service.startsWith("avformat") && !shotcutProducer.startsWith("avformat"))
+                    error = tr("This item can not be aligned.");
             }
             m_alignClipsModel.addClip(clipName, AlignClipsModel::INVALID_OFFSET,
                                       AlignClipsModel::INVALID_OFFSET, error);
@@ -354,7 +358,11 @@ void AlignAudioDialog::process()
         if (!info || !info->cut || !info->cut->is_valid()) {
             continue;
         }
-        if (trackIndex == referenceTrackIndex) {
+        QString shotcutProducer(info->producer->get(kShotcutProducerProperty));
+        QString service(info->producer->get("mlt_service"));
+        if (!service.startsWith("avformat") && !shotcutProducer.startsWith("avformat")) {
+            m_clipReaders.append(nullptr);
+        } else if (trackIndex == referenceTrackIndex) {
             m_clipReaders.append(nullptr);
         } else {
             QString xml = MLT.XML(info->cut);
