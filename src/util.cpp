@@ -693,4 +693,8 @@ void Util::passProducerProperties(Mlt::Producer *src, Mlt::Producer *dst)
                    kDisableProxyProperty ","
                    kIsProxyProperty ","
                    kShotcutProducerProperty);
+    QString shotcutProducer(src->get(kShotcutProducerProperty));
+    QString service(src->get("mlt_service"));
+    if (service.startsWith("avformat") || shotcutProducer == "avformat")
+        dst->set(kShotcutProducerProperty, "avformat");
 }
