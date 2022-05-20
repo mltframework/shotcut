@@ -44,6 +44,9 @@ jobs:
             mingw-w64-x86_64-vid.stab
             mingw-w64-x86_64-x264
             mingw-w64-x86_64-x265
+            mingw-w64-x86_64-libarchive
+            mingw-w64-x86_64-potrace
+            mingw-w64-x86_64-libimagequant
 
       - uses: actions/checkout@v2
 

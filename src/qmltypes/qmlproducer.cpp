@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2020 Meltytech, LLC
+ * Copyright (c) 2016-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@
 #include "util.h"
 #include "models/audiolevelstask.h"
 #include "mainwindow.h"
+#include "widgets/glaxnimateproducerwidget.h"
 
 static const char *kWidthProperty = "meta.media.width";
 static const char *kHeightProperty = "meta.media.height";
@@ -156,6 +157,18 @@ Q_INVOKABLE bool QmlProducer::outOfBounds()
     return m_position < 0 || m_position > duration();
 }
 
+void QmlProducer::newGlaxnimateFile(const QString &filename)
+{
+    GlaxnimateIpcServer::instance().newFile(filename, duration());
+}
+
+void QmlProducer::launchGlaxnimate(const QString &filename) const
+{
+    if (!filename.isEmpty()) {
+        GlaxnimateIpcServer::instance().launch(m_producer, filename, false);
+    }
+}
+
 void QmlProducer::audioLevelsReady(const QModelIndex &index)
 {
     Q_UNUSED(index)
@@ -237,8 +250,11 @@ QRectF QmlProducer::getRect(QString name, int position)
 void QmlProducer::setProducer(Mlt::Producer &producer)
 {
     m_producer = producer;
-    if (m_producer.is_valid())
+    if (m_producer.is_valid()) {
         remakeAudioLevels(MAIN.keyframesDockIsVisible());
+    } else {
+        GlaxnimateIpcServer::instance().reset();
+    }
     emit producerChanged();
     emit inChanged(0);
     emit outChanged(0);

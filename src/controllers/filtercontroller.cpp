@@ -52,6 +52,7 @@ void FilterController::loadFilterMetadata()
 {
     QScopedPointer<Mlt::Properties> mltFilters(MLT.repository()->filters());
     QScopedPointer<Mlt::Properties> mltLinks(MLT.repository()->links());
+    QScopedPointer<Mlt::Properties> mltProducers(MLT.repository()->producers());
     QDir dir = QmlUtilities::qmlDir();
     dir.cd("filters");
     foreach (QString dirName, dir.entryList(QDir::AllDirs | QDir::NoDotAndDotDot | QDir::Executable)) {
@@ -75,6 +76,8 @@ void FilterController::loadFilterMetadata()
 
                 // Check if mlt_service is available.
                 if (mltFilters->get_data(meta->mlt_service().toLatin1().constData()) &&
+                        // Check if MLT glaxnimate producer is available if needed
+                        ("maskGlaxnimate" != meta->objectName() || mltProducers->get_data("glaxnimate")) &&
                         (version.isEmpty() || meta->isMltVersion(version))) {
                     LOG_DEBUG() << "added filter" << meta->name();
                     meta->loadSettings();

@@ -9,7 +9,7 @@ find ~/Desktop/Shotcut.app/Contents/Resources -type f -exec codesign --options=r
 xattr -cr ~/Desktop/Shotcut.app
 codesign --options=runtime -v -s "$SIGNER" \
   --entitlements ./notarization.entitlements \
-  ~/Desktop/Shotcut.app/Contents/MacOS/{melt,ffmpeg,ffplay,ffprobe}
+  ~/Desktop/Shotcut.app/Contents/MacOS/{melt,ffmpeg,ffplay,ffprobe,glaxnimate}
 codesign --options=runtime -v -s "$SIGNER" \
   --entitlements ./notarization.entitlements \
   ~/Desktop/Shotcut.app
@@ -21,7 +21,7 @@ mv ~/Desktop/Shotcut.app $TMP
 ln -s /Applications $TMP
 cp ../COPYING $TMP
 rm ~/Desktop/shotcut-macos-${VERSION}.dmg
-hdiutil create -srcfolder $TMP -volname Shotcut -format UDBZ -size 300m \
+hdiutil create -srcfolder $TMP -volname Shotcut -format UDBZ -size 400m \
   ~/Desktop/shotcut-macos-${VERSION}.dmg
 rm -rf $TMP
 

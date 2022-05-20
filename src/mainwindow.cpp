@@ -1938,6 +1938,7 @@ void MainWindow::on_actionAbout_Shotcut_triggered()
                           "<li><a href=\"https://www.ladspa.org/\">LADSPA</a> audio plugins</li>"
                           "<li><a href=\"http://www.defaulticon.com/\">DefaultIcon</a> icon collection by <a href=\"http://www.interactivemania.com/\">interactivemania</a></li>"
                           "<li><a href=\"http://www.oxygen-icons.org/\">Oxygen</a> icon collection</li>"
+                          "<li><a href=\"https://glaxnimate.mattbas.org/\">Glaxnimate</a> vector animation program</li>"
                           "</ul></p>"
                           "<p>The source code used to build this program can be downloaded from "
                           "<a href=\"%3\">%3</a>.</p>"
@@ -4944,6 +4945,14 @@ void MainWindow::replaceAllByHash(const QString &hash, Mlt::Producer &producer, 
     if (isMultitrackValid()) {
         m_timelineDock->replaceClipsWithHash(hash, producer);
     }
+}
+
+int MainWindow::mltIndexForTrack(int trackIndex) const
+{
+    if (trackIndex < m_timelineDock->model()->trackList().count() - 1) {
+        return m_timelineDock->model()->trackList()[trackIndex].mlt_index;
+    }
+    return -1;
 }
 
 void MainWindow::on_actionTopics_triggered()

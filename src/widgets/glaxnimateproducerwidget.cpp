@@ -18,6 +18,7 @@
 #include <QColorDialog>
 #include <QFileInfo>
 #include "glaxnimateproducerwidget.h"
+#include "mainwindow.h"
 #include "settings.h"
 #include "ui_glaxnimateproducerwidget.h"
 #include "shotcut_mlt_properties.h"
@@ -74,6 +75,7 @@ GlaxnimateProducerWidget::GlaxnimateProducerWidget(QWidget *parent) :
 
 GlaxnimateProducerWidget::~GlaxnimateProducerWidget()
 {
+    GlaxnimateIpcServer::instance().reset();
     delete ui;
 }
 
@@ -203,29 +205,10 @@ Mlt::Producer *GlaxnimateProducerWidget::newProducer(Mlt::Profile &profile)
     auto info = QFileInfo(filename);
     Settings.setSavePath(info.path());
 
-    QFile rawr(QStringLiteral(":/resources/glaxnimate.rawr"));
-    rawr.open(QIODevice::ReadOnly);
-    auto data = rawr.readAll();
-    auto json = QJsonDocument::fromJson(data).object();
-    rawr.close();
-
-    QJsonValue jsonValue(json);
-    auto duration = ui->durationSpinBox->value();
-    modifyJsonValue(jsonValue, "animation.name", info.completeBaseName());
-    modifyJsonValue(jsonValue, "animation.width", qRound(MLT.profile().width() * MLT.profile().sar()));
-    modifyJsonValue(jsonValue, "animation.height", MLT.profile().height());
-    modifyJsonValue(jsonValue, "animation.fps", MLT.profile().fps());
-    modifyJsonValue(jsonValue, "animation.animation.last_frame", duration - 1);
-    modifyJsonValue(jsonValue, "animation.shapes[0].animation.last_frame", duration - 1);
-    json = jsonValue.toObject();
-
-    rawr.setFileName(filename);
-    rawr.open(QIODevice::WriteOnly);
-    rawr.write(QJsonDocument(json).toJson());
-    rawr.close();
+    GlaxnimateIpcServer::instance().newFile(filename, ui->durationSpinBox->value());
 
     Mlt::Producer *p = new Mlt::Producer(profile,
-                                         QString("glaxnimate:").append(rawr.fileName()).toUtf8().constData());
+                                         QString("glaxnimate:").append(filename).toUtf8().constData());
     p->set("background", colorStringToResource(ui->colorLabel->text()).toLatin1().constData());
 
     m_title = info.fileName();
@@ -235,7 +218,7 @@ Mlt::Producer *GlaxnimateProducerWidget::newProducer(Mlt::Profile &profile)
     m_watcher.reset(new QFileSystemWatcher({filename}));
     connect(m_watcher.get(), &QFileSystemWatcher::fileChanged, this,
             &GlaxnimateProducerWidget::onFileChanged);
-    launchGlaxnimate(filename);
+    GlaxnimateIpcServer::instance().launch(p);
 
     return p;
 }
@@ -327,7 +310,7 @@ void GlaxnimateProducerWidget::on_notesTextEdit_textChanged()
 void GlaxnimateProducerWidget::on_editButton_clicked()
 {
     if (m_producer && m_producer->is_valid()) {
-        launchGlaxnimate(QString::fromUtf8(m_producer->get("resource")));
+        GlaxnimateIpcServer::instance().launch(*producer());
     }
 }
 
@@ -364,9 +347,215 @@ void GlaxnimateProducerWidget::on_durationSpinBox_editingFinished()
     }
 }
 
-void GlaxnimateProducerWidget::launchGlaxnimate(const QString &filename)
+
+void GlaxnimateIpcServer::ParentResources::setProducer(const Mlt::Producer &producer,
+                                                       bool hideCurrentTrack)
 {
-    if (!QProcess::startDetached(Settings.glaxnimatePath(), {filename})) {
+    m_producer = producer;
+    m_profile.reset(new Mlt::Profile(::mlt_profile_clone(MLT.profile().get_profile())));
+    m_profile->set_progressive(Settings.playerProgressive());
+    m_glaxnimateProducer.reset(new Mlt::Producer(*m_profile, "xml-string",
+                                                 MLT.XML().toUtf8().constData()));
+    if (m_glaxnimateProducer && m_glaxnimateProducer->is_valid()) {
+        m_frameNum = -1;
+        if (m_producer.get(kMultitrackItemProperty)) {
+            // hide this clip's video track and upper ones
+            QString s = QString::fromLatin1(m_producer.get(kMultitrackItemProperty));
+            QVector<QStringRef> parts = s.splitRef(':');
+            if (parts.length() == 2) {
+                auto trackIndex = parts[1].toInt();
+                auto offset = hideCurrentTrack ? 1 : 0;
+                Mlt::Tractor tractor(*m_glaxnimateProducer);
+                // for each upper video track plus this one
+                for (int i = 0; i < trackIndex + offset; i++) {
+                    // get the MLT track index
+                    auto index = MAIN.mltIndexForTrack(i);
+                    // get the MLT track in this copy
+                    std::unique_ptr<Mlt::Producer> track(tractor.track(index));
+                    if (track && track->is_valid()) {
+                        // hide the track
+                        track->set("hide", 3);
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+void GlaxnimateIpcServer::onConnect()
+{
+    LOG_DEBUG() << "";
+    m_socket = m_server->nextPendingConnection();
+    connect(m_socket.data(), &QLocalSocket::readyRead, this, &GlaxnimateIpcServer::onReadyRead);
+    connect(m_socket.data(), &QLocalSocket::errorOccurred, this, &GlaxnimateIpcServer::onSocketError);
+    m_stream.reset(new QDataStream(m_socket.data()));
+    m_stream->setVersion(QDataStream::Qt_5_15);
+    *m_stream << QString("hello");
+
+    m_socket->flush();
+    m_server->close();
+    m_isProtocolValid = false;
+}
+
+void GlaxnimateIpcServer::onReadyRead()
+{
+    if (!m_isProtocolValid) {
+        QString message;
+        *m_stream >> message;
+        LOG_DEBUG() << message;
+        if (message.startsWith("version ") && message != "version 1") {
+            *m_stream << QString("bye");
+            m_server->close();
+        } else {
+            m_isProtocolValid = true;
+        }
+    } else {
+        qreal time = -1.0;
+        for (int i = 0; i < 1000 && !m_stream->atEnd(); i++) {
+            *m_stream >> time;
+        }
+        if (!parent || !parent->m_glaxnimateProducer
+                || !parent->m_glaxnimateProducer->is_valid()
+                || time < 0.0)
+            return;
+
+        // Only if the frame number is different
+        int frameNum = parent->m_producer.get_int(kPlaylistStartProperty) + qRound(time);
+        if (frameNum != parent->m_frameNum) {
+            LOG_DEBUG() << "glaxnimate time =" << time;
+
+            // Get the image from MLT
+            parent->m_glaxnimateProducer->seek(frameNum);
+            std::unique_ptr<Mlt::Frame> frame(parent->m_glaxnimateProducer->get_frame());
+            // Use preview scaling
+#ifdef Q_OS_MAC
+            int scale = Settings.playerPreviewScale() ? Settings.playerPreviewScale() : 720;
+#else
+            int scale = Settings.playerPreviewScale() ? Settings.playerPreviewScale() : 2160;
+#endif
+            auto height = qMin(scale, MLT.profile().height());
+            auto width = (height == MLT.profile().height()) ? MLT.profile().width() :
+                         Util::coerceMultiple(height * MLT.profile().display_aspect_num() /
+                                              MLT.profile().display_aspect_den()
+                                              * MLT.profile().sample_aspect_den()  / MLT.profile().sample_aspect_num());
+            frame->set("consumer.deinterlacer", Settings.playerDeinterlacer().toLatin1().constData());
+            frame->set("consumer.top_field_first", -1);
+            mlt_image_format format = mlt_image_rgb;
+            const uchar *image = frame->get_image(format, width, height);
+            if (image) {
+                QImage temp(width, height, QImage::Format_RGB888);
+                for (int i = 0; i < height; i++) {
+                    ::memcpy(temp.scanLine(i), &image[i * 3 * width], temp.bytesPerLine());
+                }
+                if (MLT.profile().sar() - 1.0 > 0.0001) {
+                    // Use QImage to convert to square pixels
+                    width = qRound(width * MLT.profile().sar());
+                    temp = temp.scaled(width, height, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+                }
+                if (copyToShared(temp)) {
+                    parent->m_frameNum = frameNum;
+                }
+            }
+        }
+    }
+}
+
+void GlaxnimateIpcServer::onSocketError(QLocalSocket::LocalSocketError socketError)
+{
+    switch (socketError) {
+    case QLocalSocket::PeerClosedError:
+        LOG_DEBUG() << "Glaxnimate closed the connection";
+        m_stream.reset();
+        m_sharedMemory.reset();
+        break;
+    default:
+        LOG_INFO() << "Glaxnimate IPC error:" << m_socket->errorString();
+    }
+}
+
+GlaxnimateIpcServer &GlaxnimateIpcServer::instance()
+{
+    static GlaxnimateIpcServer instance;
+    return instance;
+}
+
+void GlaxnimateIpcServer::newFile(const QString &filename, int duration)
+{
+    QFile rawr(QStringLiteral(":/resources/glaxnimate.rawr"));
+    rawr.open(QIODevice::ReadOnly);
+    auto data = rawr.readAll();
+    auto json = QJsonDocument::fromJson(data).object();
+    rawr.close();
+
+    QJsonValue jsonValue(json);
+    modifyJsonValue(jsonValue, "animation.name", QFileInfo(filename).completeBaseName());
+    modifyJsonValue(jsonValue, "animation.width", qRound(MLT.profile().width() * MLT.profile().sar()));
+    modifyJsonValue(jsonValue, "animation.height", MLT.profile().height());
+    modifyJsonValue(jsonValue, "animation.fps", MLT.profile().fps());
+    modifyJsonValue(jsonValue, "animation.animation.last_frame", duration - 1);
+    modifyJsonValue(jsonValue, "animation.shapes[0].animation.last_frame", duration - 1);
+    json = jsonValue.toObject();
+
+    rawr.setFileName(filename);
+    rawr.open(QIODevice::WriteOnly);
+    rawr.write(QJsonDocument(json).toJson());
+    rawr.close();
+}
+
+void GlaxnimateIpcServer::reset()
+{
+    if (m_stream) {
+        *m_stream << QString("clear");
+    }
+    parent.reset();
+}
+
+void GlaxnimateIpcServer::launch(const Mlt::Producer &producer, QString filename,
+                                 bool hideCurrentTrack)
+{
+    parent.reset(new ParentResources);
+    parent->setProducer(producer, hideCurrentTrack);
+    if (filename.isEmpty()) {
+        filename = QString::fromUtf8(parent->m_producer.get("resource"));
+    }
+    //XXX Glaxnimate on Windows is not respond to open messages.
+#ifndef Q_OS_WIN
+    if (m_server && m_socket && m_stream && QLocalSocket::ConnectedState == m_socket->state()) {
+        auto s = QString("open ").append(filename).append("\r");
+        LOG_DEBUG() << s;
+        *m_stream << s;
+        m_socket->flush();
+        parent->m_frameNum = -1;
+        return;
+    }
+#endif
+    m_server.reset(new QLocalServer);
+    connect(m_server.get(), &QLocalServer::newConnection, this, &GlaxnimateIpcServer::onConnect);
+    QString name = "shotcut-%1";
+    name = name.arg(QCoreApplication::applicationPid());
+    QStringList args = {"--ipc", name, filename};
+    if (!m_server->listen(name)) {
+        LOG_ERROR() << "failed to start the IPC server:" << m_server->errorString();
+        m_server.reset();
+        args.clear();
+        args << filename;
+        // Run without --ipc
+    } else  {
+        if (QProcess::startDetached(Settings.glaxnimatePath(), args)) {
+            LOG_DEBUG() << Settings.glaxnimatePath() << args.join(' ');
+            m_sharedMemory.reset(new QSharedMemory(name));
+            return;
+        } else {
+            // This glaxnimate executable may not support --ipc
+            m_server.reset();
+            args.clear();
+            args << filename;
+            // Try without --ipc
+        }
+    }
+    LOG_DEBUG() << Settings.glaxnimatePath() << args.join(' ');
+    if (!QProcess::startDetached(Settings.glaxnimatePath(), args)) {
         LOG_DEBUG() << "failed to launch Glaxnimate with" << Settings.glaxnimatePath();
         QMessageBox dialog(QMessageBox::Information,
                            qApp->applicationName(),
@@ -374,21 +563,90 @@ void GlaxnimateProducerWidget::launchGlaxnimate(const QString &filename)
                               "Click OK to open a file dialog to choose its location.\n"
                               "Click Cancel if you do not have Glaxnimate."),
                            QMessageBox::Ok | QMessageBox::Cancel,
-                           this);
+                           MAIN.window());
         dialog.setDefaultButton(QMessageBox::Ok);
         dialog.setEscapeButton(QMessageBox::Cancel);
         dialog.setWindowModality(QmlApplication::dialogModality());
         if (dialog.exec() == QMessageBox::Ok) {
-            auto path = QFileDialog::getOpenFileName(this, tr("Find Glaxnimate"), QString(), QString(),
+            auto path = QFileDialog::getOpenFileName(MAIN.window(), tr("Find Glaxnimate"), QString(), QString(),
                                                      nullptr, Util::getFileDialogOptions());
             if (!path.isEmpty()) {
-                if (QProcess::startDetached(path, {filename})) {
+                args.clear();
+                args << "--ipc" << name << filename;
+                if (QProcess::startDetached(path, args)) {
+                    LOG_DEBUG() << Settings.glaxnimatePath() << args.join(' ');
                     Settings.setGlaxnimatePath(path);
                     LOG_INFO() << "changed Glaxnimate path to" << path;
+                    m_sharedMemory.reset(new QSharedMemory(name));
+                    return;
                 } else {
-                    LOG_WARNING() << "failed to launch Glaxnimate with" << path;
+                    // This glaxnimate executable may not support --ipc
+                    m_server.reset();
+                    args.clear();
+                    args << filename;
+                    // Try without --ipc
+                    if (QProcess::startDetached(path, args)) {
+                        LOG_DEBUG() << Settings.glaxnimatePath() << args.join(' ');
+                    } else {
+                        LOG_WARNING() << "failed to launch Glaxnimate with" << path;
+                    }
                 }
             }
         }
     }
+}
+
+bool GlaxnimateIpcServer::copyToShared(const QImage &image)
+{
+    if (!m_sharedMemory) {
+        return false;
+    }
+    qint32 sizeInBytes = image.sizeInBytes() + 4 * sizeof(qint32);
+    if (sizeInBytes > m_sharedMemory->size()) {
+        if (m_sharedMemory->isAttached()) {
+            m_sharedMemory->lock();
+            m_sharedMemory->detach();
+            m_sharedMemory->unlock();
+        }
+        // over-allocate to avoid recreating
+        if (!m_sharedMemory->create(sizeInBytes)) {
+            LOG_WARNING() << m_sharedMemory->errorString();
+            return false;
+        }
+    }
+    if (m_sharedMemory->isAttached()) {
+        m_sharedMemory->lock();
+
+        uchar *to = (uchar *) m_sharedMemory->data();
+        // Write the width of the image and move the pointer forward
+        qint32 width = image.width();
+        ::memcpy(to, &width, sizeof(width));
+        to += sizeof(width);
+
+        // Write the height of the image and move the pointer forward
+        qint32 height = image.height();
+        ::memcpy(to, &height, sizeof(height));
+        to += sizeof(height);
+
+        // Write the image format of the image and move the pointer forward
+        qint32 imageFormat = image.format();
+        ::memcpy(to, &imageFormat, sizeof(imageFormat));
+        to += sizeof(imageFormat);
+
+        // Write the bytes per line of the image and move the pointer forward
+        qint32 bytesPerLine = image.bytesPerLine();
+        ::memcpy(to, &bytesPerLine, sizeof(bytesPerLine));
+        to += sizeof(bytesPerLine);
+
+        // Write the raw data of the image and move the pointer forward
+        ::memcpy(to, image.constBits(), image.sizeInBytes());
+
+        m_sharedMemory->unlock();
+        if (m_stream && m_socket) {
+            *m_stream << QString("redraw");
+            m_socket->flush();
+        }
+        return true;
+    }
+    return false;
 }

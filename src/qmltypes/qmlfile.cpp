@@ -119,3 +119,9 @@ QString QmlFile::suffix()
 {
     return QFileInfo(m_url.toString()).suffix();
 }
+
+void QmlFile::watch()
+{
+    m_watcher.reset(new QFileSystemWatcher({getUrl()}));
+    connect(m_watcher.get(), &QFileSystemWatcher::fileChanged, this, &QmlFile::fileChanged);
+}

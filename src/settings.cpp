@@ -16,6 +16,7 @@
  */
 
 #include "settings.h"
+#include <QApplication>
 #include <QColor>
 #include <QLocale>
 #include <QStandardPaths>
@@ -988,7 +989,8 @@ void ShotcutSettings::setVideoInput(const QString &name)
 
 QString ShotcutSettings::glaxnimatePath() const
 {
-    return settings.value("glaxnimatePath", "glaxnimate").toString();
+    QDir dir(qApp->applicationDirPath());
+    return settings.value("glaxnimatePath", dir.absoluteFilePath("glaxnimate")).toString();
 }
 
 void ShotcutSettings::setGlaxnimatePath(const QString &path)

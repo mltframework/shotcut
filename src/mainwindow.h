@@ -124,6 +124,7 @@ public:
     {
         return m_clipboardUpdatedAt > m_sourceUpdatedAt;
     }
+    int mltIndexForTrack(int trackIndex) const;
 
 signals:
     void audioChannelsChanged();

@@ -54,7 +54,9 @@ AOM_REVISION="v3.2.0"
 ENABLE_VMAF=1
 VMAF_HEAD=0
 VMAF_REVISION="v2.3.0"
-
+ENABLE_GLAXNIMATE=1
+GLAXNIMATE_HEAD=0
+GLAXNIMATE_REVISION="origin/shotcut"
 
 # QT_INCLUDE_DIR="$(pkg-config --variable=prefix QtCore)/include"
 QT_INCLUDE_DIR=${QTDIR:+${QTDIR}/include}
@@ -167,6 +169,9 @@ function to_key {
     ;;
     vmaf)
       echo 12
+    ;;
+    glaxnimate)
+      echo 13
     ;;
     *)
       echo UNKNOWN
@@ -353,6 +358,9 @@ function set_globals {
     if test "$ENABLE_VMAF" = 1 ; then
         SUBDIRS="vmaf $SUBDIRS"
     fi
+    if test "$ENABLE_GLAXNIMATE" = 1 ; then
+        SUBDIRS="$SUBDIRS glaxnimate"
+    fi
     SUBDIRS="$SUBDIRS mlt shotcut"
   fi
 
@@ -391,6 +399,7 @@ function set_globals {
   REPOLOCS[10]="https://code.videolan.org/videolan/dav1d.git"
   REPOLOCS[11]="https://aomedia.googlesource.com/aom"
   REPOLOCS[12]="https://github.com/Netflix/vmaf.git"
+  REPOLOCS[13]="https://gitlab.com/ddennedy/glaxnimate.git"
 
   # REPOTYPE Array holds the repo types. (Yes, this might be redundant, but easy for me)
   REPOTYPES[0]="git"
@@ -406,6 +415,7 @@ function set_globals {
   REPOTYPES[10]="git"
   REPOTYPES[11]="git"
   REPOTYPES[12]="git"
+  REPOTYPES[13]="git"
 
   # And, set up the revisions
   REVISIONS[0]=""
@@ -450,6 +460,10 @@ function set_globals {
   REVISIONS[12]=""
   if test 0 = "$VMAF_HEAD" -a "$VMAF_REVISION" ; then
     REVISIONS[12]="$VMAF_REVISION"
+  fi
+  REVISIONS[13]=""
+  if test 0 = "$GLAXNIMATE_HEAD" -a "$GLAXNIMATE_REVISION" ; then
+    REVISIONS[13]="$GLAXNIMATE_REVISION"
   fi
 
   # Figure out the number of cores in the system. Used both by make and startup script
@@ -502,7 +516,7 @@ function set_globals {
   CFLAGS_[1]="-I$FINAL_INSTALL_DIR/include $ASAN_CFLAGS $CFLAGS"
   LDFLAGS_[1]="-L$FINAL_INSTALL_DIR/lib $ASAN_LDFLAGS $LDFLAGS"
 
-  ####
+  #####
   # frei0r
   CONFIG[2]="cmake -DCMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -DWITHOUT_GAVL=1 -DWITHOUT_OPENCV=1 -GNinja $CMAKE_DEBUG_FLAG"
   CFLAGS_[2]="$CFLAGS"
@@ -576,6 +590,12 @@ function set_globals {
   fi
   CFLAGS_[12]=$CFLAGS
   LDFLAGS_[12]=$LDFLAGS
+
+  #####
+  # glaxnimate
+  CONFIG[13]="cmake -G Ninja -DCMAKE_PREFIX_PATH=$QTDIR -DCMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR $CMAKE_DEBUG_FLAG"
+  CFLAGS_[13]="$ASAN_CFLAGS $CFLAGS"
+  LDFLAGS_[13]="$ASAN_LDFLAGS $LDFLAGS"
 }
 
 ######################################################################
@@ -896,7 +916,7 @@ function configure_compile_install_subproject {
   feedback_status Building $1 - this could take some time
   if test "movit" = "$1" ; then
     cmd make -j$MAKEJ libmovit.la || die "Unable to build $1"
-  elif test "frei0r" = "$1" -o "bigsh0t" = "$1" -o "aom" = "$1" -o "mlt" = "$1" -o "shotcut" = "$1"; then
+  elif test "frei0r" = "$1" -o "bigsh0t" = "$1" -o "aom" = "$1" -o "mlt" = "$1" -o "shotcut" = "$1" -o "glaxnimate" = "$1"; then
     cmd ninja -j $MAKEJ || die "Unable to build $1"
   elif test "dav1d" = "$1"; then
     cmd ninja -C builddir -j $MAKEJ || die "Unable to build $1"
@@ -928,6 +948,9 @@ function configure_compile_install_subproject {
     cmd ninja install -C libvmaf/build || die "Unable to install $1"
     cmd install -d "$FINAL_INSTALL_DIR"/share/vmaf
     cmd install -p -c model/*.json "$FINAL_INSTALL_DIR"/share/vmaf || die "Unable to install $1"
+  elif test "glaxnimate" = "$1"; then
+    cmd ninja translations || die "Unable to build translations for $1"
+    cmd ninja install || die "Unable to install $1"
   elif test "$MYCONFIG" != "" ; then
     cmd make install || die "Unable to install $1"
   fi
@@ -1056,6 +1079,7 @@ function deploy
     cmd mv bin/ffmpeg.exe .
     cmd mv bin/ffplay.exe .
     cmd mv bin/ffprobe.exe .
+    cmd mv bin/glaxnimate.exe .
     cmd rm -rf bin include etc man manifest src *.txt
     cmd rm lib/*
     cmd rm -rf lib/cmake lib/pkgconfig lib/gdk-pixbuf-2.0 lib/glib-2.0 lib/gtk-2.0
@@ -1085,7 +1109,16 @@ function deploy
   for lib in lib/{frei0r-1,ladspa,mlt}/*.dll; do
     bundle_dlls "$lib"
   done
+  bundle_dlls glaxnimate.exe
   cmd rm *.bundled
+
+  log Copying some DLLs and python libraries for Glaxnimate
+  cmd cp -p "$SOURCE_DIR"/glaxnimate/external/Qt-Color-Widgets/libQtColorWidgets.dll .
+  cmd mkdir -p share/glaxnimate/glaxnimate/pythonhome/lib/python
+  cmd cp -r /mingw64/lib/python3.10/*.py \
+            /mingw64/lib/python3.10/lib-dynload/* \
+            /mingw64/lib/python3.10/{json,collections,encodings,logging,urllib} \
+      share/glaxnimate/glaxnimate/pythonhome/lib/python
 
   cmd cp -p "$HOME"/bin/*.dll .
   cmd cp -p "$QTDIR"/bin/{libEGL,libGLESv2,d3dcompiler_47}.dll .

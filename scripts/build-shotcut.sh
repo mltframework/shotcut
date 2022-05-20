@@ -84,6 +84,10 @@ AOM_HEAD=0
 AOM_REVISION="v3.2.0"
 VMAF_HEAD=0
 VMAF_REVISION="v2.3.0"
+ENABLE_GLAXNIMATE=1
+GLAXNIMATE_HEAD=0
+GLAXNIMATE_REVISION="origin/shotcut"
+
 QT_VERSION_DEFAULT=5.15.3
 QT_VERSION_DARWIN=5.15.2
 
@@ -225,6 +229,9 @@ function to_key {
     ;;
     vmaf)
       echo 23
+    ;;
+    glaxnimate)
+      echo 24
     ;;
     *)
       echo UNKNOWN
@@ -454,6 +461,9 @@ function set_globals {
     if test "$FFMPEG_SUPPORT_VMAF" = 1 && test "$VMAF_HEAD" = 1 -o "$VMAF_REVISION" != ""; then
         SUBDIRS="vmaf $SUBDIRS"
     fi
+    if test "$ENABLE_GLAXNIMATE" = 1 ; then
+        SUBDIRS="$SUBDIRS glaxnimate"
+    fi
   fi
 
   if [ "$DEBUG_BUILD" = "1" ]; then
@@ -499,6 +509,7 @@ function set_globals {
   REPOLOCS[21]="https://github.com/videolan/dav1d"
   REPOLOCS[22]="https://aomedia.googlesource.com/aom"
   REPOLOCS[23]="https://github.com/Netflix/vmaf.git"
+  REPOLOCS[24]="https://gitlab.com/ddennedy/glaxnimate.git"
 
   # REPOTYPE Array holds the repo types. (Yes, this might be redundant, but easy for me)
   REPOTYPES[0]="git"
@@ -522,6 +533,7 @@ function set_globals {
   REPOTYPES[21]="git"
   REPOTYPES[22]="git"
   REPOTYPES[23]="git"
+  REPOTYPES[24]="git"
 
   # And, set up the revisions
   REVISIONS[0]=""
@@ -588,6 +600,18 @@ function set_globals {
   REVISIONS[22]=""
   if test 0 = "$AOM_HEAD" -a "$AOM_REVISION" ; then
     REVISIONS[22]="$AOM_REVISION"
+  fi
+  REVISIONS[22]=""
+  if test 0 = "$AOM_HEAD" -a "$AOM_REVISION" ; then
+    REVISIONS[22]="$AOM_REVISION"
+  fi
+  REVISIONS[23]=""
+  if test 0 = "$VMAF_HEAD" -a "$VMAF_REVISION" ; then
+    REVISIONS[23]="$VMAF_REVISION"
+  fi
+  REVISIONS[24]=""
+  if test 0 = "$GLAXNIMATE_HEAD" -a "$GLAXNIMATE_REVISION" ; then
+    REVISIONS[24]="$GLAXNIMATE_REVISION"
   fi
 
   # Figure out the number of cores in the system. Used both by make and startup script
@@ -764,7 +788,7 @@ function set_globals {
   fi
   LDFLAGS_[8]=$LDFLAGS
 
-  ####
+  #####
   # vid.stab
   CONFIG[10]="cmake -DCMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR -DCMAKE_INSTALL_LIBDIR=lib $CMAKE_DEBUG_FLAG"
   if test "$TARGET_OS" = "Darwin" ; then
@@ -861,6 +885,12 @@ function set_globals {
   fi
   CFLAGS_[23]=$CFLAGS
   LDFLAGS_[23]=$LDFLAGS
+
+  #####
+  # glaxnimate
+  CONFIG[24]="cmake -G Ninja -DCMAKE_PREFIX_PATH=$QTDIR -DCMAKE_INSTALL_PREFIX=$FINAL_INSTALL_DIR $CMAKE_DEBUG_FLAG"
+  CFLAGS_[24]="$ASAN_CFLAGS $CFLAGS"
+  LDFLAGS_[24]="$ASAN_LDFLAGS $LDFLAGS"
 }
 
 ######################################################################
@@ -1271,7 +1301,7 @@ function configure_compile_install_subproject {
     cmd make -j$MAKEJ RANLIB="$RANLIB" libmovit.la || die "Unable to build $1"
   elif test "dav1d" = "$1" -o "rubberband" = "$1" ; then
     cmd ninja -C builddir -j $MAKEJ || die "Unable to build $1"
-  elif test "aom" = "$1" -o "mlt" = "$1" -o "shotcut" = "$1" ; then
+  elif test "aom" = "$1" -o "mlt" = "$1" -o "shotcut" = "$1"  -o "glaxnimate" = "$1"; then
     cmd ninja -j $MAKEJ || die "Unable to build $1"
   elif test "x265" = "$1" ; then
     cmd ninja -j $MAKEJ || die "Unable to build $1"
@@ -1325,6 +1355,9 @@ EOF
     elif test "ladspa" = "$1" ; then
       cmd make install || die "Unable to install $1"
       cmd install -p -c ladspa.h "$FINAL_INSTALL_DIR"/include || die "Unable to install ladspa.h"
+    elif test "glaxnimate" = "$1" ; then
+      cmd ninja translations || die "Unable to build translations for $1"
+      cmd ninja install || die "Unable to install $1"
     elif test "$MYCONFIG" != "" ; then
       cmd make install || die "Unable to install $1"
     fi
@@ -1376,6 +1409,7 @@ function configure_compile_install_all {
     for lib in "$FINAL_INSTALL_DIR"/{lib,lib/mlt,lib/frei0r-1,lib/ladspa,lib/va}/*.so*; do
       bundle_libs "$lib"
     done
+    bundle_libs "$FINAL_INSTALL_DIR"/bin/glaxnimate
     cmd rm *.bundled
   fi
 
@@ -1582,10 +1616,10 @@ function deploy_mac
 
   log Copying supplementary executables
   cmd mkdir -p MacOS 2>/dev/null
-  cmd cp -a "$FINAL_INSTALL_DIR"/bin/{melt,ffmpeg,ffplay,ffprobe} MacOS
+  cmd cp -a "$FINAL_INSTALL_DIR"/bin/{melt,ffmpeg,ffplay,ffprobe,glaxnimate} MacOS
   cmd mkdir -p Frameworks 2>/dev/null
   cmd cp -p ../../lib/libCuteLogger.dylib Frameworks
-  for exe in MacOS/Shotcut MacOS/melt MacOS/ffmpeg MacOS/ffplay MacOS/ffprobe; do
+  for exe in MacOS/Shotcut MacOS/melt MacOS/ffmpeg MacOS/ffplay MacOS/ffprobe MacOS/glaxnimate; do
     fixlibs "$exe"
     log fixing rpath of executable "$exe"
     cmd install_name_tool -delete_rpath "$FINAL_INSTALL_DIR/lib" "$exe" 2> /dev/null
@@ -1660,6 +1694,10 @@ function deploy_mac
   # VMAF models
   log Copying VMAF models
   cmd cp -a "$FINAL_INSTALL_DIR"/share/vmaf Resources
+
+  # Glaxnimate data
+  log Copying Glaxnimate data
+  cmd cp -a "$FINAL_INSTALL_DIR"/share/glaxnimate Resources
 
   log Fixing rpath in libraries
   cmd find . -name '*.dylib' -exec sh -c "install_name_tool -delete_rpath \"/opt/local/lib/libomp\" {} 2> /dev/null" \;
@@ -1773,7 +1811,7 @@ End-of-environment-setup-template
   cp $TMPFILE "$FINAL_INSTALL_DIR/source-me" || die "Unable to create environment script - cp failed"
 
   log Creating wrapper scripts in $TMPFILE
-  for exe in melt ffmpeg ffplay ffprobe; do
+  for exe in melt ffmpeg ffplay ffprobe glaxnimate; do
     cat > $TMPFILE <<End-of-exe-wrapper
 #!/bin/sh
 # Set up environment

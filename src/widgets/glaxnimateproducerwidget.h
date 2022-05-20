@@ -19,15 +19,64 @@
 #define GLAXNIMATEPRODUCERWIDGET_H
 
 #include <QWidget>
+#include <QPointer>
+#include <QLocalSocket>
+#include <QLocalServer>
+#include <QDataStream>
+#include <QSharedMemory>
+
 #include "abstractproducerwidget.h"
+
+class GlaxnimateIpcServer : public QObject
+{
+    Q_OBJECT
+
+    class ParentResources
+    {
+    public:
+        Mlt::Producer m_producer;
+        std::unique_ptr<Mlt::Profile> m_profile;
+        std::unique_ptr<Mlt::Producer> m_glaxnimateProducer;
+        int m_frameNum = -1;
+
+        void setProducer(const Mlt::Producer &producer, bool hideCurrentTrack);
+    };
+
+public:
+    std::unique_ptr<ParentResources> parent;
+    std::unique_ptr<QLocalServer> m_server;
+    std::unique_ptr<QDataStream> m_stream;
+    bool m_isProtocolValid = false;
+    std::unique_ptr<QSharedMemory> m_sharedMemory;
+    QPointer<QLocalSocket> m_socket;
+
+    static GlaxnimateIpcServer &instance();
+    static void newFile(const QString &filename, int duration);
+    void reset();
+    void launch(const Mlt::Producer &producer, QString filename = QString(),
+                bool hideCurrentTrack = true);
+
+private slots:
+    void onConnect();
+    void onReadyRead();
+    void onSocketError(QLocalSocket::LocalSocketError socketError);
+
+private:
+    bool copyToShared(const QImage &image);
+};
 
 namespace Ui {
 class GlaxnimateProducerWidget;
 }
 class QFileSystemWatcher;
+class QLocalServer;
+class QDataStream;
+class QSharedMemory;
 
 class GlaxnimateProducerWidget : public QWidget, public AbstractProducerWidget
 {
+    friend GlaxnimateIpcServer;
+
     Q_OBJECT
 
 public:
@@ -59,8 +108,6 @@ private slots:
     void on_durationSpinBox_editingFinished();
 
 private:
-    void launchGlaxnimate(const QString &filename);
-
     Ui::GlaxnimateProducerWidget *ui;
     QString m_title;
     std::unique_ptr<QFileSystemWatcher> m_watcher;

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2019 Meltytech, LLC
+ * Copyright (c) 2016-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -90,6 +90,8 @@ public:
     Q_INVOKABLE double getDouble(QString name, int position = -1);
     Q_INVOKABLE QRectF getRect(QString name, int position = -1);
     Q_INVOKABLE bool outOfBounds();
+    Q_INVOKABLE void newGlaxnimateFile(const QString &filename);
+    Q_INVOKABLE void launchGlaxnimate(const QString &filename = QString()) const;
 
 signals:
     void producerChanged();

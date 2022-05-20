@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2020 Meltytech, LLC
+ * Copyright (c) 2014-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,6 +20,8 @@
 
 #include <QObject>
 #include <QUrl>
+#include <QFileSystemWatcher>
+#include <memory>
 
 class QmlFile : public QObject
 {
@@ -40,11 +42,16 @@ public:
     Q_INVOKABLE bool exists();
     Q_INVOKABLE QString suffix();
 
+public slots:
+    void watch();
+
 signals:
     void urlChanged(const QUrl &url);
+    void fileChanged(const QString &path);
 
 private:
     QUrl m_url;
+    std::unique_ptr<QFileSystemWatcher> m_watcher;
 };
 
 #endif // QMLFILE_H
