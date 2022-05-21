@@ -25,6 +25,7 @@
 #include "util.h"
 #include "mltcontroller.h"
 #include "qmltypes/qmlapplication.h"
+#include "dialogs/longuitask.h"
 #include <Logger.h>
 #include <QProcess>
 #include <QFile>
@@ -33,6 +34,8 @@
 #include <QJsonArray>
 #include <QFileSystemWatcher>
 #include <QMessageBox>
+#include <QtConcurrent/QtConcurrentRun>
+#include <QFuture>
 
 static const QString kTransparent = QObject::tr("transparent", "Open Other > Animation");
 
@@ -516,7 +519,14 @@ void GlaxnimateIpcServer::launch(const Mlt::Producer &producer, QString filename
                                  bool hideCurrentTrack)
 {
     parent.reset(new ParentResources);
-    parent->setProducer(producer, hideCurrentTrack);
+
+    LongUiTask longTask(QObject::tr("Edit With Glaxnimate"));
+    auto future = QtConcurrent::run([this, &producer, &hideCurrentTrack]() {
+        parent->setProducer(producer, hideCurrentTrack);
+        return true;
+    });
+    longTask.wait<bool>(tr("Preparing Glaxnimate preview...."), future);
+
     if (filename.isEmpty()) {
         filename = QString::fromUtf8(parent->m_producer.get("resource"));
     }
