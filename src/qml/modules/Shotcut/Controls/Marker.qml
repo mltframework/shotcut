@@ -209,7 +209,7 @@ Item {
                 target: pressedButtons & Qt.LeftButton ? parent : undefined
                 axis: Drag.XAxis
                 threshold: 0
-                minimumX: endMouseArea.lockWidth == -1 ? markerStart.x + 7 : 0
+                minimumX: endMouseArea.lockWidth == -1 ? markerStart.x + 7 : endMouseArea.lockWidth - 7
                 maximumX: root.width
             }
             onPressed: {
