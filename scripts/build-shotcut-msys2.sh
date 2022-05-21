@@ -1118,6 +1118,7 @@ function deploy
   cmd rm *.bundled
 
   log Copying some DLLs and python libraries for Glaxnimate
+  cmd cp -p /mingw64/bin/libpython3.10.dll python310.dll
   cmd cp -p "$SOURCE_DIR"/glaxnimate/external/Qt-Color-Widgets/libQtColorWidgets.dll .
   cmd mkdir -p share/glaxnimate/glaxnimate/pythonhome/lib/python
   cmd cp -r /mingw64/lib/python3.10/*.py \
