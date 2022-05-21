@@ -392,7 +392,6 @@ void GlaxnimateIpcServer::onConnect()
     m_stream.reset(new QDataStream(m_socket.data()));
     m_stream->setVersion(QDataStream::Qt_5_15);
     *m_stream << QString("hello");
-
     m_socket->flush();
     m_server->close();
     m_isProtocolValid = false;
@@ -406,6 +405,7 @@ void GlaxnimateIpcServer::onReadyRead()
         LOG_DEBUG() << message;
         if (message.startsWith("version ") && message != "version 1") {
             *m_stream << QString("bye");
+            m_socket->flush();
             m_server->close();
         } else {
             m_isProtocolValid = true;
@@ -507,6 +507,7 @@ void GlaxnimateIpcServer::reset()
 {
     if (m_stream) {
         *m_stream << QString("clear");
+        m_socket->flush();
     }
     parent.reset();
 }
@@ -519,17 +520,16 @@ void GlaxnimateIpcServer::launch(const Mlt::Producer &producer, QString filename
     if (filename.isEmpty()) {
         filename = QString::fromUtf8(parent->m_producer.get("resource"));
     }
-    //XXX Glaxnimate on Windows is not respond to open messages.
-#ifndef Q_OS_WIN
+
     if (m_server && m_socket && m_stream && QLocalSocket::ConnectedState == m_socket->state()) {
-        auto s = QString("open ").append(filename).append("\r");
+        auto s = QString("open ").append(filename);
         LOG_DEBUG() << s;
         *m_stream << s;
         m_socket->flush();
         parent->m_frameNum = -1;
         return;
     }
-#endif
+
     m_server.reset(new QLocalServer);
     connect(m_server.get(), &QLocalServer::newConnection, this, &GlaxnimateIpcServer::onConnect);
     QString name = "shotcut-%1";
@@ -548,6 +548,7 @@ void GlaxnimateIpcServer::launch(const Mlt::Producer &producer, QString filename
             return;
         } else {
             // This glaxnimate executable may not support --ipc
+            //XXX startDetached is not failing in this case, need something better
             m_server.reset();
             args.clear();
             args << filename;
