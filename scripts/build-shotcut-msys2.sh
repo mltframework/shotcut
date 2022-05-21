@@ -1228,9 +1228,8 @@ function deploy
     pushd .
     clean_dirs
     popd
-    log Copying src
-    cmd rm -rf src 2> /dev/null
-    cmd cp -a $SOURCE_DIR .
+    log Moving src
+    cmd mv $SOURCE_DIR .
 
     log Creating archive
     cmd cd ..
