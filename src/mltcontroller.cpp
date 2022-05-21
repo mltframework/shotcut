@@ -1003,7 +1003,7 @@ void Controller::copyFilters(Producer &fromProducer, Producer &toProducer, bool 
                 }
                 if (!metadata->allowMultiple()) {
                     std::unique_ptr<Mlt::Filter> existing(getFilter(metadata->uniqueId(), &toProducer));
-                    if (existing) {
+                    if (existing && !existing->get_int("_loader")) {
                         continue;
                     }
                 }
