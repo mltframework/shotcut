@@ -2027,7 +2027,11 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
             m_playlistDock->show();
             m_playlistDock->raise();
             m_playlistDock->on_actionSelectAll_triggered();
-        } else if (event->modifiers() == Qt::ControlModifier) {
+        } else if ((event->modifiers() & Qt::ControlModifier) && (event->modifiers() & Qt::AltModifier)) {
+            m_timelineDock->show();
+            m_timelineDock->raise();
+            m_timelineDock->selectAllOnCurrentTrack();
+        }  else if (event->modifiers() == Qt::ControlModifier) {
             m_timelineDock->show();
             m_timelineDock->raise();
             m_timelineDock->selectAll();

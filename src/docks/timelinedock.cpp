@@ -1169,6 +1169,19 @@ void TimelineDock::selectAll()
     setSelection(selection);
 }
 
+void TimelineDock::selectAllOnCurrentTrack()
+{
+    int y = currentTrack();
+    QList<QPoint> selection;
+    if (y > -1 && y < m_model.rowCount()) {
+        for (int x = 0; x < m_model.rowCount(m_model.index(y)); x++) {
+            if (!isBlank(y, x) && !isTrackLocked(y))
+                selection << QPoint(x, y);
+        }
+    }
+    setSelection(selection);
+}
+
 bool TimelineDock::blockSelection(bool block)
 {
     m_blockSetSelection = block;

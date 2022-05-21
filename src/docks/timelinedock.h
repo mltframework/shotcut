@@ -193,6 +193,7 @@ public slots:
                      int row);
     void detachAudio(int trackIndex, int clipIndex);
     void selectAll();
+    void selectAllOnCurrentTrack();
     bool blockSelection(bool block);
     void onProducerModified();
     void replace(int trackIndex, int clipIndex, const QString &xml = QString());
