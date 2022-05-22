@@ -141,7 +141,10 @@ Item {
             }
             Shotcut.Button {
                 text: qsTr('Reload')
-                onClicked: filter.set('filter.producer.refresh', 1)
+                onClicked: {
+                    filter.set('filter.producer.refresh', 1)
+                    producer.launchGlaxnimate(filter.get('filter.resource'))
+                }
             }
         }
         Item { width: 1 }
