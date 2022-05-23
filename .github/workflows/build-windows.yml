@@ -99,7 +99,7 @@ jobs:
           osslsigncode sign -pkcs12 CodeSignCertificates.p12 -readpass CodeSignCertificates.pass -n "Shotcut" -i "https://www.meltytech.com" -t "http://timestamp.digicert.com" -in Shotcut/shotcut.exe -out Shotcut/shotcut-signed.exe
           mv Shotcut/shotcut-signed.exe Shotcut/shotcut.exe
           echo Signing glaxnimate.exe
-          osslsigncode sign -pkcs12 CodeSignCertificates.p12 -readpass CodeSignCertificates.pass -n "Shotcut" -i "https://www.meltytech.com" -t "http://timestamp.digicert.com" -in Shotcut/shotcut.exe -out Shotcut/glaxnimate-signed.exe
+          osslsigncode sign -pkcs12 CodeSignCertificates.p12 -readpass CodeSignCertificates.pass -n "Shotcut" -i "https://www.meltytech.com" -t "http://timestamp.digicert.com" -in Shotcut/glaxnimate.exe -out Shotcut/glaxnimate-signed.exe
           mv Shotcut/glaxnimate-signed.exe Shotcut/glaxnimate.exe
           echo Packaging the portable zip
           zip -gr shotcut-win64-$FILENAME_VERSION.zip Shotcut
