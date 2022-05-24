@@ -1035,7 +1035,7 @@ void MainWindow::setupOpenOtherMenu()
             otherMenu->addAction(tr("Text"), this, SLOT(onOpenOtherTriggered()))->setObjectName("text");
     }
     if (mltProducers->get_data("glaxnimate"))
-        otherMenu->addAction(tr("Animation"), this,
+        otherMenu->addAction(tr("Animation") + " (Glaxnimate)", this,
                              SLOT(onOpenOtherTriggered()))->setObjectName("glaxnimate");
     if (mltProducers->get_data("noise"))
         otherMenu->addAction(tr("Noise"), this, SLOT(onOpenOtherTriggered()))->setObjectName("noise");
