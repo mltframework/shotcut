@@ -508,7 +508,7 @@ void GlaxnimateIpcServer::newFile(const QString &filename, int duration)
 
 void GlaxnimateIpcServer::reset()
 {
-    if (m_stream) {
+    if (m_stream && m_socket && m_stream && QLocalSocket::ConnectedState == m_socket->state()) {
         *m_stream << QString("clear");
         m_socket->flush();
     }
