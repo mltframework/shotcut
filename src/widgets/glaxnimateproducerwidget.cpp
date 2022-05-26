@@ -331,6 +331,7 @@ void GlaxnimateProducerWidget::onFileChanged(const QString &path)
         m_title = caption;
         m_producer->set("refresh", 1);
         MLT.refreshConsumer();
+        ui->durationSpinBox->setValue(m_producer->get_length());
     }
 }
 
@@ -339,6 +340,7 @@ void GlaxnimateProducerWidget::on_reloadButton_clicked()
     if (m_producer && m_producer->is_valid()) {
         m_producer->set("refresh", 1);
         MLT.refreshConsumer();
+        ui->durationSpinBox->setValue(m_producer->get_length());
     }
 }
 
@@ -400,6 +402,11 @@ void GlaxnimateIpcServer::onConnect()
     m_isProtocolValid = false;
 }
 
+int GlaxnimateIpcServer::toMltFps(float frame) const
+{
+    return qRound(frame / parent->m_producer.get_double("meta.media.frame_rate") * MLT.profile().fps());
+}
+
 void GlaxnimateIpcServer::onReadyRead()
 {
     if (!m_isProtocolValid) {
@@ -424,7 +431,8 @@ void GlaxnimateIpcServer::onReadyRead()
             return;
 
         // Only if the frame number is different
-        int frameNum = parent->m_producer.get_int(kPlaylistStartProperty) + qRound(time);
+        int frameNum = parent->m_producer.get_int(kPlaylistStartProperty) + toMltFps(
+                           time) - parent->m_producer.get_int("first_frame");
         if (frameNum != parent->m_frameNum) {
             LOG_DEBUG() << "glaxnimate time =" << time;
 

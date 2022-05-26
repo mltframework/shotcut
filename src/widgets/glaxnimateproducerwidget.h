@@ -62,6 +62,7 @@ private slots:
     void onSocketError(QLocalSocket::LocalSocketError socketError);
 
 private:
+    int toMltFps(float frame) const;
     bool copyToShared(const QImage &image);
 };
 
