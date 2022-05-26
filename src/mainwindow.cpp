@@ -4733,6 +4733,9 @@ void MainWindow::onOpenOtherTriggered(QWidget *widget)
         closeProducer();
         auto &profile = MLT.profile();
         auto producer = dynamic_cast<AbstractProducerWidget *>(widget)->newProducer(profile);
+        if (!(producer && producer->is_valid())) {
+            return;
+        }
         if (!profile.is_explicit()) {
             profile.from_producer(*producer);
             profile.set_width(Util::coerceMultiple(profile.width()));
