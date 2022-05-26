@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2021 Meltytech, LLC
+ * Copyright (c) 2011-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -47,7 +47,7 @@ extern "C"
 
 static const int kMaxCacheCount = 5000;
 #ifdef Q_OS_WIN
-static const char *kDefaultScaleRoundPolicy = "RoundPreferFloor";
+static const char *kDefaultScaleRoundPolicy = "PassThrough";
 #else
 static const char *kDefaultScaleRoundPolicy = "Round";
 #endif
