@@ -652,6 +652,10 @@ Rectangle {
                 onTriggered: timeline.selectAll()
             }
             MenuItem {
+                text: qsTr('Select All On Current Track') + (application.OS === 'OS X'? '    ⌥⌘A' : ' (Ctrl+Alt+A)')
+                onTriggered: timeline.selectAllOnCurrentTrack()
+            }
+            MenuItem {
                 text: qsTr('Select None') + (application.OS === 'OS X'? '    ⌘D' : ' (Ctrl+D)')
                 onTriggered: {
                     timeline.selection = []
