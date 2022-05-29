@@ -9619,7 +9619,7 @@ Most users do not need to change this.</source>
     </message>
     <message>
         <location filename="../src/qml/filters/mask_glaxnimate/meta.qml" line="6"/>
-        <source>Mask: Rotoscope</source>
+        <source>Mask: Draw</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
