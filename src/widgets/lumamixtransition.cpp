@@ -36,19 +36,28 @@ LumaMixTransition::LumaMixTransition(Mlt::Producer &producer, QWidget *parent)
 {
     ui->setupUi(this);
     Util::setColorsToHighlight(ui->label_2);
+    m_maxStockIndex = ui->lumaCombo->count() - 1;
+    QDir dir(Settings.appDataLocation());
+    if (dir.cd("wipes")) {
+        for (auto &s : dir.entryList(QDir::Files | QDir::Readable)) {
+            auto i = new QListWidgetItem(s);
+            i->setData(Qt::UserRole, dir.filePath(s));
+            ui->lumaCombo->addItem(i);
+        }
+    }
 
     QScopedPointer<Mlt::Transition> transition(getTransition("luma"));
     if (transition && transition->is_valid()) {
         QString resource = transition->get("resource");
         if (!resource.isEmpty() && resource.indexOf("%luma") != -1) {
-            ui->lumaCombo->setCurrentIndex(resource.midRef(resource.indexOf("%luma") + 5).left(2).toInt() + 1);
+            ui->lumaCombo->setCurrentRow(resource.midRef(resource.indexOf("%luma") + 5).left(2).toInt() + 1);
         } else if (!resource.isEmpty() && resource.startsWith("color:")) {
-            ui->lumaCombo->setCurrentIndex(kLumaComboCutIndex);
+            ui->lumaCombo->setCurrentRow(kLumaComboCutIndex);
             ui->softnessLabel->setText(tr("Position"));
             ui->softnessSlider->setValue(qRound(QColor(resource.mid(6)).redF() * 100.0));
             ui->invertCheckBox->setDisabled(true);
         } else if (!resource.isEmpty()) {
-            ui->lumaCombo->setCurrentIndex(kLumaComboCustomIndex);
+            ui->lumaCombo->setCurrentRow(kLumaComboCustomIndex);
         } else {
             ui->invertCheckBox->setDisabled(true);
             ui->softnessSlider->setDisabled(true);
@@ -99,7 +108,7 @@ void LumaMixTransition::on_softnessSlider_valueChanged(int value)
 {
     QScopedPointer<Mlt::Transition> transition(getTransition("luma"));
     if (transition && transition->is_valid()) {
-        if (kLumaComboCutIndex == ui->lumaCombo->currentIndex()) {
+        if (kLumaComboCutIndex == ui->lumaCombo->currentRow()) {
             setColor(transition.data(), value);
         } else {
             transition->set("softness", value / 100.0);
@@ -156,7 +165,8 @@ Mlt::Transition *LumaMixTransition::getTransition(const QString &name)
 void LumaMixTransition::updateCustomLumaLabel(Mlt::Transition &transition)
 {
     QString resource = transition.get("resource");
-    if (resource.isEmpty() || resource.indexOf("%luma") != -1 || resource.startsWith("color:")) {
+    if (resource.isEmpty() || resource.indexOf("%luma") != -1 || resource.startsWith("color:")
+            || ui->lumaCombo->currentRow() > m_maxStockIndex) {
         ui->customLumaLabel->hide();
         ui->customLumaLabel->setToolTip(QString());
     } else if (!resource.isEmpty() && !resource.startsWith("color:")) {
@@ -166,7 +176,7 @@ void LumaMixTransition::updateCustomLumaLabel(Mlt::Transition &transition)
     }
 }
 
-void LumaMixTransition::on_lumaCombo_activated(int index)
+void LumaMixTransition::on_lumaCombo_currentRowChanged(int index)
 {
     if (index == kLumaComboDissolveIndex || index == kLumaComboCutIndex) {
         on_invertCheckBox_clicked(false);
@@ -200,6 +210,12 @@ void LumaMixTransition::on_lumaCombo_activated(int index)
                 Util::getHash(*transition);
                 Settings.setOpenPath(QFileInfo(filename).path());
             }
+        } else if (index > m_maxStockIndex) {
+            // Custom file in app data dir
+            auto filename = ui->lumaCombo->item(index)->data(Qt::UserRole).toString();
+            ui->softnessLabel->setText(tr("Softness"));
+            transition->set("resource", filename.toUtf8().constData());
+            Util::getHash(*transition);
         } else {
             ui->softnessLabel->setText(tr("Softness"));
             transition->set("resource", QString("%luma%1.pgm").arg(index - 1, 2, 10,

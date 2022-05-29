@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2020 Meltytech, LLC
+ * Copyright (c) 2014-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -48,11 +48,12 @@ private slots:
 
     void on_mixSlider_valueChanged(int value);
 
-    void on_lumaCombo_activated(int index);
+    void on_lumaCombo_currentRowChanged(int index);
 
 private:
     Ui::LumaMixTransition *ui;
     Mlt::Producer m_producer;
+    int m_maxStockIndex;
 
     Mlt::Transition *getTransition(const QString &name);
     void updateCustomLumaLabel(Mlt::Transition &transition);
