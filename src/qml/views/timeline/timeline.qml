@@ -620,12 +620,12 @@ Rectangle {
             }
             MenuItem {
                 text: qsTr('Move Track Up') + (application.OS === 'OS X'? '    ⌥⇧↑' : ' (Alt+Shift+↑)')
-                enabled: !trackHeaderRepeater.itemAt(timeline.currentTrack).isTopVideo && !trackHeaderRepeater.itemAt(timeline.currentTrack).isTopAudio
+                enabled: trackHeaderRepeater.count < 2 ? false : !trackHeaderRepeater.itemAt(timeline.currentTrack).isTopVideo && !trackHeaderRepeater.itemAt(timeline.currentTrack).isTopAudio
                 onTriggered: timeline.moveTrackUp()
             }
             MenuItem {
                 text: qsTr('Move Track Down') + (application.OS === 'OS X'? '    ⌥⇧↓' : ' (Alt+Shift+↓)')
-                enabled: !trackHeaderRepeater.itemAt(timeline.currentTrack).isBottomVideo && !trackHeaderRepeater.itemAt(timeline.currentTrack).isBottomAudio
+                enabled: trackHeaderRepeater.count < 2 ? false : !trackHeaderRepeater.itemAt(timeline.currentTrack).isBottomVideo && !trackHeaderRepeater.itemAt(timeline.currentTrack).isBottomAudio
                 onTriggered: timeline.moveTrackDown()
             }
         }
