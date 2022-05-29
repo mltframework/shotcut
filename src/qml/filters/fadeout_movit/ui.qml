@@ -45,7 +45,7 @@ Item {
 
     Connections {
         target: filter
-        onAnimateOutChanged: duration = filter.animateOut
+        function onAnimateOutChanged() { duration = filter.animateOut }
     }
 
     function updateFilter() {

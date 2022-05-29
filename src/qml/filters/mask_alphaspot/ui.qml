@@ -370,17 +370,17 @@ Item {
 
     Connections {
         target: filter
-        onChanged: setControls()
-        onInChanged: updatedSimpleAnimation()
-        onOutChanged: updatedSimpleAnimation()
-        onAnimateInChanged: updatedSimpleAnimation()
-        onAnimateOutChanged: updatedSimpleAnimation()
-        onPropertyChanged: setControls()
+        function onChanged() { setControls() }
+        function onInChanged() { updatedSimpleAnimation() }
+        function onOutChanged() { updatedSimpleAnimation() }
+        function onAnimateInChanged() { updatedSimpleAnimation() }
+        function onAnimateOutChanged() { updatedSimpleAnimation() }
+        function onPropertyChanged(name) { setControls() }
     }
 
     Connections {
         target: producer
-        onPositionChanged: {
+        function onPositionChanged() {
             if (filter.animateIn > 0 || filter.animateOut > 0) {
                 setControls()
             } else {

@@ -46,15 +46,6 @@ Item {
         updateProperty_interpolation ()
     }
 
-    Connections {
-        target: filter
-        onChanged: setControls()
-        onInChanged: updateSimpleKeyframes()
-        onOutChanged: updateSimpleKeyframes()
-        onAnimateInChanged: updateSimpleKeyframes()
-        onAnimateOutChanged: updateSimpleKeyframes()
-    }
-
     Component.onCompleted: {
         if (filter.isNew) { filter.set("yaw", 0); } else { yawMiddle = filter.getDouble("yaw", filter.animateIn); if (filter.animateIn > 0) { yawStart = filter.getDouble("yaw", 0); } if (filter.animateOut > 0) { yawEnd = filter.getDouble("yaw", filter.duration - 1); } }
         if (filter.isNew) { filter.set("pitch", -90); } else { pitchMiddle = filter.getDouble("pitch", filter.animateIn); if (filter.animateIn > 0) { pitchStart = filter.getDouble("pitch", 0); } if (filter.animateOut > 0) { pitchEnd = filter.getDouble("pitch", filter.duration - 1); } }
@@ -238,11 +229,16 @@ Item {
 
     Connections {
         target: filter
-        onPropertyChanged: setControls()
+        function onChanged() { setControls() }
+        function onInChanged() { updateSimpleKeyframes() }
+        function onOutChanged() { updateSimpleKeyframes() }
+        function onAnimateInChanged() { updateSimpleKeyframes() }
+        function onAnimateOutChanged() { updateSimpleKeyframes() }
+        function onPropertyChanged(name) { setControls() }
     }
 
     Connections {
         target: producer
-        onPositionChanged: setControls()
+        function onPositionChanged() { setControls() }
     }
 }

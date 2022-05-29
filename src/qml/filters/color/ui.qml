@@ -533,12 +533,12 @@ Item {
 
     Connections {
         target: producer
-        onPositionChanged: loadValues()
+        function onPositionChanged() { loadValues() }
     }
 
     Connections {
         target: parameters
-        onKeyframeAdded: {
+        function onKeyframeAdded(parameter, position) {
             switch (parameter) {
             case 'lift_r':
                 filter.set('lift_r', liftwheel.redF * 2.0 - 1.0, position)

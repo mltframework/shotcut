@@ -223,16 +223,16 @@ Item {
 
     Connections {
         target: filter
-        onChanged: setControls()
-        onInChanged: updateSimpleAnimation()
-        onOutChanged: updateSimpleAnimation()
-        onAnimateInChanged: updateSimpleAnimation()
-        onAnimateOutChanged: updateSimpleAnimation()
-        onPropertyChanged: setControls()
+        function onChanged() { setControls() }
+        function onInChanged() { updateSimpleKeyframes() }
+        function onOutChanged() { updateSimpleKeyframes() }
+        function onAnimateInChanged() { updateSimpleKeyframes() }
+        function onAnimateOutChanged() { updateSimpleKeyframes() }
+        function onPropertyChanged(name) { setControls() }
     }
 
     Connections {
         target: producer
-        onPositionChanged: setControls()
+        function onPositionChanged() { setControls() }
     }
 }

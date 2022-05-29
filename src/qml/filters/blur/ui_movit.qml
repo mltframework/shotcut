@@ -149,15 +149,17 @@ Item {
 
     Connections {
         target: filter
-        onInChanged: updateFilter(null)
-        onOutChanged: updateFilter(null)
-        onAnimateInChanged: updateFilter(null)
-        onAnimateOutChanged: updateFilter(null)
+        function onChanged() { setControls() }
+        function onInChanged() { updateFilter(null) }
+        function onOutChanged() { updateFilter(null) }
+        function onAnimateInChanged() { updateFilter(null) }
+        function onAnimateOutChanged() { updateFilter(null) }
+        function onPropertyChanged(name) { setControls() }
     }
 
     Connections {
         target: producer
-        onPositionChanged: {
+        function onPositionChanged() {
             if (filter.animateIn > 0 || filter.animateOut > 0) {
                 setControls()
             } else {

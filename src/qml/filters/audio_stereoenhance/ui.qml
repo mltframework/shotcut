@@ -20,7 +20,7 @@ import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 import Shotcut.Controls 1.0 as Shotcut
 
-Shotcut.KeyframableFilter {
+Item{
     property bool blockControls: false
 
     width: 200
@@ -56,14 +56,12 @@ Shotcut.KeyframableFilter {
 
     function setControls() {
         if (blockControls) return
-        blockUpdate = true
         sliderLeftDelay.value = filter.getDouble('av.left_delay')
         sliderLeftLevel.value = toDb(filter.getDouble('av.left_gain'))
         sliderRightDelay.value = filter.getDouble('av.right_delay')
         sliderRightLevel.value = toDb(filter.getDouble('av.right_gain'))
         sliderOutputLevel.value = toDb(filter.getDouble('av.level_out'))
         sourceCombo.currentIndex = sourceCombo.valueToIndex()
-        blockUpdate = false
     }
 
     GridLayout {
@@ -224,9 +222,9 @@ Shotcut.KeyframableFilter {
 
     Connections {
         target: filter
-        onChanged: setControls()
-        onInChanged: setControls()
-        onOutChanged: setControls()
-        onPropertyChanged: setControls()
+        function onChanged() { setControls() }
+        function onInChanged() { setControls() }
+        function onOutChanged() { setControls() }
+        function onPropertyChanged(name) { setControls() }
     }
 }

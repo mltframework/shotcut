@@ -197,16 +197,16 @@ Item {
 
     Connections {
         target: filter
-        onChanged: setControls()
-        onInChanged: updateSimpleAnimation()
-        onOutChanged: updateSimpleAnimation()
-        onAnimateInChanged: updateSimpleAnimation()
-        onAnimateOutChanged: updateSimpleAnimation()
-        onPropertyChanged: setControls()
+        function onChanged() { setControls() }
+        function onInChanged() { updateSimpleAnimation() }
+        function onOutChanged() { updateSimpleAnimation() }
+        function onAnimateInChanged() { updateSimpleAnimation() }
+        function onAnimateOutChanged() { updateSimpleAnimation() }
+        function onPropertyChanged(name) { setControls() }
     }
 
     Connections {
         target: producer
-        onPositionChanged: setControls()
+        function onPositionChanged() { setControls() }
     }
 }

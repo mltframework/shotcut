@@ -217,21 +217,22 @@ Item {
 
     Connections {
         target: filter
-        onChanged: setControls()
-        onInChanged: updateFilter(null)
-        onOutChanged: updateFilter(null)
-        onAnimateInChanged: updateFilter(null)
-        onAnimateOutChanged: updateFilter(null)
+        function onChanged() { setControls() }
+        function onInChanged() { updateFilter(null) }
+        function onOutChanged() { updateFilter(null) }
+        function onAnimateInChanged() { updateFilter(null) }
+        function onAnimateOutChanged() { updateFilter(null) }
+        function onPropertyChanged(name) { setControls() }
     }
 
     Connections {
         target: producer
-        onPositionChanged: setControls()
+        function onPositionChanged() { setControls() }
     }
 
     Connections {
         target: parameters
-        onKeyframeAdded: {
+        function onKeyframeAdded(parameter, position) {
             middleValue = filter.getDouble(parameter, position) / gainFactor
             filter.set("gain_r", middleValue * gainFactor, position)
             filter.set("gain_g", middleValue * gainFactor, position)

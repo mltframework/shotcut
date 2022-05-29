@@ -29,23 +29,6 @@ Item {
     property double timeBiasRollValue : 0.0;
     property double clipOffsetValue: 0.0;
 
-    Connections { target: filter; onChanged: setControls(); onInChanged: { updateProperty_interpolation (); } onOutChanged: { updateProperty_interpolation (); } onAnimateInChanged: { updateProperty_interpolation (); } onAnimateOutChanged: { updateProperty_interpolation (); } }
-    Connections { target: filter; onChanged: setControls(); }
-    Connections { target: filter; onChanged: setControls(); onInChanged: { updateProperty_sampleRadius (null); } onOutChanged: { updateProperty_sampleRadius (null); } onAnimateInChanged: { updateProperty_sampleRadius (null); } onAnimateOutChanged: { updateProperty_sampleRadius (null); } }
-    Connections { target: filter; onChanged: setControls(); onInChanged: { updateProperty_searchRadius (null); } onOutChanged: { updateProperty_searchRadius (null); } onAnimateInChanged: { updateProperty_searchRadius (null); } onAnimateOutChanged: { updateProperty_searchRadius (null); } }
-    Connections { target: filter; onChanged: setControls(); onInChanged: { updateProperty_offset (null); } onOutChanged: { updateProperty_offset (null); } onAnimateInChanged: { updateProperty_offset (null); } onAnimateOutChanged: { updateProperty_offset (null); } }
-    Connections { target: filter; onChanged: setControls(); }
-    Connections { target: filter; onChanged: setControls(); }
-    Connections { target: filter; onChanged: setControls(); onInChanged: { updateProperty_stabilizeYaw (null); } onOutChanged: { updateProperty_stabilizeYaw (null); } onAnimateInChanged: { updateProperty_stabilizeYaw (null); } onAnimateOutChanged: { updateProperty_stabilizeYaw (null); } }
-    Connections { target: filter; onChanged: setControls(); onInChanged: { updateProperty_stabilizePitch (null); } onOutChanged: { updateProperty_stabilizePitch (null); } onAnimateInChanged: { updateProperty_stabilizePitch (null); } onAnimateOutChanged: { updateProperty_stabilizePitch (null); } }
-    Connections { target: filter; onChanged: setControls(); onInChanged: { updateProperty_stabilizeRoll (null); } onOutChanged: { updateProperty_stabilizeRoll (null); } onAnimateInChanged: { updateProperty_stabilizeRoll (null); } onAnimateOutChanged: { updateProperty_stabilizeRoll (null); } }
-    Connections { target: filter; onChanged: setControls(); onInChanged: { updateProperty_smoothYaw (null); } onOutChanged: { updateProperty_smoothYaw (null); } onAnimateInChanged: { updateProperty_smoothYaw (null); } onAnimateOutChanged: { updateProperty_smoothYaw (null); } }
-    Connections { target: filter; onChanged: setControls(); onInChanged: { updateProperty_smoothPitch (null); } onOutChanged: { updateProperty_smoothPitch (null); } onAnimateInChanged: { updateProperty_smoothPitch (null); } onAnimateOutChanged: { updateProperty_smoothPitch (null); } }
-    Connections { target: filter; onChanged: setControls(); onInChanged: { updateProperty_smoothRoll (null); } onOutChanged: { updateProperty_smoothRoll (null); } onAnimateInChanged: { updateProperty_smoothRoll (null); } onAnimateOutChanged: { updateProperty_smoothRoll (null); } }
-    Connections { target: filter; onChanged: setControls(); onInChanged: { updateProperty_timeBiasYaw (null); } onOutChanged: { updateProperty_timeBiasYaw (null); } onAnimateInChanged: { updateProperty_timeBiasYaw (null); } onAnimateOutChanged: { updateProperty_timeBiasYaw (null); } }
-    Connections { target: filter; onChanged: setControls(); onInChanged: { updateProperty_timeBiasPitch (null); } onOutChanged: { updateProperty_timeBiasPitch (null); } onAnimateInChanged: { updateProperty_timeBiasPitch (null); } onAnimateOutChanged: { updateProperty_timeBiasPitch (null); } }
-    Connections { target: filter; onChanged: setControls(); onInChanged: { updateProperty_timeBiasRoll (null); } onOutChanged: { updateProperty_timeBiasRoll (null); } onAnimateInChanged: { updateProperty_timeBiasRoll (null); } onAnimateOutChanged: { updateProperty_timeBiasRoll (null); } }
-
     Component.onCompleted: {
         if (filter.isNew) { filter.set("analyze", false); } else { analyzeValue = filter.get("analyze"); }
         if (filter.isNew) { filter.set("transformWhenAnalyzing", true); } else { transformWhenAnalyzingValue = filter.get("transformWhenAnalyzing"); }
@@ -554,11 +537,16 @@ Item {
 
     Connections {
         target: filter
-        onPropertyChanged: setControls()
+        function onChanged() { setControls() }
+        function onInChanged() { setControls() }
+        function onOutChanged() { setControls() }
+        function onAnimateInChanged() { setControls() }
+        function onAnimateOutChanged() { setControls() }
+        function onPropertyChanged(name) { setControls() }
     }
 
     Connections {
         target: producer
-        onPositionChanged: setControls()
+        function onPositionChanged() { setControls() }
     }
 }

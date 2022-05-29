@@ -155,18 +155,19 @@ Shotcut.KeyframableFilter {
             Layout.fillHeight: true
         }
     }
+
     Connections {
         target: filter
-        onChanged: setControls()
-        onInChanged: updateSimpleKeyframes()
-        onOutChanged: updateSimpleKeyframes()
-        onAnimateInChanged: updateSimpleKeyframes()
-        onAnimateOutChanged: updateSimpleKeyframes()
-        onPropertyChanged: setControls()
+        function onChanged() { setControls() }
+        function onInChanged() { updateSimpleKeyframes() }
+        function onOutChanged() { updateSimpleKeyframes() }
+        function onAnimateInChanged() { updateSimpleKeyframes() }
+        function onAnimateOutChanged() { updateSimpleKeyframes() }
+        function onPropertyChanged(name) { setControls() }
     }
 
     Connections {
         target: producer
-        onPositionChanged: setControls()
+        function onPositionChanged() { setControls() }
     }
 }

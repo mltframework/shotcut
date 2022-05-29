@@ -126,7 +126,7 @@ Rectangle {
 
     Connections {
         target: profile
-        onProfileChanged: {
+        function onProfileChanged() {
             // Force a repeater model change to update the labels.
             ++adjustment
             --adjustment

@@ -77,6 +77,10 @@ Item {
     function updateFilter(parameter, value, button, position) {
         if (blockUpdate) return
         var index = keyframableParameters.indexOf(parameter)
+        if (index < 0) {
+            console.log("ERROR: Parameter not found in keyframableParameters:", parameter)
+            return
+        }
 
         if (position !== null) {
             if (position <= 0 && filter.animateIn > 0)

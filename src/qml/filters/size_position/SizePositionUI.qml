@@ -23,7 +23,7 @@ import Shotcut.Controls 1.0 as Shotcut
 Item {
     property string fillProperty
     property string distortProperty
-    property string legacyRectProperty: null
+    property string legacyRectProperty: ''
     property string rectProperty
     property string valignProperty
     property string halignProperty
@@ -209,7 +209,7 @@ Item {
             filter.get(rectProperty)
             filter.savePreset(preset.parameters)
         } else {
-            if (legacyRectProperty !== null) {
+            if (legacyRectProperty !== '') {
                 var old = filter.get(legacyRectProperty)
                 if (old && old.length > 0) {
                     filter.resetProperty(legacyRectProperty)
@@ -851,22 +851,22 @@ Item {
 
     Connections {
         target: filter
-        onChanged: setKeyframedControls()
-        onInChanged: updateSimpleKeyframes()
-        onOutChanged: updateSimpleKeyframes()
-        onAnimateInChanged: updateSimpleKeyframes()
-        onAnimateOutChanged: updateSimpleKeyframes()
-        onPropertyChanged: setKeyframedControls()
+        function onChanged() { setKeyframedControls() }
+        function onInChanged() { updateSimpleKeyframes() }
+        function onOutChanged() { updateSimpleKeyframes() }
+        function onAnimateInChanged() { updateSimpleKeyframes() }
+        function onAnimateOutChanged() { updateSimpleKeyframes() }
+        function onPropertyChanged() { setKeyframedControls() }
     }
 
     Connections {
         target: producer
-        onPositionChanged: setKeyframedControls()
+        function onPositionChanged() { setKeyframedControls() }
     }
 
     Connections {
         target: parameters
-        onKeyframeAdded: {
+        function onKeyframeAdded() {
             if (parameter == rotationProperty) {
                 var n = filter.getDouble(parameter, position)
                 filter.set(parameter, n, position)

@@ -26,7 +26,7 @@ Shotcut.VuiBase {
 
     Connections {
         target: filter
-        onChanged: mouseArea.enabled = filter.get('disable') !== '1'
+        function onChanged() { mouseArea.enabled = filter.get('disable') !== '1' }
     }
 
     MouseArea {

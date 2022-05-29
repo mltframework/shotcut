@@ -483,15 +483,15 @@ body { font-family:%1; font-size:72pt; font-weight:600; font-style:normal; color
 
     Connections {
         target: filter
-        onChanged: setKeyframedControls()
-        onInChanged: updateFilter(null)
-        onOutChanged: updateFilter(null)
-        onAnimateInChanged: updateFilter(null)
-        onAnimateOutChanged: updateFilter(null)
+        function onChanged() { setKeyframedControls() }
+        function onInChanged() { updateFilter(null) }
+        function onOutChanged() { updateFilter(null) }
+        function onAnimateInChanged() { updateFilter(null) }
+        function onAnimateOutChanged() { updateFilter(null) }
     }
 
     Connections {
         target: producer
-        onPositionChanged: setKeyframedControls()
+        function onPositionChanged() { setKeyframedControls() }
     }
 }

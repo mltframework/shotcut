@@ -350,7 +350,7 @@ Shotcut.VuiBase {
 
     Connections {
         target: filter
-        onChanged: {
+        function onChanged() {
             setCornersControl()
             videoItem.enabled = filter.get('disable') !== '1'
         }
@@ -358,12 +358,12 @@ Shotcut.VuiBase {
 
     Connections {
         target: producer
-        onPositionChanged: setCornersControl()
+        function onPositionChanged() { setCornersControl() }
     }
     
     Connections {
         target: video
-        onRectChanged: setCornersControl()
+        function onRectChanged() { setCornersControl() }
     }
 }
 

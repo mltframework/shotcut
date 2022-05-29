@@ -31,15 +31,6 @@ Item {
         updateProperty_interpolation()
     }
 
-    Connections {
-        target: filter
-        onChanged: setControls()
-        onInChanged: updateSimpleKeyframes()
-        onOutChanged: updateSimpleKeyframes()
-        onAnimateInChanged: updateSimpleKeyframes()
-        onAnimateOutChanged: updateSimpleKeyframes()
-    }
-
     Component.onCompleted: {
         if (filter.isNew) { filter.set("hfov", 90); } else { hfovMiddle = filter.getDouble("hfov", filter.animateIn); if (filter.animateIn > 0) { hfovStart = filter.getDouble("hfov", 0); } if (filter.animateOut > 0) { hfovEnd = filter.getDouble("hfov", filter.duration - 1); } }
         if (filter.isNew) { filter.set("vfov", 60); } else { vfovMiddle = filter.getDouble("vfov", filter.animateIn); if (filter.animateIn > 0) { vfovStart = filter.getDouble("vfov", 0); } if (filter.animateOut > 0) { vfovEnd = filter.getDouble("vfov", filter.duration - 1); } }
@@ -57,7 +48,7 @@ Item {
         hfovSlider.value = filter.getDouble("hfov", position)
         hfovKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount("hfov") > 0
         vfovSlider.value = filter.getDouble("vfov", position)
-        VfovKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount("vfov") > 0
+        vfovKeyframesButton.checked = filter.animateIn <= 0 && filter.animateOut <= 0 && filter.keyframeCount("vfov") > 0
         interpolationComboBox.currentIndex = filter.get("interpolation")
         blockUpdate = false
     }
@@ -152,11 +143,16 @@ Item {
 
     Connections {
         target: filter
-        onPropertyChanged: setControls()
+        function onChanged() { setControls() }
+        function onInChanged() { updateSimpleKeyframes() }
+        function onOutChanged() { updateSimpleKeyframes() }
+        function onAnimateInChanged() { updateSimpleKeyframes() }
+        function onAnimateOutChanged() { updateSimpleKeyframes() }
+        function onPropertyChanged(name) { setControls() }
     }
 
     Connections {
         target: producer
-        onPositionChanged: setControls()
+        function onPositionChanged() { setControls() }
     }
 }

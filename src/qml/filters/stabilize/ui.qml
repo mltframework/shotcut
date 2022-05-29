@@ -77,12 +77,12 @@ Item {
 
     Connections {
         target: filter
-        onAnalyzeFinished: {
+        function onAnalyzeFinished() {
             filter.set("reload", 1);
             setStatus(false)
         }
-        onInChanged: analyzeValueChanged()
-        onOutChanged: analyzeValueChanged()
+        function onInChanged() { analyzeValueChanged() }
+        function onOutChanged() { analyzeValueChanged() }
     }
     
     FileDialog {

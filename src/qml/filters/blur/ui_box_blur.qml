@@ -23,6 +23,10 @@ import Shotcut.Controls 1.0 as Shotcut
 Shotcut.KeyframableFilter {
     width: 200
     height: 50
+    keyframableParameters: ['hradius', 'vradius']
+    startValues: [0, 0]
+    middleValues: [5, 5]
+    endValues: [0, 0]
 
     Component.onCompleted: {
         if (filter.isNew) {
@@ -136,16 +140,16 @@ Shotcut.KeyframableFilter {
 
     Connections {
         target: filter
-        onChanged: setControls()
-        onInChanged: updateSimpleKeyframes()
-        onOutChanged: updateSimpleKeyframes()
-        onAnimateInChanged: updateSimpleKeyframes()
-        onAnimateOutChanged: updateSimpleKeyframes()
-        onPropertyChanged: setControls()
+        function onChanged() { setControls() }
+        function onInChanged() { updateSimpleKeyframes() }
+        function onOutChanged() { updateSimpleKeyframes() }
+        function onAnimateInChanged() { updateSimpleKeyframes() }
+        function onAnimateOutChanged() { updateSimpleKeyframes() }
+        function onPropertyChanged(name) { setControls() }
     }
 
     Connections {
         target: producer
-        onPositionChanged: setControls()
+        function onPositionChanged() { setControls() }
     }
 }

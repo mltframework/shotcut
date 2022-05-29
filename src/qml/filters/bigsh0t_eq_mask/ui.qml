@@ -39,15 +39,6 @@ Item {
         updateProperty_vfov1(null)
     }
 
-    Connections {
-        target: filter
-        onChanged: setControls()
-        onInChanged: updateSimpleKeyframes()
-        onOutChanged: updateSimpleKeyframes()
-        onAnimateInChanged: updateSimpleKeyframes()
-        onAnimateOutChanged: updateSimpleKeyframes()
-    }
-
     Component.onCompleted: {
         if (filter.isNew) { filter.set("hfov0", 180); } else { hfov0Middle = filter.getDouble("hfov0", filter.animateIn); if (filter.animateIn > 0) { hfov0Start = filter.getDouble("hfov0", 0); } if (filter.animateOut > 0) { hfov0End = filter.getDouble("hfov0", filter.duration - 1); } }
         if (filter.isNew) { filter.set("hfov1", 200); } else { hfov1Middle = filter.getDouble("hfov1", filter.animateIn); if (filter.animateIn > 0) { hfov1Start = filter.getDouble("hfov1", 0); } if (filter.animateOut > 0) { hfov1End = filter.getDouble("hfov1", filter.duration - 1); } }
@@ -197,12 +188,16 @@ Item {
 
     Connections {
         target: filter
-        onChanged: setControls()
-        onPropertyChanged: setControls()
+        function onChanged() { setControls() }
+        function onInChanged() { updateSimpleKeyframes() }
+        function onOutChanged() { updateSimpleKeyframes() }
+        function onAnimateInChanged() { updateSimpleKeyframes() }
+        function onAnimateOutChanged() { updateSimpleKeyframes() }
+        function onPropertyChanged(name) { setControls() }
     }
 
     Connections {
         target: producer
-        onPositionChanged: setControls()
+        function onPositionChanged() { setControls() }
     }
 }

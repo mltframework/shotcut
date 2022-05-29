@@ -44,13 +44,13 @@ Item {
 
     Connections {
         target: filter
-        onInChanged: {
+        function onInChanged() {
             timer.restart()
         }
-        onOutChanged: {
+        function onOutChanged() {
             timer.restart()
         }
-        onPropertyChanged: {
+        function onPropertyChanged() {
             timer.restart()
         }
     }
@@ -67,7 +67,7 @@ Item {
 
     Connections {
         target: producer
-        onPositionChanged: {
+        function onPositionChanged() {
             timer.restart()
         }
     }

@@ -313,7 +313,7 @@ Item {
 
     Connections {
         target: filter
-        onChanged: {
+        function onChanged() {
             var newValue = filter.getRect(rectProperty)
             if (filterRect !== newValue) {
                 filterRect = newValue

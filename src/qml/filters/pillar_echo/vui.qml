@@ -117,7 +117,7 @@ Shotcut.VuiBase {
 
     Connections {
         target: filter
-        onChanged: {
+        function onChanged() {
             setRectangleControl()
             videoItem.enabled = filter.get('disable') !== '1'
         }
@@ -125,6 +125,6 @@ Shotcut.VuiBase {
 
     Connections {
         target: producer
-        onPositionChanged: setRectangleControl()
+        function onPositionChanged() { setRectangleControl() }
     }
 }
