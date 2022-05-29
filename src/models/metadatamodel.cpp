@@ -176,7 +176,8 @@ bool MetadataModel::isVisible(int row) const
         default:
             break;
         }
-    } else if (!meta->name().contains(m_search, Qt::CaseInsensitive)) {
+    } else if (!meta->name().contains(m_search, Qt::CaseInsensitive)
+               && !meta->keywords().contains(m_search, Qt::CaseInsensitive)) {
         return false;
     }
     return true;

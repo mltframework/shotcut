@@ -182,6 +182,7 @@ class QmlMetadata : public QObject
     Q_PROPERTY(QmlKeyframesMetadata *keyframes READ keyframes NOTIFY changed)
     Q_PROPERTY(bool isDeprecated READ isDeprecated WRITE setIsDeprecated)
     Q_PROPERTY(QString minimumVersion MEMBER m_minimumVersion NOTIFY changed)
+    Q_PROPERTY(QString keywords MEMBER m_keywords NOTIFY changed)
 
 public:
     enum PluginType {
@@ -288,6 +289,10 @@ public:
         m_isDeprecated = deprecated;
     }
     bool isMltVersion(const QString &version);
+    QString keywords() const
+    {
+        return m_keywords;
+    }
 
 signals:
     void changed();
@@ -310,6 +315,7 @@ private:
     QmlKeyframesMetadata m_keyframes;
     bool m_isDeprecated;
     QString m_minimumVersion;
+    QString m_keywords;
 };
 
 #endif // QMLMETADATA_H
