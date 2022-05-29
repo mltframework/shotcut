@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2018 Meltytech, LLC
+ * Copyright (c) 2012-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,13 +40,17 @@ public:
 
     Mlt::Producer *newProducer(Mlt::Profile &) const;
     void load(Mlt::Producer *);
+    QWidget *currentWidget() const
+    {
+        return m_current;
+    }
 
 private slots:
     void on_treeWidget_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
 
 private:
     Ui::OpenOtherDialog *ui;
-    QObject *m_current;
+    QWidget *m_current;
 
     Mlt::Producer *newProducer(Mlt::Profile &, QObject *widget) const;
     void selectTreeWidget(const QString &s);

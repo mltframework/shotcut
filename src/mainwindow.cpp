@@ -2838,9 +2838,18 @@ void MainWindow::on_actionOpenOther_triggered()
     if (MLT.producer())
         dialog.load(MLT.producer());
     if (dialog.exec() == QDialog::Accepted) {
-        closeProducer();
+        auto isDevice = AbstractProducerWidget::isDevice(dialog.currentWidget());
+        if (isDevice)
+            closeProducer();
         auto &profile = MLT.profile();
         auto producer = dialog.newProducer(profile);
+        if (!(producer && producer->is_valid())) {
+            delete producer;
+            return;
+        }
+        if (!isDevice)
+            closeProducer();
+
         if (!profile.is_explicit()) {
             profile.from_producer(*producer);
             profile.set_width(Util::coerceMultiple(profile.width()));
@@ -4730,12 +4739,18 @@ void MainWindow::onOpenOtherTriggered(QWidget *widget)
     connect(&buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
     QString name = widget->objectName();
     if (name == "NoiseWidget" || dialog.exec() == QDialog::Accepted) {
-        closeProducer();
+        auto isDevice = AbstractProducerWidget::isDevice(widget);
+        if (isDevice)
+            closeProducer();
         auto &profile = MLT.profile();
         auto producer = dynamic_cast<AbstractProducerWidget *>(widget)->newProducer(profile);
         if (!(producer && producer->is_valid())) {
+            delete producer;
             return;
         }
+        if (!isDevice)
+            closeProducer();
+
         if (!profile.is_explicit()) {
             profile.from_producer(*producer);
             profile.set_width(Util::coerceMultiple(profile.width()));

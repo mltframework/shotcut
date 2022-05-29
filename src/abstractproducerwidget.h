@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2018 Meltytech, LLC
+ * Copyright (c) 2012-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,8 @@
 #include <MltProducer.h>
 #include <QScopedPointer>
 
+class QWidget;
+
 class AbstractProducerWidget
 {
 public:
@@ -38,6 +40,7 @@ public:
     {
         return m_producer.data();
     }
+    static bool isDevice(const QWidget *widget);
 
 protected:
     QScopedPointer<Mlt::Producer> m_producer;
