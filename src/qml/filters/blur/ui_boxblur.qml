@@ -240,16 +240,17 @@ Item {
 
     Connections {
         target: filter
-        onInChanged: { setControls(); updateFilterWidth(null); updateFilterHeight(null) }
-        onOutChanged: { setControls(); updateFilterWidth(null); updateFilterHeight(null) }
-        onAnimateInChanged: { setControls(); updateFilterWidth(null); updateFilterHeight(null) }
-        onAnimateOutChanged: { setControls(); updateFilterWidth(null); updateFilterHeight(null) }
-        onPropertyChanged: setControls()
+        function onChanged() { setControls() }
+        function onInChanged() { updateSimpleKeyframes() }
+        function onOutChanged() { updateSimpleKeyframes() }
+        function onAnimateInChanged() { updateSimpleKeyframes() }
+        function onAnimateOutChanged() { updateSimpleKeyframes() }
+        function onPropertyChanged(name) { setControls() }
     }
 
     Connections {
         target: producer
-        onPositionChanged: {
+        function onPositionChanged() {
             if (filter.animateIn > 0 || filter.animateOut > 0) {
                 setControls()
             } else {

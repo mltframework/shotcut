@@ -426,15 +426,15 @@ Item {
 
     Connections {
         target: filter
-        onChanged: setKeyframedControls()
-        onInChanged: setFilter(null)
-        onOutChanged: setFilter(null)
-        onAnimateInChanged: setFilter(null)
-        onAnimateOutChanged: setFilter(null)
+        function onChanged() { setKeyframedControls() }
+        function onInChanged() { setFilter(null) }
+        function onOutChanged() { setFilter(null) }
+        function onAnimateInChanged() { setFilter(null) }
+        function onAnimateOutChanged() { setFilter(null) }
     }
 
     Connections {
         target: producer
-        onPositionChanged: setKeyframedControls()
+        function onPositionChanged() { setKeyframedControls() }
     }
 }

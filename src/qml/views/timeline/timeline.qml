@@ -817,31 +817,35 @@ Rectangle {
     
     Connections {
         target: timeline
-        onPositionChanged: if (!stopScrolling) Logic.scrollIfNeeded()
-        onDragging: Logic.dragging(pos, duration)
-        onDropped: Logic.dropped()
-        onDropAccepted: Logic.acceptDrop(xml)
-        onSelectionChanged: {
+        function onPositionChanged() { if (!stopScrolling) Logic.scrollIfNeeded() }
+        function onDragging() { Logic.dragging(pos, duration) }
+        function onDropped() { Logic.dropped() }
+        function onDropAccepted() { Logic.acceptDrop(xml) }
+        function onSelectionChanged() {
             cornerstone.selected = timeline.isMultitrackSelected()
             var selectedTrack = timeline.selectedTrack()
             for (var i = 0; i < trackHeaderRepeater.count; i++)
                 trackHeaderRepeater.itemAt(i).selected = (i === selectedTrack)
             propertiesMenuItem.enabled = (cornerstone.selected || (selectedTrack >= 0 && selectedTrack < trackHeaderRepeater.count))
         }
-        onZoomIn: zoomIn()
-        onZoomOut: zoomOut()
-        onZoomToFit: zoomToFit()
-        onResetZoom: resetZoom()
-        onMakeTracksShorter: makeTracksShorter()
-        onMakeTracksTaller: makeTracksTaller()
-        onWarnTrackLocked: pulseLockButtonOnTrack(trackIndex)
-        onMultitrackSelected: selectMultitrack()
+        function onZoomIn() { zoomIn() }
+        function onZoomOut() { zoomOut() }
+        function onZoomToFit() { zoomToFit() }
+        function onResetZoom() { resetZoom() }
+        function onMakeTracksShorter() { makeTracksShorter() }
+        function onMakeTracksTaller() { makeTracksTaller() }
+        function onWarnTrackLocked() { pulseLockButtonOnTrack(trackIndex) }
+        function onMultitrackSelected() { selectMultitrack() }
     }
 
     Connections {
         target: multitrack
-        onLoaded: toolbar.scaleSlider.value = Math.pow(multitrack.scaleFactor - 0.01, 1.0 / 3.0)
-        onScaleFactorChanged: if (settings.timelineCenterPlayhead) Logic.scrollIfNeeded()
+        function onLoaded() {
+            toolbar.scaleSlider.value = Math.pow(multitrack.scaleFactor - 0.01, 1.0 / 3.0)
+        }
+        function onScaleFactorChanged() {
+            if (settings.timelineCenterPlayhead) Logic.scrollIfNeeded()
+        }
     }
 
     // This provides continuous scrolling at the left/right edges.

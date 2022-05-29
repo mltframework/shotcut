@@ -377,15 +377,15 @@ Item {
     
     Connections {
         target: filter
-        onChanged: {
+        function onChanged() {
             setRectControls()
             setRatioControls()
         }
-        onInChanged: updateFilter()
-        onOutChanged: updateFilter()
-        onAnimateInChanged: updateFilter()
-        onAnimateOutChanged: updateFilter()
-        onPropertyChanged: {
+        function onInChanged() { updateFilter(null) }
+        function onOutChanged() { updateFilter(null) }
+        function onAnimateInChanged() { updateFilter(null) }
+        function onAnimateOutChanged() { updateFilter(null) }
+        function onPropertyChanged(name) {
             setRectControls()
             setRatioControls()
         }
@@ -393,7 +393,7 @@ Item {
 
     Connections {
         target: producer
-        onPositionChanged: {
+        function onPositionChanged() {
             setRatioControls()
             setRectControls()
         }

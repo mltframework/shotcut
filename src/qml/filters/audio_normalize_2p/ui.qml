@@ -54,7 +54,7 @@ Item {
 
     Connections {
         target: filter
-        onAnalyzeFinished: {
+        function onAnalyzeFinished() {
             setStatus(false)
             button.enabled = true
         }

@@ -139,16 +139,16 @@ Shotcut.KeyframableFilter {
 
     Connections {
         target: filter
-        onChanged: setKeyframableControls()
-        onInChanged: updateSimpleKeyframes()
-        onOutChanged: updateSimpleKeyframes()
-        onAnimateInChanged: updateSimpleKeyframes()
-        onAnimateOutChanged: updateSimpleKeyframes()
-        onPropertyChanged: setKeyframableControls()
+        function onChanged() { setKeyframableControls() }
+        function onInChanged() { updateSimpleKeyframes() }
+        function onOutChanged() { updateSimpleKeyframes() }
+        function onAnimateInChanged() { updateSimpleKeyframes() }
+        function onAnimateOutChanged() { updateSimpleKeyframes() }
+        function onPropertyChanged() { setKeyframableControls() }
     }
 
     Connections {
         target: producer
-        onPositionChanged: setKeyframableControls()
+        function onPositionChanged() { setKeyframableControls() }
     }
 }

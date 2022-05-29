@@ -90,16 +90,16 @@ DropArea {
 
     Connections {
         target: video
-        onRectChanged: {
+        function onRectChanged() {
             grid.requestPaint()
         }
-        onGridChanged: {
+        function onGridChanged() {
             grid.requestPaint()
         }
-        onOffsetChanged: {
+        function onOffsetChanged() {
             grid.requestPaint()
         }
-        onZoomChanged: {
+        function onZoomChanged() {
             grid.requestPaint()
         }
     }

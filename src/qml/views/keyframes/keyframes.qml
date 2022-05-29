@@ -544,12 +544,14 @@ Rectangle {
 
     Connections {
         target: producer
-        onPositionChanged: if (!stopScrolling) Logic.scrollIfNeeded()
+        function onPositionChanged() {
+            if (!stopScrolling) Logic.scrollIfNeeded()
+        }
     }
 
     Connections {
         target: filter
-        onChanged: {
+        function onChanged(name) {
             var parameterIndex = parameters.parameterIndex(name)
             if (parameterIndex > -1) {
                 currentTrack = parameterIndex
@@ -562,12 +564,12 @@ Rectangle {
 
     Connections {
         target: keyframes
-        onZoomIn: zoomIn()
-        onZoomOut: zoomOut()
-        onZoomToFit: zoomToFit()
-        onResetZoom: resetZoom()
-        onSeekPreviousSimple: Logic.seekPreviousSimple()
-        onSeekNextSimple: Logic.seekNextSimple()
+        function onZoomIn() { zoomIn() }
+        function onZoomOut() {zoomOut() }
+        function onZoomToFit() { zoomToFit() }
+        function onResetZoom() { resetZoom() }
+        function onSeekPreviousSimple() { Logic.seekPreviousSimple() }
+        function onSeekNextSimple() { Logic.seekNextSimple() }
     }
 
     // This provides continuous scrolling at the left/right edges.

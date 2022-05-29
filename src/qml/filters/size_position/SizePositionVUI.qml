@@ -269,7 +269,7 @@ Shotcut.VuiBase {
 
     Connections {
         target: filter
-        onChanged: {
+        function onChanged() {
             setRectangleControl()
             if (rectangle.aspectRatio !== getAspectRatio()) {
                 rectangle.aspectRatio = getAspectRatio()
@@ -281,6 +281,6 @@ Shotcut.VuiBase {
 
     Connections {
         target: producer
-        onPositionChanged: setRectangleControl()
+        function onPositionChanged() { setRectangleControl() }
     }
 }

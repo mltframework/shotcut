@@ -239,17 +239,17 @@ Item {
 
     Connections {
         target: filter
-        onChanged: setControls()
-        onInChanged: { setControls(); updateFilterWidth(null); updateFilterHeight(null) }
-        onOutChanged: { setControls(); updateFilterWidth(null); updateFilterHeight(null) }
-        onAnimateInChanged: { setControls(); updateFilterWidth(null); updateFilterHeight(null) }
-        onAnimateOutChanged: { setControls(); updateFilterWidth(null); updateFilterHeight(null) }
-        onPropertyChanged: setControls()
+        function onChanged() { setControls() }
+        function onInChanged() { setControls(); updateFilterWidth(null); updateFilterHeight(null) }
+        function onOutChanged() { setControls(); updateFilterWidth(null); updateFilterHeight(null) }
+        function onAnimateInChanged() { setControls(); updateFilterWidth(null); updateFilterHeight(null) }
+        function onAnimateOutChanged() { setControls(); updateFilterWidth(null); updateFilterHeight(null) }
+        function onPropertyChanged() { setControls() }
     }
 
     Connections {
         target: producer
-        onPositionChanged: {
+        function onPositionChanged() {
             if (filter.animateIn > 0 || filter.animateOut > 0) {
                 setControls()
             } else {

@@ -66,7 +66,7 @@ Shotcut.VuiBase {
 
     Connections {
         target: filter
-        onChanged: {
+        function onChanged() {
             var newRect = filter.getRect(rectProperty)
             if (filterRect !== newRect) {
                 filterRect = newRect

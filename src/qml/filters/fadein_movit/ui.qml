@@ -44,7 +44,7 @@ Item {
 
     Connections {
         target: filter
-        onAnimateInChanged: duration = filter.animateIn
+        function onAnimateInChanged() { duration = filter.animateIn }
     }
 
     ColumnLayout {

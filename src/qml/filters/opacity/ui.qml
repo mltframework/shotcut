@@ -168,17 +168,17 @@ Item {
 
     Connections {
         target: filter
-        onChanged: setControls()
-        onInChanged: { setControls(); updateFilter(null) }
-        onOutChanged: { setControls(); updateFilter(null) }
-        onAnimateInChanged: { setControls(); updateFilter(null) }
-        onAnimateOutChanged: { setControls(); updateFilter(null) }
-        onPropertyChanged: setControls()
+        function onChanged() { setControls() }
+        function onInChanged() { setControls(); updateFilter(null) }
+        function onOutChanged() { setControls(); updateFilter(null) }
+        function onAnimateInChanged() { setControls(); updateFilter(null) }
+        function onAnimateOutChanged() { setControls(); updateFilter(null) }
+        function onPropertyChanged(name) { setControls() }
     }
 
     Connections {
         target: producer
-        onPositionChanged: {
+        function onPositionChanged() {
             if (filter.animateIn > 0 || filter.animateOut > 0) {
                 setControls()
             } else {

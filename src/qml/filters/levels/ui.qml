@@ -314,16 +314,16 @@ Item {
 
     Connections {
         target: filter
-        onChanged: setKeyframedControls()
-        onInChanged: updateSimpleAnimation()
-        onOutChanged: updateSimpleAnimation()
-        onAnimateInChanged: updateSimpleAnimation()
-        onAnimateOutChanged: updateSimpleAnimation()
-        onPropertyChanged: setKeyframedControls()
+        function onChanged() { setKeyframedControls() }
+        function onInChanged() { updateSimpleAnimation() }
+        function onOutChanged() { updateSimpleAnimation() }
+        function onAnimateInChanged() { updateSimpleAnimation() }
+        function onAnimateOutChanged() { updateSimpleAnimation() }
+        function onPropertyChanged() { setKeyframedControls() }
     }
 
     Connections {
         target: producer
-        onPositionChanged: setKeyframedControls()
+        function onPositionChanged() { setKeyframedControls() }
     }
 }
