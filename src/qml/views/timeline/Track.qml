@@ -66,25 +66,25 @@ Rectangle {
     DelegateModel {
         id: trackModel
         Clip {
-            clipName: model.name
-            clipComment: model.comment
-            clipResource: model.resource
-            clipDuration: model.duration
-            mltService: model.mlt_service
-            inPoint: model.in
-            outPoint: model.out
-            isBlank: model.blank
-            isAudio: model.audio
-            isTransition: model.isTransition
-            audioLevels: model.audioLevels
-            width: model.duration * timeScale
+            clipName: model.name != undefined ? model.name : ""
+            clipComment: model.comment != undefined ? model.comment : ""
+            clipResource: model.resource != undefined ? model.resource : ""
+            clipDuration: model.duration != undefined ? model.duration : 0
+            mltService: model.mlt_service != undefined ? model.mlt_service : ""
+            inPoint: model.in != undefined ? model.in : 0
+            outPoint: model.out != undefined ? model.out : 0
+            isBlank: model.blank != undefined ? model.blank : false
+            isAudio: model.audio != undefined ? model.audio : false
+            isTransition: model.isTransition != undefined ? model.isTransition : false
+            audioLevels: model.audioLevels != undefined ? model.audioLevels : ""
+            width: model.duration != undefined ? model.duration * timeScale : 0
             height: trackRoot.height
             trackIndex: trackRoot.DelegateModel.itemsIndex
-            fadeIn: model.fadeIn
-            fadeOut: model.fadeOut
-            hash: model.hash
-            speed: model.speed
-            audioIndex: model.audioIndex
+            fadeIn: model.fadeIn != undefined ? model.fadeIn : 0
+            fadeOut: model.fadeOut != undefined ? model.fadeOut : 0
+            hash: model.hash != undefined ? model.hash : 0
+            speed: model.speed != undefined ? model.speed : 1
+            audioIndex: model.audioindex != undefined ? model.audioIndex : 0
             selected: Logic.selectionContains(timeline.selection, trackIndex, index)
             isTrackMute: trackRoot.isMute
 

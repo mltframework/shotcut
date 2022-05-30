@@ -76,8 +76,12 @@ Item {
             decimals: 1
             suffix: ' LUFS'
             spinnerWidth: 100
-            value: filter.getDouble('program')
-            onValueChanged: filter.set('program', value)
+            value: filter ? filter.getDouble('program') : 0
+            onValueChanged: {
+                if (filter) {
+                    filter.set('program', value)
+                }
+            }
         }
         Shotcut.UndoButton {
             onClicked: programSlider.value = -23.0

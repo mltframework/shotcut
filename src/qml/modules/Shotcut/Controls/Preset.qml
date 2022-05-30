@@ -37,7 +37,7 @@ RowLayout {
         Layout.fillWidth: true
         Layout.minimumWidth: 100
         Layout.maximumWidth: 300
-        model: filter.presets
+        model: filter ? filter.presets : 0
         onActivated: {
             if (currentText.length > 0) {
                 // toggling focus works around a weird bug involving sticky

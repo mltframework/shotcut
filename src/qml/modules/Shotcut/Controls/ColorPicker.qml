@@ -47,7 +47,7 @@ RowLayout {
         background: Rectangle {
             border.width: 1
             border.color: 'gray'
-            radius: parent.radius
+            radius: pickerButton.background.radius
             color: value
         }
         Shotcut.HoverTip { text: qsTr('Click to open color dialog') }

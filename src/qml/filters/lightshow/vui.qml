@@ -21,7 +21,7 @@ import Shotcut.Controls 1.0 as Shotcut
 Shotcut.VuiBase {
     property string rectProperty: "rect"
     property real zoom: (video.zoom > 0)? video.zoom : 1.0
-    property rect filterRect: filter.getRect(rectProperty)
+    property rect filterRect: filter ? filter.getRect(rectProperty) : Qt.rect(0, 0, 0, 0)
 
     Component.onCompleted: {
         application.showStatusMessage(qsTr('Click in rectangle + hold Shift to drag'))

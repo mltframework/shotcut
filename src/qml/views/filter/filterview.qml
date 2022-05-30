@@ -231,8 +231,8 @@ Rectangle {
         interactive: false
         anchors.bottomMargin: 16
         anchors.rightMargin: 16
-        contentWidth: filterConfig.item.width + 16
-        contentHeight: filterConfig.item.height + 16
+        contentWidth: filterConfig.item ? filterConfig.item.width + 16 : 0
+        contentHeight: filterConfig.item ? filterConfig.item.height + 16 : 0
         ScrollBar.horizontal: ScrollBar {
             height: 16
             policy: ScrollBar.AlwaysOn

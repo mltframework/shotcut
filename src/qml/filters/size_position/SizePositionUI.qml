@@ -554,7 +554,7 @@ Item {
                 color: activePalette.text
                 width: 1
                 height: positionKeyframesButton.height
-                anchors.horizontalCenter: positionKeyframesButton.horizontalCenter
+                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             }
             Shotcut.KeyframesButton {
                 id: positionKeyframesButton
@@ -575,7 +575,7 @@ Item {
                 color: activePalette.text
                 width: 1
                 height: positionKeyframesButton.height
-                anchors.horizontalCenter: positionKeyframesButton.horizontalCenter
+                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             }
         }
 
