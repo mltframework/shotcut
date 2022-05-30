@@ -321,7 +321,7 @@ Shotcut.KeyframableFilter {
                 color: activePalette.text
                 width: 1
                 height: parent.height / 2
-                anchors.horizontalCenter: corner1KeyframesButton.horizontalCenter
+                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             }
             Shotcut.KeyframesButton {
                 id: corner1KeyframesButton
@@ -345,7 +345,7 @@ Shotcut.KeyframableFilter {
                 color: activePalette.text
                 width: 1
                 height: parent.height / 2
-                anchors.horizontalCenter: corner1KeyframesButton.horizontalCenter
+                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             }
         }
 

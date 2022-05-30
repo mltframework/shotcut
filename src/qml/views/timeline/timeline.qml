@@ -470,11 +470,11 @@ Rectangle {
                                 model: timeline.selection
                                 Rectangle {
                                     property var clip: trackAt(modelData.y).clipAt(modelData.x)
-                                    property var track: trackAt(clip.trackIndex + dragDelta.y)
-                                    x: clip.x + dragDelta.x
-                                    y: track.y
+                                    property var track: clip == undefined ? trackAt(clip.trackIndex + dragDelta.y) : 0
+                                    x: clip == undefined ? clip.x + dragDelta.x : 0
+                                    y: track ? track.y : 0
                                     width: clip.width
-                                    height: track.height
+                                    height: track ? track.height : 0
                                     color: 'transparent'
                                     border.color: 'red'
                                     visible: !clip.Drag.active && clip.trackIndex === clip.originalTrackIndex
