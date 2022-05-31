@@ -92,6 +92,7 @@ public:
     void setAudioChannels(int audioChannels);
     QString resource() const;
     bool isSeekable(Mlt::Producer *p = nullptr) const;
+    bool isLiveProducer(Mlt::Producer *p = nullptr) const;
     bool isClip() const;
     bool isSeekableClip();
     bool isPlaylist() const;

@@ -383,8 +383,7 @@ void PlaylistDock::on_actionAppendCut_triggered()
 {
     Mlt::Producer producer(MLT.isClip() ? MLT.producer() : MLT.savedProducer());
     if (producer.is_valid() && !MAIN.isSourceClipMyProject()) {
-        if (MLT.isSeekableClip()
-                || (MLT.savedProducer() && MLT.isSeekable(MLT.savedProducer()))) {
+        if (!MLT.isLiveProducer(&producer)) {
             ProxyManager::generateIfNotExists(producer);
             MAIN.undoStack()->push(
                 new Playlist::AppendCommand(m_model, MLT.XML(&producer)));
@@ -434,8 +433,7 @@ void PlaylistDock::on_actionUpdate_triggered()
     Mlt::Producer producer(MLT.isClip() ? MLT.producer() : MLT.savedProducer());
     if (!info || !producer.is_valid()) return;
     if (producer.type() != mlt_service_playlist_type) {
-        if (MLT.isSeekableClip()
-                || (MLT.savedProducer() && MLT.isSeekable(MLT.savedProducer()))) {
+        if (!MLT.isLiveProducer(&producer)) {
             ProxyManager::generateIfNotExists(producer);
             MAIN.undoStack()->push(new Playlist::UpdateCommand(m_model, MLT.XML(&producer), index.row()));
             setPlaylistIndex(&producer, index.row());
@@ -676,7 +674,7 @@ void PlaylistDock::onDropped(const QMimeData *data, int row)
         bool first = true;
         QStringList fileNames = Util::sortedFileList(Util::expandDirectories(data->urls()));
         auto i = 0, count = fileNames.size();
-        for (const auto &path : fileNames) {
+        for (auto &path : fileNames) {
             if (MAIN.isSourceClipMyProject(path)) continue;
             longTask.reportProgress(Util::baseName(path), i++, count);
             Mlt::Producer p;
@@ -704,13 +702,14 @@ void PlaylistDock::onDropped(const QMimeData *data, int row)
                     }
                 }
                 producer = MLT.setupNewProducer(producer);
-                if (MLT.isSeekable(producer) || producer->get_int(kShotcutVirtualClip)) {
+                if (!MLT.isLiveProducer(producer) || producer->get_int(kShotcutVirtualClip)) {
                     ProxyManager::generateIfNotExists(*producer);
                     if (row == -1)
                         MAIN.undoStack()->push(new Playlist::AppendCommand(m_model, MLT.XML(producer)));
                     else
                         MAIN.undoStack()->push(new Playlist::InsertCommand(m_model, MLT.XML(producer), insertNextAt++));
                 } else {
+                    LongUiTask::cancel();
                     DurationDialog dialog(this);
                     dialog.setDuration(MLT.profile().fps() * 5);
                     if (dialog.exec() == QDialog::Accepted) {
@@ -735,7 +734,7 @@ void PlaylistDock::onDropped(const QMimeData *data, int row)
                 emit showStatusMessage(tr("You cannot insert a playlist into a playlist!"));
             } else if (MAIN.isSourceClipMyProject()) {
                 return;
-            } else if (MLT.isSeekable()) {
+            } else if (!MLT.isLiveProducer()) {
                 Mlt::Producer p(MLT.profile(), "xml-string", data->data(Mlt::XmlMimeType).constData());
                 ProxyManager::generateIfNotExists(p);
                 if (row == -1) {
@@ -747,6 +746,7 @@ void PlaylistDock::onDropped(const QMimeData *data, int row)
                 }
                 setUpdateButtonEnabled(true);
             } else {
+                LongUiTask::cancel();
                 DurationDialog dialog(this);
                 dialog.setDuration(MLT.profile().fps() * 5);
                 if (dialog.exec() == QDialog::Accepted) {

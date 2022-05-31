@@ -640,6 +640,15 @@ bool Controller::isSeekable(Producer *p) const
     return seekable;
 }
 
+bool Controller::isLiveProducer(Producer *p) const
+{
+    Mlt::Producer *producer = p ? p : m_producer.data();
+    if (producer && producer->is_valid()) {
+        return producer->get_length() == std::numeric_limits<int>::max();
+    }
+    return false;
+}
+
 bool Controller::isClip() const
 {
     return producer() && producer()->is_valid() && !isPlaylist() && !isMultitrack();
