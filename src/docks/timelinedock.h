@@ -204,6 +204,7 @@ public slots:
     void deleteMarker(int markerIndex = -1);
     void seekNextMarker();
     void seekPrevMarker();
+    void onFilterModelChanged();
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);

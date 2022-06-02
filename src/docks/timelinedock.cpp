@@ -1340,6 +1340,13 @@ void TimelineDock::seekPrevMarker()
     }
 }
 
+void TimelineDock::onFilterModelChanged()
+{
+    if (m_updateCommand) {
+        m_updateCommand->setPosition(-1, -1, -1);
+    }
+}
+
 void TimelineDock::setTrackName(int trackIndex, const QString &value)
 {
     MAIN.undoStack()->push(
