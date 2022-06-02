@@ -596,7 +596,6 @@ private:
     int m_clipIndex;
     int m_position;
     QString m_xmlAfter;
-    bool m_isFirstRedo;
     UndoHelper m_undoHelper;
     bool m_ripple;
 };

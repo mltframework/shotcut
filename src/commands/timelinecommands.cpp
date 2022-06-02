@@ -1312,12 +1312,10 @@ UpdateCommand::UpdateCommand(TimelineDock &timeline, int trackIndex, int clipInd
     , m_trackIndex(trackIndex)
     , m_clipIndex(clipIndex)
     , m_position(position)
-    , m_isFirstRedo(true)
     , m_undoHelper(*timeline.model())
     , m_ripple(Settings.timelineRipple())
 {
     setText(QObject::tr("Change clip properties"));
-    m_undoHelper.recordBeforeState();
 }
 
 void UpdateCommand::setXmlAfter(const QString &xml)
@@ -1334,15 +1332,13 @@ void UpdateCommand::setPosition(int trackIndex, int clipIndex, int position)
         m_clipIndex = clipIndex;
     if (position >= 0)
         m_position = position;
-    m_undoHelper.recordBeforeState();
 }
 
 void UpdateCommand::redo()
 {
     LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "position" <<
                 m_position;
-    if (!m_isFirstRedo)
-        m_undoHelper.recordBeforeState();
+    m_undoHelper.recordBeforeState();
     Mlt::Producer clip(MLT.profile(), "xml-string", m_xmlAfter.toUtf8().constData());
     if (m_ripple) {
         m_timeline.model()->removeClip(m_trackIndex, m_clipIndex, false);
@@ -1360,7 +1356,6 @@ void UpdateCommand::undo()
                 m_position;
     m_undoHelper.undoChanges();
     m_timeline.emitSelectedFromSelection();
-    m_isFirstRedo = false;
 }
 
 DetachAudioCommand::DetachAudioCommand(MultitrackModel &model, int trackIndex, int clipIndex,
