@@ -74,9 +74,7 @@ MltXmlParser.prototype.createChapters = function() {
                             marker.text = prop.val;
                         }
                     });
-                    if (marker.end === marker.start) {
-                        markers.push(marker);
-                    }
+                    markers.push(marker);
                 });
                 return;
             }
