@@ -3036,10 +3036,9 @@ void MultitrackModel::moveTrack(int fromTrackIndex, int toTrackIndex)
     while (service && service->is_valid()) {
         if (service->type() == mlt_service_transition_type) {
             Mlt::Transition t((mlt_transition) service->get_service());
-            bTracks.push_back(t.get_b_track());
+            int newBTrack = t.get_b_track();
             if (service->get("mlt_service") != QString("mix") ) {
                 // Figure out how the blend modes will be moved to match the track move
-                int newBTrack = t.get_b_track();
                 if (newBTrack == fromMltIndex) {
                     newBTrack = toMltIndex;
                 } else {
@@ -3052,6 +3051,7 @@ void MultitrackModel::moveTrack(int fromTrackIndex, int toTrackIndex)
                 }
                 modes[newBTrack] = t.get("1");
             }
+            bTracks.push_back(newBTrack);
         }
         service.reset(service->producer());
     }
