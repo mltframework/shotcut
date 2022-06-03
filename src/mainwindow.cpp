@@ -4371,7 +4371,7 @@ void MainWindow::on_actionExportEDL_triggered()
                     // Save the result with the export file name.
                     QFile f(saveFileName);
                     f.open(QIODevice::WriteOnly | QIODevice::Text);
-                    f.write(result.toString().toLatin1());
+                    f.write(result.toString().toUtf8());
                     f.close();
                 }
             }
@@ -5273,7 +5273,7 @@ void MainWindow::on_actionExportChapters_triggered()
                     // Save the result with the export file name.
                     QFile f(saveFileName);
                     f.open(QIODevice::WriteOnly | QIODevice::Text);
-                    f.write(result.toString().toLatin1());
+                    f.write(result.toString().toUtf8());
                     f.close();
                 }
             }
