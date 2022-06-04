@@ -193,8 +193,8 @@ public:
     void setTimelineFramebufferWaveform(bool);
     int audioReferenceTrack() const;
     void setAudioReferenceTrack(int);
-    bool audioReferenceCalcSpeed() const;
-    void setAudioReferenceCalcSpeed(bool);
+    double audioReferenceSpeedRange() const;
+    void setAudioReferenceSpeedRange(double);
 
     // filter
     QString filterFavorite(const QString &filterName);

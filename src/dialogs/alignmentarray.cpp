@@ -126,7 +126,8 @@ double AlignmentArray::calculateOffset(AlignmentArray &from, int *offset)
     return max / correlationCoefficient;
 }
 
-double AlignmentArray::calculateOffsetAndSpeed(AlignmentArray &from, double *speed, int *offset)
+double AlignmentArray::calculateOffsetAndSpeed(AlignmentArray &from, double *speed, int *offset,
+                                               double speedRange)
 {
     // The minimum speed step results in one frame of stretch.
     // Do not try to compensate for more than 1 frame of speed difference.
@@ -136,8 +137,8 @@ double AlignmentArray::calculateOffsetAndSpeed(AlignmentArray &from, double *spe
     int bestOffset = 0;
     double bestScore = calculateOffset(from, &bestOffset);
     AlignmentArray stretched(m_minimumSize);
-    double speedMin = bestSpeed - 0.005;
-    double speedMax = bestSpeed + 0.005;
+    double speedMin = bestSpeed - speedRange;
+    double speedMax = bestSpeed + speedRange;
 
     while (speedStep > (minimumSpeedStep / 10)) {
         for (double s = speedMin; s <= speedMax; s += speedStep) {

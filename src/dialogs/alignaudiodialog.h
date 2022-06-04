@@ -23,7 +23,6 @@
 #include <QDialog>
 #include <QUuid>
 
-class QCheckBox;
 class QComboBox;
 class QDialogButtonBox;
 class QLabel;
@@ -59,7 +58,7 @@ private:
     AlignClipsModel m_alignClipsModel;
     QVector<QUuid> m_uuids;
     QComboBox *m_trackCombo;
-    QCheckBox *m_speedCheckBox;
+    QComboBox *m_speedCombo;
     QTreeView *m_table;
     QDialogButtonBox *m_buttonBox;
     QPushButton *m_applyButton;
