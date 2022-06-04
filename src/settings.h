@@ -258,6 +258,8 @@ public:
     void setVideoInput(const QString &name);
     QString glaxnimatePath() const;
     void setGlaxnimatePath(const QString &path);
+    bool exportRangeMarkers() const;
+    void setExportRangeMarkers(bool);
 
     // proxy
     bool proxyEnabled() const;

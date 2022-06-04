@@ -564,9 +564,11 @@ QStringList MarkersModel::recentColors()
     return m_recentColors.values();
 }
 
-QList<Markers::Marker> MarkersModel::getMarkers()
+QList<Markers::Marker> MarkersModel::getMarkers() const
 {
     QList<Markers::Marker> markers;
+    if (!m_producer || !m_producer->is_valid())
+        return markers;
     QScopedPointer<Mlt::Properties> markerList(m_producer->get_props(kShotcutMarkersProperty));
     if (markerList &&  markerList->is_valid()) {
         for (const auto i : qAsConst(m_keys)) {
@@ -579,6 +581,17 @@ QList<Markers::Marker> MarkersModel::getMarkers()
         }
     }
     return markers;
+}
+
+QList<QColor> MarkersModel::allColors() const
+{
+    QList<QColor> result;
+    for (auto &m : getMarkers()) {
+        if (!result.contains(m.color)) {
+            result << m.color;
+        }
+    }
+    return result;
 }
 
 Mlt::Properties *MarkersModel::getMarkerProperties(int markerIndex)

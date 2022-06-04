@@ -64,7 +64,8 @@ public:
     QModelIndex modelIndexForRow(int row);
     QMap<int, QString> ranges();
     QStringList recentColors();
-    QList<Markers::Marker> getMarkers();
+    QList<Markers::Marker> getMarkers() const;
+    QList<QColor> allColors() const;
 
     // These should only be called by the marker commands
     void doRemove(int markerIndex);

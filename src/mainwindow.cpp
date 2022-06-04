@@ -101,6 +101,7 @@
 #include <QApplication>
 #include <QClipboard>
 #include <clocale>
+#include <algorithm>
 
 static bool eventDebugCallback(void **data)
 {
@@ -5235,7 +5236,39 @@ void MainWindow::resetSourceUpdated()
 
 void MainWindow::on_actionExportChapters_triggered()
 {
-    // Dialog to get export file name.
+    // Options dialog
+    auto uniqueColors = m_timelineDock->markersModel()->allColors();
+    if (uniqueColors.isEmpty()) {
+        return;
+    }
+    std::sort(uniqueColors.begin(), uniqueColors.end(), [ = ](const QColor & a, const QColor & b) {
+        if (a.hue() == b.hue()) {
+            if (a.saturation() == b.saturation()) {
+                return a.value() <= b.value();
+            }
+            return a.saturation() <= b.saturation();
+        }
+        return a.hue() <= b.hue();
+    });
+    QStringList colors;
+    for (auto &color : uniqueColors) {
+        colors << color.name();
+    }
+    const auto rangesOption = tr("Include ranges (Duration > 1)?");
+    ListSelectionDialog dialog({rangesOption}, this);
+    dialog.setWindowModality(QmlApplication::dialogModality());
+    dialog.setWindowTitle(tr("Choose Markers"));
+    if (Settings.exportRangeMarkers()) {
+        dialog.setSelection({rangesOption});
+    }
+    dialog.setColors(colors);
+    if (dialog.exec() != QDialog::Accepted) {
+        return;
+    }
+    auto selection = dialog.selection();
+    Settings.setExportRangeMarkers(selection.contains(rangesOption));
+
+    // Dialog to get export file name
     QString path = Settings.savePath();
     QString caption = tr("Export Chapters");
     QString saveFileName = QFileDialog::getSaveFileName(this, caption, path,
@@ -5266,8 +5299,17 @@ void MainWindow::on_actionExportChapters_triggered()
             QJSValue result = jsEngine.evaluate(contents, jsFileName);
             if (!result.isError()) {
                 // Call the JavaScript main function.
+                QJSValue options = jsEngine.newObject();
+                if (selection.contains(rangesOption)) {
+                    options.setProperty("includeRanges", true);
+                    selection.removeOne(rangesOption);
+                }
+                QJSValue array = jsEngine.newArray(selection.size());
+                for (int i = 0; i < selection.size(); ++i)
+                    array.setProperty(i, selection[i].toUpper());
+                options.setProperty("colors", array);
                 QJSValueList args;
-                args << MLT.XML(0, true, true);
+                args << MLT.XML(0, true, true) << options;
                 result = result.call(args);
                 if (!result.isError()) {
                     // Save the result with the export file name.

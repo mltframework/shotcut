@@ -32,8 +32,14 @@ if (typeof module !== 'undefined' && module.exports) {
 function MltXmlParser(xmlString, options) {
     var self = Object.create(this);
     self.xmldoc = new xmldoc.XmlDocument(xmlString);
+    self.includeRanges = self.get(options, 'includeRanges', false);
+    self.selectedColors = self.get(options, 'colors', []);
     return self;
 }
+
+MltXmlParser.prototype.get = function(dict, name, defaultValue) {
+    return (typeof dict === 'object' && name in dict)? dict[name] : defaultValue;
+};
 
 MltXmlParser.prototype.timecode = function(value) {
     if (typeof value === 'string') {
@@ -72,9 +78,14 @@ MltXmlParser.prototype.createChapters = function() {
                             marker.end = prop.val;
                         } else if (prop.attr.name === 'text') {
                             marker.text = prop.val;
+                        } else if (prop.attr.name === 'color') {
+                            marker.color = prop.val;
                         }
                     });
-                    markers.push(marker);
+                    if ((self.includeRanges || marker.end === marker.start)
+                            && (self.selectedColors.length === 0 || self.selectedColors.includes(marker.color))) {
+                        markers.push(marker);
+                    }
                 });
                 return;
             }

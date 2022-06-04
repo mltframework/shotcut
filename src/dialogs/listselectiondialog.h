@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2020 Meltytech, LLC
+ * Copyright (c) 2018-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,6 +33,7 @@ class ListSelectionDialog : public QDialog
 public:
     explicit ListSelectionDialog(const QStringList &list, QWidget *parent = 0);
     ~ListSelectionDialog();
+    void setColors(const QStringList &colors);
     void setSelection(const QStringList &selection);
     QStringList selection() const;
     QDialogButtonBox *buttonBox() const;

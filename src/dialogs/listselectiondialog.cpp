@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Meltytech, LLC
+ * Copyright (c) 2018-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@ ListSelectionDialog::ListSelectionDialog(const QStringList &list, QWidget *paren
     ui(new Ui::ListSelectionDialog)
 {
     ui->setupUi(this);
-    foreach (const QString text, list) {
+    for (auto &text : list) {
         QListWidgetItem *item = new QListWidgetItem(text, ui->listWidget);
         item->setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled | Qt::ItemIsSelectable);
         item->setCheckState(Qt::Unchecked);
@@ -36,6 +36,23 @@ ListSelectionDialog::ListSelectionDialog(const QStringList &list, QWidget *paren
 ListSelectionDialog::~ListSelectionDialog()
 {
     delete ui;
+}
+
+void ListSelectionDialog::setColors(const QStringList &list)
+{
+    ui->listWidget->setAlternatingRowColors(false);
+    ui->listWidget->setSortingEnabled(false);
+    for (auto &text : list) {
+        QListWidgetItem *item = new QListWidgetItem(text, ui->listWidget);
+        item->setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled | Qt::ItemIsSelectable);
+        connect(ui->listWidget, SIGNAL(itemActivated(QListWidgetItem *)),
+                SLOT(onItemActivated(QListWidgetItem *)));
+        QColor color(text);
+        item->setCheckState(Qt::Checked);
+        if (color.isValid()) {
+            item->setBackground(color);
+        }
+    }
 }
 
 void ListSelectionDialog::setSelection(const QStringList &selection)

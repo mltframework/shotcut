@@ -998,6 +998,16 @@ void ShotcutSettings::setGlaxnimatePath(const QString &path)
     settings.setValue("glaxnimatePath", path);
 }
 
+bool ShotcutSettings::exportRangeMarkers() const
+{
+    return settings.value("exportRangeMarkers", true).toBool();
+}
+
+void ShotcutSettings::setExportRangeMarkers(bool b)
+{
+    settings.setValue("exportRangeMarkers", b);
+}
+
 bool ShotcutSettings::proxyEnabled() const
 {
     return settings.value("proxy/enabled", false).toBool();
