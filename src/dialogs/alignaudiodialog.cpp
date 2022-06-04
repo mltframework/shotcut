@@ -39,6 +39,7 @@
 #include <QHeaderView>
 #include <QIcon>
 #include <QLabel>
+#include <QLocale>
 #include <QPainter>
 #include <QPushButton>
 #include <QStyledItemDelegate>
@@ -110,13 +111,11 @@ class ClipAudioReader : public QObject
 {
     Q_OBJECT
 public:
-    ClipAudioReader(QString producerXml, AlignmentArray &referenceArray, int index, int in, int out,
-                    bool calculateSpeed)
+    ClipAudioReader(QString producerXml, AlignmentArray &referenceArray, int index, int in, int out)
         : QObject()
         , m_referenceArray(referenceArray)
         , m_reader(producerXml, &m_clipArray, in, out)
         , m_index(index)
-        , m_calculateSpeed(calculateSpeed)
     {
         connect(&m_reader, SIGNAL(progressUpdate(int)), this, SLOT(onReaderProgressUpdate(int)));
     }
@@ -143,8 +142,9 @@ public:
         double speed = 1.0;
         int offset = 0;
         double quality;
-        if (m_calculateSpeed) {
-            quality = m_referenceArray.calculateOffsetAndSpeed(m_clipArray, &speed, &offset);
+        double speedRange = Settings.audioReferenceSpeedRange();
+        if (speedRange != 0.0) {
+            quality = m_referenceArray.calculateOffsetAndSpeed(m_clipArray, &speed, &offset, speedRange);
         } else {
             quality = m_referenceArray.calculateOffset(m_clipArray, &offset);
         }
@@ -246,6 +246,28 @@ AlignAudioDialog::AlignAudioDialog(QString title, MultitrackModel *model,
                  &AlignAudioDialog::rebuildClipList))
         connect(m_trackCombo, SIGNAL(activated(const QString &)), SLOT(rebuildClipList()));
     glayout->addWidget(m_trackCombo, row++, 1, Qt::AlignLeft);
+    // Speed combo box
+    glayout->addWidget(new QLabel(tr("Speed adjustment range")), row, 0, Qt::AlignRight);
+    m_speedCombo = new QComboBox();
+    m_speedCombo->setToolTip("Larger speed adjustment ranges take longer to process.");
+    m_speedCombo->addItem(tr("None") + QString(" (%L1%)").arg(0), QVariant(0));
+    m_speedCombo->addItem(tr("Narrow") + QString(" (%L1%)").arg((double)0.1, 0, 'g', 2),
+                          QVariant(0.001));
+    m_speedCombo->addItem(tr("Normal") + QString(" (%L1%)").arg((double)0.5, 0, 'g', 2),
+                          QVariant(0.005));
+    m_speedCombo->addItem(tr("Wide") + QString(" (%L1%)").arg(1), QVariant(0.01));
+    m_speedCombo->addItem(tr("Very wide") + QString(" (%L1%)").arg(5), QVariant(0.05));
+    double defaultRange = Settings.audioReferenceSpeedRange();
+    for (int i = 0; i < m_speedCombo->count(); i++) {
+        if (m_speedCombo->itemData(i).toDouble() == defaultRange) {
+            m_speedCombo->setCurrentIndex(i);
+            break;
+        }
+    }
+    if (!connect(m_speedCombo, QOverload<int>::of(&QComboBox::activated), this,
+                 &AlignAudioDialog::rebuildClipList))
+        connect(m_speedCombo, SIGNAL(activated(const QString &)), SLOT(rebuildClipList()));
+    glayout->addWidget(m_speedCombo, row++, 1, Qt::AlignLeft);
     // List
     m_table = new QTreeView();
     m_table->setSelectionMode(QAbstractItemView::NoSelection);
@@ -269,11 +291,6 @@ AlignAudioDialog::AlignAudioDialog(QString title, MultitrackModel *model,
     m_table->header()->setSectionResizeMode(AlignClipsModel::COLUMN_SPEED,
                                             QHeaderView::ResizeToContents);
     glayout->addWidget(m_table, row++, 0, 1, 2);
-    // Speed check box
-    m_speedCheckBox = new QCheckBox(tr("Calculate speed adjustment"), this);
-    m_speedCheckBox->setChecked(Settings.audioReferenceCalcSpeed());
-    connect(m_speedCheckBox, SIGNAL(stateChanged(int)), SLOT(rebuildClipList()));
-    glayout->addWidget(m_speedCheckBox, row++, 0, 1, 2);
     // Button Box + cancel
     m_buttonBox = new QDialogButtonBox(QDialogButtonBox::Cancel);
     connect(m_buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
@@ -309,7 +326,7 @@ void AlignAudioDialog::rebuildClipList()
     m_alignClipsModel.clear();
     int referenceIndex = m_trackCombo->currentData().toInt();
     Settings.setAudioReferenceTrack(referenceIndex);
-    Settings.setAudioReferenceCalcSpeed(m_speedCheckBox->isChecked());
+    Settings.setAudioReferenceSpeedRange(m_speedCombo->currentData().toDouble());
     m_applyButton->setEnabled(false);
 
     for (const auto &uuid : m_uuids) {
@@ -367,7 +384,7 @@ void AlignAudioDialog::process()
         } else {
             QString xml = MLT.XML(info->cut);
             ClipAudioReader *clipReader = new ClipAudioReader(xml, trackArray, m_clipReaders.size(),
-                                                              info->frame_in, info->frame_out, m_speedCheckBox->isChecked());
+                                                              info->frame_in, info->frame_out);
             connect(clipReader, SIGNAL(progressUpdate(int, int)), this, SLOT(updateClipProgress(int, int)));
             connect(clipReader, SIGNAL(finished(int, int, double, double)), this, SLOT(clipFinished(int, int,
                                                                                                     double, double)));
