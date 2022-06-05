@@ -1170,6 +1170,13 @@ bool MainWindow::saveRepairedXmlFile(MltXmlChecker &checker, QString &fileName)
             QByteArray xml = checker.tempFile().readAll();
             checker.tempFile().close();
 
+            if (Settings.proxyEnabled()) {
+                auto s = QString::fromUtf8(xml);
+                if (ProxyManager::filterXML(s, QDir::fromNativeSeparators(fi.absolutePath()))) {
+                    xml = s.toUtf8();
+                }
+            }
+
             qint64 n = repaired.write(xml);
             while (n > 0 && n < xml.size()) {
                 qint64 x = repaired.write(xml.right(xml.size() - n));
