@@ -596,7 +596,7 @@ TrimClipInCommand::TrimClipInCommand(MultitrackModel &model, MarkersModel &marke
     , m_delta(delta)
     , m_ripple(ripple)
     , m_rippleAllTracks(Settings.timelineRippleAllTracks())
-    , m_rippleMarkers(Settings.timelineRippleMarkers() && m_ripple && m_rippleAllTracks)
+    , m_rippleMarkers(Settings.timelineRippleMarkers() && m_ripple)
     , m_redo(redo)
 {
     setText(QObject::tr("Trim clip in point"));
@@ -694,7 +694,7 @@ TrimClipOutCommand::TrimClipOutCommand(MultitrackModel &model, MarkersModel &mar
     , m_delta(delta)
     , m_ripple(ripple)
     , m_rippleAllTracks(Settings.timelineRippleAllTracks())
-    , m_rippleMarkers(Settings.timelineRippleMarkers() && m_ripple && m_rippleAllTracks)
+    , m_rippleMarkers(Settings.timelineRippleMarkers() && m_ripple)
     , m_redo(redo)
 {
     setText(QObject::tr("Trim clip out point"));
