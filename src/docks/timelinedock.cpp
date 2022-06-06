@@ -422,7 +422,8 @@ void TimelineDock::trimClipAtPlayhead(TrimLocation location, bool ripple)
 
     if (location == TrimInPoint) {
         MAIN.undoStack()->push(
-            new Timeline::TrimClipInCommand(m_model, trackIndex, clipIndex, m_position - info->start, ripple));
+            new Timeline::TrimClipInCommand(m_model, m_markersModel, trackIndex, clipIndex,
+                                            m_position - info->start, ripple));
         if (ripple)
             setPosition(info->start);
         if (m_updateCommand && m_updateCommand->trackIndex() == trackIndex
@@ -431,7 +432,7 @@ void TimelineDock::trimClipAtPlayhead(TrimLocation location, bool ripple)
                                          m_updateCommand->position() + m_position - info->start);
     } else {
         MAIN.undoStack()->push(
-            new Timeline::TrimClipOutCommand(m_model, trackIndex, clipIndex,
+            new Timeline::TrimClipOutCommand(m_model, m_markersModel, trackIndex, clipIndex,
                                              info->start + info->frame_count - m_position, ripple));
         if (m_updateCommand && m_updateCommand->trackIndex() == trackIndex
                 && m_updateCommand->clipIndex() == clipIndex)
@@ -1500,8 +1501,8 @@ bool TimelineDock::trimClipIn(int trackIndex, int clipIndex, int oldClipIndex, i
                                        Settings.timelineRippleAllTracks());
 
         m_trimDelta += delta;
-        m_trimCommand.reset(new Timeline::TrimClipInCommand(m_model, trackIndex, oldClipIndex, m_trimDelta,
-                                                            ripple, false));
+        m_trimCommand.reset(new Timeline::TrimClipInCommand(m_model, m_markersModel, trackIndex,
+                                                            oldClipIndex, m_trimDelta, ripple, false));
         if (m_updateCommand && m_updateCommand->trackIndex() == trackIndex
                 && m_updateCommand->clipIndex() == clipIndex)
             m_updateCommand->setPosition(trackIndex, clipIndex, m_updateCommand->position() + delta);
@@ -1551,8 +1552,8 @@ bool TimelineDock::trimClipOut(int trackIndex, int clipIndex, int delta, bool ri
         m_model.trimClipOut(trackIndex, clipIndex, delta, ripple, Settings.timelineRippleAllTracks());
 
         m_trimDelta += delta;
-        m_trimCommand.reset(new Timeline::TrimClipOutCommand(m_model, trackIndex, clipIndex, m_trimDelta,
-                                                             ripple, false));
+        m_trimCommand.reset(new Timeline::TrimClipOutCommand(m_model, m_markersModel, trackIndex, clipIndex,
+                                                             m_trimDelta, ripple, false));
         if (m_updateCommand && m_updateCommand->trackIndex() == trackIndex
                 && m_updateCommand->clipIndex() == clipIndex)
             m_updateCommand->setPosition(trackIndex, clipIndex, -1);

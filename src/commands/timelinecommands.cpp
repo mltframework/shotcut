@@ -586,15 +586,17 @@ void MoveClipCommand::redoMarkers()
     }
 }
 
-TrimClipInCommand::TrimClipInCommand(MultitrackModel &model, int trackIndex, int clipIndex,
-                                     int delta, bool ripple, bool redo, QUndoCommand *parent)
+TrimClipInCommand::TrimClipInCommand(MultitrackModel &model, MarkersModel &markersModel,
+                                     int trackIndex, int clipIndex, int delta, bool ripple, bool redo, QUndoCommand *parent)
     : TrimCommand(parent)
     , m_model(model)
+    , m_markersModel(markersModel)
     , m_trackIndex(qBound(0, trackIndex, qMax(model.rowCount() - 1, 0)))
     , m_clipIndex(clipIndex)
     , m_delta(delta)
     , m_ripple(ripple)
     , m_rippleAllTracks(Settings.timelineRippleAllTracks())
+    , m_rippleMarkers(Settings.timelineRippleMarkers() && m_ripple && m_rippleAllTracks)
     , m_redo(redo)
 {
     setText(QObject::tr("Trim clip in point"));
@@ -602,6 +604,46 @@ TrimClipInCommand::TrimClipInCommand(MultitrackModel &model, int trackIndex, int
 
 void TrimClipInCommand::redo()
 {
+    if (m_rippleMarkers) {
+        // Remove and shift markers as appropriate
+        bool markersModified = false;
+        m_markers = m_markersModel.getMarkers();
+        if (m_markers.size() > 0) {
+            auto mlt_index = m_model.trackList().at(m_trackIndex).mlt_index;
+            QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(mlt_index));
+            if (track && track->is_valid()) {
+                Mlt::Playlist playlist(*track);
+                m_markerRemoveStart = playlist.clip_start(m_clipIndex);
+                m_markerRemoveEnd = m_markerRemoveStart + m_delta;
+            }
+        }
+        if (m_markers.size() > 0 && m_markerRemoveStart >= 0) {
+            QList<Markers::Marker> newMarkers = m_markers;
+            for (int i = 0; i < newMarkers.size(); i++) {
+                Markers::Marker &marker = newMarkers[i];
+                if (marker.start >= m_markerRemoveStart &&
+                        marker.start <= m_markerRemoveEnd) {
+                    // This marker is in the removed segment. Remove it
+                    newMarkers.removeAt(i);
+                    i--;
+                    markersModified = true;
+                } else if (marker.start > m_markerRemoveEnd) {
+                    // This marker is after the removed segment. Shift it left
+                    marker.start -= m_markerRemoveEnd - m_markerRemoveStart;
+                    marker.end -= m_markerRemoveEnd - m_markerRemoveStart;
+                    markersModified = true;
+                }
+            }
+            if (markersModified) {
+                m_markersModel.doReplace(newMarkers);
+            }
+        }
+        if (!markersModified) {
+            m_markerRemoveStart = -1;
+            m_markers.clear();
+        }
+    }
+
     if (m_redo) {
         LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "delta" << m_delta;
         m_undoHelper.reset(new UndoHelper(m_model));
@@ -625,6 +667,9 @@ void TrimClipInCommand::undo()
     LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "delta" << m_delta;
     Q_ASSERT(m_undoHelper);
     m_undoHelper->undoChanges();
+    if (m_rippleMarkers && m_markerRemoveStart >= 0) {
+        m_markersModel.doReplace(m_markers);
+    }
 }
 
 bool TrimClipInCommand::mergeWith(const QUndoCommand *other)
@@ -639,15 +684,17 @@ bool TrimClipInCommand::mergeWith(const QUndoCommand *other)
     return true;
 }
 
-TrimClipOutCommand::TrimClipOutCommand(MultitrackModel &model, int trackIndex, int clipIndex,
-                                       int delta, bool ripple, bool redo, QUndoCommand *parent)
+TrimClipOutCommand::TrimClipOutCommand(MultitrackModel &model, MarkersModel &markersModel,
+                                       int trackIndex, int clipIndex, int delta, bool ripple, bool redo, QUndoCommand *parent)
     : TrimCommand(parent)
     , m_model(model)
+    , m_markersModel(markersModel)
     , m_trackIndex(qBound(0, trackIndex, qMax(model.rowCount() - 1, 0)))
     , m_clipIndex(clipIndex)
     , m_delta(delta)
     , m_ripple(ripple)
     , m_rippleAllTracks(Settings.timelineRippleAllTracks())
+    , m_rippleMarkers(Settings.timelineRippleMarkers() && m_ripple && m_rippleAllTracks)
     , m_redo(redo)
 {
     setText(QObject::tr("Trim clip out point"));
@@ -655,6 +702,47 @@ TrimClipOutCommand::TrimClipOutCommand(MultitrackModel &model, int trackIndex, i
 
 void TrimClipOutCommand::redo()
 {
+    if (m_rippleMarkers) {
+        // Remove and shift markers as appropriate
+        bool markersModified = false;
+        m_markers = m_markersModel.getMarkers();
+        if (m_markers.size() > 0) {
+            auto mlt_index = m_model.trackList().at(m_trackIndex).mlt_index;
+            QScopedPointer<Mlt::Producer> track(m_model.tractor()->track(mlt_index));
+            if (track && track->is_valid()) {
+                Mlt::Playlist playlist(*track);
+                m_markerRemoveStart = playlist.clip_start(m_clipIndex) + playlist.clip_length(
+                                          m_clipIndex) - m_delta;
+                m_markerRemoveEnd = m_markerRemoveStart + m_delta;
+            }
+        }
+        if (m_markers.size() > 0 && m_markerRemoveStart >= 0) {
+            QList<Markers::Marker> newMarkers = m_markers;
+            for (int i = 0; i < newMarkers.size(); i++) {
+                Markers::Marker &marker = newMarkers[i];
+                if (marker.start >= m_markerRemoveStart &&
+                        marker.start <= m_markerRemoveEnd) {
+                    // This marker is in the removed segment. Remove it
+                    newMarkers.removeAt(i);
+                    i--;
+                    markersModified = true;
+                } else if (marker.start > m_markerRemoveEnd) {
+                    // This marker is after the removed segment. Shift it left
+                    marker.start -= m_markerRemoveEnd - m_markerRemoveStart;
+                    marker.end -= m_markerRemoveEnd - m_markerRemoveStart;
+                    markersModified = true;
+                }
+            }
+            if (markersModified) {
+                m_markersModel.doReplace(newMarkers);
+            }
+        }
+        if (!markersModified) {
+            m_markerRemoveStart = -1;
+            m_markers.clear();
+        }
+    }
+
     if (m_redo) {
         m_undoHelper.reset(new UndoHelper(m_model));
         if (!m_ripple)
@@ -674,6 +762,9 @@ void TrimClipOutCommand::undo()
     LOG_DEBUG() << "trackIndex" << m_trackIndex << "clipIndex" << m_clipIndex << "delta" << m_delta;
     Q_ASSERT(m_undoHelper);
     m_undoHelper->undoChanges();
+    if (m_rippleMarkers && m_markerRemoveStart >= 0) {
+        m_markersModel.doReplace(m_markers);
+    }
 }
 
 bool TrimClipOutCommand::mergeWith(const QUndoCommand *other)

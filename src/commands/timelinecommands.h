@@ -251,8 +251,8 @@ protected:
 class TrimClipInCommand : public TrimCommand
 {
 public:
-    TrimClipInCommand(MultitrackModel &model, int trackIndex, int clipIndex, int delta, bool ripple,
-                      bool redo = true, QUndoCommand *parent = 0);
+    TrimClipInCommand(MultitrackModel &model, MarkersModel &markersModel, int trackIndex, int clipIndex,
+                      int delta, bool ripple, bool redo = true, QUndoCommand *parent = 0);
     void redo();
     void undo();
 protected:
@@ -263,19 +263,24 @@ protected:
     bool mergeWith(const QUndoCommand *other);
 private:
     MultitrackModel &m_model;
+    MarkersModel &m_markersModel;
     int m_trackIndex;
     int m_clipIndex;
     int m_delta;
     bool m_ripple;
     bool m_rippleAllTracks;
+    bool m_rippleMarkers;
     bool m_redo;
+    int m_markerRemoveStart;
+    int m_markerRemoveEnd;
+    QList<Markers::Marker> m_markers;
 };
 
 class TrimClipOutCommand : public TrimCommand
 {
 public:
-    TrimClipOutCommand(MultitrackModel &model, int trackIndex, int clipIndex, int delta, bool ripple,
-                       bool redo = true, QUndoCommand *parent = 0);
+    TrimClipOutCommand(MultitrackModel &model, MarkersModel &markersModel, int trackIndex,
+                       int clipIndex, int delta, bool ripple, bool redo = true, QUndoCommand *parent = 0);
     void redo();
     void undo();
 protected:
@@ -286,12 +291,17 @@ protected:
     bool mergeWith(const QUndoCommand *other);
 private:
     MultitrackModel &m_model;
+    MarkersModel &m_markersModel;
     int m_trackIndex;
     int m_clipIndex;
     int m_delta;
     bool m_ripple;
     bool m_rippleAllTracks;
+    bool m_rippleMarkers;
     bool m_redo;
+    int m_markerRemoveStart;
+    int m_markerRemoveEnd;
+    QList<Markers::Marker> m_markers;
 };
 
 class SplitCommand : public QUndoCommand
