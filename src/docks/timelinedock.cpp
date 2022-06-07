@@ -1834,6 +1834,9 @@ void TimelineDock::overwrite(int trackIndex, int position, const QString &xml, b
 void TimelineDock::appendFromPlaylist(Mlt::Playlist *playlist, bool skipProxy)
 {
     int trackIndex = currentTrack();
+    if (trackIndex < 0) {
+        trackIndex = 0;
+    }
     if (isTrackLocked(trackIndex)) {
         emit warnTrackLocked(trackIndex);
         return;

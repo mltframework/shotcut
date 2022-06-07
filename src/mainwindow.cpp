@@ -5261,8 +5261,16 @@ void MainWindow::on_actionExportChapters_triggered()
     for (auto &color : uniqueColors) {
         colors << color.name();
     }
-    const auto rangesOption = tr("Include ranges (Duration > 1)?");
-    ListSelectionDialog dialog({rangesOption}, this);
+    const auto rangesOption = tr("Include ranges (Duration > 1 frame)?");
+    QStringList initialOptions;
+    for (auto &m : m_timelineDock->markersModel()->getMarkers()) {
+        if (m.end != m.start) {
+            initialOptions << rangesOption;
+            break;
+        }
+    }
+
+    ListSelectionDialog dialog(initialOptions, this);
     dialog.setWindowModality(QmlApplication::dialogModality());
     dialog.setWindowTitle(tr("Choose Markers"));
     if (Settings.exportRangeMarkers()) {

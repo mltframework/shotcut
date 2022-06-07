@@ -676,7 +676,9 @@ bool TrimClipInCommand::mergeWith(const QUndoCommand *other)
 {
     const TrimClipInCommand *that = static_cast<const TrimClipInCommand *>(other);
     LOG_DEBUG() << "this clipIndex" << m_clipIndex << "that clipIndex" << that->m_clipIndex;
-    if (that->id() != id() || that->m_trackIndex != m_trackIndex || that->m_clipIndex != m_clipIndex)
+    if (that->id() != id() || that->m_trackIndex != m_trackIndex || that->m_clipIndex != m_clipIndex
+            || that->m_ripple != m_ripple || that->m_rippleAllTracks != m_rippleAllTracks
+            || that->m_rippleMarkers != m_rippleMarkers)
         return false;
     Q_ASSERT(m_undoHelper);
     m_undoHelper->recordAfterState();
@@ -770,7 +772,9 @@ void TrimClipOutCommand::undo()
 bool TrimClipOutCommand::mergeWith(const QUndoCommand *other)
 {
     const TrimClipOutCommand *that = static_cast<const TrimClipOutCommand *>(other);
-    if (that->id() != id() || that->m_trackIndex != m_trackIndex || that->m_clipIndex != m_clipIndex)
+    if (that->id() != id() || that->m_trackIndex != m_trackIndex || that->m_clipIndex != m_clipIndex
+            || that->m_ripple != m_ripple || that->m_rippleAllTracks != m_rippleAllTracks
+            || that->m_rippleMarkers != m_rippleMarkers)
         return false;
     Q_ASSERT(m_undoHelper);
     m_undoHelper->recordAfterState();
