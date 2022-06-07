@@ -1343,7 +1343,7 @@ EOF
         cmd ninja install
       fi
     elif test "bigsh0t" = "$1" ; then
-      log "skipping install for bigsh0t, which has no install target"
+      cmd install -p -c *.so "$FINAL_INSTALL_DIR"/lib/frei0r-1  || die "Unable to install $1"
     elif test "dav1d" = "$1" -o "rubberband" = "$1" ; then
       cmd meson install -C builddir || die "Unable to install $1"
     elif test "aom" = "$1" -o "mlt" = "$1" -o "x265" = "$1" ; then
