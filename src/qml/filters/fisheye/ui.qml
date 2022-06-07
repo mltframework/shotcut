@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2015 Meltytech, LLC
- * Author: Dan Dennedy <dan@dennedy.org>
+ * Copyright (c) 2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,81 +15,53 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*
- * Updated UI by hypov8
- * v1 june2022 (shotcut 22.04.25)
- * -changed Interpolation quality slider to integer
- * -changed UI presets(scale + A/R) from slider to radio buttons
- * -user set sliders are hidden when scale or A/R presets are used
- * -added buttons for pre-configured cameras. eg gopro..
- * -changed UI names to be more intuitive
- * -added UI values into global varables, incase plugin changes.
- *
- * original source from forum user TwitchyMcJoe
- * https://forum.shotcut.org/t/using-defish0r-as-a-filter-code-for-a-useful-defisheye-effect/181
- *
- */
-
-
 import QtQuick 2.12
-import QtQuick.Controls 2.12 //1.1
-import QtQuick.Layouts 1.12 //1.1
+import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.12
 import Shotcut.Controls 1.0 as Shotcut
 import QtQuick.Controls.Styles 1.1
-
 
 Item {
     width: 300
     height: 150
-    SystemPalette { id: activePalette }//colorGroup: SystemPalette.Active }
+    SystemPalette { id: activePalette }
 
     //plugin input index values
-    property string idx0_amount: '0'
-    property string idx1_deFish: '1'
-    property string idx2_lensType: '2'
-    property string idx3_scaling: '3'
-    property string idx4_manualScale: '4'
-    property string idx5_interpolator: '5'
-    property string idx6_aspectType: '6'
-    property string idx7_manualAspect: '7'
+    property string focalRatioParam: '0'
+    property string deFishParam: '1'
+    property string lensTypeParam: '2'
+    property string scaePresetParam: '3'
+    property string scaleManualParam: '4'
+    property string qualityParam: '5'
+    property string aspectPresetParam: '6'
+    property string aspectManualParam: '7'
 
     //default plugin values
-    property double v0_amount: 0.5      //default was 0.0
-    property bool   v1_deFish: false
-    property double v2_type: 0.6        //default #3
-    property double v3_scaling: 0.6     //default #3
-    property double v4_manualScale: 0.5
-    property double v5_interpolator: 0.16
-    property double v6_aspectType: 0.0  //default #1
-    property double v7_manualAspect: 0.5
+    property double focalRatioDefault: 0.5  //default was 0.0
+    property bool   deFishDefault: false
+    property double lensTypeDefault: 0.6    //default #3
+    property double scalePresetDefault: 0.6 //default #3
+    property double scaleManualDefault: 0.5
+    property double qualityDefault: 0.16
+    property double aspectPresetDefault: 0.0
+    property double aspectManualDefault: 0.5
 
-    //UI option counter max  (eg.. 4 radio buttons)
-    property int v2_lensMax: 4
-    property int v3_scaleMax: 4
-    property int v5_qualityMax: 7
-    property int v6_arMax: 5
-    //radioButton name arrays
-    property var v2_model: ['1', '2', '3', '4']
-    property var v3_model: ['1', '2', '3', 'user']
-    property var v6_model: ['1', '2', '3', '4', 'user']
-    //added varables above for ease of UI change, incase plugin gets updated
-
-    //hidden user sliders
-    property bool v3_scaleShow: false
-    property bool v6_arShow: false
+    //hide user sliders
+    property bool scaleShowSlider: false
+    property bool aspectShowSlider: false
+    property bool cameraShowNew: false    
 
     //combobox presets text index
     property int iDX_CAMERA: 8
     property int iDX_WIDE: 9
     property int iDX_RESULT: 10
 
-    property var defaultParameters: [idx0_amount,idx1_deFish,idx2_lensType,idx3_scaling,
-                idx4_manualScale,idx5_interpolator,idx6_aspectType,idx7_manualAspect]
+    property var defaultParameters: [focalRatioParam,deFishParam,lensTypeParam,scaePresetParam,
+                scaleManualParam,qualityParam,aspectPresetParam,aspectManualParam]
 
 
-    //todo: add more cameras
     //preset data. used for comboboxes.
-    function fn_getPreset(index) {
+    function getPresetData(index) {
         switch (index) {
             //Action
             // tries to keep all 4 borders in frame. straighten left/right edge. zoomed center, makes motion look faster
@@ -103,117 +74,119 @@ Item {
 
 
             //HERO3
-            case  0: return [0.736, true,  f_lens[4], f_scl[1], 0.500, f_qlty[2], f_ar[1], 0.500, 'HERO-3. 1080',   'Wide',     'focused'] //todo: language?
+            case  0: return [0.736, true, lensValue(4), scaleValue(1), 0.500, qualityValue(2), aspectValue(1), 0.500, 'HERO-3 1080', 'Wide', 'focused'] //todo: language?
 
             //HERO4
-            case  1: return [0.513, true,  f_lens(1), f_scl(1), 0.500, f_qlty(2), f_ar(5), 0.136, 'HERO-4 1080',    'Medium',   'Action']
-            case  2: return [0.643, true,  f_lens(1), f_scl(1), 0.500, f_qlty(2), f_ar(5), 0.487, 'HERO-4 1080',    'Medium',   'Focus']
-            case  3: return [0.695, true,  f_lens(4), f_scl(2), 0.500, f_qlty(2), f_ar(1), 0.500, 'HERO-4 1080',    'Medium',   'Linear']
+            case  1: return [0.513, true, lensValue(1), scaleValue(1), 0.500, qualityValue(2), aspectValue(5), 0.136, 'HERO-4 1080', 'Medium', 'Action']
+            case  2: return [0.643, true, lensValue(1), scaleValue(1), 0.500, qualityValue(2), aspectValue(5), 0.487, 'HERO-4 1080', 'Medium', 'Focus']
+            case  3: return [0.695, true, lensValue(4), scaleValue(2), 0.500, qualityValue(2), aspectValue(1), 0.500, 'HERO-4 1080', 'Medium', 'Linear']
 
-            case  4: return [0.630, true,  f_lens(1), f_scl(1), 0.500, f_qlty(2), f_ar(5), 0.247, 'HERO-4 1080',    'Wide',     'Action']
-            case  5: return [0.714, true,  f_lens(1), f_scl(1), 0.500, f_qlty(2), f_ar(5), 0.468, 'HERO-4 1080',    'Wide',     'Focus']
-            case  6: return [0.700, true,  f_lens(1), f_scl(2), 0.500, f_qlty(2), f_ar(1), 0.500, 'HERO-4 1080',    'Wide',     'Linear']
+            case  4: return [0.630, true, lensValue(1), scaleValue(1), 0.500, qualityValue(2), aspectValue(5), 0.247, 'HERO-4 1080', 'Wide', 'Action']
+            case  5: return [0.714, true, lensValue(1), scaleValue(1), 0.500, qualityValue(2), aspectValue(5), 0.468, 'HERO-4 1080', 'Wide', 'Focus']
+            case  6: return [0.700, true, lensValue(1), scaleValue(2), 0.500, qualityValue(2), aspectValue(1), 0.500, 'HERO-4 1080', 'Wide', 'Linear']
 
-            case  7: return [0.708, true,  f_lens(1), f_scl(1), 0.500, f_qlty(2), f_ar(5), 0.100, 'HERO-4 1080', 'SuperView',   'Action']
-            case  8: return [0.747, true,  f_lens(1), f_scl(1), 0.500, f_qlty(2), f_ar(5), 0.230, 'HERO-4 1080', 'SuperView',   'Focus']
-            case  9: return [0.750, true,  f_lens(1), f_scl(2), 0.500, f_qlty(2), f_ar(5), 0.227, 'HERO-4 1080', 'SuperView',   'Linear']
+            case  7: return [0.708, true, lensValue(1), scaleValue(1), 0.500, qualityValue(2), aspectValue(5), 0.100, 'HERO-4 1080', 'SuperView', 'Action']
+            case  8: return [0.747, true, lensValue(1), scaleValue(1), 0.500, qualityValue(2), aspectValue(5), 0.230, 'HERO-4 1080', 'SuperView', 'Focus']
+            case  9: return [0.750, true, lensValue(1), scaleValue(2), 0.500, qualityValue(2), aspectValue(5), 0.227, 'HERO-4 1080', 'SuperView', 'Linear']
 
              //HERO 5
-            case  10: return [0.730, true,  f_lens(4), f_scl(2), 0.500, f_qlty(2), f_ar(1), 0.500, 'HERO-5 1080',  'Wide',     'Linear']
-            case  11: return [0.696, true,  f_lens(4), f_scl(2), 0.532, f_qlty(2), f_ar(1), 0.500, 'HERO-5 1080', 'SuperView', 'Linear']
+            case 10: return [0.730, true, lensValue(4), scaleValue(2), 0.500, qualityValue(2), aspectValue(1), 0.500, 'HERO-5 1080', 'Wide', 'Linear']
+            case 11: return [0.696, true, lensValue(4), scaleValue(2), 0.532, qualityValue(2), aspectValue(1), 0.500, 'HERO-5 1080', 'SuperView', 'Linear']
 
             //4k CLONE
-            case  12: return [0.494, true,  f_lens(1), f_scl(1), 0.500, f_qlty(2), f_ar(5), 0.091, '4k-CLONE 1080p', 'None',    'Action']
-            case  13: return [0.643, true,  f_lens(1), f_scl(1), 0.500, f_qlty(2), f_ar(5), 0.487, '4k-CLONE 1080p', 'None',    'Focus']
-            case  14: return [0.695, true,  f_lens(4), f_scl(2), 0.500, f_qlty(2), f_ar(1), 0.500, '4k-CLONE 1080p', 'None',    'Linear']
+            case 12: return [0.494, true, lensValue(1), scaleValue(1), 0.500, qualityValue(2), aspectValue(5), 0.091, '4k-CLONE 1080p', 'None', 'Action']
+            case 13: return [0.643, true, lensValue(1), scaleValue(1), 0.500, qualityValue(2), aspectValue(5), 0.487, '4k-CLONE 1080p', 'None', 'Focus']
+            case 14: return [0.695, true, lensValue(4), scaleValue(2), 0.500, qualityValue(2), aspectValue(1), 0.500, '4k-CLONE 1080p', 'None', 'Linear']
 
-            case  15: return [0.442, true,  f_lens(1), f_scl(1), 0.500, f_qlty(2), f_ar(5), 0.357, '4k-CLONE 720p', 'None',     'Focus']
-            case  16: return [0.531, true,  f_lens(4), f_scl(2), 0.500, f_qlty(2), f_ar(5), 0.286, '4k-CLONE 720p', 'None',     'Linear']
-            //               focal, defish, lens,      pScale,   mScale, filter,   A/R_p, A/R_m,   camera,          mode,       result
+            case 15: return [0.442, true, lensValue(1), scaleValue(1), 0.500, qualityValue(2), aspectValue(5), 0.357, '4k-CLONE 720p', 'None', 'Focus']
+            case 16: return [0.531, true, lensValue(4), scaleValue(2), 0.500, qualityValue(2), aspectValue(5), 0.286, '4k-CLONE 720p', 'None', 'Linear']
+            //               focal, defish, lens,       scalePreset, scaleMan, interpolation,  A/R_preset,     A/R_man, camera,         mode,   result
         }
         //console.log('array done...')
         return '' //done
     }
 
     //set UI control values
-    function fn_SetControls() {
+    function setControlData() {
+        var activeIndex        
 
         // #0 Focal Ratio
-        uID0_ratioSlider.value = filter.getDouble(idx0_amount)
+        focalRatioSlider.value = filter.getDouble(focalRatioParam)
 
         // #1 Fish or Defish
-        if (filter.get(idx1_deFish) == false)
-            uID1_fisheye.checked = true
+        if (filter.get(deFishParam) === '1')
+             fisheyeRemoveButton.checked = true           
         else
-            uID1_defisheye.checked = true
+            fisheyeAddButton.checked = true
 
         // #2 Mapping function (lens type)
-        uID2_repeater.itemAt(fn_CalcIndex(idx2_lensType, v2_lensMax ) -1).checked = true
+        lensCombo.currentIndex = indexFromFloat(lensTypeParam, lensCombo.count) - 1 
 
-        // #3 Scaling method
-        uID3_repeater.itemAt(fn_CalcIndex(idx3_scaling, v3_scaleMax ) -1).checked = true
-        v3_scaleShow = (fn_CalcIndex(idx3_scaling, v3_scaleMax) == v3_scaleMax)? true:false
+        // #3 Scaling method     
+        activeIndex = indexFromFloat(scaePresetParam, scaleCombo.count )
+        scaleCombo.currentIndex = activeIndex - 1
+        scaleShowSlider = (activeIndex == scaleCombo.count)? true:false //only show custom slider when last option used       
 
         // #4 Manual Scale
-        uID4_manScaleSlider.value = filter.getDouble(idx4_manualScale)
+        scaleManualSlider.value = filter.getDouble(scaleManualParam)
 
-        // #5 interpolation quality
-        uID5_qualitySlider.value = fn_CalcIndex(idx5_interpolator, v5_qualityMax)
+       // #5 interpolation quality
+        qualityCombo.currentIndex = indexFromFloat(qualityParam, qualityCombo.count) - 1
 
-        // #6 Pixel aspect ratio presets
-        uID6_repeater.itemAt(fn_CalcIndex(idx6_aspectType, v6_arMax) -1).checked = true
-        v6_arShow = (fn_CalcIndex(idx6_aspectType, v6_arMax) == v6_arMax)? true:false  //show user set slider?
+         // #6 Pixel aspect ratio presets
+        activeIndex = indexFromFloat(aspectPresetParam, aspectCombo.count)
+        aspectCombo.currentIndex = activeIndex - 1
+        aspectShowSlider = (activeIndex == aspectCombo.count)? true:false //only show custom slider when last option used   
 
-        // #7 Manual Pixel Aspect ratio
-        uID7_manArSlider.value = filter.getDouble(idx7_manualAspect)
+         // #7 Manual Pixel Aspect ratio
+        aspectManualSlider.value = filter.getDouble(aspectManualParam)
     }
 
     //set plugin values
-    function fn_SetPlugin(idx0, idx1, idx2, idx3, idx4, idx5, idx6, idx7) {
-        filter.set(idx0_amount, idx0)       // focal ratio
-        filter.set(idx1_deFish, idx1)       // add/remove fisheye
-        filter.set(idx2_lensType, idx2)     // Lens type
-        filter.set(idx3_scaling, idx3)      // scale Presets
-        filter.set(idx4_manualScale, idx4)  // scale manual
-        filter.set(idx5_interpolator, idx5) // Filter
-        filter.set(idx6_aspectType, idx6)   // A/R Presets
-        filter.set(idx7_manualAspect, idx7) // A/R Manual
+    function setPluginData(idx0, idx1, idx2, idx3, idx4, idx5, idx6, idx7) {
+        filter.set(focalRatioParam, idx0)   // focal ratio
+        filter.set(deFishParam, idx1)       // add/remove fisheye
+        filter.set(lensTypeParam, idx2)     // Lens type
+        filter.set(scaePresetParam, idx3)   // scale Presets
+        filter.set(scaleManualParam, idx4)  // scale manual
+        filter.set(qualityParam, idx5)      // Filter
+        filter.set(aspectPresetParam, idx6) // A/R Presets
+        filter.set(aspectManualParam, idx7) // A/R Manual
     }
 
     //get text string from presets
-    function fn_getCameraListName(index, strIdx) {
-       var v_ret = fn_getPreset(index)
+    function getPresetName(index, strIdx) {
+       var v_ret = getPresetData(index)
        if (v_ret !== '')
            return v_ret[strIdx]
-        return v_ret //done
+        return v_ret
     }
 
-
     //fill combobox 'camera'
-    function fn_ListCamera() {
+    function fillCameraCombo() {
         var a_list = []
         var v_more = true
         var v_ret = ''
         var i = 0
 
         do {
-            v_ret = fn_getCameraListName(i, iDX_CAMERA)
+            v_ret = getPresetName(i, iDX_CAMERA)
             if (v_ret !== ''){
                 if (a_list.indexOf(v_ret) === -1)
-                    a_list.push(v_ret) //append camera  if unique
-            }
-            else
+                    a_list.push(v_ret) //append unique camera
+            } else {
                 v_more = false
+            }
 
             i += 1
         } while(v_more)
 
         cameraCombo.model = a_list
-        fn_ListFillWideModes() //fill combo 'camera modes'
+        fillModeCombo()
 
     }
     //fill combobox 'camera modes'
-    function fn_ListFillWideModes() {
+    function fillModeCombo() {
         var a_list = []
         var v_more = true
         var v_ret = ''
@@ -221,27 +194,26 @@ Item {
         var v_cam = cameraCombo.currentText
 
         do {
-            v_ret = fn_getCameraListName(i, iDX_CAMERA)
+            v_ret = getPresetName(i, iDX_CAMERA)
             if (v_ret !== '' ){
                 if (v_ret === v_cam) {
-                    v_ret = fn_getCameraListName(i, iDX_WIDE)
+                    v_ret = getPresetName(i, iDX_WIDE)
                     if (a_list.indexOf(v_ret) === -1){
-                        a_list.push(v_ret) //append mode if unique
+                        a_list.push(v_ret) //append unique modes
                     }
                 }
-            }
-            else {
+            } else {
                 v_more = false
             }
             i += 1
         } while(v_more)
 
         camModeCombo.model = a_list
-        fn_ListResultsChanged() //fill combo 'result'
+        fillResultsCombo()
     }
 
     //fill combobox 'results'
-    function fn_ListResultsChanged()  {
+    function fillResultsCombo()  {
         var a_list = []
         var v_more = true
         var v_ret = ''
@@ -250,31 +222,30 @@ Item {
         var v_mode = camModeCombo.currentText
 
         do {
-            v_ret = fn_getCameraListName(i, iDX_CAMERA)
+            v_ret = getPresetName(i, iDX_CAMERA)
             if (v_ret !== '' ){
-                if (v_ret === v_cam){ //match camera
-                    v_ret = fn_getCameraListName(i, iDX_WIDE)
-                    if (v_ret === v_mode) //match mode
-                        a_list.push(fn_getCameraListName(i, iDX_RESULT)) //append results if unique
+                if (   v_ret === v_cam //match camera
+                    && v_ret === getPresetName(i, iDX_WIDE)) //match mode
+                {
+                    a_list.push(getPresetName(i, iDX_RESULT)) //append unique results
                 }
-            }
-            else {
+            } else {
                 v_more = false
             }
             i += 1
         } while(v_more)
 
-        resultCombo.model = a_list //["New York", "Washington", "Houston"]
+        resultCombo.model = a_list 
     }
-
 
     //update plugin/ui with preset data
-    function fn_FillInputs(index){
-        var v_ret = fn_getPreset(index)
-        fn_SetPlugin(v_ret[0], v_ret[1], v_ret[2], v_ret[3], v_ret[4], v_ret[5], v_ret[6], v_ret[7])
-        fn_SetControls()
+    function sendPresetData(index){
+        var v_ret = getPresetData(index)
+        setPluginData(v_ret[0], v_ret[1], v_ret[2], v_ret[3], v_ret[4], v_ret[5], v_ret[6], v_ret[7])
+        setControlData()
     }
-    function fn_SetCameraData(){
+    //'Apply' button pressed
+    function setCameraData(){
         var v_more = true
         var v_cam = cameraCombo.currentText
         var v_mode = camModeCombo.currentText
@@ -283,45 +254,42 @@ Item {
         var v_ret = ''
 
         do {
-            v_ret = fn_getCameraListName(i, iDX_CAMERA)
+            v_ret = getPresetName(i, iDX_CAMERA)
             if (v_ret !== '' ){
                 if (   v_cam === v_ret //match camera
-                    && v_mode === fn_getCameraListName(i, iDX_WIDE) //match mode
-                    && v_result === fn_getCameraListName(i, iDX_RESULT)) //match result
+                    && v_mode === getPresetName(i, iDX_WIDE) //match mode
+                    && v_result === getPresetName(i, iDX_RESULT)) //match result
                 {
-                    fn_FillInputs(i)
+                    sendPresetData(i)
                     v_more = false
                 }
-            }
-            else {
+            } else {
                 v_more = false
             }
             i += 1
         } while(v_more)
     }
 
-
-
     //lens presets
-    function f_lens(index)  { return fn_CalcFloat(index, v2_lensMax) }
+    function lensValue(index)  { return floatFromIndex(index, lensCombo.count) }
     //scale presets
-    function f_scl(index)   { return fn_CalcFloat(index, v3_scaleMax) }
+    function scaleValue(index)   { return floatFromIndex(index, scaleCombo.count) }
     //quality presets
-    function f_qlty(index)  { return fn_CalcFloat(index, v5_qualityMax) }
+    function qualityValue(index)  { return floatFromIndex(index, qualityCombo.count) }
     //aspect ratio presets
-    function f_ar(index)    { return fn_CalcFloat(index, v6_arMax) }
+    function aspectValue(index)    { return floatFromIndex(index, aspectCombo.count) }
 
-    //calculate float for plugin
-    function fn_CalcFloat(idx, max) {
-        if (idx <= 0)
+    //calculate a float for plugin. 1-based
+    function floatFromIndex(idx, max) {
+        if (idx < 1)
             idx = 1
         if (idx > max)
             idx = max
         return ((1 / (max-1)) * (idx-1)).toPrecision(6)
     }
 
-    //convert float to int for inputs
-    function fn_CalcIndex(idx, max) {
+    //convert float to int for UI inputs. 1-based
+    function indexFromFloat(idx, max) {
         var v_rng = 1 / max
         var v_plug = filter.getDouble(idx)
         for (var i = 1; i < max; i++) {
@@ -332,8 +300,8 @@ Item {
         return max
     }
 
-    //index for undo
-    function fn_CalcDefaultIndex(value, max){
+    //index for reset button. 1-based
+    function setDefaultIndex(value, max){
         var v_rng = 1 / max
         for (var i = 1; i < max; i++) {
             if (value < (v_rng * i))
@@ -342,24 +310,40 @@ Item {
         return max
     }
 
+    //set presets
+    function setPresetData() {
+        var v_more = true
+        var v_ret = ''
+        var i = 0
 
-    //loading UI done. setup values
+        do {
+            v_ret = getPresetData(i)
+            if (v_ret !== '' ){
+                setPluginData(v_ret[0], v_ret[1], v_ret[2], v_ret[3], v_ret[4], v_ret[5], v_ret[6], v_ret[7])
+                filter.savePreset(preset.parameters, qsTr(v_ret[8]+ ' ' +v_ret[9] + ' (' +v_ret[10]+')'))
+            } else {
+                v_more = false
+            }
+            i += 1
+        } while(v_more)    
+    }
+
     Component.onCompleted: {
         filter.blockSignals = true
         if (filter.isNew) {
+            setPresetData()
+            
             // save (default) in preset dropdown
-            fn_SetPlugin(v0_amount, v1_deFish, v2_type, v3_scaling, v4_manualScale, v5_interpolator, v6_aspectType, v7_manualAspect)
+            setPluginData(focalRatioDefault, deFishDefault, lensTypeDefault, scalePresetDefault, scaleManualDefault, qualityDefault, aspectPresetDefault, aspectManualDefault)
             filter.savePreset(defaultParameters)
         }
-
         filter.blockSignals = false
-        fn_ListCamera() //fill comboboxes
+        
+        if (cameraShowNew) fillCameraCombo()
 
-        fn_SetControls() //set UI values
+        setControlData()
     }
 
-    ///////////////////
-    //main UI gid
     GridLayout {
         columns: 3
         anchors.fill: parent
@@ -373,9 +357,9 @@ Item {
         Shotcut.Preset {
             id: preset
             parameters: defaultParameters
-            onPresetSelected: fn_SetControls()
+            onPresetSelected: setControlData()
         }
-        Row {width: 6} //blank, keep above within grid
+        Row {width: 6} //blank
 
         //line seperator #1
         Rectangle{Layout.columnSpan: 3; Layout.fillWidth: true; height: 1; color: activePalette.text; opacity: 0.3}
@@ -383,159 +367,168 @@ Item {
         // Row 2 defish/fish
         Label {
             text: qsTr('Fisheye')
-            Shotcut.HoverTip { text: qsTr('Add or Remove fisheye effect') }
+            Shotcut.HoverTip { text: qsTr('Add or remove fisheye effect') }
             Layout.alignment: Qt.AlignRight
         }
         RowLayout {
             ButtonGroup { id: fisheyeGroup }
             RadioButton {
-                id: uID1_defisheye
+                id: fisheyeRemoveButton
                 text: qsTr('Remove')
                 ButtonGroup.group: fisheyeGroup
-                checked: (filter.get(idx1_deFish) == true) ? true:false
-                onCheckedChanged: if (checked) filter.set(idx1_deFish, true)
+                checked: (filter.get(deFishParam) === '1') ? true:false
+                onCheckedChanged: { if (checked) filter.set(deFishParam, true) }
             }
             RadioButton {
-                id: uID1_fisheye
+                id: fisheyeAddButton
                 text: qsTr('Add')
                 ButtonGroup.group: fisheyeGroup
-                checked: (filter.get(idx1_deFish) == false) ? true:false
-                onCheckedChanged: if (checked) filter.set(idx1_deFish, false)
+                checked: (filter.get(deFishParam) === '1') ? false:true
+                onCheckedChanged: { if (checked) filter.set(deFishParam, false) }
             }
         }
         Shotcut.UndoButton {
             onClicked: {
-                if(v1_deFish == true)
-                    uID1_defisheye.checked = true
+                if(deFishDefault)
+                    fisheyeRemoveButton.checked = true
                 else
-                    uID1_fisheye.checked = true
+                    fisheyeAddButton.checked = true
             }
         }
 
         // Row 3: focal ratio
         Label {
-            text: qsTr('Focal Ratio')
+            text: qsTr('Focal ratio')
             Shotcut.HoverTip { text: qsTr('The amount of lens distortion') }
             Layout.alignment: Qt.AlignRight
         }
         Shotcut.SliderSpinner {
-            id: uID0_ratioSlider
+            id: focalRatioSlider
             minimumValue: 0
             maximumValue: 1
             decimals: 3
             suffix: ''
-            value: filter.getDouble(idx0_amount)
-            onValueChanged: filter.set(idx0_amount, value)
+            value: filter.getDouble(focalRatioParam)
+            onValueChanged: filter.set(focalRatioParam, value)
         }
         Shotcut.UndoButton {
-            onClicked: uID0_ratioSlider.value = v0_amount
+            onClicked: focalRatioSlider.value = focalRatioDefault
         }
 
         // Row 4: Interpolation Quality
         Label {
             text: qsTr('Quality')
-            Shotcut.HoverTip { text: qsTr('Resample quality\n 1=no interpolation\n 2=fast linear\n 7=slowest') }
+            Shotcut.HoverTip { text: qsTr( 'Resample quality') }
             Layout.alignment: Qt.AlignRight
         }
-        Shotcut.SliderSpinner {
-            id: uID5_qualitySlider
-            minimumValue: 1
-            maximumValue: v5_qualityMax //7
-            decimals: 0
-            suffix: ''
-            value: fn_CalcIndex(idx5_interpolator,v5_qualityMax)
-            onValueChanged: filter.set(idx5_interpolator, ((value - 1) / (v5_qualityMax - 1)).toPrecision(6) )
+        Shotcut.ComboBox {
+            //Layout.columnSpan: 2
+            id: qualityCombo
+            implicitWidth: 120
+            model: ListModel { 
+                id: qualityModel 
+                ListElement { text: qsTr('Nearest neighbor'); value: 0.0 }
+                ListElement { text: qsTr('Bilinear'); value: 0.166 }
+                ListElement { text: qsTr('Bicubic smooth'); value: 0.333 }
+                ListElement { text: qsTr('Bicubic sharp'); value: 0.500 }
+                ListElement { text: qsTr('Spline 4x4'); value: 0.666 }
+                ListElement { text: qsTr('Spline 6x6'); value: 0.833 }                
+                ListElement { text: qsTr('Lanczos 16x16'); value: 1.0 }                
+            }
+            textRole: 'text'
+            onActivated: {
+                filter.set(qualityParam, qualityModel.get(currentIndex).value)
+            }
         }
-        Shotcut.UndoButton {
-            onClicked:  uID5_qualitySlider.value = fn_CalcDefaultIndex(v5_interpolator, v5_qualityMax)
+         Shotcut.UndoButton {
+            onClicked: {
+                filter.set(qualityParam, qualityDefault)
+                qualityCombo.currentIndex = setDefaultIndex(qualityDefault, qualityCombo.count) - 1
+            }
         }
 
         // Row 5: Lens Type
         Label {
-            text: qsTr('Lens Type')
-            Shotcut.HoverTip { text: qsTr('Select a lens that best matches your camera') }
+            text: qsTr('Lens type')
+            Shotcut.HoverTip { text: qsTr('Select a lens distortion pattern that best matches your camera') }
             Layout.alignment: Qt.AlignRight
         }
-        Row {
-            ButtonGroup { id: mapTypeGroup }
-            Repeater {
-                id: uID2_repeater
-                model: v2_model
-                RadioButton {
-                    text: modelData
-                    checked: (index == fn_CalcIndex(idx2_lensType, v2_lensMax) - 1)? true:false
-                    ButtonGroup.group: mapTypeGroup
-                    onCheckedChanged: filter.set(idx2_lensType, f_lens(index+1))
-                }
+        Shotcut.ComboBox {
+            id: lensCombo
+            implicitWidth: 120
+            model: ListModel { 
+                id: lensModel 
+                ListElement { text: qsTr('Equidistant'); value: 0.0 }
+                ListElement { text: qsTr('Ortographic'); value: 0.333 }
+                ListElement { text: qsTr('Equiarea'); value: 0.666 }
+                ListElement { text: qsTr('Stereographic'); value: 1.0 }
+            }
+            textRole: 'text'
+            onActivated: {
+                filter.set(lensTypeParam, lensModel.get(currentIndex).value)
             }
         }
-        Shotcut.UndoButton {
-            onClicked: {uID2_repeater.itemAt(fn_CalcDefaultIndex(v2_type, v2_lensMax)-1).checked = true } //2
-        }
-
+         Shotcut.UndoButton {
+            onClicked: {
+                filter.set(lensTypeParam, lensTypeDefault)
+                lensCombo.currentIndex = setDefaultIndex(lensTypeDefault, lensCombo.count) - 1
+            }
+        }        
+        
         //line seperator #2
         Rectangle{Layout.columnSpan: 3; Layout.fillWidth: true; height: 1; color: activePalette.text; opacity: 0.3}
 
         // Row 6: Scale (Preset)
         Label {
-            text: qsTr('Scale (Preset)')
-            Layout.alignment: Qt.AlignRight
-            Shotcut.HoverTip {
-                text: qsTr( 'Preset Scale methods will lock pixel locations\n'+
-                            'Defish\n'+
-                            ' 1=fixed top-bottom\n'+
-                            ' 2=fixed middle\n'+
-                            ' 3=fixed corners\n'+
-                            'Fisheye\n'+
-                            ' 1=fixed corners\n'+
-                            ' 2=fixed middle\n'+
-                            ' 3=fixed top-bottom')
-            }
+            text: qsTr('Scale (preset)')
+            Shotcut.HoverTip { text: qsTr( 'Preset scale methods\n'+
+                                           'Lock pixels at specific locations') }
+            Layout.alignment: Qt.AlignRight                                           
         }
-        Row {
-            ButtonGroup { id: scalePresetGroup }
-            Repeater {
-                id: uID3_repeater
-                model: v3_model
-                RadioButton {
-                    text: modelData
-                    checked: (index == fn_CalcIndex(idx3_scaling, v3_scaleMax) - 1)? true:false
-                    ButtonGroup.group: scalePresetGroup
-                    onCheckedChanged: {
-                        filter.set(idx3_scaling, f_scl(index+1))
-                        v3_scaleShow = ((index+1)==v3_scaleMax)? true : false //show user input?
-                    }
-                }
+        Shotcut.ComboBox {
+            id: scaleCombo
+            implicitWidth: 120
+            model: ListModel { 
+                id: scaleModel 
+                ListElement { text: qsTr('Scale to Fill'); value: 0.0 }
+                ListElement { text: qsTr('Keep Center Scale'); value: 0.333 }
+                ListElement { text: qsTr('Scale to Fit'); value: 0.666 }
+                ListElement { text: qsTr('Manual Scale'); value: 1.0 }
+            }
+            textRole: 'text'
+            onActivated: {
+                filter.set(scaePresetParam, scaleModel.get(currentIndex).value)
+                scaleShowSlider = ((currentIndex+1)==scaleCombo.count)? true : false //show user input?
             }
         }
         Shotcut.UndoButton {
             onClicked: {
-                uID3_repeater.itemAt(fn_CalcDefaultIndex(v3_scaling, v3_scaleMax)-1).checked = true
-                v3_scaleShow = false //hide user input as default
+                filter.set(scaePresetParam, scalePresetDefault)
+                scaleCombo.currentIndex = setDefaultIndex(scalePresetDefault, scaleCombo.count) - 1
+                scaleShowSlider = false
             }
-        }
-
+        }     
 
         // Row 7: Scale (Manual)
         Label {
-            text: qsTr('Scale (Manual)')
-            Shotcut.HoverTip { text: qsTr('User set zoom/scale\nNo fixed sides') }
+            text: qsTr('Scale (manual)')
+            Shotcut.HoverTip { text: qsTr('User set zoom/scale\nSides of image are not fixed') }
             Layout.alignment: Qt.AlignRight
-            visible: v3_scaleShow
+            visible: scaleShowSlider
         }
         Shotcut.SliderSpinner {
-            id: uID4_manScaleSlider
-            visible: v3_scaleShow
+            id: scaleManualSlider
+            visible: scaleShowSlider
             minimumValue: 0
             maximumValue: 1
             decimals: 3
             suffix: ''
-            value: filter.getDouble(idx4_manualScale)
-            onValueChanged: filter.set(idx4_manualScale, value)
+            value: filter.getDouble(scaleManualParam)
+            onValueChanged: filter.set(scaleManualParam, value)
         }
         Shotcut.UndoButton {
-            visible: v3_scaleShow
-            onClicked: uID4_manScaleSlider.value = v4_manualScale
+            visible: scaleShowSlider
+            onClicked: scaleManualSlider.value = scaleManualDefault
         }
 
         // line seperator #3
@@ -543,53 +536,58 @@ Item {
 
         // Row 8: A/R (Presets)
         Label {
-            text: qsTr('A/R (Presets)')
-            Shotcut.HoverTip { text: qsTr("Pixel Aspect Ratio presets\nUse custom when more bias is needed")}
+            text: qsTr('Aspect (preset)')
+            Shotcut.HoverTip { text: qsTr( 'Preset pixel aspect ratio') }
             Layout.alignment: Qt.AlignRight
         }
-        Row {
-            ButtonGroup { id: arPresetGroup }
-            Repeater {
-                id: uID6_repeater
-                model: v6_model
-                RadioButton {
-                    text: modelData
-                    checked: (index == fn_CalcIndex(idx6_aspectType, v6_arMax) - 1)? true:false
-                    ButtonGroup.group: arPresetGroup
-                    onCheckedChanged: {
-                        filter.set(idx6_aspectType, f_ar(index+1))
-                        v6_arShow = ((index+1)==v6_arMax)? true : false
-                    }
+        RowLayout {
+            Shotcut.ComboBox {
+                id: aspectCombo
+                implicitWidth: 120
+                model: ListModel { 
+                    id: aspectModel 
+                    ListElement { text: qsTr('Square Pixel'); value: 0.0 }
+                    ListElement { text: qsTr('PAL DV  1.067'); value: 0.250 }
+                    ListElement { text: qsTr('NTSC DV 0.889'); value: 0.500 }
+                    ListElement { text: qsTr('HDV     1.333'); value: 0.750 }                
+                    ListElement { text: qsTr('Manual Aspect'); value: 1.0 }
+                }
+                textRole: 'text'
+                onActivated: {
+                    filter.set(aspectPresetParam, aspectModel.get(currentIndex).value)
+                    aspectShowSlider = ((currentIndex+1) == aspectCombo.count)? true : false //show user input?
                 }
             }
         }
-        Shotcut.UndoButton {
+         Shotcut.UndoButton {
             onClicked: {
-                uID6_repeater.itemAt(fn_CalcDefaultIndex(v6_aspectType, v6_arMax)-1).checked = true
-                v6_arShow = false //hide user input as default
+                filter.set(aspectPresetParam, aspectPresetDefault)
+                aspectCombo.currentIndex = setDefaultIndex(aspectPresetDefault, aspectCombo.count) - 1
+                aspectShowSlider = false
             }
         }
-
+       
         // Row 9: A/R (Manual)
         Label {
-            text: qsTr('A/R (Manual)')
-            Shotcut.HoverTip { text: qsTr('User set Pixel Aspect ratios\nChange top/side distortion bias')}
+            text: qsTr('Aspect (manual)')
+            Shotcut.HoverTip { text: qsTr( 'User set pixel aspect ratios\n'+ 
+                                           'Change top/side distortion bias') }
             Layout.alignment: Qt.AlignRight
-            visible: v6_arShow
+            visible: aspectShowSlider
         }
         Shotcut.SliderSpinner {
-            id: uID7_manArSlider
+            id: aspectManualSlider
             minimumValue: 0
             maximumValue: 1
             decimals: 3
             suffix: ''
-            visible: v6_arShow
-            value: filter.getDouble(idx7_manualAspect)
-            onValueChanged: filter.set(idx7_manualAspect, value)
+            visible: aspectShowSlider
+            value: filter.getDouble(aspectManualParam)
+            onValueChanged: filter.set(aspectManualParam, value)
         }
         Shotcut.UndoButton {
-            visible: v6_arShow
-            onClicked: uID7_manArSlider.value = v7_manualAspect
+            visible: aspectShowSlider
+            onClicked: aspectManualSlider.value = aspectManualDefault
         }
 
         //line seperator #4
@@ -597,34 +595,40 @@ Item {
 
         //row 10 combo cameras
          Label {
+            visible: cameraShowNew
             text: qsTr('Camera')
             Layout.alignment: Qt.AlignRight
         }
         Shotcut.ComboBox {
+            visible: cameraShowNew
             Layout.columnSpan: 2
             id: cameraCombo
             implicitWidth: 120
             model: ListModel { id: tempList1 }
-            onActivated: fn_ListFillWideModes()
+            onActivated: fillModeCombo()
         }
         //row 11 combo camera mode
          Label {
-            text: qsTr('Record Mode')
+            visible: cameraShowNew
+            text: qsTr('Record mode')
             Layout.alignment: Qt.AlignRight
         }
         Shotcut.ComboBox {
+            visible: cameraShowNew
             Layout.columnSpan: 2
             id: camModeCombo
             implicitWidth: 120
             model:  ListModel { id: tempList2 }
-            onActivated: fn_ListResultsChanged()
+            onActivated: fillResultsCombo()
         }
         //row 12 combo results
         Label {
+            visible: cameraShowNew
             text: qsTr('Result')
             Layout.alignment: Qt.AlignRight
         }
         Row {
+            visible: cameraShowNew
             Layout.columnSpan: 2
             Shotcut.ComboBox {
                 id: resultCombo
@@ -635,13 +639,14 @@ Item {
                 Layout.alignment: Qt.AlignRight
                 text: qsTr('Apply')
                 implicitWidth: 80
-                onClicked: fn_SetCameraData()
+                onClicked: setCameraData()
             }
         }
 
         //line seperator #5
-        Rectangle{Layout.columnSpan: 3; Layout.fillWidth: true; height: 1; color: activePalette.text; opacity: 0.3}
-
+        Rectangle{
+            visible: cameraShowNew
+            Layout.columnSpan: 3; Layout.fillWidth: true; height: 1; color: activePalette.text; opacity: 0.3}
 
         Item {
             Layout.fillHeight: true
