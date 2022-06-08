@@ -357,35 +357,34 @@ void GlaxnimateIpcServer::ParentResources::setProducer(const Mlt::Producer &prod
                                                        bool hideCurrentTrack)
 {
     m_producer = producer;
+    if (!m_producer.get(kMultitrackItemProperty))
+        return;
     m_profile.reset(new Mlt::Profile(::mlt_profile_clone(MLT.profile().get_profile())));
     m_profile->set_progressive(Settings.playerProgressive());
     m_glaxnimateProducer.reset(new Mlt::Producer(*m_profile, "xml-string",
                                                  MLT.XML().toUtf8().constData()));
     if (m_glaxnimateProducer && m_glaxnimateProducer->is_valid()) {
         m_frameNum = -1;
-        if (m_producer.get(kMultitrackItemProperty)) {
-            // hide this clip's video track and upper ones
-            QString s = QString::fromLatin1(m_producer.get(kMultitrackItemProperty));
-            QVector<QStringRef> parts = s.splitRef(':');
-            if (parts.length() == 2) {
-                auto trackIndex = parts[1].toInt();
-                auto offset = hideCurrentTrack ? 1 : 0;
-                Mlt::Tractor tractor(*m_glaxnimateProducer);
-                // for each upper video track plus this one
-                for (int i = 0; i < trackIndex + offset; i++) {
-                    // get the MLT track index
-                    auto index = MAIN.mltIndexForTrack(i);
-                    // get the MLT track in this copy
-                    std::unique_ptr<Mlt::Producer> track(tractor.track(index));
-                    if (track && track->is_valid()) {
-                        // hide the track
-                        track->set("hide", 3);
-                    }
+        // hide this clip's video track and upper ones
+        QString s = QString::fromLatin1(m_producer.get(kMultitrackItemProperty));
+        QVector<QStringRef> parts = s.splitRef(':');
+        if (parts.length() == 2) {
+            auto trackIndex = parts[1].toInt();
+            auto offset = hideCurrentTrack ? 1 : 0;
+            Mlt::Tractor tractor(*m_glaxnimateProducer);
+            // for each upper video track plus this one
+            for (int i = 0; i < trackIndex + offset; i++) {
+                // get the MLT track index
+                auto index = MAIN.mltIndexForTrack(i);
+                // get the MLT track in this copy
+                std::unique_ptr<Mlt::Producer> track(tractor.track(index));
+                if (track && track->is_valid()) {
+                    // hide the track
+                    track->set("hide", 3);
                 }
             }
         }
     }
-
 }
 
 void GlaxnimateIpcServer::onConnect()
