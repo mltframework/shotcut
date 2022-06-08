@@ -74,33 +74,33 @@ Item {
 
 
             //HERO3
-            case  0: return [0.736, true, lensValue(4), scaleValue(1), 0.500, qualityValue(2), aspectValue(1), 0.500, 'HERO-3 1080', 'Wide', 'focused'] //todo: language?
+            case  0: return [0.736, true, lensValue(4), scaleValue(1), 0.500, qualityValue(2), aspectValue(1), 0.500, 'HERO3 1080', 'Wide', 'Focus']
 
             //HERO4
-            case  1: return [0.513, true, lensValue(1), scaleValue(1), 0.500, qualityValue(2), aspectValue(5), 0.136, 'HERO-4 1080', 'Medium', 'Action']
-            case  2: return [0.643, true, lensValue(1), scaleValue(1), 0.500, qualityValue(2), aspectValue(5), 0.487, 'HERO-4 1080', 'Medium', 'Focus']
-            case  3: return [0.695, true, lensValue(4), scaleValue(2), 0.500, qualityValue(2), aspectValue(1), 0.500, 'HERO-4 1080', 'Medium', 'Linear']
+            case  1: return [0.513, true, lensValue(1), scaleValue(1), 0.500, qualityValue(2), aspectValue(5), 0.136, 'HERO4 1080', 'Medium', 'Action']
+            case  2: return [0.643, true, lensValue(1), scaleValue(1), 0.500, qualityValue(2), aspectValue(5), 0.487, 'HERO4 1080', 'Medium', 'Focus']
+            case  3: return [0.695, true, lensValue(4), scaleValue(2), 0.500, qualityValue(2), aspectValue(1), 0.500, 'HERO4 1080', 'Medium', 'Linear']
 
-            case  4: return [0.630, true, lensValue(1), scaleValue(1), 0.500, qualityValue(2), aspectValue(5), 0.247, 'HERO-4 1080', 'Wide', 'Action']
-            case  5: return [0.714, true, lensValue(1), scaleValue(1), 0.500, qualityValue(2), aspectValue(5), 0.468, 'HERO-4 1080', 'Wide', 'Focus']
-            case  6: return [0.700, true, lensValue(1), scaleValue(2), 0.500, qualityValue(2), aspectValue(1), 0.500, 'HERO-4 1080', 'Wide', 'Linear']
+            case  4: return [0.630, true, lensValue(1), scaleValue(1), 0.500, qualityValue(2), aspectValue(5), 0.247, 'HERO4 1080', 'Wide', 'Action']
+            case  5: return [0.714, true, lensValue(1), scaleValue(1), 0.500, qualityValue(2), aspectValue(5), 0.468, 'HERO4 1080', 'Wide', 'Focus']
+            case  6: return [0.700, true, lensValue(1), scaleValue(2), 0.500, qualityValue(2), aspectValue(1), 0.500, 'HERO4 1080', 'Wide', 'Linear']
 
-            case  7: return [0.708, true, lensValue(1), scaleValue(1), 0.500, qualityValue(2), aspectValue(5), 0.100, 'HERO-4 1080', 'SuperView', 'Action']
-            case  8: return [0.747, true, lensValue(1), scaleValue(1), 0.500, qualityValue(2), aspectValue(5), 0.230, 'HERO-4 1080', 'SuperView', 'Focus']
-            case  9: return [0.750, true, lensValue(1), scaleValue(2), 0.500, qualityValue(2), aspectValue(5), 0.227, 'HERO-4 1080', 'SuperView', 'Linear']
+            case  7: return [0.708, true, lensValue(1), scaleValue(1), 0.500, qualityValue(2), aspectValue(5), 0.100, 'HERO4 1080', 'SuperView', 'Action']
+            case  8: return [0.747, true, lensValue(1), scaleValue(1), 0.500, qualityValue(2), aspectValue(5), 0.230, 'HERO4 1080', 'SuperView', 'Focus']
+            case  9: return [0.750, true, lensValue(1), scaleValue(2), 0.500, qualityValue(2), aspectValue(5), 0.227, 'HERO4 1080', 'SuperView', 'Linear']
 
              //HERO 5
-            case 10: return [0.730, true, lensValue(4), scaleValue(2), 0.500, qualityValue(2), aspectValue(1), 0.500, 'HERO-5 1080', 'Wide', 'Linear']
-            case 11: return [0.696, true, lensValue(4), scaleValue(2), 0.532, qualityValue(2), aspectValue(1), 0.500, 'HERO-5 1080', 'SuperView', 'Linear']
+            case 10: return [0.730, true, lensValue(4), scaleValue(2), 0.500, qualityValue(2), aspectValue(1), 0.500, 'HERO5 1080', 'Wide', 'Linear']
+            case 11: return [0.696, true, lensValue(4), scaleValue(2), 0.532, qualityValue(2), aspectValue(1), 0.500, 'HERO5 1080', 'SuperView', 'Linear']
 
             //4k CLONE
-            case 12: return [0.494, true, lensValue(1), scaleValue(1), 0.500, qualityValue(2), aspectValue(5), 0.091, '4k-CLONE 1080p', 'None', 'Action']
-            case 13: return [0.643, true, lensValue(1), scaleValue(1), 0.500, qualityValue(2), aspectValue(5), 0.487, '4k-CLONE 1080p', 'None', 'Focus']
-            case 14: return [0.695, true, lensValue(4), scaleValue(2), 0.500, qualityValue(2), aspectValue(1), 0.500, '4k-CLONE 1080p', 'None', 'Linear']
+            case 12: return [0.494, true, lensValue(1), scaleValue(1), 0.500, qualityValue(2), aspectValue(5), 0.091, '4K CLONE 1080p', 'Wide', 'Action']
+            case 13: return [0.643, true, lensValue(1), scaleValue(1), 0.500, qualityValue(2), aspectValue(5), 0.487, '4K CLONE 1080p', 'Wide', 'Focus']
+            case 14: return [0.695, true, lensValue(4), scaleValue(2), 0.500, qualityValue(2), aspectValue(1), 0.500, '4K CLONE 1080p', 'Wide', 'Linear']
 
-            case 15: return [0.442, true, lensValue(1), scaleValue(1), 0.500, qualityValue(2), aspectValue(5), 0.357, '4k-CLONE 720p', 'None', 'Focus']
-            case 16: return [0.531, true, lensValue(4), scaleValue(2), 0.500, qualityValue(2), aspectValue(5), 0.286, '4k-CLONE 720p', 'None', 'Linear']
-            //               focal, defish, lens,       scalePreset, scaleMan, interpolation,  A/R_preset,     A/R_man, camera,         mode,   result
+            case 15: return [0.442, true, lensValue(1), scaleValue(1), 0.500, qualityValue(2), aspectValue(5), 0.357, '4K CLONE 720p', 'Medium', 'Focus']
+            case 16: return [0.531, true, lensValue(4), scaleValue(2), 0.500, qualityValue(2), aspectValue(5), 0.286, '4K CLONE 720p', 'Medium', 'Linear']
+            //               focal, defish, lens,       scalePreset, scaleMan, interpolation,  A/R_preset,     A/R_man, camera,     qsTr(mode), qsTr(result)
         }
         //console.log('array done...')
         return '' //done
@@ -125,7 +125,7 @@ Item {
         // #3 Scaling method     
         activeIndex = indexFromFloat(scaePresetParam, scaleCombo.count )
         scaleCombo.currentIndex = activeIndex - 1
-        scaleShowSlider = (activeIndex == scaleCombo.count)? true:false //only show custom slider when last option used       
+        scaleShowSlider = (activeIndex == scaleCombo.count) //only show custom slider when last option used       
 
         // #4 Manual Scale
         scaleManualSlider.value = filter.getDouble(scaleManualParam)
@@ -136,7 +136,7 @@ Item {
          // #6 Pixel aspect ratio presets
         activeIndex = indexFromFloat(aspectPresetParam, aspectCombo.count)
         aspectCombo.currentIndex = activeIndex - 1
-        aspectShowSlider = (activeIndex == aspectCombo.count)? true:false //only show custom slider when last option used   
+        aspectShowSlider = (activeIndex == aspectCombo.count) //only show custom slider when last option used   
 
          // #7 Manual Pixel Aspect ratio
         aspectManualSlider.value = filter.getDouble(aspectManualParam)
@@ -156,9 +156,13 @@ Item {
 
     //get text string from presets
     function getPresetName(index, strIdx) {
-       var v_ret = getPresetData(index)
-       if (v_ret !== '')
-           return v_ret[strIdx]
+        var v_ret = getPresetData(index)
+        if (v_ret !== '') {
+            if (strIdx == iDX_CAMERA)
+                return v_ret[strIdx]                
+            else
+                return qsTr(v_ret[strIdx]) //language on 'mode' and 'results'
+        }
         return v_ret
     }
 
@@ -320,7 +324,7 @@ Item {
             v_ret = getPresetData(i)
             if (v_ret !== '' ){
                 setPluginData(v_ret[0], v_ret[1], v_ret[2], v_ret[3], v_ret[4], v_ret[5], v_ret[6], v_ret[7])
-                filter.savePreset(preset.parameters, qsTr(v_ret[8]+ ' ' +v_ret[9] + ' (' +v_ret[10]+')'))
+                filter.savePreset(preset.parameters, qsTr(v_ret[8]+ ' ' +qsTr(v_ret[9]) + ' (' +qsTr(v_ret[10])+')'))
             } else {
                 v_more = false
             }
@@ -361,9 +365,6 @@ Item {
         }
         Row {width: 6} //blank
 
-        //line seperator #1
-        Rectangle{Layout.columnSpan: 3; Layout.fillWidth: true; height: 1; color: activePalette.text; opacity: 0.3}
-
         // Row 2 defish/fish
         Label {
             text: qsTr('Fisheye')
@@ -376,7 +377,7 @@ Item {
                 id: fisheyeRemoveButton
                 text: qsTr('Remove')
                 ButtonGroup.group: fisheyeGroup
-                checked: (filter.get(deFishParam) === '1') ? true:false
+                checked: (filter.get(deFishParam) === '1')
                 onCheckedChanged: { if (checked) filter.set(deFishParam, true) }
             }
             RadioButton {
@@ -475,7 +476,7 @@ Item {
             }
         }        
         
-        //line seperator #2
+        //line seperator #1
         Rectangle{Layout.columnSpan: 3; Layout.fillWidth: true; height: 1; color: activePalette.text; opacity: 0.3}
 
         // Row 6: Scale (Preset)
@@ -498,7 +499,7 @@ Item {
             textRole: 'text'
             onActivated: {
                 filter.set(scaePresetParam, scaleModel.get(currentIndex).value)
-                scaleShowSlider = ((currentIndex+1)==scaleCombo.count)? true : false //show user input?
+                scaleShowSlider = ((currentIndex+1)==scaleCombo.count) //show user input?
             }
         }
         Shotcut.UndoButton {
@@ -531,7 +532,7 @@ Item {
             onClicked: scaleManualSlider.value = scaleManualDefault
         }
 
-        // line seperator #3
+        // line seperator #2
         Rectangle{Layout.columnSpan: 3; Layout.fillWidth: true; height: 1; color: activePalette.text; opacity: 0.3}
 
         // Row 8: A/R (Presets)
@@ -546,16 +547,16 @@ Item {
                 implicitWidth: 120
                 model: ListModel { 
                     id: aspectModel 
-                    ListElement { text: qsTr('Square Pixel'); value: 0.0 }
-                    ListElement { text: qsTr('PAL DV  1.067'); value: 0.250 }
-                    ListElement { text: qsTr('NTSC DV 0.889'); value: 0.500 }
-                    ListElement { text: qsTr('HDV     1.333'); value: 0.750 }                
+                    ListElement { text: 'Square Pixel'; value: 0.0 }
+                    ListElement { text: 'PAL DV  1.067'; value: 0.250 }
+                    ListElement { text: 'NTSC DV 0.889'; value: 0.500 }
+                    ListElement { text: 'HDV     1.333'; value: 0.750 }                
                     ListElement { text: qsTr('Manual Aspect'); value: 1.0 }
                 }
                 textRole: 'text'
                 onActivated: {
                     filter.set(aspectPresetParam, aspectModel.get(currentIndex).value)
-                    aspectShowSlider = ((currentIndex+1) == aspectCombo.count)? true : false //show user input?
+                    aspectShowSlider = ((currentIndex+1) == aspectCombo.count) //show user input?
                 }
             }
         }
@@ -590,8 +591,10 @@ Item {
             onClicked: aspectManualSlider.value = aspectManualDefault
         }
 
-        //line seperator #4
-        Rectangle{Layout.columnSpan: 3; Layout.fillWidth: true; height: 1; color: activePalette.text; opacity: 0.3}
+        //line seperator #3
+        Rectangle{
+            visible: cameraShowNew
+            Layout.columnSpan: 3; Layout.fillWidth: true; height: 1; color: activePalette.text; opacity: 0.3}
 
         //row 10 combo cameras
          Label {
@@ -642,11 +645,6 @@ Item {
                 onClicked: setCameraData()
             }
         }
-
-        //line seperator #5
-        Rectangle{
-            visible: cameraShowNew
-            Layout.columnSpan: 3; Layout.fillWidth: true; height: 1; color: activePalette.text; opacity: 0.3}
 
         Item {
             Layout.fillHeight: true
