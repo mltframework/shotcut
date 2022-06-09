@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2021 Meltytech, LLC
+ * Copyright (c) 2013-2022 Meltytech, LLC
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -121,6 +121,8 @@ public:
     bool mergeClipWithNext(int trackIndex, int clipIndex, bool dryrun);
     Mlt::ClipInfo *findClipByUuid(const QUuid &uuid, int &trackIndex, int &clipIndex);
     QString getTrackName(int trackIndex);
+    int bottomVideoTrackIndex() const;
+    int mltIndexForTrack(int trackIndex) const;
 
 signals:
     void created();

@@ -352,7 +352,6 @@ void GlaxnimateProducerWidget::on_durationSpinBox_editingFinished()
     }
 }
 
-
 void GlaxnimateIpcServer::ParentResources::setProducer(const Mlt::Producer &producer,
                                                        bool hideCurrentTrack)
 {
@@ -370,6 +369,13 @@ void GlaxnimateIpcServer::ParentResources::setProducer(const Mlt::Producer &prod
         QVector<QStringRef> parts = s.splitRef(':');
         if (parts.length() == 2) {
             auto trackIndex = parts[1].toInt();
+            if (hideCurrentTrack && trackIndex == MAIN.bottomVideoTrackIndex()) {
+                // Disable preview in Glaxnimate
+                m_glaxnimateProducer.reset();
+                m_profile.reset();
+                GlaxnimateIpcServer::instance().copyToShared(QImage());
+                return;
+            }
             auto offset = hideCurrentTrack ? 1 : 0;
             Mlt::Tractor tractor(*m_glaxnimateProducer);
             // for each upper video track plus this one

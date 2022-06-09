@@ -2519,13 +2519,7 @@ Mlt::Transition *MultitrackModel::getVideoBlendTransition(int trackIndex) const
 
 int MultitrackModel::bottomVideoTrackMltIndex() const
 {
-    // Get the MLT index of the bottom-most video track
-    int track = 0;
-    for (auto &t : m_trackList) {
-        if (t.type == VideoTrackType)
-            track = t.mlt_index;
-    }
-    return track;
+    return mltIndexForTrack(bottomVideoTrackIndex());
 }
 
 void MultitrackModel::refreshVideoBlendTransitions()
@@ -2548,6 +2542,26 @@ void MultitrackModel::refreshVideoBlendTransitions()
             }
         }
     }
+}
+
+int MultitrackModel::bottomVideoTrackIndex() const
+{
+    int track = -1;
+    for (int i = 0; i < m_trackList.size(); ++i) {
+        if (m_trackList[i].type == VideoTrackType) {
+            track = i;
+        }
+    }
+    return track;
+}
+
+int MultitrackModel::mltIndexForTrack(int trackIndex) const
+{
+    int i = -1;
+    if (trackIndex < m_trackList.size()) {
+        i = m_trackList[trackIndex].mlt_index;
+    }
+    return i;
 }
 
 void MultitrackModel::adjustTrackFilters()
