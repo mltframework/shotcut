@@ -403,7 +403,10 @@ void GlaxnimateIpcServer::onConnect()
 
 int GlaxnimateIpcServer::toMltFps(float frame) const
 {
-    return qRound(frame / parent->m_producer.get_double("meta.media.frame_rate") * MLT.profile().fps());
+    if (parent->m_producer.get_double("meta.media.frame_rate") > 0) {
+        return qRound(frame / parent->m_producer.get_double("meta.media.frame_rate") * MLT.profile().fps());
+    }
+    return frame;
 }
 
 void GlaxnimateIpcServer::onReadyRead()
@@ -433,7 +436,7 @@ void GlaxnimateIpcServer::onReadyRead()
         int frameNum = parent->m_producer.get_int(kPlaylistStartProperty) + toMltFps(
                            time) - parent->m_producer.get_int("first_frame");
         if (frameNum != parent->m_frameNum) {
-            LOG_DEBUG() << "glaxnimate time =" << time;
+            LOG_DEBUG() << "glaxnimate time =" << time << "=> Shotcut frameNum =" << frameNum;
 
             // Get the image from MLT
             parent->m_glaxnimateProducer->seek(frameNum);
