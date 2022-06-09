@@ -389,6 +389,29 @@ void GlaxnimateIpcServer::ParentResources::setProducer(const Mlt::Producer &prod
                     track->set("hide", 3);
                 }
             }
+
+            // Disable the glaxnimate filter and below
+            if (!hideCurrentTrack) {
+                std::unique_ptr<Mlt::Producer> track(tractor.track(MAIN.mltIndexForTrack(trackIndex)));
+                if (track && track->is_valid()) {
+                    auto clipIndex = parts[0].toInt();
+                    Mlt::Playlist playlist(*track);
+                    std::unique_ptr<Mlt::ClipInfo> info(playlist.clip_info(clipIndex));
+                    if (info && info->producer && info->producer->is_valid()) {
+                        auto count = info->producer->filter_count();
+                        bool found = false;
+                        for (int i = 0; i < count; i++) {
+                            std::unique_ptr<Mlt::Filter> filter(info->producer->filter(i));
+                            if (filter && filter->is_valid()) {
+                                if (found || !qstrcmp(filter->get(kShotcutFilterProperty), "maskGlaxnimate")) {
+                                    found = true;
+                                    filter->set("disable", 1);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }
