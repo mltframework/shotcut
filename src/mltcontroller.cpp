@@ -20,6 +20,8 @@
 #include <QPalette>
 #include <QMetaType>
 #include <QFileInfo>
+#include <QApplication>
+#include <QProcess>
 #include <QUuid>
 #include <QSaveFile>
 #include <QTextStream>
@@ -105,7 +107,11 @@ static bool isFpsDifferent(double a, double b)
 
 int Controller::open(const QString &url, const QString &urlToSave)
 {
-    int error = 0;
+    int error = checkFile(url);
+    if (error) {
+        return error;
+    }
+
     Mlt::Producer *newProducer = nullptr;
 
     close();
@@ -1476,6 +1482,26 @@ bool Controller::isTrackProducer(Producer &producer)
     mlt_service_type service_type = producer.type();
     return service_type == mlt_service_playlist_type ||
            (service_type == mlt_service_tractor_type && producer.get_int(kShotcutXmlProperty));
+}
+
+int Controller::checkFile(const QString &path)
+{
+    int error = 0;
+    if (path.endsWith(".json") || path.endsWith(".rawr") || path.endsWith(".lottie")
+            || path.endsWith(".tgs")) {
+        QString shotcutPath = qApp->applicationDirPath();
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
+        QFileInfo meltPath(shotcutPath, "melt-7");
+#else
+        QFileInfo meltPath(shotcutPath, "melt");
+#endif
+        QStringList args;
+        args << "-quiet" << "-consumer" << "null" << "real_time=0" << "out=0" << "terminate_on_pause=1" <<
+             "glaxnimate:" + path;
+        LOG_DEBUG() << meltPath.absoluteFilePath()  + " " + args.join(' ');
+        error = QProcess::execute(meltPath.absoluteFilePath(), args);
+    }
+    return error;
 }
 
 bool Controller::blockRefresh(bool block)

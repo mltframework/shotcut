@@ -1586,6 +1586,10 @@ static QString convertUrlsToXML(const QString &xml)
         int i = 0, count = urls.size();
         for (const auto &path : Util::sortedFileList(urls)) {
             if (MAIN.isSourceClipMyProject(path, /* withDialog */ false)) continue;
+            if (MLT.checkFile(path)) {
+                MAIN.showStatusMessage(QObject::tr("Failed to open ").append(path));
+                continue;
+            }
             longTask.reportProgress(Util::baseName(path), i++, count);
             Mlt::Producer p;
             if (path.endsWith(".mlt") || path.endsWith(".xml")) {

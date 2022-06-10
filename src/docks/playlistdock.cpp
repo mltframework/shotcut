@@ -677,6 +677,10 @@ void PlaylistDock::onDropped(const QMimeData *data, int row)
         for (auto &path : fileNames) {
             if (MAIN.isSourceClipMyProject(path)) continue;
             longTask.reportProgress(Util::baseName(path), i++, count);
+            if (MLT.checkFile(path)) {
+                emit showStatusMessage(tr("Failed to open ").append(path));
+                continue;
+            }
             Mlt::Producer p;
             if (path.endsWith(".mlt") || path.endsWith(".xml")) {
                 p = Mlt::Producer(MLT.profile(), "xml", path.toUtf8().constData());
