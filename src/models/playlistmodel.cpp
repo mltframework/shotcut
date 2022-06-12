@@ -308,16 +308,19 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const
             Mlt::Producer parent(producer->get_parent());
             int width = THUMBNAIL_WIDTH;
             QImage image;
-
-            if (setting == "wide")
-                image = QImage(width * 2, THUMBNAIL_HEIGHT, QImage::Format_ARGB32);
-            else if (setting == "tall")
-                image = QImage(width, THUMBNAIL_HEIGHT * 2, QImage::Format_ARGB32);
-            else if (setting == "large")
-                image = QImage(width * 2, THUMBNAIL_HEIGHT * 2, QImage::Format_ARGB32);
-            else
-                image = QImage(width, THUMBNAIL_HEIGHT, QImage::Format_ARGB32);
-
+            switch (setting) {
+                case "wide":
+                    image = QImage(width * 2, THUMBNAIL_HEIGHT, QImage::Format_ARGB32);
+                    break;
+                case "tall":
+                    image = QImage(width, THUMBNAIL_HEIGHT * 2, QImage::Format_ARGB32);
+                    break;
+                case "large":
+                    image = QImage(width * 2, THUMBNAIL_HEIGHT * 2, QImage::Format_ARGB32);
+                    break;
+                default:
+                    image = QImage(width, THUMBNAIL_HEIGHT, QImage::Format_ARGB32);
+            }
             if (parent.is_valid() && parent.get_data(kThumbnailInProperty)) {
                 QPainter painter(&image);
                 image.fill(QApplication::palette().base().color().rgb());
