@@ -2558,7 +2558,7 @@ int MultitrackModel::bottomVideoTrackIndex() const
 int MultitrackModel::mltIndexForTrack(int trackIndex) const
 {
     int i = -1;
-    if (trackIndex < m_trackList.size()) {
+    if (trackIndex >= 0 && trackIndex < m_trackList.size()) {
         i = m_trackList[trackIndex].mlt_index;
     }
     return i;
