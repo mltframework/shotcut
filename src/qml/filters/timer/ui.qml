@@ -215,7 +215,10 @@ Item {
                 onSetDefaultClicked: {
                     durationSpinner.timeStr = _defaultDuration
                 }
-                Shotcut.HoverTip { text: qsTr('The timer will be frozen after the Duration has elapsed.') }
+                Shotcut.HoverTip { text: qsTr('The timer will be frozen after the Duration has elapsed.') +
+                                         '\n' +
+                                         qsTr('A value of 0 will run the timer to the end of the filter')
+                }
             }
             Shotcut.Button {
                 icon.name: 'insert'
