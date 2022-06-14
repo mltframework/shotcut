@@ -104,11 +104,11 @@ Item {
                 filename = filename.substring(1)
             }
 
-            var extension = ".stab"
             // Force file extension to ".stab"
+            var extension = ".stab"
             var extIndex = filename.indexOf(extension, filename.length - extension.length)
             if (extIndex == -1) {
-                filename += ".stab"
+                filename += extension
             }
             startAnalyzeJob(filename)
         }

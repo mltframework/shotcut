@@ -77,10 +77,12 @@ Item {
         onAccepted: {
             shapeFile.url = fileDialog.fileUrl
             if (!fileDialog.selectExisting) {
+                // Force file extension to ".rawr"
                 var filename = shapeFile.url
-                if (shapeFile.url.substring(shapeFile.url - 5) !== '.rawr') {
-                    filename += '.rawr'
-                    shapeFile.url = filename
+                var extension = ".rawr"
+                var extIndex = filename.indexOf(extension, filename.length - extension.length)
+                if (extIndex == -1) {
+                    filename += extension
                 }
                 producer.newGlaxnimateFile(filename)
             }
@@ -143,7 +145,6 @@ Item {
                 text: qsTr('Reload')
                 onClicked: {
                     filter.set('filter.producer.refresh', 1)
-                    producer.launchGlaxnimate(filter.get('filter.resource'))
                 }
             }
         }
