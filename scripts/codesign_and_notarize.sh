@@ -21,7 +21,7 @@ mv ~/Desktop/Shotcut.app $TMP
 ln -s /Applications $TMP
 cp ../COPYING $TMP
 rm ~/Desktop/shotcut-macos-${VERSION}.dmg
-hdiutil create -srcfolder $TMP -volname Shotcut -format UDBZ -size 400m \
+hdiutil create -srcfolder $TMP -volname Shotcut -format UDBZ -size 600m \
   ~/Desktop/shotcut-macos-${VERSION}.dmg
 rm -rf $TMP
 
