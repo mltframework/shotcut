@@ -88,6 +88,9 @@ ENABLE_GLAXNIMATE=1
 GLAXNIMATE_HEAD=0
 GLAXNIMATE_REVISION="origin/shotcut"
 
+PYTHON_VERSION_DEFAULT=3.8
+PYTHON_VERSION_DARWIN=3.10
+
 QT_VERSION_DEFAULT=5.15.3
 QT_VERSION_DARWIN=5.15.2
 
@@ -1698,6 +1701,8 @@ function deploy_mac
   # Glaxnimate data
   log Copying Glaxnimate data
   cmd cp -a "$FINAL_INSTALL_DIR"/share/glaxnimate Resources
+  cmd install -d lib
+  cmd cp -a /opt/local/Library/Frameworks/Python.framework/Versions/${PYTHON_VERSION_DARWIN}/lib/python${PYTHON_VERSION_DARWIN} lib
 
   log Fixing rpath in libraries
   cmd find . -name '*.dylib' -exec sh -c "install_name_tool -delete_rpath \"/opt/local/lib/libomp\" {} 2> /dev/null" \;
@@ -1773,6 +1778,8 @@ function create_startup_script {
     return
   fi
 
+  cmd cp -a /usr/lib/python${PYTHON_VERSION_DEFAULT} "$FINAL_INSTALL_DIR"/lib
+
   trace "Entering create_startup_script @ = $@"
   pushd .
 
@@ -1826,6 +1833,7 @@ export MLT_MOVIT_PATH="\$INSTALL_DIR/share/movit"
 export FREI0R_PATH="\$INSTALL_DIR/lib/frei0r-1"
 export LADSPA_PATH="\$LADSPA_PATH:/usr/local/lib/ladspa:/usr/lib/ladspa:/usr/lib64/ladspa:\$INSTALL_DIR/lib/ladspa"
 export LIBVA_DRIVERS_PATH="\$INSTALL_DIR/lib/va"
+export PYTHONHOME="\$INSTALL_DIR"
 export QT_PLUGIN_PATH="\$INSTALL_DIR/lib/qt5"
 export QML2_IMPORT_PATH="\$INSTALL_DIR/lib/qml"
 "\$INSTALL_DIR/bin/$exe" "\$@"
@@ -1855,6 +1863,7 @@ export FREI0R_PATH="\$INSTALL_DIR/lib/frei0r-1"
 # export LADSPA_PATH="\$LADSPA_PATH:/usr/local/lib/ladspa:/usr/lib/ladspa:/usr/lib64/ladspa:\$INSTALL_DIR/lib/ladspa"
 export LADSPA_PATH="\$INSTALL_DIR/lib/ladspa"
 export LIBVA_DRIVERS_PATH="\$INSTALL_DIR/lib/va"
+export PYTHONHOME="\$INSTALL_DIR"
 cd "\$INSTALL_DIR"
 export QT_PLUGIN_PATH="lib/qt5"
 export QML2_IMPORT_PATH="lib/qml"
