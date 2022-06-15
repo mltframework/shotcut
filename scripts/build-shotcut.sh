@@ -1702,7 +1702,7 @@ function deploy_mac
   log Copying Glaxnimate data
   cmd cp -a "$FINAL_INSTALL_DIR"/share/glaxnimate Resources
   cmd install -d lib
-  cmd cp -a /opt/local/Library/Frameworks/Python.framework/Versions/${PYTHON_VERSION_DARWIN}/lib/python${PYTHON_VERSION_DARWIN} lib
+  cmd cp -pLR /opt/local/Library/Frameworks/Python.framework/Versions/${PYTHON_VERSION_DARWIN}/lib/python${PYTHON_VERSION_DARWIN} lib
 
   log Fixing rpath in libraries
   cmd find . -name '*.dylib' -exec sh -c "install_name_tool -delete_rpath \"/opt/local/lib/libomp\" {} 2> /dev/null" \;
@@ -1778,7 +1778,7 @@ function create_startup_script {
     return
   fi
 
-  cmd cp -a /usr/lib/python${PYTHON_VERSION_DEFAULT} "$FINAL_INSTALL_DIR"/lib
+  cmd cp -pLR /usr/lib/python${PYTHON_VERSION_DEFAULT} "$FINAL_INSTALL_DIR"/lib
 
   trace "Entering create_startup_script @ = $@"
   pushd .
