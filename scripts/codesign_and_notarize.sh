@@ -3,6 +3,7 @@ VERSION="$1"
 sudo xcode-select -s /Applications/Xcode.app/
 
 SIGNER="Developer ID Application: Meltytech, LLC (Y6RX44QG2G)"
+find ~/Desktop/Shotcut.app/Contents/lib -type f -exec codesign --options=runtime -v -s "$SIGNER" {} \;
 find ~/Desktop/Shotcut.app/Contents/Frameworks -type f -exec codesign --options=runtime -v -s "$SIGNER" {} \;
 find ~/Desktop/Shotcut.app/Contents/PlugIns -type f -exec codesign --options=runtime -v -s "$SIGNER" {} \;
 find ~/Desktop/Shotcut.app/Contents/Resources -type f -exec codesign --options=runtime -v -s "$SIGNER" {} \;
