@@ -584,6 +584,11 @@ void GlaxnimateIpcServer::launch(const Mlt::Producer &producer, QString filename
     QString name = "shotcut-%1";
     name = name.arg(QCoreApplication::applicationPid());
     QStringList args = {"--ipc", name, filename};
+    QProcess childProcess;
+    QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
+    env.remove("LC_ALL");
+    childProcess.setProcessEnvironment(env);
+    childProcess.setProgram(Settings.glaxnimatePath());
     if (!m_server->listen(name)) {
         LOG_ERROR() << "failed to start the IPC server:" << m_server->errorString();
         m_server.reset();
@@ -591,7 +596,8 @@ void GlaxnimateIpcServer::launch(const Mlt::Producer &producer, QString filename
         args << filename;
         // Run without --ipc
     } else  {
-        if (QProcess::startDetached(Settings.glaxnimatePath(), args)) {
+        childProcess.setArguments(args);
+        if (childProcess.startDetached()) {
             LOG_DEBUG() << Settings.glaxnimatePath() << args.join(' ');
             m_sharedMemory.reset(new QSharedMemory(name));
             return;
@@ -605,7 +611,8 @@ void GlaxnimateIpcServer::launch(const Mlt::Producer &producer, QString filename
         }
     }
     LOG_DEBUG() << Settings.glaxnimatePath() << args.join(' ');
-    if (!QProcess::startDetached(Settings.glaxnimatePath(), args)) {
+    childProcess.setArguments(args);
+    if (!childProcess.startDetached()) {
         LOG_DEBUG() << "failed to launch Glaxnimate with" << Settings.glaxnimatePath();
         QMessageBox dialog(QMessageBox::Information,
                            qApp->applicationName(),
@@ -623,7 +630,9 @@ void GlaxnimateIpcServer::launch(const Mlt::Producer &producer, QString filename
             if (!path.isEmpty()) {
                 args.clear();
                 args << "--ipc" << name << filename;
-                if (QProcess::startDetached(path, args)) {
+                childProcess.setProgram(path);
+                childProcess.setArguments(args);
+                if (childProcess.startDetached()) {
                     LOG_DEBUG() << Settings.glaxnimatePath() << args.join(' ');
                     Settings.setGlaxnimatePath(path);
                     LOG_INFO() << "changed Glaxnimate path to" << path;
@@ -635,7 +644,8 @@ void GlaxnimateIpcServer::launch(const Mlt::Producer &producer, QString filename
                     args.clear();
                     args << filename;
                     // Try without --ipc
-                    if (QProcess::startDetached(path, args)) {
+                    childProcess.setArguments(args);
+                    if (childProcess.startDetached()) {
                         LOG_DEBUG() << Settings.glaxnimatePath() << args.join(' ');
                     } else {
                         LOG_WARNING() << "failed to launch Glaxnimate with" << path;
