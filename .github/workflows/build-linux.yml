@@ -80,6 +80,7 @@ jobs:
           snapcraft_token: ${{ secrets.SNAPCRAFT_TOKEN }}
           use_lxd: true
       - name: Package snap
+        if: ${{ false }}
         run: |
           VERSION=$(cat VERSION)
           mv scripts/shotcut-linux-x86_64-*.txz packaging/linux
