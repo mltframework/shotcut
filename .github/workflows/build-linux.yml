@@ -74,7 +74,7 @@ jobs:
             put packaging/linux/out/*.AppImage s3://builds.us.meltytech/shotcut/
 
       - name: Install Snapcraft
-        if: ${{ github.repository_owner == 'mltframework' }}
+        if: ${{ false }}
         uses: samuelmeuli/action-snapcraft@v1.2.0
         with:
           snapcraft_token: ${{ secrets.SNAPCRAFT_TOKEN }}
