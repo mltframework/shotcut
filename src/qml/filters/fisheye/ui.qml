@@ -23,7 +23,8 @@ import QtQuick.Controls.Styles 1.1
 
 Item {
     width: 300
-    height: 150
+    height: 228
+    id: mainItemLayout
     SystemPalette { id: activePalette }
 
     //plugin input index values
@@ -35,6 +36,9 @@ Item {
     property string qualityParam: '5'
     property string aspectPresetParam: '6'
     property string aspectManualParam: '7'
+    property string cropParam: '8'
+    property string stretchParam: '9'
+    property string scaleYParam: '10'    
 
     //default plugin values
     property double focalRatioDefault: 0.5  //default was 0.0
@@ -45,21 +49,29 @@ Item {
     property double qualityDefault: 0.16
     property double aspectPresetDefault: 0.0
     property double aspectManualDefault: 0.5
+    property bool cropDefault: false
+    property double stretchDefault: 0.5
+    property bool superViewDefault: false
+    property double scaleYDefault: 0.5    
 
     //hide user sliders
     property bool scaleShowSlider: false
     property bool aspectShowSlider: false
-    property bool cameraShowNew: false    
+    property bool cameraShowNew: false
+    property bool stretchShowSlider: false
+    property bool scaleYShowSlider: false  
 
     //combobox presets text index
-    property int iDX_CAMERA: 8
-    property int iDX_WIDE: 9
-    property int iDX_RESULT: 10
+    property int iDX_CAMERA: 11
+    property int iDX_WIDE: 12
+    property int iDX_RESULT: 13
 
     property var defaultParameters: [focalRatioParam,deFishParam,lensTypeParam,scaePresetParam,
-                scaleManualParam,qualityParam,aspectPresetParam,aspectManualParam]
-
-
+                scaleManualParam,qualityParam,aspectPresetParam,aspectManualParam, cropParam, stretchParam, scaleYParam]
+    
+    property bool blockUpdate: true
+    
+    //todo: no cropped action versions yet
     //preset data. used for comboboxes.
     function getPresetData(index) {
         switch (index) {
@@ -74,76 +86,99 @@ Item {
 
 
             //HERO3
-            case  0: return [0.736, true, lensValue(4), scaleValue(1), 0.500, qualityValue(2), aspectValue(1), 0.500, 'HERO3 1080', 'Wide', 'Focus']
+            case  0: return [0.736, true, lensValue(4), scalePreset(1), scaleManual(0.000), qualityIndex(2), aspectPreset(1), aspectManual(0.000),  false, dynamicStretch(0.0), scaleY(0.00), 'HERO3 1080', 'Wide', 'Focus']
 
-            //HERO4
-            case  1: return [0.513, true, lensValue(1), scaleValue(1), 0.500, qualityValue(2), aspectValue(5), 0.136, 'HERO4 1080', 'Medium', 'Action']
-            case  2: return [0.643, true, lensValue(1), scaleValue(1), 0.500, qualityValue(2), aspectValue(5), 0.487, 'HERO4 1080', 'Medium', 'Focus']
-            case  3: return [0.695, true, lensValue(4), scaleValue(2), 0.500, qualityValue(2), aspectValue(1), 0.500, 'HERO4 1080', 'Medium', 'Linear']
-
-            case  4: return [0.630, true, lensValue(1), scaleValue(1), 0.500, qualityValue(2), aspectValue(5), 0.247, 'HERO4 1080', 'Wide', 'Action']
-            case  5: return [0.714, true, lensValue(1), scaleValue(1), 0.500, qualityValue(2), aspectValue(5), 0.468, 'HERO4 1080', 'Wide', 'Focus']
-            case  6: return [0.700, true, lensValue(1), scaleValue(2), 0.500, qualityValue(2), aspectValue(1), 0.500, 'HERO4 1080', 'Wide', 'Linear']
-
-            case  7: return [0.708, true, lensValue(1), scaleValue(1), 0.500, qualityValue(2), aspectValue(5), 0.100, 'HERO4 1080', 'SuperView', 'Action']
-            case  8: return [0.747, true, lensValue(1), scaleValue(1), 0.500, qualityValue(2), aspectValue(5), 0.230, 'HERO4 1080', 'SuperView', 'Focus']
-            case  9: return [0.750, true, lensValue(1), scaleValue(2), 0.500, qualityValue(2), aspectValue(5), 0.227, 'HERO4 1080', 'SuperView', 'Linear']
-
-             //HERO 5
-            case 10: return [0.730, true, lensValue(4), scaleValue(2), 0.500, qualityValue(2), aspectValue(1), 0.500, 'HERO5 1080', 'Wide', 'Linear']
-            case 11: return [0.696, true, lensValue(4), scaleValue(2), 0.532, qualityValue(2), aspectValue(1), 0.500, 'HERO5 1080', 'SuperView', 'Linear']
+            //HERO4 1080 (medium)
+            case  1: return [0.634, true, lensValue(1), scalePreset(4), scaleManual(0.011), qualityIndex(2), aspectPreset(5), aspectManual(-0.07), false, dynamicStretch(0.0), scaleY(0.12), 'HERO4 1080', 'Medium', 'Action']
+            case  2: return [0.643, true, lensValue(1), scalePreset(1), scaleManual(0.000), qualityIndex(2), aspectPreset(5), aspectManual(-0.01), false, dynamicStretch(0.0), scaleY(0.00), 'HERO4 1080', 'Medium', 'Focus']
+            case  3: return [0.685, true, lensValue(4), scalePreset(2), scaleManual(0.000), qualityIndex(2), aspectPreset(1), aspectManual(-0.00), false, dynamicStretch(0.0), scaleY(0.00), 'HERO4 1080', 'Medium', 'Linear']
+            //HERO4 1080 (wide)
+            case  4: return [0.700, true, lensValue(1), scalePreset(4), scaleManual(0.019), qualityIndex(2), aspectPreset(5), aspectManual(-0.01), false, dynamicStretch(0.0), scaleY(0.23), 'HERO4 1080', 'Wide', 'Action']
+            case  5: return [0.704, true, lensValue(1), scalePreset(1), scaleManual(0.000), qualityIndex(2), aspectPreset(1), aspectManual(-0.00), false, dynamicStretch(0.0), scaleY(0.00), 'HERO4 1080', 'Wide', 'Focus']
+            case  6: return [0.700, true, lensValue(1), scalePreset(2), scaleManual(0.000), qualityIndex(2), aspectPreset(1), aspectManual(-0.00), false, dynamicStretch(0.0), scaleY(0.00), 'HERO4 1080', 'Wide', 'Linear']
+            //HERO4 1080 (superview)
+            case  7: return [0.725, true, lensValue(1), scalePreset(4), scaleManual(0.038), qualityIndex(2), aspectPreset(5), aspectManual(-0.23), false, dynamicStretch(-0.14), scaleY(0.15), 'HERO4 1080', 'SuperView', 'Action']
+            case  8: return [0.737, true, lensValue(1), scalePreset(1), scaleManual(0.000), qualityIndex(2), aspectPreset(5), aspectManual(-0.25), false, dynamicStretch(-0.14), scaleY(0.00), 'HERO4 1080', 'SuperView', 'Focus']
+            case  9: return [0.725, true, lensValue(1), scalePreset(2), scaleManual(0.000), qualityIndex(2), aspectPreset(5), aspectManual(-0.25), false, dynamicStretch(-0.14), scaleY(0.00), 'HERO4 1080', 'SuperView', 'Linear']        
+            //HERO4 1440
+            case 10: return [0.781, true, lensValue(4), scalePreset(4), scaleManual(0.041), qualityIndex(2), aspectPreset(5), aspectManual(-0.23), false, dynamicStretch(0.0), scaleY(0.18), 'HERO4 1440', 'Wide', 'Action']
+            case 11: return [0.739, true, lensValue(1), scalePreset(1), scaleManual(0.000), qualityIndex(2), aspectPreset(5), aspectManual(-0.21), false, dynamicStretch(0.0), scaleY(0.00), 'HERO4 1440', 'Wide', 'Focus']
+            case 12: return [0.739, true, lensValue(1), scalePreset(2), scaleManual(0.000), qualityIndex(2), aspectPreset(5), aspectManual(-0.21), false, dynamicStretch(0.0), scaleY(0.00), 'HERO4 1440', 'Wide', 'Linear']
+            //HERO4 1440 4:3 (videos default saved aspect ratio)
+            case 13: return [0.782, true, lensValue(4), scalePreset(4), scaleManual(0.042), qualityIndex(2), aspectPreset(5), aspectManual(-0.02), false, dynamicStretch(0.0), scaleY(0.18), 'HERO4 1440 4:3', 'Wide', 'Action']
+            case 14: return [0.739, true, lensValue(1), scalePreset(1), scaleManual(0.000), qualityIndex(2), aspectPreset(5), aspectManual(-0.03), false, dynamicStretch(0.0), scaleY(0.00), 'HERO4 1440 4:3', 'Wide', 'Focus']
+            case 15: return [0.736, true, lensValue(1), scalePreset(2), scaleManual(0.000), qualityIndex(2), aspectPreset(5), aspectManual(-0.04), false, dynamicStretch(0.0), scaleY(0.00), 'HERO4 1440 4:3', 'Wide', 'Linear']
+ 
+            //HERO 5
+            case 16: return [0.730, true, lensValue(4), scalePreset(2), scaleManual(0.000), qualityIndex(2), aspectPreset(1), aspectManual(-0.00), false, dynamicStretch(0.0), scaleY(0.00), 'HERO5 1080', 'Wide', 'Linear']
+            case 17: return [0.696, true, lensValue(4), scalePreset(2), scaleManual(0.000), qualityIndex(2), aspectPreset(1), aspectManual(-0.00), false, dynamicStretch(0.0), scaleY(0.00), 'HERO5 1080', 'SuperView', 'Linear']
 
             //4k CLONE
-            case 12: return [0.494, true, lensValue(1), scaleValue(1), 0.500, qualityValue(2), aspectValue(5), 0.091, '4K CLONE 1080p', 'Wide', 'Action']
-            case 13: return [0.643, true, lensValue(1), scaleValue(1), 0.500, qualityValue(2), aspectValue(5), 0.487, '4K CLONE 1080p', 'Wide', 'Focus']
-            case 14: return [0.695, true, lensValue(4), scaleValue(2), 0.500, qualityValue(2), aspectValue(1), 0.500, '4K CLONE 1080p', 'Wide', 'Linear']
+            case 18: return [0.494, true, lensValue(1), scalePreset(1), scaleManual(0.000), qualityIndex(2), aspectPreset(5), aspectManual(-0.41), false, dynamicStretch(0.0), scaleY(0.00), '4K CLONE 1080p', 'Wide', 'Action']
+            case 19: return [0.643, true, lensValue(1), scalePreset(1), scaleManual(0.000), qualityIndex(2), aspectPreset(5), aspectManual(-0.01), false, dynamicStretch(0.0), scaleY(0.00), '4K CLONE 1080p', 'Wide', 'Focus']
+            case 20: return [0.695, true, lensValue(4), scalePreset(2), scaleManual(0.000), qualityIndex(2), aspectPreset(1), aspectManual(-0.00), false, dynamicStretch(0.0), scaleY(0.00), '4K CLONE 1080p', 'Wide', 'Linear']
 
-            case 15: return [0.442, true, lensValue(1), scaleValue(1), 0.500, qualityValue(2), aspectValue(5), 0.357, '4K CLONE 720p', 'Medium', 'Focus']
-            case 16: return [0.531, true, lensValue(4), scaleValue(2), 0.500, qualityValue(2), aspectValue(5), 0.286, '4K CLONE 720p', 'Medium', 'Linear']
-            //               focal, defish, lens,       scalePreset, scaleMan, interpolation,  A/R_preset,     A/R_man, camera,     qsTr(mode), qsTr(result)
+            case 21: return [0.442, true, lensValue(1), scalePreset(1), scaleManual(0.000), qualityIndex(2), aspectPreset(5), aspectManual(-0.14), false, dynamicStretch(0.0), scaleY(0.00), '4K CLONE 720p',  'Medium', 'Focus']
+            case 22: return [0.531, true, lensValue(4), scalePreset(2), scaleManual(0.000), qualityIndex(2), aspectPreset(5), aspectManual(-0.21), false, dynamicStretch(0.0), scaleY(0.00), '4K CLONE 720p', 'Medium', 'Linear']
+            //               focal, defish, lens,       scalePreset,    scaleManual,        interpolation,   A/R_preset,      A/R_manual,          crop,  fix stretch,         scaleY,        camera, qsTr(mode), qsTr(result)
         }
-        //console.log('array done...')
+
         return '' //done
     }
 
     //set UI control values
     function setControlData() {
-        var activeIndex        
+        var activeIndex
 
         // #0 Focal Ratio
         focalRatioSlider.value = filter.getDouble(focalRatioParam)
 
         // #1 Fish or Defish
         if (filter.get(deFishParam) === '1')
-             fisheyeRemoveButton.checked = true           
+             fisheyeRemoveButton.checked = true
         else
             fisheyeAddButton.checked = true
 
         // #2 Mapping function (lens type)
-        lensCombo.currentIndex = indexFromFloat(lensTypeParam, lensCombo.count) - 1 
+        lensCombo.currentIndex = indexFromFloat(lensTypeParam, lensCombo.count) - 1
 
-        // #3 Scaling method     
+        // #3 Scaling method
         activeIndex = indexFromFloat(scaePresetParam, scaleCombo.count )
         scaleCombo.currentIndex = activeIndex - 1
-        scaleShowSlider = (activeIndex == scaleCombo.count) //only show custom slider when last option used       
+        scaleShowSlider = (activeIndex == scaleCombo.count) //only show custom slider when last option used
 
         // #4 Manual Scale
-        scaleManualSlider.value = filter.getDouble(scaleManualParam)
+        scaleManualSlider.value = filter.getDouble(scaleManualParam) - 0.5
 
-       // #5 interpolation quality
+        // #5 interpolation quality
         qualityCombo.currentIndex = indexFromFloat(qualityParam, qualityCombo.count) - 1
 
-         // #6 Pixel aspect ratio presets
+        // #6 Pixel aspect ratio presets
         activeIndex = indexFromFloat(aspectPresetParam, aspectCombo.count)
         aspectCombo.currentIndex = activeIndex - 1
-        aspectShowSlider = (activeIndex == aspectCombo.count) //only show custom slider when last option used   
+        aspectShowSlider = (activeIndex == aspectCombo.count) //only show custom slider when last option used
 
-         // #7 Manual Pixel Aspect ratio
-        aspectManualSlider.value = filter.getDouble(aspectManualParam)
+        // #7 Manual Pixel Aspect ratio
+        aspectManualSlider.value = filter.getDouble(aspectManualParam) - 0.5
+
+        // #8 crop
+        cropCheckBox.checked = (filter.get(cropParam) === '1')
+
+        // #9 stretch
+        stretchSlider.value = filter.getDouble(stretchParam) - 0.5
+        stretchCheckBox.checked = (stretchSlider.value !== 0.0)
+        stretchShowSlider = stretchCheckBox.checked
+        
+        // #10 scale Y
+        scaleYSlider.value = filter.getDouble(scaleYParam) - 0.5
+        scaleYCheckBox.checked = (scaleYSlider.value !== 0.0)
+        scaleYShowSlider = scaleYCheckBox.checked
+
+        setScollbarHeight()
     }
 
     //set plugin values
-    function setPluginData(idx0, idx1, idx2, idx3, idx4, idx5, idx6, idx7) {
+    function setPluginData(idx0, idx1, idx2, idx3, idx4, idx5, idx6, idx7, idx8, idx9, idx10) {
         filter.set(focalRatioParam, idx0)   // focal ratio
         filter.set(deFishParam, idx1)       // add/remove fisheye
         filter.set(lensTypeParam, idx2)     // Lens type
@@ -152,6 +187,19 @@ Item {
         filter.set(qualityParam, idx5)      // Filter
         filter.set(aspectPresetParam, idx6) // A/R Presets
         filter.set(aspectManualParam, idx7) // A/R Manual
+        filter.set(cropParam, idx8)         // crop
+        filter.set(stretchParam, idx9)      // stretch
+        filter.set(scaleYParam, idx10)      // scaleY 
+    }
+
+    //fix scrollbar height when dynamic slider visability changes
+    function setScollbarHeight(){
+        mainItemLayout.height = 228
+        mainItemLayout.height += stretchShowSlider? 26: 0
+        mainItemLayout.height += scaleShowSlider? 26: 0
+        mainItemLayout.height += aspectShowSlider? 26: 0
+        mainItemLayout.height += cameraShowNew? 26*4: 0
+        mainItemLayout.height += scaleYShowSlider? 26: 0
     }
 
     //get text string from presets
@@ -159,7 +207,7 @@ Item {
         var v_ret = getPresetData(index)
         if (v_ret !== '') {
             if (strIdx == iDX_CAMERA)
-                return v_ret[strIdx]                
+                return v_ret[strIdx]
             else
                 return qsTr(v_ret[strIdx]) //language on 'mode' and 'results'
         }
@@ -168,7 +216,7 @@ Item {
 
     //fill combobox 'camera'
     function fillCameraCombo() {
-        var a_list = []
+        var a_list = [''] //start blank
         var v_more = true
         var v_ret = ''
         var i = 0
@@ -196,6 +244,8 @@ Item {
         var v_ret = ''
         var i = 0
         var v_cam = cameraCombo.currentText
+        
+        if (v_cam === '') return
 
         do {
             v_ret = getPresetName(i, iDX_CAMERA)
@@ -228,8 +278,8 @@ Item {
         do {
             v_ret = getPresetName(i, iDX_CAMERA)
             if (v_ret !== '' ){
-                if (   v_ret === v_cam //match camera
-                    && v_ret === getPresetName(i, iDX_WIDE)) //match mode
+                if (   v_cam === v_ret //match camera
+                    && v_mode === getPresetName(i, iDX_WIDE)) //match mode
                 {
                     a_list.push(getPresetName(i, iDX_RESULT)) //append unique results
                 }
@@ -239,13 +289,13 @@ Item {
             i += 1
         } while(v_more)
 
-        resultCombo.model = a_list 
+        resultCombo.model = a_list
     }
 
     //update plugin/ui with preset data
     function sendPresetData(index){
         var v_ret = getPresetData(index)
-        setPluginData(v_ret[0], v_ret[1], v_ret[2], v_ret[3], v_ret[4], v_ret[5], v_ret[6], v_ret[7])
+        setPluginData(v_ret[0], v_ret[1], v_ret[2], v_ret[3], v_ret[4], v_ret[5], v_ret[6], v_ret[7], v_ret[8], v_ret[9], v_ret[10])
         setControlData()
     }
     //'Apply' button pressed
@@ -275,13 +325,21 @@ Item {
     }
 
     //lens presets
-    function lensValue(index)  { return floatFromIndex(index, lensCombo.count) }
+    function lensValue(index) { return floatFromIndex(index, lensCombo.count) }
     //scale presets
-    function scaleValue(index)   { return floatFromIndex(index, scaleCombo.count) }
+    function scalePreset(index) { return floatFromIndex(index, scaleCombo.count) }
+    //scale manual
+    function scaleManual(fValue) { return fValue + 0.5 }
     //quality presets
-    function qualityValue(index)  { return floatFromIndex(index, qualityCombo.count) }
+    function qualityIndex(index) { return floatFromIndex(index, qualityCombo.count) }
     //aspect ratio presets
-    function aspectValue(index)    { return floatFromIndex(index, aspectCombo.count) }
+    function aspectPreset(index) { return floatFromIndex(index, aspectCombo.count) }
+    //aspect ratio manual
+    function aspectManual(fValue) { return fValue + 0.5 }    
+    //dynamic stretch
+    function dynamicStretch(fValue) { return fValue + 0.5 }
+    //scale Y preset
+    function scaleY(fValue) { return fValue + 0.5 }    
 
     //calculate a float for plugin. 1-based
     function floatFromIndex(idx, max) {
@@ -323,30 +381,33 @@ Item {
         do {
             v_ret = getPresetData(i)
             if (v_ret !== '' ){
-                setPluginData(v_ret[0], v_ret[1], v_ret[2], v_ret[3], v_ret[4], v_ret[5], v_ret[6], v_ret[7])
-                filter.savePreset(preset.parameters, qsTr(v_ret[8]+ ' ' +qsTr(v_ret[9]) + ' (' +qsTr(v_ret[10])+')'))
+                setPluginData(v_ret[0], v_ret[1], v_ret[2], v_ret[3], v_ret[4], v_ret[5], v_ret[6], v_ret[7], v_ret[8], v_ret[9], v_ret[10])
+                filter.savePreset(preset.parameters, qsTr(v_ret[iDX_CAMERA]+ ' ' +qsTr(v_ret[iDX_WIDE]) + ' (' +qsTr(v_ret[iDX_RESULT])+')'))
             } else {
                 v_more = false
             }
             i += 1
-        } while(v_more)    
+        } while(v_more)
     }
 
     Component.onCompleted: {
         filter.blockSignals = true
         if (filter.isNew) {
             setPresetData()
-            
+
             // save (default) in preset dropdown
-            setPluginData(focalRatioDefault, deFishDefault, lensTypeDefault, scalePresetDefault, scaleManualDefault, qualityDefault, aspectPresetDefault, aspectManualDefault)
+            setPluginData(focalRatioDefault, deFishDefault, lensTypeDefault, scalePresetDefault, scaleManualDefault,
+                            qualityDefault, aspectPresetDefault, aspectManualDefault, cropDefault, stretchDefault, scaleYDefault)
             filter.savePreset(defaultParameters)
         }
         filter.blockSignals = false
-        
+
         if (cameraShowNew) fillCameraCombo()
 
         setControlData()
+        blockUpdate = false
     }
+
 
     GridLayout {
         columns: 3
@@ -377,29 +438,34 @@ Item {
                 id: fisheyeRemoveButton
                 text: qsTr('Remove')
                 ButtonGroup.group: fisheyeGroup
-                checked: (filter.get(deFishParam) === '1')
-                onCheckedChanged: { if (checked) filter.set(deFishParam, true) }
+                checked: deFishDefault
+                onCheckedChanged: {
+                    if (blockUpdate) return
+                    if (checked) { filter.set(deFishParam, true) }
+                }
             }
             RadioButton {
                 id: fisheyeAddButton
                 text: qsTr('Add')
                 ButtonGroup.group: fisheyeGroup
-                checked: (filter.get(deFishParam) === '1') ? false:true
-                onCheckedChanged: { if (checked) filter.set(deFishParam, false) }
+                checked: !deFishDefault
+                onCheckedChanged: {
+                    if (blockUpdate) return
+                    if (checked) { filter.set(deFishParam, false) }
+                }
             }
         }
         Shotcut.UndoButton {
             onClicked: {
-                if(deFishDefault)
-                    fisheyeRemoveButton.checked = true
-                else
-                    fisheyeAddButton.checked = true
+                fisheyeRemoveButton.checked = deFishDefault
+                fisheyeAddButton.checked = !deFishDefault
             }
         }
 
         // Row 3: focal ratio
         Label {
             text: qsTr('Focal ratio')
+            leftPadding: 10
             Shotcut.HoverTip { text: qsTr('The amount of lens distortion') }
             Layout.alignment: Qt.AlignRight
         }
@@ -409,8 +475,8 @@ Item {
             maximumValue: 1
             decimals: 3
             suffix: ''
-            value: filter.getDouble(focalRatioParam)
-            onValueChanged: filter.set(focalRatioParam, value)
+            value: focalRatioDefault
+            onValueChanged: { if (blockUpdate) return; filter.set(focalRatioParam, value) }
         }
         Shotcut.UndoButton {
             onClicked: focalRatioSlider.value = focalRatioDefault
@@ -423,18 +489,17 @@ Item {
             Layout.alignment: Qt.AlignRight
         }
         Shotcut.ComboBox {
-            //Layout.columnSpan: 2
             id: qualityCombo
             implicitWidth: 120
-            model: ListModel { 
-                id: qualityModel 
-                ListElement { text: qsTr('Nearest neighbor'); value: 0.0 }
-                ListElement { text: qsTr('Bilinear'); value: 0.166 }
-                ListElement { text: qsTr('Bicubic smooth'); value: 0.333 }
-                ListElement { text: qsTr('Bicubic sharp'); value: 0.500 }
-                ListElement { text: qsTr('Spline 4x4'); value: 0.666 }
-                ListElement { text: qsTr('Spline 6x6'); value: 0.833 }                
-                ListElement { text: qsTr('Lanczos 16x16'); value: 1.0 }                
+            model: ListModel {
+                id: qualityModel
+                ListElement { text: qsTr('1. Nearest neighbor'); value: 0.0 }
+                ListElement { text: qsTr('2. Bilinear'); value: 0.166 }
+                ListElement { text: qsTr('3. Bicubic smooth'); value: 0.333 }
+                ListElement { text: qsTr('4. Bicubic sharp'); value: 0.500 }
+                ListElement { text: qsTr('5. Spline 4x4'); value: 0.666 }
+                ListElement { text: qsTr('6. Spline 6x6'); value: 0.833 }
+                ListElement { text: qsTr('7. Lanczos 16x16'); value: 1.0 }
             }
             textRole: 'text'
             onActivated: {
@@ -450,56 +515,129 @@ Item {
 
         // Row 5: Lens Type
         Label {
-            text: qsTr('Lens type')
+            text: qsTr('Lens')
             Shotcut.HoverTip { text: qsTr('Select a lens distortion pattern that best matches your camera') }
             Layout.alignment: Qt.AlignRight
         }
-        Shotcut.ComboBox {
-            id: lensCombo
-            implicitWidth: 120
-            model: ListModel { 
-                id: lensModel 
-                ListElement { text: qsTr('Equidistant'); value: 0.0 }
-                ListElement { text: qsTr('Ortographic'); value: 0.333 }
-                ListElement { text: qsTr('Equiarea'); value: 0.666 }
-                ListElement { text: qsTr('Stereographic'); value: 1.0 }
+        RowLayout {
+            Shotcut.ComboBox {
+                id: lensCombo
+                implicitWidth: 120
+                model: ListModel {
+                    id: lensModel
+                    ListElement { text: qsTr('1. Equidistant'); value: 0.0 }
+                    ListElement { text: qsTr('2. Ortographic'); value: 0.333 }
+                    ListElement { text: qsTr('3. Equiarea'); value: 0.666 }
+                    ListElement { text: qsTr('4. Stereographic'); value: 1.0 }
+                }
+                textRole: 'text'
+                onActivated: {
+                    filter.set(lensTypeParam, lensModel.get(currentIndex).value)
+                }
             }
-            textRole: 'text'
-            onActivated: {
-                filter.set(lensTypeParam, lensModel.get(currentIndex).value)
+            CheckBox {
+                text: qsTr('Dynamic stretch') //stretch view
+                leftPadding: 6
+                Shotcut.HoverTip { text: qsTr(  'Using a simplified version of \'Elastic Scale\' image will be stretched/squished to fix camera scaling between 4:3 and 16:9\n'+
+                                                'Like used in GoPro\'s superview' ) }
+                id: stretchCheckBox
+                padding: 0
+                checked: superViewDefault
+                onCheckedChanged: {
+                    if (blockUpdate) return
+                    stretchShowSlider = checked
+                    filter.set(stretchParam, checked? stretchSlider.value+0.5: 0.5)                    
+                    setScollbarHeight()
+                }
             }
         }
-         Shotcut.UndoButton {
+        Shotcut.UndoButton {
             onClicked: {
                 filter.set(lensTypeParam, lensTypeDefault)
                 lensCombo.currentIndex = setDefaultIndex(lensTypeDefault, lensCombo.count) - 1
+                stretchCheckBox.checked = superViewDefault
             }
-        }        
-        
-        //line seperator #1
-        Rectangle{Layout.columnSpan: 3; Layout.fillWidth: true; height: 1; color: activePalette.text; opacity: 0.3}
+        }
 
-        // Row 6: Scale (Preset)
+        // Row 6: fix stretch
         Label {
-            text: qsTr('Scale (preset)')
+            visible: stretchShowSlider
+            text: qsTr('Stretch')
+            Shotcut.HoverTip { text: qsTr(  'Use negative values for up-scaled videos\n'+
+                                            'Use positive values for down-scaled videos' ) }
+            Layout.alignment: Qt.AlignRight
+        }
+        Shotcut.SliderSpinner {
+            visible: stretchShowSlider
+            id: stretchSlider
+            minimumValue: -0.5
+            maximumValue: 0.5
+            decimals: 2
+            suffix: ''
+            value: 0
+            onValueChanged: { if (blockUpdate) return; filter.set(stretchParam, value+0.5) }
+        }
+        Shotcut.UndoButton {
+            visible: stretchShowSlider
+            onClicked: stretchSlider.value = stretchDefault - 0.5
+        }
+
+
+        //line seperator #1
+         RowLayout {
+            Layout.columnSpan: 3
+            Label { text: qsTr('Scale')}  
+            Rectangle{ Layout.fillWidth: true;height: 1; color: activePalette.text; opacity: 0.3 }
+        }
+        
+        // Row 7: Scale (Preset)
+        Label {
+            text: qsTr('Presets')
             Shotcut.HoverTip { text: qsTr( 'Preset scale methods\n'+
                                            'Lock pixels at specific locations') }
-            Layout.alignment: Qt.AlignRight                                           
+            Layout.alignment: Qt.AlignRight
         }
-        Shotcut.ComboBox {
-            id: scaleCombo
-            implicitWidth: 120
-            model: ListModel { 
-                id: scaleModel 
-                ListElement { text: qsTr('Scale to Fill'); value: 0.0 }
-                ListElement { text: qsTr('Keep Center Scale'); value: 0.333 }
-                ListElement { text: qsTr('Scale to Fit'); value: 0.666 }
-                ListElement { text: qsTr('Manual Scale'); value: 1.0 }
+        RowLayout {
+            Shotcut.ComboBox {
+                id: scaleCombo
+                implicitWidth: 120
+                model: ListModel {
+                    id: scaleModel
+                    ListElement { text: qsTr('1. Scale to Fill'); value: 0.0 }
+                    ListElement { text: qsTr('2. Keep Center Scale'); value: 0.333 }
+                    ListElement { text: qsTr('3. Scale to Fit'); value: 0.666 }
+                    ListElement { text: qsTr('4. Manual Scale'); value: 1.0 }
+                }
+                textRole: 'text'
+                onActivated: {
+                    filter.set(scaePresetParam, scaleModel.get(currentIndex).value)
+                    scaleShowSlider = ((currentIndex+1)==scaleCombo.count) //show user input?
+                    setScollbarHeight()
+                }
             }
-            textRole: 'text'
-            onActivated: {
-                filter.set(scaePresetParam, scaleModel.get(currentIndex).value)
-                scaleShowSlider = ((currentIndex+1)==scaleCombo.count) //show user input?
+            CheckBox {
+                text: qsTr('Y')
+                leftPadding: 6
+                Shotcut.HoverTip { text: qsTr('Scale Y separately\nThis changes video aspect ratio') }
+                id: scaleYCheckBox
+                padding: 0
+                checked: false
+                onCheckedChanged: {
+                    if (blockUpdate) return
+                    filter.set(scaleYParam, checked? scaleYSlider.value+0.5:0.5)
+                    scaleYShowSlider = checked                  
+                    setScollbarHeight()
+                }
+            }            
+            CheckBox {
+                text: qsTr('Crop')
+                leftPadding: 6
+                Shotcut.HoverTip { text: qsTr('Remove distorted edges') }                
+                id: cropCheckBox
+                padding: 0
+                checked: cropDefault
+                visible: fisheyeRemoveButton.checked
+                onCheckedChanged: { if (blockUpdate) return; filter.set(cropParam, checked) }
             }
         }
         Shotcut.UndoButton {
@@ -507,12 +645,16 @@ Item {
                 filter.set(scaePresetParam, scalePresetDefault)
                 scaleCombo.currentIndex = setDefaultIndex(scalePresetDefault, scaleCombo.count) - 1
                 scaleShowSlider = false
+                cropCheckBox.checked = cropDefault
+                scaleYShowSlider = false
+                scaleYCheckBox.checked = false
+                setScollbarHeight()
             }
-        }     
+        }
 
-        // Row 7: Scale (Manual)
+        // Row 8: Scale (Manual)
         Label {
-            text: qsTr('Scale (manual)')
+            text: qsTr('Manual')
             Shotcut.HoverTip { text: qsTr('User set zoom/scale\nSides of image are not fixed') }
             Layout.alignment: Qt.AlignRight
             visible: scaleShowSlider
@@ -520,24 +662,50 @@ Item {
         Shotcut.SliderSpinner {
             id: scaleManualSlider
             visible: scaleShowSlider
-            minimumValue: 0
-            maximumValue: 1
+            minimumValue: -0.5
+            maximumValue: 0.5
             decimals: 3
             suffix: ''
-            value: filter.getDouble(scaleManualParam)
-            onValueChanged: filter.set(scaleManualParam, value)
+            value: 0
+            onValueChanged: { if (blockUpdate) return; filter.set(scaleManualParam, value+0.5) }
         }
         Shotcut.UndoButton {
             visible: scaleShowSlider
-            onClicked: scaleManualSlider.value = scaleManualDefault
+            onClicked: scaleManualSlider.value = 0
         }
-
-        // line seperator #2
-        Rectangle{Layout.columnSpan: 3; Layout.fillWidth: true; height: 1; color: activePalette.text; opacity: 0.3}
-
-        // Row 8: A/R (Presets)
+       
+        // Row 9: Scale (Y)
         Label {
-            text: qsTr('Aspect (preset)')
+            text: qsTr('Y ratio')
+            Shotcut.HoverTip { text: qsTr('Seperate Y scale') }
+            Layout.alignment: Qt.AlignRight
+            visible:  scaleYShowSlider
+        }
+        Shotcut.SliderSpinner {
+            id: scaleYSlider
+            visible: scaleYShowSlider
+            minimumValue: -0.5
+            maximumValue: 0.5
+            value: 0
+            decimals: 2
+            suffix: ''
+            onValueChanged: { if (blockUpdate) return; filter.set(scaleYParam, value+0.5) }
+        }
+        Shotcut.UndoButton {
+            visible: scaleYShowSlider
+            onClicked: scaleYSlider.value = 0
+        }        
+
+        //line seperator #2
+         RowLayout {
+            Layout.columnSpan: 3
+            Label { text: qsTr('Aspect')}  
+            Rectangle{ Layout.fillWidth: true; height: 1; color: activePalette.text; opacity: 0.3 }
+        }
+        
+        // Row 10: A/R (Presets)
+        Label {
+            text: qsTr('Presets')
             Shotcut.HoverTip { text: qsTr( 'Preset pixel aspect ratio') }
             Layout.alignment: Qt.AlignRight
         }
@@ -545,58 +713,63 @@ Item {
             Shotcut.ComboBox {
                 id: aspectCombo
                 implicitWidth: 120
-                model: ListModel { 
-                    id: aspectModel 
-                    ListElement { text: 'Square Pixel'; value: 0.0 }
-                    ListElement { text: 'PAL DV  1.067'; value: 0.250 }
-                    ListElement { text: 'NTSC DV 0.889'; value: 0.500 }
-                    ListElement { text: 'HDV     1.333'; value: 0.750 }                
-                    ListElement { text: qsTr('Manual Aspect'); value: 1.0 }
+                model: ListModel {
+                    id: aspectModel
+                    ListElement { text:      '1. Square Pixel'; value: 0.0 }
+                    ListElement { text:      '2. PAL DV  1.067'; value: 0.250 }
+                    ListElement { text:      '3. NTSC DV 0.889'; value: 0.500 }
+                    ListElement { text:      '4. HDV     1.333'; value: 0.750 }
+                    ListElement { text: qsTr('5. Manual Aspect'); value: 1.0 }
                 }
                 textRole: 'text'
                 onActivated: {
                     filter.set(aspectPresetParam, aspectModel.get(currentIndex).value)
                     aspectShowSlider = ((currentIndex+1) == aspectCombo.count) //show user input?
+                    setScollbarHeight()
                 }
             }
         }
-         Shotcut.UndoButton {
+        Shotcut.UndoButton {
             onClicked: {
                 filter.set(aspectPresetParam, aspectPresetDefault)
                 aspectCombo.currentIndex = setDefaultIndex(aspectPresetDefault, aspectCombo.count) - 1
                 aspectShowSlider = false
+                setScollbarHeight()
             }
         }
-       
-        // Row 9: A/R (Manual)
+
+        // Row 11: A/R (Manual)
         Label {
-            text: qsTr('Aspect (manual)')
-            Shotcut.HoverTip { text: qsTr( 'User set pixel aspect ratios\n'+ 
+            text: qsTr('Manual')
+            Shotcut.HoverTip { text: qsTr( 'User set pixel aspect ratios\n'+
                                            'Change top/side distortion bias') }
             Layout.alignment: Qt.AlignRight
             visible: aspectShowSlider
         }
         Shotcut.SliderSpinner {
             id: aspectManualSlider
-            minimumValue: 0
-            maximumValue: 1
-            decimals: 3
+            minimumValue: -0.5
+            maximumValue: 0.5
+            decimals: 2
             suffix: ''
             visible: aspectShowSlider
-            value: filter.getDouble(aspectManualParam)
-            onValueChanged: filter.set(aspectManualParam, value)
+            value: 0 
+            onValueChanged: { if (blockUpdate) return; filter.set(aspectManualParam, value+0.5) }
         }
         Shotcut.UndoButton {
             visible: aspectShowSlider
-            onClicked: aspectManualSlider.value = aspectManualDefault
+            onClicked: aspectManualSlider.value = 0
         }
 
         //line seperator #3
-        Rectangle{
+         RowLayout {
             visible: cameraShowNew
-            Layout.columnSpan: 3; Layout.fillWidth: true; height: 1; color: activePalette.text; opacity: 0.3}
+            Layout.columnSpan: 3
+            Label { text: qsTr('Cameras')}  
+            Rectangle{ Layout.fillWidth: true; height: 1; color: activePalette.text; opacity: 0.3 }
+        }
 
-        //row 10 combo cameras
+        //row 12 combo cameras
          Label {
             visible: cameraShowNew
             text: qsTr('Camera')
@@ -610,10 +783,11 @@ Item {
             model: ListModel { id: tempList1 }
             onActivated: fillModeCombo()
         }
-        //row 11 combo camera mode
+        //row 13 combo camera mode
          Label {
             visible: cameraShowNew
             text: qsTr('Record mode')
+            leftPadding: 10
             Layout.alignment: Qt.AlignRight
         }
         Shotcut.ComboBox {
@@ -624,7 +798,7 @@ Item {
             model:  ListModel { id: tempList2 }
             onActivated: fillResultsCombo()
         }
-        //row 12 combo results
+        //row 14 combo results
         Label {
             visible: cameraShowNew
             text: qsTr('Result')
