@@ -66,9 +66,11 @@ SaveImageDialog::SaveImageDialog(QWidget *parent, const QString &caption, QImage
     nameSuggestion += suffix;
     selectFile(nameSuggestion);
 
+#if !defined(Q_OS_WIN)
     if (!connect(this, &QFileDialog::filterSelected, this, &SaveImageDialog::onFilterSelected))
         connect(this, SIGNAL(filterSelected(const QString &)),
                 SLOT(const onFilterSelected(const QString &)));
+#endif
     if (!connect(this, &QFileDialog::fileSelected, this, &SaveImageDialog::onFileSelected))
         connect(this, SIGNAL(fileSelected(const QString &)), SLOT(onFileSelected(const QString &)));
 }

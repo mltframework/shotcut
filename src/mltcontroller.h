@@ -191,6 +191,7 @@ public:
         return s.contains("<mlt ");
     }
     static bool isTrackProducer(Mlt::Producer &producer);
+    static int checkFile(const QString &path);
     bool blockRefresh(bool block);
 
     class RefreshBlocker

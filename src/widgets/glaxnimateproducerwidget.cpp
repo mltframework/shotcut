@@ -352,40 +352,68 @@ void GlaxnimateProducerWidget::on_durationSpinBox_editingFinished()
     }
 }
 
-
 void GlaxnimateIpcServer::ParentResources::setProducer(const Mlt::Producer &producer,
                                                        bool hideCurrentTrack)
 {
     m_producer = producer;
+    if (!m_producer.get(kMultitrackItemProperty))
+        return;
     m_profile.reset(new Mlt::Profile(::mlt_profile_clone(MLT.profile().get_profile())));
     m_profile->set_progressive(Settings.playerProgressive());
     m_glaxnimateProducer.reset(new Mlt::Producer(*m_profile, "xml-string",
                                                  MLT.XML().toUtf8().constData()));
     if (m_glaxnimateProducer && m_glaxnimateProducer->is_valid()) {
         m_frameNum = -1;
-        if (m_producer.get(kMultitrackItemProperty)) {
-            // hide this clip's video track and upper ones
-            QString s = QString::fromLatin1(m_producer.get(kMultitrackItemProperty));
-            QVector<QStringRef> parts = s.splitRef(':');
-            if (parts.length() == 2) {
-                auto trackIndex = parts[1].toInt();
-                auto offset = hideCurrentTrack ? 1 : 0;
-                Mlt::Tractor tractor(*m_glaxnimateProducer);
-                // for each upper video track plus this one
-                for (int i = 0; i < trackIndex + offset; i++) {
-                    // get the MLT track index
-                    auto index = MAIN.mltIndexForTrack(i);
-                    // get the MLT track in this copy
-                    std::unique_ptr<Mlt::Producer> track(tractor.track(index));
-                    if (track && track->is_valid()) {
-                        // hide the track
-                        track->set("hide", 3);
+        // hide this clip's video track and upper ones
+        QString s = QString::fromLatin1(m_producer.get(kMultitrackItemProperty));
+        QVector<QStringRef> parts = s.splitRef(':');
+        if (parts.length() == 2) {
+            auto trackIndex = parts[1].toInt();
+            if (hideCurrentTrack && trackIndex == MAIN.bottomVideoTrackIndex()) {
+                // Disable preview in Glaxnimate
+                m_glaxnimateProducer.reset();
+                m_profile.reset();
+                GlaxnimateIpcServer::instance().copyToShared(QImage());
+                return;
+            }
+            auto offset = hideCurrentTrack ? 1 : 0;
+            Mlt::Tractor tractor(*m_glaxnimateProducer);
+            // for each upper video track plus this one
+            for (int i = 0; i < trackIndex + offset; i++) {
+                // get the MLT track index
+                auto index = MAIN.mltIndexForTrack(i);
+                // get the MLT track in this copy
+                std::unique_ptr<Mlt::Producer> track(tractor.track(index));
+                if (track && track->is_valid()) {
+                    // hide the track
+                    track->set("hide", 3);
+                }
+            }
+
+            // Disable the glaxnimate filter and below
+            if (!hideCurrentTrack) {
+                std::unique_ptr<Mlt::Producer> track(tractor.track(MAIN.mltIndexForTrack(trackIndex)));
+                if (track && track->is_valid()) {
+                    auto clipIndex = parts[0].toInt();
+                    Mlt::Playlist playlist(*track);
+                    std::unique_ptr<Mlt::ClipInfo> info(playlist.clip_info(clipIndex));
+                    if (info && info->producer && info->producer->is_valid()) {
+                        auto count = info->producer->filter_count();
+                        bool found = false;
+                        for (int i = 0; i < count; i++) {
+                            std::unique_ptr<Mlt::Filter> filter(info->producer->filter(i));
+                            if (filter && filter->is_valid()) {
+                                if (found || !qstrcmp(filter->get(kShotcutFilterProperty), "maskGlaxnimate")) {
+                                    found = true;
+                                    filter->set("disable", 1);
+                                }
+                            }
+                        }
                     }
                 }
             }
         }
     }
-
 }
 
 void GlaxnimateIpcServer::onConnect()
@@ -404,7 +432,10 @@ void GlaxnimateIpcServer::onConnect()
 
 int GlaxnimateIpcServer::toMltFps(float frame) const
 {
-    return qRound(frame / parent->m_producer.get_double("meta.media.frame_rate") * MLT.profile().fps());
+    if (parent->m_producer.get_double("meta.media.frame_rate") > 0) {
+        return qRound(frame / parent->m_producer.get_double("meta.media.frame_rate") * MLT.profile().fps());
+    }
+    return frame;
 }
 
 void GlaxnimateIpcServer::onReadyRead()
@@ -434,7 +465,7 @@ void GlaxnimateIpcServer::onReadyRead()
         int frameNum = parent->m_producer.get_int(kPlaylistStartProperty) + toMltFps(
                            time) - parent->m_producer.get_int("first_frame");
         if (frameNum != parent->m_frameNum) {
-            LOG_DEBUG() << "glaxnimate time =" << time;
+            LOG_DEBUG() << "glaxnimate time =" << time << "=> Shotcut frameNum =" << frameNum;
 
             // Get the image from MLT
             parent->m_glaxnimateProducer->seek(frameNum);
@@ -553,6 +584,11 @@ void GlaxnimateIpcServer::launch(const Mlt::Producer &producer, QString filename
     QString name = "shotcut-%1";
     name = name.arg(QCoreApplication::applicationPid());
     QStringList args = {"--ipc", name, filename};
+    QProcess childProcess;
+    QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
+    env.remove("LC_ALL");
+    childProcess.setProcessEnvironment(env);
+    childProcess.setProgram(Settings.glaxnimatePath());
     if (!m_server->listen(name)) {
         LOG_ERROR() << "failed to start the IPC server:" << m_server->errorString();
         m_server.reset();
@@ -560,7 +596,8 @@ void GlaxnimateIpcServer::launch(const Mlt::Producer &producer, QString filename
         args << filename;
         // Run without --ipc
     } else  {
-        if (QProcess::startDetached(Settings.glaxnimatePath(), args)) {
+        childProcess.setArguments(args);
+        if (childProcess.startDetached()) {
             LOG_DEBUG() << Settings.glaxnimatePath() << args.join(' ');
             m_sharedMemory.reset(new QSharedMemory(name));
             return;
@@ -574,7 +611,8 @@ void GlaxnimateIpcServer::launch(const Mlt::Producer &producer, QString filename
         }
     }
     LOG_DEBUG() << Settings.glaxnimatePath() << args.join(' ');
-    if (!QProcess::startDetached(Settings.glaxnimatePath(), args)) {
+    childProcess.setArguments(args);
+    if (!childProcess.startDetached()) {
         LOG_DEBUG() << "failed to launch Glaxnimate with" << Settings.glaxnimatePath();
         QMessageBox dialog(QMessageBox::Information,
                            qApp->applicationName(),
@@ -592,7 +630,9 @@ void GlaxnimateIpcServer::launch(const Mlt::Producer &producer, QString filename
             if (!path.isEmpty()) {
                 args.clear();
                 args << "--ipc" << name << filename;
-                if (QProcess::startDetached(path, args)) {
+                childProcess.setProgram(path);
+                childProcess.setArguments(args);
+                if (childProcess.startDetached()) {
                     LOG_DEBUG() << Settings.glaxnimatePath() << args.join(' ');
                     Settings.setGlaxnimatePath(path);
                     LOG_INFO() << "changed Glaxnimate path to" << path;
@@ -604,7 +644,8 @@ void GlaxnimateIpcServer::launch(const Mlt::Producer &producer, QString filename
                     args.clear();
                     args << filename;
                     // Try without --ipc
-                    if (QProcess::startDetached(path, args)) {
+                    childProcess.setArguments(args);
+                    if (childProcess.startDetached()) {
                         LOG_DEBUG() << Settings.glaxnimatePath() << args.join(' ');
                     } else {
                         LOG_WARNING() << "failed to launch Glaxnimate with" << path;

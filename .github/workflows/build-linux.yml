@@ -77,9 +77,11 @@ jobs:
         if: ${{ github.repository_owner == 'mltframework' }}
         uses: samuelmeuli/action-snapcraft@v1.2.0
         with:
-          snapcraft_token: ${{ secrets.SNAPCRAFT_TOKEN }}
           use_lxd: true
       - name: Package snap
+        if: ${{ github.repository_owner == 'mltframework' }}
+        env:
+          SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_TOKEN }}
         run: |
           VERSION=$(cat VERSION)
           mv scripts/shotcut-linux-x86_64-*.txz packaging/linux

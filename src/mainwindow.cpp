@@ -4982,10 +4982,12 @@ void MainWindow::replaceAllByHash(const QString &hash, Mlt::Producer &producer, 
 
 int MainWindow::mltIndexForTrack(int trackIndex) const
 {
-    if (trackIndex < m_timelineDock->model()->trackList().count() - 1) {
-        return m_timelineDock->model()->trackList()[trackIndex].mlt_index;
-    }
-    return -1;
+    return m_timelineDock->model()->mltIndexForTrack(trackIndex);
+}
+
+int MainWindow::bottomVideoTrackIndex() const
+{
+    return m_timelineDock->model()->bottomVideoTrackIndex();
 }
 
 void MainWindow::on_actionTopics_triggered()
