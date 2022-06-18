@@ -21,7 +21,7 @@ import org.shotcut.qml 1.0
 
 Metadata {
     type: Metadata.Filter
-    name: qsTr("Fisheye Remover")
+    name: qsTr("Fisheye")
     mlt_service: 'frei0r.defish0r'
     qml: 'ui.qml'
 }
