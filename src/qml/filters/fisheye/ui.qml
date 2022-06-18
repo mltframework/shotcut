@@ -58,6 +58,7 @@ Item {
     property bool scaleShowSlider: false
     property bool aspectShowSlider: false
     property bool cameraShowNew: false
+    property bool pluginShowNew: false    //hide newer dll features?
     property bool stretchShowSlider: false
     property bool scaleYShowSlider: false  
 
@@ -391,6 +392,9 @@ Item {
     }
 
     Component.onCompleted: {
+        if (filter.getDouble(scaleYParam) > 0.0) 
+            pluginShowNew = true        
+          
         filter.blockSignals = true
         if (filter.isNew) {
             setPresetData()
@@ -416,7 +420,7 @@ Item {
 
         // Row 1 Preset
         Label {
-            text: qsTr('Presets')
+            text: qsTr('Preset')
             Layout.alignment: Qt.AlignRight
         }
         Shotcut.Preset {
@@ -493,13 +497,13 @@ Item {
             implicitWidth: 120
             model: ListModel {
                 id: qualityModel
-                ListElement { text: qsTr('1. Nearest neighbor'); value: 0.0 }
-                ListElement { text: qsTr('2. Bilinear'); value: 0.166 }
-                ListElement { text: qsTr('3. Bicubic smooth'); value: 0.333 }
-                ListElement { text: qsTr('4. Bicubic sharp'); value: 0.500 }
-                ListElement { text: qsTr('5. Spline 4x4'); value: 0.666 }
-                ListElement { text: qsTr('6. Spline 6x6'); value: 0.833 }
-                ListElement { text: qsTr('7. Lanczos 16x16'); value: 1.0 }
+                ListElement { text: qsTr('Nearest neighbor'); value: 0.0 }
+                ListElement { text: qsTr('Bilinear'); value: 0.166 }
+                ListElement { text: qsTr('Bicubic smooth'); value: 0.333 }
+                ListElement { text: qsTr('Bicubic sharp'); value: 0.500 }
+                ListElement { text: qsTr('Spline 4x4'); value: 0.666 }
+                ListElement { text: qsTr('Spline 6x6'); value: 0.833 }
+                ListElement { text: qsTr('Lanczos 16x16'); value: 1.0 }
             }
             textRole: 'text'
             onActivated: {
@@ -525,10 +529,10 @@ Item {
                 implicitWidth: 120
                 model: ListModel {
                     id: lensModel
-                    ListElement { text: qsTr('1. Equidistant'); value: 0.0 }
-                    ListElement { text: qsTr('2. Ortographic'); value: 0.333 }
-                    ListElement { text: qsTr('3. Equiarea'); value: 0.666 }
-                    ListElement { text: qsTr('4. Stereographic'); value: 1.0 }
+                    ListElement { text: qsTr('Equidistant'); value: 0.0 }
+                    ListElement { text: qsTr('Ortographic'); value: 0.333 }
+                    ListElement { text: qsTr('Equiarea'); value: 0.666 }
+                    ListElement { text: qsTr('Stereographic'); value: 1.0 }
                 }
                 textRole: 'text'
                 onActivated: {
@@ -536,12 +540,13 @@ Item {
                 }
             }
             CheckBox {
-                text: qsTr('Dynamic stretch') //stretch view
+                text: qsTr('Non-Linear scale') //stretch view
                 leftPadding: 6
-                Shotcut.HoverTip { text: qsTr(  'Using a simplified version of \'Elastic Scale\' image will be stretched/squished to fix camera scaling between 4:3 and 16:9\n'+
+                Shotcut.HoverTip { text: qsTr(  'The image will be stretched/squished to fix camera scaling between 4:3 and 16:9\n'+
                                                 'Like used in GoPro\'s superview' ) }
                 id: stretchCheckBox
                 padding: 0
+                visible: pluginShowNew
                 checked: superViewDefault
                 onCheckedChanged: {
                     if (blockUpdate) return
@@ -562,7 +567,7 @@ Item {
         // Row 6: fix stretch
         Label {
             visible: stretchShowSlider
-            text: qsTr('Stretch')
+            text: qsTr('Scale')
             Shotcut.HoverTip { text: qsTr(  'Use negative values for up-scaled videos\n'+
                                             'Use positive values for down-scaled videos' ) }
             Layout.alignment: Qt.AlignRight
@@ -592,7 +597,7 @@ Item {
         
         // Row 7: Scale (Preset)
         Label {
-            text: qsTr('Presets')
+            text: qsTr('Preset')
             Shotcut.HoverTip { text: qsTr( 'Preset scale methods\n'+
                                            'Lock pixels at specific locations') }
             Layout.alignment: Qt.AlignRight
@@ -603,10 +608,10 @@ Item {
                 implicitWidth: 120
                 model: ListModel {
                     id: scaleModel
-                    ListElement { text: qsTr('1. Scale to Fill'); value: 0.0 }
-                    ListElement { text: qsTr('2. Keep Center Scale'); value: 0.333 }
-                    ListElement { text: qsTr('3. Scale to Fit'); value: 0.666 }
-                    ListElement { text: qsTr('4. Manual Scale'); value: 1.0 }
+                    ListElement { text: qsTr('Scale to Fill'); value: 0.0 }
+                    ListElement { text: qsTr('Keep Center Scale'); value: 0.333 }
+                    ListElement { text: qsTr('Scale to Fit'); value: 0.666 }
+                    ListElement { text: qsTr('Manual Scale'); value: 1.0 }
                 }
                 textRole: 'text'
                 onActivated: {
@@ -620,6 +625,7 @@ Item {
                 leftPadding: 6
                 Shotcut.HoverTip { text: qsTr('Scale Y separately\nThis changes video aspect ratio') }
                 id: scaleYCheckBox
+                visible: pluginShowNew                
                 padding: 0
                 checked: false
                 onCheckedChanged: {
@@ -636,7 +642,7 @@ Item {
                 id: cropCheckBox
                 padding: 0
                 checked: cropDefault
-                visible: fisheyeRemoveButton.checked
+                visible: (pluginShowNew && fisheyeRemoveButton.checked)
                 onCheckedChanged: { if (blockUpdate) return; filter.set(cropParam, checked) }
             }
         }
@@ -703,9 +709,9 @@ Item {
             Rectangle{ Layout.fillWidth: true; height: 1; color: activePalette.text; opacity: 0.3 }
         }
         
-        // Row 10: A/R (Presets)
+        // Row 10: A/R (Preset)
         Label {
-            text: qsTr('Presets')
+            text: qsTr('Preset')
             Shotcut.HoverTip { text: qsTr( 'Preset pixel aspect ratio') }
             Layout.alignment: Qt.AlignRight
         }
@@ -715,11 +721,11 @@ Item {
                 implicitWidth: 120
                 model: ListModel {
                     id: aspectModel
-                    ListElement { text:      '1. Square Pixel'; value: 0.0 }
-                    ListElement { text:      '2. PAL DV  1.067'; value: 0.250 }
-                    ListElement { text:      '3. NTSC DV 0.889'; value: 0.500 }
-                    ListElement { text:      '4. HDV     1.333'; value: 0.750 }
-                    ListElement { text: qsTr('5. Manual Aspect'); value: 1.0 }
+                    ListElement { text:      'Square Pixel'; value: 0.0 }
+                    ListElement { text:      'PAL DV  1.067'; value: 0.250 }
+                    ListElement { text:      'NTSC DV 0.889'; value: 0.500 }
+                    ListElement { text:      'HDV     1.333'; value: 0.750 }
+                    ListElement { text: qsTr('Manual Aspect'); value: 1.0 }
                 }
                 textRole: 'text'
                 onActivated: {
