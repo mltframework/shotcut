@@ -28,9 +28,6 @@
 #include "sharedframe.h"
 #include "jobs/ffmpegjob.h"
 
-namespace Ui {
-class TimelineDock;
-}
 namespace Timeline {
 class UpdateCommand;
 class TrimCommand;
@@ -220,7 +217,6 @@ private:
     void emitNonSeekableWarning();
     void addTrackIfNeeded(int mltTrackIndex, Mlt::Producer *srcTrack);
 
-    Ui::TimelineDock *ui;
     QQuickWidget m_quickView;
     MultitrackModel m_model;
     MarkersModel m_markersModel;

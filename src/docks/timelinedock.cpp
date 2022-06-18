@@ -16,7 +16,6 @@
  */
 
 #include "timelinedock.h"
-#include "ui_timelinedock.h"
 #include "models/audiolevelstask.h"
 #include "models/multitrackmodel.h"
 #include "qmltypes/thumbnailprovider.h"
@@ -34,6 +33,7 @@
 #include "dialogs/longuitask.h"
 
 #include <QAction>
+#include <QVBoxLayout>
 #include <QtQml>
 #include <QtQuick>
 #include <QGuiApplication>
@@ -46,7 +46,6 @@ static const int kRecordingTimerIntervalMs = 1000;
 
 TimelineDock::TimelineDock(QWidget *parent) :
     QDockWidget(parent),
-    ui(new Ui::TimelineDock),
     m_quickView(QmlUtilities::sharedEngine(), this),
     m_position(-1),
     m_ignoreNextPositionChange(false),
@@ -58,8 +57,19 @@ TimelineDock::TimelineDock(QWidget *parent) :
     m_selection.selectedTrack = -1;
     m_selection.isMultitrackSelected = false;
 
-    ui->setupUi(this);
+    setObjectName("TimelineDock");
+    resize(400, 300);
+    setMinimumSize(QSize(200, 200));
+    setAcceptDrops(true);
+    QIcon filterIcon = QIcon::fromTheme("view-time-schedule",
+                                        QIcon(":/icons/oxygen/32x32/actions/view-time-schedule.png"));
+    setWindowIcon(filterIcon);
+    setFeatures(QDockWidget::AllDockWidgetFeatures);
+    setAllowedAreas(Qt::BottomDockWidgetArea | Qt::TopDockWidgetArea);
+
     toggleViewAction()->setIcon(windowIcon());
+
+    QVBoxLayout *vboxLayout = new QVBoxLayout();
 
     qmlRegisterType<MultitrackModel>("Shotcut.Models", 1, 0, "MultitrackModel");
     qmlRegisterType<MarkersModel>("Shotcut.Models", 1, 0, "MarkersModel");
@@ -98,7 +108,7 @@ TimelineDock::TimelineDock(QWidget *parent) :
     connect(&m_model, SIGNAL(loaded()), SLOT(reloadTimelineMarkers()));
     connect(&m_model, SIGNAL(closed()), SLOT(reloadTimelineMarkers()));
 
-    setWidget(&m_quickView);
+    vboxLayout->addWidget(&m_quickView);
 
     connect(this, SIGNAL(clipMoved(int, int, int, int, bool)), SLOT(onClipMoved(int, int, int, int,
                                                                                 bool)), Qt::QueuedConnection);
@@ -110,12 +120,15 @@ TimelineDock::TimelineDock(QWidget *parent) :
     connect(this, SIGNAL(topLevelChanged(bool)), this, SLOT(onTopLevelChanged(bool)));
     connect(this, SIGNAL(warnTrackLocked(int)), SLOT(onWarnTrackLocked()));
     connect(&m_markersModel, SIGNAL(rangesChanged()), this, SIGNAL(markerRangesChanged()));
+
+    QWidget *dockContentsWidget = new QWidget();
+    dockContentsWidget->setLayout(vboxLayout);
+    QDockWidget::setWidget(dockContentsWidget);
     LOG_DEBUG() << "end";
 }
 
 TimelineDock::~TimelineDock()
 {
-    delete ui;
 }
 
 void TimelineDock::setPosition(int position)
