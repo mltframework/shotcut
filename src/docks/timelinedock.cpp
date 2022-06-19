@@ -1475,8 +1475,13 @@ bool TimelineDock::trimClipIn(int trackIndex, int clipIndex, int oldClipIndex, i
         QModelIndex modelIndex = m_model.makeIndex(trackIndex, clipIndex - 1);
         int n = m_model.data(modelIndex, MultitrackModel::DurationRole).toInt();
         m_model.liftClip(trackIndex, clipIndex - 1);
-        m_model.trimClipIn(trackIndex, clipIndex, -n, false, false);
-        m_trimDelta += delta;
+        if (delta < 0 ) {
+            m_model.trimClipIn(trackIndex, clipIndex, -n, false, false);
+            m_trimDelta += -n;
+        } else if (delta > 0) {
+            m_model.trimClipOut(trackIndex, clipIndex - 2, -n, false, false);
+            m_transitionDelta = 0;
+        }
         m_trimCommand.reset(new Timeline::RemoveTransitionByTrimInCommand(m_model, trackIndex,
                                                                           clipIndex - 1, m_trimDelta, false));
         if (m_updateCommand && m_updateCommand->trackIndex() == trackIndex
@@ -1531,8 +1536,13 @@ bool TimelineDock::trimClipOut(int trackIndex, int clipIndex, int delta, bool ri
         QModelIndex modelIndex = m_model.makeIndex(trackIndex, clipIndex + 1);
         int n = m_model.data(modelIndex, MultitrackModel::DurationRole).toInt();
         m_model.liftClip(trackIndex, clipIndex + 1);
-        m_model.trimClipOut(trackIndex, clipIndex, -n, false, false);
-        m_trimDelta += delta;
+        if (delta < 0 ) {
+            m_model.trimClipOut(trackIndex, clipIndex, -n, false, false);
+            m_trimDelta += -n;
+        } else if (delta > 0) {
+            m_model.trimClipIn(trackIndex, clipIndex + 2, -n, false, false);
+            m_transitionDelta = 0;
+        }
         m_trimCommand.reset(new Timeline::RemoveTransitionByTrimOutCommand(m_model, trackIndex,
                                                                            clipIndex + 1, m_trimDelta, false));
         if (m_updateCommand && m_updateCommand->trackIndex() == trackIndex
