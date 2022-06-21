@@ -690,7 +690,7 @@ Item {
         Shotcut.SliderSpinner {
             id: scaleYSlider
             visible: scaleYShowSlider
-            minimumValue: -0.5
+            minimumValue: -0.49
             maximumValue: 0.5
             value: 0
             decimals: 2
