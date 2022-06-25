@@ -6,6 +6,8 @@ FIND_PACKAGE(Qt5Core REQUIRED)
 
 ADD_DEFINITIONS(-DCUTELOGGER_LIBRARY)
 
+INCLUDE(GNUInstallDirs)
+
 INCLUDE_DIRECTORIES(BEFORE include)
 
 SET(sources
@@ -39,4 +41,4 @@ SET(library_target CuteLogger)
 
 ADD_LIBRARY(${library_target} SHARED ${sources} ${includes})
 TARGET_LINK_LIBRARIES(${library_target} Qt5::Core)
-INSTALL(TARGETS ${library_target} DESTINATION lib)
+INSTALL(TARGETS ${library_target} DESTINATION ${CMAKE_INSTALL_LIBDIR})
