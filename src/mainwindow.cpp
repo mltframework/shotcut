@@ -2282,7 +2282,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         break;
     case Qt::Key_Up:
         if (isMultitrackValid() && (event->modifiers() & Qt::AltModifier)
-                && (event->modifiers() & Qt::AltModifier) && m_timelineDock->isVisible()) {
+                && (event->modifiers() & Qt::ShiftModifier) && m_timelineDock->isVisible()) {
             m_timelineDock->moveTrackUp();
         } else if (m_playlistDock->isVisible() && event->modifiers() & Qt::AltModifier
                    && m_playlistDock->model()->rowCount() > 0) {
