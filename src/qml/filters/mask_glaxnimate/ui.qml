@@ -83,7 +83,7 @@ Item {
                 var extIndex = filename.indexOf(extension, filename.length - extension.length)
                 if (extIndex == -1) {
                     filename += extension
-                    url = filename
+                    shapeFile.url = filename
                 }
                 producer.newGlaxnimateFile(filename)
             }
