@@ -123,9 +123,9 @@ void InsertCommand::redo()
             shift += clip.get_playtime();
         }
     } else {
+        shift = clip.get_playtime();
         ProxyManager::generateIfNotExists(clip);
         m_model.insertClip(m_trackIndex, clip, m_position, m_rippleAllTracks, m_seek);
-        shift = clip.get_playtime();
     }
     m_undoHelper.recordAfterState();
     if (m_rippleMarkers && shift > 0) {
