@@ -715,6 +715,11 @@ void TrimClipOutCommand::redo()
                 Mlt::Playlist playlist(*track);
                 m_markerRemoveStart = playlist.clip_start(m_clipIndex) + playlist.clip_length(
                                           m_clipIndex) - m_delta;
+                if (!m_redo) {
+                    // For the first redo, the clip has already been trimmed by the timeline dock.
+                    // So remove the delta that has already been applied
+                    m_markerRemoveStart += m_delta;
+                }
                 m_markerRemoveEnd = m_markerRemoveStart + m_delta;
             }
         }
