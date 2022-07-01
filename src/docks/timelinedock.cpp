@@ -910,8 +910,10 @@ void TimelineDock::selectTrackHead(int trackIndex)
         setSelection(QList<QPoint>(), trackIndex);
         int i = m_model.trackList().at(trackIndex).mlt_index;
         Mlt::Producer *producer = m_model.tractor()->track(i);
-        if (producer && producer->is_valid())
+        if (producer && producer->is_valid()) {
+            producer->set(kTrackIndexProperty, trackIndex);
             emit selected(producer);
+        }
         delete producer;
     }
 }

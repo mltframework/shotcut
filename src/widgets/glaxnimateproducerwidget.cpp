@@ -356,7 +356,8 @@ void GlaxnimateIpcServer::ParentResources::setProducer(const Mlt::Producer &prod
                                                        bool hideCurrentTrack)
 {
     m_producer = producer;
-    if (!m_producer.get(kMultitrackItemProperty))
+    m_producer.dump();
+    if (!m_producer.get(kMultitrackItemProperty) && !m_producer.get(kTrackIndexProperty))
         return;
     m_profile.reset(new Mlt::Profile(::mlt_profile_clone(MLT.profile().get_profile())));
     m_profile->set_progressive(Settings.playerProgressive());
@@ -365,48 +366,49 @@ void GlaxnimateIpcServer::ParentResources::setProducer(const Mlt::Producer &prod
     if (m_glaxnimateProducer && m_glaxnimateProducer->is_valid()) {
         m_frameNum = -1;
         // hide this clip's video track and upper ones
+        int trackIndex = m_producer.get_int(kTrackIndexProperty);
         QString s = QString::fromLatin1(m_producer.get(kMultitrackItemProperty));
         QVector<QStringRef> parts = s.splitRef(':');
         if (parts.length() == 2) {
-            auto trackIndex = parts[1].toInt();
-            if (hideCurrentTrack && trackIndex == MAIN.bottomVideoTrackIndex()) {
-                // Disable preview in Glaxnimate
-                m_glaxnimateProducer.reset();
-                m_profile.reset();
-                GlaxnimateIpcServer::instance().copyToShared(QImage());
-                return;
+            trackIndex = parts[1].toInt();
+        }
+        if (hideCurrentTrack && trackIndex == MAIN.bottomVideoTrackIndex()) {
+            // Disable preview in Glaxnimate
+            m_glaxnimateProducer.reset();
+            m_profile.reset();
+            GlaxnimateIpcServer::instance().copyToShared(QImage());
+            return;
+        }
+        auto offset = hideCurrentTrack ? 1 : 0;
+        Mlt::Tractor tractor(*m_glaxnimateProducer);
+        // for each upper video track plus this one
+        for (int i = 0; i < trackIndex + offset; i++) {
+            // get the MLT track index
+            auto index = MAIN.mltIndexForTrack(i);
+            // get the MLT track in this copy
+            std::unique_ptr<Mlt::Producer> track(tractor.track(index));
+            if (track && track->is_valid()) {
+                // hide the track
+                track->set("hide", 3);
             }
-            auto offset = hideCurrentTrack ? 1 : 0;
-            Mlt::Tractor tractor(*m_glaxnimateProducer);
-            // for each upper video track plus this one
-            for (int i = 0; i < trackIndex + offset; i++) {
-                // get the MLT track index
-                auto index = MAIN.mltIndexForTrack(i);
-                // get the MLT track in this copy
-                std::unique_ptr<Mlt::Producer> track(tractor.track(index));
-                if (track && track->is_valid()) {
-                    // hide the track
-                    track->set("hide", 3);
-                }
-            }
+        }
 
-            // Disable the glaxnimate filter and below
-            if (!hideCurrentTrack) {
-                std::unique_ptr<Mlt::Producer> track(tractor.track(MAIN.mltIndexForTrack(trackIndex)));
-                if (track && track->is_valid()) {
-                    auto clipIndex = parts[0].toInt();
-                    Mlt::Playlist playlist(*track);
-                    std::unique_ptr<Mlt::ClipInfo> info(playlist.clip_info(clipIndex));
-                    if (info && info->producer && info->producer->is_valid()) {
-                        auto count = info->producer->filter_count();
-                        bool found = false;
-                        for (int i = 0; i < count; i++) {
-                            std::unique_ptr<Mlt::Filter> filter(info->producer->filter(i));
-                            if (filter && filter->is_valid()) {
-                                if (found || !qstrcmp(filter->get(kShotcutFilterProperty), "maskGlaxnimate")) {
-                                    found = true;
-                                    filter->set("disable", 1);
-                                }
+        // Disable the glaxnimate filter and below
+        if (!hideCurrentTrack) {
+            std::unique_ptr<Mlt::Producer> track(tractor.track(MAIN.mltIndexForTrack(trackIndex)));
+            if (track && track->is_valid()) {
+                auto clipIndex = parts[0].toInt();
+                Mlt::Playlist playlist(*track);
+                std::unique_ptr<Mlt::ClipInfo> info(playlist.clip_info(clipIndex));
+                if (info && info->producer && info->producer->is_valid()) {
+                    auto count = info->producer->filter_count();
+                    bool found = false;
+                    for (int i = 0; i < count; i++) {
+                        std::unique_ptr<Mlt::Filter> filter(info->producer->filter(i));
+                        if (filter && filter->is_valid()) {
+                            if (found || !qstrcmp(filter->get(kShotcutFilterProperty), "maskGlaxnimate")) {
+                                found = true;
+                                filter->set("disable", 1);
                             }
                         }
                     }
