@@ -42,7 +42,7 @@ Item {
 
     //default plugin values
     property double focalRatioDefault: 0.5  //default was 0.0
-    property bool   deFishDefault: false
+    property bool   deFishDefault: true
     property double lensTypeDefault: 0.6    //default #3
     property double scalePresetDefault: 0.6 //default #3
     property double scaleManualDefault: 0.5
@@ -494,7 +494,7 @@ Item {
         }
         Shotcut.ComboBox {
             id: qualityCombo
-            implicitWidth: 120
+            implicitWidth: 150
             model: ListModel {
                 id: qualityModel
                 ListElement { text: qsTr('Nearest neighbor'); value: 0.0 }
@@ -526,7 +526,7 @@ Item {
         RowLayout {
             Shotcut.ComboBox {
                 id: lensCombo
-                implicitWidth: 120
+                implicitWidth: 150
                 model: ListModel {
                     id: lensModel
                     ListElement { text: qsTr('Equidistant'); value: 0.0 }
@@ -605,7 +605,7 @@ Item {
         RowLayout {
             Shotcut.ComboBox {
                 id: scaleCombo
-                implicitWidth: 120
+                implicitWidth: 150
                 model: ListModel {
                     id: scaleModel
                     ListElement { text: qsTr('Scale to Fill'); value: 0.0 }
@@ -718,7 +718,7 @@ Item {
         RowLayout {
             Shotcut.ComboBox {
                 id: aspectCombo
-                implicitWidth: 120
+                implicitWidth: 150
                 model: ListModel {
                     id: aspectModel
                     ListElement { text:      'Square Pixel'; value: 0.0 }
@@ -785,7 +785,7 @@ Item {
             visible: cameraShowNew
             Layout.columnSpan: 2
             id: cameraCombo
-            implicitWidth: 120
+            implicitWidth: 150
             model: ListModel { id: tempList1 }
             onActivated: fillModeCombo()
         }
@@ -800,7 +800,7 @@ Item {
             visible: cameraShowNew
             Layout.columnSpan: 2
             id: camModeCombo
-            implicitWidth: 120
+            implicitWidth: 150
             model:  ListModel { id: tempList2 }
             onActivated: fillResultsCombo()
         }
@@ -815,7 +815,7 @@ Item {
             Layout.columnSpan: 2
             Shotcut.ComboBox {
                 id: resultCombo
-                implicitWidth: 120
+                implicitWidth: 150
                 model:  ListModel { id: tempList3 }
             }
             Shotcut.Button {
