@@ -23,7 +23,7 @@ import QtQuick.Controls.Styles 1.1
 
 Item {
     width: 300
-    height: 228
+    height: 240
     id: mainItemLayout
     SystemPalette { id: activePalette }
 
@@ -195,12 +195,13 @@ Item {
 
     //fix scrollbar height when dynamic slider visability changes
     function setScollbarHeight(){
-        mainItemLayout.height = 228
-        mainItemLayout.height += stretchShowSlider? 26: 0
-        mainItemLayout.height += scaleShowSlider? 26: 0
-        mainItemLayout.height += aspectShowSlider? 26: 0
-        mainItemLayout.height += cameraShowNew? 26*4: 0
-        mainItemLayout.height += scaleYShowSlider? 26: 0
+        var h = 240
+        h += stretchShowSlider? 26: 0
+        h += scaleShowSlider? 26: 0
+        h += aspectShowSlider? 26: 0
+        h += cameraShowNew? 26*4: 0
+        h += scaleYShowSlider? 26: 0
+        mainItemLayout.height = h
     }
 
     //get text string from presets
