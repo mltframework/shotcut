@@ -120,6 +120,7 @@ add_executable(shotcut WIN32 MACOSX_BUNDLE
   widgets/decklinkproducerwidget.ui
   widgets/directshowvideowidget.cpp widgets/directshowvideowidget.h
   widgets/directshowvideowidget.ui
+  widgets/docktoolbar.cpp widgets/docktoolbar.h
   widgets/editmarkerwidget.cpp widgets/editmarkerwidget.h
   widgets/exportpresetstreeview.cpp widgets/exportpresetstreeview.h
   widgets/frameratewidget.cpp widgets/frameratewidget.h

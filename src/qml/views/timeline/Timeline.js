@@ -37,7 +37,7 @@ function scrollIfNeeded(center) {
 
 function dragging(pos, duration) {
     if (tracksRepeater.count > 0) {
-        var headerHeight = ruler.height + toolbar.height
+        var headerHeight = ruler.height
         dropTarget.x = pos.x
         dropTarget.width = duration * multitrack.scaleFactor
 
@@ -79,7 +79,7 @@ function dragging(pos, duration) {
             scrollTimer.stop()
         }
 
-        if (toolbar.scrub) {
+        if (settings.timelineDragScrub) {
             timeline.position = Math.round(
                 (pos.x + tracksFlickable.contentX - headerWidth) / multitrack.scaleFactor)
         }

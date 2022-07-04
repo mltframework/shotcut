@@ -90,7 +90,7 @@ Rectangle {
             parent.clicked()
             nameEdit.focus = false
             if (mouse.button == Qt.RightButton)
-                menu.popup()
+                root.timelineRightClicked()
         }
     }
     Flow {

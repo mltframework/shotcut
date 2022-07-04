@@ -32,6 +32,7 @@ Rectangle {
     property bool isMute: false
 
     signal clipClicked(var clip, var track, var mouse)
+    signal clipRightClicked(var clip, var track, var mouse)
     signal clipDragged(var clip, int x, int y)
     signal clipDropped(var clip)
     signal clipDraggedToTrack(var clip, int direction)
@@ -45,6 +46,12 @@ Rectangle {
     function remakeWaveforms(force) {
         for (var i = 0; i < repeater.count; i++)
             timeline.remakeAudioLevels(trackRoot.DelegateModel.itemsIndex, i, force)
+    }
+
+    function updateThumbnails(clipIndex) {
+        if (clipIndex >= 0 && clipIndex < repeater.count) {
+            repeater.itemAt(clipIndex).updateThumbnails()
+        }
     }
 
     function snapClip(clip) {
@@ -89,6 +96,7 @@ Rectangle {
             isTrackMute: trackRoot.isMute
 
             onClicked: trackRoot.clipClicked(clip, trackRoot, mouse);
+            onClipRightClicked: trackRoot.clipRightClicked(clip, trackRoot, mouse)
             onMoved: {
                 var fromTrack = clip.originalTrackIndex
                 var toTrack = clip.trackIndex
@@ -123,7 +131,7 @@ Rectangle {
                 }
             }
             onDragged: {
-                if (toolbar.scrub) {
+                if (settings.timelineDragScrub) {
                     root.stopScrolling = false
                     timeline.position = Math.round(clip.x / timeScale)
                 }
