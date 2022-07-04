@@ -47,7 +47,7 @@ RowLayout {
                stopIndex == colorList.length - 1 ? parent.width - width :
                stopIndex * (parent.width / (colorList.length - 1)) - (width / 2)
             y: 0
-            color: colorList[stopIndex] != undefined ? colorList[stopIndex] : "gray"
+            color: typeof colorList[stopIndex] !== 'undefined' ? colorList[stopIndex] : "gray"
             border.color: "gray"
             border.width: 1
             width: 10
