@@ -470,8 +470,8 @@ Rectangle {
                                 model: timeline.selection
                                 Rectangle {
                                     property var clip: trackAt(modelData.y).clipAt(modelData.x)
-                                    property var track: clip == undefined ? trackAt(clip.trackIndex + dragDelta.y) : 0
-                                    x: clip == undefined ? clip.x + dragDelta.x : 0
+                                    property var track: typeof clip === 'undefined' ? trackAt(clip.trackIndex + dragDelta.y) : 0
+                                    x: typeof clip === 'undefined' ? clip.x + dragDelta.x : 0
                                     y: track ? track.y : 0
                                     width: clip.width
                                     height: track ? track.height : 0

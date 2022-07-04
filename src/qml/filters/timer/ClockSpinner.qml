@@ -41,11 +41,11 @@ Item {
 
     function timeToSeconds(time) {
         var fields = time.split(":")
-        if (fields[1] == undefined)
+        if (typeof fields[1] === 'undefined')
             fields[1] = 0
-        if (fields[0] == undefined)
+        if (typeof fields[0] === 'undefined')
             fields[0] = 0
-        if (fields[2] == undefined)
+        if (typeof fields[2] === 'undefined')
             fields[2] = 0
         var hSeconds = fields[0] * 60.0 * 60.0
         var mSeconds = fields[1] * 60.0
@@ -75,7 +75,7 @@ Item {
         if (fractionLen == 0)
             return b[0]
         // Add trailing zeros to the fraction part (after decimal)
-        if (b[1] == undefined)
+        if (typeof b[1] === 'undefined')
             b[1] = ""
         while (b[1].length < fractionLen) {
             b[1] = b[1] + "0"
