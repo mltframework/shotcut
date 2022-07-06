@@ -1645,7 +1645,8 @@ void TimelineDock::insert(int trackIndex, int position, const QString &xml, bool
         QUrl url = xml.split(kFilesUrlDelimiter).first();
         Mlt::Properties properties;
         properties.set(kShotcutSkipConvertProperty, 1);
-        MAIN.open(Util::removeFileScheme(url), &properties, false /* play */ );
+        if (!MAIN.open(Util::removeFileScheme(url), &properties, false /* play */))
+            MAIN.open(Util::removeFileScheme(url, false), &properties, false /* play */);
     }
 
     // Use MLT XML on the clipboard if it exists and is newer than source clip.
@@ -1767,7 +1768,8 @@ void TimelineDock::overwrite(int trackIndex, int position, const QString &xml, b
         QUrl url = xml.split(kFilesUrlDelimiter).first();
         Mlt::Properties properties;
         properties.set(kShotcutSkipConvertProperty, 1);
-        MAIN.open(Util::removeFileScheme(url), &properties, false /* play */ );
+        if (!MAIN.open(Util::removeFileScheme(url), &properties, false /* play */))
+            MAIN.open(Util::removeFileScheme(url, false), &properties, false /* play */);
     }
 
     // Use MLT XML on the clipboard if it exists and is newer than source clip.

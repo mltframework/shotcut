@@ -158,12 +158,14 @@ QString Util::producerTitle(const Mlt::Producer &producer)
     return Util::baseName(ProxyManager::resource(p));
 }
 
-QString Util::removeFileScheme(QUrl &url)
+QString Util::removeFileScheme(QUrl &url, bool fromPercentEncoding)
 {
     QString path = url.url();
     if (url.scheme() == "file")
         path = url.toString(QUrl::PreferLocalFile);
-    return QUrl::fromPercentEncoding(path.toUtf8());
+    if (fromPercentEncoding)
+        return QUrl::fromPercentEncoding(path.toUtf8());
+    return path;
 }
 
 static inline bool isValidGoProFirstFilePrefix(const QFileInfo &info)

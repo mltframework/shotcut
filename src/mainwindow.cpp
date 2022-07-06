@@ -1479,8 +1479,9 @@ void MainWindow::onAutosaveTimeout()
     }
 }
 
-void MainWindow::open(QString url, const Mlt::Properties *properties, bool play)
+bool MainWindow::open(QString url, const Mlt::Properties *properties, bool play)
 {
+    // returns false when MLT is unable to open the file, possibly because it has percent sign in the path
     LOG_DEBUG() << url;
     bool modified = false;
     MltXmlChecker checker;
@@ -1499,19 +1500,19 @@ void MainWindow::open(QString url, const Mlt::Properties *properties, bool play)
         case QXmlStreamReader::NoError:
             if (!isCompatibleWithGpuMode(checker)) {
                 showStatusMessage(tr("Failed to open ").append(url));
-                return;
+                return true;
             }
             break;
         case QXmlStreamReader::CustomError:
             showIncompatibleProjectMessage(checker.shotcutVersion());
-            return;
+            return true;
         default:
             showStatusMessage(tr("Failed to open ").append(url));
-            return;
+            return true;
         }
         // only check for a modified project when loading a project, not a simple producer
         if (!continueModified())
-            return;
+            return true;
         QCoreApplication::processEvents();
         // close existing project
         if (playlist())
@@ -1520,19 +1521,19 @@ void MainWindow::open(QString url, const Mlt::Properties *properties, bool play)
             m_timelineDock->model()->close();
         MLT.purgeMemoryPool();
         if (!isXmlRepaired(checker, url))
-            return;
+            return true;
         modified = checkAutoSave(url);
         if (modified) {
             if (checker.check(url) == QXmlStreamReader::NoError) {
                 if (!isCompatibleWithGpuMode(checker))
-                    return;
+                    return true;
             } else {
                 showStatusMessage(tr("Failed to open ").append(url));
                 showIncompatibleProjectMessage(checker.shotcutVersion());
-                return;
+                return true;
             }
             if (!isXmlRepaired(checker, url))
-                return;
+                return true;
         }
         // let the new project change the profile
         if (modified || QFile::exists(url)) {
@@ -1543,7 +1544,7 @@ void MainWindow::open(QString url, const Mlt::Properties *properties, bool play)
     }
     if (!playlist() && !multitrack()) {
         if (!modified && !continueModified())
-            return;
+            return true;
         setCurrentFile("");
         setWindowModified(modified);
         sourceUpdated();
@@ -1584,7 +1585,9 @@ void MainWindow::open(QString url, const Mlt::Properties *properties, bool play)
     } else if (url != untitledFileName()) {
         showStatusMessage(tr("Failed to open ") + url);
         emit openFailed(url);
+        return false;
     }
+    return true;
 }
 
 void MainWindow::openMultiple(const QStringList &paths)
@@ -1606,7 +1609,8 @@ void MainWindow::openMultiple(const QList<QUrl> &urls)
         open(m_multipleFiles.first());
     } else {
         QUrl url = urls.first();
-        open(Util::removeFileScheme(url));
+        if (!open(Util::removeFileScheme(url)))
+            open(Util::removeFileScheme(url, false));
     }
 }
 
